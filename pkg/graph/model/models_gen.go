@@ -770,61 +770,6 @@ func (e DataForMonitoringType) MarshalGQL(w io.Writer) {
 	fmt.Fprint(w, strconv.Quote(e.String()))
 }
 
-type DataFrequencyType string
-
-const (
-	DataFrequencyTypeAnnually            DataFrequencyType = "ANNUALLY"
-	DataFrequencyTypeBiannually          DataFrequencyType = "BIANNUALLY"
-	DataFrequencyTypeQuarterly           DataFrequencyType = "QUARTERLY"
-	DataFrequencyTypeMonthly             DataFrequencyType = "MONTHLY"
-	DataFrequencyTypeSemiMonthly         DataFrequencyType = "SEMI_MONTHLY"
-	DataFrequencyTypeWeekly              DataFrequencyType = "WEEKLY"
-	DataFrequencyTypeDaily               DataFrequencyType = "DAILY"
-	DataFrequencyTypeOther               DataFrequencyType = "OTHER"
-	DataFrequencyTypeNotPlanningToDoThis DataFrequencyType = "NOT_PLANNING_TO_DO_THIS"
-)
-
-var AllDataFrequencyType = []DataFrequencyType{
-	DataFrequencyTypeAnnually,
-	DataFrequencyTypeBiannually,
-	DataFrequencyTypeQuarterly,
-	DataFrequencyTypeMonthly,
-	DataFrequencyTypeSemiMonthly,
-	DataFrequencyTypeWeekly,
-	DataFrequencyTypeDaily,
-	DataFrequencyTypeOther,
-	DataFrequencyTypeNotPlanningToDoThis,
-}
-
-func (e DataFrequencyType) IsValid() bool {
-	switch e {
-	case DataFrequencyTypeAnnually, DataFrequencyTypeBiannually, DataFrequencyTypeQuarterly, DataFrequencyTypeMonthly, DataFrequencyTypeSemiMonthly, DataFrequencyTypeWeekly, DataFrequencyTypeDaily, DataFrequencyTypeOther, DataFrequencyTypeNotPlanningToDoThis:
-		return true
-	}
-	return false
-}
-
-func (e DataFrequencyType) String() string {
-	return string(e)
-}
-
-func (e *DataFrequencyType) UnmarshalGQL(v interface{}) error {
-	str, ok := v.(string)
-	if !ok {
-		return fmt.Errorf("enums must be strings")
-	}
-
-	*e = DataFrequencyType(str)
-	if !e.IsValid() {
-		return fmt.Errorf("%s is not a valid DataFrequencyType", str)
-	}
-	return nil
-}
-
-func (e DataFrequencyType) MarshalGQL(w io.Writer) {
-	fmt.Fprint(w, strconv.Quote(e.String()))
-}
-
 type DataToSendParticipantsType string
 
 const (

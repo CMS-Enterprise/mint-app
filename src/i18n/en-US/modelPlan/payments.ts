@@ -1,5 +1,7 @@
 import { TranslationPayments } from 'types/translation';
 
+import { frequencyOptions } from './miscellaneous';
+
 export const payments: TranslationPayments = {
   fundingSource: {
     gqlField: 'fundingSource',
@@ -635,25 +637,32 @@ export const payments: TranslationPayments = {
     dbField: 'anticipated_payment_frequency',
     label: 'How often do you anticipate making payments?',
     dataType: 'enum',
-    formType: 'multiSelect',
-    multiSelectLabel: 'Selected payment frequency',
-    options: {
-      ANNUALLY: 'Annually',
-      BIANNUALLY: 'Semiannually',
-      QUARTERLY: 'Quarterly',
-      MONTHLY: 'Monthly',
-      SEMIMONTHLY: 'Semi-monthly',
-      WEEKLY: 'Weekly',
-      DAILY: 'Daily',
-      OTHER: 'Other'
+    formType: 'checkbox',
+    options: frequencyOptions,
+    optionsRelatedInfo: {
+      ANNUALLY: '',
+      SEMIANNUALLY: '',
+      QUARTERLY: '',
+      MONTHLY: '',
+      CONTINUALLY: 'anticipatedPaymentFrequencyContinually',
+      OTHER: 'anticipatedPaymentFrequencyOther'
     },
+    filterGroups: ['cmmi', 'dfsdm', 'ipc']
+  },
+  anticipatedPaymentFrequencyContinually: {
+    gqlField: 'anticipatedPaymentFrequencyContinually',
+    goField: 'AnticipatedPaymentFrequencyContinually',
+    dbField: 'anticipated_payment_frequency_continually',
+    label: 'Please specify',
+    dataType: 'string',
+    formType: 'textarea',
     filterGroups: ['cmmi', 'dfsdm', 'ipc']
   },
   anticipatedPaymentFrequencyOther: {
     gqlField: 'anticipatedPaymentFrequencyOther',
     goField: 'AnticipatedPaymentFrequencyOther',
     dbField: 'anticipated_payment_frequency_other',
-    label: 'Please describe the other payment frequency.',
+    label: 'Please specify',
     dataType: 'string',
     formType: 'textarea',
     filterGroups: ['cmmi', 'dfsdm', 'ipc']

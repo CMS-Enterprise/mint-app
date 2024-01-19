@@ -29,9 +29,14 @@ export interface GetAllBeneficiaries_modelPlan_beneficiaries {
   beneficiarySelectionMethod: SelectionMethodType[];
   beneficiarySelectionOther: string | null;
   beneficiarySelectionNote: string | null;
-  beneficiarySelectionFrequency: FrequencyType | null;
+  beneficiarySelectionFrequency: FrequencyType[];
+  beneficiarySelectionFrequencyContinually: string | null;
   beneficiarySelectionFrequencyOther: string | null;
   beneficiarySelectionFrequencyNote: string | null;
+  beneficiaryRemovalFrequency: FrequencyType[];
+  beneficiaryRemovalFrequencyContinually: string | null;
+  beneficiaryRemovalFrequencyNote: string | null;
+  beneficiaryRemovalFrequencyOther: string | null;
   beneficiaryOverlap: OverlapType | null;
   beneficiaryOverlapNote: string | null;
   precedenceRules: YesNoType[];

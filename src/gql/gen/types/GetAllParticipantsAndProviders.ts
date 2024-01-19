@@ -47,7 +47,8 @@ export interface GetAllParticipantsAndProviders_modelPlan_participantsAndProvide
   participantsIds: ParticipantsIDType[];
   participantsIdsOther: string | null;
   participantsIDSNote: string | null;
-  providerAdditionFrequency: FrequencyType | null;
+  providerAdditionFrequency: FrequencyType[];
+  providerAdditionFrequencyContinually: string | null;
   providerAdditionFrequencyOther: string | null;
   providerAdditionFrequencyNote: string | null;
   providerAddMethod: ProviderAddType[];
