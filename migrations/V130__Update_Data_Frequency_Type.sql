@@ -186,3 +186,49 @@ ALTER TABLE plan_ops_eval_and_learning
             WHEN data_collection_frequency IS NULL THEN NULL
             ELSE data_collection_frequency::FREQUENCY_TYPE[]
     END;
+
+--
+-- Update plan_beneficiaries to use the array type where needed
+--
+
+-- Rename old beneficiary_selection_frequency to beneficiary_selection_frequency_old
+ALTER TABLE plan_beneficiaries
+  RENAME COLUMN beneficiary_selection_frequency TO beneficiary_selection_frequency_old;
+
+-- Create a new beneficiary_selection_frequency column with the new type
+ALTER TABLE plan_beneficiaries
+  ADD COLUMN beneficiary_selection_frequency FREQUENCY_TYPE[];
+
+-- Update the values for already existing rows
+UPDATE plan_beneficiaries
+SET beneficiary_selection_frequency = ARRAY[beneficiary_selection_frequency_old],
+    modified_by = '00000001-0001-0001-0001-000000000001',
+    modified_dts = now()
+WHERE beneficiary_selection_frequency_old IS NOT NULL;
+
+-- Delete the old data
+ALTER TABLE plan_beneficiaries
+  DROP COLUMN beneficiary_selection_frequency_old;
+
+--
+-- Update plan_participants_and_providers to use the array type where needed
+--
+
+-- Rename old provider_addition_frequency to provider_addition_frequency_old
+ALTER TABLE plan_participants_and_providers
+  RENAME COLUMN provider_addition_frequency TO provider_addition_frequency_old;
+
+-- Create a new provider_addition_frequency column with the new type
+ALTER TABLE plan_participants_and_providers
+  ADD COLUMN provider_addition_frequency FREQUENCY_TYPE[];
+
+-- Update the values for already existing rows
+UPDATE plan_participants_and_providers
+SET provider_addition_frequency = ARRAY[provider_addition_frequency_old],
+    modified_by = '00000001-0001-0001-0001-000000000001',
+    modified_dts = now()
+WHERE provider_addition_frequency_old IS NOT NULL;
+
+-- Delete the old data
+ALTER TABLE plan_participants_and_providers
+  DROP COLUMN provider_addition_frequency_old;

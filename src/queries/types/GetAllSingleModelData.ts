@@ -203,6 +203,10 @@ export interface GetAllSingleModelData_modelPlan_beneficiaries {
   beneficiarySelectionFrequencyContinually: string | null;
   beneficiarySelectionFrequencyNote: string | null;
   beneficiarySelectionFrequencyOther: string | null;
+  beneficiaryRemovalFrequency: FrequencyType[];
+  beneficiaryRemovalFrequencyContinually: string | null;
+  beneficiaryRemovalFrequencyNote: string | null;
+  beneficiaryRemovalFrequencyOther: string | null;
   precedenceRules: YesNoType[];
   precedenceRulesYes: string | null;
   precedenceRulesNo: string | null;

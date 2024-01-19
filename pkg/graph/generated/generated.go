@@ -367,6 +367,10 @@ type ComplexityRoot struct {
 		BeneficiariesOther                       func(childComplexity int) int
 		BeneficiaryOverlap                       func(childComplexity int) int
 		BeneficiaryOverlapNote                   func(childComplexity int) int
+		BeneficiaryRemovalFrequency              func(childComplexity int) int
+		BeneficiaryRemovalFrequencyContinually   func(childComplexity int) int
+		BeneficiaryRemovalFrequencyNote          func(childComplexity int) int
+		BeneficiaryRemovalFrequencyOther         func(childComplexity int) int
 		BeneficiarySelectionFrequency            func(childComplexity int) int
 		BeneficiarySelectionFrequencyContinually func(childComplexity int) int
 		BeneficiarySelectionFrequencyNote        func(childComplexity int) int
@@ -1062,6 +1066,8 @@ type PlanBeneficiariesResolver interface {
 	BeneficiarySelectionMethod(ctx context.Context, obj *models.PlanBeneficiaries) ([]model.SelectionMethodType, error)
 
 	BeneficiarySelectionFrequency(ctx context.Context, obj *models.PlanBeneficiaries) ([]models.FrequencyType, error)
+
+	BeneficiaryRemovalFrequency(ctx context.Context, obj *models.PlanBeneficiaries) ([]models.FrequencyType, error)
 
 	PrecedenceRules(ctx context.Context, obj *models.PlanBeneficiaries) ([]models.YesNoType, error)
 }
@@ -3084,6 +3090,34 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.PlanBeneficiaries.BeneficiaryOverlapNote(childComplexity), true
+
+	case "PlanBeneficiaries.beneficiaryRemovalFrequency":
+		if e.complexity.PlanBeneficiaries.BeneficiaryRemovalFrequency == nil {
+			break
+		}
+
+		return e.complexity.PlanBeneficiaries.BeneficiaryRemovalFrequency(childComplexity), true
+
+	case "PlanBeneficiaries.beneficiaryRemovalFrequencyContinually":
+		if e.complexity.PlanBeneficiaries.BeneficiaryRemovalFrequencyContinually == nil {
+			break
+		}
+
+		return e.complexity.PlanBeneficiaries.BeneficiaryRemovalFrequencyContinually(childComplexity), true
+
+	case "PlanBeneficiaries.beneficiaryRemovalFrequencyNote":
+		if e.complexity.PlanBeneficiaries.BeneficiaryRemovalFrequencyNote == nil {
+			break
+		}
+
+		return e.complexity.PlanBeneficiaries.BeneficiaryRemovalFrequencyNote(childComplexity), true
+
+	case "PlanBeneficiaries.beneficiaryRemovalFrequencyOther":
+		if e.complexity.PlanBeneficiaries.BeneficiaryRemovalFrequencyOther == nil {
+			break
+		}
+
+		return e.complexity.PlanBeneficiaries.BeneficiaryRemovalFrequencyOther(childComplexity), true
 
 	case "PlanBeneficiaries.beneficiarySelectionFrequency":
 		if e.complexity.PlanBeneficiaries.BeneficiarySelectionFrequency == nil {
@@ -7775,6 +7809,10 @@ type PlanBeneficiaries {
   beneficiarySelectionFrequencyContinually: String
   beneficiarySelectionFrequencyOther: String
   beneficiarySelectionFrequencyNote: String
+  beneficiaryRemovalFrequency: [FrequencyType!]!
+  beneficiaryRemovalFrequencyContinually: String
+  beneficiaryRemovalFrequencyOther: String
+  beneficiaryRemovalFrequencyNote: String
   beneficiaryOverlap: OverlapType
   beneficiaryOverlapNote: String
   precedenceRules: [YesNoType!]!
@@ -7823,6 +7861,10 @@ input PlanBeneficiariesChanges @goModel(model: "map[string]interface{}") {
   beneficiarySelectionFrequencyContinually: String
   beneficiarySelectionFrequencyOther: String
   beneficiarySelectionFrequencyNote: String
+  beneficiaryRemovalFrequency: [FrequencyType!]
+  beneficiaryRemovalFrequencyContinually: String
+  beneficiaryRemovalFrequencyOther: String
+  beneficiaryRemovalFrequencyNote: String
   beneficiaryOverlap: OverlapType
   beneficiaryOverlapNote: String
   precedenceRules: [YesNoType!]
@@ -9110,39 +9152,6 @@ enum ConfidenceType {
   FAIRLY
   COMPLETELY
 }
-
-# enum FrequencyType {
-#   ANNUALLY
-#   BIANNUALLY
-#   QUARTERLY
-#   MONTHLY
-#   ROLLING
-#   OTHER
-# }
-
-
-# enum DataFrequencyType {
-#   ANNUALLY
-#   BIANNUALLY
-#   QUARTERLY
-#   MONTHLY
-#   SEMI_MONTHLY
-#   WEEKLY
-#   DAILY
-#   OTHER
-#   NOT_PLANNING_TO_DO_THIS
-# }
-
-# enum AnticipatedPaymentFrequencyType {
-#   ANNUALLY
-#   BIANNUALLY
-#   QUARTERLY
-#   MONTHLY
-#   SEMIMONTHLY
-#   WEEKLY
-#   DAILY
-#   OTHER
-# }
 
 enum FrequencyType {
   ANNUALLY
@@ -15680,6 +15689,14 @@ func (ec *executionContext) fieldContext_ModelPlan_beneficiaries(ctx context.Con
 				return ec.fieldContext_PlanBeneficiaries_beneficiarySelectionFrequencyOther(ctx, field)
 			case "beneficiarySelectionFrequencyNote":
 				return ec.fieldContext_PlanBeneficiaries_beneficiarySelectionFrequencyNote(ctx, field)
+			case "beneficiaryRemovalFrequency":
+				return ec.fieldContext_PlanBeneficiaries_beneficiaryRemovalFrequency(ctx, field)
+			case "beneficiaryRemovalFrequencyContinually":
+				return ec.fieldContext_PlanBeneficiaries_beneficiaryRemovalFrequencyContinually(ctx, field)
+			case "beneficiaryRemovalFrequencyOther":
+				return ec.fieldContext_PlanBeneficiaries_beneficiaryRemovalFrequencyOther(ctx, field)
+			case "beneficiaryRemovalFrequencyNote":
+				return ec.fieldContext_PlanBeneficiaries_beneficiaryRemovalFrequencyNote(ctx, field)
 			case "beneficiaryOverlap":
 				return ec.fieldContext_PlanBeneficiaries_beneficiaryOverlap(ctx, field)
 			case "beneficiaryOverlapNote":
@@ -17940,6 +17957,14 @@ func (ec *executionContext) fieldContext_Mutation_updatePlanBeneficiaries(ctx co
 				return ec.fieldContext_PlanBeneficiaries_beneficiarySelectionFrequencyOther(ctx, field)
 			case "beneficiarySelectionFrequencyNote":
 				return ec.fieldContext_PlanBeneficiaries_beneficiarySelectionFrequencyNote(ctx, field)
+			case "beneficiaryRemovalFrequency":
+				return ec.fieldContext_PlanBeneficiaries_beneficiaryRemovalFrequency(ctx, field)
+			case "beneficiaryRemovalFrequencyContinually":
+				return ec.fieldContext_PlanBeneficiaries_beneficiaryRemovalFrequencyContinually(ctx, field)
+			case "beneficiaryRemovalFrequencyOther":
+				return ec.fieldContext_PlanBeneficiaries_beneficiaryRemovalFrequencyOther(ctx, field)
+			case "beneficiaryRemovalFrequencyNote":
+				return ec.fieldContext_PlanBeneficiaries_beneficiaryRemovalFrequencyNote(ctx, field)
 			case "beneficiaryOverlap":
 				return ec.fieldContext_PlanBeneficiaries_beneficiaryOverlap(ctx, field)
 			case "beneficiaryOverlapNote":
@@ -26353,6 +26378,173 @@ func (ec *executionContext) _PlanBeneficiaries_beneficiarySelectionFrequencyNote
 }
 
 func (ec *executionContext) fieldContext_PlanBeneficiaries_beneficiarySelectionFrequencyNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanBeneficiaries",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanBeneficiaries_beneficiaryRemovalFrequency(ctx context.Context, field graphql.CollectedField, obj *models.PlanBeneficiaries) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanBeneficiaries_beneficiaryRemovalFrequency(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.PlanBeneficiaries().BeneficiaryRemovalFrequency(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.([]models.FrequencyType)
+	fc.Result = res
+	return ec.marshalNFrequencyType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐFrequencyTypeᚄ(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanBeneficiaries_beneficiaryRemovalFrequency(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanBeneficiaries",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type FrequencyType does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanBeneficiaries_beneficiaryRemovalFrequencyContinually(ctx context.Context, field graphql.CollectedField, obj *models.PlanBeneficiaries) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanBeneficiaries_beneficiaryRemovalFrequencyContinually(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.BeneficiaryRemovalFrequencyContinually, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanBeneficiaries_beneficiaryRemovalFrequencyContinually(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanBeneficiaries",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanBeneficiaries_beneficiaryRemovalFrequencyOther(ctx context.Context, field graphql.CollectedField, obj *models.PlanBeneficiaries) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanBeneficiaries_beneficiaryRemovalFrequencyOther(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.BeneficiaryRemovalFrequencyOther, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanBeneficiaries_beneficiaryRemovalFrequencyOther(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanBeneficiaries",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanBeneficiaries_beneficiaryRemovalFrequencyNote(ctx context.Context, field graphql.CollectedField, obj *models.PlanBeneficiaries) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanBeneficiaries_beneficiaryRemovalFrequencyNote(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.BeneficiaryRemovalFrequencyNote, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanBeneficiaries_beneficiaryRemovalFrequencyNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "PlanBeneficiaries",
 		Field:      field,
@@ -56831,6 +57023,48 @@ func (ec *executionContext) _PlanBeneficiaries(ctx context.Context, sel ast.Sele
 			out.Values[i] = ec._PlanBeneficiaries_beneficiarySelectionFrequencyOther(ctx, field, obj)
 		case "beneficiarySelectionFrequencyNote":
 			out.Values[i] = ec._PlanBeneficiaries_beneficiarySelectionFrequencyNote(ctx, field, obj)
+		case "beneficiaryRemovalFrequency":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._PlanBeneficiaries_beneficiaryRemovalFrequency(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
+				return res
+			}
+
+			if field.Deferrable != nil {
+				dfs, ok := deferred[field.Deferrable.Label]
+				di := 0
+				if ok {
+					dfs.AddField(field)
+					di = len(dfs.Values) - 1
+				} else {
+					dfs = graphql.NewFieldSet([]graphql.CollectedField{field})
+					deferred[field.Deferrable.Label] = dfs
+				}
+				dfs.Concurrently(di, func(ctx context.Context) graphql.Marshaler {
+					return innerFunc(ctx, dfs)
+				})
+
+				// don't run the out.Concurrently() call below
+				out.Values[i] = graphql.Null
+				continue
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+		case "beneficiaryRemovalFrequencyContinually":
+			out.Values[i] = ec._PlanBeneficiaries_beneficiaryRemovalFrequencyContinually(ctx, field, obj)
+		case "beneficiaryRemovalFrequencyOther":
+			out.Values[i] = ec._PlanBeneficiaries_beneficiaryRemovalFrequencyOther(ctx, field, obj)
+		case "beneficiaryRemovalFrequencyNote":
+			out.Values[i] = ec._PlanBeneficiaries_beneficiaryRemovalFrequencyNote(ctx, field, obj)
 		case "beneficiaryOverlap":
 			out.Values[i] = ec._PlanBeneficiaries_beneficiaryOverlap(ctx, field, obj)
 		case "beneficiaryOverlapNote":

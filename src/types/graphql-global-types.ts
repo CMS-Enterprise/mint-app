@@ -728,6 +728,10 @@ export interface PlanBeneficiariesChanges {
   beneficiarySelectionFrequencyContinually?: string | null;
   beneficiarySelectionFrequencyOther?: string | null;
   beneficiarySelectionFrequencyNote?: string | null;
+  beneficiaryRemovalFrequency?: FrequencyType[] | null;
+  beneficiaryRemovalFrequencyContinually?: string | null;
+  beneficiaryRemovalFrequencyOther?: string | null;
+  beneficiaryRemovalFrequencyNote?: string | null;
   beneficiaryOverlap?: OverlapType | null;
   beneficiaryOverlapNote?: string | null;
   precedenceRules?: YesNoType[] | null;

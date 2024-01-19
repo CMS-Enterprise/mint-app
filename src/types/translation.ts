@@ -288,6 +288,10 @@ export type TranslationBeneficiaries = {
   beneficiarySelectionFrequencyContinually: TranslationFieldProperties;
   beneficiarySelectionFrequencyOther: TranslationFieldProperties;
   beneficiarySelectionFrequencyNote: TranslationFieldProperties;
+  beneficiaryRemovalFrequency: TranslationFieldPropertiesWithOptions<FrequencyType>;
+  beneficiaryRemovalFrequencyContinually: TranslationFieldProperties;
+  beneficiaryRemovalFrequencyOther: TranslationFieldProperties;
+  beneficiaryRemovalFrequencyNote: TranslationFieldProperties;
   beneficiaryOverlap: TranslationFieldPropertiesWithOptions<OverlapType>;
   beneficiaryOverlapNote: TranslationFieldProperties;
   precedenceRules: TranslationFieldPropertiesWithOptions<YesNoType>;
