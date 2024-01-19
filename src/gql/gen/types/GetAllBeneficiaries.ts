@@ -33,6 +33,10 @@ export interface GetAllBeneficiaries_modelPlan_beneficiaries {
   beneficiarySelectionFrequencyContinually: string | null;
   beneficiarySelectionFrequencyOther: string | null;
   beneficiarySelectionFrequencyNote: string | null;
+  beneficiaryRemovalFrequency: FrequencyType[];
+  beneficiaryRemovalFrequencyContinually: string | null;
+  beneficiaryRemovalFrequencyNote: string | null;
+  beneficiaryRemovalFrequencyOther: string | null;
   beneficiaryOverlap: OverlapType | null;
   beneficiaryOverlapNote: string | null;
   precedenceRules: YesNoType[];

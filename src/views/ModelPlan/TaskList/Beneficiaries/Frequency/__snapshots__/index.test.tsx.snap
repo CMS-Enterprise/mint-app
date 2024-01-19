@@ -282,6 +282,181 @@ exports[`Model Plan Beneficiaries > matches snapshot 1`] = `
           </div>
           <div
             class="usa-form-group"
+            data-scroll="beneficiaryRemovalFrequency"
+          >
+            <label
+              class="usa-label maxw-none"
+              data-testid="label"
+              for="beneficiary-removal-frequency"
+            >
+              How frequently are beneficiaries removed?
+            </label>
+            <div
+              class="mint-checkbox usa-checkbox"
+            >
+              <input
+                class="usa-checkbox__input"
+                id="beneficiary-removal-frequency-annually"
+                name="beneficiaryRemovalFrequency"
+                type="checkbox"
+                value="ANNUALLY"
+              />
+              <label
+                class="usa-checkbox__label"
+                for="beneficiary-removal-frequency-annually"
+              >
+                Annually
+              </label>
+              <p
+                class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+              />
+            </div>
+            <div
+              class="mint-checkbox usa-checkbox"
+            >
+              <input
+                class="usa-checkbox__input"
+                id="beneficiary-removal-frequency-semiannually"
+                name="beneficiaryRemovalFrequency"
+                type="checkbox"
+                value="SEMIANNUALLY"
+              />
+              <label
+                class="usa-checkbox__label"
+                for="beneficiary-removal-frequency-semiannually"
+              >
+                Semi-annually
+              </label>
+              <p
+                class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+              />
+            </div>
+            <div
+              class="mint-checkbox usa-checkbox"
+            >
+              <input
+                class="usa-checkbox__input"
+                id="beneficiary-removal-frequency-quarterly"
+                name="beneficiaryRemovalFrequency"
+                type="checkbox"
+                value="QUARTERLY"
+              />
+              <label
+                class="usa-checkbox__label"
+                for="beneficiary-removal-frequency-quarterly"
+              >
+                Quarterly
+              </label>
+              <p
+                class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+              />
+            </div>
+            <div
+              class="mint-checkbox usa-checkbox"
+            >
+              <input
+                class="usa-checkbox__input"
+                id="beneficiary-removal-frequency-monthly"
+                name="beneficiaryRemovalFrequency"
+                type="checkbox"
+                value="MONTHLY"
+              />
+              <label
+                class="usa-checkbox__label"
+                for="beneficiary-removal-frequency-monthly"
+              >
+                Monthly
+              </label>
+              <p
+                class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+              />
+            </div>
+            <div
+              class="mint-checkbox usa-checkbox"
+            >
+              <input
+                class="usa-checkbox__input"
+                id="beneficiary-removal-frequency-continually"
+                name="beneficiaryRemovalFrequency"
+                type="checkbox"
+                value="CONTINUALLY"
+              />
+              <label
+                class="usa-checkbox__label"
+                for="beneficiary-removal-frequency-continually"
+              >
+                Continually
+              </label>
+              <p
+                class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+              />
+            </div>
+            <div
+              class="margin-left-4"
+            >
+              <label
+                class="usa-label text-normal margin-top-1"
+                data-testid="label"
+                for="beneficiary-removal-frequency-continually"
+              >
+                Please specify
+              </label>
+              <input
+                class="usa-input"
+                data-testid="beneficiary-removal-frequency-continually-text"
+                id="beneficiary-removal-frequency-continually-text"
+                name="beneficiaryRemovalFrequencyContinually"
+                value="continually"
+              />
+            </div>
+            <div
+              class="mint-checkbox usa-checkbox"
+            >
+              <input
+                class="usa-checkbox__input"
+                id="beneficiary-removal-frequency-other"
+                name="beneficiaryRemovalFrequency"
+                type="checkbox"
+                value="OTHER"
+              />
+              <label
+                class="usa-checkbox__label"
+                for="beneficiary-removal-frequency-other"
+              >
+                Other
+              </label>
+              <p
+                class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+              />
+            </div>
+            <div
+              class="margin-top-4 margin-bottom-8"
+            >
+              <button
+                class="usa-button usa-button usa-button--unstyled"
+                data-testid="add-note-toggle"
+                type="button"
+              >
+                <svg
+                  aria-hidden="true"
+                  class="usa-icon margin-right-1"
+                  focusable="false"
+                  height="1em"
+                  role="img"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+                  />
+                </svg>
+                Add an additional note
+              </button>
+            </div>
+          </div>
+          <div
+            class="usa-form-group"
             data-scroll="beneficiaryOverlap"
           >
             <label
