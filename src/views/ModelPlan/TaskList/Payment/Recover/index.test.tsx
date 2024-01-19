@@ -2,13 +2,14 @@ import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
-import { GetRecoverDocument, GetRecoverQuery } from 'gql/gen/graphql';
-
 import {
   ClaimsBasedPayType,
+  FrequencyType,
+  GetRecoverDocument,
+  GetRecoverQuery,
   PayType,
   TaskStatus
-} from 'types/graphql-global-types';
+} from 'gql/gen/graphql';
 
 import Recover from './index';
 
@@ -23,6 +24,10 @@ const mockData: GetRecoverType = {
   willRecoverPaymentsNote: 'string',
   anticipateReconcilingPaymentsRetrospectively: true,
   anticipateReconcilingPaymentsRetrospectivelyNote: 'string',
+  paymentReconciliationFrequency: [FrequencyType.CONTINUALLY],
+  paymentReconciliationFrequencyContinually: 'Continual Frequency',
+  paymentReconciliationFrequencyOther: '',
+  paymentReconciliationFrequencyNote: 'Reconciliation note',
   paymentStartDate: null,
   paymentStartDateNote: 'string',
   readyForReviewByUserAccount: {

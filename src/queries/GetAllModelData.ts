@@ -237,6 +237,9 @@ export default gql`
         qualityReportingStarts
         qualityReportingStartsOther
         qualityReportingStartsNote
+        qualityReportingFrequency
+        qualityReportingFrequencyContinually
+        qualityReportingFrequencyOther
         evaluationApproaches
         evaluationApproachOther
         evalutaionApproachNote
@@ -368,6 +371,10 @@ export default gql`
         willRecoverPaymentsNote
         anticipateReconcilingPaymentsRetrospectively
         anticipateReconcilingPaymentsRetrospectivelyNote
+        paymentReconciliationFrequency
+        paymentReconciliationFrequencyContinually
+        paymentReconciliationFrequencyOther
+        paymentReconciliationFrequencyNote
         paymentStartDate
         paymentStartDateNote
         readyForReviewByUserAccount {

@@ -406,6 +406,9 @@ export type TranslationOpsEvalAndLearning = {
   qualityReportingStarts: TranslationFieldPropertiesWithOptions<DataStartsType>;
   qualityReportingStartsOther: TranslationFieldProperties;
   qualityReportingStartsNote: TranslationFieldProperties;
+  qualityReportingFrequency: TranslationFieldPropertiesWithOptions<FrequencyType>;
+  qualityReportingFrequencyContinually: TranslationFieldProperties;
+  qualityReportingFrequencyOther: TranslationFieldProperties;
   // Learning
   modelLearningSystems: TranslationFieldPropertiesWithOptions<ModelLearningSystemType>;
   modelLearningSystemsOther: TranslationFieldProperties;
@@ -482,6 +485,10 @@ export type TranslationPayments = {
   willRecoverPaymentsNote: TranslationFieldProperties;
   anticipateReconcilingPaymentsRetrospectively: TranslationFieldPropertiesWithOptions<Bool>;
   anticipateReconcilingPaymentsRetrospectivelyNote: TranslationFieldProperties;
+  paymentReconciliationFrequency: TranslationFieldPropertiesWithOptions<FrequencyType>;
+  paymentReconciliationFrequencyContinually: TranslationFieldProperties;
+  paymentReconciliationFrequencyOther: TranslationFieldProperties;
+  paymentReconciliationFrequencyNote: TranslationFieldProperties;
   paymentStartDate: TranslationFieldProperties;
   paymentStartDateNote: TranslationFieldProperties;
   status: TranslationFieldPropertiesWithOptions<TaskStatus>;

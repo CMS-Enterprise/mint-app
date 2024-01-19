@@ -41,7 +41,8 @@ const ReadOnlyOpsEvalAndLearning = ({
 
   const {
     dataSharingFrequency: dataSharingFrequencyConfig,
-    dataCollectionFrequency: dataCollectionFrequencyConfig
+    dataCollectionFrequency: dataCollectionFrequencyConfig,
+    qualityReportingFrequency: qualityReportingFrequencyConfig
   } = usePlanTranslation('opsEvalAndLearning');
 
   const { modelName } = useContext(ModelInfoContext);
@@ -156,6 +157,7 @@ const ReadOnlyOpsEvalAndLearning = ({
     qualityReportingStarts,
     qualityReportingStartsOther,
     qualityReportingStartsNote,
+    qualityReportingFrequency,
     // Learning
     modelLearningSystems,
     modelLearningSystemsOther,
@@ -1039,6 +1041,25 @@ const ReadOnlyOpsEvalAndLearning = ({
                   ))
             }
             notes={qualityReportingStartsNote}
+          />
+        )}
+
+        {checkGroupMap(
+          isViewingFilteredView,
+          filteredQuestions,
+          'qualityReportingFrequency',
+          <ReadOnlySection
+            heading={opsEvalAndLearningT('qualityReportingFrequency.label')}
+            list
+            listItems={formatListItems(
+              qualityReportingFrequencyConfig,
+              qualityReportingFrequency
+            )}
+            listOtherItems={formatListOtherItems(
+              qualityReportingFrequencyConfig,
+              qualityReportingFrequency,
+              allOpsEvalAndLearningData
+            )}
           />
         )}
       </div>

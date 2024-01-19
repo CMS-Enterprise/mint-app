@@ -25,6 +25,7 @@ import { useFlags } from 'launchdarkly-react-client-sdk';
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
 import BooleanRadio from 'components/BooleanRadioForm';
+import FrequencyForm from 'components/FrequencyForm';
 import ITSolutionsWarning from 'components/ITSolutionsWarning';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
@@ -55,7 +56,8 @@ const Recover = () => {
 
   const {
     willRecoverPayments: willRecoverPaymentsConfig,
-    anticipateReconcilingPaymentsRetrospectively: anticipateReconcilingPaymentsRetrospectivelyConfig
+    anticipateReconcilingPaymentsRetrospectively: anticipateReconcilingPaymentsRetrospectivelyConfig,
+    paymentReconciliationFrequency: paymentReconciliationFrequencyConfig
   } = usePlanTranslation('payments');
 
   const { modelID } = useParams<{ modelID: string }>();
@@ -88,6 +90,10 @@ const Recover = () => {
     willRecoverPaymentsNote,
     anticipateReconcilingPaymentsRetrospectively,
     anticipateReconcilingPaymentsRetrospectivelyNote,
+    paymentReconciliationFrequency,
+    paymentReconciliationFrequencyContinually,
+    paymentReconciliationFrequencyOther,
+    paymentReconciliationFrequencyNote,
     paymentStartDate,
     paymentStartDateNote,
     readyForReviewByUserAccount,
@@ -152,6 +158,13 @@ const Recover = () => {
       anticipateReconcilingPaymentsRetrospectively ?? null,
     anticipateReconcilingPaymentsRetrospectivelyNote:
       anticipateReconcilingPaymentsRetrospectivelyNote ?? '',
+    paymentReconciliationFrequency: paymentReconciliationFrequency ?? [],
+    paymentReconciliationFrequencyContinually:
+      paymentReconciliationFrequencyContinually ?? '',
+    paymentReconciliationFrequencyOther:
+      paymentReconciliationFrequencyOther ?? '',
+    paymentReconciliationFrequencyNote:
+      paymentReconciliationFrequencyNote ?? '',
     paymentStartDate: paymentStartDate ?? '',
     paymentStartDateNote: paymentStartDateNote ?? '',
     status
@@ -342,6 +355,18 @@ const Recover = () => {
                             field="anticipateReconcilingPaymentsRetrospectivelyNote"
                           />
                         </FieldGroup>
+
+                        <FrequencyForm
+                          field="paymentReconciliationFrequency"
+                          values={values.paymentReconciliationFrequency}
+                          config={paymentReconciliationFrequencyConfig}
+                          nameSpace="payments"
+                          id="payment-reconciliation-frequency"
+                          label={paymentsT(
+                            'paymentReconciliationFrequency.label'
+                          )}
+                          disabled={loading}
+                        />
 
                         {!loading && (
                           <>

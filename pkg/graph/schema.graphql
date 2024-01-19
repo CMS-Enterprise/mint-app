@@ -1018,6 +1018,10 @@ type PlanPayments {
   willRecoverPaymentsNote:                           String
   anticipateReconcilingPaymentsRetrospectively:      Boolean
   anticipateReconcilingPaymentsRetrospectivelyNote:  String
+  paymentReconciliationFrequency:                    [FrequencyType!]!
+  paymentReconciliationFrequencyContinually:         String
+  paymentReconciliationFrequencyOther:               String
+  paymentReconciliationFrequencyNote:                String
   paymentStartDate:                                  Time
   paymentStartDateNote:                              String
 
@@ -1116,6 +1120,10 @@ input PlanPaymentsChanges @goModel(model: "map[string]interface{}") {
   willRecoverPaymentsNote:                          String
   anticipateReconcilingPaymentsRetrospectively:      Boolean
   anticipateReconcilingPaymentsRetrospectivelyNote: String
+  paymentReconciliationFrequency:                    [FrequencyType!]
+  paymentReconciliationFrequencyContinually:         String
+  paymentReconciliationFrequencyOther:               String
+  paymentReconciliationFrequencyNote:                String
   paymentStartDate:                                  Time
   paymentStartDateNote:                             String
 
@@ -1225,10 +1233,13 @@ type PlanOpsEvalAndLearning {
     dataCollectionFrequency: [FrequencyType!]!
     dataCollectionFrequencyContinually: String
     dataCollectionFrequencyOther: String
-    dataCollectionFrequencyNote: String
+    dataCollectionFrequencyNote: String    
     qualityReportingStarts: DataStartsType
     qualityReportingStartsOther: String
     qualityReportingStartsNote: String
+    qualityReportingFrequency: [FrequencyType!]!
+    qualityReportingFrequencyContinually: String
+    qualityReportingFrequencyOther: String
     #Page 9
     modelLearningSystems: [ModelLearningSystemType!]!
     modelLearningSystemsOther: String
@@ -1356,10 +1367,13 @@ input PlanOpsEvalAndLearningChanges @goModel(model: "map[string]interface{}") {
     dataCollectionFrequency: [FrequencyType!]
     dataCollectionFrequencyContinually: String
     dataCollectionFrequencyOther: String
-    dataCollectionFrequencyNote: String
+    dataCollectionFrequencyNote: String    
     qualityReportingStarts: DataStartsType
     qualityReportingStartsOther: String
     qualityReportingStartsNote: String
+    qualityReportingFrequency: [FrequencyType!]
+    qualityReportingFrequencyContinually: String
+    qualityReportingFrequencyOther: String
     #Page 9
     modelLearningSystems: [ModelLearningSystemType!]
     modelLearningSystemsOther: String

@@ -235,6 +235,9 @@ const csvFields = [
   'opsEvalAndLearning.qualityReportingStarts',
   'opsEvalAndLearning.qualityReportingStartsOther',
   'opsEvalAndLearning.qualityReportingStartsNote',
+  'opsEvalAndLearning.qualityReportingFrequency', // array
+  'opsEvalAndLearning.qualityReportingFrequencyContinually',
+  'opsEvalAndLearning.qualityReportingFrequencyOther',
   'opsEvalAndLearning.evaluationApproaches', // array
   'opsEvalAndLearning.evaluationApproachOther',
   'opsEvalAndLearning.evalutaionApproachNote',
@@ -363,6 +366,10 @@ const csvFields = [
   'payments.willRecoverPaymentsNote',
   'payments.anticipateReconcilingPaymentsRetrospectively',
   'payments.anticipateReconcilingPaymentsRetrospectivelyNote',
+  'payments.paymentReconciliationFrequency',
+  'payments.paymentReconciliationFrequencyContinually',
+  'payments.paymentReconciliationFrequencyOther',
+  'payments.paymentReconciliationFrequencyNote',
   'payments.paymentStartDate',
   'payments.paymentStartDateNote',
   'payments.readyForReviewByUserAccount.commonName',
