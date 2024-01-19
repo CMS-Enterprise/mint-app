@@ -303,16 +303,16 @@ exports[`Model Plan -- Recover > matches snapshot 1`] = `
               >
                 <input
                   class="usa-checkbox__input"
-                  id="payment-reconciliation-frequency-semianually"
+                  id="payment-reconciliation-frequency-semiannually"
                   name="paymentReconciliationFrequency"
                   type="checkbox"
-                  value="SEMIANUALLY"
+                  value="SEMIANNUALLY"
                 />
                 <label
                   class="usa-checkbox__label"
-                  for="payment-reconciliation-frequency-semianually"
+                  for="payment-reconciliation-frequency-semiannually"
                 >
-                  Semiannually
+                  Semi-annually
                 </label>
                 <p
                   class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
