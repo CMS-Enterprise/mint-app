@@ -30,6 +30,9 @@ export interface GetDataSharing_modelPlan_opsEvalAndLearning {
   qualityReportingStarts: DataStartsType | null;
   qualityReportingStartsOther: string | null;
   qualityReportingStartsNote: string | null;
+  qualityReportingFrequency: FrequencyType[];
+  qualityReportingFrequencyContinually: string | null;
+  qualityReportingFrequencyOther: string | null;
 }
 
 export interface GetDataSharing_modelPlan {

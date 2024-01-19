@@ -99,6 +99,9 @@ export default gql(/* GraphQL */ `
         qualityReportingStarts
         qualityReportingStartsOther
         qualityReportingStartsNote
+        qualityReportingFrequency
+        qualityReportingFrequencyContinually
+        qualityReportingFrequencyOther
         modelLearningSystems
         modelLearningSystemsOther
         modelLearningSystemsNote
