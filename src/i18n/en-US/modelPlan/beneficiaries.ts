@@ -212,7 +212,7 @@ export const beneficiaries: TranslationBeneficiaries = {
     options: frequencyOptions,
     optionsRelatedInfo: {
       ANNUALLY: '',
-      SEMIANUALLY: '',
+      SEMIANNUALLY: '',
       QUARTERLY: '',
       MONTHLY: '',
       CONTINUALLY: 'beneficiarySelectionFrequencyContinually',
@@ -226,7 +226,7 @@ export const beneficiaries: TranslationBeneficiaries = {
     dbField: 'beneficiary_selection_frequency_continually',
     label: 'Please specify',
     dataType: 'string',
-    formType: 'textarea',
+    formType: 'text',
     filterGroups: ['cmmi']
   },
   beneficiarySelectionFrequencyOther: {
@@ -235,7 +235,7 @@ export const beneficiaries: TranslationBeneficiaries = {
     dbField: 'beneficiary_selection_frequency_other',
     label: 'Please specify',
     dataType: 'string',
-    formType: 'textarea',
+    formType: 'text',
     filterGroups: ['cmmi']
   },
   beneficiarySelectionFrequencyNote: {
@@ -244,7 +244,52 @@ export const beneficiaries: TranslationBeneficiaries = {
     dbField: 'beneficiary_selection_frequency_note',
     label: 'Notes',
     dataType: 'string',
-    formType: 'textarea',
+    formType: 'text',
+    filterGroups: ['cmmi']
+  },
+  beneficiaryRemovalFrequency: {
+    gqlField: 'beneficiaryRemovalFrequency',
+    goField: 'BeneficiaryRemovalFrequency',
+    dbField: 'beneficiary_removal_frequency',
+    label: 'How frequently are beneficiaries removed?',
+    dataType: 'enum',
+    formType: 'checkbox',
+    options: frequencyOptions,
+    optionsRelatedInfo: {
+      ANNUALLY: '',
+      SEMIANNUALLY: '',
+      QUARTERLY: '',
+      MONTHLY: '',
+      CONTINUALLY: 'beneficiaryRemovalFrequencyContinually',
+      OTHER: 'beneficiaryRemovalFrequencyOther'
+    },
+    filterGroups: ['cmmi']
+  },
+  beneficiaryRemovalFrequencyContinually: {
+    gqlField: 'beneficiaryRemovalFrequencyContinually',
+    goField: 'BeneficiaryRemovalFrequencyContinually',
+    dbField: 'beneficiary_removal_frequency_continually',
+    label: 'Please specify',
+    dataType: 'string',
+    formType: 'text',
+    filterGroups: ['cmmi']
+  },
+  beneficiaryRemovalFrequencyOther: {
+    gqlField: 'beneficiaryRemovalFrequencyOther',
+    goField: 'BeneficiaryRemovalFrequencyOther',
+    dbField: 'beneficiary_removal_frequency_other',
+    label: 'Please specify',
+    dataType: 'string',
+    formType: 'text',
+    filterGroups: ['cmmi']
+  },
+  beneficiaryRemovalFrequencyNote: {
+    gqlField: 'beneficiaryRemovalFrequencyNote',
+    goField: 'BeneficiaryRemovalFrequencyNote',
+    dbField: 'beneficiary_removal_frequency_note',
+    label: 'Notes',
+    dataType: 'string',
+    formType: 'text',
     filterGroups: ['cmmi']
   },
   beneficiaryOverlap: {

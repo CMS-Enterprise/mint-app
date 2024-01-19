@@ -186,6 +186,10 @@ export default gql`
         beneficiarySelectionFrequencyContinually
         beneficiarySelectionFrequencyNote
         beneficiarySelectionFrequencyOther
+        beneficiaryRemovalFrequency
+        beneficiaryRemovalFrequencyContinually
+        beneficiaryRemovalFrequencyNote
+        beneficiaryRemovalFrequencyOther
         precedenceRules
         precedenceRulesYes
         precedenceRulesNo
@@ -216,6 +220,7 @@ export default gql`
         developNewQualityMeasures
         developNewQualityMeasuresNote
         qualityPerformanceImpactsPayment
+        qualityPerformanceImpactsPaymentOther
         qualityPerformanceImpactsPaymentNote
         dataSharingStarts
         dataSharingStartsOther

@@ -227,7 +227,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     options: frequencyOptions,
     optionsRelatedInfo: {
       ANNUALLY: '',
-      SEMIANUALLY: '',
+      SEMIANNUALLY: '',
       QUARTERLY: '',
       MONTHLY: '',
       CONTINUALLY: 'participantAddedFrequencyContinually',
@@ -268,7 +268,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     options: frequencyOptions,
     optionsRelatedInfo: {
       ANNUALLY: '',
-      SEMIANUALLY: '',
+      SEMIANNUALLY: '',
       QUARTERLY: '',
       MONTHLY: '',
       CONTINUALLY: 'participantRemovedFrequencyContinually',
@@ -506,7 +506,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     options: frequencyOptions,
     optionsRelatedInfo: {
       ANNUALLY: '',
-      SEMIANUALLY: '',
+      SEMIANNUALLY: '',
       QUARTERLY: '',
       MONTHLY: '',
       CONTINUALLY: 'providerAdditionFrequencyContinually',
@@ -517,7 +517,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
   providerAdditionFrequencyContinually: {
     gqlField: 'providerAdditionFrequencyContinually',
     goField: 'ProviderAdditionFrequencyContinually',
-    dbField: 'provider_addition_frequency_continually',
+    dbField: 'provide_addition_frequency_continually',
     label: 'Please specify',
     dataType: 'string',
     formType: 'textarea',

@@ -33,6 +33,10 @@ type PlanBeneficiaries struct {
 	BeneficiarySelectionFrequencyContinually *string        `json:"beneficiarySelectionFrequencyContinually" db:"beneficiary_selection_frequency_continually"`
 	BeneficiarySelectionFrequencyOther       *string        `json:"beneficiarySelectionFrequencyOther" db:"beneficiary_selection_frequency_other"`
 	BeneficiarySelectionFrequencyNote        *string        `json:"beneficiarySelectionFrequencyNote" db:"beneficiary_selection_frequency_note"`
+	BeneficiaryRemovalFrequency              pq.StringArray `json:"beneficiaryRemovalFrequency" db:"beneficiary_removal_frequency" statusWeight:"1"`
+	BeneficiaryRemovalFrequencyContinually   *string        `json:"beneficiaryRemovalFrequencyContinually" db:"beneficiary_removal_frequency_continually"`
+	BeneficiaryRemovalFrequencyOther         *string        `json:"beneficiaryRemovalFrequencyOther" db:"beneficiary_removal_frequency_other"`
+	BeneficiaryRemovalFrequencyNote          *string        `json:"beneficiaryRemovalFrequencyNote" db:"beneficiary_removal_frequency_note"`
 	BeneficiaryOverlap                       *OverlapType   `json:"beneficiaryOverlap" db:"beneficiary_overlap" statusWeight:"1"`
 	BeneficiaryOverlapNote                   *string        `json:"beneficiaryOverlapNote" db:"beneficiary_overlap_note"`
 	PrecedenceRules                          pq.StringArray `json:"precedenceRules" db:"precedence_rules"`

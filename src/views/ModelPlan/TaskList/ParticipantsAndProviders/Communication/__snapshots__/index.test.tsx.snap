@@ -133,16 +133,16 @@ exports[`Model Plan Communication > matches snapshot 1`] = `
         >
           <input
             class="usa-checkbox__input"
-            id="participant-added-frequency-semianually"
+            id="participant-added-frequency-semiannually"
             name="participantAddedFrequency"
             type="checkbox"
-            value="SEMIANUALLY"
+            value="SEMIANNUALLY"
           />
           <label
             class="usa-checkbox__label"
-            for="participant-added-frequency-semianually"
+            for="participant-added-frequency-semiannually"
           >
-            Semiannually
+            Semi-annually
           </label>
           <p
             class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
@@ -307,16 +307,16 @@ exports[`Model Plan Communication > matches snapshot 1`] = `
         >
           <input
             class="usa-checkbox__input"
-            id="participant-removed-frequency-semianually"
+            id="participant-removed-frequency-semiannually"
             name="participantRemovedFrequency"
             type="checkbox"
-            value="SEMIANUALLY"
+            value="SEMIANNUALLY"
           />
           <label
             class="usa-checkbox__label"
-            for="participant-removed-frequency-semianually"
+            for="participant-removed-frequency-semiannually"
           >
-            Semiannually
+            Semi-annually
           </label>
           <p
             class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"

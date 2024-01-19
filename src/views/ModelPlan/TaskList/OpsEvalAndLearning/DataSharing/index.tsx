@@ -322,6 +322,12 @@ const DataSharing = () => {
                     label={opsEvalAndLearningT('dataSharingFrequency.label')}
                     disabled={loading}
                     boldLabel={false}
+                    addNote={false}
+                  />
+
+                  <AddNote
+                    id="ops-eval-and-learning-data-sharing-starts-note"
+                    field="dataSharingStartsNote"
                   />
 
                   <FieldGroup
