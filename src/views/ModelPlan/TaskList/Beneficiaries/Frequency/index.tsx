@@ -56,6 +56,7 @@ const Frequency = () => {
 
   const {
     beneficiarySelectionFrequency: beneficiarySelectionFrequencyConfig,
+    beneficiaryRemovalFrequency: beneficiaryRemovalFrequencyConfig,
     beneficiaryOverlap: beneficiaryOverlapConfig,
     precedenceRules: beneficiaryPrecedenceConfig
   } = usePlanTranslation('beneficiaries');
@@ -78,6 +79,10 @@ const Frequency = () => {
     beneficiarySelectionFrequencyContinually,
     beneficiarySelectionFrequencyNote,
     beneficiarySelectionFrequencyOther,
+    beneficiaryRemovalFrequency,
+    beneficiaryRemovalFrequencyContinually,
+    beneficiaryRemovalFrequencyNote,
+    beneficiaryRemovalFrequencyOther,
     beneficiaryOverlap,
     beneficiaryOverlapNote,
     precedenceRules,
@@ -146,6 +151,11 @@ const Frequency = () => {
     beneficiarySelectionFrequencyNote: beneficiarySelectionFrequencyNote ?? '',
     beneficiarySelectionFrequencyOther:
       beneficiarySelectionFrequencyOther ?? '',
+    beneficiaryRemovalFrequency: beneficiaryRemovalFrequency ?? null,
+    beneficiaryRemovalFrequencyContinually:
+      beneficiaryRemovalFrequencyContinually ?? '',
+    beneficiaryRemovalFrequencyNote: beneficiaryRemovalFrequencyNote ?? '',
+    beneficiaryRemovalFrequencyOther: beneficiaryRemovalFrequencyOther ?? '',
     beneficiaryOverlap: beneficiaryOverlap ?? null,
     beneficiaryOverlapNote: beneficiaryOverlapNote ?? '',
     precedenceRules: precedenceRules ?? [],
@@ -248,6 +258,18 @@ const Frequency = () => {
                         id="beneficiary-selection-frequency"
                         label={beneficiariesT(
                           'beneficiarySelectionFrequency.label'
+                        )}
+                        disabled={loading}
+                      />
+
+                      <FrequencyForm
+                        field="beneficiaryRemovalFrequency"
+                        values={values.beneficiaryRemovalFrequency}
+                        config={beneficiaryRemovalFrequencyConfig}
+                        nameSpace="beneficiaries"
+                        id="beneficiary-removal-frequency"
+                        label={beneficiariesT(
+                          'beneficiaryRemovalFrequency.label'
                         )}
                         disabled={loading}
                       />

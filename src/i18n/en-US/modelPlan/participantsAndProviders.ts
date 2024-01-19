@@ -424,7 +424,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     options: frequencyOptions,
     optionsRelatedInfo: {
       ANNUALLY: '',
-      SEMIANUALLY: '',
+      SEMIANNUALLY: '',
       QUARTERLY: '',
       MONTHLY: '',
       CONTINUALLY: 'providerAdditionFrequencyContinually',

@@ -33,7 +33,8 @@ const ReadOnlyBeneficiaries = ({
   const { t: prepareForClearanceT } = useTranslation('prepareForClearance');
 
   const {
-    beneficiarySelectionFrequency: beneficiarySelectionFrequencyConfig
+    beneficiarySelectionFrequency: beneficiarySelectionFrequencyConfig,
+    beneficiaryRemovalFrequency: beneficiaryRemovalFrequencyConfig
   } = usePlanTranslation('beneficiaries');
 
   const { modelName } = useContext(ModelInfoContext);
@@ -70,6 +71,8 @@ const ReadOnlyBeneficiaries = ({
     beneficiarySelectionNote,
     beneficiarySelectionFrequency,
     beneficiarySelectionFrequencyNote,
+    beneficiaryRemovalFrequency,
+    beneficiaryRemovalFrequencyNote,
     beneficiaryOverlap,
     beneficiaryOverlapNote,
     precedenceRules,
@@ -295,6 +298,26 @@ const ReadOnlyBeneficiaries = ({
               allbeneficiariesData
             )}
             notes={beneficiarySelectionFrequencyNote}
+          />
+        )}
+
+        {checkGroupMap(
+          isViewingFilteredView,
+          filteredQuestions,
+          'beneficiaryRemovalFrequency',
+          <ReadOnlySection
+            heading={beneficiariesT('beneficiaryRemovalFrequency.label')}
+            list
+            listItems={formatListItems(
+              beneficiaryRemovalFrequencyConfig,
+              beneficiaryRemovalFrequency
+            )}
+            listOtherItems={formatListOtherItems(
+              beneficiaryRemovalFrequencyConfig,
+              beneficiaryRemovalFrequency,
+              allbeneficiariesData
+            )}
+            notes={beneficiaryRemovalFrequencyNote}
           />
         )}
 

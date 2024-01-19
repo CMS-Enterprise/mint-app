@@ -175,7 +175,6 @@ export const GetAccessContent = ({ help }: GetAccessContentProps) => {
                   <Trans i18nKey="getAccess:jobcodes.table.rowTwo.jobCodeToRequest">
                     <Link
                       aria-label="Open EUA in a new tab"
-                      // href="https://home.idm.cms.gov/"
                       href="https://eua.cms.gov"
                       target="_blank"
                       rel="noopener noreferrer"
@@ -224,8 +223,8 @@ export const GetAccessContent = ({ help }: GetAccessContentProps) => {
                 <td className="text-baseline">
                   <Trans i18nKey="getAccess:jobcodes.table.rowFour.jobCodeToRequest">
                     <Link
-                      aria-label="Open IDM in a new tab"
-                      href="https://home.idm.cms.gov/"
+                      aria-label="Open EUA in a new tab"
+                      href="https://eua.cms.gov"
                       target="_blank"
                       rel="noopener noreferrer"
                       variant="external"

@@ -18,9 +18,10 @@ func (suite *ResolverSuite) TestPlanPaymentsUpdate() {
 	suite.NoError(err)
 
 	changes := map[string]interface{}{
-		"fundingSource":     []string{"OTHER"},
-		"fundingSourceNote": "Ello gov'na",
-		"payType":           []string{"CLAIMS_BASED_PAYMENTS"},
+		"fundingSource":                          []string{"OTHER"},
+		"fundingSourceNote":                      "Ello gov'na",
+		"payType":                                []string{"CLAIMS_BASED_PAYMENTS"},
+		"anticipatedPaymentFrequencyContinually": "some test value for anticipated payment frequency continually",
 	}
 
 	updatedPP, err := PlanPaymentsUpdate(suite.testConfigs.Logger, suite.testConfigs.Store, pp.ID, changes, suite.testConfigs.Principal)
@@ -29,6 +30,7 @@ func (suite *ResolverSuite) TestPlanPaymentsUpdate() {
 	suite.EqualValues(plan.ID, pp.ModelPlanID)
 	suite.EqualValues(models.TaskReady, pp.Status)
 	suite.EqualValues(suite.testConfigs.Principal.UserAccount.ID, pp.CreatedBy)
+	suite.EqualValues("some test value for anticipated payment frequency continually", *updatedPP.AnticipatedPaymentFrequencyContinually)
 	suite.Nil(pp.ModifiedBy)
 
 	//suite.Nil(updatedPP.FundingSource)
