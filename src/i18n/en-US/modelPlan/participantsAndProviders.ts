@@ -625,6 +625,47 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     formType: 'textarea',
     filterGroups: ['ipc', 'oact']
   },
+  providerRemovalFrequency: {
+    gqlField: 'providerRemovalFrequency',
+    goField: 'ProviderRemovalFrequency',
+    dbField: 'provider_removal_frequency',
+    label: 'How frequently are providers removed?',
+    dataType: 'enum',
+    formType: 'checkbox',
+    options: frequencyOptions,
+    optionsRelatedInfo: {
+      ANNUALLY: '',
+      SEMIANNUALLY: '',
+      QUARTERLY: '',
+      MONTHLY: '',
+      CONTINUALLY: 'providerRemovalFrequencyContinually',
+      OTHER: 'providerRemovalFrequencyOther'
+    }
+  },
+  providerRemovalFrequencyContinually: {
+    gqlField: 'providerRemovalFrequencyContinually',
+    goField: 'ProviderRemovalFrequencyContinually',
+    dbField: 'provide_removal_frequency_continually',
+    label: 'Please specify',
+    dataType: 'string',
+    formType: 'text'
+  },
+  providerRemovalFrequencyOther: {
+    gqlField: 'providerRemovalFrequencyOther',
+    goField: 'ProviderRemovalFrequencyOther',
+    dbField: 'provider_removal_frequency_other',
+    label: 'Please specify',
+    dataType: 'string',
+    formType: 'text'
+  },
+  providerRemovalFrequencyNote: {
+    gqlField: 'providerRemovalFrequencyNote',
+    goField: 'ProviderRemovalFrequencyNote',
+    dbField: 'provider_removal_frequency_note',
+    label: 'Notes',
+    dataType: 'string',
+    formType: 'textarea'
+  },
   providerOverlap: {
     gqlField: 'providerOverlap',
     goField: 'ProviderOverlap',

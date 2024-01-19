@@ -40,6 +40,7 @@ const ReadOnlyParticipantsAndProviders = ({
     participantAddedFrequency: participantAddedFrequencyConfig,
     participantRemovedFrequency: participantRemovedFrequencyConfig,
     providerAdditionFrequency: providerAdditionFrequencyConfig,
+    providerRemovalFrequency: providerRemovalFrequencyConfig,
     riskType: riskTypeConfig
   } = usePlanTranslation('participantsAndProviders');
 
@@ -107,6 +108,8 @@ const ReadOnlyParticipantsAndProviders = ({
     providerLeaveMethod,
     providerLeaveMethodOther,
     providerLeaveMethodNote,
+    providerRemovalFrequency,
+    providerRemovalFrequencyNote,
     providerOverlap,
     providerOverlapHierarchy,
     providerOverlapNote,
@@ -537,6 +540,28 @@ const ReadOnlyParticipantsAndProviders = ({
             )}
             listOtherItem={providerLeaveMethodOther}
             notes={providerLeaveMethodNote}
+          />
+        )}
+
+        {checkGroupMap(
+          isViewingFilteredView,
+          filteredQuestions,
+          'providerRemovalFrequency',
+          <ReadOnlySection
+            heading={participantsAndProvidersT(
+              'providerRemovalFrequency.label'
+            )}
+            list
+            listItems={formatListItems(
+              providerRemovalFrequencyConfig,
+              providerRemovalFrequency
+            )}
+            listOtherItems={formatListOtherItems(
+              providerRemovalFrequencyConfig,
+              providerRemovalFrequency,
+              allparticipantsAndProvidersData
+            )}
+            notes={providerRemovalFrequencyNote}
           />
         )}
 
