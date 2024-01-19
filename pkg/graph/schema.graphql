@@ -711,9 +711,14 @@ type PlanBeneficiaries {
   beneficiarySelectionOther: String
   beneficiarySelectionNote: String
   #Page 3
-  beneficiarySelectionFrequency: FrequencyType
+  beneficiarySelectionFrequency: [FrequencyType!]!
+  beneficiarySelectionFrequencyContinually: String
   beneficiarySelectionFrequencyOther: String
   beneficiarySelectionFrequencyNote: String
+  beneficiaryRemovalFrequency: [FrequencyType!]!
+  beneficiaryRemovalFrequencyContinually: String
+  beneficiaryRemovalFrequencyOther: String
+  beneficiaryRemovalFrequencyNote: String
   beneficiaryOverlap: OverlapType
   beneficiaryOverlapNote: String
   precedenceRules: [YesNoType!]!
@@ -758,9 +763,14 @@ input PlanBeneficiariesChanges @goModel(model: "map[string]interface{}") {
   beneficiarySelectionOther: String
   beneficiarySelectionNote: String
   #Page 3
-  beneficiarySelectionFrequency: FrequencyType
+  beneficiarySelectionFrequency: [FrequencyType!]
+  beneficiarySelectionFrequencyContinually: String
   beneficiarySelectionFrequencyOther: String
   beneficiarySelectionFrequencyNote: String
+  beneficiaryRemovalFrequency: [FrequencyType!]
+  beneficiaryRemovalFrequencyContinually: String
+  beneficiaryRemovalFrequencyOther: String
+  beneficiaryRemovalFrequencyNote: String
   beneficiaryOverlap: OverlapType
   beneficiaryOverlapNote: String
   precedenceRules: [YesNoType!]
@@ -822,7 +832,8 @@ type PlanParticipantsAndProviders {
   participantsIDSNote:     String
 
   #Page 5
-  providerAdditionFrequency:      FrequencyType
+  providerAdditionFrequency:      [FrequencyType!]!
+  providerAdditionFrequencyContinually: String
   providerAdditionFrequencyOther: String
   providerAdditionFrequencyNote:  String
   providerAddMethod:              [ProviderAddType!]!
@@ -905,7 +916,8 @@ input PlanParticipantsAndProvidersChanges @goModel(model: "map[string]interface{
   participantsIDSNote:     String
 
   #Page 5
-  providerAdditionFrequency:      FrequencyType
+  providerAdditionFrequency:      [FrequencyType!]
+  providerAdditionFrequencyContinually: String
   providerAdditionFrequencyOther: String
   providerAdditionFrequencyNote:  String
   providerAddMethod:              [ProviderAddType!]
@@ -991,7 +1003,8 @@ type PlanPayments {
   canParticipantsSelectBetweenPaymentMechanisms:     Boolean
   canParticipantsSelectBetweenPaymentMechanismsHow:  String
   canParticipantsSelectBetweenPaymentMechanismsNote: String
-  anticipatedPaymentFrequency:                       [AnticipatedPaymentFrequencyType!]!
+  anticipatedPaymentFrequency:                       [FrequencyType!]!
+  anticipatedPaymentFrequencyContinually:            String
   anticipatedPaymentFrequencyOther:                  String
   anticipatedPaymentFrequencyNote:                   String
 
@@ -1088,7 +1101,8 @@ input PlanPaymentsChanges @goModel(model: "map[string]interface{}") {
   canParticipantsSelectBetweenPaymentMechanisms:            Boolean
   canParticipantsSelectBetweenPaymentMechanismsHow:         String
   canParticipantsSelectBetweenPaymentMechanismsNote:        String
-  anticipatedPaymentFrequency:                              [AnticipatedPaymentFrequencyType!]
+  anticipatedPaymentFrequency:                              [FrequencyType!]
+  anticipatedPaymentFrequencyContinually:                   String
   anticipatedPaymentFrequencyOther:                         String
   anticipatedPaymentFrequencyNote:                         String
 
@@ -1197,12 +1211,14 @@ type PlanOpsEvalAndLearning {
     #Page 8
     dataSharingStarts: DataStartsType
     dataSharingStartsOther: String
-    dataSharingFrequency: [DataFrequencyType!]!
+    dataSharingFrequency: [FrequencyType!]!
+    dataSharingFrequencyContinually: String
     dataSharingFrequencyOther: String
     dataSharingStartsNote: String
     dataCollectionStarts: DataStartsType
     dataCollectionStartsOther: String
-    dataCollectionFrequency: [DataFrequencyType!]!
+    dataCollectionFrequency: [FrequencyType!]!
+    dataCollectionFrequencyContinually: String
     dataCollectionFrequencyOther: String
     dataCollectionFrequencyNote: String
     qualityReportingStarts: DataStartsType
@@ -1326,12 +1342,14 @@ input PlanOpsEvalAndLearningChanges @goModel(model: "map[string]interface{}") {
     #Page 8
     dataSharingStarts: DataStartsType
     dataSharingStartsOther: String
-    dataSharingFrequency: [DataFrequencyType!]
+    dataSharingFrequency: [FrequencyType!]
+    dataSharingFrequencyContinually: String
     dataSharingFrequencyOther: String
     dataSharingStartsNote: String
     dataCollectionStarts: DataStartsType
     dataCollectionStartsOther: String
-    dataCollectionFrequency: [DataFrequencyType!]
+    dataCollectionFrequency: [FrequencyType!]
+    dataCollectionFrequencyContinually: String
     dataCollectionFrequencyOther: String
     dataCollectionFrequencyNote: String
     qualityReportingStarts: DataStartsType
@@ -2032,14 +2050,16 @@ enum ConfidenceType {
   FAIRLY
   COMPLETELY
 }
+
 enum FrequencyType {
   ANNUALLY
-  BIANNUALLY
+  SEMIANNUALLY
   QUARTERLY
   MONTHLY
-  ROLLING
+  CONTINUALLY
   OTHER
 }
+
 enum TriStateAnswer {
   YES
   NO
@@ -2206,18 +2226,6 @@ enum YesNoOtherType {
     OTHER
 }
 
-enum DataFrequencyType {
-    ANNUALLY
-    BIANNUALLY
-    QUARTERLY
-    MONTHLY
-    SEMI_MONTHLY
-    WEEKLY
-    DAILY
-    OTHER
-    NOT_PLANNING_TO_DO_THIS
-}
-
 enum ModelLearningSystemType {
     LEARNING_CONTRACTOR
     IT_PLATFORM_CONNECT
@@ -2300,17 +2308,6 @@ enum ComplexityCalculationLevelType {
   LOW
   MIDDLE
   HIGH
-}
-
-enum AnticipatedPaymentFrequencyType {
-  ANNUALLY
-  BIANNUALLY
-  QUARTERLY
-  MONTHLY
-  SEMIMONTHLY
-  WEEKLY
-  DAILY
-  OTHER
 }
 
 enum OpSolutionStatus {

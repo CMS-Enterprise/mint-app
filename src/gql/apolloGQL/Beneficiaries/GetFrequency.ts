@@ -8,8 +8,13 @@ export default gql(/* GraphQL */ `
       beneficiaries {
         id
         beneficiarySelectionFrequency
+        beneficiarySelectionFrequencyContinually
         beneficiarySelectionFrequencyNote
         beneficiarySelectionFrequencyOther
+        beneficiaryRemovalFrequency
+        beneficiaryRemovalFrequencyContinually
+        beneficiaryRemovalFrequencyNote
+        beneficiaryRemovalFrequencyOther
         beneficiaryOverlap
         beneficiaryOverlapNote
         precedenceRules

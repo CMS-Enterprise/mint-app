@@ -58,6 +58,7 @@ SELECT
     pay.can_participants_select_between_payment_mechanisms_how,
     pay.can_participants_select_between_payment_mechanisms_note,
     pay.anticipated_payment_frequency,
+    pay.anticipated_payment_frequency_continually,
     pay.anticipated_payment_frequency_other,
     pay.anticipated_payment_frequency_note,
     pay.will_recover_payments,

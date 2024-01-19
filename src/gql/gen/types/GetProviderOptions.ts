@@ -18,7 +18,8 @@ export interface GetProviderOptions_modelPlan_participantsAndProviders_readyForR
 export interface GetProviderOptions_modelPlan_participantsAndProviders {
   __typename: "PlanParticipantsAndProviders";
   id: UUID;
-  providerAdditionFrequency: FrequencyType | null;
+  providerAdditionFrequency: FrequencyType[];
+  providerAdditionFrequencyContinually: string | null;
   providerAdditionFrequencyOther: string | null;
   providerAdditionFrequencyNote: string | null;
   providerAddMethod: ProviderAddType[];

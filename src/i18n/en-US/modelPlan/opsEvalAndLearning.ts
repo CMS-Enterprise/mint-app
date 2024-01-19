@@ -1,5 +1,7 @@
 import { TranslationOpsEvalAndLearning } from 'types/translation';
 
+import { frequencyOptions } from './miscellaneous';
+
 export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
   agencyOrStateHelp: {
     gqlField: 'agencyOrStateHelp',
@@ -922,19 +924,25 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     dbField: 'data_sharing_frequency',
     label: 'How often do you anticipate sharing data?',
     dataType: 'enum',
-    formType: 'multiSelect',
-    multiSelectLabel: 'Data sharing frequency',
-    options: {
-      ANNUALLY: 'Annually',
-      BIANNUALLY: 'Biannually',
-      QUARTERLY: 'Quarterly',
-      MONTHLY: 'Monthly',
-      SEMI_MONTHLY: 'Semi-monthly',
-      WEEKLY: 'Weekly',
-      DAILY: 'Daily',
-      OTHER: 'Other',
-      NOT_PLANNING_TO_DO_THIS: 'Not planning to do this'
+    formType: 'checkbox',
+    options: frequencyOptions,
+    optionsRelatedInfo: {
+      ANNUALLY: '',
+      SEMIANNUALLY: '',
+      QUARTERLY: '',
+      MONTHLY: '',
+      CONTINUALLY: 'dataSharingFrequencyContinually',
+      OTHER: 'dataSharingFrequencyOther'
     },
+    filterGroups: ['cmmi', 'iddoc']
+  },
+  dataSharingFrequencyContinually: {
+    gqlField: 'dataSharingFrequencyContinually',
+    goField: 'DataSharingFrequencyContinually',
+    dbField: 'data_sharing_frequency_continually',
+    label: 'Please specify',
+    dataType: 'string',
+    formType: 'textarea',
     filterGroups: ['cmmi', 'iddoc']
   },
   dataSharingFrequencyOther: {
@@ -991,19 +999,25 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     dbField: 'data_collection_frequency',
     label: 'How often do you anticipate collecting data?',
     dataType: 'enum',
-    formType: 'multiSelect',
-    multiSelectLabel: 'Data collection frequency',
-    options: {
-      ANNUALLY: 'Annually',
-      BIANNUALLY: 'Biannually',
-      QUARTERLY: 'Quarterly',
-      MONTHLY: 'Monthly',
-      SEMI_MONTHLY: 'Semi-monthly',
-      WEEKLY: 'Weekly',
-      DAILY: 'Daily',
-      OTHER: 'Other',
-      NOT_PLANNING_TO_DO_THIS: 'Not planning to do this'
+    formType: 'checkbox',
+    options: frequencyOptions,
+    optionsRelatedInfo: {
+      ANNUALLY: '',
+      SEMIANNUALLY: '',
+      QUARTERLY: '',
+      MONTHLY: '',
+      CONTINUALLY: 'dataCollectionFrequencyContinually',
+      OTHER: 'dataCollectionFrequencyOther'
     },
+    filterGroups: ['cmmi']
+  },
+  dataCollectionFrequencyContinually: {
+    gqlField: 'dataCollectionFrequencyContinually',
+    goField: 'DataCollectionFrequencyContinually',
+    dbField: 'data_collection_frequency_continually',
+    label: 'Please specify',
+    dataType: 'string',
+    formType: 'textarea',
     filterGroups: ['cmmi']
   },
   dataCollectionFrequencyOther: {
