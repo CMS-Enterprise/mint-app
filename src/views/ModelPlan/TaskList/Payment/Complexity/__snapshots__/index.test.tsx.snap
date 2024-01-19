@@ -343,14 +343,14 @@ exports[`Model Plan -- Complexity > matches snapshot 1`] = `
               >
                 <input
                   class="usa-checkbox__input"
-                  id="anticipated-payment-frequency-semianually"
+                  id="anticipated-payment-frequency-semiannually"
                   name="anticipatedPaymentFrequency"
                   type="checkbox"
-                  value="SEMIANUALLY"
+                  value="SEMIANNUALLY"
                 />
                 <label
                   class="usa-checkbox__label"
-                  for="anticipated-payment-frequency-semianually"
+                  for="anticipated-payment-frequency-semiannually"
                 >
                   Semi-annually
                 </label>

@@ -206,106 +206,6 @@ exports[`Model Plan Ops Eval and Learning Data Sharing > matches snapshot 1`] = 
         >
           <input
             class="usa-checkbox__input"
-            id="ops-eval-and-learning-data-sharing-frequency-semianually"
-            name="dataSharingFrequency"
-            type="checkbox"
-            value="SEMIANUALLY"
-          />
-          <label
-            class="usa-checkbox__label"
-            for="ops-eval-and-learning-data-sharing-frequency-semianually"
-          >
-            Semi-annually
-          </label>
-          <p
-            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
-          />
-        </div>
-        <div
-          class="mint-checkbox usa-checkbox"
-        >
-          <input
-            class="usa-checkbox__input"
-            id="ops-eval-and-learning-data-sharing-frequency-quarterly"
-            name="dataSharingFrequency"
-            type="checkbox"
-            value="QUARTERLY"
-          />
-          <label
-            class="usa-checkbox__label"
-            for="ops-eval-and-learning-data-sharing-frequency-quarterly"
-          >
-            Quarterly
-          </label>
-          <p
-            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
-          />
-        </div>
-        <div
-          class="mint-checkbox usa-checkbox"
-        >
-          <input
-            class="usa-checkbox__input"
-            id="ops-eval-and-learning-data-sharing-frequency-monthly"
-            name="dataSharingFrequency"
-            type="checkbox"
-            value="MONTHLY"
-          />
-          <label
-            class="usa-checkbox__label"
-            for="ops-eval-and-learning-data-sharing-frequency-monthly"
-          >
-            Monthly
-          </label>
-          <p
-            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
-          />
-        </div>
-        <div
-          class="mint-checkbox usa-checkbox"
-        >
-          <input
-            class="usa-checkbox__input"
-            id="ops-eval-and-learning-data-sharing-frequency-continually"
-            name="dataSharingFrequency"
-            type="checkbox"
-            value="CONTINUALLY"
-          />
-          <label
-            class="usa-checkbox__label"
-            for="ops-eval-and-learning-data-sharing-frequency-continually"
-          >
-            Continually
-          </label>
-          <p
-            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
-          />
-        </div>
-        <div
-          class="mint-checkbox usa-checkbox"
-        >
-          <input
-            class="usa-checkbox__input"
-            id="ops-eval-and-learning-data-sharing-frequency-other"
-            name="dataSharingFrequency"
-            type="checkbox"
-            value="OTHER"
-          />
-          <label
-            class="usa-checkbox__label"
-            for="ops-eval-and-learning-data-sharing-frequency-other"
-          >
-            Other
-          </label>
-          <p
-            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
-          />
-        </div>
-        <div
-          class="mint-checkbox usa-checkbox"
-        >
-          <input
-            class="usa-checkbox__input"
             id="ops-eval-and-learning-data-sharing-frequency-semiannually"
             name="dataSharingFrequency"
             type="checkbox"
@@ -531,14 +431,14 @@ exports[`Model Plan Ops Eval and Learning Data Sharing > matches snapshot 1`] = 
         >
           <input
             class="usa-checkbox__input"
-            id="ops-eval-and-learning-data-collection-frequency-semianually"
+            id="ops-eval-and-learning-data-collection-frequency-semiannually"
             name="dataCollectionFrequency"
             type="checkbox"
-            value="SEMIANUALLY"
+            value="SEMIANNUALLY"
           />
           <label
             class="usa-checkbox__label"
-            for="ops-eval-and-learning-data-collection-frequency-semianually"
+            for="ops-eval-and-learning-data-collection-frequency-semiannually"
           >
             Semi-annually
           </label>
