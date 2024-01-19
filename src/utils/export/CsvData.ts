@@ -145,6 +145,7 @@ const csvFields = [
   'participantsAndProviders.participantsCurrentlyInModelsNote',
   'participantsAndProviders.modelApplicationLevel',
   'participantsAndProviders.providerAdditionFrequency',
+  'participantsAndProviders.providerAdditionFrequencyContinually',
   'participantsAndProviders.providerAdditionFrequencyOther',
   'participantsAndProviders.providerAdditionFrequencyNote',
   'participantsAndProviders.providerAddMethod', // array
@@ -176,6 +177,7 @@ const csvFields = [
   'beneficiaries.excludeCertainCharacteristicsCriteria',
   'beneficiaries.excludeCertainCharacteristicsNote',
   'beneficiaries.beneficiarySelectionFrequency',
+  'beneficiaries.beneficiarySelectionFrequencyContinually',
   'beneficiaries.beneficiarySelectionFrequencyNote',
   'beneficiaries.beneficiarySelectionFrequencyOther',
   'beneficiaries.precedenceRules',
@@ -209,11 +211,13 @@ const csvFields = [
   'opsEvalAndLearning.dataSharingStarts',
   'opsEvalAndLearning.dataSharingStartsOther',
   'opsEvalAndLearning.dataSharingFrequency', // array
+  'opsEvalAndLearning.dataSharingFrequencyContinually',
   'opsEvalAndLearning.dataSharingFrequencyOther',
   'opsEvalAndLearning.dataSharingStartsNote',
   'opsEvalAndLearning.dataCollectionStarts',
   'opsEvalAndLearning.dataCollectionStartsOther',
   'opsEvalAndLearning.dataCollectionFrequency', // array
+  'opsEvalAndLearning.dataCollectionFrequencyContinually',
   'opsEvalAndLearning.dataCollectionFrequencyOther',
   'opsEvalAndLearning.dataCollectionFrequencyNote',
   'opsEvalAndLearning.qualityReportingStarts',
@@ -318,6 +322,7 @@ const csvFields = [
   'payments.canParticipantsSelectBetweenPaymentMechanismsHow',
   'payments.canParticipantsSelectBetweenPaymentMechanismsNote',
   'payments.anticipatedPaymentFrequency', // array
+  'payments.anticipatedPaymentFrequencyContinually',
   'payments.anticipatedPaymentFrequencyOther',
   'payments.anticipatedPaymentFrequencyNote',
   'payments.fundingSource', // array

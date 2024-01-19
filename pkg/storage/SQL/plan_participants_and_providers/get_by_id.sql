@@ -37,6 +37,7 @@ SELECT
     participants_ids_other,
     participants_ids_note,
     provider_addition_frequency,
+    provider_addition_frequency_continually,
     provider_addition_frequency_other,
     provider_addition_frequency_note,
     provider_add_method,

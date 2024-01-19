@@ -18,7 +18,8 @@ export interface GetFrequency_modelPlan_beneficiaries_readyForReviewByUserAccoun
 export interface GetFrequency_modelPlan_beneficiaries {
   __typename: "PlanBeneficiaries";
   id: UUID;
-  beneficiarySelectionFrequency: FrequencyType | null;
+  beneficiarySelectionFrequency: FrequencyType[];
+  beneficiarySelectionFrequencyContinually: string | null;
   beneficiarySelectionFrequencyNote: string | null;
   beneficiarySelectionFrequencyOther: string | null;
   beneficiaryOverlap: OverlapType | null;
