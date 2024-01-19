@@ -243,6 +243,14 @@ const participantsAndProvidersData: GetAllParticipantsTypes = {
   ],
   selectionOther: 'Selection other',
   selectionNote: 'Note selection',
+  participantAddedFrequency: [FrequencyType.CONTINUALLY],
+  participantAddedFrequencyContinually: 'participant added continually',
+  participantAddedFrequencyOther: '',
+  participantAddedFrequencyNote: 'My note',
+  participantRemovedFrequency: [FrequencyType.OTHER],
+  participantRemovedFrequencyContinually: '',
+  participantRemovedFrequencyOther: 'participant added other',
+  participantRemovedFrequencyNote: 'Second note',
   communicationMethod: [
     ParticipantCommunicationType.IT_TOOL,
     ParticipantCommunicationType.MASS_EMAIL

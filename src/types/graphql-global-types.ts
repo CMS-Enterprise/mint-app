@@ -993,6 +993,14 @@ export interface PlanParticipantsAndProvidersChanges {
   selectionMethod?: ParticipantSelectionType[] | null;
   selectionOther?: string | null;
   selectionNote?: string | null;
+  participantAddedFrequency?: FrequencyType[] | null;
+  participantAddedFrequencyContinually?: string | null;
+  participantAddedFrequencyOther?: string | null;
+  participantAddedFrequencyNote?: string | null;
+  participantRemovedFrequency?: FrequencyType[] | null;
+  participantRemovedFrequencyContinually?: string | null;
+  participantRemovedFrequencyOther?: string | null;
+  participantRemovedFrequencyNote?: string | null;
   communicationMethod?: ParticipantCommunicationType[] | null;
   communicationMethodOther?: string | null;
   communicationNote?: string | null;

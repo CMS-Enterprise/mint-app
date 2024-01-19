@@ -30,14 +30,22 @@ type PlanParticipantsAndProviders struct {
 	SelectionNote                *string          `json:"selectionNote" db:"selection_note"`
 
 	//page 3
-	CommunicationMethod      pq.StringArray `json:"communicationMethod" db:"communication_method"`
-	CommunicationMethodOther *string        `json:"communicationMethodOther" db:"communication_method_other"`
-	CommunicationNote        *string        `json:"communicationNote" db:"communication_note"`
-	RiskType                 pq.StringArray `json:"riskType" db:"risk_type"`
-	RiskOther                *string        `json:"riskOther" db:"risk_other"`
-	RiskNote                 *string        `json:"riskNote" db:"risk_note"`
-	WillRiskChange           *bool          `json:"willRiskChange" db:"will_risk_change" statusWeight:"1"`
-	WillRiskChangeNote       *string        `json:"willRiskChangeNote" db:"will_risk_change_note"`
+	ParticipantAddedFrequency              pq.StringArray `json:"participantAddedFrequency" db:"participant_added_frequency" statusWeight:"1"`
+	ParticipantAddedFrequencyContinually   *string        `json:"participantAddedFrequencyContinually" db:"participant_added_frequency_continually"`
+	ParticipantAddedFrequencyOther         *string        `json:"participantAddedFrequencyOther" db:"participant_added_frequency_other"`
+	ParticipantAddedFrequencyNote          *string        `json:"participantAddedFrequencyNote" db:"participant_added_frequency_note"`
+	ParticipantRemovedFrequency            pq.StringArray `json:"participantRemovedFrequency" db:"participant_removed_frequency" statusWeight:"1"`
+	ParticipantRemovedFrequencyContinually *string        `json:"participantRemovedFrequencyContinually" db:"participant_removed_frequency_continually"`
+	ParticipantRemovedFrequencyOther       *string        `json:"participantRemovedFrequencyOther" db:"participant_removed_frequency_other"`
+	ParticipantRemovedFrequencyNote        *string        `json:"participantRemovedFrequencyNote" db:"participant_removed_frequency_note"`
+	CommunicationMethod                    pq.StringArray `json:"communicationMethod" db:"communication_method"`
+	CommunicationMethodOther               *string        `json:"communicationMethodOther" db:"communication_method_other"`
+	CommunicationNote                      *string        `json:"communicationNote" db:"communication_note"`
+	RiskType                               pq.StringArray `json:"riskType" db:"risk_type"`
+	RiskOther                              *string        `json:"riskOther" db:"risk_other"`
+	RiskNote                               *string        `json:"riskNote" db:"risk_note"`
+	WillRiskChange                         *bool          `json:"willRiskChange" db:"will_risk_change" statusWeight:"1"`
+	WillRiskChangeNote                     *string        `json:"willRiskChangeNote" db:"will_risk_change_note"`
 
 	//page 4
 	CoordinateWork                    *bool          `json:"coordinateWork" db:"coordinate_work" statusWeight:"1"`
