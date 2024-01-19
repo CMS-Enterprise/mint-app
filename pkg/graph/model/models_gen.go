@@ -1047,15 +1047,17 @@ func (e GeographyType) MarshalGQL(w io.Writer) {
 type KeyCharacteristic string
 
 const (
-	KeyCharacteristicEpisodeBased    KeyCharacteristic = "EPISODE_BASED"
-	KeyCharacteristicPartC           KeyCharacteristic = "PART_C"
-	KeyCharacteristicPartD           KeyCharacteristic = "PART_D"
-	KeyCharacteristicPayment         KeyCharacteristic = "PAYMENT"
-	KeyCharacteristicPopulationBased KeyCharacteristic = "POPULATION_BASED"
-	KeyCharacteristicPreventative    KeyCharacteristic = "PREVENTATIVE"
-	KeyCharacteristicServiceDelivery KeyCharacteristic = "SERVICE_DELIVERY"
-	KeyCharacteristicSharedSavings   KeyCharacteristic = "SHARED_SAVINGS"
-	KeyCharacteristicOther           KeyCharacteristic = "OTHER"
+	KeyCharacteristicEpisodeBased     KeyCharacteristic = "EPISODE_BASED"
+	KeyCharacteristicPartC            KeyCharacteristic = "PART_C"
+	KeyCharacteristicPartD            KeyCharacteristic = "PART_D"
+	KeyCharacteristicPayment          KeyCharacteristic = "PAYMENT"
+	KeyCharacteristicPopulationBased  KeyCharacteristic = "POPULATION_BASED"
+	KeyCharacteristicPreventative     KeyCharacteristic = "PREVENTATIVE"
+	KeyCharacteristicServiceDelivery  KeyCharacteristic = "SERVICE_DELIVERY"
+	KeyCharacteristicSharedSavings    KeyCharacteristic = "SHARED_SAVINGS"
+	KeyCharacteristicOther            KeyCharacteristic = "OTHER"
+	KeyCharacteristicMedicaidModel    KeyCharacteristic = "MEDICAID_MODEL"
+	KeyCharacteristicMedicareFfsModel KeyCharacteristic = "MEDICARE_FFS_MODEL"
 )
 
 var AllKeyCharacteristic = []KeyCharacteristic{
@@ -1068,11 +1070,13 @@ var AllKeyCharacteristic = []KeyCharacteristic{
 	KeyCharacteristicServiceDelivery,
 	KeyCharacteristicSharedSavings,
 	KeyCharacteristicOther,
+	KeyCharacteristicMedicaidModel,
+	KeyCharacteristicMedicareFfsModel,
 }
 
 func (e KeyCharacteristic) IsValid() bool {
 	switch e {
-	case KeyCharacteristicEpisodeBased, KeyCharacteristicPartC, KeyCharacteristicPartD, KeyCharacteristicPayment, KeyCharacteristicPopulationBased, KeyCharacteristicPreventative, KeyCharacteristicServiceDelivery, KeyCharacteristicSharedSavings, KeyCharacteristicOther:
+	case KeyCharacteristicEpisodeBased, KeyCharacteristicPartC, KeyCharacteristicPartD, KeyCharacteristicPayment, KeyCharacteristicPopulationBased, KeyCharacteristicPreventative, KeyCharacteristicServiceDelivery, KeyCharacteristicSharedSavings, KeyCharacteristicOther, KeyCharacteristicMedicaidModel, KeyCharacteristicMedicareFfsModel:
 		return true
 	}
 	return false

@@ -9245,6 +9245,8 @@ enum KeyCharacteristic {
   SERVICE_DELIVERY
   SHARED_SAVINGS
   OTHER
+  MEDICAID_MODEL
+  MEDICARE_FFS_MODEL
 }
 
 enum GeographyType {
