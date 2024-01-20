@@ -46,20 +46,12 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
             <li
               class="font-sans-md line-height-sans-4"
             >
-              <div
-                class="display-flex flex-align-center"
-              >
-                Yes, we will partner with states
-              </div>
+              Yes, we will partner with states
             </li>
             <li
               class="font-sans-md line-height-sans-4"
             >
-              <div
-                class="display-flex flex-align-center"
-              >
-                Other
-              </div>
+              Other
             </li>
             <ul
               data-testid="other-entry"
@@ -110,29 +102,17 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
             <li
               class="font-sans-md line-height-sans-4"
             >
-              <div
-                class="display-flex flex-align-center"
-              >
-                Beneficiaries
-              </div>
+              Beneficiaries
             </li>
             <li
               class="font-sans-md line-height-sans-4"
             >
-              <div
-                class="display-flex flex-align-center"
-              >
-                Participants
-              </div>
+              Participants
             </li>
             <li
               class="font-sans-md line-height-sans-4"
             >
-              <div
-                class="display-flex flex-align-center"
-              >
-                Providers
-              </div>
+              Providers
             </li>
           </ul>
         </div>
@@ -220,20 +200,12 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
                 <li
                   class="font-sans-md line-height-sans-4"
                 >
-                  <div
-                    class="display-flex flex-align-center"
-                  >
-                    May have separate contractors for different implementation functions
-                  </div>
+                  May have separate contractors for different implementation functions
                 </li>
                 <li
                   class="font-sans-md line-height-sans-4"
                 >
-                  <div
-                    class="display-flex flex-align-center"
-                  >
-                    Other
-                  </div>
+                  Other
                 </li>
                 <ul
                   data-testid="other-entry"
@@ -619,20 +591,12 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
             <li
               class="font-sans-md line-height-sans-4"
             >
-              <div
-                class="display-flex flex-align-center"
-              >
-                Part A
-              </div>
+              Part A
             </li>
             <li
               class="font-sans-md line-height-sans-4"
             >
-              <div
-                class="display-flex flex-align-center"
-              >
-                Part B
-              </div>
+              Part B
             </li>
           </ul>
         </div>
@@ -1190,20 +1154,12 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
             <li
               class="font-sans-md line-height-sans-4"
             >
-              <div
-                class="display-flex flex-align-center"
-              >
-                Interrupted time series
-              </div>
+              Interrupted time series
             </li>
             <li
               class="font-sans-md line-height-sans-4"
             >
-              <div
-                class="display-flex flex-align-center"
-              >
-                Other
-              </div>
+              Other
             </li>
             <ul
               data-testid="other-entry"
@@ -1254,20 +1210,12 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
             <li
               class="font-sans-md line-height-sans-4"
             >
-              <div
-                class="display-flex flex-align-center"
-              >
-                Yes, for evaluation
-              </div>
+              Yes, for evaluation
             </li>
             <li
               class="font-sans-md line-height-sans-4"
             >
-              <div
-                class="display-flex flex-align-center"
-              >
-                Other
-              </div>
+              Other
             </li>
             <ul
               data-testid="other-entry"
@@ -1318,29 +1266,17 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
             <li
               class="font-sans-md line-height-sans-4"
             >
-              <div
-                class="display-flex flex-align-center"
-              >
-                Clinical data
-              </div>
+              Clinical data
             </li>
             <li
               class="font-sans-md line-height-sans-4"
             >
-              <div
-                class="display-flex flex-align-center"
-              >
-                Medicare claims
-              </div>
+              Medicare claims
             </li>
             <li
               class="font-sans-md line-height-sans-4"
             >
-              <div
-                class="display-flex flex-align-center"
-              >
-                Other
-              </div>
+              Other
             </li>
             <ul
               data-testid="other-entry"
@@ -1391,29 +1327,17 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
             <li
               class="font-sans-md line-height-sans-4"
             >
-              <div
-                class="display-flex flex-align-center"
-              >
-                Baseline/historical data
-              </div>
+              Baseline/historical data
             </li>
             <li
               class="font-sans-md line-height-sans-4"
             >
-              <div
-                class="display-flex flex-align-center"
-              >
-                Beneficiary-level data
-              </div>
+              Beneficiary-level data
             </li>
             <li
               class="font-sans-md line-height-sans-4"
             >
-              <div
-                class="display-flex flex-align-center"
-              >
-                Other
-              </div>
+              Other
             </li>
             <ul
               data-testid="other-entry"
@@ -1683,12 +1607,11 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
             <li
               class="font-sans-md line-height-sans-4"
             >
-              <div
-                class="display-flex flex-align-center"
-              >
-                Daily
-              </div>
+              Monthly
             </li>
+            <ul
+              data-testid="other-entry"
+            />
           </ul>
         </div>
         <div
@@ -1748,12 +1671,11 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
             <li
               class="font-sans-md line-height-sans-4"
             >
-              <div
-                class="display-flex flex-align-center"
-              >
-                Monthly
-              </div>
+              Annually
             </li>
+            <ul
+              data-testid="other-entry"
+            />
           </ul>
         </div>
         <div
@@ -1814,6 +1736,38 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
           </div>
         </div>
       </div>
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--how-frequently-does-quality-reporting-happen margin-bottom-3"
+        >
+          <p
+            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+          >
+            How frequently does quality reporting happen?
+          </p>
+          <ul
+            class="margin-y-0 padding-left-3"
+          >
+            <li
+              class="font-sans-md line-height-sans-4"
+            >
+              Other
+            </li>
+            <ul
+              data-testid="other-entry"
+            >
+              <li
+                class="font-sans-md line-height-sans-4"
+              >
+                Other frequency
+              </li>
+            </ul>
+          </ul>
+        </div>
+      </div>
     </div>
     <div>
       <div
@@ -1834,29 +1788,17 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
             <li
               class="font-sans-md line-height-sans-4"
             >
-              <div
-                class="display-flex flex-align-center"
-              >
-                We plan to use an IT platform (Connect)
-              </div>
+              We plan to use an IT platform (Connect)
             </li>
             <li
               class="font-sans-md line-height-sans-4"
             >
-              <div
-                class="display-flex flex-align-center"
-              >
-                No, we will not have a learning strategy
-              </div>
+              No, we will not have a learning strategy
             </li>
             <li
               class="font-sans-md line-height-sans-4"
             >
-              <div
-                class="display-flex flex-align-center"
-              >
-                Other
-              </div>
+              Other
             </li>
             <ul
               data-testid="other-entry"

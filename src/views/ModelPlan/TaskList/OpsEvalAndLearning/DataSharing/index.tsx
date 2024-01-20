@@ -13,7 +13,6 @@ import {
 } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
 import {
-  DataFrequencyType,
   DataStartsType,
   GetDataSharingQuery,
   useGetDataSharingQuery,
@@ -22,19 +21,18 @@ import {
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
+import FrequencyForm from 'components/FrequencyForm';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import AutoSave from 'components/shared/AutoSave';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
-import MultiSelect from 'components/shared/MultiSelect';
 import TextAreaField from 'components/shared/TextAreaField';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import { getKeys } from 'types/translation';
 import flattenErrors from 'utils/flattenErrors';
 import { dirtyInput } from 'utils/formDiff';
-import { composeMultiSelectOptions } from 'utils/modelPlan';
 import { NotFoundPartial } from 'views/NotFound';
 
 import {
@@ -59,7 +57,8 @@ const DataSharing = () => {
     dataSharingFrequency: dataSharingFrequencyConfig,
     dataCollectionStarts: dataCollectionStartsConfig,
     dataCollectionFrequency: dataCollectionFrequencyConfig,
-    qualityReportingStarts: qualityReportingStartsConfig
+    qualityReportingStarts: qualityReportingStartsConfig,
+    qualityReportingFrequency: qualityReportingFrequencyConfig
   } = usePlanTranslation('opsEvalAndLearning');
 
   const { modelID } = useParams<{ modelID: string }>();
@@ -81,16 +80,21 @@ const DataSharing = () => {
     dataSharingStarts,
     dataSharingStartsOther,
     dataSharingFrequency,
+    dataSharingFrequencyContinually,
     dataSharingFrequencyOther,
     dataSharingStartsNote,
     dataCollectionStarts,
     dataCollectionStartsOther,
     dataCollectionFrequency,
+    dataCollectionFrequencyContinually,
     dataCollectionFrequencyOther,
     dataCollectionFrequencyNote,
     qualityReportingStarts,
     qualityReportingStartsOther,
-    qualityReportingStartsNote
+    qualityReportingStartsNote,
+    qualityReportingFrequency,
+    qualityReportingFrequencyContinually,
+    qualityReportingFrequencyOther
   } = (data?.modelPlan?.opsEvalAndLearning || {}) as GetDataSharingFormType;
 
   const modelName = data?.modelPlan?.modelName || '';
@@ -147,16 +151,23 @@ const DataSharing = () => {
     dataSharingStarts: dataSharingStarts ?? null,
     dataSharingStartsOther: dataSharingStartsOther ?? '',
     dataSharingFrequency: dataSharingFrequency ?? [],
+    dataSharingFrequencyContinually: dataSharingFrequencyContinually ?? '',
     dataSharingFrequencyOther: dataSharingFrequencyOther ?? '',
     dataSharingStartsNote: dataSharingStartsNote ?? '',
     dataCollectionStarts: dataCollectionStarts ?? null,
     dataCollectionStartsOther: dataCollectionStartsOther ?? '',
     dataCollectionFrequency: dataCollectionFrequency ?? [],
+    dataCollectionFrequencyContinually:
+      dataCollectionFrequencyContinually ?? '',
     dataCollectionFrequencyOther: dataCollectionFrequencyOther ?? '',
     dataCollectionFrequencyNote: dataCollectionFrequencyNote ?? '',
     qualityReportingStarts: qualityReportingStarts ?? null,
     qualityReportingStartsOther: qualityReportingStartsOther ?? '',
-    qualityReportingStartsNote: qualityReportingStartsNote ?? ''
+    qualityReportingStartsNote: qualityReportingStartsNote ?? '',
+    qualityReportingFrequency: qualityReportingFrequency ?? [],
+    qualityReportingFrequencyContinually:
+      qualityReportingFrequencyContinually ?? '',
+    qualityReportingFrequencyOther: qualityReportingFrequencyOther ?? ''
   };
 
   if ((!loading && error) || (!loading && !data?.modelPlan)) {
@@ -310,73 +321,22 @@ const DataSharing = () => {
                     )}
                   </FieldGroup>
 
-                  <FieldGroup
-                    scrollElement="dataSharingFrequency"
-                    error={!!flatErrors.dataSharingFrequency}
-                    className="margin-top-4"
-                  >
-                    <Label
-                      htmlFor="ops-eval-and-learning-data-sharing-frequency"
-                      className="maxw-none text-normal"
-                      id="label-ops-eval-and-learning-data-sharing-frequency"
-                    >
-                      {opsEvalAndLearningT('dataSharingFrequency.label')}
-                    </Label>
+                  <FrequencyForm
+                    field="dataSharingFrequency"
+                    values={values.dataSharingFrequency}
+                    config={dataSharingFrequencyConfig}
+                    nameSpace="opsEvalAndLearning"
+                    id="ops-eval-and-learning-data-sharing-frequency"
+                    label={opsEvalAndLearningT('dataSharingFrequency.label')}
+                    disabled={loading}
+                    boldLabel={false}
+                    addNote={false}
+                  />
 
-                    <FieldErrorMsg>
-                      {flatErrors.dataSharingFrequency}
-                    </FieldErrorMsg>
-
-                    <Field
-                      as={MultiSelect}
-                      id="ops-eval-and-learning-data-sharing-frequency"
-                      name="dataSharingFrequency"
-                      ariaLabel="label-ops-eval-and-learning-data-sharing-frequency"
-                      options={composeMultiSelectOptions(
-                        dataSharingFrequencyConfig.options
-                      )}
-                      selectedLabel={opsEvalAndLearningT(
-                        'dataSharingFrequency.multiSelectLabel'
-                      )}
-                      onChange={(value: string[] | []) => {
-                        setFieldValue('dataSharingFrequency', value);
-                      }}
-                      initialValues={initialValues.dataSharingFrequency}
-                    />
-
-                    {(values?.dataSharingFrequency || []).includes(
-                      DataFrequencyType.OTHER
-                    ) && (
-                      <div className="margin-top-2">
-                        <Label
-                          htmlFor="ops-eval-and-learning-data-sharing-frequency-other"
-                          className="text-normal"
-                        >
-                          {opsEvalAndLearningT(
-                            'dataSharingFrequencyOther.label'
-                          )}
-                        </Label>
-
-                        <FieldErrorMsg>
-                          {flatErrors.dataSharingFrequencyOther}
-                        </FieldErrorMsg>
-
-                        <Field
-                          as={TextAreaField}
-                          maxLength={5000}
-                          className="mint-textarea"
-                          error={flatErrors.dataSharingFrequencyOther}
-                          id="ops-eval-and-learning-data-sharing-frequency-other"
-                          name="dataSharingFrequencyOther"
-                        />
-                      </div>
-                    )}
-
-                    <AddNote
-                      id="ops-eval-and-learning-data-sharing-frequency-note"
-                      field="dataSharingStartsNote"
-                    />
-                  </FieldGroup>
+                  <AddNote
+                    id="ops-eval-and-learning-data-sharing-starts-note"
+                    field="dataSharingStartsNote"
+                  />
 
                   <FieldGroup
                     scrollElement="dataCollectionStarts"
@@ -445,73 +405,16 @@ const DataSharing = () => {
                     )}
                   </FieldGroup>
 
-                  <FieldGroup
-                    scrollElement="dataCollectionFrequency"
-                    error={!!flatErrors.dataCollectionFrequency}
-                    className="margin-top-4"
-                  >
-                    <Label
-                      htmlFor="ops-eval-and-learning-data-collection-frequency"
-                      id="label-ops-eval-and-learning-data-collection-frequency"
-                      className="maxw-none text-normal"
-                    >
-                      {opsEvalAndLearningT('dataCollectionFrequency.label')}
-                    </Label>
-
-                    <FieldErrorMsg>
-                      {flatErrors.dataCollectionFrequency}
-                    </FieldErrorMsg>
-
-                    <Field
-                      as={MultiSelect}
-                      id="ops-eval-and-learning-data-collection-frequency"
-                      name="dataCollectionFrequency"
-                      ariaLabel="label-ops-eval-and-learning-data-collection-frequency"
-                      options={composeMultiSelectOptions(
-                        dataCollectionFrequencyConfig.options
-                      )}
-                      selectedLabel={opsEvalAndLearningT(
-                        'dataCollectionFrequency.multiSelectLabel'
-                      )}
-                      onChange={(value: string[] | []) => {
-                        setFieldValue('dataCollectionFrequency', value);
-                      }}
-                      initialValues={initialValues.dataCollectionFrequency}
-                    />
-
-                    {(values?.dataCollectionFrequency || []).includes(
-                      DataFrequencyType.OTHER
-                    ) && (
-                      <div className="margin-top-2">
-                        <Label
-                          htmlFor="ops-eval-and-learning-data-collection-frequency-other"
-                          className="text-normal"
-                        >
-                          {opsEvalAndLearningT(
-                            'dataCollectionFrequencyOther.label'
-                          )}
-                        </Label>
-
-                        <FieldErrorMsg>
-                          {flatErrors.dataCollectionFrequencyOther}
-                        </FieldErrorMsg>
-
-                        <Field
-                          as={TextAreaField}
-                          maxLength={5000}
-                          className="mint-textarea"
-                          error={flatErrors.dataCollectionFrequencyOther}
-                          id="ops-eval-and-learning-data-collection-frequency-other"
-                          name="dataCollectionFrequencyOther"
-                        />
-                      </div>
-                    )}
-
-                    <AddNote
-                      id="ops-eval-and-learning-data-sharing-frequency-note"
-                      field="dataCollectionFrequencyNote"
-                    />
-                  </FieldGroup>
+                  <FrequencyForm
+                    field="dataCollectionFrequency"
+                    values={values.dataCollectionFrequency}
+                    config={dataCollectionFrequencyConfig}
+                    nameSpace="opsEvalAndLearning"
+                    id="ops-eval-and-learning-data-collection-frequency"
+                    label={opsEvalAndLearningT('dataCollectionFrequency.label')}
+                    disabled={loading}
+                    boldLabel={false}
+                  />
 
                   <FieldGroup
                     scrollElement="qualityReportingStarts"
@@ -577,6 +480,20 @@ const DataSharing = () => {
                         />
                       </div>
                     )}
+
+                    <FrequencyForm
+                      field="qualityReportingFrequency"
+                      values={values.qualityReportingFrequency}
+                      config={qualityReportingFrequencyConfig}
+                      nameSpace="opsEvalAndLearning"
+                      id="ops-eval-and-learning-quality-reporting-frequency"
+                      label={opsEvalAndLearningT(
+                        'qualityReportingFrequency.label'
+                      )}
+                      disabled={loading}
+                      boldLabel={false}
+                      addNote={false}
+                    />
 
                     <AddNote
                       id="ops-eval-and-learning-data-reporting-frequency-note"

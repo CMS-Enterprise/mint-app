@@ -268,6 +268,180 @@ exports[`Model Plan -- Recover > matches snapshot 1`] = `
               </div>
             </div>
             <div
+              class="usa-form-group"
+              data-scroll="paymentReconciliationFrequency"
+            >
+              <label
+                class="usa-label maxw-none"
+                data-testid="label"
+                for="payment-reconciliation-frequency"
+              >
+                How often are payments reconciled?
+              </label>
+              <div
+                class="mint-checkbox usa-checkbox"
+              >
+                <input
+                  class="usa-checkbox__input"
+                  id="payment-reconciliation-frequency-annually"
+                  name="paymentReconciliationFrequency"
+                  type="checkbox"
+                  value="ANNUALLY"
+                />
+                <label
+                  class="usa-checkbox__label"
+                  for="payment-reconciliation-frequency-annually"
+                >
+                  Annually
+                </label>
+                <p
+                  class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                />
+              </div>
+              <div
+                class="mint-checkbox usa-checkbox"
+              >
+                <input
+                  class="usa-checkbox__input"
+                  id="payment-reconciliation-frequency-semiannually"
+                  name="paymentReconciliationFrequency"
+                  type="checkbox"
+                  value="SEMIANNUALLY"
+                />
+                <label
+                  class="usa-checkbox__label"
+                  for="payment-reconciliation-frequency-semiannually"
+                >
+                  Semi-annually
+                </label>
+                <p
+                  class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                />
+              </div>
+              <div
+                class="mint-checkbox usa-checkbox"
+              >
+                <input
+                  class="usa-checkbox__input"
+                  id="payment-reconciliation-frequency-quarterly"
+                  name="paymentReconciliationFrequency"
+                  type="checkbox"
+                  value="QUARTERLY"
+                />
+                <label
+                  class="usa-checkbox__label"
+                  for="payment-reconciliation-frequency-quarterly"
+                >
+                  Quarterly
+                </label>
+                <p
+                  class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                />
+              </div>
+              <div
+                class="mint-checkbox usa-checkbox"
+              >
+                <input
+                  class="usa-checkbox__input"
+                  id="payment-reconciliation-frequency-monthly"
+                  name="paymentReconciliationFrequency"
+                  type="checkbox"
+                  value="MONTHLY"
+                />
+                <label
+                  class="usa-checkbox__label"
+                  for="payment-reconciliation-frequency-monthly"
+                >
+                  Monthly
+                </label>
+                <p
+                  class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                />
+              </div>
+              <div
+                class="mint-checkbox usa-checkbox"
+              >
+                <input
+                  class="usa-checkbox__input"
+                  id="payment-reconciliation-frequency-continually"
+                  name="paymentReconciliationFrequency"
+                  type="checkbox"
+                  value="CONTINUALLY"
+                />
+                <label
+                  class="usa-checkbox__label"
+                  for="payment-reconciliation-frequency-continually"
+                >
+                  Continually
+                </label>
+                <p
+                  class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                />
+              </div>
+              <div
+                class="margin-left-4"
+              >
+                <label
+                  class="usa-label text-normal margin-top-1"
+                  data-testid="label"
+                  for="payment-reconciliation-frequency-continually"
+                >
+                  Please specify
+                </label>
+                <input
+                  class="usa-input"
+                  data-testid="payment-reconciliation-frequency-continually-text"
+                  id="payment-reconciliation-frequency-continually-text"
+                  name="paymentReconciliationFrequencyContinually"
+                  value="Continual Frequency"
+                />
+              </div>
+              <div
+                class="mint-checkbox usa-checkbox"
+              >
+                <input
+                  class="usa-checkbox__input"
+                  id="payment-reconciliation-frequency-other"
+                  name="paymentReconciliationFrequency"
+                  type="checkbox"
+                  value="OTHER"
+                />
+                <label
+                  class="usa-checkbox__label"
+                  for="payment-reconciliation-frequency-other"
+                >
+                  Other
+                </label>
+                <p
+                  class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                />
+              </div>
+              <div
+                class="margin-top-4 margin-bottom-8"
+              >
+                <div
+                  class="usa-form-group"
+                >
+                  <label
+                    class="usa-label"
+                    for="payment-reconciliation-frequency-note"
+                    id="label-payment-reconciliation-frequency-note"
+                  >
+                    Notes
+                  </label>
+                  <textarea
+                    aria-labelledby="label-payment-reconciliation-frequency-note hint-payment-reconciliation-frequency-note"
+                    class="usa-textarea"
+                    data-testid="payment-reconciliation-frequency-note"
+                    id="payment-reconciliation-frequency-note"
+                    name="paymentReconciliationFrequencyNote"
+                  >
+                    Reconciliation note
+                  </textarea>
+                </div>
+              </div>
+            </div>
+            <div
               class="usa-form-group margin-top-6 margin-right-4"
               data-scroll="paymentStartDate"
             >

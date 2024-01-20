@@ -18,7 +18,8 @@ export interface GetProviderOptions_modelPlan_participantsAndProviders_readyForR
 export interface GetProviderOptions_modelPlan_participantsAndProviders {
   __typename: "PlanParticipantsAndProviders";
   id: UUID;
-  providerAdditionFrequency: FrequencyType | null;
+  providerAdditionFrequency: FrequencyType[];
+  providerAdditionFrequencyContinually: string | null;
   providerAdditionFrequencyOther: string | null;
   providerAdditionFrequencyNote: string | null;
   providerAddMethod: ProviderAddType[];
@@ -27,6 +28,10 @@ export interface GetProviderOptions_modelPlan_participantsAndProviders {
   providerLeaveMethod: ProviderLeaveType[];
   providerLeaveMethodOther: string | null;
   providerLeaveMethodNote: string | null;
+  providerRemovalFrequency: FrequencyType[];
+  providerRemovalFrequencyContinually: string | null;
+  providerRemovalFrequencyOther: string | null;
+  providerRemovalFrequencyNote: string | null;
   providerOverlap: OverlapType | null;
   providerOverlapHierarchy: string | null;
   providerOverlapNote: string | null;

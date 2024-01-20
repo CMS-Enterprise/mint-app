@@ -15,7 +15,6 @@ import {
 } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
 import {
-  FrequencyType,
   GetFrequencyQuery,
   useGetFrequencyQuery,
   useUpdateModelPlanBeneficiariesMutation
@@ -23,6 +22,7 @@ import {
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
+import FrequencyForm from 'components/FrequencyForm';
 import ITSolutionsWarning from 'components/ITSolutionsWarning';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
@@ -56,6 +56,7 @@ const Frequency = () => {
 
   const {
     beneficiarySelectionFrequency: beneficiarySelectionFrequencyConfig,
+    beneficiaryRemovalFrequency: beneficiaryRemovalFrequencyConfig,
     beneficiaryOverlap: beneficiaryOverlapConfig,
     precedenceRules: beneficiaryPrecedenceConfig
   } = usePlanTranslation('beneficiaries');
@@ -75,8 +76,13 @@ const Frequency = () => {
   const {
     id,
     beneficiarySelectionFrequency,
+    beneficiarySelectionFrequencyContinually,
     beneficiarySelectionFrequencyNote,
     beneficiarySelectionFrequencyOther,
+    beneficiaryRemovalFrequency,
+    beneficiaryRemovalFrequencyContinually,
+    beneficiaryRemovalFrequencyNote,
+    beneficiaryRemovalFrequencyOther,
     beneficiaryOverlap,
     beneficiaryOverlapNote,
     precedenceRules,
@@ -140,9 +146,16 @@ const Frequency = () => {
     __typename: 'PlanBeneficiaries',
     id: id ?? '',
     beneficiarySelectionFrequency: beneficiarySelectionFrequency ?? null,
+    beneficiarySelectionFrequencyContinually:
+      beneficiarySelectionFrequencyContinually ?? '',
     beneficiarySelectionFrequencyNote: beneficiarySelectionFrequencyNote ?? '',
     beneficiarySelectionFrequencyOther:
       beneficiarySelectionFrequencyOther ?? '',
+    beneficiaryRemovalFrequency: beneficiaryRemovalFrequency ?? null,
+    beneficiaryRemovalFrequencyContinually:
+      beneficiaryRemovalFrequencyContinually ?? '',
+    beneficiaryRemovalFrequencyNote: beneficiaryRemovalFrequencyNote ?? '',
+    beneficiaryRemovalFrequencyOther: beneficiaryRemovalFrequencyOther ?? '',
     beneficiaryOverlap: beneficiaryOverlap ?? null,
     beneficiaryOverlapNote: beneficiaryOverlapNote ?? '',
     precedenceRules: precedenceRules ?? [],
@@ -237,83 +250,29 @@ const Frequency = () => {
                         handleSubmit(e);
                       }}
                     >
-                      <FieldGroup
-                        scrollElement="beneficiarySelectionFrequency"
-                        error={!!flatErrors.beneficiarySelectionFrequency}
-                      >
-                        <Label htmlFor="beneficiaries-beneficiarySelectionFrequency">
-                          {beneficiariesT(
-                            'beneficiarySelectionFrequency.label'
-                          )}
-                        </Label>
+                      <FrequencyForm
+                        field="beneficiarySelectionFrequency"
+                        values={values.beneficiarySelectionFrequency}
+                        config={beneficiarySelectionFrequencyConfig}
+                        nameSpace="beneficiaries"
+                        id="beneficiary-selection-frequency"
+                        label={beneficiariesT(
+                          'beneficiarySelectionFrequency.label'
+                        )}
+                        disabled={loading}
+                      />
 
-                        <FieldErrorMsg>
-                          {flatErrors.beneficiarySelectionFrequency}
-                        </FieldErrorMsg>
-
-                        <Fieldset>
-                          {getKeys(
-                            beneficiarySelectionFrequencyConfig.options
-                          ).map(key => (
-                            <Fragment key={key}>
-                              <Field
-                                as={Radio}
-                                id={`beneficiaries-beneficiarySelectionFrequency-${key}`}
-                                name="beneficiarySelectionFrequency"
-                                label={
-                                  beneficiarySelectionFrequencyConfig.options[
-                                    key
-                                  ]
-                                }
-                                value={key}
-                                checked={
-                                  values.beneficiarySelectionFrequency === key
-                                }
-                                onChange={() => {
-                                  setFieldValue(
-                                    'beneficiarySelectionFrequency',
-                                    key
-                                  );
-                                }}
-                              />
-
-                              {key === FrequencyType.OTHER &&
-                                values.beneficiarySelectionFrequency ===
-                                  key && (
-                                  <div className="margin-left-4 margin-top-1">
-                                    <Label
-                                      htmlFor="beneficiaries-beneficiary-selection-frequency-other"
-                                      className="text-normal"
-                                    >
-                                      {beneficiariesT(
-                                        'beneficiarySelectionFrequencyOther.label'
-                                      )}
-                                    </Label>
-
-                                    <FieldErrorMsg>
-                                      {
-                                        flatErrors.beneficiarySelectionFrequencyOther
-                                      }
-                                    </FieldErrorMsg>
-
-                                    <Field
-                                      as={TextAreaField}
-                                      className="maxw-none mint-textarea"
-                                      id="beneficiaries-beneficiary-selection-frequency-other"
-                                      maxLength={5000}
-                                      name="beneficiarySelectionFrequencyOther"
-                                    />
-                                  </div>
-                                )}
-                            </Fragment>
-                          ))}
-                        </Fieldset>
-
-                        <AddNote
-                          id="beneficiaries-beneficiarySelectionFrequency-note"
-                          field="beneficiarySelectionFrequencyNote"
-                        />
-                      </FieldGroup>
+                      <FrequencyForm
+                        field="beneficiaryRemovalFrequency"
+                        values={values.beneficiaryRemovalFrequency}
+                        config={beneficiaryRemovalFrequencyConfig}
+                        nameSpace="beneficiaries"
+                        id="beneficiary-removal-frequency"
+                        label={beneficiariesT(
+                          'beneficiaryRemovalFrequency.label'
+                        )}
+                        disabled={loading}
+                      />
 
                       <FieldGroup
                         scrollElement="beneficiaryOverlap"
