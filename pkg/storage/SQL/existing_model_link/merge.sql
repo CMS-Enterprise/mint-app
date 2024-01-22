@@ -16,7 +16,6 @@ existing_model_links AS (
     SELECT * FROM existing_model_link
     WHERE model_plan_id = :model_plan_id AND field_name = :field_name
 ),
---TODO: Update this to join on not only the model_plan_id, but also the field_name
 
 /* Find the links that already exist */
 matchedLinks AS ( 
@@ -53,7 +52,7 @@ inserted AS (
     SELECT
         gen_random_uuid() AS id, --Use the actual id, not gen random id here
         :model_plan_id AS model_plan_id,
-        :field_name as :field_name,
+        :field_name AS field_name,
         matchedLinks.existing_model_id,
         matchedLinks.current_model_plan_id,
         :created_by AS created_by
@@ -110,7 +109,7 @@ SELECT
     inserted.model_plan_id,
     inserted.existing_model_id,
     inserted.current_model_plan_id,
-    inserted.field_name
+    inserted.field_name,
     inserted.created_by,
     inserted.created_dts,
     inserted.modified_by,
