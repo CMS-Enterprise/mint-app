@@ -293,9 +293,6 @@ const PeopleImpact = () => {
                                   label={estimateConfidenceConfig.options[key]}
                                   value={key}
                                   checked={values.estimateConfidence === key}
-                                  onChange={() => {
-                                    setFieldValue('estimateConfidence', key);
-                                  }}
                                 />
                               )
                             )}

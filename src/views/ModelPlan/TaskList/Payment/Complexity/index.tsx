@@ -287,12 +287,6 @@ const Complexity = () => {
                                   values.expectedCalculationComplexityLevel ===
                                   key
                                 }
-                                onChange={() => {
-                                  setFieldValue(
-                                    'expectedCalculationComplexityLevel',
-                                    key
-                                  );
-                                }}
                               />
                             ))}
                           </Fieldset>

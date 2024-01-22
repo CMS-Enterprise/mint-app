@@ -457,9 +457,6 @@ export const ProviderOptions = () => {
                             label={providerOverlapConfig.options[key]}
                             value={key}
                             checked={values.providerOverlap === key}
-                            onChange={() => {
-                              setFieldValue('providerOverlap', key);
-                            }}
                           />
                         </Fragment>
                       ))}

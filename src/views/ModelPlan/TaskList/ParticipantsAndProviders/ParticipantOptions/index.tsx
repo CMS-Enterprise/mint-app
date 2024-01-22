@@ -317,9 +317,6 @@ export const ParticipantOptions = () => {
                           label={estimateConfidenceConfig.options[key]}
                           value={key}
                           checked={values.estimateConfidence === key}
-                          onChange={() => {
-                            setFieldValue('estimateConfidence', key);
-                          }}
                         />
                       ))}
                     </Fieldset>
@@ -363,9 +360,6 @@ export const ParticipantOptions = () => {
                             label={recruitmentMethodConfig.options[key]}
                             value={key}
                             checked={values.recruitmentMethod === key}
-                            onChange={() => {
-                              setFieldValue('recruitmentMethod', key);
-                            }}
                           />
 
                           {key === RecruitmentType.NOFO && (
