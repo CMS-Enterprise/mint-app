@@ -23,6 +23,14 @@ export default gql(/* GraphQL */ `
         selectionMethod
         selectionOther
         selectionNote
+        participantAddedFrequency
+        participantAddedFrequencyContinually
+        participantAddedFrequencyOther
+        participantAddedFrequencyNote
+        participantRemovedFrequency
+        participantRemovedFrequencyContinually
+        participantRemovedFrequencyOther
+        participantRemovedFrequencyNote
         communicationMethod
         communicationMethodOther
         communicationNote
@@ -42,6 +50,7 @@ export default gql(/* GraphQL */ `
         participantsIdsOther
         participantsIDSNote
         providerAdditionFrequency
+        providerAdditionFrequencyContinually
         providerAdditionFrequencyOther
         providerAdditionFrequencyNote
         providerAddMethod
@@ -50,6 +59,10 @@ export default gql(/* GraphQL */ `
         providerLeaveMethod
         providerLeaveMethodOther
         providerLeaveMethodNote
+        providerRemovalFrequency
+        providerRemovalFrequencyContinually
+        providerRemovalFrequencyOther
+        providerRemovalFrequencyNote
         providerOverlap
         providerOverlapHierarchy
         providerOverlapNote

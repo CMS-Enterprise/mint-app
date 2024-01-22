@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { FundingSource, PayRecipient, PayType, ClaimsBasedPayType, NonClaimsBasedPayType, ComplexityCalculationLevelType, AnticipatedPaymentFrequencyType, TaskStatus } from "./../../../types/graphql-global-types";
+import { FundingSource, PayRecipient, PayType, ClaimsBasedPayType, NonClaimsBasedPayType, ComplexityCalculationLevelType, FrequencyType, TaskStatus } from "./../../../types/graphql-global-types";
 
 // ====================================================
 // GraphQL query operation: GetAllPayments
@@ -63,13 +63,18 @@ export interface GetAllPayments_modelPlan_payments {
   canParticipantsSelectBetweenPaymentMechanisms: boolean | null;
   canParticipantsSelectBetweenPaymentMechanismsHow: string | null;
   canParticipantsSelectBetweenPaymentMechanismsNote: string | null;
-  anticipatedPaymentFrequency: AnticipatedPaymentFrequencyType[];
+  anticipatedPaymentFrequency: FrequencyType[];
+  anticipatedPaymentFrequencyContinually: string | null;
   anticipatedPaymentFrequencyOther: string | null;
   anticipatedPaymentFrequencyNote: string | null;
   willRecoverPayments: boolean | null;
   willRecoverPaymentsNote: string | null;
   anticipateReconcilingPaymentsRetrospectively: boolean | null;
   anticipateReconcilingPaymentsRetrospectivelyNote: string | null;
+  paymentReconciliationFrequency: FrequencyType[];
+  paymentReconciliationFrequencyContinually: string | null;
+  paymentReconciliationFrequencyOther: string | null;
+  paymentReconciliationFrequencyNote: string | null;
   paymentStartDate: Time | null;
   paymentStartDateNote: string | null;
   status: TaskStatus;

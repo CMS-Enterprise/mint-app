@@ -6,29 +6,6 @@ import (
 	"github.com/lib/pq"
 )
 
-// AnticipatedPaymentFrequencyType is the enumeration of options for this category
-type AnticipatedPaymentFrequencyType string
-
-//goland:noinspection ALL
-const (
-	// AnticipatedPaymentFrequencyTypeAnnually indicates annual payments
-	AnticipatedPaymentFrequencyTypeAnnually AnticipatedPaymentFrequencyType = "ANNUALLY"
-	// AnticipatedPaymentFrequencyTypeBiannually indicates biannual payments
-	AnticipatedPaymentFrequencyTypeBiannually AnticipatedPaymentFrequencyType = "BIANNUALLY"
-	// AnticipatedPaymentFrequencyTypeQuarterly indicates payments every quarter
-	AnticipatedPaymentFrequencyTypeQuarterly AnticipatedPaymentFrequencyType = "QUARTERLY"
-	// AnticipatedPaymentFrequencyTypeMonthly indicates payments every month
-	AnticipatedPaymentFrequencyTypeMonthly AnticipatedPaymentFrequencyType = "MONTHLY"
-	// AnticipatedPaymentFrequencyTypeSemiMonthly indicates semi-monthly payments
-	AnticipatedPaymentFrequencyTypeSemiMonthly AnticipatedPaymentFrequencyType = "SEMIMONTHLY"
-	// AnticipatedPaymentFrequencyTypeWeekly indicates payments every week
-	AnticipatedPaymentFrequencyTypeWeekly AnticipatedPaymentFrequencyType = "WEEKLY"
-	// AnticipatedPaymentFrequencyTypeDaily indicates payments every day
-	AnticipatedPaymentFrequencyTypeDaily AnticipatedPaymentFrequencyType = "DAILY"
-	// AnticipatedPaymentFrequencyTypeOther indicates another form of payment than provided
-	AnticipatedPaymentFrequencyTypeOther AnticipatedPaymentFrequencyType = "OTHER"
-)
-
 // ComplexityCalculationLevelType is an enumeration of options for this category
 type ComplexityCalculationLevelType string
 
@@ -201,16 +178,21 @@ type PlanPayments struct {
 	CanParticipantsSelectBetweenPaymentMechanismsHow  *string                         `json:"canParticipantsSelectBetweenPaymentMechanismsHow" db:"can_participants_select_between_payment_mechanisms_how"`
 	CanParticipantsSelectBetweenPaymentMechanismsNote *string                         `json:"canParticipantsSelectBetweenPaymentMechanismsNote" db:"can_participants_select_between_payment_mechanisms_note"`
 	AnticipatedPaymentFrequency                       pq.StringArray                  `json:"anticipatedPaymentFrequency" db:"anticipated_payment_frequency" statusWeight:"1"`
+	AnticipatedPaymentFrequencyContinually            *string                         `json:"anticipatedPaymentFrequencyContinually" db:"anticipated_payment_frequency_continually"`
 	AnticipatedPaymentFrequencyOther                  *string                         `json:"anticipatedPaymentFrequencyOther" db:"anticipated_payment_frequency_other"`
 	AnticipatedPaymentFrequencyNote                   *string                         `json:"anticipatedPaymentFrequencyNote" db:"anticipated_payment_frequency_note"`
 
 	// Page 7
-	WillRecoverPayments                              *bool      `json:"willRecoverPayments" db:"will_recover_payments" statusWeight:"1"`
-	WillRecoverPaymentsNote                          *string    `json:"willRecoverPaymentsNote" db:"will_recover_payments_note"`
-	AnticipateReconcilingPaymentsRetrospectively     *bool      `json:"anticipateReconcilingPaymentsRetrospectively" db:"anticipate_reconciling_payments_retrospectively" statusWeight:"1"`
-	AnticipateReconcilingPaymentsRetrospectivelyNote *string    `json:"anticipateReconcilingPaymentsRetrospectivelyNote" db:"anticipate_reconciling_payments_retrospectively_note"`
-	PaymentStartDate                                 *time.Time `json:"paymentStartDate" db:"payment_start_date" statusWeight:"1"`
-	PaymentStartDateNote                             *string    `json:"paymentStartDateNote" db:"payment_start_date_note"`
+	WillRecoverPayments                              *bool          `json:"willRecoverPayments" db:"will_recover_payments" statusWeight:"1"`
+	WillRecoverPaymentsNote                          *string        `json:"willRecoverPaymentsNote" db:"will_recover_payments_note"`
+	AnticipateReconcilingPaymentsRetrospectively     *bool          `json:"anticipateReconcilingPaymentsRetrospectively" db:"anticipate_reconciling_payments_retrospectively" statusWeight:"1"`
+	AnticipateReconcilingPaymentsRetrospectivelyNote *string        `json:"anticipateReconcilingPaymentsRetrospectivelyNote" db:"anticipate_reconciling_payments_retrospectively_note"`
+	PaymentReconciliationFrequency                   pq.StringArray `json:"paymentReconciliationFrequency" db:"payment_reconciliation_frequency" statusWeight:"1"`
+	PaymentReconciliationFrequencyContinually        *string        `json:"paymentReconciliationFrequencyContinually" db:"payment_reconciliation_frequency_continually"`
+	PaymentReconciliationFrequencyOther              *string        `json:"paymentReconciliationFrequencyOther" db:"payment_reconciliation_frequency_other"`
+	PaymentReconciliationFrequencyNote               *string        `json:"paymentReconciliationFrequencyNote" db:"payment_reconciliation_frequency_note"`
+	PaymentStartDate                                 *time.Time     `json:"paymentStartDate" db:"payment_start_date" statusWeight:"1"`
+	PaymentStartDateNote                             *string        `json:"paymentStartDateNote" db:"payment_start_date_note"`
 }
 
 // NewPlanPayments returns a new PlanPayments object

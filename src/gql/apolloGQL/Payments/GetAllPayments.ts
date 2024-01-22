@@ -58,12 +58,17 @@ export default gql(/* GraphQL */ `
         canParticipantsSelectBetweenPaymentMechanismsHow
         canParticipantsSelectBetweenPaymentMechanismsNote
         anticipatedPaymentFrequency
+        anticipatedPaymentFrequencyContinually
         anticipatedPaymentFrequencyOther
         anticipatedPaymentFrequencyNote
         willRecoverPayments
         willRecoverPaymentsNote
         anticipateReconcilingPaymentsRetrospectively
         anticipateReconcilingPaymentsRetrospectivelyNote
+        paymentReconciliationFrequency
+        paymentReconciliationFrequencyContinually
+        paymentReconciliationFrequencyOther
+        paymentReconciliationFrequencyNote
         paymentStartDate
         paymentStartDateNote
         status

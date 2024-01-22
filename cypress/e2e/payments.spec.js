@@ -223,17 +223,15 @@ describe('The Model Plan Payment Form', () => {
       .type('Payment Funding Structure')
       .should('have.value', 'Payment Funding Structure');
 
-    cy.get('#payment-frequency-payments').within(() => {
-      cy.get("input[type='text']").click();
-    });
-
-    cy.get('[data-testid="option-OTHER"]')
+    cy.get('#anticipated-payment-frequency-quarterly')
       .check({ force: true })
       .should('be.checked');
 
-    cy.clickOutside();
+    cy.get('#anticipated-payment-frequency-other')
+      .check({ force: true })
+      .should('be.checked');
 
-    cy.get('#payment-frequency-payments-other')
+    cy.get('#anticipated-payment-frequency-other-text')
       .type('Payment Frequency Payments Other')
       .should('have.value', 'Payment Frequency Payments Other');
 
@@ -255,6 +253,18 @@ describe('The Model Plan Payment Form', () => {
     cy.get('#payment-anticipate-reconciling-payment-retro-true')
       .check({ force: true })
       .should('be.checked');
+
+    cy.get('#payment-reconciliation-frequency-quarterly')
+      .check({ force: true })
+      .should('be.checked');
+
+    cy.get('#payment-reconciliation-frequency-other')
+      .check({ force: true })
+      .should('be.checked');
+
+    cy.get('#payment-reconciliation-frequency-other-text')
+      .type('Payment Frequency Payments Other')
+      .should('have.value', 'Payment Frequency Payments Other');
 
     cy.get('#payment-payment-start-date')
       .type('10/26/2028')

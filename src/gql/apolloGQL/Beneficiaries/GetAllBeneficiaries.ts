@@ -24,8 +24,13 @@ export default gql(/* GraphQL */ `
         beneficiarySelectionOther
         beneficiarySelectionNote
         beneficiarySelectionFrequency
+        beneficiarySelectionFrequencyContinually
         beneficiarySelectionFrequencyOther
         beneficiarySelectionFrequencyNote
+        beneficiaryRemovalFrequency
+        beneficiaryRemovalFrequencyContinually
+        beneficiaryRemovalFrequencyNote
+        beneficiaryRemovalFrequencyOther
         beneficiaryOverlap
         beneficiaryOverlapNote
         precedenceRules
