@@ -207,14 +207,16 @@ type ExistingModel {
   modifiedDts: Time
 }
 """
-TaggedEntity is the actual object represented by a tag in the data base.
+LinkedExistingModel is a union type that returns either an Existing Model, or a Model plan from the database
 """
 union LinkedExistingModel =  ExistingModel | ModelPlan
 
 
 type ExistingModelLinks {
   links: [ExistingModelLink!]!
-  names: [String!]! # TODO, do we need this?
+  fieldName: ExisitingModelLinkFieldType!
+  modelPlanID: UUID!
+  names: [String!]!
 }
 
 type ExistingModelLink {

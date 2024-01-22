@@ -32,12 +32,17 @@ type LinkedExistingModel interface {
 
 // ExistingModelLinks is a wrapper for a collection of Existing Model Links
 type ExistingModelLinks struct {
-	Links []*ExistingModelLink
+	FieldName ExisitingModelLinkFieldType `json:"fieldName" db:"field_name"`
+	Links     []*ExistingModelLink
+	modelPlanRelation
 }
 
-// Names converts a collection of ExistingModelLinks to an array of strings for the represented linked names
-func (emls ExistingModelLinks) Names() []string {
-	return []string{"hooray", "TODO:", "TEST DATA"}
+func NewExistingModelLinks(modelPlanID uuid.UUID, fieldName ExisitingModelLinkFieldType, links []*ExistingModelLink) *ExistingModelLinks {
+	return &ExistingModelLinks{
+		Links:             links,
+		modelPlanRelation: NewModelPlanRelation(modelPlanID),
+		FieldName:         fieldName,
+	}
 
 }
 

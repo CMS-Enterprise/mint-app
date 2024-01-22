@@ -36,6 +36,11 @@ func (r *existingModelLinkResolver) Model(ctx context.Context, obj *models.Exist
 	return resolvers.ExistingModelLinkGetModel(ctx, obj)
 }
 
+// Names is the resolver for the names field.
+func (r *existingModelLinksResolver) Names(ctx context.Context, obj *models.ExistingModelLinks) ([]string, error) {
+	return resolvers.ExistingModelLinksNameArray(obj)
+}
+
 // Basics is the resolver for the basics field.
 func (r *modelPlanResolver) Basics(ctx context.Context, obj *models.ModelPlan) (*models.PlanBasics, error) {
 	return resolvers.PlanBasicsGetByModelPlanIDLOADER(ctx, obj.ID)
@@ -1068,6 +1073,11 @@ func (r *Resolver) ExistingModelLink() generated.ExistingModelLinkResolver {
 	return &existingModelLinkResolver{r}
 }
 
+// ExistingModelLinks returns generated.ExistingModelLinksResolver implementation.
+func (r *Resolver) ExistingModelLinks() generated.ExistingModelLinksResolver {
+	return &existingModelLinksResolver{r}
+}
+
 // ModelPlan returns generated.ModelPlanResolver implementation.
 func (r *Resolver) ModelPlan() generated.ModelPlanResolver { return &modelPlanResolver{r} }
 
@@ -1148,6 +1158,7 @@ func (r *Resolver) TaggedContent() generated.TaggedContentResolver { return &tag
 type auditChangeResolver struct{ *Resolver }
 type discussionReplyResolver struct{ *Resolver }
 type existingModelLinkResolver struct{ *Resolver }
+type existingModelLinksResolver struct{ *Resolver }
 type modelPlanResolver struct{ *Resolver }
 type mutationResolver struct{ *Resolver }
 type operationalNeedResolver struct{ *Resolver }

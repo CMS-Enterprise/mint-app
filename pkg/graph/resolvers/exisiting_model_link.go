@@ -39,10 +39,9 @@ func ExistingModelLinksGetByModelPlanIDLOADER(ctx context.Context, modelPlanID u
 	if err != nil {
 		return nil, err
 	}
-	links := models.ExistingModelLinks{
-		Links: linkCollection,
-	}
-	return &links, nil
+	links := models.NewExistingModelLinks(modelPlanID, fieldName, linkCollection)
+
+	return links, nil
 }
 
 // ExistingModelLinksUpdate creates or deletes existing model links based on the list provided.
@@ -53,14 +52,13 @@ func ExistingModelLinksUpdate(logger *zap.Logger, store *storage.Store, principa
 		return nil, err
 	}
 
-	retLink, err := store.ExistingModelLinksUpdate(logger, principal.Account().ID, modelPlanID, fieldName, existingModelIDs, currentModelPlanIDs)
+	retLinks, err := store.ExistingModelLinksUpdate(logger, principal.Account().ID, modelPlanID, fieldName, existingModelIDs, currentModelPlanIDs)
 	if err != nil {
 		return nil, err
 	}
-	links := models.ExistingModelLinks{
-		Links: retLink,
-	}
-	return &links, err
+	links := models.NewExistingModelLinks(modelPlanID, fieldName, retLinks)
+
+	return links, err
 
 }
 
@@ -78,7 +76,6 @@ func ExistingModelLinkGetByID(logger *zap.Logger, store *storage.Store, principa
 // ExistingModelLinkGetModel conditionally returns either an ExistingModel, or a ModelPlan that is connected in an existing model link
 func ExistingModelLinkGetModel(ctx context.Context, link *models.ExistingModelLink) (models.LinkedExistingModel, error) {
 	if link.CurrentModelPlanID != nil {
-		//TODO: figure this out, potential nil pointer dereference
 		return ModelPlanGetByIDLOADER(ctx, *link.CurrentModelPlanID)
 	}
 
@@ -87,4 +84,9 @@ func ExistingModelLinkGetModel(ctx context.Context, link *models.ExistingModelLi
 	}
 	return nil, fmt.Errorf("no valid model for existing model link %s for model_plan_id %s", link.ID, link.ModelPlanID)
 
+}
+
+func ExistingModelLinksNameArray(links *models.ExistingModelLinks) ([]string, error) {
+	//TODO: implement this
+	return []string{"hooray", "TODO:", "TEST DATA"}, nil
 }

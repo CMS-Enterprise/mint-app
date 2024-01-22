@@ -44,6 +44,7 @@ type ResolverRoot interface {
 	AuditChange() AuditChangeResolver
 	DiscussionReply() DiscussionReplyResolver
 	ExistingModelLink() ExistingModelLinkResolver
+	ExistingModelLinks() ExistingModelLinksResolver
 	ModelPlan() ModelPlanResolver
 	Mutation() MutationResolver
 	OperationalNeed() OperationalNeedResolver
@@ -172,8 +173,10 @@ type ComplexityRoot struct {
 	}
 
 	ExistingModelLinks struct {
-		Links func(childComplexity int) int
-		Names func(childComplexity int) int
+		FieldName   func(childComplexity int) int
+		Links       func(childComplexity int) int
+		ModelPlanID func(childComplexity int) int
+		Names       func(childComplexity int) int
 	}
 
 	Field struct {
@@ -1006,6 +1009,9 @@ type DiscussionReplyResolver interface {
 type ExistingModelLinkResolver interface {
 	Model(ctx context.Context, obj *models.ExistingModelLink) (models.LinkedExistingModel, error)
 }
+type ExistingModelLinksResolver interface {
+	Names(ctx context.Context, obj *models.ExistingModelLinks) ([]string, error)
+}
 type ModelPlanResolver interface {
 	Basics(ctx context.Context, obj *models.ModelPlan) (*models.PlanBasics, error)
 	GeneralCharacteristics(ctx context.Context, obj *models.ModelPlan) (*models.PlanGeneralCharacteristics, error)
@@ -1763,12 +1769,26 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.ExistingModelLink.ModifiedDts(childComplexity), true
 
+	case "ExistingModelLinks.fieldName":
+		if e.complexity.ExistingModelLinks.FieldName == nil {
+			break
+		}
+
+		return e.complexity.ExistingModelLinks.FieldName(childComplexity), true
+
 	case "ExistingModelLinks.links":
 		if e.complexity.ExistingModelLinks.Links == nil {
 			break
 		}
 
 		return e.complexity.ExistingModelLinks.Links(childComplexity), true
+
+	case "ExistingModelLinks.modelPlanID":
+		if e.complexity.ExistingModelLinks.ModelPlanID == nil {
+			break
+		}
+
+		return e.complexity.ExistingModelLinks.ModelPlanID(childComplexity), true
 
 	case "ExistingModelLinks.names":
 		if e.complexity.ExistingModelLinks.Names == nil {
@@ -7458,14 +7478,16 @@ type ExistingModel {
   modifiedDts: Time
 }
 """
-TaggedEntity is the actual object represented by a tag in the data base.
+LinkedExistingModel is a union type that returns either an Existing Model, or a Model plan from the database
 """
 union LinkedExistingModel =  ExistingModel | ModelPlan
 
 
 type ExistingModelLinks {
   links: [ExistingModelLink!]!
-  names: [String!]! # TODO, do we need this?
+  fieldName: ExisitingModelLinkFieldType!
+  modelPlanID: UUID!
+  names: [String!]!
 }
 
 type ExistingModelLink {
@@ -14525,6 +14547,94 @@ func (ec *executionContext) fieldContext_ExistingModelLinks_links(ctx context.Co
 	return fc, nil
 }
 
+func (ec *executionContext) _ExistingModelLinks_fieldName(ctx context.Context, field graphql.CollectedField, obj *models.ExistingModelLinks) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_ExistingModelLinks_fieldName(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.FieldName, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(models.ExisitingModelLinkFieldType)
+	fc.Result = res
+	return ec.marshalNExisitingModelLinkFieldType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐExisitingModelLinkFieldType(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_ExistingModelLinks_fieldName(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "ExistingModelLinks",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type ExisitingModelLinkFieldType does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _ExistingModelLinks_modelPlanID(ctx context.Context, field graphql.CollectedField, obj *models.ExistingModelLinks) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_ExistingModelLinks_modelPlanID(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ModelPlanID, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(uuid.UUID)
+	fc.Result = res
+	return ec.marshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_ExistingModelLinks_modelPlanID(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "ExistingModelLinks",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type UUID does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
 func (ec *executionContext) _ExistingModelLinks_names(ctx context.Context, field graphql.CollectedField, obj *models.ExistingModelLinks) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_ExistingModelLinks_names(ctx, field)
 	if err != nil {
@@ -14539,7 +14649,7 @@ func (ec *executionContext) _ExistingModelLinks_names(ctx context.Context, field
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.Names(), nil
+		return ec.resolvers.ExistingModelLinks().Names(rctx, obj)
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -14561,7 +14671,7 @@ func (ec *executionContext) fieldContext_ExistingModelLinks_names(ctx context.Co
 		Object:     "ExistingModelLinks",
 		Field:      field,
 		IsMethod:   true,
-		IsResolver: false,
+		IsResolver: true,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return nil, errors.New("field of type String does not have child fields")
 		},
@@ -21378,6 +21488,10 @@ func (ec *executionContext) fieldContext_Mutation_updateExistingModelLinks(ctx c
 			switch field.Name {
 			case "links":
 				return ec.fieldContext_ExistingModelLinks_links(ctx, field)
+			case "fieldName":
+				return ec.fieldContext_ExistingModelLinks_fieldName(ctx, field)
+			case "modelPlanID":
+				return ec.fieldContext_ExistingModelLinks_modelPlanID(ctx, field)
 			case "names":
 				return ec.fieldContext_ExistingModelLinks_names(ctx, field)
 			}
@@ -31966,6 +32080,10 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristics_resemblesExi
 			switch field.Name {
 			case "links":
 				return ec.fieldContext_ExistingModelLinks_links(ctx, field)
+			case "fieldName":
+				return ec.fieldContext_ExistingModelLinks_fieldName(ctx, field)
+			case "modelPlanID":
+				return ec.fieldContext_ExistingModelLinks_modelPlanID(ctx, field)
 			case "names":
 				return ec.fieldContext_ExistingModelLinks_names(ctx, field)
 			}
@@ -55630,13 +55748,54 @@ func (ec *executionContext) _ExistingModelLinks(ctx context.Context, sel ast.Sel
 		case "links":
 			out.Values[i] = ec._ExistingModelLinks_links(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
-				out.Invalids++
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "fieldName":
+			out.Values[i] = ec._ExistingModelLinks_fieldName(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "modelPlanID":
+			out.Values[i] = ec._ExistingModelLinks_modelPlanID(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
 			}
 		case "names":
-			out.Values[i] = ec._ExistingModelLinks_names(ctx, field, obj)
-			if out.Values[i] == graphql.Null {
-				out.Invalids++
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._ExistingModelLinks_names(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
+				return res
 			}
+
+			if field.Deferrable != nil {
+				dfs, ok := deferred[field.Deferrable.Label]
+				di := 0
+				if ok {
+					dfs.AddField(field)
+					di = len(dfs.Values) - 1
+				} else {
+					dfs = graphql.NewFieldSet([]graphql.CollectedField{field})
+					deferred[field.Deferrable.Label] = dfs
+				}
+				dfs.Concurrently(di, func(ctx context.Context) graphql.Marshaler {
+					return innerFunc(ctx, dfs)
+				})
+
+				// don't run the out.Concurrently() call below
+				out.Values[i] = graphql.Null
+				continue
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
 		default:
 			panic("unknown field " + strconv.Quote(field.Name))
 		}
