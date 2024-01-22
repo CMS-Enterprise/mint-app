@@ -86,7 +86,19 @@ func ExistingModelLinkGetModel(ctx context.Context, link *models.ExistingModelLi
 
 }
 
-func ExistingModelLinksNameArray(links *models.ExistingModelLinks) ([]string, error) {
-	//TODO: implement this
-	return []string{"hooray", "TODO:", "TEST DATA"}, nil
+func ExistingModelLinksNameArray(ctx context.Context, modelPlanID uuid.UUID, fieldName models.ExisitingModelLinkFieldType) ([]string, error) {
+	allLoaders := loaders.Loaders(ctx)
+	linkLoader := allLoaders.ExistingModelLinkNameLoader
+	key := loaders.NewKeyArgs()
+	key.Args["model_plan_id"] = modelPlanID
+	key.Args["field_name"] = fieldName
+
+	thunk := linkLoader.Loader.Load(ctx, key)
+	result, err := thunk()
+
+	if err != nil {
+		return nil, err
+	}
+
+	return result.([]string), nil
 }

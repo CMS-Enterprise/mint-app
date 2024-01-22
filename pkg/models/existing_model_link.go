@@ -2,6 +2,7 @@ package models
 
 import (
 	"github.com/google/uuid"
+	"github.com/lib/pq"
 )
 
 // ExistingModelLink represents a link between another current model, or an existing model from the existing model table.
@@ -35,6 +36,7 @@ type ExistingModelLinks struct {
 	FieldName ExisitingModelLinkFieldType `json:"fieldName" db:"field_name"`
 	Links     []*ExistingModelLink
 	modelPlanRelation
+	NameArray pq.StringArray `json:"names_array_db" db:"name_array"` //note, we don't have this automatically resolve to GQL, as we query this field individually
 }
 
 func NewExistingModelLinks(modelPlanID uuid.UUID, fieldName ExisitingModelLinkFieldType, links []*ExistingModelLink) *ExistingModelLinks {

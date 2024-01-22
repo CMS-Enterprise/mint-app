@@ -21,6 +21,36 @@ var existingModelLinkGetByIDSQL string
 //go:embed SQL/existing_model_link/get_by_model_plan_id_and_field_name_LOADER.sql
 var existingModelLinkGetByModelPlanIDAndFieldNameLoaderSQL string
 
+//go:embed SQL/existing_model_link/get_names_by_model_plan_id_and_field_name_LOADER.sql
+var existingModelLinkGetNamesByModelPlanIDAndFieldNameSQL string
+
+// GetExistingModelLinkNamesByModelPlanIDAndFieldNameLOADER returns the plan GeneralCharacteristics for a slice of model plan ids and field Names
+func (s *Store) GetExistingModelLinkNamesByModelPlanIDAndFieldNameLOADER(
+	logger *zap.Logger,
+	paramTableJSON string,
+) ([]*models.ExistingModelLinks, error) {
+
+	var linkSlice []*models.ExistingModelLinks
+
+	stmt, err := s.db.PrepareNamed(existingModelLinkGetNamesByModelPlanIDAndFieldNameSQL)
+	if err != nil {
+		return nil, err
+	}
+	defer stmt.Close()
+
+	arg := map[string]interface{}{
+		"paramTableJSON": paramTableJSON,
+	}
+
+	err = stmt.Select(&linkSlice, arg) //this returns more than one
+	if err != nil {
+		logger.Error("failed to get names of all model links by modelPlanID and field name", zap.Error(err))
+		return nil, err
+	}
+
+	return linkSlice, nil
+}
+
 // ExistingModelLinkGetByModelPlanIDAndFieldNameLOADER returns the plan GeneralCharacteristics for a slice of model plan ids
 func (s *Store) ExistingModelLinkGetByModelPlanIDAndFieldNameLOADER(
 	logger *zap.Logger,

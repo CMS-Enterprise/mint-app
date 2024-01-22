@@ -38,7 +38,7 @@ func (r *existingModelLinkResolver) Model(ctx context.Context, obj *models.Exist
 
 // Names is the resolver for the names field.
 func (r *existingModelLinksResolver) Names(ctx context.Context, obj *models.ExistingModelLinks) ([]string, error) {
-	return resolvers.ExistingModelLinksNameArray(obj)
+	return resolvers.ExistingModelLinksNameArray(ctx, obj.ModelPlanID, obj.FieldName)
 }
 
 // Basics is the resolver for the basics field.
