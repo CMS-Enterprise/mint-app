@@ -46,7 +46,7 @@ SET
     expected_calculation_complexity_level = :expected_calculation_complexity_level,
     expected_calculation_complexity_level_note = :expected_calculation_complexity_level_note,
     claims_processing_precedence = :claims_processing_precedence,
-    claims_processing_precedence_other = :claims_processing_precedence,
+    claims_processing_precedence_other = :claims_processing_precedence_other,
     claims_processing_precedence_note = :claims_processing_precedence_note,
     can_participants_select_between_payment_mechanisms = :can_participants_select_between_payment_mechanisms,
     can_participants_select_between_payment_mechanisms_how = :can_participants_select_between_payment_mechanisms_how,

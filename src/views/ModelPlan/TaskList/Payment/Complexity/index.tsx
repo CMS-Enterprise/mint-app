@@ -33,7 +33,6 @@ import AutoSave from 'components/shared/AutoSave';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
-import TextAreaField from 'components/shared/TextAreaField';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import { getKeys } from 'types/translation';
 import flattenErrors from 'utils/flattenErrors';
@@ -330,7 +329,7 @@ const Complexity = () => {
                             {values.claimsProcessingPrecedence === true ? (
                               <div className="display-flex margin-left-4 margin-bottom-1">
                                 <FieldGroup
-                                  className="flex-1"
+                                  className="flex-1 margin-top-1"
                                   scrollElement="claimsProcessingPrecedenceOther"
                                 >
                                   <Label
@@ -343,8 +342,7 @@ const Complexity = () => {
                                   </Label>
 
                                   <Field
-                                    as={TextAreaField}
-                                    className="margin-top-0 height-15"
+                                    as={TextInput}
                                     data-testid="payment-claims-processing-precendece-other"
                                     id="payment-claims-processing-precendece-other"
                                     name="claimsProcessingPrecedenceOther"
@@ -355,6 +353,11 @@ const Complexity = () => {
                               <></>
                             )}
                           </BooleanRadio>
+
+                          <AddNote
+                            id="payment-claims-processing-precendece-note"
+                            field="claimsProcessingPrecedenceNote"
+                          />
                         </FieldGroup>
 
                         <FieldGroup

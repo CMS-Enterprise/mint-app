@@ -630,7 +630,7 @@ export const payments: TranslationPayments = {
     dbField: 'claims_processing_precedence_note',
     label: 'Notes',
     dataType: 'string',
-    formType: 'textarea'
+    formType: 'text'
   },
   canParticipantsSelectBetweenPaymentMechanisms: {
     gqlField: 'canParticipantsSelectBetweenPaymentMechanisms',

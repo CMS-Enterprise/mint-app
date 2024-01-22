@@ -587,14 +587,21 @@ const ReadOnlyPayments = ({
           isViewingFilteredView,
           filteredQuestions,
           'claimsProcessingPrecedence',
-          <ReadOnlySection
-            heading={paymentsT('claimsProcessingPrecedence.label')}
-            copy={paymentsT(
-              `claimsProcessingPrecedence.options.${claimsProcessingPrecedence}`,
-              ''
-            )}
-            listOtherItem={claimsProcessingPrecedenceOther}
-            notes={claimsProcessingPrecedenceNote}
+          <SideBySideReadOnlySection
+            firstSection={{
+              heading: paymentsT('claimsProcessingPrecedence.label'),
+              copy: paymentsT(
+                `claimsProcessingPrecedence.options.${claimsProcessingPrecedence}`,
+                ''
+              ),
+              notes: claimsProcessingPrecedenceNote
+            }}
+            secondSection={
+              claimsProcessingPrecedence === true && {
+                heading: paymentsT('claimsProcessingPrecedenceOther.label'),
+                copy: claimsProcessingPrecedenceOther
+              }
+            }
           />
         )}
 
