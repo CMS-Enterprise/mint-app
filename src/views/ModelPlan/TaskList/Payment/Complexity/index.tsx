@@ -22,7 +22,7 @@ import {
   useGetComplexityQuery,
   useUpdatePaymentsMutation
 } from 'gql/gen/graphql';
-
+import BooleanRadio from 'components/BooleanRadioForm';
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
 import BooleanRadio from 'components/BooleanRadioForm';
@@ -311,61 +311,55 @@ const Complexity = () => {
                         </FieldGroup>
 
                         <FieldGroup
-                          scrollElement="precedenceRules"
-                          error={!!flatErrors.precedenceRules}
-                        >
-                          <Label htmlFor="precedenceRules">
-                            {beneficiariesT('precedenceRules.label')}
-                          </Label>
+                    scrollElement="claimsProcessingPrecedence"
+                    className="margin-y-4 margin-bottom-8"
+                  >
+                    <Label htmlFor="payment-claims-processing-precendece">
+                      {paymentsT('claimsProcessingPrecedence.label')}
+                    </Label>
 
-                          <p className="text-base margin-top-1 margin-bottom-0 line-height-body-3">
-                            {beneficiariesT('precedenceRules.sublabel')}
-                          </p>
+                    <BooleanRadio
+                      field="claimsProcessingPrecedence"
+                      id="plan-characteristics-has-component-or-tracks"
+                      value={values.claimsProcessingPrecedence}
+                      setFieldValue={setFieldValue}
+                      options={claimsProcessingPrecedenceConfig.options}
+                      childName="claimsProcessingPrecedenceOther"
+                    >
+                      {values.hasComponentsOrTracks === true ? (
+                        <div className="display-flex margin-left-4 margin-bottom-1">
+                          <FieldGroup
+                            className="flex-1"
+                            scrollElement="hasComponentsOrTracksDiffer"
+                            error={!!flatErrors.hasComponentsOrTracksDiffer}
+                          >
+                            <Label
+                              htmlFor="plan-characteristics-tracks-differ-how"
+                              className="margin-bottom-1 text-normal"
+                            >
+                              {generalCharacteristicsT(
+                                'hasComponentsOrTracksDiffer.label'
+                              )}
+                            </Label>
 
-                          <FieldErrorMsg>
-                            {flatErrors.precedenceRules}
-                          </FieldErrorMsg>
+                            <FieldErrorMsg>
+                              {flatErrors.hasComponentsOrTracksDiffer}
+                            </FieldErrorMsg>
 
-                          {getKeys(beneficiaryPrecedenceConfig.options).map(
-                            key => (
-                              <Fragment key={key}>
-                                <Field
-                                  as={CheckboxField}
-                                  id={`beneficiaries-precedence-rules-${key}`}
-                                  data-testid={`beneficiaries-precedence-rules-${key}`}
-                                  name="precedenceRules"
-                                  label={
-                                    beneficiaryPrecedenceConfig.options[key]
-                                  }
-                                  value={key}
-                                  checked={values.precedenceRules.includes(key)}
-                                />
-
-                                {values.precedenceRules?.includes(key) && (
-                                  <div className="margin-left-4">
-                                    <span>
-                                      {beneficiariesT(
-                                        `precedenceRules${beneficiaryPrecedenceConfig.options[key]}.label`
-                                      )}
-                                    </span>
-                                    <Field
-                                      as={TextAreaField}
-                                      className="height-15"
-                                      id={`beneficiaries-precedence-rules-${key}-note`}
-                                      data-testid={`beneficiaries-precedence-rules-${key}-note`}
-                                      name={`precedenceRules${beneficiaryPrecedenceConfig.options[key]}`}
-                                    />
-                                  </div>
-                                )}
-                              </Fragment>
-                            )
-                          )}
-
-                          <AddNote
-                            id="beneficiaries-precedence-note"
-                            field="precedenceRulesNote"
-                          />
-                        </FieldGroup>
+                            <Field
+                              as={TextAreaField}
+                              error={!!flatErrors.hasComponentsOrTracksDiffer}
+                              className="margin-top-0 height-15"
+                              data-testid="plan-characteristics-tracks-differ-how"
+                              id="plan-characteristics-tracks-differ-how"
+                              name="hasComponentsOrTracksDiffer"
+                            />
+                          </FieldGroup>
+                        </div>
+                      ) : (
+                        <></>
+                      )}
+                    </BooleanRadio>
 
                         <FieldGroup
                           scrollElement="canParticipantsSelectBetweenPaymentMechanisms"

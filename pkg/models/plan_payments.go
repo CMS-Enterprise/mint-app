@@ -175,7 +175,7 @@ type PlanPayments struct {
 	ExpectedCalculationComplexityLevel                *ComplexityCalculationLevelType `json:"expectedCalculationComplexityLevel" db:"expected_calculation_complexity_level" statusWeight:"1"`
 	ExpectedCalculationComplexityLevelNote            *string                         `json:"expectedCalculationComplexityLevelNote" db:"expected_calculation_complexity_level_note"`
 	ClaimsProcessingPrecedence                        *bool                           `json:"claimsProcessingPrecedence" db:"claims_processing_precedence"`
-	ClaimsProcessingPrecedenceYes                     *string                         `json:"claimsProcessingPrecedenceYes" db:"claims_processing_precedence_yes"`
+	ClaimsProcessingPrecedenceOther                   *string                         `json:"claimsProcessingPrecedenceOther" db:"claims_processing_precedence_other"`
 	ClaimsProcessingPrecedenceNote                    *string                         `json:"claimsProcessingPrecedenceNote" db:"claims_processing_precedence_note"`
 	CanParticipantsSelectBetweenPaymentMechanisms     *bool                           `json:"canParticipantsSelectBetweenPaymentMechanisms" db:"can_participants_select_between_payment_mechanisms" statusWeight:"1"`
 	CanParticipantsSelectBetweenPaymentMechanismsHow  *string                         `json:"canParticipantsSelectBetweenPaymentMechanismsHow" db:"can_participants_select_between_payment_mechanisms_how"`

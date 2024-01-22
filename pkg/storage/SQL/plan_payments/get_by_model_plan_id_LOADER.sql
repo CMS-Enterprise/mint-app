@@ -55,7 +55,7 @@ SELECT
     pay.expected_calculation_complexity_level,
     pay.expected_calculation_complexity_level_note,
     pay.claims_processing_precedence,
-    pay.claims_processing_precedence_yes,
+    pay.claims_processing_precedence_other,
     pay.claims_processing_precedence_note,
     pay.can_participants_select_between_payment_mechanisms,
     pay.can_participants_select_between_payment_mechanisms_how,

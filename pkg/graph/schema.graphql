@@ -1014,7 +1014,7 @@ type PlanPayments {
   expectedCalculationComplexityLevel:                ComplexityCalculationLevelType
   expectedCalculationComplexityLevelNote:            String
   claimsProcessingPrecedence:                        Boolean
-  claimsProcessingPrecedenceYes:                     String
+  claimsProcessingPrecedenceOther:                   String
   claimsProcessingPrecedenceNote:                    String
   canParticipantsSelectBetweenPaymentMechanisms:     Boolean
   canParticipantsSelectBetweenPaymentMechanismsHow:  String
@@ -1119,7 +1119,7 @@ input PlanPaymentsChanges @goModel(model: "map[string]interface{}") {
   expectedCalculationComplexityLevel:                       ComplexityCalculationLevelType
   expectedCalculationComplexityLevelNote:                   String
   claimsProcessingPrecedence:                               Boolean
-  claimsProcessingPrecedenceYes:                            String
+  claimsProcessingPrecedenceOther:                          String
   claimsProcessingPrecedenceNote:                           String
   canParticipantsSelectBetweenPaymentMechanisms:            Boolean
   canParticipantsSelectBetweenPaymentMechanismsHow:         String
