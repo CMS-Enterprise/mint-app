@@ -52,6 +52,7 @@ const Complexity = () => {
 
   const {
     expectedCalculationComplexityLevel: expectedCalculationComplexityLevelConfig,
+    claimsProcessingPrecedence: claimsProcessingPrecedenceConfig,
     canParticipantsSelectBetweenPaymentMechanisms: canParticipantsSelectBetweenPaymentMechanismsConfig,
     anticipatedPaymentFrequency: anticipatedPaymentFrequencyConfig
   } = usePlanTranslation('payments');
@@ -73,6 +74,9 @@ const Complexity = () => {
     payClaims,
     expectedCalculationComplexityLevel,
     expectedCalculationComplexityLevelNote,
+    claimsProcessingPrecedence,
+    claimsProcessingPrecedenceYes,
+    claimsProcessingPrecedenceNote,
     canParticipantsSelectBetweenPaymentMechanisms,
     canParticipantsSelectBetweenPaymentMechanismsHow,
     canParticipantsSelectBetweenPaymentMechanismsNote,
@@ -148,6 +152,9 @@ const Complexity = () => {
       expectedCalculationComplexityLevel ?? null,
     expectedCalculationComplexityLevelNote:
       expectedCalculationComplexityLevelNote ?? '',
+    claimsProcessingPrecedence: claimsProcessingPrecedence ?? null,
+    claimsProcessingPrecedenceYes: claimsProcessingPrecedenceYes ?? '',
+    claimsProcessingPrecedenceNote: claimsProcessingPrecedenceNote ?? '',
     canParticipantsSelectBetweenPaymentMechanisms:
       canParticipantsSelectBetweenPaymentMechanisms ?? null,
     canParticipantsSelectBetweenPaymentMechanismsHow:
@@ -300,6 +307,63 @@ const Complexity = () => {
                           <AddNote
                             id="payment-complexity-note"
                             field="expectedCalculationComplexityLevelNote"
+                          />
+                        </FieldGroup>
+
+                        <FieldGroup
+                          scrollElement="precedenceRules"
+                          error={!!flatErrors.precedenceRules}
+                        >
+                          <Label htmlFor="precedenceRules">
+                            {beneficiariesT('precedenceRules.label')}
+                          </Label>
+
+                          <p className="text-base margin-top-1 margin-bottom-0 line-height-body-3">
+                            {beneficiariesT('precedenceRules.sublabel')}
+                          </p>
+
+                          <FieldErrorMsg>
+                            {flatErrors.precedenceRules}
+                          </FieldErrorMsg>
+
+                          {getKeys(beneficiaryPrecedenceConfig.options).map(
+                            key => (
+                              <Fragment key={key}>
+                                <Field
+                                  as={CheckboxField}
+                                  id={`beneficiaries-precedence-rules-${key}`}
+                                  data-testid={`beneficiaries-precedence-rules-${key}`}
+                                  name="precedenceRules"
+                                  label={
+                                    beneficiaryPrecedenceConfig.options[key]
+                                  }
+                                  value={key}
+                                  checked={values.precedenceRules.includes(key)}
+                                />
+
+                                {values.precedenceRules?.includes(key) && (
+                                  <div className="margin-left-4">
+                                    <span>
+                                      {beneficiariesT(
+                                        `precedenceRules${beneficiaryPrecedenceConfig.options[key]}.label`
+                                      )}
+                                    </span>
+                                    <Field
+                                      as={TextAreaField}
+                                      className="height-15"
+                                      id={`beneficiaries-precedence-rules-${key}-note`}
+                                      data-testid={`beneficiaries-precedence-rules-${key}-note`}
+                                      name={`precedenceRules${beneficiaryPrecedenceConfig.options[key]}`}
+                                    />
+                                  </div>
+                                )}
+                              </Fragment>
+                            )
+                          )}
+
+                          <AddNote
+                            id="beneficiaries-precedence-note"
+                            field="precedenceRulesNote"
                           />
                         </FieldGroup>
 

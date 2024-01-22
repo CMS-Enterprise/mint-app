@@ -16,6 +16,9 @@ export interface GetComplexity_modelPlan_payments {
   payClaims: ClaimsBasedPayType[];
   expectedCalculationComplexityLevel: ComplexityCalculationLevelType | null;
   expectedCalculationComplexityLevelNote: string | null;
+  claimsProcessingPrecedence: boolean | null;
+  claimsProcessingPrecedenceYes: string | null;
+  claimsProcessingPrecedenceNote: string | null;
   canParticipantsSelectBetweenPaymentMechanisms: boolean | null;
   canParticipantsSelectBetweenPaymentMechanismsHow: string | null;
   canParticipantsSelectBetweenPaymentMechanismsNote: string | null;

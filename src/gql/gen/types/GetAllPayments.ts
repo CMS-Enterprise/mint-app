@@ -60,6 +60,9 @@ export interface GetAllPayments_modelPlan_payments {
   planningToUseInnovationPaymentContractorNote: string | null;
   expectedCalculationComplexityLevel: ComplexityCalculationLevelType | null;
   expectedCalculationComplexityLevelNote: string | null;
+  claimsProcessingPrecedence: boolean | null;
+  claimsProcessingPrecedenceYes: string | null;
+  claimsProcessingPrecedenceNote: string | null;
   canParticipantsSelectBetweenPaymentMechanisms: boolean | null;
   canParticipantsSelectBetweenPaymentMechanismsHow: string | null;
   canParticipantsSelectBetweenPaymentMechanismsNote: string | null;

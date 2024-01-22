@@ -1091,7 +1091,7 @@ export interface PlanPaymentsChanges {
   planningToUseInnovationPaymentContractorNote?: string | null;
   expectedCalculationComplexityLevel?: ComplexityCalculationLevelType | null;
   expectedCalculationComplexityLevelNote?: string | null;
-  claimsProcessingPrecedence?: YesNoType[] | null;
+  claimsProcessingPrecedence?: boolean | null;
   claimsProcessingPrecedenceYes?: string | null;
   claimsProcessingPrecedenceNote?: string | null;
   canParticipantsSelectBetweenPaymentMechanisms?: boolean | null;
