@@ -1861,7 +1861,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation updateExistingModelLinks{\n  \n  updateExistingModelLinks(modelPlanID:\"{{modelPlanID}}\", existingModelIDs:\n#   null\n  [100014,100015] \n  currentModelPlanIDs: \n  null,\n#   [\"{{modelPlanID}}\"  ]\n  )\n  {\n      id\n\n        currentModelPlan {\n            id\n            modelName\n        }\n        existingModel{\n            id\n            modelName\n        }\n\n  }\n  \n  \n}",
+								"query": "mutation updateExistingModelLinks {\n  updateExistingModelLinks(\n    modelPlanID: \"{{modelPlanID}}\"\n    fieldName: \n    #   GEN_CHAR_PARTICIPATION_EXISTING_MODEL_WHICH\n    GEN_CHAR_RESEMBLES_EXISTING_MODEL_WHICH\n    existingModelIDs:\n     null\n    #   [100014,100015]\n    currentModelPlanIDs:\n     #   null\n    [\"{{modelPlanID}}\"]\n  ) {\n    links {\n      id\n      modelPlanID\n      existingModelID\n      currentModelPlanID\n      fieldName\n      model {\n        __typename\n\n        ... on ExistingModel {\n          modelName\n          stage\n          numberOfParticipants\n          keywords\n        }\n        ... on ModelPlan {\n          modelName\n          abbreviation\n        }\n      }\n    }\n  }\n}\n",
 								"variables": ""
 							}
 						},
@@ -1882,7 +1882,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "query existingModelLink{\n  \n  existingModelLink(id:\"{{existingModelLinkID}}\"){\n\n        currentModelPlan {\n            modelName\n        }\n        existingModel{\n            modelName\n        }\n\n  }\n  \n  \n}",
+								"query": "query existingModelLink {\n  existingModelLink(id: \"{{existingModelLinkID}}\") {\n    id\n    modelPlanID\n    currentModelPlanID\n    existingModelID\n    fieldName\n    model {\n      __typename\n\n      ... on ExistingModel {\n        modelName\n        stage\n        numberOfParticipants\n        keywords\n      }\n      ... on ModelPlan {\n        modelName\n        abbreviation\n      }\n    }\n  }\n}\n",
 								"variables": ""
 							}
 						},
@@ -1896,14 +1896,35 @@
 					"response": []
 				},
 				{
-					"name": "ModelPlanGetExisting ModelLinks",
+					"name": "ModelPlanGetExisting ModelLinks (Gen Characteristics)",
 					"request": {
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "query ModelPlan{\n  \n  modelPlan(id:\"{{modelPlanID}}\"){\n    id\n    modelName\n    nameHistory\n    existingModelLinks{\n        currentModelPlan {\n            modelName\n        }\n        existingModel{\n            modelName\n        }\n    }\n  }\n  \n  \n}",
+								"query": "query ModelPlan {\n  modelPlan(id: \"{{modelPlanID}}\") {\n    id\n    modelName\n    nameHistory\n    generalCharacteristics {\n      resemblesExistingModelWhich {\n        links {\n          id\n          modelPlanID\n          existingModelID\n          currentModelPlanID\n          fieldName\n          model {\n            __typename\n\n            ... on ExistingModel {\n              modelName\n              stage\n              numberOfParticipants\n              keywords\n            }\n            ... on ModelPlan {\n              modelName\n              abbreviation\n            }\n          }\n        }\n      }\n    }\n  }\n}\n",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ModelPlanCollection ModelLinks (Gen Characteristics)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query modelPlanCollection {\n  modelPlanCollection(filter: INCLUDE_ALL) {\n    id\n    modelName\n    nameHistory\n    generalCharacteristics {\n      resemblesExistingModelWhich {\n        links {\n          id\n          modelPlanID\n          existingModelID\n          currentModelPlanID\n          fieldName\n          model {\n            __typename\n\n            ... on ExistingModel {\n              modelName\n              stage\n              numberOfParticipants\n              keywords\n            }\n            ... on ModelPlan {\n              modelName\n              abbreviation\n            }\n          }\n        }\n      }\n    }\n  }\n}\n",
 								"variables": ""
 							}
 						},
