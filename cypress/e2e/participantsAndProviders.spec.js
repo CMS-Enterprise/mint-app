@@ -108,6 +108,42 @@ describe('The Model Plan Participants and Providers Form', () => {
 
     // Page - /participants-and-providers/communication
 
+    cy.get('#participant-added-frequency-other')
+      .should('not.be.disabled')
+      .check({ force: true })
+      .should('be.checked');
+
+    cy.get('#participant-added-frequency-other-text')
+      .type('Sometimes')
+      .should('have.value', 'Sometimes');
+
+    cy.get('#participant-added-frequency-continually')
+      .should('not.be.disabled')
+      .check({ force: true })
+      .should('be.checked');
+
+    cy.get('#participant-added-frequency-continually-text')
+      .type('Every month')
+      .should('have.value', 'Every month');
+
+    cy.get('#participant-removed-frequency-other')
+      .should('not.be.disabled')
+      .check({ force: true })
+      .should('be.checked');
+
+    cy.get('#participant-removed-frequency-other-text')
+      .type('Sometimes')
+      .should('have.value', 'Sometimes');
+
+    cy.get('#participant-removed-frequency-continually')
+      .should('not.be.disabled')
+      .check({ force: true })
+      .should('be.checked');
+
+    cy.get('#participant-removed-frequency-continually-text')
+      .type('Every month')
+      .should('have.value', 'Every month');
+
     cy.get('#participants-and-providers-communication-method-IT_TOOL')
       .should('not.be.disabled')
       .as('communication')

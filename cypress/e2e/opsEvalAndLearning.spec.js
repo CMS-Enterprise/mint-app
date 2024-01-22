@@ -342,6 +342,16 @@ describe('The Model Plan Ops Eval and Learning Form', () => {
       .type('the third leap year from now')
       .should('have.value', 'the third leap year from now');
 
+    cy.get('#ops-eval-and-learning-quality-reporting-frequency-continually')
+      .check({ force: true })
+      .should('be.checked');
+
+    cy.get(
+      '#ops-eval-and-learning-quality-reporting-frequency-continually-text'
+    )
+      .type('Quality Reporting Frequency Continually')
+      .should('have.value', 'Quality Reporting Frequency Continually');
+
     cy.contains('button', 'Next').click();
 
     // Page - /ops-eval-and-learning/learning

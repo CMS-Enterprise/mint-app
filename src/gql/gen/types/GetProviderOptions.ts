@@ -28,6 +28,10 @@ export interface GetProviderOptions_modelPlan_participantsAndProviders {
   providerLeaveMethod: ProviderLeaveType[];
   providerLeaveMethodOther: string | null;
   providerLeaveMethodNote: string | null;
+  providerRemovalFrequency: FrequencyType[];
+  providerRemovalFrequencyContinually: string | null;
+  providerRemovalFrequencyOther: string | null;
+  providerRemovalFrequencyNote: string | null;
   providerOverlap: OverlapType | null;
   providerOverlapHierarchy: string | null;
   providerOverlapNote: string | null;

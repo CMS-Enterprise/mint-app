@@ -37,7 +37,10 @@ const ReadOnlyParticipantsAndProviders = ({
   const { t: prepareForClearanceT } = useTranslation('prepareForClearance');
 
   const {
+    participantAddedFrequency: participantAddedFrequencyConfig,
+    participantRemovedFrequency: participantRemovedFrequencyConfig,
     providerAdditionFrequency: providerAdditionFrequencyConfig,
+    providerRemovalFrequency: providerRemovalFrequencyConfig,
     riskType: riskTypeConfig
   } = usePlanTranslation('participantsAndProviders');
 
@@ -75,6 +78,10 @@ const ReadOnlyParticipantsAndProviders = ({
     selectionMethod,
     selectionOther,
     selectionNote,
+    participantAddedFrequency,
+    participantAddedFrequencyNote,
+    participantRemovedFrequency,
+    participantRemovedFrequencyNote,
     communicationMethod,
     communicationMethodOther,
     communicationNote,
@@ -101,6 +108,8 @@ const ReadOnlyParticipantsAndProviders = ({
     providerLeaveMethod,
     providerLeaveMethodOther,
     providerLeaveMethodNote,
+    providerRemovalFrequency,
+    providerRemovalFrequencyNote,
     providerOverlap,
     providerOverlapHierarchy,
     providerOverlapNote,
@@ -286,6 +295,50 @@ const ReadOnlyParticipantsAndProviders = ({
             : 'margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light'
         }`}
       >
+        {checkGroupMap(
+          isViewingFilteredView,
+          filteredQuestions,
+          'participantAddedFrequency',
+          <ReadOnlySection
+            heading={participantsAndProvidersT(
+              'participantAddedFrequency.label'
+            )}
+            list
+            listItems={formatListItems(
+              participantAddedFrequencyConfig,
+              participantAddedFrequency
+            )}
+            listOtherItems={formatListOtherItems(
+              participantAddedFrequencyConfig,
+              participantAddedFrequency,
+              allparticipantsAndProvidersData
+            )}
+            notes={participantAddedFrequencyNote}
+          />
+        )}
+
+        {checkGroupMap(
+          isViewingFilteredView,
+          filteredQuestions,
+          'participantRemovedFrequency',
+          <ReadOnlySection
+            heading={participantsAndProvidersT(
+              'participantRemovedFrequency.label'
+            )}
+            list
+            listItems={formatListItems(
+              participantRemovedFrequencyConfig,
+              participantRemovedFrequency
+            )}
+            listOtherItems={formatListOtherItems(
+              participantRemovedFrequencyConfig,
+              participantRemovedFrequency,
+              allparticipantsAndProvidersData
+            )}
+            notes={participantRemovedFrequencyNote}
+          />
+        )}
+
         {checkGroupMap(
           isViewingFilteredView,
           filteredQuestions,
@@ -487,6 +540,28 @@ const ReadOnlyParticipantsAndProviders = ({
             )}
             listOtherItem={providerLeaveMethodOther}
             notes={providerLeaveMethodNote}
+          />
+        )}
+
+        {checkGroupMap(
+          isViewingFilteredView,
+          filteredQuestions,
+          'providerRemovalFrequency',
+          <ReadOnlySection
+            heading={participantsAndProvidersT(
+              'providerRemovalFrequency.label'
+            )}
+            list
+            listItems={formatListItems(
+              providerRemovalFrequencyConfig,
+              providerRemovalFrequency
+            )}
+            listOtherItems={formatListOtherItems(
+              providerRemovalFrequencyConfig,
+              providerRemovalFrequency,
+              allparticipantsAndProvidersData
+            )}
+            notes={providerRemovalFrequencyNote}
           />
         )}
 

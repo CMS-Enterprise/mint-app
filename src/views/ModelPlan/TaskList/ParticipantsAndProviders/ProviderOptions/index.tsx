@@ -59,6 +59,7 @@ export const ProviderOptions = () => {
     providerAdditionFrequency: providerAdditionFrequencyConfig,
     providerAddMethod: providerAddMethodConfig,
     providerLeaveMethod: providerLeaveMethodConfig,
+    providerRemovalFrequency: providerRemovalFrequencyConfig,
     providerOverlap: providerOverlapConfig
   } = usePlanTranslation('participantsAndProviders');
 
@@ -91,6 +92,10 @@ export const ProviderOptions = () => {
     providerLeaveMethod,
     providerLeaveMethodOther,
     providerLeaveMethodNote,
+    providerRemovalFrequency,
+    providerRemovalFrequencyContinually,
+    providerRemovalFrequencyOther,
+    providerRemovalFrequencyNote,
     providerOverlap,
     providerOverlapHierarchy,
     providerOverlapNote,
@@ -162,6 +167,11 @@ export const ProviderOptions = () => {
     providerLeaveMethod: providerLeaveMethod ?? [],
     providerLeaveMethodOther: providerLeaveMethodOther ?? '',
     providerLeaveMethodNote: providerLeaveMethodNote ?? '',
+    providerRemovalFrequency: providerRemovalFrequency ?? null,
+    providerRemovalFrequencyContinually:
+      providerRemovalFrequencyContinually ?? '',
+    providerRemovalFrequencyOther: providerRemovalFrequencyOther ?? '',
+    providerRemovalFrequencyNote: providerRemovalFrequencyNote ?? '',
     providerOverlap: providerOverlap ?? null,
     providerOverlapHierarchy: providerOverlapHierarchy ?? '',
     providerOverlapNote: providerOverlapNote ?? '',
@@ -430,6 +440,18 @@ export const ProviderOptions = () => {
                       )}
                     />
                   </FieldGroup>
+
+                  <FrequencyForm
+                    field="providerRemovalFrequency"
+                    values={values.providerRemovalFrequency}
+                    config={providerRemovalFrequencyConfig}
+                    nameSpace="participantsAndProviders"
+                    id="participants-and-providers-removal-frequency"
+                    label={participantsAndProvidersT(
+                      'providerRemovalFrequency.label'
+                    )}
+                    disabled={loading}
+                  />
 
                   <FieldGroup
                     scrollElement="providerOverlap"

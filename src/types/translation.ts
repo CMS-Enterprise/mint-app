@@ -224,6 +224,14 @@ export type TranslationParticipantsAndProviders = {
   selectionOther: TranslationFieldProperties;
   selectionNote: TranslationFieldProperties;
   // Communication
+  participantAddedFrequency: TranslationFieldPropertiesWithOptions<FrequencyType>;
+  participantAddedFrequencyContinually: TranslationFieldProperties;
+  participantAddedFrequencyOther: TranslationFieldProperties;
+  participantAddedFrequencyNote: TranslationFieldProperties;
+  participantRemovedFrequency: TranslationFieldPropertiesWithOptions<FrequencyType>;
+  participantRemovedFrequencyContinually: TranslationFieldProperties;
+  participantRemovedFrequencyOther: TranslationFieldProperties;
+  participantRemovedFrequencyNote: TranslationFieldProperties;
   communicationMethod: TranslationFieldPropertiesWithOptions<ParticipantCommunicationType>;
   communicationMethodOther: TranslationFieldProperties;
   communicationNote: TranslationFieldProperties;
@@ -254,6 +262,10 @@ export type TranslationParticipantsAndProviders = {
   providerLeaveMethod: TranslationFieldPropertiesWithOptions<ProviderLeaveType>;
   providerLeaveMethodOther: TranslationFieldProperties;
   providerLeaveMethodNote: TranslationFieldProperties;
+  providerRemovalFrequency: TranslationFieldPropertiesWithOptions<FrequencyType>;
+  providerRemovalFrequencyContinually: TranslationFieldProperties;
+  providerRemovalFrequencyOther: TranslationFieldProperties;
+  providerRemovalFrequencyNote: TranslationFieldProperties;
   providerOverlap: TranslationFieldPropertiesWithOptions<OverlapType>;
   providerOverlapHierarchy: TranslationFieldProperties;
   providerOverlapNote: TranslationFieldProperties;
@@ -398,6 +410,9 @@ export type TranslationOpsEvalAndLearning = {
   qualityReportingStarts: TranslationFieldPropertiesWithOptions<DataStartsType>;
   qualityReportingStartsOther: TranslationFieldProperties;
   qualityReportingStartsNote: TranslationFieldProperties;
+  qualityReportingFrequency: TranslationFieldPropertiesWithOptions<FrequencyType>;
+  qualityReportingFrequencyContinually: TranslationFieldProperties;
+  qualityReportingFrequencyOther: TranslationFieldProperties;
   // Learning
   modelLearningSystems: TranslationFieldPropertiesWithOptions<ModelLearningSystemType>;
   modelLearningSystemsOther: TranslationFieldProperties;
@@ -474,6 +489,10 @@ export type TranslationPayments = {
   willRecoverPaymentsNote: TranslationFieldProperties;
   anticipateReconcilingPaymentsRetrospectively: TranslationFieldPropertiesWithOptions<Bool>;
   anticipateReconcilingPaymentsRetrospectivelyNote: TranslationFieldProperties;
+  paymentReconciliationFrequency: TranslationFieldPropertiesWithOptions<FrequencyType>;
+  paymentReconciliationFrequencyContinually: TranslationFieldProperties;
+  paymentReconciliationFrequencyOther: TranslationFieldProperties;
+  paymentReconciliationFrequencyNote: TranslationFieldProperties;
   paymentStartDate: TranslationFieldProperties;
   paymentStartDateNote: TranslationFieldProperties;
   status: TranslationFieldPropertiesWithOptions<TaskStatus>;

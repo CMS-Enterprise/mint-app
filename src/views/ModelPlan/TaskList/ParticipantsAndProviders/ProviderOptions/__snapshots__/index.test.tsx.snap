@@ -646,6 +646,180 @@ exports[`Model Plan ProviderOptions > matches snapshot 1`] = `
         </div>
       </div>
       <div
+        class="usa-form-group"
+        data-scroll="providerRemovalFrequency"
+      >
+        <label
+          class="usa-label maxw-none"
+          data-testid="label"
+          for="participants-and-providers-removal-frequency"
+        >
+          How frequently are providers removed?
+        </label>
+        <div
+          class="mint-checkbox usa-checkbox"
+        >
+          <input
+            class="usa-checkbox__input"
+            id="participants-and-providers-removal-frequency-annually"
+            name="providerRemovalFrequency"
+            type="checkbox"
+            value="ANNUALLY"
+          />
+          <label
+            class="usa-checkbox__label"
+            for="participants-and-providers-removal-frequency-annually"
+          >
+            Annually
+          </label>
+          <p
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+          />
+        </div>
+        <div
+          class="mint-checkbox usa-checkbox"
+        >
+          <input
+            class="usa-checkbox__input"
+            id="participants-and-providers-removal-frequency-semiannually"
+            name="providerRemovalFrequency"
+            type="checkbox"
+            value="SEMIANNUALLY"
+          />
+          <label
+            class="usa-checkbox__label"
+            for="participants-and-providers-removal-frequency-semiannually"
+          >
+            Semi-annually
+          </label>
+          <p
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+          />
+        </div>
+        <div
+          class="mint-checkbox usa-checkbox"
+        >
+          <input
+            class="usa-checkbox__input"
+            id="participants-and-providers-removal-frequency-quarterly"
+            name="providerRemovalFrequency"
+            type="checkbox"
+            value="QUARTERLY"
+          />
+          <label
+            class="usa-checkbox__label"
+            for="participants-and-providers-removal-frequency-quarterly"
+          >
+            Quarterly
+          </label>
+          <p
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+          />
+        </div>
+        <div
+          class="mint-checkbox usa-checkbox"
+        >
+          <input
+            class="usa-checkbox__input"
+            id="participants-and-providers-removal-frequency-monthly"
+            name="providerRemovalFrequency"
+            type="checkbox"
+            value="MONTHLY"
+          />
+          <label
+            class="usa-checkbox__label"
+            for="participants-and-providers-removal-frequency-monthly"
+          >
+            Monthly
+          </label>
+          <p
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+          />
+        </div>
+        <div
+          class="mint-checkbox usa-checkbox"
+        >
+          <input
+            class="usa-checkbox__input"
+            id="participants-and-providers-removal-frequency-continually"
+            name="providerRemovalFrequency"
+            type="checkbox"
+            value="CONTINUALLY"
+          />
+          <label
+            class="usa-checkbox__label"
+            for="participants-and-providers-removal-frequency-continually"
+          >
+            Continually
+          </label>
+          <p
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+          />
+        </div>
+        <div
+          class="margin-left-4"
+        >
+          <label
+            class="usa-label text-normal margin-top-1"
+            data-testid="label"
+            for="participants-and-providers-removal-frequency-continually"
+          >
+            Please specify
+          </label>
+          <input
+            class="usa-input"
+            data-testid="participants-and-providers-removal-frequency-continually-text"
+            id="participants-and-providers-removal-frequency-continually-text"
+            name="providerRemovalFrequencyContinually"
+            value="Continually"
+          />
+        </div>
+        <div
+          class="mint-checkbox usa-checkbox"
+        >
+          <input
+            class="usa-checkbox__input"
+            id="participants-and-providers-removal-frequency-other"
+            name="providerRemovalFrequency"
+            type="checkbox"
+            value="OTHER"
+          />
+          <label
+            class="usa-checkbox__label"
+            for="participants-and-providers-removal-frequency-other"
+          >
+            Other
+          </label>
+          <p
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+          />
+        </div>
+        <div
+          class="margin-top-4 margin-bottom-8"
+        >
+          <div
+            class="usa-form-group"
+          >
+            <label
+              class="usa-label"
+              for="participants-and-providers-removal-frequency-note"
+              id="label-participants-and-providers-removal-frequency-note"
+            >
+              Notes
+            </label>
+            <textarea
+              aria-labelledby="label-participants-and-providers-removal-frequency-note hint-participants-and-providers-removal-frequency-note"
+              class="usa-textarea"
+              data-testid="participants-and-providers-removal-frequency-note"
+              id="participants-and-providers-removal-frequency-note"
+              name="providerRemovalFrequencyNote"
+            >
+              removal note
+            </textarea>
+          </div>
+        </div>
+      </div>
+      <div
         class="usa-form-group margin-y-4 margin-bottom-8"
         data-scroll="providerOverlap"
       >

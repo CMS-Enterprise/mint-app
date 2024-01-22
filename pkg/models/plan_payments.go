@@ -183,12 +183,16 @@ type PlanPayments struct {
 	AnticipatedPaymentFrequencyNote                   *string                         `json:"anticipatedPaymentFrequencyNote" db:"anticipated_payment_frequency_note"`
 
 	// Page 7
-	WillRecoverPayments                              *bool      `json:"willRecoverPayments" db:"will_recover_payments" statusWeight:"1"`
-	WillRecoverPaymentsNote                          *string    `json:"willRecoverPaymentsNote" db:"will_recover_payments_note"`
-	AnticipateReconcilingPaymentsRetrospectively     *bool      `json:"anticipateReconcilingPaymentsRetrospectively" db:"anticipate_reconciling_payments_retrospectively" statusWeight:"1"`
-	AnticipateReconcilingPaymentsRetrospectivelyNote *string    `json:"anticipateReconcilingPaymentsRetrospectivelyNote" db:"anticipate_reconciling_payments_retrospectively_note"`
-	PaymentStartDate                                 *time.Time `json:"paymentStartDate" db:"payment_start_date" statusWeight:"1"`
-	PaymentStartDateNote                             *string    `json:"paymentStartDateNote" db:"payment_start_date_note"`
+	WillRecoverPayments                              *bool          `json:"willRecoverPayments" db:"will_recover_payments" statusWeight:"1"`
+	WillRecoverPaymentsNote                          *string        `json:"willRecoverPaymentsNote" db:"will_recover_payments_note"`
+	AnticipateReconcilingPaymentsRetrospectively     *bool          `json:"anticipateReconcilingPaymentsRetrospectively" db:"anticipate_reconciling_payments_retrospectively" statusWeight:"1"`
+	AnticipateReconcilingPaymentsRetrospectivelyNote *string        `json:"anticipateReconcilingPaymentsRetrospectivelyNote" db:"anticipate_reconciling_payments_retrospectively_note"`
+	PaymentReconciliationFrequency                   pq.StringArray `json:"paymentReconciliationFrequency" db:"payment_reconciliation_frequency" statusWeight:"1"`
+	PaymentReconciliationFrequencyContinually        *string        `json:"paymentReconciliationFrequencyContinually" db:"payment_reconciliation_frequency_continually"`
+	PaymentReconciliationFrequencyOther              *string        `json:"paymentReconciliationFrequencyOther" db:"payment_reconciliation_frequency_other"`
+	PaymentReconciliationFrequencyNote               *string        `json:"paymentReconciliationFrequencyNote" db:"payment_reconciliation_frequency_note"`
+	PaymentStartDate                                 *time.Time     `json:"paymentStartDate" db:"payment_start_date" statusWeight:"1"`
+	PaymentStartDateNote                             *string        `json:"paymentStartDateNote" db:"payment_start_date_note"`
 }
 
 // NewPlanPayments returns a new PlanPayments object

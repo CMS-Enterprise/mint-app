@@ -103,6 +103,14 @@ export default gql`
       }
       participantsAndProviders {
         id
+        participantAddedFrequency
+        participantAddedFrequencyContinually
+        participantAddedFrequencyOther
+        participantAddedFrequencyNote
+        participantRemovedFrequency
+        participantRemovedFrequencyContinually
+        participantRemovedFrequencyOther
+        participantRemovedFrequencyNote
         communicationMethod
         communicationMethodOther
         communicationNote
@@ -148,6 +156,10 @@ export default gql`
         providerLeaveMethod
         providerLeaveMethodOther
         providerLeaveMethodNote
+        providerRemovalFrequency
+        providerRemovalFrequencyContinually
+        providerRemovalFrequencyOther
+        providerRemovalFrequencyNote
         providerOverlap
         providerOverlapHierarchy
         providerOverlapNote
@@ -228,6 +240,9 @@ export default gql`
         qualityReportingStarts
         qualityReportingStartsOther
         qualityReportingStartsNote
+        qualityReportingFrequency
+        qualityReportingFrequencyContinually
+        qualityReportingFrequencyOther
         evaluationApproaches
         evaluationApproachOther
         evalutaionApproachNote
@@ -359,6 +374,10 @@ export default gql`
         willRecoverPaymentsNote
         anticipateReconcilingPaymentsRetrospectively
         anticipateReconcilingPaymentsRetrospectivelyNote
+        paymentReconciliationFrequency
+        paymentReconciliationFrequencyContinually
+        paymentReconciliationFrequencyOther
+        paymentReconciliationFrequencyNote
         paymentStartDate
         paymentStartDateNote
         readyForReviewByUserAccount {
