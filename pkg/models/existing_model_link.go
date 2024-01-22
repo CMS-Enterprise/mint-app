@@ -20,6 +20,8 @@ type ExisitingModelLinkFieldType string
 const (
 	// EMLFTGeneralCharacteristicsResemblesExistingModelWhich is used to denote the link is in reference to the ResemblesExistingModelWhich question on Plan_General_Characteristics
 	EMLFTGeneralCharacteristicsResemblesExistingModelWhich ExisitingModelLinkFieldType = "GEN_CHAR_RESEMBLES_EXISTING_MODEL_WHICH"
+	// EMLFTGeneralCharacteristicsParticipationExistingModelWhich is used to denote the link is in refernce to the Participation in an existing model which question on Plan_Genereal_Characteristics
+	EMLFTGeneralCharacteristicsParticipationExistingModelWhich ExisitingModelLinkFieldType = "GEN_CHAR_PARTICIPATION_EXISTING_MODEL_WHICH"
 )
 
 // LinkedExistingModel is an interface which is used to return a Union type for graphql.
