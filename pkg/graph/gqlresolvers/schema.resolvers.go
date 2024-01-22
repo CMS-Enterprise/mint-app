@@ -861,6 +861,11 @@ func (r *planPaymentsResolver) NonClaimsPaymentOther(ctx context.Context, obj *m
 	return obj.NonClaimsPaymentsOther, nil
 }
 
+// ClaimsProcessingPrecedence is the resolver for the claimsProcessingPrecedence field.
+func (r *planPaymentsResolver) ClaimsProcessingPrecedence(ctx context.Context, obj *models.PlanPayments) ([]models.YesNoType, error) {
+	return models.ConvertEnums[models.YesNoType](obj.ClaimsProcessingPrecedence), nil
+}
+
 // AnticipatedPaymentFrequency is the resolver for the anticipatedPaymentFrequency field.
 func (r *planPaymentsResolver) AnticipatedPaymentFrequency(ctx context.Context, obj *models.PlanPayments) ([]models.FrequencyType, error) {
 	return models.ConvertEnums[models.FrequencyType](obj.AnticipatedPaymentFrequency), nil

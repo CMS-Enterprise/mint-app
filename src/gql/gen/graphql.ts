@@ -2005,6 +2005,9 @@ export type PlanPayments = {
   canParticipantsSelectBetweenPaymentMechanismsNote?: Maybe<Scalars['String']['output']>;
   changesMedicarePhysicianFeeSchedule?: Maybe<Scalars['Boolean']['output']>;
   changesMedicarePhysicianFeeScheduleNote?: Maybe<Scalars['String']['output']>;
+  claimsProcessingPrecedence: Array<YesNoType>;
+  claimsProcessingPrecedenceNote?: Maybe<Scalars['String']['output']>;
+  claimsProcessingPrecedenceYes?: Maybe<Scalars['String']['output']>;
   createdBy: Scalars['UUID']['output'];
   createdByUserAccount: UserAccount;
   createdDts: Scalars['Time']['output'];
@@ -2089,6 +2092,9 @@ export type PlanPaymentsChanges = {
   canParticipantsSelectBetweenPaymentMechanismsNote?: InputMaybe<Scalars['String']['input']>;
   changesMedicarePhysicianFeeSchedule?: InputMaybe<Scalars['Boolean']['input']>;
   changesMedicarePhysicianFeeScheduleNote?: InputMaybe<Scalars['String']['input']>;
+  claimsProcessingPrecedence?: InputMaybe<Array<YesNoType>>;
+  claimsProcessingPrecedenceNote?: InputMaybe<Scalars['String']['input']>;
+  claimsProcessingPrecedenceYes?: InputMaybe<Scalars['String']['input']>;
   creatingDependenciesBetweenServices?: InputMaybe<Scalars['Boolean']['input']>;
   creatingDependenciesBetweenServicesNote?: InputMaybe<Scalars['String']['input']>;
   expectedCalculationComplexityLevel?: InputMaybe<ComplexityCalculationLevelType>;
