@@ -11,7 +11,7 @@ import {
   Label,
   TextInput
 } from '@trussworks/react-uswds';
-import { Field, FieldArray, Form, Formik, FormikProps } from 'formik';
+import { Field, Form, Formik, FormikProps } from 'formik';
 import {
   GetCommunicationQuery,
   ParticipantCommunicationType,
@@ -32,7 +32,6 @@ import CheckboxField from 'components/shared/CheckboxField';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
-import TextAreaField from 'components/shared/TextAreaField';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import useScrollElement from 'hooks/useScrollElement';
 import { getKeys } from 'types/translation';
@@ -271,99 +270,68 @@ export const Communication = () => {
                     scrollElement="communicationMethod"
                     error={!!flatErrors.communicationMethod}
                   >
-                    <FieldArray
-                      name="communicationMethod"
-                      render={arrayHelpers => (
-                        <>
-                          <legend className="usa-label">
-                            {participantsAndProvidersT(
-                              'communicationMethod.label'
-                            )}
-                          </legend>
+                    <Label htmlFor="participants-and-providers-communication-method">
+                      {participantsAndProvidersT('communicationMethod.label')}
+                    </Label>
 
-                          {itSolutionsStarted && (
-                            <ITSolutionsWarning
-                              id="participants-and-providers-communication-method-warning"
-                              onClick={() =>
-                                handleFormSubmit(
-                                  `/models/${modelID}/task-list/it-solutions`
-                                )
-                              }
-                            />
-                          )}
+                    {itSolutionsStarted && (
+                      <ITSolutionsWarning
+                        id="participants-and-providers-communication-method-warning"
+                        onClick={() =>
+                          handleFormSubmit(
+                            `/models/${modelID}/task-list/it-solutions`
+                          )
+                        }
+                      />
+                    )}
 
-                          <FieldErrorMsg>
-                            {flatErrors.communicationMethod}
-                          </FieldErrorMsg>
+                    <FieldErrorMsg>
+                      {flatErrors.communicationMethod}
+                    </FieldErrorMsg>
 
-                          {getKeys(communicationMethodConfig.options).map(
-                            type => {
-                              return (
-                                <Fragment key={type}>
-                                  <Field
-                                    as={CheckboxField}
-                                    id={`participants-and-providers-communication-method-${type}`}
-                                    name="communicationMethod"
-                                    label={
-                                      communicationMethodConfig.options[type]
-                                    }
-                                    value={type}
-                                    checked={values?.communicationMethod.includes(
-                                      type
-                                    )}
-                                    onChange={(
-                                      e: React.ChangeEvent<HTMLInputElement>
-                                    ) => {
-                                      if (e.target.checked) {
-                                        arrayHelpers.push(e.target.value);
-                                      } else {
-                                        const idx = values.communicationMethod.indexOf(
-                                          e.target
-                                            .value as ParticipantCommunicationType
-                                        );
-                                        arrayHelpers.remove(idx);
-                                      }
-                                    }}
-                                  />
-
-                                  {type ===
-                                    ParticipantCommunicationType.OTHER &&
-                                    values.communicationMethod.includes(
-                                      ParticipantCommunicationType.OTHER
-                                    ) && (
-                                      <div className="margin-left-4">
-                                        <Label
-                                          htmlFor="participants-and-providers-communication-method-other"
-                                          className="text-normal"
-                                        >
-                                          {participantsAndProvidersT(
-                                            'communicationMethodOther.label'
-                                          )}
-                                        </Label>
-
-                                        <FieldErrorMsg>
-                                          {flatErrors.communicationMethodOther}
-                                        </FieldErrorMsg>
-
-                                        <Field
-                                          as={TextAreaField}
-                                          className="maxw-none mint-textarea"
-                                          id="participants-and-providers-communication-method-other"
-                                          maxLength={5000}
-                                          name="communicationMethodOther"
-                                        />
-                                      </div>
-                                    )}
-                                </Fragment>
-                              );
-                            }
-                          )}
-                          <AddNote
-                            id="participants-and-providers-communication-method-note"
-                            field="communicationNote"
+                    {getKeys(communicationMethodConfig.options).map(type => {
+                      return (
+                        <Fragment key={type}>
+                          <Field
+                            as={CheckboxField}
+                            id={`participants-and-providers-communication-method-${type}`}
+                            name="communicationMethod"
+                            label={communicationMethodConfig.options[type]}
+                            value={type}
+                            checked={values?.communicationMethod.includes(type)}
                           />
-                        </>
-                      )}
+
+                          {type === ParticipantCommunicationType.OTHER &&
+                            values.communicationMethod.includes(
+                              ParticipantCommunicationType.OTHER
+                            ) && (
+                              <div className="margin-left-4">
+                                <Label
+                                  htmlFor="participants-and-providers-communication-method-other"
+                                  className="text-normal"
+                                >
+                                  {participantsAndProvidersT(
+                                    'communicationMethodOther.label'
+                                  )}
+                                </Label>
+
+                                <FieldErrorMsg>
+                                  {flatErrors.communicationMethodOther}
+                                </FieldErrorMsg>
+
+                                <Field
+                                  as={TextInput}
+                                  id="participants-and-providers-communication-method-other"
+                                  name="communicationMethodOther"
+                                />
+                              </div>
+                            )}
+                        </Fragment>
+                      );
+                    })}
+                    <AddNote
+                      id="participants-and-providers-communication-method-note"
+                      field="communicationNote"
                     />
                   </FieldGroup>
 
