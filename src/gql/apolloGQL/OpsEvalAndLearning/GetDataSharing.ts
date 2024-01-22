@@ -13,16 +13,21 @@ export default gql(/* GraphQL */ `
         dataSharingStarts
         dataSharingStartsOther
         dataSharingFrequency
+        dataSharingFrequencyContinually
         dataSharingFrequencyOther
         dataSharingStartsNote
         dataCollectionStarts
         dataCollectionStartsOther
         dataCollectionFrequency
+        dataCollectionFrequencyContinually
         dataCollectionFrequencyOther
         dataCollectionFrequencyNote
         qualityReportingStarts
         qualityReportingStartsOther
         qualityReportingStartsNote
+        qualityReportingFrequency
+        qualityReportingFrequencyContinually
+        qualityReportingFrequencyOther
       }
     }
   }

@@ -23,6 +23,7 @@ import {
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
 import BooleanRadio from 'components/BooleanRadioForm';
+import FrequencyForm from 'components/FrequencyForm';
 import ITSolutionsWarning from 'components/ITSolutionsWarning';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
@@ -51,6 +52,8 @@ export const Communication = () => {
   const { t: miscellaneousT } = useTranslation('miscellaneous');
 
   const {
+    participantAddedFrequency: participantAddedFrequencyConfig,
+    participantRemovedFrequency: participantRemovedFrequencyConfig,
     communicationMethod: communicationMethodConfig,
     riskType: riskTypeConfig,
     willRiskChange: willRiskChangeConfig
@@ -69,6 +72,14 @@ export const Communication = () => {
 
   const {
     id,
+    participantAddedFrequency,
+    participantAddedFrequencyContinually,
+    participantAddedFrequencyOther,
+    participantAddedFrequencyNote,
+    participantRemovedFrequency,
+    participantRemovedFrequencyContinually,
+    participantRemovedFrequencyOther,
+    participantRemovedFrequencyNote,
     communicationMethod,
     communicationMethodOther,
     communicationNote,
@@ -128,6 +139,16 @@ export const Communication = () => {
   const initialValues: CommunicationFormType = {
     __typename: 'PlanParticipantsAndProviders',
     id: id ?? '',
+    participantAddedFrequency: participantAddedFrequency ?? [],
+    participantAddedFrequencyContinually:
+      participantAddedFrequencyContinually ?? '',
+    participantAddedFrequencyOther: participantAddedFrequencyOther ?? '',
+    participantAddedFrequencyNote: participantAddedFrequencyNote ?? '',
+    participantRemovedFrequency: participantRemovedFrequency ?? [],
+    participantRemovedFrequencyContinually:
+      participantRemovedFrequencyContinually ?? '',
+    participantRemovedFrequencyOther: participantRemovedFrequencyOther ?? '',
+    participantRemovedFrequencyNote: participantRemovedFrequencyNote ?? '',
     communicationMethod: communicationMethod ?? [],
     communicationMethodOther: communicationMethodOther ?? '',
     communicationNote: communicationNote ?? '',
@@ -222,6 +243,30 @@ export const Communication = () => {
                 }}
               >
                 <Fieldset disabled={!!error || loading}>
+                  <FrequencyForm
+                    field="participantAddedFrequency"
+                    values={values.participantAddedFrequency}
+                    config={participantAddedFrequencyConfig}
+                    nameSpace="participantsAndProviders"
+                    id="participant-added-frequency"
+                    label={participantsAndProvidersT(
+                      'participantAddedFrequency.label'
+                    )}
+                    disabled={loading}
+                  />
+
+                  <FrequencyForm
+                    field="participantRemovedFrequency"
+                    values={values.participantRemovedFrequency}
+                    config={participantRemovedFrequencyConfig}
+                    nameSpace="participantsAndProviders"
+                    id="participant-removed-frequency"
+                    label={participantsAndProvidersT(
+                      'participantRemovedFrequency.label'
+                    )}
+                    disabled={loading}
+                  />
+
                   <FieldGroup
                     scrollElement="communicationMethod"
                     error={!!flatErrors.communicationMethod}

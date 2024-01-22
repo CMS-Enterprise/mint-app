@@ -3,6 +3,7 @@ import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
 import {
+  FrequencyType,
   GetCommunicationDocument,
   GetCommunicationQuery,
   ParticipantRiskType
@@ -15,6 +16,14 @@ type GetCommunicationType = GetCommunicationQuery['modelPlan']['participantsAndP
 const communicationMockData: GetCommunicationType = {
   __typename: 'PlanParticipantsAndProviders',
   id: '123',
+  participantAddedFrequency: [FrequencyType.CONTINUALLY],
+  participantAddedFrequencyContinually: 'participant added continually',
+  participantAddedFrequencyOther: '',
+  participantAddedFrequencyNote: 'My note',
+  participantRemovedFrequency: [FrequencyType.OTHER],
+  participantRemovedFrequencyContinually: '',
+  participantRemovedFrequencyOther: 'participant added other',
+  participantRemovedFrequencyNote: 'Second note',
   communicationMethod: [],
   communicationMethodOther: '',
   communicationNote: '',

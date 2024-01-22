@@ -74,13 +74,16 @@ func (suite *ResolverSuite) TestPlanParticipantsAndProvidersUpdate() {
 	suite.NoError(err)
 
 	changes := map[string]interface{}{
-		"confidenceNote":     "This is a confidence note",
-		"recruitmentNote":    "This is a recruitment note",
-		"estimateConfidence": string(models.ConfidenceSlightly),
+		"confidenceNote":                       "This is a confidence note",
+		"recruitmentNote":                      "This is a recruitment note",
+		"estimateConfidence":                   string(models.ConfidenceSlightly),
+		"providerAdditionFrequencyContinually": "This is a provider addition frequency continually note",
 	}
 
 	updatedPP, err := PlanParticipantsAndProvidersUpdate(suite.testConfigs.Logger, pp.ID, changes, suite.testConfigs.Principal, suite.testConfigs.Store)
 	suite.NoError(err)
+
+	suite.EqualValues("This is a provider addition frequency continually note", *updatedPP.ProviderAdditionFrequencyContinually)
 
 	suite.Nil(updatedPP.Participants)
 	suite.Nil(updatedPP.MedicareProviderType)
@@ -99,6 +102,14 @@ func (suite *ResolverSuite) TestPlanParticipantsAndProvidersUpdate() {
 	suite.Nil(updatedPP.SelectionMethod)
 	suite.Nil(updatedPP.SelectionOther)
 	suite.Nil(updatedPP.SelectionNote)
+	suite.Nil(updatedPP.ParticipantAddedFrequency)
+	suite.Nil(updatedPP.ParticipantAddedFrequencyContinually)
+	suite.Nil(updatedPP.ParticipantAddedFrequencyOther)
+	suite.Nil(updatedPP.ParticipantAddedFrequencyNote)
+	suite.Nil(updatedPP.ParticipantRemovedFrequency)
+	suite.Nil(updatedPP.ParticipantRemovedFrequencyContinually)
+	suite.Nil(updatedPP.ParticipantRemovedFrequencyOther)
+	suite.Nil(updatedPP.ParticipantRemovedFrequencyNote)
 	suite.Nil(updatedPP.CommunicationMethod)
 	suite.Nil(updatedPP.CommunicationNote)
 	suite.Nil(updatedPP.RiskType)
@@ -125,6 +136,10 @@ func (suite *ResolverSuite) TestPlanParticipantsAndProvidersUpdate() {
 	suite.Nil(updatedPP.ProviderLeaveMethod)
 	suite.Nil(updatedPP.ProviderLeaveMethodOther)
 	suite.Nil(updatedPP.ProviderLeaveMethodNote)
+	suite.Nil(updatedPP.ProviderRemovalFrequency)
+	suite.Nil(updatedPP.ProviderRemovalFrequencyContinually)
+	suite.Nil(updatedPP.ProviderRemovalFrequencyOther)
+	suite.Nil(updatedPP.ProviderRemovalFrequencyNote)
 	suite.Nil(updatedPP.ProviderOverlap)
 	suite.Nil(updatedPP.ProviderOverlapHierarchy)
 	suite.Nil(updatedPP.ProviderOverlapNote)
@@ -162,6 +177,14 @@ func (suite *ResolverSuite) TestPlanParticipantsAndProvidersGetByModelPlanID() {
 	suite.Nil(pp.SelectionMethod)
 	suite.Nil(pp.SelectionOther)
 	suite.Nil(pp.SelectionNote)
+	suite.Nil(pp.ParticipantAddedFrequency)
+	suite.Nil(pp.ParticipantAddedFrequencyContinually)
+	suite.Nil(pp.ParticipantAddedFrequencyOther)
+	suite.Nil(pp.ParticipantAddedFrequencyNote)
+	suite.Nil(pp.ParticipantRemovedFrequency)
+	suite.Nil(pp.ParticipantRemovedFrequencyContinually)
+	suite.Nil(pp.ParticipantRemovedFrequencyOther)
+	suite.Nil(pp.ParticipantRemovedFrequencyNote)
 	suite.Nil(pp.CommunicationMethod)
 	suite.Nil(pp.CommunicationNote)
 	suite.Nil(pp.RiskType)
@@ -180,6 +203,7 @@ func (suite *ResolverSuite) TestPlanParticipantsAndProvidersGetByModelPlanID() {
 	suite.Nil(pp.ParticipantsIdsOther)
 	suite.Nil(pp.ParticipantsIDSNote)
 	suite.Nil(pp.ProviderAdditionFrequency)
+	suite.Nil(pp.ProviderAdditionFrequencyContinually)
 	suite.Nil(pp.ProviderAdditionFrequencyOther)
 	suite.Nil(pp.ProviderAdditionFrequencyNote)
 	suite.Nil(pp.ProviderAddMethod)
@@ -188,6 +212,10 @@ func (suite *ResolverSuite) TestPlanParticipantsAndProvidersGetByModelPlanID() {
 	suite.Nil(pp.ProviderLeaveMethod)
 	suite.Nil(pp.ProviderLeaveMethodOther)
 	suite.Nil(pp.ProviderLeaveMethodNote)
+	suite.Nil(pp.ProviderRemovalFrequency)
+	suite.Nil(pp.ProviderRemovalFrequencyContinually)
+	suite.Nil(pp.ProviderRemovalFrequencyOther)
+	suite.Nil(pp.ProviderRemovalFrequencyNote)
 	suite.Nil(pp.ProviderOverlap)
 	suite.Nil(pp.ProviderOverlapHierarchy)
 	suite.Nil(pp.ProviderOverlapNote)

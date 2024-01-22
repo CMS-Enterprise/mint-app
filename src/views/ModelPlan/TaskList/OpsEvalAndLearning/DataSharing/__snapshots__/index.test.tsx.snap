@@ -171,126 +171,161 @@ exports[`Model Plan Ops Eval and Learning Data Sharing > matches snapshot 1`] = 
         </select>
       </div>
       <div
-        class="usa-form-group margin-top-4"
+        class="usa-form-group"
         data-scroll="dataSharingFrequency"
       >
         <label
           class="usa-label maxw-none text-normal"
           data-testid="label"
           for="ops-eval-and-learning-data-sharing-frequency"
-          id="label-ops-eval-and-learning-data-sharing-frequency"
         >
           How often do you anticipate sharing data?
         </label>
-        <div>
-          <div
-            class="easi-multiselect usa-combo-box margin-top-1 css-b62m3t-container"
-            id="ops-eval-and-learning-data-sharing-frequency"
+        <div
+          class="mint-checkbox usa-checkbox"
+        >
+          <input
+            class="usa-checkbox__input"
+            id="ops-eval-and-learning-data-sharing-frequency-annually"
+            name="dataSharingFrequency"
+            type="checkbox"
+            value="ANNUALLY"
+          />
+          <label
+            class="usa-checkbox__label"
+            for="ops-eval-and-learning-data-sharing-frequency-annually"
           >
-            <span
-              class="css-1f43avz-a11yText-A11yText"
-              id="react-select-4-live-region"
-            />
-            <span
-              aria-atomic="false"
-              aria-live="polite"
-              aria-relevant="additions text"
-              class="css-1f43avz-a11yText-A11yText"
-            />
-            <div
-              class=" css-jvusj8-control"
-            >
-              <div
-                class=" css-319lph-ValueContainer"
-              >
-                <div
-                  class=" css-14el2xx-placeholder"
-                  id="react-select-4-placeholder"
-                >
-                  0 selected
-                </div>
-                <div
-                  class=" css-6j8wv5-Input"
-                  data-value=""
-                >
-                  <input
-                    aria-autocomplete="list"
-                    aria-describedby="react-select-4-placeholder"
-                    aria-expanded="false"
-                    aria-haspopup="true"
-                    aria-labelledby="label-ops-eval-and-learning-data-sharing-frequency"
-                    autocapitalize="none"
-                    autocomplete="off"
-                    autocorrect="off"
-                    class=""
-                    id="react-select-4-input"
-                    role="combobox"
-                    spellcheck="false"
-                    style="opacity: 1; width: 100%; grid-area: 1 / 2; min-width: 2px; border: 0px; margin: 0px; outline: 0; padding: 0px;"
-                    tabindex="0"
-                    type="text"
-                    value=""
-                  />
-                </div>
-              </div>
-              <div
-                class=" css-1hb7zxy-IndicatorsContainer"
-              >
-                <span
-                  class=" css-1vtyy7d-indicatorSeparator"
-                />
-                <div
-                  aria-hidden="true"
-                  class=" css-1232v1p-indicatorContainer"
-                >
-                  <svg
-                    aria-hidden="true"
-                    class="css-tj5bde-Svg"
-                    focusable="false"
-                    height="20"
-                    viewBox="0 0 20 20"
-                    width="20"
-                  >
-                    <path
-                      d="M4.516 7.548c0.436-0.446 1.043-0.481 1.576 0l3.908 3.747 3.908-3.747c0.533-0.481 1.141-0.446 1.574 0 0.436 0.445 0.408 1.197 0 1.615-0.406 0.418-4.695 4.502-4.695 4.502-0.217 0.223-0.502 0.335-0.787 0.335s-0.57-0.112-0.789-0.335c0 0-4.287-4.084-4.695-4.502s-0.436-1.17 0-1.615z"
-                    />
-                  </svg>
-                </div>
-              </div>
-            </div>
-            <div>
-              <input
-                name="dataSharingFrequency"
-                type="hidden"
-              />
-            </div>
-          </div>
+            Annually
+          </label>
+          <p
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+          />
         </div>
         <div
-          class="margin-top-4 margin-bottom-8"
+          class="mint-checkbox usa-checkbox"
         >
-          <button
-            class="usa-button usa-button usa-button--unstyled"
-            data-testid="add-note-toggle"
-            type="button"
+          <input
+            class="usa-checkbox__input"
+            id="ops-eval-and-learning-data-sharing-frequency-semiannually"
+            name="dataSharingFrequency"
+            type="checkbox"
+            value="SEMIANNUALLY"
+          />
+          <label
+            class="usa-checkbox__label"
+            for="ops-eval-and-learning-data-sharing-frequency-semiannually"
           >
-            <svg
-              aria-hidden="true"
-              class="usa-icon margin-right-1"
-              focusable="false"
-              height="1em"
-              role="img"
-              viewBox="0 0 24 24"
-              width="1em"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
-              />
-            </svg>
-            Add an additional note
-          </button>
+            Semi-annually
+          </label>
+          <p
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+          />
         </div>
+        <div
+          class="mint-checkbox usa-checkbox"
+        >
+          <input
+            class="usa-checkbox__input"
+            id="ops-eval-and-learning-data-sharing-frequency-quarterly"
+            name="dataSharingFrequency"
+            type="checkbox"
+            value="QUARTERLY"
+          />
+          <label
+            class="usa-checkbox__label"
+            for="ops-eval-and-learning-data-sharing-frequency-quarterly"
+          >
+            Quarterly
+          </label>
+          <p
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+          />
+        </div>
+        <div
+          class="mint-checkbox usa-checkbox"
+        >
+          <input
+            class="usa-checkbox__input"
+            id="ops-eval-and-learning-data-sharing-frequency-monthly"
+            name="dataSharingFrequency"
+            type="checkbox"
+            value="MONTHLY"
+          />
+          <label
+            class="usa-checkbox__label"
+            for="ops-eval-and-learning-data-sharing-frequency-monthly"
+          >
+            Monthly
+          </label>
+          <p
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+          />
+        </div>
+        <div
+          class="mint-checkbox usa-checkbox"
+        >
+          <input
+            class="usa-checkbox__input"
+            id="ops-eval-and-learning-data-sharing-frequency-continually"
+            name="dataSharingFrequency"
+            type="checkbox"
+            value="CONTINUALLY"
+          />
+          <label
+            class="usa-checkbox__label"
+            for="ops-eval-and-learning-data-sharing-frequency-continually"
+          >
+            Continually
+          </label>
+          <p
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+          />
+        </div>
+        <div
+          class="mint-checkbox usa-checkbox"
+        >
+          <input
+            class="usa-checkbox__input"
+            id="ops-eval-and-learning-data-sharing-frequency-other"
+            name="dataSharingFrequency"
+            type="checkbox"
+            value="OTHER"
+          />
+          <label
+            class="usa-checkbox__label"
+            for="ops-eval-and-learning-data-sharing-frequency-other"
+          >
+            Other
+          </label>
+          <p
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+          />
+        </div>
+      </div>
+      <div
+        class="margin-top-4 margin-bottom-8"
+      >
+        <button
+          class="usa-button usa-button usa-button--unstyled"
+          data-testid="add-note-toggle"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            class="usa-icon margin-right-1"
+            focusable="false"
+            height="1em"
+            role="img"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+            />
+          </svg>
+          Add an additional note
+        </button>
       </div>
       <div
         class="usa-form-group"
@@ -361,100 +396,135 @@ exports[`Model Plan Ops Eval and Learning Data Sharing > matches snapshot 1`] = 
         </select>
       </div>
       <div
-        class="usa-form-group margin-top-4"
+        class="usa-form-group"
         data-scroll="dataCollectionFrequency"
       >
         <label
           class="usa-label maxw-none text-normal"
           data-testid="label"
           for="ops-eval-and-learning-data-collection-frequency"
-          id="label-ops-eval-and-learning-data-collection-frequency"
         >
           How often do you anticipate collecting data?
         </label>
-        <div>
-          <div
-            class="easi-multiselect usa-combo-box margin-top-1 css-b62m3t-container"
-            id="ops-eval-and-learning-data-collection-frequency"
+        <div
+          class="mint-checkbox usa-checkbox"
+        >
+          <input
+            class="usa-checkbox__input"
+            id="ops-eval-and-learning-data-collection-frequency-annually"
+            name="dataCollectionFrequency"
+            type="checkbox"
+            value="ANNUALLY"
+          />
+          <label
+            class="usa-checkbox__label"
+            for="ops-eval-and-learning-data-collection-frequency-annually"
           >
-            <span
-              class="css-1f43avz-a11yText-A11yText"
-              id="react-select-5-live-region"
-            />
-            <span
-              aria-atomic="false"
-              aria-live="polite"
-              aria-relevant="additions text"
-              class="css-1f43avz-a11yText-A11yText"
-            />
-            <div
-              class=" css-jvusj8-control"
-            >
-              <div
-                class=" css-319lph-ValueContainer"
-              >
-                <div
-                  class=" css-14el2xx-placeholder"
-                  id="react-select-5-placeholder"
-                >
-                  0 selected
-                </div>
-                <div
-                  class=" css-6j8wv5-Input"
-                  data-value=""
-                >
-                  <input
-                    aria-autocomplete="list"
-                    aria-describedby="react-select-5-placeholder"
-                    aria-expanded="false"
-                    aria-haspopup="true"
-                    aria-labelledby="label-ops-eval-and-learning-data-collection-frequency"
-                    autocapitalize="none"
-                    autocomplete="off"
-                    autocorrect="off"
-                    class=""
-                    id="react-select-5-input"
-                    role="combobox"
-                    spellcheck="false"
-                    style="opacity: 1; width: 100%; grid-area: 1 / 2; min-width: 2px; border: 0px; margin: 0px; outline: 0; padding: 0px;"
-                    tabindex="0"
-                    type="text"
-                    value=""
-                  />
-                </div>
-              </div>
-              <div
-                class=" css-1hb7zxy-IndicatorsContainer"
-              >
-                <span
-                  class=" css-1vtyy7d-indicatorSeparator"
-                />
-                <div
-                  aria-hidden="true"
-                  class=" css-1232v1p-indicatorContainer"
-                >
-                  <svg
-                    aria-hidden="true"
-                    class="css-tj5bde-Svg"
-                    focusable="false"
-                    height="20"
-                    viewBox="0 0 20 20"
-                    width="20"
-                  >
-                    <path
-                      d="M4.516 7.548c0.436-0.446 1.043-0.481 1.576 0l3.908 3.747 3.908-3.747c0.533-0.481 1.141-0.446 1.574 0 0.436 0.445 0.408 1.197 0 1.615-0.406 0.418-4.695 4.502-4.695 4.502-0.217 0.223-0.502 0.335-0.787 0.335s-0.57-0.112-0.789-0.335c0 0-4.287-4.084-4.695-4.502s-0.436-1.17 0-1.615z"
-                    />
-                  </svg>
-                </div>
-              </div>
-            </div>
-            <div>
-              <input
-                name="dataCollectionFrequency"
-                type="hidden"
-              />
-            </div>
-          </div>
+            Annually
+          </label>
+          <p
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+          />
+        </div>
+        <div
+          class="mint-checkbox usa-checkbox"
+        >
+          <input
+            class="usa-checkbox__input"
+            id="ops-eval-and-learning-data-collection-frequency-semiannually"
+            name="dataCollectionFrequency"
+            type="checkbox"
+            value="SEMIANNUALLY"
+          />
+          <label
+            class="usa-checkbox__label"
+            for="ops-eval-and-learning-data-collection-frequency-semiannually"
+          >
+            Semi-annually
+          </label>
+          <p
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+          />
+        </div>
+        <div
+          class="mint-checkbox usa-checkbox"
+        >
+          <input
+            class="usa-checkbox__input"
+            id="ops-eval-and-learning-data-collection-frequency-quarterly"
+            name="dataCollectionFrequency"
+            type="checkbox"
+            value="QUARTERLY"
+          />
+          <label
+            class="usa-checkbox__label"
+            for="ops-eval-and-learning-data-collection-frequency-quarterly"
+          >
+            Quarterly
+          </label>
+          <p
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+          />
+        </div>
+        <div
+          class="mint-checkbox usa-checkbox"
+        >
+          <input
+            class="usa-checkbox__input"
+            id="ops-eval-and-learning-data-collection-frequency-monthly"
+            name="dataCollectionFrequency"
+            type="checkbox"
+            value="MONTHLY"
+          />
+          <label
+            class="usa-checkbox__label"
+            for="ops-eval-and-learning-data-collection-frequency-monthly"
+          >
+            Monthly
+          </label>
+          <p
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+          />
+        </div>
+        <div
+          class="mint-checkbox usa-checkbox"
+        >
+          <input
+            class="usa-checkbox__input"
+            id="ops-eval-and-learning-data-collection-frequency-continually"
+            name="dataCollectionFrequency"
+            type="checkbox"
+            value="CONTINUALLY"
+          />
+          <label
+            class="usa-checkbox__label"
+            for="ops-eval-and-learning-data-collection-frequency-continually"
+          >
+            Continually
+          </label>
+          <p
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+          />
+        </div>
+        <div
+          class="mint-checkbox usa-checkbox"
+        >
+          <input
+            class="usa-checkbox__input"
+            id="ops-eval-and-learning-data-collection-frequency-other"
+            name="dataCollectionFrequency"
+            type="checkbox"
+            value="OTHER"
+          />
+          <label
+            class="usa-checkbox__label"
+            for="ops-eval-and-learning-data-collection-frequency-other"
+          >
+            Other
+          </label>
+          <p
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+          />
         </div>
         <div
           class="margin-top-4 margin-bottom-8"
@@ -566,6 +636,156 @@ exports[`Model Plan Ops Eval and Learning Data Sharing > matches snapshot 1`] = 
           >
             Other Value
           </textarea>
+        </div>
+        <div
+          class="usa-form-group"
+          data-scroll="qualityReportingFrequency"
+        >
+          <label
+            class="usa-label maxw-none text-normal"
+            data-testid="label"
+            for="ops-eval-and-learning-quality-reporting-frequency"
+          >
+            How frequently does quality reporting happen?
+          </label>
+          <div
+            class="mint-checkbox usa-checkbox"
+          >
+            <input
+              class="usa-checkbox__input"
+              id="ops-eval-and-learning-quality-reporting-frequency-annually"
+              name="qualityReportingFrequency"
+              type="checkbox"
+              value="ANNUALLY"
+            />
+            <label
+              class="usa-checkbox__label"
+              for="ops-eval-and-learning-quality-reporting-frequency-annually"
+            >
+              Annually
+            </label>
+            <p
+              class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+            />
+          </div>
+          <div
+            class="mint-checkbox usa-checkbox"
+          >
+            <input
+              class="usa-checkbox__input"
+              id="ops-eval-and-learning-quality-reporting-frequency-semiannually"
+              name="qualityReportingFrequency"
+              type="checkbox"
+              value="SEMIANNUALLY"
+            />
+            <label
+              class="usa-checkbox__label"
+              for="ops-eval-and-learning-quality-reporting-frequency-semiannually"
+            >
+              Semi-annually
+            </label>
+            <p
+              class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+            />
+          </div>
+          <div
+            class="mint-checkbox usa-checkbox"
+          >
+            <input
+              class="usa-checkbox__input"
+              id="ops-eval-and-learning-quality-reporting-frequency-quarterly"
+              name="qualityReportingFrequency"
+              type="checkbox"
+              value="QUARTERLY"
+            />
+            <label
+              class="usa-checkbox__label"
+              for="ops-eval-and-learning-quality-reporting-frequency-quarterly"
+            >
+              Quarterly
+            </label>
+            <p
+              class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+            />
+          </div>
+          <div
+            class="mint-checkbox usa-checkbox"
+          >
+            <input
+              class="usa-checkbox__input"
+              id="ops-eval-and-learning-quality-reporting-frequency-monthly"
+              name="qualityReportingFrequency"
+              type="checkbox"
+              value="MONTHLY"
+            />
+            <label
+              class="usa-checkbox__label"
+              for="ops-eval-and-learning-quality-reporting-frequency-monthly"
+            >
+              Monthly
+            </label>
+            <p
+              class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+            />
+          </div>
+          <div
+            class="mint-checkbox usa-checkbox"
+          >
+            <input
+              class="usa-checkbox__input"
+              id="ops-eval-and-learning-quality-reporting-frequency-continually"
+              name="qualityReportingFrequency"
+              type="checkbox"
+              value="CONTINUALLY"
+            />
+            <label
+              class="usa-checkbox__label"
+              for="ops-eval-and-learning-quality-reporting-frequency-continually"
+            >
+              Continually
+            </label>
+            <p
+              class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+            />
+          </div>
+          <div
+            class="margin-left-4"
+          >
+            <label
+              class="usa-label text-normal margin-top-1"
+              data-testid="label"
+              for="ops-eval-and-learning-quality-reporting-frequency-continually"
+            >
+              Please specify
+            </label>
+            <input
+              class="usa-input"
+              data-testid="ops-eval-and-learning-quality-reporting-frequency-continually-text"
+              id="ops-eval-and-learning-quality-reporting-frequency-continually-text"
+              name="qualityReportingFrequencyContinually"
+              value="continual frequency"
+            />
+          </div>
+          <div
+            class="mint-checkbox usa-checkbox"
+          >
+            <input
+              class="usa-checkbox__input"
+              id="ops-eval-and-learning-quality-reporting-frequency-other"
+              name="qualityReportingFrequency"
+              type="checkbox"
+              value="OTHER"
+            />
+            <label
+              class="usa-checkbox__label"
+              for="ops-eval-and-learning-quality-reporting-frequency-other"
+            >
+              Other
+            </label>
+            <p
+              class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+            />
+          </div>
         </div>
         <div
           class="margin-top-4 margin-bottom-8"
