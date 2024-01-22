@@ -7,6 +7,8 @@ package gqlresolvers
 import (
 	"context"
 
+	"github.com/google/uuid"
+
 	"github.com/cmsgov/mint-app/pkg/appcontext"
 	"github.com/cmsgov/mint-app/pkg/authentication"
 	"github.com/cmsgov/mint-app/pkg/constants"
@@ -16,7 +18,6 @@ import (
 	"github.com/cmsgov/mint-app/pkg/graph/resolvers"
 	"github.com/cmsgov/mint-app/pkg/models"
 	"github.com/cmsgov/mint-app/pkg/userhelpers"
-	"github.com/google/uuid"
 )
 
 // Fields is the resolver for the fields field.
@@ -1178,13 +1179,3 @@ type queryResolver struct{ *Resolver }
 type subscriptionResolver struct{ *Resolver }
 type tagResolver struct{ *Resolver }
 type taggedContentResolver struct{ *Resolver }
-
-// !!! WARNING !!!
-// The code below was going to be deleted when updating resolvers. It has been copied here so you have
-// one last chance to move it out of harms way if you want. There are two reasons this happens:
-//   - When renaming or deleting a resolver the old code will be put in here. You can safely delete
-//     it when you're done.
-//   - You have helper methods in this file. Move them out to keep these resolver files clean.
-func (r *planPaymentsResolver) ClaimsProcessingPrecedence(ctx context.Context, obj *models.PlanPayments) ([]models.YesNoType, error) {
-	return models.ConvertEnums[models.YesNoType](obj.ClaimsProcessingPrecedence), nil
-}

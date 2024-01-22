@@ -1092,7 +1092,7 @@ export interface PlanPaymentsChanges {
   expectedCalculationComplexityLevel?: ComplexityCalculationLevelType | null;
   expectedCalculationComplexityLevelNote?: string | null;
   claimsProcessingPrecedence?: boolean | null;
-  claimsProcessingPrecedenceYes?: string | null;
+  claimsProcessingPrecedenceOther?: string | null;
   claimsProcessingPrecedenceNote?: string | null;
   canParticipantsSelectBetweenPaymentMechanisms?: boolean | null;
   canParticipantsSelectBetweenPaymentMechanismsHow?: string | null;

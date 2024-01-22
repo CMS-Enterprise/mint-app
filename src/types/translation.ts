@@ -478,7 +478,7 @@ export type TranslationPayments = {
   expectedCalculationComplexityLevel: TranslationFieldPropertiesWithOptions<ComplexityCalculationLevelType>;
   expectedCalculationComplexityLevelNote: TranslationFieldProperties;
   claimsProcessingPrecedence: TranslationFieldPropertiesWithOptions<Bool>;
-  claimsProcessingPrecedenceYes: TranslationFieldProperties;
+  claimsProcessingPrecedenceOther: TranslationFieldProperties;
   claimsProcessingPrecedenceNote: TranslationFieldProperties;
   canParticipantsSelectBetweenPaymentMechanisms: TranslationFieldPropertiesWithOptions<Bool>;
   canParticipantsSelectBetweenPaymentMechanismsHow: TranslationFieldProperties;

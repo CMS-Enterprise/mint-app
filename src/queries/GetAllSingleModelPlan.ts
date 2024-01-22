@@ -341,7 +341,7 @@ export default gql`
         expectedCalculationComplexityLevel
         expectedCalculationComplexityLevelNote
         claimsProcessingPrecedence
-        claimsProcessingPrecedenceYes
+        claimsProcessingPrecedenceOther
         claimsProcessingPrecedenceNote
         canParticipantsSelectBetweenPaymentMechanisms
         canParticipantsSelectBetweenPaymentMechanismsHow

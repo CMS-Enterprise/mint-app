@@ -612,14 +612,14 @@ export const payments: TranslationPayments = {
       false: 'No'
     },
     optionsRelatedInfo: {
-      true: 'claimsProcessingPrecedenceYes',
+      true: 'claimsProcessingPrecedenceOther',
       false: ''
     }
   },
-  claimsProcessingPrecedenceYes: {
-    gqlField: 'claimsProcessingPrecedenceYes',
-    goField: 'ClaimsProcessingPrecedenceYes',
-    dbField: 'claims_processing_precedence_yes',
+  claimsProcessingPrecedenceOther: {
+    gqlField: 'claimsProcessingPrecedenceOther',
+    goField: 'ClaimsProcessingPrecedenceOther',
+    dbField: 'claims_processing_precedence_other',
     label: 'Please specify',
     dataType: 'string',
     formType: 'text'

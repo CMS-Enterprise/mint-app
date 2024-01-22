@@ -98,6 +98,9 @@ const ReadOnlyPayments = ({
     planningToUseInnovationPaymentContractorNote,
     expectedCalculationComplexityLevel,
     expectedCalculationComplexityLevelNote,
+    claimsProcessingPrecedence,
+    claimsProcessingPrecedenceOther,
+    claimsProcessingPrecedenceNote,
     canParticipantsSelectBetweenPaymentMechanisms,
     canParticipantsSelectBetweenPaymentMechanismsHow,
     canParticipantsSelectBetweenPaymentMechanismsNote,
@@ -577,6 +580,21 @@ const ReadOnlyPayments = ({
               )
             }
             notes={expectedCalculationComplexityLevelNote}
+          />
+        )}
+
+        {checkGroupMap(
+          isViewingFilteredView,
+          filteredQuestions,
+          'claimsProcessingPrecedence',
+          <ReadOnlySection
+            heading={paymentsT('claimsProcessingPrecedence.label')}
+            copy={paymentsT(
+              `claimsProcessingPrecedence.options.${claimsProcessingPrecedence}`,
+              ''
+            )}
+            listOtherItem={claimsProcessingPrecedenceOther}
+            notes={claimsProcessingPrecedenceNote}
           />
         )}
 

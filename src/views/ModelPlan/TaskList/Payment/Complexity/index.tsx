@@ -22,7 +22,7 @@ import {
   useGetComplexityQuery,
   useUpdatePaymentsMutation
 } from 'gql/gen/graphql';
-import BooleanRadio from 'components/BooleanRadioForm';
+
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
 import BooleanRadio from 'components/BooleanRadioForm';
@@ -33,6 +33,7 @@ import AutoSave from 'components/shared/AutoSave';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
+import TextAreaField from 'components/shared/TextAreaField';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import { getKeys } from 'types/translation';
 import flattenErrors from 'utils/flattenErrors';
@@ -75,7 +76,7 @@ const Complexity = () => {
     expectedCalculationComplexityLevel,
     expectedCalculationComplexityLevelNote,
     claimsProcessingPrecedence,
-    claimsProcessingPrecedenceYes,
+    claimsProcessingPrecedenceOther,
     claimsProcessingPrecedenceNote,
     canParticipantsSelectBetweenPaymentMechanisms,
     canParticipantsSelectBetweenPaymentMechanismsHow,
@@ -153,7 +154,7 @@ const Complexity = () => {
     expectedCalculationComplexityLevelNote:
       expectedCalculationComplexityLevelNote ?? '',
     claimsProcessingPrecedence: claimsProcessingPrecedence ?? null,
-    claimsProcessingPrecedenceYes: claimsProcessingPrecedenceYes ?? '',
+    claimsProcessingPrecedenceOther: claimsProcessingPrecedenceOther ?? '',
     claimsProcessingPrecedenceNote: claimsProcessingPrecedenceNote ?? '',
     canParticipantsSelectBetweenPaymentMechanisms:
       canParticipantsSelectBetweenPaymentMechanisms ?? null,
@@ -311,55 +312,50 @@ const Complexity = () => {
                         </FieldGroup>
 
                         <FieldGroup
-                    scrollElement="claimsProcessingPrecedence"
-                    className="margin-y-4 margin-bottom-8"
-                  >
-                    <Label htmlFor="payment-claims-processing-precendece">
-                      {paymentsT('claimsProcessingPrecedence.label')}
-                    </Label>
+                          scrollElement="claimsProcessingPrecedence"
+                          className="margin-y-4 margin-bottom-8"
+                        >
+                          <Label htmlFor="payment-claims-processing-precendece">
+                            {paymentsT('claimsProcessingPrecedence.label')}
+                          </Label>
 
-                    <BooleanRadio
-                      field="claimsProcessingPrecedence"
-                      id="plan-characteristics-has-component-or-tracks"
-                      value={values.claimsProcessingPrecedence}
-                      setFieldValue={setFieldValue}
-                      options={claimsProcessingPrecedenceConfig.options}
-                      childName="claimsProcessingPrecedenceOther"
-                    >
-                      {values.hasComponentsOrTracks === true ? (
-                        <div className="display-flex margin-left-4 margin-bottom-1">
-                          <FieldGroup
-                            className="flex-1"
-                            scrollElement="hasComponentsOrTracksDiffer"
-                            error={!!flatErrors.hasComponentsOrTracksDiffer}
+                          <BooleanRadio
+                            field="claimsProcessingPrecedence"
+                            id="payment-claims-processing-precendece"
+                            value={values.claimsProcessingPrecedence}
+                            setFieldValue={setFieldValue}
+                            options={claimsProcessingPrecedenceConfig.options}
+                            childName="claimsProcessingPrecedenceOther"
                           >
-                            <Label
-                              htmlFor="plan-characteristics-tracks-differ-how"
-                              className="margin-bottom-1 text-normal"
-                            >
-                              {generalCharacteristicsT(
-                                'hasComponentsOrTracksDiffer.label'
-                              )}
-                            </Label>
+                            {values.claimsProcessingPrecedence === true ? (
+                              <div className="display-flex margin-left-4 margin-bottom-1">
+                                <FieldGroup
+                                  className="flex-1"
+                                  scrollElement="claimsProcessingPrecedenceOther"
+                                >
+                                  <Label
+                                    htmlFor="payment-claims-processing-precendece-other"
+                                    className="margin-bottom-1 text-normal"
+                                  >
+                                    {paymentsT(
+                                      'claimsProcessingPrecedenceOther.label'
+                                    )}
+                                  </Label>
 
-                            <FieldErrorMsg>
-                              {flatErrors.hasComponentsOrTracksDiffer}
-                            </FieldErrorMsg>
-
-                            <Field
-                              as={TextAreaField}
-                              error={!!flatErrors.hasComponentsOrTracksDiffer}
-                              className="margin-top-0 height-15"
-                              data-testid="plan-characteristics-tracks-differ-how"
-                              id="plan-characteristics-tracks-differ-how"
-                              name="hasComponentsOrTracksDiffer"
-                            />
-                          </FieldGroup>
-                        </div>
-                      ) : (
-                        <></>
-                      )}
-                    </BooleanRadio>
+                                  <Field
+                                    as={TextAreaField}
+                                    className="margin-top-0 height-15"
+                                    data-testid="payment-claims-processing-precendece-other"
+                                    id="payment-claims-processing-precendece-other"
+                                    name="claimsProcessingPrecedenceOther"
+                                  />
+                                </FieldGroup>
+                              </div>
+                            ) : (
+                              <></>
+                            )}
+                          </BooleanRadio>
+                        </FieldGroup>
 
                         <FieldGroup
                           scrollElement="canParticipantsSelectBetweenPaymentMechanisms"
