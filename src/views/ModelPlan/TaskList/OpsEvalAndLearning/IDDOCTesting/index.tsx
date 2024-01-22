@@ -289,7 +289,7 @@ const IDDOCTesting = () => {
                   <h3>{opsEvalAndLearningMiscT('dataMonitoring')}</h3>
 
                   <FieldGroup scrollElement="dataMonitoringFileTypes">
-                    <Label htmlFor="dataMonitoringFileTypes">
+                    <Label htmlFor="ops-eval-and-learning-data-monitoring-file">
                       {opsEvalAndLearningT('dataMonitoringFileTypes.label')}
                     </Label>
 

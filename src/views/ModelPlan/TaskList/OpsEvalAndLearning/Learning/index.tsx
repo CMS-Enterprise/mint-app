@@ -240,7 +240,7 @@ const Learning = () => {
                     scrollElement="modelLearningSystems"
                     error={!!flatErrors.modelLearningSystems}
                   >
-                    <Label htmlFor="modelLearningSystems">
+                    <Label htmlFor="ops-eval-and-learning-learning-systems">
                       {opsEvalAndLearningT('modelLearningSystems.label')}
                     </Label>
 
