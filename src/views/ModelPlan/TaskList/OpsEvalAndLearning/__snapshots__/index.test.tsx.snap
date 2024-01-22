@@ -97,135 +97,142 @@ exports[`Model Plan Ops Eval and Learning > matches snapshot 1`] = `
       class="usa-fieldset"
       data-testid="fieldset"
     >
-      <legend
-        class="usa-label maxw-none"
-      >
-        Will another Agency or State help design/operate the model? Select all that apply.
-      </legend>
       <div
-        class="mint-checkbox usa-checkbox"
+        class="usa-form-group margin-top-4"
+        data-scroll="agencyOrStateHelp"
       >
-        <input
-          class="usa-checkbox__input"
-          id="ops-eval-and-learning-agency-or-state-help-YES_STATE"
-          name="agencyOrStateHelp"
-          type="checkbox"
-          value="YES_STATE"
-        />
         <label
-          class="usa-checkbox__label"
-          for="ops-eval-and-learning-agency-or-state-help-YES_STATE"
+          class="usa-label"
+          data-testid="label"
+          for="agencyOrStateHelp"
         >
-          Yes, we will partner with states
+          Will another Agency or State help design/operate the model? Select all that apply.
         </label>
-        <p
-          class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
-        />
-      </div>
-      <div
-        class="mint-checkbox usa-checkbox"
-      >
-        <input
-          class="usa-checkbox__input"
-          id="ops-eval-and-learning-agency-or-state-help-YES_AGENCY_IDEAS"
-          name="agencyOrStateHelp"
-          type="checkbox"
-          value="YES_AGENCY_IDEAS"
-        />
-        <label
-          class="usa-checkbox__label"
-          for="ops-eval-and-learning-agency-or-state-help-YES_AGENCY_IDEAS"
+        <div
+          class="mint-checkbox usa-checkbox"
         >
-          Yes, we will get ideas from another agency
-        </label>
-        <p
-          class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
-        />
-      </div>
-      <div
-        class="mint-checkbox usa-checkbox"
-      >
-        <input
-          class="usa-checkbox__input"
-          id="ops-eval-and-learning-agency-or-state-help-YES_AGENCY_IAA"
-          name="agencyOrStateHelp"
-          type="checkbox"
-          value="YES_AGENCY_IAA"
-        />
-        <label
-          class="usa-checkbox__label"
-          for="ops-eval-and-learning-agency-or-state-help-YES_AGENCY_IAA"
-        >
-          Yes, we will get support from another agency through Inter Agency Agreement (IAA)
-        </label>
-        <p
-          class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
-        />
-      </div>
-      <div
-        class="mint-checkbox usa-checkbox"
-      >
-        <input
-          class="usa-checkbox__input"
-          id="ops-eval-and-learning-agency-or-state-help-NO"
-          name="agencyOrStateHelp"
-          type="checkbox"
-          value="NO"
-        />
-        <label
-          class="usa-checkbox__label"
-          for="ops-eval-and-learning-agency-or-state-help-NO"
-        >
-          No
-        </label>
-        <p
-          class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
-        />
-      </div>
-      <div
-        class="mint-checkbox usa-checkbox"
-      >
-        <input
-          class="usa-checkbox__input"
-          id="ops-eval-and-learning-agency-or-state-help-OTHER"
-          name="agencyOrStateHelp"
-          type="checkbox"
-          value="OTHER"
-        />
-        <label
-          class="usa-checkbox__label"
-          for="ops-eval-and-learning-agency-or-state-help-OTHER"
-        >
-          Other
-        </label>
-        <p
-          class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
-        />
-      </div>
-      <div
-        class="margin-top-4 margin-bottom-8"
-      >
-        <button
-          class="usa-button usa-button usa-button--unstyled"
-          data-testid="add-note-toggle"
-          type="button"
-        >
-          <svg
-            aria-hidden="true"
-            class="usa-icon margin-right-1"
-            focusable="false"
-            height="1em"
-            role="img"
-            viewBox="0 0 24 24"
-            width="1em"
-            xmlns="http://www.w3.org/2000/svg"
+          <input
+            class="usa-checkbox__input"
+            id="ops-eval-and-learning-agency-or-state-help-YES_STATE"
+            name="agencyOrStateHelp"
+            type="checkbox"
+            value="YES_STATE"
+          />
+          <label
+            class="usa-checkbox__label"
+            for="ops-eval-and-learning-agency-or-state-help-YES_STATE"
           >
-            <path
-              d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
-            />
-          </svg>
-          Add an additional note
-        </button>
+            Yes, we will partner with states
+          </label>
+          <p
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+          />
+        </div>
+        <div
+          class="mint-checkbox usa-checkbox"
+        >
+          <input
+            class="usa-checkbox__input"
+            id="ops-eval-and-learning-agency-or-state-help-YES_AGENCY_IDEAS"
+            name="agencyOrStateHelp"
+            type="checkbox"
+            value="YES_AGENCY_IDEAS"
+          />
+          <label
+            class="usa-checkbox__label"
+            for="ops-eval-and-learning-agency-or-state-help-YES_AGENCY_IDEAS"
+          >
+            Yes, we will get ideas from another agency
+          </label>
+          <p
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+          />
+        </div>
+        <div
+          class="mint-checkbox usa-checkbox"
+        >
+          <input
+            class="usa-checkbox__input"
+            id="ops-eval-and-learning-agency-or-state-help-YES_AGENCY_IAA"
+            name="agencyOrStateHelp"
+            type="checkbox"
+            value="YES_AGENCY_IAA"
+          />
+          <label
+            class="usa-checkbox__label"
+            for="ops-eval-and-learning-agency-or-state-help-YES_AGENCY_IAA"
+          >
+            Yes, we will get support from another agency through Inter Agency Agreement (IAA)
+          </label>
+          <p
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+          />
+        </div>
+        <div
+          class="mint-checkbox usa-checkbox"
+        >
+          <input
+            class="usa-checkbox__input"
+            id="ops-eval-and-learning-agency-or-state-help-NO"
+            name="agencyOrStateHelp"
+            type="checkbox"
+            value="NO"
+          />
+          <label
+            class="usa-checkbox__label"
+            for="ops-eval-and-learning-agency-or-state-help-NO"
+          >
+            No
+          </label>
+          <p
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+          />
+        </div>
+        <div
+          class="mint-checkbox usa-checkbox"
+        >
+          <input
+            class="usa-checkbox__input"
+            id="ops-eval-and-learning-agency-or-state-help-OTHER"
+            name="agencyOrStateHelp"
+            type="checkbox"
+            value="OTHER"
+          />
+          <label
+            class="usa-checkbox__label"
+            for="ops-eval-and-learning-agency-or-state-help-OTHER"
+          >
+            Other
+          </label>
+          <p
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+          />
+        </div>
+        <div
+          class="margin-top-4 margin-bottom-8"
+        >
+          <button
+            class="usa-button usa-button usa-button--unstyled"
+            data-testid="add-note-toggle"
+            type="button"
+          >
+            <svg
+              aria-hidden="true"
+              class="usa-icon margin-right-1"
+              focusable="false"
+              height="1em"
+              role="img"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+              />
+            </svg>
+            Add an additional note
+          </button>
+        </div>
       </div>
       <div
         class="usa-form-group margin-top-4"
@@ -429,141 +436,148 @@ exports[`Model Plan Ops Eval and Learning > matches snapshot 1`] = `
           </button>
         </div>
       </div>
-      <legend
-        class="usa-label maxw-none"
-      >
-        What contractors will support your model?
-      </legend>
-      <div
-        class="mint-checkbox usa-checkbox"
-      >
-        <input
-          class="usa-checkbox__input"
-          id="ops-eval-and-learning-contractor-support-ONE"
-          name="contractorSupport"
-          type="checkbox"
-          value="ONE"
-        />
-        <label
-          class="usa-checkbox__label"
-          for="ops-eval-and-learning-contractor-support-ONE"
-        >
-          One contractor to support implementation
-        </label>
-        <p
-          class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
-        />
-      </div>
-      <div
-        class="mint-checkbox usa-checkbox"
-      >
-        <input
-          class="usa-checkbox__input"
-          id="ops-eval-and-learning-contractor-support-MULTIPLE"
-          name="contractorSupport"
-          type="checkbox"
-          value="MULTIPLE"
-        />
-        <label
-          class="usa-checkbox__label"
-          for="ops-eval-and-learning-contractor-support-MULTIPLE"
-        >
-          May have separate contractors for different implementation functions
-        </label>
-        <p
-          class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
-        />
-      </div>
-      <div
-        class="mint-checkbox usa-checkbox"
-      >
-        <input
-          class="usa-checkbox__input"
-          id="ops-eval-and-learning-contractor-support-NONE"
-          name="contractorSupport"
-          type="checkbox"
-          value="NONE"
-        />
-        <label
-          class="usa-checkbox__label"
-          for="ops-eval-and-learning-contractor-support-NONE"
-        >
-          Do not plan to use an implemenation contractor
-        </label>
-        <p
-          class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
-        />
-      </div>
-      <div
-        class="mint-checkbox usa-checkbox"
-      >
-        <input
-          class="usa-checkbox__input"
-          id="ops-eval-and-learning-contractor-support-OTHER"
-          name="contractorSupport"
-          type="checkbox"
-          value="OTHER"
-        />
-        <label
-          class="usa-checkbox__label"
-          for="ops-eval-and-learning-contractor-support-OTHER"
-        >
-          Other
-        </label>
-        <p
-          class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
-        />
-      </div>
       <div
         class="usa-form-group"
-        data-scroll="contractorSupportHow"
+        data-scroll="contractorSupport"
       >
         <label
-          class="usa-label text-normal margin-top-4"
+          class="usa-label"
           data-testid="label"
-          for="ops-eval-and-learning-contractor-support-how"
+          for="contractorSupport"
         >
-          In what capacity will they support your model?
+          What contractors will support your model?
         </label>
-        <p
-          class="text-base margin-y-1"
+        <div
+          class="mint-checkbox usa-checkbox"
         >
-          (implementation, data analysis, quality, etc.)
-        </p>
-        <textarea
-          aria-labelledby="label-ops-eval-and-learning-contractor-support-how hint-ops-eval-and-learning-contractor-support-how"
-          class="height-card usa-textarea"
-          data-testid="ops-eval-and-learning-contractor-support-how"
-          id="ops-eval-and-learning-contractor-support-how"
-          name="contractorSupportHow"
-        >
-          Differ text
-        </textarea>
-      </div>
-      <div
-        class="margin-top-4 margin-bottom-8"
-      >
-        <button
-          class="usa-button usa-button usa-button--unstyled"
-          data-testid="add-note-toggle"
-          type="button"
-        >
-          <svg
-            aria-hidden="true"
-            class="usa-icon margin-right-1"
-            focusable="false"
-            height="1em"
-            role="img"
-            viewBox="0 0 24 24"
-            width="1em"
-            xmlns="http://www.w3.org/2000/svg"
+          <input
+            class="usa-checkbox__input"
+            id="ops-eval-and-learning-contractor-support-ONE"
+            name="contractorSupport"
+            type="checkbox"
+            value="ONE"
+          />
+          <label
+            class="usa-checkbox__label"
+            for="ops-eval-and-learning-contractor-support-ONE"
           >
-            <path
-              d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
-            />
-          </svg>
-          Add an additional note
-        </button>
+            One contractor to support implementation
+          </label>
+          <p
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+          />
+        </div>
+        <div
+          class="mint-checkbox usa-checkbox"
+        >
+          <input
+            class="usa-checkbox__input"
+            id="ops-eval-and-learning-contractor-support-MULTIPLE"
+            name="contractorSupport"
+            type="checkbox"
+            value="MULTIPLE"
+          />
+          <label
+            class="usa-checkbox__label"
+            for="ops-eval-and-learning-contractor-support-MULTIPLE"
+          >
+            May have separate contractors for different implementation functions
+          </label>
+          <p
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+          />
+        </div>
+        <div
+          class="mint-checkbox usa-checkbox"
+        >
+          <input
+            class="usa-checkbox__input"
+            id="ops-eval-and-learning-contractor-support-NONE"
+            name="contractorSupport"
+            type="checkbox"
+            value="NONE"
+          />
+          <label
+            class="usa-checkbox__label"
+            for="ops-eval-and-learning-contractor-support-NONE"
+          >
+            Do not plan to use an implemenation contractor
+          </label>
+          <p
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+          />
+        </div>
+        <div
+          class="mint-checkbox usa-checkbox"
+        >
+          <input
+            class="usa-checkbox__input"
+            id="ops-eval-and-learning-contractor-support-OTHER"
+            name="contractorSupport"
+            type="checkbox"
+            value="OTHER"
+          />
+          <label
+            class="usa-checkbox__label"
+            for="ops-eval-and-learning-contractor-support-OTHER"
+          >
+            Other
+          </label>
+          <p
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+          />
+        </div>
+        <div
+          class="usa-form-group"
+          data-scroll="contractorSupportHow"
+        >
+          <label
+            class="usa-label text-normal margin-top-4"
+            data-testid="label"
+            for="ops-eval-and-learning-contractor-support-how"
+          >
+            In what capacity will they support your model?
+          </label>
+          <p
+            class="text-base margin-y-1"
+          >
+            (implementation, data analysis, quality, etc.)
+          </p>
+          <textarea
+            aria-labelledby="label-ops-eval-and-learning-contractor-support-how hint-ops-eval-and-learning-contractor-support-how"
+            class="height-card usa-textarea"
+            data-testid="ops-eval-and-learning-contractor-support-how"
+            id="ops-eval-and-learning-contractor-support-how"
+            name="contractorSupportHow"
+          >
+            Differ text
+          </textarea>
+        </div>
+        <div
+          class="margin-top-4 margin-bottom-8"
+        >
+          <button
+            class="usa-button usa-button usa-button--unstyled"
+            data-testid="add-note-toggle"
+            type="button"
+          >
+            <svg
+              aria-hidden="true"
+              class="usa-icon margin-right-1"
+              focusable="false"
+              height="1em"
+              role="img"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+              />
+            </svg>
+            Add an additional note
+          </button>
+        </div>
       </div>
       <div
         class="usa-form-group margin-y-4 margin-bottom-8"

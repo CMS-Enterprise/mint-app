@@ -205,110 +205,117 @@ exports[`Model Plan Ops Eval and Learning IDDOC > matches snapshot 1`] = `
       <h3>
         Data monitoring questions
       </h3>
-      <legend
-        class="usa-label maxw-none"
-      >
-        What types of files? Select all that apply.
-      </legend>
       <div
-        class="mint-checkbox usa-checkbox"
+        class="usa-form-group"
+        data-scroll="dataMonitoringFileTypes"
       >
-        <input
-          class="usa-checkbox__input"
-          id="ops-eval-and-learning-data-monitoring-file-BENEFICIARY"
-          name="dataMonitoringFileTypes"
-          type="checkbox"
-          value="BENEFICIARY"
-        />
         <label
-          class="usa-checkbox__label"
-          for="ops-eval-and-learning-data-monitoring-file-BENEFICIARY"
+          class="usa-label"
+          data-testid="label"
+          for="ops-eval-and-learning-data-monitoring-file"
         >
-          Beneficiary
+          What types of files? Select all that apply.
         </label>
-        <p
-          class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
-        />
-      </div>
-      <div
-        class="mint-checkbox usa-checkbox"
-      >
-        <input
-          class="usa-checkbox__input"
-          id="ops-eval-and-learning-data-monitoring-file-PROVIDER"
-          name="dataMonitoringFileTypes"
-          type="checkbox"
-          value="PROVIDER"
-        />
-        <label
-          class="usa-checkbox__label"
-          for="ops-eval-and-learning-data-monitoring-file-PROVIDER"
+        <div
+          class="mint-checkbox usa-checkbox"
         >
-          Provider
-        </label>
-        <p
-          class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
-        />
-      </div>
-      <div
-        class="mint-checkbox usa-checkbox"
-      >
-        <input
-          class="usa-checkbox__input"
-          id="ops-eval-and-learning-data-monitoring-file-PART_A"
-          name="dataMonitoringFileTypes"
-          type="checkbox"
-          value="PART_A"
-        />
-        <label
-          class="usa-checkbox__label"
-          for="ops-eval-and-learning-data-monitoring-file-PART_A"
+          <input
+            class="usa-checkbox__input"
+            id="ops-eval-and-learning-data-monitoring-file-BENEFICIARY"
+            name="dataMonitoringFileTypes"
+            type="checkbox"
+            value="BENEFICIARY"
+          />
+          <label
+            class="usa-checkbox__label"
+            for="ops-eval-and-learning-data-monitoring-file-BENEFICIARY"
+          >
+            Beneficiary
+          </label>
+          <p
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+          />
+        </div>
+        <div
+          class="mint-checkbox usa-checkbox"
         >
-          Part A
-        </label>
-        <p
-          class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
-        />
-      </div>
-      <div
-        class="mint-checkbox usa-checkbox"
-      >
-        <input
-          class="usa-checkbox__input"
-          id="ops-eval-and-learning-data-monitoring-file-PART_B"
-          name="dataMonitoringFileTypes"
-          type="checkbox"
-          value="PART_B"
-        />
-        <label
-          class="usa-checkbox__label"
-          for="ops-eval-and-learning-data-monitoring-file-PART_B"
+          <input
+            class="usa-checkbox__input"
+            id="ops-eval-and-learning-data-monitoring-file-PROVIDER"
+            name="dataMonitoringFileTypes"
+            type="checkbox"
+            value="PROVIDER"
+          />
+          <label
+            class="usa-checkbox__label"
+            for="ops-eval-and-learning-data-monitoring-file-PROVIDER"
+          >
+            Provider
+          </label>
+          <p
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+          />
+        </div>
+        <div
+          class="mint-checkbox usa-checkbox"
         >
-          Part B
-        </label>
-        <p
-          class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
-        />
-      </div>
-      <div
-        class="mint-checkbox usa-checkbox"
-      >
-        <input
-          class="usa-checkbox__input"
-          id="ops-eval-and-learning-data-monitoring-file-OTHER"
-          name="dataMonitoringFileTypes"
-          type="checkbox"
-          value="OTHER"
-        />
-        <label
-          class="usa-checkbox__label"
-          for="ops-eval-and-learning-data-monitoring-file-OTHER"
+          <input
+            class="usa-checkbox__input"
+            id="ops-eval-and-learning-data-monitoring-file-PART_A"
+            name="dataMonitoringFileTypes"
+            type="checkbox"
+            value="PART_A"
+          />
+          <label
+            class="usa-checkbox__label"
+            for="ops-eval-and-learning-data-monitoring-file-PART_A"
+          >
+            Part A
+          </label>
+          <p
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+          />
+        </div>
+        <div
+          class="mint-checkbox usa-checkbox"
         >
-          Other
-        </label>
-        <p
-          class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
-        />
+          <input
+            class="usa-checkbox__input"
+            id="ops-eval-and-learning-data-monitoring-file-PART_B"
+            name="dataMonitoringFileTypes"
+            type="checkbox"
+            value="PART_B"
+          />
+          <label
+            class="usa-checkbox__label"
+            for="ops-eval-and-learning-data-monitoring-file-PART_B"
+          >
+            Part B
+          </label>
+          <p
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+          />
+        </div>
+        <div
+          class="mint-checkbox usa-checkbox"
+        >
+          <input
+            class="usa-checkbox__input"
+            id="ops-eval-and-learning-data-monitoring-file-OTHER"
+            name="dataMonitoringFileTypes"
+            type="checkbox"
+            value="OTHER"
+          />
+          <label
+            class="usa-checkbox__label"
+            for="ops-eval-and-learning-data-monitoring-file-OTHER"
+          >
+            Other
+          </label>
+          <p
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+          />
+        </div>
       </div>
       <div
         class="usa-form-group margin-top-6"

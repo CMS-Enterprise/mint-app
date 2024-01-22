@@ -489,11 +489,13 @@ exports[`Model Plan ProviderOptions > matches snapshot 1`] = `
         class="usa-form-group margin-top-4"
         data-scroll="providerLeaveMethod"
       >
-        <legend
+        <label
           class="usa-label"
+          data-testid="label"
+          for="participants-and-providers-leave-method"
         >
           Can providers leave the model? Select all that apply.
-        </legend>
+        </label>
         <p
           class="text-base margin-top-1 margin-bottom-0 line-height-body-3"
         >

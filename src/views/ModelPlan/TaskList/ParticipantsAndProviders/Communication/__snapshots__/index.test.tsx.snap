@@ -449,11 +449,13 @@ exports[`Model Plan Communication > matches snapshot 1`] = `
         class="usa-form-group"
         data-scroll="communicationMethod"
       >
-        <legend
+        <label
           class="usa-label"
+          data-testid="label"
+          for="participants-and-providers-communication-method"
         >
           How will you communicate with participants?
-        </legend>
+        </label>
         <div
           class="mint-checkbox usa-checkbox"
         >

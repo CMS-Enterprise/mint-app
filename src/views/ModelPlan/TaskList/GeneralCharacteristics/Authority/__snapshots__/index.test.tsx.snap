@@ -204,12 +204,15 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
       </div>
       <div
         class="usa-form-group"
+        data-scroll="authorityAllowances"
       >
-        <legend
+        <label
           class="usa-label"
+          data-testid="label"
+          for="modelType"
         >
           What authority allows CMMI to test the model?
-        </legend>
+        </label>
         <div
           class="mint-checkbox usa-checkbox"
         >
@@ -371,9 +374,6 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
           </div>
         </fieldset>
       </div>
-      <div
-        class="usa-form-group"
-      />
       <div
         class="margin-top-4 margin-bottom-8"
       >

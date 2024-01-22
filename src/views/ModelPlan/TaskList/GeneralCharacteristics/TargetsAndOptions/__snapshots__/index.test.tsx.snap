@@ -151,11 +151,13 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
             </label>
           </div>
         </fieldset>
-        <legend
+        <label
           class="usa-label text-normal"
+          data-testid="label"
+          for="geographiesTargetedTypes"
         >
           Geography type is
-        </legend>
+        </label>
         <div
           class="mint-checkbox usa-checkbox"
         >
@@ -227,101 +229,105 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
           >
             Please specify what the other geography type is.
           </label>
-          <textarea
-            aria-labelledby="label-plan-characteristics-geographies-targeted-other hint-plan-characteristics-geographies-targeted-other"
-            class="mint-textarea usa-textarea"
+          <input
+            class="usa-input"
             data-testid="plan-characteristics-geographies-targeted-other"
             id="plan-characteristics-geographies-targeted-other"
-            maxlength="5000"
             name="geographiesTargetedTypesOther"
-          >
-            Other geography type
-          </textarea>
-        </div>
-        <legend
-          class="usa-label text-normal"
-        >
-          Geographies are applied to
-        </legend>
-        <div
-          class="mint-checkbox usa-checkbox"
-        >
-          <input
-            class="usa-checkbox__input"
-            id="plan-characteristics-geographies-applied-to-BENEFICIARIES"
-            name="geographiesTargetedAppliedTo"
-            type="checkbox"
-            value="BENEFICIARIES"
-          />
-          <label
-            class="usa-checkbox__label"
-            for="plan-characteristics-geographies-applied-to-BENEFICIARIES"
-          >
-            Beneficiaries
-          </label>
-          <p
-            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+            value="Other geography type"
           />
         </div>
         <div
-          class="mint-checkbox usa-checkbox"
+          class="usa-form-group"
+          data-scroll="geographiesTargetedAppliedTo"
         >
-          <input
-            class="usa-checkbox__input"
-            id="plan-characteristics-geographies-applied-to-PARTICIPANTS"
-            name="geographiesTargetedAppliedTo"
-            type="checkbox"
-            value="PARTICIPANTS"
-          />
           <label
-            class="usa-checkbox__label"
-            for="plan-characteristics-geographies-applied-to-PARTICIPANTS"
+            class="usa-label text-normal"
+            data-testid="label"
+            for="geographiesTargetedAppliedTo"
           >
-            Participants
+            Geographies are applied to
           </label>
-          <p
-            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
-          />
-        </div>
-        <div
-          class="mint-checkbox usa-checkbox"
-        >
-          <input
-            class="usa-checkbox__input"
-            id="plan-characteristics-geographies-applied-to-PROVIDERS"
-            name="geographiesTargetedAppliedTo"
-            type="checkbox"
-            value="PROVIDERS"
-          />
-          <label
-            class="usa-checkbox__label"
-            for="plan-characteristics-geographies-applied-to-PROVIDERS"
+          <div
+            class="mint-checkbox usa-checkbox"
           >
-            Providers
-          </label>
-          <p
-            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
-          />
-        </div>
-        <div
-          class="mint-checkbox usa-checkbox"
-        >
-          <input
-            class="usa-checkbox__input"
-            id="plan-characteristics-geographies-applied-to-OTHER"
-            name="geographiesTargetedAppliedTo"
-            type="checkbox"
-            value="OTHER"
-          />
-          <label
-            class="usa-checkbox__label"
-            for="plan-characteristics-geographies-applied-to-OTHER"
+            <input
+              class="usa-checkbox__input"
+              id="plan-characteristics-geographies-applied-to-BENEFICIARIES"
+              name="geographiesTargetedAppliedTo"
+              type="checkbox"
+              value="BENEFICIARIES"
+            />
+            <label
+              class="usa-checkbox__label"
+              for="plan-characteristics-geographies-applied-to-BENEFICIARIES"
+            >
+              Beneficiaries
+            </label>
+            <p
+              class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+            />
+          </div>
+          <div
+            class="mint-checkbox usa-checkbox"
           >
-            Other
-          </label>
-          <p
-            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
-          />
+            <input
+              class="usa-checkbox__input"
+              id="plan-characteristics-geographies-applied-to-PARTICIPANTS"
+              name="geographiesTargetedAppliedTo"
+              type="checkbox"
+              value="PARTICIPANTS"
+            />
+            <label
+              class="usa-checkbox__label"
+              for="plan-characteristics-geographies-applied-to-PARTICIPANTS"
+            >
+              Participants
+            </label>
+            <p
+              class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+            />
+          </div>
+          <div
+            class="mint-checkbox usa-checkbox"
+          >
+            <input
+              class="usa-checkbox__input"
+              id="plan-characteristics-geographies-applied-to-PROVIDERS"
+              name="geographiesTargetedAppliedTo"
+              type="checkbox"
+              value="PROVIDERS"
+            />
+            <label
+              class="usa-checkbox__label"
+              for="plan-characteristics-geographies-applied-to-PROVIDERS"
+            >
+              Providers
+            </label>
+            <p
+              class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+            />
+          </div>
+          <div
+            class="mint-checkbox usa-checkbox"
+          >
+            <input
+              class="usa-checkbox__input"
+              id="plan-characteristics-geographies-applied-to-OTHER"
+              name="geographiesTargetedAppliedTo"
+              type="checkbox"
+              value="OTHER"
+            />
+            <label
+              class="usa-checkbox__label"
+              for="plan-characteristics-geographies-applied-to-OTHER"
+            >
+              Other
+            </label>
+            <p
+              class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+            />
+          </div>
         </div>
         <div
           class="margin-top-4 margin-bottom-8"
@@ -433,11 +439,13 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
         class="usa-form-group"
         data-scroll="agreementTypes"
       >
-        <legend
+        <label
           class="usa-label"
+          data-testid="label"
+          for="agreementTypes"
         >
           What is the agreement type?
-        </legend>
+        </label>
         <div
           class="usa-alert usa-alert--warning flex it-solutions-warning"
           data-testid="alert"
