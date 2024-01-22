@@ -184,7 +184,7 @@ ExistingModel represents a model that already exists outside of the scope of MIN
 """
 type ExistingModel {
   id: Int
-  modelName: String
+  modelName: String!
   stage: String!
   numberOfParticipants: String
   category: String

@@ -7273,7 +7273,7 @@ ExistingModel represents a model that already exists outside of the scope of MIN
 """
 type ExistingModel {
   id: Int
-  modelName: String
+  modelName: String!
   stage: String!
   numberOfParticipants: String
   category: String
@@ -12840,11 +12840,14 @@ func (ec *executionContext) _ExistingModel_modelName(ctx context.Context, field 
 		return graphql.Null
 	}
 	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
 		return graphql.Null
 	}
 	res := resTmp.(string)
 	fc.Result = res
-	return ec.marshalOString2string(ctx, field.Selections, res)
+	return ec.marshalNString2string(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_ExistingModel_modelName(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -54225,6 +54228,9 @@ func (ec *executionContext) _ExistingModel(ctx context.Context, sel ast.Selectio
 			out.Values[i] = ec._ExistingModel_id(ctx, field, obj)
 		case "modelName":
 			out.Values[i] = ec._ExistingModel_modelName(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
 		case "stage":
 			out.Values[i] = ec._ExistingModel_stage(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
@@ -70990,16 +70996,6 @@ func (ec *executionContext) marshalOStakeholdersType2ᚕgithubᚗcomᚋcmsgovᚋ
 	}
 
 	return ret
-}
-
-func (ec *executionContext) unmarshalOString2string(ctx context.Context, v interface{}) (string, error) {
-	res, err := graphql.UnmarshalString(v)
-	return res, graphql.ErrorOnPath(ctx, err)
-}
-
-func (ec *executionContext) marshalOString2string(ctx context.Context, sel ast.SelectionSet, v string) graphql.Marshaler {
-	res := graphql.MarshalString(v)
-	return res
 }
 
 func (ec *executionContext) unmarshalOString2ᚕstringᚄ(ctx context.Context, v interface{}) ([]string, error) {

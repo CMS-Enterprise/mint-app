@@ -6,7 +6,7 @@ WITH QUERIED_IDS AS (
     FROM
         JSON_TO_RECORDSET(:paramTableJSON)
         AS x("model_plan_id" UUID, "field_name" EXISITING_MODEL_LINK_FIELD_TYPE) --noqa
-) --TODO: add the other field to verify the field name as well, and return per field
+)
 
 SELECT
     link.id,
