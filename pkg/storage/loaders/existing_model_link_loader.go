@@ -29,13 +29,14 @@ func (loaders *DataLoaders) GetExistingModelLinkByModelPlanID(ctx context.Contex
 	links, _ := dr.Store.ExistingModelLinkGetByModelPlanIDAndFieldNameLOADER(logger, marshaledParams)
 	linksByID := map[string][]*models.ExistingModelLink{}
 	for _, link := range links {
-		slice, ok := linksByID[string(link.ModelPlanID.String())]
+		resKey := fmt.Sprint(link.ModelPlanID, link.FieldName) //The key is a compound key, the model_plan_id, and the field name
+		slice, ok := linksByID[resKey]
 		if ok {
 			slice = append(slice, link) //Add to existing slice
-			linksByID[string(link.ModelPlanID.String())] = slice
+			linksByID[resKey] = slice
 			continue
 		}
-		linksByID[string(link.ModelPlanID.String())] = []*models.ExistingModelLink{link}
+		linksByID[resKey] = []*models.ExistingModelLink{link}
 	}
 
 	// RETURN IN THE SAME ORDER REQUESTED
@@ -43,7 +44,7 @@ func (loaders *DataLoaders) GetExistingModelLinkByModelPlanID(ctx context.Contex
 	for index, key := range keys {
 		ck, ok := key.Raw().(KeyArgs)
 		if ok {
-			resKey := fmt.Sprint(ck.Args["model_plan_id"])
+			resKey := fmt.Sprint(ck.Args["model_plan_id"], ck.Args["field_name"])
 			links := linksByID[resKey] //Any not found will return an empty array
 
 			output[index] = &dataloader.Result{Data: links, Error: nil}
