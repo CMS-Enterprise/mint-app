@@ -112,7 +112,7 @@ func (suite *ResolverSuite) TestModelPlanCollection() {
 	suite.NotNil(result)
 	suite.Len(result, 4)
 
-	// Assert that TEST sees all 1 model plan when CRDTL is seelcted
+	// Assert that TEST sees all 1 model plan when CRDTL is selected
 	result, err = ModelPlanCollection(suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, model.ModelPlanFilterWithCrTdls)
 	suite.NoError(err)
 	suite.NotNil(result)

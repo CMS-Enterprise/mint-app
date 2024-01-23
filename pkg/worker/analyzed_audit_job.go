@@ -218,8 +218,8 @@ func analyzeModelPlanAudits(audits []*models.AuditChange) (*models.AnalyzedModel
 // analyzeCrTdlAudits analyzes if there were any CrTdl changes
 func analyzeCrTdlAudits(audits []*models.AuditChange) (*models.AnalyzedCrTdls, error) {
 	filteredAudits := lo.Filter(audits, func(m *models.AuditChange, index int) bool {
-		return m.TableName == "plan_cr_tdl"
-	})
+		return m.TableName == "plan_cr_tdl" || m.TableName == "plan_tdl" || m.TableName == "plan_cr"
+	}) // Note, plan_cr_tdl no longer exists, as it was renames to crs and a tdls table was created. the legacy audit changes still exist in that table
 
 	if len(filteredAudits) > 0 {
 		return &models.AnalyzedCrTdls{
