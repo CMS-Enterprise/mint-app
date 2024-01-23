@@ -100,7 +100,7 @@ func (s *Store) ExistingModelLinksUpdate(
 	existingModelIDsArray := convertIntToPQStringArray(existingModelIDs)
 	arg := map[string]interface{}{
 		"model_plan_id":          modelPlanID,
-		"field_name":             fieldName, //TODO: implement in SQL
+		"field_name":             fieldName,
 		"current_model_plan_ids": currentModelPlanIDsArray,
 		"existing_model_ids":     existingModelIDsArray,
 		"created_by":             userID,

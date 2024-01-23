@@ -36,7 +36,8 @@ type ExistingModelLinks struct {
 	FieldName ExisitingModelLinkFieldType `json:"fieldName" db:"field_name"`
 	Links     []*ExistingModelLink
 	modelPlanRelation
-	NameArray pq.StringArray `json:"names_array_db" db:"name_array"` //note, we don't have this automatically resolve to GQL, as we query this field individually
+	// Name array to store data when specifically requested from the database. It isn't specifcally returned from the database unless requested by GQL
+	NameArray pq.StringArray `json:"names_array_db" db:"name_array"`
 }
 
 func NewExistingModelLinks(modelPlanID uuid.UUID, fieldName ExisitingModelLinkFieldType, links []*ExistingModelLink) *ExistingModelLinks {

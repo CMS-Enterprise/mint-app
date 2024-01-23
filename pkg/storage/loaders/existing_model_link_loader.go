@@ -25,17 +25,10 @@ func (loaders *DataLoaders) GetExistingModelLinkNamesByModelPlanIDAndFieldName(c
 		logger.Error("issue converting keys to JSON for data loader in Existing Model Link", zap.Error(*err))
 	}
 
-	// TODO: update this to get the link by id and field, not just by modelPlanID
 	links, _ := dr.Store.GetExistingModelLinkNamesByModelPlanIDAndFieldNameLOADER(logger, marshaledParams)
 	nameArrayByResKey := map[string][]string{} //Only get the names from the links structure
 	for _, link := range links {
 		resKey := fmt.Sprint(link.ModelPlanID, link.FieldName) //The key is a compound key, the model_plan_id, and the field name
-		// slice, ok := linksByID[resKey] // We are sorting in the SQL
-		// if ok {
-		// 	slice = append(slice, link.NameArray) //Add to existing slice
-		// 	linksByID[resKey] = slice
-		// 	continue
-		// }
 		nameArrayByResKey[resKey] = link.NameArray
 	}
 
