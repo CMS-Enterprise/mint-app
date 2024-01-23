@@ -10,18 +10,26 @@ WITH QUERIED_IDS AS (
 
 links AS (
 
-SELECT 
-qIDs.model_plan_id,
-qIDs.field_name,
-CASE 
-	WHEN eml.current_model_plan_id IS NOT NULL then plan.model_name
-	ELSE existing.model_name
-END AS model_name
+    SELECT 
+        qIDs.model_plan_id,
+        qIDs.field_name,
+        CASE 
+            WHEN eml.current_model_plan_id IS NOT NULL THEN plan.model_name
+            ELSE existing_model.model_name
+        END AS model_name
 
-FROM QUERIED_IDS AS qIDs
-INNER JOIN existing_model_link AS eml ON eml.model_plan_id = qIDs.model_plan_id AND eml.field_name = qIDS.field_name
-LEFT JOIN model_plan as plan on plan.id = eml.current_model_plan_id
-LEFT JOIN existing_model as existing on existing.id = eml.existing_model_id
+    FROM QUERIED_IDS AS qIDs
+    INNER JOIN existing_model_link AS eml ON eml.model_plan_id = qIDs.model_plan_id AND eml.field_name = qIDs.field_name
+    LEFT JOIN model_plan AS plan ON plan.id = eml.current_model_plan_id
+    LEFT JOIN existing_model AS existing_model ON existing_model.id = eml.existing_model_id
+),
+
+ordered_links AS (
+    SELECT * FROM links ORDER BY model_name
 )
 
-SELECT model_plan_id, field_name, array_agg(model_name) AS name_array FROM links GROUP BY model_plan_id, field_name
+SELECT
+    model_plan_id,
+    field_name,
+    ARRAY_AGG(model_name) AS name_array
+FROM ordered_links GROUP BY model_plan_id, field_name
