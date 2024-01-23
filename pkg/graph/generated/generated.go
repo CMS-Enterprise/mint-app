@@ -9154,7 +9154,7 @@ deleteOperationalSolutionSubtask(id: UUID!): Int!
 This will update linked existing models, and relatede model plans for given model plan and fieldName. 
 The fieldName allows it so you can create links for multiple sections of the model plan
 """
-updateExistingModelLinks(modelPlanID: UUID!,fieldName: ExisitingModelLinkFieldType!,  existingModelIDs: [Int!],currentModelPlanIDs: [UUID!]): ExistingModelLinks! ## TODO: should this return the parent object
+updateExistingModelLinks(modelPlanID: UUID!,fieldName: ExisitingModelLinkFieldType!,  existingModelIDs: [Int!],currentModelPlanIDs: [UUID!]): ExistingModelLinks!
 @hasRole(role: MINT_USER)
 
 shareModelPlan(modelPlanID: UUID!, viewFilter: ModelViewFilter, usernames: [String!]!, optionalMessage: String): Boolean!
