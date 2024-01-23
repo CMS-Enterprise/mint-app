@@ -26,6 +26,11 @@ func (suite *ResolverSuite) TestExistingModelLinksUpdate() {
 	suite.NoError(err)
 	suite.Len(links.Links, len(ids))
 
+	/* Get links for another section, and confirm that there are no links */
+	otherLinks, err := ExistingModelLinksGetByModelPlanIDAndFieldNameLOADER(suite.testConfigs.Context, plan.ID, models.EMLFTGeneralCharacteristicsParticipationExistingModelWhich)
+	suite.NoError(err)
+	suite.Len(otherLinks.Links, 0)
+
 	/* Link the model plan, make sure other links were deleted, and that there is only the one link*/
 	links2, err := ExistingModelLinksUpdate(suite.testConfigs.Logger, suite.testConfigs.Store, suite.testConfigs.Principal, plan.ID, models.EMLFTGeneralCharacteristicsResemblesExistingModelWhich, nil, []uuid.UUID{modelToLink.ID})
 	suite.NoError(err)
@@ -101,7 +106,7 @@ func (suite *ResolverSuite) TestExistingModelLinkDataLoader() {
 }
 func verifyExistingModelLinkLoader(ctx context.Context, modelPlanID uuid.UUID, fieldName models.ExisitingModelLinkFieldType) error {
 
-	links, err := ExistingModelLinkGetByModelPlanIDLOADER(ctx, modelPlanID, fieldName)
+	links, err := ExistingModelLinkGetByModelPlanIDAndFieldNameLOADER(ctx, modelPlanID, fieldName)
 	if err != nil {
 		return err
 	}

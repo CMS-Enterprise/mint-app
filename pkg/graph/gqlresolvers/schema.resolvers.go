@@ -635,7 +635,7 @@ func (r *planGeneralCharacteristicsResolver) ExistingModelPlan(ctx context.Conte
 
 // ResemblesExistingModelWhich is the resolver for the resemblesExistingModelWhich field.
 func (r *planGeneralCharacteristicsResolver) ResemblesExistingModelWhich(ctx context.Context, obj *models.PlanGeneralCharacteristics) (*models.ExistingModelLinks, error) {
-	return resolvers.ExistingModelLinksGetByModelPlanIDLOADER(ctx, obj.ModelPlanID, models.EMLFTGeneralCharacteristicsResemblesExistingModelWhich)
+	return resolvers.ExistingModelLinksGetByModelPlanIDAndFieldNameLOADER(ctx, obj.ModelPlanID, models.EMLFTGeneralCharacteristicsResemblesExistingModelWhich)
 }
 
 // AlternativePaymentModelTypes is the resolver for the alternativePaymentModelTypes field.

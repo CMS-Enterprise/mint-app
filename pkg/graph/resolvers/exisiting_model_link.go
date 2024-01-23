@@ -14,8 +14,8 @@ import (
 	"github.com/cmsgov/mint-app/pkg/storage/loaders"
 )
 
-// ExistingModelLinkGetByModelPlanIDLOADER implements resolver logic to get Existing Model Link by a model plan ID using a data loader
-func ExistingModelLinkGetByModelPlanIDLOADER(ctx context.Context, modelPlanID uuid.UUID, fieldName models.ExisitingModelLinkFieldType) ([]*models.ExistingModelLink, error) {
+// ExistingModelLinkGetByModelPlanIDAndFieldNameLOADER implements resolver logic to get Existing Model Link by a model plan ID using a data loader
+func ExistingModelLinkGetByModelPlanIDAndFieldNameLOADER(ctx context.Context, modelPlanID uuid.UUID, fieldName models.ExisitingModelLinkFieldType) ([]*models.ExistingModelLink, error) {
 	allLoaders := loaders.Loaders(ctx)
 	linkLoader := allLoaders.ExistingModelLinkLoader
 	key := loaders.NewKeyArgs()
@@ -32,9 +32,9 @@ func ExistingModelLinkGetByModelPlanIDLOADER(ctx context.Context, modelPlanID uu
 	return result.([]*models.ExistingModelLink), nil
 }
 
-// ExistingModelLinksGetByModelPlanIDLOADER implements resolver logic to get Existing Model Link by a model plan ID using a data loader
-func ExistingModelLinksGetByModelPlanIDLOADER(ctx context.Context, modelPlanID uuid.UUID, fieldName models.ExisitingModelLinkFieldType) (*models.ExistingModelLinks, error) {
-	linkCollection, err := ExistingModelLinkGetByModelPlanIDLOADER(ctx, modelPlanID, fieldName)
+// ExistingModelLinksGetByModelPlanIDAndFieldNameLOADER implements resolver logic to get Existing Model Link by a model plan ID using a data loader
+func ExistingModelLinksGetByModelPlanIDAndFieldNameLOADER(ctx context.Context, modelPlanID uuid.UUID, fieldName models.ExisitingModelLinkFieldType) (*models.ExistingModelLinks, error) {
+	linkCollection, err := ExistingModelLinkGetByModelPlanIDAndFieldNameLOADER(ctx, modelPlanID, fieldName)
 
 	if err != nil {
 		return nil, err
