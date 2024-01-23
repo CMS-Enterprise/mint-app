@@ -1,4 +1,4 @@
-INSERT INTO plan_cr_tdl(
+INSERT INTO plan_cr(
     id,
     model_plan_id,
     id_number,
@@ -6,7 +6,6 @@ INSERT INTO plan_cr_tdl(
     date_implemented,
     title,
     note,
-    type,
     created_by,
     modified_by
 )
@@ -18,7 +17,6 @@ VALUES (
     :date_implemented,
     :title,
     :note,
-    'CR',
     :created_by,
     :modified_by
 )

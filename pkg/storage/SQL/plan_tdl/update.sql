@@ -1,4 +1,4 @@
-UPDATE plan_cr_tdl
+UPDATE plan_tdl
 SET
     model_plan_id = :model_plan_id,
     id_number = :id_number,
@@ -9,7 +9,6 @@ SET
     modified_dts = CURRENT_TIMESTAMP
 WHERE
     id = :id
-    AND type = 'TDL'
 RETURNING
 id,
 model_plan_id,

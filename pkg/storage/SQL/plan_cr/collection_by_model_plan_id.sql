@@ -12,5 +12,4 @@ SELECT
     modified_dts
 FROM plan_cr_tdl
 WHERE
-    id = :id
-    AND type = 'CR';
+    model_plan_id = :model_plan_id;

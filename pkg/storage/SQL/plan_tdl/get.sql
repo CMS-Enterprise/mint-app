@@ -9,7 +9,6 @@ SELECT
     created_dts,
     modified_by,
     modified_dts
-FROM plan_cr_tdl
+FROM plan_tdl
 WHERE
-    model_plan_id = :model_plan_id
-    AND type = 'TDL';
+    id = :id;
