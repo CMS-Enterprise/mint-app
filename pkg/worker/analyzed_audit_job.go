@@ -220,6 +220,7 @@ func analyzeCrTdlAudits(audits []*models.AuditChange) (*models.AnalyzedCrTdls, e
 	filteredAudits := lo.Filter(audits, func(m *models.AuditChange, index int) bool {
 		return m.TableName == "plan_cr_tdl" || m.TableName == "plan_tdl" || m.TableName == "plan_cr"
 	}) // Note, plan_cr_tdl no longer exists, as it was renames to crs and a tdls table was created. the legacy audit changes still exist in that table
+	// TODO: after this has been deployed for a day, we should be able to remove the table name comparison to plan_cr_tdl
 
 	if len(filteredAudits) > 0 {
 		return &models.AnalyzedCrTdls{
