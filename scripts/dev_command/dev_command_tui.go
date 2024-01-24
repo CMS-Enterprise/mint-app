@@ -133,6 +133,20 @@ func (tm populateUserTableTuiModel) View() string {
 }
 
 func (tm populateUserTableTuiModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
+
+	model, cmd := tm.UpdateParentWindow(msg)
+	if cmd != nil {
+		return model, cmd
+	}
+
+	model, childCommand := tm.UpdateActiveTab(msg)
+	if childCommand != nil {
+		return model, childCommand
+	}
+	return tm, nil
+
+}
+func (tm *populateUserTableTuiModel) UpdateParentWindow(msg tea.Msg) (tea.Model, tea.Cmd) {
 	switch msg := msg.(type) {
 
 	// Is it a key press?
@@ -145,17 +159,6 @@ func (tm populateUserTableTuiModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		case "ctrl+c", "q":
 			return tm, tea.Quit
 
-		// The "up" and "k" keys move the cursor up
-		case "up", "k":
-			if tm.cursor > 0 {
-				tm.cursor--
-			}
-
-		// The "down" and "j" keys move the cursor down
-		case "down", "j":
-			if tm.cursor < len(tm.options)-1 {
-				tm.cursor++
-			}
 		// The "left" and "u" keys move the activeTab left
 		case "left", "u":
 			if tm.activeTabIndex > 0 {
@@ -169,6 +172,40 @@ func (tm populateUserTableTuiModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			if tm.activeTabIndex < len(tm.tabs)-1 {
 				tm.activeTabIndex++
 				tm.SetActiveTab(tm.activeTabIndex)
+			}
+
+		}
+	case cmdFinishedMsg:
+		// Clear the screen when the message is received
+		if msg.err != nil {
+			tm.err = msg.err
+			return tm, tea.Quit
+		}
+		return tm, tea.ClearScreen
+	}
+
+	return tm, nil
+
+}
+
+// UpdateCommonCommandTab handles updates when the selected tab is the CommonCommandsTab
+func (tm *populateUserTableTuiModel) UpdateCommonCommandTab(msg tea.Msg) (tea.Model, tea.Cmd) {
+	switch msg := msg.(type) {
+
+	// Is it a key press?
+	case tea.KeyMsg:
+		// what was the actual key pressed?
+		switch msg.String() {
+		// The "up" and "k" keys move the cursor up
+		case "up", "k":
+			if tm.cursor > 0 {
+				tm.cursor--
+			}
+
+		// The "down" and "j" keys move the cursor down
+		case "down", "j":
+			if tm.cursor < len(tm.options)-1 {
+				tm.cursor++
 			}
 
 		// The spacebar (a literal space) toggle
@@ -195,25 +232,25 @@ func (tm populateUserTableTuiModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			return tm, func() tea.Msg {
 				return cmdFinishedMsg{}
 			}
-
 		}
-	case cmdFinishedMsg:
-		// Clear the screen when the message is received
-		if msg.err != nil {
-			tm.err = msg.err
-			return tm, tea.Quit
-		}
-		return tm, tea.ClearScreen
 	}
-
 	return tm, nil
 
 }
+func (tm *populateUserTableTuiModel) UpdateActiveTab(msg tea.Msg) (tea.Model, tea.Cmd) {
+
+	if tm.activeTab == &commonCommandTab {
+		return tm.UpdateCommonCommandTab(msg)
+	}
+	return tm, nil
+
+}
+
 func (tm *populateUserTableTuiModel) SetActiveTab(index int) {
 	tm.activeTab = tm.tabs[index]
 }
 
-func (tm populateUserTableTuiModel) RenderTabs(width int) string {
+func (tm *populateUserTableTuiModel) RenderTabs(width int) string {
 	tabString := []string{}
 	for index, tab := range tm.tabs {
 		isActive := index == tm.activeTabIndex
@@ -236,7 +273,7 @@ func (tm populateUserTableTuiModel) RenderTabs(width int) string {
 	return row
 }
 
-func (tm populateUserTableTuiModel) RenderNestedView() string {
+func (tm *populateUserTableTuiModel) RenderNestedView() string {
 
 	if tm.activeTab == &commonCommandTab {
 		return tm.RenderCommandCommandsView()
@@ -245,7 +282,7 @@ func (tm populateUserTableTuiModel) RenderNestedView() string {
 
 }
 
-func (tm populateUserTableTuiModel) RenderCommandCommandsView() string {
+func (tm *populateUserTableTuiModel) RenderCommandCommandsView() string {
 	doc := strings.Builder{}
 	doc.WriteString("Which commands would you like to execute?\n\n")
 
