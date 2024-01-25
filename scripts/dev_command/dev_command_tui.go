@@ -78,7 +78,7 @@ func newPopulateUserTableModel() populateUserTableTuiModel {
 			},
 			genericCommandOption{
 				CommandName: "Seed the Database",
-				CommandRun:  func() { command.DBSeedCommand.Run(command.DBSeedCommand, []string{}) },
+				CommandRun:  func() { command.DBCommand.Run(command.DBCommand, []string{}) },
 			},
 			// genericCommandOption{
 			// 	CommandName: "Say Hi",

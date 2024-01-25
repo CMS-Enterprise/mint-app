@@ -22,7 +22,7 @@ var rootCmd = &cobra.Command{
 
 func init() {
 	rootCmd.AddCommand(command.StartDockerCommand)
-	rootCmd.AddCommand(command.DBSeedCommand)
+	rootCmd.AddCommand(command.DBCommand)
 	rootCmd.AddCommand(command.FrontEndStartCommand)
 	rootCmd.AddCommand(command.PruneDockerCommand)
 	rootCmd.AddCommand(command.StopDockerCommand)
