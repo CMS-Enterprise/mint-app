@@ -1482,6 +1482,9 @@ export type PlanGeneralCharacteristics = {
   additionalServicesInvolved?: Maybe<Scalars['Boolean']['output']>;
   additionalServicesInvolvedDescription?: Maybe<Scalars['String']['output']>;
   additionalServicesInvolvedNote?: Maybe<Scalars['String']['output']>;
+  agencyOrStateHelp: Array<AgencyOrStateHelpType>;
+  agencyOrStateHelpNote?: Maybe<Scalars['String']['output']>;
+  agencyOrStateHelpOther?: Maybe<Scalars['String']['output']>;
   agreementTypes: Array<AgreementType>;
   agreementTypesOther?: Maybe<Scalars['String']['output']>;
   alternativePaymentModelNote?: Maybe<Scalars['String']['output']>;
@@ -1559,6 +1562,9 @@ export type PlanGeneralCharacteristicsChanges = {
   additionalServicesInvolved?: InputMaybe<Scalars['Boolean']['input']>;
   additionalServicesInvolvedDescription?: InputMaybe<Scalars['String']['input']>;
   additionalServicesInvolvedNote?: InputMaybe<Scalars['String']['input']>;
+  agencyOrStateHelp?: InputMaybe<Array<AgencyOrStateHelpType>>;
+  agencyOrStateHelpNote?: InputMaybe<Scalars['String']['input']>;
+  agencyOrStateHelpOther?: InputMaybe<Scalars['String']['input']>;
   agreementTypes?: InputMaybe<Array<AgreementType>>;
   agreementTypesOther?: InputMaybe<Scalars['String']['input']>;
   alternativePaymentModelNote?: InputMaybe<Scalars['String']['input']>;
@@ -1612,9 +1618,6 @@ export type PlanGeneralCharacteristicsChanges = {
 /** PlanOpsEvalAndLearning represents the task list section that deals with information regarding the Ops Eval and Learning */
 export type PlanOpsEvalAndLearning = {
   __typename: 'PlanOpsEvalAndLearning';
-  agencyOrStateHelp: Array<AgencyOrStateHelpType>;
-  agencyOrStateHelpNote?: Maybe<Scalars['String']['output']>;
-  agencyOrStateHelpOther?: Maybe<Scalars['String']['output']>;
   anticipatedChallenges?: Maybe<Scalars['String']['output']>;
   appToSendFilesToKnown?: Maybe<Scalars['Boolean']['output']>;
   appToSendFilesToNote?: Maybe<Scalars['String']['output']>;
@@ -1735,9 +1738,6 @@ export type PlanOpsEvalAndLearning = {
  * https://gqlgen.com/reference/changesets/
  */
 export type PlanOpsEvalAndLearningChanges = {
-  agencyOrStateHelp?: InputMaybe<Array<AgencyOrStateHelpType>>;
-  agencyOrStateHelpNote?: InputMaybe<Scalars['String']['input']>;
-  agencyOrStateHelpOther?: InputMaybe<Scalars['String']['input']>;
   anticipatedChallenges?: InputMaybe<Scalars['String']['input']>;
   appToSendFilesToKnown?: InputMaybe<Scalars['Boolean']['input']>;
   appToSendFilesToNote?: InputMaybe<Scalars['String']['input']>;
@@ -2878,7 +2878,7 @@ export type GetAllOpsEvalAndLearningQueryVariables = Exact<{
 }>;
 
 
-export type GetAllOpsEvalAndLearningQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, opsEvalAndLearning: { __typename: 'PlanOpsEvalAndLearning', id: UUID, modelPlanID: UUID, agencyOrStateHelp: Array<AgencyOrStateHelpType>, agencyOrStateHelpOther?: string | null, agencyOrStateHelpNote?: string | null, stakeholders: Array<StakeholdersType>, stakeholdersOther?: string | null, stakeholdersNote?: string | null, helpdeskUse?: boolean | null, helpdeskUseNote?: string | null, contractorSupport: Array<ContractorSupportType>, contractorSupportOther?: string | null, contractorSupportHow?: string | null, contractorSupportNote?: string | null, iddocSupport?: boolean | null, iddocSupportNote?: string | null, technicalContactsIdentified?: boolean | null, technicalContactsIdentifiedDetail?: string | null, technicalContactsIdentifiedNote?: string | null, captureParticipantInfo?: boolean | null, captureParticipantInfoNote?: string | null, icdOwner?: string | null, draftIcdDueDate?: Time | null, icdNote?: string | null, uatNeeds?: string | null, stcNeeds?: string | null, testingTimelines?: string | null, testingNote?: string | null, dataMonitoringFileTypes: Array<MonitoringFileType>, dataMonitoringFileOther?: string | null, dataResponseType?: string | null, dataResponseFileFrequency?: string | null, dataFullTimeOrIncremental?: DataFullTimeOrIncrementalType | null, eftSetUp?: boolean | null, unsolicitedAdjustmentsIncluded?: boolean | null, dataFlowDiagramsNeeded?: boolean | null, produceBenefitEnhancementFiles?: boolean | null, fileNamingConventions?: string | null, dataMonitoringNote?: string | null, benchmarkForPerformance?: BenchmarkForPerformanceType | null, benchmarkForPerformanceNote?: string | null, computePerformanceScores?: boolean | null, computePerformanceScoresNote?: string | null, riskAdjustPerformance?: boolean | null, riskAdjustFeedback?: boolean | null, riskAdjustPayments?: boolean | null, riskAdjustOther?: boolean | null, riskAdjustNote?: string | null, appealPerformance?: boolean | null, appealFeedback?: boolean | null, appealPayments?: boolean | null, appealOther?: boolean | null, appealNote?: string | null, evaluationApproaches: Array<EvaluationApproachType>, evaluationApproachOther?: string | null, evalutaionApproachNote?: string | null, ccmInvolvment: Array<CcmInvolvmentType>, ccmInvolvmentOther?: string | null, ccmInvolvmentNote?: string | null, dataNeededForMonitoring: Array<DataForMonitoringType>, dataNeededForMonitoringOther?: string | null, dataNeededForMonitoringNote?: string | null, dataToSendParticicipants: Array<DataToSendParticipantsType>, dataToSendParticicipantsOther?: string | null, dataToSendParticicipantsNote?: string | null, shareCclfData?: boolean | null, shareCclfDataNote?: string | null, sendFilesBetweenCcw?: boolean | null, sendFilesBetweenCcwNote?: string | null, appToSendFilesToKnown?: boolean | null, appToSendFilesToWhich?: string | null, appToSendFilesToNote?: string | null, useCcwForFileDistribiutionToParticipants?: boolean | null, useCcwForFileDistribiutionToParticipantsNote?: string | null, developNewQualityMeasures?: boolean | null, developNewQualityMeasuresNote?: string | null, qualityPerformanceImpactsPayment?: YesNoOtherType | null, qualityPerformanceImpactsPaymentOther?: string | null, qualityPerformanceImpactsPaymentNote?: string | null, dataSharingStarts?: DataStartsType | null, dataSharingStartsOther?: string | null, dataSharingFrequency: Array<FrequencyType>, dataSharingFrequencyContinually?: string | null, dataSharingFrequencyOther?: string | null, dataSharingStartsNote?: string | null, dataCollectionStarts?: DataStartsType | null, dataCollectionStartsOther?: string | null, dataCollectionFrequency: Array<FrequencyType>, dataCollectionFrequencyContinually?: string | null, dataCollectionFrequencyOther?: string | null, dataCollectionFrequencyNote?: string | null, qualityReportingStarts?: DataStartsType | null, qualityReportingStartsOther?: string | null, qualityReportingStartsNote?: string | null, qualityReportingFrequency: Array<FrequencyType>, qualityReportingFrequencyContinually?: string | null, qualityReportingFrequencyOther?: string | null, modelLearningSystems: Array<ModelLearningSystemType>, modelLearningSystemsOther?: string | null, modelLearningSystemsNote?: string | null, anticipatedChallenges?: string | null, status: TaskStatus } } };
+export type GetAllOpsEvalAndLearningQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, opsEvalAndLearning: { __typename: 'PlanOpsEvalAndLearning', id: UUID, modelPlanID: UUID, stakeholders: Array<StakeholdersType>, stakeholdersOther?: string | null, stakeholdersNote?: string | null, helpdeskUse?: boolean | null, helpdeskUseNote?: string | null, contractorSupport: Array<ContractorSupportType>, contractorSupportOther?: string | null, contractorSupportHow?: string | null, contractorSupportNote?: string | null, iddocSupport?: boolean | null, iddocSupportNote?: string | null, technicalContactsIdentified?: boolean | null, technicalContactsIdentifiedDetail?: string | null, technicalContactsIdentifiedNote?: string | null, captureParticipantInfo?: boolean | null, captureParticipantInfoNote?: string | null, icdOwner?: string | null, draftIcdDueDate?: Time | null, icdNote?: string | null, uatNeeds?: string | null, stcNeeds?: string | null, testingTimelines?: string | null, testingNote?: string | null, dataMonitoringFileTypes: Array<MonitoringFileType>, dataMonitoringFileOther?: string | null, dataResponseType?: string | null, dataResponseFileFrequency?: string | null, dataFullTimeOrIncremental?: DataFullTimeOrIncrementalType | null, eftSetUp?: boolean | null, unsolicitedAdjustmentsIncluded?: boolean | null, dataFlowDiagramsNeeded?: boolean | null, produceBenefitEnhancementFiles?: boolean | null, fileNamingConventions?: string | null, dataMonitoringNote?: string | null, benchmarkForPerformance?: BenchmarkForPerformanceType | null, benchmarkForPerformanceNote?: string | null, computePerformanceScores?: boolean | null, computePerformanceScoresNote?: string | null, riskAdjustPerformance?: boolean | null, riskAdjustFeedback?: boolean | null, riskAdjustPayments?: boolean | null, riskAdjustOther?: boolean | null, riskAdjustNote?: string | null, appealPerformance?: boolean | null, appealFeedback?: boolean | null, appealPayments?: boolean | null, appealOther?: boolean | null, appealNote?: string | null, evaluationApproaches: Array<EvaluationApproachType>, evaluationApproachOther?: string | null, evalutaionApproachNote?: string | null, ccmInvolvment: Array<CcmInvolvmentType>, ccmInvolvmentOther?: string | null, ccmInvolvmentNote?: string | null, dataNeededForMonitoring: Array<DataForMonitoringType>, dataNeededForMonitoringOther?: string | null, dataNeededForMonitoringNote?: string | null, dataToSendParticicipants: Array<DataToSendParticipantsType>, dataToSendParticicipantsOther?: string | null, dataToSendParticicipantsNote?: string | null, shareCclfData?: boolean | null, shareCclfDataNote?: string | null, sendFilesBetweenCcw?: boolean | null, sendFilesBetweenCcwNote?: string | null, appToSendFilesToKnown?: boolean | null, appToSendFilesToWhich?: string | null, appToSendFilesToNote?: string | null, useCcwForFileDistribiutionToParticipants?: boolean | null, useCcwForFileDistribiutionToParticipantsNote?: string | null, developNewQualityMeasures?: boolean | null, developNewQualityMeasuresNote?: string | null, qualityPerformanceImpactsPayment?: YesNoOtherType | null, qualityPerformanceImpactsPaymentOther?: string | null, qualityPerformanceImpactsPaymentNote?: string | null, dataSharingStarts?: DataStartsType | null, dataSharingStartsOther?: string | null, dataSharingFrequency: Array<FrequencyType>, dataSharingFrequencyContinually?: string | null, dataSharingFrequencyOther?: string | null, dataSharingStartsNote?: string | null, dataCollectionStarts?: DataStartsType | null, dataCollectionStartsOther?: string | null, dataCollectionFrequency: Array<FrequencyType>, dataCollectionFrequencyContinually?: string | null, dataCollectionFrequencyOther?: string | null, dataCollectionFrequencyNote?: string | null, qualityReportingStarts?: DataStartsType | null, qualityReportingStartsOther?: string | null, qualityReportingStartsNote?: string | null, qualityReportingFrequency: Array<FrequencyType>, qualityReportingFrequencyContinually?: string | null, qualityReportingFrequencyOther?: string | null, modelLearningSystems: Array<ModelLearningSystemType>, modelLearningSystemsOther?: string | null, modelLearningSystemsNote?: string | null, anticipatedChallenges?: string | null, status: TaskStatus } } };
 
 export type GetCcwAndQualityQueryVariables = Exact<{
   id: Scalars['UUID']['input'];
@@ -2934,7 +2934,7 @@ export type GetOpsEvalAndLearningQueryVariables = Exact<{
 }>;
 
 
-export type GetOpsEvalAndLearningQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, opsEvalAndLearning: { __typename: 'PlanOpsEvalAndLearning', id: UUID, ccmInvolvment: Array<CcmInvolvmentType>, dataNeededForMonitoring: Array<DataForMonitoringType>, agencyOrStateHelp: Array<AgencyOrStateHelpType>, agencyOrStateHelpOther?: string | null, agencyOrStateHelpNote?: string | null, stakeholders: Array<StakeholdersType>, stakeholdersOther?: string | null, stakeholdersNote?: string | null, helpdeskUse?: boolean | null, helpdeskUseNote?: string | null, contractorSupport: Array<ContractorSupportType>, contractorSupportOther?: string | null, contractorSupportHow?: string | null, contractorSupportNote?: string | null, iddocSupport?: boolean | null, iddocSupportNote?: string | null }, operationalNeeds: Array<{ __typename: 'OperationalNeed', modifiedDts?: Time | null }> } };
+export type GetOpsEvalAndLearningQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, opsEvalAndLearning: { __typename: 'PlanOpsEvalAndLearning', id: UUID, ccmInvolvment: Array<CcmInvolvmentType>, dataNeededForMonitoring: Array<DataForMonitoringType>, stakeholders: Array<StakeholdersType>, stakeholdersOther?: string | null, stakeholdersNote?: string | null, helpdeskUse?: boolean | null, helpdeskUseNote?: string | null, contractorSupport: Array<ContractorSupportType>, contractorSupportOther?: string | null, contractorSupportHow?: string | null, contractorSupportNote?: string | null, iddocSupport?: boolean | null, iddocSupportNote?: string | null }, operationalNeeds: Array<{ __typename: 'OperationalNeed', modifiedDts?: Time | null }> } };
 
 export type GetPerformanceQueryVariables = Exact<{
   id: Scalars['UUID']['input'];
@@ -4513,9 +4513,6 @@ export const GetAllOpsEvalAndLearningDocument = gql`
     opsEvalAndLearning {
       id
       modelPlanID
-      agencyOrStateHelp
-      agencyOrStateHelpOther
-      agencyOrStateHelpNote
       stakeholders
       stakeholdersOther
       stakeholdersNote
@@ -5076,9 +5073,6 @@ export const GetOpsEvalAndLearningDocument = gql`
       id
       ccmInvolvment
       dataNeededForMonitoring
-      agencyOrStateHelp
-      agencyOrStateHelpOther
-      agencyOrStateHelpNote
       stakeholders
       stakeholdersOther
       stakeholdersNote

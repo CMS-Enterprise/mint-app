@@ -9,9 +9,6 @@ WITH QUERIED_IDS AS (
 SELECT
     oel.id,
     oel.model_plan_id,
-    oel.agency_or_state_help,
-    oel.agency_or_state_help_other,
-    oel.agency_or_state_help_note,
     oel.stakeholders,
     oel.stakeholders_other,
     oel.stakeholders_note,

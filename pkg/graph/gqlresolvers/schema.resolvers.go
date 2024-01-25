@@ -645,6 +645,12 @@ func (r *planGeneralCharacteristicsResolver) ExistingModelPlan(ctx context.Conte
 	return resolvers.ExistingModelGetByIDLOADER(ctx, *obj.ExistingModelID) //TODO, implement loader, or this will be many queries
 }
 
+// AgencyOrStateHelp is the resolver for the agencyOrStateHelp field.
+func (r *planGeneralCharacteristicsResolver) AgencyOrStateHelp(ctx context.Context, obj *models.PlanGeneralCharacteristics) ([]model.AgencyOrStateHelpType, error) {
+	agencyOrStateHelpTypes := models.ConvertEnums[model.AgencyOrStateHelpType](obj.AgencyOrStateHelp)
+	return agencyOrStateHelpTypes, nil
+}
+
 // AlternativePaymentModelTypes is the resolver for the alternativePaymentModelTypes field.
 func (r *planGeneralCharacteristicsResolver) AlternativePaymentModelTypes(ctx context.Context, obj *models.PlanGeneralCharacteristics) ([]model.AlternativePaymentModelType, error) {
 	apmTypes := models.ConvertEnums[model.AlternativePaymentModelType](obj.AlternativePaymentModelTypes)
@@ -685,12 +691,6 @@ func (r *planGeneralCharacteristicsResolver) AuthorityAllowances(ctx context.Con
 func (r *planGeneralCharacteristicsResolver) WaiversRequiredTypes(ctx context.Context, obj *models.PlanGeneralCharacteristics) ([]model.WaiverType, error) {
 	waiverTypes := models.ConvertEnums[model.WaiverType](obj.WaiversRequiredTypes)
 	return waiverTypes, nil
-}
-
-// AgencyOrStateHelp is the resolver for the agencyOrStateHelp field.
-func (r *planOpsEvalAndLearningResolver) AgencyOrStateHelp(ctx context.Context, obj *models.PlanOpsEvalAndLearning) ([]model.AgencyOrStateHelpType, error) {
-	agencyOrStateHelpTypes := models.ConvertEnums[model.AgencyOrStateHelpType](obj.AgencyOrStateHelp)
-	return agencyOrStateHelpTypes, nil
 }
 
 // Stakeholders is the resolver for the stakeholders field.

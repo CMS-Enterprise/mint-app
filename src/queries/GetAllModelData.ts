@@ -282,9 +282,6 @@ export default gql`
         modelLearningSystemsOther
         modelLearningSystemsNote
         anticipatedChallenges
-        agencyOrStateHelp
-        agencyOrStateHelpOther
-        agencyOrStateHelpNote
         stakeholders
         stakeholdersOther
         stakeholdersNote

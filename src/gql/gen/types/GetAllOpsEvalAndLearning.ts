@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { AgencyOrStateHelpType, StakeholdersType, ContractorSupportType, MonitoringFileType, DataFullTimeOrIncrementalType, BenchmarkForPerformanceType, EvaluationApproachType, CcmInvolvmentType, DataForMonitoringType, DataToSendParticipantsType, YesNoOtherType, DataStartsType, FrequencyType, ModelLearningSystemType, TaskStatus } from "./../../../types/graphql-global-types";
+import { StakeholdersType, ContractorSupportType, MonitoringFileType, DataFullTimeOrIncrementalType, BenchmarkForPerformanceType, EvaluationApproachType, CcmInvolvmentType, DataForMonitoringType, DataToSendParticipantsType, YesNoOtherType, DataStartsType, FrequencyType, ModelLearningSystemType, TaskStatus } from "./../../../types/graphql-global-types";
 
 // ====================================================
 // GraphQL query operation: GetAllOpsEvalAndLearning
@@ -13,9 +13,6 @@ export interface GetAllOpsEvalAndLearning_modelPlan_opsEvalAndLearning {
   __typename: "PlanOpsEvalAndLearning";
   id: UUID;
   modelPlanID: UUID;
-  agencyOrStateHelp: AgencyOrStateHelpType[];
-  agencyOrStateHelpOther: string | null;
-  agencyOrStateHelpNote: string | null;
   stakeholders: StakeholdersType[];
   stakeholdersOther: string | null;
   stakeholdersNote: string | null;

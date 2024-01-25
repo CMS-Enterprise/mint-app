@@ -1,8 +1,5 @@
 UPDATE plan_ops_eval_and_learning
 SET
-    agency_or_state_help = :agency_or_state_help,
-    agency_or_state_help_other = :agency_or_state_help_other,
-    agency_or_state_help_note = :agency_or_state_help_note,
     stakeholders = :stakeholders,
     stakeholders_other = :stakeholders_other,
     stakeholders_note = :stakeholders_note,
@@ -110,9 +107,6 @@ WHERE plan_ops_eval_and_learning.id = :id
 RETURNING
 id,
 model_plan_id,
-agency_or_state_help,
-agency_or_state_help_other,
-agency_or_state_help_note,
 stakeholders,
 stakeholders_other,
 stakeholders_note,
