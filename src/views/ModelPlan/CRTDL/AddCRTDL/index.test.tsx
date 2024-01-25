@@ -2,9 +2,9 @@ import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, waitFor } from '@testing-library/react';
+import { GetCrDocument, GetTdlDocument } from 'gql/gen/graphql';
 
 import { MessageProvider } from 'hooks/useMessage';
-import GetCRTDL from 'queries/CRTDL/GetCRTDL';
 
 import AddCRTDL from '.';
 
@@ -14,19 +14,37 @@ const crtdlID = '123';
 const mocks = [
   {
     request: {
-      query: GetCRTDL,
+      query: GetCrDocument,
       variables: { id: crtdlID }
     },
     result: {
       data: {
-        crTdl: {
-          __typename: 'PlanCrTdl',
-          id: '123',
-          modelPlanID: modelID,
+        planCR: {
+          __typename: 'PlanCR',
+          id: crtdlID,
           title: 'My CR',
           idNumber: 'CR123',
           dateInitiated: '2022-07-30T05:00:00Z',
+          dateImplemented: '',
           note: 'note'
+        }
+      }
+    }
+  },
+  {
+    request: {
+      query: GetTdlDocument,
+      variables: { id: crtdlID }
+    },
+    result: {
+      data: {
+        planTDL: {
+          __typename: 'PlanTDL',
+          id: crtdlID,
+          title: 'My TDL',
+          idNumber: 'TDL123',
+          dateInitiated: '2022-07-30T05:00:00Z',
+          note: 'note tdl'
         }
       }
     }
@@ -38,12 +56,12 @@ describe('Model Plan Add CR and TDL page', () => {
     const { getByTestId } = render(
       <MemoryRouter
         initialEntries={[
-          `/models/${modelID}/cr-and-tdl/add-cr-and-tdl/${crtdlID}`
+          `/models/${modelID}/cr-and-tdl/add-cr-and-tdl?type=cr&id=${crtdlID}`
         ]}
       >
         <MessageProvider>
           <MockedProvider mocks={mocks} addTypename={false}>
-            <Route path="/models/:modelID/cr-and-tdl/add-cr-and-tdl/:crtdlID?">
+            <Route path="/models/:modelID/cr-and-tdl/add-cr-and-tdl">
               <AddCRTDL />
             </Route>
           </MockedProvider>
@@ -65,12 +83,12 @@ describe('Model Plan Add CR and TDL page', () => {
     const { asFragment, getByTestId } = render(
       <MemoryRouter
         initialEntries={[
-          `/models/${modelID}/cr-and-tdl/add-cr-and-tdl/${crtdlID}`
+          `/models/${modelID}/cr-and-tdl/add-cr-and-tdl?type=cr&id=${crtdlID}`
         ]}
       >
         <MessageProvider>
           <MockedProvider mocks={mocks} addTypename={false}>
-            <Route path="/models/:modelID/cr-and-tdl/add-cr-and-tdl/:crtdlID?">
+            <Route path="/models/:modelID/cr-and-tdl/add-cr-and-tdl">
               <AddCRTDL />
             </Route>
           </MockedProvider>

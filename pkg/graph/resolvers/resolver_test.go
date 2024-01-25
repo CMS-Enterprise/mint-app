@@ -172,17 +172,31 @@ func (suite *ResolverSuite) createPlanCollaborator(mp *models.ModelPlan, userNam
 	return collaborator
 }
 
-func (suite *ResolverSuite) createPlanCrTdl(mp *models.ModelPlan, idNumber string, dateInitated time.Time, title string, note string) *models.PlanCrTdl {
-	input := &model.PlanCrTdlCreateInput{
+func (suite *ResolverSuite) createPlanCR(mp *models.ModelPlan, idNumber string, dateInitated time.Time, dateImplemented time.Time, title string, note string) *models.PlanCR {
+	input := &model.PlanCRCreateInput{
+		ModelPlanID:     mp.ID,
+		IDNumber:        idNumber,
+		DateInitiated:   dateInitated,
+		DateImplemented: dateImplemented,
+		Title:           title,
+		Note:            &note,
+	}
+	cr, err := PlanCRCreate(suite.testConfigs.Logger, input, suite.testConfigs.Principal, suite.testConfigs.Store)
+	suite.NoError(err)
+	return cr
+}
+
+func (suite *ResolverSuite) createPlanTDL(mp *models.ModelPlan, idNumber string, dateInitated time.Time, title string, note string) *models.PlanTDL {
+	input := &model.PlanTDLCreateInput{
 		ModelPlanID:   mp.ID,
 		IDNumber:      idNumber,
 		DateInitiated: dateInitated,
 		Title:         title,
 		Note:          &note,
 	}
-	crTdl, err := PlanCrTdlCreate(suite.testConfigs.Logger, input, suite.testConfigs.Principal, suite.testConfigs.Store)
+	tdl, err := PlanTDLCreate(suite.testConfigs.Logger, input, suite.testConfigs.Principal, suite.testConfigs.Store)
 	suite.NoError(err)
-	return crTdl
+	return tdl
 }
 
 func (suite *ResolverSuite) createOperationalSolution() *models.OperationalSolution {

@@ -129,17 +129,30 @@ func (s *Seeder) addPlanCollaborator(
 	return collaborator
 }
 
-// crTdlCreate is a wrapper for resolvers.PlanCrTdlCreate
+// addCR is a wrapper for resolvers.PlanCRCreate
 // It will panic if an error occurs, rather than bubbling the error up
 // It will always add the CR/TDL object with the principal value of the Model Plan's "createdBy"
-func (s *Seeder) addCrTdl(mp *models.ModelPlan, input *model.PlanCrTdlCreateInput) *models.PlanCrTdl {
+func (s *Seeder) addCR(mp *models.ModelPlan, input *model.PlanCRCreateInput) *models.PlanCR {
 	princ := s.getTestPrincipalByUUID(mp.CreatedBy)
 
-	collaborator, err := resolvers.PlanCrTdlCreate(s.Config.Logger, input, princ, s.Config.Store)
+	cr, err := resolvers.PlanCRCreate(s.Config.Logger, input, princ, s.Config.Store)
 	if err != nil {
 		panic(err)
 	}
-	return collaborator
+	return cr
+}
+
+// addTDL is a wrapper for resolvers.PlanTDLCreate
+// It will panic if an error occurs, rather than bubbling the error up
+// It will always add the CR/TDL object with the principal value of the Model Plan's "createdBy"
+func (s *Seeder) addTDL(mp *models.ModelPlan, input *model.PlanTDLCreateInput) *models.PlanTDL {
+	princ := s.getTestPrincipalByUUID(mp.CreatedBy)
+
+	tdl, err := resolvers.PlanTDLCreate(s.Config.Logger, input, princ, s.Config.Store)
+	if err != nil {
+		panic(err)
+	}
+	return tdl
 }
 
 // planDocumentCreate is a wrapper for resolvers.PlanDocumentCreate

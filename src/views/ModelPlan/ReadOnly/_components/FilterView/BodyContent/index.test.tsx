@@ -53,9 +53,17 @@ const mockData: GetModelSummaryTypes = {
       __typename: 'PlanCollaborator'
     }
   ],
-  crTdls: [
+  crs: [
     {
-      __typename: 'PlanCrTdl',
+      __typename: 'PlanCR',
+      id: '123',
+      idNumber: 'CR 123'
+    }
+  ],
+  tdls: [
+    {
+      __typename: 'PlanTDL',
+      id: '456',
       idNumber: 'TDL-123'
     }
   ]

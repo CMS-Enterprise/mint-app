@@ -145,15 +145,16 @@ func (s *Seeder) SeedData() {
 
 	// Seed a plan with CRs / TDLs
 	planWithCrTDLs := s.createModelPlan("Plan With CRs and TDLs", "MINT")
-	s.addCrTdl(planWithCrTDLs, &model.PlanCrTdlCreateInput{
-		ModelPlanID:   planWithCrTDLs.ID,
-		IDNumber:      "CR-123",
-		DateInitiated: time.Now(),
-		Title:         "My CR",
-		Note:          nil,
+	s.addCR(planWithCrTDLs, &model.PlanCRCreateInput{
+		ModelPlanID:     planWithCrTDLs.ID,
+		IDNumber:        "CR-123",
+		DateInitiated:   time.Now(),
+		DateImplemented: time.Now(),
+		Title:           "My CR",
+		Note:            nil,
 	})
 	tdlNote := "My TDL note"
-	s.addCrTdl(planWithCrTDLs, &model.PlanCrTdlCreateInput{
+	s.addTDL(planWithCrTDLs, &model.PlanTDLCreateInput{
 		ModelPlanID:   planWithCrTDLs.ID,
 		IDNumber:      "TDL-123",
 		DateInitiated: time.Now(),
@@ -177,7 +178,7 @@ func (s *Seeder) SeedData() {
 
 	sampleModelName := "Enhancing Oncology Model"
 	sampleModelPlan := s.createModelPlan(sampleModelName, "MINT")
-	s.addCrTdl(planWithCrTDLs, &model.PlanCrTdlCreateInput{
+	s.addTDL(planWithCrTDLs, &model.PlanTDLCreateInput{
 		ModelPlanID:   sampleModelPlan.ID,
 		IDNumber:      "TDL-123",
 		DateInitiated: time.Now(),

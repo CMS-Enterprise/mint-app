@@ -16,7 +16,7 @@ const CRTDL = () => {
         render={() => <CRTDLs />}
       />
       <Route
-        path="/models/:modelID/cr-and-tdl/add-cr-and-tdl/:crtdlID?"
+        path="/models/:modelID/cr-and-tdl/add-cr-and-tdl"
         exact
         render={() => <AddCRTDL />}
       />
