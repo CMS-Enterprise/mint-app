@@ -1,12 +1,21 @@
 import { gql } from '@apollo/client';
 
-export default gql`
+export default gql(/* GraphQL */ `
   query GetCRTDLs($id: UUID!) {
     modelPlan(id: $id) {
       id
       modelName
       isCollaborator
-      crTdls {
+      crs {
+        id
+        modelPlanID
+        title
+        idNumber
+        dateInitiated
+        dateImplemented
+        note
+      }
+      tdls {
         id
         modelPlanID
         title
@@ -16,4 +25,4 @@ export default gql`
       }
     }
   }
-`;
+`);

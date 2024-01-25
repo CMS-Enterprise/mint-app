@@ -25,10 +25,24 @@ const ReadOnlyCRTDLs = ({
       data-testid="read-only-model-plan--cr-and-tdls"
     >
       <h2 className="margin-top-0 margin-bottom-4">{t('heading')}</h2>
+
       <p className="font-body-md line-height-body-4">
         {t('readOnlyDescription')}
-        <Link href="MINTTeam@cms.hhs.gov">{t('emailContact')}</Link>
       </p>
+
+      <Link
+        aria-label="Open EUA in a new tab"
+        href="https://echimp.cmsnet/"
+        target="_blank"
+        rel="noopener noreferrer"
+        variant="external"
+      >
+        {t('visitECHIMPReadonly')}
+      </Link>
+
+      <Alert type="info" slim className="margin-bottom-1">
+        {t('echimp')}
+      </Alert>
 
       {crtdlMessage && (
         <Expire delay={45000}>

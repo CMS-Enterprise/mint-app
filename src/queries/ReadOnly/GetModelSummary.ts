@@ -27,7 +27,12 @@ export default gql`
         }
         teamRoles
       }
-      crTdls {
+      crs {
+        id
+        idNumber
+      }
+      tdls {
+        id
         idNumber
       }
     }

@@ -37,13 +37,14 @@ describe('The Model Plan Task List', () => {
       readyForClearanceDts: '2022-05-12T15:01:39.190679Z',
       status: 'READY'
     },
-    opsEvalAndLearning: [] as any,
-    generalCharacteristics: [] as any,
-    participantsAndProviders: [] as any,
-    beneficiaries: [] as any,
-    prepareForClearance: [] as any,
-    payments: [] as any,
-    crTdls: [] as any,
+    opsEvalAndLearning: {} as any,
+    generalCharacteristics: {} as any,
+    participantsAndProviders: {} as any,
+    beneficiaries: {} as any,
+    prepareForClearance: {} as any,
+    payments: {} as any,
+    crs: [],
+    tdls: [],
     operationalNeeds: [] as any,
     documents: [
       {

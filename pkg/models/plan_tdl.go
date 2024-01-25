@@ -6,8 +6,8 @@ import (
 	"github.com/google/uuid"
 )
 
-// PlanCrTdl represents CRs and TDLs related to a model plan
-type PlanCrTdl struct {
+// PlanTDL represents TDLs (Technical Direction Letters) related to a model plan
+type PlanTDL struct {
 	baseStruct
 	modelPlanRelation
 	IDNumber      string     `json:"idNumber" db:"id_number"`
@@ -16,9 +16,9 @@ type PlanCrTdl struct {
 	Note          *string    `json:"note" db:"note"`
 }
 
-// NewPlanCrTdl returns a New PlanCrTdl
-func NewPlanCrTdl(createdBy uuid.UUID, modelPlanID uuid.UUID) *PlanCrTdl {
-	return &PlanCrTdl{
+// NewPlanTDL returns a New PlanTDL
+func NewPlanTDL(createdBy uuid.UUID, modelPlanID uuid.UUID) *PlanTDL {
+	return &PlanTDL{
 		baseStruct:        NewBaseStruct(createdBy),
 		modelPlanRelation: NewModelPlanRelation(modelPlanID),
 	}
