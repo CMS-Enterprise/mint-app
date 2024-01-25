@@ -39,7 +39,7 @@ const MemberCards = ({ collaborator }: { collaborator: CollaboratorsType }) => {
         <p className="margin-y-0">
           {collaborator.teamRoles
             .map((role: TeamRole) => {
-              return collaboratorsT(`teamRole.options.${role}`);
+              return collaboratorsT(`teamRoles.options.${role}`);
             })
             .join(', ')}
         </p>

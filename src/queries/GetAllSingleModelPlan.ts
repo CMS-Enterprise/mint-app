@@ -103,10 +103,17 @@ export default gql`
       }
       participantsAndProviders {
         id
+        participantAddedFrequency
+        participantAddedFrequencyContinually
+        participantAddedFrequencyOther
+        participantAddedFrequencyNote
+        participantRemovedFrequency
+        participantRemovedFrequencyContinually
+        participantRemovedFrequencyOther
+        participantRemovedFrequencyNote
         communicationMethod
         communicationMethodOther
         communicationNote
-        participantAssumeRisk
         riskType
         riskOther
         riskNote
@@ -140,6 +147,7 @@ export default gql`
         participantsCurrentlyInModelsNote
         modelApplicationLevel
         providerAdditionFrequency
+        providerAdditionFrequencyContinually
         providerAdditionFrequencyOther
         providerAdditionFrequencyNote
         providerAddMethod
@@ -148,6 +156,10 @@ export default gql`
         providerLeaveMethod
         providerLeaveMethodOther
         providerLeaveMethodNote
+        providerRemovalFrequency
+        providerRemovalFrequencyContinually
+        providerRemovalFrequencyOther
+        providerRemovalFrequencyNote
         providerOverlap
         providerOverlapHierarchy
         providerOverlapNote
@@ -174,8 +186,13 @@ export default gql`
         excludeCertainCharacteristicsCriteria
         excludeCertainCharacteristicsNote
         beneficiarySelectionFrequency
+        beneficiarySelectionFrequencyContinually
         beneficiarySelectionFrequencyNote
         beneficiarySelectionFrequencyOther
+        beneficiaryRemovalFrequency
+        beneficiaryRemovalFrequencyContinually
+        beneficiaryRemovalFrequencyNote
+        beneficiaryRemovalFrequencyOther
         precedenceRules
         precedenceRulesYes
         precedenceRulesNo
@@ -206,20 +223,26 @@ export default gql`
         developNewQualityMeasures
         developNewQualityMeasuresNote
         qualityPerformanceImpactsPayment
+        qualityPerformanceImpactsPaymentOther
         qualityPerformanceImpactsPaymentNote
         dataSharingStarts
         dataSharingStartsOther
         dataSharingFrequency
+        dataSharingFrequencyContinually
         dataSharingFrequencyOther
         dataSharingStartsNote
         dataCollectionStarts
         dataCollectionStartsOther
         dataCollectionFrequency
+        dataCollectionFrequencyContinually
         dataCollectionFrequencyOther
         dataCollectionFrequencyNote
         qualityReportingStarts
         qualityReportingStartsOther
         qualityReportingStartsNote
+        qualityReportingFrequency
+        qualityReportingFrequencyContinually
+        qualityReportingFrequencyOther
         evaluationApproaches
         evaluationApproachOther
         evalutaionApproachNote
@@ -321,6 +344,7 @@ export default gql`
         canParticipantsSelectBetweenPaymentMechanismsHow
         canParticipantsSelectBetweenPaymentMechanismsNote
         anticipatedPaymentFrequency
+        anticipatedPaymentFrequencyContinually
         anticipatedPaymentFrequencyOther
         anticipatedPaymentFrequencyNote
         fundingSource
@@ -350,6 +374,10 @@ export default gql`
         willRecoverPaymentsNote
         anticipateReconcilingPaymentsRetrospectively
         anticipateReconcilingPaymentsRetrospectivelyNote
+        paymentReconciliationFrequency
+        paymentReconciliationFrequencyContinually
+        paymentReconciliationFrequencyOther
+        paymentReconciliationFrequencyNote
         paymentStartDate
         paymentStartDateNote
         readyForReviewByUserAccount {

@@ -30,15 +30,22 @@ type PlanParticipantsAndProviders struct {
 	SelectionNote                *string          `json:"selectionNote" db:"selection_note"`
 
 	//page 3
-	CommunicationMethod      pq.StringArray       `json:"communicationMethod" db:"communication_method"`
-	CommunicationMethodOther *string              `json:"communicationMethodOther" db:"communication_method_other"`
-	CommunicationNote        *string              `json:"communicationNote" db:"communication_note"`
-	ParticipantAssumeRisk    *bool                `json:"participantAssumeRisk" db:"participant_assume_risk" statusWeight:"1"`
-	RiskType                 *ParticipantRiskType `json:"riskType" db:"risk_type"`
-	RiskOther                *string              `json:"riskOther" db:"risk_other"`
-	RiskNote                 *string              `json:"riskNote" db:"risk_note"`
-	WillRiskChange           *bool                `json:"willRiskChange" db:"will_risk_change" statusWeight:"1"`
-	WillRiskChangeNote       *string              `json:"willRiskChangeNote" db:"will_risk_change_note"`
+	ParticipantAddedFrequency              pq.StringArray `json:"participantAddedFrequency" db:"participant_added_frequency" statusWeight:"1"`
+	ParticipantAddedFrequencyContinually   *string        `json:"participantAddedFrequencyContinually" db:"participant_added_frequency_continually"`
+	ParticipantAddedFrequencyOther         *string        `json:"participantAddedFrequencyOther" db:"participant_added_frequency_other"`
+	ParticipantAddedFrequencyNote          *string        `json:"participantAddedFrequencyNote" db:"participant_added_frequency_note"`
+	ParticipantRemovedFrequency            pq.StringArray `json:"participantRemovedFrequency" db:"participant_removed_frequency" statusWeight:"1"`
+	ParticipantRemovedFrequencyContinually *string        `json:"participantRemovedFrequencyContinually" db:"participant_removed_frequency_continually"`
+	ParticipantRemovedFrequencyOther       *string        `json:"participantRemovedFrequencyOther" db:"participant_removed_frequency_other"`
+	ParticipantRemovedFrequencyNote        *string        `json:"participantRemovedFrequencyNote" db:"participant_removed_frequency_note"`
+	CommunicationMethod                    pq.StringArray `json:"communicationMethod" db:"communication_method"`
+	CommunicationMethodOther               *string        `json:"communicationMethodOther" db:"communication_method_other"`
+	CommunicationNote                      *string        `json:"communicationNote" db:"communication_note"`
+	RiskType                               pq.StringArray `json:"riskType" db:"risk_type"`
+	RiskOther                              *string        `json:"riskOther" db:"risk_other"`
+	RiskNote                               *string        `json:"riskNote" db:"risk_note"`
+	WillRiskChange                         *bool          `json:"willRiskChange" db:"will_risk_change" statusWeight:"1"`
+	WillRiskChangeNote                     *string        `json:"willRiskChangeNote" db:"will_risk_change_note"`
 
 	//page 4
 	CoordinateWork                    *bool          `json:"coordinateWork" db:"coordinate_work" statusWeight:"1"`
@@ -53,18 +60,23 @@ type PlanParticipantsAndProviders struct {
 	ParticipantsIDSNote               *string        `json:"participantsIDSNote" db:"participants_ids_note"`
 
 	//page 5
-	ProviderAdditionFrequency      *FrequencyType `json:"providerAdditionFrequency" db:"provider_addition_frequency" statusWeight:"1"`
-	ProviderAdditionFrequencyOther *string        `json:"providerAdditionFrequencyOther" db:"provider_addition_frequency_other"`
-	ProviderAdditionFrequencyNote  *string        `json:"providerAdditionFrequencyNote" db:"provider_addition_frequency_note"`
-	ProviderAddMethod              pq.StringArray `json:"providerAddMethod" db:"provider_add_method"`
-	ProviderAddMethodOther         *string        `json:"providerAddMethodOther" db:"provider_add_method_other"`
-	ProviderAddMethodNote          *string        `json:"providerAddMethodNote" db:"provider_add_method_note"`
-	ProviderLeaveMethod            pq.StringArray `json:"providerLeaveMethod" db:"provider_leave_method"`
-	ProviderLeaveMethodOther       *string        `json:"providerLeaveMethodOther" db:"provider_leave_method_other"`
-	ProviderLeaveMethodNote        *string        `json:"providerLeaveMethodNote" db:"provider_leave_method_note"`
-	ProviderOverlap                *OverlapType   `json:"providerOverlap" db:"provider_overlap" statusWeight:"1"`
-	ProviderOverlapHierarchy       *string        `json:"providerOverlapHierarchy" db:"provider_overlap_hierarchy"`
-	ProviderOverlapNote            *string        `json:"providerOverlapNote" db:"provider_overlap_note"`
+	ProviderAdditionFrequency            pq.StringArray `json:"providerAdditionFrequency" db:"provider_addition_frequency" statusWeight:"1"`
+	ProviderAdditionFrequencyContinually *string        `json:"providerAdditionFrequencyContinually" db:"provider_addition_frequency_continually"`
+	ProviderAdditionFrequencyOther       *string        `json:"providerAdditionFrequencyOther" db:"provider_addition_frequency_other"`
+	ProviderAdditionFrequencyNote        *string        `json:"providerAdditionFrequencyNote" db:"provider_addition_frequency_note"`
+	ProviderAddMethod                    pq.StringArray `json:"providerAddMethod" db:"provider_add_method"`
+	ProviderAddMethodOther               *string        `json:"providerAddMethodOther" db:"provider_add_method_other"`
+	ProviderAddMethodNote                *string        `json:"providerAddMethodNote" db:"provider_add_method_note"`
+	ProviderLeaveMethod                  pq.StringArray `json:"providerLeaveMethod" db:"provider_leave_method"`
+	ProviderLeaveMethodOther             *string        `json:"providerLeaveMethodOther" db:"provider_leave_method_other"`
+	ProviderLeaveMethodNote              *string        `json:"providerLeaveMethodNote" db:"provider_leave_method_note"`
+	ProviderRemovalFrequency             pq.StringArray `json:"providerRemovalFrequency" db:"provider_removal_frequency" statusWeight:"1"`
+	ProviderRemovalFrequencyContinually  *string        `json:"providerRemovalFrequencyContinually" db:"provider_removal_frequency_continually"`
+	ProviderRemovalFrequencyOther        *string        `json:"providerRemovalFrequencyOther" db:"provider_removal_frequency_other"`
+	ProviderRemovalFrequencyNote         *string        `json:"providerRemovalFrequencyNote" db:"provider_removal_frequency_note"`
+	ProviderOverlap                      *OverlapType   `json:"providerOverlap" db:"provider_overlap" statusWeight:"1"`
+	ProviderOverlapHierarchy             *string        `json:"providerOverlapHierarchy" db:"provider_overlap_hierarchy"`
+	ProviderOverlapNote                  *string        `json:"providerOverlapNote" db:"provider_overlap_note"`
 }
 
 // RecruitmentType represents the possible RecruitmentType options
@@ -84,10 +96,11 @@ type ParticipantRiskType string
 
 // These constants represent the choices for Participant Risk Type
 const (
-	RiskTWOSIDED   ParticipantRiskType = "TWO_SIDED"
-	RiskONESIDED   ParticipantRiskType = "ONE_SIDED"
-	RiskCAPITATION ParticipantRiskType = "CAPITATION"
-	RiskOTHER      ParticipantRiskType = "OTHER"
+	RiskTWOSIDED     ParticipantRiskType = "TWO_SIDED"
+	RiskONESIDED     ParticipantRiskType = "ONE_SIDED"
+	RiskCAPITATION   ParticipantRiskType = "CAPITATION"
+	RiskNOTRISKBASED ParticipantRiskType = "NOT_RISK_BASED"
+	RiskOTHER        ParticipantRiskType = "OTHER"
 )
 
 // GainsharePaymentsEligibility represents the possible GainsharePaymentsEligibility values

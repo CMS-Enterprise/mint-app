@@ -193,10 +193,10 @@ type ComplexityRoot struct {
 		Basics                   func(childComplexity int) int
 		Beneficiaries            func(childComplexity int) int
 		Collaborators            func(childComplexity int) int
-		CrTdls                   func(childComplexity int) int
 		CreatedBy                func(childComplexity int) int
 		CreatedByUserAccount     func(childComplexity int) int
 		CreatedDts               func(childComplexity int) int
+		Crs                      func(childComplexity int) int
 		Discussions              func(childComplexity int) int
 		Documents                func(childComplexity int) int
 		ExistingModelLinks       func(childComplexity int) int
@@ -215,6 +215,7 @@ type ComplexityRoot struct {
 		Payments                 func(childComplexity int) int
 		PrepareForClearance      func(childComplexity int) int
 		Status                   func(childComplexity int) int
+		Tdls                     func(childComplexity int) int
 	}
 
 	Mutation struct {
@@ -226,14 +227,16 @@ type ComplexityRoot struct {
 		CreateOperationalSolution          func(childComplexity int, operationalNeedID uuid.UUID, solutionType *models.OperationalSolutionKey, changes map[string]interface{}) int
 		CreateOperationalSolutionSubtasks  func(childComplexity int, solutionID uuid.UUID, inputs []*model.CreateOperationalSolutionSubtaskInput) int
 		CreatePlanCollaborator             func(childComplexity int, input model.PlanCollaboratorCreateInput) int
-		CreatePlanCrTdl                    func(childComplexity int, input model.PlanCrTdlCreateInput) int
+		CreatePlanCr                       func(childComplexity int, input model.PlanCRCreateInput) int
 		CreatePlanDiscussion               func(childComplexity int, input model.PlanDiscussionCreateInput) int
 		CreatePlanDocumentSolutionLinks    func(childComplexity int, solutionID uuid.UUID, documentIDs []uuid.UUID) int
+		CreatePlanTdl                      func(childComplexity int, input model.PlanTDLCreateInput) int
 		DeleteOperationalSolutionSubtask   func(childComplexity int, id uuid.UUID) int
 		DeletePlanCollaborator             func(childComplexity int, id uuid.UUID) int
-		DeletePlanCrTdl                    func(childComplexity int, id uuid.UUID) int
+		DeletePlanCr                       func(childComplexity int, id uuid.UUID) int
 		DeletePlanDocument                 func(childComplexity int, id uuid.UUID) int
 		DeletePlanFavorite                 func(childComplexity int, modelPlanID uuid.UUID) int
+		DeletePlanTdl                      func(childComplexity int, id uuid.UUID) int
 		LinkNewPlanDocument                func(childComplexity int, input model.PlanDocumentLinkInput) int
 		LockTaskListSection                func(childComplexity int, modelPlanID uuid.UUID, section models.TaskListSection) int
 		RemovePlanDocumentSolutionLinks    func(childComplexity int, solutionID uuid.UUID, documentIDs []uuid.UUID) int
@@ -250,11 +253,12 @@ type ComplexityRoot struct {
 		UpdatePlanBasics                   func(childComplexity int, id uuid.UUID, changes map[string]interface{}) int
 		UpdatePlanBeneficiaries            func(childComplexity int, id uuid.UUID, changes map[string]interface{}) int
 		UpdatePlanCollaborator             func(childComplexity int, id uuid.UUID, newRoles []models.TeamRole) int
-		UpdatePlanCrTdl                    func(childComplexity int, id uuid.UUID, changes map[string]interface{}) int
+		UpdatePlanCr                       func(childComplexity int, id uuid.UUID, changes map[string]interface{}) int
 		UpdatePlanGeneralCharacteristics   func(childComplexity int, id uuid.UUID, changes map[string]interface{}) int
 		UpdatePlanOpsEvalAndLearning       func(childComplexity int, id uuid.UUID, changes map[string]interface{}) int
 		UpdatePlanParticipantsAndProviders func(childComplexity int, id uuid.UUID, changes map[string]interface{}) int
 		UpdatePlanPayments                 func(childComplexity int, id uuid.UUID, changes map[string]interface{}) int
+		UpdatePlanTdl                      func(childComplexity int, id uuid.UUID, changes map[string]interface{}) int
 		UploadNewPlanDocument              func(childComplexity int, input model.PlanDocumentInput) int
 	}
 
@@ -362,46 +366,67 @@ type ComplexityRoot struct {
 	}
 
 	PlanBeneficiaries struct {
-		Beneficiaries                         func(childComplexity int) int
-		BeneficiariesNote                     func(childComplexity int) int
-		BeneficiariesOther                    func(childComplexity int) int
-		BeneficiaryOverlap                    func(childComplexity int) int
-		BeneficiaryOverlapNote                func(childComplexity int) int
-		BeneficiarySelectionFrequency         func(childComplexity int) int
-		BeneficiarySelectionFrequencyNote     func(childComplexity int) int
-		BeneficiarySelectionFrequencyOther    func(childComplexity int) int
-		BeneficiarySelectionMethod            func(childComplexity int) int
-		BeneficiarySelectionNote              func(childComplexity int) int
-		BeneficiarySelectionOther             func(childComplexity int) int
-		ConfidenceNote                        func(childComplexity int) int
-		CreatedBy                             func(childComplexity int) int
-		CreatedByUserAccount                  func(childComplexity int) int
-		CreatedDts                            func(childComplexity int) int
-		DiseaseSpecificGroup                  func(childComplexity int) int
-		EstimateConfidence                    func(childComplexity int) int
-		ExcludeCertainCharacteristics         func(childComplexity int) int
-		ExcludeCertainCharacteristicsCriteria func(childComplexity int) int
-		ExcludeCertainCharacteristicsNote     func(childComplexity int) int
-		ID                                    func(childComplexity int) int
-		ModelPlanID                           func(childComplexity int) int
-		ModifiedBy                            func(childComplexity int) int
-		ModifiedByUserAccount                 func(childComplexity int) int
-		ModifiedDts                           func(childComplexity int) int
-		NumberPeopleImpacted                  func(childComplexity int) int
-		PrecedenceRules                       func(childComplexity int) int
-		PrecedenceRulesNo                     func(childComplexity int) int
-		PrecedenceRulesNote                   func(childComplexity int) int
-		PrecedenceRulesYes                    func(childComplexity int) int
-		ReadyForClearanceBy                   func(childComplexity int) int
-		ReadyForClearanceByUserAccount        func(childComplexity int) int
-		ReadyForClearanceDts                  func(childComplexity int) int
-		ReadyForReviewBy                      func(childComplexity int) int
-		ReadyForReviewByUserAccount           func(childComplexity int) int
-		ReadyForReviewDts                     func(childComplexity int) int
-		Status                                func(childComplexity int) int
-		TreatDualElligibleDifferent           func(childComplexity int) int
-		TreatDualElligibleDifferentHow        func(childComplexity int) int
-		TreatDualElligibleDifferentNote       func(childComplexity int) int
+		Beneficiaries                            func(childComplexity int) int
+		BeneficiariesNote                        func(childComplexity int) int
+		BeneficiariesOther                       func(childComplexity int) int
+		BeneficiaryOverlap                       func(childComplexity int) int
+		BeneficiaryOverlapNote                   func(childComplexity int) int
+		BeneficiaryRemovalFrequency              func(childComplexity int) int
+		BeneficiaryRemovalFrequencyContinually   func(childComplexity int) int
+		BeneficiaryRemovalFrequencyNote          func(childComplexity int) int
+		BeneficiaryRemovalFrequencyOther         func(childComplexity int) int
+		BeneficiarySelectionFrequency            func(childComplexity int) int
+		BeneficiarySelectionFrequencyContinually func(childComplexity int) int
+		BeneficiarySelectionFrequencyNote        func(childComplexity int) int
+		BeneficiarySelectionFrequencyOther       func(childComplexity int) int
+		BeneficiarySelectionMethod               func(childComplexity int) int
+		BeneficiarySelectionNote                 func(childComplexity int) int
+		BeneficiarySelectionOther                func(childComplexity int) int
+		ConfidenceNote                           func(childComplexity int) int
+		CreatedBy                                func(childComplexity int) int
+		CreatedByUserAccount                     func(childComplexity int) int
+		CreatedDts                               func(childComplexity int) int
+		DiseaseSpecificGroup                     func(childComplexity int) int
+		EstimateConfidence                       func(childComplexity int) int
+		ExcludeCertainCharacteristics            func(childComplexity int) int
+		ExcludeCertainCharacteristicsCriteria    func(childComplexity int) int
+		ExcludeCertainCharacteristicsNote        func(childComplexity int) int
+		ID                                       func(childComplexity int) int
+		ModelPlanID                              func(childComplexity int) int
+		ModifiedBy                               func(childComplexity int) int
+		ModifiedByUserAccount                    func(childComplexity int) int
+		ModifiedDts                              func(childComplexity int) int
+		NumberPeopleImpacted                     func(childComplexity int) int
+		PrecedenceRules                          func(childComplexity int) int
+		PrecedenceRulesNo                        func(childComplexity int) int
+		PrecedenceRulesNote                      func(childComplexity int) int
+		PrecedenceRulesYes                       func(childComplexity int) int
+		ReadyForClearanceBy                      func(childComplexity int) int
+		ReadyForClearanceByUserAccount           func(childComplexity int) int
+		ReadyForClearanceDts                     func(childComplexity int) int
+		ReadyForReviewBy                         func(childComplexity int) int
+		ReadyForReviewByUserAccount              func(childComplexity int) int
+		ReadyForReviewDts                        func(childComplexity int) int
+		Status                                   func(childComplexity int) int
+		TreatDualElligibleDifferent              func(childComplexity int) int
+		TreatDualElligibleDifferentHow           func(childComplexity int) int
+		TreatDualElligibleDifferentNote          func(childComplexity int) int
+	}
+
+	PlanCR struct {
+		CreatedBy             func(childComplexity int) int
+		CreatedByUserAccount  func(childComplexity int) int
+		CreatedDts            func(childComplexity int) int
+		DateImplemented       func(childComplexity int) int
+		DateInitiated         func(childComplexity int) int
+		ID                    func(childComplexity int) int
+		IDNumber              func(childComplexity int) int
+		ModelPlanID           func(childComplexity int) int
+		ModifiedBy            func(childComplexity int) int
+		ModifiedByUserAccount func(childComplexity int) int
+		ModifiedDts           func(childComplexity int) int
+		Note                  func(childComplexity int) int
+		Title                 func(childComplexity int) int
 	}
 
 	PlanCollaborator struct {
@@ -416,21 +441,6 @@ type ComplexityRoot struct {
 		TeamRoles             func(childComplexity int) int
 		UserAccount           func(childComplexity int) int
 		UserID                func(childComplexity int) int
-	}
-
-	PlanCrTdl struct {
-		CreatedBy             func(childComplexity int) int
-		CreatedByUserAccount  func(childComplexity int) int
-		CreatedDts            func(childComplexity int) int
-		DateInitiated         func(childComplexity int) int
-		ID                    func(childComplexity int) int
-		IDNumber              func(childComplexity int) int
-		ModelPlanID           func(childComplexity int) int
-		ModifiedBy            func(childComplexity int) int
-		ModifiedByUserAccount func(childComplexity int) int
-		ModifiedDts           func(childComplexity int) int
-		Note                  func(childComplexity int) int
-		Title                 func(childComplexity int) int
 	}
 
 	PlanDiscussion struct {
@@ -602,6 +612,7 @@ type ComplexityRoot struct {
 		CreatedByUserAccount                         func(childComplexity int) int
 		CreatedDts                                   func(childComplexity int) int
 		DataCollectionFrequency                      func(childComplexity int) int
+		DataCollectionFrequencyContinually           func(childComplexity int) int
 		DataCollectionFrequencyNote                  func(childComplexity int) int
 		DataCollectionFrequencyOther                 func(childComplexity int) int
 		DataCollectionStarts                         func(childComplexity int) int
@@ -617,6 +628,7 @@ type ComplexityRoot struct {
 		DataResponseFileFrequency                    func(childComplexity int) int
 		DataResponseType                             func(childComplexity int) int
 		DataSharingFrequency                         func(childComplexity int) int
+		DataSharingFrequencyContinually              func(childComplexity int) int
 		DataSharingFrequencyOther                    func(childComplexity int) int
 		DataSharingStarts                            func(childComplexity int) int
 		DataSharingStartsNote                        func(childComplexity int) int
@@ -649,6 +661,10 @@ type ComplexityRoot struct {
 		ProduceBenefitEnhancementFiles               func(childComplexity int) int
 		QualityPerformanceImpactsPayment             func(childComplexity int) int
 		QualityPerformanceImpactsPaymentNote         func(childComplexity int) int
+		QualityPerformanceImpactsPaymentOther        func(childComplexity int) int
+		QualityReportingFrequency                    func(childComplexity int) int
+		QualityReportingFrequencyContinually         func(childComplexity int) int
+		QualityReportingFrequencyOther               func(childComplexity int) int
 		QualityReportingStarts                       func(childComplexity int) int
 		QualityReportingStartsNote                   func(childComplexity int) int
 		QualityReportingStartsOther                  func(childComplexity int) int
@@ -684,69 +700,81 @@ type ComplexityRoot struct {
 	}
 
 	PlanParticipantsAndProviders struct {
-		CommunicationMethod               func(childComplexity int) int
-		CommunicationMethodOther          func(childComplexity int) int
-		CommunicationNote                 func(childComplexity int) int
-		ConfidenceNote                    func(childComplexity int) int
-		CoordinateWork                    func(childComplexity int) int
-		CoordinateWorkNote                func(childComplexity int) int
-		CreatedBy                         func(childComplexity int) int
-		CreatedByUserAccount              func(childComplexity int) int
-		CreatedDts                        func(childComplexity int) int
-		EstimateConfidence                func(childComplexity int) int
-		ExpectedNumberOfParticipants      func(childComplexity int) int
-		GainsharePayments                 func(childComplexity int) int
-		GainsharePaymentsEligibility      func(childComplexity int) int
-		GainsharePaymentsEligibilityOther func(childComplexity int) int
-		GainsharePaymentsNote             func(childComplexity int) int
-		GainsharePaymentsTrack            func(childComplexity int) int
-		ID                                func(childComplexity int) int
-		MedicareProviderType              func(childComplexity int) int
-		ModelApplicationLevel             func(childComplexity int) int
-		ModelPlanID                       func(childComplexity int) int
-		ModifiedBy                        func(childComplexity int) int
-		ModifiedByUserAccount             func(childComplexity int) int
-		ModifiedDts                       func(childComplexity int) int
-		ParticipantAssumeRisk             func(childComplexity int) int
-		Participants                      func(childComplexity int) int
-		ParticipantsCurrentlyInModels     func(childComplexity int) int
-		ParticipantsCurrentlyInModelsNote func(childComplexity int) int
-		ParticipantsIDSNote               func(childComplexity int) int
-		ParticipantsIds                   func(childComplexity int) int
-		ParticipantsIdsOther              func(childComplexity int) int
-		ParticipantsNote                  func(childComplexity int) int
-		ParticipantsOther                 func(childComplexity int) int
-		ProviderAddMethod                 func(childComplexity int) int
-		ProviderAddMethodNote             func(childComplexity int) int
-		ProviderAddMethodOther            func(childComplexity int) int
-		ProviderAdditionFrequency         func(childComplexity int) int
-		ProviderAdditionFrequencyNote     func(childComplexity int) int
-		ProviderAdditionFrequencyOther    func(childComplexity int) int
-		ProviderLeaveMethod               func(childComplexity int) int
-		ProviderLeaveMethodNote           func(childComplexity int) int
-		ProviderLeaveMethodOther          func(childComplexity int) int
-		ProviderOverlap                   func(childComplexity int) int
-		ProviderOverlapHierarchy          func(childComplexity int) int
-		ProviderOverlapNote               func(childComplexity int) int
-		ReadyForClearanceBy               func(childComplexity int) int
-		ReadyForClearanceByUserAccount    func(childComplexity int) int
-		ReadyForClearanceDts              func(childComplexity int) int
-		ReadyForReviewBy                  func(childComplexity int) int
-		ReadyForReviewByUserAccount       func(childComplexity int) int
-		ReadyForReviewDts                 func(childComplexity int) int
-		RecruitmentMethod                 func(childComplexity int) int
-		RecruitmentNote                   func(childComplexity int) int
-		RecruitmentOther                  func(childComplexity int) int
-		RiskNote                          func(childComplexity int) int
-		RiskOther                         func(childComplexity int) int
-		RiskType                          func(childComplexity int) int
-		SelectionMethod                   func(childComplexity int) int
-		SelectionNote                     func(childComplexity int) int
-		SelectionOther                    func(childComplexity int) int
-		StatesEngagement                  func(childComplexity int) int
-		Status                            func(childComplexity int) int
-		WillRiskChange                    func(childComplexity int) int
-		WillRiskChangeNote                func(childComplexity int) int
+		CommunicationMethod                    func(childComplexity int) int
+		CommunicationMethodOther               func(childComplexity int) int
+		CommunicationNote                      func(childComplexity int) int
+		ConfidenceNote                         func(childComplexity int) int
+		CoordinateWork                         func(childComplexity int) int
+		CoordinateWorkNote                     func(childComplexity int) int
+		CreatedBy                              func(childComplexity int) int
+		CreatedByUserAccount                   func(childComplexity int) int
+		CreatedDts                             func(childComplexity int) int
+		EstimateConfidence                     func(childComplexity int) int
+		ExpectedNumberOfParticipants           func(childComplexity int) int
+		GainsharePayments                      func(childComplexity int) int
+		GainsharePaymentsEligibility           func(childComplexity int) int
+		GainsharePaymentsEligibilityOther      func(childComplexity int) int
+		GainsharePaymentsNote                  func(childComplexity int) int
+		GainsharePaymentsTrack                 func(childComplexity int) int
+		ID                                     func(childComplexity int) int
+		MedicareProviderType                   func(childComplexity int) int
+		ModelApplicationLevel                  func(childComplexity int) int
+		ModelPlanID                            func(childComplexity int) int
+		ModifiedBy                             func(childComplexity int) int
+		ModifiedByUserAccount                  func(childComplexity int) int
+		ModifiedDts                            func(childComplexity int) int
+		ParticipantAddedFrequency              func(childComplexity int) int
+		ParticipantAddedFrequencyContinually   func(childComplexity int) int
+		ParticipantAddedFrequencyNote          func(childComplexity int) int
+		ParticipantAddedFrequencyOther         func(childComplexity int) int
+		ParticipantRemovedFrequency            func(childComplexity int) int
+		ParticipantRemovedFrequencyContinually func(childComplexity int) int
+		ParticipantRemovedFrequencyNote        func(childComplexity int) int
+		ParticipantRemovedFrequencyOther       func(childComplexity int) int
+		Participants                           func(childComplexity int) int
+		ParticipantsCurrentlyInModels          func(childComplexity int) int
+		ParticipantsCurrentlyInModelsNote      func(childComplexity int) int
+		ParticipantsIDSNote                    func(childComplexity int) int
+		ParticipantsIds                        func(childComplexity int) int
+		ParticipantsIdsOther                   func(childComplexity int) int
+		ParticipantsNote                       func(childComplexity int) int
+		ParticipantsOther                      func(childComplexity int) int
+		ProviderAddMethod                      func(childComplexity int) int
+		ProviderAddMethodNote                  func(childComplexity int) int
+		ProviderAddMethodOther                 func(childComplexity int) int
+		ProviderAdditionFrequency              func(childComplexity int) int
+		ProviderAdditionFrequencyContinually   func(childComplexity int) int
+		ProviderAdditionFrequencyNote          func(childComplexity int) int
+		ProviderAdditionFrequencyOther         func(childComplexity int) int
+		ProviderLeaveMethod                    func(childComplexity int) int
+		ProviderLeaveMethodNote                func(childComplexity int) int
+		ProviderLeaveMethodOther               func(childComplexity int) int
+		ProviderOverlap                        func(childComplexity int) int
+		ProviderOverlapHierarchy               func(childComplexity int) int
+		ProviderOverlapNote                    func(childComplexity int) int
+		ProviderRemovalFrequency               func(childComplexity int) int
+		ProviderRemovalFrequencyContinually    func(childComplexity int) int
+		ProviderRemovalFrequencyNote           func(childComplexity int) int
+		ProviderRemovalFrequencyOther          func(childComplexity int) int
+		ReadyForClearanceBy                    func(childComplexity int) int
+		ReadyForClearanceByUserAccount         func(childComplexity int) int
+		ReadyForClearanceDts                   func(childComplexity int) int
+		ReadyForReviewBy                       func(childComplexity int) int
+		ReadyForReviewByUserAccount            func(childComplexity int) int
+		ReadyForReviewDts                      func(childComplexity int) int
+		RecruitmentMethod                      func(childComplexity int) int
+		RecruitmentNote                        func(childComplexity int) int
+		RecruitmentOther                       func(childComplexity int) int
+		RiskNote                               func(childComplexity int) int
+		RiskOther                              func(childComplexity int) int
+		RiskType                               func(childComplexity int) int
+		SelectionMethod                        func(childComplexity int) int
+		SelectionNote                          func(childComplexity int) int
+		SelectionOther                         func(childComplexity int) int
+		StatesEngagement                       func(childComplexity int) int
+		Status                                 func(childComplexity int) int
+		WillRiskChange                         func(childComplexity int) int
+		WillRiskChangeNote                     func(childComplexity int) int
 	}
 
 	PlanPayments struct {
@@ -756,6 +784,7 @@ type ComplexityRoot struct {
 		AnticipateReconcilingPaymentsRetrospectively      func(childComplexity int) int
 		AnticipateReconcilingPaymentsRetrospectivelyNote  func(childComplexity int) int
 		AnticipatedPaymentFrequency                       func(childComplexity int) int
+		AnticipatedPaymentFrequencyContinually            func(childComplexity int) int
 		AnticipatedPaymentFrequencyNote                   func(childComplexity int) int
 		AnticipatedPaymentFrequencyOther                  func(childComplexity int) int
 		BeneficiaryCostSharingLevelAndHandling            func(childComplexity int) int
@@ -804,6 +833,10 @@ type ComplexityRoot struct {
 		PayType                                           func(childComplexity int) int
 		PayTypeNote                                       func(childComplexity int) int
 		PaymentCalculationOwner                           func(childComplexity int) int
+		PaymentReconciliationFrequency                    func(childComplexity int) int
+		PaymentReconciliationFrequencyContinually         func(childComplexity int) int
+		PaymentReconciliationFrequencyNote                func(childComplexity int) int
+		PaymentReconciliationFrequencyOther               func(childComplexity int) int
 		PaymentStartDate                                  func(childComplexity int) int
 		PaymentStartDateNote                              func(childComplexity int) int
 		PlanningToUseInnovationPaymentContractor          func(childComplexity int) int
@@ -826,6 +859,21 @@ type ComplexityRoot struct {
 		WaiverOnlyAppliesPartOfPayment                    func(childComplexity int) int
 		WillRecoverPayments                               func(childComplexity int) int
 		WillRecoverPaymentsNote                           func(childComplexity int) int
+	}
+
+	PlanTDL struct {
+		CreatedBy             func(childComplexity int) int
+		CreatedByUserAccount  func(childComplexity int) int
+		CreatedDts            func(childComplexity int) int
+		DateInitiated         func(childComplexity int) int
+		ID                    func(childComplexity int) int
+		IDNumber              func(childComplexity int) int
+		ModelPlanID           func(childComplexity int) int
+		ModifiedBy            func(childComplexity int) int
+		ModifiedByUserAccount func(childComplexity int) int
+		ModifiedDts           func(childComplexity int) int
+		Note                  func(childComplexity int) int
+		Title                 func(childComplexity int) int
 	}
 
 	PossibleOperationalNeed struct {
@@ -879,7 +927,6 @@ type ComplexityRoot struct {
 
 	Query struct {
 		AuditChanges                                           func(childComplexity int, tableName string, primaryKey uuid.UUID) int
-		CrTdl                                                  func(childComplexity int, id uuid.UUID) int
 		CurrentUser                                            func(childComplexity int) int
 		ExistingModelCollection                                func(childComplexity int) int
 		ExistingModelLink                                      func(childComplexity int, id uuid.UUID) int
@@ -891,8 +938,10 @@ type ComplexityRoot struct {
 		OperationalSolution                                    func(childComplexity int, id uuid.UUID) int
 		OperationalSolutions                                   func(childComplexity int, operationalNeedID uuid.UUID, includeNotNeeded bool) int
 		PlanCollaboratorByID                                   func(childComplexity int, id uuid.UUID) int
+		PlanCr                                                 func(childComplexity int, id uuid.UUID) int
 		PlanDocument                                           func(childComplexity int, id uuid.UUID) int
 		PlanPayments                                           func(childComplexity int, id uuid.UUID) int
+		PlanTdl                                                func(childComplexity int, id uuid.UUID) int
 		PossibleOperationalNeeds                               func(childComplexity int) int
 		PossibleOperationalSolutions                           func(childComplexity int) int
 		SearchChangeTableDateHistogramConsolidatedAggregations func(childComplexity int, interval string, limit int, offset int) int
@@ -988,7 +1037,8 @@ type ModelPlanResolver interface {
 
 	IsFavorite(ctx context.Context, obj *models.ModelPlan) (bool, error)
 	IsCollaborator(ctx context.Context, obj *models.ModelPlan) (bool, error)
-	CrTdls(ctx context.Context, obj *models.ModelPlan) ([]*models.PlanCrTdl, error)
+	Crs(ctx context.Context, obj *models.ModelPlan) ([]*models.PlanCR, error)
+	Tdls(ctx context.Context, obj *models.ModelPlan) ([]*models.PlanTDL, error)
 	PrepareForClearance(ctx context.Context, obj *models.ModelPlan) (*model.PrepareForClearance, error)
 	NameHistory(ctx context.Context, obj *models.ModelPlan, sort models.SortDirection) ([]string, error)
 	OperationalNeeds(ctx context.Context, obj *models.ModelPlan) ([]*models.OperationalNeed, error)
@@ -1017,9 +1067,12 @@ type MutationResolver interface {
 	AgreeToNda(ctx context.Context, agree bool) (*model.NDAInfo, error)
 	AddPlanFavorite(ctx context.Context, modelPlanID uuid.UUID) (*models.PlanFavorite, error)
 	DeletePlanFavorite(ctx context.Context, modelPlanID uuid.UUID) (*models.PlanFavorite, error)
-	CreatePlanCrTdl(ctx context.Context, input model.PlanCrTdlCreateInput) (*models.PlanCrTdl, error)
-	UpdatePlanCrTdl(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanCrTdl, error)
-	DeletePlanCrTdl(ctx context.Context, id uuid.UUID) (*models.PlanCrTdl, error)
+	CreatePlanCr(ctx context.Context, input model.PlanCRCreateInput) (*models.PlanCR, error)
+	CreatePlanTdl(ctx context.Context, input model.PlanTDLCreateInput) (*models.PlanTDL, error)
+	UpdatePlanCr(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanCR, error)
+	UpdatePlanTdl(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanTDL, error)
+	DeletePlanCr(ctx context.Context, id uuid.UUID) (*models.PlanCR, error)
+	DeletePlanTdl(ctx context.Context, id uuid.UUID) (*models.PlanTDL, error)
 	AddOrUpdateCustomOperationalNeed(ctx context.Context, modelPlanID uuid.UUID, customNeedType string, needed bool) (*models.OperationalNeed, error)
 	UpdateCustomOperationalNeedByID(ctx context.Context, id uuid.UUID, customNeedType *string, needed bool) (*models.OperationalNeed, error)
 	CreateOperationalSolution(ctx context.Context, operationalNeedID uuid.UUID, solutionType *models.OperationalSolutionKey, changes map[string]interface{}) (*models.OperationalSolution, error)
@@ -1051,6 +1104,10 @@ type PlanBeneficiariesResolver interface {
 	Beneficiaries(ctx context.Context, obj *models.PlanBeneficiaries) ([]model.BeneficiariesType, error)
 
 	BeneficiarySelectionMethod(ctx context.Context, obj *models.PlanBeneficiaries) ([]model.SelectionMethodType, error)
+
+	BeneficiarySelectionFrequency(ctx context.Context, obj *models.PlanBeneficiaries) ([]models.FrequencyType, error)
+
+	BeneficiaryRemovalFrequency(ctx context.Context, obj *models.PlanBeneficiaries) ([]models.FrequencyType, error)
 
 	PrecedenceRules(ctx context.Context, obj *models.PlanBeneficiaries) ([]models.YesNoType, error)
 }
@@ -1109,9 +1166,11 @@ type PlanOpsEvalAndLearningResolver interface {
 
 	DataToSendParticicipants(ctx context.Context, obj *models.PlanOpsEvalAndLearning) ([]model.DataToSendParticipantsType, error)
 
-	DataSharingFrequency(ctx context.Context, obj *models.PlanOpsEvalAndLearning) ([]model.DataFrequencyType, error)
+	DataSharingFrequency(ctx context.Context, obj *models.PlanOpsEvalAndLearning) ([]models.FrequencyType, error)
 
-	DataCollectionFrequency(ctx context.Context, obj *models.PlanOpsEvalAndLearning) ([]model.DataFrequencyType, error)
+	DataCollectionFrequency(ctx context.Context, obj *models.PlanOpsEvalAndLearning) ([]models.FrequencyType, error)
+
+	QualityReportingFrequency(ctx context.Context, obj *models.PlanOpsEvalAndLearning) ([]models.FrequencyType, error)
 
 	ModelLearningSystems(ctx context.Context, obj *models.PlanOpsEvalAndLearning) ([]model.ModelLearningSystemType, error)
 }
@@ -1120,15 +1179,25 @@ type PlanParticipantsAndProvidersResolver interface {
 
 	SelectionMethod(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]model.ParticipantSelectionType, error)
 
+	ParticipantAddedFrequency(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]models.FrequencyType, error)
+
+	ParticipantRemovedFrequency(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]models.FrequencyType, error)
+
 	CommunicationMethod(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]model.ParticipantCommunicationType, error)
+
+	RiskType(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]models.ParticipantRiskType, error)
 
 	GainsharePaymentsEligibility(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]model.GainshareArrangementEligibility, error)
 
 	ParticipantsIds(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]model.ParticipantsIDType, error)
 
+	ProviderAdditionFrequency(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]models.FrequencyType, error)
+
 	ProviderAddMethod(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]model.ProviderAddType, error)
 
 	ProviderLeaveMethod(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]model.ProviderLeaveType, error)
+
+	ProviderRemovalFrequency(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]models.FrequencyType, error)
 }
 type PlanPaymentsResolver interface {
 	FundingSource(ctx context.Context, obj *models.PlanPayments) ([]models.FundingSource, error)
@@ -1144,7 +1213,9 @@ type PlanPaymentsResolver interface {
 	NonClaimsPayments(ctx context.Context, obj *models.PlanPayments) ([]model.NonClaimsBasedPayType, error)
 	NonClaimsPaymentOther(ctx context.Context, obj *models.PlanPayments) (*string, error)
 
-	AnticipatedPaymentFrequency(ctx context.Context, obj *models.PlanPayments) ([]models.AnticipatedPaymentFrequencyType, error)
+	AnticipatedPaymentFrequency(ctx context.Context, obj *models.PlanPayments) ([]models.FrequencyType, error)
+
+	PaymentReconciliationFrequency(ctx context.Context, obj *models.PlanPayments) ([]models.FrequencyType, error)
 }
 type PossibleOperationalNeedResolver interface {
 	PossibleSolutions(ctx context.Context, obj *models.PossibleOperationalNeed) ([]*models.PossibleOperationalSolution, error)
@@ -1163,7 +1234,8 @@ type QueryResolver interface {
 	TaskListSectionLocks(ctx context.Context, modelPlanID uuid.UUID) ([]*model.TaskListSectionLockStatus, error)
 	PlanPayments(ctx context.Context, id uuid.UUID) (*models.PlanPayments, error)
 	NdaInfo(ctx context.Context) (*model.NDAInfo, error)
-	CrTdl(ctx context.Context, id uuid.UUID) (*models.PlanCrTdl, error)
+	PlanCr(ctx context.Context, id uuid.UUID) (*models.PlanCR, error)
+	PlanTdl(ctx context.Context, id uuid.UUID) (*models.PlanTDL, error)
 	OperationalSolutions(ctx context.Context, operationalNeedID uuid.UUID, includeNotNeeded bool) ([]*models.OperationalSolution, error)
 	OperationalSolution(ctx context.Context, id uuid.UUID) (*models.OperationalSolution, error)
 	OperationalNeed(ctx context.Context, id uuid.UUID) (*models.OperationalNeed, error)
@@ -1797,13 +1869,6 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.ModelPlan.Collaborators(childComplexity), true
 
-	case "ModelPlan.crTdls":
-		if e.complexity.ModelPlan.CrTdls == nil {
-			break
-		}
-
-		return e.complexity.ModelPlan.CrTdls(childComplexity), true
-
 	case "ModelPlan.createdBy":
 		if e.complexity.ModelPlan.CreatedBy == nil {
 			break
@@ -1824,6 +1889,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.ModelPlan.CreatedDts(childComplexity), true
+
+	case "ModelPlan.crs":
+		if e.complexity.ModelPlan.Crs == nil {
+			break
+		}
+
+		return e.complexity.ModelPlan.Crs(childComplexity), true
 
 	case "ModelPlan.discussions":
 		if e.complexity.ModelPlan.Discussions == nil {
@@ -1956,6 +2028,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.ModelPlan.Status(childComplexity), true
 
+	case "ModelPlan.tdls":
+		if e.complexity.ModelPlan.Tdls == nil {
+			break
+		}
+
+		return e.complexity.ModelPlan.Tdls(childComplexity), true
+
 	case "Mutation.addOrUpdateCustomOperationalNeed":
 		if e.complexity.Mutation.AddOrUpdateCustomOperationalNeed == nil {
 			break
@@ -2052,17 +2131,17 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Mutation.CreatePlanCollaborator(childComplexity, args["input"].(model.PlanCollaboratorCreateInput)), true
 
-	case "Mutation.createPlanCrTdl":
-		if e.complexity.Mutation.CreatePlanCrTdl == nil {
+	case "Mutation.createPlanCR":
+		if e.complexity.Mutation.CreatePlanCr == nil {
 			break
 		}
 
-		args, err := ec.field_Mutation_createPlanCrTdl_args(context.TODO(), rawArgs)
+		args, err := ec.field_Mutation_createPlanCR_args(context.TODO(), rawArgs)
 		if err != nil {
 			return 0, false
 		}
 
-		return e.complexity.Mutation.CreatePlanCrTdl(childComplexity, args["input"].(model.PlanCrTdlCreateInput)), true
+		return e.complexity.Mutation.CreatePlanCr(childComplexity, args["input"].(model.PlanCRCreateInput)), true
 
 	case "Mutation.createPlanDiscussion":
 		if e.complexity.Mutation.CreatePlanDiscussion == nil {
@@ -2088,6 +2167,18 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Mutation.CreatePlanDocumentSolutionLinks(childComplexity, args["solutionID"].(uuid.UUID), args["documentIDs"].([]uuid.UUID)), true
 
+	case "Mutation.createPlanTDL":
+		if e.complexity.Mutation.CreatePlanTdl == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_createPlanTDL_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Mutation.CreatePlanTdl(childComplexity, args["input"].(model.PlanTDLCreateInput)), true
+
 	case "Mutation.deleteOperationalSolutionSubtask":
 		if e.complexity.Mutation.DeleteOperationalSolutionSubtask == nil {
 			break
@@ -2112,17 +2203,17 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Mutation.DeletePlanCollaborator(childComplexity, args["id"].(uuid.UUID)), true
 
-	case "Mutation.deletePlanCrTdl":
-		if e.complexity.Mutation.DeletePlanCrTdl == nil {
+	case "Mutation.deletePlanCR":
+		if e.complexity.Mutation.DeletePlanCr == nil {
 			break
 		}
 
-		args, err := ec.field_Mutation_deletePlanCrTdl_args(context.TODO(), rawArgs)
+		args, err := ec.field_Mutation_deletePlanCR_args(context.TODO(), rawArgs)
 		if err != nil {
 			return 0, false
 		}
 
-		return e.complexity.Mutation.DeletePlanCrTdl(childComplexity, args["id"].(uuid.UUID)), true
+		return e.complexity.Mutation.DeletePlanCr(childComplexity, args["id"].(uuid.UUID)), true
 
 	case "Mutation.deletePlanDocument":
 		if e.complexity.Mutation.DeletePlanDocument == nil {
@@ -2147,6 +2238,18 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Mutation.DeletePlanFavorite(childComplexity, args["modelPlanID"].(uuid.UUID)), true
+
+	case "Mutation.deletePlanTDL":
+		if e.complexity.Mutation.DeletePlanTdl == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_deletePlanTDL_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Mutation.DeletePlanTdl(childComplexity, args["id"].(uuid.UUID)), true
 
 	case "Mutation.linkNewPlanDocument":
 		if e.complexity.Mutation.LinkNewPlanDocument == nil {
@@ -2340,17 +2443,17 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Mutation.UpdatePlanCollaborator(childComplexity, args["id"].(uuid.UUID), args["newRoles"].([]models.TeamRole)), true
 
-	case "Mutation.updatePlanCrTdl":
-		if e.complexity.Mutation.UpdatePlanCrTdl == nil {
+	case "Mutation.updatePlanCR":
+		if e.complexity.Mutation.UpdatePlanCr == nil {
 			break
 		}
 
-		args, err := ec.field_Mutation_updatePlanCrTdl_args(context.TODO(), rawArgs)
+		args, err := ec.field_Mutation_updatePlanCR_args(context.TODO(), rawArgs)
 		if err != nil {
 			return 0, false
 		}
 
-		return e.complexity.Mutation.UpdatePlanCrTdl(childComplexity, args["id"].(uuid.UUID), args["changes"].(map[string]interface{})), true
+		return e.complexity.Mutation.UpdatePlanCr(childComplexity, args["id"].(uuid.UUID), args["changes"].(map[string]interface{})), true
 
 	case "Mutation.updatePlanGeneralCharacteristics":
 		if e.complexity.Mutation.UpdatePlanGeneralCharacteristics == nil {
@@ -2399,6 +2502,18 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Mutation.UpdatePlanPayments(childComplexity, args["id"].(uuid.UUID), args["changes"].(map[string]interface{})), true
+
+	case "Mutation.updatePlanTDL":
+		if e.complexity.Mutation.UpdatePlanTdl == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_updatePlanTDL_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Mutation.UpdatePlanTdl(childComplexity, args["id"].(uuid.UUID), args["changes"].(map[string]interface{})), true
 
 	case "Mutation.uploadNewPlanDocument":
 		if e.complexity.Mutation.UploadNewPlanDocument == nil {
@@ -3068,12 +3183,47 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.PlanBeneficiaries.BeneficiaryOverlapNote(childComplexity), true
 
+	case "PlanBeneficiaries.beneficiaryRemovalFrequency":
+		if e.complexity.PlanBeneficiaries.BeneficiaryRemovalFrequency == nil {
+			break
+		}
+
+		return e.complexity.PlanBeneficiaries.BeneficiaryRemovalFrequency(childComplexity), true
+
+	case "PlanBeneficiaries.beneficiaryRemovalFrequencyContinually":
+		if e.complexity.PlanBeneficiaries.BeneficiaryRemovalFrequencyContinually == nil {
+			break
+		}
+
+		return e.complexity.PlanBeneficiaries.BeneficiaryRemovalFrequencyContinually(childComplexity), true
+
+	case "PlanBeneficiaries.beneficiaryRemovalFrequencyNote":
+		if e.complexity.PlanBeneficiaries.BeneficiaryRemovalFrequencyNote == nil {
+			break
+		}
+
+		return e.complexity.PlanBeneficiaries.BeneficiaryRemovalFrequencyNote(childComplexity), true
+
+	case "PlanBeneficiaries.beneficiaryRemovalFrequencyOther":
+		if e.complexity.PlanBeneficiaries.BeneficiaryRemovalFrequencyOther == nil {
+			break
+		}
+
+		return e.complexity.PlanBeneficiaries.BeneficiaryRemovalFrequencyOther(childComplexity), true
+
 	case "PlanBeneficiaries.beneficiarySelectionFrequency":
 		if e.complexity.PlanBeneficiaries.BeneficiarySelectionFrequency == nil {
 			break
 		}
 
 		return e.complexity.PlanBeneficiaries.BeneficiarySelectionFrequency(childComplexity), true
+
+	case "PlanBeneficiaries.beneficiarySelectionFrequencyContinually":
+		if e.complexity.PlanBeneficiaries.BeneficiarySelectionFrequencyContinually == nil {
+			break
+		}
+
+		return e.complexity.PlanBeneficiaries.BeneficiarySelectionFrequencyContinually(childComplexity), true
 
 	case "PlanBeneficiaries.beneficiarySelectionFrequencyNote":
 		if e.complexity.PlanBeneficiaries.BeneficiarySelectionFrequencyNote == nil {
@@ -3313,6 +3463,97 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.PlanBeneficiaries.TreatDualElligibleDifferentNote(childComplexity), true
 
+	case "PlanCR.createdBy":
+		if e.complexity.PlanCR.CreatedBy == nil {
+			break
+		}
+
+		return e.complexity.PlanCR.CreatedBy(childComplexity), true
+
+	case "PlanCR.createdByUserAccount":
+		if e.complexity.PlanCR.CreatedByUserAccount == nil {
+			break
+		}
+
+		return e.complexity.PlanCR.CreatedByUserAccount(childComplexity), true
+
+	case "PlanCR.createdDts":
+		if e.complexity.PlanCR.CreatedDts == nil {
+			break
+		}
+
+		return e.complexity.PlanCR.CreatedDts(childComplexity), true
+
+	case "PlanCR.dateImplemented":
+		if e.complexity.PlanCR.DateImplemented == nil {
+			break
+		}
+
+		return e.complexity.PlanCR.DateImplemented(childComplexity), true
+
+	case "PlanCR.dateInitiated":
+		if e.complexity.PlanCR.DateInitiated == nil {
+			break
+		}
+
+		return e.complexity.PlanCR.DateInitiated(childComplexity), true
+
+	case "PlanCR.id":
+		if e.complexity.PlanCR.ID == nil {
+			break
+		}
+
+		return e.complexity.PlanCR.ID(childComplexity), true
+
+	case "PlanCR.idNumber":
+		if e.complexity.PlanCR.IDNumber == nil {
+			break
+		}
+
+		return e.complexity.PlanCR.IDNumber(childComplexity), true
+
+	case "PlanCR.modelPlanID":
+		if e.complexity.PlanCR.ModelPlanID == nil {
+			break
+		}
+
+		return e.complexity.PlanCR.ModelPlanID(childComplexity), true
+
+	case "PlanCR.modifiedBy":
+		if e.complexity.PlanCR.ModifiedBy == nil {
+			break
+		}
+
+		return e.complexity.PlanCR.ModifiedBy(childComplexity), true
+
+	case "PlanCR.modifiedByUserAccount":
+		if e.complexity.PlanCR.ModifiedByUserAccount == nil {
+			break
+		}
+
+		return e.complexity.PlanCR.ModifiedByUserAccount(childComplexity), true
+
+	case "PlanCR.modifiedDts":
+		if e.complexity.PlanCR.ModifiedDts == nil {
+			break
+		}
+
+		return e.complexity.PlanCR.ModifiedDts(childComplexity), true
+
+	case "PlanCR.note":
+		if e.complexity.PlanCR.Note == nil {
+			break
+		}
+
+		return e.complexity.PlanCR.Note(childComplexity), true
+
+	case "PlanCR.title":
+		if e.complexity.PlanCR.Title == nil {
+			break
+		}
+
+		return e.complexity.PlanCR.Title(childComplexity), true
+
 	case "PlanCollaborator.createdBy":
 		if e.complexity.PlanCollaborator.CreatedBy == nil {
 			break
@@ -3389,90 +3630,6 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.PlanCollaborator.UserID(childComplexity), true
-
-	case "PlanCrTdl.createdBy":
-		if e.complexity.PlanCrTdl.CreatedBy == nil {
-			break
-		}
-
-		return e.complexity.PlanCrTdl.CreatedBy(childComplexity), true
-
-	case "PlanCrTdl.createdByUserAccount":
-		if e.complexity.PlanCrTdl.CreatedByUserAccount == nil {
-			break
-		}
-
-		return e.complexity.PlanCrTdl.CreatedByUserAccount(childComplexity), true
-
-	case "PlanCrTdl.createdDts":
-		if e.complexity.PlanCrTdl.CreatedDts == nil {
-			break
-		}
-
-		return e.complexity.PlanCrTdl.CreatedDts(childComplexity), true
-
-	case "PlanCrTdl.dateInitiated":
-		if e.complexity.PlanCrTdl.DateInitiated == nil {
-			break
-		}
-
-		return e.complexity.PlanCrTdl.DateInitiated(childComplexity), true
-
-	case "PlanCrTdl.id":
-		if e.complexity.PlanCrTdl.ID == nil {
-			break
-		}
-
-		return e.complexity.PlanCrTdl.ID(childComplexity), true
-
-	case "PlanCrTdl.idNumber":
-		if e.complexity.PlanCrTdl.IDNumber == nil {
-			break
-		}
-
-		return e.complexity.PlanCrTdl.IDNumber(childComplexity), true
-
-	case "PlanCrTdl.modelPlanID":
-		if e.complexity.PlanCrTdl.ModelPlanID == nil {
-			break
-		}
-
-		return e.complexity.PlanCrTdl.ModelPlanID(childComplexity), true
-
-	case "PlanCrTdl.modifiedBy":
-		if e.complexity.PlanCrTdl.ModifiedBy == nil {
-			break
-		}
-
-		return e.complexity.PlanCrTdl.ModifiedBy(childComplexity), true
-
-	case "PlanCrTdl.modifiedByUserAccount":
-		if e.complexity.PlanCrTdl.ModifiedByUserAccount == nil {
-			break
-		}
-
-		return e.complexity.PlanCrTdl.ModifiedByUserAccount(childComplexity), true
-
-	case "PlanCrTdl.modifiedDts":
-		if e.complexity.PlanCrTdl.ModifiedDts == nil {
-			break
-		}
-
-		return e.complexity.PlanCrTdl.ModifiedDts(childComplexity), true
-
-	case "PlanCrTdl.note":
-		if e.complexity.PlanCrTdl.Note == nil {
-			break
-		}
-
-		return e.complexity.PlanCrTdl.Note(childComplexity), true
-
-	case "PlanCrTdl.title":
-		if e.complexity.PlanCrTdl.Title == nil {
-			break
-		}
-
-		return e.complexity.PlanCrTdl.Title(childComplexity), true
 
 	case "PlanDiscussion.content":
 		if e.complexity.PlanDiscussion.Content == nil {
@@ -4545,6 +4702,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.PlanOpsEvalAndLearning.DataCollectionFrequency(childComplexity), true
 
+	case "PlanOpsEvalAndLearning.dataCollectionFrequencyContinually":
+		if e.complexity.PlanOpsEvalAndLearning.DataCollectionFrequencyContinually == nil {
+			break
+		}
+
+		return e.complexity.PlanOpsEvalAndLearning.DataCollectionFrequencyContinually(childComplexity), true
+
 	case "PlanOpsEvalAndLearning.dataCollectionFrequencyNote":
 		if e.complexity.PlanOpsEvalAndLearning.DataCollectionFrequencyNote == nil {
 			break
@@ -4649,6 +4813,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.PlanOpsEvalAndLearning.DataSharingFrequency(childComplexity), true
+
+	case "PlanOpsEvalAndLearning.dataSharingFrequencyContinually":
+		if e.complexity.PlanOpsEvalAndLearning.DataSharingFrequencyContinually == nil {
+			break
+		}
+
+		return e.complexity.PlanOpsEvalAndLearning.DataSharingFrequencyContinually(childComplexity), true
 
 	case "PlanOpsEvalAndLearning.dataSharingFrequencyOther":
 		if e.complexity.PlanOpsEvalAndLearning.DataSharingFrequencyOther == nil {
@@ -4873,6 +5044,34 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.PlanOpsEvalAndLearning.QualityPerformanceImpactsPaymentNote(childComplexity), true
+
+	case "PlanOpsEvalAndLearning.qualityPerformanceImpactsPaymentOther":
+		if e.complexity.PlanOpsEvalAndLearning.QualityPerformanceImpactsPaymentOther == nil {
+			break
+		}
+
+		return e.complexity.PlanOpsEvalAndLearning.QualityPerformanceImpactsPaymentOther(childComplexity), true
+
+	case "PlanOpsEvalAndLearning.qualityReportingFrequency":
+		if e.complexity.PlanOpsEvalAndLearning.QualityReportingFrequency == nil {
+			break
+		}
+
+		return e.complexity.PlanOpsEvalAndLearning.QualityReportingFrequency(childComplexity), true
+
+	case "PlanOpsEvalAndLearning.qualityReportingFrequencyContinually":
+		if e.complexity.PlanOpsEvalAndLearning.QualityReportingFrequencyContinually == nil {
+			break
+		}
+
+		return e.complexity.PlanOpsEvalAndLearning.QualityReportingFrequencyContinually(childComplexity), true
+
+	case "PlanOpsEvalAndLearning.qualityReportingFrequencyOther":
+		if e.complexity.PlanOpsEvalAndLearning.QualityReportingFrequencyOther == nil {
+			break
+		}
+
+		return e.complexity.PlanOpsEvalAndLearning.QualityReportingFrequencyOther(childComplexity), true
 
 	case "PlanOpsEvalAndLearning.qualityReportingStarts":
 		if e.complexity.PlanOpsEvalAndLearning.QualityReportingStarts == nil {
@@ -5259,12 +5458,61 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.PlanParticipantsAndProviders.ModifiedDts(childComplexity), true
 
-	case "PlanParticipantsAndProviders.participantAssumeRisk":
-		if e.complexity.PlanParticipantsAndProviders.ParticipantAssumeRisk == nil {
+	case "PlanParticipantsAndProviders.participantAddedFrequency":
+		if e.complexity.PlanParticipantsAndProviders.ParticipantAddedFrequency == nil {
 			break
 		}
 
-		return e.complexity.PlanParticipantsAndProviders.ParticipantAssumeRisk(childComplexity), true
+		return e.complexity.PlanParticipantsAndProviders.ParticipantAddedFrequency(childComplexity), true
+
+	case "PlanParticipantsAndProviders.participantAddedFrequencyContinually":
+		if e.complexity.PlanParticipantsAndProviders.ParticipantAddedFrequencyContinually == nil {
+			break
+		}
+
+		return e.complexity.PlanParticipantsAndProviders.ParticipantAddedFrequencyContinually(childComplexity), true
+
+	case "PlanParticipantsAndProviders.participantAddedFrequencyNote":
+		if e.complexity.PlanParticipantsAndProviders.ParticipantAddedFrequencyNote == nil {
+			break
+		}
+
+		return e.complexity.PlanParticipantsAndProviders.ParticipantAddedFrequencyNote(childComplexity), true
+
+	case "PlanParticipantsAndProviders.participantAddedFrequencyOther":
+		if e.complexity.PlanParticipantsAndProviders.ParticipantAddedFrequencyOther == nil {
+			break
+		}
+
+		return e.complexity.PlanParticipantsAndProviders.ParticipantAddedFrequencyOther(childComplexity), true
+
+	case "PlanParticipantsAndProviders.participantRemovedFrequency":
+		if e.complexity.PlanParticipantsAndProviders.ParticipantRemovedFrequency == nil {
+			break
+		}
+
+		return e.complexity.PlanParticipantsAndProviders.ParticipantRemovedFrequency(childComplexity), true
+
+	case "PlanParticipantsAndProviders.participantRemovedFrequencyContinually":
+		if e.complexity.PlanParticipantsAndProviders.ParticipantRemovedFrequencyContinually == nil {
+			break
+		}
+
+		return e.complexity.PlanParticipantsAndProviders.ParticipantRemovedFrequencyContinually(childComplexity), true
+
+	case "PlanParticipantsAndProviders.participantRemovedFrequencyNote":
+		if e.complexity.PlanParticipantsAndProviders.ParticipantRemovedFrequencyNote == nil {
+			break
+		}
+
+		return e.complexity.PlanParticipantsAndProviders.ParticipantRemovedFrequencyNote(childComplexity), true
+
+	case "PlanParticipantsAndProviders.participantRemovedFrequencyOther":
+		if e.complexity.PlanParticipantsAndProviders.ParticipantRemovedFrequencyOther == nil {
+			break
+		}
+
+		return e.complexity.PlanParticipantsAndProviders.ParticipantRemovedFrequencyOther(childComplexity), true
 
 	case "PlanParticipantsAndProviders.participants":
 		if e.complexity.PlanParticipantsAndProviders.Participants == nil {
@@ -5350,6 +5598,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.PlanParticipantsAndProviders.ProviderAdditionFrequency(childComplexity), true
 
+	case "PlanParticipantsAndProviders.providerAdditionFrequencyContinually":
+		if e.complexity.PlanParticipantsAndProviders.ProviderAdditionFrequencyContinually == nil {
+			break
+		}
+
+		return e.complexity.PlanParticipantsAndProviders.ProviderAdditionFrequencyContinually(childComplexity), true
+
 	case "PlanParticipantsAndProviders.providerAdditionFrequencyNote":
 		if e.complexity.PlanParticipantsAndProviders.ProviderAdditionFrequencyNote == nil {
 			break
@@ -5405,6 +5660,34 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.PlanParticipantsAndProviders.ProviderOverlapNote(childComplexity), true
+
+	case "PlanParticipantsAndProviders.providerRemovalFrequency":
+		if e.complexity.PlanParticipantsAndProviders.ProviderRemovalFrequency == nil {
+			break
+		}
+
+		return e.complexity.PlanParticipantsAndProviders.ProviderRemovalFrequency(childComplexity), true
+
+	case "PlanParticipantsAndProviders.providerRemovalFrequencyContinually":
+		if e.complexity.PlanParticipantsAndProviders.ProviderRemovalFrequencyContinually == nil {
+			break
+		}
+
+		return e.complexity.PlanParticipantsAndProviders.ProviderRemovalFrequencyContinually(childComplexity), true
+
+	case "PlanParticipantsAndProviders.providerRemovalFrequencyNote":
+		if e.complexity.PlanParticipantsAndProviders.ProviderRemovalFrequencyNote == nil {
+			break
+		}
+
+		return e.complexity.PlanParticipantsAndProviders.ProviderRemovalFrequencyNote(childComplexity), true
+
+	case "PlanParticipantsAndProviders.providerRemovalFrequencyOther":
+		if e.complexity.PlanParticipantsAndProviders.ProviderRemovalFrequencyOther == nil {
+			break
+		}
+
+		return e.complexity.PlanParticipantsAndProviders.ProviderRemovalFrequencyOther(childComplexity), true
 
 	case "PlanParticipantsAndProviders.readyForClearanceBy":
 		if e.complexity.PlanParticipantsAndProviders.ReadyForClearanceBy == nil {
@@ -5580,6 +5863,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.PlanPayments.AnticipatedPaymentFrequency(childComplexity), true
+
+	case "PlanPayments.anticipatedPaymentFrequencyContinually":
+		if e.complexity.PlanPayments.AnticipatedPaymentFrequencyContinually == nil {
+			break
+		}
+
+		return e.complexity.PlanPayments.AnticipatedPaymentFrequencyContinually(childComplexity), true
 
 	case "PlanPayments.anticipatedPaymentFrequencyNote":
 		if e.complexity.PlanPayments.AnticipatedPaymentFrequencyNote == nil {
@@ -5917,6 +6207,34 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.PlanPayments.PaymentCalculationOwner(childComplexity), true
 
+	case "PlanPayments.paymentReconciliationFrequency":
+		if e.complexity.PlanPayments.PaymentReconciliationFrequency == nil {
+			break
+		}
+
+		return e.complexity.PlanPayments.PaymentReconciliationFrequency(childComplexity), true
+
+	case "PlanPayments.paymentReconciliationFrequencyContinually":
+		if e.complexity.PlanPayments.PaymentReconciliationFrequencyContinually == nil {
+			break
+		}
+
+		return e.complexity.PlanPayments.PaymentReconciliationFrequencyContinually(childComplexity), true
+
+	case "PlanPayments.paymentReconciliationFrequencyNote":
+		if e.complexity.PlanPayments.PaymentReconciliationFrequencyNote == nil {
+			break
+		}
+
+		return e.complexity.PlanPayments.PaymentReconciliationFrequencyNote(childComplexity), true
+
+	case "PlanPayments.paymentReconciliationFrequencyOther":
+		if e.complexity.PlanPayments.PaymentReconciliationFrequencyOther == nil {
+			break
+		}
+
+		return e.complexity.PlanPayments.PaymentReconciliationFrequencyOther(childComplexity), true
+
 	case "PlanPayments.paymentStartDate":
 		if e.complexity.PlanPayments.PaymentStartDate == nil {
 			break
@@ -6070,6 +6388,90 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.PlanPayments.WillRecoverPaymentsNote(childComplexity), true
+
+	case "PlanTDL.createdBy":
+		if e.complexity.PlanTDL.CreatedBy == nil {
+			break
+		}
+
+		return e.complexity.PlanTDL.CreatedBy(childComplexity), true
+
+	case "PlanTDL.createdByUserAccount":
+		if e.complexity.PlanTDL.CreatedByUserAccount == nil {
+			break
+		}
+
+		return e.complexity.PlanTDL.CreatedByUserAccount(childComplexity), true
+
+	case "PlanTDL.createdDts":
+		if e.complexity.PlanTDL.CreatedDts == nil {
+			break
+		}
+
+		return e.complexity.PlanTDL.CreatedDts(childComplexity), true
+
+	case "PlanTDL.dateInitiated":
+		if e.complexity.PlanTDL.DateInitiated == nil {
+			break
+		}
+
+		return e.complexity.PlanTDL.DateInitiated(childComplexity), true
+
+	case "PlanTDL.id":
+		if e.complexity.PlanTDL.ID == nil {
+			break
+		}
+
+		return e.complexity.PlanTDL.ID(childComplexity), true
+
+	case "PlanTDL.idNumber":
+		if e.complexity.PlanTDL.IDNumber == nil {
+			break
+		}
+
+		return e.complexity.PlanTDL.IDNumber(childComplexity), true
+
+	case "PlanTDL.modelPlanID":
+		if e.complexity.PlanTDL.ModelPlanID == nil {
+			break
+		}
+
+		return e.complexity.PlanTDL.ModelPlanID(childComplexity), true
+
+	case "PlanTDL.modifiedBy":
+		if e.complexity.PlanTDL.ModifiedBy == nil {
+			break
+		}
+
+		return e.complexity.PlanTDL.ModifiedBy(childComplexity), true
+
+	case "PlanTDL.modifiedByUserAccount":
+		if e.complexity.PlanTDL.ModifiedByUserAccount == nil {
+			break
+		}
+
+		return e.complexity.PlanTDL.ModifiedByUserAccount(childComplexity), true
+
+	case "PlanTDL.modifiedDts":
+		if e.complexity.PlanTDL.ModifiedDts == nil {
+			break
+		}
+
+		return e.complexity.PlanTDL.ModifiedDts(childComplexity), true
+
+	case "PlanTDL.note":
+		if e.complexity.PlanTDL.Note == nil {
+			break
+		}
+
+		return e.complexity.PlanTDL.Note(childComplexity), true
+
+	case "PlanTDL.title":
+		if e.complexity.PlanTDL.Title == nil {
+			break
+		}
+
+		return e.complexity.PlanTDL.Title(childComplexity), true
 
 	case "PossibleOperationalNeed.createdBy":
 		if e.complexity.PossibleOperationalNeed.CreatedBy == nil {
@@ -6342,18 +6744,6 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Query.AuditChanges(childComplexity, args["tableName"].(string), args["primaryKey"].(uuid.UUID)), true
 
-	case "Query.crTdl":
-		if e.complexity.Query.CrTdl == nil {
-			break
-		}
-
-		args, err := ec.field_Query_crTdl_args(context.TODO(), rawArgs)
-		if err != nil {
-			return 0, false
-		}
-
-		return e.complexity.Query.CrTdl(childComplexity, args["id"].(uuid.UUID)), true
-
 	case "Query.currentUser":
 		if e.complexity.Query.CurrentUser == nil {
 			break
@@ -6466,6 +6856,18 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Query.PlanCollaboratorByID(childComplexity, args["id"].(uuid.UUID)), true
 
+	case "Query.planCR":
+		if e.complexity.Query.PlanCr == nil {
+			break
+		}
+
+		args, err := ec.field_Query_planCR_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Query.PlanCr(childComplexity, args["id"].(uuid.UUID)), true
+
 	case "Query.planDocument":
 		if e.complexity.Query.PlanDocument == nil {
 			break
@@ -6489,6 +6891,18 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Query.PlanPayments(childComplexity, args["id"].(uuid.UUID)), true
+
+	case "Query.planTDL":
+		if e.complexity.Query.PlanTdl == nil {
+			break
+		}
+
+		args, err := ec.field_Query_planTDL_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Query.PlanTdl(childComplexity, args["id"].(uuid.UUID)), true
 
 	case "Query.possibleOperationalNeeds":
 		if e.complexity.Query.PossibleOperationalNeeds == nil {
@@ -6866,11 +7280,12 @@ func (e *executableSchema) Exec(ctx context.Context) graphql.ResponseHandler {
 		ec.unmarshalInputCreateOperationalSolutionSubtaskInput,
 		ec.unmarshalInputDiscussionReplyCreateInput,
 		ec.unmarshalInputPageParams,
+		ec.unmarshalInputPlanCRCreateInput,
 		ec.unmarshalInputPlanCollaboratorCreateInput,
-		ec.unmarshalInputPlanCrTdlCreateInput,
 		ec.unmarshalInputPlanDiscussionCreateInput,
 		ec.unmarshalInputPlanDocumentInput,
 		ec.unmarshalInputPlanDocumentLinkInput,
+		ec.unmarshalInputPlanTDLCreateInput,
 		ec.unmarshalInputReportAProblemInput,
 		ec.unmarshalInputSearchFilter,
 		ec.unmarshalInputSendFeedbackEmailInput,
@@ -7064,7 +7479,8 @@ type ModelPlan {
   status: ModelStatus!
   isFavorite: Boolean!
   isCollaborator: Boolean!
-  crTdls: [PlanCrTdl!]!
+  crs: [PlanCR!]!
+  tdls: [PlanTDL!]!
   prepareForClearance: PrepareForClearance!
   nameHistory(sort: SortDirection! = DESC): [String!]!
   operationalNeeds: [OperationalNeed!]!
@@ -7691,9 +8107,14 @@ type PlanBeneficiaries {
   beneficiarySelectionOther: String
   beneficiarySelectionNote: String
   #Page 3
-  beneficiarySelectionFrequency: FrequencyType
+  beneficiarySelectionFrequency: [FrequencyType!]!
+  beneficiarySelectionFrequencyContinually: String
   beneficiarySelectionFrequencyOther: String
   beneficiarySelectionFrequencyNote: String
+  beneficiaryRemovalFrequency: [FrequencyType!]!
+  beneficiaryRemovalFrequencyContinually: String
+  beneficiaryRemovalFrequencyOther: String
+  beneficiaryRemovalFrequencyNote: String
   beneficiaryOverlap: OverlapType
   beneficiaryOverlapNote: String
   precedenceRules: [YesNoType!]!
@@ -7738,9 +8159,14 @@ input PlanBeneficiariesChanges @goModel(model: "map[string]interface{}") {
   beneficiarySelectionOther: String
   beneficiarySelectionNote: String
   #Page 3
-  beneficiarySelectionFrequency: FrequencyType
+  beneficiarySelectionFrequency: [FrequencyType!]
+  beneficiarySelectionFrequencyContinually: String
   beneficiarySelectionFrequencyOther: String
   beneficiarySelectionFrequencyNote: String
+  beneficiaryRemovalFrequency: [FrequencyType!]
+  beneficiaryRemovalFrequencyContinually: String
+  beneficiaryRemovalFrequencyOther: String
+  beneficiaryRemovalFrequencyNote: String
   beneficiaryOverlap: OverlapType
   beneficiaryOverlapNote: String
   precedenceRules: [YesNoType!]
@@ -7780,11 +8206,18 @@ type PlanParticipantsAndProviders {
   selectionNote:                String
 
   #Page 3
+  participantAddedFrequency:                 [FrequencyType!]!
+  participantAddedFrequencyContinually:      String
+  participantAddedFrequencyOther:            String
+  participantAddedFrequencyNote:             String
+  participantRemovedFrequency:               [FrequencyType!]!
+  participantRemovedFrequencyContinually:    String
+  participantRemovedFrequencyOther:          String
+  participantRemovedFrequencyNote:           String
   communicationMethod:   [ParticipantCommunicationType!]!
   communicationMethodOther:   String
   communicationNote:     String
-  participantAssumeRisk: Boolean
-  riskType:              ParticipantRiskType
+  riskType:              [ParticipantRiskType!]!
   riskOther:             String
   riskNote:              String
   willRiskChange:        Boolean
@@ -7803,7 +8236,8 @@ type PlanParticipantsAndProviders {
   participantsIDSNote:     String
 
   #Page 5
-  providerAdditionFrequency:      FrequencyType
+  providerAdditionFrequency:      [FrequencyType!]!
+  providerAdditionFrequencyContinually: String
   providerAdditionFrequencyOther: String
   providerAdditionFrequencyNote:  String
   providerAddMethod:              [ProviderAddType!]!
@@ -7812,6 +8246,10 @@ type PlanParticipantsAndProviders {
   providerLeaveMethod:            [ProviderLeaveType!]!
   providerLeaveMethodOther:       String
   providerLeaveMethodNote:        String
+  providerRemovalFrequency:       [FrequencyType!]!
+  providerRemovalFrequencyContinually: String
+  providerRemovalFrequencyOther:  String
+  providerRemovalFrequencyNote:   String
   providerOverlap:                OverlapType
   providerOverlapHierarchy:       String
   providerOverlapNote:            String
@@ -7864,11 +8302,18 @@ input PlanParticipantsAndProvidersChanges @goModel(model: "map[string]interface{
   selectionNote:                String
 
   #Page 3
+  participantAddedFrequency:                 [FrequencyType!]
+  participantAddedFrequencyContinually:      String
+  participantAddedFrequencyOther:            String
+  participantAddedFrequencyNote:             String
+  participantRemovedFrequency:               [FrequencyType!]
+  participantRemovedFrequencyContinually:    String
+  participantRemovedFrequencyOther:          String
+  participantRemovedFrequencyNote:           String
   communicationMethod:   [ParticipantCommunicationType!]
   communicationMethodOther:   String
   communicationNote:     String
-  participantAssumeRisk: Boolean
-  riskType:              ParticipantRiskType
+  riskType:              [ParticipantRiskType!]
   riskOther:             String
   riskNote:              String
   willRiskChange:        Boolean
@@ -7887,7 +8332,8 @@ input PlanParticipantsAndProvidersChanges @goModel(model: "map[string]interface{
   participantsIDSNote:     String
 
   #Page 5
-  providerAdditionFrequency:      FrequencyType
+  providerAdditionFrequency:      [FrequencyType!]
+  providerAdditionFrequencyContinually: String
   providerAdditionFrequencyOther: String
   providerAdditionFrequencyNote:  String
   providerAddMethod:              [ProviderAddType!]
@@ -7896,6 +8342,10 @@ input PlanParticipantsAndProvidersChanges @goModel(model: "map[string]interface{
   providerLeaveMethod:            [ProviderLeaveType!]
   providerLeaveMethodOther:       String
   providerLeaveMethodNote:        String
+  providerRemovalFrequency:       [FrequencyType!]
+  providerRemovalFrequencyContinually: String
+  providerRemovalFrequencyOther:  String
+  providerRemovalFrequencyNote:   String
   providerOverlap:                OverlapType
   providerOverlapHierarchy:       String
   providerOverlapNote:            String
@@ -7973,7 +8423,8 @@ type PlanPayments {
   canParticipantsSelectBetweenPaymentMechanisms:     Boolean
   canParticipantsSelectBetweenPaymentMechanismsHow:  String
   canParticipantsSelectBetweenPaymentMechanismsNote: String
-  anticipatedPaymentFrequency:                       [AnticipatedPaymentFrequencyType!]!
+  anticipatedPaymentFrequency:                       [FrequencyType!]!
+  anticipatedPaymentFrequencyContinually:            String
   anticipatedPaymentFrequencyOther:                  String
   anticipatedPaymentFrequencyNote:                   String
 
@@ -7982,6 +8433,10 @@ type PlanPayments {
   willRecoverPaymentsNote:                           String
   anticipateReconcilingPaymentsRetrospectively:      Boolean
   anticipateReconcilingPaymentsRetrospectivelyNote:  String
+  paymentReconciliationFrequency:                    [FrequencyType!]!
+  paymentReconciliationFrequencyContinually:         String
+  paymentReconciliationFrequencyOther:               String
+  paymentReconciliationFrequencyNote:                String
   paymentStartDate:                                  Time
   paymentStartDateNote:                              String
 
@@ -8070,7 +8525,8 @@ input PlanPaymentsChanges @goModel(model: "map[string]interface{}") {
   canParticipantsSelectBetweenPaymentMechanisms:            Boolean
   canParticipantsSelectBetweenPaymentMechanismsHow:         String
   canParticipantsSelectBetweenPaymentMechanismsNote:        String
-  anticipatedPaymentFrequency:                              [AnticipatedPaymentFrequencyType!]
+  anticipatedPaymentFrequency:                              [FrequencyType!]
+  anticipatedPaymentFrequencyContinually:                   String
   anticipatedPaymentFrequencyOther:                         String
   anticipatedPaymentFrequencyNote:                         String
 
@@ -8079,6 +8535,10 @@ input PlanPaymentsChanges @goModel(model: "map[string]interface{}") {
   willRecoverPaymentsNote:                          String
   anticipateReconcilingPaymentsRetrospectively:      Boolean
   anticipateReconcilingPaymentsRetrospectivelyNote: String
+  paymentReconciliationFrequency:                    [FrequencyType!]
+  paymentReconciliationFrequencyContinually:         String
+  paymentReconciliationFrequencyOther:               String
+  paymentReconciliationFrequencyNote:                String
   paymentStartDate:                                  Time
   paymentStartDateNote:                             String
 
@@ -8173,22 +8633,28 @@ type PlanOpsEvalAndLearning {
     useCcwForFileDistribiutionToParticipantsNote: String
     developNewQualityMeasures: Boolean
     developNewQualityMeasuresNote: String
-    qualityPerformanceImpactsPayment: Boolean
+    qualityPerformanceImpactsPayment: YesNoOtherType
+    qualityPerformanceImpactsPaymentOther: String
     qualityPerformanceImpactsPaymentNote: String
     #Page 8
     dataSharingStarts: DataStartsType
     dataSharingStartsOther: String
-    dataSharingFrequency: [DataFrequencyType!]!
+    dataSharingFrequency: [FrequencyType!]!
+    dataSharingFrequencyContinually: String
     dataSharingFrequencyOther: String
     dataSharingStartsNote: String
     dataCollectionStarts: DataStartsType
     dataCollectionStartsOther: String
-    dataCollectionFrequency: [DataFrequencyType!]!
+    dataCollectionFrequency: [FrequencyType!]!
+    dataCollectionFrequencyContinually: String
     dataCollectionFrequencyOther: String
-    dataCollectionFrequencyNote: String
+    dataCollectionFrequencyNote: String    
     qualityReportingStarts: DataStartsType
     qualityReportingStartsOther: String
     qualityReportingStartsNote: String
+    qualityReportingFrequency: [FrequencyType!]!
+    qualityReportingFrequencyContinually: String
+    qualityReportingFrequencyOther: String
     #Page 9
     modelLearningSystems: [ModelLearningSystemType!]!
     modelLearningSystemsOther: String
@@ -8301,22 +8767,28 @@ input PlanOpsEvalAndLearningChanges @goModel(model: "map[string]interface{}") {
     useCcwForFileDistribiutionToParticipantsNote: String
     developNewQualityMeasures: Boolean
     developNewQualityMeasuresNote: String
-    qualityPerformanceImpactsPayment: Boolean
+    qualityPerformanceImpactsPayment: YesNoOtherType
+    qualityPerformanceImpactsPaymentOther: String
     qualityPerformanceImpactsPaymentNote: String
     #Page 8
     dataSharingStarts: DataStartsType
     dataSharingStartsOther: String
-    dataSharingFrequency: [DataFrequencyType!]
+    dataSharingFrequency: [FrequencyType!]
+    dataSharingFrequencyContinually: String
     dataSharingFrequencyOther: String
     dataSharingStartsNote: String
     dataCollectionStarts: DataStartsType
     dataCollectionStartsOther: String
-    dataCollectionFrequency: [DataFrequencyType!]
+    dataCollectionFrequency: [FrequencyType!]
+    dataCollectionFrequencyContinually: String
     dataCollectionFrequencyOther: String
-    dataCollectionFrequencyNote: String
+    dataCollectionFrequencyNote: String    
     qualityReportingStarts: DataStartsType
     qualityReportingStartsOther: String
     qualityReportingStartsNote: String
+    qualityReportingFrequency: [FrequencyType!]
+    qualityReportingFrequencyContinually: String
+    qualityReportingFrequencyOther: String
     #Page 9
     modelLearningSystems: [ModelLearningSystemType!]
     modelLearningSystemsOther: String
@@ -8374,7 +8846,25 @@ type PlanFavorite {
 
 }
 
-type PlanCrTdl {
+type PlanCR {
+    id: UUID!
+    modelPlanID: UUID!
+
+    idNumber: String!
+    dateInitiated: Time!
+    dateImplemented: Time # Required in the API, but can be nullable for historical entries before we migrated CRs and TDLs as different types
+    title: String!
+    note: String
+
+    createdBy: UUID!
+    createdByUserAccount: UserAccount!
+    createdDts: Time!
+    modifiedBy: UUID
+    modifiedByUserAccount: UserAccount
+    modifiedDts: Time
+}
+
+type PlanTDL {
     id: UUID!
     modelPlanID: UUID!
 
@@ -8391,7 +8881,25 @@ type PlanCrTdl {
     modifiedDts: Time
 }
 
-input PlanCrTdlCreateInput {
+input PlanCRCreateInput {
+    modelPlanID: UUID!
+
+    idNumber: String!
+    dateInitiated: Time!
+    dateImplemented: Time!
+    title: String!
+    note: String
+}
+
+input PlanCRChanges @goModel(model: "map[string]interface{}") {
+    idNumber: String
+    dateInitiated: Time
+    dateImplemented: Time
+    title: String
+    note: String
+}
+
+input PlanTDLCreateInput {
     modelPlanID: UUID!
 
     idNumber: String!
@@ -8400,7 +8908,7 @@ input PlanCrTdlCreateInput {
     note: String
 }
 
-input PlanCrTdlChanges @goModel(model: "map[string]interface{}") {
+input PlanTDLChanges @goModel(model: "map[string]interface{}") {
     idNumber: String
     dateInitiated: Time
     title: String
@@ -8659,7 +9167,9 @@ type Query {
   @hasAnyRole(roles: [MINT_USER, MINT_MAC])
   ndaInfo: NDAInfo!
   @hasAnyRole(roles: [MINT_USER, MINT_MAC])
-  crTdl(id: UUID!): PlanCrTdl!
+  planCR(id: UUID!): PlanCR!
+  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+  planTDL(id: UUID!): PlanTDL!
   @hasAnyRole(roles: [MINT_USER, MINT_MAC])
   operationalSolutions(operationalNeedID: UUID!, includeNotNeeded: Boolean! = false): [OperationalSolution!]!
   @hasAnyRole(roles: [MINT_USER, MINT_MAC])
@@ -8761,13 +9271,22 @@ addPlanFavorite(modelPlanID: UUID!): PlanFavorite!
 deletePlanFavorite(modelPlanID: UUID!): PlanFavorite!
 @hasAnyRole(roles: [MINT_USER, MINT_MAC])
 
-createPlanCrTdl(input: PlanCrTdlCreateInput!): PlanCrTdl!
+createPlanCR(input: PlanCRCreateInput!): PlanCR!
 @hasRole(role: MINT_USER)
 
-updatePlanCrTdl(id: UUID!, changes: PlanCrTdlChanges!): PlanCrTdl!
+createPlanTDL(input: PlanTDLCreateInput!): PlanTDL!
 @hasRole(role: MINT_USER)
 
-deletePlanCrTdl(id: UUID!): PlanCrTdl!
+updatePlanCR(id: UUID!, changes: PlanCRChanges!): PlanCR!
+@hasRole(role: MINT_USER)
+
+updatePlanTDL(id: UUID!, changes: PlanTDLChanges!): PlanTDL!
+@hasRole(role: MINT_USER)
+
+deletePlanCR(id: UUID!): PlanCR!
+@hasRole(role: MINT_USER)
+
+deletePlanTDL(id: UUID!): PlanTDL!
 @hasRole(role: MINT_USER)
 
 addOrUpdateCustomOperationalNeed(modelPlanID: UUID!, customNeedType: String! needed: Boolean!): OperationalNeed!
@@ -8866,6 +9385,7 @@ enum TeamRole {
   OACT
   PAYMENT
   CM_FFS_COUNTERPART
+  COR
 }
 
 enum ModelType
@@ -8946,6 +9466,8 @@ enum KeyCharacteristic {
   SERVICE_DELIVERY
   SHARED_SAVINGS
   OTHER
+  MEDICAID_MODEL
+  MEDICARE_FFS_MODEL
 }
 
 enum GeographyType {
@@ -9011,14 +9533,16 @@ enum ConfidenceType {
   FAIRLY
   COMPLETELY
 }
+
 enum FrequencyType {
   ANNUALLY
-  BIANNUALLY
+  SEMIANNUALLY
   QUARTERLY
   MONTHLY
-  ROLLING
+  CONTINUALLY
   OTHER
 }
+
 enum TriStateAnswer {
   YES
   NO
@@ -9065,10 +9589,12 @@ enum ParticipantCommunicationType {
   OTHER
   NO_COMMUNICATION
 }
+
 enum ParticipantRiskType {
   TWO_SIDED
   ONE_SIDED
   CAPITATION
+  NOT_RISK_BASED
   OTHER
 }
 
@@ -9177,16 +9703,10 @@ enum DataToSendParticipantsType {
     NOT_PLANNING_TO_SEND_DATA
 }
 
-enum DataFrequencyType {
-    ANNUALLY
-    BIANNUALLY
-    QUARTERLY
-    MONTHLY
-    SEMI_MONTHLY
-    WEEKLY
-    DAILY
+enum YesNoOtherType {
+    YES
+    NO
     OTHER
-    NOT_PLANNING_TO_DO_THIS
 }
 
 enum ModelLearningSystemType {
@@ -9271,17 +9791,6 @@ enum ComplexityCalculationLevelType {
   LOW
   MIDDLE
   HIGH
-}
-
-enum AnticipatedPaymentFrequencyType {
-  ANNUALLY
-  BIANNUALLY
-  QUARTERLY
-  MONTHLY
-  SEMIMONTHLY
-  WEEKLY
-  DAILY
-  OTHER
 }
 
 enum OpSolutionStatus {
@@ -9771,13 +10280,13 @@ func (ec *executionContext) field_Mutation_createOperationalSolution_args(ctx co
 	return args, nil
 }
 
-func (ec *executionContext) field_Mutation_createPlanCollaborator_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+func (ec *executionContext) field_Mutation_createPlanCR_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
-	var arg0 model.PlanCollaboratorCreateInput
+	var arg0 model.PlanCRCreateInput
 	if tmp, ok := rawArgs["input"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("input"))
-		arg0, err = ec.unmarshalNPlanCollaboratorCreateInput2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐPlanCollaboratorCreateInput(ctx, tmp)
+		arg0, err = ec.unmarshalNPlanCRCreateInput2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐPlanCRCreateInput(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -9786,13 +10295,13 @@ func (ec *executionContext) field_Mutation_createPlanCollaborator_args(ctx conte
 	return args, nil
 }
 
-func (ec *executionContext) field_Mutation_createPlanCrTdl_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+func (ec *executionContext) field_Mutation_createPlanCollaborator_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
-	var arg0 model.PlanCrTdlCreateInput
+	var arg0 model.PlanCollaboratorCreateInput
 	if tmp, ok := rawArgs["input"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("input"))
-		arg0, err = ec.unmarshalNPlanCrTdlCreateInput2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐPlanCrTdlCreateInput(ctx, tmp)
+		arg0, err = ec.unmarshalNPlanCollaboratorCreateInput2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐPlanCollaboratorCreateInput(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -9840,6 +10349,21 @@ func (ec *executionContext) field_Mutation_createPlanDocumentSolutionLinks_args(
 	return args, nil
 }
 
+func (ec *executionContext) field_Mutation_createPlanTDL_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+	var err error
+	args := map[string]interface{}{}
+	var arg0 model.PlanTDLCreateInput
+	if tmp, ok := rawArgs["input"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("input"))
+		arg0, err = ec.unmarshalNPlanTDLCreateInput2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐPlanTDLCreateInput(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["input"] = arg0
+	return args, nil
+}
+
 func (ec *executionContext) field_Mutation_deleteOperationalSolutionSubtask_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
@@ -9855,7 +10379,7 @@ func (ec *executionContext) field_Mutation_deleteOperationalSolutionSubtask_args
 	return args, nil
 }
 
-func (ec *executionContext) field_Mutation_deletePlanCollaborator_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+func (ec *executionContext) field_Mutation_deletePlanCR_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
 	var arg0 uuid.UUID
@@ -9870,7 +10394,7 @@ func (ec *executionContext) field_Mutation_deletePlanCollaborator_args(ctx conte
 	return args, nil
 }
 
-func (ec *executionContext) field_Mutation_deletePlanCrTdl_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+func (ec *executionContext) field_Mutation_deletePlanCollaborator_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
 	var arg0 uuid.UUID
@@ -9912,6 +10436,21 @@ func (ec *executionContext) field_Mutation_deletePlanFavorite_args(ctx context.C
 		}
 	}
 	args["modelPlanID"] = arg0
+	return args, nil
+}
+
+func (ec *executionContext) field_Mutation_deletePlanTDL_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+	var err error
+	args := map[string]interface{}{}
+	var arg0 uuid.UUID
+	if tmp, ok := rawArgs["id"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("id"))
+		arg0, err = ec.unmarshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["id"] = arg0
 	return args, nil
 }
 
@@ -10266,6 +10805,30 @@ func (ec *executionContext) field_Mutation_updatePlanBeneficiaries_args(ctx cont
 	return args, nil
 }
 
+func (ec *executionContext) field_Mutation_updatePlanCR_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+	var err error
+	args := map[string]interface{}{}
+	var arg0 uuid.UUID
+	if tmp, ok := rawArgs["id"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("id"))
+		arg0, err = ec.unmarshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["id"] = arg0
+	var arg1 map[string]interface{}
+	if tmp, ok := rawArgs["changes"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("changes"))
+		arg1, err = ec.unmarshalNPlanCRChanges2map(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["changes"] = arg1
+	return args, nil
+}
+
 func (ec *executionContext) field_Mutation_updatePlanCollaborator_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
@@ -10287,30 +10850,6 @@ func (ec *executionContext) field_Mutation_updatePlanCollaborator_args(ctx conte
 		}
 	}
 	args["newRoles"] = arg1
-	return args, nil
-}
-
-func (ec *executionContext) field_Mutation_updatePlanCrTdl_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
-	var err error
-	args := map[string]interface{}{}
-	var arg0 uuid.UUID
-	if tmp, ok := rawArgs["id"]; ok {
-		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("id"))
-		arg0, err = ec.unmarshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, tmp)
-		if err != nil {
-			return nil, err
-		}
-	}
-	args["id"] = arg0
-	var arg1 map[string]interface{}
-	if tmp, ok := rawArgs["changes"]; ok {
-		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("changes"))
-		arg1, err = ec.unmarshalNPlanCrTdlChanges2map(ctx, tmp)
-		if err != nil {
-			return nil, err
-		}
-	}
-	args["changes"] = arg1
 	return args, nil
 }
 
@@ -10410,6 +10949,30 @@ func (ec *executionContext) field_Mutation_updatePlanPayments_args(ctx context.C
 	return args, nil
 }
 
+func (ec *executionContext) field_Mutation_updatePlanTDL_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+	var err error
+	args := map[string]interface{}{}
+	var arg0 uuid.UUID
+	if tmp, ok := rawArgs["id"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("id"))
+		arg0, err = ec.unmarshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["id"] = arg0
+	var arg1 map[string]interface{}
+	if tmp, ok := rawArgs["changes"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("changes"))
+		arg1, err = ec.unmarshalNPlanTDLChanges2map(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["changes"] = arg1
+	return args, nil
+}
+
 func (ec *executionContext) field_Mutation_uploadNewPlanDocument_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
@@ -10476,21 +11039,6 @@ func (ec *executionContext) field_Query_auditChanges_args(ctx context.Context, r
 		}
 	}
 	args["primaryKey"] = arg1
-	return args, nil
-}
-
-func (ec *executionContext) field_Query_crTdl_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
-	var err error
-	args := map[string]interface{}{}
-	var arg0 uuid.UUID
-	if tmp, ok := rawArgs["id"]; ok {
-		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("id"))
-		arg0, err = ec.unmarshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, tmp)
-		if err != nil {
-			return nil, err
-		}
-	}
-	args["id"] = arg0
 	return args, nil
 }
 
@@ -10593,6 +11141,21 @@ func (ec *executionContext) field_Query_operationalSolutions_args(ctx context.Co
 	return args, nil
 }
 
+func (ec *executionContext) field_Query_planCR_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+	var err error
+	args := map[string]interface{}{}
+	var arg0 uuid.UUID
+	if tmp, ok := rawArgs["id"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("id"))
+		arg0, err = ec.unmarshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["id"] = arg0
+	return args, nil
+}
+
 func (ec *executionContext) field_Query_planCollaboratorByID_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
@@ -10624,6 +11187,21 @@ func (ec *executionContext) field_Query_planDocument_args(ctx context.Context, r
 }
 
 func (ec *executionContext) field_Query_planPayments_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+	var err error
+	args := map[string]interface{}{}
+	var arg0 uuid.UUID
+	if tmp, ok := rawArgs["id"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("id"))
+		arg0, err = ec.unmarshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["id"] = arg0
+	return args, nil
+}
+
+func (ec *executionContext) field_Query_planTDL_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
 	var arg0 uuid.UUID
@@ -13896,8 +14474,10 @@ func (ec *executionContext) fieldContext_ExistingModelLink_currentModelPlan(ctx 
 				return ec.fieldContext_ModelPlan_isFavorite(ctx, field)
 			case "isCollaborator":
 				return ec.fieldContext_ModelPlan_isCollaborator(ctx, field)
-			case "crTdls":
-				return ec.fieldContext_ModelPlan_crTdls(ctx, field)
+			case "crs":
+				return ec.fieldContext_ModelPlan_crs(ctx, field)
+			case "tdls":
+				return ec.fieldContext_ModelPlan_tdls(ctx, field)
 			case "prepareForClearance":
 				return ec.fieldContext_ModelPlan_prepareForClearance(ctx, field)
 			case "nameHistory":
@@ -15375,14 +15955,28 @@ func (ec *executionContext) fieldContext_ModelPlan_participantsAndProviders(ctx 
 				return ec.fieldContext_PlanParticipantsAndProviders_selectionOther(ctx, field)
 			case "selectionNote":
 				return ec.fieldContext_PlanParticipantsAndProviders_selectionNote(ctx, field)
+			case "participantAddedFrequency":
+				return ec.fieldContext_PlanParticipantsAndProviders_participantAddedFrequency(ctx, field)
+			case "participantAddedFrequencyContinually":
+				return ec.fieldContext_PlanParticipantsAndProviders_participantAddedFrequencyContinually(ctx, field)
+			case "participantAddedFrequencyOther":
+				return ec.fieldContext_PlanParticipantsAndProviders_participantAddedFrequencyOther(ctx, field)
+			case "participantAddedFrequencyNote":
+				return ec.fieldContext_PlanParticipantsAndProviders_participantAddedFrequencyNote(ctx, field)
+			case "participantRemovedFrequency":
+				return ec.fieldContext_PlanParticipantsAndProviders_participantRemovedFrequency(ctx, field)
+			case "participantRemovedFrequencyContinually":
+				return ec.fieldContext_PlanParticipantsAndProviders_participantRemovedFrequencyContinually(ctx, field)
+			case "participantRemovedFrequencyOther":
+				return ec.fieldContext_PlanParticipantsAndProviders_participantRemovedFrequencyOther(ctx, field)
+			case "participantRemovedFrequencyNote":
+				return ec.fieldContext_PlanParticipantsAndProviders_participantRemovedFrequencyNote(ctx, field)
 			case "communicationMethod":
 				return ec.fieldContext_PlanParticipantsAndProviders_communicationMethod(ctx, field)
 			case "communicationMethodOther":
 				return ec.fieldContext_PlanParticipantsAndProviders_communicationMethodOther(ctx, field)
 			case "communicationNote":
 				return ec.fieldContext_PlanParticipantsAndProviders_communicationNote(ctx, field)
-			case "participantAssumeRisk":
-				return ec.fieldContext_PlanParticipantsAndProviders_participantAssumeRisk(ctx, field)
 			case "riskType":
 				return ec.fieldContext_PlanParticipantsAndProviders_riskType(ctx, field)
 			case "riskOther":
@@ -15415,6 +16009,8 @@ func (ec *executionContext) fieldContext_ModelPlan_participantsAndProviders(ctx 
 				return ec.fieldContext_PlanParticipantsAndProviders_participantsIDSNote(ctx, field)
 			case "providerAdditionFrequency":
 				return ec.fieldContext_PlanParticipantsAndProviders_providerAdditionFrequency(ctx, field)
+			case "providerAdditionFrequencyContinually":
+				return ec.fieldContext_PlanParticipantsAndProviders_providerAdditionFrequencyContinually(ctx, field)
 			case "providerAdditionFrequencyOther":
 				return ec.fieldContext_PlanParticipantsAndProviders_providerAdditionFrequencyOther(ctx, field)
 			case "providerAdditionFrequencyNote":
@@ -15431,6 +16027,14 @@ func (ec *executionContext) fieldContext_ModelPlan_participantsAndProviders(ctx 
 				return ec.fieldContext_PlanParticipantsAndProviders_providerLeaveMethodOther(ctx, field)
 			case "providerLeaveMethodNote":
 				return ec.fieldContext_PlanParticipantsAndProviders_providerLeaveMethodNote(ctx, field)
+			case "providerRemovalFrequency":
+				return ec.fieldContext_PlanParticipantsAndProviders_providerRemovalFrequency(ctx, field)
+			case "providerRemovalFrequencyContinually":
+				return ec.fieldContext_PlanParticipantsAndProviders_providerRemovalFrequencyContinually(ctx, field)
+			case "providerRemovalFrequencyOther":
+				return ec.fieldContext_PlanParticipantsAndProviders_providerRemovalFrequencyOther(ctx, field)
+			case "providerRemovalFrequencyNote":
+				return ec.fieldContext_PlanParticipantsAndProviders_providerRemovalFrequencyNote(ctx, field)
 			case "providerOverlap":
 				return ec.fieldContext_PlanParticipantsAndProviders_providerOverlap(ctx, field)
 			case "providerOverlapHierarchy":
@@ -15547,10 +16151,20 @@ func (ec *executionContext) fieldContext_ModelPlan_beneficiaries(ctx context.Con
 				return ec.fieldContext_PlanBeneficiaries_beneficiarySelectionNote(ctx, field)
 			case "beneficiarySelectionFrequency":
 				return ec.fieldContext_PlanBeneficiaries_beneficiarySelectionFrequency(ctx, field)
+			case "beneficiarySelectionFrequencyContinually":
+				return ec.fieldContext_PlanBeneficiaries_beneficiarySelectionFrequencyContinually(ctx, field)
 			case "beneficiarySelectionFrequencyOther":
 				return ec.fieldContext_PlanBeneficiaries_beneficiarySelectionFrequencyOther(ctx, field)
 			case "beneficiarySelectionFrequencyNote":
 				return ec.fieldContext_PlanBeneficiaries_beneficiarySelectionFrequencyNote(ctx, field)
+			case "beneficiaryRemovalFrequency":
+				return ec.fieldContext_PlanBeneficiaries_beneficiaryRemovalFrequency(ctx, field)
+			case "beneficiaryRemovalFrequencyContinually":
+				return ec.fieldContext_PlanBeneficiaries_beneficiaryRemovalFrequencyContinually(ctx, field)
+			case "beneficiaryRemovalFrequencyOther":
+				return ec.fieldContext_PlanBeneficiaries_beneficiaryRemovalFrequencyOther(ctx, field)
+			case "beneficiaryRemovalFrequencyNote":
+				return ec.fieldContext_PlanBeneficiaries_beneficiaryRemovalFrequencyNote(ctx, field)
 			case "beneficiaryOverlap":
 				return ec.fieldContext_PlanBeneficiaries_beneficiaryOverlap(ctx, field)
 			case "beneficiaryOverlapNote":
@@ -15789,6 +16403,8 @@ func (ec *executionContext) fieldContext_ModelPlan_opsEvalAndLearning(ctx contex
 				return ec.fieldContext_PlanOpsEvalAndLearning_developNewQualityMeasuresNote(ctx, field)
 			case "qualityPerformanceImpactsPayment":
 				return ec.fieldContext_PlanOpsEvalAndLearning_qualityPerformanceImpactsPayment(ctx, field)
+			case "qualityPerformanceImpactsPaymentOther":
+				return ec.fieldContext_PlanOpsEvalAndLearning_qualityPerformanceImpactsPaymentOther(ctx, field)
 			case "qualityPerformanceImpactsPaymentNote":
 				return ec.fieldContext_PlanOpsEvalAndLearning_qualityPerformanceImpactsPaymentNote(ctx, field)
 			case "dataSharingStarts":
@@ -15797,6 +16413,8 @@ func (ec *executionContext) fieldContext_ModelPlan_opsEvalAndLearning(ctx contex
 				return ec.fieldContext_PlanOpsEvalAndLearning_dataSharingStartsOther(ctx, field)
 			case "dataSharingFrequency":
 				return ec.fieldContext_PlanOpsEvalAndLearning_dataSharingFrequency(ctx, field)
+			case "dataSharingFrequencyContinually":
+				return ec.fieldContext_PlanOpsEvalAndLearning_dataSharingFrequencyContinually(ctx, field)
 			case "dataSharingFrequencyOther":
 				return ec.fieldContext_PlanOpsEvalAndLearning_dataSharingFrequencyOther(ctx, field)
 			case "dataSharingStartsNote":
@@ -15807,6 +16425,8 @@ func (ec *executionContext) fieldContext_ModelPlan_opsEvalAndLearning(ctx contex
 				return ec.fieldContext_PlanOpsEvalAndLearning_dataCollectionStartsOther(ctx, field)
 			case "dataCollectionFrequency":
 				return ec.fieldContext_PlanOpsEvalAndLearning_dataCollectionFrequency(ctx, field)
+			case "dataCollectionFrequencyContinually":
+				return ec.fieldContext_PlanOpsEvalAndLearning_dataCollectionFrequencyContinually(ctx, field)
 			case "dataCollectionFrequencyOther":
 				return ec.fieldContext_PlanOpsEvalAndLearning_dataCollectionFrequencyOther(ctx, field)
 			case "dataCollectionFrequencyNote":
@@ -15817,6 +16437,12 @@ func (ec *executionContext) fieldContext_ModelPlan_opsEvalAndLearning(ctx contex
 				return ec.fieldContext_PlanOpsEvalAndLearning_qualityReportingStartsOther(ctx, field)
 			case "qualityReportingStartsNote":
 				return ec.fieldContext_PlanOpsEvalAndLearning_qualityReportingStartsNote(ctx, field)
+			case "qualityReportingFrequency":
+				return ec.fieldContext_PlanOpsEvalAndLearning_qualityReportingFrequency(ctx, field)
+			case "qualityReportingFrequencyContinually":
+				return ec.fieldContext_PlanOpsEvalAndLearning_qualityReportingFrequencyContinually(ctx, field)
+			case "qualityReportingFrequencyOther":
+				return ec.fieldContext_PlanOpsEvalAndLearning_qualityReportingFrequencyOther(ctx, field)
 			case "modelLearningSystems":
 				return ec.fieldContext_PlanOpsEvalAndLearning_modelLearningSystems(ctx, field)
 			case "modelLearningSystemsOther":
@@ -16241,6 +16867,8 @@ func (ec *executionContext) fieldContext_ModelPlan_payments(ctx context.Context,
 				return ec.fieldContext_PlanPayments_canParticipantsSelectBetweenPaymentMechanismsNote(ctx, field)
 			case "anticipatedPaymentFrequency":
 				return ec.fieldContext_PlanPayments_anticipatedPaymentFrequency(ctx, field)
+			case "anticipatedPaymentFrequencyContinually":
+				return ec.fieldContext_PlanPayments_anticipatedPaymentFrequencyContinually(ctx, field)
 			case "anticipatedPaymentFrequencyOther":
 				return ec.fieldContext_PlanPayments_anticipatedPaymentFrequencyOther(ctx, field)
 			case "anticipatedPaymentFrequencyNote":
@@ -16253,6 +16881,14 @@ func (ec *executionContext) fieldContext_ModelPlan_payments(ctx context.Context,
 				return ec.fieldContext_PlanPayments_anticipateReconcilingPaymentsRetrospectively(ctx, field)
 			case "anticipateReconcilingPaymentsRetrospectivelyNote":
 				return ec.fieldContext_PlanPayments_anticipateReconcilingPaymentsRetrospectivelyNote(ctx, field)
+			case "paymentReconciliationFrequency":
+				return ec.fieldContext_PlanPayments_paymentReconciliationFrequency(ctx, field)
+			case "paymentReconciliationFrequencyContinually":
+				return ec.fieldContext_PlanPayments_paymentReconciliationFrequencyContinually(ctx, field)
+			case "paymentReconciliationFrequencyOther":
+				return ec.fieldContext_PlanPayments_paymentReconciliationFrequencyOther(ctx, field)
+			case "paymentReconciliationFrequencyNote":
+				return ec.fieldContext_PlanPayments_paymentReconciliationFrequencyNote(ctx, field)
 			case "paymentStartDate":
 				return ec.fieldContext_PlanPayments_paymentStartDate(ctx, field)
 			case "paymentStartDateNote":
@@ -16422,8 +17058,8 @@ func (ec *executionContext) fieldContext_ModelPlan_isCollaborator(ctx context.Co
 	return fc, nil
 }
 
-func (ec *executionContext) _ModelPlan_crTdls(ctx context.Context, field graphql.CollectedField, obj *models.ModelPlan) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_ModelPlan_crTdls(ctx, field)
+func (ec *executionContext) _ModelPlan_crs(ctx context.Context, field graphql.CollectedField, obj *models.ModelPlan) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_ModelPlan_crs(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -16436,7 +17072,7 @@ func (ec *executionContext) _ModelPlan_crTdls(ctx context.Context, field graphql
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.ModelPlan().CrTdls(rctx, obj)
+		return ec.resolvers.ModelPlan().Crs(rctx, obj)
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -16448,12 +17084,12 @@ func (ec *executionContext) _ModelPlan_crTdls(ctx context.Context, field graphql
 		}
 		return graphql.Null
 	}
-	res := resTmp.([]*models.PlanCrTdl)
+	res := resTmp.([]*models.PlanCR)
 	fc.Result = res
-	return ec.marshalNPlanCrTdl2ᚕᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanCrTdlᚄ(ctx, field.Selections, res)
+	return ec.marshalNPlanCR2ᚕᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanCRᚄ(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_ModelPlan_crTdls(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_ModelPlan_crs(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "ModelPlan",
 		Field:      field,
@@ -16462,31 +17098,103 @@ func (ec *executionContext) fieldContext_ModelPlan_crTdls(ctx context.Context, f
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			switch field.Name {
 			case "id":
-				return ec.fieldContext_PlanCrTdl_id(ctx, field)
+				return ec.fieldContext_PlanCR_id(ctx, field)
 			case "modelPlanID":
-				return ec.fieldContext_PlanCrTdl_modelPlanID(ctx, field)
+				return ec.fieldContext_PlanCR_modelPlanID(ctx, field)
 			case "idNumber":
-				return ec.fieldContext_PlanCrTdl_idNumber(ctx, field)
+				return ec.fieldContext_PlanCR_idNumber(ctx, field)
 			case "dateInitiated":
-				return ec.fieldContext_PlanCrTdl_dateInitiated(ctx, field)
+				return ec.fieldContext_PlanCR_dateInitiated(ctx, field)
+			case "dateImplemented":
+				return ec.fieldContext_PlanCR_dateImplemented(ctx, field)
 			case "title":
-				return ec.fieldContext_PlanCrTdl_title(ctx, field)
+				return ec.fieldContext_PlanCR_title(ctx, field)
 			case "note":
-				return ec.fieldContext_PlanCrTdl_note(ctx, field)
+				return ec.fieldContext_PlanCR_note(ctx, field)
 			case "createdBy":
-				return ec.fieldContext_PlanCrTdl_createdBy(ctx, field)
+				return ec.fieldContext_PlanCR_createdBy(ctx, field)
 			case "createdByUserAccount":
-				return ec.fieldContext_PlanCrTdl_createdByUserAccount(ctx, field)
+				return ec.fieldContext_PlanCR_createdByUserAccount(ctx, field)
 			case "createdDts":
-				return ec.fieldContext_PlanCrTdl_createdDts(ctx, field)
+				return ec.fieldContext_PlanCR_createdDts(ctx, field)
 			case "modifiedBy":
-				return ec.fieldContext_PlanCrTdl_modifiedBy(ctx, field)
+				return ec.fieldContext_PlanCR_modifiedBy(ctx, field)
 			case "modifiedByUserAccount":
-				return ec.fieldContext_PlanCrTdl_modifiedByUserAccount(ctx, field)
+				return ec.fieldContext_PlanCR_modifiedByUserAccount(ctx, field)
 			case "modifiedDts":
-				return ec.fieldContext_PlanCrTdl_modifiedDts(ctx, field)
+				return ec.fieldContext_PlanCR_modifiedDts(ctx, field)
 			}
-			return nil, fmt.Errorf("no field named %q was found under type PlanCrTdl", field.Name)
+			return nil, fmt.Errorf("no field named %q was found under type PlanCR", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _ModelPlan_tdls(ctx context.Context, field graphql.CollectedField, obj *models.ModelPlan) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_ModelPlan_tdls(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.ModelPlan().Tdls(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.([]*models.PlanTDL)
+	fc.Result = res
+	return ec.marshalNPlanTDL2ᚕᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanTDLᚄ(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_ModelPlan_tdls(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "ModelPlan",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_PlanTDL_id(ctx, field)
+			case "modelPlanID":
+				return ec.fieldContext_PlanTDL_modelPlanID(ctx, field)
+			case "idNumber":
+				return ec.fieldContext_PlanTDL_idNumber(ctx, field)
+			case "dateInitiated":
+				return ec.fieldContext_PlanTDL_dateInitiated(ctx, field)
+			case "title":
+				return ec.fieldContext_PlanTDL_title(ctx, field)
+			case "note":
+				return ec.fieldContext_PlanTDL_note(ctx, field)
+			case "createdBy":
+				return ec.fieldContext_PlanTDL_createdBy(ctx, field)
+			case "createdByUserAccount":
+				return ec.fieldContext_PlanTDL_createdByUserAccount(ctx, field)
+			case "createdDts":
+				return ec.fieldContext_PlanTDL_createdDts(ctx, field)
+			case "modifiedBy":
+				return ec.fieldContext_PlanTDL_modifiedBy(ctx, field)
+			case "modifiedByUserAccount":
+				return ec.fieldContext_PlanTDL_modifiedByUserAccount(ctx, field)
+			case "modifiedDts":
+				return ec.fieldContext_PlanTDL_modifiedDts(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type PlanTDL", field.Name)
 		},
 	}
 	return fc, nil
@@ -16848,8 +17556,10 @@ func (ec *executionContext) fieldContext_Mutation_createModelPlan(ctx context.Co
 				return ec.fieldContext_ModelPlan_isFavorite(ctx, field)
 			case "isCollaborator":
 				return ec.fieldContext_ModelPlan_isCollaborator(ctx, field)
-			case "crTdls":
-				return ec.fieldContext_ModelPlan_crTdls(ctx, field)
+			case "crs":
+				return ec.fieldContext_ModelPlan_crs(ctx, field)
+			case "tdls":
+				return ec.fieldContext_ModelPlan_tdls(ctx, field)
 			case "prepareForClearance":
 				return ec.fieldContext_ModelPlan_prepareForClearance(ctx, field)
 			case "nameHistory":
@@ -16983,8 +17693,10 @@ func (ec *executionContext) fieldContext_Mutation_updateModelPlan(ctx context.Co
 				return ec.fieldContext_ModelPlan_isFavorite(ctx, field)
 			case "isCollaborator":
 				return ec.fieldContext_ModelPlan_isCollaborator(ctx, field)
-			case "crTdls":
-				return ec.fieldContext_ModelPlan_crTdls(ctx, field)
+			case "crs":
+				return ec.fieldContext_ModelPlan_crs(ctx, field)
+			case "tdls":
+				return ec.fieldContext_ModelPlan_tdls(ctx, field)
 			case "prepareForClearance":
 				return ec.fieldContext_ModelPlan_prepareForClearance(ctx, field)
 			case "nameHistory":
@@ -17797,10 +18509,20 @@ func (ec *executionContext) fieldContext_Mutation_updatePlanBeneficiaries(ctx co
 				return ec.fieldContext_PlanBeneficiaries_beneficiarySelectionNote(ctx, field)
 			case "beneficiarySelectionFrequency":
 				return ec.fieldContext_PlanBeneficiaries_beneficiarySelectionFrequency(ctx, field)
+			case "beneficiarySelectionFrequencyContinually":
+				return ec.fieldContext_PlanBeneficiaries_beneficiarySelectionFrequencyContinually(ctx, field)
 			case "beneficiarySelectionFrequencyOther":
 				return ec.fieldContext_PlanBeneficiaries_beneficiarySelectionFrequencyOther(ctx, field)
 			case "beneficiarySelectionFrequencyNote":
 				return ec.fieldContext_PlanBeneficiaries_beneficiarySelectionFrequencyNote(ctx, field)
+			case "beneficiaryRemovalFrequency":
+				return ec.fieldContext_PlanBeneficiaries_beneficiaryRemovalFrequency(ctx, field)
+			case "beneficiaryRemovalFrequencyContinually":
+				return ec.fieldContext_PlanBeneficiaries_beneficiaryRemovalFrequencyContinually(ctx, field)
+			case "beneficiaryRemovalFrequencyOther":
+				return ec.fieldContext_PlanBeneficiaries_beneficiaryRemovalFrequencyOther(ctx, field)
+			case "beneficiaryRemovalFrequencyNote":
+				return ec.fieldContext_PlanBeneficiaries_beneficiaryRemovalFrequencyNote(ctx, field)
 			case "beneficiaryOverlap":
 				return ec.fieldContext_PlanBeneficiaries_beneficiaryOverlap(ctx, field)
 			case "beneficiaryOverlapNote":
@@ -17958,14 +18680,28 @@ func (ec *executionContext) fieldContext_Mutation_updatePlanParticipantsAndProvi
 				return ec.fieldContext_PlanParticipantsAndProviders_selectionOther(ctx, field)
 			case "selectionNote":
 				return ec.fieldContext_PlanParticipantsAndProviders_selectionNote(ctx, field)
+			case "participantAddedFrequency":
+				return ec.fieldContext_PlanParticipantsAndProviders_participantAddedFrequency(ctx, field)
+			case "participantAddedFrequencyContinually":
+				return ec.fieldContext_PlanParticipantsAndProviders_participantAddedFrequencyContinually(ctx, field)
+			case "participantAddedFrequencyOther":
+				return ec.fieldContext_PlanParticipantsAndProviders_participantAddedFrequencyOther(ctx, field)
+			case "participantAddedFrequencyNote":
+				return ec.fieldContext_PlanParticipantsAndProviders_participantAddedFrequencyNote(ctx, field)
+			case "participantRemovedFrequency":
+				return ec.fieldContext_PlanParticipantsAndProviders_participantRemovedFrequency(ctx, field)
+			case "participantRemovedFrequencyContinually":
+				return ec.fieldContext_PlanParticipantsAndProviders_participantRemovedFrequencyContinually(ctx, field)
+			case "participantRemovedFrequencyOther":
+				return ec.fieldContext_PlanParticipantsAndProviders_participantRemovedFrequencyOther(ctx, field)
+			case "participantRemovedFrequencyNote":
+				return ec.fieldContext_PlanParticipantsAndProviders_participantRemovedFrequencyNote(ctx, field)
 			case "communicationMethod":
 				return ec.fieldContext_PlanParticipantsAndProviders_communicationMethod(ctx, field)
 			case "communicationMethodOther":
 				return ec.fieldContext_PlanParticipantsAndProviders_communicationMethodOther(ctx, field)
 			case "communicationNote":
 				return ec.fieldContext_PlanParticipantsAndProviders_communicationNote(ctx, field)
-			case "participantAssumeRisk":
-				return ec.fieldContext_PlanParticipantsAndProviders_participantAssumeRisk(ctx, field)
 			case "riskType":
 				return ec.fieldContext_PlanParticipantsAndProviders_riskType(ctx, field)
 			case "riskOther":
@@ -17998,6 +18734,8 @@ func (ec *executionContext) fieldContext_Mutation_updatePlanParticipantsAndProvi
 				return ec.fieldContext_PlanParticipantsAndProviders_participantsIDSNote(ctx, field)
 			case "providerAdditionFrequency":
 				return ec.fieldContext_PlanParticipantsAndProviders_providerAdditionFrequency(ctx, field)
+			case "providerAdditionFrequencyContinually":
+				return ec.fieldContext_PlanParticipantsAndProviders_providerAdditionFrequencyContinually(ctx, field)
 			case "providerAdditionFrequencyOther":
 				return ec.fieldContext_PlanParticipantsAndProviders_providerAdditionFrequencyOther(ctx, field)
 			case "providerAdditionFrequencyNote":
@@ -18014,6 +18752,14 @@ func (ec *executionContext) fieldContext_Mutation_updatePlanParticipantsAndProvi
 				return ec.fieldContext_PlanParticipantsAndProviders_providerLeaveMethodOther(ctx, field)
 			case "providerLeaveMethodNote":
 				return ec.fieldContext_PlanParticipantsAndProviders_providerLeaveMethodNote(ctx, field)
+			case "providerRemovalFrequency":
+				return ec.fieldContext_PlanParticipantsAndProviders_providerRemovalFrequency(ctx, field)
+			case "providerRemovalFrequencyContinually":
+				return ec.fieldContext_PlanParticipantsAndProviders_providerRemovalFrequencyContinually(ctx, field)
+			case "providerRemovalFrequencyOther":
+				return ec.fieldContext_PlanParticipantsAndProviders_providerRemovalFrequencyOther(ctx, field)
+			case "providerRemovalFrequencyNote":
+				return ec.fieldContext_PlanParticipantsAndProviders_providerRemovalFrequencyNote(ctx, field)
 			case "providerOverlap":
 				return ec.fieldContext_PlanParticipantsAndProviders_providerOverlap(ctx, field)
 			case "providerOverlapHierarchy":
@@ -18281,6 +19027,8 @@ func (ec *executionContext) fieldContext_Mutation_updatePlanOpsEvalAndLearning(c
 				return ec.fieldContext_PlanOpsEvalAndLearning_developNewQualityMeasuresNote(ctx, field)
 			case "qualityPerformanceImpactsPayment":
 				return ec.fieldContext_PlanOpsEvalAndLearning_qualityPerformanceImpactsPayment(ctx, field)
+			case "qualityPerformanceImpactsPaymentOther":
+				return ec.fieldContext_PlanOpsEvalAndLearning_qualityPerformanceImpactsPaymentOther(ctx, field)
 			case "qualityPerformanceImpactsPaymentNote":
 				return ec.fieldContext_PlanOpsEvalAndLearning_qualityPerformanceImpactsPaymentNote(ctx, field)
 			case "dataSharingStarts":
@@ -18289,6 +19037,8 @@ func (ec *executionContext) fieldContext_Mutation_updatePlanOpsEvalAndLearning(c
 				return ec.fieldContext_PlanOpsEvalAndLearning_dataSharingStartsOther(ctx, field)
 			case "dataSharingFrequency":
 				return ec.fieldContext_PlanOpsEvalAndLearning_dataSharingFrequency(ctx, field)
+			case "dataSharingFrequencyContinually":
+				return ec.fieldContext_PlanOpsEvalAndLearning_dataSharingFrequencyContinually(ctx, field)
 			case "dataSharingFrequencyOther":
 				return ec.fieldContext_PlanOpsEvalAndLearning_dataSharingFrequencyOther(ctx, field)
 			case "dataSharingStartsNote":
@@ -18299,6 +19049,8 @@ func (ec *executionContext) fieldContext_Mutation_updatePlanOpsEvalAndLearning(c
 				return ec.fieldContext_PlanOpsEvalAndLearning_dataCollectionStartsOther(ctx, field)
 			case "dataCollectionFrequency":
 				return ec.fieldContext_PlanOpsEvalAndLearning_dataCollectionFrequency(ctx, field)
+			case "dataCollectionFrequencyContinually":
+				return ec.fieldContext_PlanOpsEvalAndLearning_dataCollectionFrequencyContinually(ctx, field)
 			case "dataCollectionFrequencyOther":
 				return ec.fieldContext_PlanOpsEvalAndLearning_dataCollectionFrequencyOther(ctx, field)
 			case "dataCollectionFrequencyNote":
@@ -18309,6 +19061,12 @@ func (ec *executionContext) fieldContext_Mutation_updatePlanOpsEvalAndLearning(c
 				return ec.fieldContext_PlanOpsEvalAndLearning_qualityReportingStartsOther(ctx, field)
 			case "qualityReportingStartsNote":
 				return ec.fieldContext_PlanOpsEvalAndLearning_qualityReportingStartsNote(ctx, field)
+			case "qualityReportingFrequency":
+				return ec.fieldContext_PlanOpsEvalAndLearning_qualityReportingFrequency(ctx, field)
+			case "qualityReportingFrequencyContinually":
+				return ec.fieldContext_PlanOpsEvalAndLearning_qualityReportingFrequencyContinually(ctx, field)
+			case "qualityReportingFrequencyOther":
+				return ec.fieldContext_PlanOpsEvalAndLearning_qualityReportingFrequencyOther(ctx, field)
 			case "modelLearningSystems":
 				return ec.fieldContext_PlanOpsEvalAndLearning_modelLearningSystems(ctx, field)
 			case "modelLearningSystemsOther":
@@ -19330,6 +20088,8 @@ func (ec *executionContext) fieldContext_Mutation_updatePlanPayments(ctx context
 				return ec.fieldContext_PlanPayments_canParticipantsSelectBetweenPaymentMechanismsNote(ctx, field)
 			case "anticipatedPaymentFrequency":
 				return ec.fieldContext_PlanPayments_anticipatedPaymentFrequency(ctx, field)
+			case "anticipatedPaymentFrequencyContinually":
+				return ec.fieldContext_PlanPayments_anticipatedPaymentFrequencyContinually(ctx, field)
 			case "anticipatedPaymentFrequencyOther":
 				return ec.fieldContext_PlanPayments_anticipatedPaymentFrequencyOther(ctx, field)
 			case "anticipatedPaymentFrequencyNote":
@@ -19342,6 +20102,14 @@ func (ec *executionContext) fieldContext_Mutation_updatePlanPayments(ctx context
 				return ec.fieldContext_PlanPayments_anticipateReconcilingPaymentsRetrospectively(ctx, field)
 			case "anticipateReconcilingPaymentsRetrospectivelyNote":
 				return ec.fieldContext_PlanPayments_anticipateReconcilingPaymentsRetrospectivelyNote(ctx, field)
+			case "paymentReconciliationFrequency":
+				return ec.fieldContext_PlanPayments_paymentReconciliationFrequency(ctx, field)
+			case "paymentReconciliationFrequencyContinually":
+				return ec.fieldContext_PlanPayments_paymentReconciliationFrequencyContinually(ctx, field)
+			case "paymentReconciliationFrequencyOther":
+				return ec.fieldContext_PlanPayments_paymentReconciliationFrequencyOther(ctx, field)
+			case "paymentReconciliationFrequencyNote":
+				return ec.fieldContext_PlanPayments_paymentReconciliationFrequencyNote(ctx, field)
 			case "paymentStartDate":
 				return ec.fieldContext_PlanPayments_paymentStartDate(ctx, field)
 			case "paymentStartDateNote":
@@ -19677,8 +20445,8 @@ func (ec *executionContext) fieldContext_Mutation_deletePlanFavorite(ctx context
 	return fc, nil
 }
 
-func (ec *executionContext) _Mutation_createPlanCrTdl(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Mutation_createPlanCrTdl(ctx, field)
+func (ec *executionContext) _Mutation_createPlanCR(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Mutation_createPlanCR(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -19692,7 +20460,7 @@ func (ec *executionContext) _Mutation_createPlanCrTdl(ctx context.Context, field
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		directive0 := func(rctx context.Context) (interface{}, error) {
 			ctx = rctx // use context from middleware stack in children
-			return ec.resolvers.Mutation().CreatePlanCrTdl(rctx, fc.Args["input"].(model.PlanCrTdlCreateInput))
+			return ec.resolvers.Mutation().CreatePlanCr(rctx, fc.Args["input"].(model.PlanCRCreateInput))
 		}
 		directive1 := func(ctx context.Context) (interface{}, error) {
 			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
@@ -19712,10 +20480,10 @@ func (ec *executionContext) _Mutation_createPlanCrTdl(ctx context.Context, field
 		if tmp == nil {
 			return nil, nil
 		}
-		if data, ok := tmp.(*models.PlanCrTdl); ok {
+		if data, ok := tmp.(*models.PlanCR); ok {
 			return data, nil
 		}
-		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/cmsgov/mint-app/pkg/models.PlanCrTdl`, tmp)
+		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/cmsgov/mint-app/pkg/models.PlanCR`, tmp)
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -19727,12 +20495,12 @@ func (ec *executionContext) _Mutation_createPlanCrTdl(ctx context.Context, field
 		}
 		return graphql.Null
 	}
-	res := resTmp.(*models.PlanCrTdl)
+	res := resTmp.(*models.PlanCR)
 	fc.Result = res
-	return ec.marshalNPlanCrTdl2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanCrTdl(ctx, field.Selections, res)
+	return ec.marshalNPlanCR2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanCR(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_Mutation_createPlanCrTdl(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_Mutation_createPlanCR(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "Mutation",
 		Field:      field,
@@ -19741,31 +20509,33 @@ func (ec *executionContext) fieldContext_Mutation_createPlanCrTdl(ctx context.Co
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			switch field.Name {
 			case "id":
-				return ec.fieldContext_PlanCrTdl_id(ctx, field)
+				return ec.fieldContext_PlanCR_id(ctx, field)
 			case "modelPlanID":
-				return ec.fieldContext_PlanCrTdl_modelPlanID(ctx, field)
+				return ec.fieldContext_PlanCR_modelPlanID(ctx, field)
 			case "idNumber":
-				return ec.fieldContext_PlanCrTdl_idNumber(ctx, field)
+				return ec.fieldContext_PlanCR_idNumber(ctx, field)
 			case "dateInitiated":
-				return ec.fieldContext_PlanCrTdl_dateInitiated(ctx, field)
+				return ec.fieldContext_PlanCR_dateInitiated(ctx, field)
+			case "dateImplemented":
+				return ec.fieldContext_PlanCR_dateImplemented(ctx, field)
 			case "title":
-				return ec.fieldContext_PlanCrTdl_title(ctx, field)
+				return ec.fieldContext_PlanCR_title(ctx, field)
 			case "note":
-				return ec.fieldContext_PlanCrTdl_note(ctx, field)
+				return ec.fieldContext_PlanCR_note(ctx, field)
 			case "createdBy":
-				return ec.fieldContext_PlanCrTdl_createdBy(ctx, field)
+				return ec.fieldContext_PlanCR_createdBy(ctx, field)
 			case "createdByUserAccount":
-				return ec.fieldContext_PlanCrTdl_createdByUserAccount(ctx, field)
+				return ec.fieldContext_PlanCR_createdByUserAccount(ctx, field)
 			case "createdDts":
-				return ec.fieldContext_PlanCrTdl_createdDts(ctx, field)
+				return ec.fieldContext_PlanCR_createdDts(ctx, field)
 			case "modifiedBy":
-				return ec.fieldContext_PlanCrTdl_modifiedBy(ctx, field)
+				return ec.fieldContext_PlanCR_modifiedBy(ctx, field)
 			case "modifiedByUserAccount":
-				return ec.fieldContext_PlanCrTdl_modifiedByUserAccount(ctx, field)
+				return ec.fieldContext_PlanCR_modifiedByUserAccount(ctx, field)
 			case "modifiedDts":
-				return ec.fieldContext_PlanCrTdl_modifiedDts(ctx, field)
+				return ec.fieldContext_PlanCR_modifiedDts(ctx, field)
 			}
-			return nil, fmt.Errorf("no field named %q was found under type PlanCrTdl", field.Name)
+			return nil, fmt.Errorf("no field named %q was found under type PlanCR", field.Name)
 		},
 	}
 	defer func() {
@@ -19775,15 +20545,15 @@ func (ec *executionContext) fieldContext_Mutation_createPlanCrTdl(ctx context.Co
 		}
 	}()
 	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Mutation_createPlanCrTdl_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+	if fc.Args, err = ec.field_Mutation_createPlanCR_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
 		ec.Error(ctx, err)
 		return fc, err
 	}
 	return fc, nil
 }
 
-func (ec *executionContext) _Mutation_updatePlanCrTdl(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Mutation_updatePlanCrTdl(ctx, field)
+func (ec *executionContext) _Mutation_createPlanTDL(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Mutation_createPlanTDL(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -19797,7 +20567,7 @@ func (ec *executionContext) _Mutation_updatePlanCrTdl(ctx context.Context, field
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		directive0 := func(rctx context.Context) (interface{}, error) {
 			ctx = rctx // use context from middleware stack in children
-			return ec.resolvers.Mutation().UpdatePlanCrTdl(rctx, fc.Args["id"].(uuid.UUID), fc.Args["changes"].(map[string]interface{}))
+			return ec.resolvers.Mutation().CreatePlanTdl(rctx, fc.Args["input"].(model.PlanTDLCreateInput))
 		}
 		directive1 := func(ctx context.Context) (interface{}, error) {
 			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
@@ -19817,10 +20587,10 @@ func (ec *executionContext) _Mutation_updatePlanCrTdl(ctx context.Context, field
 		if tmp == nil {
 			return nil, nil
 		}
-		if data, ok := tmp.(*models.PlanCrTdl); ok {
+		if data, ok := tmp.(*models.PlanTDL); ok {
 			return data, nil
 		}
-		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/cmsgov/mint-app/pkg/models.PlanCrTdl`, tmp)
+		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/cmsgov/mint-app/pkg/models.PlanTDL`, tmp)
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -19832,12 +20602,12 @@ func (ec *executionContext) _Mutation_updatePlanCrTdl(ctx context.Context, field
 		}
 		return graphql.Null
 	}
-	res := resTmp.(*models.PlanCrTdl)
+	res := resTmp.(*models.PlanTDL)
 	fc.Result = res
-	return ec.marshalNPlanCrTdl2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanCrTdl(ctx, field.Selections, res)
+	return ec.marshalNPlanTDL2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanTDL(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_Mutation_updatePlanCrTdl(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_Mutation_createPlanTDL(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "Mutation",
 		Field:      field,
@@ -19846,31 +20616,31 @@ func (ec *executionContext) fieldContext_Mutation_updatePlanCrTdl(ctx context.Co
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			switch field.Name {
 			case "id":
-				return ec.fieldContext_PlanCrTdl_id(ctx, field)
+				return ec.fieldContext_PlanTDL_id(ctx, field)
 			case "modelPlanID":
-				return ec.fieldContext_PlanCrTdl_modelPlanID(ctx, field)
+				return ec.fieldContext_PlanTDL_modelPlanID(ctx, field)
 			case "idNumber":
-				return ec.fieldContext_PlanCrTdl_idNumber(ctx, field)
+				return ec.fieldContext_PlanTDL_idNumber(ctx, field)
 			case "dateInitiated":
-				return ec.fieldContext_PlanCrTdl_dateInitiated(ctx, field)
+				return ec.fieldContext_PlanTDL_dateInitiated(ctx, field)
 			case "title":
-				return ec.fieldContext_PlanCrTdl_title(ctx, field)
+				return ec.fieldContext_PlanTDL_title(ctx, field)
 			case "note":
-				return ec.fieldContext_PlanCrTdl_note(ctx, field)
+				return ec.fieldContext_PlanTDL_note(ctx, field)
 			case "createdBy":
-				return ec.fieldContext_PlanCrTdl_createdBy(ctx, field)
+				return ec.fieldContext_PlanTDL_createdBy(ctx, field)
 			case "createdByUserAccount":
-				return ec.fieldContext_PlanCrTdl_createdByUserAccount(ctx, field)
+				return ec.fieldContext_PlanTDL_createdByUserAccount(ctx, field)
 			case "createdDts":
-				return ec.fieldContext_PlanCrTdl_createdDts(ctx, field)
+				return ec.fieldContext_PlanTDL_createdDts(ctx, field)
 			case "modifiedBy":
-				return ec.fieldContext_PlanCrTdl_modifiedBy(ctx, field)
+				return ec.fieldContext_PlanTDL_modifiedBy(ctx, field)
 			case "modifiedByUserAccount":
-				return ec.fieldContext_PlanCrTdl_modifiedByUserAccount(ctx, field)
+				return ec.fieldContext_PlanTDL_modifiedByUserAccount(ctx, field)
 			case "modifiedDts":
-				return ec.fieldContext_PlanCrTdl_modifiedDts(ctx, field)
+				return ec.fieldContext_PlanTDL_modifiedDts(ctx, field)
 			}
-			return nil, fmt.Errorf("no field named %q was found under type PlanCrTdl", field.Name)
+			return nil, fmt.Errorf("no field named %q was found under type PlanTDL", field.Name)
 		},
 	}
 	defer func() {
@@ -19880,15 +20650,15 @@ func (ec *executionContext) fieldContext_Mutation_updatePlanCrTdl(ctx context.Co
 		}
 	}()
 	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Mutation_updatePlanCrTdl_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+	if fc.Args, err = ec.field_Mutation_createPlanTDL_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
 		ec.Error(ctx, err)
 		return fc, err
 	}
 	return fc, nil
 }
 
-func (ec *executionContext) _Mutation_deletePlanCrTdl(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Mutation_deletePlanCrTdl(ctx, field)
+func (ec *executionContext) _Mutation_updatePlanCR(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Mutation_updatePlanCR(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -19902,7 +20672,7 @@ func (ec *executionContext) _Mutation_deletePlanCrTdl(ctx context.Context, field
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		directive0 := func(rctx context.Context) (interface{}, error) {
 			ctx = rctx // use context from middleware stack in children
-			return ec.resolvers.Mutation().DeletePlanCrTdl(rctx, fc.Args["id"].(uuid.UUID))
+			return ec.resolvers.Mutation().UpdatePlanCr(rctx, fc.Args["id"].(uuid.UUID), fc.Args["changes"].(map[string]interface{}))
 		}
 		directive1 := func(ctx context.Context) (interface{}, error) {
 			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
@@ -19922,10 +20692,10 @@ func (ec *executionContext) _Mutation_deletePlanCrTdl(ctx context.Context, field
 		if tmp == nil {
 			return nil, nil
 		}
-		if data, ok := tmp.(*models.PlanCrTdl); ok {
+		if data, ok := tmp.(*models.PlanCR); ok {
 			return data, nil
 		}
-		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/cmsgov/mint-app/pkg/models.PlanCrTdl`, tmp)
+		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/cmsgov/mint-app/pkg/models.PlanCR`, tmp)
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -19937,12 +20707,12 @@ func (ec *executionContext) _Mutation_deletePlanCrTdl(ctx context.Context, field
 		}
 		return graphql.Null
 	}
-	res := resTmp.(*models.PlanCrTdl)
+	res := resTmp.(*models.PlanCR)
 	fc.Result = res
-	return ec.marshalNPlanCrTdl2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanCrTdl(ctx, field.Selections, res)
+	return ec.marshalNPlanCR2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanCR(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_Mutation_deletePlanCrTdl(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_Mutation_updatePlanCR(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "Mutation",
 		Field:      field,
@@ -19951,31 +20721,33 @@ func (ec *executionContext) fieldContext_Mutation_deletePlanCrTdl(ctx context.Co
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			switch field.Name {
 			case "id":
-				return ec.fieldContext_PlanCrTdl_id(ctx, field)
+				return ec.fieldContext_PlanCR_id(ctx, field)
 			case "modelPlanID":
-				return ec.fieldContext_PlanCrTdl_modelPlanID(ctx, field)
+				return ec.fieldContext_PlanCR_modelPlanID(ctx, field)
 			case "idNumber":
-				return ec.fieldContext_PlanCrTdl_idNumber(ctx, field)
+				return ec.fieldContext_PlanCR_idNumber(ctx, field)
 			case "dateInitiated":
-				return ec.fieldContext_PlanCrTdl_dateInitiated(ctx, field)
+				return ec.fieldContext_PlanCR_dateInitiated(ctx, field)
+			case "dateImplemented":
+				return ec.fieldContext_PlanCR_dateImplemented(ctx, field)
 			case "title":
-				return ec.fieldContext_PlanCrTdl_title(ctx, field)
+				return ec.fieldContext_PlanCR_title(ctx, field)
 			case "note":
-				return ec.fieldContext_PlanCrTdl_note(ctx, field)
+				return ec.fieldContext_PlanCR_note(ctx, field)
 			case "createdBy":
-				return ec.fieldContext_PlanCrTdl_createdBy(ctx, field)
+				return ec.fieldContext_PlanCR_createdBy(ctx, field)
 			case "createdByUserAccount":
-				return ec.fieldContext_PlanCrTdl_createdByUserAccount(ctx, field)
+				return ec.fieldContext_PlanCR_createdByUserAccount(ctx, field)
 			case "createdDts":
-				return ec.fieldContext_PlanCrTdl_createdDts(ctx, field)
+				return ec.fieldContext_PlanCR_createdDts(ctx, field)
 			case "modifiedBy":
-				return ec.fieldContext_PlanCrTdl_modifiedBy(ctx, field)
+				return ec.fieldContext_PlanCR_modifiedBy(ctx, field)
 			case "modifiedByUserAccount":
-				return ec.fieldContext_PlanCrTdl_modifiedByUserAccount(ctx, field)
+				return ec.fieldContext_PlanCR_modifiedByUserAccount(ctx, field)
 			case "modifiedDts":
-				return ec.fieldContext_PlanCrTdl_modifiedDts(ctx, field)
+				return ec.fieldContext_PlanCR_modifiedDts(ctx, field)
 			}
-			return nil, fmt.Errorf("no field named %q was found under type PlanCrTdl", field.Name)
+			return nil, fmt.Errorf("no field named %q was found under type PlanCR", field.Name)
 		},
 	}
 	defer func() {
@@ -19985,7 +20757,324 @@ func (ec *executionContext) fieldContext_Mutation_deletePlanCrTdl(ctx context.Co
 		}
 	}()
 	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Mutation_deletePlanCrTdl_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+	if fc.Args, err = ec.field_Mutation_updatePlanCR_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Mutation_updatePlanTDL(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Mutation_updatePlanTDL(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		directive0 := func(rctx context.Context) (interface{}, error) {
+			ctx = rctx // use context from middleware stack in children
+			return ec.resolvers.Mutation().UpdatePlanTdl(rctx, fc.Args["id"].(uuid.UUID), fc.Args["changes"].(map[string]interface{}))
+		}
+		directive1 := func(ctx context.Context) (interface{}, error) {
+			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
+			if err != nil {
+				return nil, err
+			}
+			if ec.directives.HasRole == nil {
+				return nil, errors.New("directive hasRole is not implemented")
+			}
+			return ec.directives.HasRole(ctx, nil, directive0, role)
+		}
+
+		tmp, err := directive1(rctx)
+		if err != nil {
+			return nil, graphql.ErrorOnPath(ctx, err)
+		}
+		if tmp == nil {
+			return nil, nil
+		}
+		if data, ok := tmp.(*models.PlanTDL); ok {
+			return data, nil
+		}
+		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/cmsgov/mint-app/pkg/models.PlanTDL`, tmp)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*models.PlanTDL)
+	fc.Result = res
+	return ec.marshalNPlanTDL2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanTDL(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Mutation_updatePlanTDL(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Mutation",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_PlanTDL_id(ctx, field)
+			case "modelPlanID":
+				return ec.fieldContext_PlanTDL_modelPlanID(ctx, field)
+			case "idNumber":
+				return ec.fieldContext_PlanTDL_idNumber(ctx, field)
+			case "dateInitiated":
+				return ec.fieldContext_PlanTDL_dateInitiated(ctx, field)
+			case "title":
+				return ec.fieldContext_PlanTDL_title(ctx, field)
+			case "note":
+				return ec.fieldContext_PlanTDL_note(ctx, field)
+			case "createdBy":
+				return ec.fieldContext_PlanTDL_createdBy(ctx, field)
+			case "createdByUserAccount":
+				return ec.fieldContext_PlanTDL_createdByUserAccount(ctx, field)
+			case "createdDts":
+				return ec.fieldContext_PlanTDL_createdDts(ctx, field)
+			case "modifiedBy":
+				return ec.fieldContext_PlanTDL_modifiedBy(ctx, field)
+			case "modifiedByUserAccount":
+				return ec.fieldContext_PlanTDL_modifiedByUserAccount(ctx, field)
+			case "modifiedDts":
+				return ec.fieldContext_PlanTDL_modifiedDts(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type PlanTDL", field.Name)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Mutation_updatePlanTDL_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Mutation_deletePlanCR(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Mutation_deletePlanCR(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		directive0 := func(rctx context.Context) (interface{}, error) {
+			ctx = rctx // use context from middleware stack in children
+			return ec.resolvers.Mutation().DeletePlanCr(rctx, fc.Args["id"].(uuid.UUID))
+		}
+		directive1 := func(ctx context.Context) (interface{}, error) {
+			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
+			if err != nil {
+				return nil, err
+			}
+			if ec.directives.HasRole == nil {
+				return nil, errors.New("directive hasRole is not implemented")
+			}
+			return ec.directives.HasRole(ctx, nil, directive0, role)
+		}
+
+		tmp, err := directive1(rctx)
+		if err != nil {
+			return nil, graphql.ErrorOnPath(ctx, err)
+		}
+		if tmp == nil {
+			return nil, nil
+		}
+		if data, ok := tmp.(*models.PlanCR); ok {
+			return data, nil
+		}
+		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/cmsgov/mint-app/pkg/models.PlanCR`, tmp)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*models.PlanCR)
+	fc.Result = res
+	return ec.marshalNPlanCR2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanCR(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Mutation_deletePlanCR(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Mutation",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_PlanCR_id(ctx, field)
+			case "modelPlanID":
+				return ec.fieldContext_PlanCR_modelPlanID(ctx, field)
+			case "idNumber":
+				return ec.fieldContext_PlanCR_idNumber(ctx, field)
+			case "dateInitiated":
+				return ec.fieldContext_PlanCR_dateInitiated(ctx, field)
+			case "dateImplemented":
+				return ec.fieldContext_PlanCR_dateImplemented(ctx, field)
+			case "title":
+				return ec.fieldContext_PlanCR_title(ctx, field)
+			case "note":
+				return ec.fieldContext_PlanCR_note(ctx, field)
+			case "createdBy":
+				return ec.fieldContext_PlanCR_createdBy(ctx, field)
+			case "createdByUserAccount":
+				return ec.fieldContext_PlanCR_createdByUserAccount(ctx, field)
+			case "createdDts":
+				return ec.fieldContext_PlanCR_createdDts(ctx, field)
+			case "modifiedBy":
+				return ec.fieldContext_PlanCR_modifiedBy(ctx, field)
+			case "modifiedByUserAccount":
+				return ec.fieldContext_PlanCR_modifiedByUserAccount(ctx, field)
+			case "modifiedDts":
+				return ec.fieldContext_PlanCR_modifiedDts(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type PlanCR", field.Name)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Mutation_deletePlanCR_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Mutation_deletePlanTDL(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Mutation_deletePlanTDL(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		directive0 := func(rctx context.Context) (interface{}, error) {
+			ctx = rctx // use context from middleware stack in children
+			return ec.resolvers.Mutation().DeletePlanTdl(rctx, fc.Args["id"].(uuid.UUID))
+		}
+		directive1 := func(ctx context.Context) (interface{}, error) {
+			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
+			if err != nil {
+				return nil, err
+			}
+			if ec.directives.HasRole == nil {
+				return nil, errors.New("directive hasRole is not implemented")
+			}
+			return ec.directives.HasRole(ctx, nil, directive0, role)
+		}
+
+		tmp, err := directive1(rctx)
+		if err != nil {
+			return nil, graphql.ErrorOnPath(ctx, err)
+		}
+		if tmp == nil {
+			return nil, nil
+		}
+		if data, ok := tmp.(*models.PlanTDL); ok {
+			return data, nil
+		}
+		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/cmsgov/mint-app/pkg/models.PlanTDL`, tmp)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*models.PlanTDL)
+	fc.Result = res
+	return ec.marshalNPlanTDL2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanTDL(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Mutation_deletePlanTDL(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Mutation",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_PlanTDL_id(ctx, field)
+			case "modelPlanID":
+				return ec.fieldContext_PlanTDL_modelPlanID(ctx, field)
+			case "idNumber":
+				return ec.fieldContext_PlanTDL_idNumber(ctx, field)
+			case "dateInitiated":
+				return ec.fieldContext_PlanTDL_dateInitiated(ctx, field)
+			case "title":
+				return ec.fieldContext_PlanTDL_title(ctx, field)
+			case "note":
+				return ec.fieldContext_PlanTDL_note(ctx, field)
+			case "createdBy":
+				return ec.fieldContext_PlanTDL_createdBy(ctx, field)
+			case "createdByUserAccount":
+				return ec.fieldContext_PlanTDL_createdByUserAccount(ctx, field)
+			case "createdDts":
+				return ec.fieldContext_PlanTDL_createdDts(ctx, field)
+			case "modifiedBy":
+				return ec.fieldContext_PlanTDL_modifiedBy(ctx, field)
+			case "modifiedByUserAccount":
+				return ec.fieldContext_PlanTDL_modifiedByUserAccount(ctx, field)
+			case "modifiedDts":
+				return ec.fieldContext_PlanTDL_modifiedDts(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type PlanTDL", field.Name)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Mutation_deletePlanTDL_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
 		ec.Error(ctx, err)
 		return fc, err
 	}
@@ -26057,7 +27146,51 @@ func (ec *executionContext) _PlanBeneficiaries_beneficiarySelectionFrequency(ctx
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.BeneficiarySelectionFrequency, nil
+		return ec.resolvers.PlanBeneficiaries().BeneficiarySelectionFrequency(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.([]models.FrequencyType)
+	fc.Result = res
+	return ec.marshalNFrequencyType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐFrequencyTypeᚄ(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanBeneficiaries_beneficiarySelectionFrequency(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanBeneficiaries",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type FrequencyType does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanBeneficiaries_beneficiarySelectionFrequencyContinually(ctx context.Context, field graphql.CollectedField, obj *models.PlanBeneficiaries) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanBeneficiaries_beneficiarySelectionFrequencyContinually(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.BeneficiarySelectionFrequencyContinually, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -26066,19 +27199,19 @@ func (ec *executionContext) _PlanBeneficiaries_beneficiarySelectionFrequency(ctx
 	if resTmp == nil {
 		return graphql.Null
 	}
-	res := resTmp.(*models.FrequencyType)
+	res := resTmp.(*string)
 	fc.Result = res
-	return ec.marshalOFrequencyType2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐFrequencyType(ctx, field.Selections, res)
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_PlanBeneficiaries_beneficiarySelectionFrequency(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_PlanBeneficiaries_beneficiarySelectionFrequencyContinually(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "PlanBeneficiaries",
 		Field:      field,
 		IsMethod:   false,
 		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type FrequencyType does not have child fields")
+			return nil, errors.New("field of type String does not have child fields")
 		},
 	}
 	return fc, nil
@@ -26154,6 +27287,173 @@ func (ec *executionContext) _PlanBeneficiaries_beneficiarySelectionFrequencyNote
 }
 
 func (ec *executionContext) fieldContext_PlanBeneficiaries_beneficiarySelectionFrequencyNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanBeneficiaries",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanBeneficiaries_beneficiaryRemovalFrequency(ctx context.Context, field graphql.CollectedField, obj *models.PlanBeneficiaries) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanBeneficiaries_beneficiaryRemovalFrequency(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.PlanBeneficiaries().BeneficiaryRemovalFrequency(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.([]models.FrequencyType)
+	fc.Result = res
+	return ec.marshalNFrequencyType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐFrequencyTypeᚄ(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanBeneficiaries_beneficiaryRemovalFrequency(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanBeneficiaries",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type FrequencyType does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanBeneficiaries_beneficiaryRemovalFrequencyContinually(ctx context.Context, field graphql.CollectedField, obj *models.PlanBeneficiaries) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanBeneficiaries_beneficiaryRemovalFrequencyContinually(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.BeneficiaryRemovalFrequencyContinually, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanBeneficiaries_beneficiaryRemovalFrequencyContinually(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanBeneficiaries",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanBeneficiaries_beneficiaryRemovalFrequencyOther(ctx context.Context, field graphql.CollectedField, obj *models.PlanBeneficiaries) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanBeneficiaries_beneficiaryRemovalFrequencyOther(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.BeneficiaryRemovalFrequencyOther, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanBeneficiaries_beneficiaryRemovalFrequencyOther(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanBeneficiaries",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanBeneficiaries_beneficiaryRemovalFrequencyNote(ctx context.Context, field graphql.CollectedField, obj *models.PlanBeneficiaries) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanBeneficiaries_beneficiaryRemovalFrequencyNote(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.BeneficiaryRemovalFrequencyNote, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanBeneficiaries_beneficiaryRemovalFrequencyNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "PlanBeneficiaries",
 		Field:      field,
@@ -27048,6 +28348,607 @@ func (ec *executionContext) fieldContext_PlanBeneficiaries_status(ctx context.Co
 	return fc, nil
 }
 
+func (ec *executionContext) _PlanCR_id(ctx context.Context, field graphql.CollectedField, obj *models.PlanCR) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanCR_id(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ID, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(uuid.UUID)
+	fc.Result = res
+	return ec.marshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanCR_id(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanCR",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type UUID does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanCR_modelPlanID(ctx context.Context, field graphql.CollectedField, obj *models.PlanCR) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanCR_modelPlanID(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ModelPlanID, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(uuid.UUID)
+	fc.Result = res
+	return ec.marshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanCR_modelPlanID(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanCR",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type UUID does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanCR_idNumber(ctx context.Context, field graphql.CollectedField, obj *models.PlanCR) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanCR_idNumber(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.IDNumber, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalNString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanCR_idNumber(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanCR",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanCR_dateInitiated(ctx context.Context, field graphql.CollectedField, obj *models.PlanCR) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanCR_dateInitiated(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.DateInitiated, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*time.Time)
+	fc.Result = res
+	return ec.marshalNTime2ᚖtimeᚐTime(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanCR_dateInitiated(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanCR",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Time does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanCR_dateImplemented(ctx context.Context, field graphql.CollectedField, obj *models.PlanCR) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanCR_dateImplemented(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.DateImplemented, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*time.Time)
+	fc.Result = res
+	return ec.marshalOTime2ᚖtimeᚐTime(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanCR_dateImplemented(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanCR",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Time does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanCR_title(ctx context.Context, field graphql.CollectedField, obj *models.PlanCR) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanCR_title(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Title, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalNString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanCR_title(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanCR",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanCR_note(ctx context.Context, field graphql.CollectedField, obj *models.PlanCR) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanCR_note(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Note, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanCR_note(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanCR",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanCR_createdBy(ctx context.Context, field graphql.CollectedField, obj *models.PlanCR) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanCR_createdBy(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.CreatedBy, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(uuid.UUID)
+	fc.Result = res
+	return ec.marshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanCR_createdBy(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanCR",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type UUID does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanCR_createdByUserAccount(ctx context.Context, field graphql.CollectedField, obj *models.PlanCR) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanCR_createdByUserAccount(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.CreatedByUserAccount(ctx), nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*authentication.UserAccount)
+	fc.Result = res
+	return ec.marshalNUserAccount2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋauthenticationᚐUserAccount(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanCR_createdByUserAccount(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanCR",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_UserAccount_id(ctx, field)
+			case "username":
+				return ec.fieldContext_UserAccount_username(ctx, field)
+			case "isEUAID":
+				return ec.fieldContext_UserAccount_isEUAID(ctx, field)
+			case "commonName":
+				return ec.fieldContext_UserAccount_commonName(ctx, field)
+			case "locale":
+				return ec.fieldContext_UserAccount_locale(ctx, field)
+			case "email":
+				return ec.fieldContext_UserAccount_email(ctx, field)
+			case "givenName":
+				return ec.fieldContext_UserAccount_givenName(ctx, field)
+			case "familyName":
+				return ec.fieldContext_UserAccount_familyName(ctx, field)
+			case "zoneInfo":
+				return ec.fieldContext_UserAccount_zoneInfo(ctx, field)
+			case "hasLoggedIn":
+				return ec.fieldContext_UserAccount_hasLoggedIn(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type UserAccount", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanCR_createdDts(ctx context.Context, field graphql.CollectedField, obj *models.PlanCR) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanCR_createdDts(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.CreatedDts, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(time.Time)
+	fc.Result = res
+	return ec.marshalNTime2timeᚐTime(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanCR_createdDts(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanCR",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Time does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanCR_modifiedBy(ctx context.Context, field graphql.CollectedField, obj *models.PlanCR) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanCR_modifiedBy(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ModifiedBy, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*uuid.UUID)
+	fc.Result = res
+	return ec.marshalOUUID2ᚖgithubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanCR_modifiedBy(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanCR",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type UUID does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanCR_modifiedByUserAccount(ctx context.Context, field graphql.CollectedField, obj *models.PlanCR) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanCR_modifiedByUserAccount(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ModifiedByUserAccount(ctx), nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*authentication.UserAccount)
+	fc.Result = res
+	return ec.marshalOUserAccount2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋauthenticationᚐUserAccount(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanCR_modifiedByUserAccount(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanCR",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_UserAccount_id(ctx, field)
+			case "username":
+				return ec.fieldContext_UserAccount_username(ctx, field)
+			case "isEUAID":
+				return ec.fieldContext_UserAccount_isEUAID(ctx, field)
+			case "commonName":
+				return ec.fieldContext_UserAccount_commonName(ctx, field)
+			case "locale":
+				return ec.fieldContext_UserAccount_locale(ctx, field)
+			case "email":
+				return ec.fieldContext_UserAccount_email(ctx, field)
+			case "givenName":
+				return ec.fieldContext_UserAccount_givenName(ctx, field)
+			case "familyName":
+				return ec.fieldContext_UserAccount_familyName(ctx, field)
+			case "zoneInfo":
+				return ec.fieldContext_UserAccount_zoneInfo(ctx, field)
+			case "hasLoggedIn":
+				return ec.fieldContext_UserAccount_hasLoggedIn(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type UserAccount", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanCR_modifiedDts(ctx context.Context, field graphql.CollectedField, obj *models.PlanCR) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanCR_modifiedDts(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ModifiedDts, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*time.Time)
+	fc.Result = res
+	return ec.marshalOTime2ᚖtimeᚐTime(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanCR_modifiedDts(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanCR",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Time does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
 func (ec *executionContext) _PlanCollaborator_id(ctx context.Context, field graphql.CollectedField, obj *models.PlanCollaborator) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_PlanCollaborator_id(ctx, field)
 	if err != nil {
@@ -27579,566 +29480,6 @@ func (ec *executionContext) _PlanCollaborator_modifiedDts(ctx context.Context, f
 func (ec *executionContext) fieldContext_PlanCollaborator_modifiedDts(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "PlanCollaborator",
-		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type Time does not have child fields")
-		},
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _PlanCrTdl_id(ctx context.Context, field graphql.CollectedField, obj *models.PlanCrTdl) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_PlanCrTdl_id(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.ID, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(uuid.UUID)
-	fc.Result = res
-	return ec.marshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_PlanCrTdl_id(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "PlanCrTdl",
-		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type UUID does not have child fields")
-		},
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _PlanCrTdl_modelPlanID(ctx context.Context, field graphql.CollectedField, obj *models.PlanCrTdl) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_PlanCrTdl_modelPlanID(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.ModelPlanID, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(uuid.UUID)
-	fc.Result = res
-	return ec.marshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_PlanCrTdl_modelPlanID(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "PlanCrTdl",
-		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type UUID does not have child fields")
-		},
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _PlanCrTdl_idNumber(ctx context.Context, field graphql.CollectedField, obj *models.PlanCrTdl) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_PlanCrTdl_idNumber(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.IDNumber, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(string)
-	fc.Result = res
-	return ec.marshalNString2string(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_PlanCrTdl_idNumber(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "PlanCrTdl",
-		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type String does not have child fields")
-		},
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _PlanCrTdl_dateInitiated(ctx context.Context, field graphql.CollectedField, obj *models.PlanCrTdl) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_PlanCrTdl_dateInitiated(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.DateInitiated, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(*time.Time)
-	fc.Result = res
-	return ec.marshalNTime2ᚖtimeᚐTime(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_PlanCrTdl_dateInitiated(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "PlanCrTdl",
-		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type Time does not have child fields")
-		},
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _PlanCrTdl_title(ctx context.Context, field graphql.CollectedField, obj *models.PlanCrTdl) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_PlanCrTdl_title(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.Title, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(string)
-	fc.Result = res
-	return ec.marshalNString2string(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_PlanCrTdl_title(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "PlanCrTdl",
-		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type String does not have child fields")
-		},
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _PlanCrTdl_note(ctx context.Context, field graphql.CollectedField, obj *models.PlanCrTdl) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_PlanCrTdl_note(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.Note, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		return graphql.Null
-	}
-	res := resTmp.(*string)
-	fc.Result = res
-	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_PlanCrTdl_note(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "PlanCrTdl",
-		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type String does not have child fields")
-		},
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _PlanCrTdl_createdBy(ctx context.Context, field graphql.CollectedField, obj *models.PlanCrTdl) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_PlanCrTdl_createdBy(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.CreatedBy, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(uuid.UUID)
-	fc.Result = res
-	return ec.marshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_PlanCrTdl_createdBy(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "PlanCrTdl",
-		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type UUID does not have child fields")
-		},
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _PlanCrTdl_createdByUserAccount(ctx context.Context, field graphql.CollectedField, obj *models.PlanCrTdl) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_PlanCrTdl_createdByUserAccount(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.CreatedByUserAccount(ctx), nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(*authentication.UserAccount)
-	fc.Result = res
-	return ec.marshalNUserAccount2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋauthenticationᚐUserAccount(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_PlanCrTdl_createdByUserAccount(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "PlanCrTdl",
-		Field:      field,
-		IsMethod:   true,
-		IsResolver: false,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			switch field.Name {
-			case "id":
-				return ec.fieldContext_UserAccount_id(ctx, field)
-			case "username":
-				return ec.fieldContext_UserAccount_username(ctx, field)
-			case "isEUAID":
-				return ec.fieldContext_UserAccount_isEUAID(ctx, field)
-			case "commonName":
-				return ec.fieldContext_UserAccount_commonName(ctx, field)
-			case "locale":
-				return ec.fieldContext_UserAccount_locale(ctx, field)
-			case "email":
-				return ec.fieldContext_UserAccount_email(ctx, field)
-			case "givenName":
-				return ec.fieldContext_UserAccount_givenName(ctx, field)
-			case "familyName":
-				return ec.fieldContext_UserAccount_familyName(ctx, field)
-			case "zoneInfo":
-				return ec.fieldContext_UserAccount_zoneInfo(ctx, field)
-			case "hasLoggedIn":
-				return ec.fieldContext_UserAccount_hasLoggedIn(ctx, field)
-			}
-			return nil, fmt.Errorf("no field named %q was found under type UserAccount", field.Name)
-		},
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _PlanCrTdl_createdDts(ctx context.Context, field graphql.CollectedField, obj *models.PlanCrTdl) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_PlanCrTdl_createdDts(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.CreatedDts, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(time.Time)
-	fc.Result = res
-	return ec.marshalNTime2timeᚐTime(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_PlanCrTdl_createdDts(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "PlanCrTdl",
-		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type Time does not have child fields")
-		},
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _PlanCrTdl_modifiedBy(ctx context.Context, field graphql.CollectedField, obj *models.PlanCrTdl) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_PlanCrTdl_modifiedBy(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.ModifiedBy, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		return graphql.Null
-	}
-	res := resTmp.(*uuid.UUID)
-	fc.Result = res
-	return ec.marshalOUUID2ᚖgithubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_PlanCrTdl_modifiedBy(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "PlanCrTdl",
-		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type UUID does not have child fields")
-		},
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _PlanCrTdl_modifiedByUserAccount(ctx context.Context, field graphql.CollectedField, obj *models.PlanCrTdl) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_PlanCrTdl_modifiedByUserAccount(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.ModifiedByUserAccount(ctx), nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		return graphql.Null
-	}
-	res := resTmp.(*authentication.UserAccount)
-	fc.Result = res
-	return ec.marshalOUserAccount2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋauthenticationᚐUserAccount(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_PlanCrTdl_modifiedByUserAccount(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "PlanCrTdl",
-		Field:      field,
-		IsMethod:   true,
-		IsResolver: false,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			switch field.Name {
-			case "id":
-				return ec.fieldContext_UserAccount_id(ctx, field)
-			case "username":
-				return ec.fieldContext_UserAccount_username(ctx, field)
-			case "isEUAID":
-				return ec.fieldContext_UserAccount_isEUAID(ctx, field)
-			case "commonName":
-				return ec.fieldContext_UserAccount_commonName(ctx, field)
-			case "locale":
-				return ec.fieldContext_UserAccount_locale(ctx, field)
-			case "email":
-				return ec.fieldContext_UserAccount_email(ctx, field)
-			case "givenName":
-				return ec.fieldContext_UserAccount_givenName(ctx, field)
-			case "familyName":
-				return ec.fieldContext_UserAccount_familyName(ctx, field)
-			case "zoneInfo":
-				return ec.fieldContext_UserAccount_zoneInfo(ctx, field)
-			case "hasLoggedIn":
-				return ec.fieldContext_UserAccount_hasLoggedIn(ctx, field)
-			}
-			return nil, fmt.Errorf("no field named %q was found under type UserAccount", field.Name)
-		},
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _PlanCrTdl_modifiedDts(ctx context.Context, field graphql.CollectedField, obj *models.PlanCrTdl) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_PlanCrTdl_modifiedDts(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.ModifiedDts, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		return graphql.Null
-	}
-	res := resTmp.(*time.Time)
-	fc.Result = res
-	return ec.marshalOTime2ᚖtimeᚐTime(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_PlanCrTdl_modifiedDts(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "PlanCrTdl",
 		Field:      field,
 		IsMethod:   false,
 		IsResolver: false,
@@ -31074,8 +32415,10 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristics_currentModel
 				return ec.fieldContext_ModelPlan_isFavorite(ctx, field)
 			case "isCollaborator":
 				return ec.fieldContext_ModelPlan_isCollaborator(ctx, field)
-			case "crTdls":
-				return ec.fieldContext_ModelPlan_crTdls(ctx, field)
+			case "crs":
+				return ec.fieldContext_ModelPlan_crs(ctx, field)
+			case "tdls":
+				return ec.fieldContext_ModelPlan_tdls(ctx, field)
 			case "prepareForClearance":
 				return ec.fieldContext_ModelPlan_prepareForClearance(ctx, field)
 			case "nameHistory":
@@ -36967,9 +38310,9 @@ func (ec *executionContext) _PlanOpsEvalAndLearning_qualityPerformanceImpactsPay
 	if resTmp == nil {
 		return graphql.Null
 	}
-	res := resTmp.(*bool)
+	res := resTmp.(*models.YesNoOtherType)
 	fc.Result = res
-	return ec.marshalOBoolean2ᚖbool(ctx, field.Selections, res)
+	return ec.marshalOYesNoOtherType2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐYesNoOtherType(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_qualityPerformanceImpactsPayment(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -36979,7 +38322,48 @@ func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_qualityPerforman
 		IsMethod:   false,
 		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type Boolean does not have child fields")
+			return nil, errors.New("field of type YesNoOtherType does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanOpsEvalAndLearning_qualityPerformanceImpactsPaymentOther(ctx context.Context, field graphql.CollectedField, obj *models.PlanOpsEvalAndLearning) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanOpsEvalAndLearning_qualityPerformanceImpactsPaymentOther(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.QualityPerformanceImpactsPaymentOther, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_qualityPerformanceImpactsPaymentOther(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanOpsEvalAndLearning",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
 		},
 	}
 	return fc, nil
@@ -37134,9 +38518,9 @@ func (ec *executionContext) _PlanOpsEvalAndLearning_dataSharingFrequency(ctx con
 		}
 		return graphql.Null
 	}
-	res := resTmp.([]model.DataFrequencyType)
+	res := resTmp.([]models.FrequencyType)
 	fc.Result = res
-	return ec.marshalNDataFrequencyType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐDataFrequencyTypeᚄ(ctx, field.Selections, res)
+	return ec.marshalNFrequencyType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐFrequencyTypeᚄ(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_dataSharingFrequency(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -37146,7 +38530,48 @@ func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_dataSharingFrequ
 		IsMethod:   true,
 		IsResolver: true,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type DataFrequencyType does not have child fields")
+			return nil, errors.New("field of type FrequencyType does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanOpsEvalAndLearning_dataSharingFrequencyContinually(ctx context.Context, field graphql.CollectedField, obj *models.PlanOpsEvalAndLearning) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanOpsEvalAndLearning_dataSharingFrequencyContinually(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.DataSharingFrequencyContinually, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_dataSharingFrequencyContinually(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanOpsEvalAndLearning",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
 		},
 	}
 	return fc, nil
@@ -37342,9 +38767,9 @@ func (ec *executionContext) _PlanOpsEvalAndLearning_dataCollectionFrequency(ctx 
 		}
 		return graphql.Null
 	}
-	res := resTmp.([]model.DataFrequencyType)
+	res := resTmp.([]models.FrequencyType)
 	fc.Result = res
-	return ec.marshalNDataFrequencyType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐDataFrequencyTypeᚄ(ctx, field.Selections, res)
+	return ec.marshalNFrequencyType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐFrequencyTypeᚄ(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_dataCollectionFrequency(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -37354,7 +38779,48 @@ func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_dataCollectionFr
 		IsMethod:   true,
 		IsResolver: true,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type DataFrequencyType does not have child fields")
+			return nil, errors.New("field of type FrequencyType does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanOpsEvalAndLearning_dataCollectionFrequencyContinually(ctx context.Context, field graphql.CollectedField, obj *models.PlanOpsEvalAndLearning) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanOpsEvalAndLearning_dataCollectionFrequencyContinually(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.DataCollectionFrequencyContinually, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_dataCollectionFrequencyContinually(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanOpsEvalAndLearning",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
 		},
 	}
 	return fc, nil
@@ -37553,6 +39019,132 @@ func (ec *executionContext) _PlanOpsEvalAndLearning_qualityReportingStartsNote(c
 }
 
 func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_qualityReportingStartsNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanOpsEvalAndLearning",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanOpsEvalAndLearning_qualityReportingFrequency(ctx context.Context, field graphql.CollectedField, obj *models.PlanOpsEvalAndLearning) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanOpsEvalAndLearning_qualityReportingFrequency(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.PlanOpsEvalAndLearning().QualityReportingFrequency(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.([]models.FrequencyType)
+	fc.Result = res
+	return ec.marshalNFrequencyType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐFrequencyTypeᚄ(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_qualityReportingFrequency(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanOpsEvalAndLearning",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type FrequencyType does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanOpsEvalAndLearning_qualityReportingFrequencyContinually(ctx context.Context, field graphql.CollectedField, obj *models.PlanOpsEvalAndLearning) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanOpsEvalAndLearning_qualityReportingFrequencyContinually(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.QualityReportingFrequencyContinually, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_qualityReportingFrequencyContinually(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanOpsEvalAndLearning",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanOpsEvalAndLearning_qualityReportingFrequencyOther(ctx context.Context, field graphql.CollectedField, obj *models.PlanOpsEvalAndLearning) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanOpsEvalAndLearning_qualityReportingFrequencyOther(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.QualityReportingFrequencyOther, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_qualityReportingFrequencyOther(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "PlanOpsEvalAndLearning",
 		Field:      field,
@@ -39156,6 +40748,340 @@ func (ec *executionContext) fieldContext_PlanParticipantsAndProviders_selectionN
 	return fc, nil
 }
 
+func (ec *executionContext) _PlanParticipantsAndProviders_participantAddedFrequency(ctx context.Context, field graphql.CollectedField, obj *models.PlanParticipantsAndProviders) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanParticipantsAndProviders_participantAddedFrequency(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.PlanParticipantsAndProviders().ParticipantAddedFrequency(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.([]models.FrequencyType)
+	fc.Result = res
+	return ec.marshalNFrequencyType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐFrequencyTypeᚄ(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanParticipantsAndProviders_participantAddedFrequency(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanParticipantsAndProviders",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type FrequencyType does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanParticipantsAndProviders_participantAddedFrequencyContinually(ctx context.Context, field graphql.CollectedField, obj *models.PlanParticipantsAndProviders) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanParticipantsAndProviders_participantAddedFrequencyContinually(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ParticipantAddedFrequencyContinually, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanParticipantsAndProviders_participantAddedFrequencyContinually(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanParticipantsAndProviders",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanParticipantsAndProviders_participantAddedFrequencyOther(ctx context.Context, field graphql.CollectedField, obj *models.PlanParticipantsAndProviders) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanParticipantsAndProviders_participantAddedFrequencyOther(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ParticipantAddedFrequencyOther, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanParticipantsAndProviders_participantAddedFrequencyOther(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanParticipantsAndProviders",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanParticipantsAndProviders_participantAddedFrequencyNote(ctx context.Context, field graphql.CollectedField, obj *models.PlanParticipantsAndProviders) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanParticipantsAndProviders_participantAddedFrequencyNote(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ParticipantAddedFrequencyNote, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanParticipantsAndProviders_participantAddedFrequencyNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanParticipantsAndProviders",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanParticipantsAndProviders_participantRemovedFrequency(ctx context.Context, field graphql.CollectedField, obj *models.PlanParticipantsAndProviders) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanParticipantsAndProviders_participantRemovedFrequency(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.PlanParticipantsAndProviders().ParticipantRemovedFrequency(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.([]models.FrequencyType)
+	fc.Result = res
+	return ec.marshalNFrequencyType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐFrequencyTypeᚄ(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanParticipantsAndProviders_participantRemovedFrequency(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanParticipantsAndProviders",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type FrequencyType does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanParticipantsAndProviders_participantRemovedFrequencyContinually(ctx context.Context, field graphql.CollectedField, obj *models.PlanParticipantsAndProviders) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanParticipantsAndProviders_participantRemovedFrequencyContinually(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ParticipantRemovedFrequencyContinually, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanParticipantsAndProviders_participantRemovedFrequencyContinually(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanParticipantsAndProviders",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanParticipantsAndProviders_participantRemovedFrequencyOther(ctx context.Context, field graphql.CollectedField, obj *models.PlanParticipantsAndProviders) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanParticipantsAndProviders_participantRemovedFrequencyOther(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ParticipantRemovedFrequencyOther, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanParticipantsAndProviders_participantRemovedFrequencyOther(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanParticipantsAndProviders",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanParticipantsAndProviders_participantRemovedFrequencyNote(ctx context.Context, field graphql.CollectedField, obj *models.PlanParticipantsAndProviders) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanParticipantsAndProviders_participantRemovedFrequencyNote(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ParticipantRemovedFrequencyNote, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanParticipantsAndProviders_participantRemovedFrequencyNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanParticipantsAndProviders",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
 func (ec *executionContext) _PlanParticipantsAndProviders_communicationMethod(ctx context.Context, field graphql.CollectedField, obj *models.PlanParticipantsAndProviders) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_PlanParticipantsAndProviders_communicationMethod(ctx, field)
 	if err != nil {
@@ -39282,47 +41208,6 @@ func (ec *executionContext) fieldContext_PlanParticipantsAndProviders_communicat
 	return fc, nil
 }
 
-func (ec *executionContext) _PlanParticipantsAndProviders_participantAssumeRisk(ctx context.Context, field graphql.CollectedField, obj *models.PlanParticipantsAndProviders) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_PlanParticipantsAndProviders_participantAssumeRisk(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.ParticipantAssumeRisk, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		return graphql.Null
-	}
-	res := resTmp.(*bool)
-	fc.Result = res
-	return ec.marshalOBoolean2ᚖbool(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_PlanParticipantsAndProviders_participantAssumeRisk(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "PlanParticipantsAndProviders",
-		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type Boolean does not have child fields")
-		},
-	}
-	return fc, nil
-}
-
 func (ec *executionContext) _PlanParticipantsAndProviders_riskType(ctx context.Context, field graphql.CollectedField, obj *models.PlanParticipantsAndProviders) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_PlanParticipantsAndProviders_riskType(ctx, field)
 	if err != nil {
@@ -39337,26 +41222,29 @@ func (ec *executionContext) _PlanParticipantsAndProviders_riskType(ctx context.C
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.RiskType, nil
+		return ec.resolvers.PlanParticipantsAndProviders().RiskType(rctx, obj)
 	})
 	if err != nil {
 		ec.Error(ctx, err)
 		return graphql.Null
 	}
 	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
 		return graphql.Null
 	}
-	res := resTmp.(*models.ParticipantRiskType)
+	res := resTmp.([]models.ParticipantRiskType)
 	fc.Result = res
-	return ec.marshalOParticipantRiskType2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐParticipantRiskType(ctx, field.Selections, res)
+	return ec.marshalNParticipantRiskType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐParticipantRiskTypeᚄ(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanParticipantsAndProviders_riskType(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "PlanParticipantsAndProviders",
 		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
+		IsMethod:   true,
+		IsResolver: true,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return nil, errors.New("field of type ParticipantRiskType does not have child fields")
 		},
@@ -39958,7 +41846,51 @@ func (ec *executionContext) _PlanParticipantsAndProviders_providerAdditionFreque
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.ProviderAdditionFrequency, nil
+		return ec.resolvers.PlanParticipantsAndProviders().ProviderAdditionFrequency(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.([]models.FrequencyType)
+	fc.Result = res
+	return ec.marshalNFrequencyType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐFrequencyTypeᚄ(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanParticipantsAndProviders_providerAdditionFrequency(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanParticipantsAndProviders",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type FrequencyType does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanParticipantsAndProviders_providerAdditionFrequencyContinually(ctx context.Context, field graphql.CollectedField, obj *models.PlanParticipantsAndProviders) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanParticipantsAndProviders_providerAdditionFrequencyContinually(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ProviderAdditionFrequencyContinually, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -39967,19 +41899,19 @@ func (ec *executionContext) _PlanParticipantsAndProviders_providerAdditionFreque
 	if resTmp == nil {
 		return graphql.Null
 	}
-	res := resTmp.(*models.FrequencyType)
+	res := resTmp.(*string)
 	fc.Result = res
-	return ec.marshalOFrequencyType2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐFrequencyType(ctx, field.Selections, res)
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_PlanParticipantsAndProviders_providerAdditionFrequency(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_PlanParticipantsAndProviders_providerAdditionFrequencyContinually(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "PlanParticipantsAndProviders",
 		Field:      field,
 		IsMethod:   false,
 		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type FrequencyType does not have child fields")
+			return nil, errors.New("field of type String does not have child fields")
 		},
 	}
 	return fc, nil
@@ -40307,6 +42239,173 @@ func (ec *executionContext) _PlanParticipantsAndProviders_providerLeaveMethodNot
 }
 
 func (ec *executionContext) fieldContext_PlanParticipantsAndProviders_providerLeaveMethodNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanParticipantsAndProviders",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanParticipantsAndProviders_providerRemovalFrequency(ctx context.Context, field graphql.CollectedField, obj *models.PlanParticipantsAndProviders) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanParticipantsAndProviders_providerRemovalFrequency(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.PlanParticipantsAndProviders().ProviderRemovalFrequency(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.([]models.FrequencyType)
+	fc.Result = res
+	return ec.marshalNFrequencyType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐFrequencyTypeᚄ(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanParticipantsAndProviders_providerRemovalFrequency(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanParticipantsAndProviders",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type FrequencyType does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanParticipantsAndProviders_providerRemovalFrequencyContinually(ctx context.Context, field graphql.CollectedField, obj *models.PlanParticipantsAndProviders) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanParticipantsAndProviders_providerRemovalFrequencyContinually(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ProviderRemovalFrequencyContinually, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanParticipantsAndProviders_providerRemovalFrequencyContinually(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanParticipantsAndProviders",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanParticipantsAndProviders_providerRemovalFrequencyOther(ctx context.Context, field graphql.CollectedField, obj *models.PlanParticipantsAndProviders) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanParticipantsAndProviders_providerRemovalFrequencyOther(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ProviderRemovalFrequencyOther, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanParticipantsAndProviders_providerRemovalFrequencyOther(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanParticipantsAndProviders",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanParticipantsAndProviders_providerRemovalFrequencyNote(ctx context.Context, field graphql.CollectedField, obj *models.PlanParticipantsAndProviders) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanParticipantsAndProviders_providerRemovalFrequencyNote(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ProviderRemovalFrequencyNote, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanParticipantsAndProviders_providerRemovalFrequencyNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "PlanParticipantsAndProviders",
 		Field:      field,
@@ -43339,9 +45438,9 @@ func (ec *executionContext) _PlanPayments_anticipatedPaymentFrequency(ctx contex
 		}
 		return graphql.Null
 	}
-	res := resTmp.([]models.AnticipatedPaymentFrequencyType)
+	res := resTmp.([]models.FrequencyType)
 	fc.Result = res
-	return ec.marshalNAnticipatedPaymentFrequencyType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐAnticipatedPaymentFrequencyTypeᚄ(ctx, field.Selections, res)
+	return ec.marshalNFrequencyType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐFrequencyTypeᚄ(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanPayments_anticipatedPaymentFrequency(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -43351,7 +45450,48 @@ func (ec *executionContext) fieldContext_PlanPayments_anticipatedPaymentFrequenc
 		IsMethod:   true,
 		IsResolver: true,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type AnticipatedPaymentFrequencyType does not have child fields")
+			return nil, errors.New("field of type FrequencyType does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanPayments_anticipatedPaymentFrequencyContinually(ctx context.Context, field graphql.CollectedField, obj *models.PlanPayments) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanPayments_anticipatedPaymentFrequencyContinually(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.AnticipatedPaymentFrequencyContinually, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanPayments_anticipatedPaymentFrequencyContinually(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanPayments",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
 		},
 	}
 	return fc, nil
@@ -43591,6 +45731,173 @@ func (ec *executionContext) _PlanPayments_anticipateReconcilingPaymentsRetrospec
 }
 
 func (ec *executionContext) fieldContext_PlanPayments_anticipateReconcilingPaymentsRetrospectivelyNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanPayments",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanPayments_paymentReconciliationFrequency(ctx context.Context, field graphql.CollectedField, obj *models.PlanPayments) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanPayments_paymentReconciliationFrequency(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.PlanPayments().PaymentReconciliationFrequency(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.([]models.FrequencyType)
+	fc.Result = res
+	return ec.marshalNFrequencyType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐFrequencyTypeᚄ(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanPayments_paymentReconciliationFrequency(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanPayments",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type FrequencyType does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanPayments_paymentReconciliationFrequencyContinually(ctx context.Context, field graphql.CollectedField, obj *models.PlanPayments) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanPayments_paymentReconciliationFrequencyContinually(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.PaymentReconciliationFrequencyContinually, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanPayments_paymentReconciliationFrequencyContinually(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanPayments",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanPayments_paymentReconciliationFrequencyOther(ctx context.Context, field graphql.CollectedField, obj *models.PlanPayments) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanPayments_paymentReconciliationFrequencyOther(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.PaymentReconciliationFrequencyOther, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanPayments_paymentReconciliationFrequencyOther(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanPayments",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanPayments_paymentReconciliationFrequencyNote(ctx context.Context, field graphql.CollectedField, obj *models.PlanPayments) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanPayments_paymentReconciliationFrequencyNote(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.PaymentReconciliationFrequencyNote, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanPayments_paymentReconciliationFrequencyNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "PlanPayments",
 		Field:      field,
@@ -44313,6 +46620,566 @@ func (ec *executionContext) fieldContext_PlanPayments_status(ctx context.Context
 		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return nil, errors.New("field of type TaskStatus does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanTDL_id(ctx context.Context, field graphql.CollectedField, obj *models.PlanTDL) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanTDL_id(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ID, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(uuid.UUID)
+	fc.Result = res
+	return ec.marshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanTDL_id(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanTDL",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type UUID does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanTDL_modelPlanID(ctx context.Context, field graphql.CollectedField, obj *models.PlanTDL) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanTDL_modelPlanID(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ModelPlanID, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(uuid.UUID)
+	fc.Result = res
+	return ec.marshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanTDL_modelPlanID(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanTDL",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type UUID does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanTDL_idNumber(ctx context.Context, field graphql.CollectedField, obj *models.PlanTDL) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanTDL_idNumber(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.IDNumber, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalNString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanTDL_idNumber(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanTDL",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanTDL_dateInitiated(ctx context.Context, field graphql.CollectedField, obj *models.PlanTDL) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanTDL_dateInitiated(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.DateInitiated, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*time.Time)
+	fc.Result = res
+	return ec.marshalNTime2ᚖtimeᚐTime(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanTDL_dateInitiated(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanTDL",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Time does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanTDL_title(ctx context.Context, field graphql.CollectedField, obj *models.PlanTDL) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanTDL_title(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Title, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalNString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanTDL_title(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanTDL",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanTDL_note(ctx context.Context, field graphql.CollectedField, obj *models.PlanTDL) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanTDL_note(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Note, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanTDL_note(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanTDL",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanTDL_createdBy(ctx context.Context, field graphql.CollectedField, obj *models.PlanTDL) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanTDL_createdBy(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.CreatedBy, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(uuid.UUID)
+	fc.Result = res
+	return ec.marshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanTDL_createdBy(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanTDL",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type UUID does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanTDL_createdByUserAccount(ctx context.Context, field graphql.CollectedField, obj *models.PlanTDL) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanTDL_createdByUserAccount(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.CreatedByUserAccount(ctx), nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*authentication.UserAccount)
+	fc.Result = res
+	return ec.marshalNUserAccount2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋauthenticationᚐUserAccount(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanTDL_createdByUserAccount(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanTDL",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_UserAccount_id(ctx, field)
+			case "username":
+				return ec.fieldContext_UserAccount_username(ctx, field)
+			case "isEUAID":
+				return ec.fieldContext_UserAccount_isEUAID(ctx, field)
+			case "commonName":
+				return ec.fieldContext_UserAccount_commonName(ctx, field)
+			case "locale":
+				return ec.fieldContext_UserAccount_locale(ctx, field)
+			case "email":
+				return ec.fieldContext_UserAccount_email(ctx, field)
+			case "givenName":
+				return ec.fieldContext_UserAccount_givenName(ctx, field)
+			case "familyName":
+				return ec.fieldContext_UserAccount_familyName(ctx, field)
+			case "zoneInfo":
+				return ec.fieldContext_UserAccount_zoneInfo(ctx, field)
+			case "hasLoggedIn":
+				return ec.fieldContext_UserAccount_hasLoggedIn(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type UserAccount", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanTDL_createdDts(ctx context.Context, field graphql.CollectedField, obj *models.PlanTDL) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanTDL_createdDts(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.CreatedDts, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(time.Time)
+	fc.Result = res
+	return ec.marshalNTime2timeᚐTime(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanTDL_createdDts(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanTDL",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Time does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanTDL_modifiedBy(ctx context.Context, field graphql.CollectedField, obj *models.PlanTDL) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanTDL_modifiedBy(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ModifiedBy, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*uuid.UUID)
+	fc.Result = res
+	return ec.marshalOUUID2ᚖgithubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanTDL_modifiedBy(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanTDL",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type UUID does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanTDL_modifiedByUserAccount(ctx context.Context, field graphql.CollectedField, obj *models.PlanTDL) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanTDL_modifiedByUserAccount(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ModifiedByUserAccount(ctx), nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*authentication.UserAccount)
+	fc.Result = res
+	return ec.marshalOUserAccount2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋauthenticationᚐUserAccount(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanTDL_modifiedByUserAccount(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanTDL",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_UserAccount_id(ctx, field)
+			case "username":
+				return ec.fieldContext_UserAccount_username(ctx, field)
+			case "isEUAID":
+				return ec.fieldContext_UserAccount_isEUAID(ctx, field)
+			case "commonName":
+				return ec.fieldContext_UserAccount_commonName(ctx, field)
+			case "locale":
+				return ec.fieldContext_UserAccount_locale(ctx, field)
+			case "email":
+				return ec.fieldContext_UserAccount_email(ctx, field)
+			case "givenName":
+				return ec.fieldContext_UserAccount_givenName(ctx, field)
+			case "familyName":
+				return ec.fieldContext_UserAccount_familyName(ctx, field)
+			case "zoneInfo":
+				return ec.fieldContext_UserAccount_zoneInfo(ctx, field)
+			case "hasLoggedIn":
+				return ec.fieldContext_UserAccount_hasLoggedIn(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type UserAccount", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanTDL_modifiedDts(ctx context.Context, field graphql.CollectedField, obj *models.PlanTDL) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanTDL_modifiedDts(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ModifiedDts, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*time.Time)
+	fc.Result = res
+	return ec.marshalOTime2ᚖtimeᚐTime(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanTDL_modifiedDts(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanTDL",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Time does not have child fields")
 		},
 	}
 	return fc, nil
@@ -46246,8 +49113,10 @@ func (ec *executionContext) fieldContext_Query_modelPlan(ctx context.Context, fi
 				return ec.fieldContext_ModelPlan_isFavorite(ctx, field)
 			case "isCollaborator":
 				return ec.fieldContext_ModelPlan_isCollaborator(ctx, field)
-			case "crTdls":
-				return ec.fieldContext_ModelPlan_crTdls(ctx, field)
+			case "crs":
+				return ec.fieldContext_ModelPlan_crs(ctx, field)
+			case "tdls":
+				return ec.fieldContext_ModelPlan_tdls(ctx, field)
 			case "prepareForClearance":
 				return ec.fieldContext_ModelPlan_prepareForClearance(ctx, field)
 			case "nameHistory":
@@ -46510,8 +49379,10 @@ func (ec *executionContext) fieldContext_Query_modelPlanCollection(ctx context.C
 				return ec.fieldContext_ModelPlan_isFavorite(ctx, field)
 			case "isCollaborator":
 				return ec.fieldContext_ModelPlan_isCollaborator(ctx, field)
-			case "crTdls":
-				return ec.fieldContext_ModelPlan_crTdls(ctx, field)
+			case "crs":
+				return ec.fieldContext_ModelPlan_crs(ctx, field)
+			case "tdls":
+				return ec.fieldContext_ModelPlan_tdls(ctx, field)
 			case "prepareForClearance":
 				return ec.fieldContext_ModelPlan_prepareForClearance(ctx, field)
 			case "nameHistory":
@@ -47106,6 +49977,8 @@ func (ec *executionContext) fieldContext_Query_planPayments(ctx context.Context,
 				return ec.fieldContext_PlanPayments_canParticipantsSelectBetweenPaymentMechanismsNote(ctx, field)
 			case "anticipatedPaymentFrequency":
 				return ec.fieldContext_PlanPayments_anticipatedPaymentFrequency(ctx, field)
+			case "anticipatedPaymentFrequencyContinually":
+				return ec.fieldContext_PlanPayments_anticipatedPaymentFrequencyContinually(ctx, field)
 			case "anticipatedPaymentFrequencyOther":
 				return ec.fieldContext_PlanPayments_anticipatedPaymentFrequencyOther(ctx, field)
 			case "anticipatedPaymentFrequencyNote":
@@ -47118,6 +49991,14 @@ func (ec *executionContext) fieldContext_Query_planPayments(ctx context.Context,
 				return ec.fieldContext_PlanPayments_anticipateReconcilingPaymentsRetrospectively(ctx, field)
 			case "anticipateReconcilingPaymentsRetrospectivelyNote":
 				return ec.fieldContext_PlanPayments_anticipateReconcilingPaymentsRetrospectivelyNote(ctx, field)
+			case "paymentReconciliationFrequency":
+				return ec.fieldContext_PlanPayments_paymentReconciliationFrequency(ctx, field)
+			case "paymentReconciliationFrequencyContinually":
+				return ec.fieldContext_PlanPayments_paymentReconciliationFrequencyContinually(ctx, field)
+			case "paymentReconciliationFrequencyOther":
+				return ec.fieldContext_PlanPayments_paymentReconciliationFrequencyOther(ctx, field)
+			case "paymentReconciliationFrequencyNote":
+				return ec.fieldContext_PlanPayments_paymentReconciliationFrequencyNote(ctx, field)
 			case "paymentStartDate":
 				return ec.fieldContext_PlanPayments_paymentStartDate(ctx, field)
 			case "paymentStartDateNote":
@@ -47240,8 +50121,8 @@ func (ec *executionContext) fieldContext_Query_ndaInfo(ctx context.Context, fiel
 	return fc, nil
 }
 
-func (ec *executionContext) _Query_crTdl(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Query_crTdl(ctx, field)
+func (ec *executionContext) _Query_planCR(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Query_planCR(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -47255,7 +50136,7 @@ func (ec *executionContext) _Query_crTdl(ctx context.Context, field graphql.Coll
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		directive0 := func(rctx context.Context) (interface{}, error) {
 			ctx = rctx // use context from middleware stack in children
-			return ec.resolvers.Query().CrTdl(rctx, fc.Args["id"].(uuid.UUID))
+			return ec.resolvers.Query().PlanCr(rctx, fc.Args["id"].(uuid.UUID))
 		}
 		directive1 := func(ctx context.Context) (interface{}, error) {
 			roles, err := ec.unmarshalNRole2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRoleᚄ(ctx, []interface{}{"MINT_USER", "MINT_MAC"})
@@ -47275,10 +50156,10 @@ func (ec *executionContext) _Query_crTdl(ctx context.Context, field graphql.Coll
 		if tmp == nil {
 			return nil, nil
 		}
-		if data, ok := tmp.(*models.PlanCrTdl); ok {
+		if data, ok := tmp.(*models.PlanCR); ok {
 			return data, nil
 		}
-		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/cmsgov/mint-app/pkg/models.PlanCrTdl`, tmp)
+		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/cmsgov/mint-app/pkg/models.PlanCR`, tmp)
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -47290,12 +50171,12 @@ func (ec *executionContext) _Query_crTdl(ctx context.Context, field graphql.Coll
 		}
 		return graphql.Null
 	}
-	res := resTmp.(*models.PlanCrTdl)
+	res := resTmp.(*models.PlanCR)
 	fc.Result = res
-	return ec.marshalNPlanCrTdl2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanCrTdl(ctx, field.Selections, res)
+	return ec.marshalNPlanCR2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanCR(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_Query_crTdl(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_Query_planCR(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "Query",
 		Field:      field,
@@ -47304,31 +50185,33 @@ func (ec *executionContext) fieldContext_Query_crTdl(ctx context.Context, field 
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			switch field.Name {
 			case "id":
-				return ec.fieldContext_PlanCrTdl_id(ctx, field)
+				return ec.fieldContext_PlanCR_id(ctx, field)
 			case "modelPlanID":
-				return ec.fieldContext_PlanCrTdl_modelPlanID(ctx, field)
+				return ec.fieldContext_PlanCR_modelPlanID(ctx, field)
 			case "idNumber":
-				return ec.fieldContext_PlanCrTdl_idNumber(ctx, field)
+				return ec.fieldContext_PlanCR_idNumber(ctx, field)
 			case "dateInitiated":
-				return ec.fieldContext_PlanCrTdl_dateInitiated(ctx, field)
+				return ec.fieldContext_PlanCR_dateInitiated(ctx, field)
+			case "dateImplemented":
+				return ec.fieldContext_PlanCR_dateImplemented(ctx, field)
 			case "title":
-				return ec.fieldContext_PlanCrTdl_title(ctx, field)
+				return ec.fieldContext_PlanCR_title(ctx, field)
 			case "note":
-				return ec.fieldContext_PlanCrTdl_note(ctx, field)
+				return ec.fieldContext_PlanCR_note(ctx, field)
 			case "createdBy":
-				return ec.fieldContext_PlanCrTdl_createdBy(ctx, field)
+				return ec.fieldContext_PlanCR_createdBy(ctx, field)
 			case "createdByUserAccount":
-				return ec.fieldContext_PlanCrTdl_createdByUserAccount(ctx, field)
+				return ec.fieldContext_PlanCR_createdByUserAccount(ctx, field)
 			case "createdDts":
-				return ec.fieldContext_PlanCrTdl_createdDts(ctx, field)
+				return ec.fieldContext_PlanCR_createdDts(ctx, field)
 			case "modifiedBy":
-				return ec.fieldContext_PlanCrTdl_modifiedBy(ctx, field)
+				return ec.fieldContext_PlanCR_modifiedBy(ctx, field)
 			case "modifiedByUserAccount":
-				return ec.fieldContext_PlanCrTdl_modifiedByUserAccount(ctx, field)
+				return ec.fieldContext_PlanCR_modifiedByUserAccount(ctx, field)
 			case "modifiedDts":
-				return ec.fieldContext_PlanCrTdl_modifiedDts(ctx, field)
+				return ec.fieldContext_PlanCR_modifiedDts(ctx, field)
 			}
-			return nil, fmt.Errorf("no field named %q was found under type PlanCrTdl", field.Name)
+			return nil, fmt.Errorf("no field named %q was found under type PlanCR", field.Name)
 		},
 	}
 	defer func() {
@@ -47338,7 +50221,112 @@ func (ec *executionContext) fieldContext_Query_crTdl(ctx context.Context, field 
 		}
 	}()
 	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Query_crTdl_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+	if fc.Args, err = ec.field_Query_planCR_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Query_planTDL(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Query_planTDL(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		directive0 := func(rctx context.Context) (interface{}, error) {
+			ctx = rctx // use context from middleware stack in children
+			return ec.resolvers.Query().PlanTdl(rctx, fc.Args["id"].(uuid.UUID))
+		}
+		directive1 := func(ctx context.Context) (interface{}, error) {
+			roles, err := ec.unmarshalNRole2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRoleᚄ(ctx, []interface{}{"MINT_USER", "MINT_MAC"})
+			if err != nil {
+				return nil, err
+			}
+			if ec.directives.HasAnyRole == nil {
+				return nil, errors.New("directive hasAnyRole is not implemented")
+			}
+			return ec.directives.HasAnyRole(ctx, nil, directive0, roles)
+		}
+
+		tmp, err := directive1(rctx)
+		if err != nil {
+			return nil, graphql.ErrorOnPath(ctx, err)
+		}
+		if tmp == nil {
+			return nil, nil
+		}
+		if data, ok := tmp.(*models.PlanTDL); ok {
+			return data, nil
+		}
+		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/cmsgov/mint-app/pkg/models.PlanTDL`, tmp)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*models.PlanTDL)
+	fc.Result = res
+	return ec.marshalNPlanTDL2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanTDL(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Query_planTDL(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Query",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_PlanTDL_id(ctx, field)
+			case "modelPlanID":
+				return ec.fieldContext_PlanTDL_modelPlanID(ctx, field)
+			case "idNumber":
+				return ec.fieldContext_PlanTDL_idNumber(ctx, field)
+			case "dateInitiated":
+				return ec.fieldContext_PlanTDL_dateInitiated(ctx, field)
+			case "title":
+				return ec.fieldContext_PlanTDL_title(ctx, field)
+			case "note":
+				return ec.fieldContext_PlanTDL_note(ctx, field)
+			case "createdBy":
+				return ec.fieldContext_PlanTDL_createdBy(ctx, field)
+			case "createdByUserAccount":
+				return ec.fieldContext_PlanTDL_createdByUserAccount(ctx, field)
+			case "createdDts":
+				return ec.fieldContext_PlanTDL_createdDts(ctx, field)
+			case "modifiedBy":
+				return ec.fieldContext_PlanTDL_modifiedBy(ctx, field)
+			case "modifiedByUserAccount":
+				return ec.fieldContext_PlanTDL_modifiedByUserAccount(ctx, field)
+			case "modifiedDts":
+				return ec.fieldContext_PlanTDL_modifiedDts(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type PlanTDL", field.Name)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Query_planTDL_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
 		ec.Error(ctx, err)
 		return fc, err
 	}
@@ -52490,6 +55478,80 @@ func (ec *executionContext) unmarshalInputPageParams(ctx context.Context, obj in
 	return it, nil
 }
 
+func (ec *executionContext) unmarshalInputPlanCRCreateInput(ctx context.Context, obj interface{}) (model.PlanCRCreateInput, error) {
+	var it model.PlanCRCreateInput
+	asMap := map[string]interface{}{}
+	for k, v := range obj.(map[string]interface{}) {
+		asMap[k] = v
+	}
+
+	fieldsInOrder := [...]string{"modelPlanID", "idNumber", "dateInitiated", "dateImplemented", "title", "note"}
+	for _, k := range fieldsInOrder {
+		v, ok := asMap[k]
+		if !ok {
+			continue
+		}
+		switch k {
+		case "modelPlanID":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("modelPlanID"))
+			data, err := ec.unmarshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.ModelPlanID = data
+		case "idNumber":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("idNumber"))
+			data, err := ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.IDNumber = data
+		case "dateInitiated":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("dateInitiated"))
+			data, err := ec.unmarshalNTime2timeᚐTime(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.DateInitiated = data
+		case "dateImplemented":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("dateImplemented"))
+			data, err := ec.unmarshalNTime2timeᚐTime(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.DateImplemented = data
+		case "title":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("title"))
+			data, err := ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.Title = data
+		case "note":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("note"))
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.Note = data
+		}
+	}
+
+	return it, nil
+}
+
 func (ec *executionContext) unmarshalInputPlanCollaboratorCreateInput(ctx context.Context, obj interface{}) (model.PlanCollaboratorCreateInput, error) {
 	var it model.PlanCollaboratorCreateInput
 	asMap := map[string]interface{}{}
@@ -52531,71 +55593,6 @@ func (ec *executionContext) unmarshalInputPlanCollaboratorCreateInput(ctx contex
 				return it, err
 			}
 			it.TeamRoles = data
-		}
-	}
-
-	return it, nil
-}
-
-func (ec *executionContext) unmarshalInputPlanCrTdlCreateInput(ctx context.Context, obj interface{}) (model.PlanCrTdlCreateInput, error) {
-	var it model.PlanCrTdlCreateInput
-	asMap := map[string]interface{}{}
-	for k, v := range obj.(map[string]interface{}) {
-		asMap[k] = v
-	}
-
-	fieldsInOrder := [...]string{"modelPlanID", "idNumber", "dateInitiated", "title", "note"}
-	for _, k := range fieldsInOrder {
-		v, ok := asMap[k]
-		if !ok {
-			continue
-		}
-		switch k {
-		case "modelPlanID":
-			var err error
-
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("modelPlanID"))
-			data, err := ec.unmarshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, v)
-			if err != nil {
-				return it, err
-			}
-			it.ModelPlanID = data
-		case "idNumber":
-			var err error
-
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("idNumber"))
-			data, err := ec.unmarshalNString2string(ctx, v)
-			if err != nil {
-				return it, err
-			}
-			it.IDNumber = data
-		case "dateInitiated":
-			var err error
-
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("dateInitiated"))
-			data, err := ec.unmarshalNTime2timeᚐTime(ctx, v)
-			if err != nil {
-				return it, err
-			}
-			it.DateInitiated = data
-		case "title":
-			var err error
-
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("title"))
-			data, err := ec.unmarshalNString2string(ctx, v)
-			if err != nil {
-				return it, err
-			}
-			it.Title = data
-		case "note":
-			var err error
-
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("note"))
-			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
-			if err != nil {
-				return it, err
-			}
-			it.Note = data
 		}
 	}
 
@@ -52809,6 +55806,71 @@ func (ec *executionContext) unmarshalInputPlanDocumentLinkInput(ctx context.Cont
 				return it, err
 			}
 			it.OptionalNotes = data
+		}
+	}
+
+	return it, nil
+}
+
+func (ec *executionContext) unmarshalInputPlanTDLCreateInput(ctx context.Context, obj interface{}) (model.PlanTDLCreateInput, error) {
+	var it model.PlanTDLCreateInput
+	asMap := map[string]interface{}{}
+	for k, v := range obj.(map[string]interface{}) {
+		asMap[k] = v
+	}
+
+	fieldsInOrder := [...]string{"modelPlanID", "idNumber", "dateInitiated", "title", "note"}
+	for _, k := range fieldsInOrder {
+		v, ok := asMap[k]
+		if !ok {
+			continue
+		}
+		switch k {
+		case "modelPlanID":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("modelPlanID"))
+			data, err := ec.unmarshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.ModelPlanID = data
+		case "idNumber":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("idNumber"))
+			data, err := ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.IDNumber = data
+		case "dateInitiated":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("dateInitiated"))
+			data, err := ec.unmarshalNTime2timeᚐTime(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.DateInitiated = data
+		case "title":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("title"))
+			data, err := ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.Title = data
+		case "note":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("note"))
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.Note = data
 		}
 	}
 
@@ -54653,7 +57715,7 @@ func (ec *executionContext) _ModelPlan(ctx context.Context, sel ast.SelectionSet
 			}
 
 			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
-		case "crTdls":
+		case "crs":
 			field := field
 
 			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
@@ -54662,7 +57724,43 @@ func (ec *executionContext) _ModelPlan(ctx context.Context, sel ast.SelectionSet
 						ec.Error(ctx, ec.Recover(ctx, r))
 					}
 				}()
-				res = ec._ModelPlan_crTdls(ctx, field, obj)
+				res = ec._ModelPlan_crs(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
+				return res
+			}
+
+			if field.Deferrable != nil {
+				dfs, ok := deferred[field.Deferrable.Label]
+				di := 0
+				if ok {
+					dfs.AddField(field)
+					di = len(dfs.Values) - 1
+				} else {
+					dfs = graphql.NewFieldSet([]graphql.CollectedField{field})
+					deferred[field.Deferrable.Label] = dfs
+				}
+				dfs.Concurrently(di, func(ctx context.Context) graphql.Marshaler {
+					return innerFunc(ctx, dfs)
+				})
+
+				// don't run the out.Concurrently() call below
+				out.Values[i] = graphql.Null
+				continue
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+		case "tdls":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._ModelPlan_tdls(ctx, field, obj)
 				if res == graphql.Null {
 					atomic.AddUint32(&fs.Invalids, 1)
 				}
@@ -55029,23 +58127,44 @@ func (ec *executionContext) _Mutation(ctx context.Context, sel ast.SelectionSet)
 			if out.Values[i] == graphql.Null {
 				out.Invalids++
 			}
-		case "createPlanCrTdl":
+		case "createPlanCR":
 			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
-				return ec._Mutation_createPlanCrTdl(ctx, field)
+				return ec._Mutation_createPlanCR(ctx, field)
 			})
 			if out.Values[i] == graphql.Null {
 				out.Invalids++
 			}
-		case "updatePlanCrTdl":
+		case "createPlanTDL":
 			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
-				return ec._Mutation_updatePlanCrTdl(ctx, field)
+				return ec._Mutation_createPlanTDL(ctx, field)
 			})
 			if out.Values[i] == graphql.Null {
 				out.Invalids++
 			}
-		case "deletePlanCrTdl":
+		case "updatePlanCR":
 			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
-				return ec._Mutation_deletePlanCrTdl(ctx, field)
+				return ec._Mutation_updatePlanCR(ctx, field)
+			})
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "updatePlanTDL":
+			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
+				return ec._Mutation_updatePlanTDL(ctx, field)
+			})
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "deletePlanCR":
+			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
+				return ec._Mutation_deletePlanCR(ctx, field)
+			})
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "deletePlanTDL":
+			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
+				return ec._Mutation_deletePlanTDL(ctx, field)
 			})
 			if out.Values[i] == graphql.Null {
 				out.Invalids++
@@ -56252,11 +59371,89 @@ func (ec *executionContext) _PlanBeneficiaries(ctx context.Context, sel ast.Sele
 		case "beneficiarySelectionNote":
 			out.Values[i] = ec._PlanBeneficiaries_beneficiarySelectionNote(ctx, field, obj)
 		case "beneficiarySelectionFrequency":
-			out.Values[i] = ec._PlanBeneficiaries_beneficiarySelectionFrequency(ctx, field, obj)
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._PlanBeneficiaries_beneficiarySelectionFrequency(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
+				return res
+			}
+
+			if field.Deferrable != nil {
+				dfs, ok := deferred[field.Deferrable.Label]
+				di := 0
+				if ok {
+					dfs.AddField(field)
+					di = len(dfs.Values) - 1
+				} else {
+					dfs = graphql.NewFieldSet([]graphql.CollectedField{field})
+					deferred[field.Deferrable.Label] = dfs
+				}
+				dfs.Concurrently(di, func(ctx context.Context) graphql.Marshaler {
+					return innerFunc(ctx, dfs)
+				})
+
+				// don't run the out.Concurrently() call below
+				out.Values[i] = graphql.Null
+				continue
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+		case "beneficiarySelectionFrequencyContinually":
+			out.Values[i] = ec._PlanBeneficiaries_beneficiarySelectionFrequencyContinually(ctx, field, obj)
 		case "beneficiarySelectionFrequencyOther":
 			out.Values[i] = ec._PlanBeneficiaries_beneficiarySelectionFrequencyOther(ctx, field, obj)
 		case "beneficiarySelectionFrequencyNote":
 			out.Values[i] = ec._PlanBeneficiaries_beneficiarySelectionFrequencyNote(ctx, field, obj)
+		case "beneficiaryRemovalFrequency":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._PlanBeneficiaries_beneficiaryRemovalFrequency(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
+				return res
+			}
+
+			if field.Deferrable != nil {
+				dfs, ok := deferred[field.Deferrable.Label]
+				di := 0
+				if ok {
+					dfs.AddField(field)
+					di = len(dfs.Values) - 1
+				} else {
+					dfs = graphql.NewFieldSet([]graphql.CollectedField{field})
+					deferred[field.Deferrable.Label] = dfs
+				}
+				dfs.Concurrently(di, func(ctx context.Context) graphql.Marshaler {
+					return innerFunc(ctx, dfs)
+				})
+
+				// don't run the out.Concurrently() call below
+				out.Values[i] = graphql.Null
+				continue
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+		case "beneficiaryRemovalFrequencyContinually":
+			out.Values[i] = ec._PlanBeneficiaries_beneficiaryRemovalFrequencyContinually(ctx, field, obj)
+		case "beneficiaryRemovalFrequencyOther":
+			out.Values[i] = ec._PlanBeneficiaries_beneficiaryRemovalFrequencyOther(ctx, field, obj)
+		case "beneficiaryRemovalFrequencyNote":
+			out.Values[i] = ec._PlanBeneficiaries_beneficiaryRemovalFrequencyNote(ctx, field, obj)
 		case "beneficiaryOverlap":
 			out.Values[i] = ec._PlanBeneficiaries_beneficiaryOverlap(ctx, field, obj)
 		case "beneficiaryOverlapNote":
@@ -56488,6 +59685,152 @@ func (ec *executionContext) _PlanBeneficiaries(ctx context.Context, sel ast.Sele
 	return out
 }
 
+var planCRImplementors = []string{"PlanCR"}
+
+func (ec *executionContext) _PlanCR(ctx context.Context, sel ast.SelectionSet, obj *models.PlanCR) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, planCRImplementors)
+
+	out := graphql.NewFieldSet(fields)
+	deferred := make(map[string]*graphql.FieldSet)
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("PlanCR")
+		case "id":
+			out.Values[i] = ec._PlanCR_id(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "modelPlanID":
+			out.Values[i] = ec._PlanCR_modelPlanID(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "idNumber":
+			out.Values[i] = ec._PlanCR_idNumber(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "dateInitiated":
+			out.Values[i] = ec._PlanCR_dateInitiated(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "dateImplemented":
+			out.Values[i] = ec._PlanCR_dateImplemented(ctx, field, obj)
+		case "title":
+			out.Values[i] = ec._PlanCR_title(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "note":
+			out.Values[i] = ec._PlanCR_note(ctx, field, obj)
+		case "createdBy":
+			out.Values[i] = ec._PlanCR_createdBy(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "createdByUserAccount":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._PlanCR_createdByUserAccount(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
+				return res
+			}
+
+			if field.Deferrable != nil {
+				dfs, ok := deferred[field.Deferrable.Label]
+				di := 0
+				if ok {
+					dfs.AddField(field)
+					di = len(dfs.Values) - 1
+				} else {
+					dfs = graphql.NewFieldSet([]graphql.CollectedField{field})
+					deferred[field.Deferrable.Label] = dfs
+				}
+				dfs.Concurrently(di, func(ctx context.Context) graphql.Marshaler {
+					return innerFunc(ctx, dfs)
+				})
+
+				// don't run the out.Concurrently() call below
+				out.Values[i] = graphql.Null
+				continue
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+		case "createdDts":
+			out.Values[i] = ec._PlanCR_createdDts(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "modifiedBy":
+			out.Values[i] = ec._PlanCR_modifiedBy(ctx, field, obj)
+		case "modifiedByUserAccount":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._PlanCR_modifiedByUserAccount(ctx, field, obj)
+				return res
+			}
+
+			if field.Deferrable != nil {
+				dfs, ok := deferred[field.Deferrable.Label]
+				di := 0
+				if ok {
+					dfs.AddField(field)
+					di = len(dfs.Values) - 1
+				} else {
+					dfs = graphql.NewFieldSet([]graphql.CollectedField{field})
+					deferred[field.Deferrable.Label] = dfs
+				}
+				dfs.Concurrently(di, func(ctx context.Context) graphql.Marshaler {
+					return innerFunc(ctx, dfs)
+				})
+
+				// don't run the out.Concurrently() call below
+				out.Values[i] = graphql.Null
+				continue
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+		case "modifiedDts":
+			out.Values[i] = ec._PlanCR_modifiedDts(ctx, field, obj)
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch(ctx)
+	if out.Invalids > 0 {
+		return graphql.Null
+	}
+
+	atomic.AddInt32(&ec.deferred, int32(len(deferred)))
+
+	for label, dfs := range deferred {
+		ec.processDeferredGroup(graphql.DeferredGroup{
+			Label:    label,
+			Path:     graphql.GetPath(ctx),
+			FieldSet: dfs,
+			Context:  ctx,
+		})
+	}
+
+	return out
+}
+
 var planCollaboratorImplementors = []string{"PlanCollaborator"}
 
 func (ec *executionContext) _PlanCollaborator(ctx context.Context, sel ast.SelectionSet, obj *models.PlanCollaborator) graphql.Marshaler {
@@ -56669,150 +60012,6 @@ func (ec *executionContext) _PlanCollaborator(ctx context.Context, sel ast.Selec
 			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
 		case "modifiedDts":
 			out.Values[i] = ec._PlanCollaborator_modifiedDts(ctx, field, obj)
-		default:
-			panic("unknown field " + strconv.Quote(field.Name))
-		}
-	}
-	out.Dispatch(ctx)
-	if out.Invalids > 0 {
-		return graphql.Null
-	}
-
-	atomic.AddInt32(&ec.deferred, int32(len(deferred)))
-
-	for label, dfs := range deferred {
-		ec.processDeferredGroup(graphql.DeferredGroup{
-			Label:    label,
-			Path:     graphql.GetPath(ctx),
-			FieldSet: dfs,
-			Context:  ctx,
-		})
-	}
-
-	return out
-}
-
-var planCrTdlImplementors = []string{"PlanCrTdl"}
-
-func (ec *executionContext) _PlanCrTdl(ctx context.Context, sel ast.SelectionSet, obj *models.PlanCrTdl) graphql.Marshaler {
-	fields := graphql.CollectFields(ec.OperationContext, sel, planCrTdlImplementors)
-
-	out := graphql.NewFieldSet(fields)
-	deferred := make(map[string]*graphql.FieldSet)
-	for i, field := range fields {
-		switch field.Name {
-		case "__typename":
-			out.Values[i] = graphql.MarshalString("PlanCrTdl")
-		case "id":
-			out.Values[i] = ec._PlanCrTdl_id(ctx, field, obj)
-			if out.Values[i] == graphql.Null {
-				atomic.AddUint32(&out.Invalids, 1)
-			}
-		case "modelPlanID":
-			out.Values[i] = ec._PlanCrTdl_modelPlanID(ctx, field, obj)
-			if out.Values[i] == graphql.Null {
-				atomic.AddUint32(&out.Invalids, 1)
-			}
-		case "idNumber":
-			out.Values[i] = ec._PlanCrTdl_idNumber(ctx, field, obj)
-			if out.Values[i] == graphql.Null {
-				atomic.AddUint32(&out.Invalids, 1)
-			}
-		case "dateInitiated":
-			out.Values[i] = ec._PlanCrTdl_dateInitiated(ctx, field, obj)
-			if out.Values[i] == graphql.Null {
-				atomic.AddUint32(&out.Invalids, 1)
-			}
-		case "title":
-			out.Values[i] = ec._PlanCrTdl_title(ctx, field, obj)
-			if out.Values[i] == graphql.Null {
-				atomic.AddUint32(&out.Invalids, 1)
-			}
-		case "note":
-			out.Values[i] = ec._PlanCrTdl_note(ctx, field, obj)
-		case "createdBy":
-			out.Values[i] = ec._PlanCrTdl_createdBy(ctx, field, obj)
-			if out.Values[i] == graphql.Null {
-				atomic.AddUint32(&out.Invalids, 1)
-			}
-		case "createdByUserAccount":
-			field := field
-
-			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
-				defer func() {
-					if r := recover(); r != nil {
-						ec.Error(ctx, ec.Recover(ctx, r))
-					}
-				}()
-				res = ec._PlanCrTdl_createdByUserAccount(ctx, field, obj)
-				if res == graphql.Null {
-					atomic.AddUint32(&fs.Invalids, 1)
-				}
-				return res
-			}
-
-			if field.Deferrable != nil {
-				dfs, ok := deferred[field.Deferrable.Label]
-				di := 0
-				if ok {
-					dfs.AddField(field)
-					di = len(dfs.Values) - 1
-				} else {
-					dfs = graphql.NewFieldSet([]graphql.CollectedField{field})
-					deferred[field.Deferrable.Label] = dfs
-				}
-				dfs.Concurrently(di, func(ctx context.Context) graphql.Marshaler {
-					return innerFunc(ctx, dfs)
-				})
-
-				// don't run the out.Concurrently() call below
-				out.Values[i] = graphql.Null
-				continue
-			}
-
-			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
-		case "createdDts":
-			out.Values[i] = ec._PlanCrTdl_createdDts(ctx, field, obj)
-			if out.Values[i] == graphql.Null {
-				atomic.AddUint32(&out.Invalids, 1)
-			}
-		case "modifiedBy":
-			out.Values[i] = ec._PlanCrTdl_modifiedBy(ctx, field, obj)
-		case "modifiedByUserAccount":
-			field := field
-
-			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
-				defer func() {
-					if r := recover(); r != nil {
-						ec.Error(ctx, ec.Recover(ctx, r))
-					}
-				}()
-				res = ec._PlanCrTdl_modifiedByUserAccount(ctx, field, obj)
-				return res
-			}
-
-			if field.Deferrable != nil {
-				dfs, ok := deferred[field.Deferrable.Label]
-				di := 0
-				if ok {
-					dfs.AddField(field)
-					di = len(dfs.Values) - 1
-				} else {
-					dfs = graphql.NewFieldSet([]graphql.CollectedField{field})
-					deferred[field.Deferrable.Label] = dfs
-				}
-				dfs.Concurrently(di, func(ctx context.Context) graphql.Marshaler {
-					return innerFunc(ctx, dfs)
-				})
-
-				// don't run the out.Concurrently() call below
-				out.Values[i] = graphql.Null
-				continue
-			}
-
-			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
-		case "modifiedDts":
-			out.Values[i] = ec._PlanCrTdl_modifiedDts(ctx, field, obj)
 		default:
 			panic("unknown field " + strconv.Quote(field.Name))
 		}
@@ -58774,6 +61973,8 @@ func (ec *executionContext) _PlanOpsEvalAndLearning(ctx context.Context, sel ast
 			out.Values[i] = ec._PlanOpsEvalAndLearning_developNewQualityMeasuresNote(ctx, field, obj)
 		case "qualityPerformanceImpactsPayment":
 			out.Values[i] = ec._PlanOpsEvalAndLearning_qualityPerformanceImpactsPayment(ctx, field, obj)
+		case "qualityPerformanceImpactsPaymentOther":
+			out.Values[i] = ec._PlanOpsEvalAndLearning_qualityPerformanceImpactsPaymentOther(ctx, field, obj)
 		case "qualityPerformanceImpactsPaymentNote":
 			out.Values[i] = ec._PlanOpsEvalAndLearning_qualityPerformanceImpactsPaymentNote(ctx, field, obj)
 		case "dataSharingStarts":
@@ -58816,6 +62017,8 @@ func (ec *executionContext) _PlanOpsEvalAndLearning(ctx context.Context, sel ast
 			}
 
 			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+		case "dataSharingFrequencyContinually":
+			out.Values[i] = ec._PlanOpsEvalAndLearning_dataSharingFrequencyContinually(ctx, field, obj)
 		case "dataSharingFrequencyOther":
 			out.Values[i] = ec._PlanOpsEvalAndLearning_dataSharingFrequencyOther(ctx, field, obj)
 		case "dataSharingStartsNote":
@@ -58860,6 +62063,8 @@ func (ec *executionContext) _PlanOpsEvalAndLearning(ctx context.Context, sel ast
 			}
 
 			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+		case "dataCollectionFrequencyContinually":
+			out.Values[i] = ec._PlanOpsEvalAndLearning_dataCollectionFrequencyContinually(ctx, field, obj)
 		case "dataCollectionFrequencyOther":
 			out.Values[i] = ec._PlanOpsEvalAndLearning_dataCollectionFrequencyOther(ctx, field, obj)
 		case "dataCollectionFrequencyNote":
@@ -58870,6 +62075,46 @@ func (ec *executionContext) _PlanOpsEvalAndLearning(ctx context.Context, sel ast
 			out.Values[i] = ec._PlanOpsEvalAndLearning_qualityReportingStartsOther(ctx, field, obj)
 		case "qualityReportingStartsNote":
 			out.Values[i] = ec._PlanOpsEvalAndLearning_qualityReportingStartsNote(ctx, field, obj)
+		case "qualityReportingFrequency":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._PlanOpsEvalAndLearning_qualityReportingFrequency(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
+				return res
+			}
+
+			if field.Deferrable != nil {
+				dfs, ok := deferred[field.Deferrable.Label]
+				di := 0
+				if ok {
+					dfs.AddField(field)
+					di = len(dfs.Values) - 1
+				} else {
+					dfs = graphql.NewFieldSet([]graphql.CollectedField{field})
+					deferred[field.Deferrable.Label] = dfs
+				}
+				dfs.Concurrently(di, func(ctx context.Context) graphql.Marshaler {
+					return innerFunc(ctx, dfs)
+				})
+
+				// don't run the out.Concurrently() call below
+				out.Values[i] = graphql.Null
+				continue
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+		case "qualityReportingFrequencyContinually":
+			out.Values[i] = ec._PlanOpsEvalAndLearning_qualityReportingFrequencyContinually(ctx, field, obj)
+		case "qualityReportingFrequencyOther":
+			out.Values[i] = ec._PlanOpsEvalAndLearning_qualityReportingFrequencyOther(ctx, field, obj)
 		case "modelLearningSystems":
 			field := field
 
@@ -59220,6 +62465,90 @@ func (ec *executionContext) _PlanParticipantsAndProviders(ctx context.Context, s
 			out.Values[i] = ec._PlanParticipantsAndProviders_selectionOther(ctx, field, obj)
 		case "selectionNote":
 			out.Values[i] = ec._PlanParticipantsAndProviders_selectionNote(ctx, field, obj)
+		case "participantAddedFrequency":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._PlanParticipantsAndProviders_participantAddedFrequency(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
+				return res
+			}
+
+			if field.Deferrable != nil {
+				dfs, ok := deferred[field.Deferrable.Label]
+				di := 0
+				if ok {
+					dfs.AddField(field)
+					di = len(dfs.Values) - 1
+				} else {
+					dfs = graphql.NewFieldSet([]graphql.CollectedField{field})
+					deferred[field.Deferrable.Label] = dfs
+				}
+				dfs.Concurrently(di, func(ctx context.Context) graphql.Marshaler {
+					return innerFunc(ctx, dfs)
+				})
+
+				// don't run the out.Concurrently() call below
+				out.Values[i] = graphql.Null
+				continue
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+		case "participantAddedFrequencyContinually":
+			out.Values[i] = ec._PlanParticipantsAndProviders_participantAddedFrequencyContinually(ctx, field, obj)
+		case "participantAddedFrequencyOther":
+			out.Values[i] = ec._PlanParticipantsAndProviders_participantAddedFrequencyOther(ctx, field, obj)
+		case "participantAddedFrequencyNote":
+			out.Values[i] = ec._PlanParticipantsAndProviders_participantAddedFrequencyNote(ctx, field, obj)
+		case "participantRemovedFrequency":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._PlanParticipantsAndProviders_participantRemovedFrequency(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
+				return res
+			}
+
+			if field.Deferrable != nil {
+				dfs, ok := deferred[field.Deferrable.Label]
+				di := 0
+				if ok {
+					dfs.AddField(field)
+					di = len(dfs.Values) - 1
+				} else {
+					dfs = graphql.NewFieldSet([]graphql.CollectedField{field})
+					deferred[field.Deferrable.Label] = dfs
+				}
+				dfs.Concurrently(di, func(ctx context.Context) graphql.Marshaler {
+					return innerFunc(ctx, dfs)
+				})
+
+				// don't run the out.Concurrently() call below
+				out.Values[i] = graphql.Null
+				continue
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+		case "participantRemovedFrequencyContinually":
+			out.Values[i] = ec._PlanParticipantsAndProviders_participantRemovedFrequencyContinually(ctx, field, obj)
+		case "participantRemovedFrequencyOther":
+			out.Values[i] = ec._PlanParticipantsAndProviders_participantRemovedFrequencyOther(ctx, field, obj)
+		case "participantRemovedFrequencyNote":
+			out.Values[i] = ec._PlanParticipantsAndProviders_participantRemovedFrequencyNote(ctx, field, obj)
 		case "communicationMethod":
 			field := field
 
@@ -59260,10 +62589,42 @@ func (ec *executionContext) _PlanParticipantsAndProviders(ctx context.Context, s
 			out.Values[i] = ec._PlanParticipantsAndProviders_communicationMethodOther(ctx, field, obj)
 		case "communicationNote":
 			out.Values[i] = ec._PlanParticipantsAndProviders_communicationNote(ctx, field, obj)
-		case "participantAssumeRisk":
-			out.Values[i] = ec._PlanParticipantsAndProviders_participantAssumeRisk(ctx, field, obj)
 		case "riskType":
-			out.Values[i] = ec._PlanParticipantsAndProviders_riskType(ctx, field, obj)
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._PlanParticipantsAndProviders_riskType(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
+				return res
+			}
+
+			if field.Deferrable != nil {
+				dfs, ok := deferred[field.Deferrable.Label]
+				di := 0
+				if ok {
+					dfs.AddField(field)
+					di = len(dfs.Values) - 1
+				} else {
+					dfs = graphql.NewFieldSet([]graphql.CollectedField{field})
+					deferred[field.Deferrable.Label] = dfs
+				}
+				dfs.Concurrently(di, func(ctx context.Context) graphql.Marshaler {
+					return innerFunc(ctx, dfs)
+				})
+
+				// don't run the out.Concurrently() call below
+				out.Values[i] = graphql.Null
+				continue
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
 		case "riskOther":
 			out.Values[i] = ec._PlanParticipantsAndProviders_riskOther(ctx, field, obj)
 		case "riskNote":
@@ -59361,7 +62722,43 @@ func (ec *executionContext) _PlanParticipantsAndProviders(ctx context.Context, s
 		case "participantsIDSNote":
 			out.Values[i] = ec._PlanParticipantsAndProviders_participantsIDSNote(ctx, field, obj)
 		case "providerAdditionFrequency":
-			out.Values[i] = ec._PlanParticipantsAndProviders_providerAdditionFrequency(ctx, field, obj)
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._PlanParticipantsAndProviders_providerAdditionFrequency(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
+				return res
+			}
+
+			if field.Deferrable != nil {
+				dfs, ok := deferred[field.Deferrable.Label]
+				di := 0
+				if ok {
+					dfs.AddField(field)
+					di = len(dfs.Values) - 1
+				} else {
+					dfs = graphql.NewFieldSet([]graphql.CollectedField{field})
+					deferred[field.Deferrable.Label] = dfs
+				}
+				dfs.Concurrently(di, func(ctx context.Context) graphql.Marshaler {
+					return innerFunc(ctx, dfs)
+				})
+
+				// don't run the out.Concurrently() call below
+				out.Values[i] = graphql.Null
+				continue
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+		case "providerAdditionFrequencyContinually":
+			out.Values[i] = ec._PlanParticipantsAndProviders_providerAdditionFrequencyContinually(ctx, field, obj)
 		case "providerAdditionFrequencyOther":
 			out.Values[i] = ec._PlanParticipantsAndProviders_providerAdditionFrequencyOther(ctx, field, obj)
 		case "providerAdditionFrequencyNote":
@@ -59446,6 +62843,48 @@ func (ec *executionContext) _PlanParticipantsAndProviders(ctx context.Context, s
 			out.Values[i] = ec._PlanParticipantsAndProviders_providerLeaveMethodOther(ctx, field, obj)
 		case "providerLeaveMethodNote":
 			out.Values[i] = ec._PlanParticipantsAndProviders_providerLeaveMethodNote(ctx, field, obj)
+		case "providerRemovalFrequency":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._PlanParticipantsAndProviders_providerRemovalFrequency(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
+				return res
+			}
+
+			if field.Deferrable != nil {
+				dfs, ok := deferred[field.Deferrable.Label]
+				di := 0
+				if ok {
+					dfs.AddField(field)
+					di = len(dfs.Values) - 1
+				} else {
+					dfs = graphql.NewFieldSet([]graphql.CollectedField{field})
+					deferred[field.Deferrable.Label] = dfs
+				}
+				dfs.Concurrently(di, func(ctx context.Context) graphql.Marshaler {
+					return innerFunc(ctx, dfs)
+				})
+
+				// don't run the out.Concurrently() call below
+				out.Values[i] = graphql.Null
+				continue
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+		case "providerRemovalFrequencyContinually":
+			out.Values[i] = ec._PlanParticipantsAndProviders_providerRemovalFrequencyContinually(ctx, field, obj)
+		case "providerRemovalFrequencyOther":
+			out.Values[i] = ec._PlanParticipantsAndProviders_providerRemovalFrequencyOther(ctx, field, obj)
+		case "providerRemovalFrequencyNote":
+			out.Values[i] = ec._PlanParticipantsAndProviders_providerRemovalFrequencyNote(ctx, field, obj)
 		case "providerOverlap":
 			out.Values[i] = ec._PlanParticipantsAndProviders_providerOverlap(ctx, field, obj)
 		case "providerOverlapHierarchy":
@@ -60033,6 +63472,8 @@ func (ec *executionContext) _PlanPayments(ctx context.Context, sel ast.Selection
 			}
 
 			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+		case "anticipatedPaymentFrequencyContinually":
+			out.Values[i] = ec._PlanPayments_anticipatedPaymentFrequencyContinually(ctx, field, obj)
 		case "anticipatedPaymentFrequencyOther":
 			out.Values[i] = ec._PlanPayments_anticipatedPaymentFrequencyOther(ctx, field, obj)
 		case "anticipatedPaymentFrequencyNote":
@@ -60045,6 +63486,48 @@ func (ec *executionContext) _PlanPayments(ctx context.Context, sel ast.Selection
 			out.Values[i] = ec._PlanPayments_anticipateReconcilingPaymentsRetrospectively(ctx, field, obj)
 		case "anticipateReconcilingPaymentsRetrospectivelyNote":
 			out.Values[i] = ec._PlanPayments_anticipateReconcilingPaymentsRetrospectivelyNote(ctx, field, obj)
+		case "paymentReconciliationFrequency":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._PlanPayments_paymentReconciliationFrequency(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
+				return res
+			}
+
+			if field.Deferrable != nil {
+				dfs, ok := deferred[field.Deferrable.Label]
+				di := 0
+				if ok {
+					dfs.AddField(field)
+					di = len(dfs.Values) - 1
+				} else {
+					dfs = graphql.NewFieldSet([]graphql.CollectedField{field})
+					deferred[field.Deferrable.Label] = dfs
+				}
+				dfs.Concurrently(di, func(ctx context.Context) graphql.Marshaler {
+					return innerFunc(ctx, dfs)
+				})
+
+				// don't run the out.Concurrently() call below
+				out.Values[i] = graphql.Null
+				continue
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+		case "paymentReconciliationFrequencyContinually":
+			out.Values[i] = ec._PlanPayments_paymentReconciliationFrequencyContinually(ctx, field, obj)
+		case "paymentReconciliationFrequencyOther":
+			out.Values[i] = ec._PlanPayments_paymentReconciliationFrequencyOther(ctx, field, obj)
+		case "paymentReconciliationFrequencyNote":
+			out.Values[i] = ec._PlanPayments_paymentReconciliationFrequencyNote(ctx, field, obj)
 		case "paymentStartDate":
 			out.Values[i] = ec._PlanPayments_paymentStartDate(ctx, field, obj)
 		case "paymentStartDateNote":
@@ -60211,6 +63694,150 @@ func (ec *executionContext) _PlanPayments(ctx context.Context, sel ast.Selection
 			if out.Values[i] == graphql.Null {
 				atomic.AddUint32(&out.Invalids, 1)
 			}
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch(ctx)
+	if out.Invalids > 0 {
+		return graphql.Null
+	}
+
+	atomic.AddInt32(&ec.deferred, int32(len(deferred)))
+
+	for label, dfs := range deferred {
+		ec.processDeferredGroup(graphql.DeferredGroup{
+			Label:    label,
+			Path:     graphql.GetPath(ctx),
+			FieldSet: dfs,
+			Context:  ctx,
+		})
+	}
+
+	return out
+}
+
+var planTDLImplementors = []string{"PlanTDL"}
+
+func (ec *executionContext) _PlanTDL(ctx context.Context, sel ast.SelectionSet, obj *models.PlanTDL) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, planTDLImplementors)
+
+	out := graphql.NewFieldSet(fields)
+	deferred := make(map[string]*graphql.FieldSet)
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("PlanTDL")
+		case "id":
+			out.Values[i] = ec._PlanTDL_id(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "modelPlanID":
+			out.Values[i] = ec._PlanTDL_modelPlanID(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "idNumber":
+			out.Values[i] = ec._PlanTDL_idNumber(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "dateInitiated":
+			out.Values[i] = ec._PlanTDL_dateInitiated(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "title":
+			out.Values[i] = ec._PlanTDL_title(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "note":
+			out.Values[i] = ec._PlanTDL_note(ctx, field, obj)
+		case "createdBy":
+			out.Values[i] = ec._PlanTDL_createdBy(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "createdByUserAccount":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._PlanTDL_createdByUserAccount(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
+				return res
+			}
+
+			if field.Deferrable != nil {
+				dfs, ok := deferred[field.Deferrable.Label]
+				di := 0
+				if ok {
+					dfs.AddField(field)
+					di = len(dfs.Values) - 1
+				} else {
+					dfs = graphql.NewFieldSet([]graphql.CollectedField{field})
+					deferred[field.Deferrable.Label] = dfs
+				}
+				dfs.Concurrently(di, func(ctx context.Context) graphql.Marshaler {
+					return innerFunc(ctx, dfs)
+				})
+
+				// don't run the out.Concurrently() call below
+				out.Values[i] = graphql.Null
+				continue
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+		case "createdDts":
+			out.Values[i] = ec._PlanTDL_createdDts(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "modifiedBy":
+			out.Values[i] = ec._PlanTDL_modifiedBy(ctx, field, obj)
+		case "modifiedByUserAccount":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._PlanTDL_modifiedByUserAccount(ctx, field, obj)
+				return res
+			}
+
+			if field.Deferrable != nil {
+				dfs, ok := deferred[field.Deferrable.Label]
+				di := 0
+				if ok {
+					dfs.AddField(field)
+					di = len(dfs.Values) - 1
+				} else {
+					dfs = graphql.NewFieldSet([]graphql.CollectedField{field})
+					deferred[field.Deferrable.Label] = dfs
+				}
+				dfs.Concurrently(di, func(ctx context.Context) graphql.Marshaler {
+					return innerFunc(ctx, dfs)
+				})
+
+				// don't run the out.Concurrently() call below
+				out.Values[i] = graphql.Null
+				continue
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+		case "modifiedDts":
+			out.Values[i] = ec._PlanTDL_modifiedDts(ctx, field, obj)
 		default:
 			panic("unknown field " + strconv.Quote(field.Name))
 		}
@@ -61003,7 +64630,7 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 			}
 
 			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return rrm(innerCtx) })
-		case "crTdl":
+		case "planCR":
 			field := field
 
 			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
@@ -61012,7 +64639,29 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 						ec.Error(ctx, ec.Recover(ctx, r))
 					}
 				}()
-				res = ec._Query_crTdl(ctx, field)
+				res = ec._Query_planCR(ctx, field)
+				if res == graphql.Null {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
+				return res
+			}
+
+			rrm := func(ctx context.Context) graphql.Marshaler {
+				return ec.OperationContext.RootResolverMiddleware(ctx,
+					func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return rrm(innerCtx) })
+		case "planTDL":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Query_planTDL(ctx, field)
 				if res == graphql.Null {
 					atomic.AddUint32(&fs.Invalids, 1)
 				}
@@ -62360,83 +66009,6 @@ func (ec *executionContext) marshalNAlternativePaymentModelType2ᚕgithubᚗcom�
 	return ret
 }
 
-func (ec *executionContext) unmarshalNAnticipatedPaymentFrequencyType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐAnticipatedPaymentFrequencyType(ctx context.Context, v interface{}) (models.AnticipatedPaymentFrequencyType, error) {
-	tmp, err := graphql.UnmarshalString(v)
-	res := models.AnticipatedPaymentFrequencyType(tmp)
-	return res, graphql.ErrorOnPath(ctx, err)
-}
-
-func (ec *executionContext) marshalNAnticipatedPaymentFrequencyType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐAnticipatedPaymentFrequencyType(ctx context.Context, sel ast.SelectionSet, v models.AnticipatedPaymentFrequencyType) graphql.Marshaler {
-	res := graphql.MarshalString(string(v))
-	if res == graphql.Null {
-		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
-			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
-		}
-	}
-	return res
-}
-
-func (ec *executionContext) unmarshalNAnticipatedPaymentFrequencyType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐAnticipatedPaymentFrequencyTypeᚄ(ctx context.Context, v interface{}) ([]models.AnticipatedPaymentFrequencyType, error) {
-	var vSlice []interface{}
-	if v != nil {
-		vSlice = graphql.CoerceList(v)
-	}
-	var err error
-	res := make([]models.AnticipatedPaymentFrequencyType, len(vSlice))
-	for i := range vSlice {
-		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithIndex(i))
-		res[i], err = ec.unmarshalNAnticipatedPaymentFrequencyType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐAnticipatedPaymentFrequencyType(ctx, vSlice[i])
-		if err != nil {
-			return nil, err
-		}
-	}
-	return res, nil
-}
-
-func (ec *executionContext) marshalNAnticipatedPaymentFrequencyType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐAnticipatedPaymentFrequencyTypeᚄ(ctx context.Context, sel ast.SelectionSet, v []models.AnticipatedPaymentFrequencyType) graphql.Marshaler {
-	ret := make(graphql.Array, len(v))
-	var wg sync.WaitGroup
-	isLen1 := len(v) == 1
-	if !isLen1 {
-		wg.Add(len(v))
-	}
-	for i := range v {
-		i := i
-		fc := &graphql.FieldContext{
-			Index:  &i,
-			Result: &v[i],
-		}
-		ctx := graphql.WithFieldContext(ctx, fc)
-		f := func(i int) {
-			defer func() {
-				if r := recover(); r != nil {
-					ec.Error(ctx, ec.Recover(ctx, r))
-					ret = nil
-				}
-			}()
-			if !isLen1 {
-				defer wg.Done()
-			}
-			ret[i] = ec.marshalNAnticipatedPaymentFrequencyType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐAnticipatedPaymentFrequencyType(ctx, sel, v[i])
-		}
-		if isLen1 {
-			f(i)
-		} else {
-			go f(i)
-		}
-
-	}
-	wg.Wait()
-
-	for _, e := range ret {
-		if e == graphql.Null {
-			return graphql.Null
-		}
-	}
-
-	return ret
-}
-
 func (ec *executionContext) unmarshalNAny2interface(ctx context.Context, v interface{}) (interface{}, error) {
 	res, err := graphql.UnmarshalAny(v)
 	return res, graphql.ErrorOnPath(ctx, err)
@@ -63236,77 +66808,6 @@ func (ec *executionContext) marshalNDataForMonitoringType2ᚕgithubᚗcomᚋcmsg
 	return ret
 }
 
-func (ec *executionContext) unmarshalNDataFrequencyType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐDataFrequencyType(ctx context.Context, v interface{}) (model.DataFrequencyType, error) {
-	var res model.DataFrequencyType
-	err := res.UnmarshalGQL(v)
-	return res, graphql.ErrorOnPath(ctx, err)
-}
-
-func (ec *executionContext) marshalNDataFrequencyType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐDataFrequencyType(ctx context.Context, sel ast.SelectionSet, v model.DataFrequencyType) graphql.Marshaler {
-	return v
-}
-
-func (ec *executionContext) unmarshalNDataFrequencyType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐDataFrequencyTypeᚄ(ctx context.Context, v interface{}) ([]model.DataFrequencyType, error) {
-	var vSlice []interface{}
-	if v != nil {
-		vSlice = graphql.CoerceList(v)
-	}
-	var err error
-	res := make([]model.DataFrequencyType, len(vSlice))
-	for i := range vSlice {
-		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithIndex(i))
-		res[i], err = ec.unmarshalNDataFrequencyType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐDataFrequencyType(ctx, vSlice[i])
-		if err != nil {
-			return nil, err
-		}
-	}
-	return res, nil
-}
-
-func (ec *executionContext) marshalNDataFrequencyType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐDataFrequencyTypeᚄ(ctx context.Context, sel ast.SelectionSet, v []model.DataFrequencyType) graphql.Marshaler {
-	ret := make(graphql.Array, len(v))
-	var wg sync.WaitGroup
-	isLen1 := len(v) == 1
-	if !isLen1 {
-		wg.Add(len(v))
-	}
-	for i := range v {
-		i := i
-		fc := &graphql.FieldContext{
-			Index:  &i,
-			Result: &v[i],
-		}
-		ctx := graphql.WithFieldContext(ctx, fc)
-		f := func(i int) {
-			defer func() {
-				if r := recover(); r != nil {
-					ec.Error(ctx, ec.Recover(ctx, r))
-					ret = nil
-				}
-			}()
-			if !isLen1 {
-				defer wg.Done()
-			}
-			ret[i] = ec.marshalNDataFrequencyType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐDataFrequencyType(ctx, sel, v[i])
-		}
-		if isLen1 {
-			f(i)
-		} else {
-			go f(i)
-		}
-
-	}
-	wg.Wait()
-
-	for _, e := range ret {
-		if e == graphql.Null {
-			return graphql.Null
-		}
-	}
-
-	return ret
-}
-
 func (ec *executionContext) unmarshalNDataToSendParticipantsType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐDataToSendParticipantsType(ctx context.Context, v interface{}) (model.DataToSendParticipantsType, error) {
 	var res model.DataToSendParticipantsType
 	err := res.UnmarshalGQL(v)
@@ -63766,6 +67267,83 @@ func (ec *executionContext) marshalNField2ᚖgithubᚗcomᚋcmsgovᚋmintᚑapp�
 
 func (ec *executionContext) marshalNFieldValue2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐFieldValue(ctx context.Context, sel ast.SelectionSet, v models.FieldValue) graphql.Marshaler {
 	return ec._FieldValue(ctx, sel, &v)
+}
+
+func (ec *executionContext) unmarshalNFrequencyType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐFrequencyType(ctx context.Context, v interface{}) (models.FrequencyType, error) {
+	tmp, err := graphql.UnmarshalString(v)
+	res := models.FrequencyType(tmp)
+	return res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalNFrequencyType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐFrequencyType(ctx context.Context, sel ast.SelectionSet, v models.FrequencyType) graphql.Marshaler {
+	res := graphql.MarshalString(string(v))
+	if res == graphql.Null {
+		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
+			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
+		}
+	}
+	return res
+}
+
+func (ec *executionContext) unmarshalNFrequencyType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐFrequencyTypeᚄ(ctx context.Context, v interface{}) ([]models.FrequencyType, error) {
+	var vSlice []interface{}
+	if v != nil {
+		vSlice = graphql.CoerceList(v)
+	}
+	var err error
+	res := make([]models.FrequencyType, len(vSlice))
+	for i := range vSlice {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithIndex(i))
+		res[i], err = ec.unmarshalNFrequencyType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐFrequencyType(ctx, vSlice[i])
+		if err != nil {
+			return nil, err
+		}
+	}
+	return res, nil
+}
+
+func (ec *executionContext) marshalNFrequencyType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐFrequencyTypeᚄ(ctx context.Context, sel ast.SelectionSet, v []models.FrequencyType) graphql.Marshaler {
+	ret := make(graphql.Array, len(v))
+	var wg sync.WaitGroup
+	isLen1 := len(v) == 1
+	if !isLen1 {
+		wg.Add(len(v))
+	}
+	for i := range v {
+		i := i
+		fc := &graphql.FieldContext{
+			Index:  &i,
+			Result: &v[i],
+		}
+		ctx := graphql.WithFieldContext(ctx, fc)
+		f := func(i int) {
+			defer func() {
+				if r := recover(); r != nil {
+					ec.Error(ctx, ec.Recover(ctx, r))
+					ret = nil
+				}
+			}()
+			if !isLen1 {
+				defer wg.Done()
+			}
+			ret[i] = ec.marshalNFrequencyType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐFrequencyType(ctx, sel, v[i])
+		}
+		if isLen1 {
+			f(i)
+		} else {
+			go f(i)
+		}
+
+	}
+	wg.Wait()
+
+	for _, e := range ret {
+		if e == graphql.Null {
+			return graphql.Null
+		}
+	}
+
+	return ret
 }
 
 func (ec *executionContext) unmarshalNFundingSource2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐFundingSource(ctx context.Context, v interface{}) (models.FundingSource, error) {
@@ -64994,6 +68572,83 @@ func (ec *executionContext) marshalNParticipantCommunicationType2ᚕgithubᚗcom
 	return ret
 }
 
+func (ec *executionContext) unmarshalNParticipantRiskType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐParticipantRiskType(ctx context.Context, v interface{}) (models.ParticipantRiskType, error) {
+	tmp, err := graphql.UnmarshalString(v)
+	res := models.ParticipantRiskType(tmp)
+	return res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalNParticipantRiskType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐParticipantRiskType(ctx context.Context, sel ast.SelectionSet, v models.ParticipantRiskType) graphql.Marshaler {
+	res := graphql.MarshalString(string(v))
+	if res == graphql.Null {
+		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
+			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
+		}
+	}
+	return res
+}
+
+func (ec *executionContext) unmarshalNParticipantRiskType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐParticipantRiskTypeᚄ(ctx context.Context, v interface{}) ([]models.ParticipantRiskType, error) {
+	var vSlice []interface{}
+	if v != nil {
+		vSlice = graphql.CoerceList(v)
+	}
+	var err error
+	res := make([]models.ParticipantRiskType, len(vSlice))
+	for i := range vSlice {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithIndex(i))
+		res[i], err = ec.unmarshalNParticipantRiskType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐParticipantRiskType(ctx, vSlice[i])
+		if err != nil {
+			return nil, err
+		}
+	}
+	return res, nil
+}
+
+func (ec *executionContext) marshalNParticipantRiskType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐParticipantRiskTypeᚄ(ctx context.Context, sel ast.SelectionSet, v []models.ParticipantRiskType) graphql.Marshaler {
+	ret := make(graphql.Array, len(v))
+	var wg sync.WaitGroup
+	isLen1 := len(v) == 1
+	if !isLen1 {
+		wg.Add(len(v))
+	}
+	for i := range v {
+		i := i
+		fc := &graphql.FieldContext{
+			Index:  &i,
+			Result: &v[i],
+		}
+		ctx := graphql.WithFieldContext(ctx, fc)
+		f := func(i int) {
+			defer func() {
+				if r := recover(); r != nil {
+					ec.Error(ctx, ec.Recover(ctx, r))
+					ret = nil
+				}
+			}()
+			if !isLen1 {
+				defer wg.Done()
+			}
+			ret[i] = ec.marshalNParticipantRiskType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐParticipantRiskType(ctx, sel, v[i])
+		}
+		if isLen1 {
+			f(i)
+		} else {
+			go f(i)
+		}
+
+	}
+	wg.Wait()
+
+	for _, e := range ret {
+		if e == graphql.Null {
+			return graphql.Null
+		}
+	}
+
+	return ret
+}
+
 func (ec *executionContext) unmarshalNParticipantSelectionType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐParticipantSelectionType(ctx context.Context, v interface{}) (model.ParticipantSelectionType, error) {
 	var res model.ParticipantSelectionType
 	err := res.UnmarshalGQL(v)
@@ -65397,6 +69052,73 @@ func (ec *executionContext) unmarshalNPlanBeneficiariesChanges2map(ctx context.C
 	return v.(map[string]interface{}), nil
 }
 
+func (ec *executionContext) marshalNPlanCR2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanCR(ctx context.Context, sel ast.SelectionSet, v models.PlanCR) graphql.Marshaler {
+	return ec._PlanCR(ctx, sel, &v)
+}
+
+func (ec *executionContext) marshalNPlanCR2ᚕᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanCRᚄ(ctx context.Context, sel ast.SelectionSet, v []*models.PlanCR) graphql.Marshaler {
+	ret := make(graphql.Array, len(v))
+	var wg sync.WaitGroup
+	isLen1 := len(v) == 1
+	if !isLen1 {
+		wg.Add(len(v))
+	}
+	for i := range v {
+		i := i
+		fc := &graphql.FieldContext{
+			Index:  &i,
+			Result: &v[i],
+		}
+		ctx := graphql.WithFieldContext(ctx, fc)
+		f := func(i int) {
+			defer func() {
+				if r := recover(); r != nil {
+					ec.Error(ctx, ec.Recover(ctx, r))
+					ret = nil
+				}
+			}()
+			if !isLen1 {
+				defer wg.Done()
+			}
+			ret[i] = ec.marshalNPlanCR2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanCR(ctx, sel, v[i])
+		}
+		if isLen1 {
+			f(i)
+		} else {
+			go f(i)
+		}
+
+	}
+	wg.Wait()
+
+	for _, e := range ret {
+		if e == graphql.Null {
+			return graphql.Null
+		}
+	}
+
+	return ret
+}
+
+func (ec *executionContext) marshalNPlanCR2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanCR(ctx context.Context, sel ast.SelectionSet, v *models.PlanCR) graphql.Marshaler {
+	if v == nil {
+		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
+			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
+		}
+		return graphql.Null
+	}
+	return ec._PlanCR(ctx, sel, v)
+}
+
+func (ec *executionContext) unmarshalNPlanCRChanges2map(ctx context.Context, v interface{}) (map[string]interface{}, error) {
+	return v.(map[string]interface{}), nil
+}
+
+func (ec *executionContext) unmarshalNPlanCRCreateInput2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐPlanCRCreateInput(ctx context.Context, v interface{}) (model.PlanCRCreateInput, error) {
+	res, err := ec.unmarshalInputPlanCRCreateInput(ctx, v)
+	return res, graphql.ErrorOnPath(ctx, err)
+}
+
 func (ec *executionContext) marshalNPlanCollaborator2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanCollaborator(ctx context.Context, sel ast.SelectionSet, v models.PlanCollaborator) graphql.Marshaler {
 	return ec._PlanCollaborator(ctx, sel, &v)
 }
@@ -65457,73 +69179,6 @@ func (ec *executionContext) marshalNPlanCollaborator2ᚖgithubᚗcomᚋcmsgovᚋ
 
 func (ec *executionContext) unmarshalNPlanCollaboratorCreateInput2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐPlanCollaboratorCreateInput(ctx context.Context, v interface{}) (model.PlanCollaboratorCreateInput, error) {
 	res, err := ec.unmarshalInputPlanCollaboratorCreateInput(ctx, v)
-	return res, graphql.ErrorOnPath(ctx, err)
-}
-
-func (ec *executionContext) marshalNPlanCrTdl2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanCrTdl(ctx context.Context, sel ast.SelectionSet, v models.PlanCrTdl) graphql.Marshaler {
-	return ec._PlanCrTdl(ctx, sel, &v)
-}
-
-func (ec *executionContext) marshalNPlanCrTdl2ᚕᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanCrTdlᚄ(ctx context.Context, sel ast.SelectionSet, v []*models.PlanCrTdl) graphql.Marshaler {
-	ret := make(graphql.Array, len(v))
-	var wg sync.WaitGroup
-	isLen1 := len(v) == 1
-	if !isLen1 {
-		wg.Add(len(v))
-	}
-	for i := range v {
-		i := i
-		fc := &graphql.FieldContext{
-			Index:  &i,
-			Result: &v[i],
-		}
-		ctx := graphql.WithFieldContext(ctx, fc)
-		f := func(i int) {
-			defer func() {
-				if r := recover(); r != nil {
-					ec.Error(ctx, ec.Recover(ctx, r))
-					ret = nil
-				}
-			}()
-			if !isLen1 {
-				defer wg.Done()
-			}
-			ret[i] = ec.marshalNPlanCrTdl2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanCrTdl(ctx, sel, v[i])
-		}
-		if isLen1 {
-			f(i)
-		} else {
-			go f(i)
-		}
-
-	}
-	wg.Wait()
-
-	for _, e := range ret {
-		if e == graphql.Null {
-			return graphql.Null
-		}
-	}
-
-	return ret
-}
-
-func (ec *executionContext) marshalNPlanCrTdl2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanCrTdl(ctx context.Context, sel ast.SelectionSet, v *models.PlanCrTdl) graphql.Marshaler {
-	if v == nil {
-		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
-			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
-		}
-		return graphql.Null
-	}
-	return ec._PlanCrTdl(ctx, sel, v)
-}
-
-func (ec *executionContext) unmarshalNPlanCrTdlChanges2map(ctx context.Context, v interface{}) (map[string]interface{}, error) {
-	return v.(map[string]interface{}), nil
-}
-
-func (ec *executionContext) unmarshalNPlanCrTdlCreateInput2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐPlanCrTdlCreateInput(ctx context.Context, v interface{}) (model.PlanCrTdlCreateInput, error) {
-	res, err := ec.unmarshalInputPlanCrTdlCreateInput(ctx, v)
 	return res, graphql.ErrorOnPath(ctx, err)
 }
 
@@ -65752,6 +69407,73 @@ func (ec *executionContext) marshalNPlanPayments2ᚖgithubᚗcomᚋcmsgovᚋmint
 
 func (ec *executionContext) unmarshalNPlanPaymentsChanges2map(ctx context.Context, v interface{}) (map[string]interface{}, error) {
 	return v.(map[string]interface{}), nil
+}
+
+func (ec *executionContext) marshalNPlanTDL2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanTDL(ctx context.Context, sel ast.SelectionSet, v models.PlanTDL) graphql.Marshaler {
+	return ec._PlanTDL(ctx, sel, &v)
+}
+
+func (ec *executionContext) marshalNPlanTDL2ᚕᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanTDLᚄ(ctx context.Context, sel ast.SelectionSet, v []*models.PlanTDL) graphql.Marshaler {
+	ret := make(graphql.Array, len(v))
+	var wg sync.WaitGroup
+	isLen1 := len(v) == 1
+	if !isLen1 {
+		wg.Add(len(v))
+	}
+	for i := range v {
+		i := i
+		fc := &graphql.FieldContext{
+			Index:  &i,
+			Result: &v[i],
+		}
+		ctx := graphql.WithFieldContext(ctx, fc)
+		f := func(i int) {
+			defer func() {
+				if r := recover(); r != nil {
+					ec.Error(ctx, ec.Recover(ctx, r))
+					ret = nil
+				}
+			}()
+			if !isLen1 {
+				defer wg.Done()
+			}
+			ret[i] = ec.marshalNPlanTDL2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanTDL(ctx, sel, v[i])
+		}
+		if isLen1 {
+			f(i)
+		} else {
+			go f(i)
+		}
+
+	}
+	wg.Wait()
+
+	for _, e := range ret {
+		if e == graphql.Null {
+			return graphql.Null
+		}
+	}
+
+	return ret
+}
+
+func (ec *executionContext) marshalNPlanTDL2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanTDL(ctx context.Context, sel ast.SelectionSet, v *models.PlanTDL) graphql.Marshaler {
+	if v == nil {
+		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
+			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
+		}
+		return graphql.Null
+	}
+	return ec._PlanTDL(ctx, sel, v)
+}
+
+func (ec *executionContext) unmarshalNPlanTDLChanges2map(ctx context.Context, v interface{}) (map[string]interface{}, error) {
+	return v.(map[string]interface{}), nil
+}
+
+func (ec *executionContext) unmarshalNPlanTDLCreateInput2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐPlanTDLCreateInput(ctx context.Context, v interface{}) (model.PlanTDLCreateInput, error) {
+	res, err := ec.unmarshalInputPlanTDLCreateInput(ctx, v)
+	return res, graphql.ErrorOnPath(ctx, err)
 }
 
 func (ec *executionContext) marshalNPossibleOperationalNeed2ᚕᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPossibleOperationalNeedᚄ(ctx context.Context, sel ast.SelectionSet, v []*models.PossibleOperationalNeed) graphql.Marshaler {
@@ -67455,73 +71177,6 @@ func (ec *executionContext) marshalOAlternativePaymentModelType2ᚕgithubᚗcom�
 	return ret
 }
 
-func (ec *executionContext) unmarshalOAnticipatedPaymentFrequencyType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐAnticipatedPaymentFrequencyTypeᚄ(ctx context.Context, v interface{}) ([]models.AnticipatedPaymentFrequencyType, error) {
-	if v == nil {
-		return nil, nil
-	}
-	var vSlice []interface{}
-	if v != nil {
-		vSlice = graphql.CoerceList(v)
-	}
-	var err error
-	res := make([]models.AnticipatedPaymentFrequencyType, len(vSlice))
-	for i := range vSlice {
-		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithIndex(i))
-		res[i], err = ec.unmarshalNAnticipatedPaymentFrequencyType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐAnticipatedPaymentFrequencyType(ctx, vSlice[i])
-		if err != nil {
-			return nil, err
-		}
-	}
-	return res, nil
-}
-
-func (ec *executionContext) marshalOAnticipatedPaymentFrequencyType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐAnticipatedPaymentFrequencyTypeᚄ(ctx context.Context, sel ast.SelectionSet, v []models.AnticipatedPaymentFrequencyType) graphql.Marshaler {
-	if v == nil {
-		return graphql.Null
-	}
-	ret := make(graphql.Array, len(v))
-	var wg sync.WaitGroup
-	isLen1 := len(v) == 1
-	if !isLen1 {
-		wg.Add(len(v))
-	}
-	for i := range v {
-		i := i
-		fc := &graphql.FieldContext{
-			Index:  &i,
-			Result: &v[i],
-		}
-		ctx := graphql.WithFieldContext(ctx, fc)
-		f := func(i int) {
-			defer func() {
-				if r := recover(); r != nil {
-					ec.Error(ctx, ec.Recover(ctx, r))
-					ret = nil
-				}
-			}()
-			if !isLen1 {
-				defer wg.Done()
-			}
-			ret[i] = ec.marshalNAnticipatedPaymentFrequencyType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐAnticipatedPaymentFrequencyType(ctx, sel, v[i])
-		}
-		if isLen1 {
-			f(i)
-		} else {
-			go f(i)
-		}
-
-	}
-	wg.Wait()
-
-	for _, e := range ret {
-		if e == graphql.Null {
-			return graphql.Null
-		}
-	}
-
-	return ret
-}
-
 func (ec *executionContext) unmarshalOAny2interface(ctx context.Context, v interface{}) (interface{}, error) {
 	if v == nil {
 		return nil, nil
@@ -68159,73 +71814,6 @@ func (ec *executionContext) marshalODataForMonitoringType2ᚕgithubᚗcomᚋcmsg
 	return ret
 }
 
-func (ec *executionContext) unmarshalODataFrequencyType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐDataFrequencyTypeᚄ(ctx context.Context, v interface{}) ([]model.DataFrequencyType, error) {
-	if v == nil {
-		return nil, nil
-	}
-	var vSlice []interface{}
-	if v != nil {
-		vSlice = graphql.CoerceList(v)
-	}
-	var err error
-	res := make([]model.DataFrequencyType, len(vSlice))
-	for i := range vSlice {
-		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithIndex(i))
-		res[i], err = ec.unmarshalNDataFrequencyType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐDataFrequencyType(ctx, vSlice[i])
-		if err != nil {
-			return nil, err
-		}
-	}
-	return res, nil
-}
-
-func (ec *executionContext) marshalODataFrequencyType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐDataFrequencyTypeᚄ(ctx context.Context, sel ast.SelectionSet, v []model.DataFrequencyType) graphql.Marshaler {
-	if v == nil {
-		return graphql.Null
-	}
-	ret := make(graphql.Array, len(v))
-	var wg sync.WaitGroup
-	isLen1 := len(v) == 1
-	if !isLen1 {
-		wg.Add(len(v))
-	}
-	for i := range v {
-		i := i
-		fc := &graphql.FieldContext{
-			Index:  &i,
-			Result: &v[i],
-		}
-		ctx := graphql.WithFieldContext(ctx, fc)
-		f := func(i int) {
-			defer func() {
-				if r := recover(); r != nil {
-					ec.Error(ctx, ec.Recover(ctx, r))
-					ret = nil
-				}
-			}()
-			if !isLen1 {
-				defer wg.Done()
-			}
-			ret[i] = ec.marshalNDataFrequencyType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐDataFrequencyType(ctx, sel, v[i])
-		}
-		if isLen1 {
-			f(i)
-		} else {
-			go f(i)
-		}
-
-	}
-	wg.Wait()
-
-	for _, e := range ret {
-		if e == graphql.Null {
-			return graphql.Null
-		}
-	}
-
-	return ret
-}
-
 func (ec *executionContext) unmarshalODataFullTimeOrIncrementalType2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐDataFullTimeOrIncrementalType(ctx context.Context, v interface{}) (*models.DataFullTimeOrIncrementalType, error) {
 	if v == nil {
 		return nil, nil
@@ -68441,21 +72029,71 @@ func (ec *executionContext) marshalOExistingModel2ᚖgithubᚗcomᚋcmsgovᚋmin
 	return ec._ExistingModel(ctx, sel, v)
 }
 
-func (ec *executionContext) unmarshalOFrequencyType2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐFrequencyType(ctx context.Context, v interface{}) (*models.FrequencyType, error) {
+func (ec *executionContext) unmarshalOFrequencyType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐFrequencyTypeᚄ(ctx context.Context, v interface{}) ([]models.FrequencyType, error) {
 	if v == nil {
 		return nil, nil
 	}
-	tmp, err := graphql.UnmarshalString(v)
-	res := models.FrequencyType(tmp)
-	return &res, graphql.ErrorOnPath(ctx, err)
+	var vSlice []interface{}
+	if v != nil {
+		vSlice = graphql.CoerceList(v)
+	}
+	var err error
+	res := make([]models.FrequencyType, len(vSlice))
+	for i := range vSlice {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithIndex(i))
+		res[i], err = ec.unmarshalNFrequencyType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐFrequencyType(ctx, vSlice[i])
+		if err != nil {
+			return nil, err
+		}
+	}
+	return res, nil
 }
 
-func (ec *executionContext) marshalOFrequencyType2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐFrequencyType(ctx context.Context, sel ast.SelectionSet, v *models.FrequencyType) graphql.Marshaler {
+func (ec *executionContext) marshalOFrequencyType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐFrequencyTypeᚄ(ctx context.Context, sel ast.SelectionSet, v []models.FrequencyType) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
-	res := graphql.MarshalString(string(*v))
-	return res
+	ret := make(graphql.Array, len(v))
+	var wg sync.WaitGroup
+	isLen1 := len(v) == 1
+	if !isLen1 {
+		wg.Add(len(v))
+	}
+	for i := range v {
+		i := i
+		fc := &graphql.FieldContext{
+			Index:  &i,
+			Result: &v[i],
+		}
+		ctx := graphql.WithFieldContext(ctx, fc)
+		f := func(i int) {
+			defer func() {
+				if r := recover(); r != nil {
+					ec.Error(ctx, ec.Recover(ctx, r))
+					ret = nil
+				}
+			}()
+			if !isLen1 {
+				defer wg.Done()
+			}
+			ret[i] = ec.marshalNFrequencyType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐFrequencyType(ctx, sel, v[i])
+		}
+		if isLen1 {
+			f(i)
+		} else {
+			go f(i)
+		}
+
+	}
+	wg.Wait()
+
+	for _, e := range ret {
+		if e == graphql.Null {
+			return graphql.Null
+		}
+	}
+
+	return ret
 }
 
 func (ec *executionContext) unmarshalOFundingSource2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐFundingSourceᚄ(ctx context.Context, v interface{}) ([]models.FundingSource, error) {
@@ -69507,21 +73145,71 @@ func (ec *executionContext) marshalOParticipantCommunicationType2ᚕgithubᚗcom
 	return ret
 }
 
-func (ec *executionContext) unmarshalOParticipantRiskType2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐParticipantRiskType(ctx context.Context, v interface{}) (*models.ParticipantRiskType, error) {
+func (ec *executionContext) unmarshalOParticipantRiskType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐParticipantRiskTypeᚄ(ctx context.Context, v interface{}) ([]models.ParticipantRiskType, error) {
 	if v == nil {
 		return nil, nil
 	}
-	tmp, err := graphql.UnmarshalString(v)
-	res := models.ParticipantRiskType(tmp)
-	return &res, graphql.ErrorOnPath(ctx, err)
+	var vSlice []interface{}
+	if v != nil {
+		vSlice = graphql.CoerceList(v)
+	}
+	var err error
+	res := make([]models.ParticipantRiskType, len(vSlice))
+	for i := range vSlice {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithIndex(i))
+		res[i], err = ec.unmarshalNParticipantRiskType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐParticipantRiskType(ctx, vSlice[i])
+		if err != nil {
+			return nil, err
+		}
+	}
+	return res, nil
 }
 
-func (ec *executionContext) marshalOParticipantRiskType2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐParticipantRiskType(ctx context.Context, sel ast.SelectionSet, v *models.ParticipantRiskType) graphql.Marshaler {
+func (ec *executionContext) marshalOParticipantRiskType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐParticipantRiskTypeᚄ(ctx context.Context, sel ast.SelectionSet, v []models.ParticipantRiskType) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
-	res := graphql.MarshalString(string(*v))
-	return res
+	ret := make(graphql.Array, len(v))
+	var wg sync.WaitGroup
+	isLen1 := len(v) == 1
+	if !isLen1 {
+		wg.Add(len(v))
+	}
+	for i := range v {
+		i := i
+		fc := &graphql.FieldContext{
+			Index:  &i,
+			Result: &v[i],
+		}
+		ctx := graphql.WithFieldContext(ctx, fc)
+		f := func(i int) {
+			defer func() {
+				if r := recover(); r != nil {
+					ec.Error(ctx, ec.Recover(ctx, r))
+					ret = nil
+				}
+			}()
+			if !isLen1 {
+				defer wg.Done()
+			}
+			ret[i] = ec.marshalNParticipantRiskType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐParticipantRiskType(ctx, sel, v[i])
+		}
+		if isLen1 {
+			f(i)
+		} else {
+			go f(i)
+		}
+
+	}
+	wg.Wait()
+
+	for _, e := range ret {
+		if e == graphql.Null {
+			return graphql.Null
+		}
+	}
+
+	return ret
 }
 
 func (ec *executionContext) unmarshalOParticipantSelectionType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐParticipantSelectionTypeᚄ(ctx context.Context, v interface{}) ([]model.ParticipantSelectionType, error) {
@@ -70550,6 +74238,23 @@ func (ec *executionContext) marshalOWaiverType2ᚕgithubᚗcomᚋcmsgovᚋmint�
 	}
 
 	return ret
+}
+
+func (ec *executionContext) unmarshalOYesNoOtherType2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐYesNoOtherType(ctx context.Context, v interface{}) (*models.YesNoOtherType, error) {
+	if v == nil {
+		return nil, nil
+	}
+	tmp, err := graphql.UnmarshalString(v)
+	res := models.YesNoOtherType(tmp)
+	return &res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalOYesNoOtherType2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐYesNoOtherType(ctx context.Context, sel ast.SelectionSet, v *models.YesNoOtherType) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	res := graphql.MarshalString(string(*v))
+	return res
 }
 
 func (ec *executionContext) unmarshalOYesNoType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐYesNoTypeᚄ(ctx context.Context, v interface{}) ([]models.YesNoType, error) {

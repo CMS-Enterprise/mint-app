@@ -50,17 +50,7 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
             </li>
             <ul
               data-testid="other-entry"
-            >
-              <li
-                class="font-sans-md line-height-sans-4 "
-              >
-                <em
-                  class="text-base"
-                >
-                  No additional information specified
-                </em>
-              </li>
-            </ul>
+            />
           </ul>
         </div>
       </div>
@@ -105,17 +95,7 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
             </li>
             <ul
               data-testid="other-entry"
-            >
-              <li
-                class="font-sans-md line-height-sans-4 "
-              >
-                <em
-                  class="text-base"
-                >
-                  No additional information specified
-                </em>
-              </li>
-            </ul>
+            />
           </ul>
         </div>
       </div>
@@ -729,8 +709,11 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
             <li
               class="font-sans-md line-height-sans-4"
             >
-              Semiannually
+              Semi-annually
             </li>
+            <ul
+              data-testid="other-entry"
+            />
           </ul>
         </div>
         <div
@@ -827,6 +810,57 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
               class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
             >
               Anticipate note
+            </p>
+          </div>
+        </div>
+      </div>
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--how-often-are-payments-reconciled margin-bottom-3"
+        >
+          <p
+            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+          >
+            How often are payments reconciled?
+          </p>
+          <ul
+            class="margin-y-0 padding-left-3"
+          >
+            <li
+              class="font-sans-md line-height-sans-4"
+            >
+              Continually
+            </li>
+            <ul
+              data-testid="other-entry"
+            >
+              <li
+                class="font-sans-md line-height-sans-4"
+              >
+                Continual Frequency
+              </li>
+            </ul>
+          </ul>
+        </div>
+        <div
+          class="desktop:grid-col-12"
+          data-testid="grid"
+        >
+          <div
+            class="read-only-section read-only-section--notes margin-bottom-3"
+          >
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Notes
+            </p>
+            <p
+              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            >
+              Reconciliation note
             </p>
           </div>
         </div>

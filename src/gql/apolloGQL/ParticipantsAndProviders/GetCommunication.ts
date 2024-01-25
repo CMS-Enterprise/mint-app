@@ -7,10 +7,17 @@ export default gql(/* GraphQL */ `
       modelName
       participantsAndProviders {
         id
+        participantAddedFrequency
+        participantAddedFrequencyContinually
+        participantAddedFrequencyOther
+        participantAddedFrequencyNote
+        participantRemovedFrequency
+        participantRemovedFrequencyContinually
+        participantRemovedFrequencyOther
+        participantRemovedFrequencyNote
         communicationMethod
         communicationMethodOther
         communicationNote
-        participantAssumeRisk
         riskType
         riskOther
         riskNote

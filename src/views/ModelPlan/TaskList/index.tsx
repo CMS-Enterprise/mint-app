@@ -22,6 +22,7 @@ import {
   SummaryBoxHeading
 } from '@trussworks/react-uswds';
 import classNames from 'classnames';
+import { GetCrtdLsQuery } from 'gql/gen/graphql';
 import { useFlags } from 'launchdarkly-react-client-sdk';
 
 import UswdsReactLink from 'components/LinkWrapper';
@@ -39,7 +40,6 @@ import {
   GetModelPlan_modelPlan as GetModelPlanTypes,
   GetModelPlan_modelPlan_basics as BasicsType,
   GetModelPlan_modelPlan_beneficiaries as BeneficiariesType,
-  GetModelPlan_modelPlan_crTdls as CRTDLType,
   GetModelPlan_modelPlan_discussions as DiscussionType,
   GetModelPlan_modelPlan_documents as DocumentType,
   GetModelPlan_modelPlan_generalCharacteristics as GeneralCharacteristicsType,
@@ -65,6 +65,10 @@ import TaskListSideNav from './_components/TaskListSideNav';
 import TaskListStatus from './_components/TaskListStatus';
 
 import './index.scss';
+
+type CRTDLType =
+  | GetCrtdLsQuery['modelPlan']['crs'][0]
+  | GetCrtdLsQuery['modelPlan']['tdls'][0];
 
 type ITSolutionsType = {
   modifiedDts: string | null;
@@ -157,7 +161,8 @@ const TaskList = () => {
     basics,
     discussions,
     documents,
-    crTdls,
+    crs,
+    tdls,
     status,
     generalCharacteristics,
     participantsAndProviders,
@@ -168,6 +173,11 @@ const TaskList = () => {
     prepareForClearance,
     collaborators
   } = modelPlan;
+
+  const planCRs = crs || [];
+  const planTDLs = tdls || [];
+
+  const crTdls = [...planCRs, ...planTDLs] as CRTDLType[];
 
   const getITSolutionsStatus = (
     operationalNeedsArray: OperationalNeedsType[]

@@ -9,7 +9,7 @@ import {
   Fieldset,
   Icon,
   Label,
-  Radio
+  TextInput
 } from '@trussworks/react-uswds';
 import { Field, FieldArray, Form, Formik, FormikProps } from 'formik';
 import {
@@ -23,6 +23,7 @@ import {
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
 import BooleanRadio from 'components/BooleanRadioForm';
+import FrequencyForm from 'components/FrequencyForm';
 import ITSolutionsWarning from 'components/ITSolutionsWarning';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
@@ -51,8 +52,9 @@ export const Communication = () => {
   const { t: miscellaneousT } = useTranslation('miscellaneous');
 
   const {
+    participantAddedFrequency: participantAddedFrequencyConfig,
+    participantRemovedFrequency: participantRemovedFrequencyConfig,
     communicationMethod: communicationMethodConfig,
-    participantAssumeRisk: participantAssumeRiskConfig,
     riskType: riskTypeConfig,
     willRiskChange: willRiskChangeConfig
   } = usePlanTranslation('participantsAndProviders');
@@ -70,10 +72,17 @@ export const Communication = () => {
 
   const {
     id,
+    participantAddedFrequency,
+    participantAddedFrequencyContinually,
+    participantAddedFrequencyOther,
+    participantAddedFrequencyNote,
+    participantRemovedFrequency,
+    participantRemovedFrequencyContinually,
+    participantRemovedFrequencyOther,
+    participantRemovedFrequencyNote,
     communicationMethod,
     communicationMethodOther,
     communicationNote,
-    participantAssumeRisk,
     riskType,
     riskOther,
     riskNote,
@@ -130,10 +139,19 @@ export const Communication = () => {
   const initialValues: CommunicationFormType = {
     __typename: 'PlanParticipantsAndProviders',
     id: id ?? '',
+    participantAddedFrequency: participantAddedFrequency ?? [],
+    participantAddedFrequencyContinually:
+      participantAddedFrequencyContinually ?? '',
+    participantAddedFrequencyOther: participantAddedFrequencyOther ?? '',
+    participantAddedFrequencyNote: participantAddedFrequencyNote ?? '',
+    participantRemovedFrequency: participantRemovedFrequency ?? [],
+    participantRemovedFrequencyContinually:
+      participantRemovedFrequencyContinually ?? '',
+    participantRemovedFrequencyOther: participantRemovedFrequencyOther ?? '',
+    participantRemovedFrequencyNote: participantRemovedFrequencyNote ?? '',
     communicationMethod: communicationMethod ?? [],
     communicationMethodOther: communicationMethodOther ?? '',
     communicationNote: communicationNote ?? '',
-    participantAssumeRisk: participantAssumeRisk ?? null,
     riskType: riskType ?? null,
     riskOther: riskOther ?? '',
     riskNote: riskNote ?? '',
@@ -225,6 +243,30 @@ export const Communication = () => {
                 }}
               >
                 <Fieldset disabled={!!error || loading}>
+                  <FrequencyForm
+                    field="participantAddedFrequency"
+                    values={values.participantAddedFrequency}
+                    config={participantAddedFrequencyConfig}
+                    nameSpace="participantsAndProviders"
+                    id="participant-added-frequency"
+                    label={participantsAndProvidersT(
+                      'participantAddedFrequency.label'
+                    )}
+                    disabled={loading}
+                  />
+
+                  <FrequencyForm
+                    field="participantRemovedFrequency"
+                    values={values.participantRemovedFrequency}
+                    config={participantRemovedFrequencyConfig}
+                    nameSpace="participantsAndProviders"
+                    id="participant-removed-frequency"
+                    label={participantsAndProvidersT(
+                      'participantRemovedFrequency.label'
+                    )}
+                    disabled={loading}
+                  />
+
                   <FieldGroup
                     scrollElement="communicationMethod"
                     error={!!flatErrors.communicationMethod}
@@ -326,82 +368,50 @@ export const Communication = () => {
                   </FieldGroup>
 
                   <FieldGroup
-                    scrollElement="participantAssumeRisk"
-                    error={!!flatErrors.participantAssumeRisk}
+                    scrollElement="riskType"
+                    error={!!flatErrors.riskType}
                     className="margin-y-4 margin-bottom-8"
                   >
-                    <Label htmlFor="participants-and-providers-risk">
-                      {participantsAndProvidersT('participantAssumeRisk.label')}
+                    <Label htmlFor="participants-and-providers-risk-type">
+                      {participantsAndProvidersT('riskType.label')}
                     </Label>
 
-                    <FieldErrorMsg>
-                      {flatErrors.participantAssumeRisk}
-                    </FieldErrorMsg>
+                    <FieldErrorMsg>{flatErrors.riskType}</FieldErrorMsg>
 
-                    <BooleanRadio
-                      field="participantAssumeRisk"
-                      id="participants-and-providers-risk"
-                      value={values.participantAssumeRisk}
-                      setFieldValue={setFieldValue}
-                      options={participantAssumeRiskConfig.options}
-                    />
+                    <Fieldset>
+                      {getKeys(riskTypeConfig.options).map(key => (
+                        <Fragment key={key}>
+                          <Field
+                            as={CheckboxField}
+                            id={`participants-and-providers-risk-type-${key}`}
+                            name="riskType"
+                            label={riskTypeConfig.options[key]}
+                            value={key}
+                            checked={values.riskType?.includes(key)}
+                          />
+                        </Fragment>
+                      ))}
+                      {values.riskType?.includes(ParticipantRiskType.OTHER) && (
+                        <div className="margin-left-4">
+                          <Label
+                            htmlFor="participants-and-providers-risk-type-other"
+                            className="text-normal"
+                          >
+                            {participantsAndProvidersT('riskOther.label')}
+                          </Label>
 
-                    {values.participantAssumeRisk && (
-                      <>
-                        <Label
-                          htmlFor="participants-and-providers-risk-type"
-                          className="text-normal"
-                        >
-                          {participantsAndProvidersT('riskType.label')}
-                        </Label>
+                          <FieldErrorMsg>{flatErrors.riskOther}</FieldErrorMsg>
 
-                        <FieldErrorMsg>{flatErrors.riskType}</FieldErrorMsg>
-
-                        <Fieldset>
-                          {getKeys(riskTypeConfig.options).map(key => (
-                            <Fragment key={key}>
-                              <Field
-                                as={Radio}
-                                id={`participants-and-providers-risk-type-${key}`}
-                                name="riskType"
-                                label={riskTypeConfig.options[key]}
-                                value={key}
-                                checked={values.riskType === key}
-                                onChange={() => {
-                                  setFieldValue('riskType', key);
-                                }}
-                              />
-                              {key === ParticipantRiskType.OTHER &&
-                                values.riskType === key && (
-                                  <div className="margin-left-4 margin-top-2">
-                                    <Label
-                                      htmlFor="participants-and-providers-risk-type-other"
-                                      className="text-normal"
-                                    >
-                                      {participantsAndProvidersT(
-                                        'riskOther.label'
-                                      )}
-                                    </Label>
-
-                                    <FieldErrorMsg>
-                                      {flatErrors.riskOther}
-                                    </FieldErrorMsg>
-
-                                    <Field
-                                      as={TextAreaField}
-                                      className="maxw-none mint-textarea"
-                                      id="participants-and-providers-risk-type-other"
-                                      data-testid="participants-and-providers-risk-type-other"
-                                      maxLength={5000}
-                                      name="riskOther"
-                                    />
-                                  </div>
-                                )}
-                            </Fragment>
-                          ))}
-                        </Fieldset>
-                      </>
-                    )}
+                          <Field
+                            as={TextInput}
+                            className="maxw-none mint-textarea"
+                            id="participants-and-providers-risk-type-other"
+                            data-testid="participants-and-providers-risk-type-other"
+                            name="riskOther"
+                          />
+                        </div>
+                      )}
+                    </Fieldset>
                     <AddNote
                       id="participants-and-providers-risk-note"
                       field="riskNote"

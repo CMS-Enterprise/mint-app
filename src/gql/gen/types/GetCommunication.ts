@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { ParticipantCommunicationType, ParticipantRiskType } from "./../../../types/graphql-global-types";
+import { FrequencyType, ParticipantCommunicationType, ParticipantRiskType } from "./../../../types/graphql-global-types";
 
 // ====================================================
 // GraphQL query operation: GetCommunication
@@ -12,11 +12,18 @@ import { ParticipantCommunicationType, ParticipantRiskType } from "./../../../ty
 export interface GetCommunication_modelPlan_participantsAndProviders {
   __typename: "PlanParticipantsAndProviders";
   id: UUID;
+  participantAddedFrequency: FrequencyType[];
+  participantAddedFrequencyContinually: string | null;
+  participantAddedFrequencyOther: string | null;
+  participantAddedFrequencyNote: string | null;
+  participantRemovedFrequency: FrequencyType[];
+  participantRemovedFrequencyContinually: string | null;
+  participantRemovedFrequencyOther: string | null;
+  participantRemovedFrequencyNote: string | null;
   communicationMethod: ParticipantCommunicationType[];
   communicationMethodOther: string | null;
   communicationNote: string | null;
-  participantAssumeRisk: boolean | null;
-  riskType: ParticipantRiskType | null;
+  riskType: ParticipantRiskType[];
   riskOther: string | null;
   riskNote: string | null;
   willRiskChange: boolean | null;

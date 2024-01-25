@@ -60,7 +60,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                       class="mint-tag bg-base text-white margin-right-0"
                       data-testid="tag"
                     >
-                      Draft model plan
+                      Draft Model Plan
                     </span>
                   </div>
                   <div
@@ -2180,6 +2180,108 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                 data-testid="grid"
               >
                 <div
+                  class="read-only-section read-only-section--how-frequently-are-participants-added margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    How frequently are participants added?
+                  </p>
+                  <ul
+                    class="margin-y-0 padding-left-3"
+                  >
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Continually
+                    </li>
+                    <ul
+                      data-testid="other-entry"
+                    >
+                      <li
+                        class="font-sans-md line-height-sans-4"
+                      >
+                        participant added continually
+                      </li>
+                    </ul>
+                  </ul>
+                </div>
+                <div
+                  class="desktop:grid-col-12"
+                  data-testid="grid"
+                >
+                  <div
+                    class="read-only-section read-only-section--notes margin-bottom-3"
+                  >
+                    <p
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                    >
+                      Notes
+                    </p>
+                    <p
+                      class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                    >
+                      My note
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--how-frequently-are-participants-removed margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    How frequently are participants removed?
+                  </p>
+                  <ul
+                    class="margin-y-0 padding-left-3"
+                  >
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Other
+                    </li>
+                    <ul
+                      data-testid="other-entry"
+                    >
+                      <li
+                        class="font-sans-md line-height-sans-4"
+                      >
+                        participant added other
+                      </li>
+                    </ul>
+                  </ul>
+                </div>
+                <div
+                  class="desktop:grid-col-12"
+                  data-testid="grid"
+                >
+                  <div
+                    class="read-only-section read-only-section--notes margin-bottom-3"
+                  >
+                    <p
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                    >
+                      Notes
+                    </p>
+                    <p
+                      class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                    >
+                      Second note
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
                   class="read-only-section read-only-section--how-will-you-communicate-with-participants margin-bottom-3"
                 >
                   <p
@@ -2223,55 +2325,44 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                 </div>
               </div>
               <div
-                class="grid-row grid-gap"
+                class="desktop:grid-col-12"
                 data-testid="grid"
               >
                 <div
-                  class="desktop:grid-col-6"
-                  data-testid="grid"
+                  class="read-only-section read-only-section--what-type-of-risk-will-the-participant-assume margin-bottom-3"
                 >
-                  <div
-                    class="desktop:grid-col-12"
-                    data-testid="grid"
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
                   >
-                    <div
-                      class="read-only-section read-only-section--will-the-participants-assume-risk margin-bottom-3"
+                    What type of risk will the participant assume?
+                  </p>
+                  <ul
+                    class="margin-y-0 padding-left-3"
+                  >
+                    <li
+                      class="font-sans-md line-height-sans-4"
                     >
-                      <p
-                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
-                      >
-                        Will the participants assume risk?
-                      </p>
-                      <p
-                        class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
-                      >
-                        Yes
-                      </p>
-                    </div>
-                  </div>
+                      Capitation
+                    </li>
+                  </ul>
                 </div>
                 <div
-                  class="desktop:grid-col-6"
+                  class="desktop:grid-col-12"
                   data-testid="grid"
                 >
                   <div
-                    class="desktop:grid-col-12"
-                    data-testid="grid"
+                    class="read-only-section read-only-section--notes margin-bottom-3"
                   >
-                    <div
-                      class="read-only-section read-only-section--what-type-of-risk-will-the-participant-assume margin-bottom-3"
+                    <p
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
                     >
-                      <p
-                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
-                      >
-                        What type of risk will the participant assume?
-                      </p>
-                      <p
-                        class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
-                      >
-                        Capitation
-                      </p>
-                    </div>
+                      Notes
+                    </p>
+                    <p
+                      class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                    >
+                      Note risk
+                    </p>
                   </div>
                 </div>
               </div>
@@ -2534,11 +2625,24 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                   >
                     How frequently are providers added?
                   </p>
-                  <p
-                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  <ul
+                    class="margin-y-0 padding-left-3"
                   >
-                    Biannually
-                  </p>
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Other
+                    </li>
+                    <ul
+                      data-testid="other-entry"
+                    >
+                      <li
+                        class="font-sans-md line-height-sans-4"
+                      >
+                        Freq other
+                      </li>
+                    </ul>
+                  </ul>
                 </div>
                 <div
                   class="desktop:grid-col-12"
@@ -2640,6 +2744,57 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                       class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
                     >
                       Note leave
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--how-frequently-are-providers-removed margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    How frequently are providers removed?
+                  </p>
+                  <ul
+                    class="margin-y-0 padding-left-3"
+                  >
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Continually
+                    </li>
+                    <ul
+                      data-testid="other-entry"
+                    >
+                      <li
+                        class="font-sans-md line-height-sans-4"
+                      >
+                        Freq cont
+                      </li>
+                    </ul>
+                  </ul>
+                </div>
+                <div
+                  class="desktop:grid-col-12"
+                  data-testid="grid"
+                >
+                  <div
+                    class="read-only-section read-only-section--notes margin-bottom-3"
+                  >
+                    <p
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                    >
+                      Notes
+                    </p>
+                    <p
+                      class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                    >
+                      Note freq removal
                     </p>
                   </div>
                 </div>
@@ -3012,11 +3167,75 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                   >
                     How frequently are beneficiaries added?
                   </p>
-                  <p
-                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  <ul
+                    class="margin-y-0 padding-left-3"
                   >
-                    Annually
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Other
+                    </li>
+                    <ul
+                      data-testid="other-entry"
+                    >
+                      <li
+                        class="font-sans-md line-height-sans-4"
+                      >
+                        Frequency other
+                      </li>
+                    </ul>
+                  </ul>
+                </div>
+                <div
+                  class="desktop:grid-col-12"
+                  data-testid="grid"
+                >
+                  <div
+                    class="read-only-section read-only-section--notes margin-bottom-3"
+                  >
+                    <p
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                    >
+                      Notes
+                    </p>
+                    <p
+                      class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                    >
+                      Note frequency
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--how-frequently-are-beneficiaries-removed margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    How frequently are beneficiaries removed?
                   </p>
+                  <ul
+                    class="margin-y-0 padding-left-3"
+                  >
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Continually
+                    </li>
+                    <ul
+                      data-testid="other-entry"
+                    >
+                      <li
+                        class="font-sans-md line-height-sans-4"
+                      >
+                        Frequency continually
+                      </li>
+                    </ul>
+                  </ul>
                 </div>
                 <div
                   class="desktop:grid-col-12"
@@ -4719,8 +4938,11 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      Daily
+                      Monthly
                     </li>
+                    <ul
+                      data-testid="other-entry"
+                    />
                   </ul>
                 </div>
                 <div
@@ -4780,8 +5002,11 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      Monthly
+                      Annually
                     </li>
+                    <ul
+                      data-testid="other-entry"
+                    />
                   </ul>
                 </div>
                 <div
@@ -4840,6 +5065,38 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                       Note for qual report
                     </p>
                   </div>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--how-frequently-does-quality-reporting-happen margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    How frequently does quality reporting happen?
+                  </p>
+                  <ul
+                    class="margin-y-0 padding-left-3"
+                  >
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Other
+                    </li>
+                    <ul
+                      data-testid="other-entry"
+                    >
+                      <li
+                        class="font-sans-md line-height-sans-4"
+                      >
+                        Other frequency
+                      </li>
+                    </ul>
+                  </ul>
                 </div>
               </div>
             </div>
@@ -4978,17 +5235,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     </li>
                     <ul
                       data-testid="other-entry"
-                    >
-                      <li
-                        class="font-sans-md line-height-sans-4 "
-                      >
-                        <em
-                          class="text-base"
-                        >
-                          No additional information specified
-                        </em>
-                      </li>
-                    </ul>
+                    />
                   </ul>
                 </div>
               </div>
@@ -5033,17 +5280,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     </li>
                     <ul
                       data-testid="other-entry"
-                    >
-                      <li
-                        class="font-sans-md line-height-sans-4 "
-                      >
-                        <em
-                          class="text-base"
-                        >
-                          No additional information specified
-                        </em>
-                      </li>
-                    </ul>
+                    />
                   </ul>
                 </div>
               </div>
@@ -5657,8 +5894,11 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      Semiannually
+                      Semi-annually
                     </li>
+                    <ul
+                      data-testid="other-entry"
+                    />
                   </ul>
                 </div>
                 <div
@@ -5755,6 +5995,57 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                       class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
                     >
                       Anticipate note
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--how-often-are-payments-reconciled margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    How often are payments reconciled?
+                  </p>
+                  <ul
+                    class="margin-y-0 padding-left-3"
+                  >
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Continually
+                    </li>
+                    <ul
+                      data-testid="other-entry"
+                    >
+                      <li
+                        class="font-sans-md line-height-sans-4"
+                      >
+                        Continual Frequency
+                      </li>
+                    </ul>
+                  </ul>
+                </div>
+                <div
+                  class="desktop:grid-col-12"
+                  data-testid="grid"
+                >
+                  <div
+                    class="read-only-section read-only-section--notes margin-bottom-3"
+                  >
+                    <p
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                    >
+                      Notes
+                    </p>
+                    <p
+                      class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                    >
+                      Reconciliation note
                     </p>
                   </div>
                 </div>
@@ -6419,7 +6710,7 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                       class="mint-tag bg-base text-white margin-right-0"
                       data-testid="tag"
                     >
-                      Draft model plan
+                      Draft Model Plan
                     </span>
                   </div>
                   <div
@@ -8539,6 +8830,108 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                 data-testid="grid"
               >
                 <div
+                  class="read-only-section read-only-section--how-frequently-are-participants-added margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    How frequently are participants added?
+                  </p>
+                  <ul
+                    class="margin-y-0 padding-left-3"
+                  >
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Continually
+                    </li>
+                    <ul
+                      data-testid="other-entry"
+                    >
+                      <li
+                        class="font-sans-md line-height-sans-4"
+                      >
+                        participant added continually
+                      </li>
+                    </ul>
+                  </ul>
+                </div>
+                <div
+                  class="desktop:grid-col-12"
+                  data-testid="grid"
+                >
+                  <div
+                    class="read-only-section read-only-section--notes margin-bottom-3"
+                  >
+                    <p
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                    >
+                      Notes
+                    </p>
+                    <p
+                      class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                    >
+                      My note
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--how-frequently-are-participants-removed margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    How frequently are participants removed?
+                  </p>
+                  <ul
+                    class="margin-y-0 padding-left-3"
+                  >
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Other
+                    </li>
+                    <ul
+                      data-testid="other-entry"
+                    >
+                      <li
+                        class="font-sans-md line-height-sans-4"
+                      >
+                        participant added other
+                      </li>
+                    </ul>
+                  </ul>
+                </div>
+                <div
+                  class="desktop:grid-col-12"
+                  data-testid="grid"
+                >
+                  <div
+                    class="read-only-section read-only-section--notes margin-bottom-3"
+                  >
+                    <p
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                    >
+                      Notes
+                    </p>
+                    <p
+                      class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                    >
+                      Second note
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
                   class="read-only-section read-only-section--how-will-you-communicate-with-participants margin-bottom-3"
                 >
                   <p
@@ -8582,55 +8975,44 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                 </div>
               </div>
               <div
-                class="grid-row grid-gap"
+                class="desktop:grid-col-12"
                 data-testid="grid"
               >
                 <div
-                  class="desktop:grid-col-6"
-                  data-testid="grid"
+                  class="read-only-section read-only-section--what-type-of-risk-will-the-participant-assume margin-bottom-3"
                 >
-                  <div
-                    class="desktop:grid-col-12"
-                    data-testid="grid"
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
                   >
-                    <div
-                      class="read-only-section read-only-section--will-the-participants-assume-risk margin-bottom-3"
+                    What type of risk will the participant assume?
+                  </p>
+                  <ul
+                    class="margin-y-0 padding-left-3"
+                  >
+                    <li
+                      class="font-sans-md line-height-sans-4"
                     >
-                      <p
-                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
-                      >
-                        Will the participants assume risk?
-                      </p>
-                      <p
-                        class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
-                      >
-                        Yes
-                      </p>
-                    </div>
-                  </div>
+                      Capitation
+                    </li>
+                  </ul>
                 </div>
                 <div
-                  class="desktop:grid-col-6"
+                  class="desktop:grid-col-12"
                   data-testid="grid"
                 >
                   <div
-                    class="desktop:grid-col-12"
-                    data-testid="grid"
+                    class="read-only-section read-only-section--notes margin-bottom-3"
                   >
-                    <div
-                      class="read-only-section read-only-section--what-type-of-risk-will-the-participant-assume margin-bottom-3"
+                    <p
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
                     >
-                      <p
-                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
-                      >
-                        What type of risk will the participant assume?
-                      </p>
-                      <p
-                        class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
-                      >
-                        Capitation
-                      </p>
-                    </div>
+                      Notes
+                    </p>
+                    <p
+                      class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                    >
+                      Note risk
+                    </p>
                   </div>
                 </div>
               </div>
@@ -8893,11 +9275,24 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                   >
                     How frequently are providers added?
                   </p>
-                  <p
-                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  <ul
+                    class="margin-y-0 padding-left-3"
                   >
-                    Biannually
-                  </p>
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Other
+                    </li>
+                    <ul
+                      data-testid="other-entry"
+                    >
+                      <li
+                        class="font-sans-md line-height-sans-4"
+                      >
+                        Freq other
+                      </li>
+                    </ul>
+                  </ul>
                 </div>
                 <div
                   class="desktop:grid-col-12"
@@ -8999,6 +9394,57 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                       class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
                     >
                       Note leave
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--how-frequently-are-providers-removed margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    How frequently are providers removed?
+                  </p>
+                  <ul
+                    class="margin-y-0 padding-left-3"
+                  >
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Continually
+                    </li>
+                    <ul
+                      data-testid="other-entry"
+                    >
+                      <li
+                        class="font-sans-md line-height-sans-4"
+                      >
+                        Freq cont
+                      </li>
+                    </ul>
+                  </ul>
+                </div>
+                <div
+                  class="desktop:grid-col-12"
+                  data-testid="grid"
+                >
+                  <div
+                    class="read-only-section read-only-section--notes margin-bottom-3"
+                  >
+                    <p
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                    >
+                      Notes
+                    </p>
+                    <p
+                      class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                    >
+                      Note freq removal
                     </p>
                   </div>
                 </div>
@@ -9371,11 +9817,75 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                   >
                     How frequently are beneficiaries added?
                   </p>
-                  <p
-                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  <ul
+                    class="margin-y-0 padding-left-3"
                   >
-                    Annually
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Other
+                    </li>
+                    <ul
+                      data-testid="other-entry"
+                    >
+                      <li
+                        class="font-sans-md line-height-sans-4"
+                      >
+                        Frequency other
+                      </li>
+                    </ul>
+                  </ul>
+                </div>
+                <div
+                  class="desktop:grid-col-12"
+                  data-testid="grid"
+                >
+                  <div
+                    class="read-only-section read-only-section--notes margin-bottom-3"
+                  >
+                    <p
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                    >
+                      Notes
+                    </p>
+                    <p
+                      class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                    >
+                      Note frequency
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--how-frequently-are-beneficiaries-removed margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    How frequently are beneficiaries removed?
                   </p>
+                  <ul
+                    class="margin-y-0 padding-left-3"
+                  >
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Continually
+                    </li>
+                    <ul
+                      data-testid="other-entry"
+                    >
+                      <li
+                        class="font-sans-md line-height-sans-4"
+                      >
+                        Frequency continually
+                      </li>
+                    </ul>
+                  </ul>
                 </div>
                 <div
                   class="desktop:grid-col-12"
@@ -11078,8 +11588,11 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      Daily
+                      Monthly
                     </li>
+                    <ul
+                      data-testid="other-entry"
+                    />
                   </ul>
                 </div>
                 <div
@@ -11139,8 +11652,11 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      Monthly
+                      Annually
                     </li>
+                    <ul
+                      data-testid="other-entry"
+                    />
                   </ul>
                 </div>
                 <div
@@ -11199,6 +11715,38 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                       Note for qual report
                     </p>
                   </div>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--how-frequently-does-quality-reporting-happen margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    How frequently does quality reporting happen?
+                  </p>
+                  <ul
+                    class="margin-y-0 padding-left-3"
+                  >
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Other
+                    </li>
+                    <ul
+                      data-testid="other-entry"
+                    >
+                      <li
+                        class="font-sans-md line-height-sans-4"
+                      >
+                        Other frequency
+                      </li>
+                    </ul>
+                  </ul>
                 </div>
               </div>
             </div>
@@ -11337,17 +11885,7 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                     </li>
                     <ul
                       data-testid="other-entry"
-                    >
-                      <li
-                        class="font-sans-md line-height-sans-4 "
-                      >
-                        <em
-                          class="text-base"
-                        >
-                          No additional information specified
-                        </em>
-                      </li>
-                    </ul>
+                    />
                   </ul>
                 </div>
               </div>
@@ -11392,17 +11930,7 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                     </li>
                     <ul
                       data-testid="other-entry"
-                    >
-                      <li
-                        class="font-sans-md line-height-sans-4 "
-                      >
-                        <em
-                          class="text-base"
-                        >
-                          No additional information specified
-                        </em>
-                      </li>
-                    </ul>
+                    />
                   </ul>
                 </div>
               </div>
@@ -12016,8 +12544,11 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      Semiannually
+                      Semi-annually
                     </li>
+                    <ul
+                      data-testid="other-entry"
+                    />
                   </ul>
                 </div>
                 <div
@@ -12114,6 +12645,57 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                       class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
                     >
                       Anticipate note
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--how-often-are-payments-reconciled margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    How often are payments reconciled?
+                  </p>
+                  <ul
+                    class="margin-y-0 padding-left-3"
+                  >
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Continually
+                    </li>
+                    <ul
+                      data-testid="other-entry"
+                    >
+                      <li
+                        class="font-sans-md line-height-sans-4"
+                      >
+                        Continual Frequency
+                      </li>
+                    </ul>
+                  </ul>
+                </div>
+                <div
+                  class="desktop:grid-col-12"
+                  data-testid="grid"
+                >
+                  <div
+                    class="read-only-section read-only-section--notes margin-bottom-3"
+                  >
+                    <p
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                    >
+                      Notes
+                    </p>
+                    <p
+                      class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                    >
+                      Reconciliation note
                     </p>
                   </div>
                 </div>

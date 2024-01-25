@@ -60,8 +60,13 @@ export interface GetModelPlans_modelPlanCollection_discussions {
   replies: GetModelPlans_modelPlanCollection_discussions_replies[];
 }
 
-export interface GetModelPlans_modelPlanCollection_crTdls {
-  __typename: "PlanCrTdl";
+export interface GetModelPlans_modelPlanCollection_crs {
+  __typename: "PlanCR";
+  idNumber: string;
+}
+
+export interface GetModelPlans_modelPlanCollection_tdls {
+  __typename: "PlanTDL";
   idNumber: string;
 }
 
@@ -82,7 +87,8 @@ export interface GetModelPlans_modelPlanCollection {
   payments: GetModelPlans_modelPlanCollection_payments;
   collaborators: GetModelPlans_modelPlanCollection_collaborators[];
   discussions: GetModelPlans_modelPlanCollection_discussions[];
-  crTdls: GetModelPlans_modelPlanCollection_crTdls[];
+  crs: GetModelPlans_modelPlanCollection_crs[];
+  tdls: GetModelPlans_modelPlanCollection_tdls[];
 }
 
 export interface GetModelPlans {

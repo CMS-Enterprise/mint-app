@@ -73,7 +73,8 @@ type ModelPlan {
   status: ModelStatus!
   isFavorite: Boolean!
   isCollaborator: Boolean!
-  crTdls: [PlanCrTdl!]!
+  crs: [PlanCR!]!
+  tdls: [PlanTDL!]!
   prepareForClearance: PrepareForClearance!
   nameHistory(sort: SortDirection! = DESC): [String!]!
   operationalNeeds: [OperationalNeed!]!
@@ -700,9 +701,14 @@ type PlanBeneficiaries {
   beneficiarySelectionOther: String
   beneficiarySelectionNote: String
   #Page 3
-  beneficiarySelectionFrequency: FrequencyType
+  beneficiarySelectionFrequency: [FrequencyType!]!
+  beneficiarySelectionFrequencyContinually: String
   beneficiarySelectionFrequencyOther: String
   beneficiarySelectionFrequencyNote: String
+  beneficiaryRemovalFrequency: [FrequencyType!]!
+  beneficiaryRemovalFrequencyContinually: String
+  beneficiaryRemovalFrequencyOther: String
+  beneficiaryRemovalFrequencyNote: String
   beneficiaryOverlap: OverlapType
   beneficiaryOverlapNote: String
   precedenceRules: [YesNoType!]!
@@ -747,9 +753,14 @@ input PlanBeneficiariesChanges @goModel(model: "map[string]interface{}") {
   beneficiarySelectionOther: String
   beneficiarySelectionNote: String
   #Page 3
-  beneficiarySelectionFrequency: FrequencyType
+  beneficiarySelectionFrequency: [FrequencyType!]
+  beneficiarySelectionFrequencyContinually: String
   beneficiarySelectionFrequencyOther: String
   beneficiarySelectionFrequencyNote: String
+  beneficiaryRemovalFrequency: [FrequencyType!]
+  beneficiaryRemovalFrequencyContinually: String
+  beneficiaryRemovalFrequencyOther: String
+  beneficiaryRemovalFrequencyNote: String
   beneficiaryOverlap: OverlapType
   beneficiaryOverlapNote: String
   precedenceRules: [YesNoType!]
@@ -789,11 +800,18 @@ type PlanParticipantsAndProviders {
   selectionNote:                String
 
   #Page 3
+  participantAddedFrequency:                 [FrequencyType!]!
+  participantAddedFrequencyContinually:      String
+  participantAddedFrequencyOther:            String
+  participantAddedFrequencyNote:             String
+  participantRemovedFrequency:               [FrequencyType!]!
+  participantRemovedFrequencyContinually:    String
+  participantRemovedFrequencyOther:          String
+  participantRemovedFrequencyNote:           String
   communicationMethod:   [ParticipantCommunicationType!]!
   communicationMethodOther:   String
   communicationNote:     String
-  participantAssumeRisk: Boolean
-  riskType:              ParticipantRiskType
+  riskType:              [ParticipantRiskType!]!
   riskOther:             String
   riskNote:              String
   willRiskChange:        Boolean
@@ -812,7 +830,8 @@ type PlanParticipantsAndProviders {
   participantsIDSNote:     String
 
   #Page 5
-  providerAdditionFrequency:      FrequencyType
+  providerAdditionFrequency:      [FrequencyType!]!
+  providerAdditionFrequencyContinually: String
   providerAdditionFrequencyOther: String
   providerAdditionFrequencyNote:  String
   providerAddMethod:              [ProviderAddType!]!
@@ -821,6 +840,10 @@ type PlanParticipantsAndProviders {
   providerLeaveMethod:            [ProviderLeaveType!]!
   providerLeaveMethodOther:       String
   providerLeaveMethodNote:        String
+  providerRemovalFrequency:       [FrequencyType!]!
+  providerRemovalFrequencyContinually: String
+  providerRemovalFrequencyOther:  String
+  providerRemovalFrequencyNote:   String
   providerOverlap:                OverlapType
   providerOverlapHierarchy:       String
   providerOverlapNote:            String
@@ -873,11 +896,18 @@ input PlanParticipantsAndProvidersChanges @goModel(model: "map[string]interface{
   selectionNote:                String
 
   #Page 3
+  participantAddedFrequency:                 [FrequencyType!]
+  participantAddedFrequencyContinually:      String
+  participantAddedFrequencyOther:            String
+  participantAddedFrequencyNote:             String
+  participantRemovedFrequency:               [FrequencyType!]
+  participantRemovedFrequencyContinually:    String
+  participantRemovedFrequencyOther:          String
+  participantRemovedFrequencyNote:           String
   communicationMethod:   [ParticipantCommunicationType!]
   communicationMethodOther:   String
   communicationNote:     String
-  participantAssumeRisk: Boolean
-  riskType:              ParticipantRiskType
+  riskType:              [ParticipantRiskType!]
   riskOther:             String
   riskNote:              String
   willRiskChange:        Boolean
@@ -896,7 +926,8 @@ input PlanParticipantsAndProvidersChanges @goModel(model: "map[string]interface{
   participantsIDSNote:     String
 
   #Page 5
-  providerAdditionFrequency:      FrequencyType
+  providerAdditionFrequency:      [FrequencyType!]
+  providerAdditionFrequencyContinually: String
   providerAdditionFrequencyOther: String
   providerAdditionFrequencyNote:  String
   providerAddMethod:              [ProviderAddType!]
@@ -905,6 +936,10 @@ input PlanParticipantsAndProvidersChanges @goModel(model: "map[string]interface{
   providerLeaveMethod:            [ProviderLeaveType!]
   providerLeaveMethodOther:       String
   providerLeaveMethodNote:        String
+  providerRemovalFrequency:       [FrequencyType!]
+  providerRemovalFrequencyContinually: String
+  providerRemovalFrequencyOther:  String
+  providerRemovalFrequencyNote:   String
   providerOverlap:                OverlapType
   providerOverlapHierarchy:       String
   providerOverlapNote:            String
@@ -982,7 +1017,8 @@ type PlanPayments {
   canParticipantsSelectBetweenPaymentMechanisms:     Boolean
   canParticipantsSelectBetweenPaymentMechanismsHow:  String
   canParticipantsSelectBetweenPaymentMechanismsNote: String
-  anticipatedPaymentFrequency:                       [AnticipatedPaymentFrequencyType!]!
+  anticipatedPaymentFrequency:                       [FrequencyType!]!
+  anticipatedPaymentFrequencyContinually:            String
   anticipatedPaymentFrequencyOther:                  String
   anticipatedPaymentFrequencyNote:                   String
 
@@ -991,6 +1027,10 @@ type PlanPayments {
   willRecoverPaymentsNote:                           String
   anticipateReconcilingPaymentsRetrospectively:      Boolean
   anticipateReconcilingPaymentsRetrospectivelyNote:  String
+  paymentReconciliationFrequency:                    [FrequencyType!]!
+  paymentReconciliationFrequencyContinually:         String
+  paymentReconciliationFrequencyOther:               String
+  paymentReconciliationFrequencyNote:                String
   paymentStartDate:                                  Time
   paymentStartDateNote:                              String
 
@@ -1079,7 +1119,8 @@ input PlanPaymentsChanges @goModel(model: "map[string]interface{}") {
   canParticipantsSelectBetweenPaymentMechanisms:            Boolean
   canParticipantsSelectBetweenPaymentMechanismsHow:         String
   canParticipantsSelectBetweenPaymentMechanismsNote:        String
-  anticipatedPaymentFrequency:                              [AnticipatedPaymentFrequencyType!]
+  anticipatedPaymentFrequency:                              [FrequencyType!]
+  anticipatedPaymentFrequencyContinually:                   String
   anticipatedPaymentFrequencyOther:                         String
   anticipatedPaymentFrequencyNote:                         String
 
@@ -1088,6 +1129,10 @@ input PlanPaymentsChanges @goModel(model: "map[string]interface{}") {
   willRecoverPaymentsNote:                          String
   anticipateReconcilingPaymentsRetrospectively:      Boolean
   anticipateReconcilingPaymentsRetrospectivelyNote: String
+  paymentReconciliationFrequency:                    [FrequencyType!]
+  paymentReconciliationFrequencyContinually:         String
+  paymentReconciliationFrequencyOther:               String
+  paymentReconciliationFrequencyNote:                String
   paymentStartDate:                                  Time
   paymentStartDateNote:                             String
 
@@ -1182,22 +1227,28 @@ type PlanOpsEvalAndLearning {
     useCcwForFileDistribiutionToParticipantsNote: String
     developNewQualityMeasures: Boolean
     developNewQualityMeasuresNote: String
-    qualityPerformanceImpactsPayment: Boolean
+    qualityPerformanceImpactsPayment: YesNoOtherType
+    qualityPerformanceImpactsPaymentOther: String
     qualityPerformanceImpactsPaymentNote: String
     #Page 8
     dataSharingStarts: DataStartsType
     dataSharingStartsOther: String
-    dataSharingFrequency: [DataFrequencyType!]!
+    dataSharingFrequency: [FrequencyType!]!
+    dataSharingFrequencyContinually: String
     dataSharingFrequencyOther: String
     dataSharingStartsNote: String
     dataCollectionStarts: DataStartsType
     dataCollectionStartsOther: String
-    dataCollectionFrequency: [DataFrequencyType!]!
+    dataCollectionFrequency: [FrequencyType!]!
+    dataCollectionFrequencyContinually: String
     dataCollectionFrequencyOther: String
-    dataCollectionFrequencyNote: String
+    dataCollectionFrequencyNote: String    
     qualityReportingStarts: DataStartsType
     qualityReportingStartsOther: String
     qualityReportingStartsNote: String
+    qualityReportingFrequency: [FrequencyType!]!
+    qualityReportingFrequencyContinually: String
+    qualityReportingFrequencyOther: String
     #Page 9
     modelLearningSystems: [ModelLearningSystemType!]!
     modelLearningSystemsOther: String
@@ -1310,22 +1361,28 @@ input PlanOpsEvalAndLearningChanges @goModel(model: "map[string]interface{}") {
     useCcwForFileDistribiutionToParticipantsNote: String
     developNewQualityMeasures: Boolean
     developNewQualityMeasuresNote: String
-    qualityPerformanceImpactsPayment: Boolean
+    qualityPerformanceImpactsPayment: YesNoOtherType
+    qualityPerformanceImpactsPaymentOther: String
     qualityPerformanceImpactsPaymentNote: String
     #Page 8
     dataSharingStarts: DataStartsType
     dataSharingStartsOther: String
-    dataSharingFrequency: [DataFrequencyType!]
+    dataSharingFrequency: [FrequencyType!]
+    dataSharingFrequencyContinually: String
     dataSharingFrequencyOther: String
     dataSharingStartsNote: String
     dataCollectionStarts: DataStartsType
     dataCollectionStartsOther: String
-    dataCollectionFrequency: [DataFrequencyType!]
+    dataCollectionFrequency: [FrequencyType!]
+    dataCollectionFrequencyContinually: String
     dataCollectionFrequencyOther: String
-    dataCollectionFrequencyNote: String
+    dataCollectionFrequencyNote: String    
     qualityReportingStarts: DataStartsType
     qualityReportingStartsOther: String
     qualityReportingStartsNote: String
+    qualityReportingFrequency: [FrequencyType!]
+    qualityReportingFrequencyContinually: String
+    qualityReportingFrequencyOther: String
     #Page 9
     modelLearningSystems: [ModelLearningSystemType!]
     modelLearningSystemsOther: String
@@ -1383,7 +1440,25 @@ type PlanFavorite {
 
 }
 
-type PlanCrTdl {
+type PlanCR {
+    id: UUID!
+    modelPlanID: UUID!
+
+    idNumber: String!
+    dateInitiated: Time!
+    dateImplemented: Time # Required in the API, but can be nullable for historical entries before we migrated CRs and TDLs as different types
+    title: String!
+    note: String
+
+    createdBy: UUID!
+    createdByUserAccount: UserAccount!
+    createdDts: Time!
+    modifiedBy: UUID
+    modifiedByUserAccount: UserAccount
+    modifiedDts: Time
+}
+
+type PlanTDL {
     id: UUID!
     modelPlanID: UUID!
 
@@ -1400,7 +1475,25 @@ type PlanCrTdl {
     modifiedDts: Time
 }
 
-input PlanCrTdlCreateInput {
+input PlanCRCreateInput {
+    modelPlanID: UUID!
+
+    idNumber: String!
+    dateInitiated: Time!
+    dateImplemented: Time!
+    title: String!
+    note: String
+}
+
+input PlanCRChanges @goModel(model: "map[string]interface{}") {
+    idNumber: String
+    dateInitiated: Time
+    dateImplemented: Time
+    title: String
+    note: String
+}
+
+input PlanTDLCreateInput {
     modelPlanID: UUID!
 
     idNumber: String!
@@ -1409,7 +1502,7 @@ input PlanCrTdlCreateInput {
     note: String
 }
 
-input PlanCrTdlChanges @goModel(model: "map[string]interface{}") {
+input PlanTDLChanges @goModel(model: "map[string]interface{}") {
     idNumber: String
     dateInitiated: Time
     title: String
@@ -1668,7 +1761,9 @@ type Query {
   @hasAnyRole(roles: [MINT_USER, MINT_MAC])
   ndaInfo: NDAInfo!
   @hasAnyRole(roles: [MINT_USER, MINT_MAC])
-  crTdl(id: UUID!): PlanCrTdl!
+  planCR(id: UUID!): PlanCR!
+  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+  planTDL(id: UUID!): PlanTDL!
   @hasAnyRole(roles: [MINT_USER, MINT_MAC])
   operationalSolutions(operationalNeedID: UUID!, includeNotNeeded: Boolean! = false): [OperationalSolution!]!
   @hasAnyRole(roles: [MINT_USER, MINT_MAC])
@@ -1770,13 +1865,22 @@ addPlanFavorite(modelPlanID: UUID!): PlanFavorite!
 deletePlanFavorite(modelPlanID: UUID!): PlanFavorite!
 @hasAnyRole(roles: [MINT_USER, MINT_MAC])
 
-createPlanCrTdl(input: PlanCrTdlCreateInput!): PlanCrTdl!
+createPlanCR(input: PlanCRCreateInput!): PlanCR!
 @hasRole(role: MINT_USER)
 
-updatePlanCrTdl(id: UUID!, changes: PlanCrTdlChanges!): PlanCrTdl!
+createPlanTDL(input: PlanTDLCreateInput!): PlanTDL!
 @hasRole(role: MINT_USER)
 
-deletePlanCrTdl(id: UUID!): PlanCrTdl!
+updatePlanCR(id: UUID!, changes: PlanCRChanges!): PlanCR!
+@hasRole(role: MINT_USER)
+
+updatePlanTDL(id: UUID!, changes: PlanTDLChanges!): PlanTDL!
+@hasRole(role: MINT_USER)
+
+deletePlanCR(id: UUID!): PlanCR!
+@hasRole(role: MINT_USER)
+
+deletePlanTDL(id: UUID!): PlanTDL!
 @hasRole(role: MINT_USER)
 
 addOrUpdateCustomOperationalNeed(modelPlanID: UUID!, customNeedType: String! needed: Boolean!): OperationalNeed!
@@ -1875,6 +1979,7 @@ enum TeamRole {
   OACT
   PAYMENT
   CM_FFS_COUNTERPART
+  COR
 }
 
 enum ModelType
@@ -1955,6 +2060,8 @@ enum KeyCharacteristic {
   SERVICE_DELIVERY
   SHARED_SAVINGS
   OTHER
+  MEDICAID_MODEL
+  MEDICARE_FFS_MODEL
 }
 
 enum GeographyType {
@@ -2020,14 +2127,16 @@ enum ConfidenceType {
   FAIRLY
   COMPLETELY
 }
+
 enum FrequencyType {
   ANNUALLY
-  BIANNUALLY
+  SEMIANNUALLY
   QUARTERLY
   MONTHLY
-  ROLLING
+  CONTINUALLY
   OTHER
 }
+
 enum TriStateAnswer {
   YES
   NO
@@ -2074,10 +2183,12 @@ enum ParticipantCommunicationType {
   OTHER
   NO_COMMUNICATION
 }
+
 enum ParticipantRiskType {
   TWO_SIDED
   ONE_SIDED
   CAPITATION
+  NOT_RISK_BASED
   OTHER
 }
 
@@ -2186,16 +2297,10 @@ enum DataToSendParticipantsType {
     NOT_PLANNING_TO_SEND_DATA
 }
 
-enum DataFrequencyType {
-    ANNUALLY
-    BIANNUALLY
-    QUARTERLY
-    MONTHLY
-    SEMI_MONTHLY
-    WEEKLY
-    DAILY
+enum YesNoOtherType {
+    YES
+    NO
     OTHER
-    NOT_PLANNING_TO_DO_THIS
 }
 
 enum ModelLearningSystemType {
@@ -2280,17 +2385,6 @@ enum ComplexityCalculationLevelType {
   LOW
   MIDDLE
   HIGH
-}
-
-enum AnticipatedPaymentFrequencyType {
-  ANNUALLY
-  BIANNUALLY
-  QUARTERLY
-  MONTHLY
-  SEMIMONTHLY
-  WEEKLY
-  DAILY
-  OTHER
 }
 
 enum OpSolutionStatus {

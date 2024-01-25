@@ -32,7 +32,11 @@ export default gql`
         id
         fileName
       }
-      crTdls {
+      crs {
+        id
+        idNumber
+      }
+      tdls {
         id
         idNumber
       }

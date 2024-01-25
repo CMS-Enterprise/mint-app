@@ -8,6 +8,7 @@ export default gql(/* GraphQL */ `
       participantsAndProviders {
         id
         providerAdditionFrequency
+        providerAdditionFrequencyContinually
         providerAdditionFrequencyOther
         providerAdditionFrequencyNote
         providerAddMethod
@@ -16,6 +17,10 @@ export default gql(/* GraphQL */ `
         providerLeaveMethod
         providerLeaveMethodOther
         providerLeaveMethodNote
+        providerRemovalFrequency
+        providerRemovalFrequencyContinually
+        providerRemovalFrequencyOther
+        providerRemovalFrequencyNote
         providerOverlap
         providerOverlapHierarchy
         providerOverlapNote

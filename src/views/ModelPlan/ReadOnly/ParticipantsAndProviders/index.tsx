@@ -1,18 +1,22 @@
 import React, { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
-  FrequencyType,
+  GetAllParticipantsAndProvidersQuery,
   OverlapType,
   ParticipantsType,
   RecruitmentType,
   useGetAllParticipantsAndProvidersQuery
 } from 'gql/gen/graphql';
 
+import usePlanTranslation from 'hooks/usePlanTranslation';
 import { ModelInfoContext } from 'views/ModelInfoWrapper';
 import { NotFoundPartial } from 'views/NotFound';
 
 import { checkGroupMap } from '../_components/FilterView/util';
-import ReadOnlySection from '../_components/ReadOnlySection';
+import ReadOnlySection, {
+  formatListItems,
+  formatListOtherItems
+} from '../_components/ReadOnlySection';
 import SideBySideReadOnlySection from '../_components/SideBySideReadOnlySection';
 import TitleAndStatus from '../_components/TitleAndStatus';
 import { ReadOnlyProps } from '../ModelBasics';
@@ -32,6 +36,14 @@ const ReadOnlyParticipantsAndProviders = ({
   );
   const { t: prepareForClearanceT } = useTranslation('prepareForClearance');
 
+  const {
+    participantAddedFrequency: participantAddedFrequencyConfig,
+    participantRemovedFrequency: participantRemovedFrequencyConfig,
+    providerAdditionFrequency: providerAdditionFrequencyConfig,
+    providerRemovalFrequency: providerRemovalFrequencyConfig,
+    riskType: riskTypeConfig
+  } = usePlanTranslation('participantsAndProviders');
+
   const { modelName } = useContext(ModelInfoContext);
 
   const { data, loading, error } = useGetAllParticipantsAndProvidersQuery({
@@ -43,6 +55,10 @@ const ReadOnlyParticipantsAndProviders = ({
   if ((!loading && error) || (!loading && !data?.modelPlan)) {
     return <NotFoundPartial />;
   }
+
+  const allparticipantsAndProvidersData = (data?.modelPlan
+    .participantsAndProviders ||
+    {}) as GetAllParticipantsAndProvidersQuery['modelPlan']['participantsAndProviders'];
 
   const {
     participants,
@@ -62,10 +78,13 @@ const ReadOnlyParticipantsAndProviders = ({
     selectionMethod,
     selectionOther,
     selectionNote,
+    participantAddedFrequency,
+    participantAddedFrequencyNote,
+    participantRemovedFrequency,
+    participantRemovedFrequencyNote,
     communicationMethod,
     communicationMethodOther,
     communicationNote,
-    participantAssumeRisk,
     riskType,
     riskOther,
     riskNote,
@@ -82,7 +101,6 @@ const ReadOnlyParticipantsAndProviders = ({
     participantsIdsOther,
     participantsIDSNote,
     providerAdditionFrequency,
-    providerAdditionFrequencyOther,
     providerAdditionFrequencyNote,
     providerAddMethod,
     providerAddMethodOther,
@@ -90,11 +108,13 @@ const ReadOnlyParticipantsAndProviders = ({
     providerLeaveMethod,
     providerLeaveMethodOther,
     providerLeaveMethodNote,
+    providerRemovalFrequency,
+    providerRemovalFrequencyNote,
     providerOverlap,
     providerOverlapHierarchy,
     providerOverlapNote,
     status
-  } = data?.modelPlan.participantsAndProviders || {};
+  } = allparticipantsAndProvidersData;
 
   return (
     <div
@@ -278,6 +298,50 @@ const ReadOnlyParticipantsAndProviders = ({
         {checkGroupMap(
           isViewingFilteredView,
           filteredQuestions,
+          'participantAddedFrequency',
+          <ReadOnlySection
+            heading={participantsAndProvidersT(
+              'participantAddedFrequency.label'
+            )}
+            list
+            listItems={formatListItems(
+              participantAddedFrequencyConfig,
+              participantAddedFrequency
+            )}
+            listOtherItems={formatListOtherItems(
+              participantAddedFrequencyConfig,
+              participantAddedFrequency,
+              allparticipantsAndProvidersData
+            )}
+            notes={participantAddedFrequencyNote}
+          />
+        )}
+
+        {checkGroupMap(
+          isViewingFilteredView,
+          filteredQuestions,
+          'participantRemovedFrequency',
+          <ReadOnlySection
+            heading={participantsAndProvidersT(
+              'participantRemovedFrequency.label'
+            )}
+            list
+            listItems={formatListItems(
+              participantRemovedFrequencyConfig,
+              participantRemovedFrequency
+            )}
+            listOtherItems={formatListOtherItems(
+              participantRemovedFrequencyConfig,
+              participantRemovedFrequency,
+              allparticipantsAndProvidersData
+            )}
+            notes={participantRemovedFrequencyNote}
+          />
+        )}
+
+        {checkGroupMap(
+          isViewingFilteredView,
+          filteredQuestions,
           'communicationMethod',
           <ReadOnlySection
             heading={participantsAndProvidersT('communicationMethod.label')}
@@ -293,26 +357,16 @@ const ReadOnlyParticipantsAndProviders = ({
         {checkGroupMap(
           isViewingFilteredView,
           filteredQuestions,
-          'participantAssumeRisk',
-          <SideBySideReadOnlySection
-            firstSection={{
-              heading: participantsAndProvidersT('participantAssumeRisk.label'),
-              copy: participantsAndProvidersT(
-                `participantAssumeRisk.options.${participantAssumeRisk}`,
-                ''
-              )
-            }}
-            secondSection={
-              participantAssumeRisk === true && {
-                heading: participantsAndProvidersT('riskType.label'),
-                copy:
-                  riskType &&
-                  participantsAndProvidersT(`riskType.options.${riskType}`, ''),
-                listOtherItem: riskOther
-              }
-            }
+          'riskType',
+          <ReadOnlySection
+            heading={participantsAndProvidersT('riskType.label')}
+            list
+            listItems={formatListItems(riskTypeConfig, riskType)}
+            listOtherItem={riskOther}
+            notes={riskNote}
           />
         )}
+
         {riskNote &&
           checkGroupMap(
             isViewingFilteredView,
@@ -433,8 +487,6 @@ const ReadOnlyParticipantsAndProviders = ({
       </div>
 
       <div>
-        {/* If "Other", then display "Other — Lorem ipsum." */}
-        {/* Else just display content, i.e. "LOI (Letter of interest)" */}
         {checkGroupMap(
           isViewingFilteredView,
           filteredQuestions,
@@ -443,17 +495,16 @@ const ReadOnlyParticipantsAndProviders = ({
             heading={participantsAndProvidersT(
               'providerAdditionFrequency.label'
             )}
-            copy={
-              providerAdditionFrequency &&
-              (providerAdditionFrequency === FrequencyType.OTHER
-                ? `${participantsAndProvidersT(
-                    `providerAdditionFrequency.options.${providerAdditionFrequency}`
-                  )} \u2014  ${providerAdditionFrequencyOther}`
-                : participantsAndProvidersT(
-                    `providerAdditionFrequency.options.${providerAdditionFrequency}`,
-                    ''
-                  ))
-            }
+            list
+            listItems={formatListItems(
+              providerAdditionFrequencyConfig,
+              providerAdditionFrequency
+            )}
+            listOtherItems={formatListOtherItems(
+              providerAdditionFrequencyConfig,
+              providerAdditionFrequency,
+              allparticipantsAndProvidersData
+            )}
             notes={providerAdditionFrequencyNote}
           />
         )}
@@ -489,6 +540,28 @@ const ReadOnlyParticipantsAndProviders = ({
             )}
             listOtherItem={providerLeaveMethodOther}
             notes={providerLeaveMethodNote}
+          />
+        )}
+
+        {checkGroupMap(
+          isViewingFilteredView,
+          filteredQuestions,
+          'providerRemovalFrequency',
+          <ReadOnlySection
+            heading={participantsAndProvidersT(
+              'providerRemovalFrequency.label'
+            )}
+            list
+            listItems={formatListItems(
+              providerRemovalFrequencyConfig,
+              providerRemovalFrequency
+            )}
+            listOtherItems={formatListOtherItems(
+              providerRemovalFrequencyConfig,
+              providerRemovalFrequency,
+              allparticipantsAndProvidersData
+            )}
+            notes={providerRemovalFrequencyNote}
           />
         )}
 

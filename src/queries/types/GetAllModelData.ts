@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { ModelStatus, ModelCategory, CMSCenter, CMMIGroup, ModelType, TaskStatus, AuthorityAllowance, WaiverType, AlternativePaymentModelType, KeyCharacteristic, GeographyType, GeographyApplication, AgreementType, ParticipantCommunicationType, ParticipantRiskType, GainshareArrangementEligibility, ParticipantsIDType, ConfidenceType, RecruitmentType, ParticipantSelectionType, ParticipantsType, FrequencyType, ProviderAddType, ProviderLeaveType, OverlapType, BeneficiariesType, SelectionMethodType, TriStateAnswer, YesNoType, CcmInvolvmentType, DataStartsType, DataFrequencyType, EvaluationApproachType, DataForMonitoringType, DataToSendParticipantsType, DataFullTimeOrIncrementalType, MonitoringFileType, ModelLearningSystemType, AgencyOrStateHelpType, StakeholdersType, ContractorSupportType, BenchmarkForPerformanceType, PayType, ClaimsBasedPayType, ComplexityCalculationLevelType, AnticipatedPaymentFrequencyType, FundingSource, PayRecipient, NonClaimsBasedPayType, TeamRole, DiscussionUserRole } from "./../../types/graphql-global-types";
+import { ModelStatus, ModelCategory, CMSCenter, CMMIGroup, ModelType, TaskStatus, AuthorityAllowance, WaiverType, AlternativePaymentModelType, KeyCharacteristic, GeographyType, GeographyApplication, AgreementType, FrequencyType, ParticipantCommunicationType, ParticipantRiskType, GainshareArrangementEligibility, ParticipantsIDType, ConfidenceType, RecruitmentType, ParticipantSelectionType, ParticipantsType, ProviderAddType, ProviderLeaveType, OverlapType, BeneficiariesType, SelectionMethodType, TriStateAnswer, YesNoType, CcmInvolvmentType, YesNoOtherType, DataStartsType, EvaluationApproachType, DataForMonitoringType, DataToSendParticipantsType, DataFullTimeOrIncrementalType, MonitoringFileType, ModelLearningSystemType, AgencyOrStateHelpType, StakeholdersType, ContractorSupportType, BenchmarkForPerformanceType, PayType, ClaimsBasedPayType, ComplexityCalculationLevelType, FundingSource, PayRecipient, NonClaimsBasedPayType, TeamRole, DiscussionUserRole } from "./../../types/graphql-global-types";
 
 // ====================================================
 // GraphQL query operation: GetAllModelData
@@ -120,11 +120,18 @@ export interface GetAllModelData_modelPlanCollection_participantsAndProviders_re
 export interface GetAllModelData_modelPlanCollection_participantsAndProviders {
   __typename: "PlanParticipantsAndProviders";
   id: UUID;
+  participantAddedFrequency: FrequencyType[];
+  participantAddedFrequencyContinually: string | null;
+  participantAddedFrequencyOther: string | null;
+  participantAddedFrequencyNote: string | null;
+  participantRemovedFrequency: FrequencyType[];
+  participantRemovedFrequencyContinually: string | null;
+  participantRemovedFrequencyOther: string | null;
+  participantRemovedFrequencyNote: string | null;
   communicationMethod: ParticipantCommunicationType[];
   communicationMethodOther: string | null;
   communicationNote: string | null;
-  participantAssumeRisk: boolean | null;
-  riskType: ParticipantRiskType | null;
+  riskType: ParticipantRiskType[];
   riskOther: string | null;
   riskNote: string | null;
   willRiskChange: boolean | null;
@@ -156,7 +163,8 @@ export interface GetAllModelData_modelPlanCollection_participantsAndProviders {
   participantsCurrentlyInModels: boolean | null;
   participantsCurrentlyInModelsNote: string | null;
   modelApplicationLevel: string | null;
-  providerAdditionFrequency: FrequencyType | null;
+  providerAdditionFrequency: FrequencyType[];
+  providerAdditionFrequencyContinually: string | null;
   providerAdditionFrequencyOther: string | null;
   providerAdditionFrequencyNote: string | null;
   providerAddMethod: ProviderAddType[];
@@ -165,6 +173,10 @@ export interface GetAllModelData_modelPlanCollection_participantsAndProviders {
   providerLeaveMethod: ProviderLeaveType[];
   providerLeaveMethodOther: string | null;
   providerLeaveMethodNote: string | null;
+  providerRemovalFrequency: FrequencyType[];
+  providerRemovalFrequencyContinually: string | null;
+  providerRemovalFrequencyOther: string | null;
+  providerRemovalFrequencyNote: string | null;
   providerOverlap: OverlapType | null;
   providerOverlapHierarchy: string | null;
   providerOverlapNote: string | null;
@@ -195,9 +207,14 @@ export interface GetAllModelData_modelPlanCollection_beneficiaries {
   excludeCertainCharacteristics: TriStateAnswer | null;
   excludeCertainCharacteristicsCriteria: string | null;
   excludeCertainCharacteristicsNote: string | null;
-  beneficiarySelectionFrequency: FrequencyType | null;
+  beneficiarySelectionFrequency: FrequencyType[];
+  beneficiarySelectionFrequencyContinually: string | null;
   beneficiarySelectionFrequencyNote: string | null;
   beneficiarySelectionFrequencyOther: string | null;
+  beneficiaryRemovalFrequency: FrequencyType[];
+  beneficiaryRemovalFrequencyContinually: string | null;
+  beneficiaryRemovalFrequencyNote: string | null;
+  beneficiaryRemovalFrequencyOther: string | null;
   precedenceRules: YesNoType[];
   precedenceRulesYes: string | null;
   precedenceRulesNo: string | null;
@@ -232,21 +249,27 @@ export interface GetAllModelData_modelPlanCollection_opsEvalAndLearning {
   useCcwForFileDistribiutionToParticipantsNote: string | null;
   developNewQualityMeasures: boolean | null;
   developNewQualityMeasuresNote: string | null;
-  qualityPerformanceImpactsPayment: boolean | null;
+  qualityPerformanceImpactsPayment: YesNoOtherType | null;
+  qualityPerformanceImpactsPaymentOther: string | null;
   qualityPerformanceImpactsPaymentNote: string | null;
   dataSharingStarts: DataStartsType | null;
   dataSharingStartsOther: string | null;
-  dataSharingFrequency: DataFrequencyType[];
+  dataSharingFrequency: FrequencyType[];
+  dataSharingFrequencyContinually: string | null;
   dataSharingFrequencyOther: string | null;
   dataSharingStartsNote: string | null;
   dataCollectionStarts: DataStartsType | null;
   dataCollectionStartsOther: string | null;
-  dataCollectionFrequency: DataFrequencyType[];
+  dataCollectionFrequency: FrequencyType[];
+  dataCollectionFrequencyContinually: string | null;
   dataCollectionFrequencyOther: string | null;
   dataCollectionFrequencyNote: string | null;
   qualityReportingStarts: DataStartsType | null;
   qualityReportingStartsOther: string | null;
   qualityReportingStartsNote: string | null;
+  qualityReportingFrequency: FrequencyType[];
+  qualityReportingFrequencyContinually: string | null;
+  qualityReportingFrequencyOther: string | null;
   evaluationApproaches: EvaluationApproachType[];
   evaluationApproachOther: string | null;
   evalutaionApproachNote: string | null;
@@ -352,7 +375,8 @@ export interface GetAllModelData_modelPlanCollection_payments {
   canParticipantsSelectBetweenPaymentMechanisms: boolean | null;
   canParticipantsSelectBetweenPaymentMechanismsHow: string | null;
   canParticipantsSelectBetweenPaymentMechanismsNote: string | null;
-  anticipatedPaymentFrequency: AnticipatedPaymentFrequencyType[];
+  anticipatedPaymentFrequency: FrequencyType[];
+  anticipatedPaymentFrequencyContinually: string | null;
   anticipatedPaymentFrequencyOther: string | null;
   anticipatedPaymentFrequencyNote: string | null;
   fundingSource: FundingSource[];
@@ -382,6 +406,10 @@ export interface GetAllModelData_modelPlanCollection_payments {
   willRecoverPaymentsNote: string | null;
   anticipateReconcilingPaymentsRetrospectively: boolean | null;
   anticipateReconcilingPaymentsRetrospectivelyNote: string | null;
+  paymentReconciliationFrequency: FrequencyType[];
+  paymentReconciliationFrequencyContinually: string | null;
+  paymentReconciliationFrequencyOther: string | null;
+  paymentReconciliationFrequencyNote: string | null;
   paymentStartDate: Time | null;
   paymentStartDateNote: string | null;
   readyForReviewByUserAccount: GetAllModelData_modelPlanCollection_payments_readyForReviewByUserAccount | null;

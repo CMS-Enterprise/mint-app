@@ -114,10 +114,16 @@ func (r *modelPlanResolver) IsCollaborator(ctx context.Context, obj *models.Mode
 	return resolvers.IsPlanCollaborator(logger, principal, r.store, obj.ID)
 }
 
-// CrTdls is the resolver for the crTdls field.
-func (r *modelPlanResolver) CrTdls(ctx context.Context, obj *models.ModelPlan) ([]*models.PlanCrTdl, error) {
+// Crs is the resolver for the crs field.
+func (r *modelPlanResolver) Crs(ctx context.Context, obj *models.ModelPlan) ([]*models.PlanCR, error) {
 	logger := appcontext.ZLogger(ctx)
-	return resolvers.PlanCrTdlsGetByModelPlanID(logger, obj.ID, r.store)
+	return resolvers.PlanCRsGetByModelPlanID(logger, obj.ID, r.store)
+}
+
+// Tdls is the resolver for the tdls field.
+func (r *modelPlanResolver) Tdls(ctx context.Context, obj *models.ModelPlan) ([]*models.PlanTDL, error) {
+	logger := appcontext.ZLogger(ctx)
+	return resolvers.PlanTDLsGetByModelPlanID(logger, obj.ID, r.store)
 }
 
 // PrepareForClearance is the resolver for the prepareForClearance field.
@@ -359,25 +365,46 @@ func (r *mutationResolver) DeletePlanFavorite(ctx context.Context, modelPlanID u
 	return resolvers.PlanFavoriteDelete(logger, principal, r.store, modelPlanID)
 }
 
-// CreatePlanCrTdl is the resolver for the createPlanCrTdl field.
-func (r *mutationResolver) CreatePlanCrTdl(ctx context.Context, input model.PlanCrTdlCreateInput) (*models.PlanCrTdl, error) {
+// CreatePlanCr is the resolver for the createPlanCR field.
+func (r *mutationResolver) CreatePlanCr(ctx context.Context, input model.PlanCRCreateInput) (*models.PlanCR, error) {
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
-	return resolvers.PlanCrTdlCreate(logger, &input, principal, r.store)
+	return resolvers.PlanCRCreate(logger, &input, principal, r.store)
 }
 
-// UpdatePlanCrTdl is the resolver for the updatePlanCrTdl field.
-func (r *mutationResolver) UpdatePlanCrTdl(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanCrTdl, error) {
+// CreatePlanTdl is the resolver for the createPlanTDL field.
+func (r *mutationResolver) CreatePlanTdl(ctx context.Context, input model.PlanTDLCreateInput) (*models.PlanTDL, error) {
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
-	return resolvers.PlanCrTdlUpdate(logger, id, changes, principal, r.store)
+	return resolvers.PlanTDLCreate(logger, &input, principal, r.store)
 }
 
-// DeletePlanCrTdl is the resolver for the deletePlanCrTdl field.
-func (r *mutationResolver) DeletePlanCrTdl(ctx context.Context, id uuid.UUID) (*models.PlanCrTdl, error) {
+// UpdatePlanCr is the resolver for the updatePlanCR field.
+func (r *mutationResolver) UpdatePlanCr(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanCR, error) {
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
-	return resolvers.PlanCrTdlDelete(logger, id, principal, r.store)
+	return resolvers.PlanCRUpdate(logger, id, changes, principal, r.store)
+}
+
+// UpdatePlanTdl is the resolver for the updatePlanTDL field.
+func (r *mutationResolver) UpdatePlanTdl(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanTDL, error) {
+	principal := appcontext.Principal(ctx)
+	logger := appcontext.ZLogger(ctx)
+	return resolvers.PlanTDLUpdate(logger, id, changes, principal, r.store)
+}
+
+// DeletePlanCr is the resolver for the deletePlanCR field.
+func (r *mutationResolver) DeletePlanCr(ctx context.Context, id uuid.UUID) (*models.PlanCR, error) {
+	principal := appcontext.Principal(ctx)
+	logger := appcontext.ZLogger(ctx)
+	return resolvers.PlanCRDelete(logger, id, principal, r.store)
+}
+
+// DeletePlanTdl is the resolver for the deletePlanTDL field.
+func (r *mutationResolver) DeletePlanTdl(ctx context.Context, id uuid.UUID) (*models.PlanTDL, error) {
+	principal := appcontext.Principal(ctx)
+	logger := appcontext.ZLogger(ctx)
+	return resolvers.PlanTDLDelete(logger, id, principal, r.store)
 }
 
 // AddOrUpdateCustomOperationalNeed is the resolver for the addOrUpdateCustomOperationalNeed field.
@@ -555,6 +582,16 @@ func (r *planBeneficiariesResolver) BeneficiarySelectionMethod(ctx context.Conte
 	return sTypes, nil
 }
 
+// BeneficiarySelectionFrequency is the resolver for the beneficiarySelectionFrequency field.
+func (r *planBeneficiariesResolver) BeneficiarySelectionFrequency(ctx context.Context, obj *models.PlanBeneficiaries) ([]models.FrequencyType, error) {
+	return models.ConvertEnums[models.FrequencyType](obj.BeneficiarySelectionFrequency), nil
+}
+
+// BeneficiaryRemovalFrequency is the resolver for the beneficiaryRemovalFrequency field.
+func (r *planBeneficiariesResolver) BeneficiaryRemovalFrequency(ctx context.Context, obj *models.PlanBeneficiaries) ([]models.FrequencyType, error) {
+	return models.ConvertEnums[models.FrequencyType](obj.BeneficiaryRemovalFrequency), nil
+}
+
 // PrecedenceRules is the resolver for the precedenceRules field.
 func (r *planBeneficiariesResolver) PrecedenceRules(ctx context.Context, obj *models.PlanBeneficiaries) ([]models.YesNoType, error) {
 	return models.ConvertEnums[models.YesNoType](obj.PrecedenceRules), nil
@@ -726,14 +763,20 @@ func (r *planOpsEvalAndLearningResolver) DataToSendParticicipants(ctx context.Co
 }
 
 // DataSharingFrequency is the resolver for the dataSharingFrequency field.
-func (r *planOpsEvalAndLearningResolver) DataSharingFrequency(ctx context.Context, obj *models.PlanOpsEvalAndLearning) ([]model.DataFrequencyType, error) {
-	dataFrequencyTypes := models.ConvertEnums[model.DataFrequencyType](obj.DataSharingFrequency)
+func (r *planOpsEvalAndLearningResolver) DataSharingFrequency(ctx context.Context, obj *models.PlanOpsEvalAndLearning) ([]models.FrequencyType, error) {
+	dataFrequencyTypes := models.ConvertEnums[models.FrequencyType](obj.DataSharingFrequency)
 	return dataFrequencyTypes, nil
 }
 
 // DataCollectionFrequency is the resolver for the dataCollectionFrequency field.
-func (r *planOpsEvalAndLearningResolver) DataCollectionFrequency(ctx context.Context, obj *models.PlanOpsEvalAndLearning) ([]model.DataFrequencyType, error) {
-	dataFrequencyTypes := models.ConvertEnums[model.DataFrequencyType](obj.DataCollectionFrequency)
+func (r *planOpsEvalAndLearningResolver) DataCollectionFrequency(ctx context.Context, obj *models.PlanOpsEvalAndLearning) ([]models.FrequencyType, error) {
+	dataFrequencyTypes := models.ConvertEnums[models.FrequencyType](obj.DataCollectionFrequency)
+	return dataFrequencyTypes, nil
+}
+
+// QualityReportingFrequency is the resolver for the qualityReportingFrequency field.
+func (r *planOpsEvalAndLearningResolver) QualityReportingFrequency(ctx context.Context, obj *models.PlanOpsEvalAndLearning) ([]models.FrequencyType, error) {
+	dataFrequencyTypes := models.ConvertEnums[models.FrequencyType](obj.QualityReportingFrequency)
 	return dataFrequencyTypes, nil
 }
 
@@ -755,10 +798,25 @@ func (r *planParticipantsAndProvidersResolver) SelectionMethod(ctx context.Conte
 	return selectionTypes, nil
 }
 
+// ParticipantAddedFrequency is the resolver for the participantAddedFrequency field.
+func (r *planParticipantsAndProvidersResolver) ParticipantAddedFrequency(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]models.FrequencyType, error) {
+	return models.ConvertEnums[models.FrequencyType](obj.ParticipantAddedFrequency), nil
+}
+
+// ParticipantRemovedFrequency is the resolver for the participantRemovedFrequency field.
+func (r *planParticipantsAndProvidersResolver) ParticipantRemovedFrequency(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]models.FrequencyType, error) {
+	return models.ConvertEnums[models.FrequencyType](obj.ParticipantRemovedFrequency), nil
+}
+
 // CommunicationMethod is the resolver for the communicationMethod field.
 func (r *planParticipantsAndProvidersResolver) CommunicationMethod(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]model.ParticipantCommunicationType, error) {
 	communicationTypes := models.ConvertEnums[model.ParticipantCommunicationType](obj.CommunicationMethod)
 	return communicationTypes, nil
+}
+
+// RiskType is the resolver for the riskType field.
+func (r *planParticipantsAndProvidersResolver) RiskType(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]models.ParticipantRiskType, error) {
+	return models.ConvertEnums[models.ParticipantRiskType](obj.RiskType), nil
 }
 
 // GainsharePaymentsEligibility is the resolver for the gainsharePaymentsEligibility field.
@@ -773,6 +831,11 @@ func (r *planParticipantsAndProvidersResolver) ParticipantsIds(ctx context.Conte
 	return participantsIDTypes, nil
 }
 
+// ProviderAdditionFrequency is the resolver for the providerAdditionFrequency field.
+func (r *planParticipantsAndProvidersResolver) ProviderAdditionFrequency(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]models.FrequencyType, error) {
+	return models.ConvertEnums[models.FrequencyType](obj.ProviderAdditionFrequency), nil
+}
+
 // ProviderAddMethod is the resolver for the providerAddMethod field.
 func (r *planParticipantsAndProvidersResolver) ProviderAddMethod(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]model.ProviderAddType, error) {
 	providerAddTypes := models.ConvertEnums[model.ProviderAddType](obj.ProviderAddMethod)
@@ -783,6 +846,11 @@ func (r *planParticipantsAndProvidersResolver) ProviderAddMethod(ctx context.Con
 func (r *planParticipantsAndProvidersResolver) ProviderLeaveMethod(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]model.ProviderLeaveType, error) {
 	providerLeaveTypes := models.ConvertEnums[model.ProviderLeaveType](obj.ProviderLeaveMethod)
 	return providerLeaveTypes, nil
+}
+
+// ProviderRemovalFrequency is the resolver for the providerRemovalFrequency field.
+func (r *planParticipantsAndProvidersResolver) ProviderRemovalFrequency(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]models.FrequencyType, error) {
+	return models.ConvertEnums[models.FrequencyType](obj.ProviderRemovalFrequency), nil
 }
 
 // FundingSource is the resolver for the fundingSource field.
@@ -821,8 +889,13 @@ func (r *planPaymentsResolver) NonClaimsPaymentOther(ctx context.Context, obj *m
 }
 
 // AnticipatedPaymentFrequency is the resolver for the anticipatedPaymentFrequency field.
-func (r *planPaymentsResolver) AnticipatedPaymentFrequency(ctx context.Context, obj *models.PlanPayments) ([]models.AnticipatedPaymentFrequencyType, error) {
-	return models.ConvertEnums[models.AnticipatedPaymentFrequencyType](obj.AnticipatedPaymentFrequency), nil
+func (r *planPaymentsResolver) AnticipatedPaymentFrequency(ctx context.Context, obj *models.PlanPayments) ([]models.FrequencyType, error) {
+	return models.ConvertEnums[models.FrequencyType](obj.AnticipatedPaymentFrequency), nil
+}
+
+// PaymentReconciliationFrequency is the resolver for the paymentReconciliationFrequency field.
+func (r *planPaymentsResolver) PaymentReconciliationFrequency(ctx context.Context, obj *models.PlanPayments) ([]models.FrequencyType, error) {
+	return models.ConvertEnums[models.FrequencyType](obj.PaymentReconciliationFrequency), nil
 }
 
 // PossibleSolutions is the resolver for the possibleSolutions field.
@@ -918,10 +991,16 @@ func (r *queryResolver) NdaInfo(ctx context.Context) (*model.NDAInfo, error) {
 	return resolvers.NDAAgreementGetByUserID(logger, principal, r.store)
 }
 
-// CrTdl is the resolver for the crTdl field.
-func (r *queryResolver) CrTdl(ctx context.Context, id uuid.UUID) (*models.PlanCrTdl, error) {
+// PlanCr is the resolver for the planCR field.
+func (r *queryResolver) PlanCr(ctx context.Context, id uuid.UUID) (*models.PlanCR, error) {
 	logger := appcontext.ZLogger(ctx)
-	return resolvers.PlanCrTdlGet(logger, id, r.store)
+	return resolvers.PlanCRGet(logger, id, r.store)
+}
+
+// PlanTdl is the resolver for the planTDL field.
+func (r *queryResolver) PlanTdl(ctx context.Context, id uuid.UUID) (*models.PlanTDL, error) {
+	logger := appcontext.ZLogger(ctx)
+	return resolvers.PlanTDLGet(logger, id, r.store)
 }
 
 // OperationalSolutions is the resolver for the operationalSolutions field.

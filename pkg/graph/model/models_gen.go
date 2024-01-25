@@ -54,19 +54,20 @@ type PageParams struct {
 	Limit  int `json:"limit"`
 }
 
+type PlanCRCreateInput struct {
+	ModelPlanID     uuid.UUID `json:"modelPlanID"`
+	IDNumber        string    `json:"idNumber"`
+	DateInitiated   time.Time `json:"dateInitiated"`
+	DateImplemented time.Time `json:"dateImplemented"`
+	Title           string    `json:"title"`
+	Note            *string   `json:"note,omitempty"`
+}
+
 // PlanCollaboratorCreateInput represents the data required to create a collaborator on a plan
 type PlanCollaboratorCreateInput struct {
 	ModelPlanID uuid.UUID         `json:"modelPlanID"`
 	UserName    string            `json:"userName"`
 	TeamRoles   []models.TeamRole `json:"teamRoles"`
-}
-
-type PlanCrTdlCreateInput struct {
-	ModelPlanID   uuid.UUID `json:"modelPlanID"`
-	IDNumber      string    `json:"idNumber"`
-	DateInitiated time.Time `json:"dateInitiated"`
-	Title         string    `json:"title"`
-	Note          *string   `json:"note,omitempty"`
 }
 
 // PlanDiscussionCreateInput represents the necessary fields to create a plan discussion
@@ -96,6 +97,14 @@ type PlanDocumentLinkInput struct {
 	Restricted           bool                `json:"restricted"`
 	OtherTypeDescription *string             `json:"otherTypeDescription,omitempty"`
 	OptionalNotes        *string             `json:"optionalNotes,omitempty"`
+}
+
+type PlanTDLCreateInput struct {
+	ModelPlanID   uuid.UUID `json:"modelPlanID"`
+	IDNumber      string    `json:"idNumber"`
+	DateInitiated time.Time `json:"dateInitiated"`
+	Title         string    `json:"title"`
+	Note          *string   `json:"note,omitempty"`
 }
 
 type PrepareForClearance struct {
@@ -770,61 +779,6 @@ func (e DataForMonitoringType) MarshalGQL(w io.Writer) {
 	fmt.Fprint(w, strconv.Quote(e.String()))
 }
 
-type DataFrequencyType string
-
-const (
-	DataFrequencyTypeAnnually            DataFrequencyType = "ANNUALLY"
-	DataFrequencyTypeBiannually          DataFrequencyType = "BIANNUALLY"
-	DataFrequencyTypeQuarterly           DataFrequencyType = "QUARTERLY"
-	DataFrequencyTypeMonthly             DataFrequencyType = "MONTHLY"
-	DataFrequencyTypeSemiMonthly         DataFrequencyType = "SEMI_MONTHLY"
-	DataFrequencyTypeWeekly              DataFrequencyType = "WEEKLY"
-	DataFrequencyTypeDaily               DataFrequencyType = "DAILY"
-	DataFrequencyTypeOther               DataFrequencyType = "OTHER"
-	DataFrequencyTypeNotPlanningToDoThis DataFrequencyType = "NOT_PLANNING_TO_DO_THIS"
-)
-
-var AllDataFrequencyType = []DataFrequencyType{
-	DataFrequencyTypeAnnually,
-	DataFrequencyTypeBiannually,
-	DataFrequencyTypeQuarterly,
-	DataFrequencyTypeMonthly,
-	DataFrequencyTypeSemiMonthly,
-	DataFrequencyTypeWeekly,
-	DataFrequencyTypeDaily,
-	DataFrequencyTypeOther,
-	DataFrequencyTypeNotPlanningToDoThis,
-}
-
-func (e DataFrequencyType) IsValid() bool {
-	switch e {
-	case DataFrequencyTypeAnnually, DataFrequencyTypeBiannually, DataFrequencyTypeQuarterly, DataFrequencyTypeMonthly, DataFrequencyTypeSemiMonthly, DataFrequencyTypeWeekly, DataFrequencyTypeDaily, DataFrequencyTypeOther, DataFrequencyTypeNotPlanningToDoThis:
-		return true
-	}
-	return false
-}
-
-func (e DataFrequencyType) String() string {
-	return string(e)
-}
-
-func (e *DataFrequencyType) UnmarshalGQL(v interface{}) error {
-	str, ok := v.(string)
-	if !ok {
-		return fmt.Errorf("enums must be strings")
-	}
-
-	*e = DataFrequencyType(str)
-	if !e.IsValid() {
-		return fmt.Errorf("%s is not a valid DataFrequencyType", str)
-	}
-	return nil
-}
-
-func (e DataFrequencyType) MarshalGQL(w io.Writer) {
-	fmt.Fprint(w, strconv.Quote(e.String()))
-}
-
 type DataToSendParticipantsType string
 
 const (
@@ -1102,15 +1056,17 @@ func (e GeographyType) MarshalGQL(w io.Writer) {
 type KeyCharacteristic string
 
 const (
-	KeyCharacteristicEpisodeBased    KeyCharacteristic = "EPISODE_BASED"
-	KeyCharacteristicPartC           KeyCharacteristic = "PART_C"
-	KeyCharacteristicPartD           KeyCharacteristic = "PART_D"
-	KeyCharacteristicPayment         KeyCharacteristic = "PAYMENT"
-	KeyCharacteristicPopulationBased KeyCharacteristic = "POPULATION_BASED"
-	KeyCharacteristicPreventative    KeyCharacteristic = "PREVENTATIVE"
-	KeyCharacteristicServiceDelivery KeyCharacteristic = "SERVICE_DELIVERY"
-	KeyCharacteristicSharedSavings   KeyCharacteristic = "SHARED_SAVINGS"
-	KeyCharacteristicOther           KeyCharacteristic = "OTHER"
+	KeyCharacteristicEpisodeBased     KeyCharacteristic = "EPISODE_BASED"
+	KeyCharacteristicPartC            KeyCharacteristic = "PART_C"
+	KeyCharacteristicPartD            KeyCharacteristic = "PART_D"
+	KeyCharacteristicPayment          KeyCharacteristic = "PAYMENT"
+	KeyCharacteristicPopulationBased  KeyCharacteristic = "POPULATION_BASED"
+	KeyCharacteristicPreventative     KeyCharacteristic = "PREVENTATIVE"
+	KeyCharacteristicServiceDelivery  KeyCharacteristic = "SERVICE_DELIVERY"
+	KeyCharacteristicSharedSavings    KeyCharacteristic = "SHARED_SAVINGS"
+	KeyCharacteristicOther            KeyCharacteristic = "OTHER"
+	KeyCharacteristicMedicaidModel    KeyCharacteristic = "MEDICAID_MODEL"
+	KeyCharacteristicMedicareFfsModel KeyCharacteristic = "MEDICARE_FFS_MODEL"
 )
 
 var AllKeyCharacteristic = []KeyCharacteristic{
@@ -1123,11 +1079,13 @@ var AllKeyCharacteristic = []KeyCharacteristic{
 	KeyCharacteristicServiceDelivery,
 	KeyCharacteristicSharedSavings,
 	KeyCharacteristicOther,
+	KeyCharacteristicMedicaidModel,
+	KeyCharacteristicMedicareFfsModel,
 }
 
 func (e KeyCharacteristic) IsValid() bool {
 	switch e {
-	case KeyCharacteristicEpisodeBased, KeyCharacteristicPartC, KeyCharacteristicPartD, KeyCharacteristicPayment, KeyCharacteristicPopulationBased, KeyCharacteristicPreventative, KeyCharacteristicServiceDelivery, KeyCharacteristicSharedSavings, KeyCharacteristicOther:
+	case KeyCharacteristicEpisodeBased, KeyCharacteristicPartC, KeyCharacteristicPartD, KeyCharacteristicPayment, KeyCharacteristicPopulationBased, KeyCharacteristicPreventative, KeyCharacteristicServiceDelivery, KeyCharacteristicSharedSavings, KeyCharacteristicOther, KeyCharacteristicMedicaidModel, KeyCharacteristicMedicareFfsModel:
 		return true
 	}
 	return false

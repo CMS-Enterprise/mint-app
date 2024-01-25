@@ -45,7 +45,7 @@ const Collaborators = () => {
   const { t: collaboratorsT } = useTranslation('collaborators');
   const { t: collaboratorsMiscT } = useTranslation('collaboratorsMisc');
   const { t: miscellaneousT } = useTranslation('miscellaneous');
-  const { teamRole: teamRoleConfig } = usePlanTranslation('collaborators');
+  const { teamRoles: teamRolesConfig } = usePlanTranslation('collaborators');
 
   const history = useHistory();
 
@@ -125,7 +125,7 @@ const Collaborators = () => {
                     collaborator: commonName,
                     role: teamRoles
                       ?.map((role: TeamRole) => {
-                        return collaboratorsT(`teamRole.options.${role}`);
+                        return collaboratorsT(`teamRoles.options.${role}`);
                       })
                       .join(', ')
                   })}
@@ -164,7 +164,7 @@ const Collaborators = () => {
                     collaborator: commonName,
                     role: teamRoles
                       ?.map((role: TeamRole) => {
-                        return collaboratorsT(`teamRole.options.${role}`);
+                        return collaboratorsT(`teamRoles.options.${role}`);
                       })
                       .join(', ')
                   })}
@@ -315,7 +315,7 @@ const Collaborators = () => {
                         error={!!flatErrors.teamRoles}
                       >
                         <Label htmlFor="collaborator-role">
-                          {collaboratorsT('teamRole.label')}
+                          {collaboratorsT('teamRoles.label')}
                         </Label>
 
                         <FieldErrorMsg>{flatErrors.teamRoles}</FieldErrorMsg>
@@ -326,7 +326,7 @@ const Collaborators = () => {
                           name="role"
                           selectedLabel={collaboratorsMiscT('roles')}
                           options={composeMultiSelectOptions(
-                            teamRoleConfig.options,
+                            teamRolesConfig.options,
                             undefined,
                             isModelLead && isLastModelLead(allCollaborators)
                               ? TeamRole.MODEL_LEAD
@@ -336,12 +336,14 @@ const Collaborators = () => {
                             setFieldValue('teamRoles', value);
                           }}
                           initialValues={initialValues.teamRoles}
-                          tagOrder={teamRoleConfig.options[TeamRole.MODEL_LEAD]}
+                          tagOrder={
+                            teamRolesConfig.options[TeamRole.MODEL_LEAD]
+                          }
                           disabledOption={
                             isModelLead && isLastModelLead(allCollaborators)
                           }
                           disabledLabel={
-                            teamRoleConfig.options[TeamRole.MODEL_LEAD]
+                            teamRolesConfig.options[TeamRole.MODEL_LEAD]
                           }
                         />
                       </FieldGroup>

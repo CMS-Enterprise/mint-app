@@ -468,15 +468,15 @@ exports[`Model Plan Ops Eval and Learning CCW and Qualtiy > matches snapshot 1`]
           >
             <input
               class="usa-radio__input"
-              data-testid="ops-eval-and-learning-performance-impact-true"
-              id="ops-eval-and-learning-performance-impact-true"
+              data-testid="ops-eval-and-learning-performance-impact-YES"
+              id="ops-eval-and-learning-performance-impact-YES"
               name="qualityPerformanceImpactsPayment"
               type="radio"
-              value="TRUE"
+              value="YES"
             />
             <label
               class="usa-radio__label"
-              for="ops-eval-and-learning-performance-impact-true"
+              for="ops-eval-and-learning-performance-impact-YES"
             >
               Yes
             </label>
@@ -487,17 +487,36 @@ exports[`Model Plan Ops Eval and Learning CCW and Qualtiy > matches snapshot 1`]
           >
             <input
               class="usa-radio__input"
-              data-testid="ops-eval-and-learning-performance-impact-false"
-              id="ops-eval-and-learning-performance-impact-false"
+              data-testid="ops-eval-and-learning-performance-impact-NO"
+              id="ops-eval-and-learning-performance-impact-NO"
               name="qualityPerformanceImpactsPayment"
               type="radio"
-              value="FALSE"
+              value="NO"
             />
             <label
               class="usa-radio__label"
-              for="ops-eval-and-learning-performance-impact-false"
+              for="ops-eval-and-learning-performance-impact-NO"
             >
               No
+            </label>
+          </div>
+          <div
+            class="usa-radio"
+            data-testid="radio"
+          >
+            <input
+              class="usa-radio__input"
+              data-testid="ops-eval-and-learning-performance-impact-OTHER"
+              id="ops-eval-and-learning-performance-impact-OTHER"
+              name="qualityPerformanceImpactsPayment"
+              type="radio"
+              value="OTHER"
+            />
+            <label
+              class="usa-radio__label"
+              for="ops-eval-and-learning-performance-impact-OTHER"
+            >
+              Other
             </label>
           </div>
         </fieldset>
