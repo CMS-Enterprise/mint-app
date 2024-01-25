@@ -1432,11 +1432,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      <div
-                        class="display-flex flex-align-center"
-                      >
-                        States and territories
-                      </div>
+                      States and territories
                     </li>
                     <ul
                       data-testid="other-entry"
@@ -1444,18 +1440,13 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                       <li
                         class="font-sans-md line-height-sans-4"
                       >
-<<<<<<< HEAD
                         California, Indiana
                       </li>
                     </ul>
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      <div
-                        class="display-flex flex-align-center"
-                      >
-                        Region
-                      </div>
+                      Region
                     </li>
                     <ul
                       data-testid="other-entry"
@@ -1470,11 +1461,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      <div
-                        class="display-flex flex-align-center"
-                      >
-                        Other
-                      </div>
+                      Other
                     </li>
                     <ul
                       data-testid="other-entry"
@@ -1486,25 +1473,6 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                       </li>
                     </ul>
                   </ul>
-=======
-                        <li
-                          class="font-sans-md line-height-sans-4"
-                        >
-                          Other
-                        </li>
-                        <ul
-                          data-testid="other-entry"
-                        >
-                          <li
-                            class="font-sans-md line-height-sans-4"
-                          >
-                            Geography type other
-                          </li>
-                        </ul>
-                      </ul>
-                    </div>
-                  </div>
->>>>>>> main
                 </div>
               </div>
               <div
@@ -1525,21 +1493,12 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      <div
-                        class="display-flex flex-align-center"
-                      >
-                        Beneficiaries
-                      </div>
+                      Beneficiaries
                     </li>
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      <div
-                        class="display-flex flex-align-center"
-                      >
-<<<<<<< HEAD
-                        Other
-                      </div>
+                      Other
                     </li>
                     <ul
                       data-testid="other-entry"
@@ -1551,30 +1510,6 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                       </li>
                     </ul>
                   </ul>
-=======
-                        <li
-                          class="font-sans-md line-height-sans-4"
-                        >
-                          Beneficiaries
-                        </li>
-                        <li
-                          class="font-sans-md line-height-sans-4"
-                        >
-                          Other
-                        </li>
-                        <ul
-                          data-testid="other-entry"
-                        >
-                          <li
-                            class="font-sans-md line-height-sans-4"
-                          >
-                            Geography applied other
-                          </li>
-                        </ul>
-                      </ul>
-                    </div>
-                  </div>
->>>>>>> main
                 </div>
               </div>
               <div
@@ -8161,11 +8096,7 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      <div
-                        class="display-flex flex-align-center"
-                      >
-                        States and territories
-                      </div>
+                      States and territories
                     </li>
                     <ul
                       data-testid="other-entry"
@@ -8173,18 +8104,13 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                       <li
                         class="font-sans-md line-height-sans-4"
                       >
-<<<<<<< HEAD
                         California, Indiana
                       </li>
                     </ul>
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      <div
-                        class="display-flex flex-align-center"
-                      >
-                        Region
-                      </div>
+                      Region
                     </li>
                     <ul
                       data-testid="other-entry"
@@ -8199,11 +8125,7 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      <div
-                        class="display-flex flex-align-center"
-                      >
-                        Other
-                      </div>
+                      Other
                     </li>
                     <ul
                       data-testid="other-entry"
@@ -8215,25 +8137,6 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                       </li>
                     </ul>
                   </ul>
-=======
-                        <li
-                          class="font-sans-md line-height-sans-4"
-                        >
-                          Other
-                        </li>
-                        <ul
-                          data-testid="other-entry"
-                        >
-                          <li
-                            class="font-sans-md line-height-sans-4"
-                          >
-                            Geography type other
-                          </li>
-                        </ul>
-                      </ul>
-                    </div>
-                  </div>
->>>>>>> main
                 </div>
               </div>
               <div
@@ -8254,21 +8157,12 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      <div
-                        class="display-flex flex-align-center"
-                      >
-                        Beneficiaries
-                      </div>
+                      Beneficiaries
                     </li>
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      <div
-                        class="display-flex flex-align-center"
-                      >
-<<<<<<< HEAD
-                        Other
-                      </div>
+                      Other
                     </li>
                     <ul
                       data-testid="other-entry"
@@ -8280,30 +8174,6 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                       </li>
                     </ul>
                   </ul>
-=======
-                        <li
-                          class="font-sans-md line-height-sans-4"
-                        >
-                          Beneficiaries
-                        </li>
-                        <li
-                          class="font-sans-md line-height-sans-4"
-                        >
-                          Other
-                        </li>
-                        <ul
-                          data-testid="other-entry"
-                        >
-                          <li
-                            class="font-sans-md line-height-sans-4"
-                          >
-                            Geography applied other
-                          </li>
-                        </ul>
-                      </ul>
-                    </div>
-                  </div>
->>>>>>> main
                 </div>
               </div>
               <div
