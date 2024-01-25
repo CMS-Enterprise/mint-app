@@ -215,6 +215,14 @@ describe('The Model Plan Payment Form', () => {
       .check({ force: true })
       .should('be.checked');
 
+    cy.get('#payment-claims-processing-precendece-true')
+      .check({ force: true })
+      .should('be.checked');
+
+    cy.get('#payment-claims-processing-precendece-other')
+      .type('One business requirement')
+      .should('have.value', 'One business requirement');
+
     cy.get('#payment-multiple-payments-true')
       .check({ force: true })
       .should('be.checked');
