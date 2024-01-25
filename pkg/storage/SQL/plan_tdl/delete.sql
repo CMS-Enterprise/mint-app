@@ -1,4 +1,4 @@
-DELETE FROM plan_cr_tdl
+DELETE FROM plan_tdl
 WHERE id = :id
 RETURNING
 id,

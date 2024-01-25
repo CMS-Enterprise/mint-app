@@ -99,10 +99,21 @@ export const CRTDLs = () => {
 
           <p className="margin-bottom-2 font-body-md line-height-body-4">
             {t('description')}
-            <TrussLink href="[email]@cms.hhs.gov">
-              {t('emailContact')}
-            </TrussLink>
           </p>
+
+          <TrussLink
+            aria-label="Open EUA in a new tab"
+            href="https://echimp.cmsnet/"
+            target="_blank"
+            rel="noopener noreferrer"
+            variant="external"
+          >
+            {t('visitECHIMP')}
+          </TrussLink>
+
+          <Alert type="info" slim className="margin-bottom-1">
+            {t('echimp')}
+          </Alert>
 
           <UswdsReactLink
             to={`/models/${modelID}/task-list`}

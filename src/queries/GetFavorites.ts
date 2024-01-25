@@ -22,7 +22,10 @@ export default gql`
         }
         teamRoles
       }
-      crTdls @include(if: $isMAC) {
+      crs @include(if: $isMAC) {
+        idNumber
+      }
+      tdls @include(if: $isMAC) {
         idNumber
       }
     }

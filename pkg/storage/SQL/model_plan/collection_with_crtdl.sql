@@ -9,5 +9,5 @@ SELECT
     model_plan.modified_by,
     model_plan.modified_dts
 FROM model_plan
-WHERE EXISTS (SELECT 1 FROM plan_cr_tdl WHERE model_plan_id = model_plan.id) --noqa
+WHERE EXISTS (SELECT 1 FROM plan_tdl WHERE model_plan_id = model_plan.id) OR EXISTS (SELECT 1 FROM plan_cr WHERE model_plan_id = model_plan.id) --noqa
     AND model_plan.archived = FALSE

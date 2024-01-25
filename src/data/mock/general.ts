@@ -45,7 +45,18 @@ const modelPlanData: GetModelPlansType[] = [
     },
     collaborators: [],
     discussions: [],
-    crTdls: [],
+    crs: [
+      {
+        __typename: 'PlanCR',
+        idNumber: 'CR 123'
+      }
+    ],
+    tdls: [
+      {
+        __typename: 'PlanTDL',
+        idNumber: 'TDL 456'
+      }
+    ],
     __typename: 'ModelPlan'
   }
 ];
@@ -85,7 +96,18 @@ const favoritesModelPlanData: GetFavoritesType[] = [
       __typename: 'PlanBasics'
     },
     collaborators: [],
-    crTdls: [],
+    crs: [
+      {
+        __typename: 'PlanCR',
+        idNumber: 'CR 123'
+      }
+    ],
+    tdls: [
+      {
+        __typename: 'PlanTDL',
+        idNumber: 'TDL 456'
+      }
+    ],
     __typename: 'ModelPlan'
   }
 ];
