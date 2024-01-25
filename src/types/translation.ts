@@ -6,7 +6,6 @@ import {
   AgencyOrStateHelpType,
   AgreementType,
   AlternativePaymentModelType,
-  AnticipatedPaymentFrequencyType,
   AuthorityAllowance,
   BenchmarkForPerformanceType,
   BeneficiariesType,
@@ -18,7 +17,6 @@ import {
   ConfidenceType,
   ContractorSupportType,
   DataForMonitoringType,
-  DataFrequencyType,
   DataFullTimeOrIncrementalType,
   DataStartsType,
   DataToSendParticipantsType,
@@ -54,6 +52,7 @@ import {
   TeamRole,
   TriStateAnswer,
   WaiverType,
+  YesNoOtherType,
   YesNoType
 } from 'gql/gen/graphql';
 
@@ -229,6 +228,14 @@ export type TranslationParticipantsAndProviders = {
   selectionOther: TranslationFieldProperties;
   selectionNote: TranslationFieldProperties;
   // Communication
+  participantAddedFrequency: TranslationFieldPropertiesWithOptions<FrequencyType>;
+  participantAddedFrequencyContinually: TranslationFieldProperties;
+  participantAddedFrequencyOther: TranslationFieldProperties;
+  participantAddedFrequencyNote: TranslationFieldProperties;
+  participantRemovedFrequency: TranslationFieldPropertiesWithOptions<FrequencyType>;
+  participantRemovedFrequencyContinually: TranslationFieldProperties;
+  participantRemovedFrequencyOther: TranslationFieldProperties;
+  participantRemovedFrequencyNote: TranslationFieldProperties;
   communicationMethod: TranslationFieldPropertiesWithOptions<ParticipantCommunicationType>;
   communicationMethodOther: TranslationFieldProperties;
   communicationNote: TranslationFieldProperties;
@@ -250,6 +257,7 @@ export type TranslationParticipantsAndProviders = {
   participantsIDSNote: TranslationFieldProperties;
   // Provider Options
   providerAdditionFrequency: TranslationFieldPropertiesWithOptions<FrequencyType>;
+  providerAdditionFrequencyContinually: TranslationFieldProperties;
   providerAdditionFrequencyOther: TranslationFieldProperties;
   providerAdditionFrequencyNote: TranslationFieldProperties;
   providerAddMethod: TranslationFieldPropertiesWithOptions<ProviderAddType>;
@@ -258,6 +266,10 @@ export type TranslationParticipantsAndProviders = {
   providerLeaveMethod: TranslationFieldPropertiesWithOptions<ProviderLeaveType>;
   providerLeaveMethodOther: TranslationFieldProperties;
   providerLeaveMethodNote: TranslationFieldProperties;
+  providerRemovalFrequency: TranslationFieldPropertiesWithOptions<FrequencyType>;
+  providerRemovalFrequencyContinually: TranslationFieldProperties;
+  providerRemovalFrequencyOther: TranslationFieldProperties;
+  providerRemovalFrequencyNote: TranslationFieldProperties;
   providerOverlap: TranslationFieldPropertiesWithOptions<OverlapType>;
   providerOverlapHierarchy: TranslationFieldProperties;
   providerOverlapNote: TranslationFieldProperties;
@@ -285,8 +297,13 @@ export type TranslationBeneficiaries = {
   beneficiarySelectionOther: TranslationFieldProperties;
   // Frequency
   beneficiarySelectionFrequency: TranslationFieldPropertiesWithOptions<FrequencyType>;
-  beneficiarySelectionFrequencyNote: TranslationFieldProperties;
+  beneficiarySelectionFrequencyContinually: TranslationFieldProperties;
   beneficiarySelectionFrequencyOther: TranslationFieldProperties;
+  beneficiarySelectionFrequencyNote: TranslationFieldProperties;
+  beneficiaryRemovalFrequency: TranslationFieldPropertiesWithOptions<FrequencyType>;
+  beneficiaryRemovalFrequencyContinually: TranslationFieldProperties;
+  beneficiaryRemovalFrequencyOther: TranslationFieldProperties;
+  beneficiaryRemovalFrequencyNote: TranslationFieldProperties;
   beneficiaryOverlap: TranslationFieldPropertiesWithOptions<OverlapType>;
   beneficiaryOverlapNote: TranslationFieldProperties;
   precedenceRules: TranslationFieldPropertiesWithOptions<YesNoType>;
@@ -378,22 +395,28 @@ export type TranslationOpsEvalAndLearning = {
   useCcwForFileDistribiutionToParticipantsNote: TranslationFieldProperties;
   developNewQualityMeasures: TranslationFieldPropertiesWithOptions<Bool>;
   developNewQualityMeasuresNote: TranslationFieldProperties;
-  qualityPerformanceImpactsPayment: TranslationFieldPropertiesWithOptions<Bool>;
+  qualityPerformanceImpactsPayment: TranslationFieldPropertiesWithOptions<YesNoOtherType>;
+  qualityPerformanceImpactsPaymentOther: TranslationFieldProperties;
   qualityPerformanceImpactsPaymentNote: TranslationFieldProperties;
   // Data Sharing
   dataSharingStarts: TranslationFieldPropertiesWithOptions<DataStartsType>;
   dataSharingStartsOther: TranslationFieldProperties;
-  dataSharingFrequency: TranslationFieldPropertiesWithOptions<DataFrequencyType>;
+  dataSharingFrequency: TranslationFieldPropertiesWithOptions<FrequencyType>;
+  dataSharingFrequencyContinually: TranslationFieldProperties;
   dataSharingFrequencyOther: TranslationFieldProperties;
   dataSharingStartsNote: TranslationFieldProperties;
   dataCollectionStarts: TranslationFieldPropertiesWithOptions<DataStartsType>;
   dataCollectionStartsOther: TranslationFieldProperties;
-  dataCollectionFrequency: TranslationFieldPropertiesWithOptions<DataFrequencyType>;
+  dataCollectionFrequency: TranslationFieldPropertiesWithOptions<FrequencyType>;
+  dataCollectionFrequencyContinually: TranslationFieldProperties;
   dataCollectionFrequencyOther: TranslationFieldProperties;
   dataCollectionFrequencyNote: TranslationFieldProperties;
   qualityReportingStarts: TranslationFieldPropertiesWithOptions<DataStartsType>;
   qualityReportingStartsOther: TranslationFieldProperties;
   qualityReportingStartsNote: TranslationFieldProperties;
+  qualityReportingFrequency: TranslationFieldPropertiesWithOptions<FrequencyType>;
+  qualityReportingFrequencyContinually: TranslationFieldProperties;
+  qualityReportingFrequencyOther: TranslationFieldProperties;
   // Learning
   modelLearningSystems: TranslationFieldPropertiesWithOptions<ModelLearningSystemType>;
   modelLearningSystemsOther: TranslationFieldProperties;
@@ -461,7 +484,8 @@ export type TranslationPayments = {
   canParticipantsSelectBetweenPaymentMechanisms: TranslationFieldPropertiesWithOptions<Bool>;
   canParticipantsSelectBetweenPaymentMechanismsHow: TranslationFieldProperties;
   canParticipantsSelectBetweenPaymentMechanismsNote: TranslationFieldProperties;
-  anticipatedPaymentFrequency: TranslationFieldPropertiesWithOptions<AnticipatedPaymentFrequencyType>;
+  anticipatedPaymentFrequency: TranslationFieldPropertiesWithOptions<FrequencyType>;
+  anticipatedPaymentFrequencyContinually: TranslationFieldProperties;
   anticipatedPaymentFrequencyOther: TranslationFieldProperties;
   anticipatedPaymentFrequencyNote: TranslationFieldProperties;
   // Recover Payment
@@ -469,6 +493,10 @@ export type TranslationPayments = {
   willRecoverPaymentsNote: TranslationFieldProperties;
   anticipateReconcilingPaymentsRetrospectively: TranslationFieldPropertiesWithOptions<Bool>;
   anticipateReconcilingPaymentsRetrospectivelyNote: TranslationFieldProperties;
+  paymentReconciliationFrequency: TranslationFieldPropertiesWithOptions<FrequencyType>;
+  paymentReconciliationFrequencyContinually: TranslationFieldProperties;
+  paymentReconciliationFrequencyOther: TranslationFieldProperties;
+  paymentReconciliationFrequencyNote: TranslationFieldProperties;
   paymentStartDate: TranslationFieldProperties;
   paymentStartDateNote: TranslationFieldProperties;
   status: TranslationFieldPropertiesWithOptions<TaskStatus>;
@@ -476,7 +504,7 @@ export type TranslationPayments = {
 
 // Collaborators
 export type TranslationCollaborators = {
-  teamRole: TranslationFieldPropertiesWithOptions<TeamRole>;
+  teamRoles: TranslationFieldPropertiesWithOptions<TeamRole>;
   username: TranslationFieldProperties;
 };
 

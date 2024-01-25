@@ -1,0 +1,31 @@
+INSERT INTO plan_tdl(
+    id,
+    model_plan_id,
+    id_number,
+    date_initiated,
+    title,
+    note,
+    created_by,
+    modified_by
+)
+VALUES (
+    :id,
+    :model_plan_id,
+    :id_number,
+    :date_initiated,
+    :title,
+    :note,
+    :created_by,
+    :modified_by
+)
+RETURNING
+id,
+model_plan_id,
+id_number,
+date_initiated,
+title,
+note,
+created_by,
+created_dts,
+modified_by,
+modified_dts;

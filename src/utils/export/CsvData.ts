@@ -111,6 +111,14 @@ const csvFields = [
   'generalCharacteristics.status',
 
   // Participants and Providers
+  'participantsAndProviders.participantAddedFrequency',
+  'participantsAndProviders.participantAddedFrequencyContinually',
+  'participantsAndProviders.participantAddedFrequencyOther',
+  'participantsAndProviders.participantAddedFrequencyNote',
+  'participantsAndProviders.participantRemovedFrequency',
+  'participantsAndProviders.participantRemovedFrequencyContinually',
+  'participantsAndProviders.participantRemovedFrequencyOther',
+  'participantsAndProviders.participantRemovedFrequencyNote',
   'participantsAndProviders.communicationMethod', // array
   'participantsAndProviders.communicationMethodOther',
   'participantsAndProviders.communicationNote',
@@ -147,6 +155,7 @@ const csvFields = [
   'participantsAndProviders.participantsCurrentlyInModelsNote',
   'participantsAndProviders.modelApplicationLevel',
   'participantsAndProviders.providerAdditionFrequency',
+  'participantsAndProviders.providerAdditionFrequencyContinually',
   'participantsAndProviders.providerAdditionFrequencyOther',
   'participantsAndProviders.providerAdditionFrequencyNote',
   'participantsAndProviders.providerAddMethod', // array
@@ -155,6 +164,10 @@ const csvFields = [
   'participantsAndProviders.providerLeaveMethod', // array
   'participantsAndProviders.providerLeaveMethodOther',
   'participantsAndProviders.providerLeaveMethodNote',
+  'participantsAndProviders.providerRemovalFrequency',
+  'participantsAndProviders.providerRemovalFrequencyContinually',
+  'participantsAndProviders.providerRemovalFrequencyOther',
+  'participantsAndProviders.providerRemovalFrequencyNote',
   'participantsAndProviders.providerOverlap',
   'participantsAndProviders.providerOverlapHierarchy',
   'participantsAndProviders.providerOverlapNote',
@@ -178,8 +191,13 @@ const csvFields = [
   'beneficiaries.excludeCertainCharacteristicsCriteria',
   'beneficiaries.excludeCertainCharacteristicsNote',
   'beneficiaries.beneficiarySelectionFrequency',
+  'beneficiaries.beneficiarySelectionFrequencyContinually',
   'beneficiaries.beneficiarySelectionFrequencyNote',
   'beneficiaries.beneficiarySelectionFrequencyOther',
+  'beneficiaries.beneficiaryRemovalFrequency',
+  'beneficiaries.beneficiaryRemovalFrequencyContinually',
+  'beneficiaries.beneficiaryRemovalFrequencyNote',
+  'beneficiaries.beneficiaryRemovalFrequencyOther',
   'beneficiaries.precedenceRules',
   'beneficiaries.precedenceRulesYes',
   'beneficiaries.precedenceRulesNo',
@@ -211,16 +229,21 @@ const csvFields = [
   'opsEvalAndLearning.dataSharingStarts',
   'opsEvalAndLearning.dataSharingStartsOther',
   'opsEvalAndLearning.dataSharingFrequency', // array
+  'opsEvalAndLearning.dataSharingFrequencyContinually',
   'opsEvalAndLearning.dataSharingFrequencyOther',
   'opsEvalAndLearning.dataSharingStartsNote',
   'opsEvalAndLearning.dataCollectionStarts',
   'opsEvalAndLearning.dataCollectionStartsOther',
   'opsEvalAndLearning.dataCollectionFrequency', // array
+  'opsEvalAndLearning.dataCollectionFrequencyContinually',
   'opsEvalAndLearning.dataCollectionFrequencyOther',
   'opsEvalAndLearning.dataCollectionFrequencyNote',
   'opsEvalAndLearning.qualityReportingStarts',
   'opsEvalAndLearning.qualityReportingStartsOther',
   'opsEvalAndLearning.qualityReportingStartsNote',
+  'opsEvalAndLearning.qualityReportingFrequency', // array
+  'opsEvalAndLearning.qualityReportingFrequencyContinually',
+  'opsEvalAndLearning.qualityReportingFrequencyOther',
   'opsEvalAndLearning.evaluationApproaches', // array
   'opsEvalAndLearning.evaluationApproachOther',
   'opsEvalAndLearning.evalutaionApproachNote',
@@ -320,6 +343,7 @@ const csvFields = [
   'payments.canParticipantsSelectBetweenPaymentMechanismsHow',
   'payments.canParticipantsSelectBetweenPaymentMechanismsNote',
   'payments.anticipatedPaymentFrequency', // array
+  'payments.anticipatedPaymentFrequencyContinually',
   'payments.anticipatedPaymentFrequencyOther',
   'payments.anticipatedPaymentFrequencyNote',
   'payments.fundingSource', // array
@@ -348,6 +372,10 @@ const csvFields = [
   'payments.willRecoverPaymentsNote',
   'payments.anticipateReconcilingPaymentsRetrospectively',
   'payments.anticipateReconcilingPaymentsRetrospectivelyNote',
+  'payments.paymentReconciliationFrequency',
+  'payments.paymentReconciliationFrequencyContinually',
+  'payments.paymentReconciliationFrequencyOther',
+  'payments.paymentReconciliationFrequencyNote',
   'payments.paymentStartDate',
   'payments.paymentStartDateNote',
   'payments.readyForReviewByUserAccount.commonName',
@@ -370,8 +398,8 @@ const csvFields = [
   {
     label: `${i18next.t<string>(
       'collaboratorsMisc:csvTitle'
-    )} ${i18next.t<string>('collaborators:teamRole.label')}`,
-    value: 'collaborators.teamRole'
+    )} ${i18next.t<string>('collaborators:teamRoles.label')}`,
+    value: 'collaborators.teamRoles'
   },
 
   // Discussions

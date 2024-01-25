@@ -229,20 +229,12 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
             <li
               class="font-sans-md line-height-sans-4"
             >
-              <div
-                class="display-flex flex-align-center"
-              >
-                Regular APM
-              </div>
+              Regular APM
             </li>
             <li
               class="font-sans-md line-height-sans-4"
             >
-              <div
-                class="display-flex flex-align-center"
-              >
-                MIPS APM
-              </div>
+              MIPS APM
             </li>
           </ul>
         </div>
@@ -284,38 +276,22 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
             <li
               class="font-sans-md line-height-sans-4"
             >
-              <div
-                class="display-flex flex-align-center"
-              >
-                Population-based Model
-              </div>
+              Population-based Model
             </li>
             <li
               class="font-sans-md line-height-sans-4"
             >
-              <div
-                class="display-flex flex-align-center"
-              >
-                Payment Model
-              </div>
+              Payment Model
             </li>
             <li
               class="font-sans-md line-height-sans-4"
             >
-              <div
-                class="display-flex flex-align-center"
-              >
-                Service Delivery Model
-              </div>
+              Service Delivery Model
             </li>
             <li
               class="font-sans-md line-height-sans-4"
             >
-              <div
-                class="display-flex flex-align-center"
-              >
-                Other
-              </div>
+              Other
             </li>
             <ul
               data-testid="other-entry"
@@ -623,6 +599,7 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
               <li
                 class="font-sans-md line-height-sans-4"
               >
+<<<<<<< HEAD
                 California, Indiana
               </li>
             </ul>
@@ -664,6 +641,25 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
               </li>
             </ul>
           </ul>
+=======
+                <li
+                  class="font-sans-md line-height-sans-4"
+                >
+                  Other
+                </li>
+                <ul
+                  data-testid="other-entry"
+                >
+                  <li
+                    class="font-sans-md line-height-sans-4"
+                  >
+                    Geography type other
+                  </li>
+                </ul>
+              </ul>
+            </div>
+          </div>
+>>>>>>> main
         </div>
       </div>
       <div
@@ -696,6 +692,7 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
               <div
                 class="display-flex flex-align-center"
               >
+<<<<<<< HEAD
                 Other
               </div>
             </li>
@@ -709,6 +706,30 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
               </li>
             </ul>
           </ul>
+=======
+                <li
+                  class="font-sans-md line-height-sans-4"
+                >
+                  Beneficiaries
+                </li>
+                <li
+                  class="font-sans-md line-height-sans-4"
+                >
+                  Other
+                </li>
+                <ul
+                  data-testid="other-entry"
+                >
+                  <li
+                    class="font-sans-md line-height-sans-4"
+                  >
+                    Geography applied other
+                  </li>
+                </ul>
+              </ul>
+            </div>
+          </div>
+>>>>>>> main
         </div>
       </div>
       <div
@@ -786,11 +807,7 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
             <li
               class="font-sans-md line-height-sans-4"
             >
-              <div
-                class="display-flex flex-align-center"
-              >
-                Other
-              </div>
+              Other
             </li>
             <ul
               data-testid="other-entry"
@@ -934,20 +951,12 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
             <li
               class="font-sans-md line-height-sans-4"
             >
-              <div
-                class="display-flex flex-align-center"
-              >
-                3021 Affordable Care Act (ACA)
-              </div>
+              3021 Affordable Care Act (ACA)
             </li>
             <li
               class="font-sans-md line-height-sans-4"
             >
-              <div
-                class="display-flex flex-align-center"
-              >
-                Other
-              </div>
+              Other
             </li>
             <ul
               data-testid="other-entry"
@@ -1030,20 +1039,12 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
                 <li
                   class="font-sans-md line-height-sans-4"
                 >
-                  <div
-                    class="display-flex flex-align-center"
-                  >
-                    Fraud and Abuse
-                  </div>
+                  Fraud and Abuse
                 </li>
                 <li
                   class="font-sans-md line-height-sans-4"
                 >
-                  <div
-                    class="display-flex flex-align-center"
-                  >
-                    Medicaid
-                  </div>
+                  Medicaid
                 </li>
               </ul>
             </div>

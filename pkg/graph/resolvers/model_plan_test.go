@@ -81,7 +81,8 @@ func (suite *ResolverSuite) TestModelPlanCollection() {
 	planWithCollab := suite.createModelPlan("Test Plan 4 (Collab)")
 	suite.createPlanCollaborator(planWithCollab, "CLAB", []models.TeamRole{models.TeamRoleEvaluation})
 
-	suite.createPlanCrTdl(planWithCRTDLs, "Happy Happy Test", time.Now(), "Good CRTDL", "This is a test")
+	suite.createPlanCR(planWithCRTDLs, "Happy Happy Test", time.Now(), time.Now().Add(time.Hour*48), "Good CR", "This is a test")
+	suite.createPlanTDL(planWithCRTDLs, "Happy Happy Test", time.Now(), "Good TDL", "This is a test")
 
 	// Get plan collection as CLAB
 	clabPrincipal := getTestPrincipal(suite.testConfigs.Store, "CLAB")
@@ -111,7 +112,7 @@ func (suite *ResolverSuite) TestModelPlanCollection() {
 	suite.NotNil(result)
 	suite.Len(result, 4)
 
-	// Assert that TEST sees all 1 model plan when CRDTL is seelcted
+	// Assert that TEST sees all 1 model plan when CRDTL is selected
 	result, err = ModelPlanCollection(suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, model.ModelPlanFilterWithCrTdls)
 	suite.NoError(err)
 	suite.NotNil(result)

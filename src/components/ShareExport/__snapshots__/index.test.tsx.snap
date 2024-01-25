@@ -60,7 +60,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                       class="mint-tag bg-base text-white margin-right-0"
                       data-testid="tag"
                     >
-                      Draft model plan
+                      Draft Model Plan
                     </span>
                   </div>
                   <div
@@ -213,20 +213,12 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                   <li
                     class="font-sans-md line-height-sans-4"
                   >
-                    <div
-                      class="display-flex flex-align-center"
-                    >
-                      First Name
-                    </div>
+                    First Name
                   </li>
                   <li
                     class="font-sans-md line-height-sans-4"
                   >
-                    <div
-                      class="display-flex flex-align-center"
-                    >
-                      Second Name
-                    </div>
+                    Second Name
                   </li>
                 </ul>
               </div>
@@ -383,53 +375,49 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                       <li
                         class="font-sans-md line-height-sans-4"
                       >
-                        <div
+                        <span
                           class="display-flex flex-align-center"
+                          style="gap: 4px;"
                         >
+                          Accountable Care
                           <span
-                            class="display-flex flex-align-center"
-                            style="gap: 4px;"
+                            class="usa-tooltip"
+                            data-testid="tooltipWrapper"
                           >
-                            Accountable Care
-                            <span
-                              class="usa-tooltip"
-                              data-testid="tooltipWrapper"
+                            <div
+                              aria-describedby="tooltip-550000"
+                              class="usa-tooltip__trigger"
+                              data-testid="triggerElement"
+                              position="right"
+                              tabindex="0"
+                              title=""
                             >
-                              <div
-                                aria-describedby="tooltip-550000"
-                                class="usa-tooltip__trigger"
-                                data-testid="triggerElement"
-                                position="right"
-                                tabindex="0"
-                                title=""
+                              <svg
+                                class="usa-icon text-base-light"
+                                focusable="false"
+                                height="1em"
+                                role="img"
+                                viewBox="0 0 24 24"
+                                width="1em"
+                                xmlns="http://www.w3.org/2000/svg"
                               >
-                                <svg
-                                  class="usa-icon text-base-light"
-                                  focusable="false"
-                                  height="1em"
-                                  role="img"
-                                  viewBox="0 0 24 24"
-                                  width="1em"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
-                                  <path
-                                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
-                                  />
-                                </svg>
-                              </div>
-                              <span
-                                aria-hidden="true"
-                                class="usa-tooltip__body"
-                                data-testid="tooltipBody"
-                                id="tooltip-550000"
-                                role="tooltip"
-                                title="Models in which a doctor, group of health care providers or hospital takes financial responsibility for improving quality of care, including advanced primary care services, care coordination and health outcomes for a defined group of patients, thereby reducing care fragmentation and unnecessary costs for patients and the health system"
-                              >
-                                Models in which a doctor, group of health care providers or hospital takes financial responsibility for improving quality of care, including advanced primary care services, care coordination and health outcomes for a defined group of patients, thereby reducing care fragmentation and unnecessary costs for patients and the health system
-                              </span>
+                                <path
+                                  d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
+                                />
+                              </svg>
+                            </div>
+                            <span
+                              aria-hidden="true"
+                              class="usa-tooltip__body"
+                              data-testid="tooltipBody"
+                              id="tooltip-550000"
+                              role="tooltip"
+                              title="Models in which a doctor, group of health care providers or hospital takes financial responsibility for improving quality of care, including advanced primary care services, care coordination and health outcomes for a defined group of patients, thereby reducing care fragmentation and unnecessary costs for patients and the health system"
+                            >
+                              Models in which a doctor, group of health care providers or hospital takes financial responsibility for improving quality of care, including advanced primary care services, care coordination and health outcomes for a defined group of patients, thereby reducing care fragmentation and unnecessary costs for patients and the health system
                             </span>
                           </span>
-                        </div>
+                        </span>
                       </li>
                     </ul>
                   </div>
@@ -462,20 +450,12 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                       <li
                         class="font-sans-md line-height-sans-4"
                       >
-                        <div
-                          class="display-flex flex-align-center"
-                        >
-                          Center for Medicare (CM)
-                        </div>
+                        Center for Medicare (CM)
                       </li>
                       <li
                         class="font-sans-md line-height-sans-4"
                       >
-                        <div
-                          class="display-flex flex-align-center"
-                        >
-                          Center for Medicaid and CHIP Services (CMCS)
-                        </div>
+                        Center for Medicaid and CHIP Services (CMCS)
                       </li>
                     </ul>
                   </div>
@@ -503,20 +483,12 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                       <li
                         class="font-sans-md line-height-sans-4"
                       >
-                        <div
-                          class="display-flex flex-align-center"
-                        >
-                          State and Population Health Group (SPHG)
-                        </div>
+                        State and Population Health Group (SPHG)
                       </li>
                       <li
                         class="font-sans-md line-height-sans-4"
                       >
-                        <div
-                          class="display-flex flex-align-center"
-                        >
-                          Policy and Programs Group (PPG)
-                        </div>
+                        Policy and Programs Group (PPG)
                       </li>
                     </ul>
                   </div>
@@ -541,11 +513,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                   <li
                     class="font-sans-md line-height-sans-4"
                   >
-                    <div
-                      class="display-flex flex-align-center"
-                    >
-                      Mandatory national
-                    </div>
+                    Mandatory national
                   </li>
                 </ul>
               </div>
@@ -1106,20 +1074,12 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      <div
-                        class="display-flex flex-align-center"
-                      >
-                        Regular APM
-                      </div>
+                      Regular APM
                     </li>
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      <div
-                        class="display-flex flex-align-center"
-                      >
-                        MIPS APM
-                      </div>
+                      MIPS APM
                     </li>
                   </ul>
                 </div>
@@ -1161,38 +1121,22 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      <div
-                        class="display-flex flex-align-center"
-                      >
-                        Population-based Model
-                      </div>
+                      Population-based Model
                     </li>
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      <div
-                        class="display-flex flex-align-center"
-                      >
-                        Payment Model
-                      </div>
+                      Payment Model
                     </li>
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      <div
-                        class="display-flex flex-align-center"
-                      >
-                        Service Delivery Model
-                      </div>
+                      Service Delivery Model
                     </li>
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      <div
-                        class="display-flex flex-align-center"
-                      >
-                        Other
-                      </div>
+                      Other
                     </li>
                     <ul
                       data-testid="other-entry"
@@ -1500,6 +1444,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                       <li
                         class="font-sans-md line-height-sans-4"
                       >
+<<<<<<< HEAD
                         California, Indiana
                       </li>
                     </ul>
@@ -1541,6 +1486,25 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                       </li>
                     </ul>
                   </ul>
+=======
+                        <li
+                          class="font-sans-md line-height-sans-4"
+                        >
+                          Other
+                        </li>
+                        <ul
+                          data-testid="other-entry"
+                        >
+                          <li
+                            class="font-sans-md line-height-sans-4"
+                          >
+                            Geography type other
+                          </li>
+                        </ul>
+                      </ul>
+                    </div>
+                  </div>
+>>>>>>> main
                 </div>
               </div>
               <div
@@ -1573,6 +1537,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                       <div
                         class="display-flex flex-align-center"
                       >
+<<<<<<< HEAD
                         Other
                       </div>
                     </li>
@@ -1586,6 +1551,30 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                       </li>
                     </ul>
                   </ul>
+=======
+                        <li
+                          class="font-sans-md line-height-sans-4"
+                        >
+                          Beneficiaries
+                        </li>
+                        <li
+                          class="font-sans-md line-height-sans-4"
+                        >
+                          Other
+                        </li>
+                        <ul
+                          data-testid="other-entry"
+                        >
+                          <li
+                            class="font-sans-md line-height-sans-4"
+                          >
+                            Geography applied other
+                          </li>
+                        </ul>
+                      </ul>
+                    </div>
+                  </div>
+>>>>>>> main
                 </div>
               </div>
               <div
@@ -1663,11 +1652,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      <div
-                        class="display-flex flex-align-center"
-                      >
-                        Other
-                      </div>
+                      Other
                     </li>
                     <ul
                       data-testid="other-entry"
@@ -1811,20 +1796,12 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      <div
-                        class="display-flex flex-align-center"
-                      >
-                        3021 Affordable Care Act (ACA)
-                      </div>
+                      3021 Affordable Care Act (ACA)
                     </li>
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      <div
-                        class="display-flex flex-align-center"
-                      >
-                        Other
-                      </div>
+                      Other
                     </li>
                     <ul
                       data-testid="other-entry"
@@ -1907,20 +1884,12 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                         <li
                           class="font-sans-md line-height-sans-4"
                         >
-                          <div
-                            class="display-flex flex-align-center"
-                          >
-                            Fraud and Abuse
-                          </div>
+                          Fraud and Abuse
                         </li>
                         <li
                           class="font-sans-md line-height-sans-4"
                         >
-                          <div
-                            class="display-flex flex-align-center"
-                          >
-                            Medicaid
-                          </div>
+                          Medicaid
                         </li>
                       </ul>
                     </div>
@@ -1996,38 +1965,22 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      <div
-                        class="display-flex flex-align-center"
-                      >
-                        Medicaid providers
-                      </div>
+                      Medicaid providers
                     </li>
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      <div
-                        class="display-flex flex-align-center"
-                      >
-                        States
-                      </div>
+                      States
                     </li>
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      <div
-                        class="display-flex flex-align-center"
-                      >
-                        State Medicaid agencies
-                      </div>
+                      State Medicaid agencies
                     </li>
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      <div
-                        class="display-flex flex-align-center"
-                      >
-                        Other
-                      </div>
+                      Other
                     </li>
                     <ul
                       data-testid="other-entry"
@@ -2268,20 +2221,12 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      <div
-                        class="display-flex flex-align-center"
-                      >
-                        Use an application review and scoring tool
-                      </div>
+                      Use an application review and scoring tool
                     </li>
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      <div
-                        class="display-flex flex-align-center"
-                      >
-                        Another CMS component or process will provide support
-                      </div>
+                      Another CMS component or process will provide support
                     </li>
                   </ul>
                 </div>
@@ -2314,6 +2259,108 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                 data-testid="grid"
               >
                 <div
+                  class="read-only-section read-only-section--how-frequently-are-participants-added margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    How frequently are participants added?
+                  </p>
+                  <ul
+                    class="margin-y-0 padding-left-3"
+                  >
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Continually
+                    </li>
+                    <ul
+                      data-testid="other-entry"
+                    >
+                      <li
+                        class="font-sans-md line-height-sans-4"
+                      >
+                        participant added continually
+                      </li>
+                    </ul>
+                  </ul>
+                </div>
+                <div
+                  class="desktop:grid-col-12"
+                  data-testid="grid"
+                >
+                  <div
+                    class="read-only-section read-only-section--notes margin-bottom-3"
+                  >
+                    <p
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                    >
+                      Notes
+                    </p>
+                    <p
+                      class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                    >
+                      My note
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--how-frequently-are-participants-removed margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    How frequently are participants removed?
+                  </p>
+                  <ul
+                    class="margin-y-0 padding-left-3"
+                  >
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Other
+                    </li>
+                    <ul
+                      data-testid="other-entry"
+                    >
+                      <li
+                        class="font-sans-md line-height-sans-4"
+                      >
+                        participant added other
+                      </li>
+                    </ul>
+                  </ul>
+                </div>
+                <div
+                  class="desktop:grid-col-12"
+                  data-testid="grid"
+                >
+                  <div
+                    class="read-only-section read-only-section--notes margin-bottom-3"
+                  >
+                    <p
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                    >
+                      Notes
+                    </p>
+                    <p
+                      class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                    >
+                      Second note
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
                   class="read-only-section read-only-section--how-will-you-communicate-with-participants margin-bottom-3"
                 >
                   <p
@@ -2327,20 +2374,12 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      <div
-                        class="display-flex flex-align-center"
-                      >
-                        Manage ongoing communications with participants using an IT tool
-                      </div>
+                      Manage ongoing communications with participants using an IT tool
                     </li>
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      <div
-                        class="display-flex flex-align-center"
-                      >
-                        Send mass emails to new participants
-                      </div>
+                      Send mass emails to new participants
                     </li>
                   </ul>
                 </div>
@@ -2382,11 +2421,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      <div
-                        class="display-flex flex-align-center"
-                      >
-                        Capitation
-                      </div>
+                      Capitation
                     </li>
                   </ul>
                 </div>
@@ -2408,6 +2443,25 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                       Note risk
                     </p>
                   </div>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--notes margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    Notes
+                  </p>
+                  <p
+                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  >
+                    Note risk
+                  </p>
                 </div>
               </div>
               <div
@@ -2561,11 +2615,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      <div
-                        class="display-flex flex-align-center"
-                      >
-                        Other
-                      </div>
+                      Other
                     </li>
                     <ul
                       data-testid="other-entry"
@@ -2616,11 +2666,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      <div
-                        class="display-flex flex-align-center"
-                      >
-                        CCNs
-                      </div>
+                      CCNs
                     </li>
                   </ul>
                 </div>
@@ -2658,11 +2704,24 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                   >
                     How frequently are providers added?
                   </p>
-                  <p
-                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  <ul
+                    class="margin-y-0 padding-left-3"
                   >
-                    Biannually
-                  </p>
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Other
+                    </li>
+                    <ul
+                      data-testid="other-entry"
+                    >
+                      <li
+                        class="font-sans-md line-height-sans-4"
+                      >
+                        Freq other
+                      </li>
+                    </ul>
+                  </ul>
                 </div>
                 <div
                   class="desktop:grid-col-12"
@@ -2702,11 +2761,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      <div
-                        class="display-flex flex-align-center"
-                      >
-                        Add retrospectively (once an interaction happens this year)
-                      </div>
+                      Add retrospectively (once an interaction happens this year)
                     </li>
                   </ul>
                 </div>
@@ -2748,11 +2803,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      <div
-                        class="display-flex flex-align-center"
-                      >
-                        Not applicable
-                      </div>
+                      Not applicable
                     </li>
                   </ul>
                 </div>
@@ -2772,6 +2823,57 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                       class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
                     >
                       Note leave
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--how-frequently-are-providers-removed margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    How frequently are providers removed?
+                  </p>
+                  <ul
+                    class="margin-y-0 padding-left-3"
+                  >
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Continually
+                    </li>
+                    <ul
+                      data-testid="other-entry"
+                    >
+                      <li
+                        class="font-sans-md line-height-sans-4"
+                      >
+                        Freq cont
+                      </li>
+                    </ul>
+                  </ul>
+                </div>
+                <div
+                  class="desktop:grid-col-12"
+                  data-testid="grid"
+                >
+                  <div
+                    class="read-only-section read-only-section--notes margin-bottom-3"
+                  >
+                    <p
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                    >
+                      Notes
+                    </p>
+                    <p
+                      class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                    >
+                      Note freq removal
                     </p>
                   </div>
                 </div>
@@ -2864,20 +2966,12 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      <div
-                        class="display-flex flex-align-center"
-                      >
-                        Disease-specific
-                      </div>
+                      Disease-specific
                     </li>
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      <div
-                        class="display-flex flex-align-center"
-                      >
-                        Dually-eligible beneficiaries
-                      </div>
+                      Dually-eligible beneficiaries
                     </li>
                   </ul>
                 </div>
@@ -3114,11 +3208,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      <div
-                        class="display-flex flex-align-center"
-                      >
-                        Historical claims
-                      </div>
+                      Historical claims
                     </li>
                   </ul>
                 </div>
@@ -3156,11 +3246,75 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                   >
                     How frequently are beneficiaries added?
                   </p>
-                  <p
-                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  <ul
+                    class="margin-y-0 padding-left-3"
                   >
-                    Annually
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Other
+                    </li>
+                    <ul
+                      data-testid="other-entry"
+                    >
+                      <li
+                        class="font-sans-md line-height-sans-4"
+                      >
+                        Frequency other
+                      </li>
+                    </ul>
+                  </ul>
+                </div>
+                <div
+                  class="desktop:grid-col-12"
+                  data-testid="grid"
+                >
+                  <div
+                    class="read-only-section read-only-section--notes margin-bottom-3"
+                  >
+                    <p
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                    >
+                      Notes
+                    </p>
+                    <p
+                      class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                    >
+                      Note frequency
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--how-frequently-are-beneficiaries-removed margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    How frequently are beneficiaries removed?
                   </p>
+                  <ul
+                    class="margin-y-0 padding-left-3"
+                  >
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Continually
+                    </li>
+                    <ul
+                      data-testid="other-entry"
+                    >
+                      <li
+                        class="font-sans-md line-height-sans-4"
+                      >
+                        Frequency continually
+                      </li>
+                    </ul>
+                  </ul>
                 </div>
                 <div
                   class="desktop:grid-col-12"
@@ -3238,11 +3392,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      <div
-                        class="display-flex flex-align-center"
-                      >
-                        Yes
-                      </div>
+                      Yes
                     </li>
                     <ul
                       data-testid="other-entry"
@@ -3306,20 +3456,12 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      <div
-                        class="display-flex flex-align-center"
-                      >
-                        Yes, we will partner with states
-                      </div>
+                      Yes, we will partner with states
                     </li>
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      <div
-                        class="display-flex flex-align-center"
-                      >
-                        Other
-                      </div>
+                      Other
                     </li>
                     <ul
                       data-testid="other-entry"
@@ -3370,29 +3512,17 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      <div
-                        class="display-flex flex-align-center"
-                      >
-                        Beneficiaries
-                      </div>
+                      Beneficiaries
                     </li>
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      <div
-                        class="display-flex flex-align-center"
-                      >
-                        Participants
-                      </div>
+                      Participants
                     </li>
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      <div
-                        class="display-flex flex-align-center"
-                      >
-                        Providers
-                      </div>
+                      Providers
                     </li>
                   </ul>
                 </div>
@@ -3480,20 +3610,12 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                         <li
                           class="font-sans-md line-height-sans-4"
                         >
-                          <div
-                            class="display-flex flex-align-center"
-                          >
-                            May have separate contractors for different implementation functions
-                          </div>
+                          May have separate contractors for different implementation functions
                         </li>
                         <li
                           class="font-sans-md line-height-sans-4"
                         >
-                          <div
-                            class="display-flex flex-align-center"
-                          >
-                            Other
-                          </div>
+                          Other
                         </li>
                         <ul
                           data-testid="other-entry"
@@ -3879,20 +4001,12 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      <div
-                        class="display-flex flex-align-center"
-                      >
-                        Part A
-                      </div>
+                      Part A
                     </li>
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      <div
-                        class="display-flex flex-align-center"
-                      >
-                        Part B
-                      </div>
+                      Part B
                     </li>
                   </ul>
                 </div>
@@ -4450,20 +4564,12 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      <div
-                        class="display-flex flex-align-center"
-                      >
-                        Interrupted time series
-                      </div>
+                      Interrupted time series
                     </li>
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      <div
-                        class="display-flex flex-align-center"
-                      >
-                        Other
-                      </div>
+                      Other
                     </li>
                     <ul
                       data-testid="other-entry"
@@ -4514,20 +4620,12 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      <div
-                        class="display-flex flex-align-center"
-                      >
-                        Yes, for evaluation
-                      </div>
+                      Yes, for evaluation
                     </li>
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      <div
-                        class="display-flex flex-align-center"
-                      >
-                        Other
-                      </div>
+                      Other
                     </li>
                     <ul
                       data-testid="other-entry"
@@ -4578,29 +4676,17 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      <div
-                        class="display-flex flex-align-center"
-                      >
-                        Clinical data
-                      </div>
+                      Clinical data
                     </li>
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      <div
-                        class="display-flex flex-align-center"
-                      >
-                        Medicare claims
-                      </div>
+                      Medicare claims
                     </li>
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      <div
-                        class="display-flex flex-align-center"
-                      >
-                        Other
-                      </div>
+                      Other
                     </li>
                     <ul
                       data-testid="other-entry"
@@ -4651,29 +4737,17 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      <div
-                        class="display-flex flex-align-center"
-                      >
-                        Baseline/historical data
-                      </div>
+                      Baseline/historical data
                     </li>
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      <div
-                        class="display-flex flex-align-center"
-                      >
-                        Beneficiary-level data
-                      </div>
+                      Beneficiary-level data
                     </li>
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      <div
-                        class="display-flex flex-align-center"
-                      >
-                        Other
-                      </div>
+                      Other
                     </li>
                     <ul
                       data-testid="other-entry"
@@ -4943,12 +5017,11 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      <div
-                        class="display-flex flex-align-center"
-                      >
-                        Daily
-                      </div>
+                      Monthly
                     </li>
+                    <ul
+                      data-testid="other-entry"
+                    />
                   </ul>
                 </div>
                 <div
@@ -5008,12 +5081,11 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      <div
-                        class="display-flex flex-align-center"
-                      >
-                        Monthly
-                      </div>
+                      Annually
                     </li>
+                    <ul
+                      data-testid="other-entry"
+                    />
                   </ul>
                 </div>
                 <div
@@ -5074,6 +5146,38 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                   </div>
                 </div>
               </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--how-frequently-does-quality-reporting-happen margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    How frequently does quality reporting happen?
+                  </p>
+                  <ul
+                    class="margin-y-0 padding-left-3"
+                  >
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Other
+                    </li>
+                    <ul
+                      data-testid="other-entry"
+                    >
+                      <li
+                        class="font-sans-md line-height-sans-4"
+                      >
+                        Other frequency
+                      </li>
+                    </ul>
+                  </ul>
+                </div>
+              </div>
             </div>
             <div>
               <div
@@ -5094,29 +5198,17 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      <div
-                        class="display-flex flex-align-center"
-                      >
-                        We plan to use an IT platform (Connect)
-                      </div>
+                      We plan to use an IT platform (Connect)
                     </li>
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      <div
-                        class="display-flex flex-align-center"
-                      >
-                        No, we will not have a learning strategy
-                      </div>
+                      No, we will not have a learning strategy
                     </li>
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      <div
-                        class="display-flex flex-align-center"
-                      >
-                        Other
-                      </div>
+                      Other
                     </li>
                     <ul
                       data-testid="other-entry"
@@ -5218,25 +5310,11 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      <div
-                        class="display-flex flex-align-center"
-                      >
-                        Patient Protection Affordable Care Act (Sec 3021)
-                      </div>
+                      Patient Protection Affordable Care Act (Sec 3021)
                     </li>
                     <ul
                       data-testid="other-entry"
-                    >
-                      <li
-                        class="font-sans-md line-height-sans-4 "
-                      >
-                        <em
-                          class="text-base"
-                        >
-                          No additional information specified
-                        </em>
-                      </li>
-                    </ul>
+                    />
                   </ul>
                 </div>
               </div>
@@ -5277,25 +5355,11 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      <div
-                        class="display-flex flex-align-center"
-                      >
-                        Patient Protection Affordable Care Act (Sec 3021)
-                      </div>
+                      Patient Protection Affordable Care Act (Sec 3021)
                     </li>
                     <ul
                       data-testid="other-entry"
-                    >
-                      <li
-                        class="font-sans-md line-height-sans-4 "
-                      >
-                        <em
-                          class="text-base"
-                        >
-                          No additional information specified
-                        </em>
-                      </li>
-                    </ul>
+                    />
                   </ul>
                 </div>
               </div>
@@ -5336,11 +5400,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      <div
-                        class="display-flex flex-align-center"
-                      >
-                        Beneficiaries
-                      </div>
+                      Beneficiaries
                     </li>
                   </ul>
                 </div>
@@ -5382,11 +5442,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      <div
-                        class="display-flex flex-align-center"
-                      >
-                        Claims-Based Payments
-                      </div>
+                      Claims-Based Payments
                     </li>
                   </ul>
                 </div>
@@ -5435,11 +5491,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      <div
-                        class="display-flex flex-align-center"
-                      >
-                        Adjustments to FFS payments
-                      </div>
+                      Adjustments to FFS payments
                     </li>
                   </ul>
                 </div>
@@ -5921,12 +5973,11 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      <div
-                        class="display-flex flex-align-center"
-                      >
-                        Semiannually
-                      </div>
+                      Semi-annually
                     </li>
+                    <ul
+                      data-testid="other-entry"
+                    />
                   </ul>
                 </div>
                 <div
@@ -6023,6 +6074,57 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                       class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
                     >
                       Anticipate note
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--how-often-are-payments-reconciled margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    How often are payments reconciled?
+                  </p>
+                  <ul
+                    class="margin-y-0 padding-left-3"
+                  >
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Continually
+                    </li>
+                    <ul
+                      data-testid="other-entry"
+                    >
+                      <li
+                        class="font-sans-md line-height-sans-4"
+                      >
+                        Continual Frequency
+                      </li>
+                    </ul>
+                  </ul>
+                </div>
+                <div
+                  class="desktop:grid-col-12"
+                  data-testid="grid"
+                >
+                  <div
+                    class="read-only-section read-only-section--notes margin-bottom-3"
+                  >
+                    <p
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                    >
+                      Notes
+                    </p>
+                    <p
+                      class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                    >
+                      Reconciliation note
                     </p>
                   </div>
                 </div>
@@ -6687,7 +6789,7 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                       class="mint-tag bg-base text-white margin-right-0"
                       data-testid="tag"
                     >
-                      Draft model plan
+                      Draft Model Plan
                     </span>
                   </div>
                   <div
@@ -6840,20 +6942,12 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                   <li
                     class="font-sans-md line-height-sans-4"
                   >
-                    <div
-                      class="display-flex flex-align-center"
-                    >
-                      First Name
-                    </div>
+                    First Name
                   </li>
                   <li
                     class="font-sans-md line-height-sans-4"
                   >
-                    <div
-                      class="display-flex flex-align-center"
-                    >
-                      Second Name
-                    </div>
+                    Second Name
                   </li>
                 </ul>
               </div>
@@ -7010,53 +7104,49 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                       <li
                         class="font-sans-md line-height-sans-4"
                       >
-                        <div
+                        <span
                           class="display-flex flex-align-center"
+                          style="gap: 4px;"
                         >
+                          Accountable Care
                           <span
-                            class="display-flex flex-align-center"
-                            style="gap: 4px;"
+                            class="usa-tooltip"
+                            data-testid="tooltipWrapper"
                           >
-                            Accountable Care
-                            <span
-                              class="usa-tooltip"
-                              data-testid="tooltipWrapper"
+                            <div
+                              aria-describedby="tooltip-550000"
+                              class="usa-tooltip__trigger"
+                              data-testid="triggerElement"
+                              position="right"
+                              tabindex="0"
+                              title=""
                             >
-                              <div
-                                aria-describedby="tooltip-550000"
-                                class="usa-tooltip__trigger"
-                                data-testid="triggerElement"
-                                position="right"
-                                tabindex="0"
-                                title=""
+                              <svg
+                                class="usa-icon text-base-light"
+                                focusable="false"
+                                height="1em"
+                                role="img"
+                                viewBox="0 0 24 24"
+                                width="1em"
+                                xmlns="http://www.w3.org/2000/svg"
                               >
-                                <svg
-                                  class="usa-icon text-base-light"
-                                  focusable="false"
-                                  height="1em"
-                                  role="img"
-                                  viewBox="0 0 24 24"
-                                  width="1em"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
-                                  <path
-                                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
-                                  />
-                                </svg>
-                              </div>
-                              <span
-                                aria-hidden="true"
-                                class="usa-tooltip__body"
-                                data-testid="tooltipBody"
-                                id="tooltip-550000"
-                                role="tooltip"
-                                title="Models in which a doctor, group of health care providers or hospital takes financial responsibility for improving quality of care, including advanced primary care services, care coordination and health outcomes for a defined group of patients, thereby reducing care fragmentation and unnecessary costs for patients and the health system"
-                              >
-                                Models in which a doctor, group of health care providers or hospital takes financial responsibility for improving quality of care, including advanced primary care services, care coordination and health outcomes for a defined group of patients, thereby reducing care fragmentation and unnecessary costs for patients and the health system
-                              </span>
+                                <path
+                                  d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
+                                />
+                              </svg>
+                            </div>
+                            <span
+                              aria-hidden="true"
+                              class="usa-tooltip__body"
+                              data-testid="tooltipBody"
+                              id="tooltip-550000"
+                              role="tooltip"
+                              title="Models in which a doctor, group of health care providers or hospital takes financial responsibility for improving quality of care, including advanced primary care services, care coordination and health outcomes for a defined group of patients, thereby reducing care fragmentation and unnecessary costs for patients and the health system"
+                            >
+                              Models in which a doctor, group of health care providers or hospital takes financial responsibility for improving quality of care, including advanced primary care services, care coordination and health outcomes for a defined group of patients, thereby reducing care fragmentation and unnecessary costs for patients and the health system
                             </span>
                           </span>
-                        </div>
+                        </span>
                       </li>
                     </ul>
                   </div>
@@ -7089,20 +7179,12 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                       <li
                         class="font-sans-md line-height-sans-4"
                       >
-                        <div
-                          class="display-flex flex-align-center"
-                        >
-                          Center for Medicare (CM)
-                        </div>
+                        Center for Medicare (CM)
                       </li>
                       <li
                         class="font-sans-md line-height-sans-4"
                       >
-                        <div
-                          class="display-flex flex-align-center"
-                        >
-                          Center for Medicaid and CHIP Services (CMCS)
-                        </div>
+                        Center for Medicaid and CHIP Services (CMCS)
                       </li>
                     </ul>
                   </div>
@@ -7130,20 +7212,12 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                       <li
                         class="font-sans-md line-height-sans-4"
                       >
-                        <div
-                          class="display-flex flex-align-center"
-                        >
-                          State and Population Health Group (SPHG)
-                        </div>
+                        State and Population Health Group (SPHG)
                       </li>
                       <li
                         class="font-sans-md line-height-sans-4"
                       >
-                        <div
-                          class="display-flex flex-align-center"
-                        >
-                          Policy and Programs Group (PPG)
-                        </div>
+                        Policy and Programs Group (PPG)
                       </li>
                     </ul>
                   </div>
@@ -7168,11 +7242,7 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                   <li
                     class="font-sans-md line-height-sans-4"
                   >
-                    <div
-                      class="display-flex flex-align-center"
-                    >
-                      Mandatory national
-                    </div>
+                    Mandatory national
                   </li>
                 </ul>
               </div>
@@ -7733,20 +7803,12 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      <div
-                        class="display-flex flex-align-center"
-                      >
-                        Regular APM
-                      </div>
+                      Regular APM
                     </li>
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      <div
-                        class="display-flex flex-align-center"
-                      >
-                        MIPS APM
-                      </div>
+                      MIPS APM
                     </li>
                   </ul>
                 </div>
@@ -7788,38 +7850,22 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      <div
-                        class="display-flex flex-align-center"
-                      >
-                        Population-based Model
-                      </div>
+                      Population-based Model
                     </li>
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      <div
-                        class="display-flex flex-align-center"
-                      >
-                        Payment Model
-                      </div>
+                      Payment Model
                     </li>
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      <div
-                        class="display-flex flex-align-center"
-                      >
-                        Service Delivery Model
-                      </div>
+                      Service Delivery Model
                     </li>
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      <div
-                        class="display-flex flex-align-center"
-                      >
-                        Other
-                      </div>
+                      Other
                     </li>
                     <ul
                       data-testid="other-entry"
@@ -8127,6 +8173,7 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                       <li
                         class="font-sans-md line-height-sans-4"
                       >
+<<<<<<< HEAD
                         California, Indiana
                       </li>
                     </ul>
@@ -8168,6 +8215,25 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                       </li>
                     </ul>
                   </ul>
+=======
+                        <li
+                          class="font-sans-md line-height-sans-4"
+                        >
+                          Other
+                        </li>
+                        <ul
+                          data-testid="other-entry"
+                        >
+                          <li
+                            class="font-sans-md line-height-sans-4"
+                          >
+                            Geography type other
+                          </li>
+                        </ul>
+                      </ul>
+                    </div>
+                  </div>
+>>>>>>> main
                 </div>
               </div>
               <div
@@ -8200,6 +8266,7 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                       <div
                         class="display-flex flex-align-center"
                       >
+<<<<<<< HEAD
                         Other
                       </div>
                     </li>
@@ -8213,6 +8280,30 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                       </li>
                     </ul>
                   </ul>
+=======
+                        <li
+                          class="font-sans-md line-height-sans-4"
+                        >
+                          Beneficiaries
+                        </li>
+                        <li
+                          class="font-sans-md line-height-sans-4"
+                        >
+                          Other
+                        </li>
+                        <ul
+                          data-testid="other-entry"
+                        >
+                          <li
+                            class="font-sans-md line-height-sans-4"
+                          >
+                            Geography applied other
+                          </li>
+                        </ul>
+                      </ul>
+                    </div>
+                  </div>
+>>>>>>> main
                 </div>
               </div>
               <div
@@ -8290,11 +8381,7 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      <div
-                        class="display-flex flex-align-center"
-                      >
-                        Other
-                      </div>
+                      Other
                     </li>
                     <ul
                       data-testid="other-entry"
@@ -8438,20 +8525,12 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      <div
-                        class="display-flex flex-align-center"
-                      >
-                        3021 Affordable Care Act (ACA)
-                      </div>
+                      3021 Affordable Care Act (ACA)
                     </li>
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      <div
-                        class="display-flex flex-align-center"
-                      >
-                        Other
-                      </div>
+                      Other
                     </li>
                     <ul
                       data-testid="other-entry"
@@ -8534,20 +8613,12 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                         <li
                           class="font-sans-md line-height-sans-4"
                         >
-                          <div
-                            class="display-flex flex-align-center"
-                          >
-                            Fraud and Abuse
-                          </div>
+                          Fraud and Abuse
                         </li>
                         <li
                           class="font-sans-md line-height-sans-4"
                         >
-                          <div
-                            class="display-flex flex-align-center"
-                          >
-                            Medicaid
-                          </div>
+                          Medicaid
                         </li>
                       </ul>
                     </div>
@@ -8623,38 +8694,22 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      <div
-                        class="display-flex flex-align-center"
-                      >
-                        Medicaid providers
-                      </div>
+                      Medicaid providers
                     </li>
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      <div
-                        class="display-flex flex-align-center"
-                      >
-                        States
-                      </div>
+                      States
                     </li>
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      <div
-                        class="display-flex flex-align-center"
-                      >
-                        State Medicaid agencies
-                      </div>
+                      State Medicaid agencies
                     </li>
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      <div
-                        class="display-flex flex-align-center"
-                      >
-                        Other
-                      </div>
+                      Other
                     </li>
                     <ul
                       data-testid="other-entry"
@@ -8895,20 +8950,12 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      <div
-                        class="display-flex flex-align-center"
-                      >
-                        Use an application review and scoring tool
-                      </div>
+                      Use an application review and scoring tool
                     </li>
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      <div
-                        class="display-flex flex-align-center"
-                      >
-                        Another CMS component or process will provide support
-                      </div>
+                      Another CMS component or process will provide support
                     </li>
                   </ul>
                 </div>
@@ -8941,6 +8988,108 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                 data-testid="grid"
               >
                 <div
+                  class="read-only-section read-only-section--how-frequently-are-participants-added margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    How frequently are participants added?
+                  </p>
+                  <ul
+                    class="margin-y-0 padding-left-3"
+                  >
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Continually
+                    </li>
+                    <ul
+                      data-testid="other-entry"
+                    >
+                      <li
+                        class="font-sans-md line-height-sans-4"
+                      >
+                        participant added continually
+                      </li>
+                    </ul>
+                  </ul>
+                </div>
+                <div
+                  class="desktop:grid-col-12"
+                  data-testid="grid"
+                >
+                  <div
+                    class="read-only-section read-only-section--notes margin-bottom-3"
+                  >
+                    <p
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                    >
+                      Notes
+                    </p>
+                    <p
+                      class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                    >
+                      My note
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--how-frequently-are-participants-removed margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    How frequently are participants removed?
+                  </p>
+                  <ul
+                    class="margin-y-0 padding-left-3"
+                  >
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Other
+                    </li>
+                    <ul
+                      data-testid="other-entry"
+                    >
+                      <li
+                        class="font-sans-md line-height-sans-4"
+                      >
+                        participant added other
+                      </li>
+                    </ul>
+                  </ul>
+                </div>
+                <div
+                  class="desktop:grid-col-12"
+                  data-testid="grid"
+                >
+                  <div
+                    class="read-only-section read-only-section--notes margin-bottom-3"
+                  >
+                    <p
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                    >
+                      Notes
+                    </p>
+                    <p
+                      class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                    >
+                      Second note
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
                   class="read-only-section read-only-section--how-will-you-communicate-with-participants margin-bottom-3"
                 >
                   <p
@@ -8954,20 +9103,12 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      <div
-                        class="display-flex flex-align-center"
-                      >
-                        Manage ongoing communications with participants using an IT tool
-                      </div>
+                      Manage ongoing communications with participants using an IT tool
                     </li>
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      <div
-                        class="display-flex flex-align-center"
-                      >
-                        Send mass emails to new participants
-                      </div>
+                      Send mass emails to new participants
                     </li>
                   </ul>
                 </div>
@@ -9009,11 +9150,7 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      <div
-                        class="display-flex flex-align-center"
-                      >
-                        Capitation
-                      </div>
+                      Capitation
                     </li>
                   </ul>
                 </div>
@@ -9035,6 +9172,25 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                       Note risk
                     </p>
                   </div>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--notes margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    Notes
+                  </p>
+                  <p
+                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  >
+                    Note risk
+                  </p>
                 </div>
               </div>
               <div
@@ -9188,11 +9344,7 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      <div
-                        class="display-flex flex-align-center"
-                      >
-                        Other
-                      </div>
+                      Other
                     </li>
                     <ul
                       data-testid="other-entry"
@@ -9243,11 +9395,7 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      <div
-                        class="display-flex flex-align-center"
-                      >
-                        CCNs
-                      </div>
+                      CCNs
                     </li>
                   </ul>
                 </div>
@@ -9285,11 +9433,24 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                   >
                     How frequently are providers added?
                   </p>
-                  <p
-                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  <ul
+                    class="margin-y-0 padding-left-3"
                   >
-                    Biannually
-                  </p>
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Other
+                    </li>
+                    <ul
+                      data-testid="other-entry"
+                    >
+                      <li
+                        class="font-sans-md line-height-sans-4"
+                      >
+                        Freq other
+                      </li>
+                    </ul>
+                  </ul>
                 </div>
                 <div
                   class="desktop:grid-col-12"
@@ -9329,11 +9490,7 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      <div
-                        class="display-flex flex-align-center"
-                      >
-                        Add retrospectively (once an interaction happens this year)
-                      </div>
+                      Add retrospectively (once an interaction happens this year)
                     </li>
                   </ul>
                 </div>
@@ -9375,11 +9532,7 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      <div
-                        class="display-flex flex-align-center"
-                      >
-                        Not applicable
-                      </div>
+                      Not applicable
                     </li>
                   </ul>
                 </div>
@@ -9399,6 +9552,57 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                       class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
                     >
                       Note leave
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--how-frequently-are-providers-removed margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    How frequently are providers removed?
+                  </p>
+                  <ul
+                    class="margin-y-0 padding-left-3"
+                  >
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Continually
+                    </li>
+                    <ul
+                      data-testid="other-entry"
+                    >
+                      <li
+                        class="font-sans-md line-height-sans-4"
+                      >
+                        Freq cont
+                      </li>
+                    </ul>
+                  </ul>
+                </div>
+                <div
+                  class="desktop:grid-col-12"
+                  data-testid="grid"
+                >
+                  <div
+                    class="read-only-section read-only-section--notes margin-bottom-3"
+                  >
+                    <p
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                    >
+                      Notes
+                    </p>
+                    <p
+                      class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                    >
+                      Note freq removal
                     </p>
                   </div>
                 </div>
@@ -9491,20 +9695,12 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      <div
-                        class="display-flex flex-align-center"
-                      >
-                        Disease-specific
-                      </div>
+                      Disease-specific
                     </li>
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      <div
-                        class="display-flex flex-align-center"
-                      >
-                        Dually-eligible beneficiaries
-                      </div>
+                      Dually-eligible beneficiaries
                     </li>
                   </ul>
                 </div>
@@ -9741,11 +9937,7 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      <div
-                        class="display-flex flex-align-center"
-                      >
-                        Historical claims
-                      </div>
+                      Historical claims
                     </li>
                   </ul>
                 </div>
@@ -9783,11 +9975,75 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                   >
                     How frequently are beneficiaries added?
                   </p>
-                  <p
-                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  <ul
+                    class="margin-y-0 padding-left-3"
                   >
-                    Annually
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Other
+                    </li>
+                    <ul
+                      data-testid="other-entry"
+                    >
+                      <li
+                        class="font-sans-md line-height-sans-4"
+                      >
+                        Frequency other
+                      </li>
+                    </ul>
+                  </ul>
+                </div>
+                <div
+                  class="desktop:grid-col-12"
+                  data-testid="grid"
+                >
+                  <div
+                    class="read-only-section read-only-section--notes margin-bottom-3"
+                  >
+                    <p
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                    >
+                      Notes
+                    </p>
+                    <p
+                      class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                    >
+                      Note frequency
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--how-frequently-are-beneficiaries-removed margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    How frequently are beneficiaries removed?
                   </p>
+                  <ul
+                    class="margin-y-0 padding-left-3"
+                  >
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Continually
+                    </li>
+                    <ul
+                      data-testid="other-entry"
+                    >
+                      <li
+                        class="font-sans-md line-height-sans-4"
+                      >
+                        Frequency continually
+                      </li>
+                    </ul>
+                  </ul>
                 </div>
                 <div
                   class="desktop:grid-col-12"
@@ -9865,11 +10121,7 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      <div
-                        class="display-flex flex-align-center"
-                      >
-                        Yes
-                      </div>
+                      Yes
                     </li>
                     <ul
                       data-testid="other-entry"
@@ -9933,20 +10185,12 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      <div
-                        class="display-flex flex-align-center"
-                      >
-                        Yes, we will partner with states
-                      </div>
+                      Yes, we will partner with states
                     </li>
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      <div
-                        class="display-flex flex-align-center"
-                      >
-                        Other
-                      </div>
+                      Other
                     </li>
                     <ul
                       data-testid="other-entry"
@@ -9997,29 +10241,17 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      <div
-                        class="display-flex flex-align-center"
-                      >
-                        Beneficiaries
-                      </div>
+                      Beneficiaries
                     </li>
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      <div
-                        class="display-flex flex-align-center"
-                      >
-                        Participants
-                      </div>
+                      Participants
                     </li>
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      <div
-                        class="display-flex flex-align-center"
-                      >
-                        Providers
-                      </div>
+                      Providers
                     </li>
                   </ul>
                 </div>
@@ -10107,20 +10339,12 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                         <li
                           class="font-sans-md line-height-sans-4"
                         >
-                          <div
-                            class="display-flex flex-align-center"
-                          >
-                            May have separate contractors for different implementation functions
-                          </div>
+                          May have separate contractors for different implementation functions
                         </li>
                         <li
                           class="font-sans-md line-height-sans-4"
                         >
-                          <div
-                            class="display-flex flex-align-center"
-                          >
-                            Other
-                          </div>
+                          Other
                         </li>
                         <ul
                           data-testid="other-entry"
@@ -10506,20 +10730,12 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      <div
-                        class="display-flex flex-align-center"
-                      >
-                        Part A
-                      </div>
+                      Part A
                     </li>
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      <div
-                        class="display-flex flex-align-center"
-                      >
-                        Part B
-                      </div>
+                      Part B
                     </li>
                   </ul>
                 </div>
@@ -11077,20 +11293,12 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      <div
-                        class="display-flex flex-align-center"
-                      >
-                        Interrupted time series
-                      </div>
+                      Interrupted time series
                     </li>
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      <div
-                        class="display-flex flex-align-center"
-                      >
-                        Other
-                      </div>
+                      Other
                     </li>
                     <ul
                       data-testid="other-entry"
@@ -11141,20 +11349,12 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      <div
-                        class="display-flex flex-align-center"
-                      >
-                        Yes, for evaluation
-                      </div>
+                      Yes, for evaluation
                     </li>
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      <div
-                        class="display-flex flex-align-center"
-                      >
-                        Other
-                      </div>
+                      Other
                     </li>
                     <ul
                       data-testid="other-entry"
@@ -11205,29 +11405,17 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      <div
-                        class="display-flex flex-align-center"
-                      >
-                        Clinical data
-                      </div>
+                      Clinical data
                     </li>
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      <div
-                        class="display-flex flex-align-center"
-                      >
-                        Medicare claims
-                      </div>
+                      Medicare claims
                     </li>
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      <div
-                        class="display-flex flex-align-center"
-                      >
-                        Other
-                      </div>
+                      Other
                     </li>
                     <ul
                       data-testid="other-entry"
@@ -11278,29 +11466,17 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      <div
-                        class="display-flex flex-align-center"
-                      >
-                        Baseline/historical data
-                      </div>
+                      Baseline/historical data
                     </li>
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      <div
-                        class="display-flex flex-align-center"
-                      >
-                        Beneficiary-level data
-                      </div>
+                      Beneficiary-level data
                     </li>
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      <div
-                        class="display-flex flex-align-center"
-                      >
-                        Other
-                      </div>
+                      Other
                     </li>
                     <ul
                       data-testid="other-entry"
@@ -11570,12 +11746,11 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      <div
-                        class="display-flex flex-align-center"
-                      >
-                        Daily
-                      </div>
+                      Monthly
                     </li>
+                    <ul
+                      data-testid="other-entry"
+                    />
                   </ul>
                 </div>
                 <div
@@ -11635,12 +11810,11 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      <div
-                        class="display-flex flex-align-center"
-                      >
-                        Monthly
-                      </div>
+                      Annually
                     </li>
+                    <ul
+                      data-testid="other-entry"
+                    />
                   </ul>
                 </div>
                 <div
@@ -11701,6 +11875,38 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                   </div>
                 </div>
               </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--how-frequently-does-quality-reporting-happen margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    How frequently does quality reporting happen?
+                  </p>
+                  <ul
+                    class="margin-y-0 padding-left-3"
+                  >
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Other
+                    </li>
+                    <ul
+                      data-testid="other-entry"
+                    >
+                      <li
+                        class="font-sans-md line-height-sans-4"
+                      >
+                        Other frequency
+                      </li>
+                    </ul>
+                  </ul>
+                </div>
+              </div>
             </div>
             <div>
               <div
@@ -11721,29 +11927,17 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      <div
-                        class="display-flex flex-align-center"
-                      >
-                        We plan to use an IT platform (Connect)
-                      </div>
+                      We plan to use an IT platform (Connect)
                     </li>
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      <div
-                        class="display-flex flex-align-center"
-                      >
-                        No, we will not have a learning strategy
-                      </div>
+                      No, we will not have a learning strategy
                     </li>
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      <div
-                        class="display-flex flex-align-center"
-                      >
-                        Other
-                      </div>
+                      Other
                     </li>
                     <ul
                       data-testid="other-entry"
@@ -11845,25 +12039,11 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      <div
-                        class="display-flex flex-align-center"
-                      >
-                        Patient Protection Affordable Care Act (Sec 3021)
-                      </div>
+                      Patient Protection Affordable Care Act (Sec 3021)
                     </li>
                     <ul
                       data-testid="other-entry"
-                    >
-                      <li
-                        class="font-sans-md line-height-sans-4 "
-                      >
-                        <em
-                          class="text-base"
-                        >
-                          No additional information specified
-                        </em>
-                      </li>
-                    </ul>
+                    />
                   </ul>
                 </div>
               </div>
@@ -11904,25 +12084,11 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      <div
-                        class="display-flex flex-align-center"
-                      >
-                        Patient Protection Affordable Care Act (Sec 3021)
-                      </div>
+                      Patient Protection Affordable Care Act (Sec 3021)
                     </li>
                     <ul
                       data-testid="other-entry"
-                    >
-                      <li
-                        class="font-sans-md line-height-sans-4 "
-                      >
-                        <em
-                          class="text-base"
-                        >
-                          No additional information specified
-                        </em>
-                      </li>
-                    </ul>
+                    />
                   </ul>
                 </div>
               </div>
@@ -11963,11 +12129,7 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      <div
-                        class="display-flex flex-align-center"
-                      >
-                        Beneficiaries
-                      </div>
+                      Beneficiaries
                     </li>
                   </ul>
                 </div>
@@ -12009,11 +12171,7 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      <div
-                        class="display-flex flex-align-center"
-                      >
-                        Claims-Based Payments
-                      </div>
+                      Claims-Based Payments
                     </li>
                   </ul>
                 </div>
@@ -12062,11 +12220,7 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      <div
-                        class="display-flex flex-align-center"
-                      >
-                        Adjustments to FFS payments
-                      </div>
+                      Adjustments to FFS payments
                     </li>
                   </ul>
                 </div>
@@ -12548,12 +12702,11 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      <div
-                        class="display-flex flex-align-center"
-                      >
-                        Semiannually
-                      </div>
+                      Semi-annually
                     </li>
+                    <ul
+                      data-testid="other-entry"
+                    />
                   </ul>
                 </div>
                 <div
@@ -12650,6 +12803,57 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                       class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
                     >
                       Anticipate note
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--how-often-are-payments-reconciled margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    How often are payments reconciled?
+                  </p>
+                  <ul
+                    class="margin-y-0 padding-left-3"
+                  >
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Continually
+                    </li>
+                    <ul
+                      data-testid="other-entry"
+                    >
+                      <li
+                        class="font-sans-md line-height-sans-4"
+                      >
+                        Continual Frequency
+                      </li>
+                    </ul>
+                  </ul>
+                </div>
+                <div
+                  class="desktop:grid-col-12"
+                  data-testid="grid"
+                >
+                  <div
+                    class="read-only-section read-only-section--notes margin-bottom-3"
+                  >
+                    <p
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                    >
+                      Notes
+                    </p>
+                    <p
+                      class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                    >
+                      Reconciliation note
                     </p>
                   </div>
                 </div>

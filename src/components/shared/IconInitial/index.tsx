@@ -55,7 +55,7 @@ const IconInitial = ({
           {teamRoles &&
             modelLeadFirst!
               .map(role => {
-                return collaboratorsT(`teamRole.options.${role}`);
+                return collaboratorsT(`teamRoles.options.${role}`);
               })
               .join(', ')}
         </p>

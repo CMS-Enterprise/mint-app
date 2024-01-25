@@ -88,32 +88,38 @@ type PlanOpsEvalAndLearning struct {
 	ShareCclfDataNote             *string        `json:"shareCclfDataNote" db:"share_cclf_data_note"`
 
 	//Page 7
-	SendFilesBetweenCcw                          *bool   `json:"sendFilesBetweenCcw" db:"send_files_between_ccw" statusWeight:"1"`
-	SendFilesBetweenCcwNote                      *string `json:"sendFilesBetweenCcwNote" db:"send_files_between_ccw_note"`
-	AppToSendFilesToKnown                        *bool   `json:"appToSendFilesToKnown" db:"app_to_send_files_to_known" statusWeight:"1"`
-	AppToSendFilesToWhich                        *string `json:"appToSendFilesToWhich" db:"app_to_send_files_to_which"`
-	AppToSendFilesToNote                         *string `json:"appToSendFilesToNote" db:"app_to_send_files_to_note"`
-	UseCcwForFileDistribiutionToParticipants     *bool   `json:"useCcwForFileDistribiutionToParticipants" db:"use_ccw_for_file_distribiution_to_participants" statusWeight:"1"`
-	UseCcwForFileDistribiutionToParticipantsNote *string `json:"useCcwForFileDistribiutionToParticipantsNote" db:"use_ccw_for_file_distribiution_to_participants_note"`
-	DevelopNewQualityMeasures                    *bool   `json:"developNewQualityMeasures" db:"develop_new_quality_measures" statusWeight:"1"`
-	DevelopNewQualityMeasuresNote                *string `json:"developNewQualityMeasuresNote" db:"develop_new_quality_measures_note"`
-	QualityPerformanceImpactsPayment             *bool   `json:"qualityPerformanceImpactsPayment" db:"quality_performance_impacts_payment" statusWeight:"1"`
-	QualityPerformanceImpactsPaymentNote         *string `json:"qualityPerformanceImpactsPaymentNote" db:"quality_performance_impacts_payment_note"`
+	SendFilesBetweenCcw                          *bool           `json:"sendFilesBetweenCcw" db:"send_files_between_ccw" statusWeight:"1"`
+	SendFilesBetweenCcwNote                      *string         `json:"sendFilesBetweenCcwNote" db:"send_files_between_ccw_note"`
+	AppToSendFilesToKnown                        *bool           `json:"appToSendFilesToKnown" db:"app_to_send_files_to_known" statusWeight:"1"`
+	AppToSendFilesToWhich                        *string         `json:"appToSendFilesToWhich" db:"app_to_send_files_to_which"`
+	AppToSendFilesToNote                         *string         `json:"appToSendFilesToNote" db:"app_to_send_files_to_note"`
+	UseCcwForFileDistribiutionToParticipants     *bool           `json:"useCcwForFileDistribiutionToParticipants" db:"use_ccw_for_file_distribiution_to_participants" statusWeight:"1"`
+	UseCcwForFileDistribiutionToParticipantsNote *string         `json:"useCcwForFileDistribiutionToParticipantsNote" db:"use_ccw_for_file_distribiution_to_participants_note"`
+	DevelopNewQualityMeasures                    *bool           `json:"developNewQualityMeasures" db:"develop_new_quality_measures" statusWeight:"1"`
+	DevelopNewQualityMeasuresNote                *string         `json:"developNewQualityMeasuresNote" db:"develop_new_quality_measures_note"`
+	QualityPerformanceImpactsPayment             *YesNoOtherType `json:"qualityPerformanceImpactsPayment" db:"quality_performance_impacts_payment" statusWeight:"1"`
+	QualityPerformanceImpactsPaymentOther        *string         `json:"qualityPerformanceImpactsPaymentOther" db:"quality_performance_impacts_payment_other"`
+	QualityPerformanceImpactsPaymentNote         *string         `json:"qualityPerformanceImpactsPaymentNote" db:"quality_performance_impacts_payment_note"`
 
 	//Page 8
-	DataSharingStarts            *DataStartsType `json:"dataSharingStarts" db:"data_sharing_starts" statusWeight:"1"`
-	DataSharingStartsOther       *string         `json:"dataSharingStartsOther" db:"data_sharing_starts_other"`
-	DataSharingFrequency         pq.StringArray  `json:"dataSharingFrequency" db:"data_sharing_frequency"`
-	DataSharingFrequencyOther    *string         `json:"dataSharingFrequencyOther" db:"data_sharing_frequency_other"`
-	DataSharingStartsNote        *string         `json:"dataSharingStartsNote" db:"data_sharing_starts_note"`
-	DataCollectionStarts         *DataStartsType `json:"dataCollectionStarts" db:"data_collection_starts" statusWeight:"1"`
-	DataCollectionStartsOther    *string         `json:"dataCollectionStartsOther" db:"data_collection_starts_other"`
-	DataCollectionFrequency      pq.StringArray  `json:"dataCollectionFrequency" db:"data_collection_frequency"`
-	DataCollectionFrequencyOther *string         `json:"dataCollectionFrequencyOther" db:"data_collection_frequency_other"`
-	DataCollectionFrequencyNote  *string         `json:"dataCollectionFrequencyNote" db:"data_collection_frequency_note"`
-	QualityReportingStarts       *DataStartsType `json:"qualityReportingStarts" db:"quality_reporting_starts" statusWeight:"1"`
-	QualityReportingStartsOther  *string         `json:"qualityReportingStartsOther" db:"quality_reporting_starts_other"`
-	QualityReportingStartsNote   *string         `json:"qualityReportingStartsNote" db:"quality_reporting_starts_note"`
+	DataSharingStarts                    *DataStartsType `json:"dataSharingStarts" db:"data_sharing_starts" statusWeight:"1"`
+	DataSharingStartsOther               *string         `json:"dataSharingStartsOther" db:"data_sharing_starts_other"`
+	DataSharingFrequency                 pq.StringArray  `json:"dataSharingFrequency" db:"data_sharing_frequency"`
+	DataSharingFrequencyContinually      *string         `json:"dataSharingFrequencyContinually" db:"data_sharing_frequency_continually"`
+	DataSharingFrequencyOther            *string         `json:"dataSharingFrequencyOther" db:"data_sharing_frequency_other"`
+	DataSharingStartsNote                *string         `json:"dataSharingStartsNote" db:"data_sharing_starts_note"`
+	DataCollectionStarts                 *DataStartsType `json:"dataCollectionStarts" db:"data_collection_starts" statusWeight:"1"`
+	DataCollectionStartsOther            *string         `json:"dataCollectionStartsOther" db:"data_collection_starts_other"`
+	DataCollectionFrequency              pq.StringArray  `json:"dataCollectionFrequency" db:"data_collection_frequency"`
+	DataCollectionFrequencyContinually   *string         `json:"dataCollectionFrequencyContinually" db:"data_collection_frequency_continually"`
+	DataCollectionFrequencyOther         *string         `json:"dataCollectionFrequencyOther" db:"data_collection_frequency_other"`
+	DataCollectionFrequencyNote          *string         `json:"dataCollectionFrequencyNote" db:"data_collection_frequency_note"`
+	QualityReportingStarts               *DataStartsType `json:"qualityReportingStarts" db:"quality_reporting_starts" statusWeight:"1"`
+	QualityReportingStartsOther          *string         `json:"qualityReportingStartsOther" db:"quality_reporting_starts_other"`
+	QualityReportingStartsNote           *string         `json:"qualityReportingStartsNote" db:"quality_reporting_starts_note"`
+	QualityReportingFrequency            pq.StringArray  `json:"qualityReportingFrequency" db:"quality_reporting_frequency"`
+	QualityReportingFrequencyContinually *string         `json:"qualityReportingFrequencyContinually" db:"quality_reporting_frequency_continually"`
+	QualityReportingFrequencyOther       *string         `json:"qualityReportingFrequencyOther" db:"quality_reporting_frequency_other"`
 
 	//Page 9
 	ModelLearningSystems      pq.StringArray `json:"modelLearningSystems" db:"model_learning_systems"`
@@ -154,6 +160,16 @@ type DataFullTimeOrIncrementalType string
 const (
 	DataFullTime    DataFullTimeOrIncrementalType = "FULL_TIME"
 	DataIncremental DataFullTimeOrIncrementalType = "INCREMENTAL"
+)
+
+// YesNoOtherType represents the possible YESNOOTHERTYPE options
+type YesNoOtherType string
+
+// These constants represent the choices for YESNOOTHERTYPE
+const (
+	YesNoOtherTypeYes   YesNoOtherType = "YES"
+	YesNoOtherTypeNo    YesNoOtherType = "NO"
+	YesNoOtherTypeOther YesNoOtherType = "OTHER"
 )
 
 // NewPlanOpsEvalAndLearning returns a new ops Eval and Learning object

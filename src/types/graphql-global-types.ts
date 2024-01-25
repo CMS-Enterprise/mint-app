@@ -33,17 +33,6 @@ export enum AlternativePaymentModelType {
   REGULAR = "REGULAR",
 }
 
-export enum AnticipatedPaymentFrequencyType {
-  ANNUALLY = "ANNUALLY",
-  BIANNUALLY = "BIANNUALLY",
-  DAILY = "DAILY",
-  MONTHLY = "MONTHLY",
-  OTHER = "OTHER",
-  QUARTERLY = "QUARTERLY",
-  SEMIMONTHLY = "SEMIMONTHLY",
-  WEEKLY = "WEEKLY",
-}
-
 export enum AuthorityAllowance {
   ACA = "ACA",
   CONGRESSIONALLY_MANDATED = "CONGRESSIONALLY_MANDATED",
@@ -145,18 +134,6 @@ export enum DataForMonitoringType {
   SITE_VISITS = "SITE_VISITS",
 }
 
-export enum DataFrequencyType {
-  ANNUALLY = "ANNUALLY",
-  BIANNUALLY = "BIANNUALLY",
-  DAILY = "DAILY",
-  MONTHLY = "MONTHLY",
-  NOT_PLANNING_TO_DO_THIS = "NOT_PLANNING_TO_DO_THIS",
-  OTHER = "OTHER",
-  QUARTERLY = "QUARTERLY",
-  SEMI_MONTHLY = "SEMI_MONTHLY",
-  WEEKLY = "WEEKLY",
-}
-
 export enum DataFullTimeOrIncrementalType {
   FULL_TIME = "FULL_TIME",
   INCREMENTAL = "INCREMENTAL",
@@ -221,11 +198,11 @@ export enum EvaluationApproachType {
 
 export enum FrequencyType {
   ANNUALLY = "ANNUALLY",
-  BIANNUALLY = "BIANNUALLY",
+  CONTINUALLY = "CONTINUALLY",
   MONTHLY = "MONTHLY",
   OTHER = "OTHER",
   QUARTERLY = "QUARTERLY",
-  ROLLING = "ROLLING",
+  SEMIANNUALLY = "SEMIANNUALLY",
 }
 
 export enum FundingSource {
@@ -263,6 +240,8 @@ export enum GeographyType {
 
 export enum KeyCharacteristic {
   EPISODE_BASED = "EPISODE_BASED",
+  MEDICAID_MODEL = "MEDICAID_MODEL",
+  MEDICARE_FFS_MODEL = "MEDICARE_FFS_MODEL",
   OTHER = "OTHER",
   PART_C = "PART_C",
   PART_D = "PART_D",
@@ -689,6 +668,7 @@ export enum TaskStatusInput {
 
 export enum TeamRole {
   CM_FFS_COUNTERPART = "CM_FFS_COUNTERPART",
+  COR = "COR",
   EVALUATION = "EVALUATION",
   IT_LEAD = "IT_LEAD",
   LEADERSHIP = "LEADERSHIP",
@@ -710,6 +690,12 @@ export enum WaiverType {
   FRAUD_ABUSE = "FRAUD_ABUSE",
   MEDICAID = "MEDICAID",
   PROGRAM_PAYMENT = "PROGRAM_PAYMENT",
+}
+
+export enum YesNoOtherType {
+  NO = "NO",
+  OTHER = "OTHER",
+  YES = "YES",
 }
 
 export enum YesNoType {
@@ -806,9 +792,14 @@ export interface PlanBeneficiariesChanges {
   beneficiarySelectionMethod?: SelectionMethodType[] | null;
   beneficiarySelectionOther?: string | null;
   beneficiarySelectionNote?: string | null;
-  beneficiarySelectionFrequency?: FrequencyType | null;
+  beneficiarySelectionFrequency?: FrequencyType[] | null;
+  beneficiarySelectionFrequencyContinually?: string | null;
   beneficiarySelectionFrequencyOther?: string | null;
   beneficiarySelectionFrequencyNote?: string | null;
+  beneficiaryRemovalFrequency?: FrequencyType[] | null;
+  beneficiaryRemovalFrequencyContinually?: string | null;
+  beneficiaryRemovalFrequencyOther?: string | null;
+  beneficiaryRemovalFrequencyNote?: string | null;
   beneficiaryOverlap?: OverlapType | null;
   beneficiaryOverlapNote?: string | null;
   precedenceRules?: YesNoType[] | null;
@@ -818,6 +809,23 @@ export interface PlanBeneficiariesChanges {
   status?: TaskStatusInput | null;
 }
 
+export interface PlanCRChanges {
+  idNumber?: string | null;
+  dateInitiated?: Time | null;
+  dateImplemented?: Time | null;
+  title?: string | null;
+  note?: string | null;
+}
+
+export interface PlanCRCreateInput {
+  modelPlanID: UUID;
+  idNumber: string;
+  dateInitiated: Time;
+  dateImplemented: Time;
+  title: string;
+  note?: string | null;
+}
+
 /**
  * PlanCollaboratorCreateInput represents the data required to create a collaborator on a plan
  */
@@ -825,21 +833,6 @@ export interface PlanCollaboratorCreateInput {
   modelPlanID: UUID;
   userName: string;
   teamRoles: TeamRole[];
-}
-
-export interface PlanCrTdlChanges {
-  idNumber?: string | null;
-  dateInitiated?: Time | null;
-  title?: string | null;
-  note?: string | null;
-}
-
-export interface PlanCrTdlCreateInput {
-  modelPlanID: UUID;
-  idNumber: string;
-  dateInitiated: Time;
-  title: string;
-  note?: string | null;
 }
 
 /**
@@ -1020,21 +1013,27 @@ export interface PlanOpsEvalAndLearningChanges {
   useCcwForFileDistribiutionToParticipantsNote?: string | null;
   developNewQualityMeasures?: boolean | null;
   developNewQualityMeasuresNote?: string | null;
-  qualityPerformanceImpactsPayment?: boolean | null;
+  qualityPerformanceImpactsPayment?: YesNoOtherType | null;
+  qualityPerformanceImpactsPaymentOther?: string | null;
   qualityPerformanceImpactsPaymentNote?: string | null;
   dataSharingStarts?: DataStartsType | null;
   dataSharingStartsOther?: string | null;
-  dataSharingFrequency?: DataFrequencyType[] | null;
+  dataSharingFrequency?: FrequencyType[] | null;
+  dataSharingFrequencyContinually?: string | null;
   dataSharingFrequencyOther?: string | null;
   dataSharingStartsNote?: string | null;
   dataCollectionStarts?: DataStartsType | null;
   dataCollectionStartsOther?: string | null;
-  dataCollectionFrequency?: DataFrequencyType[] | null;
+  dataCollectionFrequency?: FrequencyType[] | null;
+  dataCollectionFrequencyContinually?: string | null;
   dataCollectionFrequencyOther?: string | null;
   dataCollectionFrequencyNote?: string | null;
   qualityReportingStarts?: DataStartsType | null;
   qualityReportingStartsOther?: string | null;
   qualityReportingStartsNote?: string | null;
+  qualityReportingFrequency?: FrequencyType[] | null;
+  qualityReportingFrequencyContinually?: string | null;
+  qualityReportingFrequencyOther?: string | null;
   modelLearningSystems?: ModelLearningSystemType[] | null;
   modelLearningSystemsOther?: string | null;
   modelLearningSystemsNote?: string | null;
@@ -1066,6 +1065,14 @@ export interface PlanParticipantsAndProvidersChanges {
   selectionMethod?: ParticipantSelectionType[] | null;
   selectionOther?: string | null;
   selectionNote?: string | null;
+  participantAddedFrequency?: FrequencyType[] | null;
+  participantAddedFrequencyContinually?: string | null;
+  participantAddedFrequencyOther?: string | null;
+  participantAddedFrequencyNote?: string | null;
+  participantRemovedFrequency?: FrequencyType[] | null;
+  participantRemovedFrequencyContinually?: string | null;
+  participantRemovedFrequencyOther?: string | null;
+  participantRemovedFrequencyNote?: string | null;
   communicationMethod?: ParticipantCommunicationType[] | null;
   communicationMethodOther?: string | null;
   communicationNote?: string | null;
@@ -1084,7 +1091,8 @@ export interface PlanParticipantsAndProvidersChanges {
   participantsIds?: ParticipantsIDType[] | null;
   participantsIdsOther?: string | null;
   participantsIDSNote?: string | null;
-  providerAdditionFrequency?: FrequencyType | null;
+  providerAdditionFrequency?: FrequencyType[] | null;
+  providerAdditionFrequencyContinually?: string | null;
   providerAdditionFrequencyOther?: string | null;
   providerAdditionFrequencyNote?: string | null;
   providerAddMethod?: ProviderAddType[] | null;
@@ -1093,6 +1101,10 @@ export interface PlanParticipantsAndProvidersChanges {
   providerLeaveMethod?: ProviderLeaveType[] | null;
   providerLeaveMethodOther?: string | null;
   providerLeaveMethodNote?: string | null;
+  providerRemovalFrequency?: FrequencyType[] | null;
+  providerRemovalFrequencyContinually?: string | null;
+  providerRemovalFrequencyOther?: string | null;
+  providerRemovalFrequencyNote?: string | null;
   providerOverlap?: OverlapType | null;
   providerOverlapHierarchy?: string | null;
   providerOverlapNote?: string | null;
@@ -1152,16 +1164,36 @@ export interface PlanPaymentsChanges {
   canParticipantsSelectBetweenPaymentMechanisms?: boolean | null;
   canParticipantsSelectBetweenPaymentMechanismsHow?: string | null;
   canParticipantsSelectBetweenPaymentMechanismsNote?: string | null;
-  anticipatedPaymentFrequency?: AnticipatedPaymentFrequencyType[] | null;
+  anticipatedPaymentFrequency?: FrequencyType[] | null;
+  anticipatedPaymentFrequencyContinually?: string | null;
   anticipatedPaymentFrequencyOther?: string | null;
   anticipatedPaymentFrequencyNote?: string | null;
   willRecoverPayments?: boolean | null;
   willRecoverPaymentsNote?: string | null;
   anticipateReconcilingPaymentsRetrospectively?: boolean | null;
   anticipateReconcilingPaymentsRetrospectivelyNote?: string | null;
+  paymentReconciliationFrequency?: FrequencyType[] | null;
+  paymentReconciliationFrequencyContinually?: string | null;
+  paymentReconciliationFrequencyOther?: string | null;
+  paymentReconciliationFrequencyNote?: string | null;
   paymentStartDate?: Time | null;
   paymentStartDateNote?: string | null;
   status?: TaskStatusInput | null;
+}
+
+export interface PlanTDLChanges {
+  idNumber?: string | null;
+  dateInitiated?: Time | null;
+  title?: string | null;
+  note?: string | null;
+}
+
+export interface PlanTDLCreateInput {
+  modelPlanID: UUID;
+  idNumber: string;
+  dateInitiated: Time;
+  title: string;
+  note?: string | null;
 }
 
 export interface ReportAProblemInput {
