@@ -7,8 +7,19 @@
 // GraphQL query operation: GetCRTDLs
 // ====================================================
 
-export interface GetCRTDLs_modelPlan_crTdls {
-  __typename: "PlanCrTdl";
+export interface GetCRTDLs_modelPlan_crs {
+  __typename: "PlanCR";
+  id: UUID;
+  modelPlanID: UUID;
+  title: string;
+  idNumber: string;
+  dateInitiated: Time;
+  dateImplemented: Time | null;
+  note: string | null;
+}
+
+export interface GetCRTDLs_modelPlan_tdls {
+  __typename: "PlanTDL";
   id: UUID;
   modelPlanID: UUID;
   title: string;
@@ -22,7 +33,8 @@ export interface GetCRTDLs_modelPlan {
   id: UUID;
   modelName: string;
   isCollaborator: boolean;
-  crTdls: GetCRTDLs_modelPlan_crTdls[];
+  crs: GetCRTDLs_modelPlan_crs[];
+  tdls: GetCRTDLs_modelPlan_tdls[];
 }
 
 export interface GetCRTDLs {

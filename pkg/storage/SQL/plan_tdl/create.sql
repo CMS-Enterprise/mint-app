@@ -1,4 +1,4 @@
-INSERT INTO plan_cr_tdl(
+INSERT INTO plan_tdl(
     id,
     model_plan_id,
     id_number,

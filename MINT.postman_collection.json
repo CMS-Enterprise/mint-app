@@ -814,14 +814,35 @@
 			"name": "CRs and TDLs",
 			"item": [
 				{
-					"name": "Create CR/TDL",
+					"name": "Create CR",
 					"request": {
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation createPlanCrTdl ($input: PlanCrTdlCreateInput!) {\n    createPlanCrTdl (input: $input) {\n        id\n        modelPlanID\n        idNumber\n        dateInitiated\n        title\n        note\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n    }\n}",
+								"query": "mutation createPlanCR ($input: PlanCRCreateInput!) {\n    createPlanCR (input: $input) {\n        id\n        modelPlanID\n        idNumber\n        dateInitiated\n        dateImplemented\n        title\n        note\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n    }\n}",
+								"variables": "{\n  \"input\": {\n    \"modelPlanID\": \"\",\n    \"idNumber\": \"\",\n    \"dateInitiated\": \"\",\n    \"dateImplemented\": \"\",\n    \"title\": \"\",\n    \"note\": \"\"\n  }\n}"
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create TDL",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation createPlanTDL ($input: PlanTDLCreateInput!) {\n    createPlanTDL (input: $input) {\n        id\n        modelPlanID\n        idNumber\n        dateInitiated\n        title\n        note\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n    }\n}",
 								"variables": "{\n  \"input\": {\n    \"modelPlanID\": \"\",\n    \"idNumber\": \"\",\n    \"dateInitiated\": \"\",\n    \"title\": \"\",\n    \"note\": \"\"\n  }\n}"
 							}
 						},
@@ -835,14 +856,14 @@
 					"response": []
 				},
 				{
-					"name": "Get CR/TDL by ID",
+					"name": "Get CR by ID",
 					"request": {
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "query crTdl ($id: UUID!) {\n    crTdl (id: $id) {\n        id\n        modelPlanID\n        idNumber\n        dateInitiated\n        title\n        note\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n    }\n}",
+								"query": "query planCR ($id: UUID!) {\n    planCR (id: $id) {\n        id\n        modelPlanID\n        idNumber\n        dateInitiated\n        dateImplemented\n        title\n        note\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n    }\n}",
 								"variables": "{\n  \"id\": \"\"\n}"
 							}
 						},
@@ -856,14 +877,56 @@
 					"response": []
 				},
 				{
-					"name": "Update CR/TDL",
+					"name": "Get TDL by ID",
 					"request": {
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation updatePlanCrTdl ($id: UUID!, $changes: PlanCrTdlChanges!) {\n    updatePlanCrTdl (id: $id, changes: $changes) {\n        id\n        modelPlanID\n        idNumber\n        dateInitiated\n        title\n        note\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n    }\n}",
+								"query": "query planTDL ($id: UUID!) {\n    planTDL (id: $id) {\n        id\n        modelPlanID\n        idNumber\n        dateInitiated\n        title\n        note\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n    }\n}",
+								"variables": "{\n  \"id\": \"\"\n}"
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update CR",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation updatePlanCR ($id: UUID!, $changes: PlanCRChanges!) {\n    updatePlanCR (id: $id, changes: $changes) {\n        id\n        modelPlanID\n        idNumber\n        dateInitiated\n        dateImplemented\n        title\n        note\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n    }\n}",
+								"variables": "{\n  \"id\": \"\",\n  \"changes\": {\n    \"idNumber\": \"\",\n    \"dateInitiated\": \"\",\n    \"dateImplemented\": \"\",\n    \"title\": \"\",\n    \"note\": \"\"\n  }\n}"
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update TDL",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation updatePlanTDL ($id: UUID!, $changes: PlanTDLChanges!) {\n    updatePlanTDL (id: $id, changes: $changes) {\n        id\n        modelPlanID\n        idNumber\n        dateInitiated\n        title\n        note\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n    }\n}",
 								"variables": "{\n  \"id\": \"\",\n  \"changes\": {\n    \"idNumber\": \"\",\n    \"dateInitiated\": \"\",\n    \"title\": \"\",\n    \"note\": \"\"\n  }\n}"
 							}
 						},
@@ -877,14 +940,35 @@
 					"response": []
 				},
 				{
-					"name": "Delete CR/TDL",
+					"name": "Delete CR",
 					"request": {
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation deletePlanCrTdl ($id: UUID!) {\n    deletePlanCrTdl (id: $id) {\n        id\n        modelPlanID\n        idNumber\n        dateInitiated\n        title\n        note\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n    }\n}",
+								"query": "mutation deletePlanCR ($id: UUID!) {\n    deletePlanCR (id: $id) {\n        id\n        modelPlanID\n        idNumber\n        dateInitiated\n        dateImplemented\n        title\n        note\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n    }\n}",
+								"variables": "{\n  \"id\": \"\"\n}"
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete TDL",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation deletePlanTDL ($id: UUID!) {\n    deletePlanTDL (id: $id) {\n        id\n        modelPlanID\n        idNumber\n        dateInitiated\n        title\n        note\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n    }\n}",
 								"variables": "{\n  \"id\": \"\"\n}"
 							}
 						},

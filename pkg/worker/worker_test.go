@@ -122,17 +122,18 @@ func (suite *WorkerSuite) createPlanCollaborator(
 	return collaborator
 }
 
-func (suite *WorkerSuite) createPlanCrTdl(mp *models.ModelPlan, idNumber string, dateInitated time.Time, title string, note string) *models.PlanCrTdl {
-	input := &model.PlanCrTdlCreateInput{
-		ModelPlanID:   mp.ID,
-		IDNumber:      idNumber,
-		DateInitiated: dateInitated,
-		Title:         title,
-		Note:          &note,
+func (suite *WorkerSuite) createPlanCR(mp *models.ModelPlan, idNumber string, dateInitated time.Time, dateImplemented time.Time, title string, note string) *models.PlanCR {
+	input := &model.PlanCRCreateInput{
+		ModelPlanID:     mp.ID,
+		IDNumber:        idNumber,
+		DateInitiated:   dateInitated,
+		DateImplemented: dateImplemented,
+		Title:           title,
+		Note:            &note,
 	}
-	crTdl, err := resolvers.PlanCrTdlCreate(suite.testConfigs.Logger, input, suite.testConfigs.Principal, suite.testConfigs.Store)
+	cr, err := resolvers.PlanCRCreate(suite.testConfigs.Logger, input, suite.testConfigs.Principal, suite.testConfigs.Store)
 	suite.NoError(err)
-	return crTdl
+	return cr
 }
 
 func (suite *WorkerSuite) createPlanDocument(mp *models.ModelPlan) *models.PlanDocument {

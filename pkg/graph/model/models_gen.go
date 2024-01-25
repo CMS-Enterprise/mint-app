@@ -54,19 +54,20 @@ type PageParams struct {
 	Limit  int `json:"limit"`
 }
 
+type PlanCRCreateInput struct {
+	ModelPlanID     uuid.UUID `json:"modelPlanID"`
+	IDNumber        string    `json:"idNumber"`
+	DateInitiated   time.Time `json:"dateInitiated"`
+	DateImplemented time.Time `json:"dateImplemented"`
+	Title           string    `json:"title"`
+	Note            *string   `json:"note,omitempty"`
+}
+
 // PlanCollaboratorCreateInput represents the data required to create a collaborator on a plan
 type PlanCollaboratorCreateInput struct {
 	ModelPlanID uuid.UUID         `json:"modelPlanID"`
 	UserName    string            `json:"userName"`
 	TeamRoles   []models.TeamRole `json:"teamRoles"`
-}
-
-type PlanCrTdlCreateInput struct {
-	ModelPlanID   uuid.UUID `json:"modelPlanID"`
-	IDNumber      string    `json:"idNumber"`
-	DateInitiated time.Time `json:"dateInitiated"`
-	Title         string    `json:"title"`
-	Note          *string   `json:"note,omitempty"`
 }
 
 // PlanDiscussionCreateInput represents the necessary fields to create a plan discussion
@@ -96,6 +97,14 @@ type PlanDocumentLinkInput struct {
 	Restricted           bool                `json:"restricted"`
 	OtherTypeDescription *string             `json:"otherTypeDescription,omitempty"`
 	OptionalNotes        *string             `json:"optionalNotes,omitempty"`
+}
+
+type PlanTDLCreateInput struct {
+	ModelPlanID   uuid.UUID `json:"modelPlanID"`
+	IDNumber      string    `json:"idNumber"`
+	DateInitiated time.Time `json:"dateInitiated"`
+	Title         string    `json:"title"`
+	Note          *string   `json:"note,omitempty"`
 }
 
 type PrepareForClearance struct {
