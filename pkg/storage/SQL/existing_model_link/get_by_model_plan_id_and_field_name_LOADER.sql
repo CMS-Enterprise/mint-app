@@ -20,4 +20,4 @@ SELECT
     link.modified_dts
 
 FROM QUERIED_IDS AS qIDs
-INNER JOIN existing_model_link AS link ON link.model_plan_id = qIDs.model_plan_id AND link.field_name = qIDS.field_name;
+INNER JOIN existing_model_link AS link ON link.model_plan_id = qIDs.model_plan_id AND link.field_name = qIDs.field_name;
