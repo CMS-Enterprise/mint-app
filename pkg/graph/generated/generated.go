@@ -801,6 +801,9 @@ type ComplexityRoot struct {
 		CanParticipantsSelectBetweenPaymentMechanismsNote func(childComplexity int) int
 		ChangesMedicarePhysicianFeeSchedule               func(childComplexity int) int
 		ChangesMedicarePhysicianFeeScheduleNote           func(childComplexity int) int
+		ClaimsProcessingPrecedence                        func(childComplexity int) int
+		ClaimsProcessingPrecedenceNote                    func(childComplexity int) int
+		ClaimsProcessingPrecedenceOther                   func(childComplexity int) int
 		CreatedBy                                         func(childComplexity int) int
 		CreatedByUserAccount                              func(childComplexity int) int
 		CreatedDts                                        func(childComplexity int) int
@@ -5965,6 +5968,27 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.PlanPayments.ChangesMedicarePhysicianFeeScheduleNote(childComplexity), true
 
+	case "PlanPayments.claimsProcessingPrecedence":
+		if e.complexity.PlanPayments.ClaimsProcessingPrecedence == nil {
+			break
+		}
+
+		return e.complexity.PlanPayments.ClaimsProcessingPrecedence(childComplexity), true
+
+	case "PlanPayments.claimsProcessingPrecedenceNote":
+		if e.complexity.PlanPayments.ClaimsProcessingPrecedenceNote == nil {
+			break
+		}
+
+		return e.complexity.PlanPayments.ClaimsProcessingPrecedenceNote(childComplexity), true
+
+	case "PlanPayments.claimsProcessingPrecedenceOther":
+		if e.complexity.PlanPayments.ClaimsProcessingPrecedenceOther == nil {
+			break
+		}
+
+		return e.complexity.PlanPayments.ClaimsProcessingPrecedenceOther(childComplexity), true
+
 	case "PlanPayments.createdBy":
 		if e.complexity.PlanPayments.CreatedBy == nil {
 			break
@@ -8470,6 +8494,9 @@ type PlanPayments {
   # Page 6
   expectedCalculationComplexityLevel:                ComplexityCalculationLevelType
   expectedCalculationComplexityLevelNote:            String
+  claimsProcessingPrecedence:                        Boolean
+  claimsProcessingPrecedenceOther:                   String
+  claimsProcessingPrecedenceNote:                    String
   canParticipantsSelectBetweenPaymentMechanisms:     Boolean
   canParticipantsSelectBetweenPaymentMechanismsHow:  String
   canParticipantsSelectBetweenPaymentMechanismsNote: String
@@ -8572,6 +8599,9 @@ input PlanPaymentsChanges @goModel(model: "map[string]interface{}") {
   # Page 6
   expectedCalculationComplexityLevel:                       ComplexityCalculationLevelType
   expectedCalculationComplexityLevelNote:                   String
+  claimsProcessingPrecedence:                               Boolean
+  claimsProcessingPrecedenceOther:                          String
+  claimsProcessingPrecedenceNote:                           String
   canParticipantsSelectBetweenPaymentMechanisms:            Boolean
   canParticipantsSelectBetweenPaymentMechanismsHow:         String
   canParticipantsSelectBetweenPaymentMechanismsNote:        String
@@ -17038,6 +17068,12 @@ func (ec *executionContext) fieldContext_ModelPlan_payments(ctx context.Context,
 				return ec.fieldContext_PlanPayments_expectedCalculationComplexityLevel(ctx, field)
 			case "expectedCalculationComplexityLevelNote":
 				return ec.fieldContext_PlanPayments_expectedCalculationComplexityLevelNote(ctx, field)
+			case "claimsProcessingPrecedence":
+				return ec.fieldContext_PlanPayments_claimsProcessingPrecedence(ctx, field)
+			case "claimsProcessingPrecedenceOther":
+				return ec.fieldContext_PlanPayments_claimsProcessingPrecedenceOther(ctx, field)
+			case "claimsProcessingPrecedenceNote":
+				return ec.fieldContext_PlanPayments_claimsProcessingPrecedenceNote(ctx, field)
 			case "canParticipantsSelectBetweenPaymentMechanisms":
 				return ec.fieldContext_PlanPayments_canParticipantsSelectBetweenPaymentMechanisms(ctx, field)
 			case "canParticipantsSelectBetweenPaymentMechanismsHow":
@@ -20187,6 +20223,12 @@ func (ec *executionContext) fieldContext_Mutation_updatePlanPayments(ctx context
 				return ec.fieldContext_PlanPayments_expectedCalculationComplexityLevel(ctx, field)
 			case "expectedCalculationComplexityLevelNote":
 				return ec.fieldContext_PlanPayments_expectedCalculationComplexityLevelNote(ctx, field)
+			case "claimsProcessingPrecedence":
+				return ec.fieldContext_PlanPayments_claimsProcessingPrecedence(ctx, field)
+			case "claimsProcessingPrecedenceOther":
+				return ec.fieldContext_PlanPayments_claimsProcessingPrecedenceOther(ctx, field)
+			case "claimsProcessingPrecedenceNote":
+				return ec.fieldContext_PlanPayments_claimsProcessingPrecedenceNote(ctx, field)
 			case "canParticipantsSelectBetweenPaymentMechanisms":
 				return ec.fieldContext_PlanPayments_canParticipantsSelectBetweenPaymentMechanisms(ctx, field)
 			case "canParticipantsSelectBetweenPaymentMechanismsHow":
@@ -45429,6 +45471,129 @@ func (ec *executionContext) fieldContext_PlanPayments_expectedCalculationComplex
 	return fc, nil
 }
 
+func (ec *executionContext) _PlanPayments_claimsProcessingPrecedence(ctx context.Context, field graphql.CollectedField, obj *models.PlanPayments) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanPayments_claimsProcessingPrecedence(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ClaimsProcessingPrecedence, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*bool)
+	fc.Result = res
+	return ec.marshalOBoolean2ᚖbool(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanPayments_claimsProcessingPrecedence(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanPayments",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Boolean does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanPayments_claimsProcessingPrecedenceOther(ctx context.Context, field graphql.CollectedField, obj *models.PlanPayments) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanPayments_claimsProcessingPrecedenceOther(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ClaimsProcessingPrecedenceOther, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanPayments_claimsProcessingPrecedenceOther(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanPayments",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanPayments_claimsProcessingPrecedenceNote(ctx context.Context, field graphql.CollectedField, obj *models.PlanPayments) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanPayments_claimsProcessingPrecedenceNote(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ClaimsProcessingPrecedenceNote, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanPayments_claimsProcessingPrecedenceNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanPayments",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
 func (ec *executionContext) _PlanPayments_canParticipantsSelectBetweenPaymentMechanisms(ctx context.Context, field graphql.CollectedField, obj *models.PlanPayments) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_PlanPayments_canParticipantsSelectBetweenPaymentMechanisms(ctx, field)
 	if err != nil {
@@ -50105,6 +50270,12 @@ func (ec *executionContext) fieldContext_Query_planPayments(ctx context.Context,
 				return ec.fieldContext_PlanPayments_expectedCalculationComplexityLevel(ctx, field)
 			case "expectedCalculationComplexityLevelNote":
 				return ec.fieldContext_PlanPayments_expectedCalculationComplexityLevelNote(ctx, field)
+			case "claimsProcessingPrecedence":
+				return ec.fieldContext_PlanPayments_claimsProcessingPrecedence(ctx, field)
+			case "claimsProcessingPrecedenceOther":
+				return ec.fieldContext_PlanPayments_claimsProcessingPrecedenceOther(ctx, field)
+			case "claimsProcessingPrecedenceNote":
+				return ec.fieldContext_PlanPayments_claimsProcessingPrecedenceNote(ctx, field)
 			case "canParticipantsSelectBetweenPaymentMechanisms":
 				return ec.fieldContext_PlanPayments_canParticipantsSelectBetweenPaymentMechanisms(ctx, field)
 			case "canParticipantsSelectBetweenPaymentMechanismsHow":
@@ -63649,6 +63820,12 @@ func (ec *executionContext) _PlanPayments(ctx context.Context, sel ast.Selection
 			out.Values[i] = ec._PlanPayments_expectedCalculationComplexityLevel(ctx, field, obj)
 		case "expectedCalculationComplexityLevelNote":
 			out.Values[i] = ec._PlanPayments_expectedCalculationComplexityLevelNote(ctx, field, obj)
+		case "claimsProcessingPrecedence":
+			out.Values[i] = ec._PlanPayments_claimsProcessingPrecedence(ctx, field, obj)
+		case "claimsProcessingPrecedenceOther":
+			out.Values[i] = ec._PlanPayments_claimsProcessingPrecedenceOther(ctx, field, obj)
+		case "claimsProcessingPrecedenceNote":
+			out.Values[i] = ec._PlanPayments_claimsProcessingPrecedenceNote(ctx, field, obj)
 		case "canParticipantsSelectBetweenPaymentMechanisms":
 			out.Values[i] = ec._PlanPayments_canParticipantsSelectBetweenPaymentMechanisms(ctx, field, obj)
 		case "canParticipantsSelectBetweenPaymentMechanismsHow":

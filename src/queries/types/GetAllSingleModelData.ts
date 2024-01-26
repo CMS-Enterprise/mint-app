@@ -372,6 +372,9 @@ export interface GetAllSingleModelData_modelPlan_payments {
   payModelDifferentiation: string | null;
   expectedCalculationComplexityLevel: ComplexityCalculationLevelType | null;
   expectedCalculationComplexityLevelNote: string | null;
+  claimsProcessingPrecedence: boolean | null;
+  claimsProcessingPrecedenceOther: string | null;
+  claimsProcessingPrecedenceNote: string | null;
   canParticipantsSelectBetweenPaymentMechanisms: boolean | null;
   canParticipantsSelectBetweenPaymentMechanismsHow: string | null;
   canParticipantsSelectBetweenPaymentMechanismsNote: string | null;
