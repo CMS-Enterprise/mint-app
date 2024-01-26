@@ -99,7 +99,7 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
     >
       <div
         class="usa-form-group margin-y-4 margin-bottom-8"
-        data-scroll="geographiesTargeted"
+        data-scroll="plan-characteristics-geographies-targeted"
       >
         <label
           class="usa-label"
@@ -153,12 +153,12 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
         </fieldset>
         <div
           class="usa-form-group margin-top-4"
-          data-scroll="geographiesTargetedTypes"
+          data-scroll="plan-characteristics-geographies-type"
         >
           <label
             class="usa-label text-normal"
             data-testid="label"
-            for="geographiesTargetedTypes"
+            for="plan-characteristics-geographies-type"
           >
             Geography type is
           </label>
@@ -244,12 +244,12 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
         </div>
         <div
           class="usa-form-group margin-top-4"
-          data-scroll="geographiesTargetedAppliedTo"
+          data-scroll="plan-characteristics-geographies-applied-to"
         >
           <label
             class="usa-label text-normal"
             data-testid="label"
-            for="geographiesTargetedAppliedTo"
+            for="plan-characteristics-geographies-applied-to"
           >
             Geographies are applied to
           </label>
@@ -362,7 +362,7 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
       </div>
       <div
         class="usa-form-group margin-y-4"
-        data-scroll="participationOptions"
+        data-scroll="plan-characteristics-participation"
       >
         <label
           class="usa-label"
@@ -442,12 +442,12 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
       </div>
       <div
         class="usa-form-group"
-        data-scroll="agreementTypes"
+        data-scroll="plan-characteristics-agreement-type"
       >
         <label
           class="usa-label"
           data-testid="label"
-          for="agreementTypes"
+          for="plan-characteristics-agreement-type"
         >
           What is the agreement type?
         </label>

@@ -111,12 +111,12 @@ exports[`Model Plan -- Complexity > matches snapshot 1`] = `
           >
             <div
               class="usa-form-group margin-top-4"
-              data-scroll="expectedCalculationComplexityLevel"
+              data-scroll="payment-complexity"
             >
               <label
                 class="usa-label maxw-none"
                 data-testid="label"
-                for="expectedCalculationComplexityLevel"
+                for="payment-complexity"
               >
                 What level of complexity do you expect calculations to be?
               </label>
@@ -209,13 +209,115 @@ exports[`Model Plan -- Complexity > matches snapshot 1`] = `
               </div>
             </div>
             <div
+              class="usa-form-group margin-y-4 margin-bottom-8"
+              data-scroll="payment-claims-processing-precendece"
+            >
+              <label
+                class="usa-label"
+                data-testid="label"
+                for="payment-claims-processing-precendece"
+              >
+                Are there any business requirement(s) that address claims processing precedence order with the other model(s)?
+              </label>
+              <fieldset
+                class="usa-fieldset"
+                data-testid="fieldset"
+              >
+                <div
+                  class="usa-radio"
+                  data-testid="radio"
+                >
+                  <input
+                    class="usa-radio__input"
+                    data-testid="payment-claims-processing-precendece-true"
+                    id="payment-claims-processing-precendece-true"
+                    name="claimsProcessingPrecedence"
+                    type="radio"
+                    value="TRUE"
+                  />
+                  <label
+                    class="usa-radio__label"
+                    for="payment-claims-processing-precendece-true"
+                  >
+                    Yes
+                  </label>
+                </div>
+                <div
+                  class="display-flex margin-left-4 margin-bottom-1"
+                >
+                  <div
+                    class="usa-form-group flex-1 margin-top-1"
+                    data-scroll="claimsProcessingPrecedenceOther"
+                  >
+                    <label
+                      class="usa-label margin-bottom-1 text-normal"
+                      data-testid="label"
+                      for="payment-claims-processing-precendece-other"
+                    >
+                      Please specify
+                    </label>
+                    <input
+                      class="usa-input"
+                      data-testid="payment-claims-processing-precendece-other"
+                      id="payment-claims-processing-precendece-other"
+                      name="claimsProcessingPrecedenceOther"
+                      value="other claims"
+                    />
+                  </div>
+                </div>
+                <div
+                  class="usa-radio"
+                  data-testid="radio"
+                >
+                  <input
+                    class="usa-radio__input"
+                    data-testid="payment-claims-processing-precendece-false"
+                    id="payment-claims-processing-precendece-false"
+                    name="claimsProcessingPrecedence"
+                    type="radio"
+                    value="FALSE"
+                  />
+                  <label
+                    class="usa-radio__label"
+                    for="payment-claims-processing-precendece-false"
+                  >
+                    No
+                  </label>
+                </div>
+              </fieldset>
+              <div
+                class="margin-top-4 margin-bottom-8"
+              >
+                <div
+                  class="usa-form-group"
+                >
+                  <label
+                    class="usa-label"
+                    for="payment-claims-processing-precendece-note"
+                    id="label-payment-claims-processing-precendece-note"
+                  >
+                    Notes
+                  </label>
+                  <textarea
+                    aria-labelledby="label-payment-claims-processing-precendece-note hint-payment-claims-processing-precendece-note"
+                    class="usa-textarea"
+                    data-testid="payment-claims-processing-precendece-note"
+                    id="payment-claims-processing-precendece-note"
+                    name="claimsProcessingPrecedenceNote"
+                  >
+                    claim note
+                  </textarea>
+                </div>
+              </div>
+            </div>
+            <div
               class="usa-form-group margin-top-4"
-              data-scroll="canParticipantsSelectBetweenPaymentMechanisms"
+              data-scroll="payment-multiple-payments"
             >
               <label
                 class="usa-label maxw-none"
                 data-testid="label"
-                for="canParticipantsSelectBetweenPaymentMechanisms"
+                for="payment-multiple-payments"
               >
                 Will participants be allowed to select between multiple payment mechanisms?
               </label>

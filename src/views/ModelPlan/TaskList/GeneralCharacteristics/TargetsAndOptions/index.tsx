@@ -240,7 +240,7 @@ const TargetsAndOptions = () => {
               >
                 <Fieldset disabled={!!error || loading}>
                   <FieldGroup
-                    scrollElement="geographiesTargeted"
+                    scrollElement="plan-characteristics-geographies-targeted"
                     error={!!flatErrors.geographiesTargeted}
                     className="margin-y-4 margin-bottom-8"
                   >
@@ -263,12 +263,12 @@ const TargetsAndOptions = () => {
                     {values.geographiesTargeted && (
                       <>
                         <FieldGroup
-                          scrollElement="geographiesTargetedTypes"
+                          scrollElement="plan-characteristics-geographies-type"
                           error={!!flatErrors.geographiesTargetedTypes}
                           className="margin-top-4"
                         >
                           <Label
-                            htmlFor="geographiesTargetedTypes"
+                            htmlFor="plan-characteristics-geographies-type"
                             className="text-normal"
                           >
                             {generalCharacteristicsT(
@@ -302,7 +302,7 @@ const TargetsAndOptions = () => {
                                   ) && (
                                     <FieldGroup className="margin-left-4 margin-y-2">
                                       <Label
-                                        htmlFor="geographiesStatesAndTerritories"
+                                        htmlFor="plan-characteristics-geographies-state-and-territories-type"
                                         className="text-normal"
                                       >
                                         {generalCharacteristicsT(
@@ -397,19 +397,18 @@ const TargetsAndOptions = () => {
                         </FieldGroup>
 
                         <FieldGroup
-                          scrollElement="geographiesTargetedAppliedTo"
+                          scrollElement="plan-characteristics-geographies-applied-to"
                           error={!!flatErrors.geographiesTargetedAppliedTo}
                           className="margin-top-4"
                         >
                           <Label
-                            htmlFor="geographiesTargetedAppliedTo"
+                            htmlFor="plan-characteristics-geographies-applied-to"
                             className="text-normal"
                           >
                             {generalCharacteristicsT(
                               'geographiesTargetedAppliedTo.label'
                             )}
                           </Label>
-
                           <FieldErrorMsg>
                             {flatErrors.geographiesTargetedAppliedTo}
                           </FieldErrorMsg>
@@ -478,7 +477,7 @@ const TargetsAndOptions = () => {
                   </FieldGroup>
 
                   <FieldGroup
-                    scrollElement="participationOptions"
+                    scrollElement="plan-characteristics-participation"
                     error={!!flatErrors.participationOptions}
                     className="margin-y-4"
                   >
@@ -505,10 +504,10 @@ const TargetsAndOptions = () => {
                   />
 
                   <FieldGroup
-                    scrollElement="agreementTypes"
+                    scrollElement="plan-characteristics-agreement-type"
                     error={!!flatErrors.agreementTypes}
                   >
-                    <Label htmlFor="agreementTypes">
+                    <Label htmlFor="plan-characteristics-agreement-type">
                       {generalCharacteristicsT('agreementTypes.label')}
                     </Label>
 
@@ -574,7 +573,7 @@ const TargetsAndOptions = () => {
                   ) && (
                     <>
                       <FieldGroup
-                        scrollElement="multiplePatricipationAgreementsNeeded"
+                        scrollElement="plan-characteristics-multiple-participation-needed"
                         error={
                           !!flatErrors.multiplePatricipationAgreementsNeeded
                         }

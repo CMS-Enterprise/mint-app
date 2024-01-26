@@ -99,7 +99,7 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
     >
       <div
         class="usa-form-group margin-y-4"
-        data-scroll="rulemakingRequired"
+        data-scroll="plan-characteristics-rulemaking-required"
       >
         <label
           class="usa-label"
@@ -136,7 +136,7 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
           >
             <div
               class="usa-form-group flex-1"
-              data-scroll="rulemakingRequiredDescription"
+              data-scroll="plan-characteristics-rulemaking-required-description"
             >
               <label
                 class="usa-label margin-bottom-1 text-normal"
@@ -204,12 +204,15 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
       </div>
       <div
         class="usa-form-group"
+        data-scroll="plan-characteristics-authority-allowance"
       >
-        <legend
+        <label
           class="usa-label"
+          data-testid="label"
+          for="plan-characteristics-authority-allowance"
         >
           What authority allows CMMI to test the model?
-        </legend>
+        </label>
         <div
           class="mint-checkbox usa-checkbox"
         >
@@ -318,7 +321,7 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
       </div>
       <div
         class="usa-form-group margin-y-4"
-        data-scroll="waiversRequired"
+        data-scroll="plan-characteristics-waivers-required"
       >
         <label
           class="usa-label"
@@ -371,9 +374,6 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
           </div>
         </fieldset>
       </div>
-      <div
-        class="usa-form-group"
-      />
       <div
         class="margin-top-4 margin-bottom-8"
       >

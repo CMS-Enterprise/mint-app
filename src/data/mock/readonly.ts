@@ -577,6 +577,9 @@ const paymentsData: PaymentTypes = {
   planningToUseInnovationPaymentContractorNote: 'Contractor planning note',
   expectedCalculationComplexityLevel: ComplexityCalculationLevelType.HIGH,
   expectedCalculationComplexityLevelNote: 'Expected complexity note',
+  claimsProcessingPrecedence: true,
+  claimsProcessingPrecedenceOther: 'other claims',
+  claimsProcessingPrecedenceNote: 'claim note',
   canParticipantsSelectBetweenPaymentMechanisms: true,
   canParticipantsSelectBetweenPaymentMechanismsHow:
     'Can participants select how',

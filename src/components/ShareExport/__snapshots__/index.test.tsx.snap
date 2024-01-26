@@ -5831,6 +5831,78 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     data-testid="grid"
                   >
                     <div
+                      class="read-only-section read-only-section--are-there-any-business-requirement-s--that-address-claims-processing-precedence-order-with-the-other-model-s margin-bottom-3"
+                    >
+                      <p
+                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                      >
+                        Are there any business requirement(s) that address claims processing precedence order with the other model(s)?
+                      </p>
+                      <p
+                        class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                      >
+                        Yes
+                      </p>
+                    </div>
+                    <div
+                      class="desktop:grid-col-12"
+                      data-testid="grid"
+                    >
+                      <div
+                        class="read-only-section read-only-section--notes margin-bottom-3"
+                      >
+                        <p
+                          class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                        >
+                          Notes
+                        </p>
+                        <p
+                          class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                        >
+                          claim note
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="desktop:grid-col-6"
+                  data-testid="grid"
+                >
+                  <div
+                    class="desktop:grid-col-12"
+                    data-testid="grid"
+                  >
+                    <div
+                      class="read-only-section read-only-section--please-specify margin-bottom-3"
+                    >
+                      <p
+                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                      >
+                        Please specify
+                      </p>
+                      <p
+                        class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                      >
+                        other claims
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="grid-row grid-gap"
+                data-testid="grid"
+              >
+                <div
+                  class="desktop:grid-col-6"
+                  data-testid="grid"
+                >
+                  <div
+                    class="desktop:grid-col-12"
+                    data-testid="grid"
+                  >
+                    <div
                       class="read-only-section read-only-section--will-participants-be-allowed-to-select-between-multiple-payment-mechanisms margin-bottom-3"
                     >
                       <p
@@ -12479,6 +12551,78 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                     >
                       Expected complexity note
                     </p>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="grid-row grid-gap"
+                data-testid="grid"
+              >
+                <div
+                  class="desktop:grid-col-6"
+                  data-testid="grid"
+                >
+                  <div
+                    class="desktop:grid-col-12"
+                    data-testid="grid"
+                  >
+                    <div
+                      class="read-only-section read-only-section--are-there-any-business-requirement-s--that-address-claims-processing-precedence-order-with-the-other-model-s margin-bottom-3"
+                    >
+                      <p
+                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                      >
+                        Are there any business requirement(s) that address claims processing precedence order with the other model(s)?
+                      </p>
+                      <p
+                        class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                      >
+                        Yes
+                      </p>
+                    </div>
+                    <div
+                      class="desktop:grid-col-12"
+                      data-testid="grid"
+                    >
+                      <div
+                        class="read-only-section read-only-section--notes margin-bottom-3"
+                      >
+                        <p
+                          class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                        >
+                          Notes
+                        </p>
+                        <p
+                          class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                        >
+                          claim note
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="desktop:grid-col-6"
+                  data-testid="grid"
+                >
+                  <div
+                    class="desktop:grid-col-12"
+                    data-testid="grid"
+                  >
+                    <div
+                      class="read-only-section read-only-section--please-specify margin-bottom-3"
+                    >
+                      <p
+                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                      >
+                        Please specify
+                      </p>
+                      <p
+                        class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                      >
+                        other claims
+                      </p>
+                    </div>
                   </div>
                 </div>
               </div>
