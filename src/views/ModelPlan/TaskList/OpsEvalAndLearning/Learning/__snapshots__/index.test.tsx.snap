@@ -99,13 +99,15 @@ exports[`Model Plan Ops Eval and Learning - Learning > matches snapshot 1`] = `
     >
       <div
         class="usa-form-group"
-        data-scroll="modelLearningSystems"
+        data-scroll="ops-eval-and-learning-learning-systems"
       >
-        <legend
+        <label
           class="usa-label"
+          data-testid="label"
+          for="ops-eval-and-learning-learning-systems"
         >
           Will the model have a learning strategy?
-        </legend>
+        </label>
         <div
           class="usa-alert usa-alert--warning flex it-solutions-warning"
           data-testid="alert"
@@ -278,7 +280,7 @@ exports[`Model Plan Ops Eval and Learning - Learning > matches snapshot 1`] = `
       </div>
       <div
         class="usa-form-group"
-        data-scroll="anticipatedChallenges"
+        data-scroll="ops-eval-and-learning-learning-anticipated-challenges"
       >
         <label
           class="usa-label"

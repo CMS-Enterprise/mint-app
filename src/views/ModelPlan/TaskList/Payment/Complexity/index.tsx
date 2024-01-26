@@ -256,14 +256,14 @@ const Complexity = () => {
                     >
                       <Fieldset disabled={!!error || loading}>
                         <FieldGroup
-                          scrollElement="expectedCalculationComplexityLevel"
+                          scrollElement="payment-complexity"
                           error={
                             !!flatErrors.expectedCalculationComplexityLevel
                           }
                           className="margin-top-4"
                         >
                           <Label
-                            htmlFor="expectedCalculationComplexityLevel"
+                            htmlFor="payment-complexity"
                             className="maxw-none"
                           >
                             {paymentsT(
@@ -294,12 +294,6 @@ const Complexity = () => {
                                   values.expectedCalculationComplexityLevel ===
                                   key
                                 }
-                                onChange={() => {
-                                  setFieldValue(
-                                    'expectedCalculationComplexityLevel',
-                                    key
-                                  );
-                                }}
                               />
                             ))}
                           </Fieldset>
@@ -311,7 +305,7 @@ const Complexity = () => {
                         </FieldGroup>
 
                         <FieldGroup
-                          scrollElement="claimsProcessingPrecedence"
+                          scrollElement="payment-claims-processing-precendece"
                           className="margin-y-4 margin-bottom-8"
                         >
                           <Label htmlFor="payment-claims-processing-precendece">
@@ -361,14 +355,14 @@ const Complexity = () => {
                         </FieldGroup>
 
                         <FieldGroup
-                          scrollElement="canParticipantsSelectBetweenPaymentMechanisms"
+                          scrollElement="payment-multiple-payments"
                           error={
                             !!flatErrors.canParticipantsSelectBetweenPaymentMechanisms
                           }
                           className="margin-top-4"
                         >
                           <Label
-                            htmlFor="canParticipantsSelectBetweenPaymentMechanisms"
+                            htmlFor="payment-multiple-payments"
                             className="maxw-none"
                           >
                             {paymentsT(
