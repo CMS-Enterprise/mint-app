@@ -3,29 +3,40 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { AlternativePaymentModelType, KeyCharacteristic, GeographyType, GeographyApplication, AgreementType, AuthorityAllowance, WaiverType, TaskStatus } from "./../../../types/graphql-global-types";
+import { ExisitingModelLinkFieldType, AlternativePaymentModelType, KeyCharacteristic, GeographyType, GeographyApplication, AgreementType, AuthorityAllowance, WaiverType, TaskStatus } from "./../../../types/graphql-global-types";
 
 // ====================================================
 // GraphQL query operation: GetAllGeneralCharacteristics
 // ====================================================
 
-export interface GetAllGeneralCharacteristics_modelPlan_existingModelLinks_existingModel {
+export interface GetAllGeneralCharacteristics_modelPlan_generalCharacteristics_resemblesExistingModelWhich_links_model_ExistingModel {
   __typename: "ExistingModel";
-  id: number | null;
-  modelName: string | null;
-}
-
-export interface GetAllGeneralCharacteristics_modelPlan_existingModelLinks_currentModelPlan {
-  __typename: "ModelPlan";
-  id: UUID;
   modelName: string;
+  stage: string;
+  numberOfParticipants: string | null;
+  keywords: string | null;
 }
 
-export interface GetAllGeneralCharacteristics_modelPlan_existingModelLinks {
+export interface GetAllGeneralCharacteristics_modelPlan_generalCharacteristics_resemblesExistingModelWhich_links_model_ModelPlan {
+  __typename: "ModelPlan";
+  modelName: string;
+  abbreviation: string | null;
+}
+
+export type GetAllGeneralCharacteristics_modelPlan_generalCharacteristics_resemblesExistingModelWhich_links_model = GetAllGeneralCharacteristics_modelPlan_generalCharacteristics_resemblesExistingModelWhich_links_model_ExistingModel | GetAllGeneralCharacteristics_modelPlan_generalCharacteristics_resemblesExistingModelWhich_links_model_ModelPlan;
+
+export interface GetAllGeneralCharacteristics_modelPlan_generalCharacteristics_resemblesExistingModelWhich_links {
   __typename: "ExistingModelLink";
   id: UUID | null;
-  existingModel: GetAllGeneralCharacteristics_modelPlan_existingModelLinks_existingModel | null;
-  currentModelPlan: GetAllGeneralCharacteristics_modelPlan_existingModelLinks_currentModelPlan | null;
+  existingModelID: number | null;
+  currentModelPlanID: UUID | null;
+  fieldName: ExisitingModelLinkFieldType;
+  model: GetAllGeneralCharacteristics_modelPlan_generalCharacteristics_resemblesExistingModelWhich_links_model;
+}
+
+export interface GetAllGeneralCharacteristics_modelPlan_generalCharacteristics_resemblesExistingModelWhich {
+  __typename: "ExistingModelLinks";
+  links: GetAllGeneralCharacteristics_modelPlan_generalCharacteristics_resemblesExistingModelWhich_links[];
 }
 
 export interface GetAllGeneralCharacteristics_modelPlan_generalCharacteristics {
@@ -36,6 +47,7 @@ export interface GetAllGeneralCharacteristics_modelPlan_generalCharacteristics {
   resemblesExistingModel: boolean | null;
   resemblesExistingModelHow: string | null;
   resemblesExistingModelNote: string | null;
+  resemblesExistingModelWhich: GetAllGeneralCharacteristics_modelPlan_generalCharacteristics_resemblesExistingModelWhich | null;
   hasComponentsOrTracks: boolean | null;
   hasComponentsOrTracksDiffer: string | null;
   hasComponentsOrTracksNote: string | null;
@@ -86,7 +98,6 @@ export interface GetAllGeneralCharacteristics_modelPlan_generalCharacteristics {
 export interface GetAllGeneralCharacteristics_modelPlan {
   __typename: "ModelPlan";
   id: UUID;
-  existingModelLinks: GetAllGeneralCharacteristics_modelPlan_existingModelLinks[];
   generalCharacteristics: GetAllGeneralCharacteristics_modelPlan_generalCharacteristics;
 }
 
