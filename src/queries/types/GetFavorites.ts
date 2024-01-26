@@ -29,8 +29,13 @@ export interface GetFavorites_modelPlanCollection_collaborators {
   teamRoles: TeamRole[];
 }
 
-export interface GetFavorites_modelPlanCollection_crTdls {
-  __typename: "PlanCrTdl";
+export interface GetFavorites_modelPlanCollection_crs {
+  __typename: "PlanCR";
+  idNumber: string;
+}
+
+export interface GetFavorites_modelPlanCollection_tdls {
+  __typename: "PlanTDL";
   idNumber: string;
 }
 
@@ -44,7 +49,8 @@ export interface GetFavorites_modelPlanCollection {
   status: ModelStatus;
   basics: GetFavorites_modelPlanCollection_basics;
   collaborators: GetFavorites_modelPlanCollection_collaborators[];
-  crTdls: GetFavorites_modelPlanCollection_crTdls[];
+  crs: GetFavorites_modelPlanCollection_crs[];
+  tdls: GetFavorites_modelPlanCollection_tdls[];
 }
 
 export interface GetFavorites {

@@ -743,6 +743,23 @@ export interface PlanBeneficiariesChanges {
   status?: TaskStatusInput | null;
 }
 
+export interface PlanCRChanges {
+  idNumber?: string | null;
+  dateInitiated?: Time | null;
+  dateImplemented?: Time | null;
+  title?: string | null;
+  note?: string | null;
+}
+
+export interface PlanCRCreateInput {
+  modelPlanID: UUID;
+  idNumber: string;
+  dateInitiated: Time;
+  dateImplemented: Time;
+  title: string;
+  note?: string | null;
+}
+
 /**
  * PlanCollaboratorCreateInput represents the data required to create a collaborator on a plan
  */
@@ -750,21 +767,6 @@ export interface PlanCollaboratorCreateInput {
   modelPlanID: UUID;
   userName: string;
   teamRoles: TeamRole[];
-}
-
-export interface PlanCrTdlChanges {
-  idNumber?: string | null;
-  dateInitiated?: Time | null;
-  title?: string | null;
-  note?: string | null;
-}
-
-export interface PlanCrTdlCreateInput {
-  modelPlanID: UUID;
-  idNumber: string;
-  dateInitiated: Time;
-  title: string;
-  note?: string | null;
 }
 
 /**
@@ -1091,6 +1093,9 @@ export interface PlanPaymentsChanges {
   planningToUseInnovationPaymentContractorNote?: string | null;
   expectedCalculationComplexityLevel?: ComplexityCalculationLevelType | null;
   expectedCalculationComplexityLevelNote?: string | null;
+  claimsProcessingPrecedence?: boolean | null;
+  claimsProcessingPrecedenceOther?: string | null;
+  claimsProcessingPrecedenceNote?: string | null;
   canParticipantsSelectBetweenPaymentMechanisms?: boolean | null;
   canParticipantsSelectBetweenPaymentMechanismsHow?: string | null;
   canParticipantsSelectBetweenPaymentMechanismsNote?: string | null;
@@ -1109,6 +1114,21 @@ export interface PlanPaymentsChanges {
   paymentStartDate?: Time | null;
   paymentStartDateNote?: string | null;
   status?: TaskStatusInput | null;
+}
+
+export interface PlanTDLChanges {
+  idNumber?: string | null;
+  dateInitiated?: Time | null;
+  title?: string | null;
+  note?: string | null;
+}
+
+export interface PlanTDLCreateInput {
+  modelPlanID: UUID;
+  idNumber: string;
+  dateInitiated: Time;
+  title: string;
+  note?: string | null;
 }
 
 export interface ReportAProblemInput {

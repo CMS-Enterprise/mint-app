@@ -566,6 +566,9 @@ const paymentsData: PaymentTypes = {
   planningToUseInnovationPaymentContractorNote: 'Contractor planning note',
   expectedCalculationComplexityLevel: ComplexityCalculationLevelType.HIGH,
   expectedCalculationComplexityLevelNote: 'Expected complexity note',
+  claimsProcessingPrecedence: true,
+  claimsProcessingPrecedenceOther: 'other claims',
+  claimsProcessingPrecedenceNote: 'claim note',
   canParticipantsSelectBetweenPaymentMechanisms: true,
   canParticipantsSelectBetweenPaymentMechanismsHow:
     'Can participants select how',
@@ -638,10 +641,18 @@ const summaryData: GetModelSummaryTypes = {
       __typename: 'PlanCollaborator'
     }
   ],
-  crTdls: [
+  crs: [
     {
-      __typename: 'PlanCrTdl',
-      idNumber: 'TDL-123'
+      __typename: 'PlanCR',
+      id: '123',
+      idNumber: 'CR 123'
+    }
+  ],
+  tdls: [
+    {
+      __typename: 'PlanTDL',
+      id: '456',
+      idNumber: 'TDL 456'
     }
   ]
 };

@@ -340,8 +340,8 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation updatePlanPayments ($id: UUID!, $changes: PlanPaymentsChanges!) {\n    updatePlanPayments (id: $id, changes: $changes) {\n        id\n        modelPlanID\n        fundingSource\n        fundingSourceTrustFund\n        fundingSourceTrustFundType\n        fundingSourceOther\n        fundingSourceNote\n        fundingSourceR\n        fundingSourceRTrustFund\n        fundingSourceRTrustFundType\n        fundingSourceROther\n        fundingSourceRNote\n        payRecipients\n        payRecipientsOtherSpecification\n        payRecipientsNote\n        payType\n        payTypeNote\n        payClaims\n        payClaimsOther\n        payClaimsNote\n        shouldAnyProvidersExcludedFFSSystems\n        shouldAnyProviderExcludedFFSSystemsNote\n        changesMedicarePhysicianFeeSchedule\n        changesMedicarePhysicianFeeScheduleNote\n        affectsMedicareSecondaryPayerClaims\n        affectsMedicareSecondaryPayerClaimsHow\n        affectsMedicareSecondaryPayerClaimsNote\n        payModelDifferentiation\n        creatingDependenciesBetweenServices\n        creatingDependenciesBetweenServicesNote\n        needsClaimsDataCollection\n        needsClaimsDataCollectionNote\n        providingThirdPartyFile\n        isContractorAwareTestDataRequirements\n        beneficiaryCostSharingLevelAndHandling\n        waiveBeneficiaryCostSharingForAnyServices\n        waiveBeneficiaryCostSharingServiceSpecification\n        waiverOnlyAppliesPartOfPayment\n        waiveBeneficiaryCostSharingNote\n        nonClaimsPayments\n        nonClaimsPaymentOther\n        nonClaimsPaymentsNote\n        paymentCalculationOwner\n        numberPaymentsPerPayCycle\n        numberPaymentsPerPayCycleNote\n        sharedSystemsInvolvedAdditionalClaimPayment\n        sharedSystemsInvolvedAdditionalClaimPaymentNote\n        planningToUseInnovationPaymentContractor\n        planningToUseInnovationPaymentContractorNote\n        expectedCalculationComplexityLevel\n        expectedCalculationComplexityLevelNote\n        canParticipantsSelectBetweenPaymentMechanisms\n        canParticipantsSelectBetweenPaymentMechanismsHow\n        canParticipantsSelectBetweenPaymentMechanismsNote\n        anticipatedPaymentFrequency\n        anticipatedPaymentFrequencyOther\n        anticipatedPaymentFrequencyNote\n        willRecoverPayments\n        willRecoverPaymentsNote\n        anticipateReconcilingPaymentsRetrospectively\n        anticipateReconcilingPaymentsRetrospectivelyNote\n        paymentReconciliationFrequency\n        paymentReconciliationFrequencyContinually\n        paymentReconciliationFrequencyOther\n        paymentReconciliationFrequencyNote\n        paymentStartDate\n        paymentStartDateNote\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n        readyForReviewBy\n        readyForReviewDts\n        readyForClearanceBy\n        readyForClearanceDts\n        status\n\n        createdByUserAccount \n        {\n            commonName\n        }   \n        modifiedByUserAccount\n        {\n            commonName\n        }     \n        readyForReviewByUserAccount \n        {\n            commonName\n        }\n        readyForClearanceByUserAccount \n        {\n            commonName\n        }\n    }\n}",
-								"variables": "{\n  \"id\": \"{{paymentsID}}\",\n  \"changes\": {\n    \"fundingSource\": [\n      \"\"\n    ],\n    \"fundingSourceTrustFund\": \"\",\n    \"fundingSourceTrustFundType\": \"\",\n    \"fundingSourceOther\": \"\",\n    \"fundingSourceNote\": \"\",\n    \"fundingSourceR\": [\n      \"\"\n    ],\n    \"fundingSourceRTrustFund\": \"\",\n    \"fundingSourceRTrustFundType\": \"\",\n    \"fundingSourceROther\": \"\",\n    \"fundingSourceRNote\": \"\",\n    \"payRecipients\": [\n      \"\"\n    ],\n    \"payRecipientsOtherSpecification\": \"\",\n    \"payRecipientsNote\": \"\",\n    \"payType\": [\n      \"\"\n    ],\n    \"payTypeNote\": \"\",\n    \"payClaims\": [\n      \"\"\n    ],\n    \"payClaimsOther\": \"\",\n    \"payClaimsNote\": \"\",\n    \"shouldAnyProvidersExcludedFFSSystems\": true,\n    \"shouldAnyProviderExcludedFFSSystemsNote\": \"\",\n    \"changesMedicarePhysicianFeeSchedule\": true,\n    \"changesMedicarePhysicianFeeScheduleNote\": \"\",\n    \"affectsMedicareSecondaryPayerClaims\": true,\n    \"affectsMedicareSecondaryPayerClaimsHow\": \"\",\n    \"affectsMedicareSecondaryPayerClaimsNote\": \"\",\n    \"payModelDifferentiation\": \"\",\n    \"creatingDependenciesBetweenServices\": true,\n    \"creatingDependenciesBetweenServicesNote\": \"\",\n    \"needsClaimsDataCollection\": true,\n    \"needsClaimsDataCollectionNote\": \"\",\n    \"providingThirdPartyFile\": true,\n    \"isContractorAwareTestDataRequirements\": true,\n    \"beneficiaryCostSharingLevelAndHandling\": \"\",\n    \"waiveBeneficiaryCostSharingForAnyServices\": true,\n    \"waiveBeneficiaryCostSharingServiceSpecification\": \"\",\n    \"waiverOnlyAppliesPartOfPayment\": true,\n    \"waiveBeneficiaryCostSharingNote\": \"\",\n    \"nonClaimsPayments\": [\n      \"\"\n    ],\n    \"nonClaimsPaymentOther\": \"\",\n    \"nonClaimsPaymentsNote\": \"\",\n    \"paymentCalculationOwner\": \"\",\n    \"numberPaymentsPerPayCycle\": \"\",\n    \"numberPaymentsPerPayCycleNote\": \"\",\n    \"sharedSystemsInvolvedAdditionalClaimPayment\": true,\n    \"sharedSystemsInvolvedAdditionalClaimPaymentNote\": \"\",\n    \"planningToUseInnovationPaymentContractor\": true,\n    \"planningToUseInnovationPaymentContractorNote\": \"\",\n    \"expectedCalculationComplexityLevel\": \"\",\n    \"expectedCalculationComplexityLevelNote\": \"\",\n    \"canParticipantsSelectBetweenPaymentMechanisms\": true,\n    \"canParticipantsSelectBetweenPaymentMechanismsHow\": \"\",\n    \"canParticipantsSelectBetweenPaymentMechanismsNote\": \"\",\n    \"anticipatedPaymentFrequency\": [\n      \"\"\n    ],\n    \"anticipatedPaymentFrequencyOther\": \"\",\n    \"anticipatedPaymentFrequencyNote\": \"\",\n    \"willRecoverPayments\": true,\n    \"willRecoverPaymentsNote\": \"\",\n    \"anticipateReconcilingPaymentsRetrospectively\": true,\n    \"anticipateReconcilingPaymentsRetrospectivelyNote\": \"\",\n    \"paymentReconciliationFrequency\": [\n        \"\"\n    ],\n    \"paymentReconciliationFrequencyContinually\": \"\",\n    \"paymentReconciliationFrequencyOther\": \"\",\n    \"paymentReconciliationFrequencyNote\": \"\",\n    \"paymentStartDate\": \"\",\n    \"paymentStartDateNote\": \"\",\n    \"status\": \"\"\n  }\n}"
+								"query": "mutation updatePlanPayments ($id: UUID!, $changes: PlanPaymentsChanges!) {\n    updatePlanPayments (id: $id, changes: $changes) {\n        id\n        modelPlanID\n        fundingSource\n        fundingSourceTrustFund\n        fundingSourceTrustFundType\n        fundingSourceOther\n        fundingSourceNote\n        fundingSourceR\n        fundingSourceRTrustFund\n        fundingSourceRTrustFundType\n        fundingSourceROther\n        fundingSourceRNote\n        payRecipients\n        payRecipientsOtherSpecification\n        payRecipientsNote\n        payType\n        payTypeNote\n        payClaims\n        payClaimsOther\n        payClaimsNote\n        shouldAnyProvidersExcludedFFSSystems\n        shouldAnyProviderExcludedFFSSystemsNote\n        changesMedicarePhysicianFeeSchedule\n        changesMedicarePhysicianFeeScheduleNote\n        affectsMedicareSecondaryPayerClaims\n        affectsMedicareSecondaryPayerClaimsHow\n        affectsMedicareSecondaryPayerClaimsNote\n        payModelDifferentiation\n        creatingDependenciesBetweenServices\n        creatingDependenciesBetweenServicesNote\n        needsClaimsDataCollection\n        needsClaimsDataCollectionNote\n        providingThirdPartyFile\n        isContractorAwareTestDataRequirements\n        beneficiaryCostSharingLevelAndHandling\n        waiveBeneficiaryCostSharingForAnyServices\n        waiveBeneficiaryCostSharingServiceSpecification\n        waiverOnlyAppliesPartOfPayment\n        waiveBeneficiaryCostSharingNote\n        nonClaimsPayments\n        nonClaimsPaymentOther\n        nonClaimsPaymentsNote\n        paymentCalculationOwner\n        numberPaymentsPerPayCycle\n        numberPaymentsPerPayCycleNote\n        sharedSystemsInvolvedAdditionalClaimPayment\n        sharedSystemsInvolvedAdditionalClaimPaymentNote\n        planningToUseInnovationPaymentContractor\n        planningToUseInnovationPaymentContractorNote\n        expectedCalculationComplexityLevel\n        expectedCalculationComplexityLevelNote\n        claims_processing_precedence\n        claims_processing_precedence_yes\n        claims_processing_precedence_note\n        canParticipantsSelectBetweenPaymentMechanisms\n        canParticipantsSelectBetweenPaymentMechanismsHow\n        canParticipantsSelectBetweenPaymentMechanismsNote\n        anticipatedPaymentFrequency\n        anticipatedPaymentFrequencyOther\n        anticipatedPaymentFrequencyNote\n        willRecoverPayments\n        willRecoverPaymentsNote\n        anticipateReconcilingPaymentsRetrospectively\n        anticipateReconcilingPaymentsRetrospectivelyNote\n        paymentReconciliationFrequency\n        paymentReconciliationFrequencyContinually\n        paymentReconciliationFrequencyOther\n        paymentReconciliationFrequencyNote\n        paymentStartDate\n        paymentStartDateNote\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n        readyForReviewBy\n        readyForReviewDts\n        readyForClearanceBy\n        readyForClearanceDts\n        status\n\n        createdByUserAccount \n        {\n            commonName\n        }   \n        modifiedByUserAccount\n        {\n            commonName\n        }     \n        readyForReviewByUserAccount \n        {\n            commonName\n        }\n        readyForClearanceByUserAccount \n        {\n            commonName\n        }\n    }\n}",
+								"variables": "{\n  \"id\": \"{{paymentsID}}\",\n  \"changes\": {\n    \"fundingSource\": [\n      \"\"\n    ],\n    \"fundingSourceTrustFund\": \"\",\n    \"fundingSourceTrustFundType\": \"\",\n    \"fundingSourceOther\": \"\",\n    \"fundingSourceNote\": \"\",\n    \"fundingSourceR\": [\n      \"\"\n    ],\n    \"fundingSourceRTrustFund\": \"\",\n    \"fundingSourceRTrustFundType\": \"\",\n    \"fundingSourceROther\": \"\",\n    \"fundingSourceRNote\": \"\",\n    \"payRecipients\": [\n      \"\"\n    ],\n    \"payRecipientsOtherSpecification\": \"\",\n    \"payRecipientsNote\": \"\",\n    \"payType\": [\n      \"\"\n    ],\n    \"payTypeNote\": \"\",\n    \"payClaims\": [\n      \"\"\n    ],\n    \"payClaimsOther\": \"\",\n    \"payClaimsNote\": \"\",\n    \"shouldAnyProvidersExcludedFFSSystems\": true,\n    \"shouldAnyProviderExcludedFFSSystemsNote\": \"\",\n    \"changesMedicarePhysicianFeeSchedule\": true,\n    \"changesMedicarePhysicianFeeScheduleNote\": \"\",\n    \"affectsMedicareSecondaryPayerClaims\": true,\n    \"affectsMedicareSecondaryPayerClaimsHow\": \"\",\n    \"affectsMedicareSecondaryPayerClaimsNote\": \"\",\n    \"payModelDifferentiation\": \"\",\n    \"creatingDependenciesBetweenServices\": true,\n    \"creatingDependenciesBetweenServicesNote\": \"\",\n    \"needsClaimsDataCollection\": true,\n    \"needsClaimsDataCollectionNote\": \"\",\n    \"providingThirdPartyFile\": true,\n    \"isContractorAwareTestDataRequirements\": true,\n    \"beneficiaryCostSharingLevelAndHandling\": \"\",\n    \"waiveBeneficiaryCostSharingForAnyServices\": true,\n    \"waiveBeneficiaryCostSharingServiceSpecification\": \"\",\n    \"waiverOnlyAppliesPartOfPayment\": true,\n    \"waiveBeneficiaryCostSharingNote\": \"\",\n    \"nonClaimsPayments\": [\n      \"\"\n    ],\n    \"nonClaimsPaymentOther\": \"\",\n    \"nonClaimsPaymentsNote\": \"\",\n    \"paymentCalculationOwner\": \"\",\n    \"numberPaymentsPerPayCycle\": \"\",\n    \"numberPaymentsPerPayCycleNote\": \"\",\n    \"sharedSystemsInvolvedAdditionalClaimPayment\": true,\n    \"sharedSystemsInvolvedAdditionalClaimPaymentNote\": \"\",\n    \"planningToUseInnovationPaymentContractor\": true,\n    \"planningToUseInnovationPaymentContractorNote\": \"\",\n    \"expectedCalculationComplexityLevel\": \"\",\n    \"expectedCalculationComplexityLevelNote\": \"\",\n    \"claims_processing_precedence\": true,\n    \"claims_processing_precedence_yes\": \"\",\n    \"claims_processing_precedence_note\": \"\",\n    \"canParticipantsSelectBetweenPaymentMechanisms\": true,\n    \"canParticipantsSelectBetweenPaymentMechanismsHow\": \"\",\n    \"canParticipantsSelectBetweenPaymentMechanismsNote\": \"\",\n    \"anticipatedPaymentFrequency\": [\n      \"\"\n    ],\n    \"anticipatedPaymentFrequencyOther\": \"\",\n    \"anticipatedPaymentFrequencyNote\": \"\",\n    \"willRecoverPayments\": true,\n    \"willRecoverPaymentsNote\": \"\",\n    \"anticipateReconcilingPaymentsRetrospectively\": true,\n    \"anticipateReconcilingPaymentsRetrospectivelyNote\": \"\",\n    \"paymentReconciliationFrequency\": [\n        \"\"\n    ],\n    \"paymentReconciliationFrequencyContinually\": \"\",\n    \"paymentReconciliationFrequencyOther\": \"\",\n    \"paymentReconciliationFrequencyNote\": \"\",\n    \"paymentStartDate\": \"\",\n    \"paymentStartDateNote\": \"\",\n    \"status\": \"\"\n  }\n}"
 							}
 						},
 						"url": {
@@ -814,14 +814,35 @@
 			"name": "CRs and TDLs",
 			"item": [
 				{
-					"name": "Create CR/TDL",
+					"name": "Create CR",
 					"request": {
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation createPlanCrTdl ($input: PlanCrTdlCreateInput!) {\n    createPlanCrTdl (input: $input) {\n        id\n        modelPlanID\n        idNumber\n        dateInitiated\n        title\n        note\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n    }\n}",
+								"query": "mutation createPlanCR ($input: PlanCRCreateInput!) {\n    createPlanCR (input: $input) {\n        id\n        modelPlanID\n        idNumber\n        dateInitiated\n        dateImplemented\n        title\n        note\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n    }\n}",
+								"variables": "{\n  \"input\": {\n    \"modelPlanID\": \"\",\n    \"idNumber\": \"\",\n    \"dateInitiated\": \"\",\n    \"dateImplemented\": \"\",\n    \"title\": \"\",\n    \"note\": \"\"\n  }\n}"
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create TDL",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation createPlanTDL ($input: PlanTDLCreateInput!) {\n    createPlanTDL (input: $input) {\n        id\n        modelPlanID\n        idNumber\n        dateInitiated\n        title\n        note\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n    }\n}",
 								"variables": "{\n  \"input\": {\n    \"modelPlanID\": \"\",\n    \"idNumber\": \"\",\n    \"dateInitiated\": \"\",\n    \"title\": \"\",\n    \"note\": \"\"\n  }\n}"
 							}
 						},
@@ -835,14 +856,14 @@
 					"response": []
 				},
 				{
-					"name": "Get CR/TDL by ID",
+					"name": "Get CR by ID",
 					"request": {
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "query crTdl ($id: UUID!) {\n    crTdl (id: $id) {\n        id\n        modelPlanID\n        idNumber\n        dateInitiated\n        title\n        note\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n    }\n}",
+								"query": "query planCR ($id: UUID!) {\n    planCR (id: $id) {\n        id\n        modelPlanID\n        idNumber\n        dateInitiated\n        dateImplemented\n        title\n        note\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n    }\n}",
 								"variables": "{\n  \"id\": \"\"\n}"
 							}
 						},
@@ -856,14 +877,56 @@
 					"response": []
 				},
 				{
-					"name": "Update CR/TDL",
+					"name": "Get TDL by ID",
 					"request": {
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation updatePlanCrTdl ($id: UUID!, $changes: PlanCrTdlChanges!) {\n    updatePlanCrTdl (id: $id, changes: $changes) {\n        id\n        modelPlanID\n        idNumber\n        dateInitiated\n        title\n        note\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n    }\n}",
+								"query": "query planTDL ($id: UUID!) {\n    planTDL (id: $id) {\n        id\n        modelPlanID\n        idNumber\n        dateInitiated\n        title\n        note\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n    }\n}",
+								"variables": "{\n  \"id\": \"\"\n}"
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update CR",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation updatePlanCR ($id: UUID!, $changes: PlanCRChanges!) {\n    updatePlanCR (id: $id, changes: $changes) {\n        id\n        modelPlanID\n        idNumber\n        dateInitiated\n        dateImplemented\n        title\n        note\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n    }\n}",
+								"variables": "{\n  \"id\": \"\",\n  \"changes\": {\n    \"idNumber\": \"\",\n    \"dateInitiated\": \"\",\n    \"dateImplemented\": \"\",\n    \"title\": \"\",\n    \"note\": \"\"\n  }\n}"
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update TDL",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation updatePlanTDL ($id: UUID!, $changes: PlanTDLChanges!) {\n    updatePlanTDL (id: $id, changes: $changes) {\n        id\n        modelPlanID\n        idNumber\n        dateInitiated\n        title\n        note\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n    }\n}",
 								"variables": "{\n  \"id\": \"\",\n  \"changes\": {\n    \"idNumber\": \"\",\n    \"dateInitiated\": \"\",\n    \"title\": \"\",\n    \"note\": \"\"\n  }\n}"
 							}
 						},
@@ -877,14 +940,35 @@
 					"response": []
 				},
 				{
-					"name": "Delete CR/TDL",
+					"name": "Delete CR",
 					"request": {
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation deletePlanCrTdl ($id: UUID!) {\n    deletePlanCrTdl (id: $id) {\n        id\n        modelPlanID\n        idNumber\n        dateInitiated\n        title\n        note\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n    }\n}",
+								"query": "mutation deletePlanCR ($id: UUID!) {\n    deletePlanCR (id: $id) {\n        id\n        modelPlanID\n        idNumber\n        dateInitiated\n        dateImplemented\n        title\n        note\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n    }\n}",
+								"variables": "{\n  \"id\": \"\"\n}"
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete TDL",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation deletePlanTDL ($id: UUID!) {\n    deletePlanTDL (id: $id) {\n        id\n        modelPlanID\n        idNumber\n        dateInitiated\n        title\n        note\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n    }\n}",
 								"variables": "{\n  \"id\": \"\"\n}"
 							}
 						},

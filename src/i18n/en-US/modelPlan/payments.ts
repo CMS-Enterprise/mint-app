@@ -599,6 +599,39 @@ export const payments: TranslationPayments = {
     dataType: 'string',
     formType: 'textarea'
   },
+  claimsProcessingPrecedence: {
+    gqlField: 'claimsProcessingPrecedence',
+    goField: 'ClaimsProcessingPrecedence',
+    dbField: 'claims_processing_precedence',
+    label:
+      'Are there any business requirement(s) that address claims processing precedence order with the other model(s)?',
+    dataType: 'enum',
+    formType: 'checkbox',
+    options: {
+      true: 'Yes',
+      false: 'No'
+    },
+    optionsRelatedInfo: {
+      true: 'claimsProcessingPrecedenceOther',
+      false: ''
+    }
+  },
+  claimsProcessingPrecedenceOther: {
+    gqlField: 'claimsProcessingPrecedenceOther',
+    goField: 'ClaimsProcessingPrecedenceOther',
+    dbField: 'claims_processing_precedence_other',
+    label: 'Please specify',
+    dataType: 'string',
+    formType: 'text'
+  },
+  claimsProcessingPrecedenceNote: {
+    gqlField: 'claimsProcessingPrecedenceNote',
+    goField: 'ClaimsProcessingPrecedenceNote',
+    dbField: 'claims_processing_precedence_note',
+    label: 'Notes',
+    dataType: 'string',
+    formType: 'text'
+  },
   canParticipantsSelectBetweenPaymentMechanisms: {
     gqlField: 'canParticipantsSelectBetweenPaymentMechanisms',
     goField: 'CanParticipantsSelectBetweenPaymentMechanisms',

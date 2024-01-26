@@ -52,6 +52,7 @@ const Complexity = () => {
 
   const {
     expectedCalculationComplexityLevel: expectedCalculationComplexityLevelConfig,
+    claimsProcessingPrecedence: claimsProcessingPrecedenceConfig,
     canParticipantsSelectBetweenPaymentMechanisms: canParticipantsSelectBetweenPaymentMechanismsConfig,
     anticipatedPaymentFrequency: anticipatedPaymentFrequencyConfig
   } = usePlanTranslation('payments');
@@ -73,6 +74,9 @@ const Complexity = () => {
     payClaims,
     expectedCalculationComplexityLevel,
     expectedCalculationComplexityLevelNote,
+    claimsProcessingPrecedence,
+    claimsProcessingPrecedenceOther,
+    claimsProcessingPrecedenceNote,
     canParticipantsSelectBetweenPaymentMechanisms,
     canParticipantsSelectBetweenPaymentMechanismsHow,
     canParticipantsSelectBetweenPaymentMechanismsNote,
@@ -148,6 +152,9 @@ const Complexity = () => {
       expectedCalculationComplexityLevel ?? null,
     expectedCalculationComplexityLevelNote:
       expectedCalculationComplexityLevelNote ?? '',
+    claimsProcessingPrecedence: claimsProcessingPrecedence ?? null,
+    claimsProcessingPrecedenceOther: claimsProcessingPrecedenceOther ?? '',
+    claimsProcessingPrecedenceNote: claimsProcessingPrecedenceNote ?? '',
     canParticipantsSelectBetweenPaymentMechanisms:
       canParticipantsSelectBetweenPaymentMechanisms ?? null,
     canParticipantsSelectBetweenPaymentMechanismsHow:
@@ -294,6 +301,56 @@ const Complexity = () => {
                           <AddNote
                             id="payment-complexity-note"
                             field="expectedCalculationComplexityLevelNote"
+                          />
+                        </FieldGroup>
+
+                        <FieldGroup
+                          scrollElement="claimsProcessingPrecedence"
+                          className="margin-y-4 margin-bottom-8"
+                        >
+                          <Label htmlFor="payment-claims-processing-precendece">
+                            {paymentsT('claimsProcessingPrecedence.label')}
+                          </Label>
+
+                          <BooleanRadio
+                            field="claimsProcessingPrecedence"
+                            id="payment-claims-processing-precendece"
+                            value={values.claimsProcessingPrecedence}
+                            setFieldValue={setFieldValue}
+                            options={claimsProcessingPrecedenceConfig.options}
+                            childName="claimsProcessingPrecedenceOther"
+                          >
+                            {values.claimsProcessingPrecedence === true ? (
+                              <div className="display-flex margin-left-4 margin-bottom-1">
+                                <FieldGroup
+                                  className="flex-1 margin-top-1"
+                                  scrollElement="claimsProcessingPrecedenceOther"
+                                >
+                                  <Label
+                                    htmlFor="payment-claims-processing-precendece-other"
+                                    className="margin-bottom-1 text-normal"
+                                  >
+                                    {paymentsT(
+                                      'claimsProcessingPrecedenceOther.label'
+                                    )}
+                                  </Label>
+
+                                  <Field
+                                    as={TextInput}
+                                    data-testid="payment-claims-processing-precendece-other"
+                                    id="payment-claims-processing-precendece-other"
+                                    name="claimsProcessingPrecedenceOther"
+                                  />
+                                </FieldGroup>
+                              </div>
+                            ) : (
+                              <></>
+                            )}
+                          </BooleanRadio>
+
+                          <AddNote
+                            id="payment-claims-processing-precendece-note"
+                            field="claimsProcessingPrecedenceNote"
                           />
                         </FieldGroup>
 

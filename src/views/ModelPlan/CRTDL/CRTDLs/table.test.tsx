@@ -3,11 +3,11 @@ import { Provider } from 'react-redux';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, waitFor } from '@testing-library/react';
+import { GetCrtdLsDocument } from 'gql/gen/graphql';
 import configureMockStore from 'redux-mock-store';
 
 import { ASSESSMENT } from 'constants/jobCodes';
 import { MessageProvider } from 'hooks/useMessage';
-import GetCRDTLs from 'queries/CRTDL/GetCRDTLs';
 
 import PlanCRTDLsTable from './table';
 
@@ -16,7 +16,7 @@ const modelID = 'f11eb129-2c80-4080-9440-439cbe1a286f';
 const mocks = [
   {
     request: {
-      query: GetCRDTLs,
+      query: GetCrtdLsDocument,
       variables: { id: modelID }
     },
     result: {
@@ -26,17 +26,19 @@ const mocks = [
           __typename: 'ModelPlan',
           modelName: 'My Plan',
           isCollaborator: true,
-          crTdls: [
+          crs: [
             {
-              __typename: 'PlanCrTdl',
+              __typename: 'PlanCR',
               id: '123',
               modelPlanID: modelID,
               title: 'My CR',
               idNumber: 'CR123',
               dateInitiated: '2022-07-30T05:00:00Z',
+              dateImplemented: '2022-07-30T05:00:00Z',
               note: 'note'
             }
-          ]
+          ],
+          tdls: []
         }
       }
     }
@@ -76,10 +78,10 @@ describe('Model Plan CR and TDL table', () => {
       </MemoryRouter>
     );
     await waitFor(() => {
-      expect(getByTestId('cr-tdl-table')).toHaveTextContent('My CR');
-      expect(getByTestId('cr-tdl-table')).toHaveTextContent('CR123');
-      expect(getByTestId('cr-tdl-table')).toHaveTextContent('7/30/2022');
-      expect(getByTestId('cr-tdl-table')).toHaveTextContent('note');
+      expect(getByTestId('cr-tdl-table-cr')).toHaveTextContent('My CR');
+      expect(getByTestId('cr-tdl-table-cr')).toHaveTextContent('CR123');
+      expect(getByTestId('cr-tdl-table-cr')).toHaveTextContent('7/30/2022');
+      expect(getByTestId('cr-tdl-table-cr')).toHaveTextContent('note');
     });
   });
 
@@ -107,7 +109,7 @@ describe('Model Plan CR and TDL table', () => {
     );
 
     await waitFor(() => {
-      expect(getByTestId('cr-tdl-table')).toHaveTextContent('My CR');
+      expect(getByTestId('cr-tdl-table-cr')).toHaveTextContent('My CR');
     });
 
     expect(asFragment()).toMatchSnapshot();
