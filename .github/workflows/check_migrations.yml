@@ -13,3 +13,6 @@ jobs:
     steps:
       - name: Checkout all
         uses: actions/checkout@v4
+
+      - name: Check migrations
+        run: ./scripts/check_migration_versions.sh
