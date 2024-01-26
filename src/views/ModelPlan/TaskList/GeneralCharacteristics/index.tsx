@@ -16,6 +16,7 @@ import {
 import classNames from 'classnames';
 import { Field, Form, Formik, FormikProps } from 'formik';
 import {
+  ExisitingModelLinkFieldType,
   GetExistingModelPlansQuery,
   GetGeneralCharacteristicsQuery,
   GetModelPlansBaseQuery,
@@ -141,6 +142,7 @@ export const CharacteristicsContent = () => {
     resemblesExistingModel,
     resemblesExistingModelHow,
     resemblesExistingModelNote,
+    resemblesExistingModelWhich,
     hasComponentsOrTracks,
     hasComponentsOrTracksDiffer,
     hasComponentsOrTracksNote
@@ -154,11 +156,11 @@ export const CharacteristicsContent = () => {
 
   const existingModelLinks: (string | number)[] = useMemo(() => {
     return (
-      data?.modelPlan.existingModelLinks?.map(
+      resemblesExistingModelWhich?.links?.map(
         link => (link.existingModelID || link.currentModelPlanID)!
       ) || []
     );
-  }, [data?.modelPlan?.existingModelLinks]);
+  }, [resemblesExistingModelWhich?.links]);
 
   const [update] = useUpdatePlanGeneralCharacteristicsMutation();
 
@@ -203,6 +205,8 @@ export const CharacteristicsContent = () => {
       updateExistingLinks({
         variables: {
           modelPlanID: modelID,
+          fieldName:
+            ExisitingModelLinkFieldType.GEN_CHAR_RESEMBLES_EXISTING_MODEL_WHICH,
           ...linksToUpdate
         }
       })
