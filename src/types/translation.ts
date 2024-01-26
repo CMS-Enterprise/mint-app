@@ -25,6 +25,7 @@ import {
   FundingSource,
   GainshareArrangementEligibility,
   GeographyApplication,
+  GeographyRegionType,
   GeographyType,
   KeyCharacteristic,
   ModelCategory,
@@ -46,6 +47,7 @@ import {
   RecruitmentType,
   SelectionMethodType,
   StakeholdersType,
+  StatesAndTerritories,
   TaskStatus,
   TeamRole,
   TriStateAnswer,
@@ -181,6 +183,8 @@ export type TranslationGeneralCharacteristics = {
   geographiesTargeted: TranslationFieldPropertiesWithOptions<Bool>;
   geographiesTargetedTypes: TranslationFieldPropertiesWithOptions<GeographyType>;
   geographiesTargetedTypesOther: TranslationFieldProperties;
+  geographiesStatesAndTerritories: TranslationFieldPropertiesWithOptions<StatesAndTerritories>;
+  geographiesRegionTypes: TranslationFieldPropertiesWithOptions<GeographyRegionType>;
   geographiesTargetedAppliedTo: TranslationFieldPropertiesWithOptions<GeographyApplication>;
   geographiesTargetedAppliedToOther: TranslationFieldProperties;
   geographiesTargetedNote: TranslationFieldProperties;

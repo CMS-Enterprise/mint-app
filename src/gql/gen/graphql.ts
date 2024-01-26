@@ -452,6 +452,12 @@ export enum GeographyApplication {
   PROVIDERS = 'PROVIDERS'
 }
 
+export enum GeographyRegionType {
+  CBSA = 'CBSA',
+  HRR = 'HRR',
+  MSA = 'MSA'
+}
+
 export enum GeographyType {
   OTHER = 'OTHER',
   REGION = 'REGION',
@@ -1551,6 +1557,8 @@ export type PlanGeneralCharacteristics = {
   existingModel?: Maybe<Scalars['String']['output']>;
   existingModelID?: Maybe<Scalars['Int']['output']>;
   existingModelPlan?: Maybe<ExistingModel>;
+  geographiesRegionTypes: Array<GeographyRegionType>;
+  geographiesStatesAndTerritories: Array<StatesAndTerritories>;
   geographiesTargeted?: Maybe<Scalars['Boolean']['output']>;
   geographiesTargetedAppliedTo: Array<GeographyApplication>;
   geographiesTargetedAppliedToOther?: Maybe<Scalars['String']['output']>;
@@ -1623,6 +1631,8 @@ export type PlanGeneralCharacteristicsChanges = {
   communityPartnersInvolvedNote?: InputMaybe<Scalars['String']['input']>;
   currentModelPlanID?: InputMaybe<Scalars['UUID']['input']>;
   existingModelID?: InputMaybe<Scalars['Int']['input']>;
+  geographiesRegionTypes?: InputMaybe<Array<GeographyRegionType>>;
+  geographiesStatesAndTerritories?: InputMaybe<Array<StatesAndTerritories>>;
   geographiesTargeted?: InputMaybe<Scalars['Boolean']['input']>;
   geographiesTargetedAppliedTo?: InputMaybe<Array<GeographyApplication>>;
   geographiesTargetedAppliedToOther?: InputMaybe<Scalars['String']['input']>;
@@ -2604,6 +2614,66 @@ export enum StakeholdersType {
   STATES = 'STATES'
 }
 
+export enum StatesAndTerritories {
+  AK = 'AK',
+  AL = 'AL',
+  AR = 'AR',
+  AS = 'AS',
+  AZ = 'AZ',
+  CA = 'CA',
+  CO = 'CO',
+  CT = 'CT',
+  DC = 'DC',
+  DE = 'DE',
+  FL = 'FL',
+  GA = 'GA',
+  GU = 'GU',
+  HI = 'HI',
+  IA = 'IA',
+  ID = 'ID',
+  IL = 'IL',
+  IN = 'IN',
+  KS = 'KS',
+  KY = 'KY',
+  LA = 'LA',
+  MA = 'MA',
+  MD = 'MD',
+  ME = 'ME',
+  MI = 'MI',
+  MN = 'MN',
+  MO = 'MO',
+  MP = 'MP',
+  MS = 'MS',
+  MT = 'MT',
+  NC = 'NC',
+  ND = 'ND',
+  NE = 'NE',
+  NH = 'NH',
+  NJ = 'NJ',
+  NM = 'NM',
+  NV = 'NV',
+  NY = 'NY',
+  OH = 'OH',
+  OK = 'OK',
+  OR = 'OR',
+  PA = 'PA',
+  PR = 'PR',
+  RI = 'RI',
+  SC = 'SC',
+  SD = 'SD',
+  TN = 'TN',
+  TX = 'TX',
+  UM = 'UM',
+  UT = 'UT',
+  VA = 'VA',
+  VI = 'VI',
+  VT = 'VT',
+  WA = 'WA',
+  WI = 'WI',
+  WV = 'WV',
+  WY = 'WY'
+}
+
 export type Subscription = {
   __typename: 'Subscription';
   onLockTaskListSectionContext: TaskListSectionLockStatusChanged;
@@ -2958,7 +3028,7 @@ export type GetAllGeneralCharacteristicsQueryVariables = Exact<{
 }>;
 
 
-export type GetAllGeneralCharacteristicsQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, generalCharacteristics: { __typename: 'PlanGeneralCharacteristics', id: UUID, isNewModel?: boolean | null, existingModel?: string | null, resemblesExistingModel?: boolean | null, resemblesExistingModelHow?: string | null, resemblesExistingModelNote?: string | null, hasComponentsOrTracks?: boolean | null, hasComponentsOrTracksDiffer?: string | null, hasComponentsOrTracksNote?: string | null, alternativePaymentModelTypes: Array<AlternativePaymentModelType>, alternativePaymentModelNote?: string | null, keyCharacteristics: Array<KeyCharacteristic>, keyCharacteristicsOther?: string | null, keyCharacteristicsNote?: string | null, collectPlanBids?: boolean | null, collectPlanBidsNote?: string | null, managePartCDEnrollment?: boolean | null, managePartCDEnrollmentNote?: string | null, planContractUpdated?: boolean | null, planContractUpdatedNote?: string | null, careCoordinationInvolved?: boolean | null, careCoordinationInvolvedDescription?: string | null, careCoordinationInvolvedNote?: string | null, additionalServicesInvolved?: boolean | null, additionalServicesInvolvedDescription?: string | null, additionalServicesInvolvedNote?: string | null, communityPartnersInvolved?: boolean | null, communityPartnersInvolvedDescription?: string | null, communityPartnersInvolvedNote?: string | null, geographiesTargeted?: boolean | null, geographiesTargetedTypes: Array<GeographyType>, geographiesTargetedTypesOther?: string | null, geographiesTargetedAppliedTo: Array<GeographyApplication>, geographiesTargetedAppliedToOther?: string | null, geographiesTargetedNote?: string | null, participationOptions?: boolean | null, participationOptionsNote?: string | null, agreementTypes: Array<AgreementType>, agreementTypesOther?: string | null, multiplePatricipationAgreementsNeeded?: boolean | null, multiplePatricipationAgreementsNeededNote?: string | null, rulemakingRequired?: boolean | null, rulemakingRequiredDescription?: string | null, rulemakingRequiredNote?: string | null, authorityAllowances: Array<AuthorityAllowance>, authorityAllowancesOther?: string | null, authorityAllowancesNote?: string | null, waiversRequired?: boolean | null, waiversRequiredTypes: Array<WaiverType>, waiversRequiredNote?: string | null, status: TaskStatus, resemblesExistingModelWhich?: { __typename: 'ExistingModelLinks', links: Array<{ __typename: 'ExistingModelLink', id?: UUID | null, existingModelID?: number | null, currentModelPlanID?: UUID | null, fieldName: ExisitingModelLinkFieldType, model: { __typename: 'ExistingModel', modelName: string, stage: string, numberOfParticipants?: string | null, keywords?: string | null } | { __typename: 'ModelPlan', modelName: string, abbreviation?: string | null } }> } | null } } };
+export type GetAllGeneralCharacteristicsQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, generalCharacteristics: { __typename: 'PlanGeneralCharacteristics', id: UUID, isNewModel?: boolean | null, existingModel?: string | null, resemblesExistingModel?: boolean | null, resemblesExistingModelHow?: string | null, resemblesExistingModelNote?: string | null, hasComponentsOrTracks?: boolean | null, hasComponentsOrTracksDiffer?: string | null, hasComponentsOrTracksNote?: string | null, alternativePaymentModelTypes: Array<AlternativePaymentModelType>, alternativePaymentModelNote?: string | null, keyCharacteristics: Array<KeyCharacteristic>, keyCharacteristicsOther?: string | null, keyCharacteristicsNote?: string | null, collectPlanBids?: boolean | null, collectPlanBidsNote?: string | null, managePartCDEnrollment?: boolean | null, managePartCDEnrollmentNote?: string | null, planContractUpdated?: boolean | null, planContractUpdatedNote?: string | null, careCoordinationInvolved?: boolean | null, careCoordinationInvolvedDescription?: string | null, careCoordinationInvolvedNote?: string | null, additionalServicesInvolved?: boolean | null, additionalServicesInvolvedDescription?: string | null, additionalServicesInvolvedNote?: string | null, communityPartnersInvolved?: boolean | null, communityPartnersInvolvedDescription?: string | null, communityPartnersInvolvedNote?: string | null, geographiesTargeted?: boolean | null, geographiesTargetedTypes: Array<GeographyType>, geographiesStatesAndTerritories: Array<StatesAndTerritories>, geographiesRegionTypes: Array<GeographyRegionType>, geographiesTargetedTypesOther?: string | null, geographiesTargetedAppliedTo: Array<GeographyApplication>, geographiesTargetedAppliedToOther?: string | null, geographiesTargetedNote?: string | null, participationOptions?: boolean | null, participationOptionsNote?: string | null, agreementTypes: Array<AgreementType>, agreementTypesOther?: string | null, multiplePatricipationAgreementsNeeded?: boolean | null, multiplePatricipationAgreementsNeededNote?: string | null, rulemakingRequired?: boolean | null, rulemakingRequiredDescription?: string | null, rulemakingRequiredNote?: string | null, authorityAllowances: Array<AuthorityAllowance>, authorityAllowancesOther?: string | null, authorityAllowancesNote?: string | null, waiversRequired?: boolean | null, waiversRequiredTypes: Array<WaiverType>, waiversRequiredNote?: string | null, status: TaskStatus, resemblesExistingModelWhich?: { __typename: 'ExistingModelLinks', links: Array<{ __typename: 'ExistingModelLink', id?: UUID | null, existingModelID?: number | null, currentModelPlanID?: UUID | null, fieldName: ExisitingModelLinkFieldType, model: { __typename: 'ExistingModel', modelName: string, stage: string, numberOfParticipants?: string | null, keywords?: string | null } | { __typename: 'ModelPlan', modelName: string, abbreviation?: string | null } }> } | null } } };
 
 export type GetAuthorityQueryVariables = Exact<{
   id: Scalars['UUID']['input'];
@@ -2993,7 +3063,7 @@ export type GetTargetsAndOptionsQueryVariables = Exact<{
 }>;
 
 
-export type GetTargetsAndOptionsQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, generalCharacteristics: { __typename: 'PlanGeneralCharacteristics', id: UUID, geographiesTargeted?: boolean | null, geographiesTargetedTypes: Array<GeographyType>, geographiesTargetedTypesOther?: string | null, geographiesTargetedAppliedTo: Array<GeographyApplication>, geographiesTargetedAppliedToOther?: string | null, geographiesTargetedNote?: string | null, participationOptions?: boolean | null, participationOptionsNote?: string | null, agreementTypes: Array<AgreementType>, agreementTypesOther?: string | null, multiplePatricipationAgreementsNeeded?: boolean | null, multiplePatricipationAgreementsNeededNote?: string | null }, operationalNeeds: Array<{ __typename: 'OperationalNeed', id: UUID, modifiedDts?: Time | null }> } };
+export type GetTargetsAndOptionsQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, generalCharacteristics: { __typename: 'PlanGeneralCharacteristics', id: UUID, geographiesTargeted?: boolean | null, geographiesTargetedTypes: Array<GeographyType>, geographiesStatesAndTerritories: Array<StatesAndTerritories>, geographiesRegionTypes: Array<GeographyRegionType>, geographiesTargetedTypesOther?: string | null, geographiesTargetedAppliedTo: Array<GeographyApplication>, geographiesTargetedAppliedToOther?: string | null, geographiesTargetedNote?: string | null, participationOptions?: boolean | null, participationOptionsNote?: string | null, agreementTypes: Array<AgreementType>, agreementTypesOther?: string | null, multiplePatricipationAgreementsNeeded?: boolean | null, multiplePatricipationAgreementsNeededNote?: string | null }, operationalNeeds: Array<{ __typename: 'OperationalNeed', id: UUID, modifiedDts?: Time | null }> } };
 
 export type UpdateExistingModelLinksMutationVariables = Exact<{
   modelPlanID: Scalars['UUID']['input'];
@@ -4508,6 +4578,8 @@ export const GetAllGeneralCharacteristicsDocument = gql`
       communityPartnersInvolvedNote
       geographiesTargeted
       geographiesTargetedTypes
+      geographiesStatesAndTerritories
+      geographiesRegionTypes
       geographiesTargetedTypesOther
       geographiesTargetedAppliedTo
       geographiesTargetedAppliedToOther
@@ -4817,6 +4889,8 @@ export const GetTargetsAndOptionsDocument = gql`
       id
       geographiesTargeted
       geographiesTargetedTypes
+      geographiesStatesAndTerritories
+      geographiesRegionTypes
       geographiesTargetedTypesOther
       geographiesTargetedAppliedTo
       geographiesTargetedAppliedToOther

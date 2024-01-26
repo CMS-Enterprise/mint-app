@@ -5,11 +5,15 @@ import {
   useGetAllGeneralCharacteristicsQuery
 } from 'gql/gen/graphql';
 
+import usePlanTranslation from 'hooks/usePlanTranslation';
 import { ModelInfoContext } from 'views/ModelInfoWrapper';
 import { NotFoundPartial } from 'views/NotFound';
 
 import { checkGroupMap } from '../_components/FilterView/util';
-import ReadOnlySection from '../_components/ReadOnlySection';
+import ReadOnlySection, {
+  formatListItems,
+  formatListOtherItems
+} from '../_components/ReadOnlySection';
 import SideBySideReadOnlySection from '../_components/SideBySideReadOnlySection';
 import TitleAndStatus from '../_components/TitleAndStatus';
 import { ReadOnlyProps } from '../ModelBasics';
@@ -28,6 +32,11 @@ const ReadOnlyGeneralCharacteristics = ({
     'generalCharacteristicsMisc'
   );
   const { t: prepareForClearanceT } = useTranslation('prepareForClearance');
+
+  const {
+    geographiesTargetedTypes: geographiesTargetedTypesConfig,
+    geographiesTargetedAppliedTo: geographiesTargetedAppliedToConfig
+  } = usePlanTranslation('generalCharacteristics');
 
   const { modelName } = useContext(ModelInfoContext);
 
@@ -82,6 +91,8 @@ const ReadOnlyGeneralCharacteristics = ({
     communityPartnersInvolvedNote,
     geographiesTargeted,
     geographiesTargetedTypes,
+    geographiesStatesAndTerritories,
+    geographiesRegionTypes,
     geographiesTargetedTypesOther,
     geographiesTargetedAppliedTo,
     geographiesTargetedAppliedToOther,
@@ -454,33 +465,59 @@ const ReadOnlyGeneralCharacteristics = ({
           isViewingFilteredView,
           filteredQuestions,
           'geographiesTargetedTypes',
-          <SideBySideReadOnlySection
-            firstSection={{
-              heading: generalCharacteristicsT(
-                'geographiesTargetedTypes.label'
-              ),
-              list: true,
-              listItems: geographiesTargetedTypes?.map((type): string =>
-                generalCharacteristicsT(
-                  `geographiesTargetedTypes.options.${type}`
-                )
-              ),
-              listOtherItem: geographiesTargetedTypesOther
-            }}
-            secondSection={{
-              heading: generalCharacteristicsT(
-                'geographiesTargetedAppliedTo.label'
-              ),
-              list: true,
-              listItems: geographiesTargetedAppliedTo?.map((type): string =>
-                generalCharacteristicsT(
-                  `geographiesTargetedAppliedTo.options.${type}`
-                )
-              ),
-              listOtherItem: geographiesTargetedAppliedToOther
-            }}
+          <ReadOnlySection
+            heading={generalCharacteristicsT('geographiesTargetedTypes.label')}
+            list
+            listItems={formatListItems(
+              geographiesTargetedTypesConfig,
+              geographiesTargetedTypes
+            )}
+            listOtherItems={formatListOtherItems(
+              geographiesTargetedTypesConfig,
+              geographiesTargetedTypes,
+              {
+                geographiesStatesAndTerritories: geographiesStatesAndTerritories
+                  ?.map(
+                    state =>
+                      generalCharacteristicsT(
+                        `geographiesStatesAndTerritories.options.${state}`
+                      ).split(' - ')[1]
+                  )
+                  .join(', '),
+                geographiesRegionTypes:
+                  geographiesRegionTypes?.length !== 0 &&
+                  geographiesRegionTypes?.map(region => {
+                    return (
+                      <li key={region}>
+                        {generalCharacteristicsT(
+                          `geographiesRegionTypes.options.${region}`
+                        )}
+                      </li>
+                    );
+                  }),
+                geographiesTargetedTypesOther
+              }
+            )}
           />
         )}
+
+        {checkGroupMap(
+          isViewingFilteredView,
+          filteredQuestions,
+          'geographiesTargetedTypes',
+          <ReadOnlySection
+            heading={generalCharacteristicsT(
+              'geographiesTargetedAppliedTo.label'
+            )}
+            list
+            listItems={formatListItems(
+              geographiesTargetedAppliedToConfig,
+              geographiesTargetedAppliedTo
+            )}
+            listOtherItem={geographiesTargetedAppliedToOther}
+          />
+        )}
+
         {checkGroupMap(
           isViewingFilteredView,
           filteredQuestions,
