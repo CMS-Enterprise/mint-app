@@ -156,12 +156,12 @@ exports[`Model Plan Basics page > disables and clears checkbox when user selects
                   </div>
                   <div
                     class="usa-form-group margin-top-4"
-                    data-scroll="abbreviation"
+                    data-scroll="plan-basics-abbreviation"
                   >
                     <label
                       class="usa-label"
                       data-testid="label"
-                      for="plan-basics-model-name"
+                      for="plan-basics-abbreviation"
                     >
                       Short name
                     </label>
@@ -214,7 +214,7 @@ exports[`Model Plan Basics page > disables and clears checkbox when user selects
                       >
                         <div
                           class="usa-form-group margin-top-0"
-                          data-scroll="basics.amsModelID"
+                          data-scroll="plan-basics-ams-model-id"
                         >
                           <label
                             class="usa-label"
@@ -239,7 +239,7 @@ exports[`Model Plan Basics page > disables and clears checkbox when user selects
                       >
                         <div
                           class="usa-form-group margin-top-0"
-                          data-scroll="basics.demoCode"
+                          data-scroll="plan-basics-demo-code"
                         >
                           <label
                             class="usa-label"
@@ -262,7 +262,7 @@ exports[`Model Plan Basics page > disables and clears checkbox when user selects
                   </div>
                   <div
                     class="usa-form-group margin-top-4"
-                    data-scroll="modelCategory"
+                    data-scroll="plan-basics-model-category"
                   >
                     <label
                       class="usa-label"
@@ -675,11 +675,12 @@ exports[`Model Plan Basics page > disables and clears checkbox when user selects
                   </div>
                   <div
                     class="usa-form-group margin-top-4"
+                    data-scroll="plan-basics-model-additional-category"
                   >
                     <label
                       class="usa-label text-normal"
                       data-testid="label"
-                      for="basics.additionalModelCategories"
+                      for="plan-basics-model-additional-category"
                     >
                       Additional model categories
                     </label>
@@ -1070,154 +1071,150 @@ exports[`Model Plan Basics page > disables and clears checkbox when user selects
                   </div>
                   <div
                     class="usa-form-group margin-top-4"
-                    data-scroll="cmsCenters"
+                    data-scroll="new-plan-cmsCenters"
                   >
-                    <fieldset
-                      class="usa-fieldset"
-                      data-testid="fieldset"
+                    <label
+                      class="usa-label"
+                      data-testid="label"
+                      for="new-plan-cmsCenters"
                     >
+                      CMS component
+                      <span
+                        aria-label="(Field required)"
+                        class="text-red margin-x-05"
+                      >
+                        *
+                      </span>
+                    </label>
+                    <div
+                      class="mint-checkbox usa-checkbox"
+                    >
+                      <input
+                        class="usa-checkbox__input"
+                        id="new-plan-cmsCenters-CMMI"
+                        name="basics.cmsCenters"
+                        type="checkbox"
+                        value="CMMI"
+                      />
                       <label
-                        class="usa-label"
-                        data-testid="label"
-                        for="plan-basics-cmsCenters"
+                        class="usa-checkbox__label"
+                        for="new-plan-cmsCenters-CMMI"
                       >
-                        CMS component
-                        <span
-                          aria-label="(Field required)"
-                          class="text-red margin-x-05"
-                        >
-                          *
-                        </span>
+                        Center for Medicare and Medicaid Innovation (CMMI)
                       </label>
-                      <div
-                        class="mint-checkbox usa-checkbox"
+                      <p
+                        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                      />
+                    </div>
+                    <div
+                      class="mint-checkbox usa-checkbox"
+                    >
+                      <input
+                        class="usa-checkbox__input"
+                        id="new-plan-cmsCenters-CENTER_FOR_CLINICAL_STANDARDS_AND_QUALITY"
+                        name="basics.cmsCenters"
+                        type="checkbox"
+                        value="CENTER_FOR_CLINICAL_STANDARDS_AND_QUALITY"
+                      />
+                      <label
+                        class="usa-checkbox__label"
+                        for="new-plan-cmsCenters-CENTER_FOR_CLINICAL_STANDARDS_AND_QUALITY"
                       >
-                        <input
-                          class="usa-checkbox__input"
-                          id="new-plan-cmsCenters-CMMI"
-                          name="basics.cmsCenters"
-                          type="checkbox"
-                          value="CMMI"
-                        />
-                        <label
-                          class="usa-checkbox__label"
-                          for="new-plan-cmsCenters-CMMI"
-                        >
-                          Center for Medicare and Medicaid Innovation (CMMI)
-                        </label>
-                        <p
-                          class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
-                        />
-                      </div>
-                      <div
-                        class="mint-checkbox usa-checkbox"
+                        Center for Clinical Standards and Quality (CCSQ)
+                      </label>
+                      <p
+                        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                      />
+                    </div>
+                    <div
+                      class="mint-checkbox usa-checkbox"
+                    >
+                      <input
+                        class="usa-checkbox__input"
+                        id="new-plan-cmsCenters-CENTER_FOR_MEDICAID_AND_CHIP_SERVICES"
+                        name="basics.cmsCenters"
+                        type="checkbox"
+                        value="CENTER_FOR_MEDICAID_AND_CHIP_SERVICES"
+                      />
+                      <label
+                        class="usa-checkbox__label"
+                        for="new-plan-cmsCenters-CENTER_FOR_MEDICAID_AND_CHIP_SERVICES"
                       >
-                        <input
-                          class="usa-checkbox__input"
-                          id="new-plan-cmsCenters-CENTER_FOR_CLINICAL_STANDARDS_AND_QUALITY"
-                          name="basics.cmsCenters"
-                          type="checkbox"
-                          value="CENTER_FOR_CLINICAL_STANDARDS_AND_QUALITY"
-                        />
-                        <label
-                          class="usa-checkbox__label"
-                          for="new-plan-cmsCenters-CENTER_FOR_CLINICAL_STANDARDS_AND_QUALITY"
-                        >
-                          Center for Clinical Standards and Quality (CCSQ)
-                        </label>
-                        <p
-                          class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
-                        />
-                      </div>
-                      <div
-                        class="mint-checkbox usa-checkbox"
+                        Center for Medicaid and CHIP Services (CMCS)
+                      </label>
+                      <p
+                        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                      />
+                    </div>
+                    <div
+                      class="mint-checkbox usa-checkbox"
+                    >
+                      <input
+                        class="usa-checkbox__input"
+                        id="new-plan-cmsCenters-CENTER_FOR_MEDICARE"
+                        name="basics.cmsCenters"
+                        type="checkbox"
+                        value="CENTER_FOR_MEDICARE"
+                      />
+                      <label
+                        class="usa-checkbox__label"
+                        for="new-plan-cmsCenters-CENTER_FOR_MEDICARE"
                       >
-                        <input
-                          class="usa-checkbox__input"
-                          id="new-plan-cmsCenters-CENTER_FOR_MEDICAID_AND_CHIP_SERVICES"
-                          name="basics.cmsCenters"
-                          type="checkbox"
-                          value="CENTER_FOR_MEDICAID_AND_CHIP_SERVICES"
-                        />
-                        <label
-                          class="usa-checkbox__label"
-                          for="new-plan-cmsCenters-CENTER_FOR_MEDICAID_AND_CHIP_SERVICES"
-                        >
-                          Center for Medicaid and CHIP Services (CMCS)
-                        </label>
-                        <p
-                          class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
-                        />
-                      </div>
-                      <div
-                        class="mint-checkbox usa-checkbox"
+                        Center for Medicare (CM)
+                      </label>
+                      <p
+                        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                      />
+                    </div>
+                    <div
+                      class="mint-checkbox usa-checkbox"
+                    >
+                      <input
+                        class="usa-checkbox__input"
+                        id="new-plan-cmsCenters-FEDERAL_COORDINATED_HEALTH_CARE_OFFICE"
+                        name="basics.cmsCenters"
+                        type="checkbox"
+                        value="FEDERAL_COORDINATED_HEALTH_CARE_OFFICE"
+                      />
+                      <label
+                        class="usa-checkbox__label"
+                        for="new-plan-cmsCenters-FEDERAL_COORDINATED_HEALTH_CARE_OFFICE"
                       >
-                        <input
-                          class="usa-checkbox__input"
-                          id="new-plan-cmsCenters-CENTER_FOR_MEDICARE"
-                          name="basics.cmsCenters"
-                          type="checkbox"
-                          value="CENTER_FOR_MEDICARE"
-                        />
-                        <label
-                          class="usa-checkbox__label"
-                          for="new-plan-cmsCenters-CENTER_FOR_MEDICARE"
-                        >
-                          Center for Medicare (CM)
-                        </label>
-                        <p
-                          class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
-                        />
-                      </div>
-                      <div
-                        class="mint-checkbox usa-checkbox"
+                        Federal Coordinated Health Care Office (FCHCO)
+                      </label>
+                      <p
+                        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                      />
+                    </div>
+                    <div
+                      class="mint-checkbox usa-checkbox"
+                    >
+                      <input
+                        class="usa-checkbox__input"
+                        id="new-plan-cmsCenters-CENTER_FOR_PROGRAM_INTEGRITY"
+                        name="basics.cmsCenters"
+                        type="checkbox"
+                        value="CENTER_FOR_PROGRAM_INTEGRITY"
+                      />
+                      <label
+                        class="usa-checkbox__label"
+                        for="new-plan-cmsCenters-CENTER_FOR_PROGRAM_INTEGRITY"
                       >
-                        <input
-                          class="usa-checkbox__input"
-                          id="new-plan-cmsCenters-FEDERAL_COORDINATED_HEALTH_CARE_OFFICE"
-                          name="basics.cmsCenters"
-                          type="checkbox"
-                          value="FEDERAL_COORDINATED_HEALTH_CARE_OFFICE"
-                        />
-                        <label
-                          class="usa-checkbox__label"
-                          for="new-plan-cmsCenters-FEDERAL_COORDINATED_HEALTH_CARE_OFFICE"
-                        >
-                          Federal Coordinated Health Care Office (FCHCO)
-                        </label>
-                        <p
-                          class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
-                        />
-                      </div>
-                      <div
-                        class="mint-checkbox usa-checkbox"
-                      >
-                        <input
-                          class="usa-checkbox__input"
-                          id="new-plan-cmsCenters-CENTER_FOR_PROGRAM_INTEGRITY"
-                          name="basics.cmsCenters"
-                          type="checkbox"
-                          value="CENTER_FOR_PROGRAM_INTEGRITY"
-                        />
-                        <label
-                          class="usa-checkbox__label"
-                          for="new-plan-cmsCenters-CENTER_FOR_PROGRAM_INTEGRITY"
-                        >
-                          Center for Program Integrity (CPI)
-                        </label>
-                        <p
-                          class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
-                        />
-                      </div>
-                    </fieldset>
+                        Center for Program Integrity (CPI)
+                      </label>
+                      <p
+                        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                      />
+                    </div>
                   </div>
                   <div
                     class="usa-form-group margin-top-4"
+                    data-scroll="new-plan-cmmiGroup"
                   >
                     <label
                       class="usa-label text-normal"
                       data-testid="label"
-                      for="basics.cmmiGroups"
+                      for="new-plan-cmmiGroup"
                     >
                       CMMI Group
                     </label>
@@ -1572,12 +1569,12 @@ exports[`Model Plan Basics page > matches snapshot 1`] = `
                   </div>
                   <div
                     class="usa-form-group margin-top-4"
-                    data-scroll="abbreviation"
+                    data-scroll="plan-basics-abbreviation"
                   >
                     <label
                       class="usa-label"
                       data-testid="label"
-                      for="plan-basics-model-name"
+                      for="plan-basics-abbreviation"
                     >
                       Short name
                     </label>
@@ -1630,7 +1627,7 @@ exports[`Model Plan Basics page > matches snapshot 1`] = `
                       >
                         <div
                           class="usa-form-group margin-top-0"
-                          data-scroll="basics.amsModelID"
+                          data-scroll="plan-basics-ams-model-id"
                         >
                           <label
                             class="usa-label"
@@ -1655,7 +1652,7 @@ exports[`Model Plan Basics page > matches snapshot 1`] = `
                       >
                         <div
                           class="usa-form-group margin-top-0"
-                          data-scroll="basics.demoCode"
+                          data-scroll="plan-basics-demo-code"
                         >
                           <label
                             class="usa-label"
@@ -1678,7 +1675,7 @@ exports[`Model Plan Basics page > matches snapshot 1`] = `
                   </div>
                   <div
                     class="usa-form-group margin-top-4"
-                    data-scroll="modelCategory"
+                    data-scroll="plan-basics-model-category"
                   >
                     <label
                       class="usa-label"
@@ -2091,11 +2088,12 @@ exports[`Model Plan Basics page > matches snapshot 1`] = `
                   </div>
                   <div
                     class="usa-form-group margin-top-4"
+                    data-scroll="plan-basics-model-additional-category"
                   >
                     <label
                       class="usa-label text-normal"
                       data-testid="label"
-                      for="basics.additionalModelCategories"
+                      for="plan-basics-model-additional-category"
                     >
                       Additional model categories
                     </label>
@@ -2486,154 +2484,150 @@ exports[`Model Plan Basics page > matches snapshot 1`] = `
                   </div>
                   <div
                     class="usa-form-group margin-top-4"
-                    data-scroll="cmsCenters"
+                    data-scroll="new-plan-cmsCenters"
                   >
-                    <fieldset
-                      class="usa-fieldset"
-                      data-testid="fieldset"
+                    <label
+                      class="usa-label"
+                      data-testid="label"
+                      for="new-plan-cmsCenters"
                     >
+                      CMS component
+                      <span
+                        aria-label="(Field required)"
+                        class="text-red margin-x-05"
+                      >
+                        *
+                      </span>
+                    </label>
+                    <div
+                      class="mint-checkbox usa-checkbox"
+                    >
+                      <input
+                        class="usa-checkbox__input"
+                        id="new-plan-cmsCenters-CMMI"
+                        name="basics.cmsCenters"
+                        type="checkbox"
+                        value="CMMI"
+                      />
                       <label
-                        class="usa-label"
-                        data-testid="label"
-                        for="plan-basics-cmsCenters"
+                        class="usa-checkbox__label"
+                        for="new-plan-cmsCenters-CMMI"
                       >
-                        CMS component
-                        <span
-                          aria-label="(Field required)"
-                          class="text-red margin-x-05"
-                        >
-                          *
-                        </span>
+                        Center for Medicare and Medicaid Innovation (CMMI)
                       </label>
-                      <div
-                        class="mint-checkbox usa-checkbox"
+                      <p
+                        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                      />
+                    </div>
+                    <div
+                      class="mint-checkbox usa-checkbox"
+                    >
+                      <input
+                        class="usa-checkbox__input"
+                        id="new-plan-cmsCenters-CENTER_FOR_CLINICAL_STANDARDS_AND_QUALITY"
+                        name="basics.cmsCenters"
+                        type="checkbox"
+                        value="CENTER_FOR_CLINICAL_STANDARDS_AND_QUALITY"
+                      />
+                      <label
+                        class="usa-checkbox__label"
+                        for="new-plan-cmsCenters-CENTER_FOR_CLINICAL_STANDARDS_AND_QUALITY"
                       >
-                        <input
-                          class="usa-checkbox__input"
-                          id="new-plan-cmsCenters-CMMI"
-                          name="basics.cmsCenters"
-                          type="checkbox"
-                          value="CMMI"
-                        />
-                        <label
-                          class="usa-checkbox__label"
-                          for="new-plan-cmsCenters-CMMI"
-                        >
-                          Center for Medicare and Medicaid Innovation (CMMI)
-                        </label>
-                        <p
-                          class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
-                        />
-                      </div>
-                      <div
-                        class="mint-checkbox usa-checkbox"
+                        Center for Clinical Standards and Quality (CCSQ)
+                      </label>
+                      <p
+                        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                      />
+                    </div>
+                    <div
+                      class="mint-checkbox usa-checkbox"
+                    >
+                      <input
+                        class="usa-checkbox__input"
+                        id="new-plan-cmsCenters-CENTER_FOR_MEDICAID_AND_CHIP_SERVICES"
+                        name="basics.cmsCenters"
+                        type="checkbox"
+                        value="CENTER_FOR_MEDICAID_AND_CHIP_SERVICES"
+                      />
+                      <label
+                        class="usa-checkbox__label"
+                        for="new-plan-cmsCenters-CENTER_FOR_MEDICAID_AND_CHIP_SERVICES"
                       >
-                        <input
-                          class="usa-checkbox__input"
-                          id="new-plan-cmsCenters-CENTER_FOR_CLINICAL_STANDARDS_AND_QUALITY"
-                          name="basics.cmsCenters"
-                          type="checkbox"
-                          value="CENTER_FOR_CLINICAL_STANDARDS_AND_QUALITY"
-                        />
-                        <label
-                          class="usa-checkbox__label"
-                          for="new-plan-cmsCenters-CENTER_FOR_CLINICAL_STANDARDS_AND_QUALITY"
-                        >
-                          Center for Clinical Standards and Quality (CCSQ)
-                        </label>
-                        <p
-                          class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
-                        />
-                      </div>
-                      <div
-                        class="mint-checkbox usa-checkbox"
+                        Center for Medicaid and CHIP Services (CMCS)
+                      </label>
+                      <p
+                        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                      />
+                    </div>
+                    <div
+                      class="mint-checkbox usa-checkbox"
+                    >
+                      <input
+                        class="usa-checkbox__input"
+                        id="new-plan-cmsCenters-CENTER_FOR_MEDICARE"
+                        name="basics.cmsCenters"
+                        type="checkbox"
+                        value="CENTER_FOR_MEDICARE"
+                      />
+                      <label
+                        class="usa-checkbox__label"
+                        for="new-plan-cmsCenters-CENTER_FOR_MEDICARE"
                       >
-                        <input
-                          class="usa-checkbox__input"
-                          id="new-plan-cmsCenters-CENTER_FOR_MEDICAID_AND_CHIP_SERVICES"
-                          name="basics.cmsCenters"
-                          type="checkbox"
-                          value="CENTER_FOR_MEDICAID_AND_CHIP_SERVICES"
-                        />
-                        <label
-                          class="usa-checkbox__label"
-                          for="new-plan-cmsCenters-CENTER_FOR_MEDICAID_AND_CHIP_SERVICES"
-                        >
-                          Center for Medicaid and CHIP Services (CMCS)
-                        </label>
-                        <p
-                          class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
-                        />
-                      </div>
-                      <div
-                        class="mint-checkbox usa-checkbox"
+                        Center for Medicare (CM)
+                      </label>
+                      <p
+                        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                      />
+                    </div>
+                    <div
+                      class="mint-checkbox usa-checkbox"
+                    >
+                      <input
+                        class="usa-checkbox__input"
+                        id="new-plan-cmsCenters-FEDERAL_COORDINATED_HEALTH_CARE_OFFICE"
+                        name="basics.cmsCenters"
+                        type="checkbox"
+                        value="FEDERAL_COORDINATED_HEALTH_CARE_OFFICE"
+                      />
+                      <label
+                        class="usa-checkbox__label"
+                        for="new-plan-cmsCenters-FEDERAL_COORDINATED_HEALTH_CARE_OFFICE"
                       >
-                        <input
-                          class="usa-checkbox__input"
-                          id="new-plan-cmsCenters-CENTER_FOR_MEDICARE"
-                          name="basics.cmsCenters"
-                          type="checkbox"
-                          value="CENTER_FOR_MEDICARE"
-                        />
-                        <label
-                          class="usa-checkbox__label"
-                          for="new-plan-cmsCenters-CENTER_FOR_MEDICARE"
-                        >
-                          Center for Medicare (CM)
-                        </label>
-                        <p
-                          class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
-                        />
-                      </div>
-                      <div
-                        class="mint-checkbox usa-checkbox"
+                        Federal Coordinated Health Care Office (FCHCO)
+                      </label>
+                      <p
+                        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                      />
+                    </div>
+                    <div
+                      class="mint-checkbox usa-checkbox"
+                    >
+                      <input
+                        class="usa-checkbox__input"
+                        id="new-plan-cmsCenters-CENTER_FOR_PROGRAM_INTEGRITY"
+                        name="basics.cmsCenters"
+                        type="checkbox"
+                        value="CENTER_FOR_PROGRAM_INTEGRITY"
+                      />
+                      <label
+                        class="usa-checkbox__label"
+                        for="new-plan-cmsCenters-CENTER_FOR_PROGRAM_INTEGRITY"
                       >
-                        <input
-                          class="usa-checkbox__input"
-                          id="new-plan-cmsCenters-FEDERAL_COORDINATED_HEALTH_CARE_OFFICE"
-                          name="basics.cmsCenters"
-                          type="checkbox"
-                          value="FEDERAL_COORDINATED_HEALTH_CARE_OFFICE"
-                        />
-                        <label
-                          class="usa-checkbox__label"
-                          for="new-plan-cmsCenters-FEDERAL_COORDINATED_HEALTH_CARE_OFFICE"
-                        >
-                          Federal Coordinated Health Care Office (FCHCO)
-                        </label>
-                        <p
-                          class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
-                        />
-                      </div>
-                      <div
-                        class="mint-checkbox usa-checkbox"
-                      >
-                        <input
-                          class="usa-checkbox__input"
-                          id="new-plan-cmsCenters-CENTER_FOR_PROGRAM_INTEGRITY"
-                          name="basics.cmsCenters"
-                          type="checkbox"
-                          value="CENTER_FOR_PROGRAM_INTEGRITY"
-                        />
-                        <label
-                          class="usa-checkbox__label"
-                          for="new-plan-cmsCenters-CENTER_FOR_PROGRAM_INTEGRITY"
-                        >
-                          Center for Program Integrity (CPI)
-                        </label>
-                        <p
-                          class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
-                        />
-                      </div>
-                    </fieldset>
+                        Center for Program Integrity (CPI)
+                      </label>
+                      <p
+                        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                      />
+                    </div>
                   </div>
                   <div
                     class="usa-form-group margin-top-4"
+                    data-scroll="new-plan-cmmiGroup"
                   >
                     <label
                       class="usa-label text-normal"
                       data-testid="label"
-                      for="basics.cmmiGroups"
+                      for="new-plan-cmmiGroup"
                     >
                       CMMI Group
                     </label>

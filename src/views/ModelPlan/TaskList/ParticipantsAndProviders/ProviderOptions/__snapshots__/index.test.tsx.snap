@@ -274,7 +274,7 @@ exports[`Model Plan ProviderOptions > matches snapshot 1`] = `
       </div>
       <div
         class="usa-form-group margin-top-4"
-        data-scroll="providerAddMethod"
+        data-scroll="participants-and-providers-provider-add-method"
       >
         <label
           class="usa-label"
@@ -440,7 +440,7 @@ exports[`Model Plan ProviderOptions > matches snapshot 1`] = `
         </div>
         <div
           class="usa-form-group"
-          data-scroll="providerAddMethodOther"
+          data-scroll="participants-and-providers-provider-add-method-other"
         >
           <label
             class="usa-label text-normal"
@@ -487,13 +487,15 @@ exports[`Model Plan ProviderOptions > matches snapshot 1`] = `
       </div>
       <div
         class="usa-form-group margin-top-4"
-        data-scroll="providerLeaveMethod"
+        data-scroll="participants-and-providers-leave-method"
       >
-        <legend
+        <label
           class="usa-label"
+          data-testid="label"
+          for="participants-and-providers-leave-method"
         >
           Can providers leave the model? Select all that apply.
-        </legend>
+        </label>
         <p
           class="text-base margin-top-1 margin-bottom-0 line-height-body-3"
         >
@@ -821,7 +823,7 @@ exports[`Model Plan ProviderOptions > matches snapshot 1`] = `
       </div>
       <div
         class="usa-form-group margin-y-4 margin-bottom-8"
-        data-scroll="providerOverlap"
+        data-scroll="participants-and-providers-provider-overlap"
       >
         <label
           class="usa-label"

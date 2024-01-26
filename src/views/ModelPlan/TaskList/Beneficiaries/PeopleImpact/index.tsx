@@ -205,7 +205,7 @@ const PeopleImpact = () => {
                     >
                       <Fieldset disabled={!!error || loading}>
                         <FieldGroup
-                          scrollElement="numberPeopleImpacted"
+                          scrollElement="expected-people-impacted"
                           error={!!flatErrors.numberPeopleImpacted}
                         >
                           <Label htmlFor="expected-people-impacted">
@@ -293,9 +293,6 @@ const PeopleImpact = () => {
                                   label={estimateConfidenceConfig.options[key]}
                                   value={key}
                                   checked={values.estimateConfidence === key}
-                                  onChange={() => {
-                                    setFieldValue('estimateConfidence', key);
-                                  }}
                                 />
                               )
                             )}

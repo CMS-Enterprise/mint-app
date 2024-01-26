@@ -111,12 +111,12 @@ exports[`Model Plan -- Complexity > matches snapshot 1`] = `
           >
             <div
               class="usa-form-group margin-top-4"
-              data-scroll="expectedCalculationComplexityLevel"
+              data-scroll="payment-complexity"
             >
               <label
                 class="usa-label maxw-none"
                 data-testid="label"
-                for="expectedCalculationComplexityLevel"
+                for="payment-complexity"
               >
                 What level of complexity do you expect calculations to be?
               </label>
@@ -210,7 +210,7 @@ exports[`Model Plan -- Complexity > matches snapshot 1`] = `
             </div>
             <div
               class="usa-form-group margin-y-4 margin-bottom-8"
-              data-scroll="claimsProcessingPrecedence"
+              data-scroll="payment-claims-processing-precendece"
             >
               <label
                 class="usa-label"
@@ -312,12 +312,12 @@ exports[`Model Plan -- Complexity > matches snapshot 1`] = `
             </div>
             <div
               class="usa-form-group margin-top-4"
-              data-scroll="canParticipantsSelectBetweenPaymentMechanisms"
+              data-scroll="payment-multiple-payments"
             >
               <label
                 class="usa-label maxw-none"
                 data-testid="label"
-                for="canParticipantsSelectBetweenPaymentMechanisms"
+                for="payment-multiple-payments"
               >
                 Will participants be allowed to select between multiple payment mechanisms?
               </label>
