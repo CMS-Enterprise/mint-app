@@ -14,6 +14,10 @@ migration_versions_unique=$(echo "$migration_versions" | uniq)
 count_of_migrations=$(echo "$migration_versions" | wc -l)
 count_of_uniq_migrations=$(echo "$migration_versions_unique" | wc -l)
 
+# Print out results
+echo "Detected $count_of_migrations migrations."
+echo "Detected $count_of_uniq_migrations unique migrations."
+
 # If the number of migrations is not equal to the number of unique migrations,
 # then there are duplicate migrations.
 if [ "$count_of_migrations" -ne "$count_of_uniq_migrations" ]; then
