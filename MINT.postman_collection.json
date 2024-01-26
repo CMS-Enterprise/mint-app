@@ -1,10 +1,6 @@
 {
 	"info": {
-<<<<<<< HEAD
-		"_postman_id": "40c238ad-6410-46e8-8e01-fad116dd34a2",
-=======
 		"_postman_id": "e23e8f12-f5f3-4ec1-a657-f55753705490",
->>>>>>> main
 		"name": "MINT",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "22120875"
