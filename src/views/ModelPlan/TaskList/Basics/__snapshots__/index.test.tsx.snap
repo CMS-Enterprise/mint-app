@@ -156,12 +156,12 @@ exports[`Model Plan Basics page > disables and clears checkbox when user selects
                   </div>
                   <div
                     class="usa-form-group margin-top-4"
-                    data-scroll="abbreviation"
+                    data-scroll="plan-basics-abbreviation"
                   >
                     <label
                       class="usa-label"
                       data-testid="label"
-                      for="plan-basics-model-name"
+                      for="plan-basics-abbreviation"
                     >
                       Short name
                     </label>
@@ -214,7 +214,7 @@ exports[`Model Plan Basics page > disables and clears checkbox when user selects
                       >
                         <div
                           class="usa-form-group margin-top-0"
-                          data-scroll="basics.amsModelID"
+                          data-scroll="plan-basics-ams-model-id"
                         >
                           <label
                             class="usa-label"
@@ -239,7 +239,7 @@ exports[`Model Plan Basics page > disables and clears checkbox when user selects
                       >
                         <div
                           class="usa-form-group margin-top-0"
-                          data-scroll="basics.demoCode"
+                          data-scroll="plan-basics-demo-code"
                         >
                           <label
                             class="usa-label"
@@ -262,7 +262,7 @@ exports[`Model Plan Basics page > disables and clears checkbox when user selects
                   </div>
                   <div
                     class="usa-form-group margin-top-4"
-                    data-scroll="modelCategory"
+                    data-scroll="plan-basics-model-category"
                   >
                     <label
                       class="usa-label"
@@ -675,11 +675,12 @@ exports[`Model Plan Basics page > disables and clears checkbox when user selects
                   </div>
                   <div
                     class="usa-form-group margin-top-4"
+                    data-scroll="plan-basics-model-additional-category"
                   >
                     <label
                       class="usa-label text-normal"
                       data-testid="label"
-                      for="basics.additionalModelCategories"
+                      for="plan-basics-model-additional-category"
                     >
                       Additional model categories
                     </label>
@@ -1070,12 +1071,12 @@ exports[`Model Plan Basics page > disables and clears checkbox when user selects
                   </div>
                   <div
                     class="usa-form-group margin-top-4"
-                    data-scroll="cmsCenters"
+                    data-scroll="new-plan-cmsCenters"
                   >
                     <label
                       class="usa-label"
                       data-testid="label"
-                      for="plan-basics-cmsCenters"
+                      for="new-plan-cmsCenters"
                     >
                       CMS component
                       <span
@@ -1208,11 +1209,12 @@ exports[`Model Plan Basics page > disables and clears checkbox when user selects
                   </div>
                   <div
                     class="usa-form-group margin-top-4"
+                    data-scroll="new-plan-cmmiGroup"
                   >
                     <label
                       class="usa-label text-normal"
                       data-testid="label"
-                      for="basics.cmmiGroups"
+                      for="new-plan-cmmiGroup"
                     >
                       CMMI Group
                     </label>
@@ -1567,12 +1569,12 @@ exports[`Model Plan Basics page > matches snapshot 1`] = `
                   </div>
                   <div
                     class="usa-form-group margin-top-4"
-                    data-scroll="abbreviation"
+                    data-scroll="plan-basics-abbreviation"
                   >
                     <label
                       class="usa-label"
                       data-testid="label"
-                      for="plan-basics-model-name"
+                      for="plan-basics-abbreviation"
                     >
                       Short name
                     </label>
@@ -1625,7 +1627,7 @@ exports[`Model Plan Basics page > matches snapshot 1`] = `
                       >
                         <div
                           class="usa-form-group margin-top-0"
-                          data-scroll="basics.amsModelID"
+                          data-scroll="plan-basics-ams-model-id"
                         >
                           <label
                             class="usa-label"
@@ -1650,7 +1652,7 @@ exports[`Model Plan Basics page > matches snapshot 1`] = `
                       >
                         <div
                           class="usa-form-group margin-top-0"
-                          data-scroll="basics.demoCode"
+                          data-scroll="plan-basics-demo-code"
                         >
                           <label
                             class="usa-label"
@@ -1673,7 +1675,7 @@ exports[`Model Plan Basics page > matches snapshot 1`] = `
                   </div>
                   <div
                     class="usa-form-group margin-top-4"
-                    data-scroll="modelCategory"
+                    data-scroll="plan-basics-model-category"
                   >
                     <label
                       class="usa-label"
@@ -2086,11 +2088,12 @@ exports[`Model Plan Basics page > matches snapshot 1`] = `
                   </div>
                   <div
                     class="usa-form-group margin-top-4"
+                    data-scroll="plan-basics-model-additional-category"
                   >
                     <label
                       class="usa-label text-normal"
                       data-testid="label"
-                      for="basics.additionalModelCategories"
+                      for="plan-basics-model-additional-category"
                     >
                       Additional model categories
                     </label>
@@ -2481,12 +2484,12 @@ exports[`Model Plan Basics page > matches snapshot 1`] = `
                   </div>
                   <div
                     class="usa-form-group margin-top-4"
-                    data-scroll="cmsCenters"
+                    data-scroll="new-plan-cmsCenters"
                   >
                     <label
                       class="usa-label"
                       data-testid="label"
-                      for="plan-basics-cmsCenters"
+                      for="new-plan-cmsCenters"
                     >
                       CMS component
                       <span
@@ -2619,11 +2622,12 @@ exports[`Model Plan Basics page > matches snapshot 1`] = `
                   </div>
                   <div
                     class="usa-form-group margin-top-4"
+                    data-scroll="new-plan-cmmiGroup"
                   >
                     <label
                       class="usa-label text-normal"
                       data-testid="label"
-                      for="basics.cmmiGroups"
+                      for="new-plan-cmmiGroup"
                     >
                       CMMI Group
                     </label>

@@ -122,7 +122,7 @@ exports[`Model Plan Ops Eval and Learning IDDOC > matches snapshot 1`] = `
       </div>
       <div
         class="usa-form-group margin-top-6"
-        data-scroll="uatNeeds"
+        data-scroll="ops-eval-and-learning-uat-needs"
       >
         <label
           class="usa-label"
@@ -140,7 +140,7 @@ exports[`Model Plan Ops Eval and Learning IDDOC > matches snapshot 1`] = `
       </div>
       <div
         class="usa-form-group margin-top-6"
-        data-scroll="stcNeeds"
+        data-scroll="ops-eval-and-learning-stc-needs"
       >
         <label
           class="usa-label"
@@ -161,7 +161,7 @@ exports[`Model Plan Ops Eval and Learning IDDOC > matches snapshot 1`] = `
       </div>
       <div
         class="usa-form-group margin-top-6"
-        data-scroll="testingTimelines"
+        data-scroll="ops-eval-and-learning-testing-timelines"
       >
         <label
           class="usa-label"
@@ -207,7 +207,7 @@ exports[`Model Plan Ops Eval and Learning IDDOC > matches snapshot 1`] = `
       </h3>
       <div
         class="usa-form-group"
-        data-scroll="dataMonitoringFileTypes"
+        data-scroll="ops-eval-and-learning-data-monitoring-file"
       >
         <label
           class="usa-label"
@@ -319,7 +319,7 @@ exports[`Model Plan Ops Eval and Learning IDDOC > matches snapshot 1`] = `
       </div>
       <div
         class="usa-form-group margin-top-6"
-        data-scroll="dataResponseType"
+        data-scroll="ops-eval-and-learning-data-response-type"
       >
         <label
           class="usa-label"
@@ -339,7 +339,7 @@ exports[`Model Plan Ops Eval and Learning IDDOC > matches snapshot 1`] = `
       </div>
       <div
         class="usa-form-group margin-top-6"
-        data-scroll="dataResponseFileFrequency"
+        data-scroll="ops-eval-and-learning-data-file-frequency"
       >
         <label
           class="usa-label"
