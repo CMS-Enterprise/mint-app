@@ -86,6 +86,8 @@ export default gql`
         planContractUpdatedNote
         geographiesTargeted
         geographiesTargetedTypes
+        geographiesStatesAndTerritories
+        geographiesRegionTypes
         geographiesTargetedTypesOther
         geographiesTargetedAppliedTo
         geographiesTargetedAppliedToOther

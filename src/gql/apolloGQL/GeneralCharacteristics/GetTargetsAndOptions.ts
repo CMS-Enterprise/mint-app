@@ -9,6 +9,8 @@ export default gql(/* GraphQL */ `
         id
         geographiesTargeted
         geographiesTargetedTypes
+        geographiesStatesAndTerritories
+        geographiesRegionTypes
         geographiesTargetedTypesOther
         geographiesTargetedAppliedTo
         geographiesTargetedAppliedToOther
