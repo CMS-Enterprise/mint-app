@@ -4,9 +4,9 @@ on:
   workflow_call:
 
 env:
-  GIT_HASH: ${{ github.event.pull_request.head.sha || github.sha }}
+  GIT_HASH: ${{ github.sha }}
+  GIT_REF_NAME: ${{ github.ref }}
   SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-  GIT_REF_NAME: ${{ github.event.pull_request.head.ref || github.ref }}
 
 permissions:
   id-token: write
@@ -20,8 +20,6 @@ jobs:
     steps:
       - name: Check out code
         uses: actions/checkout@v4
-        with:
-          ref: ${{ env.GIT_HASH }}
       - name: Run clamscan
         run: |
           clamscan --version
