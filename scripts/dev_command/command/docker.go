@@ -207,3 +207,14 @@ func bringDockerDown() {
 	}
 
 }
+
+// MintDockerContainerName is an enum that represents all valid containers for mint
+type MintDockerContainerName string
+
+// These constants represent the different values of ContainerNames
+const (
+	dbContainer        MintDockerContainerName = "db"
+	dbMigrateContainer MintDockerContainerName = "db_migrate"
+	backendContainer   MintDockerContainerName = "mint"
+	frontendContainer  MintDockerContainerName = "mint_client"
+)
