@@ -302,11 +302,11 @@ export const OpsEvalAndLearningContent = () => {
               >
                 <Fieldset disabled={!!error || loading}>
                   <FieldGroup
-                    scrollElement="agencyOrStateHelp"
+                    scrollElement="ops-eval-and-learning-agency-or-state-help"
                     error={!!flatErrors.agencyOrStateHelp}
                     className="margin-top-4"
                   >
-                    <Label htmlFor="agencyOrStateHelp">
+                    <Label htmlFor="ops-eval-and-learning-agency-or-state-help">
                       {opsEvalAndLearningT('agencyOrStateHelp.label')}
                     </Label>
 
@@ -362,7 +362,7 @@ export const OpsEvalAndLearningContent = () => {
                   </FieldGroup>
 
                   <FieldGroup
-                    scrollElement="stakeholders"
+                    scrollElement="ops-eval-and-learning-stakeholders"
                     error={!!flatErrors.stakeholders}
                     className="margin-top-4"
                   >
@@ -395,9 +395,12 @@ export const OpsEvalAndLearningContent = () => {
 
                     {values.stakeholders.includes(StakeholdersType.OTHER) && (
                       <>
-                        <p className="margin-y-1 margin-top-3">
+                        <Label
+                          htmlFor="ops-eval-and-learning-stakeholders-other"
+                          className="margin-y-1 margin-top-3"
+                        >
                           {opsEvalAndLearningT('stakeholdersOther.label')}
-                        </p>
+                        </Label>
 
                         <FieldErrorMsg>
                           {flatErrors.stakeholdersOther}
@@ -421,7 +424,7 @@ export const OpsEvalAndLearningContent = () => {
                   </FieldGroup>
 
                   <FieldGroup
-                    scrollElement="helpdeskUse"
+                    scrollElement="ops-eval-and-learning-help-desk-use"
                     error={!!flatErrors.helpdeskUse}
                     className="margin-y-4 margin-bottom-8"
                   >
@@ -456,8 +459,8 @@ export const OpsEvalAndLearningContent = () => {
                     />
                   </FieldGroup>
 
-                  <FieldGroup scrollElement="contractorSupport">
-                    <Label htmlFor="contractorSupport">
+                  <FieldGroup scrollElement="ops-eval-and-learning-contractor-support">
+                    <Label htmlFor="ops-eval-and-learning-contractor-support">
                       {opsEvalAndLearningT('contractorSupport.label')}
                     </Label>
 
@@ -507,7 +510,7 @@ export const OpsEvalAndLearningContent = () => {
                     })}
 
                     <FieldGroup
-                      scrollElement="contractorSupportHow"
+                      scrollElement="ops-eval-and-learning-contractor-support-how"
                       error={!!flatErrors.contractorSupportHow}
                     >
                       <Label
@@ -542,7 +545,7 @@ export const OpsEvalAndLearningContent = () => {
                   </FieldGroup>
 
                   <FieldGroup
-                    scrollElement="iddocSupport"
+                    scrollElement="ops-eval-and-learning-iddoc-support"
                     error={!!flatErrors.iddocSupport}
                     className="margin-y-4 margin-bottom-8"
                   >

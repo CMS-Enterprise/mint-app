@@ -267,7 +267,7 @@ export const Communication = () => {
                   />
 
                   <FieldGroup
-                    scrollElement="communicationMethod"
+                    scrollElement="participants-and-providers-communication-method"
                     error={!!flatErrors.communicationMethod}
                   >
                     <Label htmlFor="participants-and-providers-communication-method">
@@ -336,7 +336,7 @@ export const Communication = () => {
                   </FieldGroup>
 
                   <FieldGroup
-                    scrollElement="riskType"
+                    scrollElement="participants-and-providers-risk-type"
                     error={!!flatErrors.riskType}
                     className="margin-y-4 margin-bottom-8"
                   >
@@ -387,7 +387,7 @@ export const Communication = () => {
                   </FieldGroup>
 
                   <FieldGroup
-                    scrollElement="willRiskChange"
+                    scrollElement="participants-and-providers-risk-change"
                     error={!!flatErrors.willRiskChange}
                     className="margin-y-4 margin-bottom-8"
                   >

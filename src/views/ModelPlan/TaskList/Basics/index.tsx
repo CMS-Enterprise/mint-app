@@ -270,11 +270,11 @@ const BasicsContent = () => {
                         </FieldGroup>
 
                         <FieldGroup
-                          scrollElement="abbreviation"
+                          scrollElement="plan-basics-abbreviation"
                           error={!!flatErrors.abbreviation}
                           className="margin-top-4"
                         >
-                          <Label htmlFor="plan-basics-model-name">
+                          <Label htmlFor="plan-basics-abbreviation">
                             {modelPlanT('abbreviation.label')}
                           </Label>
 
@@ -327,7 +327,7 @@ const BasicsContent = () => {
                           <Grid row gap>
                             <Grid desktop={{ col: 6 }}>
                               <FieldGroup
-                                scrollElement="basics.amsModelID"
+                                scrollElement="plan-basics-ams-model-id"
                                 error={!!flatErrors['basics.amsModelID']}
                                 className="margin-top-0"
                               >
@@ -349,7 +349,7 @@ const BasicsContent = () => {
                             </Grid>
                             <Grid desktop={{ col: 6 }}>
                               <FieldGroup
-                                scrollElement="basics.demoCode"
+                                scrollElement="plan-basics-demo-code"
                                 error={!!flatErrors['basics.demoCode']}
                                 className="margin-top-0"
                               >
@@ -373,7 +373,7 @@ const BasicsContent = () => {
                         </div>
 
                         <FieldGroup
-                          scrollElement="modelCategory"
+                          scrollElement="plan-basics-model-category"
                           error={!!flatErrors['basics.modelCategory']}
                           className="margin-top-4"
                         >
@@ -441,13 +441,14 @@ const BasicsContent = () => {
                         </FieldGroup>
 
                         <FieldGroup
+                          scrollElement="plan-basics-model-additional-category"
                           error={
                             !!flatErrors['basics.additionalModelCategories']
                           }
                           className="margin-top-4"
                         >
                           <Label
-                            htmlFor="basics.additionalModelCategories"
+                            htmlFor="plan-basics-model-additional-category"
                             className="text-normal"
                           >
                             {basicsT('additionalModelCategories.label')}
@@ -508,11 +509,11 @@ const BasicsContent = () => {
                         </FieldGroup>
 
                         <FieldGroup
-                          scrollElement="cmsCenters"
+                          scrollElement="new-plan-cmsCenters"
                           error={!!flatErrors['basics.cmsCenters']}
                           className="margin-top-4"
                         >
-                          <Label htmlFor="plan-basics-cmsCenters">
+                          <Label htmlFor="new-plan-cmsCenters">
                             {basicsT('cmsCenters.label')}
                             <RequiredAsterisk />
                           </Label>
@@ -539,11 +540,12 @@ const BasicsContent = () => {
                         </FieldGroup>
 
                         <FieldGroup
+                          scrollElement="new-plan-cmmiGroup"
                           error={!!flatErrors['basics.cmmiGroups']}
                           className="margin-top-4"
                         >
                           <Label
-                            htmlFor="basics.cmmiGroups"
+                            htmlFor="new-plan-cmmiGroup"
                             className="text-normal"
                           >
                             {basicsT('cmmiGroups.label')}

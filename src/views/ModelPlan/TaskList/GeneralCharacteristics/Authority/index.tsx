@@ -229,7 +229,7 @@ const Authority = () => {
               >
                 <Fieldset disabled={!!error || loading}>
                   <FieldGroup
-                    scrollElement="rulemakingRequired"
+                    scrollElement="plan-characteristics-rulemaking-required"
                     error={!!flatErrors.rulemakingRequired}
                     className="margin-y-4"
                   >
@@ -253,7 +253,7 @@ const Authority = () => {
                         <div className="display-flex margin-left-4 margin-bottom-1">
                           <FieldGroup
                             className="flex-1"
-                            scrollElement="rulemakingRequiredDescription"
+                            scrollElement="plan-characteristics-rulemaking-required-description"
                             error={!!flatErrors.rulemakingRequiredDescription}
                           >
                             <Label
@@ -290,8 +290,8 @@ const Authority = () => {
                     field="rulemakingRequiredNote"
                   />
 
-                  <FieldGroup scrollElement="authorityAllowances">
-                    <Label htmlFor="modelType">
+                  <FieldGroup scrollElement="plan-characteristics-authority-allowance">
+                    <Label htmlFor="plan-characteristics-authority-allowance">
                       {generalCharacteristicsT('authorityAllowances.label')}
                     </Label>
                     <FieldErrorMsg>
@@ -312,6 +312,7 @@ const Authority = () => {
                           {type === AuthorityAllowance.OTHER &&
                             values.authorityAllowances.includes(type) && (
                               <FieldGroup
+                                scrollElement="plan-characteristics-authority-allowance-other"
                                 className="margin-left-4 margin-top-2 margin-bottom-4"
                                 error={!!flatErrors.authorityAllowancesOther}
                               >
@@ -346,7 +347,7 @@ const Authority = () => {
                   />
 
                   <FieldGroup
-                    scrollElement="waiversRequired"
+                    scrollElement="plan-characteristics-waivers-required"
                     error={!!flatErrors.waiversRequired}
                     className="margin-y-4"
                   >
@@ -366,8 +367,8 @@ const Authority = () => {
                   </FieldGroup>
 
                   {values.waiversRequired && (
-                    <FieldGroup scrollElement="waiversRequiredTypes">
-                      <Label htmlFor="waiversRequiredTypes">
+                    <FieldGroup scrollElement="plan-characteristics-waiver-types">
+                      <Label htmlFor="plan-characteristics-waiver-types">
                         {generalCharacteristicsT('waiversRequiredTypes.label')}
                       </Label>
 

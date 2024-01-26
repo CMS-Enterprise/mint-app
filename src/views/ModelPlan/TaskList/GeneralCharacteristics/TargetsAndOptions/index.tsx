@@ -232,7 +232,7 @@ const TargetsAndOptions = () => {
               >
                 <Fieldset disabled={!!error || loading}>
                   <FieldGroup
-                    scrollElement="geographiesTargeted"
+                    scrollElement="plan-characteristics-geographies-targeted"
                     error={!!flatErrors.geographiesTargeted}
                     className="margin-y-4 margin-bottom-8"
                   >
@@ -255,7 +255,7 @@ const TargetsAndOptions = () => {
                     {values.geographiesTargeted && (
                       <>
                         <Label
-                          htmlFor="geographiesTargetedTypes"
+                          htmlFor="plan-characteristics-geographies-type"
                           className="text-normal"
                         >
                           {generalCharacteristicsT(
@@ -288,6 +288,7 @@ const TargetsAndOptions = () => {
                                     GeographyType.OTHER
                                   ) && (
                                     <FieldGroup
+                                      scrollElement="plan-characteristics-geographies-targeted-other"
                                       className="margin-left-4 margin-y-2"
                                       error={
                                         !!flatErrors.geographiesTargetedTypesOther
@@ -319,9 +320,9 @@ const TargetsAndOptions = () => {
                           }
                         )}
 
-                        <FieldGroup scrollElement="geographiesTargetedAppliedTo">
+                        <FieldGroup scrollElement="plan-characteristics-geographies-applied-to">
                           <Label
-                            htmlFor="geographiesTargetedAppliedTo"
+                            htmlFor="plan-characteristics-geographies-applied-to"
                             className="text-normal"
                           >
                             {generalCharacteristicsT(
@@ -357,6 +358,7 @@ const TargetsAndOptions = () => {
                                     GeographyApplication.OTHER
                                   ) && (
                                     <FieldGroup
+                                      scrollElement="plan-characteristics-geographies-applied-to-other"
                                       className="margin-left-4 margin-top-2 margin-bottom-0"
                                       error={
                                         !!flatErrors.geographiesTargetedAppliedToOther
@@ -396,7 +398,7 @@ const TargetsAndOptions = () => {
                   </FieldGroup>
 
                   <FieldGroup
-                    scrollElement="participationOptions"
+                    scrollElement="plan-characteristics-participation"
                     error={!!flatErrors.participationOptions}
                     className="margin-y-4"
                   >
@@ -423,10 +425,10 @@ const TargetsAndOptions = () => {
                   />
 
                   <FieldGroup
-                    scrollElement="agreementTypes"
+                    scrollElement="plan-characteristics-agreement-type"
                     error={!!flatErrors.agreementTypes}
                   >
-                    <Label htmlFor="agreementTypes">
+                    <Label htmlFor="plan-characteristics-agreement-type">
                       {generalCharacteristicsT('agreementTypes.label')}
                     </Label>
 
@@ -461,6 +463,7 @@ const TargetsAndOptions = () => {
                               AgreementType.OTHER
                             ) && (
                               <FieldGroup
+                                scrollElement="plan-characteristics-agreement-type-other"
                                 className="margin-left-4 margin-top-2 margin-bottom-0"
                                 error={!!flatErrors.agreementTypesOther}
                               >
@@ -494,7 +497,7 @@ const TargetsAndOptions = () => {
                   ) && (
                     <>
                       <FieldGroup
-                        scrollElement="multiplePatricipationAgreementsNeeded"
+                        scrollElement="plan-characteristics-multiple-participation-needed"
                         error={
                           !!flatErrors.multiplePatricipationAgreementsNeeded
                         }

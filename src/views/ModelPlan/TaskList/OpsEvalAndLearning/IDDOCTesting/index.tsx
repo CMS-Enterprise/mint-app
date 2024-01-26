@@ -224,7 +224,7 @@ const IDDOCTesting = () => {
                   </Alert>
 
                   <FieldGroup
-                    scrollElement="uatNeeds"
+                    scrollElement="ops-eval-and-learning-uat-needs"
                     className="margin-top-6"
                     error={!!flatErrors.uatNeeds}
                   >
@@ -243,7 +243,7 @@ const IDDOCTesting = () => {
                   </FieldGroup>
 
                   <FieldGroup
-                    scrollElement="stcNeeds"
+                    scrollElement="ops-eval-and-learning-stc-needs"
                     className="margin-top-6"
                     error={!!flatErrors.stcNeeds}
                   >
@@ -263,7 +263,7 @@ const IDDOCTesting = () => {
                   </FieldGroup>
 
                   <FieldGroup
-                    scrollElement="testingTimelines"
+                    scrollElement="ops-eval-and-learning-testing-timelines"
                     className="margin-top-6"
                     error={!!flatErrors.testingTimelines}
                   >
@@ -288,7 +288,7 @@ const IDDOCTesting = () => {
 
                   <h3>{opsEvalAndLearningMiscT('dataMonitoring')}</h3>
 
-                  <FieldGroup scrollElement="dataMonitoringFileTypes">
+                  <FieldGroup scrollElement="ops-eval-and-learning-data-monitoring-file">
                     <Label htmlFor="ops-eval-and-learning-data-monitoring-file">
                       {opsEvalAndLearningT('dataMonitoringFileTypes.label')}
                     </Label>
@@ -346,7 +346,7 @@ const IDDOCTesting = () => {
                   </FieldGroup>
 
                   <FieldGroup
-                    scrollElement="dataResponseType"
+                    scrollElement="ops-eval-and-learning-data-response-type"
                     className="margin-top-6"
                     error={!!flatErrors.dataResponseType}
                   >
@@ -365,7 +365,7 @@ const IDDOCTesting = () => {
                   </FieldGroup>
 
                   <FieldGroup
-                    scrollElement="dataResponseFileFrequency"
+                    scrollElement="ops-eval-and-learning-data-file-frequency"
                     className="margin-top-6"
                     error={!!flatErrors.dataResponseFileFrequency}
                   >

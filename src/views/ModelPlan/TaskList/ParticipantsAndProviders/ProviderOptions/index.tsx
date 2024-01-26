@@ -275,7 +275,7 @@ export const ProviderOptions = () => {
                   />
 
                   <FieldGroup
-                    scrollElement="providerAddMethod"
+                    scrollElement="participants-and-providers-provider-add-method"
                     error={!!flatErrors.providerAddMethod}
                     className="margin-top-4"
                   >
@@ -315,7 +315,7 @@ export const ProviderOptions = () => {
                       ProviderAddType.OTHER
                     ) && (
                       <FieldGroup
-                        scrollElement="providerAddMethodOther"
+                        scrollElement="participants-and-providers-provider-add-method-other"
                         error={!!flatErrors.providerAddMethodOther}
                       >
                         <Label
@@ -349,7 +349,7 @@ export const ProviderOptions = () => {
                   </FieldGroup>
 
                   <FieldGroup
-                    scrollElement="providerLeaveMethod"
+                    scrollElement="participants-and-providers-leave-method"
                     error={!!flatErrors.providerLeaveMethod}
                     className="margin-top-4"
                   >
@@ -426,7 +426,7 @@ export const ProviderOptions = () => {
                   />
 
                   <FieldGroup
-                    scrollElement="providerOverlap"
+                    scrollElement="participants-and-providers-provider-overlap"
                     error={!!flatErrors.providerOverlap}
                     className="margin-y-4 margin-bottom-8"
                   >
@@ -466,7 +466,7 @@ export const ProviderOptions = () => {
                       OverlapType.YES_NEED_POLICIES ||
                       values.providerOverlap === OverlapType.YES_NO_ISSUES) && (
                       <FieldGroup
-                        scrollElement="providerOverlapHierarchy"
+                        scrollElement="participants-and-providers-provider-overlap-hierarchy"
                         error={!!flatErrors.providerOverlapHierarchy}
                       >
                         <Label

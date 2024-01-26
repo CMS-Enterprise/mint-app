@@ -237,7 +237,7 @@ const Learning = () => {
               >
                 <Fieldset disabled={!!error || loading}>
                   <FieldGroup
-                    scrollElement="modelLearningSystems"
+                    scrollElement="ops-eval-and-learning-learning-systems"
                     error={!!flatErrors.modelLearningSystems}
                   >
                     <Label htmlFor="ops-eval-and-learning-learning-systems">
@@ -309,7 +309,7 @@ const Learning = () => {
                   </FieldGroup>
 
                   <FieldGroup
-                    scrollElement="anticipatedChallenges"
+                    scrollElement="ops-eval-and-learning-learning-anticipated-challenges"
                     error={!!flatErrors.anticipatedChallenges}
                   >
                     <Label htmlFor="ops-eval-and-learning-learning-anticipated-challenges">

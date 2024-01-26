@@ -256,11 +256,11 @@ const Evaluation = () => {
               >
                 <Fieldset disabled={!!error || loading}>
                   <FieldGroup
-                    scrollElement="evaluationApproaches"
+                    scrollElement="ops-eval-and-learning-evaluation-approach"
                     error={!!flatErrors.evaluationApproaches}
                   >
                     <Label
-                      htmlFor="evaluationApproaches"
+                      htmlFor="ops-eval-and-learning-evaluation-approach"
                       id="ops-eval-and-learning-evaluation-approach"
                       className="maxw-none"
                     >
@@ -331,7 +331,7 @@ const Evaluation = () => {
                     />
                   </FieldGroup>
 
-                  <FieldGroup scrollElement="ccmInvolvment">
+                  <FieldGroup scrollElement="ops-eval-and-learning-cmmi-involvement">
                     <Label
                       htmlFor="ops-eval-and-learning-cmmi-involvement"
                       id="ops-eval-and-learning-cmmi-involvement"
@@ -393,7 +393,7 @@ const Evaluation = () => {
                   </FieldGroup>
 
                   <FieldGroup
-                    scrollElement="dataNeededForMonitoring"
+                    scrollElement="ops-eval-and-learning-data-needed"
                     error={!!flatErrors.dataNeededForMonitoring}
                     className="margin-top-4"
                   >
@@ -475,7 +475,7 @@ const Evaluation = () => {
                   </FieldGroup>
 
                   <FieldGroup
-                    scrollElement="dataToSendParticicipants"
+                    scrollElement="label-ops-eval-and-learning-data-to-send"
                     error={!!flatErrors.dataToSendParticicipants}
                     className="margin-top-4"
                   >
@@ -553,7 +553,7 @@ const Evaluation = () => {
                   </FieldGroup>
 
                   <FieldGroup
-                    scrollElement="shareCclfData"
+                    scrollElement="ops-eval-and-learning-share-cclf-data"
                     error={!!flatErrors.shareCclfData}
                     className="margin-top-6"
                   >
