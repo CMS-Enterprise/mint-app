@@ -32,11 +32,13 @@ import CheckboxField from 'components/shared/CheckboxField';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
+import MultiSelect from 'components/shared/MultiSelect';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import useScrollElement from 'hooks/useScrollElement';
 import { getKeys } from 'types/translation';
 import flattenErrors from 'utils/flattenErrors';
 import { dirtyInput } from 'utils/formDiff';
+import { composeMultiSelectOptions } from 'utils/modelPlan';
 import { NotFoundPartial } from 'views/NotFound';
 
 type TargetsAndOptionsFormType = GetTargetsAndOptionsQuery['modelPlan']['generalCharacteristics'];
@@ -54,6 +56,8 @@ const TargetsAndOptions = () => {
     geographiesTargeted: geographiesTargetedConfig,
     geographiesTargetedTypes: geographiesTargetedTypesConfig,
     geographiesTargetedAppliedTo: geographiesTargetedAppliedToConfig,
+    geographiesStatesAndTerritories: geographiesStatesAndTerritoriesConfig,
+    geographiesRegionTypes: geographiesRegionTypesConfig,
     participationOptions: participationOptionsConfig,
     agreementTypes: agreementTypesConfig,
     multiplePatricipationAgreementsNeeded: multiplePatricipationAgreementsNeededConfig
@@ -77,6 +81,8 @@ const TargetsAndOptions = () => {
     geographiesTargeted,
     geographiesTargetedTypes,
     geographiesTargetedTypesOther,
+    geographiesStatesAndTerritories,
+    geographiesRegionTypes,
     geographiesTargetedAppliedTo,
     geographiesTargetedAppliedToOther,
     geographiesTargetedNote,
@@ -136,6 +142,8 @@ const TargetsAndOptions = () => {
     geographiesTargeted: geographiesTargeted ?? null,
     geographiesTargetedTypes: geographiesTargetedTypes ?? [],
     geographiesTargetedTypesOther: geographiesTargetedTypesOther ?? '',
+    geographiesStatesAndTerritories: geographiesStatesAndTerritories ?? [],
+    geographiesRegionTypes: geographiesRegionTypes ?? [],
     geographiesTargetedAppliedTo: geographiesTargetedAppliedTo ?? [],
     geographiesTargetedAppliedToOther: geographiesTargetedAppliedToOther ?? '',
     geographiesTargetedNote: geographiesTargetedNote ?? null,
@@ -254,21 +262,26 @@ const TargetsAndOptions = () => {
 
                     {values.geographiesTargeted && (
                       <>
-                        <Label
-                          htmlFor="plan-characteristics-geographies-type"
-                          className="text-normal"
+                        <FieldGroup
+                          scrollElement="plan-characteristics-geographies-type"
+                          error={!!flatErrors.geographiesTargetedTypes}
+                          className="margin-top-4"
                         >
-                          {generalCharacteristicsT(
-                            'geographiesTargetedTypes.label'
-                          )}
-                        </Label>
-                        <FieldErrorMsg>
-                          {flatErrors.geographiesTargetedTypes}
-                        </FieldErrorMsg>
+                          <Label
+                            htmlFor="plan-characteristics-geographies-type"
+                            className="text-normal"
+                          >
+                            {generalCharacteristicsT(
+                              'geographiesTargetedTypes.label'
+                            )}
+                          </Label>
 
-                        {getKeys(geographiesTargetedTypesConfig.options).map(
-                          type => {
-                            return (
+                          <FieldErrorMsg>
+                            {flatErrors.geographiesTargetedTypes}
+                          </FieldErrorMsg>
+
+                          {getKeys(geographiesTargetedTypesConfig.options).map(
+                            type => (
                               <Fragment key={type}>
                                 <Field
                                   as={CheckboxField}
@@ -283,12 +296,75 @@ const TargetsAndOptions = () => {
                                   )}
                                 />
 
+                                {type === GeographyType.STATE &&
+                                  values.geographiesTargetedTypes.includes(
+                                    type
+                                  ) && (
+                                    <FieldGroup className="margin-left-4 margin-y-2">
+                                      <Label
+                                        htmlFor="plan-characteristics-geographies-state-and-territories-type"
+                                        className="text-normal"
+                                      >
+                                        {generalCharacteristicsT(
+                                          'geographiesStatesAndTerritories.label'
+                                        )}
+                                      </Label>
+                                      <Field
+                                        as={MultiSelect}
+                                        id="plan-characteristics-geographies-state-and-territories-type"
+                                        name="geographiesStatesAndTerritories"
+                                        ariaLabel="label-plan-characteristics-geographies-state-and-territories-type"
+                                        role="combobox"
+                                        options={composeMultiSelectOptions(
+                                          geographiesStatesAndTerritoriesConfig.options
+                                        )}
+                                        selectedLabel={generalCharacteristicsT(
+                                          'geographiesStatesAndTerritories.multiSelectLabel'
+                                        )}
+                                        onChange={(value: string[] | []) => {
+                                          setFieldValue(
+                                            'geographiesStatesAndTerritories',
+                                            value
+                                          );
+                                        }}
+                                        initialValues={
+                                          initialValues.geographiesStatesAndTerritories
+                                        }
+                                      />
+                                    </FieldGroup>
+                                  )}
+
+                                {type === GeographyType.REGION &&
+                                  values.geographiesTargetedTypes.includes(
+                                    type
+                                  ) && (
+                                    <FieldGroup className="margin-left-4 margin-y-2">
+                                      {getKeys(
+                                        geographiesRegionTypesConfig.options
+                                      ).map(regionType => (
+                                        <Fragment key={regionType}>
+                                          <Field
+                                            as={CheckboxField}
+                                            id={`plan-characteristics-geographies-region-type-${regionType}`}
+                                            name="geographiesRegionTypes"
+                                            label={
+                                              geographiesRegionTypesConfig
+                                                .options[regionType]
+                                            }
+                                            value={regionType}
+                                            checked={values.geographiesRegionTypes?.includes(
+                                              regionType
+                                            )}
+                                          />
+                                        </Fragment>
+                                      ))}
+                                    </FieldGroup>
+                                  )}
                                 {type === GeographyType.OTHER &&
                                   values.geographiesTargetedTypes.includes(
-                                    GeographyType.OTHER
+                                    type
                                   ) && (
                                     <FieldGroup
-                                      scrollElement="plan-characteristics-geographies-targeted-other"
                                       className="margin-left-4 margin-y-2"
                                       error={
                                         !!flatErrors.geographiesTargetedTypesOther
@@ -316,11 +392,15 @@ const TargetsAndOptions = () => {
                                     </FieldGroup>
                                   )}
                               </Fragment>
-                            );
-                          }
-                        )}
+                            )
+                          )}
+                        </FieldGroup>
 
-                        <FieldGroup scrollElement="plan-characteristics-geographies-applied-to">
+                        <FieldGroup
+                          scrollElement="plan-characteristics-geographies-applied-to"
+                          error={!!flatErrors.geographiesTargetedAppliedTo}
+                          className="margin-top-4"
+                        >
                           <Label
                             htmlFor="plan-characteristics-geographies-applied-to"
                             className="text-normal"
@@ -355,10 +435,9 @@ const TargetsAndOptions = () => {
 
                                 {type === GeographyApplication.OTHER &&
                                   values.geographiesTargetedAppliedTo.includes(
-                                    GeographyApplication.OTHER
+                                    type
                                   ) && (
                                     <FieldGroup
-                                      scrollElement="plan-characteristics-geographies-applied-to-other"
                                       className="margin-left-4 margin-top-2 margin-bottom-0"
                                       error={
                                         !!flatErrors.geographiesTargetedAppliedToOther
@@ -442,54 +521,51 @@ const TargetsAndOptions = () => {
                         }
                       />
                     )}
+
                     <p className="text-base margin-y-1">
                       {generalCharacteristicsT('agreementTypes.sublabel')}
                     </p>
+
                     <FieldErrorMsg>{flatErrors.agreementTypes}</FieldErrorMsg>
 
-                    {getKeys(agreementTypesConfig.options).map(type => {
-                      return (
-                        <Fragment key={type}>
-                          <Field
-                            as={CheckboxField}
-                            id={`plan-characteristics-agreement-type-${type}`}
-                            name="agreementTypes"
-                            label={agreementTypesConfig.options[type]}
-                            value={type}
-                            checked={values.agreementTypes.includes(type)}
-                          />
-                          {type === AgreementType.OTHER &&
-                            values.agreementTypes.includes(
-                              AgreementType.OTHER
-                            ) && (
-                              <FieldGroup
-                                scrollElement="plan-characteristics-agreement-type-other"
-                                className="margin-left-4 margin-top-2 margin-bottom-0"
-                                error={!!flatErrors.agreementTypesOther}
+                    {getKeys(agreementTypesConfig.options).map(type => (
+                      <Fragment key={type}>
+                        <Field
+                          as={CheckboxField}
+                          id={`plan-characteristics-agreement-type-${type}`}
+                          name="agreementTypes"
+                          label={agreementTypesConfig.options[type]}
+                          value={type}
+                          checked={values.agreementTypes.includes(type)}
+                        />
+                        {type === AgreementType.OTHER &&
+                          values.agreementTypes.includes(type) && (
+                            <FieldGroup
+                              className="margin-left-4 margin-top-2 margin-bottom-0"
+                              error={!!flatErrors.agreementTypesOther}
+                            >
+                              <Label
+                                htmlFor="plan-characteristics-agreement-type-other"
+                                className="text-normal"
                               >
-                                <Label
-                                  htmlFor="plan-characteristics-agreement-type-other"
-                                  className="text-normal"
-                                >
-                                  {generalCharacteristicsT(
-                                    'agreementTypesOther.label'
-                                  )}
-                                </Label>
+                                {generalCharacteristicsT(
+                                  'agreementTypesOther.label'
+                                )}
+                              </Label>
 
-                                <FieldErrorMsg>
-                                  {flatErrors.agreementTypesOther}
-                                </FieldErrorMsg>
+                              <FieldErrorMsg>
+                                {flatErrors.agreementTypesOther}
+                              </FieldErrorMsg>
 
-                                <Field
-                                  as={TextInput}
-                                  id="plan-characteristics-agreement-type-other"
-                                  name="agreementTypesOther"
-                                />
-                              </FieldGroup>
-                            )}
-                        </Fragment>
-                      );
-                    })}
+                              <Field
+                                as={TextInput}
+                                id="plan-characteristics-agreement-type-other"
+                                name="agreementTypesOther"
+                              />
+                            </FieldGroup>
+                          )}
+                      </Fragment>
+                    ))}
                   </FieldGroup>
 
                   {values.agreementTypes.includes(

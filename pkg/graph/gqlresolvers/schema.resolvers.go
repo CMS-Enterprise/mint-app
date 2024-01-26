@@ -690,6 +690,18 @@ func (r *planGeneralCharacteristicsResolver) GeographiesTargetedTypes(ctx contex
 	return geographyTypes, nil
 }
 
+// GeographiesStatesAndTerritories is the resolver for the geographiesStatesAndTerritories field.
+func (r *planGeneralCharacteristicsResolver) GeographiesStatesAndTerritories(ctx context.Context, obj *models.PlanGeneralCharacteristics) ([]models.StatesAndTerritories, error) {
+	statesAndTerritories := models.ConvertEnums[models.StatesAndTerritories](obj.GeographiesStatesAndTerritories)
+	return statesAndTerritories, nil
+}
+
+// GeographiesRegionTypes is the resolver for the geographiesRegionTypes field.
+func (r *planGeneralCharacteristicsResolver) GeographiesRegionTypes(ctx context.Context, obj *models.PlanGeneralCharacteristics) ([]models.GeographyRegionType, error) {
+	geographyRegionTypes := models.ConvertEnums[models.GeographyRegionType](obj.GeographiesRegionTypes)
+	return geographyRegionTypes, nil
+}
+
 // GeographiesTargetedAppliedTo is the resolver for the geographiesTargetedAppliedTo field.
 func (r *planGeneralCharacteristicsResolver) GeographiesTargetedAppliedTo(ctx context.Context, obj *models.PlanGeneralCharacteristics) ([]model.GeographyApplication, error) {
 	geographyApplications := models.ConvertEnums[model.GeographyApplication](obj.GeographiesTargetedAppliedTo)
