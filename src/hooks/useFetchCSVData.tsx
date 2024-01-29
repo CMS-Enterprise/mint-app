@@ -160,6 +160,7 @@ export const dataFormatter = (
     else if (
       transformObj[key] &&
       typeof transformObj[key] === 'object' &&
+      !allPlanTranslation?.[key]?.isModelLinks &&
       !Array.isArray(transformObj[key])
     ) {
       mappedObj[key] = transformObj[key];
