@@ -141,6 +141,12 @@ const generalCharacteristicData: GetAllGeneralCharacteristicsTypes = {
   hasComponentsOrTracks: true,
   hasComponentsOrTracksDiffer: 'In every way',
   hasComponentsOrTracksNote: 'Tracks note',
+  agencyOrStateHelp: [
+    AgencyOrStateHelpType.YES_STATE,
+    AgencyOrStateHelpType.OTHER
+  ],
+  agencyOrStateHelpOther: 'Agency other',
+  agencyOrStateHelpNote: 'State note',
   alternativePaymentModelTypes: [
     AlternativePaymentModelType.REGULAR,
     AlternativePaymentModelType.MIPS
@@ -371,12 +377,6 @@ const opsEvalAndLearningData: AllOpsEvalAndLearningTypes = {
   id: '123',
   modelPlanID: modelID,
   status: TaskStatus.IN_PROGRESS,
-  agencyOrStateHelp: [
-    AgencyOrStateHelpType.YES_STATE,
-    AgencyOrStateHelpType.OTHER
-  ],
-  agencyOrStateHelpOther: 'Agency other',
-  agencyOrStateHelpNote: 'State note',
   stakeholders: [
     StakeholdersType.BENEFICIARIES,
     StakeholdersType.PARTICIPANTS,

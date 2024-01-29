@@ -15,7 +15,6 @@ import {
 } from '@trussworks/react-uswds';
 import { Field, FieldArray, Form, Formik, FormikProps } from 'formik';
 import {
-  AgencyOrStateHelpType,
   CcmInvolvmentType,
   ContractorSupportType,
   DataForMonitoringType,
@@ -114,7 +113,6 @@ export const OpsEvalAndLearningContent = () => {
   const { t: miscellaneousT } = useTranslation('miscellaneous');
 
   const {
-    agencyOrStateHelp: agencyOrStateHelpConfig,
     stakeholders: stakeholdersConfig,
     helpdeskUse: helpdeskUseConfig,
     contractorSupport: contractorSupportConfig,
@@ -137,9 +135,6 @@ export const OpsEvalAndLearningContent = () => {
     id,
     ccmInvolvment,
     dataNeededForMonitoring,
-    agencyOrStateHelp,
-    agencyOrStateHelpOther,
-    agencyOrStateHelpNote,
     stakeholders,
     stakeholdersOther,
     stakeholdersNote,
@@ -203,9 +198,6 @@ export const OpsEvalAndLearningContent = () => {
     id: id ?? '',
     ccmInvolvment: ccmInvolvment ?? [],
     dataNeededForMonitoring: dataNeededForMonitoring ?? [],
-    agencyOrStateHelp: agencyOrStateHelp ?? [],
-    agencyOrStateHelpOther: agencyOrStateHelpOther ?? '',
-    agencyOrStateHelpNote: agencyOrStateHelpNote ?? '',
     stakeholders: stakeholders ?? [],
     stakeholdersOther: stakeholdersOther ?? '',
     stakeholdersNote: stakeholdersNote ?? '',
@@ -301,83 +293,6 @@ export const OpsEvalAndLearningContent = () => {
                 }}
               >
                 <Fieldset disabled={!!error || loading}>
-                  <FieldArray
-                    name="agencyOrStateHelp"
-                    render={arrayHelpers => (
-                      <>
-                        <legend className="usa-label maxw-none">
-                          {opsEvalAndLearningT('agencyOrStateHelp.label')}
-                        </legend>
-
-                        <FieldErrorMsg>
-                          {flatErrors.agencyOrStateHelp}
-                        </FieldErrorMsg>
-
-                        {getKeys(agencyOrStateHelpConfig.options).map(type => {
-                          return (
-                            <Fragment key={type}>
-                              <Field
-                                as={CheckboxField}
-                                id={`ops-eval-and-learning-agency-or-state-help-${type}`}
-                                name="agencyOrStateHelp"
-                                label={agencyOrStateHelpConfig.options[type]}
-                                value={type}
-                                checked={values?.agencyOrStateHelp.includes(
-                                  type
-                                )}
-                                onChange={(
-                                  e: React.ChangeEvent<HTMLInputElement>
-                                ) => {
-                                  if (e.target.checked) {
-                                    arrayHelpers.push(e.target.value);
-                                  } else {
-                                    const idx = values.agencyOrStateHelp.indexOf(
-                                      e.target.value as AgencyOrStateHelpType
-                                    );
-                                    arrayHelpers.remove(idx);
-                                  }
-                                }}
-                              />
-
-                              {type === AgencyOrStateHelpType.OTHER &&
-                                values.agencyOrStateHelp.includes(
-                                  AgencyOrStateHelpType.OTHER
-                                ) && (
-                                  <div className="margin-left-4 margin-top-neg-3">
-                                    <Label
-                                      htmlFor="ops-eval-and-learning-agency-or-state-help-other"
-                                      className="text-normal"
-                                    >
-                                      {opsEvalAndLearningT(
-                                        'agencyOrStateHelpOther.label'
-                                      )}
-                                    </Label>
-
-                                    <FieldErrorMsg>
-                                      {flatErrors.agencyOrStateHelpOther}
-                                    </FieldErrorMsg>
-
-                                    <Field
-                                      as={TextAreaField}
-                                      className="maxw-none mint-textarea"
-                                      id="ops-eval-and-learning-agency-or-state-help-other"
-                                      maxLength={5000}
-                                      name="agencyOrStateHelpOther"
-                                    />
-                                  </div>
-                                )}
-                            </Fragment>
-                          );
-                        })}
-
-                        <AddNote
-                          id="ops-eval-and-learning-agency-or-state-help-note"
-                          field="agencyOrStateHelpNote"
-                        />
-                      </>
-                    )}
-                  />
-
                   <FieldGroup
                     scrollElement="stakeholders"
                     error={!!flatErrors.stakeholders}
@@ -473,113 +388,122 @@ export const OpsEvalAndLearningContent = () => {
                     />
                   </FieldGroup>
 
-                  <FieldArray
-                    name="contractorSupport"
-                    render={arrayHelpers => (
-                      <>
-                        <legend className="usa-label maxw-none">
-                          {opsEvalAndLearningT('contractorSupport.label')}
-                        </legend>
-
-                        <FieldErrorMsg>
-                          {flatErrors.contractorSupport}
-                        </FieldErrorMsg>
-
-                        {getKeys(contractorSupportConfig.options).map(type => {
-                          return (
-                            <Fragment key={type}>
-                              <Field
-                                as={CheckboxField}
-                                id={`ops-eval-and-learning-contractor-support-${type}`}
-                                name="contractorSupport"
-                                label={contractorSupportConfig.options[type]}
-                                value={type}
-                                checked={values?.contractorSupport.includes(
-                                  type
-                                )}
-                                onChange={(
-                                  e: React.ChangeEvent<HTMLInputElement>
-                                ) => {
-                                  if (e.target.checked) {
-                                    arrayHelpers.push(e.target.value);
-                                  } else {
-                                    const idx = values.contractorSupport.indexOf(
-                                      e.target.value as ContractorSupportType
-                                    );
-                                    arrayHelpers.remove(idx);
-                                  }
-                                }}
-                              />
-
-                              {type === ContractorSupportType.OTHER &&
-                                values.contractorSupport.includes(
-                                  ContractorSupportType.OTHER
-                                ) && (
-                                  <div className="margin-left-4 margin-top-neg-3">
-                                    <Label
-                                      htmlFor="ops-eval-and-learning-contractor-support-other"
-                                      className="text-normal"
-                                    >
-                                      {opsEvalAndLearningT(
-                                        'contractorSupportOther.label'
-                                      )}
-                                    </Label>
-
-                                    <FieldErrorMsg>
-                                      {flatErrors.contractorSupportOther}
-                                    </FieldErrorMsg>
-
-                                    <Field
-                                      as={TextAreaField}
-                                      className="maxw-none mint-textarea"
-                                      id="ops-eval-and-learning-contractor-support-other"
-                                      maxLength={5000}
-                                      name="contractorSupportOther"
-                                    />
-                                  </div>
-                                )}
-                            </Fragment>
-                          );
-                        })}
-
-                        <FieldGroup
-                          scrollElement="contractorSupportHow"
-                          error={!!flatErrors.contractorSupportHow}
-                        >
-                          <Label
-                            htmlFor="ops-eval-and-learning-contractor-support-how"
-                            className="text-normal margin-top-4"
-                          >
-                            {opsEvalAndLearningT('contractorSupportHow.label')}
-                          </Label>
-
-                          <p className="text-base margin-y-1">
-                            {opsEvalAndLearningT(
-                              'contractorSupportHow.sublabel'
-                            )}
-                          </p>
+                  <FieldGroup>
+                    <FieldArray
+                      name="contractorSupport"
+                      render={arrayHelpers => (
+                        <>
+                          <legend className="usa-label maxw-none">
+                            {opsEvalAndLearningT('contractorSupport.label')}
+                          </legend>
 
                           <FieldErrorMsg>
-                            {flatErrors.contractorSupportHow}
+                            {flatErrors.contractorSupport}
                           </FieldErrorMsg>
 
-                          <Field
-                            as={TextAreaField}
-                            className="height-card"
-                            error={flatErrors.contractorSupportHow}
-                            id="ops-eval-and-learning-contractor-support-how"
-                            data-testid="ops-eval-and-learning-contractor-support-how"
-                            name="contractorSupportHow"
-                          />
-                        </FieldGroup>
+                          {getKeys(contractorSupportConfig.options).map(
+                            type => {
+                              return (
+                                <Fragment key={type}>
+                                  <Field
+                                    as={CheckboxField}
+                                    id={`ops-eval-and-learning-contractor-support-${type}`}
+                                    name="contractorSupport"
+                                    label={
+                                      contractorSupportConfig.options[type]
+                                    }
+                                    value={type}
+                                    checked={values?.contractorSupport.includes(
+                                      type
+                                    )}
+                                    onChange={(
+                                      e: React.ChangeEvent<HTMLInputElement>
+                                    ) => {
+                                      if (e.target.checked) {
+                                        arrayHelpers.push(e.target.value);
+                                      } else {
+                                        const idx = values.contractorSupport.indexOf(
+                                          e.target
+                                            .value as ContractorSupportType
+                                        );
+                                        arrayHelpers.remove(idx);
+                                      }
+                                    }}
+                                  />
 
-                        <AddNote
-                          id="ops-eval-and-learning-contractor-support-note"
-                          field="contractorSupportNote"
-                        />
-                      </>
-                    )}
-                  />
+                                  {type === ContractorSupportType.OTHER &&
+                                    values.contractorSupport.includes(
+                                      ContractorSupportType.OTHER
+                                    ) && (
+                                      <div className="margin-left-4 margin-top-neg-3">
+                                        <Label
+                                          htmlFor="ops-eval-and-learning-contractor-support-other"
+                                          className="text-normal"
+                                        >
+                                          {opsEvalAndLearningT(
+                                            'contractorSupportOther.label'
+                                          )}
+                                        </Label>
+
+                                        <FieldErrorMsg>
+                                          {flatErrors.contractorSupportOther}
+                                        </FieldErrorMsg>
+
+                                        <Field
+                                          as={TextAreaField}
+                                          className="maxw-none mint-textarea"
+                                          id="ops-eval-and-learning-contractor-support-other"
+                                          maxLength={5000}
+                                          name="contractorSupportOther"
+                                        />
+                                      </div>
+                                    )}
+                                </Fragment>
+                              );
+                            }
+                          )}
+
+                          <FieldGroup
+                            scrollElement="contractorSupportHow"
+                            error={!!flatErrors.contractorSupportHow}
+                          >
+                            <Label
+                              htmlFor="ops-eval-and-learning-contractor-support-how"
+                              className="text-normal margin-top-4"
+                            >
+                              {opsEvalAndLearningT(
+                                'contractorSupportHow.label'
+                              )}
+                            </Label>
+
+                            <p className="text-base margin-y-1">
+                              {opsEvalAndLearningT(
+                                'contractorSupportHow.sublabel'
+                              )}
+                            </p>
+
+                            <FieldErrorMsg>
+                              {flatErrors.contractorSupportHow}
+                            </FieldErrorMsg>
+
+                            <Field
+                              as={TextAreaField}
+                              className="height-card"
+                              error={flatErrors.contractorSupportHow}
+                              id="ops-eval-and-learning-contractor-support-how"
+                              data-testid="ops-eval-and-learning-contractor-support-how"
+                              name="contractorSupportHow"
+                            />
+                          </FieldGroup>
+
+                          <AddNote
+                            id="ops-eval-and-learning-contractor-support-note"
+                            field="contractorSupportNote"
+                          />
+                        </>
+                      )}
+                    />
+                  </FieldGroup>
 
                   <FieldGroup
                     scrollElement="iddocSupport"

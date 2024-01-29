@@ -73,6 +73,9 @@ export default gql`
         communityPartnersInvolved
         communityPartnersInvolvedDescription
         communityPartnersInvolvedNote
+        agencyOrStateHelp
+        agencyOrStateHelpOther
+        agencyOrStateHelpNote
         alternativePaymentModelTypes
         alternativePaymentModelNote
         keyCharacteristics

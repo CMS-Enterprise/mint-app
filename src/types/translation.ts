@@ -156,6 +156,9 @@ export type TranslationGeneralCharacteristics = {
   hasComponentsOrTracksDiffer: TranslationFieldProperties;
   hasComponentsOrTracksNote: TranslationFieldProperties;
   // Key Characteristics
+  agencyOrStateHelp: TranslationFieldPropertiesWithOptions<AgencyOrStateHelpType>;
+  agencyOrStateHelpOther: TranslationFieldProperties;
+  agencyOrStateHelpNote: TranslationFieldProperties;
   alternativePaymentModelTypes: TranslationFieldPropertiesWithOptions<AlternativePaymentModelType>;
   alternativePaymentModelNote: TranslationFieldProperties;
   keyCharacteristics: TranslationFieldPropertiesWithOptions<KeyCharacteristic>;
@@ -311,9 +314,6 @@ export type TranslationBeneficiaries = {
 
 // Operations Evaluation and Learning
 export type TranslationOpsEvalAndLearning = {
-  agencyOrStateHelp: TranslationFieldPropertiesWithOptions<AgencyOrStateHelpType>;
-  agencyOrStateHelpOther: TranslationFieldProperties;
-  agencyOrStateHelpNote: TranslationFieldProperties;
   stakeholders: TranslationFieldPropertiesWithOptions<StakeholdersType>;
   stakeholdersOther: TranslationFieldProperties;
   stakeholdersNote: TranslationFieldProperties;

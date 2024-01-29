@@ -7,6 +7,9 @@ export default gql(/* GraphQL */ `
       modelName
       generalCharacteristics {
         id
+        agencyOrStateHelp
+        agencyOrStateHelpOther
+        agencyOrStateHelpNote
         alternativePaymentModelTypes
         alternativePaymentModelNote
         keyCharacteristics
