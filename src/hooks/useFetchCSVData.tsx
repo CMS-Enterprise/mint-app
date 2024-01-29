@@ -165,6 +165,11 @@ export const dataFormatter = (
       mappedObj[key] = transformObj[key];
     }
 
+    // Translates the Existing Model Links names
+    else if (allPlanTranslation?.[key]?.isModelLinks && transformObj[key]) {
+      mappedObj[key] = transformObj[key].names.join(', ');
+    }
+
     // Strip html tags from TipTap RTE rawContent value
     else if (
       transformObj[key] &&
@@ -178,6 +183,7 @@ export const dataFormatter = (
     if (
       transformObj[key] &&
       typeof transformObj[key] === 'object' &&
+      !allPlanTranslation?.[key]?.isModelLinks &&
       !allPlanTranslation?.[key]?.options &&
       !Array.isArray(transformObj[key])
     ) {

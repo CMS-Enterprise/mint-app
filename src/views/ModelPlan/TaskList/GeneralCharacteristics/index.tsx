@@ -421,7 +421,10 @@ export const CharacteristicsContent = () => {
                     error={!!flatErrors.resemblesExistingModel}
                     className="margin-y-4 margin-bottom-8"
                   >
-                    <Label htmlFor="plan-characteristics-resembles-existing-model">
+                    <Label
+                      htmlFor="plan-characteristics-resembles-existing-model"
+                      className="maxw-none"
+                    >
                       {generalCharacteristicsT('resemblesExistingModel.label')}
                     </Label>
 
@@ -440,23 +443,23 @@ export const CharacteristicsContent = () => {
                     {values.resemblesExistingModel && (
                       <>
                         <FieldGroup
-                          scrollElement="resemblesExistingModelWhich"
+                          scrollElement="plan-characteristics-resembles-which-model"
                           error={!!flatErrors.resemblesExistingModelWhich}
                           className="margin-top-4"
                         >
                           <Label
                             htmlFor="plan-characteristics-resembles-which-model"
-                            className="text-normal"
+                            className="text-normal maxw-none"
                             id="label-plan-characteristics-resembles-which-model"
                           >
                             {generalCharacteristicsT(
-                              'existingModelLinks.label'
+                              'resemblesExistingModelWhich.label'
                             )}
                           </Label>
 
                           <p className="text-base margin-y-1">
                             {generalCharacteristicsT(
-                              'existingModelLinks.sublabel'
+                              'resemblesExistingModelWhich.sublabel'
                             )}
                           </p>
 
@@ -471,7 +474,7 @@ export const CharacteristicsContent = () => {
                             name="existingModelLinks"
                             options={modelPlanOptions}
                             selectedLabel={generalCharacteristicsT(
-                              'existingModelLinks.multiSelectLabel'
+                              'resemblesExistingModelWhich.multiSelectLabel'
                             )}
                             onChange={(value: string[] | []) => {
                               setFieldValue('existingModelLinks', value);
