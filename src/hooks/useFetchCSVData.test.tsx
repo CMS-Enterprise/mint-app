@@ -82,7 +82,7 @@ describe('fetch csv utils', () => {
     expect(dataFormatter(data, allPlanTranslation)).toEqual(returnData);
   });
 
-  it.only('translates Existing Model Links names', () => {
+  it('translates Existing Model Links names', () => {
     const data = {
       generalCharacteristics: {
         resemblesExistingModelWhich: {
