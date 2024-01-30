@@ -4,17 +4,6 @@ export default gql(/* GraphQL */ `
   query GetAllGeneralCharacteristics($id: UUID!) {
     modelPlan(id: $id) {
       id
-      existingModelLinks {
-        id
-        existingModel {
-          id
-          modelName
-        }
-        currentModelPlan {
-          id
-          modelName
-        }
-      }
       generalCharacteristics {
         id
         isNewModel
@@ -22,6 +11,26 @@ export default gql(/* GraphQL */ `
         resemblesExistingModel
         resemblesExistingModelHow
         resemblesExistingModelNote
+        resemblesExistingModelWhich {
+          links {
+            id
+            existingModelID
+            currentModelPlanID
+            fieldName
+            model {
+              ... on ExistingModel {
+                modelName
+                stage
+                numberOfParticipants
+                keywords
+              }
+              ... on ModelPlan {
+                modelName
+                abbreviation
+              }
+            }
+          }
+        }
         hasComponentsOrTracks
         hasComponentsOrTracksDiffer
         hasComponentsOrTracksNote

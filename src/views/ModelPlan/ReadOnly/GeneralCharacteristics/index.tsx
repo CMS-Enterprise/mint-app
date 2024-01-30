@@ -48,12 +48,13 @@ const ReadOnlyGeneralCharacteristics = ({
 
   const mappedExistingModels: (string | number)[] = useMemo(() => {
     return (
-      data?.modelPlan?.existingModelLinks?.map(
-        link =>
-          (link.currentModelPlan?.modelName || link.existingModel?.modelName)!
+      data?.modelPlan?.generalCharacteristics?.resemblesExistingModelWhich?.links?.map(
+        link => link.model.modelName!
       ) || []
     );
-  }, [data?.modelPlan?.existingModelLinks]);
+  }, [
+    data?.modelPlan?.generalCharacteristics?.resemblesExistingModelWhich?.links
+  ]);
 
   if ((!loading && error) || (!loading && !data?.modelPlan)) {
     return <NotFoundPartial />;

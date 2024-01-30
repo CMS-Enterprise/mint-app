@@ -160,9 +160,15 @@ export const dataFormatter = (
     else if (
       transformObj[key] &&
       typeof transformObj[key] === 'object' &&
+      !allPlanTranslation?.[key]?.isModelLinks &&
       !Array.isArray(transformObj[key])
     ) {
       mappedObj[key] = transformObj[key];
+    }
+
+    // Translates the Existing Model Links names
+    else if (allPlanTranslation?.[key]?.isModelLinks && transformObj[key]) {
+      mappedObj[key] = transformObj[key].names.join(', ');
     }
 
     // Strip html tags from TipTap RTE rawContent value
@@ -178,6 +184,7 @@ export const dataFormatter = (
     if (
       transformObj[key] &&
       typeof transformObj[key] === 'object' &&
+      !allPlanTranslation?.[key]?.isModelLinks &&
       !allPlanTranslation?.[key]?.options &&
       !Array.isArray(transformObj[key])
     ) {

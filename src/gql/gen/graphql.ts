@@ -328,6 +328,11 @@ export enum EvaluationApproachType {
   OTHER = 'OTHER'
 }
 
+export enum ExisitingModelLinkFieldType {
+  GEN_CHAR_PARTICIPATION_EXISTING_MODEL_WHICH = 'GEN_CHAR_PARTICIPATION_EXISTING_MODEL_WHICH',
+  GEN_CHAR_RESEMBLES_EXISTING_MODEL_WHICH = 'GEN_CHAR_RESEMBLES_EXISTING_MODEL_WHICH'
+}
+
 /** ExistingModel represents a model that already exists outside of the scope of MINT */
 export type ExistingModel = {
   __typename: 'ExistingModel';
@@ -342,7 +347,7 @@ export type ExistingModel = {
   displayModelSummary?: Maybe<Scalars['Boolean']['output']>;
   id?: Maybe<Scalars['Int']['output']>;
   keywords?: Maybe<Scalars['String']['output']>;
-  modelName?: Maybe<Scalars['String']['output']>;
+  modelName: Scalars['String']['output'];
   modifiedBy?: Maybe<Scalars['UUID']['output']>;
   modifiedByUserAccount?: Maybe<UserAccount>;
   modifiedDts?: Maybe<Scalars['Time']['output']>;
@@ -359,15 +364,23 @@ export type ExistingModelLink = {
   createdBy: Scalars['UUID']['output'];
   createdByUserAccount: UserAccount;
   createdDts: Scalars['Time']['output'];
-  currentModelPlan?: Maybe<ModelPlan>;
   currentModelPlanID?: Maybe<Scalars['UUID']['output']>;
-  existingModel?: Maybe<ExistingModel>;
   existingModelID?: Maybe<Scalars['Int']['output']>;
+  fieldName: ExisitingModelLinkFieldType;
   id?: Maybe<Scalars['UUID']['output']>;
+  model: LinkedExistingModel;
   modelPlanID: Scalars['UUID']['output'];
   modifiedBy?: Maybe<Scalars['UUID']['output']>;
   modifiedByUserAccount?: Maybe<UserAccount>;
   modifiedDts?: Maybe<Scalars['Time']['output']>;
+};
+
+export type ExistingModelLinks = {
+  __typename: 'ExistingModelLinks';
+  fieldName: ExisitingModelLinkFieldType;
+  links: Array<ExistingModelLink>;
+  modelPlanID: Scalars['UUID']['output'];
+  names: Array<Scalars['String']['output']>;
 };
 
 export type Field = {
@@ -472,6 +485,9 @@ export type LaunchDarklySettings = {
   userKey: Scalars['String']['output'];
 };
 
+/** LinkedExistingModel is a union type that returns either an Existing Model, or a Model plan from the database */
+export type LinkedExistingModel = ExistingModel | ModelPlan;
+
 export enum MintUses {
   CONTRIBUTE_DISCUSSIONS = 'CONTRIBUTE_DISCUSSIONS',
   EDIT_MODEL = 'EDIT_MODEL',
@@ -515,7 +531,6 @@ export type ModelPlan = {
   crs: Array<PlanCr>;
   discussions: Array<PlanDiscussion>;
   documents: Array<PlanDocument>;
-  existingModelLinks: Array<ExistingModelLink>;
   generalCharacteristics: PlanGeneralCharacteristics;
   id: Scalars['UUID']['output'];
   isCollaborator: Scalars['Boolean']['output'];
@@ -633,7 +648,11 @@ export type Mutation = {
   unlockAllTaskListSections: Array<TaskListSectionLockStatus>;
   unlockTaskListSection: Scalars['Boolean']['output'];
   updateCustomOperationalNeedByID: OperationalNeed;
-  updateExistingModelLinks: Array<ExistingModelLink>;
+  /**
+   * This will update linked existing models, and relatede model plans for given model plan and fieldName.
+   * The fieldName allows it so you can create links for multiple sections of the model plan
+   */
+  updateExistingModelLinks: ExistingModelLinks;
   updateModelPlan: ModelPlan;
   updateOperationalSolution: OperationalSolution;
   updateOperationalSolutionSubtasks?: Maybe<Array<OperationalSolutionSubtask>>;
@@ -830,6 +849,7 @@ export type MutationUpdateCustomOperationalNeedByIdArgs = {
 export type MutationUpdateExistingModelLinksArgs = {
   currentModelPlanIDs?: InputMaybe<Array<Scalars['UUID']['input']>>;
   existingModelIDs?: InputMaybe<Array<Scalars['Int']['input']>>;
+  fieldName: ExisitingModelLinkFieldType;
   modelPlanID: Scalars['UUID']['input'];
 };
 
@@ -1574,6 +1594,7 @@ export type PlanGeneralCharacteristics = {
   resemblesExistingModel?: Maybe<Scalars['Boolean']['output']>;
   resemblesExistingModelHow?: Maybe<Scalars['String']['output']>;
   resemblesExistingModelNote?: Maybe<Scalars['String']['output']>;
+  resemblesExistingModelWhich?: Maybe<ExistingModelLinks>;
   rulemakingRequired?: Maybe<Scalars['Boolean']['output']>;
   rulemakingRequiredDescription?: Maybe<Scalars['String']['output']>;
   rulemakingRequiredNote?: Maybe<Scalars['String']['output']>;
@@ -3007,7 +3028,7 @@ export type GetAllGeneralCharacteristicsQueryVariables = Exact<{
 }>;
 
 
-export type GetAllGeneralCharacteristicsQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, existingModelLinks: Array<{ __typename: 'ExistingModelLink', id?: UUID | null, existingModel?: { __typename: 'ExistingModel', id?: number | null, modelName?: string | null } | null, currentModelPlan?: { __typename: 'ModelPlan', id: UUID, modelName: string } | null }>, generalCharacteristics: { __typename: 'PlanGeneralCharacteristics', id: UUID, isNewModel?: boolean | null, existingModel?: string | null, resemblesExistingModel?: boolean | null, resemblesExistingModelHow?: string | null, resemblesExistingModelNote?: string | null, hasComponentsOrTracks?: boolean | null, hasComponentsOrTracksDiffer?: string | null, hasComponentsOrTracksNote?: string | null, alternativePaymentModelTypes: Array<AlternativePaymentModelType>, alternativePaymentModelNote?: string | null, keyCharacteristics: Array<KeyCharacteristic>, keyCharacteristicsOther?: string | null, keyCharacteristicsNote?: string | null, collectPlanBids?: boolean | null, collectPlanBidsNote?: string | null, managePartCDEnrollment?: boolean | null, managePartCDEnrollmentNote?: string | null, planContractUpdated?: boolean | null, planContractUpdatedNote?: string | null, careCoordinationInvolved?: boolean | null, careCoordinationInvolvedDescription?: string | null, careCoordinationInvolvedNote?: string | null, additionalServicesInvolved?: boolean | null, additionalServicesInvolvedDescription?: string | null, additionalServicesInvolvedNote?: string | null, communityPartnersInvolved?: boolean | null, communityPartnersInvolvedDescription?: string | null, communityPartnersInvolvedNote?: string | null, geographiesTargeted?: boolean | null, geographiesTargetedTypes: Array<GeographyType>, geographiesStatesAndTerritories: Array<StatesAndTerritories>, geographiesRegionTypes: Array<GeographyRegionType>, geographiesTargetedTypesOther?: string | null, geographiesTargetedAppliedTo: Array<GeographyApplication>, geographiesTargetedAppliedToOther?: string | null, geographiesTargetedNote?: string | null, participationOptions?: boolean | null, participationOptionsNote?: string | null, agreementTypes: Array<AgreementType>, agreementTypesOther?: string | null, multiplePatricipationAgreementsNeeded?: boolean | null, multiplePatricipationAgreementsNeededNote?: string | null, rulemakingRequired?: boolean | null, rulemakingRequiredDescription?: string | null, rulemakingRequiredNote?: string | null, authorityAllowances: Array<AuthorityAllowance>, authorityAllowancesOther?: string | null, authorityAllowancesNote?: string | null, waiversRequired?: boolean | null, waiversRequiredTypes: Array<WaiverType>, waiversRequiredNote?: string | null, status: TaskStatus } } };
+export type GetAllGeneralCharacteristicsQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, generalCharacteristics: { __typename: 'PlanGeneralCharacteristics', id: UUID, isNewModel?: boolean | null, existingModel?: string | null, resemblesExistingModel?: boolean | null, resemblesExistingModelHow?: string | null, resemblesExistingModelNote?: string | null, hasComponentsOrTracks?: boolean | null, hasComponentsOrTracksDiffer?: string | null, hasComponentsOrTracksNote?: string | null, alternativePaymentModelTypes: Array<AlternativePaymentModelType>, alternativePaymentModelNote?: string | null, keyCharacteristics: Array<KeyCharacteristic>, keyCharacteristicsOther?: string | null, keyCharacteristicsNote?: string | null, collectPlanBids?: boolean | null, collectPlanBidsNote?: string | null, managePartCDEnrollment?: boolean | null, managePartCDEnrollmentNote?: string | null, planContractUpdated?: boolean | null, planContractUpdatedNote?: string | null, careCoordinationInvolved?: boolean | null, careCoordinationInvolvedDescription?: string | null, careCoordinationInvolvedNote?: string | null, additionalServicesInvolved?: boolean | null, additionalServicesInvolvedDescription?: string | null, additionalServicesInvolvedNote?: string | null, communityPartnersInvolved?: boolean | null, communityPartnersInvolvedDescription?: string | null, communityPartnersInvolvedNote?: string | null, geographiesTargeted?: boolean | null, geographiesTargetedTypes: Array<GeographyType>, geographiesStatesAndTerritories: Array<StatesAndTerritories>, geographiesRegionTypes: Array<GeographyRegionType>, geographiesTargetedTypesOther?: string | null, geographiesTargetedAppliedTo: Array<GeographyApplication>, geographiesTargetedAppliedToOther?: string | null, geographiesTargetedNote?: string | null, participationOptions?: boolean | null, participationOptionsNote?: string | null, agreementTypes: Array<AgreementType>, agreementTypesOther?: string | null, multiplePatricipationAgreementsNeeded?: boolean | null, multiplePatricipationAgreementsNeededNote?: string | null, rulemakingRequired?: boolean | null, rulemakingRequiredDescription?: string | null, rulemakingRequiredNote?: string | null, authorityAllowances: Array<AuthorityAllowance>, authorityAllowancesOther?: string | null, authorityAllowancesNote?: string | null, waiversRequired?: boolean | null, waiversRequiredTypes: Array<WaiverType>, waiversRequiredNote?: string | null, status: TaskStatus, resemblesExistingModelWhich?: { __typename: 'ExistingModelLinks', links: Array<{ __typename: 'ExistingModelLink', id?: UUID | null, existingModelID?: number | null, currentModelPlanID?: UUID | null, fieldName: ExisitingModelLinkFieldType, model: { __typename: 'ExistingModel', modelName: string, stage: string, numberOfParticipants?: string | null, keywords?: string | null } | { __typename: 'ModelPlan', modelName: string, abbreviation?: string | null } }> } | null } } };
 
 export type GetAuthorityQueryVariables = Exact<{
   id: Scalars['UUID']['input'];
@@ -3021,7 +3042,7 @@ export type GetGeneralCharacteristicsQueryVariables = Exact<{
 }>;
 
 
-export type GetGeneralCharacteristicsQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, existingModelLinks: Array<{ __typename: 'ExistingModelLink', id?: UUID | null, existingModelID?: number | null, currentModelPlanID?: UUID | null }>, generalCharacteristics: { __typename: 'PlanGeneralCharacteristics', id: UUID, isNewModel?: boolean | null, currentModelPlanID?: UUID | null, existingModelID?: number | null, resemblesExistingModel?: boolean | null, resemblesExistingModelHow?: string | null, resemblesExistingModelNote?: string | null, hasComponentsOrTracks?: boolean | null, hasComponentsOrTracksDiffer?: string | null, hasComponentsOrTracksNote?: string | null } } };
+export type GetGeneralCharacteristicsQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, generalCharacteristics: { __typename: 'PlanGeneralCharacteristics', id: UUID, isNewModel?: boolean | null, currentModelPlanID?: UUID | null, existingModelID?: number | null, resemblesExistingModel?: boolean | null, resemblesExistingModelHow?: string | null, resemblesExistingModelNote?: string | null, hasComponentsOrTracks?: boolean | null, hasComponentsOrTracksDiffer?: string | null, hasComponentsOrTracksNote?: string | null, resemblesExistingModelWhich?: { __typename: 'ExistingModelLinks', links: Array<{ __typename: 'ExistingModelLink', id?: UUID | null, existingModelID?: number | null, currentModelPlanID?: UUID | null, fieldName: ExisitingModelLinkFieldType, model: { __typename: 'ExistingModel', modelName: string, stage: string, numberOfParticipants?: string | null, keywords?: string | null } | { __typename: 'ModelPlan', modelName: string, abbreviation?: string | null } }> } | null } } };
 
 export type GetInvolvementsQueryVariables = Exact<{
   id: Scalars['UUID']['input'];
@@ -3046,12 +3067,13 @@ export type GetTargetsAndOptionsQuery = { __typename: 'Query', modelPlan: { __ty
 
 export type UpdateExistingModelLinksMutationVariables = Exact<{
   modelPlanID: Scalars['UUID']['input'];
+  fieldName: ExisitingModelLinkFieldType;
   existingModelIDs?: InputMaybe<Array<Scalars['Int']['input']> | Scalars['Int']['input']>;
   currentModelPlanIDs?: InputMaybe<Array<Scalars['UUID']['input']> | Scalars['UUID']['input']>;
 }>;
 
 
-export type UpdateExistingModelLinksMutation = { __typename: 'Mutation', updateExistingModelLinks: Array<{ __typename: 'ExistingModelLink', id?: UUID | null, existingModelID?: number | null, existingModel?: { __typename: 'ExistingModel', id?: number | null, modelName?: string | null } | null }> };
+export type UpdateExistingModelLinksMutation = { __typename: 'Mutation', updateExistingModelLinks: { __typename: 'ExistingModelLinks', links: Array<{ __typename: 'ExistingModelLink', id?: UUID | null, existingModelID?: number | null, model: { __typename: 'ExistingModel', modelName: string, stage: string, numberOfParticipants?: string | null, keywords?: string | null } | { __typename: 'ModelPlan', modelName: string, abbreviation?: string | null } }> } };
 
 export type UpdatePlanGeneralCharacteristicsMutationVariables = Exact<{
   id: Scalars['UUID']['input'];
@@ -3064,7 +3086,7 @@ export type UpdatePlanGeneralCharacteristicsMutation = { __typename: 'Mutation',
 export type GetExistingModelPlansQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetExistingModelPlansQuery = { __typename: 'Query', existingModelCollection: Array<{ __typename: 'ExistingModel', id?: number | null, modelName?: string | null }> };
+export type GetExistingModelPlansQuery = { __typename: 'Query', existingModelCollection: Array<{ __typename: 'ExistingModel', id?: number | null, modelName: string }> };
 
 export type GetModelPlansBaseQueryVariables = Exact<{
   filter: ModelPlanFilter;
@@ -4504,17 +4526,6 @@ export const GetAllGeneralCharacteristicsDocument = gql`
     query GetAllGeneralCharacteristics($id: UUID!) {
   modelPlan(id: $id) {
     id
-    existingModelLinks {
-      id
-      existingModel {
-        id
-        modelName
-      }
-      currentModelPlan {
-        id
-        modelName
-      }
-    }
     generalCharacteristics {
       id
       isNewModel
@@ -4522,6 +4533,26 @@ export const GetAllGeneralCharacteristicsDocument = gql`
       resemblesExistingModel
       resemblesExistingModelHow
       resemblesExistingModelNote
+      resemblesExistingModelWhich {
+        links {
+          id
+          existingModelID
+          currentModelPlanID
+          fieldName
+          model {
+            ... on ExistingModel {
+              modelName
+              stage
+              numberOfParticipants
+              keywords
+            }
+            ... on ModelPlan {
+              modelName
+              abbreviation
+            }
+          }
+        }
+      }
       hasComponentsOrTracks
       hasComponentsOrTracksDiffer
       hasComponentsOrTracksNote
@@ -4670,11 +4701,6 @@ export const GetGeneralCharacteristicsDocument = gql`
   modelPlan(id: $id) {
     id
     modelName
-    existingModelLinks {
-      id
-      existingModelID
-      currentModelPlanID
-    }
     generalCharacteristics {
       id
       isNewModel
@@ -4683,6 +4709,26 @@ export const GetGeneralCharacteristicsDocument = gql`
       resemblesExistingModel
       resemblesExistingModelHow
       resemblesExistingModelNote
+      resemblesExistingModelWhich {
+        links {
+          id
+          existingModelID
+          currentModelPlanID
+          fieldName
+          model {
+            ... on ExistingModel {
+              modelName
+              stage
+              numberOfParticipants
+              keywords
+            }
+            ... on ModelPlan {
+              modelName
+              abbreviation
+            }
+          }
+        }
+      }
       hasComponentsOrTracks
       hasComponentsOrTracksDiffer
       hasComponentsOrTracksNote
@@ -4897,17 +4943,28 @@ export type GetTargetsAndOptionsLazyQueryHookResult = ReturnType<typeof useGetTa
 export type GetTargetsAndOptionsSuspenseQueryHookResult = ReturnType<typeof useGetTargetsAndOptionsSuspenseQuery>;
 export type GetTargetsAndOptionsQueryResult = Apollo.QueryResult<GetTargetsAndOptionsQuery, GetTargetsAndOptionsQueryVariables>;
 export const UpdateExistingModelLinksDocument = gql`
-    mutation UpdateExistingModelLinks($modelPlanID: UUID!, $existingModelIDs: [Int!], $currentModelPlanIDs: [UUID!]) {
+    mutation UpdateExistingModelLinks($modelPlanID: UUID!, $fieldName: ExisitingModelLinkFieldType!, $existingModelIDs: [Int!], $currentModelPlanIDs: [UUID!]) {
   updateExistingModelLinks(
     modelPlanID: $modelPlanID
+    fieldName: $fieldName
     existingModelIDs: $existingModelIDs
     currentModelPlanIDs: $currentModelPlanIDs
   ) {
-    id
-    existingModelID
-    existingModel {
+    links {
       id
-      modelName
+      existingModelID
+      model {
+        ... on ExistingModel {
+          modelName
+          stage
+          numberOfParticipants
+          keywords
+        }
+        ... on ModelPlan {
+          modelName
+          abbreviation
+        }
+      }
     }
   }
 }
@@ -4928,6 +4985,7 @@ export type UpdateExistingModelLinksMutationFn = Apollo.MutationFunction<UpdateE
  * const [updateExistingModelLinksMutation, { data, loading, error }] = useUpdateExistingModelLinksMutation({
  *   variables: {
  *      modelPlanID: // value for 'modelPlanID'
+ *      fieldName: // value for 'fieldName'
  *      existingModelIDs: // value for 'existingModelIDs'
  *      currentModelPlanIDs: // value for 'currentModelPlanIDs'
  *   },

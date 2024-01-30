@@ -66,9 +66,9 @@ const csvFields = [
   'generalCharacteristics.isNewModel',
   'generalCharacteristics.existingModel',
   'generalCharacteristics.resemblesExistingModel',
-  'generalCharacteristics.existingModelLinks', // array
   'generalCharacteristics.resemblesExistingModelHow',
   'generalCharacteristics.resemblesExistingModelNote',
+  'generalCharacteristics.resemblesExistingModelWhich',
   'generalCharacteristics.hasComponentsOrTracks',
   'generalCharacteristics.hasComponentsOrTracksDiffer',
   'generalCharacteristics.hasComponentsOrTracksNote',
