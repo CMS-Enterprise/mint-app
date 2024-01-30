@@ -18,21 +18,11 @@ export default gql(/* GraphQL */ `
             id
             existingModelID
             currentModelPlanID
-            fieldName
-            model {
-              ... on ExistingModel {
-                modelName
-                stage
-                numberOfParticipants
-                keywords
-              }
-              ... on ModelPlan {
-                modelName
-                abbreviation
-              }
-            }
           }
         }
+        resemblesExistingModelOtherSpecify
+        resemblesExistingModelOtherSelected
+        resemblesExistingModelOtherOption
         hasComponentsOrTracks
         hasComponentsOrTracksDiffer
         hasComponentsOrTracksNote

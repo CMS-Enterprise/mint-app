@@ -46,16 +46,6 @@ const ReadOnlyGeneralCharacteristics = ({
     }
   });
 
-  const mappedExistingModels: (string | number)[] = useMemo(() => {
-    return (
-      data?.modelPlan?.generalCharacteristics?.resemblesExistingModelWhich?.links?.map(
-        link => link.model.modelName!
-      ) || []
-    );
-  }, [
-    data?.modelPlan?.generalCharacteristics?.resemblesExistingModelWhich?.links
-  ]);
-
   if ((!loading && error) || (!loading && !data?.modelPlan)) {
     return <NotFoundPartial />;
   }
@@ -65,7 +55,11 @@ const ReadOnlyGeneralCharacteristics = ({
     existingModel,
     resemblesExistingModel,
     resemblesExistingModelHow,
+    resemblesExistingModelWhich,
     resemblesExistingModelNote,
+    resemblesExistingModelOtherSpecify,
+    resemblesExistingModelOtherSelected,
+    resemblesExistingModelOtherOption,
     hasComponentsOrTracks,
     hasComponentsOrTracksDiffer,
     hasComponentsOrTracksNote,
@@ -183,11 +177,13 @@ const ReadOnlyGeneralCharacteristics = ({
         {checkGroupMap(
           isViewingFilteredView,
           filteredQuestions,
-          'modelResemblance',
+          'resemblesExistingModelWhich',
           <ReadOnlySection
-            heading={generalCharacteristicsT('existingModelLinks.label')}
+            heading={generalCharacteristicsT(
+              'resemblesExistingModelWhich.label'
+            )}
             list
-            listItems={mappedExistingModels}
+            listItems={resemblesExistingModelWhich?.names}
           />
         )}
 

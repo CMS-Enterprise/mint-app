@@ -78,6 +78,14 @@ export interface GetAllSingleModelData_modelPlan_generalCharacteristics {
   resemblesExistingModelHow: string | null;
   resemblesExistingModelNote: string | null;
   resemblesExistingModelWhich: GetAllSingleModelData_modelPlan_generalCharacteristics_resemblesExistingModelWhich | null;
+  /**
+   * For providing clarifying comments if Other is selected for resemblesExistingModel
+   */
+  resemblesExistingModelOtherSpecify: string | null;
+  /**
+   * For denoting the name of the other existing model that this model resembles
+   */
+  resemblesExistingModelOtherOption: string | null;
   hasComponentsOrTracks: boolean | null;
   hasComponentsOrTracksDiffer: string | null;
   hasComponentsOrTracksNote: string | null;

@@ -27,11 +27,12 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     goField: 'ResemblesExistingModel',
     dbField: 'resembles_existing_model',
     label: 'Does your proposed track/model resemble any existing models?',
-    dataType: 'boolean',
+    dataType: 'enum',
     formType: 'radio',
     options: {
-      true: 'Yes',
-      false: 'No'
+      YES: 'Yes',
+      NO: 'No',
+      OTHER: 'Other'
     }
   },
   resemblesExistingModelWhich: {
@@ -45,7 +46,7 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     dataType: 'string',
     formType: 'multiSelect',
     isArray: true,
-    isModelLinks: true // tells CSV data fetcher to look for names in the names key-value
+    isModelLinks: true // Used to designate if a field is a ExistingModelLinks type with nested fields - ex: names
   },
   resemblesExistingModelHow: {
     gqlField: 'resemblesExistingModelHow',
@@ -54,6 +55,35 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     label: 'In what way does the new model resemble the selected model(s)?',
     dataType: 'string',
     formType: 'textarea'
+  },
+  resemblesExistingModelOtherSpecify: {
+    gqlField: 'resemblesExistingModelOtherSpecify',
+    goField: 'ResemblesExistingModelOtherSpecify',
+    dbField: 'resembles_existing_model_other_specify',
+    label: 'Please specify',
+    dataType: 'string',
+    formType: 'text'
+  },
+  // Not rendered in any form/ui
+  resemblesExistingModelOtherSelected: {
+    gqlField: 'resemblesExistingModelOtherSelected',
+    goField: 'ResemblesExistingModelOtherSelected',
+    dbField: 'resembles_existing_model_other_selected',
+    label: '',
+    dataType: 'boolean',
+    formType: 'radio',
+    options: {
+      true: '',
+      false: ''
+    }
+  },
+  resemblesExistingModelOtherOption: {
+    gqlField: 'resemblesExistingModelOtherOption',
+    goField: 'ResemblesExistingModelOtherOption',
+    dbField: 'resembles_existing_model_other_option',
+    label: 'Please specify other',
+    dataType: 'string',
+    formType: 'text'
   },
   resemblesExistingModelNote: {
     gqlField: 'resemblesExistingModelNote',

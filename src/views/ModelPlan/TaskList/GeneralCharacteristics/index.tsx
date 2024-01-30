@@ -1,4 +1,4 @@
-import React, { useMemo, useRef } from 'react';
+import React, { Fragment, useMemo, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, Route, Switch, useHistory, useParams } from 'react-router-dom';
 import {
@@ -11,7 +11,9 @@ import {
   Grid,
   GridContainer,
   Icon,
-  Label
+  Label,
+  Radio,
+  TextInput
 } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import { Field, Form, Formik, FormikProps } from 'formik';
@@ -25,7 +27,8 @@ import {
   useGetGeneralCharacteristicsQuery,
   useGetModelPlansBaseQuery,
   useUpdateExistingModelLinksMutation,
-  useUpdatePlanGeneralCharacteristicsMutation
+  useUpdatePlanGeneralCharacteristicsMutation,
+  YesNoOtherType
 } from 'gql/gen/graphql';
 
 import AddNote from 'components/AddNote';
@@ -143,6 +146,9 @@ export const CharacteristicsContent = () => {
     resemblesExistingModelHow,
     resemblesExistingModelNote,
     resemblesExistingModelWhich,
+    resemblesExistingModelOtherSpecify,
+    resemblesExistingModelOtherOption,
+    resemblesExistingModelOtherSelected,
     hasComponentsOrTracks,
     hasComponentsOrTracksDiffer,
     hasComponentsOrTracksNote
@@ -241,6 +247,11 @@ export const CharacteristicsContent = () => {
     existingModel: existingModel ?? null,
     resemblesExistingModel: resemblesExistingModel ?? null,
     existingModelLinks: existingModelLinks ?? [],
+    resemblesExistingModelOtherSpecify:
+      resemblesExistingModelOtherSpecify ?? '',
+    resemblesExistingModelOtherOption: resemblesExistingModelOtherOption ?? '',
+    resemblesExistingModelOtherSelected:
+      resemblesExistingModelOtherSelected ?? null,
     resemblesExistingModelHow: resemblesExistingModelHow ?? '',
     resemblesExistingModelNote: resemblesExistingModelNote ?? '',
     hasComponentsOrTracks: hasComponentsOrTracks ?? null,
@@ -432,13 +443,43 @@ export const CharacteristicsContent = () => {
                       {flatErrors.resemblesExistingModel}
                     </FieldErrorMsg>
 
-                    <BooleanRadio
-                      field="resemblesExistingModel"
-                      id="plan-characteristics-resembles-existing-model"
-                      value={values.resemblesExistingModel}
-                      setFieldValue={setFieldValue}
-                      options={resemblesExistingModelConfig.options}
-                    />
+                    <Fieldset>
+                      {getKeys(resemblesExistingModelConfig.options).map(
+                        key => (
+                          <Fragment key={key}>
+                            <Field
+                              as={Radio}
+                              id={`plan-characteristics-resembles-existing-model-${key}`}
+                              data-testid={`plan-characteristics-resembles-existing-model-${key}`}
+                              name="resemblesExistingModel"
+                              label={resemblesExistingModelConfig.options[key]}
+                              value={key}
+                              checked={values.resemblesExistingModel === key}
+                              onChange={() => {
+                                setFieldValue('resemblesExistingModel', key);
+                              }}
+                            />
+
+                            {key === YesNoOtherType.OTHER &&
+                              values.resemblesExistingModel ===
+                                YesNoOtherType.OTHER && (
+                                <div className="margin-left-4 margin-top-1">
+                                  <Field
+                                    as={TextInput}
+                                    id="plan-characteristics-resembles-existing-model-other-specify"
+                                    data-testid="plan-characteristics-resembles-existing-model-other-specify"
+                                    disabled={
+                                      values.resemblesExistingModel !==
+                                      YesNoOtherType.OTHER
+                                    }
+                                    name="resemblesExistingModelOtherSpecify"
+                                  />
+                                </div>
+                              )}
+                          </Fragment>
+                        )
+                      )}
+                    </Fieldset>
 
                     {values.resemblesExistingModel && (
                       <>
