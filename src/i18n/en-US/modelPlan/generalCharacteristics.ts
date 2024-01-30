@@ -48,6 +48,14 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     isArray: true,
     isModelLinks: true // Used to designate if a field is a ExistingModelLinks type with nested fields - ex: names
   },
+  resemblesExistingModelWhyHow: {
+    gqlField: 'resemblesExistingModelWhyHow',
+    goField: 'ResemblesExistingModelWhyHow',
+    dbField: 'resembles_existing_model_why_how',
+    label: 'Explain why and how the model made this decision.',
+    dataType: 'string',
+    formType: 'textarea'
+  },
   resemblesExistingModelHow: {
     gqlField: 'resemblesExistingModelHow',
     goField: 'ResemblesExistingModelHow',

@@ -58,6 +58,7 @@ export default gql`
         isNewModel
         existingModel
         resemblesExistingModel
+        resemblesExistingModelWhyHow
         resemblesExistingModelHow
         resemblesExistingModelNote
         resemblesExistingModelWhich {

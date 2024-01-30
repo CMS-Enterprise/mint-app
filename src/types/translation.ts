@@ -152,6 +152,7 @@ export type TranslationGeneralCharacteristics = {
   isNewModel: TranslationFieldPropertiesWithOptions<Bool>;
   existingModel: TranslationFieldProperties;
   resemblesExistingModel: TranslationFieldPropertiesWithOptions<YesNoOtherType>;
+  resemblesExistingModelWhyHow: TranslationFieldProperties;
   resemblesExistingModelHow: TranslationFieldProperties;
   resemblesExistingModelNote: TranslationFieldProperties;
   resemblesExistingModelWhich: TranslationFieldProperties;

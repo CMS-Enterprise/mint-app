@@ -75,6 +75,10 @@ export interface GetAllSingleModelData_modelPlan_generalCharacteristics {
   isNewModel: boolean | null;
   existingModel: string | null;
   resemblesExistingModel: YesNoOtherType | null;
+  /**
+   * For providing clarifying comments if Yes or No is selected for resemblesExistingModel
+   */
+  resemblesExistingModelWhyHow: string | null;
   resemblesExistingModelHow: string | null;
   resemblesExistingModelNote: string | null;
   resemblesExistingModelWhich: GetAllSingleModelData_modelPlan_generalCharacteristics_resemblesExistingModelWhich | null;

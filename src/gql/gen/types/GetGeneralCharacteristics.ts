@@ -28,6 +28,10 @@ export interface GetGeneralCharacteristics_modelPlan_generalCharacteristics {
   currentModelPlanID: UUID | null;
   existingModelID: number | null;
   resemblesExistingModel: YesNoOtherType | null;
+  /**
+   * For providing clarifying comments if Yes or No is selected for resemblesExistingModel
+   */
+  resemblesExistingModelWhyHow: string | null;
   resemblesExistingModelHow: string | null;
   resemblesExistingModelNote: string | null;
   resemblesExistingModelWhich: GetGeneralCharacteristics_modelPlan_generalCharacteristics_resemblesExistingModelWhich | null;

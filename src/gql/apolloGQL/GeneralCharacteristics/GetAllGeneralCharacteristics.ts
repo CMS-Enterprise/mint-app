@@ -9,6 +9,7 @@ export default gql(/* GraphQL */ `
         isNewModel
         existingModel
         resemblesExistingModel
+        resemblesExistingModelWhyHow
         resemblesExistingModelHow
         resemblesExistingModelNote
         resemblesExistingModelWhich {

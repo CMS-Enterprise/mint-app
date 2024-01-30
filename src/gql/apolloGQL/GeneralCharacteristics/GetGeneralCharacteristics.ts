@@ -11,6 +11,7 @@ export default gql(/* GraphQL */ `
         currentModelPlanID
         existingModelID
         resemblesExistingModel
+        resemblesExistingModelWhyHow
         resemblesExistingModelHow
         resemblesExistingModelNote
         resemblesExistingModelWhich {

@@ -10,6 +10,7 @@ ALTER TABLE plan_general_characteristics
     );
 
 ALTER TABLE plan_general_characteristics
+  ADD COLUMN resembles_existing_model_why_how ZERO_STRING,
   ADD COLUMN resembles_existing_model_other_specify ZERO_STRING,
   ADD COLUMN resembles_existing_model_other_selected BOOLEAN,
   ADD COLUMN resembles_existing_model_other_option ZERO_STRING;
