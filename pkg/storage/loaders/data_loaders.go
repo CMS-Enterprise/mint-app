@@ -21,6 +21,7 @@ type DataLoaders struct {
 	UserAccountLoader              *WrappedDataLoader
 	DataReader                     *DataReader
 	ExistingModelLinkLoader        *WrappedDataLoader
+	ExistingModelLinkNameLoader    *WrappedDataLoader
 	ExistingModelLoader            *WrappedDataLoader
 	ModelPlanLoader                *WrappedDataLoader
 
@@ -50,7 +51,8 @@ func NewDataLoaders(store *storage.Store) *DataLoaders {
 	loaders.OperationSolutionSubtaskLoader = newWrappedDataLoader(loaders.GetOperationalSolutionSubtaskByModelPlanID)
 	loaders.UserAccountLoader = newWrappedDataLoader(loaders.GetUserAccountsByIDLoader)
 
-	loaders.ExistingModelLinkLoader = newWrappedDataLoader(loaders.GetExistingModelLinkByModelPlanID)
+	loaders.ExistingModelLinkLoader = newWrappedDataLoader(loaders.GetExistingModelLinkByModelPlanIDAndFieldName)
+	loaders.ExistingModelLinkNameLoader = newWrappedDataLoader(loaders.GetExistingModelLinkNamesByModelPlanIDAndFieldName)
 	loaders.ExistingModelLoader = newWrappedDataLoader(loaders.GetExistingModelByModelPlanID)
 	loaders.ModelPlanLoader = newWrappedDataLoader(loaders.GetModelPlanByModelPlanID)
 

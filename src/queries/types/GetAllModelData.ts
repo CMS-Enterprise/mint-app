@@ -50,6 +50,11 @@ export interface GetAllModelData_modelPlanCollection_basics {
   status: TaskStatus;
 }
 
+export interface GetAllModelData_modelPlanCollection_generalCharacteristics_resemblesExistingModelWhich {
+  __typename: "ExistingModelLinks";
+  names: string[];
+}
+
 export interface GetAllModelData_modelPlanCollection_generalCharacteristics_readyForReviewByUserAccount {
   __typename: "UserAccount";
   commonName: string;
@@ -72,6 +77,7 @@ export interface GetAllModelData_modelPlanCollection_generalCharacteristics {
   resemblesExistingModel: boolean | null;
   resemblesExistingModelHow: string | null;
   resemblesExistingModelNote: string | null;
+  resemblesExistingModelWhich: GetAllModelData_modelPlanCollection_generalCharacteristics_resemblesExistingModelWhich | null;
   hasComponentsOrTracks: boolean | null;
   hasComponentsOrTracksDiffer: string | null;
   hasComponentsOrTracksNote: string | null;

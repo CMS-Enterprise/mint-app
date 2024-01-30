@@ -78,7 +78,6 @@ type ModelPlan {
   prepareForClearance: PrepareForClearance!
   nameHistory(sort: SortDirection! = DESC): [String!]!
   operationalNeeds: [OperationalNeed!]!
-  existingModelLinks: [ExistingModelLink!]!
 }
 
 type OperationalNeed {
@@ -186,7 +185,7 @@ ExistingModel represents a model that already exists outside of the scope of MIN
 """
 type ExistingModel {
   id: Int
-  modelName: String
+  modelName: String!
   stage: String!
   numberOfParticipants: String
   category: String
@@ -208,14 +207,26 @@ type ExistingModel {
   modifiedByUserAccount: UserAccount
   modifiedDts: Time
 }
+"""
+LinkedExistingModel is a union type that returns either an Existing Model, or a Model plan from the database
+"""
+union LinkedExistingModel =  ExistingModel | ModelPlan
+
+
+type ExistingModelLinks {
+  links: [ExistingModelLink!]!
+  fieldName: ExisitingModelLinkFieldType!
+  modelPlanID: UUID!
+  names: [String!]!
+}
 
 type ExistingModelLink {
   id: UUID
   modelPlanID: UUID!
   existingModelID: Int
-  existingModel: ExistingModel
   currentModelPlanID: UUID
-  currentModelPlan: ModelPlan
+  fieldName: ExisitingModelLinkFieldType!
+  model: LinkedExistingModel!
 
   createdBy: UUID!
   createdByUserAccount: UserAccount!
@@ -535,6 +546,7 @@ type PlanGeneralCharacteristics {
   resemblesExistingModel: Boolean
   resemblesExistingModelHow: String
   resemblesExistingModelNote: String
+  resemblesExistingModelWhich: ExistingModelLinks
   hasComponentsOrTracks: Boolean
   hasComponentsOrTracksDiffer: String
   hasComponentsOrTracksNote: String
@@ -1420,6 +1432,11 @@ input ReportAProblemInput {
   severityOther: String
 }
 
+enum ExisitingModelLinkFieldType {
+  GEN_CHAR_RESEMBLES_EXISTING_MODEL_WHICH
+  GEN_CHAR_PARTICIPATION_EXISTING_MODEL_WHICH
+}
+
 enum ReportAProblemSection {
   READ_VIEW
   TASK_LIST
@@ -1920,7 +1937,11 @@ updateOperationalSolutionSubtasks(inputs: [UpdateOperationalSolutionSubtaskInput
 deleteOperationalSolutionSubtask(id: UUID!): Int!
 @hasRole(role: MINT_USER)
 
-updateExistingModelLinks(modelPlanID: UUID!, existingModelIDs: [Int!],currentModelPlanIDs: [UUID!]): [ExistingModelLink!]!
+"""
+This will update linked existing models, and relatede model plans for given model plan and fieldName. 
+The fieldName allows it so you can create links for multiple sections of the model plan
+"""
+updateExistingModelLinks(modelPlanID: UUID!,fieldName: ExisitingModelLinkFieldType!,  existingModelIDs: [Int!],currentModelPlanIDs: [UUID!]): ExistingModelLinks!
 @hasRole(role: MINT_USER)
 
 shareModelPlan(modelPlanID: UUID!, viewFilter: ModelViewFilter, usernames: [String!]!, optionalMessage: String): Boolean!
