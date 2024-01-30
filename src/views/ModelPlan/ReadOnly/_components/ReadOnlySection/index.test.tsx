@@ -23,11 +23,13 @@ describe('The Read Only Section', () => {
       expect(screen.getByText(defaultCopyProps.copy)).toBeInTheDocument();
     });
 
-    it('renders "No Answer Entered" if copy is empty', async () => {
+    it('renders "No additional information specified" if copy is empty', async () => {
       render(<ReadOnlySection {...defaultCopyProps} copy={null} />);
 
       expect(screen.getByText(defaultCopyProps.heading)).toBeInTheDocument();
-      expect(screen.getByText('No answer entered')).toBeInTheDocument();
+      expect(
+        screen.getByText('No additional information specified')
+      ).toBeInTheDocument();
     });
   });
 

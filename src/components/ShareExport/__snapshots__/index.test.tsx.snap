@@ -935,22 +935,50 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                 data-testid="grid"
               >
                 <div
-                  class="read-only-section read-only-section--existingmodellinks-label margin-bottom-3"
+                  class="read-only-section read-only-section--explain-why-and-how-the-model-made-this-decision margin-bottom-3"
                 >
                   <p
                     class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
                   >
-                    existingModelLinks.label
+                    Explain why and how the model made this decision.
                   </p>
                   <p
                     class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
                   >
-                    <em
-                      class="text-base"
-                    >
-                      No answer entered
-                    </em>
+                    We think it is right
                   </p>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--which-existing-models-does-your-proposed-track-model-most-closely-resemble margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    Which existing models does your proposed track/model most closely resemble?
+                  </p>
+                  <ul
+                    class="margin-y-0 padding-left-3"
+                  >
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Other
+                    </li>
+                    <ul
+                      data-testid="other-entry"
+                    >
+                      <li
+                        class="font-sans-md line-height-sans-4"
+                      >
+                        Other model
+                      </li>
+                    </ul>
+                  </ul>
                 </div>
               </div>
               <div
@@ -971,7 +999,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     <em
                       class="text-base"
                     >
-                      No answer entered
+                      No additional information specified
                     </em>
                   </p>
                 </div>
@@ -7671,22 +7699,50 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                 data-testid="grid"
               >
                 <div
-                  class="read-only-section read-only-section--existingmodellinks-label margin-bottom-3"
+                  class="read-only-section read-only-section--explain-why-and-how-the-model-made-this-decision margin-bottom-3"
                 >
                   <p
                     class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
                   >
-                    existingModelLinks.label
+                    Explain why and how the model made this decision.
                   </p>
                   <p
                     class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
                   >
-                    <em
-                      class="text-base"
-                    >
-                      No answer entered
-                    </em>
+                    We think it is right
                   </p>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--which-existing-models-does-your-proposed-track-model-most-closely-resemble margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    Which existing models does your proposed track/model most closely resemble?
+                  </p>
+                  <ul
+                    class="margin-y-0 padding-left-3"
+                  >
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Other
+                    </li>
+                    <ul
+                      data-testid="other-entry"
+                    >
+                      <li
+                        class="font-sans-md line-height-sans-4"
+                      >
+                        Other model
+                      </li>
+                    </ul>
+                  </ul>
                 </div>
               </div>
               <div
@@ -7707,7 +7763,7 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                     <em
                       class="text-base"
                     >
-                      No answer entered
+                      No additional information specified
                     </em>
                   </p>
                 </div>
