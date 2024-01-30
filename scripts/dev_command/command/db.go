@@ -122,8 +122,8 @@ type ContainerStatus struct {
 	Status string `json:"status"`
 }
 
-// Container represents the structure of a Docker container
-type Container struct {
+// DockerContainer represents the structure of a Docker container
+type DockerContainer struct {
 	ID         string `json:"ID"`
 	Name       string `json:"Name"`
 	Image      string `json:"Image"`
@@ -143,19 +143,34 @@ type Container struct {
 	} `json:"Publishers"`
 }
 
+// DockerContainers holds docker container information from docker-compose
+type DockerContainers struct {
+	Containers map[MintDockerContainerName]*DockerContainer
+}
+
+// GetContainer returns a docker container if present by service name
+func (dc *DockerContainers) GetContainer(name MintDockerContainerName) (*DockerContainer, error) {
+	//TODO: check if present, if not return an error. Currently this will never return an error
+	return dc.Containers[name], nil
+}
+
 func checkIfContainerHasExited(container MintDockerContainerName, regexPattern string) (*string, error) {
-	containers, err := getExitedDockerContainers()
+	containers, err := getDockerContainersStatus()
 	if err != nil {
-		return nil, nil
+		return nil, err
 	}
-	containerToCheck := containers[string(container)]
+	containerToCheck, err := containers.GetContainer(container)
+	if err != nil {
+		return nil, err
+	}
 	//TODO: do a nil check, this will create a record if it doesn't exist
 
 	return models.StringPointer(fmt.Sprint(containerToCheck.ExitCode)), nil
 
 }
 
-func getExitedDockerContainers() (map[string]Container, error) {
+func getDockerContainersStatus() (*DockerContainers, error) {
+	dockerContainers := DockerContainers{}
 	psCmd := exec.Command("docker-compose", "-f", "docker-compose.backend.yml", "ps", "-a", "--format", "json")
 	output, err := psCmd.Output()
 	if err != nil {
@@ -168,7 +183,7 @@ func getExitedDockerContainers() (map[string]Container, error) {
 	fmt.Println("Ran command:", psCmd.String())
 
 	fmt.Println("Command output:", outputString)
-	exitedContainers := make(map[string]Container)
+	containers := make(map[MintDockerContainerName]*DockerContainer)
 
 	lines := strings.Split(string(outputString), "\n")
 	for _, line := range lines {
@@ -176,7 +191,7 @@ func getExitedDockerContainers() (map[string]Container, error) {
 			continue
 		}
 
-		var container Container
+		var container DockerContainer
 		err := json.Unmarshal([]byte(line), &container)
 		if err != nil {
 			fmt.Println("Error parsing JSON:", err)
@@ -184,8 +199,9 @@ func getExitedDockerContainers() (map[string]Container, error) {
 		}
 		//TODO: make this a map of enums of container names, the container name doesn't match the docker config exactly.
 
-		exitedContainers[container.Name] = container
+		containers[MintDockerContainerName(container.Service)] = &container
 	}
-	return exitedContainers, nil
+	dockerContainers.Containers = containers
+	return &dockerContainers, nil
 
 }
