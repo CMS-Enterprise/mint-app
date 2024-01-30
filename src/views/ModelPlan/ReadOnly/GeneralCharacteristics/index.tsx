@@ -185,7 +185,9 @@ const ReadOnlyGeneralCharacteristics = ({
           filteredQuestions,
           'modelResemblance',
           <ReadOnlySection
-            heading={generalCharacteristicsT('existingModelLinks.label')}
+            heading={generalCharacteristicsT(
+              'resemblesExistingModelWhich.label'
+            )}
             list
             listItems={mappedExistingModels}
           />
