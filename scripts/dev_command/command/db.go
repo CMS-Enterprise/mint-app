@@ -153,99 +153,16 @@ func checkIfContainerHasExited(container MintDockerContainerName, regexPattern s
 
 	return models.StringPointer(fmt.Sprint(containerToCheck.ExitCode)), nil
 
-	// psCmd := exec.Command("docker-compose", "-f", "docker-compose.backend.yml", "ps", "-a", "--format", "json")
-	// // psCmd := exec.Command("docker-compose", "-f", "docker-compose.backend.yml", "ps", "-a", "--format", "'json'", "--help")
-	// // psCmd := exec.Command("docker-compose", "-f", "docker-compose.backend.yml", "ps", "-a", "--format json") //, "{json }")
-	// output, err := psCmd.Output()
-	// if err != nil {
-	// 	fmt.Println("Error running docker-compose ps:", err)
-	// 	return nil, err
-	// }
-	// // Wrap the output in a JSON array
-	// jsonArrayString := "[" + string(output) + "]"
-
-	// //TODO, determine how to parse each of these in a valid way.
-	// // Right now there is an error Error parsing JSON: invalid character '{' after array element
-	// outputString := string(output)
-
-	// fmt.Println("Ran command:", psCmd.String())
-
-	// fmt.Println("Command output:", outputString)
-	// exitedContainers := make(map[string]Container)
-
-	// lines := strings.Split(string(outputString), "\n")
-	// for _, line := range lines {
-	// 	if line == "" {
-	// 		continue
-	// 	}
-
-	// 	var container Container
-	// 	err := json.Unmarshal([]byte(line), &container)
-	// 	if err != nil {
-	// 		fmt.Println("Error parsing JSON:", err)
-	// 		continue
-	// 	}
-
-	// 	exitedContainers[container.Name] = container
-	// }
-	// fmt.Print(exitedContainers)
-
-	// var containers []Container
-	// // errUnmarshal := json.Unmarshal(output, &containers)
-	// errUnmarshal := json.Unmarshal([]byte(jsonArrayString), &containers)
-	// if errUnmarshal != nil {
-	// 	fmt.Println("Error parsing JSON:", errUnmarshal)
-	// 	return nil, errUnmarshal
-	// }
-	// // var containers []ContainerStatus
-	// // errUnmarshal := json.Unmarshal(output, &containers)
-	// // if errUnmarshal != nil {
-	// // 	fmt.Println("Error parsing JSON:", errUnmarshal)
-	// // 	return nil, errUnmarshal
-	// // }
-	// // psCmd := exec.Command("docker-compose", "-f", "docker-compose.backend.yml", "ps", "-a") //This shows the status of all containers
-	// // psCmd := exec.Command("docker-compose", "-f", "docker-compose.backend.yml", "ps", "-a", "--status", "exited", "|", "grep", string(container)) // only get logs where the container has exited
-	// // psCmd := exec.Command("docker-compose", "-f", "docker-compose.backend.yml", "ps", "-a", "--status", "exited") // only get logs where the container has exited
-	// // psCmd2 := exec.Command("grep", string(container))
-	// // psCmd2.Stdin, _ = psCmd.StdoutPipe()
-
-	// // psCmd.Start()
-	// // // psCmd2.Start()
-	// // // Wait for cmd1 to finish
-	// // if err := psCmd.Wait(); err != nil {
-	// // 	fmt.Println("Error waiting for cmd1:", err)
-	// // 	return nil, err
-	// // }
-
-	// // psOutput, err := psCmd2.Output() //TODO, get the output better, there is an error with this. Maybe it's Grep? Should we do that in GO intead?
-
-	// if err != nil {
-	// 	return nil, fmt.Errorf("error checking container status: %v", err)
-	// }
-	// regexPattern = `Exited \((\d+)\)` //TODO: verify, we might only need this regex to check any containers exit status
-
-	// // status := string(psOutput)
-	// status := string(containers[0].Status) //TODO get the right container or do this elsewhere
-	// match := regexp.MustCompile(regexPattern).FindStringSubmatch(status)
-	// if match != nil {
-	// 	return &match[0], nil
-	// }
-	// return nil, nil
-
 }
 
 func getExitedDockerContainers() (map[string]Container, error) {
 	psCmd := exec.Command("docker-compose", "-f", "docker-compose.backend.yml", "ps", "-a", "--format", "json")
-	// psCmd := exec.Command("docker-compose", "-f", "docker-compose.backend.yml", "ps", "-a", "--format", "'json'", "--help")
-	// psCmd := exec.Command("docker-compose", "-f", "docker-compose.backend.yml", "ps", "-a", "--format json") //, "{json }")
 	output, err := psCmd.Output()
 	if err != nil {
 		fmt.Println("Error running docker-compose ps:", err)
 		return nil, err
 	}
 
-	//TODO, determine how to parse each of these in a valid way.
-	// Right now there is an error Error parsing JSON: invalid character '{' after array element
 	outputString := string(output)
 
 	fmt.Println("Ran command:", psCmd.String())
@@ -265,6 +182,7 @@ func getExitedDockerContainers() (map[string]Container, error) {
 			fmt.Println("Error parsing JSON:", err)
 			continue
 		}
+		//TODO: make this a map of enums of container names, the container name doesn't match the docker config exactly.
 
 		exitedContainers[container.Name] = container
 	}
