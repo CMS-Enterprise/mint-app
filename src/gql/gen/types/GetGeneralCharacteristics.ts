@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { ExisitingModelLinkFieldType } from "./../../../types/graphql-global-types";
+import { YesNoOtherType, ExisitingModelLinkFieldType } from "./../../../types/graphql-global-types";
 
 // ====================================================
 // GraphQL query operation: GetGeneralCharacteristics
@@ -45,7 +45,7 @@ export interface GetGeneralCharacteristics_modelPlan_generalCharacteristics {
   isNewModel: boolean | null;
   currentModelPlanID: UUID | null;
   existingModelID: number | null;
-  resemblesExistingModel: boolean | null;
+  resemblesExistingModel: YesNoOtherType | null;
   resemblesExistingModelHow: string | null;
   resemblesExistingModelNote: string | null;
   resemblesExistingModelWhich: GetGeneralCharacteristics_modelPlan_generalCharacteristics_resemblesExistingModelWhich | null;

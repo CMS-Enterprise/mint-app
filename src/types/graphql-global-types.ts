@@ -885,7 +885,10 @@ export interface PlanGeneralCharacteristicsChanges {
   isNewModel?: boolean | null;
   currentModelPlanID?: UUID | null;
   existingModelID?: number | null;
-  resemblesExistingModel?: boolean | null;
+  resemblesExistingModel?: YesNoOtherType | null;
+  resemblesExistingModelOtherSpecify?: string | null;
+  resemblesExistingModelOtherSelected?: boolean | null;
+  resemblesExistingModelOtherOption?: string | null;
   resemblesExistingModelHow?: string | null;
   resemblesExistingModelNote?: string | null;
   hasComponentsOrTracks?: boolean | null;

@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { ExisitingModelLinkFieldType, AlternativePaymentModelType, KeyCharacteristic, GeographyType, StatesAndTerritories, GeographyRegionType, GeographyApplication, AgreementType, AuthorityAllowance, WaiverType, TaskStatus } from "./../../../types/graphql-global-types";
+import { YesNoOtherType, ExisitingModelLinkFieldType, AlternativePaymentModelType, KeyCharacteristic, GeographyType, StatesAndTerritories, GeographyRegionType, GeographyApplication, AgreementType, AuthorityAllowance, WaiverType, TaskStatus } from "./../../../types/graphql-global-types";
 
 // ====================================================
 // GraphQL query operation: GetAllGeneralCharacteristics
@@ -44,7 +44,7 @@ export interface GetAllGeneralCharacteristics_modelPlan_generalCharacteristics {
   id: UUID;
   isNewModel: boolean | null;
   existingModel: string | null;
-  resemblesExistingModel: boolean | null;
+  resemblesExistingModel: YesNoOtherType | null;
   resemblesExistingModelHow: string | null;
   resemblesExistingModelNote: string | null;
   resemblesExistingModelWhich: GetAllGeneralCharacteristics_modelPlan_generalCharacteristics_resemblesExistingModelWhich | null;
