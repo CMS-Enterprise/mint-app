@@ -89,6 +89,8 @@ export default gql`
         planContractUpdatedNote
         geographiesTargeted
         geographiesTargetedTypes
+        geographiesStatesAndTerritories
+        geographiesRegionTypes
         geographiesTargetedTypesOther
         geographiesTargetedAppliedTo
         geographiesTargetedAppliedToOther
@@ -341,6 +343,9 @@ export default gql`
         payModelDifferentiation
         expectedCalculationComplexityLevel
         expectedCalculationComplexityLevelNote
+        claimsProcessingPrecedence
+        claimsProcessingPrecedenceOther
+        claimsProcessingPrecedenceNote
         canParticipantsSelectBetweenPaymentMechanisms
         canParticipantsSelectBetweenPaymentMechanismsHow
         canParticipantsSelectBetweenPaymentMechanismsNote

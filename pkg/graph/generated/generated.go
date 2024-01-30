@@ -541,6 +541,8 @@ type ComplexityRoot struct {
 		ExistingModel                             func(childComplexity int) int
 		ExistingModelID                           func(childComplexity int) int
 		ExistingModelPlan                         func(childComplexity int) int
+		GeographiesRegionTypes                    func(childComplexity int) int
+		GeographiesStatesAndTerritories           func(childComplexity int) int
 		GeographiesTargeted                       func(childComplexity int) int
 		GeographiesTargetedAppliedTo              func(childComplexity int) int
 		GeographiesTargetedAppliedToOther         func(childComplexity int) int
@@ -793,6 +795,9 @@ type ComplexityRoot struct {
 		CanParticipantsSelectBetweenPaymentMechanismsNote func(childComplexity int) int
 		ChangesMedicarePhysicianFeeSchedule               func(childComplexity int) int
 		ChangesMedicarePhysicianFeeScheduleNote           func(childComplexity int) int
+		ClaimsProcessingPrecedence                        func(childComplexity int) int
+		ClaimsProcessingPrecedenceNote                    func(childComplexity int) int
+		ClaimsProcessingPrecedenceOther                   func(childComplexity int) int
 		CreatedBy                                         func(childComplexity int) int
 		CreatedByUserAccount                              func(childComplexity int) int
 		CreatedDts                                        func(childComplexity int) int
@@ -1142,6 +1147,8 @@ type PlanGeneralCharacteristicsResolver interface {
 	KeyCharacteristics(ctx context.Context, obj *models.PlanGeneralCharacteristics) ([]model.KeyCharacteristic, error)
 
 	GeographiesTargetedTypes(ctx context.Context, obj *models.PlanGeneralCharacteristics) ([]model.GeographyType, error)
+	GeographiesStatesAndTerritories(ctx context.Context, obj *models.PlanGeneralCharacteristics) ([]models.StatesAndTerritories, error)
+	GeographiesRegionTypes(ctx context.Context, obj *models.PlanGeneralCharacteristics) ([]models.GeographyRegionType, error)
 
 	GeographiesTargetedAppliedTo(ctx context.Context, obj *models.PlanGeneralCharacteristics) ([]model.GeographyApplication, error)
 
@@ -4226,6 +4233,20 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.PlanGeneralCharacteristics.ExistingModelPlan(childComplexity), true
 
+	case "PlanGeneralCharacteristics.geographiesRegionTypes":
+		if e.complexity.PlanGeneralCharacteristics.GeographiesRegionTypes == nil {
+			break
+		}
+
+		return e.complexity.PlanGeneralCharacteristics.GeographiesRegionTypes(childComplexity), true
+
+	case "PlanGeneralCharacteristics.geographiesStatesAndTerritories":
+		if e.complexity.PlanGeneralCharacteristics.GeographiesStatesAndTerritories == nil {
+			break
+		}
+
+		return e.complexity.PlanGeneralCharacteristics.GeographiesStatesAndTerritories(childComplexity), true
+
 	case "PlanGeneralCharacteristics.geographiesTargeted":
 		if e.complexity.PlanGeneralCharacteristics.GeographiesTargeted == nil {
 			break
@@ -5926,6 +5947,27 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.PlanPayments.ChangesMedicarePhysicianFeeScheduleNote(childComplexity), true
+
+	case "PlanPayments.claimsProcessingPrecedence":
+		if e.complexity.PlanPayments.ClaimsProcessingPrecedence == nil {
+			break
+		}
+
+		return e.complexity.PlanPayments.ClaimsProcessingPrecedence(childComplexity), true
+
+	case "PlanPayments.claimsProcessingPrecedenceNote":
+		if e.complexity.PlanPayments.ClaimsProcessingPrecedenceNote == nil {
+			break
+		}
+
+		return e.complexity.PlanPayments.ClaimsProcessingPrecedenceNote(childComplexity), true
+
+	case "PlanPayments.claimsProcessingPrecedenceOther":
+		if e.complexity.PlanPayments.ClaimsProcessingPrecedenceOther == nil {
+			break
+		}
+
+		return e.complexity.PlanPayments.ClaimsProcessingPrecedenceOther(childComplexity), true
 
 	case "PlanPayments.createdBy":
 		if e.complexity.PlanPayments.CreatedBy == nil {
@@ -7975,6 +8017,8 @@ type PlanGeneralCharacteristics {
   # Page 4
   geographiesTargeted: Boolean
   geographiesTargetedTypes: [GeographyType!]!
+  geographiesStatesAndTerritories: [StatesAndTerritories!]!
+  geographiesRegionTypes: [GeographyRegionType!]!
   geographiesTargetedTypesOther: String
   geographiesTargetedAppliedTo: [GeographyApplication!]!
   geographiesTargetedAppliedToOther: String
@@ -8062,6 +8106,8 @@ input PlanGeneralCharacteristicsChanges @goModel(model: "map[string]interface{}"
   # Page 4
   geographiesTargeted: Boolean
   geographiesTargetedTypes: [GeographyType!]
+  geographiesStatesAndTerritories: [StatesAndTerritories!]
+  geographiesRegionTypes: [GeographyRegionType!]
   geographiesTargetedTypesOther: String
   geographiesTargetedAppliedTo: [GeographyApplication!]
   geographiesTargetedAppliedToOther: String
@@ -8426,6 +8472,9 @@ type PlanPayments {
   # Page 6
   expectedCalculationComplexityLevel:                ComplexityCalculationLevelType
   expectedCalculationComplexityLevelNote:            String
+  claimsProcessingPrecedence:                        Boolean
+  claimsProcessingPrecedenceOther:                   String
+  claimsProcessingPrecedenceNote:                    String
   canParticipantsSelectBetweenPaymentMechanisms:     Boolean
   canParticipantsSelectBetweenPaymentMechanismsHow:  String
   canParticipantsSelectBetweenPaymentMechanismsNote: String
@@ -8528,6 +8577,9 @@ input PlanPaymentsChanges @goModel(model: "map[string]interface{}") {
   # Page 6
   expectedCalculationComplexityLevel:                       ComplexityCalculationLevelType
   expectedCalculationComplexityLevelNote:                   String
+  claimsProcessingPrecedence:                               Boolean
+  claimsProcessingPrecedenceOther:                          String
+  claimsProcessingPrecedenceNote:                           String
   canParticipantsSelectBetweenPaymentMechanisms:            Boolean
   canParticipantsSelectBetweenPaymentMechanismsHow:         String
   canParticipantsSelectBetweenPaymentMechanismsNote:        String
@@ -10077,6 +10129,72 @@ enum GainshareArrangementEligibility {
 enum YesNoType {
   YES,
   NO
+}
+
+enum StatesAndTerritories {
+  AL,
+  AK,
+  AZ,
+  AR,
+  CA,
+  CO,
+  CT,
+  DE,
+  DC,
+  FL,
+  GA,
+  HI,
+  ID,
+  IL,
+  IN,
+  IA,
+  KS,
+  KY,
+  LA,
+  ME,
+  MD,
+  MA,
+  MI,
+  MN,
+  MS,
+  MO,
+  MT,
+  NE,
+  NV,
+  NH,
+  NJ,
+  NM,
+  NY,
+  NC,
+  ND,
+  OH,
+  OK,
+  OR,
+  PA,
+  RI,
+  SC,
+  SD,
+  TN,
+  TX,
+  UT,
+  VT,
+  VA,
+  WA,
+  WV,
+  WI,
+  WY,
+  AS,
+  GU,
+  MP,
+  PR,
+  UM,
+  VI
+}
+
+enum GeographyRegionType {
+  CBSA,
+  HRR,
+  MSA
 }`, BuiltIn: false},
 }
 var parsedSchema = gqlparser.MustLoadSchema(sources...)
@@ -15813,6 +15931,10 @@ func (ec *executionContext) fieldContext_ModelPlan_generalCharacteristics(ctx co
 				return ec.fieldContext_PlanGeneralCharacteristics_geographiesTargeted(ctx, field)
 			case "geographiesTargetedTypes":
 				return ec.fieldContext_PlanGeneralCharacteristics_geographiesTargetedTypes(ctx, field)
+			case "geographiesStatesAndTerritories":
+				return ec.fieldContext_PlanGeneralCharacteristics_geographiesStatesAndTerritories(ctx, field)
+			case "geographiesRegionTypes":
+				return ec.fieldContext_PlanGeneralCharacteristics_geographiesRegionTypes(ctx, field)
 			case "geographiesTargetedTypesOther":
 				return ec.fieldContext_PlanGeneralCharacteristics_geographiesTargetedTypesOther(ctx, field)
 			case "geographiesTargetedAppliedTo":
@@ -16859,6 +16981,12 @@ func (ec *executionContext) fieldContext_ModelPlan_payments(ctx context.Context,
 				return ec.fieldContext_PlanPayments_expectedCalculationComplexityLevel(ctx, field)
 			case "expectedCalculationComplexityLevelNote":
 				return ec.fieldContext_PlanPayments_expectedCalculationComplexityLevelNote(ctx, field)
+			case "claimsProcessingPrecedence":
+				return ec.fieldContext_PlanPayments_claimsProcessingPrecedence(ctx, field)
+			case "claimsProcessingPrecedenceOther":
+				return ec.fieldContext_PlanPayments_claimsProcessingPrecedenceOther(ctx, field)
+			case "claimsProcessingPrecedenceNote":
+				return ec.fieldContext_PlanPayments_claimsProcessingPrecedenceNote(ctx, field)
 			case "canParticipantsSelectBetweenPaymentMechanisms":
 				return ec.fieldContext_PlanPayments_canParticipantsSelectBetweenPaymentMechanisms(ctx, field)
 			case "canParticipantsSelectBetweenPaymentMechanismsHow":
@@ -18332,6 +18460,10 @@ func (ec *executionContext) fieldContext_Mutation_updatePlanGeneralCharacteristi
 				return ec.fieldContext_PlanGeneralCharacteristics_geographiesTargeted(ctx, field)
 			case "geographiesTargetedTypes":
 				return ec.fieldContext_PlanGeneralCharacteristics_geographiesTargetedTypes(ctx, field)
+			case "geographiesStatesAndTerritories":
+				return ec.fieldContext_PlanGeneralCharacteristics_geographiesStatesAndTerritories(ctx, field)
+			case "geographiesRegionTypes":
+				return ec.fieldContext_PlanGeneralCharacteristics_geographiesRegionTypes(ctx, field)
 			case "geographiesTargetedTypesOther":
 				return ec.fieldContext_PlanGeneralCharacteristics_geographiesTargetedTypesOther(ctx, field)
 			case "geographiesTargetedAppliedTo":
@@ -20080,6 +20212,12 @@ func (ec *executionContext) fieldContext_Mutation_updatePlanPayments(ctx context
 				return ec.fieldContext_PlanPayments_expectedCalculationComplexityLevel(ctx, field)
 			case "expectedCalculationComplexityLevelNote":
 				return ec.fieldContext_PlanPayments_expectedCalculationComplexityLevelNote(ctx, field)
+			case "claimsProcessingPrecedence":
+				return ec.fieldContext_PlanPayments_claimsProcessingPrecedence(ctx, field)
+			case "claimsProcessingPrecedenceOther":
+				return ec.fieldContext_PlanPayments_claimsProcessingPrecedenceOther(ctx, field)
+			case "claimsProcessingPrecedenceNote":
+				return ec.fieldContext_PlanPayments_claimsProcessingPrecedenceNote(ctx, field)
 			case "canParticipantsSelectBetweenPaymentMechanisms":
 				return ec.fieldContext_PlanPayments_canParticipantsSelectBetweenPaymentMechanisms(ctx, field)
 			case "canParticipantsSelectBetweenPaymentMechanismsHow":
@@ -33843,6 +33981,94 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristics_geographiesT
 	return fc, nil
 }
 
+func (ec *executionContext) _PlanGeneralCharacteristics_geographiesStatesAndTerritories(ctx context.Context, field graphql.CollectedField, obj *models.PlanGeneralCharacteristics) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanGeneralCharacteristics_geographiesStatesAndTerritories(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.PlanGeneralCharacteristics().GeographiesStatesAndTerritories(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.([]models.StatesAndTerritories)
+	fc.Result = res
+	return ec.marshalNStatesAndTerritories2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐStatesAndTerritoriesᚄ(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanGeneralCharacteristics_geographiesStatesAndTerritories(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanGeneralCharacteristics",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type StatesAndTerritories does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanGeneralCharacteristics_geographiesRegionTypes(ctx context.Context, field graphql.CollectedField, obj *models.PlanGeneralCharacteristics) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanGeneralCharacteristics_geographiesRegionTypes(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.PlanGeneralCharacteristics().GeographiesRegionTypes(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.([]models.GeographyRegionType)
+	fc.Result = res
+	return ec.marshalNGeographyRegionType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐGeographyRegionTypeᚄ(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanGeneralCharacteristics_geographiesRegionTypes(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanGeneralCharacteristics",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type GeographyRegionType does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
 func (ec *executionContext) _PlanGeneralCharacteristics_geographiesTargetedTypesOther(ctx context.Context, field graphql.CollectedField, obj *models.PlanGeneralCharacteristics) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_PlanGeneralCharacteristics_geographiesTargetedTypesOther(ctx, field)
 	if err != nil {
@@ -45289,6 +45515,129 @@ func (ec *executionContext) fieldContext_PlanPayments_expectedCalculationComplex
 	return fc, nil
 }
 
+func (ec *executionContext) _PlanPayments_claimsProcessingPrecedence(ctx context.Context, field graphql.CollectedField, obj *models.PlanPayments) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanPayments_claimsProcessingPrecedence(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ClaimsProcessingPrecedence, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*bool)
+	fc.Result = res
+	return ec.marshalOBoolean2ᚖbool(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanPayments_claimsProcessingPrecedence(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanPayments",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Boolean does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanPayments_claimsProcessingPrecedenceOther(ctx context.Context, field graphql.CollectedField, obj *models.PlanPayments) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanPayments_claimsProcessingPrecedenceOther(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ClaimsProcessingPrecedenceOther, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanPayments_claimsProcessingPrecedenceOther(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanPayments",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanPayments_claimsProcessingPrecedenceNote(ctx context.Context, field graphql.CollectedField, obj *models.PlanPayments) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanPayments_claimsProcessingPrecedenceNote(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ClaimsProcessingPrecedenceNote, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanPayments_claimsProcessingPrecedenceNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanPayments",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
 func (ec *executionContext) _PlanPayments_canParticipantsSelectBetweenPaymentMechanisms(ctx context.Context, field graphql.CollectedField, obj *models.PlanPayments) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_PlanPayments_canParticipantsSelectBetweenPaymentMechanisms(ctx, field)
 	if err != nil {
@@ -49969,6 +50318,12 @@ func (ec *executionContext) fieldContext_Query_planPayments(ctx context.Context,
 				return ec.fieldContext_PlanPayments_expectedCalculationComplexityLevel(ctx, field)
 			case "expectedCalculationComplexityLevelNote":
 				return ec.fieldContext_PlanPayments_expectedCalculationComplexityLevelNote(ctx, field)
+			case "claimsProcessingPrecedence":
+				return ec.fieldContext_PlanPayments_claimsProcessingPrecedence(ctx, field)
+			case "claimsProcessingPrecedenceOther":
+				return ec.fieldContext_PlanPayments_claimsProcessingPrecedenceOther(ctx, field)
+			case "claimsProcessingPrecedenceNote":
+				return ec.fieldContext_PlanPayments_claimsProcessingPrecedenceNote(ctx, field)
 			case "canParticipantsSelectBetweenPaymentMechanisms":
 				return ec.fieldContext_PlanPayments_canParticipantsSelectBetweenPaymentMechanisms(ctx, field)
 			case "canParticipantsSelectBetweenPaymentMechanismsHow":
@@ -61211,6 +61566,78 @@ func (ec *executionContext) _PlanGeneralCharacteristics(ctx context.Context, sel
 			}
 
 			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+		case "geographiesStatesAndTerritories":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._PlanGeneralCharacteristics_geographiesStatesAndTerritories(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
+				return res
+			}
+
+			if field.Deferrable != nil {
+				dfs, ok := deferred[field.Deferrable.Label]
+				di := 0
+				if ok {
+					dfs.AddField(field)
+					di = len(dfs.Values) - 1
+				} else {
+					dfs = graphql.NewFieldSet([]graphql.CollectedField{field})
+					deferred[field.Deferrable.Label] = dfs
+				}
+				dfs.Concurrently(di, func(ctx context.Context) graphql.Marshaler {
+					return innerFunc(ctx, dfs)
+				})
+
+				// don't run the out.Concurrently() call below
+				out.Values[i] = graphql.Null
+				continue
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+		case "geographiesRegionTypes":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._PlanGeneralCharacteristics_geographiesRegionTypes(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
+				return res
+			}
+
+			if field.Deferrable != nil {
+				dfs, ok := deferred[field.Deferrable.Label]
+				di := 0
+				if ok {
+					dfs.AddField(field)
+					di = len(dfs.Values) - 1
+				} else {
+					dfs = graphql.NewFieldSet([]graphql.CollectedField{field})
+					deferred[field.Deferrable.Label] = dfs
+				}
+				dfs.Concurrently(di, func(ctx context.Context) graphql.Marshaler {
+					return innerFunc(ctx, dfs)
+				})
+
+				// don't run the out.Concurrently() call below
+				out.Values[i] = graphql.Null
+				continue
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
 		case "geographiesTargetedTypesOther":
 			out.Values[i] = ec._PlanGeneralCharacteristics_geographiesTargetedTypesOther(ctx, field, obj)
 		case "geographiesTargetedAppliedTo":
@@ -63430,6 +63857,12 @@ func (ec *executionContext) _PlanPayments(ctx context.Context, sel ast.Selection
 			out.Values[i] = ec._PlanPayments_expectedCalculationComplexityLevel(ctx, field, obj)
 		case "expectedCalculationComplexityLevelNote":
 			out.Values[i] = ec._PlanPayments_expectedCalculationComplexityLevelNote(ctx, field, obj)
+		case "claimsProcessingPrecedence":
+			out.Values[i] = ec._PlanPayments_claimsProcessingPrecedence(ctx, field, obj)
+		case "claimsProcessingPrecedenceOther":
+			out.Values[i] = ec._PlanPayments_claimsProcessingPrecedenceOther(ctx, field, obj)
+		case "claimsProcessingPrecedenceNote":
+			out.Values[i] = ec._PlanPayments_claimsProcessingPrecedenceNote(ctx, field, obj)
 		case "canParticipantsSelectBetweenPaymentMechanisms":
 			out.Values[i] = ec._PlanPayments_canParticipantsSelectBetweenPaymentMechanisms(ctx, field, obj)
 		case "canParticipantsSelectBetweenPaymentMechanismsHow":
@@ -67581,6 +68014,83 @@ func (ec *executionContext) marshalNGeographyApplication2ᚕgithubᚗcomᚋcmsgo
 	return ret
 }
 
+func (ec *executionContext) unmarshalNGeographyRegionType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐGeographyRegionType(ctx context.Context, v interface{}) (models.GeographyRegionType, error) {
+	tmp, err := graphql.UnmarshalString(v)
+	res := models.GeographyRegionType(tmp)
+	return res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalNGeographyRegionType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐGeographyRegionType(ctx context.Context, sel ast.SelectionSet, v models.GeographyRegionType) graphql.Marshaler {
+	res := graphql.MarshalString(string(v))
+	if res == graphql.Null {
+		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
+			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
+		}
+	}
+	return res
+}
+
+func (ec *executionContext) unmarshalNGeographyRegionType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐGeographyRegionTypeᚄ(ctx context.Context, v interface{}) ([]models.GeographyRegionType, error) {
+	var vSlice []interface{}
+	if v != nil {
+		vSlice = graphql.CoerceList(v)
+	}
+	var err error
+	res := make([]models.GeographyRegionType, len(vSlice))
+	for i := range vSlice {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithIndex(i))
+		res[i], err = ec.unmarshalNGeographyRegionType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐGeographyRegionType(ctx, vSlice[i])
+		if err != nil {
+			return nil, err
+		}
+	}
+	return res, nil
+}
+
+func (ec *executionContext) marshalNGeographyRegionType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐGeographyRegionTypeᚄ(ctx context.Context, sel ast.SelectionSet, v []models.GeographyRegionType) graphql.Marshaler {
+	ret := make(graphql.Array, len(v))
+	var wg sync.WaitGroup
+	isLen1 := len(v) == 1
+	if !isLen1 {
+		wg.Add(len(v))
+	}
+	for i := range v {
+		i := i
+		fc := &graphql.FieldContext{
+			Index:  &i,
+			Result: &v[i],
+		}
+		ctx := graphql.WithFieldContext(ctx, fc)
+		f := func(i int) {
+			defer func() {
+				if r := recover(); r != nil {
+					ec.Error(ctx, ec.Recover(ctx, r))
+					ret = nil
+				}
+			}()
+			if !isLen1 {
+				defer wg.Done()
+			}
+			ret[i] = ec.marshalNGeographyRegionType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐGeographyRegionType(ctx, sel, v[i])
+		}
+		if isLen1 {
+			f(i)
+		} else {
+			go f(i)
+		}
+
+	}
+	wg.Wait()
+
+	for _, e := range ret {
+		if e == graphql.Null {
+			return graphql.Null
+		}
+	}
+
+	return ret
+}
+
 func (ec *executionContext) unmarshalNGeographyType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐGeographyType(ctx context.Context, v interface{}) (model.GeographyType, error) {
 	var res model.GeographyType
 	err := res.UnmarshalGQL(v)
@@ -70058,6 +70568,83 @@ func (ec *executionContext) marshalNStakeholdersType2ᚕgithubᚗcomᚋcmsgovᚋ
 	return ret
 }
 
+func (ec *executionContext) unmarshalNStatesAndTerritories2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐStatesAndTerritories(ctx context.Context, v interface{}) (models.StatesAndTerritories, error) {
+	tmp, err := graphql.UnmarshalString(v)
+	res := models.StatesAndTerritories(tmp)
+	return res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalNStatesAndTerritories2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐStatesAndTerritories(ctx context.Context, sel ast.SelectionSet, v models.StatesAndTerritories) graphql.Marshaler {
+	res := graphql.MarshalString(string(v))
+	if res == graphql.Null {
+		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
+			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
+		}
+	}
+	return res
+}
+
+func (ec *executionContext) unmarshalNStatesAndTerritories2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐStatesAndTerritoriesᚄ(ctx context.Context, v interface{}) ([]models.StatesAndTerritories, error) {
+	var vSlice []interface{}
+	if v != nil {
+		vSlice = graphql.CoerceList(v)
+	}
+	var err error
+	res := make([]models.StatesAndTerritories, len(vSlice))
+	for i := range vSlice {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithIndex(i))
+		res[i], err = ec.unmarshalNStatesAndTerritories2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐStatesAndTerritories(ctx, vSlice[i])
+		if err != nil {
+			return nil, err
+		}
+	}
+	return res, nil
+}
+
+func (ec *executionContext) marshalNStatesAndTerritories2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐStatesAndTerritoriesᚄ(ctx context.Context, sel ast.SelectionSet, v []models.StatesAndTerritories) graphql.Marshaler {
+	ret := make(graphql.Array, len(v))
+	var wg sync.WaitGroup
+	isLen1 := len(v) == 1
+	if !isLen1 {
+		wg.Add(len(v))
+	}
+	for i := range v {
+		i := i
+		fc := &graphql.FieldContext{
+			Index:  &i,
+			Result: &v[i],
+		}
+		ctx := graphql.WithFieldContext(ctx, fc)
+		f := func(i int) {
+			defer func() {
+				if r := recover(); r != nil {
+					ec.Error(ctx, ec.Recover(ctx, r))
+					ret = nil
+				}
+			}()
+			if !isLen1 {
+				defer wg.Done()
+			}
+			ret[i] = ec.marshalNStatesAndTerritories2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐStatesAndTerritories(ctx, sel, v[i])
+		}
+		if isLen1 {
+			f(i)
+		} else {
+			go f(i)
+		}
+
+	}
+	wg.Wait()
+
+	for _, e := range ret {
+		if e == graphql.Null {
+			return graphql.Null
+		}
+	}
+
+	return ret
+}
+
 func (ec *executionContext) unmarshalNString2string(ctx context.Context, v interface{}) (string, error) {
 	res, err := graphql.UnmarshalString(v)
 	return res, graphql.ErrorOnPath(ctx, err)
@@ -72297,6 +72884,73 @@ func (ec *executionContext) marshalOGeographyApplication2ᚕgithubᚗcomᚋcmsgo
 	return ret
 }
 
+func (ec *executionContext) unmarshalOGeographyRegionType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐGeographyRegionTypeᚄ(ctx context.Context, v interface{}) ([]models.GeographyRegionType, error) {
+	if v == nil {
+		return nil, nil
+	}
+	var vSlice []interface{}
+	if v != nil {
+		vSlice = graphql.CoerceList(v)
+	}
+	var err error
+	res := make([]models.GeographyRegionType, len(vSlice))
+	for i := range vSlice {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithIndex(i))
+		res[i], err = ec.unmarshalNGeographyRegionType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐGeographyRegionType(ctx, vSlice[i])
+		if err != nil {
+			return nil, err
+		}
+	}
+	return res, nil
+}
+
+func (ec *executionContext) marshalOGeographyRegionType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐGeographyRegionTypeᚄ(ctx context.Context, sel ast.SelectionSet, v []models.GeographyRegionType) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	ret := make(graphql.Array, len(v))
+	var wg sync.WaitGroup
+	isLen1 := len(v) == 1
+	if !isLen1 {
+		wg.Add(len(v))
+	}
+	for i := range v {
+		i := i
+		fc := &graphql.FieldContext{
+			Index:  &i,
+			Result: &v[i],
+		}
+		ctx := graphql.WithFieldContext(ctx, fc)
+		f := func(i int) {
+			defer func() {
+				if r := recover(); r != nil {
+					ec.Error(ctx, ec.Recover(ctx, r))
+					ret = nil
+				}
+			}()
+			if !isLen1 {
+				defer wg.Done()
+			}
+			ret[i] = ec.marshalNGeographyRegionType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐGeographyRegionType(ctx, sel, v[i])
+		}
+		if isLen1 {
+			f(i)
+		} else {
+			go f(i)
+		}
+
+	}
+	wg.Wait()
+
+	for _, e := range ret {
+		if e == graphql.Null {
+			return graphql.Null
+		}
+	}
+
+	return ret
+}
+
 func (ec *executionContext) unmarshalOGeographyType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐGeographyTypeᚄ(ctx context.Context, v interface{}) ([]model.GeographyType, error) {
 	if v == nil {
 		return nil, nil
@@ -73928,6 +74582,73 @@ func (ec *executionContext) marshalOStakeholdersType2ᚕgithubᚗcomᚋcmsgovᚋ
 				defer wg.Done()
 			}
 			ret[i] = ec.marshalNStakeholdersType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐStakeholdersType(ctx, sel, v[i])
+		}
+		if isLen1 {
+			f(i)
+		} else {
+			go f(i)
+		}
+
+	}
+	wg.Wait()
+
+	for _, e := range ret {
+		if e == graphql.Null {
+			return graphql.Null
+		}
+	}
+
+	return ret
+}
+
+func (ec *executionContext) unmarshalOStatesAndTerritories2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐStatesAndTerritoriesᚄ(ctx context.Context, v interface{}) ([]models.StatesAndTerritories, error) {
+	if v == nil {
+		return nil, nil
+	}
+	var vSlice []interface{}
+	if v != nil {
+		vSlice = graphql.CoerceList(v)
+	}
+	var err error
+	res := make([]models.StatesAndTerritories, len(vSlice))
+	for i := range vSlice {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithIndex(i))
+		res[i], err = ec.unmarshalNStatesAndTerritories2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐStatesAndTerritories(ctx, vSlice[i])
+		if err != nil {
+			return nil, err
+		}
+	}
+	return res, nil
+}
+
+func (ec *executionContext) marshalOStatesAndTerritories2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐStatesAndTerritoriesᚄ(ctx context.Context, sel ast.SelectionSet, v []models.StatesAndTerritories) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	ret := make(graphql.Array, len(v))
+	var wg sync.WaitGroup
+	isLen1 := len(v) == 1
+	if !isLen1 {
+		wg.Add(len(v))
+	}
+	for i := range v {
+		i := i
+		fc := &graphql.FieldContext{
+			Index:  &i,
+			Result: &v[i],
+		}
+		ctx := graphql.WithFieldContext(ctx, fc)
+		f := func(i int) {
+			defer func() {
+				if r := recover(); r != nil {
+					ec.Error(ctx, ec.Recover(ctx, r))
+					ret = nil
+				}
+			}()
+			if !isLen1 {
+				defer wg.Done()
+			}
+			ret[i] = ec.marshalNStatesAndTerritories2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐStatesAndTerritories(ctx, sel, v[i])
 		}
 		if isLen1 {
 			f(i)

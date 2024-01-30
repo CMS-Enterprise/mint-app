@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { AgencyOrStateHelpType, AlternativePaymentModelType, KeyCharacteristic, GeographyType, GeographyApplication, AgreementType, AuthorityAllowance, WaiverType, TaskStatus } from "./../../../types/graphql-global-types";
+import { AgencyOrStateHelpType, AlternativePaymentModelType, KeyCharacteristic, GeographyType, StatesAndTerritories, GeographyRegionType, GeographyApplication, AgreementType, AuthorityAllowance, WaiverType, TaskStatus } from "./../../../types/graphql-global-types";
 
 // ====================================================
 // GraphQL query operation: GetAllGeneralCharacteristics
@@ -64,6 +64,8 @@ export interface GetAllGeneralCharacteristics_modelPlan_generalCharacteristics {
   communityPartnersInvolvedNote: string | null;
   geographiesTargeted: boolean | null;
   geographiesTargetedTypes: GeographyType[];
+  geographiesStatesAndTerritories: StatesAndTerritories[];
+  geographiesRegionTypes: GeographyRegionType[];
   geographiesTargetedTypesOther: string | null;
   geographiesTargetedAppliedTo: GeographyApplication[];
   geographiesTargetedAppliedToOther: string | null;

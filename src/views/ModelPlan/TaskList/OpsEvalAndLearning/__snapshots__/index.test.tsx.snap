@@ -99,7 +99,7 @@ exports[`Model Plan Ops Eval and Learning > matches snapshot 1`] = `
     >
       <div
         class="usa-form-group margin-top-4"
-        data-scroll="stakeholders"
+        data-scroll="ops-eval-and-learning-stakeholders"
       >
         <label
           class="usa-label"
@@ -221,7 +221,7 @@ exports[`Model Plan Ops Eval and Learning > matches snapshot 1`] = `
       </div>
       <div
         class="usa-form-group margin-y-4 margin-bottom-8"
-        data-scroll="helpdeskUse"
+        data-scroll="ops-eval-and-learning-help-desk-use"
       >
         <label
           class="usa-label"
@@ -301,12 +301,15 @@ exports[`Model Plan Ops Eval and Learning > matches snapshot 1`] = `
       </div>
       <div
         class="usa-form-group"
+        data-scroll="ops-eval-and-learning-contractor-support"
       >
-        <legend
-          class="usa-label maxw-none"
+        <label
+          class="usa-label"
+          data-testid="label"
+          for="ops-eval-and-learning-contractor-support"
         >
           What contractors will support your model?
-        </legend>
+        </label>
         <div
           class="mint-checkbox usa-checkbox"
         >
@@ -389,7 +392,7 @@ exports[`Model Plan Ops Eval and Learning > matches snapshot 1`] = `
         </div>
         <div
           class="usa-form-group"
-          data-scroll="contractorSupportHow"
+          data-scroll="ops-eval-and-learning-contractor-support-how"
         >
           <label
             class="usa-label text-normal margin-top-4"
@@ -441,7 +444,7 @@ exports[`Model Plan Ops Eval and Learning > matches snapshot 1`] = `
       </div>
       <div
         class="usa-form-group margin-y-4 margin-bottom-8"
-        data-scroll="iddocSupport"
+        data-scroll="ops-eval-and-learning-iddoc-support"
       >
         <label
           class="usa-label"

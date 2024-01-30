@@ -111,7 +111,7 @@ exports[`Model Plan Beneficiaries > matches snapshot 1`] = `
           >
             <div
               class="usa-form-group"
-              data-scroll="numberPeopleImpacted"
+              data-scroll="expected-people-impacted"
             >
               <label
                 class="usa-label"

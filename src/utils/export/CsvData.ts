@@ -97,6 +97,8 @@ const csvFields = [
   'generalCharacteristics.planContractUpdatedNote',
   'generalCharacteristics.geographiesTargeted',
   'generalCharacteristics.geographiesTargetedTypes', // array
+  'generalCharacteristics.geographiesStatesAndTerritories', // array
+  'generalCharacteristics.geographiesRegionTypes', // array
   'generalCharacteristics.geographiesTargetedTypesOther',
   'generalCharacteristics.geographiesTargetedAppliedTo', // array
   'generalCharacteristics.geographiesTargetedAppliedToOther',
@@ -337,6 +339,9 @@ const csvFields = [
   'payments.payModelDifferentiation',
   'payments.expectedCalculationComplexityLevel',
   'payments.expectedCalculationComplexityLevelNote',
+  'payments.claimsProcessingPrecedence',
+  'payments.claimsProcessingPrecedenceOther',
+  'payments.claimsProcessingPrecedenceNote',
   'payments.canParticipantsSelectBetweenPaymentMechanisms',
   'payments.canParticipantsSelectBetweenPaymentMechanismsHow',
   'payments.canParticipantsSelectBetweenPaymentMechanismsNote',

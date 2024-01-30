@@ -9,7 +9,7 @@ on:
         description: Environment to build frontend assets for
 
 env:
-    GIT_HASH: ${{ github.event.pull_request.head.sha || github.sha }}
+    GIT_HASH: ${{ github.sha }}
     SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
     ENV: ${{ inputs.env }}
 
@@ -26,8 +26,6 @@ jobs:
     steps:
       - name: Check out code
         uses: actions/checkout@v4
-        with:
-          ref: ${{ env.GIT_HASH }}
       - name: Set up node
         uses: actions/setup-node@v4
         with:

@@ -21,6 +21,7 @@ import {
   FundingSource,
   GainshareArrangementEligibility,
   GeographyApplication,
+  GeographyRegionType,
   GeographyType,
   GetAllBasicsDocument,
   GetAllBasicsQuery,
@@ -54,6 +55,7 @@ import {
   RecruitmentType,
   SelectionMethodType,
   StakeholdersType,
+  StatesAndTerritories,
   TaskStatus,
   TeamRole,
   TriStateAnswer,
@@ -176,7 +178,16 @@ const generalCharacteristicData: GetAllGeneralCharacteristicsTypes = {
   communityPartnersInvolvedDescription: 'Are community partners involved?\n\n',
   communityPartnersInvolvedNote: 'frwegqergqgrqwg planContractUpdatedNote',
   geographiesTargeted: true,
-  geographiesTargetedTypes: [GeographyType.OTHER],
+  geographiesTargetedTypes: [
+    GeographyType.OTHER,
+    GeographyType.STATE,
+    GeographyType.REGION
+  ],
+  geographiesStatesAndTerritories: [
+    StatesAndTerritories.CA,
+    StatesAndTerritories.IN
+  ],
+  geographiesRegionTypes: [GeographyRegionType.CBSA],
   geographiesTargetedTypesOther: 'Geography type other',
   geographiesTargetedAppliedTo: [
     GeographyApplication.BENEFICIARIES,
@@ -566,6 +577,9 @@ const paymentsData: PaymentTypes = {
   planningToUseInnovationPaymentContractorNote: 'Contractor planning note',
   expectedCalculationComplexityLevel: ComplexityCalculationLevelType.HIGH,
   expectedCalculationComplexityLevelNote: 'Expected complexity note',
+  claimsProcessingPrecedence: true,
+  claimsProcessingPrecedenceOther: 'other claims',
+  claimsProcessingPrecedenceNote: 'claim note',
   canParticipantsSelectBetweenPaymentMechanisms: true,
   canParticipantsSelectBetweenPaymentMechanismsHow:
     'Can participants select how',

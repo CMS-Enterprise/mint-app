@@ -11,6 +11,9 @@ export default gql(/* GraphQL */ `
         payClaims
         expectedCalculationComplexityLevel
         expectedCalculationComplexityLevelNote
+        claimsProcessingPrecedence
+        claimsProcessingPrecedenceOther
+        claimsProcessingPrecedenceNote
         canParticipantsSelectBetweenPaymentMechanisms
         canParticipantsSelectBetweenPaymentMechanismsHow
         canParticipantsSelectBetweenPaymentMechanismsNote

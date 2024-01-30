@@ -225,7 +225,7 @@ export const ParticipantOptions = () => {
               >
                 <Fieldset disabled={!!error || loading}>
                   <FieldGroup
-                    scrollElement="expectedNumberOfParticipants"
+                    scrollElement="participants-and-providers-expected-participants"
                     error={!!flatErrors.expectedNumberOfParticipants}
                   >
                     <Label htmlFor="participants-and-providers-expected-participants">
@@ -317,9 +317,6 @@ export const ParticipantOptions = () => {
                           label={estimateConfidenceConfig.options[key]}
                           value={key}
                           checked={values.estimateConfidence === key}
-                          onChange={() => {
-                            setFieldValue('estimateConfidence', key);
-                          }}
                         />
                       ))}
                     </Fieldset>
@@ -331,7 +328,7 @@ export const ParticipantOptions = () => {
                   </FieldGroup>
 
                   <FieldGroup
-                    scrollElement="recruitmentMethod"
+                    scrollElement="participants-and-providers-recruitment-method"
                     error={!!flatErrors.recruitmentMethod}
                   >
                     <Label htmlFor="participants-and-providers-recruitment-method">
@@ -363,9 +360,6 @@ export const ParticipantOptions = () => {
                             label={recruitmentMethodConfig.options[key]}
                             value={key}
                             checked={values.recruitmentMethod === key}
-                            onChange={() => {
-                              setFieldValue('recruitmentMethod', key);
-                            }}
                           />
 
                           {key === RecruitmentType.NOFO && (
@@ -408,7 +402,7 @@ export const ParticipantOptions = () => {
                   </FieldGroup>
 
                   <FieldGroup
-                    scrollElement="selectionMethod"
+                    scrollElement="participants-and-providers-selection-method"
                     error={!!flatErrors.selectionMethod}
                     className="margin-top-4"
                   >

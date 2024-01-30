@@ -99,13 +99,13 @@ exports[`Model Plan Ops Eval and Learning > matches snapshot 1`] = `
     >
       <div
         class="usa-form-group"
-        data-scroll="evaluationApproaches"
+        data-scroll="ops-eval-and-learning-evaluation-approach"
       >
         <label
           class="usa-label maxw-none"
           data-testid="label"
-          for="ops-eval-and-learning-evaluation-approac"
-          id="ops-eval-and-learning-evaluation-approac"
+          for="ops-eval-and-learning-evaluation-approach"
+          id="ops-eval-and-learning-evaluation-approach"
         >
           What type of evaluation approach are you considering? Select all that apply.
         </label>
@@ -235,127 +235,132 @@ exports[`Model Plan Ops Eval and Learning > matches snapshot 1`] = `
           </button>
         </div>
       </div>
-      <label
-        class="usa-label maxw-none"
-        data-testid="label"
-        for="ops-eval-and-learning-cmmi-involvement"
-        id="ops-eval-and-learning-cmmi-involvement"
-      >
-        Is Chronic Conditions Warehouse (CCW) involved in the model?
-      </label>
-      <p
-        class="text-base margin-y-1"
-      >
-        If you select either yes option, there will be additional questions to answer.
-      </p>
       <div
-        class="mint-checkbox usa-checkbox"
+        class="usa-form-group"
+        data-scroll="ops-eval-and-learning-cmmi-involvement"
       >
-        <input
-          class="usa-checkbox__input"
-          id="ops-eval-and-learning-cmmi-involvement-YES_EVALUATION"
-          name="ccmInvolvment"
-          type="checkbox"
-          value="YES_EVALUATION"
-        />
         <label
-          class="usa-checkbox__label"
-          for="ops-eval-and-learning-cmmi-involvement-YES_EVALUATION"
+          class="usa-label maxw-none"
+          data-testid="label"
+          for="ops-eval-and-learning-cmmi-involvement"
+          id="ops-eval-and-learning-cmmi-involvement"
         >
-          Yes, for evaluation
+          Is Chronic Conditions Warehouse (CCW) involved in the model?
         </label>
         <p
-          class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
-        />
-      </div>
-      <div
-        class="mint-checkbox usa-checkbox"
-      >
-        <input
-          class="usa-checkbox__input"
-          id="ops-eval-and-learning-cmmi-involvement-YES__IMPLEMENTATION"
-          name="ccmInvolvment"
-          type="checkbox"
-          value="YES__IMPLEMENTATION"
-        />
-        <label
-          class="usa-checkbox__label"
-          for="ops-eval-and-learning-cmmi-involvement-YES__IMPLEMENTATION"
+          class="text-base margin-y-1"
         >
-          Yes, for implementation
-        </label>
-        <p
-          class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
-        />
-      </div>
-      <div
-        class="mint-checkbox usa-checkbox"
-      >
-        <input
-          class="usa-checkbox__input"
-          id="ops-eval-and-learning-cmmi-involvement-NO"
-          name="ccmInvolvment"
-          type="checkbox"
-          value="NO"
-        />
-        <label
-          class="usa-checkbox__label"
-          for="ops-eval-and-learning-cmmi-involvement-NO"
+          If you select either yes option, there will be additional questions to answer.
+        </p>
+        <div
+          class="mint-checkbox usa-checkbox"
         >
-          No
-        </label>
-        <p
-          class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
-        />
-      </div>
-      <div
-        class="mint-checkbox usa-checkbox"
-      >
-        <input
-          class="usa-checkbox__input"
-          id="ops-eval-and-learning-cmmi-involvement-OTHER"
-          name="ccmInvolvment"
-          type="checkbox"
-          value="OTHER"
-        />
-        <label
-          class="usa-checkbox__label"
-          for="ops-eval-and-learning-cmmi-involvement-OTHER"
-        >
-          Other
-        </label>
-        <p
-          class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
-        />
-      </div>
-      <div
-        class="margin-top-4 margin-bottom-8"
-      >
-        <button
-          class="usa-button usa-button usa-button--unstyled"
-          data-testid="add-note-toggle"
-          type="button"
-        >
-          <svg
-            aria-hidden="true"
-            class="usa-icon margin-right-1"
-            focusable="false"
-            height="1em"
-            role="img"
-            viewBox="0 0 24 24"
-            width="1em"
-            xmlns="http://www.w3.org/2000/svg"
+          <input
+            class="usa-checkbox__input"
+            id="ops-eval-and-learning-cmmi-involvement-YES_EVALUATION"
+            name="ccmInvolvment"
+            type="checkbox"
+            value="YES_EVALUATION"
+          />
+          <label
+            class="usa-checkbox__label"
+            for="ops-eval-and-learning-cmmi-involvement-YES_EVALUATION"
           >
-            <path
-              d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
-            />
-          </svg>
-          Add an additional note
-        </button>
+            Yes, for evaluation
+          </label>
+          <p
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+          />
+        </div>
+        <div
+          class="mint-checkbox usa-checkbox"
+        >
+          <input
+            class="usa-checkbox__input"
+            id="ops-eval-and-learning-cmmi-involvement-YES__IMPLEMENTATION"
+            name="ccmInvolvment"
+            type="checkbox"
+            value="YES__IMPLEMENTATION"
+          />
+          <label
+            class="usa-checkbox__label"
+            for="ops-eval-and-learning-cmmi-involvement-YES__IMPLEMENTATION"
+          >
+            Yes, for implementation
+          </label>
+          <p
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+          />
+        </div>
+        <div
+          class="mint-checkbox usa-checkbox"
+        >
+          <input
+            class="usa-checkbox__input"
+            id="ops-eval-and-learning-cmmi-involvement-NO"
+            name="ccmInvolvment"
+            type="checkbox"
+            value="NO"
+          />
+          <label
+            class="usa-checkbox__label"
+            for="ops-eval-and-learning-cmmi-involvement-NO"
+          >
+            No
+          </label>
+          <p
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+          />
+        </div>
+        <div
+          class="mint-checkbox usa-checkbox"
+        >
+          <input
+            class="usa-checkbox__input"
+            id="ops-eval-and-learning-cmmi-involvement-OTHER"
+            name="ccmInvolvment"
+            type="checkbox"
+            value="OTHER"
+          />
+          <label
+            class="usa-checkbox__label"
+            for="ops-eval-and-learning-cmmi-involvement-OTHER"
+          >
+            Other
+          </label>
+          <p
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+          />
+        </div>
+        <div
+          class="margin-top-4 margin-bottom-8"
+        >
+          <button
+            class="usa-button usa-button usa-button--unstyled"
+            data-testid="add-note-toggle"
+            type="button"
+          >
+            <svg
+              aria-hidden="true"
+              class="usa-icon margin-right-1"
+              focusable="false"
+              height="1em"
+              role="img"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+              />
+            </svg>
+            Add an additional note
+          </button>
+        </div>
       </div>
       <div
         class="usa-form-group margin-top-4"
-        data-scroll="dataNeededForMonitoring"
+        data-scroll="ops-eval-and-learning-data-needed"
       >
         <label
           class="usa-label maxw-none"
@@ -482,7 +487,7 @@ exports[`Model Plan Ops Eval and Learning > matches snapshot 1`] = `
       </div>
       <div
         class="usa-form-group margin-top-4"
-        data-scroll="dataToSendParticicipants"
+        data-scroll="label-ops-eval-and-learning-data-to-send"
       >
         <label
           class="usa-label maxw-none"
@@ -604,7 +609,7 @@ exports[`Model Plan Ops Eval and Learning > matches snapshot 1`] = `
       </div>
       <div
         class="usa-form-group margin-top-6"
-        data-scroll="shareCclfData"
+        data-scroll="ops-eval-and-learning-share-cclf-data"
       >
         <label
           class="usa-label maxw-none"

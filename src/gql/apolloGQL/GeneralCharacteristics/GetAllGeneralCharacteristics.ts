@@ -50,6 +50,8 @@ export default gql(/* GraphQL */ `
         communityPartnersInvolvedNote
         geographiesTargeted
         geographiesTargetedTypes
+        geographiesStatesAndTerritories
+        geographiesRegionTypes
         geographiesTargetedTypesOther
         geographiesTargetedAppliedTo
         geographiesTargetedAppliedToOther

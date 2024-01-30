@@ -1,4 +1,4 @@
-import React, { Fragment, useRef, useState } from 'react';
+import React, { Fragment, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, Route, Switch, useHistory, useParams } from 'react-router-dom';
 import {
@@ -17,7 +17,7 @@ import {
   TextInput
 } from '@trussworks/react-uswds';
 import classNames from 'classnames';
-import { Field, FieldArray, Form, Formik, FormikProps } from 'formik';
+import { Field, Form, Formik, FormikProps } from 'formik';
 import {
   CmsCenter,
   GetBasicsQuery,
@@ -69,10 +69,6 @@ const BasicsContent = () => {
   const formikRef = useRef<FormikProps<ModelPlanInfoFormType>>(null);
 
   const history = useHistory();
-
-  const [areCmmiGroupsShown, setAreCmmiGroupsShown] = useState(
-    formikRef?.current?.values.basics.cmsCenters.includes(CmsCenter.CMMI)
-  );
 
   const { data, loading, error } = useGetBasicsQuery({
     variables: {
@@ -274,11 +270,11 @@ const BasicsContent = () => {
                         </FieldGroup>
 
                         <FieldGroup
-                          scrollElement="abbreviation"
+                          scrollElement="plan-basics-abbreviation"
                           error={!!flatErrors.abbreviation}
                           className="margin-top-4"
                         >
-                          <Label htmlFor="plan-basics-model-name">
+                          <Label htmlFor="plan-basics-abbreviation">
                             {modelPlanT('abbreviation.label')}
                           </Label>
 
@@ -331,7 +327,7 @@ const BasicsContent = () => {
                           <Grid row gap>
                             <Grid desktop={{ col: 6 }}>
                               <FieldGroup
-                                scrollElement="basics.amsModelID"
+                                scrollElement="plan-basics-ams-model-id"
                                 error={!!flatErrors['basics.amsModelID']}
                                 className="margin-top-0"
                               >
@@ -353,7 +349,7 @@ const BasicsContent = () => {
                             </Grid>
                             <Grid desktop={{ col: 6 }}>
                               <FieldGroup
-                                scrollElement="basics.demoCode"
+                                scrollElement="plan-basics-demo-code"
                                 error={!!flatErrors['basics.demoCode']}
                                 className="margin-top-0"
                               >
@@ -377,7 +373,7 @@ const BasicsContent = () => {
                         </div>
 
                         <FieldGroup
-                          scrollElement="modelCategory"
+                          scrollElement="plan-basics-model-category"
                           error={!!flatErrors['basics.modelCategory']}
                           className="margin-top-4"
                         >
@@ -421,6 +417,8 @@ const BasicsContent = () => {
                                   }
                                   value={key}
                                   checked={values.basics.modelCategory === key}
+                                  // the onChange below is necessary to have a dynamic interaction
+                                  // with the Additional Model Categories question
                                   onChange={() => {
                                     setFieldValue('basics.modelCategory', key);
                                     if (
@@ -443,13 +441,14 @@ const BasicsContent = () => {
                         </FieldGroup>
 
                         <FieldGroup
+                          scrollElement="plan-basics-model-additional-category"
                           error={
                             !!flatErrors['basics.additionalModelCategories']
                           }
                           className="margin-top-4"
                         >
                           <Label
-                            htmlFor="basics.additionalModelCategories"
+                            htmlFor="plan-basics-model-additional-category"
                             className="text-normal"
                           >
                             {basicsT('additionalModelCategories.label')}
@@ -510,73 +509,43 @@ const BasicsContent = () => {
                         </FieldGroup>
 
                         <FieldGroup
-                          scrollElement="cmsCenters"
+                          scrollElement="new-plan-cmsCenters"
                           error={!!flatErrors['basics.cmsCenters']}
                           className="margin-top-4"
                         >
-                          <Fieldset>
-                            <FieldArray
-                              name="basics.cmsCenters"
-                              render={arrayHelpers => (
-                                <>
-                                  <Label htmlFor="plan-basics-cmsCenters">
-                                    {basicsT('cmsCenters.label')}
-                                    <RequiredAsterisk />
-                                  </Label>
+                          <Label htmlFor="new-plan-cmsCenters">
+                            {basicsT('cmsCenters.label')}
+                            <RequiredAsterisk />
+                          </Label>
 
-                                  <FieldErrorMsg>
-                                    {flatErrors['basics.cmsCenters']}
-                                  </FieldErrorMsg>
+                          <FieldErrorMsg>
+                            {flatErrors['basics.cmsCenters']}
+                          </FieldErrorMsg>
 
-                                  {getKeys(cmsCentersConfig.options).map(
-                                    center => {
-                                      return (
-                                        <Field
-                                          key={center}
-                                          as={CheckboxField}
-                                          id={`new-plan-cmsCenters-${center}`}
-                                          name="basics.cmsCenters"
-                                          label={
-                                            cmsCentersConfig.options[center]
-                                          }
-                                          value={center}
-                                          checked={values.basics.cmsCenters.includes(
-                                            center
-                                          )}
-                                          onChange={(
-                                            e: React.ChangeEvent<HTMLInputElement>
-                                          ) => {
-                                            if (e.target.checked) {
-                                              arrayHelpers.push(e.target.value);
-                                            } else {
-                                              const idx = values.basics.cmsCenters.indexOf(
-                                                e.target.value as CmsCenter
-                                              );
-                                              arrayHelpers.remove(idx);
-                                            }
-                                            if (
-                                              e.target.value === CmsCenter.CMMI
-                                            ) {
-                                              setAreCmmiGroupsShown(
-                                                !areCmmiGroupsShown
-                                              );
-                                            }
-                                          }}
-                                        />
-                                      );
-                                    }
-                                  )}
-                                </>
-                              )}
-                            />
-                          </Fieldset>
+                          {getKeys(cmsCentersConfig.options).map(center => {
+                            return (
+                              <Field
+                                key={center}
+                                as={CheckboxField}
+                                id={`new-plan-cmsCenters-${center}`}
+                                name="basics.cmsCenters"
+                                label={cmsCentersConfig.options[center]}
+                                value={center}
+                                checked={values.basics.cmsCenters.includes(
+                                  center
+                                )}
+                              />
+                            );
+                          })}
                         </FieldGroup>
+
                         <FieldGroup
+                          scrollElement="new-plan-cmmiGroup"
                           error={!!flatErrors['basics.cmmiGroups']}
                           className="margin-top-4"
                         >
                           <Label
-                            htmlFor="basics.cmmiGroups"
+                            htmlFor="new-plan-cmmiGroup"
                             className="text-normal"
                           >
                             {basicsT('cmmiGroups.label')}
