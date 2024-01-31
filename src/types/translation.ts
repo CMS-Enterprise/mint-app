@@ -25,6 +25,7 @@ import {
   FundingSource,
   GainshareArrangementEligibility,
   GeographyApplication,
+  GeographyRegionType,
   GeographyType,
   KeyCharacteristic,
   ModelCategory,
@@ -46,6 +47,7 @@ import {
   RecruitmentType,
   SelectionMethodType,
   StakeholdersType,
+  StatesAndTerritories,
   TaskStatus,
   TeamRole,
   TriStateAnswer,
@@ -156,6 +158,9 @@ export type TranslationGeneralCharacteristics = {
   hasComponentsOrTracksDiffer: TranslationFieldProperties;
   hasComponentsOrTracksNote: TranslationFieldProperties;
   // Key Characteristics
+  agencyOrStateHelp: TranslationFieldPropertiesWithOptions<AgencyOrStateHelpType>;
+  agencyOrStateHelpOther: TranslationFieldProperties;
+  agencyOrStateHelpNote: TranslationFieldProperties;
   alternativePaymentModelTypes: TranslationFieldPropertiesWithOptions<AlternativePaymentModelType>;
   alternativePaymentModelNote: TranslationFieldProperties;
   keyCharacteristics: TranslationFieldPropertiesWithOptions<KeyCharacteristic>;
@@ -181,6 +186,8 @@ export type TranslationGeneralCharacteristics = {
   geographiesTargeted: TranslationFieldPropertiesWithOptions<Bool>;
   geographiesTargetedTypes: TranslationFieldPropertiesWithOptions<GeographyType>;
   geographiesTargetedTypesOther: TranslationFieldProperties;
+  geographiesStatesAndTerritories: TranslationFieldPropertiesWithOptions<StatesAndTerritories>;
+  geographiesRegionTypes: TranslationFieldPropertiesWithOptions<GeographyRegionType>;
   geographiesTargetedAppliedTo: TranslationFieldPropertiesWithOptions<GeographyApplication>;
   geographiesTargetedAppliedToOther: TranslationFieldProperties;
   geographiesTargetedNote: TranslationFieldProperties;
@@ -311,9 +318,6 @@ export type TranslationBeneficiaries = {
 
 // Operations Evaluation and Learning
 export type TranslationOpsEvalAndLearning = {
-  agencyOrStateHelp: TranslationFieldPropertiesWithOptions<AgencyOrStateHelpType>;
-  agencyOrStateHelpOther: TranslationFieldProperties;
-  agencyOrStateHelpNote: TranslationFieldProperties;
   stakeholders: TranslationFieldPropertiesWithOptions<StakeholdersType>;
   stakeholdersOther: TranslationFieldProperties;
   stakeholdersNote: TranslationFieldProperties;

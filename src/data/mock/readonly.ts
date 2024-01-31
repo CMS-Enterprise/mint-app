@@ -21,6 +21,7 @@ import {
   FundingSource,
   GainshareArrangementEligibility,
   GeographyApplication,
+  GeographyRegionType,
   GeographyType,
   GetAllBasicsDocument,
   GetAllBasicsQuery,
@@ -54,6 +55,7 @@ import {
   RecruitmentType,
   SelectionMethodType,
   StakeholdersType,
+  StatesAndTerritories,
   TaskStatus,
   TeamRole,
   TriStateAnswer,
@@ -141,6 +143,12 @@ const generalCharacteristicData: GetAllGeneralCharacteristicsTypes = {
   hasComponentsOrTracks: true,
   hasComponentsOrTracksDiffer: 'In every way',
   hasComponentsOrTracksNote: 'Tracks note',
+  agencyOrStateHelp: [
+    AgencyOrStateHelpType.YES_STATE,
+    AgencyOrStateHelpType.OTHER
+  ],
+  agencyOrStateHelpOther: 'Agency other',
+  agencyOrStateHelpNote: 'State note',
   alternativePaymentModelTypes: [
     AlternativePaymentModelType.REGULAR,
     AlternativePaymentModelType.MIPS
@@ -170,7 +178,16 @@ const generalCharacteristicData: GetAllGeneralCharacteristicsTypes = {
   communityPartnersInvolvedDescription: 'Are community partners involved?\n\n',
   communityPartnersInvolvedNote: 'frwegqergqgrqwg planContractUpdatedNote',
   geographiesTargeted: true,
-  geographiesTargetedTypes: [GeographyType.OTHER],
+  geographiesTargetedTypes: [
+    GeographyType.OTHER,
+    GeographyType.STATE,
+    GeographyType.REGION
+  ],
+  geographiesStatesAndTerritories: [
+    StatesAndTerritories.CA,
+    StatesAndTerritories.IN
+  ],
+  geographiesRegionTypes: [GeographyRegionType.CBSA],
   geographiesTargetedTypesOther: 'Geography type other',
   geographiesTargetedAppliedTo: [
     GeographyApplication.BENEFICIARIES,
@@ -371,12 +388,6 @@ const opsEvalAndLearningData: AllOpsEvalAndLearningTypes = {
   id: '123',
   modelPlanID: modelID,
   status: TaskStatus.IN_PROGRESS,
-  agencyOrStateHelp: [
-    AgencyOrStateHelpType.YES_STATE,
-    AgencyOrStateHelpType.OTHER
-  ],
-  agencyOrStateHelpOther: 'Agency other',
-  agencyOrStateHelpNote: 'State note',
   stakeholders: [
     StakeholdersType.BENEFICIARIES,
     StakeholdersType.PARTICIPANTS,

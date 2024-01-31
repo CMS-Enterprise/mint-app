@@ -22,23 +22,11 @@ describe('The Model Plan Ops Eval and Learning Form', () => {
 
     // Page - /ops-eval-and-learning
 
-    cy.get('#ops-eval-and-learning-agency-or-state-help-YES_AGENCY_IAA').should(
+    cy.get('#ops-eval-and-learning-help-desk-use-true').should(
       'not.be.disabled'
     );
 
     cy.get('[data-testid="model-plan-name"]').contains('for Empty Plan');
-
-    cy.get('#ops-eval-and-learning-agency-or-state-help-YES_AGENCY_IAA')
-      .check({ force: true })
-      .should('be.checked');
-
-    cy.get('#ops-eval-and-learning-agency-or-state-help-OTHER')
-      .check({ force: true })
-      .should('be.checked');
-
-    cy.get('#ops-eval-and-learning-agency-or-state-help-other')
-      .type('Department of Motor Vehicles')
-      .should('have.value', 'Department of Motor Vehicles');
 
     cy.get('#ops-eval-and-learning-stakeholders').within(() => {
       cy.get("input[type='text']").click();

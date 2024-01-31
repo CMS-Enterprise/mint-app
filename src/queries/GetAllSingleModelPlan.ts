@@ -72,6 +72,9 @@ export default gql`
         communityPartnersInvolved
         communityPartnersInvolvedDescription
         communityPartnersInvolvedNote
+        agencyOrStateHelp
+        agencyOrStateHelpOther
+        agencyOrStateHelpNote
         alternativePaymentModelTypes
         alternativePaymentModelNote
         keyCharacteristics
@@ -85,6 +88,8 @@ export default gql`
         planContractUpdatedNote
         geographiesTargeted
         geographiesTargetedTypes
+        geographiesStatesAndTerritories
+        geographiesRegionTypes
         geographiesTargetedTypesOther
         geographiesTargetedAppliedTo
         geographiesTargetedAppliedToOther

@@ -1061,6 +1061,62 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                 data-testid="grid"
               >
                 <div
+                  class="read-only-section read-only-section--will-another-agency-or-state-help-design-operate-the-model margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    Will another Agency or State help design/operate the model?
+                  </p>
+                  <ul
+                    class="margin-y-0 padding-left-3"
+                  >
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Yes, we will partner with states
+                    </li>
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Other
+                    </li>
+                    <ul
+                      data-testid="other-entry"
+                    >
+                      <li
+                        class="font-sans-md line-height-sans-4"
+                      >
+                        Agency other
+                      </li>
+                    </ul>
+                  </ul>
+                </div>
+                <div
+                  class="desktop:grid-col-12"
+                  data-testid="grid"
+                >
+                  <div
+                    class="read-only-section read-only-section--notes margin-bottom-3"
+                  >
+                    <p
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                    >
+                      Notes
+                    </p>
+                    <p
+                      class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                    >
+                      State note
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
                   class="read-only-section read-only-section--what-type-of-alternative-payment-model--apm--do-you-think-the-model-could-be margin-bottom-3"
                 >
                   <p
@@ -1415,87 +1471,101 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                 </div>
               </div>
               <div
-                class="grid-row grid-gap"
+                class="desktop:grid-col-12"
                 data-testid="grid"
               >
                 <div
-                  class="desktop:grid-col-6"
-                  data-testid="grid"
+                  class="read-only-section read-only-section--geography-type-is margin-bottom-3"
                 >
-                  <div
-                    class="desktop:grid-col-12"
-                    data-testid="grid"
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
                   >
-                    <div
-                      class="read-only-section read-only-section--geography-type-is margin-bottom-3"
+                    Geography type is
+                  </p>
+                  <ul
+                    class="margin-y-0 padding-left-3"
+                  >
+                    <li
+                      class="font-sans-md line-height-sans-4"
                     >
-                      <p
-                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                      States and territories
+                    </li>
+                    <ul
+                      data-testid="other-entry"
+                    >
+                      <li
+                        class="font-sans-md line-height-sans-4"
                       >
-                        Geography type is
-                      </p>
-                      <ul
-                        class="margin-y-0 padding-left-3"
+                        California, Indiana
+                      </li>
+                    </ul>
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Region
+                    </li>
+                    <ul
+                      data-testid="other-entry"
+                    >
+                      <li
+                        class="font-sans-md line-height-sans-4"
+                      />
+                      <li>
+                        Core-based statistical areas (CBSAs)
+                      </li>
+                    </ul>
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Other
+                    </li>
+                    <ul
+                      data-testid="other-entry"
+                    >
+                      <li
+                        class="font-sans-md line-height-sans-4"
                       >
-                        <li
-                          class="font-sans-md line-height-sans-4"
-                        >
-                          Other
-                        </li>
-                        <ul
-                          data-testid="other-entry"
-                        >
-                          <li
-                            class="font-sans-md line-height-sans-4"
-                          >
-                            Geography type other
-                          </li>
-                        </ul>
-                      </ul>
-                    </div>
-                  </div>
+                        Geography type other
+                      </li>
+                    </ul>
+                  </ul>
                 </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
                 <div
-                  class="desktop:grid-col-6"
-                  data-testid="grid"
+                  class="read-only-section read-only-section--geographies-are-applied-to margin-bottom-3"
                 >
-                  <div
-                    class="desktop:grid-col-12"
-                    data-testid="grid"
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
                   >
-                    <div
-                      class="read-only-section read-only-section--geographies-are-applied-to margin-bottom-3"
+                    Geographies are applied to
+                  </p>
+                  <ul
+                    class="margin-y-0 padding-left-3"
+                  >
+                    <li
+                      class="font-sans-md line-height-sans-4"
                     >
-                      <p
-                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                      Beneficiaries
+                    </li>
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Other
+                    </li>
+                    <ul
+                      data-testid="other-entry"
+                    >
+                      <li
+                        class="font-sans-md line-height-sans-4"
                       >
-                        Geographies are applied to
-                      </p>
-                      <ul
-                        class="margin-y-0 padding-left-3"
-                      >
-                        <li
-                          class="font-sans-md line-height-sans-4"
-                        >
-                          Beneficiaries
-                        </li>
-                        <li
-                          class="font-sans-md line-height-sans-4"
-                        >
-                          Other
-                        </li>
-                        <ul
-                          data-testid="other-entry"
-                        >
-                          <li
-                            class="font-sans-md line-height-sans-4"
-                          >
-                            Geography applied other
-                          </li>
-                        </ul>
-                      </ul>
-                    </div>
-                  </div>
+                        Geography applied other
+                      </li>
+                    </ul>
+                  </ul>
                 </div>
               </div>
               <div
@@ -3359,62 +3429,6 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
             <div
               class="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light"
             >
-              <div
-                class="desktop:grid-col-12"
-                data-testid="grid"
-              >
-                <div
-                  class="read-only-section read-only-section--will-another-agency-or-state-help-design-operate-the-model margin-bottom-3"
-                >
-                  <p
-                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
-                  >
-                    Will another Agency or State help design/operate the model?
-                  </p>
-                  <ul
-                    class="margin-y-0 padding-left-3"
-                  >
-                    <li
-                      class="font-sans-md line-height-sans-4"
-                    >
-                      Yes, we will partner with states
-                    </li>
-                    <li
-                      class="font-sans-md line-height-sans-4"
-                    >
-                      Other
-                    </li>
-                    <ul
-                      data-testid="other-entry"
-                    >
-                      <li
-                        class="font-sans-md line-height-sans-4"
-                      >
-                        Agency other
-                      </li>
-                    </ul>
-                  </ul>
-                </div>
-                <div
-                  class="desktop:grid-col-12"
-                  data-testid="grid"
-                >
-                  <div
-                    class="read-only-section read-only-section--notes margin-bottom-3"
-                  >
-                    <p
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
-                    >
-                      Notes
-                    </p>
-                    <p
-                      class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
-                    >
-                      State note
-                    </p>
-                  </div>
-                </div>
-              </div>
               <div
                 class="desktop:grid-col-12"
                 data-testid="grid"
@@ -7783,6 +7797,62 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                 data-testid="grid"
               >
                 <div
+                  class="read-only-section read-only-section--will-another-agency-or-state-help-design-operate-the-model margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    Will another Agency or State help design/operate the model?
+                  </p>
+                  <ul
+                    class="margin-y-0 padding-left-3"
+                  >
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Yes, we will partner with states
+                    </li>
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Other
+                    </li>
+                    <ul
+                      data-testid="other-entry"
+                    >
+                      <li
+                        class="font-sans-md line-height-sans-4"
+                      >
+                        Agency other
+                      </li>
+                    </ul>
+                  </ul>
+                </div>
+                <div
+                  class="desktop:grid-col-12"
+                  data-testid="grid"
+                >
+                  <div
+                    class="read-only-section read-only-section--notes margin-bottom-3"
+                  >
+                    <p
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                    >
+                      Notes
+                    </p>
+                    <p
+                      class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                    >
+                      State note
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
                   class="read-only-section read-only-section--what-type-of-alternative-payment-model--apm--do-you-think-the-model-could-be margin-bottom-3"
                 >
                   <p
@@ -8137,87 +8207,101 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                 </div>
               </div>
               <div
-                class="grid-row grid-gap"
+                class="desktop:grid-col-12"
                 data-testid="grid"
               >
                 <div
-                  class="desktop:grid-col-6"
-                  data-testid="grid"
+                  class="read-only-section read-only-section--geography-type-is margin-bottom-3"
                 >
-                  <div
-                    class="desktop:grid-col-12"
-                    data-testid="grid"
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
                   >
-                    <div
-                      class="read-only-section read-only-section--geography-type-is margin-bottom-3"
+                    Geography type is
+                  </p>
+                  <ul
+                    class="margin-y-0 padding-left-3"
+                  >
+                    <li
+                      class="font-sans-md line-height-sans-4"
                     >
-                      <p
-                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                      States and territories
+                    </li>
+                    <ul
+                      data-testid="other-entry"
+                    >
+                      <li
+                        class="font-sans-md line-height-sans-4"
                       >
-                        Geography type is
-                      </p>
-                      <ul
-                        class="margin-y-0 padding-left-3"
+                        California, Indiana
+                      </li>
+                    </ul>
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Region
+                    </li>
+                    <ul
+                      data-testid="other-entry"
+                    >
+                      <li
+                        class="font-sans-md line-height-sans-4"
+                      />
+                      <li>
+                        Core-based statistical areas (CBSAs)
+                      </li>
+                    </ul>
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Other
+                    </li>
+                    <ul
+                      data-testid="other-entry"
+                    >
+                      <li
+                        class="font-sans-md line-height-sans-4"
                       >
-                        <li
-                          class="font-sans-md line-height-sans-4"
-                        >
-                          Other
-                        </li>
-                        <ul
-                          data-testid="other-entry"
-                        >
-                          <li
-                            class="font-sans-md line-height-sans-4"
-                          >
-                            Geography type other
-                          </li>
-                        </ul>
-                      </ul>
-                    </div>
-                  </div>
+                        Geography type other
+                      </li>
+                    </ul>
+                  </ul>
                 </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
                 <div
-                  class="desktop:grid-col-6"
-                  data-testid="grid"
+                  class="read-only-section read-only-section--geographies-are-applied-to margin-bottom-3"
                 >
-                  <div
-                    class="desktop:grid-col-12"
-                    data-testid="grid"
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
                   >
-                    <div
-                      class="read-only-section read-only-section--geographies-are-applied-to margin-bottom-3"
+                    Geographies are applied to
+                  </p>
+                  <ul
+                    class="margin-y-0 padding-left-3"
+                  >
+                    <li
+                      class="font-sans-md line-height-sans-4"
                     >
-                      <p
-                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                      Beneficiaries
+                    </li>
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Other
+                    </li>
+                    <ul
+                      data-testid="other-entry"
+                    >
+                      <li
+                        class="font-sans-md line-height-sans-4"
                       >
-                        Geographies are applied to
-                      </p>
-                      <ul
-                        class="margin-y-0 padding-left-3"
-                      >
-                        <li
-                          class="font-sans-md line-height-sans-4"
-                        >
-                          Beneficiaries
-                        </li>
-                        <li
-                          class="font-sans-md line-height-sans-4"
-                        >
-                          Other
-                        </li>
-                        <ul
-                          data-testid="other-entry"
-                        >
-                          <li
-                            class="font-sans-md line-height-sans-4"
-                          >
-                            Geography applied other
-                          </li>
-                        </ul>
-                      </ul>
-                    </div>
-                  </div>
+                        Geography applied other
+                      </li>
+                    </ul>
+                  </ul>
                 </div>
               </div>
               <div
@@ -10081,62 +10165,6 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
             <div
               class="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light"
             >
-              <div
-                class="desktop:grid-col-12"
-                data-testid="grid"
-              >
-                <div
-                  class="read-only-section read-only-section--will-another-agency-or-state-help-design-operate-the-model margin-bottom-3"
-                >
-                  <p
-                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
-                  >
-                    Will another Agency or State help design/operate the model?
-                  </p>
-                  <ul
-                    class="margin-y-0 padding-left-3"
-                  >
-                    <li
-                      class="font-sans-md line-height-sans-4"
-                    >
-                      Yes, we will partner with states
-                    </li>
-                    <li
-                      class="font-sans-md line-height-sans-4"
-                    >
-                      Other
-                    </li>
-                    <ul
-                      data-testid="other-entry"
-                    >
-                      <li
-                        class="font-sans-md line-height-sans-4"
-                      >
-                        Agency other
-                      </li>
-                    </ul>
-                  </ul>
-                </div>
-                <div
-                  class="desktop:grid-col-12"
-                  data-testid="grid"
-                >
-                  <div
-                    class="read-only-section read-only-section--notes margin-bottom-3"
-                  >
-                    <p
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
-                    >
-                      Notes
-                    </p>
-                    <p
-                      class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
-                    >
-                      State note
-                    </p>
-                  </div>
-                </div>
-              </div>
               <div
                 class="desktop:grid-col-12"
                 data-testid="grid"
