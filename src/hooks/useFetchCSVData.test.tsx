@@ -82,6 +82,32 @@ describe('fetch csv utils', () => {
     expect(dataFormatter(data, allPlanTranslation)).toEqual(returnData);
   });
 
+  it('translates Existing Model Links names', () => {
+    const data = {
+      generalCharacteristics: {
+        resemblesExistingModelWhich: {
+          names: [
+            'Accountable Care Organization Realizing Equity, Access, and Community Health Model (ACO REACH) ',
+            'Accountable Health Communities Model (AHC)',
+            'Advance Payment ACO Model',
+            'Bundled Payment for Care Improvement Advanced (BPCI-A)'
+          ]
+        }
+      }
+    };
+
+    const returnData = {
+      generalCharacteristics: {
+        resemblesExistingModelWhich: {
+          names:
+            'Accountable Care Organization Realizing Equity, Access, and Community Health Model (ACO REACH) , Accountable Health Communities Model (AHC), Advance Payment ACO Model, Bundled Payment for Care Improvement Advanced (BPCI-A)'
+        }
+      }
+    };
+
+    expect(dataFormatter(data, allPlanTranslation)).toEqual(returnData);
+  });
+
   it('translates a header value from field name', () => {
     const data = 'payments.payRecipients';
 

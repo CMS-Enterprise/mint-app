@@ -21,6 +21,7 @@ func NewModelPlan(createdBy uuid.UUID, modelName string) *ModelPlan {
 	}
 
 }
+func (m ModelPlan) isLinkedExistingModel() {}
 
 // GetModelPlanID returns the modelPlanID of the task list section
 func (m ModelPlan) GetModelPlanID() uuid.UUID {
