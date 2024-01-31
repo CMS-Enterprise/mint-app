@@ -1,9 +1,6 @@
 SELECT
     id,
     model_plan_id,
-    agency_or_state_help,
-    agency_or_state_help_other,
-    agency_or_state_help_note,
     stakeholders,
     stakeholders_other,
     stakeholders_note,

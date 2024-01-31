@@ -21,6 +21,9 @@ type PlanGeneralCharacteristics struct {
 	HasComponentsOrTracksNote   *string    `json:"hasComponentsOrTracksNote" db:"has_components_or_tracks_note"`
 
 	// Page 2
+	AgencyOrStateHelp            pq.StringArray `json:"agencyOrStateHelp" db:"agency_or_state_help"`
+	AgencyOrStateHelpOther       *string        `json:"agencyOrStateHelpOther" db:"agency_or_state_help_other"`
+	AgencyOrStateHelpNote        *string        `json:"agencyOrStateHelpNote" db:"agency_or_state_help_note"`
 	AlternativePaymentModelTypes pq.StringArray `json:"alternativePaymentModelTypes" db:"alternative_payment_model_types"`
 	AlternativePaymentModelNote  *string        `json:"alternativePaymentModelNote" db:"alternative_payment_model_note"`
 	KeyCharacteristics           pq.StringArray `json:"keyCharacteristics" db:"key_characteristics"`
