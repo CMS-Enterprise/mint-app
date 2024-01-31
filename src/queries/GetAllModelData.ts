@@ -338,6 +338,9 @@ export default gql`
         payModelDifferentiation
         expectedCalculationComplexityLevel
         expectedCalculationComplexityLevelNote
+        claimsProcessingPrecedence
+        claimsProcessingPrecedenceOther
+        claimsProcessingPrecedenceNote
         canParticipantsSelectBetweenPaymentMechanisms
         canParticipantsSelectBetweenPaymentMechanismsHow
         canParticipantsSelectBetweenPaymentMechanismsNote

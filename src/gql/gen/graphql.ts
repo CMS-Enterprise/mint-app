@@ -2031,6 +2031,9 @@ export type PlanPayments = {
   canParticipantsSelectBetweenPaymentMechanismsNote?: Maybe<Scalars['String']['output']>;
   changesMedicarePhysicianFeeSchedule?: Maybe<Scalars['Boolean']['output']>;
   changesMedicarePhysicianFeeScheduleNote?: Maybe<Scalars['String']['output']>;
+  claimsProcessingPrecedence?: Maybe<Scalars['Boolean']['output']>;
+  claimsProcessingPrecedenceNote?: Maybe<Scalars['String']['output']>;
+  claimsProcessingPrecedenceOther?: Maybe<Scalars['String']['output']>;
   createdBy: Scalars['UUID']['output'];
   createdByUserAccount: UserAccount;
   createdDts: Scalars['Time']['output'];
@@ -2115,6 +2118,9 @@ export type PlanPaymentsChanges = {
   canParticipantsSelectBetweenPaymentMechanismsNote?: InputMaybe<Scalars['String']['input']>;
   changesMedicarePhysicianFeeSchedule?: InputMaybe<Scalars['Boolean']['input']>;
   changesMedicarePhysicianFeeScheduleNote?: InputMaybe<Scalars['String']['input']>;
+  claimsProcessingPrecedence?: InputMaybe<Scalars['Boolean']['input']>;
+  claimsProcessingPrecedenceNote?: InputMaybe<Scalars['String']['input']>;
+  claimsProcessingPrecedenceOther?: InputMaybe<Scalars['String']['input']>;
   creatingDependenciesBetweenServices?: InputMaybe<Scalars['Boolean']['input']>;
   creatingDependenciesBetweenServicesNote?: InputMaybe<Scalars['String']['input']>;
   expectedCalculationComplexityLevel?: InputMaybe<ComplexityCalculationLevelType>;
@@ -3135,7 +3141,7 @@ export type GetAllPaymentsQueryVariables = Exact<{
 }>;
 
 
-export type GetAllPaymentsQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, payments: { __typename: 'PlanPayments', fundingSource: Array<FundingSource>, fundingSourceMedicareAInfo?: string | null, fundingSourceMedicareBInfo?: string | null, fundingSourceOther?: string | null, fundingSourceNote?: string | null, fundingSourceR: Array<FundingSource>, fundingSourceRMedicareAInfo?: string | null, fundingSourceRMedicareBInfo?: string | null, fundingSourceROther?: string | null, fundingSourceRNote?: string | null, payRecipients: Array<PayRecipient>, payRecipientsOtherSpecification?: string | null, payRecipientsNote?: string | null, payType: Array<PayType>, payTypeNote?: string | null, payClaims: Array<ClaimsBasedPayType>, payClaimsOther?: string | null, payClaimsNote?: string | null, shouldAnyProvidersExcludedFFSSystems?: boolean | null, shouldAnyProviderExcludedFFSSystemsNote?: string | null, changesMedicarePhysicianFeeSchedule?: boolean | null, changesMedicarePhysicianFeeScheduleNote?: string | null, affectsMedicareSecondaryPayerClaims?: boolean | null, affectsMedicareSecondaryPayerClaimsHow?: string | null, affectsMedicareSecondaryPayerClaimsNote?: string | null, payModelDifferentiation?: string | null, creatingDependenciesBetweenServices?: boolean | null, creatingDependenciesBetweenServicesNote?: string | null, needsClaimsDataCollection?: boolean | null, needsClaimsDataCollectionNote?: string | null, providingThirdPartyFile?: boolean | null, isContractorAwareTestDataRequirements?: boolean | null, beneficiaryCostSharingLevelAndHandling?: string | null, waiveBeneficiaryCostSharingForAnyServices?: boolean | null, waiveBeneficiaryCostSharingServiceSpecification?: string | null, waiverOnlyAppliesPartOfPayment?: boolean | null, waiveBeneficiaryCostSharingNote?: string | null, nonClaimsPayments: Array<NonClaimsBasedPayType>, nonClaimsPaymentsNote?: string | null, nonClaimsPaymentOther?: string | null, paymentCalculationOwner?: string | null, numberPaymentsPerPayCycle?: string | null, numberPaymentsPerPayCycleNote?: string | null, sharedSystemsInvolvedAdditionalClaimPayment?: boolean | null, sharedSystemsInvolvedAdditionalClaimPaymentNote?: string | null, planningToUseInnovationPaymentContractor?: boolean | null, planningToUseInnovationPaymentContractorNote?: string | null, expectedCalculationComplexityLevel?: ComplexityCalculationLevelType | null, expectedCalculationComplexityLevelNote?: string | null, canParticipantsSelectBetweenPaymentMechanisms?: boolean | null, canParticipantsSelectBetweenPaymentMechanismsHow?: string | null, canParticipantsSelectBetweenPaymentMechanismsNote?: string | null, anticipatedPaymentFrequency: Array<FrequencyType>, anticipatedPaymentFrequencyContinually?: string | null, anticipatedPaymentFrequencyOther?: string | null, anticipatedPaymentFrequencyNote?: string | null, willRecoverPayments?: boolean | null, willRecoverPaymentsNote?: string | null, anticipateReconcilingPaymentsRetrospectively?: boolean | null, anticipateReconcilingPaymentsRetrospectivelyNote?: string | null, paymentReconciliationFrequency: Array<FrequencyType>, paymentReconciliationFrequencyContinually?: string | null, paymentReconciliationFrequencyOther?: string | null, paymentReconciliationFrequencyNote?: string | null, paymentStartDate?: Time | null, paymentStartDateNote?: string | null, status: TaskStatus } } };
+export type GetAllPaymentsQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, payments: { __typename: 'PlanPayments', fundingSource: Array<FundingSource>, fundingSourceMedicareAInfo?: string | null, fundingSourceMedicareBInfo?: string | null, fundingSourceOther?: string | null, fundingSourceNote?: string | null, fundingSourceR: Array<FundingSource>, fundingSourceRMedicareAInfo?: string | null, fundingSourceRMedicareBInfo?: string | null, fundingSourceROther?: string | null, fundingSourceRNote?: string | null, payRecipients: Array<PayRecipient>, payRecipientsOtherSpecification?: string | null, payRecipientsNote?: string | null, payType: Array<PayType>, payTypeNote?: string | null, payClaims: Array<ClaimsBasedPayType>, payClaimsOther?: string | null, payClaimsNote?: string | null, shouldAnyProvidersExcludedFFSSystems?: boolean | null, shouldAnyProviderExcludedFFSSystemsNote?: string | null, changesMedicarePhysicianFeeSchedule?: boolean | null, changesMedicarePhysicianFeeScheduleNote?: string | null, affectsMedicareSecondaryPayerClaims?: boolean | null, affectsMedicareSecondaryPayerClaimsHow?: string | null, affectsMedicareSecondaryPayerClaimsNote?: string | null, payModelDifferentiation?: string | null, creatingDependenciesBetweenServices?: boolean | null, creatingDependenciesBetweenServicesNote?: string | null, needsClaimsDataCollection?: boolean | null, needsClaimsDataCollectionNote?: string | null, providingThirdPartyFile?: boolean | null, isContractorAwareTestDataRequirements?: boolean | null, beneficiaryCostSharingLevelAndHandling?: string | null, waiveBeneficiaryCostSharingForAnyServices?: boolean | null, waiveBeneficiaryCostSharingServiceSpecification?: string | null, waiverOnlyAppliesPartOfPayment?: boolean | null, waiveBeneficiaryCostSharingNote?: string | null, nonClaimsPayments: Array<NonClaimsBasedPayType>, nonClaimsPaymentsNote?: string | null, nonClaimsPaymentOther?: string | null, paymentCalculationOwner?: string | null, numberPaymentsPerPayCycle?: string | null, numberPaymentsPerPayCycleNote?: string | null, sharedSystemsInvolvedAdditionalClaimPayment?: boolean | null, sharedSystemsInvolvedAdditionalClaimPaymentNote?: string | null, planningToUseInnovationPaymentContractor?: boolean | null, planningToUseInnovationPaymentContractorNote?: string | null, expectedCalculationComplexityLevel?: ComplexityCalculationLevelType | null, expectedCalculationComplexityLevelNote?: string | null, claimsProcessingPrecedence?: boolean | null, claimsProcessingPrecedenceOther?: string | null, claimsProcessingPrecedenceNote?: string | null, canParticipantsSelectBetweenPaymentMechanisms?: boolean | null, canParticipantsSelectBetweenPaymentMechanismsHow?: string | null, canParticipantsSelectBetweenPaymentMechanismsNote?: string | null, anticipatedPaymentFrequency: Array<FrequencyType>, anticipatedPaymentFrequencyContinually?: string | null, anticipatedPaymentFrequencyOther?: string | null, anticipatedPaymentFrequencyNote?: string | null, willRecoverPayments?: boolean | null, willRecoverPaymentsNote?: string | null, anticipateReconcilingPaymentsRetrospectively?: boolean | null, anticipateReconcilingPaymentsRetrospectivelyNote?: string | null, paymentReconciliationFrequency: Array<FrequencyType>, paymentReconciliationFrequencyContinually?: string | null, paymentReconciliationFrequencyOther?: string | null, paymentReconciliationFrequencyNote?: string | null, paymentStartDate?: Time | null, paymentStartDateNote?: string | null, status: TaskStatus } } };
 
 export type GetAnticipateDependenciesQueryVariables = Exact<{
   id: Scalars['UUID']['input'];
@@ -3163,7 +3169,7 @@ export type GetComplexityQueryVariables = Exact<{
 }>;
 
 
-export type GetComplexityQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, payments: { __typename: 'PlanPayments', id: UUID, payType: Array<PayType>, payClaims: Array<ClaimsBasedPayType>, expectedCalculationComplexityLevel?: ComplexityCalculationLevelType | null, expectedCalculationComplexityLevelNote?: string | null, canParticipantsSelectBetweenPaymentMechanisms?: boolean | null, canParticipantsSelectBetweenPaymentMechanismsHow?: string | null, canParticipantsSelectBetweenPaymentMechanismsNote?: string | null, anticipatedPaymentFrequency: Array<FrequencyType>, anticipatedPaymentFrequencyContinually?: string | null, anticipatedPaymentFrequencyOther?: string | null, anticipatedPaymentFrequencyNote?: string | null } } };
+export type GetComplexityQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, payments: { __typename: 'PlanPayments', id: UUID, payType: Array<PayType>, payClaims: Array<ClaimsBasedPayType>, expectedCalculationComplexityLevel?: ComplexityCalculationLevelType | null, expectedCalculationComplexityLevelNote?: string | null, claimsProcessingPrecedence?: boolean | null, claimsProcessingPrecedenceOther?: string | null, claimsProcessingPrecedenceNote?: string | null, canParticipantsSelectBetweenPaymentMechanisms?: boolean | null, canParticipantsSelectBetweenPaymentMechanismsHow?: string | null, canParticipantsSelectBetweenPaymentMechanismsNote?: string | null, anticipatedPaymentFrequency: Array<FrequencyType>, anticipatedPaymentFrequencyContinually?: string | null, anticipatedPaymentFrequencyOther?: string | null, anticipatedPaymentFrequencyNote?: string | null } } };
 
 export type GetFundingQueryVariables = Exact<{
   id: Scalars['UUID']['input'];
@@ -6223,6 +6229,9 @@ export const GetAllPaymentsDocument = gql`
       planningToUseInnovationPaymentContractorNote
       expectedCalculationComplexityLevel
       expectedCalculationComplexityLevelNote
+      claimsProcessingPrecedence
+      claimsProcessingPrecedenceOther
+      claimsProcessingPrecedenceNote
       canParticipantsSelectBetweenPaymentMechanisms
       canParticipantsSelectBetweenPaymentMechanismsHow
       canParticipantsSelectBetweenPaymentMechanismsNote
@@ -6451,6 +6460,9 @@ export const GetComplexityDocument = gql`
       payClaims
       expectedCalculationComplexityLevel
       expectedCalculationComplexityLevelNote
+      claimsProcessingPrecedence
+      claimsProcessingPrecedenceOther
+      claimsProcessingPrecedenceNote
       canParticipantsSelectBetweenPaymentMechanisms
       canParticipantsSelectBetweenPaymentMechanismsHow
       canParticipantsSelectBetweenPaymentMechanismsNote
