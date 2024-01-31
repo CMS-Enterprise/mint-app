@@ -1581,6 +1581,20 @@ export type PlanGeneralCharacteristics = {
   modifiedDts?: Maybe<Scalars['Time']['output']>;
   multiplePatricipationAgreementsNeeded?: Maybe<Scalars['Boolean']['output']>;
   multiplePatricipationAgreementsNeededNote?: Maybe<Scalars['String']['output']>;
+  /** For answering if participation in other models is a precondition for participating in this model */
+  participationInModelPrecondition?: Maybe<YesNoOtherType>;
+  /** A note field for participationInModelPrecondition */
+  participationInModelPreconditionNote?: Maybe<Scalars['String']['output']>;
+  /** For denoting the name of the other existing model */
+  participationInModelPreconditionOtherOption?: Maybe<Scalars['String']['output']>;
+  /** For denoting if there is an other model that this model refers to. */
+  participationInModelPreconditionOtherSelected?: Maybe<Scalars['Boolean']['output']>;
+  /** For providing clarifying comments if Other is selected for participationInModelPrecondition */
+  participationInModelPreconditionOtherSpecify?: Maybe<Scalars['String']['output']>;
+  /** The collection of existing model links relevant to the participationInModelPrecondition question */
+  participationInModelPreconditionWhich?: Maybe<ExistingModelLinks>;
+  /** For providing clarifying comments if Yes or No is selected for participationInModelPrecondition */
+  participationInModelPreconditionWhyHow?: Maybe<Scalars['String']['output']>;
   participationOptions?: Maybe<Scalars['Boolean']['output']>;
   participationOptionsNote?: Maybe<Scalars['String']['output']>;
   planContractUpdated?: Maybe<Scalars['Boolean']['output']>;
@@ -1650,6 +1664,18 @@ export type PlanGeneralCharacteristicsChanges = {
   managePartCDEnrollmentNote?: InputMaybe<Scalars['String']['input']>;
   multiplePatricipationAgreementsNeeded?: InputMaybe<Scalars['Boolean']['input']>;
   multiplePatricipationAgreementsNeededNote?: InputMaybe<Scalars['String']['input']>;
+  /** For answering if participation in other models is a precondition for participating in this model */
+  participationInModelPrecondition?: InputMaybe<YesNoOtherType>;
+  /** A note field for participationInModelPrecondition */
+  participationInModelPreconditionNote?: InputMaybe<Scalars['String']['input']>;
+  /** For denoting the name of the other existing model */
+  participationInModelPreconditionOtherOption?: InputMaybe<Scalars['String']['input']>;
+  /** For denoting if there is an other model that this model refers to. */
+  participationInModelPreconditionOtherSelected?: InputMaybe<Scalars['Boolean']['input']>;
+  /** For providing clarifying comments if Other is selected for participationInModelPrecondition */
+  participationInModelPreconditionOtherSpecify?: InputMaybe<Scalars['String']['input']>;
+  /** For providing clarifying comments if Yes or No is selected for participationInModelPrecondition */
+  participationInModelPreconditionWhyHow?: InputMaybe<Scalars['String']['input']>;
   participationOptions?: InputMaybe<Scalars['Boolean']['input']>;
   participationOptionsNote?: InputMaybe<Scalars['String']['input']>;
   planContractUpdated?: InputMaybe<Scalars['Boolean']['input']>;
