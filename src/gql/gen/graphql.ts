@@ -1601,6 +1601,8 @@ export type PlanGeneralCharacteristics = {
   /** For providing clarifying comments if Other is selected for resemblesExistingModel */
   resemblesExistingModelOtherSpecify?: Maybe<Scalars['String']['output']>;
   resemblesExistingModelWhich?: Maybe<ExistingModelLinks>;
+  /** For providing clarifying comments if Yes or No is selected for resemblesExistingModel */
+  resemblesExistingModelWhyHow?: Maybe<Scalars['String']['output']>;
   rulemakingRequired?: Maybe<Scalars['Boolean']['output']>;
   rulemakingRequiredDescription?: Maybe<Scalars['String']['output']>;
   rulemakingRequiredNote?: Maybe<Scalars['String']['output']>;
@@ -1669,6 +1671,8 @@ export type PlanGeneralCharacteristicsChanges = {
   resemblesExistingModelOtherSelected?: InputMaybe<Scalars['Boolean']['input']>;
   /** For providing clarifying comments if Other is selected for resemblesExistingModel */
   resemblesExistingModelOtherSpecify?: InputMaybe<Scalars['String']['input']>;
+  /** For providing clarifying comments if Yes or No is selected for resemblesExistingModel */
+  resemblesExistingModelWhyHow?: InputMaybe<Scalars['String']['input']>;
   rulemakingRequired?: InputMaybe<Scalars['Boolean']['input']>;
   rulemakingRequiredDescription?: InputMaybe<Scalars['String']['input']>;
   rulemakingRequiredNote?: InputMaybe<Scalars['String']['input']>;

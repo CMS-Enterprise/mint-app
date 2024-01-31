@@ -545,6 +545,10 @@ type PlanGeneralCharacteristics {
   existingModelPlan: ExistingModel
   resemblesExistingModel: YesNoOtherType
   """
+  For providing clarifying comments if Yes or No is selected for resemblesExistingModel
+  """
+  resemblesExistingModelWhyHow: String
+  """
   For providing clarifying comments if Other is selected for resemblesExistingModel
   """
   resemblesExistingModelOtherSpecify: String
@@ -643,6 +647,10 @@ input PlanGeneralCharacteristicsChanges @goModel(model: "map[string]interface{}"
   currentModelPlanID: UUID
   existingModelID: Int
   resemblesExistingModel: YesNoOtherType
+  """
+  For providing clarifying comments if Yes or No is selected for resemblesExistingModel
+  """
+  resemblesExistingModelWhyHow: String
   """
   For providing clarifying comments if Other is selected for resemblesExistingModel
   """

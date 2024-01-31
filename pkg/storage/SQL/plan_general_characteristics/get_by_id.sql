@@ -5,6 +5,7 @@ SELECT
     current_model_plan_id,
     existing_model_id,
     resembles_existing_model,
+    resembles_existing_model_why_how,
     resembles_existing_model_other_specify,
     resembles_existing_model_other_selected,
     resembles_existing_model_other_option,
