@@ -3,35 +3,17 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { YesNoOtherType, ExisitingModelLinkFieldType } from "./../../../types/graphql-global-types";
+import { YesNoOtherType } from "./../../../types/graphql-global-types";
 
 // ====================================================
 // GraphQL query operation: GetGeneralCharacteristics
 // ====================================================
-
-export interface GetGeneralCharacteristics_modelPlan_generalCharacteristics_resemblesExistingModelWhich_links_model_ExistingModel {
-  __typename: "ExistingModel";
-  modelName: string;
-  stage: string;
-  numberOfParticipants: string | null;
-  keywords: string | null;
-}
-
-export interface GetGeneralCharacteristics_modelPlan_generalCharacteristics_resemblesExistingModelWhich_links_model_ModelPlan {
-  __typename: "ModelPlan";
-  modelName: string;
-  abbreviation: string | null;
-}
-
-export type GetGeneralCharacteristics_modelPlan_generalCharacteristics_resemblesExistingModelWhich_links_model = GetGeneralCharacteristics_modelPlan_generalCharacteristics_resemblesExistingModelWhich_links_model_ExistingModel | GetGeneralCharacteristics_modelPlan_generalCharacteristics_resemblesExistingModelWhich_links_model_ModelPlan;
 
 export interface GetGeneralCharacteristics_modelPlan_generalCharacteristics_resemblesExistingModelWhich_links {
   __typename: "ExistingModelLink";
   id: UUID | null;
   existingModelID: number | null;
   currentModelPlanID: UUID | null;
-  fieldName: ExisitingModelLinkFieldType;
-  model: GetGeneralCharacteristics_modelPlan_generalCharacteristics_resemblesExistingModelWhich_links_model;
 }
 
 export interface GetGeneralCharacteristics_modelPlan_generalCharacteristics_resemblesExistingModelWhich {
@@ -46,9 +28,25 @@ export interface GetGeneralCharacteristics_modelPlan_generalCharacteristics {
   currentModelPlanID: UUID | null;
   existingModelID: number | null;
   resemblesExistingModel: YesNoOtherType | null;
+  /**
+   * For providing clarifying comments if Yes or No is selected for resemblesExistingModel
+   */
+  resemblesExistingModelWhyHow: string | null;
   resemblesExistingModelHow: string | null;
   resemblesExistingModelNote: string | null;
   resemblesExistingModelWhich: GetGeneralCharacteristics_modelPlan_generalCharacteristics_resemblesExistingModelWhich | null;
+  /**
+   * For providing clarifying comments if Other is selected for resemblesExistingModel
+   */
+  resemblesExistingModelOtherSpecify: string | null;
+  /**
+   * For denoting if there is an other model that this model resembles if it's true that it resembles existing models.
+   */
+  resemblesExistingModelOtherSelected: boolean | null;
+  /**
+   * For denoting the name of the other existing model that this model resembles
+   */
+  resemblesExistingModelOtherOption: string | null;
   hasComponentsOrTracks: boolean | null;
   hasComponentsOrTracksDiffer: string | null;
   hasComponentsOrTracksNote: string | null;

@@ -9,28 +9,15 @@ export default gql(/* GraphQL */ `
         isNewModel
         existingModel
         resemblesExistingModel
+        resemblesExistingModelWhyHow
         resemblesExistingModelHow
         resemblesExistingModelNote
         resemblesExistingModelWhich {
-          links {
-            id
-            existingModelID
-            currentModelPlanID
-            fieldName
-            model {
-              ... on ExistingModel {
-                modelName
-                stage
-                numberOfParticipants
-                keywords
-              }
-              ... on ModelPlan {
-                modelName
-                abbreviation
-              }
-            }
-          }
+          names
         }
+        resemblesExistingModelOtherSpecify
+        resemblesExistingModelOtherSelected
+        resemblesExistingModelOtherOption
         hasComponentsOrTracks
         hasComponentsOrTracksDiffer
         hasComponentsOrTracksNote

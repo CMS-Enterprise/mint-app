@@ -178,7 +178,13 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
               data-testid="combo-box-select"
               name="existingModel"
               tabindex="-1"
-            />
+            >
+              <option
+                value="other"
+              >
+                Other
+              </option>
+            </select>
             <input
               aria-activedescendant=""
               aria-autocomplete="list"
@@ -238,9 +244,18 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
               tabindex="-1"
             >
               <li
-                class="usa-combo-box__list-option--no-results"
+                aria-posinset="1"
+                aria-selected="false"
+                aria-setsize="1"
+                class="usa-combo-box__list-option"
+                data-testid="combo-box-option-other"
+                data-value="other"
+                id="plan-characteristics-existing-model--list--option-0"
+                role="option"
+                tabindex="-1"
+                value="other"
               >
-                No results found
+                Other
               </li>
             </ul>
             <div
@@ -270,49 +285,108 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
         >
           Does your proposed track/model resemble any existing models?
         </label>
-        <fieldset
-          class="usa-fieldset"
-          data-testid="fieldset"
+        <div
+          class="usa-radio"
+          data-testid="radio"
         >
-          <div
-            class="usa-radio"
-            data-testid="radio"
+          <input
+            class="usa-radio__input"
+            data-testid="plan-characteristics-resembles-existing-model-YES"
+            id="plan-characteristics-resembles-existing-model-YES"
+            name="resemblesExistingModel"
+            type="radio"
+            value="YES"
+          />
+          <label
+            class="usa-radio__label"
+            for="plan-characteristics-resembles-existing-model-YES"
           >
-            <input
-              class="usa-radio__input"
-              data-testid="plan-characteristics-resembles-existing-model-true"
-              id="plan-characteristics-resembles-existing-model-true"
-              name="resemblesExistingModel"
-              type="radio"
-              value="TRUE"
-            />
-            <label
-              class="usa-radio__label"
-              for="plan-characteristics-resembles-existing-model-true"
-            >
-              Yes
-            </label>
-          </div>
-          <div
-            class="usa-radio"
-            data-testid="radio"
+            Yes
+          </label>
+        </div>
+        <div
+          class="usa-radio"
+          data-testid="radio"
+        >
+          <input
+            class="usa-radio__input"
+            data-testid="plan-characteristics-resembles-existing-model-NO"
+            id="plan-characteristics-resembles-existing-model-NO"
+            name="resemblesExistingModel"
+            type="radio"
+            value="NO"
+          />
+          <label
+            class="usa-radio__label"
+            for="plan-characteristics-resembles-existing-model-NO"
           >
-            <input
-              class="usa-radio__input"
-              data-testid="plan-characteristics-resembles-existing-model-false"
-              id="plan-characteristics-resembles-existing-model-false"
-              name="resemblesExistingModel"
-              type="radio"
-              value="FALSE"
-            />
-            <label
-              class="usa-radio__label"
-              for="plan-characteristics-resembles-existing-model-false"
+            No
+          </label>
+        </div>
+        <div
+          class="usa-radio"
+          data-testid="radio"
+        >
+          <input
+            class="usa-radio__input"
+            data-testid="plan-characteristics-resembles-existing-model-OTHER"
+            id="plan-characteristics-resembles-existing-model-OTHER"
+            name="resemblesExistingModel"
+            type="radio"
+            value="OTHER"
+          />
+          <label
+            class="usa-radio__label"
+            for="plan-characteristics-resembles-existing-model-OTHER"
+          >
+            Other
+          </label>
+        </div>
+        <div
+          class="margin-top-3"
+        >
+          <label
+            class="usa-label text-normal"
+            data-testid="label"
+            for="plan-characteristics-resembles-model-why-how"
+          >
+            Explain why and how the model made this decision.
+          </label>
+          <textarea
+            aria-labelledby="label-plan-characteristics-resembles-existing-model-why-how hint-plan-characteristics-resembles-existing-model-why-how"
+            class="height-15 usa-textarea"
+            data-testid="plan-characteristics-resembles-existing-model--why-how"
+            id="plan-characteristics-resembles-existing-model-why-how"
+            name="resemblesExistingModelWhyHow"
+          >
+            We think it is right
+          </textarea>
+        </div>
+        <div
+          class="margin-top-4 margin-bottom-8"
+        >
+          <button
+            class="usa-button usa-button usa-button--unstyled"
+            data-testid="add-note-toggle"
+            type="button"
+          >
+            <svg
+              aria-hidden="true"
+              class="usa-icon margin-right-1"
+              focusable="false"
+              height="1em"
+              role="img"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
             >
-              No
-            </label>
-          </div>
-        </fieldset>
+              <path
+                d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+              />
+            </svg>
+            Add an additional note
+          </button>
+        </div>
       </div>
       <div
         class="usa-form-group margin-y-4 margin-bottom-8"
