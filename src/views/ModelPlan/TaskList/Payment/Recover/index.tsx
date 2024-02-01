@@ -94,6 +94,10 @@ const Recover = () => {
     paymentReconciliationFrequencyContinually,
     paymentReconciliationFrequencyOther,
     paymentReconciliationFrequencyNote,
+    paymentDemandRecoupmentFrequency,
+    paymentDemandRecoupmentFrequencyContinually,
+    paymentDemandRecoupmentFrequencyOther,
+    paymentDemandRecoupmentFrequencyNote,
     paymentStartDate,
     paymentStartDateNote,
     readyForReviewByUserAccount,
@@ -165,6 +169,13 @@ const Recover = () => {
       paymentReconciliationFrequencyOther ?? '',
     paymentReconciliationFrequencyNote:
       paymentReconciliationFrequencyNote ?? '',
+    paymentDemandRecoupmentFrequency: paymentDemandRecoupmentFrequency ?? [],
+    paymentDemandRecoupmentFrequencyContinually:
+      paymentDemandRecoupmentFrequencyContinually ?? '',
+    paymentDemandRecoupmentFrequencyOther:
+      paymentDemandRecoupmentFrequencyOther ?? '',
+    paymentDemandRecoupmentFrequencyNote:
+      paymentDemandRecoupmentFrequencyNote ?? '',
     paymentStartDate: paymentStartDate ?? '',
     paymentStartDateNote: paymentStartDateNote ?? '',
     status
