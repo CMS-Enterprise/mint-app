@@ -1766,6 +1766,76 @@ enum SatisfactionLevel {
 }
 
 """
+ActivityType represents the possible activities that happen in application that might result in a notification
+"""
+enum ActivityType {
+  DAILY_DIGEST_COMPLETE
+  NEW_PLAN_DISCUSSION
+  NEW_DISCUSSION_REPLY
+}
+
+
+"""
+Activity represents an event that happened in the application that could result in a notification.
+"""
+type Activity {
+  id: UUID!
+	actorID: UUID! #TODO: return the actor? DataLoader?
+	entityID: UUID! #TODO: return the entity?
+	activityType: ActivityType
+
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
+
+}
+"""
+UserNotification represents a notification about a specific Activity
+"""
+type UserNotification {
+  id: UUID!
+	activityID: UUID!
+	userID: UUID! #probably not needed, it should be only visibile for the user
+  isRead: Boolean!
+  activity: Activity! # should we nest this?
+
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
+
+}
+
+"""
+UserNotificationPreferences represents a users preferences about what type and where to receive a notifiation
+"""
+type UserNotificationPreferences {
+  id: UUID!
+	userID: UUID!
+
+  dailyDigestEmail: Boolean!
+  dailyDigestInApp: Boolean!
+  newPlanDiscussionEmail: Boolean!
+  newPlanDiscussionInApp: Boolean!
+  newDiscussionReplyEmail: Boolean!
+  newDiscussionReplyInApp: Boolean!
+
+
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
+
+}
+
+"""
 Query definition for the schema
 """
 type Query {
@@ -1814,6 +1884,9 @@ type Query {
   @hasAnyRole(roles: [MINT_USER, MINT_MAC])
   mostRecentDiscussionRoleSelection: DiscussionRoleSelection
   @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+  userNotificationPreferences: UserNotificationPreferences
+  userNotifications: [UserNotification!]! #TODO: EASI-3294 consider adding filters to get only unread etc
+
 }
 
 enum ModelPlanFilter {

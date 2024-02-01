@@ -41,6 +41,7 @@ type Config struct {
 }
 
 type ResolverRoot interface {
+	Activity() ActivityResolver
 	AuditChange() AuditChangeResolver
 	DiscussionReply() DiscussionReplyResolver
 	ExistingModelLink() ExistingModelLinkResolver
@@ -64,6 +65,7 @@ type ResolverRoot interface {
 	Subscription() SubscriptionResolver
 	Tag() TagResolver
 	TaggedContent() TaggedContentResolver
+	UserNotification() UserNotificationResolver
 }
 
 type DirectiveRoot struct {
@@ -72,6 +74,19 @@ type DirectiveRoot struct {
 }
 
 type ComplexityRoot struct {
+	Activity struct {
+		ActivityType          func(childComplexity int) int
+		ActorID               func(childComplexity int) int
+		CreatedBy             func(childComplexity int) int
+		CreatedByUserAccount  func(childComplexity int) int
+		CreatedDts            func(childComplexity int) int
+		EntityID              func(childComplexity int) int
+		ID                    func(childComplexity int) int
+		ModifiedBy            func(childComplexity int) int
+		ModifiedByUserAccount func(childComplexity int) int
+		ModifiedDts           func(childComplexity int) int
+	}
+
 	AuditChange struct {
 		Action                func(childComplexity int) int
 		Fields                func(childComplexity int) int
@@ -962,6 +977,8 @@ type ComplexityRoot struct {
 		SearchOktaUsers                                        func(childComplexity int, searchTerm string) int
 		TaskListSectionLocks                                   func(childComplexity int, modelPlanID uuid.UUID) int
 		UserAccount                                            func(childComplexity int, username string) int
+		UserNotificationPreferences                            func(childComplexity int) int
+		UserNotifications                                      func(childComplexity int) int
 	}
 
 	Subscription struct {
@@ -1024,8 +1041,42 @@ type ComplexityRoot struct {
 		LastName    func(childComplexity int) int
 		Username    func(childComplexity int) int
 	}
+
+	UserNotification struct {
+		Activity              func(childComplexity int) int
+		ActivityID            func(childComplexity int) int
+		CreatedBy             func(childComplexity int) int
+		CreatedByUserAccount  func(childComplexity int) int
+		CreatedDts            func(childComplexity int) int
+		ID                    func(childComplexity int) int
+		IsRead                func(childComplexity int) int
+		ModifiedBy            func(childComplexity int) int
+		ModifiedByUserAccount func(childComplexity int) int
+		ModifiedDts           func(childComplexity int) int
+		UserID                func(childComplexity int) int
+	}
+
+	UserNotificationPreferences struct {
+		CreatedBy               func(childComplexity int) int
+		CreatedByUserAccount    func(childComplexity int) int
+		CreatedDts              func(childComplexity int) int
+		DailyDigestEmail        func(childComplexity int) int
+		DailyDigestInApp        func(childComplexity int) int
+		ID                      func(childComplexity int) int
+		ModifiedBy              func(childComplexity int) int
+		ModifiedByUserAccount   func(childComplexity int) int
+		ModifiedDts             func(childComplexity int) int
+		NewDiscussionReplyEmail func(childComplexity int) int
+		NewDiscussionReplyInApp func(childComplexity int) int
+		NewPlanDiscussionEmail  func(childComplexity int) int
+		NewPlanDiscussionInApp  func(childComplexity int) int
+		UserID                  func(childComplexity int) int
+	}
 }
 
+type ActivityResolver interface {
+	EntityID(ctx context.Context, obj *models.Activity) (uuid.UUID, error)
+}
 type AuditChangeResolver interface {
 	Fields(ctx context.Context, obj *models.AuditChange) (map[string]interface{}, error)
 }
@@ -1264,6 +1315,8 @@ type QueryResolver interface {
 	SearchChanges(ctx context.Context, filters []*model.SearchFilter, sortBy *model.ChangeHistorySortParams, page *model.PageParams) ([]*models.ChangeTableRecord, error)
 	SearchChangeTableDateHistogramConsolidatedAggregations(ctx context.Context, interval string, limit int, offset int) ([]*models.DateHistogramAggregationBucket, error)
 	MostRecentDiscussionRoleSelection(ctx context.Context) (*models.DiscussionRoleSelection, error)
+	UserNotificationPreferences(ctx context.Context) (*models.UserNotificationPreferences, error)
+	UserNotifications(ctx context.Context) ([]*models.UserNotification, error)
 }
 type SubscriptionResolver interface {
 	OnTaskListSectionLocksChanged(ctx context.Context, modelPlanID uuid.UUID) (<-chan *model.TaskListSectionLockStatusChanged, error)
@@ -1274,6 +1327,9 @@ type TagResolver interface {
 }
 type TaggedContentResolver interface {
 	RawContent(ctx context.Context, obj *models.TaggedContent) (string, error)
+}
+type UserNotificationResolver interface {
+	Activity(ctx context.Context, obj *models.UserNotification) (*models.Activity, error)
 }
 
 type executableSchema struct {
@@ -1290,6 +1346,76 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 	ec := executionContext{nil, e, 0, 0, nil}
 	_ = ec
 	switch typeName + "." + field {
+
+	case "Activity.activityType":
+		if e.complexity.Activity.ActivityType == nil {
+			break
+		}
+
+		return e.complexity.Activity.ActivityType(childComplexity), true
+
+	case "Activity.actorID":
+		if e.complexity.Activity.ActorID == nil {
+			break
+		}
+
+		return e.complexity.Activity.ActorID(childComplexity), true
+
+	case "Activity.createdBy":
+		if e.complexity.Activity.CreatedBy == nil {
+			break
+		}
+
+		return e.complexity.Activity.CreatedBy(childComplexity), true
+
+	case "Activity.createdByUserAccount":
+		if e.complexity.Activity.CreatedByUserAccount == nil {
+			break
+		}
+
+		return e.complexity.Activity.CreatedByUserAccount(childComplexity), true
+
+	case "Activity.createdDts":
+		if e.complexity.Activity.CreatedDts == nil {
+			break
+		}
+
+		return e.complexity.Activity.CreatedDts(childComplexity), true
+
+	case "Activity.entityID":
+		if e.complexity.Activity.EntityID == nil {
+			break
+		}
+
+		return e.complexity.Activity.EntityID(childComplexity), true
+
+	case "Activity.id":
+		if e.complexity.Activity.ID == nil {
+			break
+		}
+
+		return e.complexity.Activity.ID(childComplexity), true
+
+	case "Activity.modifiedBy":
+		if e.complexity.Activity.ModifiedBy == nil {
+			break
+		}
+
+		return e.complexity.Activity.ModifiedBy(childComplexity), true
+
+	case "Activity.modifiedByUserAccount":
+		if e.complexity.Activity.ModifiedByUserAccount == nil {
+			break
+		}
+
+		return e.complexity.Activity.ModifiedByUserAccount(childComplexity), true
+
+	case "Activity.modifiedDts":
+		if e.complexity.Activity.ModifiedDts == nil {
+			break
+		}
+
+		return e.complexity.Activity.ModifiedDts(childComplexity), true
 
 	case "AuditChange.action":
 		if e.complexity.AuditChange.Action == nil {
@@ -7058,6 +7184,20 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Query.UserAccount(childComplexity, args["username"].(string)), true
 
+	case "Query.userNotificationPreferences":
+		if e.complexity.Query.UserNotificationPreferences == nil {
+			break
+		}
+
+		return e.complexity.Query.UserNotificationPreferences(childComplexity), true
+
+	case "Query.userNotifications":
+		if e.complexity.Query.UserNotifications == nil {
+			break
+		}
+
+		return e.complexity.Query.UserNotifications(childComplexity), true
+
 	case "Subscription.onLockTaskListSectionContext":
 		if e.complexity.Subscription.OnLockTaskListSectionContext == nil {
 			break
@@ -7347,6 +7487,181 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.UserInfo.Username(childComplexity), true
+
+	case "UserNotification.activity":
+		if e.complexity.UserNotification.Activity == nil {
+			break
+		}
+
+		return e.complexity.UserNotification.Activity(childComplexity), true
+
+	case "UserNotification.activityID":
+		if e.complexity.UserNotification.ActivityID == nil {
+			break
+		}
+
+		return e.complexity.UserNotification.ActivityID(childComplexity), true
+
+	case "UserNotification.createdBy":
+		if e.complexity.UserNotification.CreatedBy == nil {
+			break
+		}
+
+		return e.complexity.UserNotification.CreatedBy(childComplexity), true
+
+	case "UserNotification.createdByUserAccount":
+		if e.complexity.UserNotification.CreatedByUserAccount == nil {
+			break
+		}
+
+		return e.complexity.UserNotification.CreatedByUserAccount(childComplexity), true
+
+	case "UserNotification.createdDts":
+		if e.complexity.UserNotification.CreatedDts == nil {
+			break
+		}
+
+		return e.complexity.UserNotification.CreatedDts(childComplexity), true
+
+	case "UserNotification.id":
+		if e.complexity.UserNotification.ID == nil {
+			break
+		}
+
+		return e.complexity.UserNotification.ID(childComplexity), true
+
+	case "UserNotification.isRead":
+		if e.complexity.UserNotification.IsRead == nil {
+			break
+		}
+
+		return e.complexity.UserNotification.IsRead(childComplexity), true
+
+	case "UserNotification.modifiedBy":
+		if e.complexity.UserNotification.ModifiedBy == nil {
+			break
+		}
+
+		return e.complexity.UserNotification.ModifiedBy(childComplexity), true
+
+	case "UserNotification.modifiedByUserAccount":
+		if e.complexity.UserNotification.ModifiedByUserAccount == nil {
+			break
+		}
+
+		return e.complexity.UserNotification.ModifiedByUserAccount(childComplexity), true
+
+	case "UserNotification.modifiedDts":
+		if e.complexity.UserNotification.ModifiedDts == nil {
+			break
+		}
+
+		return e.complexity.UserNotification.ModifiedDts(childComplexity), true
+
+	case "UserNotification.userID":
+		if e.complexity.UserNotification.UserID == nil {
+			break
+		}
+
+		return e.complexity.UserNotification.UserID(childComplexity), true
+
+	case "UserNotificationPreferences.createdBy":
+		if e.complexity.UserNotificationPreferences.CreatedBy == nil {
+			break
+		}
+
+		return e.complexity.UserNotificationPreferences.CreatedBy(childComplexity), true
+
+	case "UserNotificationPreferences.createdByUserAccount":
+		if e.complexity.UserNotificationPreferences.CreatedByUserAccount == nil {
+			break
+		}
+
+		return e.complexity.UserNotificationPreferences.CreatedByUserAccount(childComplexity), true
+
+	case "UserNotificationPreferences.createdDts":
+		if e.complexity.UserNotificationPreferences.CreatedDts == nil {
+			break
+		}
+
+		return e.complexity.UserNotificationPreferences.CreatedDts(childComplexity), true
+
+	case "UserNotificationPreferences.dailyDigestEmail":
+		if e.complexity.UserNotificationPreferences.DailyDigestEmail == nil {
+			break
+		}
+
+		return e.complexity.UserNotificationPreferences.DailyDigestEmail(childComplexity), true
+
+	case "UserNotificationPreferences.dailyDigestInApp":
+		if e.complexity.UserNotificationPreferences.DailyDigestInApp == nil {
+			break
+		}
+
+		return e.complexity.UserNotificationPreferences.DailyDigestInApp(childComplexity), true
+
+	case "UserNotificationPreferences.id":
+		if e.complexity.UserNotificationPreferences.ID == nil {
+			break
+		}
+
+		return e.complexity.UserNotificationPreferences.ID(childComplexity), true
+
+	case "UserNotificationPreferences.modifiedBy":
+		if e.complexity.UserNotificationPreferences.ModifiedBy == nil {
+			break
+		}
+
+		return e.complexity.UserNotificationPreferences.ModifiedBy(childComplexity), true
+
+	case "UserNotificationPreferences.modifiedByUserAccount":
+		if e.complexity.UserNotificationPreferences.ModifiedByUserAccount == nil {
+			break
+		}
+
+		return e.complexity.UserNotificationPreferences.ModifiedByUserAccount(childComplexity), true
+
+	case "UserNotificationPreferences.modifiedDts":
+		if e.complexity.UserNotificationPreferences.ModifiedDts == nil {
+			break
+		}
+
+		return e.complexity.UserNotificationPreferences.ModifiedDts(childComplexity), true
+
+	case "UserNotificationPreferences.newDiscussionReplyEmail":
+		if e.complexity.UserNotificationPreferences.NewDiscussionReplyEmail == nil {
+			break
+		}
+
+		return e.complexity.UserNotificationPreferences.NewDiscussionReplyEmail(childComplexity), true
+
+	case "UserNotificationPreferences.newDiscussionReplyInApp":
+		if e.complexity.UserNotificationPreferences.NewDiscussionReplyInApp == nil {
+			break
+		}
+
+		return e.complexity.UserNotificationPreferences.NewDiscussionReplyInApp(childComplexity), true
+
+	case "UserNotificationPreferences.newPlanDiscussionEmail":
+		if e.complexity.UserNotificationPreferences.NewPlanDiscussionEmail == nil {
+			break
+		}
+
+		return e.complexity.UserNotificationPreferences.NewPlanDiscussionEmail(childComplexity), true
+
+	case "UserNotificationPreferences.newPlanDiscussionInApp":
+		if e.complexity.UserNotificationPreferences.NewPlanDiscussionInApp == nil {
+			break
+		}
+
+		return e.complexity.UserNotificationPreferences.NewPlanDiscussionInApp(childComplexity), true
+
+	case "UserNotificationPreferences.userID":
+		if e.complexity.UserNotificationPreferences.UserID == nil {
+			break
+		}
+
+		return e.complexity.UserNotificationPreferences.UserID(childComplexity), true
 
 	}
 	return 0, false
@@ -9252,6 +9567,76 @@ enum SatisfactionLevel {
 }
 
 """
+ActivityType represents the possible activities that happen in application that might result in a notification
+"""
+enum ActivityType {
+  DAILY_DIGEST_COMPLETE
+  NEW_PLAN_DISCUSSION
+  NEW_DISCUSSION_REPLY
+}
+
+
+"""
+Activity represents an event that happened in the application that could result in a notification.
+"""
+type Activity {
+  id: UUID!
+	actorID: UUID! #TODO: return the actor? DataLoader?
+	entityID: UUID! #TODO: return the entity?
+	activityType: ActivityType
+
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
+
+}
+"""
+UserNotification represents a notification about a specific Activity
+"""
+type UserNotification {
+  id: UUID!
+	activityID: UUID!
+	userID: UUID! #probably not needed, it should be only visibile for the user
+  isRead: Boolean!
+  activity: Activity! # should we nest this?
+
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
+
+}
+
+"""
+UserNotificationPreferences represents a users preferences about what type and where to receive a notifiation
+"""
+type UserNotificationPreferences {
+  id: UUID!
+	userID: UUID!
+
+  dailyDigestEmail: Boolean!
+  dailyDigestInApp: Boolean!
+  newPlanDiscussionEmail: Boolean!
+  newPlanDiscussionInApp: Boolean!
+  newDiscussionReplyEmail: Boolean!
+  newDiscussionReplyInApp: Boolean!
+
+
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
+
+}
+
+"""
 Query definition for the schema
 """
 type Query {
@@ -9300,6 +9685,9 @@ type Query {
   @hasAnyRole(roles: [MINT_USER, MINT_MAC])
   mostRecentDiscussionRoleSelection: DiscussionRoleSelection
   @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+  userNotificationPreferences: UserNotificationPreferences
+  userNotifications: [UserNotification!]! #TODO: EASI-3294 consider adding filters to get only unread etc
+
 }
 
 enum ModelPlanFilter {
@@ -11580,6 +11968,478 @@ func (ec *executionContext) field___Type_fields_args(ctx context.Context, rawArg
 // endregion ************************** directives.gotpl **************************
 
 // region    **************************** field.gotpl *****************************
+
+func (ec *executionContext) _Activity_id(ctx context.Context, field graphql.CollectedField, obj *models.Activity) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Activity_id(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ID, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(uuid.UUID)
+	fc.Result = res
+	return ec.marshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Activity_id(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Activity",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type UUID does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Activity_actorID(ctx context.Context, field graphql.CollectedField, obj *models.Activity) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Activity_actorID(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ActorID, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(uuid.UUID)
+	fc.Result = res
+	return ec.marshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Activity_actorID(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Activity",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type UUID does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Activity_entityID(ctx context.Context, field graphql.CollectedField, obj *models.Activity) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Activity_entityID(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Activity().EntityID(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(uuid.UUID)
+	fc.Result = res
+	return ec.marshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Activity_entityID(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Activity",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type UUID does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Activity_activityType(ctx context.Context, field graphql.CollectedField, obj *models.Activity) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Activity_activityType(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ActivityType, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(models.ActivityType)
+	fc.Result = res
+	return ec.marshalOActivityType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐActivityType(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Activity_activityType(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Activity",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type ActivityType does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Activity_createdBy(ctx context.Context, field graphql.CollectedField, obj *models.Activity) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Activity_createdBy(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.CreatedBy, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(uuid.UUID)
+	fc.Result = res
+	return ec.marshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Activity_createdBy(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Activity",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type UUID does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Activity_createdByUserAccount(ctx context.Context, field graphql.CollectedField, obj *models.Activity) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Activity_createdByUserAccount(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.CreatedByUserAccount(ctx), nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*authentication.UserAccount)
+	fc.Result = res
+	return ec.marshalNUserAccount2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋauthenticationᚐUserAccount(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Activity_createdByUserAccount(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Activity",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_UserAccount_id(ctx, field)
+			case "username":
+				return ec.fieldContext_UserAccount_username(ctx, field)
+			case "isEUAID":
+				return ec.fieldContext_UserAccount_isEUAID(ctx, field)
+			case "commonName":
+				return ec.fieldContext_UserAccount_commonName(ctx, field)
+			case "locale":
+				return ec.fieldContext_UserAccount_locale(ctx, field)
+			case "email":
+				return ec.fieldContext_UserAccount_email(ctx, field)
+			case "givenName":
+				return ec.fieldContext_UserAccount_givenName(ctx, field)
+			case "familyName":
+				return ec.fieldContext_UserAccount_familyName(ctx, field)
+			case "zoneInfo":
+				return ec.fieldContext_UserAccount_zoneInfo(ctx, field)
+			case "hasLoggedIn":
+				return ec.fieldContext_UserAccount_hasLoggedIn(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type UserAccount", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Activity_createdDts(ctx context.Context, field graphql.CollectedField, obj *models.Activity) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Activity_createdDts(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.CreatedDts, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(time.Time)
+	fc.Result = res
+	return ec.marshalNTime2timeᚐTime(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Activity_createdDts(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Activity",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Time does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Activity_modifiedBy(ctx context.Context, field graphql.CollectedField, obj *models.Activity) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Activity_modifiedBy(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ModifiedBy, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*uuid.UUID)
+	fc.Result = res
+	return ec.marshalOUUID2ᚖgithubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Activity_modifiedBy(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Activity",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type UUID does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Activity_modifiedByUserAccount(ctx context.Context, field graphql.CollectedField, obj *models.Activity) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Activity_modifiedByUserAccount(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ModifiedByUserAccount(ctx), nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*authentication.UserAccount)
+	fc.Result = res
+	return ec.marshalOUserAccount2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋauthenticationᚐUserAccount(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Activity_modifiedByUserAccount(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Activity",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_UserAccount_id(ctx, field)
+			case "username":
+				return ec.fieldContext_UserAccount_username(ctx, field)
+			case "isEUAID":
+				return ec.fieldContext_UserAccount_isEUAID(ctx, field)
+			case "commonName":
+				return ec.fieldContext_UserAccount_commonName(ctx, field)
+			case "locale":
+				return ec.fieldContext_UserAccount_locale(ctx, field)
+			case "email":
+				return ec.fieldContext_UserAccount_email(ctx, field)
+			case "givenName":
+				return ec.fieldContext_UserAccount_givenName(ctx, field)
+			case "familyName":
+				return ec.fieldContext_UserAccount_familyName(ctx, field)
+			case "zoneInfo":
+				return ec.fieldContext_UserAccount_zoneInfo(ctx, field)
+			case "hasLoggedIn":
+				return ec.fieldContext_UserAccount_hasLoggedIn(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type UserAccount", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Activity_modifiedDts(ctx context.Context, field graphql.CollectedField, obj *models.Activity) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Activity_modifiedDts(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ModifiedDts, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*time.Time)
+	fc.Result = res
+	return ec.marshalOTime2ᚖtimeᚐTime(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Activity_modifiedDts(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Activity",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Time does not have child fields")
+		},
+	}
+	return fc, nil
+}
 
 func (ec *executionContext) _AuditChange_id(ctx context.Context, field graphql.CollectedField, obj *models.AuditChange) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_AuditChange_id(ctx, field)
@@ -51941,6 +52801,145 @@ func (ec *executionContext) fieldContext_Query_mostRecentDiscussionRoleSelection
 	return fc, nil
 }
 
+func (ec *executionContext) _Query_userNotificationPreferences(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Query_userNotificationPreferences(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Query().UserNotificationPreferences(rctx)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*models.UserNotificationPreferences)
+	fc.Result = res
+	return ec.marshalOUserNotificationPreferences2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐUserNotificationPreferences(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Query_userNotificationPreferences(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Query",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_UserNotificationPreferences_id(ctx, field)
+			case "userID":
+				return ec.fieldContext_UserNotificationPreferences_userID(ctx, field)
+			case "dailyDigestEmail":
+				return ec.fieldContext_UserNotificationPreferences_dailyDigestEmail(ctx, field)
+			case "dailyDigestInApp":
+				return ec.fieldContext_UserNotificationPreferences_dailyDigestInApp(ctx, field)
+			case "newPlanDiscussionEmail":
+				return ec.fieldContext_UserNotificationPreferences_newPlanDiscussionEmail(ctx, field)
+			case "newPlanDiscussionInApp":
+				return ec.fieldContext_UserNotificationPreferences_newPlanDiscussionInApp(ctx, field)
+			case "newDiscussionReplyEmail":
+				return ec.fieldContext_UserNotificationPreferences_newDiscussionReplyEmail(ctx, field)
+			case "newDiscussionReplyInApp":
+				return ec.fieldContext_UserNotificationPreferences_newDiscussionReplyInApp(ctx, field)
+			case "createdBy":
+				return ec.fieldContext_UserNotificationPreferences_createdBy(ctx, field)
+			case "createdByUserAccount":
+				return ec.fieldContext_UserNotificationPreferences_createdByUserAccount(ctx, field)
+			case "createdDts":
+				return ec.fieldContext_UserNotificationPreferences_createdDts(ctx, field)
+			case "modifiedBy":
+				return ec.fieldContext_UserNotificationPreferences_modifiedBy(ctx, field)
+			case "modifiedByUserAccount":
+				return ec.fieldContext_UserNotificationPreferences_modifiedByUserAccount(ctx, field)
+			case "modifiedDts":
+				return ec.fieldContext_UserNotificationPreferences_modifiedDts(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type UserNotificationPreferences", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Query_userNotifications(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Query_userNotifications(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Query().UserNotifications(rctx)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.([]*models.UserNotification)
+	fc.Result = res
+	return ec.marshalNUserNotification2ᚕᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐUserNotificationᚄ(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Query_userNotifications(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Query",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_UserNotification_id(ctx, field)
+			case "activityID":
+				return ec.fieldContext_UserNotification_activityID(ctx, field)
+			case "userID":
+				return ec.fieldContext_UserNotification_userID(ctx, field)
+			case "isRead":
+				return ec.fieldContext_UserNotification_isRead(ctx, field)
+			case "activity":
+				return ec.fieldContext_UserNotification_activity(ctx, field)
+			case "createdBy":
+				return ec.fieldContext_UserNotification_createdBy(ctx, field)
+			case "createdByUserAccount":
+				return ec.fieldContext_UserNotification_createdByUserAccount(ctx, field)
+			case "createdDts":
+				return ec.fieldContext_UserNotification_createdDts(ctx, field)
+			case "modifiedBy":
+				return ec.fieldContext_UserNotification_modifiedBy(ctx, field)
+			case "modifiedByUserAccount":
+				return ec.fieldContext_UserNotification_modifiedByUserAccount(ctx, field)
+			case "modifiedDts":
+				return ec.fieldContext_UserNotification_modifiedDts(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type UserNotification", field.Name)
+		},
+	}
+	return fc, nil
+}
+
 func (ec *executionContext) _Query___type(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_Query___type(ctx, field)
 	if err != nil {
@@ -54021,6 +55020,1198 @@ func (ec *executionContext) fieldContext_UserInfo_username(ctx context.Context, 
 		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _UserNotification_id(ctx context.Context, field graphql.CollectedField, obj *models.UserNotification) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_UserNotification_id(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ID, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(uuid.UUID)
+	fc.Result = res
+	return ec.marshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_UserNotification_id(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "UserNotification",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type UUID does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _UserNotification_activityID(ctx context.Context, field graphql.CollectedField, obj *models.UserNotification) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_UserNotification_activityID(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ActivityID, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(uuid.UUID)
+	fc.Result = res
+	return ec.marshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_UserNotification_activityID(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "UserNotification",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type UUID does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _UserNotification_userID(ctx context.Context, field graphql.CollectedField, obj *models.UserNotification) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_UserNotification_userID(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.UserID, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(uuid.UUID)
+	fc.Result = res
+	return ec.marshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_UserNotification_userID(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "UserNotification",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type UUID does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _UserNotification_isRead(ctx context.Context, field graphql.CollectedField, obj *models.UserNotification) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_UserNotification_isRead(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.IsRead, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(bool)
+	fc.Result = res
+	return ec.marshalNBoolean2bool(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_UserNotification_isRead(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "UserNotification",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Boolean does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _UserNotification_activity(ctx context.Context, field graphql.CollectedField, obj *models.UserNotification) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_UserNotification_activity(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.UserNotification().Activity(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*models.Activity)
+	fc.Result = res
+	return ec.marshalNActivity2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐActivity(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_UserNotification_activity(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "UserNotification",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_Activity_id(ctx, field)
+			case "actorID":
+				return ec.fieldContext_Activity_actorID(ctx, field)
+			case "entityID":
+				return ec.fieldContext_Activity_entityID(ctx, field)
+			case "activityType":
+				return ec.fieldContext_Activity_activityType(ctx, field)
+			case "createdBy":
+				return ec.fieldContext_Activity_createdBy(ctx, field)
+			case "createdByUserAccount":
+				return ec.fieldContext_Activity_createdByUserAccount(ctx, field)
+			case "createdDts":
+				return ec.fieldContext_Activity_createdDts(ctx, field)
+			case "modifiedBy":
+				return ec.fieldContext_Activity_modifiedBy(ctx, field)
+			case "modifiedByUserAccount":
+				return ec.fieldContext_Activity_modifiedByUserAccount(ctx, field)
+			case "modifiedDts":
+				return ec.fieldContext_Activity_modifiedDts(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type Activity", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _UserNotification_createdBy(ctx context.Context, field graphql.CollectedField, obj *models.UserNotification) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_UserNotification_createdBy(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.CreatedBy, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(uuid.UUID)
+	fc.Result = res
+	return ec.marshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_UserNotification_createdBy(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "UserNotification",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type UUID does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _UserNotification_createdByUserAccount(ctx context.Context, field graphql.CollectedField, obj *models.UserNotification) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_UserNotification_createdByUserAccount(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.CreatedByUserAccount(ctx), nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*authentication.UserAccount)
+	fc.Result = res
+	return ec.marshalNUserAccount2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋauthenticationᚐUserAccount(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_UserNotification_createdByUserAccount(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "UserNotification",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_UserAccount_id(ctx, field)
+			case "username":
+				return ec.fieldContext_UserAccount_username(ctx, field)
+			case "isEUAID":
+				return ec.fieldContext_UserAccount_isEUAID(ctx, field)
+			case "commonName":
+				return ec.fieldContext_UserAccount_commonName(ctx, field)
+			case "locale":
+				return ec.fieldContext_UserAccount_locale(ctx, field)
+			case "email":
+				return ec.fieldContext_UserAccount_email(ctx, field)
+			case "givenName":
+				return ec.fieldContext_UserAccount_givenName(ctx, field)
+			case "familyName":
+				return ec.fieldContext_UserAccount_familyName(ctx, field)
+			case "zoneInfo":
+				return ec.fieldContext_UserAccount_zoneInfo(ctx, field)
+			case "hasLoggedIn":
+				return ec.fieldContext_UserAccount_hasLoggedIn(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type UserAccount", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _UserNotification_createdDts(ctx context.Context, field graphql.CollectedField, obj *models.UserNotification) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_UserNotification_createdDts(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.CreatedDts, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(time.Time)
+	fc.Result = res
+	return ec.marshalNTime2timeᚐTime(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_UserNotification_createdDts(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "UserNotification",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Time does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _UserNotification_modifiedBy(ctx context.Context, field graphql.CollectedField, obj *models.UserNotification) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_UserNotification_modifiedBy(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ModifiedBy, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*uuid.UUID)
+	fc.Result = res
+	return ec.marshalOUUID2ᚖgithubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_UserNotification_modifiedBy(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "UserNotification",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type UUID does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _UserNotification_modifiedByUserAccount(ctx context.Context, field graphql.CollectedField, obj *models.UserNotification) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_UserNotification_modifiedByUserAccount(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ModifiedByUserAccount(ctx), nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*authentication.UserAccount)
+	fc.Result = res
+	return ec.marshalOUserAccount2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋauthenticationᚐUserAccount(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_UserNotification_modifiedByUserAccount(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "UserNotification",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_UserAccount_id(ctx, field)
+			case "username":
+				return ec.fieldContext_UserAccount_username(ctx, field)
+			case "isEUAID":
+				return ec.fieldContext_UserAccount_isEUAID(ctx, field)
+			case "commonName":
+				return ec.fieldContext_UserAccount_commonName(ctx, field)
+			case "locale":
+				return ec.fieldContext_UserAccount_locale(ctx, field)
+			case "email":
+				return ec.fieldContext_UserAccount_email(ctx, field)
+			case "givenName":
+				return ec.fieldContext_UserAccount_givenName(ctx, field)
+			case "familyName":
+				return ec.fieldContext_UserAccount_familyName(ctx, field)
+			case "zoneInfo":
+				return ec.fieldContext_UserAccount_zoneInfo(ctx, field)
+			case "hasLoggedIn":
+				return ec.fieldContext_UserAccount_hasLoggedIn(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type UserAccount", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _UserNotification_modifiedDts(ctx context.Context, field graphql.CollectedField, obj *models.UserNotification) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_UserNotification_modifiedDts(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ModifiedDts, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*time.Time)
+	fc.Result = res
+	return ec.marshalOTime2ᚖtimeᚐTime(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_UserNotification_modifiedDts(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "UserNotification",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Time does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _UserNotificationPreferences_id(ctx context.Context, field graphql.CollectedField, obj *models.UserNotificationPreferences) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_UserNotificationPreferences_id(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ID, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(uuid.UUID)
+	fc.Result = res
+	return ec.marshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_UserNotificationPreferences_id(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "UserNotificationPreferences",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type UUID does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _UserNotificationPreferences_userID(ctx context.Context, field graphql.CollectedField, obj *models.UserNotificationPreferences) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_UserNotificationPreferences_userID(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.UserID, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(uuid.UUID)
+	fc.Result = res
+	return ec.marshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_UserNotificationPreferences_userID(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "UserNotificationPreferences",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type UUID does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _UserNotificationPreferences_dailyDigestEmail(ctx context.Context, field graphql.CollectedField, obj *models.UserNotificationPreferences) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_UserNotificationPreferences_dailyDigestEmail(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.DailyDigestEmail, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(bool)
+	fc.Result = res
+	return ec.marshalNBoolean2bool(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_UserNotificationPreferences_dailyDigestEmail(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "UserNotificationPreferences",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Boolean does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _UserNotificationPreferences_dailyDigestInApp(ctx context.Context, field graphql.CollectedField, obj *models.UserNotificationPreferences) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_UserNotificationPreferences_dailyDigestInApp(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.DailyDigestInApp, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(bool)
+	fc.Result = res
+	return ec.marshalNBoolean2bool(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_UserNotificationPreferences_dailyDigestInApp(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "UserNotificationPreferences",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Boolean does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _UserNotificationPreferences_newPlanDiscussionEmail(ctx context.Context, field graphql.CollectedField, obj *models.UserNotificationPreferences) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_UserNotificationPreferences_newPlanDiscussionEmail(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.NewPlanDiscussionEmail, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(bool)
+	fc.Result = res
+	return ec.marshalNBoolean2bool(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_UserNotificationPreferences_newPlanDiscussionEmail(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "UserNotificationPreferences",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Boolean does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _UserNotificationPreferences_newPlanDiscussionInApp(ctx context.Context, field graphql.CollectedField, obj *models.UserNotificationPreferences) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_UserNotificationPreferences_newPlanDiscussionInApp(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.NewPlanDiscussionInApp, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(bool)
+	fc.Result = res
+	return ec.marshalNBoolean2bool(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_UserNotificationPreferences_newPlanDiscussionInApp(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "UserNotificationPreferences",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Boolean does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _UserNotificationPreferences_newDiscussionReplyEmail(ctx context.Context, field graphql.CollectedField, obj *models.UserNotificationPreferences) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_UserNotificationPreferences_newDiscussionReplyEmail(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.NewDiscussionReplyEmail, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(bool)
+	fc.Result = res
+	return ec.marshalNBoolean2bool(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_UserNotificationPreferences_newDiscussionReplyEmail(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "UserNotificationPreferences",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Boolean does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _UserNotificationPreferences_newDiscussionReplyInApp(ctx context.Context, field graphql.CollectedField, obj *models.UserNotificationPreferences) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_UserNotificationPreferences_newDiscussionReplyInApp(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.NewDiscussionReplyInApp, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(bool)
+	fc.Result = res
+	return ec.marshalNBoolean2bool(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_UserNotificationPreferences_newDiscussionReplyInApp(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "UserNotificationPreferences",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Boolean does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _UserNotificationPreferences_createdBy(ctx context.Context, field graphql.CollectedField, obj *models.UserNotificationPreferences) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_UserNotificationPreferences_createdBy(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.CreatedBy, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(uuid.UUID)
+	fc.Result = res
+	return ec.marshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_UserNotificationPreferences_createdBy(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "UserNotificationPreferences",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type UUID does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _UserNotificationPreferences_createdByUserAccount(ctx context.Context, field graphql.CollectedField, obj *models.UserNotificationPreferences) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_UserNotificationPreferences_createdByUserAccount(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.CreatedByUserAccount(ctx), nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*authentication.UserAccount)
+	fc.Result = res
+	return ec.marshalNUserAccount2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋauthenticationᚐUserAccount(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_UserNotificationPreferences_createdByUserAccount(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "UserNotificationPreferences",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_UserAccount_id(ctx, field)
+			case "username":
+				return ec.fieldContext_UserAccount_username(ctx, field)
+			case "isEUAID":
+				return ec.fieldContext_UserAccount_isEUAID(ctx, field)
+			case "commonName":
+				return ec.fieldContext_UserAccount_commonName(ctx, field)
+			case "locale":
+				return ec.fieldContext_UserAccount_locale(ctx, field)
+			case "email":
+				return ec.fieldContext_UserAccount_email(ctx, field)
+			case "givenName":
+				return ec.fieldContext_UserAccount_givenName(ctx, field)
+			case "familyName":
+				return ec.fieldContext_UserAccount_familyName(ctx, field)
+			case "zoneInfo":
+				return ec.fieldContext_UserAccount_zoneInfo(ctx, field)
+			case "hasLoggedIn":
+				return ec.fieldContext_UserAccount_hasLoggedIn(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type UserAccount", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _UserNotificationPreferences_createdDts(ctx context.Context, field graphql.CollectedField, obj *models.UserNotificationPreferences) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_UserNotificationPreferences_createdDts(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.CreatedDts, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(time.Time)
+	fc.Result = res
+	return ec.marshalNTime2timeᚐTime(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_UserNotificationPreferences_createdDts(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "UserNotificationPreferences",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Time does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _UserNotificationPreferences_modifiedBy(ctx context.Context, field graphql.CollectedField, obj *models.UserNotificationPreferences) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_UserNotificationPreferences_modifiedBy(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ModifiedBy, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*uuid.UUID)
+	fc.Result = res
+	return ec.marshalOUUID2ᚖgithubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_UserNotificationPreferences_modifiedBy(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "UserNotificationPreferences",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type UUID does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _UserNotificationPreferences_modifiedByUserAccount(ctx context.Context, field graphql.CollectedField, obj *models.UserNotificationPreferences) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_UserNotificationPreferences_modifiedByUserAccount(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ModifiedByUserAccount(ctx), nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*authentication.UserAccount)
+	fc.Result = res
+	return ec.marshalOUserAccount2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋauthenticationᚐUserAccount(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_UserNotificationPreferences_modifiedByUserAccount(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "UserNotificationPreferences",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_UserAccount_id(ctx, field)
+			case "username":
+				return ec.fieldContext_UserAccount_username(ctx, field)
+			case "isEUAID":
+				return ec.fieldContext_UserAccount_isEUAID(ctx, field)
+			case "commonName":
+				return ec.fieldContext_UserAccount_commonName(ctx, field)
+			case "locale":
+				return ec.fieldContext_UserAccount_locale(ctx, field)
+			case "email":
+				return ec.fieldContext_UserAccount_email(ctx, field)
+			case "givenName":
+				return ec.fieldContext_UserAccount_givenName(ctx, field)
+			case "familyName":
+				return ec.fieldContext_UserAccount_familyName(ctx, field)
+			case "zoneInfo":
+				return ec.fieldContext_UserAccount_zoneInfo(ctx, field)
+			case "hasLoggedIn":
+				return ec.fieldContext_UserAccount_hasLoggedIn(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type UserAccount", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _UserNotificationPreferences_modifiedDts(ctx context.Context, field graphql.CollectedField, obj *models.UserNotificationPreferences) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_UserNotificationPreferences_modifiedDts(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ModifiedDts, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*time.Time)
+	fc.Result = res
+	return ec.marshalOTime2ᚖtimeᚐTime(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_UserNotificationPreferences_modifiedDts(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "UserNotificationPreferences",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Time does not have child fields")
 		},
 	}
 	return fc, nil
@@ -56690,6 +58881,171 @@ func (ec *executionContext) _TaggedEntity(ctx context.Context, sel ast.Selection
 // endregion ************************** interface.gotpl ***************************
 
 // region    **************************** object.gotpl ****************************
+
+var activityImplementors = []string{"Activity"}
+
+func (ec *executionContext) _Activity(ctx context.Context, sel ast.SelectionSet, obj *models.Activity) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, activityImplementors)
+
+	out := graphql.NewFieldSet(fields)
+	deferred := make(map[string]*graphql.FieldSet)
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("Activity")
+		case "id":
+			out.Values[i] = ec._Activity_id(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "actorID":
+			out.Values[i] = ec._Activity_actorID(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "entityID":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Activity_entityID(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
+				return res
+			}
+
+			if field.Deferrable != nil {
+				dfs, ok := deferred[field.Deferrable.Label]
+				di := 0
+				if ok {
+					dfs.AddField(field)
+					di = len(dfs.Values) - 1
+				} else {
+					dfs = graphql.NewFieldSet([]graphql.CollectedField{field})
+					deferred[field.Deferrable.Label] = dfs
+				}
+				dfs.Concurrently(di, func(ctx context.Context) graphql.Marshaler {
+					return innerFunc(ctx, dfs)
+				})
+
+				// don't run the out.Concurrently() call below
+				out.Values[i] = graphql.Null
+				continue
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+		case "activityType":
+			out.Values[i] = ec._Activity_activityType(ctx, field, obj)
+		case "createdBy":
+			out.Values[i] = ec._Activity_createdBy(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "createdByUserAccount":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Activity_createdByUserAccount(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
+				return res
+			}
+
+			if field.Deferrable != nil {
+				dfs, ok := deferred[field.Deferrable.Label]
+				di := 0
+				if ok {
+					dfs.AddField(field)
+					di = len(dfs.Values) - 1
+				} else {
+					dfs = graphql.NewFieldSet([]graphql.CollectedField{field})
+					deferred[field.Deferrable.Label] = dfs
+				}
+				dfs.Concurrently(di, func(ctx context.Context) graphql.Marshaler {
+					return innerFunc(ctx, dfs)
+				})
+
+				// don't run the out.Concurrently() call below
+				out.Values[i] = graphql.Null
+				continue
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+		case "createdDts":
+			out.Values[i] = ec._Activity_createdDts(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "modifiedBy":
+			out.Values[i] = ec._Activity_modifiedBy(ctx, field, obj)
+		case "modifiedByUserAccount":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Activity_modifiedByUserAccount(ctx, field, obj)
+				return res
+			}
+
+			if field.Deferrable != nil {
+				dfs, ok := deferred[field.Deferrable.Label]
+				di := 0
+				if ok {
+					dfs.AddField(field)
+					di = len(dfs.Values) - 1
+				} else {
+					dfs = graphql.NewFieldSet([]graphql.CollectedField{field})
+					deferred[field.Deferrable.Label] = dfs
+				}
+				dfs.Concurrently(di, func(ctx context.Context) graphql.Marshaler {
+					return innerFunc(ctx, dfs)
+				})
+
+				// don't run the out.Concurrently() call below
+				out.Values[i] = graphql.Null
+				continue
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+		case "modifiedDts":
+			out.Values[i] = ec._Activity_modifiedDts(ctx, field, obj)
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch(ctx)
+	if out.Invalids > 0 {
+		return graphql.Null
+	}
+
+	atomic.AddInt32(&ec.deferred, int32(len(deferred)))
+
+	for label, dfs := range deferred {
+		ec.processDeferredGroup(graphql.DeferredGroup{
+			Label:    label,
+			Path:     graphql.GetPath(ctx),
+			FieldSet: dfs,
+			Context:  ctx,
+		})
+	}
+
+	return out
+}
 
 var auditChangeImplementors = []string{"AuditChange"}
 
@@ -65565,6 +67921,47 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 			}
 
 			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return rrm(innerCtx) })
+		case "userNotificationPreferences":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Query_userNotificationPreferences(ctx, field)
+				return res
+			}
+
+			rrm := func(ctx context.Context) graphql.Marshaler {
+				return ec.OperationContext.RootResolverMiddleware(ctx,
+					func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return rrm(innerCtx) })
+		case "userNotifications":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Query_userNotifications(ctx, field)
+				if res == graphql.Null {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
+				return res
+			}
+
+			rrm := func(ctx context.Context) graphql.Marshaler {
+				return ec.OperationContext.RootResolverMiddleware(ctx,
+					func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return rrm(innerCtx) })
 		case "__type":
 			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
 				return ec._Query___type(ctx, field)
@@ -66112,6 +68509,336 @@ func (ec *executionContext) _UserInfo(ctx context.Context, sel ast.SelectionSet,
 	return out
 }
 
+var userNotificationImplementors = []string{"UserNotification"}
+
+func (ec *executionContext) _UserNotification(ctx context.Context, sel ast.SelectionSet, obj *models.UserNotification) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, userNotificationImplementors)
+
+	out := graphql.NewFieldSet(fields)
+	deferred := make(map[string]*graphql.FieldSet)
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("UserNotification")
+		case "id":
+			out.Values[i] = ec._UserNotification_id(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "activityID":
+			out.Values[i] = ec._UserNotification_activityID(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "userID":
+			out.Values[i] = ec._UserNotification_userID(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "isRead":
+			out.Values[i] = ec._UserNotification_isRead(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "activity":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._UserNotification_activity(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
+				return res
+			}
+
+			if field.Deferrable != nil {
+				dfs, ok := deferred[field.Deferrable.Label]
+				di := 0
+				if ok {
+					dfs.AddField(field)
+					di = len(dfs.Values) - 1
+				} else {
+					dfs = graphql.NewFieldSet([]graphql.CollectedField{field})
+					deferred[field.Deferrable.Label] = dfs
+				}
+				dfs.Concurrently(di, func(ctx context.Context) graphql.Marshaler {
+					return innerFunc(ctx, dfs)
+				})
+
+				// don't run the out.Concurrently() call below
+				out.Values[i] = graphql.Null
+				continue
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+		case "createdBy":
+			out.Values[i] = ec._UserNotification_createdBy(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "createdByUserAccount":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._UserNotification_createdByUserAccount(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
+				return res
+			}
+
+			if field.Deferrable != nil {
+				dfs, ok := deferred[field.Deferrable.Label]
+				di := 0
+				if ok {
+					dfs.AddField(field)
+					di = len(dfs.Values) - 1
+				} else {
+					dfs = graphql.NewFieldSet([]graphql.CollectedField{field})
+					deferred[field.Deferrable.Label] = dfs
+				}
+				dfs.Concurrently(di, func(ctx context.Context) graphql.Marshaler {
+					return innerFunc(ctx, dfs)
+				})
+
+				// don't run the out.Concurrently() call below
+				out.Values[i] = graphql.Null
+				continue
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+		case "createdDts":
+			out.Values[i] = ec._UserNotification_createdDts(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "modifiedBy":
+			out.Values[i] = ec._UserNotification_modifiedBy(ctx, field, obj)
+		case "modifiedByUserAccount":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._UserNotification_modifiedByUserAccount(ctx, field, obj)
+				return res
+			}
+
+			if field.Deferrable != nil {
+				dfs, ok := deferred[field.Deferrable.Label]
+				di := 0
+				if ok {
+					dfs.AddField(field)
+					di = len(dfs.Values) - 1
+				} else {
+					dfs = graphql.NewFieldSet([]graphql.CollectedField{field})
+					deferred[field.Deferrable.Label] = dfs
+				}
+				dfs.Concurrently(di, func(ctx context.Context) graphql.Marshaler {
+					return innerFunc(ctx, dfs)
+				})
+
+				// don't run the out.Concurrently() call below
+				out.Values[i] = graphql.Null
+				continue
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+		case "modifiedDts":
+			out.Values[i] = ec._UserNotification_modifiedDts(ctx, field, obj)
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch(ctx)
+	if out.Invalids > 0 {
+		return graphql.Null
+	}
+
+	atomic.AddInt32(&ec.deferred, int32(len(deferred)))
+
+	for label, dfs := range deferred {
+		ec.processDeferredGroup(graphql.DeferredGroup{
+			Label:    label,
+			Path:     graphql.GetPath(ctx),
+			FieldSet: dfs,
+			Context:  ctx,
+		})
+	}
+
+	return out
+}
+
+var userNotificationPreferencesImplementors = []string{"UserNotificationPreferences"}
+
+func (ec *executionContext) _UserNotificationPreferences(ctx context.Context, sel ast.SelectionSet, obj *models.UserNotificationPreferences) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, userNotificationPreferencesImplementors)
+
+	out := graphql.NewFieldSet(fields)
+	deferred := make(map[string]*graphql.FieldSet)
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("UserNotificationPreferences")
+		case "id":
+			out.Values[i] = ec._UserNotificationPreferences_id(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "userID":
+			out.Values[i] = ec._UserNotificationPreferences_userID(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "dailyDigestEmail":
+			out.Values[i] = ec._UserNotificationPreferences_dailyDigestEmail(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "dailyDigestInApp":
+			out.Values[i] = ec._UserNotificationPreferences_dailyDigestInApp(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "newPlanDiscussionEmail":
+			out.Values[i] = ec._UserNotificationPreferences_newPlanDiscussionEmail(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "newPlanDiscussionInApp":
+			out.Values[i] = ec._UserNotificationPreferences_newPlanDiscussionInApp(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "newDiscussionReplyEmail":
+			out.Values[i] = ec._UserNotificationPreferences_newDiscussionReplyEmail(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "newDiscussionReplyInApp":
+			out.Values[i] = ec._UserNotificationPreferences_newDiscussionReplyInApp(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "createdBy":
+			out.Values[i] = ec._UserNotificationPreferences_createdBy(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "createdByUserAccount":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._UserNotificationPreferences_createdByUserAccount(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
+				return res
+			}
+
+			if field.Deferrable != nil {
+				dfs, ok := deferred[field.Deferrable.Label]
+				di := 0
+				if ok {
+					dfs.AddField(field)
+					di = len(dfs.Values) - 1
+				} else {
+					dfs = graphql.NewFieldSet([]graphql.CollectedField{field})
+					deferred[field.Deferrable.Label] = dfs
+				}
+				dfs.Concurrently(di, func(ctx context.Context) graphql.Marshaler {
+					return innerFunc(ctx, dfs)
+				})
+
+				// don't run the out.Concurrently() call below
+				out.Values[i] = graphql.Null
+				continue
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+		case "createdDts":
+			out.Values[i] = ec._UserNotificationPreferences_createdDts(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "modifiedBy":
+			out.Values[i] = ec._UserNotificationPreferences_modifiedBy(ctx, field, obj)
+		case "modifiedByUserAccount":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._UserNotificationPreferences_modifiedByUserAccount(ctx, field, obj)
+				return res
+			}
+
+			if field.Deferrable != nil {
+				dfs, ok := deferred[field.Deferrable.Label]
+				di := 0
+				if ok {
+					dfs.AddField(field)
+					di = len(dfs.Values) - 1
+				} else {
+					dfs = graphql.NewFieldSet([]graphql.CollectedField{field})
+					deferred[field.Deferrable.Label] = dfs
+				}
+				dfs.Concurrently(di, func(ctx context.Context) graphql.Marshaler {
+					return innerFunc(ctx, dfs)
+				})
+
+				// don't run the out.Concurrently() call below
+				out.Values[i] = graphql.Null
+				continue
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+		case "modifiedDts":
+			out.Values[i] = ec._UserNotificationPreferences_modifiedDts(ctx, field, obj)
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch(ctx)
+	if out.Invalids > 0 {
+		return graphql.Null
+	}
+
+	atomic.AddInt32(&ec.deferred, int32(len(deferred)))
+
+	for label, dfs := range deferred {
+		ec.processDeferredGroup(graphql.DeferredGroup{
+			Label:    label,
+			Path:     graphql.GetPath(ctx),
+			FieldSet: dfs,
+			Context:  ctx,
+		})
+	}
+
+	return out
+}
+
 var __DirectiveImplementors = []string{"__Directive"}
 
 func (ec *executionContext) ___Directive(ctx context.Context, sel ast.SelectionSet, obj *introspection.Directive) graphql.Marshaler {
@@ -66446,6 +69173,20 @@ func (ec *executionContext) unmarshalNActionType2githubᚗcomᚋcmsgovᚋmintᚑ
 
 func (ec *executionContext) marshalNActionType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐActionType(ctx context.Context, sel ast.SelectionSet, v model.ActionType) graphql.Marshaler {
 	return v
+}
+
+func (ec *executionContext) marshalNActivity2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐActivity(ctx context.Context, sel ast.SelectionSet, v models.Activity) graphql.Marshaler {
+	return ec._Activity(ctx, sel, &v)
+}
+
+func (ec *executionContext) marshalNActivity2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐActivity(ctx context.Context, sel ast.SelectionSet, v *models.Activity) graphql.Marshaler {
+	if v == nil {
+		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
+			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
+		}
+		return graphql.Null
+	}
+	return ec._Activity(ctx, sel, v)
 }
 
 func (ec *executionContext) unmarshalNAgencyOrStateHelpType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐAgencyOrStateHelpType(ctx context.Context, v interface{}) (model.AgencyOrStateHelpType, error) {
@@ -71421,6 +74162,60 @@ func (ec *executionContext) marshalNUserInfo2ᚖgithubᚗcomᚋcmsgovᚋmintᚑa
 	return ec._UserInfo(ctx, sel, v)
 }
 
+func (ec *executionContext) marshalNUserNotification2ᚕᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐUserNotificationᚄ(ctx context.Context, sel ast.SelectionSet, v []*models.UserNotification) graphql.Marshaler {
+	ret := make(graphql.Array, len(v))
+	var wg sync.WaitGroup
+	isLen1 := len(v) == 1
+	if !isLen1 {
+		wg.Add(len(v))
+	}
+	for i := range v {
+		i := i
+		fc := &graphql.FieldContext{
+			Index:  &i,
+			Result: &v[i],
+		}
+		ctx := graphql.WithFieldContext(ctx, fc)
+		f := func(i int) {
+			defer func() {
+				if r := recover(); r != nil {
+					ec.Error(ctx, ec.Recover(ctx, r))
+					ret = nil
+				}
+			}()
+			if !isLen1 {
+				defer wg.Done()
+			}
+			ret[i] = ec.marshalNUserNotification2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐUserNotification(ctx, sel, v[i])
+		}
+		if isLen1 {
+			f(i)
+		} else {
+			go f(i)
+		}
+
+	}
+	wg.Wait()
+
+	for _, e := range ret {
+		if e == graphql.Null {
+			return graphql.Null
+		}
+	}
+
+	return ret
+}
+
+func (ec *executionContext) marshalNUserNotification2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐUserNotification(ctx context.Context, sel ast.SelectionSet, v *models.UserNotification) graphql.Marshaler {
+	if v == nil {
+		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
+			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
+		}
+		return graphql.Null
+	}
+	return ec._UserNotification(ctx, sel, v)
+}
+
 func (ec *executionContext) unmarshalNWaiverType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐWaiverType(ctx context.Context, v interface{}) (model.WaiverType, error) {
 	var res model.WaiverType
 	err := res.UnmarshalGQL(v)
@@ -71819,6 +74614,17 @@ func (ec *executionContext) marshalN__TypeKind2string(ctx context.Context, sel a
 			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
 		}
 	}
+	return res
+}
+
+func (ec *executionContext) unmarshalOActivityType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐActivityType(ctx context.Context, v interface{}) (models.ActivityType, error) {
+	tmp, err := graphql.UnmarshalString(v)
+	res := models.ActivityType(tmp)
+	return res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalOActivityType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐActivityType(ctx context.Context, sel ast.SelectionSet, v models.ActivityType) graphql.Marshaler {
+	res := graphql.MarshalString(string(v))
 	return res
 }
 
@@ -75148,6 +77954,13 @@ func (ec *executionContext) marshalOUserAccount2ᚖgithubᚗcomᚋcmsgovᚋmint�
 		return graphql.Null
 	}
 	return ec._UserAccount(ctx, sel, v)
+}
+
+func (ec *executionContext) marshalOUserNotificationPreferences2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐUserNotificationPreferences(ctx context.Context, sel ast.SelectionSet, v *models.UserNotificationPreferences) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	return ec._UserNotificationPreferences(ctx, sel, v)
 }
 
 func (ec *executionContext) unmarshalOWaiverType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐWaiverTypeᚄ(ctx context.Context, v interface{}) ([]model.WaiverType, error) {

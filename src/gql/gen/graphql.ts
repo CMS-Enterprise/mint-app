@@ -39,6 +39,28 @@ export enum ActionType {
   NORMAL = 'NORMAL'
 }
 
+/** Activity represents an event that happened in the application that could result in a notification. */
+export type Activity = {
+  __typename: 'Activity';
+  activityType?: Maybe<ActivityType>;
+  actorID: Scalars['UUID']['output'];
+  createdBy: Scalars['UUID']['output'];
+  createdByUserAccount: UserAccount;
+  createdDts: Scalars['Time']['output'];
+  entityID: Scalars['UUID']['output'];
+  id: Scalars['UUID']['output'];
+  modifiedBy?: Maybe<Scalars['UUID']['output']>;
+  modifiedByUserAccount?: Maybe<UserAccount>;
+  modifiedDts?: Maybe<Scalars['Time']['output']>;
+};
+
+/** ActivityType represents the possible activities that happen in application that might result in a notification */
+export enum ActivityType {
+  DAILY_DIGEST_COMPLETE = 'DAILY_DIGEST_COMPLETE',
+  NEW_DISCUSSION_REPLY = 'NEW_DISCUSSION_REPLY',
+  NEW_PLAN_DISCUSSION = 'NEW_PLAN_DISCUSSION'
+}
+
 export enum AgencyOrStateHelpType {
   NO = 'NO',
   OTHER = 'OTHER',
@@ -2343,6 +2365,8 @@ export type Query = {
   searchOktaUsers: Array<UserInfo>;
   taskListSectionLocks: Array<TaskListSectionLockStatus>;
   userAccount: UserAccount;
+  userNotificationPreferences?: Maybe<UserNotificationPreferences>;
+  userNotifications: Array<UserNotification>;
 };
 
 
@@ -2815,6 +2839,41 @@ export type UserInfo = {
   firstName: Scalars['String']['output'];
   lastName: Scalars['String']['output'];
   username: Scalars['String']['output'];
+};
+
+/** UserNotification represents a notification about a specific Activity */
+export type UserNotification = {
+  __typename: 'UserNotification';
+  activity: Activity;
+  activityID: Scalars['UUID']['output'];
+  createdBy: Scalars['UUID']['output'];
+  createdByUserAccount: UserAccount;
+  createdDts: Scalars['Time']['output'];
+  id: Scalars['UUID']['output'];
+  isRead: Scalars['Boolean']['output'];
+  modifiedBy?: Maybe<Scalars['UUID']['output']>;
+  modifiedByUserAccount?: Maybe<UserAccount>;
+  modifiedDts?: Maybe<Scalars['Time']['output']>;
+  userID: Scalars['UUID']['output'];
+};
+
+/** UserNotificationPreferences represents a users preferences about what type and where to receive a notifiation */
+export type UserNotificationPreferences = {
+  __typename: 'UserNotificationPreferences';
+  createdBy: Scalars['UUID']['output'];
+  createdByUserAccount: UserAccount;
+  createdDts: Scalars['Time']['output'];
+  dailyDigestEmail: Scalars['Boolean']['output'];
+  dailyDigestInApp: Scalars['Boolean']['output'];
+  id: Scalars['UUID']['output'];
+  modifiedBy?: Maybe<Scalars['UUID']['output']>;
+  modifiedByUserAccount?: Maybe<UserAccount>;
+  modifiedDts?: Maybe<Scalars['Time']['output']>;
+  newDiscussionReplyEmail: Scalars['Boolean']['output'];
+  newDiscussionReplyInApp: Scalars['Boolean']['output'];
+  newPlanDiscussionEmail: Scalars['Boolean']['output'];
+  newPlanDiscussionInApp: Scalars['Boolean']['output'];
+  userID: Scalars['UUID']['output'];
 };
 
 export enum WaiverType {

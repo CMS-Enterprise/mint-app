@@ -8,7 +8,8 @@ CREATE TYPE ACTIVITY_TYPE AS ENUM (
 -- TODO: should these be in a new schema?
 CREATE TABLE activity ( --TODO settle on naming. The word event is reserved
     id UUID PRIMARY KEY NOT NULL,
-    actor UUID NOT NULL REFERENCES user_account(id), --foreign key to user table
+    actor_id UUID NOT NULL REFERENCES user_account(id), --foreign key to user table
+    entitity_id UUID NOT NULL REFERENCES user_account(id), --foreign key to user table
     activity_type ACTIVITY_TYPE NOT NULL,
 
     --META DATA
@@ -23,9 +24,10 @@ CREATE TABLE activity ( --TODO settle on naming. The word event is reserved
 
 CREATE TABLE user_notification ( --TODO settle on naming. The word notification is reserved
     id UUID PRIMARY KEY NOT NULL,
-    publication_id UUID NOT NULL REFERENCES activity(id), --foreign key to user table
+    activity_id UUID NOT NULL REFERENCES activity(id), --foreign key to user table
     user_id UUID NOT NULL REFERENCES user_account(id),
     is_read  BOOLEAN NOT NULL DEFAULT FALSE,
+    --TODO: EASI-3294 We might want to add more fields that distinguish events that are different from the parent activity (EG what specific model plans did a user follow at the time of a digest (it could change))
 
 
     --META DATA

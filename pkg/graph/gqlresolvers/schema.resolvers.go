@@ -6,6 +6,7 @@ package gqlresolvers
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/google/uuid"
 
@@ -19,6 +20,11 @@ import (
 	"github.com/cmsgov/mint-app/pkg/models"
 	"github.com/cmsgov/mint-app/pkg/userhelpers"
 )
+
+// EntityID is the resolver for the entityID field.
+func (r *activityResolver) EntityID(ctx context.Context, obj *models.Activity) (uuid.UUID, error) {
+	panic(fmt.Errorf("not implemented: EntityID - entityID"))
+}
 
 // Fields is the resolver for the fields field.
 func (r *auditChangeResolver) Fields(ctx context.Context, obj *models.AuditChange) (map[string]interface{}, error) {
@@ -1081,6 +1087,16 @@ func (r *queryResolver) MostRecentDiscussionRoleSelection(ctx context.Context) (
 	return resolvers.GetMostRecentDiscussionRoleSelection(logger, r.store, principal)
 }
 
+// UserNotificationPreferences is the resolver for the userNotificationPreferences field.
+func (r *queryResolver) UserNotificationPreferences(ctx context.Context) (*models.UserNotificationPreferences, error) {
+	panic(fmt.Errorf("not implemented: UserNotificationPreferences - userNotificationPreferences"))
+}
+
+// UserNotifications is the resolver for the userNotifications field.
+func (r *queryResolver) UserNotifications(ctx context.Context) ([]*models.UserNotification, error) {
+	panic(fmt.Errorf("not implemented: UserNotifications - userNotifications"))
+}
+
 // OnTaskListSectionLocksChanged is the resolver for the onTaskListSectionLocksChanged field.
 func (r *subscriptionResolver) OnTaskListSectionLocksChanged(ctx context.Context, modelPlanID uuid.UUID) (<-chan *model.TaskListSectionLockStatusChanged, error) {
 	principal := appcontext.Principal(ctx)
@@ -1104,6 +1120,15 @@ func (r *tagResolver) Entity(ctx context.Context, obj *models.Tag) (models.Tagge
 func (r *taggedContentResolver) RawContent(ctx context.Context, obj *models.TaggedContent) (string, error) {
 	return obj.RawContent.String(), nil
 }
+
+// Activity is the resolver for the activity field.
+func (r *userNotificationResolver) Activity(ctx context.Context, obj *models.UserNotification) (*models.Activity, error) {
+	//TODO: EASI-3294 fetch this based on the obj.ActivityID. Use a data loader
+	panic(fmt.Errorf("not implemented: Activity - activity"))
+}
+
+// Activity returns generated.ActivityResolver implementation.
+func (r *Resolver) Activity() generated.ActivityResolver { return &activityResolver{r} }
 
 // AuditChange returns generated.AuditChangeResolver implementation.
 func (r *Resolver) AuditChange() generated.AuditChangeResolver { return &auditChangeResolver{r} }
@@ -1200,6 +1225,12 @@ func (r *Resolver) Tag() generated.TagResolver { return &tagResolver{r} }
 // TaggedContent returns generated.TaggedContentResolver implementation.
 func (r *Resolver) TaggedContent() generated.TaggedContentResolver { return &taggedContentResolver{r} }
 
+// UserNotification returns generated.UserNotificationResolver implementation.
+func (r *Resolver) UserNotification() generated.UserNotificationResolver {
+	return &userNotificationResolver{r}
+}
+
+type activityResolver struct{ *Resolver }
 type auditChangeResolver struct{ *Resolver }
 type discussionReplyResolver struct{ *Resolver }
 type existingModelLinkResolver struct{ *Resolver }
@@ -1223,6 +1254,7 @@ type queryResolver struct{ *Resolver }
 type subscriptionResolver struct{ *Resolver }
 type tagResolver struct{ *Resolver }
 type taggedContentResolver struct{ *Resolver }
+type userNotificationResolver struct{ *Resolver }
 
 // !!! WARNING !!!
 // The code below was going to be deleted when updating resolvers. It has been copied here so you have
