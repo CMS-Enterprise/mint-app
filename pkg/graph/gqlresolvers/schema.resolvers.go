@@ -6,7 +6,6 @@ package gqlresolvers
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/google/uuid"
 
@@ -669,21 +668,6 @@ func (r *planGeneralCharacteristicsResolver) ResemblesExistingModelWhich(ctx con
 // ParticipationInModelPreconditionWhich is the resolver for the participationInModelPreconditionWhich field.
 func (r *planGeneralCharacteristicsResolver) ParticipationInModelPreconditionWhich(ctx context.Context, obj *models.PlanGeneralCharacteristics) (*models.ExistingModelLinks, error) {
 	return resolvers.ExistingModelLinksGetByModelPlanIDAndFieldNameLOADER(ctx, obj.ModelPlanID, models.EMLFTGeneralCharacteristicsParticipationExistingModelWhich)
-}
-
-// HasComponentsOrTracks is the resolver for the hasComponentsOrTracks field.
-func (r *planGeneralCharacteristicsResolver) HasComponentsOrTracks(ctx context.Context, obj *models.PlanGeneralCharacteristics) (*bool, error) {
-	panic(fmt.Errorf("not implemented: HasComponentsOrTracks - hasComponentsOrTracks"))
-}
-
-// HasComponentsOrTracksDiffer is the resolver for the hasComponentsOrTracksDiffer field.
-func (r *planGeneralCharacteristicsResolver) HasComponentsOrTracksDiffer(ctx context.Context, obj *models.PlanGeneralCharacteristics) (*string, error) {
-	panic(fmt.Errorf("not implemented: HasComponentsOrTracksDiffer - hasComponentsOrTracksDiffer"))
-}
-
-// HasComponentsOrTracksNote is the resolver for the hasComponentsOrTracksNote field.
-func (r *planGeneralCharacteristicsResolver) HasComponentsOrTracksNote(ctx context.Context, obj *models.PlanGeneralCharacteristics) (*string, error) {
-	panic(fmt.Errorf("not implemented: HasComponentsOrTracksNote - hasComponentsOrTracksNote"))
 }
 
 // AlternativePaymentModelTypes is the resolver for the alternativePaymentModelTypes field.
