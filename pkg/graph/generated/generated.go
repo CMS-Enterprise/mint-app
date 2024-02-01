@@ -8634,10 +8634,10 @@ type PlanPayments {
   paymentReconciliationFrequencyContinually:         String
   paymentReconciliationFrequencyOther:               String
   paymentReconciliationFrequencyNote:                String
-  paymentDemandRecoupmentFrequency:                    [FrequencyType!]!
-  paymentDemandRecoupmentFrequencyContinually:         String
-  paymentDemandRecoupmentFrequencyOther:               String
-  paymentDemandRecoupmentFrequencyNote:                String
+  paymentDemandRecoupmentFrequency:                  [FrequencyType!]!
+  paymentDemandRecoupmentFrequencyContinually:       String
+  paymentDemandRecoupmentFrequencyOther:             String
+  paymentDemandRecoupmentFrequencyNote:              String
   paymentStartDate:                                  Time
   paymentStartDateNote:                              String
 
