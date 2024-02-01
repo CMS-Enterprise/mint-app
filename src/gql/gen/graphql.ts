@@ -2204,7 +2204,7 @@ export type PlanPaymentsChanges = {
   payType?: InputMaybe<Array<PayType>>;
   payTypeNote?: InputMaybe<Scalars['String']['input']>;
   paymentCalculationOwner?: InputMaybe<Scalars['String']['input']>;
-  paymentDemandRecoupmentFrequency: Array<FrequencyType>;
+  paymentDemandRecoupmentFrequency?: InputMaybe<Array<FrequencyType>>;
   paymentDemandRecoupmentFrequencyContinually?: InputMaybe<Scalars['String']['input']>;
   paymentDemandRecoupmentFrequencyNote?: InputMaybe<Scalars['String']['input']>;
   paymentDemandRecoupmentFrequencyOther?: InputMaybe<Scalars['String']['input']>;

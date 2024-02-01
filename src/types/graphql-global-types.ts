@@ -1188,7 +1188,7 @@ export interface PlanPaymentsChanges {
   paymentReconciliationFrequencyContinually?: string | null;
   paymentReconciliationFrequencyOther?: string | null;
   paymentReconciliationFrequencyNote?: string | null;
-  paymentDemandRecoupmentFrequency: FrequencyType[];
+  paymentDemandRecoupmentFrequency?: FrequencyType[] | null;
   paymentDemandRecoupmentFrequencyContinually?: string | null;
   paymentDemandRecoupmentFrequencyOther?: string | null;
   paymentDemandRecoupmentFrequencyNote?: string | null;
