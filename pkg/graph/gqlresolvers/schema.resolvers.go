@@ -6,7 +6,6 @@ package gqlresolvers
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/google/uuid"
 
@@ -906,7 +905,7 @@ func (r *planPaymentsResolver) PaymentReconciliationFrequency(ctx context.Contex
 
 // PaymentDemandRecoupmentFrequency is the resolver for the paymentDemandRecoupmentFrequency field.
 func (r *planPaymentsResolver) PaymentDemandRecoupmentFrequency(ctx context.Context, obj *models.PlanPayments) ([]models.FrequencyType, error) {
-	panic(fmt.Errorf("not implemented: PaymentDemandRecoupmentFrequency - paymentDemandRecoupmentFrequency"))
+	return models.ConvertEnums[models.FrequencyType](obj.PaymentDemandRecoupmentFrequency), nil
 }
 
 // PossibleSolutions is the resolver for the possibleSolutions field.
