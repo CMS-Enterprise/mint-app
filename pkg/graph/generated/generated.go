@@ -8743,6 +8743,10 @@ input PlanPaymentsChanges @goModel(model: "map[string]interface{}") {
   paymentReconciliationFrequencyContinually:         String
   paymentReconciliationFrequencyOther:               String
   paymentReconciliationFrequencyNote:                String
+  paymentDemandRecoupmentFrequency:                    [FrequencyType!]!
+  paymentDemandRecoupmentFrequencyContinually:         String
+  paymentDemandRecoupmentFrequencyOther:               String
+  paymentDemandRecoupmentFrequencyNote:                String
   paymentStartDate:                                  Time
   paymentStartDateNote:                             String
 
