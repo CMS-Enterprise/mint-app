@@ -13,6 +13,7 @@ type PlanGeneralCharacteristics struct {
 	IsNewModel         *bool      `json:"isNewModel" db:"is_new_model" statusWeight:"1"`
 	CurrentModelPlanID *uuid.UUID `json:"currentModelPlanID" db:"current_model_plan_id"`
 	ExistingModelID    *int       `json:"existingModelID" db:"existing_model_id"`
+
 	// Resemble existing model questions
 	ResemblesExistingModel              *YesNoOtherType `json:"resemblesExistingModel" db:"resembles_existing_model" statusWeight:"1"`
 	ResemblesExistingModelWhyHow        *string         `json:"resemblesExistingModelWhyHow" db:"resembles_existing_model_why_how" statusWeight:"1"`
@@ -21,7 +22,7 @@ type PlanGeneralCharacteristics struct {
 	ResemblesExistingModelOtherOption   *string         `json:"resemblesExistingModelOtherOption" db:"resembles_existing_model_other_option" statusWeight:"1"`
 	ResemblesExistingModelHow           *string         `json:"resemblesExistingModelHow" db:"resembles_existing_model_how"`
 	ResemblesExistingModelNote          *string         `json:"resemblesExistingModelNote" db:"resembles_existing_model_note"`
-	HasComponentsOrTracks               *bool           `json:"hasComponentsOrTracks" db:"has_components_or_tracks" statusWeight:"1"`
+
 	// Particpation in model questions
 	ParticipationInModelPrecondition              *YesNoOtherType `json:"participationInModelPrecondition" db:"participation_in_model_precondition"`
 	ParticipationInModelPreconditionWhyHow        *string         `json:"participationInModelPreconditionWhyHow" db:"participation_in_model_precondition_why_how"`
@@ -30,6 +31,7 @@ type PlanGeneralCharacteristics struct {
 	ParticipationInModelPreconditionOtherOption   *string         `json:"participationInModelPreconditionOtherOption" db:"participation_in_model_precondition_other_option"`
 	ParticipationInModelPreconditionNote          *string         `json:"participationInModelPreconditionNote" db:"participation_in_model_precondition_note"`
 
+	HasComponentsOrTracks       *bool   `json:"hasComponentsOrTracks" db:"has_components_or_tracks" statusWeight:"1"`
 	HasComponentsOrTracksDiffer *string `json:"hasComponentsOrTracksDiffer" db:"has_components_or_tracks_differ"`
 	HasComponentsOrTracksNote   *string `json:"hasComponentsOrTracksNote" db:"has_components_or_tracks_note"`
 
