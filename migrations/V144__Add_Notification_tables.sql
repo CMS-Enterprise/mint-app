@@ -5,6 +5,7 @@ CREATE TYPE ACTIVITY_TYPE AS ENUM (
   'NEW_DISCUSSION_REPLY'
 );
 
+-- TODO: should these be in a new schema?
 CREATE TABLE activity ( --TODO settle on naming. The word event is reserved
     id UUID PRIMARY KEY NOT NULL,
     actor UUID NOT NULL REFERENCES user_account(id), --foreign key to user table
@@ -22,7 +23,7 @@ CREATE TABLE activity ( --TODO settle on naming. The word event is reserved
 
 CREATE TABLE user_notification ( --TODO settle on naming. The word notification is reserved
     id UUID PRIMARY KEY NOT NULL,
-    publication_id UUID NOT NULL REFERENCES publication(id), --foreign key to user table
+    publication_id UUID NOT NULL REFERENCES activity(id), --foreign key to user table
     user_id UUID NOT NULL REFERENCES user_account(id),
     is_read  BOOLEAN NOT NULL DEFAULT FALSE,
 
