@@ -100,7 +100,7 @@ const ReadOnlySection = ({
     }
 
     if (!list || listItems.length === 0) {
-      if (copy === otherItem) {
+      if (copy && copy === otherItem) {
         return (
           <p className="margin-y-0 font-body-md line-height-sans-4 text-pre-line">
             {copy} {listOtherItem && <span>- {listOtherItem}</span>}{' '}
