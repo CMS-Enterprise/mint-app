@@ -34,3 +34,24 @@ CREATE TABLE notification ( --TODO settle on naming. The word notification is re
     modified_dts TIMESTAMP WITH TIME ZONE
 
 );
+
+CREATE TABLE user_notification_preferences (
+    id UUID PRIMARY KEY NOT NULL,
+    user_id UUID NOT NULL REFERENCES user_account(id),
+
+    daily_digest_email BOOLEAN NOT NULL DEFAULT TRUE,
+    daily_digest_in_app BOOLEAN NOT NULL DEFAULT TRUE,
+
+    new_plan_discussion_email BOOLEAN NOT NULL DEFAULT TRUE,
+    new_plan_discussion_in_app BOOLEAN NOT NULL DEFAULT TRUE,
+
+    new_discussion_reply_email BOOLEAN NOT NULL DEFAULT TRUE,
+    new_discussion_reply_in_app BOOLEAN NOT NULL DEFAULT TRUE,
+
+    --META DATA
+    created_by UUID NOT NULL REFERENCES user_account(id),
+    created_dts TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    modified_by UUID REFERENCES user_account(id),
+    modified_dts TIMESTAMP WITH TIME ZONE
+
+)
