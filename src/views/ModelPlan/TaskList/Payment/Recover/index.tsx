@@ -57,7 +57,8 @@ const Recover = () => {
   const {
     willRecoverPayments: willRecoverPaymentsConfig,
     anticipateReconcilingPaymentsRetrospectively: anticipateReconcilingPaymentsRetrospectivelyConfig,
-    paymentReconciliationFrequency: paymentReconciliationFrequencyConfig
+    paymentReconciliationFrequency: paymentReconciliationFrequencyConfig,
+    paymentDemandRecoupmentFrequency: paymentDemandRecoupmentFrequencyConfig
   } = usePlanTranslation('payments');
 
   const { modelID } = useParams<{ modelID: string }>();
@@ -375,6 +376,18 @@ const Recover = () => {
                           id="payment-reconciliation-frequency"
                           label={paymentsT(
                             'paymentReconciliationFrequency.label'
+                          )}
+                          disabled={loading}
+                        />
+
+                        <FrequencyForm
+                          field="paymentDemandRecoupmentFrequency"
+                          values={values.paymentDemandRecoupmentFrequency}
+                          config={paymentDemandRecoupmentFrequencyConfig}
+                          nameSpace="payments"
+                          id="payment-demand-recoupment-frequency"
+                          label={paymentsT(
+                            'paymentDemandRecoupmentFrequency.label'
                           )}
                           disabled={loading}
                         />
