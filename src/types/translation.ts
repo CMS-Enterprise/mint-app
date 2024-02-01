@@ -159,6 +159,13 @@ export type TranslationGeneralCharacteristics = {
   resemblesExistingModelOtherSpecify: TranslationFieldProperties;
   resemblesExistingModelOtherSelected: TranslationFieldPropertiesWithOptions<Bool>;
   resemblesExistingModelOtherOption: TranslationFieldProperties;
+  participationInModelPrecondition: TranslationFieldPropertiesWithOptions<YesNoOtherType>;
+  participationInModelPreconditionWhich: TranslationFieldProperties;
+  participationInModelPreconditionOtherSpecify: TranslationFieldProperties;
+  participationInModelPreconditionOtherSelected: TranslationFieldPropertiesWithOptions<Bool>;
+  participationInModelPreconditionOtherOption: TranslationFieldProperties;
+  participationInModelPreconditionWhyHow: TranslationFieldProperties;
+  participationInModelPreconditionNote: TranslationFieldProperties;
   hasComponentsOrTracks: TranslationFieldPropertiesWithOptions<Bool>;
   hasComponentsOrTracksDiffer: TranslationFieldProperties;
   hasComponentsOrTracksNote: TranslationFieldProperties;
