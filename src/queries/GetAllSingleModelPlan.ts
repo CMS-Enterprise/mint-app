@@ -58,11 +58,14 @@ export default gql`
         isNewModel
         existingModel
         resemblesExistingModel
+        resemblesExistingModelWhyHow
         resemblesExistingModelHow
         resemblesExistingModelNote
         resemblesExistingModelWhich {
           names
         }
+        resemblesExistingModelOtherSpecify
+        resemblesExistingModelOtherOption
         hasComponentsOrTracks
         hasComponentsOrTracksDiffer
         hasComponentsOrTracksNote

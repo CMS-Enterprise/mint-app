@@ -7,7 +7,8 @@ import {
   GetGeneralCharacteristicsDocument,
   GetGeneralCharacteristicsQuery,
   GetModelPlansBaseDocument,
-  ModelPlanFilter
+  ModelPlanFilter,
+  YesNoOtherType
 } from 'gql/gen/graphql';
 
 import { CharacteristicsContent, separateLinksByType } from './index';
@@ -18,8 +19,12 @@ const generalCharacteristicsMockData: GetGeneralCharacteristicsQuery['modelPlan'
   isNewModel: false,
   existingModelID: null,
   currentModelPlanID: '7467634',
-  resemblesExistingModel: false,
+  resemblesExistingModel: YesNoOtherType.NO,
+  resemblesExistingModelWhyHow: 'We think it is right',
   resemblesExistingModelHow: '',
+  resemblesExistingModelOtherSpecify: '',
+  resemblesExistingModelOtherOption: 'Other model',
+  resemblesExistingModelOtherSelected: true,
   resemblesExistingModelNote: '',
   hasComponentsOrTracks: true,
   hasComponentsOrTracksDiffer: 'Differ text',
