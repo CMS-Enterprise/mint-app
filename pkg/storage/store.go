@@ -32,8 +32,16 @@ type DBConfig struct {
 }
 
 // PrepareNamed implements the INamedPreparer interface
+// Implementing the  sqlutils.NamedPreparer interface allows us to use a sqlx.Tx or a storage.Store as a parameter in our DB calls
+// (the former for when we want to implement transactions, the latter for when we don't)
 func (s *Store) PrepareNamed(query string) (*sqlx.NamedStmt, error) {
 	return s.db.PrepareNamed(query)
+}
+
+// Beginx implements the TransactionPreparer interface
+// Implementing the sqlutils.TransactionPreparer interfaces allows us to use a sqlx.DB or a storage.Store to create a transaction
+func (s *Store) Beginx() (*sqlx.Tx, error) {
+	return s.db.Beginx()
 }
 
 // NewStore creates a new Store struct

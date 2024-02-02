@@ -6,12 +6,13 @@ import (
 	"github.com/jmoiron/sqlx"
 
 	"github.com/cmsgov/mint-app/pkg/models"
+	"github.com/cmsgov/mint-app/pkg/sqlutils"
 )
 
 func (suite *StoreTestSuite) TestWithTransaction() {
 
 	suite.Run("No errors will commit a transaction", func() {
-		plan, err := WithTransaction[models.ModelPlan](suite.store, func(tx *sqlx.Tx) (*models.ModelPlan, error) {
+		plan, err := sqlutils.WithTransaction[models.ModelPlan](suite.store, func(tx *sqlx.Tx) (*models.ModelPlan, error) {
 			modelName := "testing transactions"
 			plan := models.NewModelPlan(suite.principal.Account().ID, modelName)
 			createdPlan, err := suite.store.ModelPlanCreate(tx, suite.logger, plan)
@@ -30,7 +31,7 @@ func (suite *StoreTestSuite) TestWithTransaction() {
 	})
 
 	suite.Run("Errors will rollback a transaction", func() {
-		plan, err := WithTransaction[models.ModelPlan](suite.store, func(tx *sqlx.Tx) (*models.ModelPlan, error) {
+		plan, err := sqlutils.WithTransaction[models.ModelPlan](suite.store, func(tx *sqlx.Tx) (*models.ModelPlan, error) {
 			modelName := "testing transactions rollback"
 			plan := models.NewModelPlan(suite.principal.Account().ID, modelName)
 			createdPlan, err := suite.store.ModelPlanCreate(tx, suite.logger, plan)
@@ -47,7 +48,7 @@ func (suite *StoreTestSuite) TestWithTransaction() {
 	suite.Run("With Transaction can also perform discrete db actions not directly part of the transaction", func() {
 		modelName := "testing discrete actions don't rollback"
 		var planGlobal *models.ModelPlan
-		plan, err := WithTransaction[models.ModelPlan](suite.store, func(tx *sqlx.Tx) (*models.ModelPlan, error) {
+		plan, err := sqlutils.WithTransaction[models.ModelPlan](suite.store, func(tx *sqlx.Tx) (*models.ModelPlan, error) {
 
 			plan := models.NewModelPlan(suite.principal.Account().ID, modelName)
 			createdPlan, err := suite.store.ModelPlanCreate(suite.store, suite.logger, plan) //Call the method on the store itself, so it is automatically created
