@@ -90,7 +90,7 @@ INSERT INTO plan_ops_eval_and_learning(
     data_collection_frequency,
     data_collection_frequency_continually,
     data_collection_frequency_other,
-    data_collection_frequency_note,    
+    data_collection_frequency_note,
     quality_reporting_starts,
     quality_reporting_starts_other,
     quality_reporting_starts_note,
