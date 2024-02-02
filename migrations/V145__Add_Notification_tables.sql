@@ -9,7 +9,7 @@ CREATE TYPE ACTIVITY_TYPE AS ENUM (
 CREATE TABLE activity ( --TODO settle on naming. The word event is reserved
     id UUID PRIMARY KEY NOT NULL,
     actor_id UUID NOT NULL REFERENCES user_account(id), --foreign key to user table
-    entitity_id UUID NOT NULL REFERENCES user_account(id), --foreign key to user table
+    entitity_id UUID NOT NULL,
     activity_type ACTIVITY_TYPE NOT NULL,
 
     --META DATA

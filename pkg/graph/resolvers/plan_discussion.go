@@ -67,10 +67,14 @@ func CreatePlanDiscussion(
 		}
 		discussion.Content.Tags = tags
 		discussion.Content.Mentions = planDiscussion.Content.Mentions // TODO, do this or send the other metions
-		err = tx.Commit()
-		if err != nil {
-			return nil, err
+
+		// TODO: EASI-3294 Add an activity
+		discussionActivity := models.NewActivity(principal.Account().ID, discussion.ID, models.ActivityNewPlanDiscussion)
+		_, activityErr := store.ActivityCreate(tx, discussionActivity)
+		if activityErr != nil {
+			return nil, activityErr
 		}
+
 		commonName := principal.Account().CommonName
 		modelPlan, err := ModelPlanGetByIDLOADER(ctx, input.ModelPlanID)
 		if err != nil {
@@ -78,12 +82,6 @@ func CreatePlanDiscussion(
 		}
 
 		userRole := discussion.UserRole.Humanize(models.ValueOrEmpty(discussion.UserRoleDescription))
-		// TODO: EASI-3294 Add an activity
-		discussionActivity := models.NewActivity(principal.Account().ID, discussion.ID, models.ActivityNewPlanDiscussion)
-		_, activityErr := store.ActivityCreate(tx, discussionActivity)
-		if activityErr != nil {
-			return nil, activityErr
-		}
 
 		// Send email to MINT Dev Team
 		go func() {
