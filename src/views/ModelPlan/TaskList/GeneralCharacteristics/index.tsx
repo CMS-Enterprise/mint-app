@@ -31,10 +31,6 @@ import {
   useUpdatePlanGeneralCharacteristicsMutation,
   YesNoOtherType
 } from 'gql/gen/graphql';
-import {
-  GetGeneralCharacteristics_modelPlan_generalCharacteristics_participationInModelPreconditionWhich as PreconditionLinksType,
-  GetGeneralCharacteristics_modelPlan_generalCharacteristics_resemblesExistingModelWhich as ResembleLinksType
-} from 'gql/gen/types/GetGeneralCharacteristics';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
@@ -83,7 +79,7 @@ export const CharacteristicsContent = () => {
   const {
     isNewModel: isNewModelConfig,
     resemblesExistingModel: resemblesExistingModelConfig,
-    participationInModelPreconditionWhich: participationInModelPreconditionWhichConfig,
+    participationInModelPrecondition: participationInModelPreconditionConfig,
     hasComponentsOrTracks: hasComponentsOrTracksConfig
   } = usePlanTranslation('generalCharacteristics');
 
@@ -295,7 +291,14 @@ export const CharacteristicsContent = () => {
           modelPlanID: modelID,
           fieldName:
             ExisitingModelLinkFieldType.GEN_CHAR_RESEMBLES_EXISTING_MODEL_WHICH,
-          ...resemblesExistingModelLinksToUpdate,
+          ...resemblesExistingModelLinksToUpdate
+        }
+      }),
+      updateExistingLinks({
+        variables: {
+          modelPlanID: modelID,
+          fieldName:
+            ExisitingModelLinkFieldType.GEN_CHAR_PARTICIPATION_EXISTING_MODEL_WHICH,
           ...participationInModelPreconditionLinksToUpdate
         }
       })
@@ -711,6 +714,188 @@ export const CharacteristicsContent = () => {
                     <AddNote
                       id="plan-characteristics-resemble-existing-note"
                       field="resemblesExistingModelNote"
+                    />
+                  </FieldGroup>
+
+                  <FieldGroup
+                    scrollElement="participationInModelPrecondition"
+                    error={!!flatErrors.participationInModelPrecondition}
+                    className="margin-y-4 margin-bottom-8"
+                  >
+                    <Label
+                      htmlFor="plan-characteristics-participation-model-precondition"
+                      className="maxw-none"
+                    >
+                      {generalCharacteristicsT(
+                        'participationInModelPrecondition.label'
+                      )}
+                    </Label>
+
+                    <FieldErrorMsg>
+                      {flatErrors.participationInModelPrecondition}
+                    </FieldErrorMsg>
+
+                    {getKeys(
+                      participationInModelPreconditionConfig.options
+                    ).map(key => (
+                      <Fragment key={key}>
+                        <Field
+                          as={Radio}
+                          id={`plan-characteristics-participation-model-precondition-${key}`}
+                          data-testid={`plan-characteristics-participation-model-precondition-${key}`}
+                          name="participationInModelPrecondition"
+                          label={
+                            participationInModelPreconditionConfig.options[key]
+                          }
+                          value={key}
+                          checked={
+                            values.participationInModelPrecondition === key
+                          }
+                        />
+
+                        {/* Conditional question if Other is selected */}
+                        {key === YesNoOtherType.OTHER &&
+                          values.participationInModelPrecondition ===
+                            YesNoOtherType.OTHER && (
+                            <div className="margin-left-4 margin-top-1">
+                              <Label
+                                htmlFor="plan-characteristics-participation-model-precondition-other-specify"
+                                className="text-normal"
+                              >
+                                {generalCharacteristicsT(
+                                  'participationInModelPreconditionOtherSpecify.label'
+                                )}
+                              </Label>
+
+                              <Field
+                                as={TextInput}
+                                id="plan-characteristics-participation-model-precondition-other-specify"
+                                data-testid="plan-characteristics-participation-model-precondition-other-specify"
+                                disabled={
+                                  values.participationInModelPrecondition !==
+                                  YesNoOtherType.OTHER
+                                }
+                                name="participationInModelPreconditionOtherSpecify"
+                              />
+                            </div>
+                          )}
+                      </Fragment>
+                    ))}
+
+                    {/* Conditional question if Yes is selected */}
+                    {values.participationInModelPrecondition ===
+                      YesNoOtherType.YES && (
+                      <>
+                        <FieldGroup
+                          scrollElement="plan-characteristics-participation-model-precondition-which"
+                          error={
+                            !!flatErrors.participationInModelPreconditionWhich
+                          }
+                          className="margin-top-4"
+                        >
+                          <Label
+                            htmlFor="plan-characteristics-participation-model-precondition-which"
+                            className="text-normal maxw-none"
+                            id="label-plan-characteristics-participation-model-precondition-which"
+                          >
+                            {generalCharacteristicsT(
+                              'participationInModelPreconditionWhich.label'
+                            )}
+                          </Label>
+
+                          <p className="text-base margin-y-1">
+                            {generalCharacteristicsT(
+                              'participationInModelPreconditionWhich.sublabel'
+                            )}
+                          </p>
+
+                          <FieldErrorMsg>
+                            {flatErrors.participationInModelPreconditionWhich}
+                          </FieldErrorMsg>
+
+                          <Field
+                            as={MultiSelect}
+                            id="plan-characteristics-participation-model-precondition-which"
+                            ariaLabel="label-plan-characteristics-participation-model-precondition-which"
+                            name="participationInModelPreconditionLinks"
+                            options={modelPlanOptions}
+                            selectedLabel={generalCharacteristicsT(
+                              'participationInModelPreconditionWhich.multiSelectLabel'
+                            )}
+                            onChange={(value: string[]) => {
+                              setFieldValue(
+                                'participationInModelPreconditionLinks',
+                                value
+                              );
+                              setFieldValue(
+                                'participationInModelPreconditionOtherSelected',
+                                value.includes('other')
+                              );
+                            }}
+                            initialValues={
+                              initialValues.participationInModelPreconditionLinks
+                            }
+                          />
+
+                          {values.participationInModelPreconditionLinks.includes(
+                            'other'
+                          ) && (
+                            <div className="margin-top-1">
+                              <Label
+                                htmlFor="plan-characteristics-participation-model-precondition-other-option"
+                                className="text-normal"
+                              >
+                                {generalCharacteristicsT(
+                                  'participationInModelPreconditionOtherOption.label'
+                                )}
+                              </Label>
+
+                              <Field
+                                as={TextInput}
+                                id="plan-characteristics-participation-model-precondition-other-option"
+                                data-testid="plan-characteristics-participation-model-precondition-other-option"
+                                name="participationInModelPreconditionOtherOption"
+                              />
+                            </div>
+                          )}
+                        </FieldGroup>
+
+                        <FieldGroup
+                          scrollElement="participationInModelPreconditionWhyHow"
+                          error={
+                            !!flatErrors.participationInModelPreconditionWhyHow
+                          }
+                          className="margin-top-4"
+                        >
+                          <Label
+                            htmlFor="plan-characteristics-participation-model-precondition-why-how"
+                            className="text-normal"
+                          >
+                            {generalCharacteristicsT(
+                              'participationInModelPreconditionWhyHow.label'
+                            )}
+                          </Label>
+
+                          <FieldErrorMsg>
+                            {flatErrors.participationInModelPreconditionWhyHow}
+                          </FieldErrorMsg>
+
+                          <Field
+                            as={TextAreaField}
+                            className="height-15"
+                            error={
+                              flatErrors.participationInModelPreconditionWhyHow
+                            }
+                            id="plan-characteristics-participation-model-precondition-why-how"
+                            name="participationInModelPreconditionWhyHow"
+                          />
+                        </FieldGroup>
+                      </>
+                    )}
+
+                    <AddNote
+                      id="plan-characteristics-participation-model-precondition-note"
+                      field="participationInModelPreconditionNote"
                     />
                   </FieldGroup>
 
