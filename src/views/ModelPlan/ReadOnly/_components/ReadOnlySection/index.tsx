@@ -11,6 +11,7 @@ import {
 export type ReadOnlySectionProps = {
   copy?: string | null | React.ReactNode;
   heading: string;
+  otherItem?: string | null; // used to designate the translated name of 'Other' option - render a followup question on a specific radio selection inline
   list?: boolean;
   listItems?: (string | number | React.ReactElement)[];
   listOtherItem?: string | null;
@@ -24,6 +25,7 @@ export type ReadOnlySectionProps = {
 const ReadOnlySection = ({
   copy,
   heading,
+  otherItem,
   list,
   listItems = [],
   listOtherItem,
@@ -44,20 +46,24 @@ const ReadOnlySection = ({
   };
 
   // Legacy function to render "Other" option or translation for other not specifed
-  const renderListItemOther = (otherItem: string | null | undefined) => {
-    if (otherItem) {
-      return <li className="font-sans-md line-height-sans-4">{otherItem}</li>;
+  const renderListItemOther = (otherSelection: string | null | undefined) => {
+    if (otherSelection) {
+      return (
+        <li className="font-sans-md line-height-sans-4">{otherSelection}</li>
+      );
     }
     return (
       <li className="font-sans-md line-height-sans-4">
-        <em className="text-base">{miscellaneousT('otherNotSpecified')}</em>
+        <em className="text-base">
+          {miscellaneousT('noAdditionalInformation')}
+        </em>
       </li>
     );
   };
 
   // Can render a single "Other" option or multiple additional information options
   // as well as default text for both if not specified
-  const renderListItemOthers = (index: number, isOther: boolean) => {
+  const renderListItemOthers = (index: number) => {
     if (listOtherItems) {
       if (listOtherItems[index] === undefined) {
         return null;
@@ -72,9 +78,7 @@ const ReadOnlySection = ({
       return (
         <li className="font-sans-md line-height-sans-4 ">
           <em className="text-base">
-            {isOther
-              ? miscellaneousT('otherNotSpecified')
-              : miscellaneousT('noAdditionalInformation')}
+            {miscellaneousT('noAdditionalInformation')}
           </em>
         </li>
       );
@@ -86,17 +90,40 @@ const ReadOnlySection = ({
     if (isElement(copy)) {
       return (
         <div className="margin-y-0 font-body-md line-height-sans-4 text-pre-line">
-          {copy || <em className="text-base">{miscellaneousT('na')}</em>}
+          {copy || (
+            <em className="text-base">
+              {miscellaneousT('noAdditionalInformation')}
+            </em>
+          )}
         </div>
       );
     }
+
     if (!list || listItems.length === 0) {
+      if (copy && copy === otherItem) {
+        return (
+          <p className="margin-y-0 font-body-md line-height-sans-4 text-pre-line">
+            {copy} {listOtherItem && <span>- {listOtherItem}</span>}{' '}
+            {!listOtherItem && (
+              <i className="text-base">
+                - {miscellaneousT('noAdditionalInformation')}
+              </i>
+            )}
+          </p>
+        );
+      }
+
       return (
         <p className="margin-y-0 font-body-md line-height-sans-4 text-pre-line">
-          {copy || <em className="text-base">{miscellaneousT('na')}</em>}
+          {copy || (
+            <em className="text-base">
+              {miscellaneousT('noAdditionalInformation')}
+            </em>
+          )}
         </p>
       );
     }
+
     return (
       <ul
         className={`margin-y-0 padding-left-${
@@ -126,8 +153,7 @@ const ReadOnlySection = ({
             {(item === 'Other' || listOtherItems) && (
               <ul data-testid="other-entry">
                 {!listOtherItems && renderListItemOther(listOtherItem)}
-                {listOtherItems &&
-                  renderListItemOthers(index, item === 'Other')}
+                {listOtherItems && renderListItemOthers(index)}
               </ul>
             )}
           </React.Fragment>
