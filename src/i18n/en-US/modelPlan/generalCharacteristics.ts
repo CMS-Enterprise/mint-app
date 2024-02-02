@@ -34,19 +34,18 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
       false: 'No'
     }
   },
-  // This value doesn't really live in generalCharacteristics, but has
-  // it's own query to pull in linked model plans
-  existingModelLinks: {
-    gqlField: 'existingModelLinks',
-    goField: 'ExistingModelLinks',
-    dbField: 'existing_model_links',
+  resemblesExistingModelWhich: {
+    gqlField: 'resemblesExistingModelWhich',
+    goField: 'ResemblesExistingModelWhich',
+    dbField: 'resembles_existing_model_which',
     label:
       'Which existing models does your proposed track/model most closely resemble?',
     sublabel: 'Start typing the name of the model',
     multiSelectLabel: 'Selected models',
     dataType: 'string',
     formType: 'multiSelect',
-    isArray: true
+    isArray: true,
+    isModelLinks: true // tells CSV data fetcher to look for names in the names key-value
   },
   resemblesExistingModelHow: {
     gqlField: 'resemblesExistingModelHow',

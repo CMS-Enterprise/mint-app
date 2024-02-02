@@ -92,6 +92,7 @@ export type TranslationFieldProperties = {
     | 'rangeInput';
   filterGroups?: FilterGroup[]; // Used to render questions within Readonly filter group view (Also CSV/PDF export)
   tags?: string[];
+  isModelLinks?: boolean;
 };
 
 // Extended type for questions that have options - boolean, radio, checkbox, etc.
@@ -150,10 +151,10 @@ export type TranslationBasics = {
 export type TranslationGeneralCharacteristics = {
   isNewModel: TranslationFieldPropertiesWithOptions<Bool>;
   existingModel: TranslationFieldProperties;
-  existingModelLinks: TranslationFieldProperties;
   resemblesExistingModel: TranslationFieldPropertiesWithOptions<Bool>;
   resemblesExistingModelHow: TranslationFieldProperties;
   resemblesExistingModelNote: TranslationFieldProperties;
+  resemblesExistingModelWhich: TranslationFieldProperties;
   hasComponentsOrTracks: TranslationFieldPropertiesWithOptions<Bool>;
   hasComponentsOrTracksDiffer: TranslationFieldProperties;
   hasComponentsOrTracksNote: TranslationFieldProperties;

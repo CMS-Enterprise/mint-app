@@ -5,11 +5,6 @@ export default gql(/* GraphQL */ `
     modelPlan(id: $id) {
       id
       modelName
-      existingModelLinks {
-        id
-        existingModelID
-        currentModelPlanID
-      }
       generalCharacteristics {
         id
         isNewModel
@@ -18,6 +13,26 @@ export default gql(/* GraphQL */ `
         resemblesExistingModel
         resemblesExistingModelHow
         resemblesExistingModelNote
+        resemblesExistingModelWhich {
+          links {
+            id
+            existingModelID
+            currentModelPlanID
+            fieldName
+            model {
+              ... on ExistingModel {
+                modelName
+                stage
+                numberOfParticipants
+                keywords
+              }
+              ... on ModelPlan {
+                modelName
+                abbreviation
+              }
+            }
+          }
+        }
         hasComponentsOrTracks
         hasComponentsOrTracksDiffer
         hasComponentsOrTracksNote
