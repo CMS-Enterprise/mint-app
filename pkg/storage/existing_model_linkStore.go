@@ -18,18 +18,48 @@ var existingModelLinkMergeSQL string
 //go:embed SQL/existing_model_link/get_by_id.sql
 var existingModelLinkGetByIDSQL string
 
-//go:embed SQL/existing_model_link/get_by_model_plan_id_LOADER.sql
-var existingModelLinkGetByModelPlanIDLoaderSQL string
+//go:embed SQL/existing_model_link/get_by_model_plan_id_and_field_name_LOADER.sql
+var existingModelLinkGetByModelPlanIDAndFieldNameLoaderSQL string
 
-// ExistingModelLinkGetByModelPlanIDLOADER returns the plan GeneralCharacteristics for a slice of model plan ids
-func (s *Store) ExistingModelLinkGetByModelPlanIDLOADER(
+//go:embed SQL/existing_model_link/get_names_by_model_plan_id_and_field_name_LOADER.sql
+var existingModelLinkGetNamesByModelPlanIDAndFieldNameSQL string
+
+// GetExistingModelLinkNamesByModelPlanIDAndFieldNameLOADER returns the plan GeneralCharacteristics for a slice of model plan ids and field Names
+func (s *Store) GetExistingModelLinkNamesByModelPlanIDAndFieldNameLOADER(
+	logger *zap.Logger,
+	paramTableJSON string,
+) ([]*models.ExistingModelLinks, error) {
+
+	var linkSlice []*models.ExistingModelLinks
+
+	stmt, err := s.db.PrepareNamed(existingModelLinkGetNamesByModelPlanIDAndFieldNameSQL)
+	if err != nil {
+		return nil, err
+	}
+	defer stmt.Close()
+
+	arg := map[string]interface{}{
+		"paramTableJSON": paramTableJSON,
+	}
+
+	err = stmt.Select(&linkSlice, arg) //this returns more than one
+	if err != nil {
+		logger.Error("failed to get names of all model links by modelPlanID and field name", zap.Error(err))
+		return nil, err
+	}
+
+	return linkSlice, nil
+}
+
+// ExistingModelLinkGetByModelPlanIDAndFieldNameLOADER returns the plan GeneralCharacteristics for a slice of model plan ids
+func (s *Store) ExistingModelLinkGetByModelPlanIDAndFieldNameLOADER(
 	logger *zap.Logger,
 	paramTableJSON string,
 ) ([]*models.ExistingModelLink, error) {
 
 	var linkSlice []*models.ExistingModelLink
 
-	stmt, err := s.db.PrepareNamed(existingModelLinkGetByModelPlanIDLoaderSQL)
+	stmt, err := s.db.PrepareNamed(existingModelLinkGetByModelPlanIDAndFieldNameLoaderSQL)
 	if err != nil {
 		return nil, err
 	}
@@ -53,6 +83,7 @@ func (s *Store) ExistingModelLinksUpdate(
 	logger *zap.Logger,
 	userID uuid.UUID,
 	modelPlanID uuid.UUID,
+	fieldName models.ExisitingModelLinkFieldType,
 	existingModelIDs []int,
 	currentModelPlanIDs []uuid.UUID,
 ) ([]*models.ExistingModelLink, error) {
@@ -69,6 +100,7 @@ func (s *Store) ExistingModelLinksUpdate(
 	existingModelIDsArray := convertIntToPQStringArray(existingModelIDs)
 	arg := map[string]interface{}{
 		"model_plan_id":          modelPlanID,
+		"field_name":             fieldName,
 		"current_model_plan_ids": currentModelPlanIDsArray,
 		"existing_model_ids":     existingModelIDsArray,
 		"created_by":             userID,

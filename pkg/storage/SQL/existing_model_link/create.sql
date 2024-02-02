@@ -3,6 +3,7 @@ INSERT INTO existing_model_link(
     model_plan_id,
     existing_model_id,
     current_model_plan_id,
+    field_name,
     created_by,
     modified_by
 )
@@ -11,6 +12,7 @@ VALUES(
     :model_plan_id,
     :existing_model_id,
     :current_model_plan_id,
+    :field_name,
     :created_by,
     :modified_by
 )
@@ -19,6 +21,7 @@ id,
 model_plan_id,
 existing_model_id,
 current_model_plan_id,
+field_name,
 created_by,
 created_dts,
 modified_by,
