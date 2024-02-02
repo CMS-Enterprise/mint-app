@@ -136,11 +136,11 @@ export const CharacteristicsContent = () => {
         })
         // Superficially adding 'other' as an option for existing links - does not persist to the db as an existing model plan however
         .concat({
-          label: 'Other',
+          label: miscellaneousT('other'),
           value: 'other'
         })
     );
-  }, [modelData, existingModelData]);
+  }, [modelData, existingModelData, miscellaneousT]);
 
   const { data, loading, error } = useGetGeneralCharacteristicsQuery({
     variables: {
@@ -179,7 +179,7 @@ export const CharacteristicsContent = () => {
 
   const modelName = data?.modelPlan?.modelName || '';
 
-  // Formats quert data of existing links to feed into multiselect
+  // Formats query data of existing links to feed into multiselect
   // Checks if Other field is selected, if so append Other to the list of existing models
   const formatExistingLinkData = useCallback(
     (
