@@ -390,6 +390,10 @@ export default gql`
         paymentReconciliationFrequencyContinually
         paymentReconciliationFrequencyOther
         paymentReconciliationFrequencyNote
+        paymentDemandRecoupmentFrequency
+        paymentDemandRecoupmentFrequencyContinually
+        paymentDemandRecoupmentFrequencyOther
+        paymentDemandRecoupmentFrequencyNote
         paymentStartDate
         paymentStartDateNote
         readyForReviewByUserAccount {

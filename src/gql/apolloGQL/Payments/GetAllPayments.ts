@@ -72,6 +72,10 @@ export default gql(/* GraphQL */ `
         paymentReconciliationFrequencyContinually
         paymentReconciliationFrequencyOther
         paymentReconciliationFrequencyNote
+        paymentDemandRecoupmentFrequency
+        paymentDemandRecoupmentFrequencyContinually
+        paymentDemandRecoupmentFrequencyOther
+        paymentDemandRecoupmentFrequencyNote
         paymentStartDate
         paymentStartDateNote
         status

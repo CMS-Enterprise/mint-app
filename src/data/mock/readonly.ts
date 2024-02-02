@@ -600,6 +600,10 @@ const paymentsData: PaymentTypes = {
   paymentReconciliationFrequencyContinually: 'Continual Frequency',
   paymentReconciliationFrequencyOther: '',
   paymentReconciliationFrequencyNote: 'Reconciliation note',
+  paymentDemandRecoupmentFrequency: [FrequencyType.CONTINUALLY],
+  paymentDemandRecoupmentFrequencyContinually: 'Continual Frequency',
+  paymentDemandRecoupmentFrequencyOther: '',
+  paymentDemandRecoupmentFrequencyNote: 'Demand and Recoupment note',
   paymentStartDate: '2022-06-03T19:32:24.412662Z',
   paymentStartDateNote: 'Note for payment start date',
   status: TaskStatus.IN_PROGRESS
