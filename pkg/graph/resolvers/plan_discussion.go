@@ -6,8 +6,11 @@ import (
 
 	"go.uber.org/zap"
 
+	"github.com/jmoiron/sqlx"
+
 	"github.com/cmsgov/mint-app/pkg/email"
 	"github.com/cmsgov/mint-app/pkg/shared/oddmail"
+	"github.com/cmsgov/mint-app/pkg/sqlutils"
 	"github.com/cmsgov/mint-app/pkg/storage/loaders"
 	"github.com/cmsgov/mint-app/pkg/userhelpers"
 
@@ -40,89 +43,98 @@ func CreatePlanDiscussion(
 		input.UserRoleDescription,
 	)
 
-	err := BaseStructPreCreate(logger, planDiscussion, principal, store, false)
-	if err != nil {
-		return nil, err
-	}
-
-	err = UpdateTaggedHTMLMentionsAndRawContent(ctx, store, &planDiscussion.Content, getAccountInformation)
-
-	if err != nil {
-		return nil, fmt.Errorf("unable to update tagged html. error : %w", err)
-	}
-
-	discussion, tx, err := store.PlanDiscussionCreate(logger, planDiscussion, nil)
-	if tx != nil {
-		defer tx.Rollback()
-	}
-
-	if err != nil {
-		return nil, err
-	}
-
-	tags, _, err := TagCollectionCreate(logger, store, principal, "content", "plan_discussion", discussion.ID, planDiscussion.Content.Mentions, tx)
-	if err != nil {
-		return discussion, err
-	}
-	discussion.Content.Tags = tags
-	discussion.Content.Mentions = planDiscussion.Content.Mentions // TODO, do this or send the other metions
-	err = tx.Commit()
-	if err != nil {
-		return nil, err
-	}
-	commonName := principal.Account().CommonName
-	modelPlan, err := ModelPlanGetByIDLOADER(ctx, input.ModelPlanID)
-	if err != nil {
-		return discussion, err
-	}
-
-	userRole := discussion.UserRole.Humanize(models.ValueOrEmpty(discussion.UserRoleDescription))
-
-	// Send email to MINT Dev Team
-	go func() {
-		sendEmailErr := sendPlanDiscussionCreatedEmail(
-			ctx,
-			logger,
-			emailService,
-			emailTemplateService,
-			addressBook,
-			addressBook.MINTTeamEmail,
-			discussion,
-			modelPlan,
-			commonName,
-			userRole,
-		)
-
-		if sendEmailErr != nil {
-			logger.Error("error sending plan discussion created email to MINT Team",
-				zap.String("discussionID", discussion.ID.String()),
-				zap.Error(sendEmailErr))
-		}
-	}()
-
-	// send an email for each tag, which is unique compared to the mention
-	go func() {
-		err = sendPlanDiscussionTagEmails(
-			ctx,
-			store,
-			logger,
-			emailService,
-			emailTemplateService,
-			addressBook,
-			discussion.Content,
-			discussion.ID,
-			modelPlan,
-			commonName,
-			userRole,
-		)
+	// TODO: EASI-3294 this should be using all transactions, for POC, I have not updated all related methods, but they should be
+	newDiscussion, err := sqlutils.WithTransaction[models.PlanDiscussion](store, func(tx *sqlx.Tx) (*models.PlanDiscussion, error) {
+		err := BaseStructPreCreate(logger, planDiscussion, principal, store, false)
 		if err != nil {
-			logger.Error("error sending tagged in plan discussion emails to tagged users and teams",
-				zap.String("discussionID", discussion.ID.String()),
-				zap.Error(err))
+			return nil, err
 		}
-	}()
 
-	return discussion, nil
+		err = UpdateTaggedHTMLMentionsAndRawContent(ctx, store, &planDiscussion.Content, getAccountInformation)
+
+		if err != nil {
+			return nil, fmt.Errorf("unable to update tagged html. error : %w", err)
+		}
+
+		discussion, err := store.PlanDiscussionCreate(logger, planDiscussion, tx)
+		if err != nil {
+			return nil, err
+		}
+
+		tags, err := TagCollectionCreate(logger, store, principal, "content", "plan_discussion", discussion.ID, planDiscussion.Content.Mentions, tx)
+		if err != nil {
+			return discussion, err
+		}
+		discussion.Content.Tags = tags
+		discussion.Content.Mentions = planDiscussion.Content.Mentions // TODO, do this or send the other metions
+		err = tx.Commit()
+		if err != nil {
+			return nil, err
+		}
+		commonName := principal.Account().CommonName
+		modelPlan, err := ModelPlanGetByIDLOADER(ctx, input.ModelPlanID)
+		if err != nil {
+			return discussion, err
+		}
+
+		userRole := discussion.UserRole.Humanize(models.ValueOrEmpty(discussion.UserRoleDescription))
+		// TODO: EASI-3294 Add an activity
+		discussionActivity := models.NewActivity(principal.Account().ID, discussion.ID, models.ActivityNewPlanDiscussion)
+		_, activityErr := store.ActivityCreate(tx, discussionActivity)
+		if activityErr != nil {
+			return nil, activityErr
+		}
+
+		// Send email to MINT Dev Team
+		go func() {
+			sendEmailErr := sendPlanDiscussionCreatedEmail(
+				ctx,
+				logger,
+				emailService,
+				emailTemplateService,
+				addressBook,
+				addressBook.MINTTeamEmail,
+				discussion,
+				modelPlan,
+				commonName,
+				userRole,
+			)
+
+			if sendEmailErr != nil {
+				logger.Error("error sending plan discussion created email to MINT Team",
+					zap.String("discussionID", discussion.ID.String()),
+					zap.Error(sendEmailErr))
+			}
+		}()
+
+		// send an email for each tag, which is unique compared to the mention
+		go func() {
+			err = sendPlanDiscussionTagEmails(
+				ctx,
+				store,
+				logger,
+				emailService,
+				emailTemplateService,
+				addressBook,
+				discussion.Content,
+				discussion.ID,
+				modelPlan,
+				commonName,
+				userRole,
+			)
+			if err != nil {
+				logger.Error("error sending tagged in plan discussion emails to tagged users and teams",
+					zap.String("discussionID", discussion.ID.String()),
+					zap.Error(err))
+			}
+		}()
+
+		return discussion, nil
+	})
+	if err != nil {
+		return nil, err
+	}
+	return newDiscussion, err
 }
 
 func sendPlanDiscussionTagEmails(
@@ -417,7 +429,7 @@ func CreateDiscussionReply(
 	if err != nil {
 		return reply, err
 	}
-	tags, _, err := TagCollectionCreate(logger, store, principal, "content", "discussion_reply", reply.ID, discussionReply.Content.Mentions, tx)
+	tags, err := TagCollectionCreate(logger, store, principal, "content", "discussion_reply", reply.ID, discussionReply.Content.Mentions, tx)
 	if err != nil {
 		return reply, err
 	}

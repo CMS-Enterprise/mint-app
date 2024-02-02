@@ -23,9 +23,11 @@ type Activity struct {
 }
 
 // NewActivity returns a New Activity
-func NewActivity(actorID uuid.UUID, entitityID uuid.UUID) *Activity {
+func NewActivity(actorID uuid.UUID, entitityID uuid.UUID, activityType ActivityType) *Activity {
 	return &Activity{
-		baseStruct: NewBaseStruct(actorID), //TODO: EASI-3294 do we want to consider the actor is always the creator the activity?
-		EntitityID: entitityID,
+		baseStruct:   NewBaseStruct(actorID), //TODO: EASI-3294 do we want to consider the actor is always the creator the activity?
+		ActorID:      actorID,
+		EntitityID:   entitityID,
+		ActivityType: activityType,
 	}
 }

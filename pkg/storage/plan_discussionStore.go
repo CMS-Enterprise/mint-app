@@ -107,17 +107,14 @@ func (s *Store) PlanDiscussionGetByModelPlanIDLOADER(
 func (s *Store) PlanDiscussionCreate(
 	logger *zap.Logger,
 	discussion *models.PlanDiscussion,
-	tx *sqlx.Tx,
-) (*models.PlanDiscussion, *sqlx.Tx, error) {
-	if tx == nil {
-		tx = s.db.MustBegin()
-	}
+	np NamedPreparer,
+) (*models.PlanDiscussion, error) {
 
 	discussion.ID = utilityUUID.ValueOrNewUUID(discussion.ID)
 
-	stmt, err := tx.PrepareNamed(planDiscussionCreateSQL)
+	stmt, err := np.PrepareNamed(planDiscussionCreateSQL)
 	if err != nil {
-		return nil, tx, genericmodel.HandleModelCreationError(logger, err, discussion)
+		return nil, genericmodel.HandleModelCreationError(logger, err, discussion)
 	}
 	defer stmt.Close()
 
@@ -127,10 +124,10 @@ func (s *Store) PlanDiscussionCreate(
 
 	err = stmt.Get(&retDiscussion, discussion)
 	if err != nil {
-		return nil, tx, genericmodel.HandleModelCreationError(logger, err, discussion)
+		return nil, genericmodel.HandleModelCreationError(logger, err, discussion)
 	}
 
-	return &retDiscussion, tx, nil
+	return &retDiscussion, nil
 }
 
 // DiscussionReplyCreate creates a discussion reply
