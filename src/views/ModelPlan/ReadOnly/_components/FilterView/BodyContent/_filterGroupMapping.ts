@@ -262,6 +262,8 @@ const FilterGroupMap: Record<typeof filterGroups[number], any> = {
       'willRecoverPaymentsNote',
       'anticipateReconcilingPaymentsRetrospectively',
       'anticipateReconcilingPaymentsRetrospectivelyNote',
+      'paymentDemandRecoupmentFrequency',
+      'paymentDemandRecoupmentFrequencyNote',
       'paymentStartDate',
       'paymentStartDateNote'
     ]

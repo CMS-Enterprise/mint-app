@@ -512,6 +512,10 @@ export type TranslationPayments = {
   paymentReconciliationFrequencyContinually: TranslationFieldProperties;
   paymentReconciliationFrequencyOther: TranslationFieldProperties;
   paymentReconciliationFrequencyNote: TranslationFieldProperties;
+  paymentDemandRecoupmentFrequency: TranslationFieldPropertiesWithOptions<FrequencyType>;
+  paymentDemandRecoupmentFrequencyContinually: TranslationFieldProperties;
+  paymentDemandRecoupmentFrequencyOther: TranslationFieldProperties;
+  paymentDemandRecoupmentFrequencyNote: TranslationFieldProperties;
   paymentStartDate: TranslationFieldProperties;
   paymentStartDateNote: TranslationFieldProperties;
   status: TranslationFieldPropertiesWithOptions<TaskStatus>;

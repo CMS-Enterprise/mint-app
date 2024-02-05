@@ -1134,6 +1134,10 @@ type PlanPayments {
   paymentReconciliationFrequencyContinually:         String
   paymentReconciliationFrequencyOther:               String
   paymentReconciliationFrequencyNote:                String
+  paymentDemandRecoupmentFrequency:                  [FrequencyType!]!
+  paymentDemandRecoupmentFrequencyContinually:       String
+  paymentDemandRecoupmentFrequencyOther:             String
+  paymentDemandRecoupmentFrequencyNote:              String
   paymentStartDate:                                  Time
   paymentStartDateNote:                              String
 
@@ -1239,6 +1243,10 @@ input PlanPaymentsChanges @goModel(model: "map[string]interface{}") {
   paymentReconciliationFrequencyContinually:         String
   paymentReconciliationFrequencyOther:               String
   paymentReconciliationFrequencyNote:                String
+  paymentDemandRecoupmentFrequency:                    [FrequencyType!]
+  paymentDemandRecoupmentFrequencyContinually:         String
+  paymentDemandRecoupmentFrequencyOther:               String
+  paymentDemandRecoupmentFrequencyNote:                String
   paymentStartDate:                                  Time
   paymentStartDateNote:                             String
 
@@ -1348,7 +1356,7 @@ type PlanOpsEvalAndLearning {
     dataCollectionFrequency: [FrequencyType!]!
     dataCollectionFrequencyContinually: String
     dataCollectionFrequencyOther: String
-    dataCollectionFrequencyNote: String    
+    dataCollectionFrequencyNote: String
     qualityReportingStarts: DataStartsType
     qualityReportingStartsOther: String
     qualityReportingStartsNote: String
@@ -1482,7 +1490,7 @@ input PlanOpsEvalAndLearningChanges @goModel(model: "map[string]interface{}") {
     dataCollectionFrequency: [FrequencyType!]
     dataCollectionFrequencyContinually: String
     dataCollectionFrequencyOther: String
-    dataCollectionFrequencyNote: String    
+    dataCollectionFrequencyNote: String
     qualityReportingStarts: DataStartsType
     qualityReportingStartsOther: String
     qualityReportingStartsNote: String
@@ -2022,7 +2030,7 @@ deleteOperationalSolutionSubtask(id: UUID!): Int!
 @hasRole(role: MINT_USER)
 
 """
-This will update linked existing models, and relatede model plans for given model plan and fieldName. 
+This will update linked existing models, and relatede model plans for given model plan and fieldName.
 The fieldName allows it so you can create links for multiple sections of the model plan
 """
 updateExistingModelLinks(modelPlanID: UUID!,fieldName: ExisitingModelLinkFieldType!,  existingModelIDs: [Int!],currentModelPlanIDs: [UUID!]): ExistingModelLinks!

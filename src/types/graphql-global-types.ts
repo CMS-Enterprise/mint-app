@@ -1194,6 +1194,10 @@ export interface PlanPaymentsChanges {
   paymentReconciliationFrequencyContinually?: string | null;
   paymentReconciliationFrequencyOther?: string | null;
   paymentReconciliationFrequencyNote?: string | null;
+  paymentDemandRecoupmentFrequency?: FrequencyType[] | null;
+  paymentDemandRecoupmentFrequencyContinually?: string | null;
+  paymentDemandRecoupmentFrequencyOther?: string | null;
+  paymentDemandRecoupmentFrequencyNote?: string | null;
   paymentStartDate?: Time | null;
   paymentStartDateNote?: string | null;
   status?: TaskStatusInput | null;

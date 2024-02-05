@@ -857,6 +857,10 @@ type ComplexityRoot struct {
 		PayType                                           func(childComplexity int) int
 		PayTypeNote                                       func(childComplexity int) int
 		PaymentCalculationOwner                           func(childComplexity int) int
+		PaymentDemandRecoupmentFrequency                  func(childComplexity int) int
+		PaymentDemandRecoupmentFrequencyContinually       func(childComplexity int) int
+		PaymentDemandRecoupmentFrequencyNote              func(childComplexity int) int
+		PaymentDemandRecoupmentFrequencyOther             func(childComplexity int) int
 		PaymentReconciliationFrequency                    func(childComplexity int) int
 		PaymentReconciliationFrequencyContinually         func(childComplexity int) int
 		PaymentReconciliationFrequencyNote                func(childComplexity int) int
@@ -1246,6 +1250,8 @@ type PlanPaymentsResolver interface {
 	AnticipatedPaymentFrequency(ctx context.Context, obj *models.PlanPayments) ([]models.FrequencyType, error)
 
 	PaymentReconciliationFrequency(ctx context.Context, obj *models.PlanPayments) ([]models.FrequencyType, error)
+
+	PaymentDemandRecoupmentFrequency(ctx context.Context, obj *models.PlanPayments) ([]models.FrequencyType, error)
 }
 type PossibleOperationalNeedResolver interface {
 	PossibleSolutions(ctx context.Context, obj *models.PossibleOperationalNeed) ([]*models.PossibleOperationalSolution, error)
@@ -6377,6 +6383,34 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.PlanPayments.PaymentCalculationOwner(childComplexity), true
 
+	case "PlanPayments.paymentDemandRecoupmentFrequency":
+		if e.complexity.PlanPayments.PaymentDemandRecoupmentFrequency == nil {
+			break
+		}
+
+		return e.complexity.PlanPayments.PaymentDemandRecoupmentFrequency(childComplexity), true
+
+	case "PlanPayments.paymentDemandRecoupmentFrequencyContinually":
+		if e.complexity.PlanPayments.PaymentDemandRecoupmentFrequencyContinually == nil {
+			break
+		}
+
+		return e.complexity.PlanPayments.PaymentDemandRecoupmentFrequencyContinually(childComplexity), true
+
+	case "PlanPayments.paymentDemandRecoupmentFrequencyNote":
+		if e.complexity.PlanPayments.PaymentDemandRecoupmentFrequencyNote == nil {
+			break
+		}
+
+		return e.complexity.PlanPayments.PaymentDemandRecoupmentFrequencyNote(childComplexity), true
+
+	case "PlanPayments.paymentDemandRecoupmentFrequencyOther":
+		if e.complexity.PlanPayments.PaymentDemandRecoupmentFrequencyOther == nil {
+			break
+		}
+
+		return e.complexity.PlanPayments.PaymentDemandRecoupmentFrequencyOther(childComplexity), true
+
 	case "PlanPayments.paymentReconciliationFrequency":
 		if e.complexity.PlanPayments.PaymentReconciliationFrequency == nil {
 			break
@@ -8710,6 +8744,10 @@ type PlanPayments {
   paymentReconciliationFrequencyContinually:         String
   paymentReconciliationFrequencyOther:               String
   paymentReconciliationFrequencyNote:                String
+  paymentDemandRecoupmentFrequency:                  [FrequencyType!]!
+  paymentDemandRecoupmentFrequencyContinually:       String
+  paymentDemandRecoupmentFrequencyOther:             String
+  paymentDemandRecoupmentFrequencyNote:              String
   paymentStartDate:                                  Time
   paymentStartDateNote:                              String
 
@@ -8815,6 +8853,10 @@ input PlanPaymentsChanges @goModel(model: "map[string]interface{}") {
   paymentReconciliationFrequencyContinually:         String
   paymentReconciliationFrequencyOther:               String
   paymentReconciliationFrequencyNote:                String
+  paymentDemandRecoupmentFrequency:                    [FrequencyType!]
+  paymentDemandRecoupmentFrequencyContinually:         String
+  paymentDemandRecoupmentFrequencyOther:               String
+  paymentDemandRecoupmentFrequencyNote:                String
   paymentStartDate:                                  Time
   paymentStartDateNote:                             String
 
@@ -8924,7 +8966,7 @@ type PlanOpsEvalAndLearning {
     dataCollectionFrequency: [FrequencyType!]!
     dataCollectionFrequencyContinually: String
     dataCollectionFrequencyOther: String
-    dataCollectionFrequencyNote: String    
+    dataCollectionFrequencyNote: String
     qualityReportingStarts: DataStartsType
     qualityReportingStartsOther: String
     qualityReportingStartsNote: String
@@ -9058,7 +9100,7 @@ input PlanOpsEvalAndLearningChanges @goModel(model: "map[string]interface{}") {
     dataCollectionFrequency: [FrequencyType!]
     dataCollectionFrequencyContinually: String
     dataCollectionFrequencyOther: String
-    dataCollectionFrequencyNote: String    
+    dataCollectionFrequencyNote: String
     qualityReportingStarts: DataStartsType
     qualityReportingStartsOther: String
     qualityReportingStartsNote: String
@@ -9598,7 +9640,7 @@ deleteOperationalSolutionSubtask(id: UUID!): Int!
 @hasRole(role: MINT_USER)
 
 """
-This will update linked existing models, and relatede model plans for given model plan and fieldName. 
+This will update linked existing models, and relatede model plans for given model plan and fieldName.
 The fieldName allows it so you can create links for multiple sections of the model plan
 """
 updateExistingModelLinks(modelPlanID: UUID!,fieldName: ExisitingModelLinkFieldType!,  existingModelIDs: [Int!],currentModelPlanIDs: [UUID!]): ExistingModelLinks!
@@ -10428,7 +10470,8 @@ enum GeographyRegionType {
   CBSA,
   HRR,
   MSA
-}`, BuiltIn: false},
+}
+`, BuiltIn: false},
 }
 var parsedSchema = gqlparser.MustLoadSchema(sources...)
 
@@ -17392,6 +17435,14 @@ func (ec *executionContext) fieldContext_ModelPlan_payments(ctx context.Context,
 				return ec.fieldContext_PlanPayments_paymentReconciliationFrequencyOther(ctx, field)
 			case "paymentReconciliationFrequencyNote":
 				return ec.fieldContext_PlanPayments_paymentReconciliationFrequencyNote(ctx, field)
+			case "paymentDemandRecoupmentFrequency":
+				return ec.fieldContext_PlanPayments_paymentDemandRecoupmentFrequency(ctx, field)
+			case "paymentDemandRecoupmentFrequencyContinually":
+				return ec.fieldContext_PlanPayments_paymentDemandRecoupmentFrequencyContinually(ctx, field)
+			case "paymentDemandRecoupmentFrequencyOther":
+				return ec.fieldContext_PlanPayments_paymentDemandRecoupmentFrequencyOther(ctx, field)
+			case "paymentDemandRecoupmentFrequencyNote":
+				return ec.fieldContext_PlanPayments_paymentDemandRecoupmentFrequencyNote(ctx, field)
 			case "paymentStartDate":
 				return ec.fieldContext_PlanPayments_paymentStartDate(ctx, field)
 			case "paymentStartDateNote":
@@ -20573,6 +20624,14 @@ func (ec *executionContext) fieldContext_Mutation_updatePlanPayments(ctx context
 				return ec.fieldContext_PlanPayments_paymentReconciliationFrequencyOther(ctx, field)
 			case "paymentReconciliationFrequencyNote":
 				return ec.fieldContext_PlanPayments_paymentReconciliationFrequencyNote(ctx, field)
+			case "paymentDemandRecoupmentFrequency":
+				return ec.fieldContext_PlanPayments_paymentDemandRecoupmentFrequency(ctx, field)
+			case "paymentDemandRecoupmentFrequencyContinually":
+				return ec.fieldContext_PlanPayments_paymentDemandRecoupmentFrequencyContinually(ctx, field)
+			case "paymentDemandRecoupmentFrequencyOther":
+				return ec.fieldContext_PlanPayments_paymentDemandRecoupmentFrequencyOther(ctx, field)
+			case "paymentDemandRecoupmentFrequencyNote":
+				return ec.fieldContext_PlanPayments_paymentDemandRecoupmentFrequencyNote(ctx, field)
 			case "paymentStartDate":
 				return ec.fieldContext_PlanPayments_paymentStartDate(ctx, field)
 			case "paymentStartDateNote":
@@ -47078,6 +47137,173 @@ func (ec *executionContext) fieldContext_PlanPayments_paymentReconciliationFrequ
 	return fc, nil
 }
 
+func (ec *executionContext) _PlanPayments_paymentDemandRecoupmentFrequency(ctx context.Context, field graphql.CollectedField, obj *models.PlanPayments) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanPayments_paymentDemandRecoupmentFrequency(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.PlanPayments().PaymentDemandRecoupmentFrequency(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.([]models.FrequencyType)
+	fc.Result = res
+	return ec.marshalNFrequencyType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐFrequencyTypeᚄ(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanPayments_paymentDemandRecoupmentFrequency(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanPayments",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type FrequencyType does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanPayments_paymentDemandRecoupmentFrequencyContinually(ctx context.Context, field graphql.CollectedField, obj *models.PlanPayments) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanPayments_paymentDemandRecoupmentFrequencyContinually(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.PaymentDemandRecoupmentFrequencyContinually, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanPayments_paymentDemandRecoupmentFrequencyContinually(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanPayments",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanPayments_paymentDemandRecoupmentFrequencyOther(ctx context.Context, field graphql.CollectedField, obj *models.PlanPayments) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanPayments_paymentDemandRecoupmentFrequencyOther(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.PaymentDemandRecoupmentFrequencyOther, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanPayments_paymentDemandRecoupmentFrequencyOther(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanPayments",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanPayments_paymentDemandRecoupmentFrequencyNote(ctx context.Context, field graphql.CollectedField, obj *models.PlanPayments) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanPayments_paymentDemandRecoupmentFrequencyNote(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.PaymentDemandRecoupmentFrequencyNote, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanPayments_paymentDemandRecoupmentFrequencyNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanPayments",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
 func (ec *executionContext) _PlanPayments_paymentStartDate(ctx context.Context, field graphql.CollectedField, obj *models.PlanPayments) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_PlanPayments_paymentStartDate(ctx, field)
 	if err != nil {
@@ -51169,6 +51395,14 @@ func (ec *executionContext) fieldContext_Query_planPayments(ctx context.Context,
 				return ec.fieldContext_PlanPayments_paymentReconciliationFrequencyOther(ctx, field)
 			case "paymentReconciliationFrequencyNote":
 				return ec.fieldContext_PlanPayments_paymentReconciliationFrequencyNote(ctx, field)
+			case "paymentDemandRecoupmentFrequency":
+				return ec.fieldContext_PlanPayments_paymentDemandRecoupmentFrequency(ctx, field)
+			case "paymentDemandRecoupmentFrequencyContinually":
+				return ec.fieldContext_PlanPayments_paymentDemandRecoupmentFrequencyContinually(ctx, field)
+			case "paymentDemandRecoupmentFrequencyOther":
+				return ec.fieldContext_PlanPayments_paymentDemandRecoupmentFrequencyOther(ctx, field)
+			case "paymentDemandRecoupmentFrequencyNote":
+				return ec.fieldContext_PlanPayments_paymentDemandRecoupmentFrequencyNote(ctx, field)
 			case "paymentStartDate":
 				return ec.fieldContext_PlanPayments_paymentStartDate(ctx, field)
 			case "paymentStartDateNote":
@@ -64912,6 +65146,48 @@ func (ec *executionContext) _PlanPayments(ctx context.Context, sel ast.Selection
 			out.Values[i] = ec._PlanPayments_paymentReconciliationFrequencyOther(ctx, field, obj)
 		case "paymentReconciliationFrequencyNote":
 			out.Values[i] = ec._PlanPayments_paymentReconciliationFrequencyNote(ctx, field, obj)
+		case "paymentDemandRecoupmentFrequency":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._PlanPayments_paymentDemandRecoupmentFrequency(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
+				return res
+			}
+
+			if field.Deferrable != nil {
+				dfs, ok := deferred[field.Deferrable.Label]
+				di := 0
+				if ok {
+					dfs.AddField(field)
+					di = len(dfs.Values) - 1
+				} else {
+					dfs = graphql.NewFieldSet([]graphql.CollectedField{field})
+					deferred[field.Deferrable.Label] = dfs
+				}
+				dfs.Concurrently(di, func(ctx context.Context) graphql.Marshaler {
+					return innerFunc(ctx, dfs)
+				})
+
+				// don't run the out.Concurrently() call below
+				out.Values[i] = graphql.Null
+				continue
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+		case "paymentDemandRecoupmentFrequencyContinually":
+			out.Values[i] = ec._PlanPayments_paymentDemandRecoupmentFrequencyContinually(ctx, field, obj)
+		case "paymentDemandRecoupmentFrequencyOther":
+			out.Values[i] = ec._PlanPayments_paymentDemandRecoupmentFrequencyOther(ctx, field, obj)
+		case "paymentDemandRecoupmentFrequencyNote":
+			out.Values[i] = ec._PlanPayments_paymentDemandRecoupmentFrequencyNote(ctx, field, obj)
 		case "paymentStartDate":
 			out.Values[i] = ec._PlanPayments_paymentStartDate(ctx, field, obj)
 		case "paymentStartDateNote":
