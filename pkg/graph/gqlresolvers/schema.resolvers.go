@@ -1094,7 +1094,8 @@ func (r *queryResolver) UserNotificationPreferences(ctx context.Context) (*model
 
 // UserNotifications is the resolver for the userNotifications field.
 func (r *queryResolver) UserNotifications(ctx context.Context) ([]*models.UserNotification, error) {
-	panic(fmt.Errorf("not implemented: UserNotifications - userNotifications"))
+	principal := appcontext.Principal(ctx)
+	return resolvers.UserNotificationCollectionGetByUser(ctx, r.store, principal)
 }
 
 // OnTaskListSectionLocksChanged is the resolver for the onTaskListSectionLocksChanged field.
