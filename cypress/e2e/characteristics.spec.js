@@ -79,19 +79,19 @@ describe('The Model Plan General Characteristics Form', () => {
 
     // Page - /characteristics/key-charactertics
 
-    cy.get('#ops-eval-and-learning-agency-or-state-help-YES_AGENCY_IAA').should(
+    cy.get('#plan-characteristics-agency-or-state-help-YES_AGENCY_IAA').should(
       'not.be.disabled'
     );
 
-    cy.get('#ops-eval-and-learning-agency-or-state-help-YES_AGENCY_IAA')
+    cy.get('#plan-characteristics-agency-or-state-help-YES_AGENCY_IAA')
       .check({ force: true })
       .should('be.checked');
 
-    cy.get('#ops-eval-and-learning-agency-or-state-help-OTHER')
+    cy.get('#plan-characteristics-agency-or-state-help-OTHER')
       .check({ force: true })
       .should('be.checked');
 
-    cy.get('#ops-eval-and-learning-agency-or-state-help-other')
+    cy.get('#plan-characteristics-agency-or-state-help-other')
       .type('Department of Motor Vehicles')
       .should('have.value', 'Department of Motor Vehicles');
 
