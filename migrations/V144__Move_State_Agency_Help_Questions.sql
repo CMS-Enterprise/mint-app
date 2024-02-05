@@ -6,7 +6,7 @@ ALTER TABLE plan_general_characteristics
 
 -- Migrate corresponding column data from plan_ops_eval_and_learning to plan_general_characteristics
 UPDATE plan_general_characteristics
-  SET agency_or_state_help = ARRAY[plan_ops_eval_and_learning.agency_or_state_help],
+  SET agency_or_state_help = plan_ops_eval_and_learning.agency_or_state_help,
       agency_or_state_help_other = plan_ops_eval_and_learning.agency_or_state_help_other,
       agency_or_state_help_note = plan_ops_eval_and_learning.agency_or_state_help_note,
       modified_by = '00000001-0001-0001-0001-000000000001', --System Account
