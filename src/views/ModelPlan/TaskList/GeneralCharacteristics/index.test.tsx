@@ -26,6 +26,12 @@ const generalCharacteristicsMockData: GetGeneralCharacteristicsQuery['modelPlan'
   resemblesExistingModelOtherOption: 'Other model',
   resemblesExistingModelOtherSelected: true,
   resemblesExistingModelNote: '',
+  participationInModelPrecondition: YesNoOtherType.YES,
+  participationInModelPreconditionWhyHow: 'It is a condition',
+  participationInModelPreconditionOtherSpecify: '',
+  participationInModelPreconditionOtherOption: 'Other model',
+  participationInModelPreconditionOtherSelected: true,
+  participationInModelPreconditionNote: 'Precondition note',
   hasComponentsOrTracks: true,
   hasComponentsOrTracksDiffer: 'Differ text',
   hasComponentsOrTracksNote: 'Component note'
