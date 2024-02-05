@@ -885,12 +885,19 @@ export interface PlanGeneralCharacteristicsChanges {
   isNewModel?: boolean | null;
   currentModelPlanID?: UUID | null;
   existingModelID?: number | null;
-  resemblesExistingModel?: boolean | null;
+  resemblesExistingModel?: YesNoOtherType | null;
+  resemblesExistingModelWhyHow?: string | null;
+  resemblesExistingModelOtherSpecify?: string | null;
+  resemblesExistingModelOtherSelected?: boolean | null;
+  resemblesExistingModelOtherOption?: string | null;
   resemblesExistingModelHow?: string | null;
   resemblesExistingModelNote?: string | null;
   hasComponentsOrTracks?: boolean | null;
   hasComponentsOrTracksDiffer?: string | null;
   hasComponentsOrTracksNote?: string | null;
+  agencyOrStateHelp?: AgencyOrStateHelpType[] | null;
+  agencyOrStateHelpOther?: string | null;
+  agencyOrStateHelpNote?: string | null;
   alternativePaymentModelTypes?: AlternativePaymentModelType[] | null;
   alternativePaymentModelNote?: string | null;
   keyCharacteristics?: KeyCharacteristic[] | null;
@@ -944,9 +951,6 @@ export interface PlanGeneralCharacteristicsChanges {
  * https: // gqlgen.com/reference/changesets/
  */
 export interface PlanOpsEvalAndLearningChanges {
-  agencyOrStateHelp?: AgencyOrStateHelpType[] | null;
-  agencyOrStateHelpOther?: string | null;
-  agencyOrStateHelpNote?: string | null;
   stakeholders?: StakeholdersType[] | null;
   stakeholdersOther?: string | null;
   stakeholdersNote?: string | null;
@@ -1184,6 +1188,10 @@ export interface PlanPaymentsChanges {
   paymentReconciliationFrequencyContinually?: string | null;
   paymentReconciliationFrequencyOther?: string | null;
   paymentReconciliationFrequencyNote?: string | null;
+  paymentDemandRecoupmentFrequency?: FrequencyType[] | null;
+  paymentDemandRecoupmentFrequencyContinually?: string | null;
+  paymentDemandRecoupmentFrequencyOther?: string | null;
+  paymentDemandRecoupmentFrequencyNote?: string | null;
   paymentStartDate?: Time | null;
   paymentStartDateNote?: string | null;
   status?: TaskStatusInput | null;

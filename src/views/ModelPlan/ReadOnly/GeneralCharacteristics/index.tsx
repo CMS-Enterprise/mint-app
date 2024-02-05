@@ -6,6 +6,7 @@ import {
 } from 'gql/gen/graphql';
 
 import usePlanTranslation from 'hooks/usePlanTranslation';
+import { YesNoOtherType } from 'types/graphql-global-types';
 import { ModelInfoContext } from 'views/ModelInfoWrapper';
 import { NotFoundPartial } from 'views/NotFound';
 
@@ -46,29 +47,23 @@ const ReadOnlyGeneralCharacteristics = ({
     }
   });
 
-  const mappedExistingModels: (string | number)[] = useMemo(() => {
-    return (
-      data?.modelPlan?.generalCharacteristics?.resemblesExistingModelWhich?.links?.map(
-        link => link.model.modelName!
-      ) || []
-    );
-  }, [
-    data?.modelPlan?.generalCharacteristics?.resemblesExistingModelWhich?.links
-  ]);
-
-  if ((!loading && error) || (!loading && !data?.modelPlan)) {
-    return <NotFoundPartial />;
-  }
-
   const {
     isNewModel,
     existingModel,
     resemblesExistingModel,
+    resemblesExistingModelWhyHow,
     resemblesExistingModelHow,
+    resemblesExistingModelWhich,
     resemblesExistingModelNote,
+    resemblesExistingModelOtherSpecify,
+    resemblesExistingModelOtherSelected,
+    resemblesExistingModelOtherOption,
     hasComponentsOrTracks,
     hasComponentsOrTracksDiffer,
     hasComponentsOrTracksNote,
+    agencyOrStateHelp,
+    agencyOrStateHelpOther,
+    agencyOrStateHelpNote,
     alternativePaymentModelTypes,
     alternativePaymentModelNote,
     keyCharacteristics,
@@ -114,6 +109,21 @@ const ReadOnlyGeneralCharacteristics = ({
     waiversRequiredNote,
     status
   } = data?.modelPlan?.generalCharacteristics || {};
+
+  // Add 'Other' to the resemblesExistingModelWhich list if resemblesExistingModelOtherSelected is true
+  const linkedResemblePlans = useMemo(() => {
+    const resemblesExistingModelWhichCopy = { ...resemblesExistingModelWhich }
+      .names;
+    const selectedPlans = [...(resemblesExistingModelWhichCopy || [])];
+    if (resemblesExistingModelOtherSelected) {
+      selectedPlans?.push('Other');
+    }
+    return selectedPlans;
+  }, [resemblesExistingModelWhich, resemblesExistingModelOtherSelected]);
+
+  if ((!loading && error) || (!loading && !data?.modelPlan)) {
+    return <NotFoundPartial />;
+  }
 
   return (
     <div
@@ -177,32 +187,56 @@ const ReadOnlyGeneralCharacteristics = ({
               `resemblesExistingModel.options.${resemblesExistingModel}`,
               ''
             )}
-          />
-        )}
-
-        {checkGroupMap(
-          isViewingFilteredView,
-          filteredQuestions,
-          'modelResemblance',
-          <ReadOnlySection
-            heading={generalCharacteristicsT(
-              'resemblesExistingModelWhich.label'
+            otherItem={generalCharacteristicsT(
+              `resemblesExistingModel.options.OTHER`,
+              ''
             )}
-            list
-            listItems={mappedExistingModels}
+            listOtherItem={resemblesExistingModelOtherSpecify}
           />
         )}
 
-        {checkGroupMap(
-          isViewingFilteredView,
-          filteredQuestions,
-          'resemblesExistingModelHow',
-          <ReadOnlySection
-            heading={generalCharacteristicsT('resemblesExistingModelHow.label')}
-            copy={resemblesExistingModelHow}
-            notes={resemblesExistingModelNote}
-          />
-        )}
+        {(resemblesExistingModel === YesNoOtherType.YES ||
+          resemblesExistingModel === YesNoOtherType.NO) &&
+          checkGroupMap(
+            isViewingFilteredView,
+            filteredQuestions,
+            'resemblesExistingModelWhyHow',
+            <ReadOnlySection
+              heading={generalCharacteristicsT(
+                'resemblesExistingModelWhyHow.label'
+              )}
+              copy={resemblesExistingModelWhyHow}
+            />
+          )}
+
+        {resemblesExistingModel === YesNoOtherType.YES &&
+          checkGroupMap(
+            isViewingFilteredView,
+            filteredQuestions,
+            'resemblesExistingModelWhich',
+            <ReadOnlySection
+              heading={generalCharacteristicsT(
+                'resemblesExistingModelWhich.label'
+              )}
+              list
+              listItems={linkedResemblePlans}
+              listOtherItem={resemblesExistingModelOtherOption}
+            />
+          )}
+
+        {resemblesExistingModel === YesNoOtherType.YES &&
+          checkGroupMap(
+            isViewingFilteredView,
+            filteredQuestions,
+            'resemblesExistingModelHow',
+            <ReadOnlySection
+              heading={generalCharacteristicsT(
+                'resemblesExistingModelHow.label'
+              )}
+              copy={resemblesExistingModelHow}
+              notes={resemblesExistingModelNote}
+            />
+          )}
 
         {checkGroupMap(
           isViewingFilteredView,
@@ -239,6 +273,21 @@ const ReadOnlyGeneralCharacteristics = ({
             : 'margin-bottom-4 border-bottom-1px border-base-light padding-bottom-2'
         }`}
       >
+        {checkGroupMap(
+          isViewingFilteredView,
+          filteredQuestions,
+          'agencyOrStateHelp',
+          <ReadOnlySection
+            heading={generalCharacteristicsT('agencyOrStateHelp.readonlyLabel')}
+            list
+            listItems={agencyOrStateHelp?.map((type): string =>
+              generalCharacteristicsT(`agencyOrStateHelp.options.${type}`)
+            )}
+            listOtherItem={agencyOrStateHelpOther}
+            notes={agencyOrStateHelpNote}
+          />
+        )}
+
         {checkGroupMap(
           isViewingFilteredView,
           filteredQuestions,

@@ -28,6 +28,10 @@ const mockData: GetRecoverType = {
   paymentReconciliationFrequencyContinually: 'Continual Frequency',
   paymentReconciliationFrequencyOther: '',
   paymentReconciliationFrequencyNote: 'Reconciliation note',
+  paymentDemandRecoupmentFrequency: [FrequencyType.CONTINUALLY],
+  paymentDemandRecoupmentFrequencyContinually: 'Continual Frequency',
+  paymentDemandRecoupmentFrequencyOther: '',
+  paymentDemandRecoupmentFrequencyNote: 'Demand and Recoupment note',
   paymentStartDate: null,
   paymentStartDateNote: 'string',
   readyForReviewByUserAccount: {

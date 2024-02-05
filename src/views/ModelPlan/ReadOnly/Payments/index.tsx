@@ -37,6 +37,7 @@ const ReadOnlyPayments = ({
   const {
     anticipatedPaymentFrequency: anticipatedPaymentFrequencyConfig,
     paymentReconciliationFrequency: paymentReconciliationFrequencyConfig,
+    paymentDemandRecoupmentFrequency: paymentDemandRecoupmentFrequencyConfig,
     fundingSource: fundingSourceConfig,
     fundingSourceR: fundingSourceRConfig
   } = usePlanTranslation('payments');
@@ -112,6 +113,8 @@ const ReadOnlyPayments = ({
     anticipateReconcilingPaymentsRetrospectivelyNote,
     paymentReconciliationFrequency,
     paymentReconciliationFrequencyNote,
+    paymentDemandRecoupmentFrequency,
+    paymentDemandRecoupmentFrequencyNote,
     paymentStartDate,
     paymentStartDateNote,
     status
@@ -712,6 +715,26 @@ const ReadOnlyPayments = ({
               allPaymentData
             )}
             notes={paymentReconciliationFrequencyNote}
+          />
+        )}
+
+        {checkGroupMap(
+          isViewingFilteredView,
+          filteredQuestions,
+          'paymentDemandRecoupmentFrequency',
+          <ReadOnlySection
+            heading={paymentsT('paymentDemandRecoupmentFrequency.label')}
+            list
+            listItems={formatListItems(
+              paymentDemandRecoupmentFrequencyConfig,
+              paymentDemandRecoupmentFrequency
+            )}
+            listOtherItems={formatListOtherItems(
+              paymentDemandRecoupmentFrequencyConfig,
+              paymentDemandRecoupmentFrequency,
+              allPaymentData
+            )}
+            notes={paymentDemandRecoupmentFrequencyNote}
           />
         )}
 

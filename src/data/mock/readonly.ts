@@ -137,12 +137,22 @@ const generalCharacteristicData: GetAllGeneralCharacteristicsTypes = {
   id: '123',
   isNewModel: false,
   existingModel: 'Accountable Care Organizations (ACOs): General Information',
-  resemblesExistingModel: true,
+  resemblesExistingModel: YesNoOtherType.YES,
+  resemblesExistingModelWhyHow: 'We think it is right',
   resemblesExistingModelHow: null,
+  resemblesExistingModelOtherSpecify: '',
+  resemblesExistingModelOtherOption: 'Other model',
+  resemblesExistingModelOtherSelected: true,
   resemblesExistingModelNote: 'THIS IS A NEW NOTE',
   hasComponentsOrTracks: true,
   hasComponentsOrTracksDiffer: 'In every way',
   hasComponentsOrTracksNote: 'Tracks note',
+  agencyOrStateHelp: [
+    AgencyOrStateHelpType.YES_STATE,
+    AgencyOrStateHelpType.OTHER
+  ],
+  agencyOrStateHelpOther: 'Agency other',
+  agencyOrStateHelpNote: 'State note',
   alternativePaymentModelTypes: [
     AlternativePaymentModelType.REGULAR,
     AlternativePaymentModelType.MIPS
@@ -382,12 +392,6 @@ const opsEvalAndLearningData: AllOpsEvalAndLearningTypes = {
   id: '123',
   modelPlanID: modelID,
   status: TaskStatus.IN_PROGRESS,
-  agencyOrStateHelp: [
-    AgencyOrStateHelpType.YES_STATE,
-    AgencyOrStateHelpType.OTHER
-  ],
-  agencyOrStateHelpOther: 'Agency other',
-  agencyOrStateHelpNote: 'State note',
   stakeholders: [
     StakeholdersType.BENEFICIARIES,
     StakeholdersType.PARTICIPANTS,
@@ -596,6 +600,10 @@ const paymentsData: PaymentTypes = {
   paymentReconciliationFrequencyContinually: 'Continual Frequency',
   paymentReconciliationFrequencyOther: '',
   paymentReconciliationFrequencyNote: 'Reconciliation note',
+  paymentDemandRecoupmentFrequency: [FrequencyType.CONTINUALLY],
+  paymentDemandRecoupmentFrequencyContinually: 'Continual Frequency',
+  paymentDemandRecoupmentFrequencyOther: '',
+  paymentDemandRecoupmentFrequencyNote: 'Demand and Recoupment note',
   paymentStartDate: '2022-06-03T19:32:24.412662Z',
   paymentStartDateNote: 'Note for payment start date',
   status: TaskStatus.IN_PROGRESS

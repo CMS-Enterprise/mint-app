@@ -53,6 +53,10 @@ func (suite *ResolverSuite) TestFetchPlanGeneralCharacteristicsByModelPlanID() {
 	// Many of the fields are nil upon creation
 	suite.Nil(gc.IsNewModel)
 	suite.Nil(gc.ResemblesExistingModel)
+	suite.Nil(gc.ResemblesExistingModelWhyHow)
+	suite.Nil(gc.ResemblesExistingModelOtherSpecify)
+	suite.Nil(gc.ResemblesExistingModelOtherSelected)
+	suite.Nil(gc.ResemblesExistingModelOtherOption)
 	suite.Nil(gc.ResemblesExistingModelHow)
 	suite.Nil(gc.ResemblesExistingModelNote)
 	suite.Nil(gc.HasComponentsOrTracks)
@@ -101,6 +105,9 @@ func (suite *ResolverSuite) TestFetchPlanGeneralCharacteristicsByModelPlanID() {
 	suite.Nil(gc.WaiversRequired)
 	suite.Nil(gc.WaiversRequiredTypes)
 	suite.Nil(gc.WaiversRequiredNote)
+	suite.Nil(gc.AgencyOrStateHelp)
+	suite.Nil(gc.AgencyOrStateHelpOther)
+	suite.Nil(gc.AgencyOrStateHelpNote)
 }
 
 func (suite *ResolverSuite) TestUpdatePlanGeneralCharacteristics() {
@@ -117,6 +124,9 @@ func (suite *ResolverSuite) TestUpdatePlanGeneralCharacteristics() {
 		"AlternativePaymentModelNote":     "Has 2 APM types!",
 		"GeographiesStatesAndTerritories": []string{"AL", "AK", "AZ"},
 		"GeographiesRegionTypes":          []string{"CBSA", "HRR"},
+		"agencyOrStateHelp":               []string{"YES_STATE", "YES_AGENCY_IDEAS", "OTHER"},
+		"agencyOrStateHelpOther":          "Some other note",
+		"agencyOrStateHelpNote":           "Some note",
 	}
 
 	updatedGeneralCharacteristics, err := UpdatePlanGeneralCharacteristics(suite.testConfigs.Logger, gc.ID, changes, suite.testConfigs.Principal, suite.testConfigs.Store)
@@ -132,10 +142,17 @@ func (suite *ResolverSuite) TestUpdatePlanGeneralCharacteristics() {
 	suite.EqualValues(models.TaskInProgress, updatedGeneralCharacteristics.Status)
 	suite.EqualValues([]string{"AL", "AK", "AZ"}, updatedGeneralCharacteristics.GeographiesStatesAndTerritories)
 	suite.EqualValues([]string{"CBSA", "HRR"}, updatedGeneralCharacteristics.GeographiesRegionTypes)
+	suite.EqualValues([]string{"YES_STATE", "YES_AGENCY_IDEAS", "OTHER"}, updatedGeneralCharacteristics.AgencyOrStateHelp)
+	suite.EqualValues("Some other note", *updatedGeneralCharacteristics.AgencyOrStateHelpOther)
+	suite.EqualValues("Some note", *updatedGeneralCharacteristics.AgencyOrStateHelpNote)
 
 	// Assert that no other fields got updated
 	suite.Nil(updatedGeneralCharacteristics.IsNewModel)
 	suite.Nil(updatedGeneralCharacteristics.ResemblesExistingModel)
+	suite.Nil(updatedGeneralCharacteristics.ResemblesExistingModelWhyHow)
+	suite.Nil(updatedGeneralCharacteristics.ResemblesExistingModelOtherSpecify)
+	suite.Nil(updatedGeneralCharacteristics.ResemblesExistingModelOtherSelected)
+	suite.Nil(updatedGeneralCharacteristics.ResemblesExistingModelOtherOption)
 	suite.Nil(updatedGeneralCharacteristics.ResemblesExistingModelHow)
 	suite.Nil(updatedGeneralCharacteristics.ResemblesExistingModelNote)
 	suite.Nil(updatedGeneralCharacteristics.KeyCharacteristics)

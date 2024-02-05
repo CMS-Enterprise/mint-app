@@ -15,7 +15,6 @@ import {
 } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
 import {
-  AgencyOrStateHelpType,
   CcmInvolvmentType,
   ContractorSupportType,
   DataForMonitoringType,
@@ -114,7 +113,6 @@ export const OpsEvalAndLearningContent = () => {
   const { t: miscellaneousT } = useTranslation('miscellaneous');
 
   const {
-    agencyOrStateHelp: agencyOrStateHelpConfig,
     stakeholders: stakeholdersConfig,
     helpdeskUse: helpdeskUseConfig,
     contractorSupport: contractorSupportConfig,
@@ -137,9 +135,6 @@ export const OpsEvalAndLearningContent = () => {
     id,
     ccmInvolvment,
     dataNeededForMonitoring,
-    agencyOrStateHelp,
-    agencyOrStateHelpOther,
-    agencyOrStateHelpNote,
     stakeholders,
     stakeholdersOther,
     stakeholdersNote,
@@ -203,9 +198,6 @@ export const OpsEvalAndLearningContent = () => {
     id: id ?? '',
     ccmInvolvment: ccmInvolvment ?? [],
     dataNeededForMonitoring: dataNeededForMonitoring ?? [],
-    agencyOrStateHelp: agencyOrStateHelp ?? [],
-    agencyOrStateHelpOther: agencyOrStateHelpOther ?? '',
-    agencyOrStateHelpNote: agencyOrStateHelpNote ?? '',
     stakeholders: stakeholders ?? [],
     stakeholdersOther: stakeholdersOther ?? '',
     stakeholdersNote: stakeholdersNote ?? '',
@@ -301,66 +293,6 @@ export const OpsEvalAndLearningContent = () => {
                 }}
               >
                 <Fieldset disabled={!!error || loading}>
-                  <FieldGroup
-                    scrollElement="ops-eval-and-learning-agency-or-state-help"
-                    error={!!flatErrors.agencyOrStateHelp}
-                    className="margin-top-4"
-                  >
-                    <Label htmlFor="ops-eval-and-learning-agency-or-state-help">
-                      {opsEvalAndLearningT('agencyOrStateHelp.label')}
-                    </Label>
-
-                    <FieldErrorMsg>
-                      {flatErrors.agencyOrStateHelp}
-                    </FieldErrorMsg>
-
-                    {getKeys(agencyOrStateHelpConfig.options).map(type => {
-                      return (
-                        <Fragment key={type}>
-                          <Field
-                            as={CheckboxField}
-                            id={`ops-eval-and-learning-agency-or-state-help-${type}`}
-                            name="agencyOrStateHelp"
-                            label={agencyOrStateHelpConfig.options[type]}
-                            value={type}
-                            checked={values?.agencyOrStateHelp.includes(type)}
-                          />
-
-                          {type === AgencyOrStateHelpType.OTHER &&
-                            values.agencyOrStateHelp.includes(
-                              AgencyOrStateHelpType.OTHER
-                            ) && (
-                              <div className="margin-left-4">
-                                <Label
-                                  htmlFor="ops-eval-and-learning-agency-or-state-help-other"
-                                  className="text-normal"
-                                >
-                                  {opsEvalAndLearningT(
-                                    'agencyOrStateHelpOther.label'
-                                  )}
-                                </Label>
-
-                                <FieldErrorMsg>
-                                  {flatErrors.agencyOrStateHelpOther}
-                                </FieldErrorMsg>
-
-                                <Field
-                                  as={TextInput}
-                                  id="ops-eval-and-learning-agency-or-state-help-other"
-                                  name="agencyOrStateHelpOther"
-                                />
-                              </div>
-                            )}
-                        </Fragment>
-                      );
-                    })}
-
-                    <AddNote
-                      id="ops-eval-and-learning-agency-or-state-help-note"
-                      field="agencyOrStateHelpNote"
-                    />
-                  </FieldGroup>
-
                   <FieldGroup
                     scrollElement="ops-eval-and-learning-stakeholders"
                     error={!!flatErrors.stakeholders}

@@ -665,6 +665,12 @@ func (r *planGeneralCharacteristicsResolver) ResemblesExistingModelWhich(ctx con
 	return resolvers.ExistingModelLinksGetByModelPlanIDAndFieldNameLOADER(ctx, obj.ModelPlanID, models.EMLFTGeneralCharacteristicsResemblesExistingModelWhich)
 }
 
+// AgencyOrStateHelp is the resolver for the agencyOrStateHelp field.
+func (r *planGeneralCharacteristicsResolver) AgencyOrStateHelp(ctx context.Context, obj *models.PlanGeneralCharacteristics) ([]model.AgencyOrStateHelpType, error) {
+	agencyOrStateHelpTypes := models.ConvertEnums[model.AgencyOrStateHelpType](obj.AgencyOrStateHelp)
+	return agencyOrStateHelpTypes, nil
+}
+
 // AlternativePaymentModelTypes is the resolver for the alternativePaymentModelTypes field.
 func (r *planGeneralCharacteristicsResolver) AlternativePaymentModelTypes(ctx context.Context, obj *models.PlanGeneralCharacteristics) ([]model.AlternativePaymentModelType, error) {
 	apmTypes := models.ConvertEnums[model.AlternativePaymentModelType](obj.AlternativePaymentModelTypes)
@@ -717,12 +723,6 @@ func (r *planGeneralCharacteristicsResolver) AuthorityAllowances(ctx context.Con
 func (r *planGeneralCharacteristicsResolver) WaiversRequiredTypes(ctx context.Context, obj *models.PlanGeneralCharacteristics) ([]model.WaiverType, error) {
 	waiverTypes := models.ConvertEnums[model.WaiverType](obj.WaiversRequiredTypes)
 	return waiverTypes, nil
-}
-
-// AgencyOrStateHelp is the resolver for the agencyOrStateHelp field.
-func (r *planOpsEvalAndLearningResolver) AgencyOrStateHelp(ctx context.Context, obj *models.PlanOpsEvalAndLearning) ([]model.AgencyOrStateHelpType, error) {
-	agencyOrStateHelpTypes := models.ConvertEnums[model.AgencyOrStateHelpType](obj.AgencyOrStateHelp)
-	return agencyOrStateHelpTypes, nil
 }
 
 // Stakeholders is the resolver for the stakeholders field.
@@ -901,6 +901,11 @@ func (r *planPaymentsResolver) AnticipatedPaymentFrequency(ctx context.Context, 
 // PaymentReconciliationFrequency is the resolver for the paymentReconciliationFrequency field.
 func (r *planPaymentsResolver) PaymentReconciliationFrequency(ctx context.Context, obj *models.PlanPayments) ([]models.FrequencyType, error) {
 	return models.ConvertEnums[models.FrequencyType](obj.PaymentReconciliationFrequency), nil
+}
+
+// PaymentDemandRecoupmentFrequency is the resolver for the paymentDemandRecoupmentFrequency field.
+func (r *planPaymentsResolver) PaymentDemandRecoupmentFrequency(ctx context.Context, obj *models.PlanPayments) ([]models.FrequencyType, error) {
+	return models.ConvertEnums[models.FrequencyType](obj.PaymentDemandRecoupmentFrequency), nil
 }
 
 // PossibleSolutions is the resolver for the possibleSolutions field.
@@ -1223,23 +1228,3 @@ type queryResolver struct{ *Resolver }
 type subscriptionResolver struct{ *Resolver }
 type tagResolver struct{ *Resolver }
 type taggedContentResolver struct{ *Resolver }
-
-// !!! WARNING !!!
-// The code below was going to be deleted when updating resolvers. It has been copied here so you have
-// one last chance to move it out of harms way if you want. There are two reasons this happens:
-//   - When renaming or deleting a resolver the old code will be put in here. You can safely delete
-//     it when you're done.
-//   - You have helper methods in this file. Move them out to keep these resolver files clean.
-func (r *existingModelLinkResolver) ExistingModel(ctx context.Context, obj *models.ExistingModelLink) (*models.ExistingModel, error) {
-	if obj.ExistingModelID == nil { //Don't do a DB call if nil
-		return nil, nil
-	}
-
-	return resolvers.ExistingModelGetByIDLOADER(ctx, *obj.ExistingModelID) //TODO, implement loader, or this will be many queries
-}
-func (r *existingModelLinkResolver) CurrentModelPlan(ctx context.Context, obj *models.ExistingModelLink) (*models.ModelPlan, error) {
-	if obj.CurrentModelPlanID == nil { //Don't do a DB call if nil
-		return nil, nil
-	}
-	return resolvers.ModelPlanGetByIDLOADER(ctx, *obj.CurrentModelPlanID) //TODO, implement loader, or this will be many queries
-}
