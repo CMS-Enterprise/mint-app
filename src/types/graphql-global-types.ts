@@ -885,7 +885,11 @@ export interface PlanGeneralCharacteristicsChanges {
   isNewModel?: boolean | null;
   currentModelPlanID?: UUID | null;
   existingModelID?: number | null;
-  resemblesExistingModel?: boolean | null;
+  resemblesExistingModel?: YesNoOtherType | null;
+  resemblesExistingModelWhyHow?: string | null;
+  resemblesExistingModelOtherSpecify?: string | null;
+  resemblesExistingModelOtherSelected?: boolean | null;
+  resemblesExistingModelOtherOption?: string | null;
   resemblesExistingModelHow?: string | null;
   resemblesExistingModelNote?: string | null;
   hasComponentsOrTracks?: boolean | null;
@@ -1184,6 +1188,10 @@ export interface PlanPaymentsChanges {
   paymentReconciliationFrequencyContinually?: string | null;
   paymentReconciliationFrequencyOther?: string | null;
   paymentReconciliationFrequencyNote?: string | null;
+  paymentDemandRecoupmentFrequency?: FrequencyType[] | null;
+  paymentDemandRecoupmentFrequencyContinually?: string | null;
+  paymentDemandRecoupmentFrequencyOther?: string | null;
+  paymentDemandRecoupmentFrequencyNote?: string | null;
   paymentStartDate?: Time | null;
   paymentStartDateNote?: string | null;
   status?: TaskStatusInput | null;

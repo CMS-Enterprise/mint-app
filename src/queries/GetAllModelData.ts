@@ -59,11 +59,14 @@ export default gql`
         isNewModel
         existingModel
         resemblesExistingModel
+        resemblesExistingModelWhyHow
         resemblesExistingModelHow
         resemblesExistingModelNote
         resemblesExistingModelWhich {
           names
         }
+        resemblesExistingModelOtherSpecify
+        resemblesExistingModelOtherOption
         hasComponentsOrTracks
         hasComponentsOrTracksDiffer
         hasComponentsOrTracksNote
@@ -387,6 +390,10 @@ export default gql`
         paymentReconciliationFrequencyContinually
         paymentReconciliationFrequencyOther
         paymentReconciliationFrequencyNote
+        paymentDemandRecoupmentFrequency
+        paymentDemandRecoupmentFrequencyContinually
+        paymentDemandRecoupmentFrequencyOther
+        paymentDemandRecoupmentFrequencyNote
         paymentStartDate
         paymentStartDateNote
         readyForReviewByUserAccount {

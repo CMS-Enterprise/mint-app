@@ -10,15 +10,19 @@ type PlanGeneralCharacteristics struct {
 	baseTaskListSection
 
 	// Page 1
-	IsNewModel                  *bool      `json:"isNewModel" db:"is_new_model" statusWeight:"1"`
-	CurrentModelPlanID          *uuid.UUID `json:"currentModelPlanID" db:"current_model_plan_id"`
-	ExistingModelID             *int       `json:"existingModelID" db:"existing_model_id"`
-	ResemblesExistingModel      *bool      `json:"resemblesExistingModel" db:"resembles_existing_model" statusWeight:"1"`
-	ResemblesExistingModelHow   *string    `json:"resemblesExistingModelHow" db:"resembles_existing_model_how"`
-	ResemblesExistingModelNote  *string    `json:"resemblesExistingModelNote" db:"resembles_existing_model_note"`
-	HasComponentsOrTracks       *bool      `json:"hasComponentsOrTracks" db:"has_components_or_tracks" statusWeight:"1"`
-	HasComponentsOrTracksDiffer *string    `json:"hasComponentsOrTracksDiffer" db:"has_components_or_tracks_differ"`
-	HasComponentsOrTracksNote   *string    `json:"hasComponentsOrTracksNote" db:"has_components_or_tracks_note"`
+	IsNewModel                          *bool           `json:"isNewModel" db:"is_new_model" statusWeight:"1"`
+	CurrentModelPlanID                  *uuid.UUID      `json:"currentModelPlanID" db:"current_model_plan_id"`
+	ExistingModelID                     *int            `json:"existingModelID" db:"existing_model_id"`
+	ResemblesExistingModel              *YesNoOtherType `json:"resemblesExistingModel" db:"resembles_existing_model" statusWeight:"1"`
+	ResemblesExistingModelWhyHow        *string         `json:"resemblesExistingModelWhyHow" db:"resembles_existing_model_why_how" statusWeight:"1"`
+	ResemblesExistingModelOtherSpecify  *string         `json:"resemblesExistingModelOtherSpecify" db:"resembles_existing_model_other_specify" statusWeight:"1"`
+	ResemblesExistingModelOtherSelected *bool           `json:"resemblesExistingModelOtherSelected" db:"resembles_existing_model_other_selected" statusWeight:"1"`
+	ResemblesExistingModelOtherOption   *string         `json:"resemblesExistingModelOtherOption" db:"resembles_existing_model_other_option" statusWeight:"1"`
+	ResemblesExistingModelHow           *string         `json:"resemblesExistingModelHow" db:"resembles_existing_model_how"`
+	ResemblesExistingModelNote          *string         `json:"resemblesExistingModelNote" db:"resembles_existing_model_note"`
+	HasComponentsOrTracks               *bool           `json:"hasComponentsOrTracks" db:"has_components_or_tracks" statusWeight:"1"`
+	HasComponentsOrTracksDiffer         *string         `json:"hasComponentsOrTracksDiffer" db:"has_components_or_tracks_differ"`
+	HasComponentsOrTracksNote           *string         `json:"hasComponentsOrTracksNote" db:"has_components_or_tracks_note"`
 
 	// Page 2
 	AgencyOrStateHelp            pq.StringArray `json:"agencyOrStateHelp" db:"agency_or_state_help"`

@@ -194,6 +194,10 @@ type PlanPayments struct {
 	PaymentReconciliationFrequencyContinually        *string        `json:"paymentReconciliationFrequencyContinually" db:"payment_reconciliation_frequency_continually"`
 	PaymentReconciliationFrequencyOther              *string        `json:"paymentReconciliationFrequencyOther" db:"payment_reconciliation_frequency_other"`
 	PaymentReconciliationFrequencyNote               *string        `json:"paymentReconciliationFrequencyNote" db:"payment_reconciliation_frequency_note"`
+	PaymentDemandRecoupmentFrequency                 pq.StringArray `json:"paymentDemandRecoupmentFrequency" db:"payment_demand_recoupment_frequency" statusWeight:"1"`
+	PaymentDemandRecoupmentFrequencyContinually      *string        `json:"paymentDemandRecoupmentFrequencyContinually" db:"payment_demand_recoupment_frequency_continually"`
+	PaymentDemandRecoupmentFrequencyOther            *string        `json:"paymentDemandRecoupmentFrequencyOther" db:"payment_demand_recoupment_frequency_other"`
+	PaymentDemandRecoupmentFrequencyNote             *string        `json:"paymentDemandRecoupmentFrequencyNote" db:"payment_demand_recoupment_frequency_note"`
 	PaymentStartDate                                 *time.Time     `json:"paymentStartDate" db:"payment_start_date" statusWeight:"1"`
 	PaymentStartDateNote                             *string        `json:"paymentStartDateNote" db:"payment_start_date_note"`
 }

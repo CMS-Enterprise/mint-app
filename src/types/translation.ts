@@ -92,7 +92,7 @@ export type TranslationFieldProperties = {
     | 'rangeInput';
   filterGroups?: FilterGroup[]; // Used to render questions within Readonly filter group view (Also CSV/PDF export)
   tags?: string[];
-  isModelLinks?: boolean;
+  isModelLinks?: boolean; // Used to designate if a field is a ExistingModelLinks type with nested fields - ex: names
 };
 
 // Extended type for questions that have options - boolean, radio, checkbox, etc.
@@ -151,10 +151,14 @@ export type TranslationBasics = {
 export type TranslationGeneralCharacteristics = {
   isNewModel: TranslationFieldPropertiesWithOptions<Bool>;
   existingModel: TranslationFieldProperties;
-  resemblesExistingModel: TranslationFieldPropertiesWithOptions<Bool>;
+  resemblesExistingModel: TranslationFieldPropertiesWithOptions<YesNoOtherType>;
+  resemblesExistingModelWhyHow: TranslationFieldProperties;
   resemblesExistingModelHow: TranslationFieldProperties;
   resemblesExistingModelNote: TranslationFieldProperties;
   resemblesExistingModelWhich: TranslationFieldProperties;
+  resemblesExistingModelOtherSpecify: TranslationFieldProperties;
+  resemblesExistingModelOtherSelected: TranslationFieldPropertiesWithOptions<Bool>;
+  resemblesExistingModelOtherOption: TranslationFieldProperties;
   hasComponentsOrTracks: TranslationFieldPropertiesWithOptions<Bool>;
   hasComponentsOrTracksDiffer: TranslationFieldProperties;
   hasComponentsOrTracksNote: TranslationFieldProperties;
@@ -501,6 +505,10 @@ export type TranslationPayments = {
   paymentReconciliationFrequencyContinually: TranslationFieldProperties;
   paymentReconciliationFrequencyOther: TranslationFieldProperties;
   paymentReconciliationFrequencyNote: TranslationFieldProperties;
+  paymentDemandRecoupmentFrequency: TranslationFieldPropertiesWithOptions<FrequencyType>;
+  paymentDemandRecoupmentFrequencyContinually: TranslationFieldProperties;
+  paymentDemandRecoupmentFrequencyOther: TranslationFieldProperties;
+  paymentDemandRecoupmentFrequencyNote: TranslationFieldProperties;
   paymentStartDate: TranslationFieldProperties;
   paymentStartDateNote: TranslationFieldProperties;
   status: TranslationFieldPropertiesWithOptions<TaskStatus>;

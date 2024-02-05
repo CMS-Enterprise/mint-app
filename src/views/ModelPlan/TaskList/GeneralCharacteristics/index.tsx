@@ -1,4 +1,4 @@
-import React, { useMemo, useRef } from 'react';
+import React, { Fragment, useMemo, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, Route, Switch, useHistory, useParams } from 'react-router-dom';
 import {
@@ -11,7 +11,9 @@ import {
   Grid,
   GridContainer,
   Icon,
-  Label
+  Label,
+  Radio,
+  TextInput
 } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import { Field, Form, Formik, FormikProps } from 'formik';
@@ -25,7 +27,8 @@ import {
   useGetGeneralCharacteristicsQuery,
   useGetModelPlansBaseQuery,
   useUpdateExistingModelLinksMutation,
-  useUpdatePlanGeneralCharacteristicsMutation
+  useUpdatePlanGeneralCharacteristicsMutation,
+  YesNoOtherType
 } from 'gql/gen/graphql';
 
 import AddNote from 'components/AddNote';
@@ -120,12 +123,20 @@ export const CharacteristicsContent = () => {
     const combinedModels = [...modelPlans, ...existingPlans].sort((a, b) =>
       (a.modelName || '') > (b.modelName || '') ? 1 : -1
     );
-    return combinedModels.map(model => {
-      return {
-        label: model!.modelName!,
-        value: model!.id! as string
-      };
-    });
+    return (
+      combinedModels
+        .map(model => {
+          return {
+            label: model!.modelName!,
+            value: model!.id! as string
+          };
+        })
+        // Superficially adding 'other' as an option for existing links - does not persist to the db as an existing model plan however
+        .concat({
+          label: 'Other',
+          value: 'other'
+        })
+    );
   }, [modelData, existingModelData]);
 
   const { data, loading, error } = useGetGeneralCharacteristicsQuery({
@@ -140,9 +151,13 @@ export const CharacteristicsContent = () => {
     currentModelPlanID,
     existingModelID,
     resemblesExistingModel,
+    resemblesExistingModelWhyHow,
     resemblesExistingModelHow,
     resemblesExistingModelNote,
     resemblesExistingModelWhich,
+    resemblesExistingModelOtherSpecify,
+    resemblesExistingModelOtherOption,
+    resemblesExistingModelOtherSelected,
     hasComponentsOrTracks,
     hasComponentsOrTracksDiffer,
     hasComponentsOrTracksNote
@@ -155,25 +170,34 @@ export const CharacteristicsContent = () => {
   const modelName = data?.modelPlan?.modelName || '';
 
   const existingModelLinks: (string | number)[] = useMemo(() => {
-    return (
+    const existingLinks =
       resemblesExistingModelWhich?.links?.map(
         link => (link.existingModelID || link.currentModelPlanID)!
-      ) || []
-    );
-  }, [resemblesExistingModelWhich?.links]);
+      ) || [];
+
+    // Checking if Other was persisted to db, if so add it as an existingModelLinks value
+    if (resemblesExistingModelOtherSelected) {
+      existingLinks.push('other');
+    }
+    return existingLinks;
+  }, [resemblesExistingModelWhich?.links, resemblesExistingModelOtherSelected]);
 
   const [update] = useUpdatePlanGeneralCharacteristicsMutation();
 
   const [updateExistingLinks] = useUpdateExistingModelLinksMutation();
 
+  // Submit handler for existing links as well as regular form updates
   const handleFormSubmit = async (redirect?: 'next' | 'back') => {
     const formValues = formikRef?.current?.values!;
 
+    // Getting the inital values of model links
     const { existingModelLinks: existingLinksInitial, ...initialValues } =
       formikRef?.current?.initialValues || {};
 
+    // Getting the current form values of model links
     const { existingModelLinks: existingLinks, ...values } = formValues || {};
 
+    // Separates the existingLinks by type (string/number) to pass into the appropriate mutation
     const linksToUpdate = separateLinksByType(
       existingLinks || [],
       modelData?.modelPlanCollection || [],
@@ -240,7 +264,13 @@ export const CharacteristicsContent = () => {
     isNewModel: isNewModel ?? null,
     existingModel: existingModel ?? null,
     resemblesExistingModel: resemblesExistingModel ?? null,
+    resemblesExistingModelWhyHow: resemblesExistingModelWhyHow ?? '',
     existingModelLinks: existingModelLinks ?? [],
+    resemblesExistingModelOtherSpecify:
+      resemblesExistingModelOtherSpecify ?? '',
+    resemblesExistingModelOtherOption: resemblesExistingModelOtherOption ?? '',
+    resemblesExistingModelOtherSelected:
+      resemblesExistingModelOtherSelected ?? null,
     resemblesExistingModelHow: resemblesExistingModelHow ?? '',
     resemblesExistingModelNote: resemblesExistingModelNote ?? '',
     hasComponentsOrTracks: hasComponentsOrTracks ?? null,
@@ -432,15 +462,72 @@ export const CharacteristicsContent = () => {
                       {flatErrors.resemblesExistingModel}
                     </FieldErrorMsg>
 
-                    <BooleanRadio
-                      field="resemblesExistingModel"
-                      id="plan-characteristics-resembles-existing-model"
-                      value={values.resemblesExistingModel}
-                      setFieldValue={setFieldValue}
-                      options={resemblesExistingModelConfig.options}
-                    />
+                    {getKeys(resemblesExistingModelConfig.options).map(key => (
+                      <Fragment key={key}>
+                        <Field
+                          as={Radio}
+                          id={`plan-characteristics-resembles-existing-model-${key}`}
+                          data-testid={`plan-characteristics-resembles-existing-model-${key}`}
+                          name="resemblesExistingModel"
+                          label={resemblesExistingModelConfig.options[key]}
+                          value={key}
+                          checked={values.resemblesExistingModel === key}
+                        />
 
-                    {values.resemblesExistingModel && (
+                        {/* Conditional question if Other is selected */}
+                        {key === YesNoOtherType.OTHER &&
+                          values.resemblesExistingModel ===
+                            YesNoOtherType.OTHER && (
+                            <div className="margin-left-4 margin-top-1">
+                              <Label
+                                htmlFor="plan-characteristics-resembles-model-other-specify"
+                                className="text-normal"
+                              >
+                                {generalCharacteristicsT(
+                                  'resemblesExistingModelOtherSpecify.label'
+                                )}
+                              </Label>
+
+                              <Field
+                                as={TextInput}
+                                id="plan-characteristics-resembles-existing-model-other-specify"
+                                data-testid="plan-characteristics-resembles-existing-model-other-specify"
+                                disabled={
+                                  values.resemblesExistingModel !==
+                                  YesNoOtherType.OTHER
+                                }
+                                name="resemblesExistingModelOtherSpecify"
+                              />
+                            </div>
+                          )}
+                      </Fragment>
+                    ))}
+
+                    {/* Conditional question if Yes or No is selected */}
+                    {(values.resemblesExistingModel === YesNoOtherType.YES ||
+                      values.resemblesExistingModel === YesNoOtherType.NO) && (
+                      <div className="margin-top-3">
+                        <Label
+                          htmlFor="plan-characteristics-resembles-model-why-how"
+                          className="text-normal"
+                        >
+                          {generalCharacteristicsT(
+                            'resemblesExistingModelWhyHow.label'
+                          )}
+                        </Label>
+
+                        <Field
+                          as={TextAreaField}
+                          className="height-15"
+                          id="plan-characteristics-resembles-existing-model-why-how"
+                          data-testid="plan-characteristics-resembles-existing-model--why-how"
+                          name="resemblesExistingModelWhyHow"
+                        />
+                      </div>
+                    )}
+
+                    {/* Conditional question if Yes is selected */}
+                    {values.resemblesExistingModel === YesNoOtherType.YES && (
                       <>
                         <FieldGroup
                           scrollElement="plan-characteristics-resembles-which-model"
@@ -476,12 +563,37 @@ export const CharacteristicsContent = () => {
                             selectedLabel={generalCharacteristicsT(
                               'resemblesExistingModelWhich.multiSelectLabel'
                             )}
-                            onChange={(value: string[] | []) => {
+                            onChange={(value: string[]) => {
                               setFieldValue('existingModelLinks', value);
+                              setFieldValue(
+                                'resemblesExistingModelOtherSelected',
+                                value.includes('other')
+                              );
                             }}
                             initialValues={initialValues.existingModelLinks}
                           />
+
+                          {values.existingModelLinks.includes('other') && (
+                            <div className="margin-top-1">
+                              <Label
+                                htmlFor="plan-characteristics-resembles-model-other-option"
+                                className="text-normal"
+                              >
+                                {generalCharacteristicsT(
+                                  'resemblesExistingModelOtherOption.label'
+                                )}
+                              </Label>
+
+                              <Field
+                                as={TextInput}
+                                id="plan-characteristics-resembles-existing-model-other-option"
+                                data-testid="plan-characteristics-resembles-existing-model-other-option"
+                                name="resemblesExistingModelOtherOption"
+                              />
+                            </div>
+                          )}
                         </FieldGroup>
+
                         <FieldGroup
                           scrollElement="resemblesExistingModelHow"
                           error={!!flatErrors.resemblesExistingModelHow}
@@ -508,13 +620,13 @@ export const CharacteristicsContent = () => {
                             name="resemblesExistingModelHow"
                           />
                         </FieldGroup>
-
-                        <AddNote
-                          id="plan-characteristics-resemble-existing-note"
-                          field="resemblesExistingModelNote"
-                        />
                       </>
                     )}
+
+                    <AddNote
+                      id="plan-characteristics-resemble-existing-note"
+                      field="resemblesExistingModelNote"
+                    />
                   </FieldGroup>
 
                   <FieldGroup

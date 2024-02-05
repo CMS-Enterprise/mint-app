@@ -53,6 +53,10 @@ func (suite *ResolverSuite) TestFetchPlanGeneralCharacteristicsByModelPlanID() {
 	// Many of the fields are nil upon creation
 	suite.Nil(gc.IsNewModel)
 	suite.Nil(gc.ResemblesExistingModel)
+	suite.Nil(gc.ResemblesExistingModelWhyHow)
+	suite.Nil(gc.ResemblesExistingModelOtherSpecify)
+	suite.Nil(gc.ResemblesExistingModelOtherSelected)
+	suite.Nil(gc.ResemblesExistingModelOtherOption)
 	suite.Nil(gc.ResemblesExistingModelHow)
 	suite.Nil(gc.ResemblesExistingModelNote)
 	suite.Nil(gc.HasComponentsOrTracks)
@@ -145,6 +149,10 @@ func (suite *ResolverSuite) TestUpdatePlanGeneralCharacteristics() {
 	// Assert that no other fields got updated
 	suite.Nil(updatedGeneralCharacteristics.IsNewModel)
 	suite.Nil(updatedGeneralCharacteristics.ResemblesExistingModel)
+	suite.Nil(updatedGeneralCharacteristics.ResemblesExistingModelWhyHow)
+	suite.Nil(updatedGeneralCharacteristics.ResemblesExistingModelOtherSpecify)
+	suite.Nil(updatedGeneralCharacteristics.ResemblesExistingModelOtherSelected)
+	suite.Nil(updatedGeneralCharacteristics.ResemblesExistingModelOtherOption)
 	suite.Nil(updatedGeneralCharacteristics.ResemblesExistingModelHow)
 	suite.Nil(updatedGeneralCharacteristics.ResemblesExistingModelNote)
 	suite.Nil(updatedGeneralCharacteristics.KeyCharacteristics)
