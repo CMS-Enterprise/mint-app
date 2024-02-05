@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { ModelStatus, ModelCategory, CMSCenter, CMMIGroup, ModelType, TaskStatus, AuthorityAllowance, WaiverType, YesNoOtherType, AlternativePaymentModelType, KeyCharacteristic, GeographyType, StatesAndTerritories, GeographyRegionType, GeographyApplication, AgreementType, FrequencyType, ParticipantCommunicationType, ParticipantRiskType, GainshareArrangementEligibility, ParticipantsIDType, ConfidenceType, RecruitmentType, ParticipantSelectionType, ParticipantsType, ProviderAddType, ProviderLeaveType, OverlapType, BeneficiariesType, SelectionMethodType, TriStateAnswer, YesNoType, CcmInvolvmentType, DataStartsType, EvaluationApproachType, DataForMonitoringType, DataToSendParticipantsType, DataFullTimeOrIncrementalType, MonitoringFileType, ModelLearningSystemType, AgencyOrStateHelpType, StakeholdersType, ContractorSupportType, BenchmarkForPerformanceType, PayType, ClaimsBasedPayType, ComplexityCalculationLevelType, FundingSource, PayRecipient, NonClaimsBasedPayType, TeamRole, DiscussionUserRole } from "./../../types/graphql-global-types";
+import { ModelStatus, ModelCategory, CMSCenter, CMMIGroup, ModelType, TaskStatus, AuthorityAllowance, WaiverType, YesNoOtherType, AgencyOrStateHelpType, AlternativePaymentModelType, KeyCharacteristic, GeographyType, StatesAndTerritories, GeographyRegionType, GeographyApplication, AgreementType, FrequencyType, ParticipantCommunicationType, ParticipantRiskType, GainshareArrangementEligibility, ParticipantsIDType, ConfidenceType, RecruitmentType, ParticipantSelectionType, ParticipantsType, ProviderAddType, ProviderLeaveType, OverlapType, BeneficiariesType, SelectionMethodType, TriStateAnswer, YesNoType, CcmInvolvmentType, DataStartsType, EvaluationApproachType, DataForMonitoringType, DataToSendParticipantsType, DataFullTimeOrIncrementalType, MonitoringFileType, ModelLearningSystemType, StakeholdersType, ContractorSupportType, BenchmarkForPerformanceType, PayType, ClaimsBasedPayType, ComplexityCalculationLevelType, FundingSource, PayRecipient, NonClaimsBasedPayType, TeamRole, DiscussionUserRole } from "./../../types/graphql-global-types";
 
 // ====================================================
 // GraphQL query operation: GetAllModelData
@@ -102,6 +102,9 @@ export interface GetAllModelData_modelPlanCollection_generalCharacteristics {
   communityPartnersInvolved: boolean | null;
   communityPartnersInvolvedDescription: string | null;
   communityPartnersInvolvedNote: string | null;
+  agencyOrStateHelp: AgencyOrStateHelpType[];
+  agencyOrStateHelpOther: string | null;
+  agencyOrStateHelpNote: string | null;
   alternativePaymentModelTypes: AlternativePaymentModelType[];
   alternativePaymentModelNote: string | null;
   keyCharacteristics: KeyCharacteristic[];
@@ -328,9 +331,6 @@ export interface GetAllModelData_modelPlanCollection_opsEvalAndLearning {
   modelLearningSystemsOther: string | null;
   modelLearningSystemsNote: string | null;
   anticipatedChallenges: string | null;
-  agencyOrStateHelp: AgencyOrStateHelpType[];
-  agencyOrStateHelpOther: string | null;
-  agencyOrStateHelpNote: string | null;
   stakeholders: StakeholdersType[];
   stakeholdersOther: string | null;
   stakeholdersNote: string | null;

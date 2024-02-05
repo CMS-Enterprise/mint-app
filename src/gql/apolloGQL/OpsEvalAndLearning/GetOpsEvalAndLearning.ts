@@ -9,9 +9,6 @@ export default gql(/* GraphQL */ `
         id
         ccmInvolvment
         dataNeededForMonitoring
-        agencyOrStateHelp
-        agencyOrStateHelpOther
-        agencyOrStateHelpNote
         stakeholders
         stakeholdersOther
         stakeholdersNote

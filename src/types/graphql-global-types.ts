@@ -895,6 +895,9 @@ export interface PlanGeneralCharacteristicsChanges {
   hasComponentsOrTracks?: boolean | null;
   hasComponentsOrTracksDiffer?: string | null;
   hasComponentsOrTracksNote?: string | null;
+  agencyOrStateHelp?: AgencyOrStateHelpType[] | null;
+  agencyOrStateHelpOther?: string | null;
+  agencyOrStateHelpNote?: string | null;
   alternativePaymentModelTypes?: AlternativePaymentModelType[] | null;
   alternativePaymentModelNote?: string | null;
   keyCharacteristics?: KeyCharacteristic[] | null;
@@ -948,9 +951,6 @@ export interface PlanGeneralCharacteristicsChanges {
  * https: // gqlgen.com/reference/changesets/
  */
 export interface PlanOpsEvalAndLearningChanges {
-  agencyOrStateHelp?: AgencyOrStateHelpType[] | null;
-  agencyOrStateHelpOther?: string | null;
-  agencyOrStateHelpNote?: string | null;
   stakeholders?: StakeholdersType[] | null;
   stakeholdersOther?: string | null;
   stakeholdersNote?: string | null;

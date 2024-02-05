@@ -1,14 +1,10 @@
 INSERT INTO plan_ops_eval_and_learning(
     id,
     model_plan_id,
-    agency_or_state_help,
-    agency_or_state_help_other,
-    agency_or_state_help_note,
     stakeholders,
     stakeholders_other,
     stakeholders_note,
     helpdesk_use,
-
     helpdesk_use_note,
     contractor_support,
     contractor_support_other,
@@ -90,7 +86,7 @@ INSERT INTO plan_ops_eval_and_learning(
     data_collection_frequency,
     data_collection_frequency_continually,
     data_collection_frequency_other,
-    data_collection_frequency_note,    
+    data_collection_frequency_note,
     quality_reporting_starts,
     quality_reporting_starts_other,
     quality_reporting_starts_note,
@@ -112,14 +108,10 @@ INSERT INTO plan_ops_eval_and_learning(
 VALUES (
     :id,
     :model_plan_id,
-    :agency_or_state_help,
-    :agency_or_state_help_other,
-    :agency_or_state_help_note,
     :stakeholders,
     :stakeholders_other,
     :stakeholders_note,
     :helpdesk_use,
-
     :helpdesk_use_note,
     :contractor_support,
     :contractor_support_other,
@@ -222,9 +214,6 @@ VALUES (
 ) RETURNING
 id,
 model_plan_id,
-agency_or_state_help,
-agency_or_state_help_other,
-agency_or_state_help_note,
 stakeholders,
 stakeholders_other,
 stakeholders_note,

@@ -61,6 +61,9 @@ const ReadOnlyGeneralCharacteristics = ({
     hasComponentsOrTracks,
     hasComponentsOrTracksDiffer,
     hasComponentsOrTracksNote,
+    agencyOrStateHelp,
+    agencyOrStateHelpOther,
+    agencyOrStateHelpNote,
     alternativePaymentModelTypes,
     alternativePaymentModelNote,
     keyCharacteristics,
@@ -270,6 +273,21 @@ const ReadOnlyGeneralCharacteristics = ({
             : 'margin-bottom-4 border-bottom-1px border-base-light padding-bottom-2'
         }`}
       >
+        {checkGroupMap(
+          isViewingFilteredView,
+          filteredQuestions,
+          'agencyOrStateHelp',
+          <ReadOnlySection
+            heading={generalCharacteristicsT('agencyOrStateHelp.readonlyLabel')}
+            list
+            listItems={agencyOrStateHelp?.map((type): string =>
+              generalCharacteristicsT(`agencyOrStateHelp.options.${type}`)
+            )}
+            listOtherItem={agencyOrStateHelpOther}
+            notes={agencyOrStateHelpNote}
+          />
+        )}
+
         {checkGroupMap(
           isViewingFilteredView,
           filteredQuestions,
