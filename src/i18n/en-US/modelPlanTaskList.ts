@@ -17,7 +17,7 @@ const modelPlanTaskList = {
     addAnother: 'Add a document'
   },
   crTDLsSummaryBox: {
-    heading: 'CRs and TDLs',
+    heading: 'FFS CRs and TDLs',
     copy: 'There are no CRs or TDLs added.',
     add: 'Add a CR or TDL',
     viewAll: 'Manage CRs and TDLs',

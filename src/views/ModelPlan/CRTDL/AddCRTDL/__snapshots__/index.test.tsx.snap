@@ -20,12 +20,12 @@ exports[`Model Plan Add CR and TDL page > matches snapshot 1`] = `
           class="mint-h1 margin-top-6 margin-bottom-2"
           tabindex="-1"
         >
-          CR and TDLs
+          FFS CR and TDLs
         </h1>
         <div
           class="margin-bottom-2 line-height-body-4"
         >
-          Update this Change Request (CR) or Technical Direction Letters (TDL) that is associated with your model.
+          Update this Fee-for Service (FFS) Change Request (CR) or Technical Direction Letters (TDL) that is associated with your model.
         </div>
         <p
           class="margin-bottom-0"

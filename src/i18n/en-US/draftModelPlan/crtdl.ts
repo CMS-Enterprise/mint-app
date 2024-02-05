@@ -1,18 +1,18 @@
 const crtdl = {
-  heading: 'CR and TDLs',
+  heading: 'FFS CR and TDLs',
   subheading: 'for <1>{{modelName}}</1>',
   breadcrumb: 'Model Plan task list',
-  breadcrumb2: 'CRs and TDLs',
+  breadcrumb2: 'FFS CRs and TDLs',
   crs: 'CRs',
   tdls: 'TDLs',
   description:
-    'Add, manage, and update any known Change Requests (CRs) and Technical Direction Letters (TDLs) associated with the model. CRs and TDLs are created and stored in Enterprise Electronic Change Information Management Portal (ECHIMP).',
+    'Add, manage, and update any known Fee-for Service (FFS) Change Requests (CRs) and Technical Direction Letters (TDLs) associated with the model. CRs and TDLs are created and stored in Enterprise Electronic Change Information Management Portal (ECHIMP).',
   echimp:
     'To get access to the ECHIMP system, please request the proper job code through EUA. If you need assistance, please contact the CMS IT Service Desk at 410-786-2580 or 800-562-1963.',
   visitECHIMP: 'Visit ECHIMP',
-  visitECHIMPReadonly: 'Visit CR and TDL details in ECHIMP',
+  visitECHIMPReadonly: 'Visit FFS CR and TDL details in ECHIMP',
   readOnlyDescription:
-    'More information about each Change Request (CR) or Technical Direction Letter (TDL) can be found in Enterprise Electronic Change Information Management Portal (ECHIMP). If you need access to ECHIMP, please contact the MINT Team at ',
+    'More information about each Fee-for Service (FFS) Change Request (CR) or Technical Direction Letter (TDL) can be found in Enterprise Electronic Change Information Management Portal (ECHIMP). If you need access to ECHIMP, please contact the MINT Team at ',
   crButton: 'Change Request (CR)',
   tdlButton: 'Technical Direction Letter (TDL)',
   addCRTDL: 'Add a CR or TDL',
@@ -21,9 +21,9 @@ const crtdl = {
   addRedirect: 'Don’t add a CR or TDL and return to previous page',
   updateRedirect: 'Don’t update CR or TDL and return to previous page',
   createDescription:
-    'Add any known Change Requests (CRs) and Technical Direction Letters (TDLs) associated with your model.',
+    'Add any known Fee-for Service (FFS) Change Requests (CRs) and Technical Direction Letters (TDLs) associated with your model.',
   updateDescription:
-    'Update this Change Request (CR) or Technical Direction Letters (TDL) that is associated with your model.',
+    'Update this Fee-for Service (FFS) Change Request (CR) or Technical Direction Letters (TDL) that is associated with your model.',
   crtdlsTable: {
     idNumber: 'ID number',
     date: 'Date initiatied',
