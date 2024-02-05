@@ -538,7 +538,23 @@ type PlanGeneralCharacteristics {
   currentModelPlan: ModelPlan
   existingModelID: Int
   existingModelPlan: ExistingModel
-  resemblesExistingModel: Boolean
+  resemblesExistingModel: YesNoOtherType
+  """
+  For providing clarifying comments if Yes or No is selected for resemblesExistingModel
+  """
+  resemblesExistingModelWhyHow: String
+  """
+  For providing clarifying comments if Other is selected for resemblesExistingModel
+  """
+  resemblesExistingModelOtherSpecify: String
+  """
+  For denoting if there is an other model that this model resembles if it's true that it resembles existing models.
+  """
+  resemblesExistingModelOtherSelected: Boolean
+  """
+  For denoting the name of the other existing model that this model resembles
+  """
+  resemblesExistingModelOtherOption: String
   resemblesExistingModelHow: String
   resemblesExistingModelNote: String
   resemblesExistingModelWhich: ExistingModelLinks
@@ -625,7 +641,23 @@ input PlanGeneralCharacteristicsChanges @goModel(model: "map[string]interface{}"
   isNewModel: Boolean
   currentModelPlanID: UUID
   existingModelID: Int
-  resemblesExistingModel: Boolean
+  resemblesExistingModel: YesNoOtherType
+  """
+  For providing clarifying comments if Yes or No is selected for resemblesExistingModel
+  """
+  resemblesExistingModelWhyHow: String
+  """
+  For providing clarifying comments if Other is selected for resemblesExistingModel
+  """
+  resemblesExistingModelOtherSpecify: String
+  """
+  For denoting if there is an other model that this model resembles if it's true that it resembles existing models.
+  """
+  resemblesExistingModelOtherSelected: Boolean
+  """
+  For denoting the name of the other existing model that this model resembles
+  """
+  resemblesExistingModelOtherOption: String
   resemblesExistingModelHow: String
   resemblesExistingModelNote: String
   hasComponentsOrTracks: Boolean
@@ -1045,6 +1077,10 @@ type PlanPayments {
   paymentReconciliationFrequencyContinually:         String
   paymentReconciliationFrequencyOther:               String
   paymentReconciliationFrequencyNote:                String
+  paymentDemandRecoupmentFrequency:                  [FrequencyType!]!
+  paymentDemandRecoupmentFrequencyContinually:       String
+  paymentDemandRecoupmentFrequencyOther:             String
+  paymentDemandRecoupmentFrequencyNote:              String
   paymentStartDate:                                  Time
   paymentStartDateNote:                              String
 
@@ -1150,6 +1186,10 @@ input PlanPaymentsChanges @goModel(model: "map[string]interface{}") {
   paymentReconciliationFrequencyContinually:         String
   paymentReconciliationFrequencyOther:               String
   paymentReconciliationFrequencyNote:                String
+  paymentDemandRecoupmentFrequency:                    [FrequencyType!]
+  paymentDemandRecoupmentFrequencyContinually:         String
+  paymentDemandRecoupmentFrequencyOther:               String
+  paymentDemandRecoupmentFrequencyNote:                String
   paymentStartDate:                                  Time
   paymentStartDateNote:                             String
 

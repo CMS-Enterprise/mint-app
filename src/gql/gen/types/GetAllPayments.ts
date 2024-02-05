@@ -78,6 +78,10 @@ export interface GetAllPayments_modelPlan_payments {
   paymentReconciliationFrequencyContinually: string | null;
   paymentReconciliationFrequencyOther: string | null;
   paymentReconciliationFrequencyNote: string | null;
+  paymentDemandRecoupmentFrequency: FrequencyType[];
+  paymentDemandRecoupmentFrequencyContinually: string | null;
+  paymentDemandRecoupmentFrequencyOther: string | null;
+  paymentDemandRecoupmentFrequencyNote: string | null;
   paymentStartDate: Time | null;
   paymentStartDateNote: string | null;
   status: TaskStatus;

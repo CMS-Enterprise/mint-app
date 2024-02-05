@@ -794,6 +794,47 @@ export const payments: TranslationPayments = {
     dataType: 'string',
     formType: 'textarea'
   },
+  paymentDemandRecoupmentFrequency: {
+    gqlField: 'paymentDemandRecoupmentFrequency',
+    goField: 'PaymentDemandRecoupmentFrequency',
+    dbField: 'payment_demand_recoupment_frequency',
+    label: 'How frequently do you anticipate making demands/recoupments?',
+    dataType: 'enum',
+    formType: 'checkbox',
+    options: frequencyOptions,
+    optionsRelatedInfo: {
+      ANNUALLY: '',
+      SEMIANNUALLY: '',
+      QUARTERLY: '',
+      MONTHLY: '',
+      CONTINUALLY: 'paymentDemandRecoupmentFrequencyContinually',
+      OTHER: 'paymentDemandRecoupmentFrequencyOther'
+    }
+  },
+  paymentDemandRecoupmentFrequencyContinually: {
+    gqlField: 'paymentDemandRecoupmentFrequencyContinually',
+    goField: 'PaymentDemandRecoupmentFrequencyContinually',
+    dbField: 'payment_demand_recoupment_frequency_continually',
+    label: 'Please specify',
+    dataType: 'string',
+    formType: 'textarea'
+  },
+  paymentDemandRecoupmentFrequencyOther: {
+    gqlField: 'paymentDemandRecoupmentFrequencyOther',
+    goField: 'PaymentReconciliationFrequencyOther',
+    dbField: 'payment_demand_recoupment_frequency_other',
+    label: 'Please specify',
+    dataType: 'string',
+    formType: 'textarea'
+  },
+  paymentDemandRecoupmentFrequencyNote: {
+    gqlField: 'paymentDemandRecoupmentFrequencyNote',
+    goField: 'PaymentReconciliationFrequencyNote',
+    dbField: 'payment_demand_recoupment_frequency_note',
+    label: 'Notes',
+    dataType: 'string',
+    formType: 'textarea'
+  },
   paymentStartDate: {
     gqlField: 'paymentStartDate',
     goField: 'PaymentStartDate',
