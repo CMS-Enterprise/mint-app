@@ -18,16 +18,16 @@ const (
 type Activity struct {
 	baseStruct
 	ActorID      uuid.UUID    `json:"actorID" db:"actor_id"`
-	EntitityID   uuid.UUID    `json:"entitityID" db:"entitity_id"`
+	EntityID     uuid.UUID    `json:"entityID" db:"entity_id"`
 	ActivityType ActivityType `json:"activityType" db:"activity_type"`
 }
 
 // NewActivity returns a New Activity
-func NewActivity(actorID uuid.UUID, entitityID uuid.UUID, activityType ActivityType) *Activity {
+func NewActivity(actorID uuid.UUID, entityID uuid.UUID, activityType ActivityType) *Activity {
 	return &Activity{
 		baseStruct:   NewBaseStruct(actorID), //TODO: EASI-3294 do we want to consider the actor is always the creator the activity?
 		ActorID:      actorID,
-		EntitityID:   entitityID,
+		EntityID:     entityID,
 		ActivityType: activityType,
 	}
 }
