@@ -121,6 +121,22 @@ describe('The Model Plan General Characteristics Form', () => {
 
     // Page - /characteristics/key-charactertics
 
+    cy.get('#plan-characteristics-agency-or-state-help-YES_AGENCY_IAA').should(
+      'not.be.disabled'
+    );
+
+    cy.get('#plan-characteristics-agency-or-state-help-YES_AGENCY_IAA')
+      .check({ force: true })
+      .should('be.checked');
+
+    cy.get('#plan-characteristics-agency-or-state-help-OTHER')
+      .check({ force: true })
+      .should('be.checked');
+
+    cy.get('#plan-characteristics-agency-or-state-help-other')
+      .type('Department of Motor Vehicles')
+      .should('have.value', 'Department of Motor Vehicles');
+
     cy.get('#plan-characteristics-alternative-payment-MIPS')
       .should('not.be.disabled')
       .check({ force: true })

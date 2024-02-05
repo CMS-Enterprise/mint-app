@@ -15,6 +15,9 @@ type GetKeyCharacteristicsType = GetKeyCharacteristicsQuery['modelPlan']['genera
 const keyCharacteristicsMockData: GetKeyCharacteristicsType = {
   __typename: 'PlanGeneralCharacteristics',
   id: '123',
+  agencyOrStateHelp: [],
+  agencyOrStateHelpOther: '',
+  agencyOrStateHelpNote: '',
   alternativePaymentModelTypes: [],
   alternativePaymentModelNote: '',
   keyCharacteristics: [KeyCharacteristic.OTHER],

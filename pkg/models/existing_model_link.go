@@ -40,6 +40,7 @@ type ExistingModelLinks struct {
 	NameArray pq.StringArray `json:"names_array_db" db:"name_array"`
 }
 
+// NewExistingModelLinks instantiates a new ExistingModelLinks
 func NewExistingModelLinks(modelPlanID uuid.UUID, fieldName ExisitingModelLinkFieldType, links []*ExistingModelLink) *ExistingModelLinks {
 	return &ExistingModelLinks{
 		Links:             links,

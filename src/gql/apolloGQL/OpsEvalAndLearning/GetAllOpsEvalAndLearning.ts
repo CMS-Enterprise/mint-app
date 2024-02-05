@@ -7,9 +7,6 @@ export default gql(/* GraphQL */ `
       opsEvalAndLearning {
         id
         modelPlanID
-        agencyOrStateHelp
-        agencyOrStateHelpOther
-        agencyOrStateHelpNote
         stakeholders
         stakeholdersOther
         stakeholdersNote
