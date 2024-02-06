@@ -29,6 +29,7 @@ const mockData: GetComplexityType = {
   canParticipantsSelectBetweenPaymentMechanismsHow: 'lorem ipsum',
   canParticipantsSelectBetweenPaymentMechanismsNote: null,
   anticipatedPaymentFrequency: [FrequencyType.ANNUALLY],
+  anticipatedPaymentFrequencyContinually: null,
   anticipatedPaymentFrequencyOther: null,
   anticipatedPaymentFrequencyNote: null
 };

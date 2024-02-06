@@ -145,13 +145,13 @@ const Frequency = () => {
   const initialValues: InitialValueType = {
     __typename: 'PlanBeneficiaries',
     id: id ?? '',
-    beneficiarySelectionFrequency: beneficiarySelectionFrequency ?? null,
+    beneficiarySelectionFrequency: beneficiarySelectionFrequency ?? [],
     beneficiarySelectionFrequencyContinually:
       beneficiarySelectionFrequencyContinually ?? '',
     beneficiarySelectionFrequencyNote: beneficiarySelectionFrequencyNote ?? '',
     beneficiarySelectionFrequencyOther:
       beneficiarySelectionFrequencyOther ?? '',
-    beneficiaryRemovalFrequency: beneficiaryRemovalFrequency ?? null,
+    beneficiaryRemovalFrequency: beneficiaryRemovalFrequency ?? [],
     beneficiaryRemovalFrequencyContinually:
       beneficiaryRemovalFrequencyContinually ?? '',
     beneficiaryRemovalFrequencyNote: beneficiaryRemovalFrequencyNote ?? '',

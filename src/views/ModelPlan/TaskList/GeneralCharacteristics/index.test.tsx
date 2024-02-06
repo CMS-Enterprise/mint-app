@@ -20,6 +20,17 @@ const generalCharacteristicsMockData: GetGeneralCharacteristicsQuery['modelPlan'
   existingModelID: null,
   currentModelPlanID: '7467634',
   resemblesExistingModel: YesNoOtherType.NO,
+  resemblesExistingModelWhich: {
+    __typename: 'ExistingModelLinks',
+    links: [
+      {
+        __typename: 'ExistingModelLink',
+        id: '1224534',
+        existingModelID: 3465254,
+        currentModelPlanID: '876578754'
+      }
+    ]
+  },
   resemblesExistingModelWhyHow: 'We think it is right',
   resemblesExistingModelHow: '',
   resemblesExistingModelOtherSpecify: '',
