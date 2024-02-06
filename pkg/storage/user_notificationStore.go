@@ -13,7 +13,7 @@ import (
 // UserNotificationCollectionGetByUserID returns all Notifications for a user for a given User Account
 func (s *Store) UserNotificationCollectionGetByUserID(np NamedPreparer, userAccountID uuid.UUID) ([]*models.UserNotification, error) {
 
-	arg := map[string]interface{}{"id": userAccountID}
+	arg := map[string]interface{}{"user_id": userAccountID}
 
 	notifCollection, procErr := sqlutils.SelectProcedure[models.UserNotification](np, sqlqueries.UserNotification.CollectionGetByUserID, arg)
 	if procErr != nil {

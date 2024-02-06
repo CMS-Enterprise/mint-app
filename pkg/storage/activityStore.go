@@ -21,3 +21,15 @@ func (s *Store) ActivityCreate(np NamedPreparer, activity *models.Activity) (*mo
 	}
 	return retActivity, nil
 }
+
+// ActivityGetByID returns an existing activity from the database
+func (s *Store) ActivityGetByID(activityID uuid.UUID) (*models.Activity, error) {
+
+	arg := map[string]interface{}{"id": activityID}
+
+	retActivity, procErr := sqlutils.GetProcedure[models.Activity](s, sqlqueries.Activity.GetByID, arg)
+	if procErr != nil {
+		return nil, fmt.Errorf("issue retrieving activity: %w", procErr)
+	}
+	return retActivity, nil
+}

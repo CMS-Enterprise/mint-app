@@ -7,6 +7,7 @@ import (
 
 	"github.com/cmsgov/mint-app/pkg/authentication"
 	"github.com/cmsgov/mint-app/pkg/models"
+	"github.com/cmsgov/mint-app/pkg/sqlutils"
 	"github.com/cmsgov/mint-app/pkg/storage"
 )
 
@@ -26,6 +27,7 @@ func UserNotificationCollectionGetByUser(
 func UserNotificationCreate(
 	ctx context.Context,
 	store *storage.Store,
+	np sqlutils.NamedPreparer,
 	// the activity this notification is in regards to
 	activity *models.Activity,
 	// The id of the user the notification is for
@@ -34,6 +36,30 @@ func UserNotificationCreate(
 	notif := models.NewUserNotification(activity.ActorID, activity.ID)
 	notif.UserID = userID
 
-	return store.UserNotificationCreate(store, notif)
+	return store.UserNotificationCreate(np, notif)
+
+}
+
+// UserNotificationCreateAllPerActivity is a helper function that will create notifications based on the new activity that is being writen to the database.
+func UserNotificationCreateAllPerActivity(ctx context.Context,
+	store *storage.Store,
+	np sqlutils.NamedPreparer,
+	// the activity this notification is in regards to
+	activity *models.Activity) ([]*models.UserNotification, error) {
+	var notifications []*models.UserNotification
+
+	originatorNotif, err := UserNotificationCreate(ctx, store, np, activity, activity.ActorID) //TODO: get the actual users who need a notification, create a list, or handle in DB
+	if err != nil {
+		return nil, err
+	}
+	notifications = append(notifications, originatorNotif)
+
+	/* TODO: EASI-3294
+	1. Find users to be notified base on the notification type
+	2. Build a notification, create the notification
+
+
+	*/
+	return notifications, nil
 
 }

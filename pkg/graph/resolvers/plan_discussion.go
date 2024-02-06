@@ -70,7 +70,7 @@ func CreatePlanDiscussion(
 
 		// TODO: EASI-3294 Add an activity
 		discussionActivity := models.NewActivity(principal.Account().ID, discussion.ID, models.ActivityNewPlanDiscussion)
-		_, activityErr := store.ActivityCreate(tx, discussionActivity)
+		_, activityErr := ActivityCreate(ctx, store, tx, discussionActivity)
 		if activityErr != nil {
 			return nil, activityErr
 		}

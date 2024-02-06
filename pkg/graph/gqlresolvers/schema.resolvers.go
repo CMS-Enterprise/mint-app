@@ -21,11 +21,6 @@ import (
 	"github.com/cmsgov/mint-app/pkg/userhelpers"
 )
 
-// EntityID is the resolver for the entityID field.
-func (r *activityResolver) EntityID(ctx context.Context, obj *models.Activity) (uuid.UUID, error) {
-	panic(fmt.Errorf("not implemented: EntityID - entityID"))
-}
-
 // Fields is the resolver for the fields field.
 func (r *auditChangeResolver) Fields(ctx context.Context, obj *models.AuditChange) (map[string]interface{}, error) {
 	return obj.Fields.ToInterface()
@@ -1124,12 +1119,9 @@ func (r *taggedContentResolver) RawContent(ctx context.Context, obj *models.Tagg
 
 // Activity is the resolver for the activity field.
 func (r *userNotificationResolver) Activity(ctx context.Context, obj *models.UserNotification) (*models.Activity, error) {
+	return resolvers.ActivityGetByID(ctx, r.store, obj.ActivityID)
 	//TODO: EASI-3294 fetch this based on the obj.ActivityID. Use a data loader
-	panic(fmt.Errorf("not implemented: Activity - activity"))
 }
-
-// Activity returns generated.ActivityResolver implementation.
-func (r *Resolver) Activity() generated.ActivityResolver { return &activityResolver{r} }
 
 // AuditChange returns generated.AuditChangeResolver implementation.
 func (r *Resolver) AuditChange() generated.AuditChangeResolver { return &auditChangeResolver{r} }
@@ -1231,7 +1223,6 @@ func (r *Resolver) UserNotification() generated.UserNotificationResolver {
 	return &userNotificationResolver{r}
 }
 
-type activityResolver struct{ *Resolver }
 type auditChangeResolver struct{ *Resolver }
 type discussionReplyResolver struct{ *Resolver }
 type existingModelLinkResolver struct{ *Resolver }
@@ -1256,23 +1247,3 @@ type subscriptionResolver struct{ *Resolver }
 type tagResolver struct{ *Resolver }
 type taggedContentResolver struct{ *Resolver }
 type userNotificationResolver struct{ *Resolver }
-
-// !!! WARNING !!!
-// The code below was going to be deleted when updating resolvers. It has been copied here so you have
-// one last chance to move it out of harms way if you want. There are two reasons this happens:
-//   - When renaming or deleting a resolver the old code will be put in here. You can safely delete
-//     it when you're done.
-//   - You have helper methods in this file. Move them out to keep these resolver files clean.
-func (r *existingModelLinkResolver) ExistingModel(ctx context.Context, obj *models.ExistingModelLink) (*models.ExistingModel, error) {
-	if obj.ExistingModelID == nil { //Don't do a DB call if nil
-		return nil, nil
-	}
-
-	return resolvers.ExistingModelGetByIDLOADER(ctx, *obj.ExistingModelID) //TODO, implement loader, or this will be many queries
-}
-func (r *existingModelLinkResolver) CurrentModelPlan(ctx context.Context, obj *models.ExistingModelLink) (*models.ModelPlan, error) {
-	if obj.CurrentModelPlanID == nil { //Don't do a DB call if nil
-		return nil, nil
-	}
-	return resolvers.ModelPlanGetByIDLOADER(ctx, *obj.CurrentModelPlanID) //TODO, implement loader, or this will be many queries
-}
