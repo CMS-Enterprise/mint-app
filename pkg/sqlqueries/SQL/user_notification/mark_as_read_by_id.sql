@@ -4,7 +4,7 @@ SET
     modified_by = :modified_by,
     modified_dts = CURRENT_TIMESTAMP
 WHERE
-    id = :id AND user_id = :modified_by AND is_read = FALSE
+    id = :id AND user_id = :modified_by
 RETURNING id,
 activity_id,
 user_id,
