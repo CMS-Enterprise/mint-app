@@ -1,5 +1,5 @@
 const crtdl = {
-  heading: 'FFS CR and TDLs',
+  heading: 'FFS CRs and TDLs',
   subheading: 'for <1>{{modelName}}</1>',
   breadcrumb: 'Model Plan task list',
   breadcrumb2: 'FFS CRs and TDLs',
