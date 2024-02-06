@@ -4366,12 +4366,12 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                 data-testid="grid"
               >
                 <div
-                  class="read-only-section read-only-section--payments margin-bottom-3"
+                  class="read-only-section read-only-section--will-you-make-risk-adjustments-to-payments margin-bottom-3"
                 >
                   <p
                     class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
                   >
-                    Payments
+                    Will you make risk adjustments to payments?
                   </p>
                   <p
                     class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
@@ -4491,12 +4491,12 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                 data-testid="grid"
               >
                 <div
-                  class="read-only-section read-only-section--payments margin-bottom-3"
+                  class="read-only-section read-only-section--will-participants-be-able-to-appeal-payments margin-bottom-3"
                 >
                   <p
                     class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
                   >
-                    Payments
+                    Will participants be able to appeal payments?
                   </p>
                   <p
                     class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
@@ -11181,12 +11181,12 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                 data-testid="grid"
               >
                 <div
-                  class="read-only-section read-only-section--payments margin-bottom-3"
+                  class="read-only-section read-only-section--will-you-make-risk-adjustments-to-payments margin-bottom-3"
                 >
                   <p
                     class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
                   >
-                    Payments
+                    Will you make risk adjustments to payments?
                   </p>
                   <p
                     class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
@@ -11306,12 +11306,12 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                 data-testid="grid"
               >
                 <div
-                  class="read-only-section read-only-section--payments margin-bottom-3"
+                  class="read-only-section read-only-section--will-participants-be-able-to-appeal-payments margin-bottom-3"
                 >
                   <p
                     class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
                   >
-                    Payments
+                    Will participants be able to appeal payments?
                   </p>
                   <p
                     class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
