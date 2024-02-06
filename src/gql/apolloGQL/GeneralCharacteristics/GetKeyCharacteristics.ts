@@ -23,6 +23,7 @@ export default gql(/* GraphQL */ `
         planContractUpdatedNote
       }
       operationalNeeds {
+        id
         modifiedDts
       }
     }

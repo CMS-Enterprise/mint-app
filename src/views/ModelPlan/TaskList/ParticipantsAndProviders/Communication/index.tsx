@@ -151,7 +151,7 @@ export const Communication = () => {
     communicationMethod: communicationMethod ?? [],
     communicationMethodOther: communicationMethodOther ?? '',
     communicationNote: communicationNote ?? '',
-    riskType: riskType ?? null,
+    riskType: riskType ?? [],
     riskOther: riskOther ?? '',
     riskNote: riskNote ?? '',
     willRiskChange: willRiskChange ?? null,

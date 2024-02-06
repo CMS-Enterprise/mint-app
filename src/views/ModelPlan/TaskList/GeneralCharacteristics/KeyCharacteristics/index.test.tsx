@@ -45,7 +45,9 @@ const keyCharacteristicsMock = [
           generalCharacteristics: keyCharacteristicsMockData,
           operationalNeeds: [
             {
-              modifiedDts: ''
+              __typename: 'OperationalNeed',
+              id: '424213',
+              modifiedDts: null
             }
           ]
         }

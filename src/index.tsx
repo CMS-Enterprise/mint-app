@@ -126,6 +126,12 @@ const client = new ApolloClient({
       },
       TaskListSectionLockStatus: {
         keyFields: ['lockedByUserAccount', ['id'], 'section', 'modelPlanID']
+      },
+      DiscussionRoleSelection: {
+        keyFields: []
+      },
+      PrepareForClearance: {
+        keyFields: ['status', 'latestClearanceDts']
       }
     }
   }),
