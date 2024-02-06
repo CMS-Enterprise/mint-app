@@ -633,7 +633,7 @@ const ReadOnlyOpsEvalAndLearning = ({
           filteredQuestions,
           'riskAdjustPayments',
           <ReadOnlySection
-            heading={opsEvalAndLearningT('riskAdjustPayments.label')}
+            heading={opsEvalAndLearningT('riskAdjustPayments.readonlyLabel')}
             copy={riskAdjustNote}
           />
         )}
@@ -688,7 +688,7 @@ const ReadOnlyOpsEvalAndLearning = ({
           filteredQuestions,
           'appealPayments',
           <ReadOnlySection
-            heading={opsEvalAndLearningT('appealPayments.label')}
+            heading={opsEvalAndLearningT('appealPayments.readonlyLabel')}
             copy={appealNote}
           />
         )}
