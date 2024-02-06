@@ -260,6 +260,8 @@ type ComplexityRoot struct {
 		DeletePlanTdl                      func(childComplexity int, id uuid.UUID) int
 		LinkNewPlanDocument                func(childComplexity int, input model.PlanDocumentLinkInput) int
 		LockTaskListSection                func(childComplexity int, modelPlanID uuid.UUID, section models.TaskListSection) int
+		MarkAllNotificationsAsRead         func(childComplexity int) int
+		MarkNotificationAsRead             func(childComplexity int, notificationID uuid.UUID) int
 		RemovePlanDocumentSolutionLinks    func(childComplexity int, solutionID uuid.UUID, documentIDs []uuid.UUID) int
 		ReportAProblem                     func(childComplexity int, input model.ReportAProblemInput) int
 		SendFeedbackEmail                  func(childComplexity int, input model.SendFeedbackEmailInput) int
@@ -1150,6 +1152,8 @@ type MutationResolver interface {
 	ShareModelPlan(ctx context.Context, modelPlanID uuid.UUID, viewFilter *models.ModelViewFilter, usernames []string, optionalMessage *string) (bool, error)
 	ReportAProblem(ctx context.Context, input model.ReportAProblemInput) (bool, error)
 	SendFeedbackEmail(ctx context.Context, input model.SendFeedbackEmailInput) (bool, error)
+	MarkNotificationAsRead(ctx context.Context, notificationID uuid.UUID) (*models.UserNotification, error)
+	MarkAllNotificationsAsRead(ctx context.Context) ([]*models.UserNotification, error)
 }
 type OperationalNeedResolver interface {
 	Solutions(ctx context.Context, obj *models.OperationalNeed, includeNotNeeded bool) ([]*models.OperationalSolution, error)
@@ -2438,6 +2442,25 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Mutation.LockTaskListSection(childComplexity, args["modelPlanID"].(uuid.UUID), args["section"].(models.TaskListSection)), true
+
+	case "Mutation.markAllNotificationsAsRead":
+		if e.complexity.Mutation.MarkAllNotificationsAsRead == nil {
+			break
+		}
+
+		return e.complexity.Mutation.MarkAllNotificationsAsRead(childComplexity), true
+
+	case "Mutation.markNotificationAsRead":
+		if e.complexity.Mutation.MarkNotificationAsRead == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_markNotificationAsRead_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Mutation.MarkNotificationAsRead(childComplexity, args["notificationID"].(uuid.UUID)), true
 
 	case "Mutation.removePlanDocumentSolutionLinks":
 		if e.complexity.Mutation.RemovePlanDocumentSolutionLinks == nil {
@@ -9745,7 +9768,7 @@ type Query {
   @hasAnyRole(roles: [MINT_USER, MINT_MAC])
   mostRecentDiscussionRoleSelection: DiscussionRoleSelection
   @hasAnyRole(roles: [MINT_USER, MINT_MAC])
-  userNotificationPreferences: UserNotificationPreferences
+  userNotificationPreferences: UserNotificationPreferences!
   userNotifications: [UserNotification!]! #TODO: EASI-3294 consider adding filters to get only unread etc
 
 }
@@ -9887,6 +9910,15 @@ reportAProblem(input: ReportAProblemInput!): Boolean!
 This mutation sends feedback about the MINT product to the MINT team
 """
 sendFeedbackEmail(input: SendFeedbackEmailInput!): Boolean!
+
+"""
+Marks a single notification as read. It requires that the notification be owned by the context of the user sending this request, or it will fail
+"""
+markNotificationAsRead(notificationID: UUID!): UserNotification!
+"""
+Marks all notifications for the current user as read, and returns the updated notifications
+"""
+markAllNotificationsAsRead: [UserNotification!]!
 }
 
 type Subscription {
@@ -11115,6 +11147,21 @@ func (ec *executionContext) field_Mutation_lockTaskListSection_args(ctx context.
 		}
 	}
 	args["section"] = arg1
+	return args, nil
+}
+
+func (ec *executionContext) field_Mutation_markNotificationAsRead_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+	var err error
+	args := map[string]interface{}{}
+	var arg0 uuid.UUID
+	if tmp, ok := rawArgs["notificationID"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("notificationID"))
+		arg0, err = ec.unmarshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["notificationID"] = arg0
 	return args, nil
 }
 
@@ -23482,6 +23529,153 @@ func (ec *executionContext) fieldContext_Mutation_sendFeedbackEmail(ctx context.
 	if fc.Args, err = ec.field_Mutation_sendFeedbackEmail_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
 		ec.Error(ctx, err)
 		return fc, err
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Mutation_markNotificationAsRead(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Mutation_markNotificationAsRead(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Mutation().MarkNotificationAsRead(rctx, fc.Args["notificationID"].(uuid.UUID))
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*models.UserNotification)
+	fc.Result = res
+	return ec.marshalNUserNotification2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐUserNotification(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Mutation_markNotificationAsRead(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Mutation",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_UserNotification_id(ctx, field)
+			case "activityID":
+				return ec.fieldContext_UserNotification_activityID(ctx, field)
+			case "userID":
+				return ec.fieldContext_UserNotification_userID(ctx, field)
+			case "isRead":
+				return ec.fieldContext_UserNotification_isRead(ctx, field)
+			case "activity":
+				return ec.fieldContext_UserNotification_activity(ctx, field)
+			case "createdBy":
+				return ec.fieldContext_UserNotification_createdBy(ctx, field)
+			case "createdByUserAccount":
+				return ec.fieldContext_UserNotification_createdByUserAccount(ctx, field)
+			case "createdDts":
+				return ec.fieldContext_UserNotification_createdDts(ctx, field)
+			case "modifiedBy":
+				return ec.fieldContext_UserNotification_modifiedBy(ctx, field)
+			case "modifiedByUserAccount":
+				return ec.fieldContext_UserNotification_modifiedByUserAccount(ctx, field)
+			case "modifiedDts":
+				return ec.fieldContext_UserNotification_modifiedDts(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type UserNotification", field.Name)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Mutation_markNotificationAsRead_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Mutation_markAllNotificationsAsRead(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Mutation_markAllNotificationsAsRead(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Mutation().MarkAllNotificationsAsRead(rctx)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.([]*models.UserNotification)
+	fc.Result = res
+	return ec.marshalNUserNotification2ᚕᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐUserNotificationᚄ(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Mutation_markAllNotificationsAsRead(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Mutation",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_UserNotification_id(ctx, field)
+			case "activityID":
+				return ec.fieldContext_UserNotification_activityID(ctx, field)
+			case "userID":
+				return ec.fieldContext_UserNotification_userID(ctx, field)
+			case "isRead":
+				return ec.fieldContext_UserNotification_isRead(ctx, field)
+			case "activity":
+				return ec.fieldContext_UserNotification_activity(ctx, field)
+			case "createdBy":
+				return ec.fieldContext_UserNotification_createdBy(ctx, field)
+			case "createdByUserAccount":
+				return ec.fieldContext_UserNotification_createdByUserAccount(ctx, field)
+			case "createdDts":
+				return ec.fieldContext_UserNotification_createdDts(ctx, field)
+			case "modifiedBy":
+				return ec.fieldContext_UserNotification_modifiedBy(ctx, field)
+			case "modifiedByUserAccount":
+				return ec.fieldContext_UserNotification_modifiedByUserAccount(ctx, field)
+			case "modifiedDts":
+				return ec.fieldContext_UserNotification_modifiedDts(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type UserNotification", field.Name)
+		},
 	}
 	return fc, nil
 }
@@ -53062,11 +53256,14 @@ func (ec *executionContext) _Query_userNotificationPreferences(ctx context.Conte
 		return graphql.Null
 	}
 	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
 		return graphql.Null
 	}
 	res := resTmp.(*models.UserNotificationPreferences)
 	fc.Result = res
-	return ec.marshalOUserNotificationPreferences2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐUserNotificationPreferences(ctx, field.Selections, res)
+	return ec.marshalNUserNotificationPreferences2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐUserNotificationPreferences(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Query_userNotificationPreferences(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -61357,6 +61554,20 @@ func (ec *executionContext) _Mutation(ctx context.Context, sel ast.SelectionSet)
 			if out.Values[i] == graphql.Null {
 				out.Invalids++
 			}
+		case "markNotificationAsRead":
+			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
+				return ec._Mutation_markNotificationAsRead(ctx, field)
+			})
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "markAllNotificationsAsRead":
+			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
+				return ec._Mutation_markAllNotificationsAsRead(ctx, field)
+			})
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
 		default:
 			panic("unknown field " + strconv.Quote(field.Name))
 		}
@@ -68148,6 +68359,9 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 					}
 				}()
 				res = ec._Query_userNotificationPreferences(ctx, field)
+				if res == graphql.Null {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
 				return res
 			}
 
@@ -74379,6 +74593,10 @@ func (ec *executionContext) marshalNUserInfo2ᚖgithubᚗcomᚋcmsgovᚋmintᚑa
 	return ec._UserInfo(ctx, sel, v)
 }
 
+func (ec *executionContext) marshalNUserNotification2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐUserNotification(ctx context.Context, sel ast.SelectionSet, v models.UserNotification) graphql.Marshaler {
+	return ec._UserNotification(ctx, sel, &v)
+}
+
 func (ec *executionContext) marshalNUserNotification2ᚕᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐUserNotificationᚄ(ctx context.Context, sel ast.SelectionSet, v []*models.UserNotification) graphql.Marshaler {
 	ret := make(graphql.Array, len(v))
 	var wg sync.WaitGroup
@@ -74431,6 +74649,20 @@ func (ec *executionContext) marshalNUserNotification2ᚖgithubᚗcomᚋcmsgovᚋ
 		return graphql.Null
 	}
 	return ec._UserNotification(ctx, sel, v)
+}
+
+func (ec *executionContext) marshalNUserNotificationPreferences2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐUserNotificationPreferences(ctx context.Context, sel ast.SelectionSet, v models.UserNotificationPreferences) graphql.Marshaler {
+	return ec._UserNotificationPreferences(ctx, sel, &v)
+}
+
+func (ec *executionContext) marshalNUserNotificationPreferences2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐUserNotificationPreferences(ctx context.Context, sel ast.SelectionSet, v *models.UserNotificationPreferences) graphql.Marshaler {
+	if v == nil {
+		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
+			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
+		}
+		return graphql.Null
+	}
+	return ec._UserNotificationPreferences(ctx, sel, v)
 }
 
 func (ec *executionContext) unmarshalNWaiverType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐWaiverType(ctx context.Context, v interface{}) (model.WaiverType, error) {
@@ -78171,13 +78403,6 @@ func (ec *executionContext) marshalOUserAccount2ᚖgithubᚗcomᚋcmsgovᚋmint�
 		return graphql.Null
 	}
 	return ec._UserAccount(ctx, sel, v)
-}
-
-func (ec *executionContext) marshalOUserNotificationPreferences2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐUserNotificationPreferences(ctx context.Context, sel ast.SelectionSet, v *models.UserNotificationPreferences) graphql.Marshaler {
-	if v == nil {
-		return graphql.Null
-	}
-	return ec._UserNotificationPreferences(ctx, sel, v)
 }
 
 func (ec *executionContext) unmarshalOWaiverType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐWaiverTypeᚄ(ctx context.Context, v interface{}) ([]model.WaiverType, error) {

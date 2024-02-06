@@ -63,3 +63,25 @@ func UserNotificationCreateAllPerActivity(ctx context.Context,
 	return notifications, nil
 
 }
+
+// UserNotificationMarkAsRead marks a single notification as read in the database
+func UserNotificationMarkAsRead(_ context.Context,
+	store *storage.Store,
+	np sqlutils.NamedPreparer,
+	principal authentication.Principal,
+	// the id of the notification
+	notificationID uuid.UUID) (*models.UserNotification, error) {
+
+	return store.UserNotificationMarkRead(np, notificationID, principal.Account().ID)
+
+}
+
+// UserNotificationMarkAllAsRead marks all notifications for a user as read in the database
+func UserNotificationMarkAllAsRead(_ context.Context,
+	store *storage.Store,
+	np sqlutils.NamedPreparer,
+	principal authentication.Principal) ([]*models.UserNotification, error) {
+
+	return store.UserNotificationMarkAllAsRead(np, principal.Account().ID)
+
+}

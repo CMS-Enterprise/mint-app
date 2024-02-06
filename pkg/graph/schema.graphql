@@ -1916,7 +1916,7 @@ type Query {
   @hasAnyRole(roles: [MINT_USER, MINT_MAC])
   mostRecentDiscussionRoleSelection: DiscussionRoleSelection
   @hasAnyRole(roles: [MINT_USER, MINT_MAC])
-  userNotificationPreferences: UserNotificationPreferences
+  userNotificationPreferences: UserNotificationPreferences!
   userNotifications: [UserNotification!]! #TODO: EASI-3294 consider adding filters to get only unread etc
 
 }
@@ -2058,6 +2058,15 @@ reportAProblem(input: ReportAProblemInput!): Boolean!
 This mutation sends feedback about the MINT product to the MINT team
 """
 sendFeedbackEmail(input: SendFeedbackEmailInput!): Boolean!
+
+"""
+Marks a single notification as read. It requires that the notification be owned by the context of the user sending this request, or it will fail
+"""
+markNotificationAsRead(notificationID: UUID!): UserNotification!
+"""
+Marks all notifications for the current user as read, and returns the updated notifications
+"""
+markAllNotificationsAsRead: [UserNotification!]!
 }
 
 type Subscription {

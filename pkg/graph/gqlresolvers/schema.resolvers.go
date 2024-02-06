@@ -512,6 +512,18 @@ func (r *mutationResolver) SendFeedbackEmail(ctx context.Context, input model.Se
 	return resolvers.SendFeedbackEmail(r.emailService, r.emailTemplateService, r.addressBook, principal, input)
 }
 
+// MarkNotificationAsRead is the resolver for the markNotificationAsRead field.
+func (r *mutationResolver) MarkNotificationAsRead(ctx context.Context, notificationID uuid.UUID) (*models.UserNotification, error) {
+	principal := appcontext.Principal(ctx)
+	return resolvers.UserNotificationMarkAsRead(ctx, r.store, r.store, principal, notificationID)
+}
+
+// MarkAllNotificationsAsRead is the resolver for the markAllNotificationsAsRead field.
+func (r *mutationResolver) MarkAllNotificationsAsRead(ctx context.Context) ([]*models.UserNotification, error) {
+	principal := appcontext.Principal(ctx)
+	return resolvers.UserNotificationMarkAllAsRead(ctx, r.store, r.store, principal)
+}
+
 // Solutions is the resolver for the solutions field.
 func (r *operationalNeedResolver) Solutions(ctx context.Context, obj *models.OperationalNeed, includeNotNeeded bool) ([]*models.OperationalSolution, error) {
 	return resolvers.OperationaSolutionsAndPossibleGetByOPNeedIDLOADER(ctx, obj.ID, includeNotNeeded)

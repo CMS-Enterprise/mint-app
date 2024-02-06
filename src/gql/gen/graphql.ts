@@ -662,6 +662,10 @@ export type Mutation = {
   deletePlanTDL: PlanTdl;
   linkNewPlanDocument: PlanDocument;
   lockTaskListSection: Scalars['Boolean']['output'];
+  /** Marks all notifications for the current user as read, and returns the updated notifications */
+  markAllNotificationsAsRead: Array<UserNotification>;
+  /** Marks a single notification as read. It requires that the notification be owned by the context of the user sending this request, or it will fail */
+  markNotificationAsRead: UserNotification;
   removePlanDocumentSolutionLinks: Scalars['Boolean']['output'];
   reportAProblem: Scalars['Boolean']['output'];
   /** This mutation sends feedback about the MINT product to the MINT team */
@@ -815,6 +819,12 @@ export type MutationLinkNewPlanDocumentArgs = {
 export type MutationLockTaskListSectionArgs = {
   modelPlanID: Scalars['UUID']['input'];
   section: TaskListSection;
+};
+
+
+/** Mutations definition for the schema */
+export type MutationMarkNotificationAsReadArgs = {
+  notificationID: Scalars['UUID']['input'];
 };
 
 
@@ -2381,7 +2391,7 @@ export type Query = {
   searchOktaUsers: Array<UserInfo>;
   taskListSectionLocks: Array<TaskListSectionLockStatus>;
   userAccount: UserAccount;
-  userNotificationPreferences?: Maybe<UserNotificationPreferences>;
+  userNotificationPreferences: UserNotificationPreferences;
   userNotifications: Array<UserNotification>;
 };
 
