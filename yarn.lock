@@ -6516,10 +6516,10 @@
   dependencies:
     redux "^4.0.5"
 
-"@types/redux-saga-routines@^3.1.0":
-  version "3.1.1"
-  resolved "https://registry.yarnpkg.com/@types/redux-saga-routines/-/redux-saga-routines-3.1.1.tgz#de15d9244dafc1f29eeb648274314ca50737c218"
-  integrity sha512-U/814DcHq/2O2dZzHDL48vp6yYp22Q8ixnqZ4mKg6s/X2w7vDPFV83CmS+j+HrCgVirVqnN2UuczKlmOIzNWyA==
+"@types/redux-saga-routines@^3.1.8":
+  version "3.1.8"
+  resolved "https://registry.yarnpkg.com/@types/redux-saga-routines/-/redux-saga-routines-3.1.8.tgz#224989d38b744123856f8655dcfdf92b61c15c1e"
+  integrity sha512-Bq79nWCurB4mGog2PWMxTYU1QDTALSPMptADvOu+9jyL+6j+AJMBzudyM7uarOlrnnvUPMspHFxFpakajSuCVw==
   dependencies:
     "@types/redux-actions" "*"
     "@types/redux-form" "*"
