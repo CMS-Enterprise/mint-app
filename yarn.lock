@@ -6321,10 +6321,10 @@
   resolved "https://registry.yarnpkg.com/@types/minimatch/-/minimatch-5.1.2.tgz#07508b45797cb81ec3f273011b054cd0755eddca"
   integrity sha512-K0VQKziLUWkVKiRVrx4a40iPaxTUefQmjtkQofBkYRcoaaL/8rhwDWww9qWbrgicNOgnpIsMxyNIUM4+n6dUIA==
 
-"@types/no-scroll@^2.1.0":
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/@types/no-scroll/-/no-scroll-2.1.0.tgz#d50280440fe1bc85c7481f40e35dc51be7b54bb8"
-  integrity sha512-67oe0I3SZeEsCIcf5MT4yKrcJOIZn5g+ytPEn+JQQnM4IprztFAWg9T3ngVGbxkceJlLYBsqIfvHl9xEGTuPyA==
+"@types/no-scroll@^2.1.2":
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/@types/no-scroll/-/no-scroll-2.1.2.tgz#9ddff0a9e0c553a7fc3ad68f29e332cb6dcc676f"
+  integrity sha512-9q36YMq0gcwsx/2T8BTObZ4Wtr7vN3eOeepZI36bPCOkwEDh4RBzyTUrvDaKADu6luXpr5h5F7G2ss4gECAF4A==
 
 "@types/node-fetch@^2.5.10":
   version "2.5.10"
