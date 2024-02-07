@@ -27,7 +27,7 @@
     "@types/apollo-upload-client": "^17.0.5",
     "@types/enzyme": "^3.10.3",
     "@types/jest": "26.0.23",
-    "@types/lodash": "^4.14.149",
+    "@types/lodash": "^4.14.202",
     "@types/luxon": "^1.26.5",
     "@types/no-scroll": "^2.1.0",
     "@types/node": "15.12.5",
