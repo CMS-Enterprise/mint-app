@@ -8,7 +8,7 @@ import (
 
 // PlanTDL represents TDLs (Technical Direction Letters) related to a model plan
 type PlanTDL struct {
-	baseStruct
+	BaseStruct
 	modelPlanRelation
 	IDNumber      string     `json:"idNumber" db:"id_number"`
 	DateInitiated *time.Time `json:"dateInitiated" db:"date_initiated"`
@@ -19,7 +19,7 @@ type PlanTDL struct {
 // NewPlanTDL returns a New PlanTDL
 func NewPlanTDL(createdBy uuid.UUID, modelPlanID uuid.UUID) *PlanTDL {
 	return &PlanTDL{
-		baseStruct:        NewBaseStruct(createdBy),
+		BaseStruct:        NewBaseStruct(createdBy),
 		modelPlanRelation: NewModelPlanRelation(modelPlanID),
 	}
 }

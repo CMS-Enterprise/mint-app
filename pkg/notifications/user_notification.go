@@ -1,4 +1,4 @@
-package resolvers
+package notifications
 
 import (
 	"context"
@@ -6,7 +6,6 @@ import (
 	"github.com/google/uuid"
 
 	"github.com/cmsgov/mint-app/pkg/authentication"
-	"github.com/cmsgov/mint-app/pkg/models"
 	"github.com/cmsgov/mint-app/pkg/sqlutils"
 	"github.com/cmsgov/mint-app/pkg/storage"
 )
@@ -16,45 +15,47 @@ func UserNotificationCollectionGetByUser(
 	ctx context.Context,
 	store *storage.Store,
 	principal authentication.Principal,
-) (*models.UserNotifications, error) {
+) (*UserNotifications, error) {
+	var db dataBaseCalls
 
 	//TODO: EASI-3294 do we want to make this resolver take a NamedPreparer? That way we can selectively create notifications as part of a transaction here
-	notifications, err := store.UserNotificationCollectionGetByUserID(store, principal.Account().ID)
+	notifications, err := db.UserNotificationCollectionGetByUserID(store, principal.Account().ID)
 	if err != nil {
 		return nil, err
 	}
-	return &models.UserNotifications{
+	return &UserNotifications{
 		Notifications: notifications,
 	}, nil
 
 }
 
-// UserNotificationCreate creates a UserNotificationRecord in the database
-func UserNotificationCreate(
+// userNotificationCreate creates a UserNotificationRecord in the database
+func userNotificationCreate(
 	ctx context.Context,
 	store *storage.Store,
 	np sqlutils.NamedPreparer,
 	// the activity this notification is in regards to
-	activity *models.Activity,
+	activity *Activity,
 	// The id of the user the notification is for
 	userID uuid.UUID,
-) (*models.UserNotification, error) {
-	notif := models.NewUserNotification(activity.ActorID, activity.ID)
+) (*UserNotification, error) {
+	notif := NewUserNotification(activity.ActorID, activity.ID)
 	notif.UserID = userID
 
-	return store.UserNotificationCreate(np, notif)
+	var db dataBaseCalls
+	return db.UserNotificationCreate(np, notif)
 
 }
 
-// UserNotificationCreateAllPerActivity is a helper function that will create notifications based on the new activity that is being writen to the database.
-func UserNotificationCreateAllPerActivity(ctx context.Context,
+// userNotificationCreateAllPerActivity is a helper function that will create notifications based on the new activity that is being writen to the database.
+func userNotificationCreateAllPerActivity(ctx context.Context,
 	store *storage.Store,
 	np sqlutils.NamedPreparer,
 	// the activity this notification is in regards to
-	activity *models.Activity) ([]*models.UserNotification, error) {
-	var notifications []*models.UserNotification
+	activity *Activity) ([]*UserNotification, error) {
+	var notifications []*UserNotification
 
-	originatorNotif, err := UserNotificationCreate(ctx, store, np, activity, activity.ActorID) //TODO: get the actual users who need a notification, create a list, or handle in DB
+	originatorNotif, err := userNotificationCreate(ctx, store, np, activity, activity.ActorID) //TODO: get the actual users who need a notification, create a list, or handle in DB
 	if err != nil {
 		return nil, err
 	}
@@ -76,9 +77,9 @@ func UserNotificationMarkAsRead(_ context.Context,
 	np sqlutils.NamedPreparer,
 	principal authentication.Principal,
 	// the id of the notification
-	notificationID uuid.UUID) (*models.UserNotification, error) {
+	notificationID uuid.UUID) (*UserNotification, error) {
 
-	return store.UserNotificationMarkRead(np, notificationID, principal.Account().ID)
+	return dbCall.UserNotificationMarkRead(np, notificationID, principal.Account().ID)
 
 }
 
@@ -86,8 +87,8 @@ func UserNotificationMarkAsRead(_ context.Context,
 func UserNotificationMarkAllAsRead(_ context.Context,
 	store *storage.Store,
 	np sqlutils.NamedPreparer,
-	principal authentication.Principal) ([]*models.UserNotification, error) {
+	principal authentication.Principal) ([]*UserNotification, error) {
 
-	return store.UserNotificationMarkAllAsRead(np, principal.Account().ID)
+	return dbCall.UserNotificationMarkAllAsRead(np, principal.Account().ID)
 
 }

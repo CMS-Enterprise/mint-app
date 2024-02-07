@@ -6,7 +6,7 @@ import (
 
 // PlanDiscussion represents a discussion that a user has about a model plan
 type PlanDiscussion struct {
-	baseStruct
+	BaseStruct
 	modelPlanRelation
 	Content             TaggedHTML          `json:"content" db:"content"`
 	UserRole            *DiscussionUserRole `json:"userRole" db:"user_role"`
@@ -31,13 +31,13 @@ func NewPlanDiscussion(
 		UserRoleDescription: userRoleDescription,
 		IsAssessment:        isAssessment,
 		modelPlanRelation:   NewModelPlanRelation(modelPlanID),
-		baseStruct:          NewBaseStruct(principal),
+		BaseStruct:          NewBaseStruct(principal),
 	}
 }
 
 // DiscussionReply represents a comment that was made on the PlanDiscussion
 type DiscussionReply struct {
-	baseStruct
+	BaseStruct
 	discussionRelation
 	Content             TaggedHTML          `json:"content" db:"content"`
 	UserRole            *DiscussionUserRole `json:"userRole" db:"user_role"`
@@ -62,7 +62,7 @@ func NewDiscussionReply(
 		UserRoleDescription: userRoleDescription,
 		IsAssessment:        isAssessment,
 		discussionRelation:  NewDiscussionRelation(discussionID),
-		baseStruct:          NewBaseStruct(principal),
+		BaseStruct:          NewBaseStruct(principal),
 	}
 }
 

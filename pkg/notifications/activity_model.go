@@ -1,7 +1,9 @@
-package models
+package notifications
 
 import (
 	"github.com/google/uuid"
+
+	"github.com/cmsgov/mint-app/pkg/models"
 )
 
 // ActivityType is an enum that represents the possible activities that happen in the MINT application
@@ -16,7 +18,7 @@ const (
 
 // Activity represents a discrete event that has happened in the application that might be notifiable.
 type Activity struct {
-	baseStruct
+	models.BaseStruct
 	ActorID      uuid.UUID    `json:"actorID" db:"actor_id"`
 	EntityID     uuid.UUID    `json:"entityID" db:"entity_id"`
 	ActivityType ActivityType `json:"activityType" db:"activity_type"`
@@ -25,7 +27,7 @@ type Activity struct {
 // NewActivity returns a New Activity
 func NewActivity(actorID uuid.UUID, entityID uuid.UUID, activityType ActivityType) *Activity {
 	return &Activity{
-		baseStruct:   NewBaseStruct(actorID), //TODO: EASI-3294 do we want to consider the actor is always the creator the activity?
+		BaseStruct:   models.NewBaseStruct(actorID), //TODO: EASI-3294 do we want to consider the actor is always the creator the activity?
 		ActorID:      actorID,
 		EntityID:     entityID,
 		ActivityType: activityType,

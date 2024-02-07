@@ -14,22 +14,24 @@ type IBaseStruct interface {
 	SetModifiedBy(principal authentication.Principal) error
 }
 
-// baseStruct represents the shared data in common betwen all models
-type baseStruct struct {
+// BaseStruct represents the shared data in common betwen all models
+type BaseStruct struct {
 	ID uuid.UUID `json:"id" db:"id"`
 	createdByRelation
 	modifiedByRelation
 }
 
 // NewBaseStruct returns a base struct object
-func NewBaseStruct(createdBy uuid.UUID) baseStruct {
-	return baseStruct{
+func NewBaseStruct(createdBy uuid.UUID) BaseStruct {
+	return BaseStruct{
 		createdByRelation: createdByRelation{
 			CreatedBy: createdBy,
 		},
 	}
 }
-func (b *baseStruct) SetModifiedBy(principal authentication.Principal) error {
+
+// SetModifiedBy conditionally sets the modified by property of the struct
+func (b *BaseStruct) SetModifiedBy(principal authentication.Principal) error {
 
 	userID := principal.Account().ID
 
@@ -38,12 +40,12 @@ func (b *baseStruct) SetModifiedBy(principal authentication.Principal) error {
 }
 
 // GetID returns the ID property for a PlanBasics struct
-func (b baseStruct) GetID() uuid.UUID {
+func (b BaseStruct) GetID() uuid.UUID {
 	return b.ID
 }
 
 // GetModifiedBy returns the ModifiedBy property for an IBaseStruct
-func (b baseStruct) GetModifiedBy() *string {
+func (b BaseStruct) GetModifiedBy() *string {
 
 	if b.ModifiedBy == nil {
 		return nil
@@ -59,6 +61,6 @@ func (b baseStruct) GetModifiedBy() *string {
 }
 
 // GetCreatedBy implements the CreatedBy property
-func (b baseStruct) GetCreatedBy() string {
+func (b BaseStruct) GetCreatedBy() string {
 	return b.CreatedBy.String()
 }

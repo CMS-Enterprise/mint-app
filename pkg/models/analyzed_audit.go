@@ -16,7 +16,7 @@ import (
 
 // AnalyzedAudit represents a analyzed_audit to a table row in the database
 type AnalyzedAudit struct {
-	baseStruct
+	BaseStruct
 	modelPlanRelation
 	ModelName string              `json:"modelName" db:"model_name"`
 	Date      time.Time           `json:"date" db:"date"`
@@ -29,7 +29,7 @@ func NewAnalyzedAudit(createdBy uuid.UUID, modelPlanID uuid.UUID, modelName stri
 		Date:              date,
 		Changes:           changes,
 		ModelName:         modelName,
-		baseStruct:        NewBaseStruct(createdBy),
+		BaseStruct:        NewBaseStruct(createdBy),
 		modelPlanRelation: NewModelPlanRelation(modelPlanID),
 	}, nil
 }

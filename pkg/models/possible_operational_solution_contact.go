@@ -9,7 +9,7 @@ import (
 
 // PossibleOperationalSolutionContact represents a contact for a possible operational solution
 type PossibleOperationalSolutionContact struct {
-	baseStruct
+	BaseStruct
 	PossibleOperationalSolutionID int `db:"possible_operational_solution_id" json:"possibleOperationalSolutionID"`
 
 	Name   string  `db:"name" json:"name"`

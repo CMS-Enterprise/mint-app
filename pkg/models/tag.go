@@ -28,7 +28,7 @@ const (
 
 // Tag represents a reference to another data structure in the database
 type Tag struct {
-	baseStruct
+	BaseStruct
 	EntityRaw          string
 	TagType            TagType    `json:"tagType" db:"tag_type"`
 	TaggedField        string     `json:"taggedField" db:"tagged_field"`

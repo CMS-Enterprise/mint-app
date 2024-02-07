@@ -17,6 +17,7 @@ import (
 	"github.com/cmsgov/mint-app/pkg/graph/model"
 	"github.com/cmsgov/mint-app/pkg/graph/resolvers"
 	"github.com/cmsgov/mint-app/pkg/models"
+	"github.com/cmsgov/mint-app/pkg/notifications"
 	"github.com/cmsgov/mint-app/pkg/userhelpers"
 )
 
@@ -36,7 +37,7 @@ func (r *currentUserResolver) Account(ctx context.Context, obj *models.CurrentUs
 }
 
 // Notifications is the resolver for the notifications field.
-func (r *currentUserResolver) Notifications(ctx context.Context, obj *models.CurrentUser) (*models.UserNotifications, error) {
+func (r *currentUserResolver) Notifications(ctx context.Context, obj *models.CurrentUser) (*notifications.UserNotifications, error) {
 	return resolvers.CurrentUserNotificationsGet(ctx, r.store)
 }
 
@@ -527,15 +528,15 @@ func (r *mutationResolver) SendFeedbackEmail(ctx context.Context, input model.Se
 }
 
 // MarkNotificationAsRead is the resolver for the markNotificationAsRead field.
-func (r *mutationResolver) MarkNotificationAsRead(ctx context.Context, notificationID uuid.UUID) (*models.UserNotification, error) {
+func (r *mutationResolver) MarkNotificationAsRead(ctx context.Context, notificationID uuid.UUID) (*notifications.UserNotification, error) {
 	principal := appcontext.Principal(ctx)
-	return resolvers.UserNotificationMarkAsRead(ctx, r.store, r.store, principal, notificationID)
+	return notifications.UserNotificationMarkAsRead(ctx, r.store, r.store, principal, notificationID)
 }
 
 // MarkAllNotificationsAsRead is the resolver for the markAllNotificationsAsRead field.
-func (r *mutationResolver) MarkAllNotificationsAsRead(ctx context.Context) ([]*models.UserNotification, error) {
+func (r *mutationResolver) MarkAllNotificationsAsRead(ctx context.Context) ([]*notifications.UserNotification, error) {
 	principal := appcontext.Principal(ctx)
-	return resolvers.UserNotificationMarkAllAsRead(ctx, r.store, r.store, principal)
+	return notifications.UserNotificationMarkAllAsRead(ctx, r.store, r.store, principal)
 }
 
 // Solutions is the resolver for the solutions field.
@@ -1104,9 +1105,9 @@ func (r *queryResolver) UserNotificationPreferences(ctx context.Context) (*model
 }
 
 // UserNotifications is the resolver for the userNotifications field.
-func (r *queryResolver) UserNotifications(ctx context.Context) (*models.UserNotifications, error) {
+func (r *queryResolver) UserNotifications(ctx context.Context) (*notifications.UserNotifications, error) {
 	principal := appcontext.Principal(ctx)
-	return resolvers.UserNotificationCollectionGetByUser(ctx, r.store, principal)
+	return notifications.UserNotificationCollectionGetByUser(ctx, r.store, principal)
 }
 
 // OnTaskListSectionLocksChanged is the resolver for the onTaskListSectionLocksChanged field.
@@ -1134,13 +1135,13 @@ func (r *taggedContentResolver) RawContent(ctx context.Context, obj *models.Tagg
 }
 
 // Activity is the resolver for the activity field.
-func (r *userNotificationResolver) Activity(ctx context.Context, obj *models.UserNotification) (*models.Activity, error) {
-	return resolvers.ActivityGetByID(ctx, r.store, obj.ActivityID)
+func (r *userNotificationResolver) Activity(ctx context.Context, obj *notifications.UserNotification) (*notifications.Activity, error) {
+	return notifications.ActivityGetByID(ctx, r.store, obj.ActivityID)
 	//TODO: EASI-3294 fetch this based on the obj.ActivityID. Use a data loader
 }
 
 // Content is the resolver for the content field.
-func (r *userNotificationResolver) Content(ctx context.Context, obj *models.UserNotification) (models.UserNotificationContent, error) {
+func (r *userNotificationResolver) Content(ctx context.Context, obj *notifications.UserNotification) (models.UserNotificationContent, error) {
 	panic(fmt.Errorf("not implemented: Content - content"))
 }
 

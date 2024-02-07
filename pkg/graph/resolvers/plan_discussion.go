@@ -9,6 +9,7 @@ import (
 	"github.com/jmoiron/sqlx"
 
 	"github.com/cmsgov/mint-app/pkg/email"
+	"github.com/cmsgov/mint-app/pkg/notifications"
 	"github.com/cmsgov/mint-app/pkg/shared/oddmail"
 	"github.com/cmsgov/mint-app/pkg/sqlutils"
 	"github.com/cmsgov/mint-app/pkg/storage/loaders"
@@ -69,8 +70,8 @@ func CreatePlanDiscussion(
 		discussion.Content.Mentions = planDiscussion.Content.Mentions // TODO, do this or send the other metions
 
 		// TODO: EASI-3294 Add an activity
-		discussionActivity := models.NewActivity(principal.Account().ID, discussion.ID, models.ActivityNewPlanDiscussion)
-		_, activityErr := ActivityCreate(ctx, store, tx, discussionActivity)
+		discussionActivity := notifications.NewActivity(principal.Account().ID, discussion.ID, notifications.ActivityNewPlanDiscussion)
+		_, activityErr := notifications.ActivityCreate(ctx, store, tx, discussionActivity)
 		if activityErr != nil {
 			return nil, activityErr
 		}

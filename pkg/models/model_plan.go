@@ -4,7 +4,7 @@ import "github.com/google/uuid"
 
 // ModelPlan is the top-level object for an entire draft model plan
 type ModelPlan struct {
-	baseStruct
+	BaseStruct
 	ModelName    string      `json:"modelName" db:"model_name"`
 	Abbreviation *string     `json:"abbreviation" db:"abbreviation"`
 	Archived     bool        `json:"archived" db:"archived"`
@@ -15,7 +15,7 @@ type ModelPlan struct {
 func NewModelPlan(createdBy uuid.UUID, modelName string) *ModelPlan {
 	return &ModelPlan{
 		ModelName:  modelName,
-		baseStruct: NewBaseStruct(createdBy),
+		BaseStruct: NewBaseStruct(createdBy),
 		Archived:   false,
 		Status:     ModelStatusPlanDraft,
 	}

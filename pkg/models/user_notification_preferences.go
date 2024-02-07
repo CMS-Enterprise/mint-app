@@ -6,7 +6,7 @@ import (
 
 // UserNotificationPreferences represents a discrete event that has happened in the application that might be notifiable.
 type UserNotificationPreferences struct {
-	baseStruct
+	BaseStruct
 	// The id of the user this preferences object is for
 	UserID uuid.UUID `json:"userID" db:"user_id"`
 
@@ -21,7 +21,7 @@ type UserNotificationPreferences struct {
 // NewUserNotificationPreferences returns a New UserNotificationPreferences
 func NewUserNotificationPreferences(userID uuid.UUID) *UserNotificationPreferences {
 	return &UserNotificationPreferences{
-		baseStruct:              NewBaseStruct(userID),
+		BaseStruct:              NewBaseStruct(userID),
 		DailyDigestEmail:        true,
 		DailyDigestInApp:        true,
 		NewPlanDiscussionEmail:  true,

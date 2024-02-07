@@ -8,7 +8,7 @@ import (
 
 // PlanCR represents CRs (Change Requests) related to a model plan
 type PlanCR struct {
-	baseStruct
+	BaseStruct
 	modelPlanRelation
 	IDNumber        string     `json:"idNumber" db:"id_number"`
 	DateInitiated   *time.Time `json:"dateInitiated" db:"date_initiated"`
@@ -20,7 +20,7 @@ type PlanCR struct {
 // NewPlanCR returns a New PlanCR
 func NewPlanCR(createdBy uuid.UUID, modelPlanID uuid.UUID) *PlanCR {
 	return &PlanCR{
-		baseStruct:        NewBaseStruct(createdBy),
+		BaseStruct:        NewBaseStruct(createdBy),
 		modelPlanRelation: NewModelPlanRelation(modelPlanID),
 	}
 }

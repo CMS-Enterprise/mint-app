@@ -11,7 +11,7 @@ type ExistingModelLink struct {
 	CurrentModelPlanID *uuid.UUID                  `json:"currentModelPlanID" db:"current_model_plan_id"`
 	FieldName          ExisitingModelLinkFieldType `json:"fieldName" db:"field_name"`
 
-	baseStruct
+	BaseStruct
 	modelPlanRelation
 }
 
@@ -53,7 +53,7 @@ func NewExistingModelLinks(modelPlanID uuid.UUID, fieldName ExisitingModelLinkFi
 func NewExistingModelLink(createdBy uuid.UUID, modelPlanID uuid.UUID, existingModelID *int, currentModelPlanID *uuid.UUID) *ExistingModelLink {
 	return &ExistingModelLink{
 		modelPlanRelation:  NewModelPlanRelation(modelPlanID),
-		baseStruct:         NewBaseStruct(createdBy),
+		BaseStruct:         NewBaseStruct(createdBy),
 		ExistingModelID:    existingModelID,
 		CurrentModelPlanID: currentModelPlanID,
 	}

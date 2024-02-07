@@ -1,13 +1,15 @@
-package models
+package notifications
 
 import (
 	"github.com/google/uuid"
 	"github.com/samber/lo"
+
+	"github.com/cmsgov/mint-app/pkg/models"
 )
 
 // UserNotification represents a discrete event that has happened in the application that might be notifiable.
 type UserNotification struct {
-	baseStruct
+	models.BaseStruct
 	// The id of the user this notification is for
 	UserID uuid.UUID `json:"userID" db:"user_id"`
 	// The if of the entity this notification is about
@@ -15,16 +17,10 @@ type UserNotification struct {
 	IsRead     bool      `json:"isRead" db:"is_read"`
 }
 
-// UserNotificationContent is an interface which is used to return a Union type for graphql.
-// Specifically, it allows us to return data that a notification is about
-type UserNotificationContent interface {
-	isUserNotificationContent()
-}
-
 // NewUserNotification returns a New UserNotification
 func NewUserNotification(userID uuid.UUID, activityID uuid.UUID) *UserNotification {
 	return &UserNotification{
-		baseStruct: NewBaseStruct(userID),
+		BaseStruct: models.NewBaseStruct(userID),
 		ActivityID: activityID,
 		IsRead:     false,
 	}

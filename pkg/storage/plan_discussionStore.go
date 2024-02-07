@@ -13,6 +13,7 @@ import (
 	"github.com/cmsgov/mint-app/pkg/models"
 	"github.com/cmsgov/mint-app/pkg/shared/utilitySQL"
 	"github.com/cmsgov/mint-app/pkg/shared/utilityUUID"
+	"github.com/cmsgov/mint-app/pkg/sqlutils"
 	"github.com/cmsgov/mint-app/pkg/storage/genericmodel"
 )
 
@@ -107,7 +108,7 @@ func (s *Store) PlanDiscussionGetByModelPlanIDLOADER(
 func (s *Store) PlanDiscussionCreate(
 	logger *zap.Logger,
 	discussion *models.PlanDiscussion,
-	np NamedPreparer,
+	np sqlutils.NamedPreparer,
 ) (*models.PlanDiscussion, error) {
 
 	discussion.ID = utilityUUID.ValueOrNewUUID(discussion.ID)

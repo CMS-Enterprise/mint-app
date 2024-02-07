@@ -9,7 +9,7 @@ import (
 
 // PlanDocument represents a document attached to the plan
 type PlanDocument struct {
-	baseStruct
+	BaseStruct
 	modelPlanRelation
 	IsLink bool        `json:"isLink" db:"is_link"`
 	URL    zero.String `json:"url" db:"url"`
@@ -35,7 +35,7 @@ type PlanDocument struct {
 func NewPlanDocument(createdBy uuid.UUID, modelPlanID uuid.UUID, fileType string, bucket string, fileKey string, fileName string, fileSize int, documentType DocumentType, restricted bool, otherTypeDescription zero.String, optionalNotes zero.String, isLink bool, url zero.String) *PlanDocument {
 	return &PlanDocument{
 		modelPlanRelation:    NewModelPlanRelation(modelPlanID),
-		baseStruct:           NewBaseStruct(createdBy),
+		BaseStruct:           NewBaseStruct(createdBy),
 		FileType:             fileType,
 		Bucket:               bucket,
 		FileKey:              fileKey,
