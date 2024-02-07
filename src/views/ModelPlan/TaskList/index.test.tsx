@@ -13,7 +13,11 @@ import configureMockStore from 'redux-mock-store';
 import { MessageProvider } from 'hooks/useMessage';
 import GetModelPlanQuery from 'queries/GetModelPlan';
 import { GetModelPlan_modelPlan as GetModelPlanTypes } from 'queries/types/GetModelPlan';
-import { ModelStatus } from 'types/graphql-global-types';
+import {
+  ModelStatus,
+  PrepareForClearanceStatus,
+  TaskStatus
+} from 'types/graphql-global-types';
 
 import TaskList, { getLatestModifiedDate } from './index';
 
@@ -26,23 +30,71 @@ describe('The Model Plan Task List', () => {
     id: '6e224030-09d5-46f7-ad04-4bb851b36eab',
     status: ModelStatus.PLAN_DRAFT,
     modelName: 'Test',
-
     modifiedDts: '2022-05-12T15:01:39.190679Z',
     archived: false,
     basics: {
       __typename: 'PlanBasics',
-      id: 'adsf',
+      id: '123',
       modifiedDts: null,
       clearanceStarts: '2022-05-12T15:01:39.190679Z',
       readyForClearanceDts: '2022-05-12T15:01:39.190679Z',
       status: 'READY'
     },
-    opsEvalAndLearning: {} as any,
-    generalCharacteristics: {} as any,
-    participantsAndProviders: {} as any,
-    beneficiaries: {} as any,
-    prepareForClearance: {} as any,
-    payments: {} as any,
+    opsEvalAndLearning: {
+      __typename: 'PlanOpsEvalAndLearning',
+      id: '7865676',
+      createdBy: 'John Doe',
+      createdDts: '',
+      modifiedBy: '',
+      modifiedDts: '',
+      readyForClearanceDts: '',
+      status: TaskStatus.IN_PROGRESS
+    },
+    generalCharacteristics: {
+      __typename: 'PlanGeneralCharacteristics',
+      id: '54234',
+      createdBy: 'John Doe',
+      createdDts: '',
+      modifiedBy: '',
+      modifiedDts: '',
+      readyForClearanceDts: '',
+      status: TaskStatus.IN_PROGRESS
+    },
+    participantsAndProviders: {
+      __typename: 'PlanParticipantsAndProviders',
+      id: '46246356',
+      createdBy: 'John Doe',
+      createdDts: '',
+      modifiedBy: '',
+      modifiedDts: '',
+      readyForClearanceDts: '',
+      status: TaskStatus.IN_PROGRESS
+    },
+    beneficiaries: {
+      __typename: 'PlanBeneficiaries',
+      id: '09865643',
+      createdBy: 'John Doe',
+      createdDts: '',
+      modifiedBy: '',
+      modifiedDts: '',
+      readyForClearanceDts: '',
+      status: TaskStatus.IN_PROGRESS
+    },
+    prepareForClearance: {
+      __typename: 'PrepareForClearance',
+      status: PrepareForClearanceStatus.IN_PROGRESS,
+      modifiedDts: ''
+    },
+    payments: {
+      __typename: 'PlanPayments',
+      id: '8756435235',
+      createdBy: 'John Doe',
+      createdDts: '',
+      modifiedBy: '',
+      modifiedDts: '',
+      readyForClearanceDts: '',
+      status: TaskStatus.IN_PROGRESS
+    },
     crs: [],
     tdls: [],
     operationalNeeds: [] as any,

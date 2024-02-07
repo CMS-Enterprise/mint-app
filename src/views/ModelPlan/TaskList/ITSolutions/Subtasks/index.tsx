@@ -101,15 +101,16 @@ const Subtasks = ({
   const formikRef = useRef<FormikProps<FormType>>(null);
 
   const initialValues: FormType = {
-    subtasks: managingSubtasks
-      ? queriedSubtasks
-      : [
-          {
-            __typename: 'OperationalSolutionSubtask',
-            name: '',
-            status: OperationalSolutionSubtaskStatus.TODO
-          }
-        ]
+    subtasks:
+      managingSubtasks && !loading
+        ? queriedSubtasks
+        : [
+            {
+              __typename: 'OperationalSolutionSubtask',
+              name: '',
+              status: OperationalSolutionSubtaskStatus.TODO
+            }
+          ]
   };
 
   const [create] = useMutation<
