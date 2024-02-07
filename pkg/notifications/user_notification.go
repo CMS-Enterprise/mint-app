@@ -16,10 +16,9 @@ func UserNotificationCollectionGetByUser(
 	store *storage.Store,
 	principal authentication.Principal,
 ) (*UserNotifications, error) {
-	var db dataBaseCalls
 
 	//TODO: EASI-3294 do we want to make this resolver take a NamedPreparer? That way we can selectively create notifications as part of a transaction here
-	notifications, err := db.UserNotificationCollectionGetByUserID(store, principal.Account().ID)
+	notifications, err := dbCall.UserNotificationCollectionGetByUserID(store, principal.Account().ID)
 	if err != nil {
 		return nil, err
 	}
@@ -42,8 +41,7 @@ func userNotificationCreate(
 	notif := NewUserNotification(activity.ActorID, activity.ID)
 	notif.UserID = userID
 
-	var db dataBaseCalls
-	return db.UserNotificationCreate(np, notif)
+	return dbCall.UserNotificationCreate(np, notif)
 
 }
 
