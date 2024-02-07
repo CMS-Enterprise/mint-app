@@ -291,7 +291,7 @@ exports[`Model Plan -- Claims Based Payment > matches snapshot 1`] = `
                   data-testid="label"
                   for="payClaimsOther"
                 >
-                  Please describe the other payment frequency.
+                  Please describe the other claims-based payments you will pay
                 </label>
                 <input
                   class="usa-input"
