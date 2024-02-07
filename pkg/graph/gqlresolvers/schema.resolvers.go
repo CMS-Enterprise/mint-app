@@ -1100,7 +1100,7 @@ func (r *queryResolver) UserNotificationPreferences(ctx context.Context) (*model
 }
 
 // UserNotifications is the resolver for the userNotifications field.
-func (r *queryResolver) UserNotifications(ctx context.Context) ([]*models.UserNotification, error) {
+func (r *queryResolver) UserNotifications(ctx context.Context) (*models.UserNotifications, error) {
 	principal := appcontext.Principal(ctx)
 	return resolvers.UserNotificationCollectionGetByUser(ctx, r.store, principal)
 }
@@ -1133,6 +1133,11 @@ func (r *taggedContentResolver) RawContent(ctx context.Context, obj *models.Tagg
 func (r *userNotificationResolver) Activity(ctx context.Context, obj *models.UserNotification) (*models.Activity, error) {
 	return resolvers.ActivityGetByID(ctx, r.store, obj.ActivityID)
 	//TODO: EASI-3294 fetch this based on the obj.ActivityID. Use a data loader
+}
+
+// Content is the resolver for the content field.
+func (r *userNotificationResolver) Content(ctx context.Context, obj *models.UserNotification) (models.UserNotificationContent, error) {
+	panic(fmt.Errorf("not implemented: Content - content"))
 }
 
 // AuditChange returns generated.AuditChangeResolver implementation.

@@ -42,7 +42,7 @@ export enum ActionType {
 /** Activity represents an event that happened in the application that could result in a notification. */
 export type Activity = {
   __typename: 'Activity';
-  activityType?: Maybe<ActivityType>;
+  activityType: ActivityType;
   actorID: Scalars['UUID']['output'];
   createdBy: Scalars['UUID']['output'];
   createdByUserAccount: UserAccount;
@@ -2392,7 +2392,7 @@ export type Query = {
   taskListSectionLocks: Array<TaskListSectionLockStatus>;
   userAccount: UserAccount;
   userNotificationPreferences: UserNotificationPreferences;
-  userNotifications: Array<UserNotification>;
+  userNotifications: UserNotifications;
 };
 
 
@@ -2872,6 +2872,7 @@ export type UserNotification = {
   __typename: 'UserNotification';
   activity: Activity;
   activityID: Scalars['UUID']['output'];
+  content: UserNotificationContent;
   createdBy: Scalars['UUID']['output'];
   createdByUserAccount: UserAccount;
   createdDts: Scalars['Time']['output'];
@@ -2882,6 +2883,9 @@ export type UserNotification = {
   modifiedDts?: Maybe<Scalars['Time']['output']>;
   userID: Scalars['UUID']['output'];
 };
+
+/** User Notification Content represents the possible data associated with a User Notification */
+export type UserNotificationContent = DiscussionReply | PlanDiscussion;
 
 /** UserNotificationPreferences represents a users preferences about what type and where to receive a notifiation */
 export type UserNotificationPreferences = {
@@ -2900,6 +2904,17 @@ export type UserNotificationPreferences = {
   newPlanDiscussionEmail: Scalars['Boolean']['output'];
   newPlanDiscussionInApp: Scalars['Boolean']['output'];
   userID: Scalars['UUID']['output'];
+};
+
+/** This is a wrapper for all information for a user  */
+export type UserNotifications = {
+  __typename: 'UserNotifications';
+  /** This includes all notifiationcs */
+  notifications: Array<UserNotification>;
+  /** This returns the number of unread notifications */
+  numUnreadNotifications: Scalars['Int']['output'];
+  /** This renders only the unread notifications */
+  unreadNotifications: Array<UserNotification>;
 };
 
 export enum WaiverType {

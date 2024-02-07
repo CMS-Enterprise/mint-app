@@ -16,10 +16,16 @@ func UserNotificationCollectionGetByUser(
 	ctx context.Context,
 	store *storage.Store,
 	principal authentication.Principal,
-) ([]*models.UserNotification, error) {
+) (*models.UserNotifications, error) {
 
 	//TODO: EASI-3294 do we want to make this resolver take a NamedPreparer? That way we can selectively create notifications as part of a transaction here
-	return store.UserNotificationCollectionGetByUserID(store, principal.Account().ID)
+	notifications, err := store.UserNotificationCollectionGetByUserID(store, principal.Account().ID)
+	if err != nil {
+		return nil, err
+	}
+	return &models.UserNotifications{
+		Notifications: notifications,
+	}, nil
 
 }
 

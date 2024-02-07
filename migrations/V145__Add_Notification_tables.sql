@@ -58,3 +58,5 @@ CREATE TABLE user_notification_preferences (
     modified_dts TIMESTAMP WITH TIME ZONE
 
 )
+
+-- TODO: EASI-3294 Add auditing, probably just the preferences table.

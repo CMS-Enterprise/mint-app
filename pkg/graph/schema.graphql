@@ -1814,7 +1814,7 @@ type Activity {
   id: UUID!
 	actorID: UUID! #TODO: return the actor? DataLoader?
 	entityID: UUID! #TODO: return the entity?
-	activityType: ActivityType
+	activityType: ActivityType!
 
   createdBy: UUID!
   createdByUserAccount: UserAccount!
@@ -1825,14 +1825,20 @@ type Activity {
 
 }
 """
+User Notification Content represents the possible data associated with a User Notification
+"""
+union UserNotificationContent = PlanDiscussion | DiscussionReply
+"""
 UserNotification represents a notification about a specific Activity
 """
 type UserNotification {
   id: UUID!
 	activityID: UUID!
+  # activityType: ActivityType #Maybe add this on this level so the FE doesn't need to query it?
 	userID: UUID! #probably not needed, it should be only visibile for the user
   isRead: Boolean!
   activity: Activity! # should we nest this?
+  content: UserNotificationContent!
 
   createdBy: UUID!
   createdByUserAccount: UserAccount!
@@ -1841,6 +1847,24 @@ type UserNotification {
   modifiedByUserAccount: UserAccount
   modifiedDts: Time
 
+}
+
+"""
+This is a wrapper for all information for a user 
+"""
+type UserNotifications {
+"""
+This returns the number of unread notifications
+"""
+numUnreadNotifications: Int!
+"""
+This includes all notifiationcs
+"""
+notifications: [UserNotification!]!
+"""
+This renders only the unread notifications
+"""
+unreadNotifications: [UserNotification!]!
 }
 
 """
@@ -1917,7 +1941,8 @@ type Query {
   mostRecentDiscussionRoleSelection: DiscussionRoleSelection
   @hasAnyRole(roles: [MINT_USER, MINT_MAC])
   userNotificationPreferences: UserNotificationPreferences!
-  userNotifications: [UserNotification!]! #TODO: EASI-3294 consider adding filters to get only unread etc
+  # userNotifications: [UserNotification!]! #TODO: EASI-3294 consider adding filters to get only unread etc
+  userNotifications:  UserNotifications!
 
 }
 
