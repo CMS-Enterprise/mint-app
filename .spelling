@@ -219,6 +219,8 @@ routes.go
 inlining
 Performant
 serializable
+OpenSearch
+Opensearch
 mint-logstash
 Logstash
 audit.change_table
