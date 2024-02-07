@@ -66,6 +66,14 @@ export default gql`
         }
         resemblesExistingModelOtherSpecify
         resemblesExistingModelOtherOption
+        participationInModelPrecondition
+        participationInModelPreconditionWhich {
+          names
+        }
+        participationInModelPreconditionOtherSpecify
+        participationInModelPreconditionOtherOption
+        participationInModelPreconditionWhyHow
+        participationInModelPreconditionNote
         hasComponentsOrTracks
         hasComponentsOrTracksDiffer
         hasComponentsOrTracksNote

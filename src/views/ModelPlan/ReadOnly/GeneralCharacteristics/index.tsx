@@ -58,6 +58,13 @@ const ReadOnlyGeneralCharacteristics = ({
     resemblesExistingModelOtherSpecify,
     resemblesExistingModelOtherSelected,
     resemblesExistingModelOtherOption,
+    participationInModelPrecondition,
+    participationInModelPreconditionWhyHow,
+    participationInModelPreconditionWhich,
+    participationInModelPreconditionNote,
+    participationInModelPreconditionOtherSpecify,
+    participationInModelPreconditionOtherSelected,
+    participationInModelPreconditionOtherOption,
     hasComponentsOrTracks,
     hasComponentsOrTracksDiffer,
     hasComponentsOrTracksNote,
@@ -120,6 +127,23 @@ const ReadOnlyGeneralCharacteristics = ({
     }
     return selectedPlans;
   }, [resemblesExistingModelWhich, resemblesExistingModelOtherSelected]);
+
+  // Add 'Other' to the participationInModelPrecondition list if participationInModelPreconditionOtherSelected is true
+  const participationPreconditionPlans = useMemo(() => {
+    const participationInModelPreconditionWhichCopy = {
+      ...participationInModelPreconditionWhich
+    }.names;
+    const selectedPlans = [
+      ...(participationInModelPreconditionWhichCopy || [])
+    ];
+    if (participationInModelPreconditionOtherSelected) {
+      selectedPlans?.push('Other');
+    }
+    return selectedPlans;
+  }, [
+    participationInModelPreconditionWhich,
+    participationInModelPreconditionOtherSelected
+  ]);
 
   if ((!loading && error) || (!loading && !data?.modelPlan)) {
     return <NotFoundPartial />;
@@ -235,6 +259,55 @@ const ReadOnlyGeneralCharacteristics = ({
               )}
               copy={resemblesExistingModelHow}
               notes={resemblesExistingModelNote}
+            />
+          )}
+
+        {checkGroupMap(
+          isViewingFilteredView,
+          filteredQuestions,
+          'participationInModelPrecondition',
+          <ReadOnlySection
+            heading={generalCharacteristicsT(
+              'participationInModelPrecondition.label'
+            )}
+            copy={generalCharacteristicsT(
+              `participationInModelPrecondition.options.${participationInModelPrecondition}`,
+              ''
+            )}
+            otherItem={generalCharacteristicsT(
+              `participationInModelPrecondition.options.OTHER`,
+              ''
+            )}
+            listOtherItem={participationInModelPreconditionOtherSpecify}
+          />
+        )}
+
+        {participationInModelPrecondition === YesNoOtherType.YES &&
+          checkGroupMap(
+            isViewingFilteredView,
+            filteredQuestions,
+            'participationInModelPreconditionWhich',
+            <ReadOnlySection
+              heading={generalCharacteristicsT(
+                'participationInModelPreconditionWhich.label'
+              )}
+              list
+              listItems={participationPreconditionPlans}
+              listOtherItem={participationInModelPreconditionOtherOption}
+            />
+          )}
+
+        {participationInModelPrecondition === YesNoOtherType.YES &&
+          checkGroupMap(
+            isViewingFilteredView,
+            filteredQuestions,
+            'participationInModelPreconditionWhyHow',
+            <ReadOnlySection
+              heading={generalCharacteristicsT(
+                'participationInModelPreconditionWhyHow.label'
+              )}
+              copy={participationInModelPreconditionWhyHow}
+              notes={participationInModelPreconditionNote}
             />
           )}
 

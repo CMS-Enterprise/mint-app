@@ -892,6 +892,12 @@ export interface PlanGeneralCharacteristicsChanges {
   resemblesExistingModelOtherOption?: string | null;
   resemblesExistingModelHow?: string | null;
   resemblesExistingModelNote?: string | null;
+  participationInModelPrecondition?: YesNoOtherType | null;
+  participationInModelPreconditionWhyHow?: string | null;
+  participationInModelPreconditionOtherSpecify?: string | null;
+  participationInModelPreconditionOtherSelected?: boolean | null;
+  participationInModelPreconditionOtherOption?: string | null;
+  participationInModelPreconditionNote?: string | null;
   hasComponentsOrTracks?: boolean | null;
   hasComponentsOrTracksDiffer?: string | null;
   hasComponentsOrTracksNote?: string | null;

@@ -14,6 +14,11 @@ export interface GetAllGeneralCharacteristics_modelPlan_generalCharacteristics_r
   names: string[];
 }
 
+export interface GetAllGeneralCharacteristics_modelPlan_generalCharacteristics_participationInModelPreconditionWhich {
+  __typename: "ExistingModelLinks";
+  names: string[];
+}
+
 export interface GetAllGeneralCharacteristics_modelPlan_generalCharacteristics {
   __typename: "PlanGeneralCharacteristics";
   id: UUID;
@@ -39,6 +44,34 @@ export interface GetAllGeneralCharacteristics_modelPlan_generalCharacteristics {
    * For denoting the name of the other existing model that this model resembles
    */
   resemblesExistingModelOtherOption: string | null;
+  /**
+   * For answering if participation in other models is a precondition for participating in this model
+   */
+  participationInModelPrecondition: YesNoOtherType | null;
+  /**
+   * The collection of existing model links relevant to the participationInModelPrecondition question
+   */
+  participationInModelPreconditionWhich: GetAllGeneralCharacteristics_modelPlan_generalCharacteristics_participationInModelPreconditionWhich | null;
+  /**
+   * For providing clarifying comments if Other is selected for participationInModelPrecondition
+   */
+  participationInModelPreconditionOtherSpecify: string | null;
+  /**
+   * For denoting if there is an other model that this model refers to.
+   */
+  participationInModelPreconditionOtherSelected: boolean | null;
+  /**
+   * For denoting the name of the other existing model
+   */
+  participationInModelPreconditionOtherOption: string | null;
+  /**
+   * For providing clarifying comments if Yes or No is selected for participationInModelPrecondition
+   */
+  participationInModelPreconditionWhyHow: string | null;
+  /**
+   * A note field for participationInModelPrecondition
+   */
+  participationInModelPreconditionNote: string | null;
   hasComponentsOrTracks: boolean | null;
   hasComponentsOrTracksDiffer: string | null;
   hasComponentsOrTracksNote: string | null;

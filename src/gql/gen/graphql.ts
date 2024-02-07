@@ -1584,6 +1584,20 @@ export type PlanGeneralCharacteristics = {
   modifiedDts?: Maybe<Scalars['Time']['output']>;
   multiplePatricipationAgreementsNeeded?: Maybe<Scalars['Boolean']['output']>;
   multiplePatricipationAgreementsNeededNote?: Maybe<Scalars['String']['output']>;
+  /** For answering if participation in other models is a precondition for participating in this model */
+  participationInModelPrecondition?: Maybe<YesNoOtherType>;
+  /** A note field for participationInModelPrecondition */
+  participationInModelPreconditionNote?: Maybe<Scalars['String']['output']>;
+  /** For denoting the name of the other existing model */
+  participationInModelPreconditionOtherOption?: Maybe<Scalars['String']['output']>;
+  /** For denoting if there is an other model that this model refers to. */
+  participationInModelPreconditionOtherSelected?: Maybe<Scalars['Boolean']['output']>;
+  /** For providing clarifying comments if Other is selected for participationInModelPrecondition */
+  participationInModelPreconditionOtherSpecify?: Maybe<Scalars['String']['output']>;
+  /** The collection of existing model links relevant to the participationInModelPrecondition question */
+  participationInModelPreconditionWhich?: Maybe<ExistingModelLinks>;
+  /** For providing clarifying comments if Yes or No is selected for participationInModelPrecondition */
+  participationInModelPreconditionWhyHow?: Maybe<Scalars['String']['output']>;
   participationOptions?: Maybe<Scalars['Boolean']['output']>;
   participationOptionsNote?: Maybe<Scalars['String']['output']>;
   planContractUpdated?: Maybe<Scalars['Boolean']['output']>;
@@ -1664,6 +1678,18 @@ export type PlanGeneralCharacteristicsChanges = {
   managePartCDEnrollmentNote?: InputMaybe<Scalars['String']['input']>;
   multiplePatricipationAgreementsNeeded?: InputMaybe<Scalars['Boolean']['input']>;
   multiplePatricipationAgreementsNeededNote?: InputMaybe<Scalars['String']['input']>;
+  /** For answering if participation in other models is a precondition for participating in this model */
+  participationInModelPrecondition?: InputMaybe<YesNoOtherType>;
+  /** A note field for participationInModelPrecondition */
+  participationInModelPreconditionNote?: InputMaybe<Scalars['String']['input']>;
+  /** For denoting the name of the other existing model */
+  participationInModelPreconditionOtherOption?: InputMaybe<Scalars['String']['input']>;
+  /** For denoting if there is an other model that this model refers to. */
+  participationInModelPreconditionOtherSelected?: InputMaybe<Scalars['Boolean']['input']>;
+  /** For providing clarifying comments if Other is selected for participationInModelPrecondition */
+  participationInModelPreconditionOtherSpecify?: InputMaybe<Scalars['String']['input']>;
+  /** For providing clarifying comments if Yes or No is selected for participationInModelPrecondition */
+  participationInModelPreconditionWhyHow?: InputMaybe<Scalars['String']['input']>;
   participationOptions?: InputMaybe<Scalars['Boolean']['input']>;
   participationOptionsNote?: InputMaybe<Scalars['String']['input']>;
   planContractUpdated?: InputMaybe<Scalars['Boolean']['input']>;
@@ -3052,7 +3078,7 @@ export type GetAllGeneralCharacteristicsQueryVariables = Exact<{
 }>;
 
 
-export type GetAllGeneralCharacteristicsQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, generalCharacteristics: { __typename: 'PlanGeneralCharacteristics', id: UUID, isNewModel?: boolean | null, existingModel?: string | null, resemblesExistingModel?: YesNoOtherType | null, resemblesExistingModelWhyHow?: string | null, resemblesExistingModelHow?: string | null, resemblesExistingModelNote?: string | null, resemblesExistingModelOtherSpecify?: string | null, resemblesExistingModelOtherSelected?: boolean | null, resemblesExistingModelOtherOption?: string | null, hasComponentsOrTracks?: boolean | null, hasComponentsOrTracksDiffer?: string | null, hasComponentsOrTracksNote?: string | null, agencyOrStateHelp: Array<AgencyOrStateHelpType>, agencyOrStateHelpOther?: string | null, agencyOrStateHelpNote?: string | null, alternativePaymentModelTypes: Array<AlternativePaymentModelType>, alternativePaymentModelNote?: string | null, keyCharacteristics: Array<KeyCharacteristic>, keyCharacteristicsOther?: string | null, keyCharacteristicsNote?: string | null, collectPlanBids?: boolean | null, collectPlanBidsNote?: string | null, managePartCDEnrollment?: boolean | null, managePartCDEnrollmentNote?: string | null, planContractUpdated?: boolean | null, planContractUpdatedNote?: string | null, careCoordinationInvolved?: boolean | null, careCoordinationInvolvedDescription?: string | null, careCoordinationInvolvedNote?: string | null, additionalServicesInvolved?: boolean | null, additionalServicesInvolvedDescription?: string | null, additionalServicesInvolvedNote?: string | null, communityPartnersInvolved?: boolean | null, communityPartnersInvolvedDescription?: string | null, communityPartnersInvolvedNote?: string | null, geographiesTargeted?: boolean | null, geographiesTargetedTypes: Array<GeographyType>, geographiesStatesAndTerritories: Array<StatesAndTerritories>, geographiesRegionTypes: Array<GeographyRegionType>, geographiesTargetedTypesOther?: string | null, geographiesTargetedAppliedTo: Array<GeographyApplication>, geographiesTargetedAppliedToOther?: string | null, geographiesTargetedNote?: string | null, participationOptions?: boolean | null, participationOptionsNote?: string | null, agreementTypes: Array<AgreementType>, agreementTypesOther?: string | null, multiplePatricipationAgreementsNeeded?: boolean | null, multiplePatricipationAgreementsNeededNote?: string | null, rulemakingRequired?: boolean | null, rulemakingRequiredDescription?: string | null, rulemakingRequiredNote?: string | null, authorityAllowances: Array<AuthorityAllowance>, authorityAllowancesOther?: string | null, authorityAllowancesNote?: string | null, waiversRequired?: boolean | null, waiversRequiredTypes: Array<WaiverType>, waiversRequiredNote?: string | null, status: TaskStatus, resemblesExistingModelWhich?: { __typename: 'ExistingModelLinks', names: Array<string> } | null } } };
+export type GetAllGeneralCharacteristicsQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, generalCharacteristics: { __typename: 'PlanGeneralCharacteristics', id: UUID, isNewModel?: boolean | null, existingModel?: string | null, resemblesExistingModel?: YesNoOtherType | null, resemblesExistingModelWhyHow?: string | null, resemblesExistingModelHow?: string | null, resemblesExistingModelNote?: string | null, resemblesExistingModelOtherSpecify?: string | null, resemblesExistingModelOtherSelected?: boolean | null, resemblesExistingModelOtherOption?: string | null, participationInModelPrecondition?: YesNoOtherType | null, participationInModelPreconditionOtherSpecify?: string | null, participationInModelPreconditionOtherSelected?: boolean | null, participationInModelPreconditionOtherOption?: string | null, participationInModelPreconditionWhyHow?: string | null, participationInModelPreconditionNote?: string | null, hasComponentsOrTracks?: boolean | null, hasComponentsOrTracksDiffer?: string | null, hasComponentsOrTracksNote?: string | null, agencyOrStateHelp: Array<AgencyOrStateHelpType>, agencyOrStateHelpOther?: string | null, agencyOrStateHelpNote?: string | null, alternativePaymentModelTypes: Array<AlternativePaymentModelType>, alternativePaymentModelNote?: string | null, keyCharacteristics: Array<KeyCharacteristic>, keyCharacteristicsOther?: string | null, keyCharacteristicsNote?: string | null, collectPlanBids?: boolean | null, collectPlanBidsNote?: string | null, managePartCDEnrollment?: boolean | null, managePartCDEnrollmentNote?: string | null, planContractUpdated?: boolean | null, planContractUpdatedNote?: string | null, careCoordinationInvolved?: boolean | null, careCoordinationInvolvedDescription?: string | null, careCoordinationInvolvedNote?: string | null, additionalServicesInvolved?: boolean | null, additionalServicesInvolvedDescription?: string | null, additionalServicesInvolvedNote?: string | null, communityPartnersInvolved?: boolean | null, communityPartnersInvolvedDescription?: string | null, communityPartnersInvolvedNote?: string | null, geographiesTargeted?: boolean | null, geographiesTargetedTypes: Array<GeographyType>, geographiesStatesAndTerritories: Array<StatesAndTerritories>, geographiesRegionTypes: Array<GeographyRegionType>, geographiesTargetedTypesOther?: string | null, geographiesTargetedAppliedTo: Array<GeographyApplication>, geographiesTargetedAppliedToOther?: string | null, geographiesTargetedNote?: string | null, participationOptions?: boolean | null, participationOptionsNote?: string | null, agreementTypes: Array<AgreementType>, agreementTypesOther?: string | null, multiplePatricipationAgreementsNeeded?: boolean | null, multiplePatricipationAgreementsNeededNote?: string | null, rulemakingRequired?: boolean | null, rulemakingRequiredDescription?: string | null, rulemakingRequiredNote?: string | null, authorityAllowances: Array<AuthorityAllowance>, authorityAllowancesOther?: string | null, authorityAllowancesNote?: string | null, waiversRequired?: boolean | null, waiversRequiredTypes: Array<WaiverType>, waiversRequiredNote?: string | null, status: TaskStatus, resemblesExistingModelWhich?: { __typename: 'ExistingModelLinks', names: Array<string> } | null, participationInModelPreconditionWhich?: { __typename: 'ExistingModelLinks', names: Array<string> } | null } } };
 
 export type GetAuthorityQueryVariables = Exact<{
   id: Scalars['UUID']['input'];
@@ -3066,7 +3092,7 @@ export type GetGeneralCharacteristicsQueryVariables = Exact<{
 }>;
 
 
-export type GetGeneralCharacteristicsQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, generalCharacteristics: { __typename: 'PlanGeneralCharacteristics', id: UUID, isNewModel?: boolean | null, currentModelPlanID?: UUID | null, existingModelID?: number | null, resemblesExistingModel?: YesNoOtherType | null, resemblesExistingModelWhyHow?: string | null, resemblesExistingModelHow?: string | null, resemblesExistingModelNote?: string | null, resemblesExistingModelOtherSpecify?: string | null, resemblesExistingModelOtherSelected?: boolean | null, resemblesExistingModelOtherOption?: string | null, hasComponentsOrTracks?: boolean | null, hasComponentsOrTracksDiffer?: string | null, hasComponentsOrTracksNote?: string | null, resemblesExistingModelWhich?: { __typename: 'ExistingModelLinks', links: Array<{ __typename: 'ExistingModelLink', id?: UUID | null, existingModelID?: number | null, currentModelPlanID?: UUID | null }> } | null } } };
+export type GetGeneralCharacteristicsQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, generalCharacteristics: { __typename: 'PlanGeneralCharacteristics', id: UUID, isNewModel?: boolean | null, currentModelPlanID?: UUID | null, existingModelID?: number | null, resemblesExistingModel?: YesNoOtherType | null, resemblesExistingModelWhyHow?: string | null, resemblesExistingModelHow?: string | null, resemblesExistingModelNote?: string | null, resemblesExistingModelOtherSpecify?: string | null, resemblesExistingModelOtherSelected?: boolean | null, resemblesExistingModelOtherOption?: string | null, participationInModelPrecondition?: YesNoOtherType | null, participationInModelPreconditionOtherSpecify?: string | null, participationInModelPreconditionOtherSelected?: boolean | null, participationInModelPreconditionOtherOption?: string | null, participationInModelPreconditionWhyHow?: string | null, participationInModelPreconditionNote?: string | null, hasComponentsOrTracks?: boolean | null, hasComponentsOrTracksDiffer?: string | null, hasComponentsOrTracksNote?: string | null, resemblesExistingModelWhich?: { __typename: 'ExistingModelLinks', links: Array<{ __typename: 'ExistingModelLink', id?: UUID | null, existingModelID?: number | null, currentModelPlanID?: UUID | null }> } | null, participationInModelPreconditionWhich?: { __typename: 'ExistingModelLinks', links: Array<{ __typename: 'ExistingModelLink', id?: UUID | null, existingModelID?: number | null, currentModelPlanID?: UUID | null }> } | null } } };
 
 export type GetInvolvementsQueryVariables = Exact<{
   id: Scalars['UUID']['input'];
@@ -4564,6 +4590,15 @@ export const GetAllGeneralCharacteristicsDocument = gql`
       resemblesExistingModelOtherSpecify
       resemblesExistingModelOtherSelected
       resemblesExistingModelOtherOption
+      participationInModelPrecondition
+      participationInModelPreconditionWhich {
+        names
+      }
+      participationInModelPreconditionOtherSpecify
+      participationInModelPreconditionOtherSelected
+      participationInModelPreconditionOtherOption
+      participationInModelPreconditionWhyHow
+      participationInModelPreconditionNote
       hasComponentsOrTracks
       hasComponentsOrTracksDiffer
       hasComponentsOrTracksNote
@@ -4734,6 +4769,19 @@ export const GetGeneralCharacteristicsDocument = gql`
       resemblesExistingModelOtherSpecify
       resemblesExistingModelOtherSelected
       resemblesExistingModelOtherOption
+      participationInModelPrecondition
+      participationInModelPreconditionWhich {
+        links {
+          id
+          existingModelID
+          currentModelPlanID
+        }
+      }
+      participationInModelPreconditionOtherSpecify
+      participationInModelPreconditionOtherSelected
+      participationInModelPreconditionOtherOption
+      participationInModelPreconditionWhyHow
+      participationInModelPreconditionNote
       hasComponentsOrTracks
       hasComponentsOrTracksDiffer
       hasComponentsOrTracksNote

@@ -29,6 +29,7 @@ describe('The Model Plan General Characteristics Form', () => {
       .type('Plan with B{downArrow}{enter}')
       .should('have.value', 'Plan with Basics');
 
+    // Resembles Questions
     cy.get('#plan-characteristics-resembles-existing-model-YES')
       .check({ force: true })
       .should('be.checked');
@@ -66,6 +67,47 @@ describe('The Model Plan General Characteristics Form', () => {
     cy.get('#plan-characteristics-resembles-how-model')
       .type('In every way')
       .should('have.value', 'In every way');
+
+    // Participation precondition questions
+    cy.get('#plan-characteristics-participation-model-precondition-YES')
+      .check({ force: true })
+      .should('be.checked');
+
+    cy.get(
+      '#plan-characteristics-participation-model-precondition-which'
+    ).within(() => {
+      cy.get("input[type='text']")
+        .click()
+        .type('advance payment{downArrow}{enter}');
+    });
+
+    cy.get('[data-testid="multiselect-tag--Advance Payment ACO Model"]')
+      .first()
+      .contains('Advance Payment ACO Model');
+
+    cy.clickOutside();
+
+    cy.get(
+      '#plan-characteristics-participation-model-precondition-which'
+    ).within(() => {
+      cy.get("input[type='text']")
+        .click()
+        .type('other{downArrow}{downArrow}{enter}');
+    });
+
+    cy.get('[data-testid="multiselect-tag--Other"]').first().contains('Other');
+
+    cy.clickOutside();
+
+    cy.get(
+      '#plan-characteristics-participation-model-precondition-other-option'
+    )
+      .type('Other model')
+      .should('have.value', 'Other model');
+
+    cy.get('#plan-characteristics-participation-model-precondition-why-how')
+      .type('This is the how and the why')
+      .should('have.value', 'This is the how and the why');
 
     cy.get('#plan-characteristics-has-component-or-tracks-true')
       .check({ force: true })
