@@ -24,11 +24,6 @@ type CreateOperationalSolutionSubtaskInput struct {
 	Status models.OperationalSolutionSubtaskStatus `json:"status"`
 }
 
-// The current user of the application
-type CurrentUser struct {
-	LaunchDarkly *LaunchDarklySettings `json:"launchDarkly"`
-}
-
 // DiscussionReplyCreateInput represents the necessary fields to create a discussion reply
 type DiscussionReplyCreateInput struct {
 	DiscussionID        uuid.UUID                  `json:"discussionID"`

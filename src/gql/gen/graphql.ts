@@ -231,7 +231,9 @@ export type CreateOperationalSolutionSubtaskInput = {
 /** The current user of the application */
 export type CurrentUser = {
   __typename: 'CurrentUser';
+  account: UserAccount;
   launchDarkly: LaunchDarklySettings;
+  notifications: UserNotifications;
 };
 
 export enum DataForMonitoringType {

@@ -13,6 +13,8 @@ The current user of the application
 """
 type CurrentUser {
   launchDarkly: LaunchDarklySettings!
+  account: UserAccount!
+  notifications: UserNotifications!
 }
 """
 UUIDs are represented using 36 ASCII characters, for example B0511859-ADE6-4A67-8969-16EC280C0E1A
@@ -1941,7 +1943,6 @@ type Query {
   mostRecentDiscussionRoleSelection: DiscussionRoleSelection
   @hasAnyRole(roles: [MINT_USER, MINT_MAC])
   userNotificationPreferences: UserNotificationPreferences!
-  # userNotifications: [UserNotification!]! #TODO: EASI-3294 consider adding filters to get only unread etc
   userNotifications:  UserNotifications!
 
 }

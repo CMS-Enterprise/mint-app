@@ -13,7 +13,6 @@ import (
 	"github.com/cmsgov/mint-app/pkg/appcontext"
 	"github.com/cmsgov/mint-app/pkg/authentication"
 	"github.com/cmsgov/mint-app/pkg/constants"
-	"github.com/cmsgov/mint-app/pkg/flags"
 	"github.com/cmsgov/mint-app/pkg/graph/generated"
 	"github.com/cmsgov/mint-app/pkg/graph/model"
 	"github.com/cmsgov/mint-app/pkg/graph/resolvers"
@@ -24,6 +23,21 @@ import (
 // Fields is the resolver for the fields field.
 func (r *auditChangeResolver) Fields(ctx context.Context, obj *models.AuditChange) (map[string]interface{}, error) {
 	return obj.Fields.ToInterface()
+}
+
+// LaunchDarkly is the resolver for the launchDarkly field.
+func (r *currentUserResolver) LaunchDarkly(ctx context.Context, obj *models.CurrentUser) (*model.LaunchDarklySettings, error) {
+	return resolvers.CurrentUserLaunchDarklySettingsGet(ctx, r.ldClient)
+}
+
+// Account is the resolver for the account field.
+func (r *currentUserResolver) Account(ctx context.Context, obj *models.CurrentUser) (*authentication.UserAccount, error) {
+	return resolvers.CurrentUserAccountGet(ctx)
+}
+
+// Notifications is the resolver for the notifications field.
+func (r *currentUserResolver) Notifications(ctx context.Context, obj *models.CurrentUser) (*models.UserNotifications, error) {
+	return resolvers.CurrentUserNotificationsGet(ctx, r.store)
 }
 
 // Content is the resolver for the content field.
@@ -928,18 +942,8 @@ func (r *possibleOperationalSolutionResolver) PointsOfContact(ctx context.Contex
 }
 
 // CurrentUser is the resolver for the currentUser field.
-func (r *queryResolver) CurrentUser(ctx context.Context) (*model.CurrentUser, error) {
-	ldContext := flags.Principal(ctx)
-	userKey := ldContext.Key()
-	signedHash := r.ldClient.SecureModeHash(ldContext)
-
-	currentUser := model.CurrentUser{
-		LaunchDarkly: &model.LaunchDarklySettings{
-			UserKey:    userKey,
-			SignedHash: signedHash,
-		},
-	}
-	return &currentUser, nil
+func (r *queryResolver) CurrentUser(ctx context.Context) (*models.CurrentUser, error) {
+	return &models.CurrentUser{}, nil
 }
 
 // ModelPlan is the resolver for the modelPlan field.
@@ -1143,6 +1147,9 @@ func (r *userNotificationResolver) Content(ctx context.Context, obj *models.User
 // AuditChange returns generated.AuditChangeResolver implementation.
 func (r *Resolver) AuditChange() generated.AuditChangeResolver { return &auditChangeResolver{r} }
 
+// CurrentUser returns generated.CurrentUserResolver implementation.
+func (r *Resolver) CurrentUser() generated.CurrentUserResolver { return &currentUserResolver{r} }
+
 // DiscussionReply returns generated.DiscussionReplyResolver implementation.
 func (r *Resolver) DiscussionReply() generated.DiscussionReplyResolver {
 	return &discussionReplyResolver{r}
@@ -1241,6 +1248,7 @@ func (r *Resolver) UserNotification() generated.UserNotificationResolver {
 }
 
 type auditChangeResolver struct{ *Resolver }
+type currentUserResolver struct{ *Resolver }
 type discussionReplyResolver struct{ *Resolver }
 type existingModelLinkResolver struct{ *Resolver }
 type existingModelLinksResolver struct{ *Resolver }
