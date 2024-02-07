@@ -159,10 +159,20 @@ export type TranslationGeneralCharacteristics = {
   resemblesExistingModelOtherSpecify: TranslationFieldProperties;
   resemblesExistingModelOtherSelected: TranslationFieldPropertiesWithOptions<Bool>;
   resemblesExistingModelOtherOption: TranslationFieldProperties;
+  participationInModelPrecondition: TranslationFieldPropertiesWithOptions<YesNoOtherType>;
+  participationInModelPreconditionWhich: TranslationFieldProperties;
+  participationInModelPreconditionOtherSpecify: TranslationFieldProperties;
+  participationInModelPreconditionOtherSelected: TranslationFieldPropertiesWithOptions<Bool>;
+  participationInModelPreconditionOtherOption: TranslationFieldProperties;
+  participationInModelPreconditionWhyHow: TranslationFieldProperties;
+  participationInModelPreconditionNote: TranslationFieldProperties;
   hasComponentsOrTracks: TranslationFieldPropertiesWithOptions<Bool>;
   hasComponentsOrTracksDiffer: TranslationFieldProperties;
   hasComponentsOrTracksNote: TranslationFieldProperties;
   // Key Characteristics
+  agencyOrStateHelp: TranslationFieldPropertiesWithOptions<AgencyOrStateHelpType>;
+  agencyOrStateHelpOther: TranslationFieldProperties;
+  agencyOrStateHelpNote: TranslationFieldProperties;
   alternativePaymentModelTypes: TranslationFieldPropertiesWithOptions<AlternativePaymentModelType>;
   alternativePaymentModelNote: TranslationFieldProperties;
   keyCharacteristics: TranslationFieldPropertiesWithOptions<KeyCharacteristic>;
@@ -320,9 +330,6 @@ export type TranslationBeneficiaries = {
 
 // Operations Evaluation and Learning
 export type TranslationOpsEvalAndLearning = {
-  agencyOrStateHelp: TranslationFieldPropertiesWithOptions<AgencyOrStateHelpType>;
-  agencyOrStateHelpOther: TranslationFieldProperties;
-  agencyOrStateHelpNote: TranslationFieldProperties;
   stakeholders: TranslationFieldPropertiesWithOptions<StakeholdersType>;
   stakeholdersOther: TranslationFieldProperties;
   stakeholdersNote: TranslationFieldProperties;

@@ -228,7 +228,7 @@ export const payments: TranslationPayments = {
     gqlField: 'payClaimsOther',
     goField: 'PayClaimsOther',
     dbField: 'pay_claims_other',
-    label: 'Please describe the other payment frequency.',
+    label: 'Please describe the other claims-based payments you will pay',
     dataType: 'string',
     formType: 'textarea',
     filterGroups: ['cmmi', 'oact']

@@ -483,87 +483,94 @@ type ComplexityRoot struct {
 	}
 
 	PlanGeneralCharacteristics struct {
-		AdditionalServicesInvolved                func(childComplexity int) int
-		AdditionalServicesInvolvedDescription     func(childComplexity int) int
-		AdditionalServicesInvolvedNote            func(childComplexity int) int
-		AgreementTypes                            func(childComplexity int) int
-		AgreementTypesOther                       func(childComplexity int) int
-		AlternativePaymentModelNote               func(childComplexity int) int
-		AlternativePaymentModelTypes              func(childComplexity int) int
-		AuthorityAllowances                       func(childComplexity int) int
-		AuthorityAllowancesNote                   func(childComplexity int) int
-		AuthorityAllowancesOther                  func(childComplexity int) int
-		CareCoordinationInvolved                  func(childComplexity int) int
-		CareCoordinationInvolvedDescription       func(childComplexity int) int
-		CareCoordinationInvolvedNote              func(childComplexity int) int
-		CollectPlanBids                           func(childComplexity int) int
-		CollectPlanBidsNote                       func(childComplexity int) int
-		CommunityPartnersInvolved                 func(childComplexity int) int
-		CommunityPartnersInvolvedDescription      func(childComplexity int) int
-		CommunityPartnersInvolvedNote             func(childComplexity int) int
-		CreatedBy                                 func(childComplexity int) int
-		CreatedByUserAccount                      func(childComplexity int) int
-		CreatedDts                                func(childComplexity int) int
-		CurrentModelPlan                          func(childComplexity int) int
-		CurrentModelPlanID                        func(childComplexity int) int
-		ExistingModel                             func(childComplexity int) int
-		ExistingModelID                           func(childComplexity int) int
-		ExistingModelPlan                         func(childComplexity int) int
-		GeographiesRegionTypes                    func(childComplexity int) int
-		GeographiesStatesAndTerritories           func(childComplexity int) int
-		GeographiesTargeted                       func(childComplexity int) int
-		GeographiesTargetedAppliedTo              func(childComplexity int) int
-		GeographiesTargetedAppliedToOther         func(childComplexity int) int
-		GeographiesTargetedNote                   func(childComplexity int) int
-		GeographiesTargetedTypes                  func(childComplexity int) int
-		GeographiesTargetedTypesOther             func(childComplexity int) int
-		HasComponentsOrTracks                     func(childComplexity int) int
-		HasComponentsOrTracksDiffer               func(childComplexity int) int
-		HasComponentsOrTracksNote                 func(childComplexity int) int
-		ID                                        func(childComplexity int) int
-		IsNewModel                                func(childComplexity int) int
-		KeyCharacteristics                        func(childComplexity int) int
-		KeyCharacteristicsNote                    func(childComplexity int) int
-		KeyCharacteristicsOther                   func(childComplexity int) int
-		ManagePartCDEnrollment                    func(childComplexity int) int
-		ManagePartCDEnrollmentNote                func(childComplexity int) int
-		ModelPlanID                               func(childComplexity int) int
-		ModifiedBy                                func(childComplexity int) int
-		ModifiedByUserAccount                     func(childComplexity int) int
-		ModifiedDts                               func(childComplexity int) int
-		MultiplePatricipationAgreementsNeeded     func(childComplexity int) int
-		MultiplePatricipationAgreementsNeededNote func(childComplexity int) int
-		ParticipationOptions                      func(childComplexity int) int
-		ParticipationOptionsNote                  func(childComplexity int) int
-		PlanContractUpdated                       func(childComplexity int) int
-		PlanContractUpdatedNote                   func(childComplexity int) int
-		ReadyForClearanceBy                       func(childComplexity int) int
-		ReadyForClearanceByUserAccount            func(childComplexity int) int
-		ReadyForClearanceDts                      func(childComplexity int) int
-		ReadyForReviewBy                          func(childComplexity int) int
-		ReadyForReviewByUserAccount               func(childComplexity int) int
-		ReadyForReviewDts                         func(childComplexity int) int
-		ResemblesExistingModel                    func(childComplexity int) int
-		ResemblesExistingModelHow                 func(childComplexity int) int
-		ResemblesExistingModelNote                func(childComplexity int) int
-		ResemblesExistingModelOtherOption         func(childComplexity int) int
-		ResemblesExistingModelOtherSelected       func(childComplexity int) int
-		ResemblesExistingModelOtherSpecify        func(childComplexity int) int
-		ResemblesExistingModelWhich               func(childComplexity int) int
-		ResemblesExistingModelWhyHow              func(childComplexity int) int
-		RulemakingRequired                        func(childComplexity int) int
-		RulemakingRequiredDescription             func(childComplexity int) int
-		RulemakingRequiredNote                    func(childComplexity int) int
-		Status                                    func(childComplexity int) int
-		WaiversRequired                           func(childComplexity int) int
-		WaiversRequiredNote                       func(childComplexity int) int
-		WaiversRequiredTypes                      func(childComplexity int) int
+		AdditionalServicesInvolved                    func(childComplexity int) int
+		AdditionalServicesInvolvedDescription         func(childComplexity int) int
+		AdditionalServicesInvolvedNote                func(childComplexity int) int
+		AgencyOrStateHelp                             func(childComplexity int) int
+		AgencyOrStateHelpNote                         func(childComplexity int) int
+		AgencyOrStateHelpOther                        func(childComplexity int) int
+		AgreementTypes                                func(childComplexity int) int
+		AgreementTypesOther                           func(childComplexity int) int
+		AlternativePaymentModelNote                   func(childComplexity int) int
+		AlternativePaymentModelTypes                  func(childComplexity int) int
+		AuthorityAllowances                           func(childComplexity int) int
+		AuthorityAllowancesNote                       func(childComplexity int) int
+		AuthorityAllowancesOther                      func(childComplexity int) int
+		CareCoordinationInvolved                      func(childComplexity int) int
+		CareCoordinationInvolvedDescription           func(childComplexity int) int
+		CareCoordinationInvolvedNote                  func(childComplexity int) int
+		CollectPlanBids                               func(childComplexity int) int
+		CollectPlanBidsNote                           func(childComplexity int) int
+		CommunityPartnersInvolved                     func(childComplexity int) int
+		CommunityPartnersInvolvedDescription          func(childComplexity int) int
+		CommunityPartnersInvolvedNote                 func(childComplexity int) int
+		CreatedBy                                     func(childComplexity int) int
+		CreatedByUserAccount                          func(childComplexity int) int
+		CreatedDts                                    func(childComplexity int) int
+		CurrentModelPlan                              func(childComplexity int) int
+		CurrentModelPlanID                            func(childComplexity int) int
+		ExistingModel                                 func(childComplexity int) int
+		ExistingModelID                               func(childComplexity int) int
+		ExistingModelPlan                             func(childComplexity int) int
+		GeographiesRegionTypes                        func(childComplexity int) int
+		GeographiesStatesAndTerritories               func(childComplexity int) int
+		GeographiesTargeted                           func(childComplexity int) int
+		GeographiesTargetedAppliedTo                  func(childComplexity int) int
+		GeographiesTargetedAppliedToOther             func(childComplexity int) int
+		GeographiesTargetedNote                       func(childComplexity int) int
+		GeographiesTargetedTypes                      func(childComplexity int) int
+		GeographiesTargetedTypesOther                 func(childComplexity int) int
+		HasComponentsOrTracks                         func(childComplexity int) int
+		HasComponentsOrTracksDiffer                   func(childComplexity int) int
+		HasComponentsOrTracksNote                     func(childComplexity int) int
+		ID                                            func(childComplexity int) int
+		IsNewModel                                    func(childComplexity int) int
+		KeyCharacteristics                            func(childComplexity int) int
+		KeyCharacteristicsNote                        func(childComplexity int) int
+		KeyCharacteristicsOther                       func(childComplexity int) int
+		ManagePartCDEnrollment                        func(childComplexity int) int
+		ManagePartCDEnrollmentNote                    func(childComplexity int) int
+		ModelPlanID                                   func(childComplexity int) int
+		ModifiedBy                                    func(childComplexity int) int
+		ModifiedByUserAccount                         func(childComplexity int) int
+		ModifiedDts                                   func(childComplexity int) int
+		MultiplePatricipationAgreementsNeeded         func(childComplexity int) int
+		MultiplePatricipationAgreementsNeededNote     func(childComplexity int) int
+		ParticipationInModelPrecondition              func(childComplexity int) int
+		ParticipationInModelPreconditionNote          func(childComplexity int) int
+		ParticipationInModelPreconditionOtherOption   func(childComplexity int) int
+		ParticipationInModelPreconditionOtherSelected func(childComplexity int) int
+		ParticipationInModelPreconditionOtherSpecify  func(childComplexity int) int
+		ParticipationInModelPreconditionWhich         func(childComplexity int) int
+		ParticipationInModelPreconditionWhyHow        func(childComplexity int) int
+		ParticipationOptions                          func(childComplexity int) int
+		ParticipationOptionsNote                      func(childComplexity int) int
+		PlanContractUpdated                           func(childComplexity int) int
+		PlanContractUpdatedNote                       func(childComplexity int) int
+		ReadyForClearanceBy                           func(childComplexity int) int
+		ReadyForClearanceByUserAccount                func(childComplexity int) int
+		ReadyForClearanceDts                          func(childComplexity int) int
+		ReadyForReviewBy                              func(childComplexity int) int
+		ReadyForReviewByUserAccount                   func(childComplexity int) int
+		ReadyForReviewDts                             func(childComplexity int) int
+		ResemblesExistingModel                        func(childComplexity int) int
+		ResemblesExistingModelHow                     func(childComplexity int) int
+		ResemblesExistingModelNote                    func(childComplexity int) int
+		ResemblesExistingModelOtherOption             func(childComplexity int) int
+		ResemblesExistingModelOtherSelected           func(childComplexity int) int
+		ResemblesExistingModelOtherSpecify            func(childComplexity int) int
+		ResemblesExistingModelWhich                   func(childComplexity int) int
+		ResemblesExistingModelWhyHow                  func(childComplexity int) int
+		RulemakingRequired                            func(childComplexity int) int
+		RulemakingRequiredDescription                 func(childComplexity int) int
+		RulemakingRequiredNote                        func(childComplexity int) int
+		Status                                        func(childComplexity int) int
+		WaiversRequired                               func(childComplexity int) int
+		WaiversRequiredNote                           func(childComplexity int) int
+		WaiversRequiredTypes                          func(childComplexity int) int
 	}
 
 	PlanOpsEvalAndLearning struct {
-		AgencyOrStateHelp                            func(childComplexity int) int
-		AgencyOrStateHelpNote                        func(childComplexity int) int
-		AgencyOrStateHelpOther                       func(childComplexity int) int
 		AnticipatedChallenges                        func(childComplexity int) int
 		AppToSendFilesToKnown                        func(childComplexity int) int
 		AppToSendFilesToNote                         func(childComplexity int) int
@@ -1120,6 +1127,10 @@ type PlanGeneralCharacteristicsResolver interface {
 
 	ResemblesExistingModelWhich(ctx context.Context, obj *models.PlanGeneralCharacteristics) (*models.ExistingModelLinks, error)
 
+	ParticipationInModelPreconditionWhich(ctx context.Context, obj *models.PlanGeneralCharacteristics) (*models.ExistingModelLinks, error)
+
+	AgencyOrStateHelp(ctx context.Context, obj *models.PlanGeneralCharacteristics) ([]model.AgencyOrStateHelpType, error)
+
 	AlternativePaymentModelTypes(ctx context.Context, obj *models.PlanGeneralCharacteristics) ([]model.AlternativePaymentModelType, error)
 
 	KeyCharacteristics(ctx context.Context, obj *models.PlanGeneralCharacteristics) ([]model.KeyCharacteristic, error)
@@ -1137,8 +1148,6 @@ type PlanGeneralCharacteristicsResolver interface {
 	WaiversRequiredTypes(ctx context.Context, obj *models.PlanGeneralCharacteristics) ([]model.WaiverType, error)
 }
 type PlanOpsEvalAndLearningResolver interface {
-	AgencyOrStateHelp(ctx context.Context, obj *models.PlanOpsEvalAndLearning) ([]model.AgencyOrStateHelpType, error)
-
 	Stakeholders(ctx context.Context, obj *models.PlanOpsEvalAndLearning) ([]model.StakeholdersType, error)
 
 	ContractorSupport(ctx context.Context, obj *models.PlanOpsEvalAndLearning) ([]model.ContractorSupportType, error)
@@ -3905,6 +3914,27 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.PlanGeneralCharacteristics.AdditionalServicesInvolvedNote(childComplexity), true
 
+	case "PlanGeneralCharacteristics.agencyOrStateHelp":
+		if e.complexity.PlanGeneralCharacteristics.AgencyOrStateHelp == nil {
+			break
+		}
+
+		return e.complexity.PlanGeneralCharacteristics.AgencyOrStateHelp(childComplexity), true
+
+	case "PlanGeneralCharacteristics.agencyOrStateHelpNote":
+		if e.complexity.PlanGeneralCharacteristics.AgencyOrStateHelpNote == nil {
+			break
+		}
+
+		return e.complexity.PlanGeneralCharacteristics.AgencyOrStateHelpNote(childComplexity), true
+
+	case "PlanGeneralCharacteristics.agencyOrStateHelpOther":
+		if e.complexity.PlanGeneralCharacteristics.AgencyOrStateHelpOther == nil {
+			break
+		}
+
+		return e.complexity.PlanGeneralCharacteristics.AgencyOrStateHelpOther(childComplexity), true
+
 	case "PlanGeneralCharacteristics.agreementTypes":
 		if e.complexity.PlanGeneralCharacteristics.AgreementTypes == nil {
 			break
@@ -4234,6 +4264,55 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.PlanGeneralCharacteristics.MultiplePatricipationAgreementsNeededNote(childComplexity), true
 
+	case "PlanGeneralCharacteristics.participationInModelPrecondition":
+		if e.complexity.PlanGeneralCharacteristics.ParticipationInModelPrecondition == nil {
+			break
+		}
+
+		return e.complexity.PlanGeneralCharacteristics.ParticipationInModelPrecondition(childComplexity), true
+
+	case "PlanGeneralCharacteristics.participationInModelPreconditionNote":
+		if e.complexity.PlanGeneralCharacteristics.ParticipationInModelPreconditionNote == nil {
+			break
+		}
+
+		return e.complexity.PlanGeneralCharacteristics.ParticipationInModelPreconditionNote(childComplexity), true
+
+	case "PlanGeneralCharacteristics.participationInModelPreconditionOtherOption":
+		if e.complexity.PlanGeneralCharacteristics.ParticipationInModelPreconditionOtherOption == nil {
+			break
+		}
+
+		return e.complexity.PlanGeneralCharacteristics.ParticipationInModelPreconditionOtherOption(childComplexity), true
+
+	case "PlanGeneralCharacteristics.participationInModelPreconditionOtherSelected":
+		if e.complexity.PlanGeneralCharacteristics.ParticipationInModelPreconditionOtherSelected == nil {
+			break
+		}
+
+		return e.complexity.PlanGeneralCharacteristics.ParticipationInModelPreconditionOtherSelected(childComplexity), true
+
+	case "PlanGeneralCharacteristics.participationInModelPreconditionOtherSpecify":
+		if e.complexity.PlanGeneralCharacteristics.ParticipationInModelPreconditionOtherSpecify == nil {
+			break
+		}
+
+		return e.complexity.PlanGeneralCharacteristics.ParticipationInModelPreconditionOtherSpecify(childComplexity), true
+
+	case "PlanGeneralCharacteristics.participationInModelPreconditionWhich":
+		if e.complexity.PlanGeneralCharacteristics.ParticipationInModelPreconditionWhich == nil {
+			break
+		}
+
+		return e.complexity.PlanGeneralCharacteristics.ParticipationInModelPreconditionWhich(childComplexity), true
+
+	case "PlanGeneralCharacteristics.participationInModelPreconditionWhyHow":
+		if e.complexity.PlanGeneralCharacteristics.ParticipationInModelPreconditionWhyHow == nil {
+			break
+		}
+
+		return e.complexity.PlanGeneralCharacteristics.ParticipationInModelPreconditionWhyHow(childComplexity), true
+
 	case "PlanGeneralCharacteristics.participationOptions":
 		if e.complexity.PlanGeneralCharacteristics.ParticipationOptions == nil {
 			break
@@ -4408,27 +4487,6 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.PlanGeneralCharacteristics.WaiversRequiredTypes(childComplexity), true
-
-	case "PlanOpsEvalAndLearning.agencyOrStateHelp":
-		if e.complexity.PlanOpsEvalAndLearning.AgencyOrStateHelp == nil {
-			break
-		}
-
-		return e.complexity.PlanOpsEvalAndLearning.AgencyOrStateHelp(childComplexity), true
-
-	case "PlanOpsEvalAndLearning.agencyOrStateHelpNote":
-		if e.complexity.PlanOpsEvalAndLearning.AgencyOrStateHelpNote == nil {
-			break
-		}
-
-		return e.complexity.PlanOpsEvalAndLearning.AgencyOrStateHelpNote(childComplexity), true
-
-	case "PlanOpsEvalAndLearning.agencyOrStateHelpOther":
-		if e.complexity.PlanOpsEvalAndLearning.AgencyOrStateHelpOther == nil {
-			break
-		}
-
-		return e.complexity.PlanOpsEvalAndLearning.AgencyOrStateHelpOther(childComplexity), true
 
 	case "PlanOpsEvalAndLearning.anticipatedChallenges":
 		if e.complexity.PlanOpsEvalAndLearning.AnticipatedChallenges == nil {
@@ -7896,11 +7954,42 @@ type PlanGeneralCharacteristics {
   resemblesExistingModelHow: String
   resemblesExistingModelNote: String
   resemblesExistingModelWhich: ExistingModelLinks
+  """
+  For answering if participation in other models is a precondition for participating in this model
+  """
+  participationInModelPrecondition: YesNoOtherType
+  """
+  For providing clarifying comments if Yes or No is selected for participationInModelPrecondition
+  """
+  participationInModelPreconditionWhyHow: String
+  """
+  For providing clarifying comments if Other is selected for participationInModelPrecondition
+  """
+  participationInModelPreconditionOtherSpecify: String
+  """
+  For denoting if there is an other model that this model refers to.
+  """
+  participationInModelPreconditionOtherSelected: Boolean
+  """
+  For denoting the name of the other existing model
+  """
+  participationInModelPreconditionOtherOption: String
+  """
+  A note field for participationInModelPrecondition
+  """
+  participationInModelPreconditionNote: String
+  """
+  The collection of existing model links relevant to the participationInModelPrecondition question
+  """
+  participationInModelPreconditionWhich: ExistingModelLinks
   hasComponentsOrTracks: Boolean
   hasComponentsOrTracksDiffer: String
   hasComponentsOrTracksNote: String
 
   # Page 2
+  agencyOrStateHelp: [AgencyOrStateHelpType!]!
+  agencyOrStateHelpOther: String
+  agencyOrStateHelpNote: String
   alternativePaymentModelTypes: [AlternativePaymentModelType!]!
   alternativePaymentModelNote: String
   keyCharacteristics: [KeyCharacteristic!]!
@@ -7998,11 +8087,38 @@ input PlanGeneralCharacteristicsChanges @goModel(model: "map[string]interface{}"
   resemblesExistingModelOtherOption: String
   resemblesExistingModelHow: String
   resemblesExistingModelNote: String
+  """
+  For answering if participation in other models is a precondition for participating in this model
+  """
+  participationInModelPrecondition: YesNoOtherType
+  """
+  For providing clarifying comments if Yes or No is selected for participationInModelPrecondition
+  """
+  participationInModelPreconditionWhyHow: String
+  """
+  For providing clarifying comments if Other is selected for participationInModelPrecondition
+  """
+  participationInModelPreconditionOtherSpecify: String
+  """
+  For denoting if there is an other model that this model refers to.
+  """
+  participationInModelPreconditionOtherSelected: Boolean
+  """
+  For denoting the name of the other existing model
+  """
+  participationInModelPreconditionOtherOption: String
+  """
+  A note field for participationInModelPrecondition
+  """
+  participationInModelPreconditionNote: String
   hasComponentsOrTracks: Boolean
   hasComponentsOrTracksDiffer: String
   hasComponentsOrTracksNote: String
 
   # Page 2
+  agencyOrStateHelp: [AgencyOrStateHelpType!]
+  agencyOrStateHelpOther: String
+  agencyOrStateHelpNote: String
   alternativePaymentModelTypes: [AlternativePaymentModelType!]
   alternativePaymentModelNote: String
   keyCharacteristics: [KeyCharacteristic!]
@@ -8542,9 +8658,6 @@ type PlanOpsEvalAndLearning {
     modelPlanID: UUID!
 
     #Page 1
-    agencyOrStateHelp: [AgencyOrStateHelpType!]!
-    agencyOrStateHelpOther: String
-    agencyOrStateHelpNote: String
     stakeholders: [StakeholdersType!]!
     stakeholdersOther: String
     stakeholdersNote: String
@@ -8676,9 +8789,6 @@ https://gqlgen.com/reference/changesets/
 input PlanOpsEvalAndLearningChanges @goModel(model: "map[string]interface{}") {
 
     #Page 1
-    agencyOrStateHelp: [AgencyOrStateHelpType!]
-    agencyOrStateHelpOther: String
-    agencyOrStateHelpNote: String
     stakeholders: [StakeholdersType!]
     stakeholdersOther: String
     stakeholdersNote: String
@@ -14743,12 +14853,32 @@ func (ec *executionContext) fieldContext_ModelPlan_generalCharacteristics(ctx co
 				return ec.fieldContext_PlanGeneralCharacteristics_resemblesExistingModelNote(ctx, field)
 			case "resemblesExistingModelWhich":
 				return ec.fieldContext_PlanGeneralCharacteristics_resemblesExistingModelWhich(ctx, field)
+			case "participationInModelPrecondition":
+				return ec.fieldContext_PlanGeneralCharacteristics_participationInModelPrecondition(ctx, field)
+			case "participationInModelPreconditionWhyHow":
+				return ec.fieldContext_PlanGeneralCharacteristics_participationInModelPreconditionWhyHow(ctx, field)
+			case "participationInModelPreconditionOtherSpecify":
+				return ec.fieldContext_PlanGeneralCharacteristics_participationInModelPreconditionOtherSpecify(ctx, field)
+			case "participationInModelPreconditionOtherSelected":
+				return ec.fieldContext_PlanGeneralCharacteristics_participationInModelPreconditionOtherSelected(ctx, field)
+			case "participationInModelPreconditionOtherOption":
+				return ec.fieldContext_PlanGeneralCharacteristics_participationInModelPreconditionOtherOption(ctx, field)
+			case "participationInModelPreconditionNote":
+				return ec.fieldContext_PlanGeneralCharacteristics_participationInModelPreconditionNote(ctx, field)
+			case "participationInModelPreconditionWhich":
+				return ec.fieldContext_PlanGeneralCharacteristics_participationInModelPreconditionWhich(ctx, field)
 			case "hasComponentsOrTracks":
 				return ec.fieldContext_PlanGeneralCharacteristics_hasComponentsOrTracks(ctx, field)
 			case "hasComponentsOrTracksDiffer":
 				return ec.fieldContext_PlanGeneralCharacteristics_hasComponentsOrTracksDiffer(ctx, field)
 			case "hasComponentsOrTracksNote":
 				return ec.fieldContext_PlanGeneralCharacteristics_hasComponentsOrTracksNote(ctx, field)
+			case "agencyOrStateHelp":
+				return ec.fieldContext_PlanGeneralCharacteristics_agencyOrStateHelp(ctx, field)
+			case "agencyOrStateHelpOther":
+				return ec.fieldContext_PlanGeneralCharacteristics_agencyOrStateHelpOther(ctx, field)
+			case "agencyOrStateHelpNote":
+				return ec.fieldContext_PlanGeneralCharacteristics_agencyOrStateHelpNote(ctx, field)
 			case "alternativePaymentModelTypes":
 				return ec.fieldContext_PlanGeneralCharacteristics_alternativePaymentModelTypes(ctx, field)
 			case "alternativePaymentModelNote":
@@ -15243,12 +15373,6 @@ func (ec *executionContext) fieldContext_ModelPlan_opsEvalAndLearning(ctx contex
 				return ec.fieldContext_PlanOpsEvalAndLearning_id(ctx, field)
 			case "modelPlanID":
 				return ec.fieldContext_PlanOpsEvalAndLearning_modelPlanID(ctx, field)
-			case "agencyOrStateHelp":
-				return ec.fieldContext_PlanOpsEvalAndLearning_agencyOrStateHelp(ctx, field)
-			case "agencyOrStateHelpOther":
-				return ec.fieldContext_PlanOpsEvalAndLearning_agencyOrStateHelpOther(ctx, field)
-			case "agencyOrStateHelpNote":
-				return ec.fieldContext_PlanOpsEvalAndLearning_agencyOrStateHelpNote(ctx, field)
 			case "stakeholders":
 				return ec.fieldContext_PlanOpsEvalAndLearning_stakeholders(ctx, field)
 			case "stakeholdersOther":
@@ -17216,12 +17340,32 @@ func (ec *executionContext) fieldContext_Mutation_updatePlanGeneralCharacteristi
 				return ec.fieldContext_PlanGeneralCharacteristics_resemblesExistingModelNote(ctx, field)
 			case "resemblesExistingModelWhich":
 				return ec.fieldContext_PlanGeneralCharacteristics_resemblesExistingModelWhich(ctx, field)
+			case "participationInModelPrecondition":
+				return ec.fieldContext_PlanGeneralCharacteristics_participationInModelPrecondition(ctx, field)
+			case "participationInModelPreconditionWhyHow":
+				return ec.fieldContext_PlanGeneralCharacteristics_participationInModelPreconditionWhyHow(ctx, field)
+			case "participationInModelPreconditionOtherSpecify":
+				return ec.fieldContext_PlanGeneralCharacteristics_participationInModelPreconditionOtherSpecify(ctx, field)
+			case "participationInModelPreconditionOtherSelected":
+				return ec.fieldContext_PlanGeneralCharacteristics_participationInModelPreconditionOtherSelected(ctx, field)
+			case "participationInModelPreconditionOtherOption":
+				return ec.fieldContext_PlanGeneralCharacteristics_participationInModelPreconditionOtherOption(ctx, field)
+			case "participationInModelPreconditionNote":
+				return ec.fieldContext_PlanGeneralCharacteristics_participationInModelPreconditionNote(ctx, field)
+			case "participationInModelPreconditionWhich":
+				return ec.fieldContext_PlanGeneralCharacteristics_participationInModelPreconditionWhich(ctx, field)
 			case "hasComponentsOrTracks":
 				return ec.fieldContext_PlanGeneralCharacteristics_hasComponentsOrTracks(ctx, field)
 			case "hasComponentsOrTracksDiffer":
 				return ec.fieldContext_PlanGeneralCharacteristics_hasComponentsOrTracksDiffer(ctx, field)
 			case "hasComponentsOrTracksNote":
 				return ec.fieldContext_PlanGeneralCharacteristics_hasComponentsOrTracksNote(ctx, field)
+			case "agencyOrStateHelp":
+				return ec.fieldContext_PlanGeneralCharacteristics_agencyOrStateHelp(ctx, field)
+			case "agencyOrStateHelpOther":
+				return ec.fieldContext_PlanGeneralCharacteristics_agencyOrStateHelpOther(ctx, field)
+			case "agencyOrStateHelpNote":
+				return ec.fieldContext_PlanGeneralCharacteristics_agencyOrStateHelpNote(ctx, field)
 			case "alternativePaymentModelTypes":
 				return ec.fieldContext_PlanGeneralCharacteristics_alternativePaymentModelTypes(ctx, field)
 			case "alternativePaymentModelNote":
@@ -17821,12 +17965,6 @@ func (ec *executionContext) fieldContext_Mutation_updatePlanOpsEvalAndLearning(c
 				return ec.fieldContext_PlanOpsEvalAndLearning_id(ctx, field)
 			case "modelPlanID":
 				return ec.fieldContext_PlanOpsEvalAndLearning_modelPlanID(ctx, field)
-			case "agencyOrStateHelp":
-				return ec.fieldContext_PlanOpsEvalAndLearning_agencyOrStateHelp(ctx, field)
-			case "agencyOrStateHelpOther":
-				return ec.fieldContext_PlanOpsEvalAndLearning_agencyOrStateHelpOther(ctx, field)
-			case "agencyOrStateHelpNote":
-				return ec.fieldContext_PlanOpsEvalAndLearning_agencyOrStateHelpNote(ctx, field)
 			case "stakeholders":
 				return ec.fieldContext_PlanOpsEvalAndLearning_stakeholders(ctx, field)
 			case "stakeholdersOther":
@@ -31838,6 +31976,303 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristics_resemblesExi
 	return fc, nil
 }
 
+func (ec *executionContext) _PlanGeneralCharacteristics_participationInModelPrecondition(ctx context.Context, field graphql.CollectedField, obj *models.PlanGeneralCharacteristics) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanGeneralCharacteristics_participationInModelPrecondition(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ParticipationInModelPrecondition, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*models.YesNoOtherType)
+	fc.Result = res
+	return ec.marshalOYesNoOtherType2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐYesNoOtherType(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanGeneralCharacteristics_participationInModelPrecondition(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanGeneralCharacteristics",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type YesNoOtherType does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanGeneralCharacteristics_participationInModelPreconditionWhyHow(ctx context.Context, field graphql.CollectedField, obj *models.PlanGeneralCharacteristics) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanGeneralCharacteristics_participationInModelPreconditionWhyHow(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ParticipationInModelPreconditionWhyHow, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanGeneralCharacteristics_participationInModelPreconditionWhyHow(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanGeneralCharacteristics",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanGeneralCharacteristics_participationInModelPreconditionOtherSpecify(ctx context.Context, field graphql.CollectedField, obj *models.PlanGeneralCharacteristics) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanGeneralCharacteristics_participationInModelPreconditionOtherSpecify(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ParticipationInModelPreconditionOtherSpecify, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanGeneralCharacteristics_participationInModelPreconditionOtherSpecify(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanGeneralCharacteristics",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanGeneralCharacteristics_participationInModelPreconditionOtherSelected(ctx context.Context, field graphql.CollectedField, obj *models.PlanGeneralCharacteristics) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanGeneralCharacteristics_participationInModelPreconditionOtherSelected(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ParticipationInModelPreconditionOtherSelected, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*bool)
+	fc.Result = res
+	return ec.marshalOBoolean2ᚖbool(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanGeneralCharacteristics_participationInModelPreconditionOtherSelected(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanGeneralCharacteristics",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Boolean does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanGeneralCharacteristics_participationInModelPreconditionOtherOption(ctx context.Context, field graphql.CollectedField, obj *models.PlanGeneralCharacteristics) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanGeneralCharacteristics_participationInModelPreconditionOtherOption(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ParticipationInModelPreconditionOtherOption, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanGeneralCharacteristics_participationInModelPreconditionOtherOption(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanGeneralCharacteristics",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanGeneralCharacteristics_participationInModelPreconditionNote(ctx context.Context, field graphql.CollectedField, obj *models.PlanGeneralCharacteristics) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanGeneralCharacteristics_participationInModelPreconditionNote(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ParticipationInModelPreconditionNote, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanGeneralCharacteristics_participationInModelPreconditionNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanGeneralCharacteristics",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanGeneralCharacteristics_participationInModelPreconditionWhich(ctx context.Context, field graphql.CollectedField, obj *models.PlanGeneralCharacteristics) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanGeneralCharacteristics_participationInModelPreconditionWhich(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.PlanGeneralCharacteristics().ParticipationInModelPreconditionWhich(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*models.ExistingModelLinks)
+	fc.Result = res
+	return ec.marshalOExistingModelLinks2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐExistingModelLinks(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanGeneralCharacteristics_participationInModelPreconditionWhich(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanGeneralCharacteristics",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "links":
+				return ec.fieldContext_ExistingModelLinks_links(ctx, field)
+			case "fieldName":
+				return ec.fieldContext_ExistingModelLinks_fieldName(ctx, field)
+			case "modelPlanID":
+				return ec.fieldContext_ExistingModelLinks_modelPlanID(ctx, field)
+			case "names":
+				return ec.fieldContext_ExistingModelLinks_names(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type ExistingModelLinks", field.Name)
+		},
+	}
+	return fc, nil
+}
+
 func (ec *executionContext) _PlanGeneralCharacteristics_hasComponentsOrTracks(ctx context.Context, field graphql.CollectedField, obj *models.PlanGeneralCharacteristics) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_PlanGeneralCharacteristics_hasComponentsOrTracks(ctx, field)
 	if err != nil {
@@ -31949,6 +32384,132 @@ func (ec *executionContext) _PlanGeneralCharacteristics_hasComponentsOrTracksNot
 }
 
 func (ec *executionContext) fieldContext_PlanGeneralCharacteristics_hasComponentsOrTracksNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanGeneralCharacteristics",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanGeneralCharacteristics_agencyOrStateHelp(ctx context.Context, field graphql.CollectedField, obj *models.PlanGeneralCharacteristics) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanGeneralCharacteristics_agencyOrStateHelp(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.PlanGeneralCharacteristics().AgencyOrStateHelp(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.([]model.AgencyOrStateHelpType)
+	fc.Result = res
+	return ec.marshalNAgencyOrStateHelpType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐAgencyOrStateHelpTypeᚄ(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanGeneralCharacteristics_agencyOrStateHelp(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanGeneralCharacteristics",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type AgencyOrStateHelpType does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanGeneralCharacteristics_agencyOrStateHelpOther(ctx context.Context, field graphql.CollectedField, obj *models.PlanGeneralCharacteristics) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanGeneralCharacteristics_agencyOrStateHelpOther(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.AgencyOrStateHelpOther, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanGeneralCharacteristics_agencyOrStateHelpOther(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanGeneralCharacteristics",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanGeneralCharacteristics_agencyOrStateHelpNote(ctx context.Context, field graphql.CollectedField, obj *models.PlanGeneralCharacteristics) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanGeneralCharacteristics_agencyOrStateHelpNote(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.AgencyOrStateHelpNote, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanGeneralCharacteristics_agencyOrStateHelpNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "PlanGeneralCharacteristics",
 		Field:      field,
@@ -34467,132 +35028,6 @@ func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_modelPlanID(ctx 
 		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return nil, errors.New("field of type UUID does not have child fields")
-		},
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _PlanOpsEvalAndLearning_agencyOrStateHelp(ctx context.Context, field graphql.CollectedField, obj *models.PlanOpsEvalAndLearning) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_PlanOpsEvalAndLearning_agencyOrStateHelp(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.PlanOpsEvalAndLearning().AgencyOrStateHelp(rctx, obj)
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.([]model.AgencyOrStateHelpType)
-	fc.Result = res
-	return ec.marshalNAgencyOrStateHelpType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐAgencyOrStateHelpTypeᚄ(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_agencyOrStateHelp(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "PlanOpsEvalAndLearning",
-		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type AgencyOrStateHelpType does not have child fields")
-		},
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _PlanOpsEvalAndLearning_agencyOrStateHelpOther(ctx context.Context, field graphql.CollectedField, obj *models.PlanOpsEvalAndLearning) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_PlanOpsEvalAndLearning_agencyOrStateHelpOther(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.AgencyOrStateHelpOther, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		return graphql.Null
-	}
-	res := resTmp.(*string)
-	fc.Result = res
-	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_agencyOrStateHelpOther(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "PlanOpsEvalAndLearning",
-		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type String does not have child fields")
-		},
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _PlanOpsEvalAndLearning_agencyOrStateHelpNote(ctx context.Context, field graphql.CollectedField, obj *models.PlanOpsEvalAndLearning) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_PlanOpsEvalAndLearning_agencyOrStateHelpNote(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.AgencyOrStateHelpNote, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		return graphql.Null
-	}
-	res := resTmp.(*string)
-	fc.Result = res
-	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_agencyOrStateHelpNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "PlanOpsEvalAndLearning",
-		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type String does not have child fields")
 		},
 	}
 	return fc, nil
@@ -60087,12 +60522,97 @@ func (ec *executionContext) _PlanGeneralCharacteristics(ctx context.Context, sel
 			}
 
 			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+		case "participationInModelPrecondition":
+			out.Values[i] = ec._PlanGeneralCharacteristics_participationInModelPrecondition(ctx, field, obj)
+		case "participationInModelPreconditionWhyHow":
+			out.Values[i] = ec._PlanGeneralCharacteristics_participationInModelPreconditionWhyHow(ctx, field, obj)
+		case "participationInModelPreconditionOtherSpecify":
+			out.Values[i] = ec._PlanGeneralCharacteristics_participationInModelPreconditionOtherSpecify(ctx, field, obj)
+		case "participationInModelPreconditionOtherSelected":
+			out.Values[i] = ec._PlanGeneralCharacteristics_participationInModelPreconditionOtherSelected(ctx, field, obj)
+		case "participationInModelPreconditionOtherOption":
+			out.Values[i] = ec._PlanGeneralCharacteristics_participationInModelPreconditionOtherOption(ctx, field, obj)
+		case "participationInModelPreconditionNote":
+			out.Values[i] = ec._PlanGeneralCharacteristics_participationInModelPreconditionNote(ctx, field, obj)
+		case "participationInModelPreconditionWhich":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._PlanGeneralCharacteristics_participationInModelPreconditionWhich(ctx, field, obj)
+				return res
+			}
+
+			if field.Deferrable != nil {
+				dfs, ok := deferred[field.Deferrable.Label]
+				di := 0
+				if ok {
+					dfs.AddField(field)
+					di = len(dfs.Values) - 1
+				} else {
+					dfs = graphql.NewFieldSet([]graphql.CollectedField{field})
+					deferred[field.Deferrable.Label] = dfs
+				}
+				dfs.Concurrently(di, func(ctx context.Context) graphql.Marshaler {
+					return innerFunc(ctx, dfs)
+				})
+
+				// don't run the out.Concurrently() call below
+				out.Values[i] = graphql.Null
+				continue
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
 		case "hasComponentsOrTracks":
 			out.Values[i] = ec._PlanGeneralCharacteristics_hasComponentsOrTracks(ctx, field, obj)
 		case "hasComponentsOrTracksDiffer":
 			out.Values[i] = ec._PlanGeneralCharacteristics_hasComponentsOrTracksDiffer(ctx, field, obj)
 		case "hasComponentsOrTracksNote":
 			out.Values[i] = ec._PlanGeneralCharacteristics_hasComponentsOrTracksNote(ctx, field, obj)
+		case "agencyOrStateHelp":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._PlanGeneralCharacteristics_agencyOrStateHelp(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
+				return res
+			}
+
+			if field.Deferrable != nil {
+				dfs, ok := deferred[field.Deferrable.Label]
+				di := 0
+				if ok {
+					dfs.AddField(field)
+					di = len(dfs.Values) - 1
+				} else {
+					dfs = graphql.NewFieldSet([]graphql.CollectedField{field})
+					deferred[field.Deferrable.Label] = dfs
+				}
+				dfs.Concurrently(di, func(ctx context.Context) graphql.Marshaler {
+					return innerFunc(ctx, dfs)
+				})
+
+				// don't run the out.Concurrently() call below
+				out.Values[i] = graphql.Null
+				continue
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+		case "agencyOrStateHelpOther":
+			out.Values[i] = ec._PlanGeneralCharacteristics_agencyOrStateHelpOther(ctx, field, obj)
+		case "agencyOrStateHelpNote":
+			out.Values[i] = ec._PlanGeneralCharacteristics_agencyOrStateHelpNote(ctx, field, obj)
 		case "alternativePaymentModelTypes":
 			field := field
 
@@ -60691,46 +61211,6 @@ func (ec *executionContext) _PlanOpsEvalAndLearning(ctx context.Context, sel ast
 			if out.Values[i] == graphql.Null {
 				atomic.AddUint32(&out.Invalids, 1)
 			}
-		case "agencyOrStateHelp":
-			field := field
-
-			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
-				defer func() {
-					if r := recover(); r != nil {
-						ec.Error(ctx, ec.Recover(ctx, r))
-					}
-				}()
-				res = ec._PlanOpsEvalAndLearning_agencyOrStateHelp(ctx, field, obj)
-				if res == graphql.Null {
-					atomic.AddUint32(&fs.Invalids, 1)
-				}
-				return res
-			}
-
-			if field.Deferrable != nil {
-				dfs, ok := deferred[field.Deferrable.Label]
-				di := 0
-				if ok {
-					dfs.AddField(field)
-					di = len(dfs.Values) - 1
-				} else {
-					dfs = graphql.NewFieldSet([]graphql.CollectedField{field})
-					deferred[field.Deferrable.Label] = dfs
-				}
-				dfs.Concurrently(di, func(ctx context.Context) graphql.Marshaler {
-					return innerFunc(ctx, dfs)
-				})
-
-				// don't run the out.Concurrently() call below
-				out.Values[i] = graphql.Null
-				continue
-			}
-
-			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
-		case "agencyOrStateHelpOther":
-			out.Values[i] = ec._PlanOpsEvalAndLearning_agencyOrStateHelpOther(ctx, field, obj)
-		case "agencyOrStateHelpNote":
-			out.Values[i] = ec._PlanOpsEvalAndLearning_agencyOrStateHelpNote(ctx, field, obj)
 		case "stakeholders":
 			field := field
 

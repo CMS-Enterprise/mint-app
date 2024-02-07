@@ -72,6 +72,12 @@ const csvFields = [
   'generalCharacteristics.resemblesExistingModelWhich',
   'generalCharacteristics.resemblesExistingModelOtherOption',
   'generalCharacteristics.resemblesExistingModelNote',
+  'generalCharacteristics.participationInModelPrecondition',
+  'generalCharacteristics.participationInModelPreconditionOtherSpecify',
+  'generalCharacteristics.participationInModelPreconditionWhich',
+  'generalCharacteristics.participationInModelPreconditionOtherOption',
+  'generalCharacteristics.participationInModelPreconditionWhyHow',
+  'generalCharacteristics.participationInModelPreconditionNote',
   'generalCharacteristics.hasComponentsOrTracks',
   'generalCharacteristics.hasComponentsOrTracksDiffer',
   'generalCharacteristics.hasComponentsOrTracksNote',
@@ -84,6 +90,9 @@ const csvFields = [
   'generalCharacteristics.communityPartnersInvolved',
   'generalCharacteristics.communityPartnersInvolvedDescription',
   'generalCharacteristics.communityPartnersInvolvedNote',
+  'generalCharacteristics.agencyOrStateHelp', // array
+  'generalCharacteristics.agencyOrStateHelpOther',
+  'generalCharacteristics.agencyOrStateHelpNote',
   'generalCharacteristics.alternativePaymentModelTypes', // array
   'generalCharacteristics.alternativePaymentModelNote',
   'generalCharacteristics.keyCharacteristics', // array
@@ -285,9 +294,6 @@ const csvFields = [
   'opsEvalAndLearning.modelLearningSystemsOther',
   'opsEvalAndLearning.modelLearningSystemsNote',
   'opsEvalAndLearning.anticipatedChallenges',
-  'opsEvalAndLearning.agencyOrStateHelp', // array
-  'opsEvalAndLearning.agencyOrStateHelpOther',
-  'opsEvalAndLearning.agencyOrStateHelpNote',
   'opsEvalAndLearning.stakeholders', // array
   'opsEvalAndLearning.stakeholdersOther',
   'opsEvalAndLearning.stakeholdersNote',

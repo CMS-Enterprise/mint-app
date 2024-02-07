@@ -1,4 +1,4 @@
-import React, { Fragment, useMemo, useRef } from 'react';
+import React, { Fragment, useCallback, useMemo, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, Route, Switch, useHistory, useParams } from 'react-router-dom';
 import {
@@ -19,6 +19,7 @@ import classNames from 'classnames';
 import { Field, Form, Formik, FormikProps } from 'formik';
 import {
   ExisitingModelLinkFieldType,
+  ExistingModelLinks,
   GetExistingModelPlansQuery,
   GetGeneralCharacteristicsQuery,
   GetModelPlansBaseQuery,
@@ -61,7 +62,8 @@ interface GetGeneralCharacteristicsFormTypeWithLinks
     GeneralCharacteristicsFormType,
     'currentModelPlanID' | 'existingModelID'
   > {
-  existingModelLinks: (string | number)[];
+  resemblesExistingModelLinks: (string | number)[];
+  participationInModelPreconditionLinks: (string | number)[];
   existingModel: string | number | null;
 }
 
@@ -77,6 +79,7 @@ export const CharacteristicsContent = () => {
   const {
     isNewModel: isNewModelConfig,
     resemblesExistingModel: resemblesExistingModelConfig,
+    participationInModelPrecondition: participationInModelPreconditionConfig,
     hasComponentsOrTracks: hasComponentsOrTracksConfig
   } = usePlanTranslation('generalCharacteristics');
 
@@ -133,11 +136,11 @@ export const CharacteristicsContent = () => {
         })
         // Superficially adding 'other' as an option for existing links - does not persist to the db as an existing model plan however
         .concat({
-          label: 'Other',
+          label: miscellaneousT('other'),
           value: 'other'
         })
     );
-  }, [modelData, existingModelData]);
+  }, [modelData, existingModelData, miscellaneousT]);
 
   const { data, loading, error } = useGetGeneralCharacteristicsQuery({
     variables: {
@@ -158,6 +161,13 @@ export const CharacteristicsContent = () => {
     resemblesExistingModelOtherSpecify,
     resemblesExistingModelOtherOption,
     resemblesExistingModelOtherSelected,
+    participationInModelPrecondition,
+    participationInModelPreconditionWhich,
+    participationInModelPreconditionOtherSpecify,
+    participationInModelPreconditionOtherSelected,
+    participationInModelPreconditionOtherOption,
+    participationInModelPreconditionWhyHow,
+    participationInModelPreconditionNote,
     hasComponentsOrTracks,
     hasComponentsOrTracksDiffer,
     hasComponentsOrTracksNote
@@ -169,18 +179,54 @@ export const CharacteristicsContent = () => {
 
   const modelName = data?.modelPlan?.modelName || '';
 
-  const existingModelLinks: (string | number)[] = useMemo(() => {
-    const existingLinks =
-      resemblesExistingModelWhich?.links?.map(
-        link => (link.existingModelID || link.currentModelPlanID)!
-      ) || [];
+  // Formats query data of existing links to feed into multiselect
+  // Checks if Other field is selected, if so append Other to the list of existing models
+  const formatExistingLinkData = useCallback(
+    (
+      existingLinks: ExistingModelLinks | undefined | null,
+      isOtherSelected: boolean | undefined | null
+    ): (string | number)[] => {
+      if (!existingLinks) return [];
 
-    // Checking if Other was persisted to db, if so add it as an existingModelLinks value
-    if (resemblesExistingModelOtherSelected) {
-      existingLinks.push('other');
-    }
-    return existingLinks;
-  }, [resemblesExistingModelWhich?.links, resemblesExistingModelOtherSelected]);
+      const formattedLinks =
+        existingLinks.links?.map(
+          link => (link.existingModelID || link.currentModelPlanID)!
+        ) || [];
+
+      // Checking if Other was persisted to db, if so add it as an resemblesExistingModelLinks value
+      if (isOtherSelected) {
+        formattedLinks.push('other');
+      }
+
+      return formattedLinks;
+    },
+    []
+  );
+
+  const resemblesExistingModelLinks: (string | number)[] = useMemo(() => {
+    return formatExistingLinkData(
+      resemblesExistingModelWhich as ExistingModelLinks,
+      resemblesExistingModelOtherSelected
+    );
+  }, [
+    resemblesExistingModelWhich,
+    resemblesExistingModelOtherSelected,
+    formatExistingLinkData
+  ]);
+
+  const participationInModelPreconditionLinks: (
+    | string
+    | number
+  )[] = useMemo(() => {
+    return formatExistingLinkData(
+      participationInModelPreconditionWhich as ExistingModelLinks,
+      participationInModelPreconditionOtherSelected
+    );
+  }, [
+    participationInModelPreconditionWhich,
+    participationInModelPreconditionOtherSelected,
+    formatExistingLinkData
+  ]);
 
   const [update] = useUpdatePlanGeneralCharacteristicsMutation();
 
@@ -191,15 +237,29 @@ export const CharacteristicsContent = () => {
     const formValues = formikRef?.current?.values!;
 
     // Getting the inital values of model links
-    const { existingModelLinks: existingLinksInitial, ...initialValues } =
-      formikRef?.current?.initialValues || {};
+    const {
+      resemblesExistingModelLinks: resemblesExistingModelLinksInitial,
+      participationInModelPreconditionLinks: participationInModelPreconditionLinksInitial,
+      ...initialValues
+    } = formikRef?.current?.initialValues || {};
 
     // Getting the current form values of model links
-    const { existingModelLinks: existingLinks, ...values } = formValues || {};
+    const {
+      resemblesExistingModelLinks: resemblesExistingModelLinksValues,
+      participationInModelPreconditionLinks: participationInModelPreconditionLinksValues,
+      ...values
+    } = formValues || {};
 
-    // Separates the existingLinks by type (string/number) to pass into the appropriate mutation
-    const linksToUpdate = separateLinksByType(
-      existingLinks || [],
+    // Separates the resemblesExistingModelLinks by type (string/number) to pass into the appropriate mutation
+    const resemblesExistingModelLinksToUpdate = separateLinksByType(
+      resemblesExistingModelLinksValues || [],
+      modelData?.modelPlanCollection || [],
+      existingModelData?.existingModelCollection || []
+    );
+
+    // Separates the participationInModelPreconditionLinks by type (string/number) to pass into the appropriate mutation
+    const participationInModelPreconditionLinksToUpdate = separateLinksByType(
+      participationInModelPreconditionLinksValues || [],
       modelData?.modelPlanCollection || [],
       existingModelData?.existingModelCollection || []
     );
@@ -231,7 +291,15 @@ export const CharacteristicsContent = () => {
           modelPlanID: modelID,
           fieldName:
             ExisitingModelLinkFieldType.GEN_CHAR_RESEMBLES_EXISTING_MODEL_WHICH,
-          ...linksToUpdate
+          ...resemblesExistingModelLinksToUpdate
+        }
+      }),
+      updateExistingLinks({
+        variables: {
+          modelPlanID: modelID,
+          fieldName:
+            ExisitingModelLinkFieldType.GEN_CHAR_PARTICIPATION_EXISTING_MODEL_WHICH,
+          ...participationInModelPreconditionLinksToUpdate
         }
       })
     ])
@@ -240,7 +308,7 @@ export const CharacteristicsContent = () => {
 
         if (anyError) {
           formikRef?.current?.setErrors({
-            existingModelLinks: miscellaneousT('apolloFailField')
+            resemblesExistingModelLinks: miscellaneousT('apolloFailField')
           });
           return;
         }
@@ -265,7 +333,7 @@ export const CharacteristicsContent = () => {
     existingModel: existingModel ?? null,
     resemblesExistingModel: resemblesExistingModel ?? null,
     resemblesExistingModelWhyHow: resemblesExistingModelWhyHow ?? '',
-    existingModelLinks: existingModelLinks ?? [],
+    resemblesExistingModelLinks: resemblesExistingModelLinks ?? [],
     resemblesExistingModelOtherSpecify:
       resemblesExistingModelOtherSpecify ?? '',
     resemblesExistingModelOtherOption: resemblesExistingModelOtherOption ?? '',
@@ -273,6 +341,19 @@ export const CharacteristicsContent = () => {
       resemblesExistingModelOtherSelected ?? null,
     resemblesExistingModelHow: resemblesExistingModelHow ?? '',
     resemblesExistingModelNote: resemblesExistingModelNote ?? '',
+    participationInModelPrecondition: participationInModelPrecondition ?? null,
+    participationInModelPreconditionLinks:
+      participationInModelPreconditionLinks ?? [],
+    participationInModelPreconditionOtherSpecify:
+      participationInModelPreconditionOtherSpecify ?? '',
+    participationInModelPreconditionOtherSelected:
+      participationInModelPreconditionOtherSelected ?? null,
+    participationInModelPreconditionOtherOption:
+      participationInModelPreconditionOtherOption ?? '',
+    participationInModelPreconditionWhyHow:
+      participationInModelPreconditionWhyHow ?? '',
+    participationInModelPreconditionNote:
+      participationInModelPreconditionNote ?? '',
     hasComponentsOrTracks: hasComponentsOrTracks ?? null,
     hasComponentsOrTracksDiffer: hasComponentsOrTracksDiffer ?? '',
     hasComponentsOrTracksNote: hasComponentsOrTracksNote ?? ''
@@ -558,22 +639,29 @@ export const CharacteristicsContent = () => {
                             as={MultiSelect}
                             id="plan-characteristics-resembles-which-model"
                             ariaLabel="label-plan-characteristics-resembles-which-model"
-                            name="existingModelLinks"
+                            name="resemblesExistingModelLinks"
                             options={modelPlanOptions}
                             selectedLabel={generalCharacteristicsT(
                               'resemblesExistingModelWhich.multiSelectLabel'
                             )}
                             onChange={(value: string[]) => {
-                              setFieldValue('existingModelLinks', value);
+                              setFieldValue(
+                                'resemblesExistingModelLinks',
+                                value
+                              );
                               setFieldValue(
                                 'resemblesExistingModelOtherSelected',
                                 value.includes('other')
                               );
                             }}
-                            initialValues={initialValues.existingModelLinks}
+                            initialValues={
+                              initialValues.resemblesExistingModelLinks
+                            }
                           />
 
-                          {values.existingModelLinks.includes('other') && (
+                          {values.resemblesExistingModelLinks.includes(
+                            'other'
+                          ) && (
                             <div className="margin-top-1">
                               <Label
                                 htmlFor="plan-characteristics-resembles-model-other-option"
@@ -626,6 +714,188 @@ export const CharacteristicsContent = () => {
                     <AddNote
                       id="plan-characteristics-resemble-existing-note"
                       field="resemblesExistingModelNote"
+                    />
+                  </FieldGroup>
+
+                  <FieldGroup
+                    scrollElement="participationInModelPrecondition"
+                    error={!!flatErrors.participationInModelPrecondition}
+                    className="margin-y-4 margin-bottom-8"
+                  >
+                    <Label
+                      htmlFor="plan-characteristics-participation-model-precondition"
+                      className="maxw-none"
+                    >
+                      {generalCharacteristicsT(
+                        'participationInModelPrecondition.label'
+                      )}
+                    </Label>
+
+                    <FieldErrorMsg>
+                      {flatErrors.participationInModelPrecondition}
+                    </FieldErrorMsg>
+
+                    {getKeys(
+                      participationInModelPreconditionConfig.options
+                    ).map(key => (
+                      <Fragment key={key}>
+                        <Field
+                          as={Radio}
+                          id={`plan-characteristics-participation-model-precondition-${key}`}
+                          data-testid={`plan-characteristics-participation-model-precondition-${key}`}
+                          name="participationInModelPrecondition"
+                          label={
+                            participationInModelPreconditionConfig.options[key]
+                          }
+                          value={key}
+                          checked={
+                            values.participationInModelPrecondition === key
+                          }
+                        />
+
+                        {/* Conditional question if Other is selected */}
+                        {key === YesNoOtherType.OTHER &&
+                          values.participationInModelPrecondition ===
+                            YesNoOtherType.OTHER && (
+                            <div className="margin-left-4 margin-top-1">
+                              <Label
+                                htmlFor="plan-characteristics-participation-model-precondition-other-specify"
+                                className="text-normal"
+                              >
+                                {generalCharacteristicsT(
+                                  'participationInModelPreconditionOtherSpecify.label'
+                                )}
+                              </Label>
+
+                              <Field
+                                as={TextInput}
+                                id="plan-characteristics-participation-model-precondition-other-specify"
+                                data-testid="plan-characteristics-participation-model-precondition-other-specify"
+                                disabled={
+                                  values.participationInModelPrecondition !==
+                                  YesNoOtherType.OTHER
+                                }
+                                name="participationInModelPreconditionOtherSpecify"
+                              />
+                            </div>
+                          )}
+                      </Fragment>
+                    ))}
+
+                    {/* Conditional question if Yes is selected */}
+                    {values.participationInModelPrecondition ===
+                      YesNoOtherType.YES && (
+                      <>
+                        <FieldGroup
+                          scrollElement="plan-characteristics-participation-model-precondition-which"
+                          error={
+                            !!flatErrors.participationInModelPreconditionWhich
+                          }
+                          className="margin-top-4"
+                        >
+                          <Label
+                            htmlFor="plan-characteristics-participation-model-precondition-which"
+                            className="text-normal maxw-none"
+                            id="label-plan-characteristics-participation-model-precondition-which"
+                          >
+                            {generalCharacteristicsT(
+                              'participationInModelPreconditionWhich.label'
+                            )}
+                          </Label>
+
+                          <p className="text-base margin-y-1">
+                            {generalCharacteristicsT(
+                              'participationInModelPreconditionWhich.sublabel'
+                            )}
+                          </p>
+
+                          <FieldErrorMsg>
+                            {flatErrors.participationInModelPreconditionWhich}
+                          </FieldErrorMsg>
+
+                          <Field
+                            as={MultiSelect}
+                            id="plan-characteristics-participation-model-precondition-which"
+                            ariaLabel="label-plan-characteristics-participation-model-precondition-which"
+                            name="participationInModelPreconditionLinks"
+                            options={modelPlanOptions}
+                            selectedLabel={generalCharacteristicsT(
+                              'participationInModelPreconditionWhich.multiSelectLabel'
+                            )}
+                            onChange={(value: string[]) => {
+                              setFieldValue(
+                                'participationInModelPreconditionLinks',
+                                value
+                              );
+                              setFieldValue(
+                                'participationInModelPreconditionOtherSelected',
+                                value.includes('other')
+                              );
+                            }}
+                            initialValues={
+                              initialValues.participationInModelPreconditionLinks
+                            }
+                          />
+
+                          {values.participationInModelPreconditionLinks.includes(
+                            'other'
+                          ) && (
+                            <div className="margin-top-1">
+                              <Label
+                                htmlFor="plan-characteristics-participation-model-precondition-other-option"
+                                className="text-normal"
+                              >
+                                {generalCharacteristicsT(
+                                  'participationInModelPreconditionOtherOption.label'
+                                )}
+                              </Label>
+
+                              <Field
+                                as={TextInput}
+                                id="plan-characteristics-participation-model-precondition-other-option"
+                                data-testid="plan-characteristics-participation-model-precondition-other-option"
+                                name="participationInModelPreconditionOtherOption"
+                              />
+                            </div>
+                          )}
+                        </FieldGroup>
+
+                        <FieldGroup
+                          scrollElement="participationInModelPreconditionWhyHow"
+                          error={
+                            !!flatErrors.participationInModelPreconditionWhyHow
+                          }
+                          className="margin-top-4"
+                        >
+                          <Label
+                            htmlFor="plan-characteristics-participation-model-precondition-why-how"
+                            className="text-normal"
+                          >
+                            {generalCharacteristicsT(
+                              'participationInModelPreconditionWhyHow.label'
+                            )}
+                          </Label>
+
+                          <FieldErrorMsg>
+                            {flatErrors.participationInModelPreconditionWhyHow}
+                          </FieldErrorMsg>
+
+                          <Field
+                            as={TextAreaField}
+                            className="height-15"
+                            error={
+                              flatErrors.participationInModelPreconditionWhyHow
+                            }
+                            id="plan-characteristics-participation-model-precondition-why-how"
+                            name="participationInModelPreconditionWhyHow"
+                          />
+                        </FieldGroup>
+                      </>
+                    )}
+
+                    <AddNote
+                      id="plan-characteristics-participation-model-precondition-note"
+                      field="participationInModelPreconditionNote"
                     />
                   </FieldGroup>
 
@@ -772,7 +1042,7 @@ type SeparateLinksType = {
 };
 
 // Function to get a formatted object for the input payload of UpdateExistingModelLinks mutation
-// Separates all selected existingModelLinks values into a type of either draftModelPlans or existingModelPlans
+// Separates all selected resemblesExistingModelLinks values into a type of either draftModelPlans or existingModelPlans
 export const separateLinksByType = (
   existingLinks: (string | number)[],
   draftModelPlans: GetModelPlansBaseQuery['modelPlanCollection'],

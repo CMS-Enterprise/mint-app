@@ -1,0 +1,8 @@
+
+ALTER TABLE plan_general_characteristics
+  ADD COLUMN participation_in_model_precondition YES_NO_OTHER_TYPE,
+  ADD COLUMN participation_in_model_precondition_why_how ZERO_STRING,
+  ADD COLUMN participation_in_model_precondition_other_specify ZERO_STRING,
+  ADD COLUMN participation_in_model_precondition_other_selected BOOLEAN,
+  ADD COLUMN participation_in_model_precondition_other_option ZERO_STRING,
+  ADD COLUMN participation_in_model_precondition_note ZERO_STRING;

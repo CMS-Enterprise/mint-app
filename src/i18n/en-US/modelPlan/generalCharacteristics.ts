@@ -101,6 +101,77 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     dataType: 'string',
     formType: 'textarea'
   },
+  participationInModelPrecondition: {
+    gqlField: 'participationInModelPrecondition',
+    goField: 'ParticipationInModelPrecondition',
+    dbField: 'participation_in_model_precondition',
+    label:
+      'Is participation in another model a precondition for participation in this model?',
+    dataType: 'enum',
+    formType: 'radio',
+    options: {
+      YES: 'Yes',
+      NO: 'No',
+      OTHER: 'Other'
+    }
+  },
+  participationInModelPreconditionOtherSpecify: {
+    gqlField: 'participationInModelPreconditionOtherSpecify',
+    goField: 'ParticipationInModelPreconditionOtherSpecify',
+    dbField: 'participation_in_model_precondition_other_specify',
+    label: 'Please specify',
+    dataType: 'string',
+    formType: 'text'
+  },
+  participationInModelPreconditionWhich: {
+    gqlField: 'participationInModelPreconditionWhich',
+    goField: 'ParticipationInModelPreconditionWhich',
+    dbField: 'participation_in_model_precondition_which',
+    label: 'Which models?',
+    sublabel: 'Start typing the name of the model',
+    multiSelectLabel: 'Selected models',
+    dataType: 'string',
+    formType: 'multiSelect',
+    isArray: true,
+    isModelLinks: true // Used to designate if a field is a ExistingModelLinks type with nested fields - ex: names
+  },
+  // Not rendered in any form/ui
+  participationInModelPreconditionOtherSelected: {
+    gqlField: 'participationInModelPreconditionOtherSelected',
+    goField: 'ParticipationInModelPreconditionOtherSelected',
+    dbField: 'participation_in_model_precondition_other_selected',
+    label: '',
+    dataType: 'boolean',
+    formType: 'radio',
+    options: {
+      true: '',
+      false: ''
+    }
+  },
+  participationInModelPreconditionOtherOption: {
+    gqlField: 'participationInModelPreconditionOtherOption',
+    goField: 'ParticipationInModelPreconditionOtherOption',
+    dbField: 'participation_in_model_precondition_other_option',
+    label: 'Please specify other',
+    dataType: 'string',
+    formType: 'text'
+  },
+  participationInModelPreconditionWhyHow: {
+    gqlField: 'participationInModelPreconditionWhyHow',
+    goField: 'ParticipationInModelPreconditionWhyHow',
+    dbField: 'participation_in_model_precondition_why_how',
+    label: 'Explain any details including if it is just part of the model.',
+    dataType: 'string',
+    formType: 'textarea'
+  },
+  participationInModelPreconditionNote: {
+    gqlField: 'participationInModelPreconditionNote',
+    goField: 'ParticipationInModelPreconditionNote',
+    dbField: 'participation_in_model_precondition_note',
+    label: 'Note',
+    dataType: 'string',
+    formType: 'textarea'
+  },
   hasComponentsOrTracks: {
     gqlField: 'hasComponentsOrTracks',
     goField: 'HasComponentsOrTracks',
@@ -126,6 +197,41 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     goField: 'HasComponentsOrTracksNote',
     dbField: 'has_components_or_tracks_note',
     label: 'Note',
+    dataType: 'string',
+    formType: 'textarea'
+  },
+  agencyOrStateHelp: {
+    gqlField: 'agencyOrStateHelp',
+    goField: 'AgencyOrStateHelp',
+    dbField: 'agency_or_state_help',
+    label:
+      'Will another Agency or State help design/operate the model? Select all that apply.',
+    readonlyLabel:
+      'Will another Agency or State help design/operate the model?',
+    dataType: 'enum',
+    formType: 'checkbox',
+    options: {
+      YES_STATE: 'Yes, we will partner with states',
+      YES_AGENCY_IDEAS: 'Yes, we will get ideas from another agency',
+      YES_AGENCY_IAA:
+        'Yes, we will get support from another agency through Inter Agency Agreement (IAA)',
+      NO: 'No',
+      OTHER: 'Other'
+    }
+  },
+  agencyOrStateHelpOther: {
+    gqlField: 'agencyOrStateHelpOther',
+    goField: 'AgencyOrStateHelpOther',
+    dbField: 'agency_or_state_help_other',
+    label: 'Please specify',
+    dataType: 'string',
+    formType: 'textarea'
+  },
+  agencyOrStateHelpNote: {
+    gqlField: 'agencyOrStateHelpNote',
+    goField: 'AgencyOrStateHelpNote',
+    dbField: 'agency_or_state_help_note',
+    label: 'Notes',
     dataType: 'string',
     formType: 'textarea'
   },

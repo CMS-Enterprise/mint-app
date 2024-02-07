@@ -62,9 +62,6 @@ const ReadOnlyOpsEvalAndLearning = ({
 
   const {
     // OpsEvalAndLearningContent
-    agencyOrStateHelp,
-    agencyOrStateHelpOther,
-    agencyOrStateHelpNote,
     stakeholders,
     stakeholdersOther,
     stakeholdersNote,
@@ -197,21 +194,6 @@ const ReadOnlyOpsEvalAndLearning = ({
             : 'margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light'
         }`}
       >
-        {checkGroupMap(
-          isViewingFilteredView,
-          filteredQuestions,
-          'agencyOrStateHelp',
-          <ReadOnlySection
-            heading={opsEvalAndLearningT('agencyOrStateHelp.readonlyLabel')}
-            list
-            listItems={agencyOrStateHelp?.map((type): string =>
-              opsEvalAndLearningT(`agencyOrStateHelp.options.${type}`)
-            )}
-            listOtherItem={agencyOrStateHelpOther}
-            notes={agencyOrStateHelpNote}
-          />
-        )}
-
         {checkGroupMap(
           isViewingFilteredView,
           filteredQuestions,
@@ -651,7 +633,7 @@ const ReadOnlyOpsEvalAndLearning = ({
           filteredQuestions,
           'riskAdjustPayments',
           <ReadOnlySection
-            heading={opsEvalAndLearningT('riskAdjustPayments.label')}
+            heading={opsEvalAndLearningT('riskAdjustPayments.readonlyLabel')}
             copy={riskAdjustNote}
           />
         )}
@@ -706,7 +688,7 @@ const ReadOnlyOpsEvalAndLearning = ({
           filteredQuestions,
           'appealPayments',
           <ReadOnlySection
-            heading={opsEvalAndLearningT('appealPayments.label')}
+            heading={opsEvalAndLearningT('appealPayments.readonlyLabel')}
             copy={appealNote}
           />
         )}

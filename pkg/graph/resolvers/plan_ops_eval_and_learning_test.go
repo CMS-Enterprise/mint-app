@@ -27,9 +27,6 @@ func (suite *ResolverSuite) TestPlanOpsEvalAndLearningUpdate() {
 	suite.EqualValues("some test value for data sharing frequency", *oel.DataSharingFrequencyContinually)
 	suite.EqualValues("some test value for data collection frequency", *oel.DataCollectionFrequencyContinually)
 
-	suite.Nil(oel.AgencyOrStateHelp)
-	suite.Nil(oel.AgencyOrStateHelpOther)
-	suite.Nil(oel.AgencyOrStateHelpNote)
 	suite.Nil(oel.Stakeholders)
 	suite.Nil(oel.StakeholdersOther)
 	suite.Equal("These stakeholders might change", *oel.StakeholdersNote)
@@ -139,9 +136,6 @@ func (suite *ResolverSuite) TestPlanOpsEvalAndLearningGetByModelPlanID() {
 	suite.Nil(oel.ModifiedBy)
 
 	//Assert these fields are nil upon creation
-	suite.Nil(oel.AgencyOrStateHelp)
-	suite.Nil(oel.AgencyOrStateHelpOther)
-	suite.Nil(oel.AgencyOrStateHelpNote)
 	suite.Nil(oel.Stakeholders)
 	suite.Nil(oel.StakeholdersOther)
 	suite.Nil(oel.StakeholdersNote)

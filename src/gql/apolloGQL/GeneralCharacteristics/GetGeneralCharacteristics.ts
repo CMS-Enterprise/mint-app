@@ -24,6 +24,19 @@ export default gql(/* GraphQL */ `
         resemblesExistingModelOtherSpecify
         resemblesExistingModelOtherSelected
         resemblesExistingModelOtherOption
+        participationInModelPrecondition
+        participationInModelPreconditionWhich {
+          links {
+            id
+            existingModelID
+            currentModelPlanID
+          }
+        }
+        participationInModelPreconditionOtherSpecify
+        participationInModelPreconditionOtherSelected
+        participationInModelPreconditionOtherOption
+        participationInModelPreconditionWhyHow
+        participationInModelPreconditionNote
         hasComponentsOrTracks
         hasComponentsOrTracksDiffer
         hasComponentsOrTracksNote

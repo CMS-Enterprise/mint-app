@@ -144,9 +144,21 @@ const generalCharacteristicData: GetAllGeneralCharacteristicsTypes = {
   resemblesExistingModelOtherOption: 'Other model',
   resemblesExistingModelOtherSelected: true,
   resemblesExistingModelNote: 'THIS IS A NEW NOTE',
+  participationInModelPrecondition: YesNoOtherType.YES,
+  participationInModelPreconditionWhyHow: 'It is a condition',
+  participationInModelPreconditionOtherSpecify: '',
+  participationInModelPreconditionOtherOption: 'Other model',
+  participationInModelPreconditionOtherSelected: true,
+  participationInModelPreconditionNote: 'Precondition note',
   hasComponentsOrTracks: true,
   hasComponentsOrTracksDiffer: 'In every way',
   hasComponentsOrTracksNote: 'Tracks note',
+  agencyOrStateHelp: [
+    AgencyOrStateHelpType.YES_STATE,
+    AgencyOrStateHelpType.OTHER
+  ],
+  agencyOrStateHelpOther: 'Agency other',
+  agencyOrStateHelpNote: 'State note',
   alternativePaymentModelTypes: [
     AlternativePaymentModelType.REGULAR,
     AlternativePaymentModelType.MIPS
@@ -386,12 +398,6 @@ const opsEvalAndLearningData: AllOpsEvalAndLearningTypes = {
   id: '123',
   modelPlanID: modelID,
   status: TaskStatus.IN_PROGRESS,
-  agencyOrStateHelp: [
-    AgencyOrStateHelpType.YES_STATE,
-    AgencyOrStateHelpType.OTHER
-  ],
-  agencyOrStateHelpOther: 'Agency other',
-  agencyOrStateHelpNote: 'State note',
   stakeholders: [
     StakeholdersType.BENEFICIARIES,
     StakeholdersType.PARTICIPANTS,
