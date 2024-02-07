@@ -11,6 +11,7 @@ CREATE TABLE activity ( --TODO settle on naming. The word event is reserved
     actor_id UUID NOT NULL REFERENCES user_account(id), --foreign key to user table
     entity_id UUID NOT NULL,
     activity_type ACTIVITY_TYPE NOT NULL,
+    meta_data jsonb NOT NULL,
 
     --META DATA
     created_by UUID NOT NULL REFERENCES user_account(id), --Who wrote this row, not necessarily the actor, though it could be the same

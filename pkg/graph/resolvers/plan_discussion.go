@@ -71,7 +71,7 @@ func CreatePlanDiscussion(
 
 		// TODO: EASI-3294 Add an activity
 		discussionActivity := notifications.NewActivity(principal.Account().ID, discussion.ID, notifications.ActivityNewPlanDiscussion)
-		_, activityErr := notifications.ActivityCreate(ctx, store, tx, discussionActivity)
+		_, activityErr := notifications.ActivityCreate(ctx, tx, discussionActivity)
 		if activityErr != nil {
 			return nil, activityErr
 		}

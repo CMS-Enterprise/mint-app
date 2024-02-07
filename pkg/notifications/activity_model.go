@@ -22,6 +22,9 @@ type Activity struct {
 	ActorID      uuid.UUID    `json:"actorID" db:"actor_id"`
 	EntityID     uuid.UUID    `json:"entityID" db:"entity_id"`
 	ActivityType ActivityType `json:"activityType" db:"activity_type"`
+	// this is conditional data that is returned. It deserializes to data specific the activity type
+	MetaData any `json:"metaData" db:"meta_data"`
+	// TODO: EASI-3294
 }
 
 // NewActivity returns a New Activity

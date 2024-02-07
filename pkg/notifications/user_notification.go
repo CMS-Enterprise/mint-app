@@ -31,7 +31,6 @@ func UserNotificationCollectionGetByUser(
 // userNotificationCreate creates a UserNotificationRecord in the database
 func userNotificationCreate(
 	ctx context.Context,
-	store *storage.Store,
 	np sqlutils.NamedPreparer,
 	// the activity this notification is in regards to
 	activity *Activity,
@@ -47,13 +46,12 @@ func userNotificationCreate(
 
 // userNotificationCreateAllPerActivity is a helper function that will create notifications based on the new activity that is being writen to the database.
 func userNotificationCreateAllPerActivity(ctx context.Context,
-	store *storage.Store,
 	np sqlutils.NamedPreparer,
 	// the activity this notification is in regards to
 	activity *Activity) ([]*UserNotification, error) {
 	var notifications []*UserNotification
 
-	originatorNotif, err := userNotificationCreate(ctx, store, np, activity, activity.ActorID) //TODO: get the actual users who need a notification, create a list, or handle in DB
+	originatorNotif, err := userNotificationCreate(ctx, np, activity, activity.ActorID) //TODO: get the actual users who need a notification, create a list, or handle in DB
 	if err != nil {
 		return nil, err
 	}
