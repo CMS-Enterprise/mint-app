@@ -9248,7 +9248,7 @@ cypress-file-upload@^5.0.8:
   resolved "https://registry.yarnpkg.com/cypress-file-upload/-/cypress-file-upload-5.0.8.tgz#d8824cbeaab798e44be8009769f9a6c9daa1b4a1"
   integrity sha512-+8VzNabRk3zG6x8f8BWArF/xA/W0VK4IZNx3MV0jFWrJS/qKn8eHfa5nU73P9fOQAgwHFJx7zjg4lwOnljMO8g==
 
-cypress-otp@^1.0.2:
+cypress-otp@^1.0.3:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/cypress-otp/-/cypress-otp-1.0.3.tgz#b8658df63dedcf722c570f0b57e6501311c78823"
   integrity sha512-o7LssfI0HRHa+TkaOE5/Aukv6M9vsoZAtYESr9m7Ky2i+HRNb2p/IRelE7Z0wJ/UK2f+nXAGZIfXqraf9EPDqw==
