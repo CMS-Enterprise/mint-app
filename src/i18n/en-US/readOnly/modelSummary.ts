@@ -21,7 +21,7 @@ const modelSummary = {
     team: 'Team',
     discussions: 'Discussions',
     documents: 'Documents',
-    'crs-and-tdl': 'CRs and TDLs'
+    'crs-and-tdl': 'FFS CRs and TDLs'
   },
   more: ' more'
 };
