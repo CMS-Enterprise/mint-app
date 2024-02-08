@@ -17,7 +17,6 @@ require (
 	github.com/lib/pq v1.10.9
 	github.com/mitchellh/mapstructure v1.5.0
 	github.com/okta/okta-jwt-verifier-golang v1.3.1
-	github.com/opensearch-project/opensearch-go/v2 v2.3.0
 	github.com/pquerna/otp v1.4.0
 	github.com/spf13/cobra v1.8.0
 	github.com/spf13/viper v1.18.2
@@ -32,9 +31,7 @@ require github.com/gorilla/websocket v1.5.1
 require github.com/xhit/go-simple-mail/v2 v2.16.0
 
 require (
-	github.com/aquasecurity/esquery v0.2.0
 	github.com/contribsys/faktory v1.8.0
-	github.com/iancoleman/strcase v0.3.0
 	github.com/launchdarkly/go-sdk-common/v3 v3.1.0
 	github.com/launchdarkly/go-server-sdk/v6 v6.1.1
 	golang.org/x/net v0.20.0
@@ -42,8 +39,6 @@ require (
 
 require (
 	github.com/aymerick/douceur v0.2.0 // indirect
-	github.com/elastic/go-elasticsearch/v7 v7.6.0 // indirect
-	github.com/fatih/structs v1.1.0 // indirect
 	github.com/go-jose/go-jose/v3 v3.0.1 // indirect
 	github.com/gorilla/css v1.0.0 // indirect
 	github.com/hashicorp/golang-lru/v2 v2.0.3 // indirect
