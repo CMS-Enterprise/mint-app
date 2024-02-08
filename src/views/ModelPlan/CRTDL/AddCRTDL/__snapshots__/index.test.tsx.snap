@@ -405,7 +405,7 @@ exports[`Model Plan Add CR and TDL page > matches snapshot 1`] = `
                         name="dateImplementedYear"
                         pattern="[0-9]*"
                         type="text"
-                        value=""
+                        value="2022"
                       />
                     </div>
                   </div>
@@ -446,7 +446,6 @@ exports[`Model Plan Add CR and TDL page > matches snapshot 1`] = `
               <button
                 class="usa-button"
                 data-testid="button"
-                disabled=""
                 id="submit-cr-and-tdl"
                 type="submit"
               >

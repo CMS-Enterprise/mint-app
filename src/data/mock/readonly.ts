@@ -94,6 +94,7 @@ const modelBasicsData: GetAllBasicsTypes = {
     CmmiGroup.POLICY_AND_PROGRAMS_GROUP
   ],
   modelType: [ModelType.MANDATORY_NATIONAL],
+  modelTypeOther: 'Other model',
   problem: 'There is not enough candy',
   goal: 'To get more candy',
   testInterventions: 'The great candy machine',
@@ -138,6 +139,10 @@ const generalCharacteristicData: GetAllGeneralCharacteristicsTypes = {
   isNewModel: false,
   existingModel: 'Accountable Care Organizations (ACOs): General Information',
   resemblesExistingModel: YesNoOtherType.YES,
+  resemblesExistingModelWhich: {
+    __typename: 'ExistingModelLinks',
+    names: ['name']
+  },
   resemblesExistingModelWhyHow: 'We think it is right',
   resemblesExistingModelHow: null,
   resemblesExistingModelOtherSpecify: '',
@@ -372,6 +377,8 @@ const beneficiaryData: AllBeneficiariesTypes = {
   beneficiaryOverlapNote: 'Note overlap',
   precedenceRules: [YesNoType.YES],
   precedenceRulesYes: 'Yes precedence rules',
+  precedenceRulesNo: 'No precedence',
+  precedenceRulesNote: 'Precedence note',
   status: TaskStatus.IN_PROGRESS
 };
 
@@ -492,14 +499,17 @@ const opsEvalAndLearningData: AllOpsEvalAndLearningTypes = {
   developNewQualityMeasuresNote: 'Note for develop measures',
   qualityPerformanceImpactsPayment: YesNoOtherType.OTHER,
   qualityPerformanceImpactsPaymentOther: 'Other text',
+  qualityPerformanceImpactsPaymentNote: 'quality note',
   dataSharingStarts: DataStartsType.DURING_APPLICATION_PERIOD,
   dataSharingStartsOther: 'Data sharing starts other',
   dataSharingFrequency: [FrequencyType.MONTHLY],
+  dataSharingFrequencyContinually: 'Data sharing cont',
   dataSharingFrequencyOther: 'Data frequency other',
   dataSharingStartsNote: 'Note for data freq',
   dataCollectionStarts: DataStartsType.EARLY_IN_THE_FIRST_PERFORMANCE_YEAR,
   dataCollectionStartsOther: 'Other collection start',
   dataCollectionFrequency: [FrequencyType.ANNUALLY],
+  dataCollectionFrequencyContinually: 'Data coll cont',
   dataCollectionFrequencyOther: 'Data freq other',
   dataCollectionFrequencyNote: 'Note for data freq',
   qualityReportingStarts: DataStartsType.LATER_IN_THE_FIRST_PERFORMANCE_YEAR,

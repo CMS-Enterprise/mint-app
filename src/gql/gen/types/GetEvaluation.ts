@@ -31,6 +31,7 @@ export interface GetEvaluation_modelPlan_opsEvalAndLearning {
 
 export interface GetEvaluation_modelPlan_operationalNeeds {
   __typename: "OperationalNeed";
+  id: UUID;
   modifiedDts: Time | null;
 }
 

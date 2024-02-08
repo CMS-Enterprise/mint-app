@@ -26,6 +26,7 @@ export default gql(/* GraphQL */ `
         appealNote
       }
       operationalNeeds {
+        id
         modifiedDts
       }
     }

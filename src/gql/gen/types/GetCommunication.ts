@@ -32,6 +32,7 @@ export interface GetCommunication_modelPlan_participantsAndProviders {
 
 export interface GetCommunication_modelPlan_operationalNeeds {
   __typename: "OperationalNeed";
+  id: UUID;
   modifiedDts: Time | null;
 }
 
