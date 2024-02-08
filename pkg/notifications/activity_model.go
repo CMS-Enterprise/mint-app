@@ -1,6 +1,9 @@
 package notifications
 
 import (
+	"encoding/json"
+	"fmt"
+
 	"github.com/google/uuid"
 
 	"github.com/cmsgov/mint-app/pkg/models"
@@ -22,9 +25,11 @@ type Activity struct {
 	ActorID      uuid.UUID    `json:"actorID" db:"actor_id"`
 	EntityID     uuid.UUID    `json:"entityID" db:"entity_id"`
 	ActivityType ActivityType `json:"activityType" db:"activity_type"`
+
+	MetaDataRaw interface{} `db:"meta_data"`
 	// this is conditional data that is returned. It deserializes to data specific the activity type
-	MetaData any `json:"metaData" db:"meta_data"`
-	// TODO: EASI-3294
+	MetaData ActivityMetaData `json:"metaData"`
+	// TODO: EASI-3294 try to get this represented as a dynamic type
 }
 
 // NewActivity returns a New Activity
@@ -35,4 +40,25 @@ func NewActivity(actorID uuid.UUID, entityID uuid.UUID, activityType ActivityTyp
 		EntityID:     entityID,
 		ActivityType: activityType,
 	}
+}
+
+func parseRawActivityMetaData(activityType ActivityType, rawMetaDataJSON interface{}) (ActivityMetaData, error) {
+	rawJSON := rawMetaDataJSON
+	switch activityType {
+	case ActivityNewPlanDiscussion:
+		// Deserialize the raw JSON into NewPlanDiscussionActivityMeta
+		meta := NewPlanDiscussionActivityMeta{}
+		if err := json.Unmarshal([]byte(rawJSON.(string)), &meta); err != nil {
+			// Handle error if unmarshaling fails
+			return nil, err
+		}
+		return &meta, nil
+
+	// Add cases for other ActivityTypes as needed
+
+	default:
+		// Return a default implementation or handle unsupported types
+		return nil, fmt.Errorf("unsupported activity type: %s", activityType)
+	}
+
 }

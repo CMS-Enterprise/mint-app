@@ -1,8 +1,8 @@
 package notifications
 
 import (
-	"database/sql/driver"
 	"encoding/json"
+	"errors"
 
 	"github.com/google/uuid"
 )
@@ -30,8 +30,25 @@ func NewNewPlanDiscussionActivityMeta(discussionID uuid.UUID) *NewPlanDiscussion
 
 // Value allows us to satisfy the valuer interface so we can write to the database
 // TODO: EASI-3294, do we need a specific implementation? Or can we rely on the base implementation? We can use this when it is ambiguous
-func (d NewPlanDiscussionActivityMeta) Value() (driver.Value, error) {
+// func (d NewPlanDiscussionActivityMeta) Value() (driver.Value, error) {
 
-	j, err := json.Marshal(d)
-	return j, err
+// 	j, err := json.Marshal(d)
+// 	return j, err
+// }
+
+// Scan implements the scanner interface so we can translate the JSONb from the db to an object in GO
+func (d *NewPlanDiscussionActivityMeta) Scan(src interface{}) error {
+	if src == nil {
+		return nil
+	}
+	source, ok := src.([]byte)
+	if !ok {
+		return errors.New("type assertion .([]byte) failed")
+	}
+	err := json.Unmarshal(source, d)
+	if err != nil {
+		return err
+	}
+
+	return nil
 }
