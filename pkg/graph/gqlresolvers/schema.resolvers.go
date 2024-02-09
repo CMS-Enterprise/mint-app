@@ -21,6 +21,11 @@ import (
 	"github.com/cmsgov/mint-app/pkg/userhelpers"
 )
 
+// DiscussionID is the resolver for the discussionID field.
+func (r *activityMetaBaseStructResolver) DiscussionID(ctx context.Context, obj *notifications.ActivityMetaBaseStruct) (uuid.UUID, error) {
+	panic(fmt.Errorf("not implemented: DiscussionID - discussionID"))
+}
+
 // Fields is the resolver for the fields field.
 func (r *auditChangeResolver) Fields(ctx context.Context, obj *models.AuditChange) (map[string]interface{}, error) {
 	return obj.Fields.ToInterface()
@@ -1145,6 +1150,11 @@ func (r *userNotificationResolver) Content(ctx context.Context, obj *notificatio
 	panic(fmt.Errorf("not implemented: Content - content"))
 }
 
+// ActivityMetaBaseStruct returns generated.ActivityMetaBaseStructResolver implementation.
+func (r *Resolver) ActivityMetaBaseStruct() generated.ActivityMetaBaseStructResolver {
+	return &activityMetaBaseStructResolver{r}
+}
+
 // AuditChange returns generated.AuditChangeResolver implementation.
 func (r *Resolver) AuditChange() generated.AuditChangeResolver { return &auditChangeResolver{r} }
 
@@ -1248,6 +1258,7 @@ func (r *Resolver) UserNotification() generated.UserNotificationResolver {
 	return &userNotificationResolver{r}
 }
 
+type activityMetaBaseStructResolver struct{ *Resolver }
 type auditChangeResolver struct{ *Resolver }
 type currentUserResolver struct{ *Resolver }
 type discussionReplyResolver struct{ *Resolver }

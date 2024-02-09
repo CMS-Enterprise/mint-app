@@ -42,6 +42,7 @@ type Config struct {
 }
 
 type ResolverRoot interface {
+	ActivityMetaBaseStruct() ActivityMetaBaseStructResolver
 	AuditChange() AuditChangeResolver
 	CurrentUser() CurrentUserResolver
 	DiscussionReply() DiscussionReplyResolver
@@ -83,9 +84,16 @@ type ComplexityRoot struct {
 		CreatedDts            func(childComplexity int) int
 		EntityID              func(childComplexity int) int
 		ID                    func(childComplexity int) int
+		MetaData              func(childComplexity int) int
 		ModifiedBy            func(childComplexity int) int
 		ModifiedByUserAccount func(childComplexity int) int
 		ModifiedDts           func(childComplexity int) int
+	}
+
+	ActivityMetaBaseStruct struct {
+		DiscussionID func(childComplexity int) int
+		Type         func(childComplexity int) int
+		Version      func(childComplexity int) int
 	}
 
 	AuditChange struct {
@@ -292,6 +300,12 @@ type ComplexityRoot struct {
 	NDAInfo struct {
 		Agreed    func(childComplexity int) int
 		AgreedDts func(childComplexity int) int
+	}
+
+	NewPlanDiscussionActivityMeta struct {
+		DiscussionID func(childComplexity int) int
+		Type         func(childComplexity int) int
+		Version      func(childComplexity int) int
 	}
 
 	OperationalNeed struct {
@@ -1090,6 +1104,9 @@ type ComplexityRoot struct {
 	}
 }
 
+type ActivityMetaBaseStructResolver interface {
+	DiscussionID(ctx context.Context, obj *notifications.ActivityMetaBaseStruct) (uuid.UUID, error)
+}
 type AuditChangeResolver interface {
 	Fields(ctx context.Context, obj *models.AuditChange) (map[string]interface{}, error)
 }
@@ -1417,6 +1434,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Activity.ID(childComplexity), true
 
+	case "Activity.metaData":
+		if e.complexity.Activity.MetaData == nil {
+			break
+		}
+
+		return e.complexity.Activity.MetaData(childComplexity), true
+
 	case "Activity.modifiedBy":
 		if e.complexity.Activity.ModifiedBy == nil {
 			break
@@ -1437,6 +1461,27 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Activity.ModifiedDts(childComplexity), true
+
+	case "ActivityMetaBaseStruct.discussionID":
+		if e.complexity.ActivityMetaBaseStruct.DiscussionID == nil {
+			break
+		}
+
+		return e.complexity.ActivityMetaBaseStruct.DiscussionID(childComplexity), true
+
+	case "ActivityMetaBaseStruct.type":
+		if e.complexity.ActivityMetaBaseStruct.Type == nil {
+			break
+		}
+
+		return e.complexity.ActivityMetaBaseStruct.Type(childComplexity), true
+
+	case "ActivityMetaBaseStruct.version":
+		if e.complexity.ActivityMetaBaseStruct.Version == nil {
+			break
+		}
+
+		return e.complexity.ActivityMetaBaseStruct.Version(childComplexity), true
 
 	case "AuditChange.action":
 		if e.complexity.AuditChange.Action == nil {
@@ -2758,6 +2803,27 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.NDAInfo.AgreedDts(childComplexity), true
+
+	case "NewPlanDiscussionActivityMeta.discussionID":
+		if e.complexity.NewPlanDiscussionActivityMeta.DiscussionID == nil {
+			break
+		}
+
+		return e.complexity.NewPlanDiscussionActivityMeta.DiscussionID(childComplexity), true
+
+	case "NewPlanDiscussionActivityMeta.type":
+		if e.complexity.NewPlanDiscussionActivityMeta.Type == nil {
+			break
+		}
+
+		return e.complexity.NewPlanDiscussionActivityMeta.Type(childComplexity), true
+
+	case "NewPlanDiscussionActivityMeta.version":
+		if e.complexity.NewPlanDiscussionActivityMeta.Version == nil {
+			break
+		}
+
+		return e.complexity.NewPlanDiscussionActivityMeta.Version(childComplexity), true
 
 	case "OperationalNeed.createdBy":
 		if e.complexity.OperationalNeed.CreatedBy == nil {
@@ -9718,6 +9784,21 @@ enum ActivityType {
   NEW_PLAN_DISCUSSION
   NEW_DISCUSSION_REPLY
 }
+"""
+"""
+union ActivityMetaData = NewPlanDiscussionActivityMeta | ActivityMetaBaseStruct
+
+type NewPlanDiscussionActivityMeta {
+  version: Int!
+  type: ActivityType!
+  discussionID: UUID!
+}
+
+type ActivityMetaBaseStruct {
+  version: Int!
+  type: ActivityType!
+  discussionID: UUID!
+}
 
 
 """
@@ -9728,6 +9809,7 @@ type Activity {
 	actorID: UUID! #TODO: return the actor? DataLoader?
 	entityID: UUID! #TODO: return the entity?
 	activityType: ActivityType!
+  metaData: ActivityMetaData!
 
   createdBy: UUID!
   createdByUserAccount: UserAccount!
@@ -12337,6 +12419,50 @@ func (ec *executionContext) fieldContext_Activity_activityType(ctx context.Conte
 	return fc, nil
 }
 
+func (ec *executionContext) _Activity_metaData(ctx context.Context, field graphql.CollectedField, obj *notifications.Activity) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Activity_metaData(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.MetaData, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(notifications.ActivityMetaData)
+	fc.Result = res
+	return ec.marshalNActivityMetaData2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋnotificationsᚐActivityMetaData(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Activity_metaData(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Activity",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type ActivityMetaData does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
 func (ec *executionContext) _Activity_createdBy(ctx context.Context, field graphql.CollectedField, obj *notifications.Activity) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_Activity_createdBy(ctx, field)
 	if err != nil {
@@ -12631,6 +12757,138 @@ func (ec *executionContext) fieldContext_Activity_modifiedDts(ctx context.Contex
 		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return nil, errors.New("field of type Time does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _ActivityMetaBaseStruct_version(ctx context.Context, field graphql.CollectedField, obj *notifications.ActivityMetaBaseStruct) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_ActivityMetaBaseStruct_version(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Version, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(int)
+	fc.Result = res
+	return ec.marshalNInt2int(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_ActivityMetaBaseStruct_version(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "ActivityMetaBaseStruct",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Int does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _ActivityMetaBaseStruct_type(ctx context.Context, field graphql.CollectedField, obj *notifications.ActivityMetaBaseStruct) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_ActivityMetaBaseStruct_type(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Type, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(notifications.ActivityType)
+	fc.Result = res
+	return ec.marshalNActivityType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋnotificationsᚐActivityType(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_ActivityMetaBaseStruct_type(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "ActivityMetaBaseStruct",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type ActivityType does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _ActivityMetaBaseStruct_discussionID(ctx context.Context, field graphql.CollectedField, obj *notifications.ActivityMetaBaseStruct) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_ActivityMetaBaseStruct_discussionID(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.ActivityMetaBaseStruct().DiscussionID(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(uuid.UUID)
+	fc.Result = res
+	return ec.marshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_ActivityMetaBaseStruct_discussionID(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "ActivityMetaBaseStruct",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type UUID does not have child fields")
 		},
 	}
 	return fc, nil
@@ -23970,6 +24228,138 @@ func (ec *executionContext) fieldContext_NDAInfo_agreedDts(ctx context.Context, 
 		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return nil, errors.New("field of type Time does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _NewPlanDiscussionActivityMeta_version(ctx context.Context, field graphql.CollectedField, obj *notifications.NewPlanDiscussionActivityMeta) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_NewPlanDiscussionActivityMeta_version(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Version, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(int)
+	fc.Result = res
+	return ec.marshalNInt2int(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_NewPlanDiscussionActivityMeta_version(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "NewPlanDiscussionActivityMeta",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Int does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _NewPlanDiscussionActivityMeta_type(ctx context.Context, field graphql.CollectedField, obj *notifications.NewPlanDiscussionActivityMeta) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_NewPlanDiscussionActivityMeta_type(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Type, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(notifications.ActivityType)
+	fc.Result = res
+	return ec.marshalNActivityType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋnotificationsᚐActivityType(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_NewPlanDiscussionActivityMeta_type(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "NewPlanDiscussionActivityMeta",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type ActivityType does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _NewPlanDiscussionActivityMeta_discussionID(ctx context.Context, field graphql.CollectedField, obj *notifications.NewPlanDiscussionActivityMeta) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_NewPlanDiscussionActivityMeta_discussionID(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.DiscussionID, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(uuid.UUID)
+	fc.Result = res
+	return ec.marshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_NewPlanDiscussionActivityMeta_discussionID(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "NewPlanDiscussionActivityMeta",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type UUID does not have child fields")
 		},
 	}
 	return fc, nil
@@ -55883,6 +56273,8 @@ func (ec *executionContext) fieldContext_UserNotification_activity(ctx context.C
 				return ec.fieldContext_Activity_entityID(ctx, field)
 			case "activityType":
 				return ec.fieldContext_Activity_activityType(ctx, field)
+			case "metaData":
+				return ec.fieldContext_Activity_metaData(ctx, field)
 			case "createdBy":
 				return ec.fieldContext_Activity_createdBy(ctx, field)
 			case "createdByUserAccount":
@@ -59695,6 +60087,25 @@ func (ec *executionContext) unmarshalInputUpdateOperationalSolutionSubtaskInput(
 
 // region    ************************** interface.gotpl ***************************
 
+func (ec *executionContext) _ActivityMetaData(ctx context.Context, sel ast.SelectionSet, obj notifications.ActivityMetaData) graphql.Marshaler {
+	switch obj := (obj).(type) {
+	case nil:
+		return graphql.Null
+	case *notifications.NewPlanDiscussionActivityMeta:
+		if obj == nil {
+			return graphql.Null
+		}
+		return ec._NewPlanDiscussionActivityMeta(ctx, sel, obj)
+	case *notifications.ActivityMetaBaseStruct:
+		if obj == nil {
+			return graphql.Null
+		}
+		return ec._ActivityMetaBaseStruct(ctx, sel, obj)
+	default:
+		panic(fmt.Errorf("unexpected type %T", obj))
+	}
+}
+
 func (ec *executionContext) _LinkedExistingModel(ctx context.Context, sel ast.SelectionSet, obj models.LinkedExistingModel) graphql.Marshaler {
 	switch obj := (obj).(type) {
 	case nil:
@@ -59799,6 +60210,11 @@ func (ec *executionContext) _Activity(ctx context.Context, sel ast.SelectionSet,
 			if out.Values[i] == graphql.Null {
 				atomic.AddUint32(&out.Invalids, 1)
 			}
+		case "metaData":
+			out.Values[i] = ec._Activity_metaData(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
 		case "createdBy":
 			out.Values[i] = ec._Activity_createdBy(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
@@ -59882,6 +60298,86 @@ func (ec *executionContext) _Activity(ctx context.Context, sel ast.SelectionSet,
 			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
 		case "modifiedDts":
 			out.Values[i] = ec._Activity_modifiedDts(ctx, field, obj)
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch(ctx)
+	if out.Invalids > 0 {
+		return graphql.Null
+	}
+
+	atomic.AddInt32(&ec.deferred, int32(len(deferred)))
+
+	for label, dfs := range deferred {
+		ec.processDeferredGroup(graphql.DeferredGroup{
+			Label:    label,
+			Path:     graphql.GetPath(ctx),
+			FieldSet: dfs,
+			Context:  ctx,
+		})
+	}
+
+	return out
+}
+
+var activityMetaBaseStructImplementors = []string{"ActivityMetaBaseStruct", "ActivityMetaData"}
+
+func (ec *executionContext) _ActivityMetaBaseStruct(ctx context.Context, sel ast.SelectionSet, obj *notifications.ActivityMetaBaseStruct) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, activityMetaBaseStructImplementors)
+
+	out := graphql.NewFieldSet(fields)
+	deferred := make(map[string]*graphql.FieldSet)
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("ActivityMetaBaseStruct")
+		case "version":
+			out.Values[i] = ec._ActivityMetaBaseStruct_version(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "type":
+			out.Values[i] = ec._ActivityMetaBaseStruct_type(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "discussionID":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._ActivityMetaBaseStruct_discussionID(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
+				return res
+			}
+
+			if field.Deferrable != nil {
+				dfs, ok := deferred[field.Deferrable.Label]
+				di := 0
+				if ok {
+					dfs.AddField(field)
+					di = len(dfs.Values) - 1
+				} else {
+					dfs = graphql.NewFieldSet([]graphql.CollectedField{field})
+					deferred[field.Deferrable.Label] = dfs
+				}
+				dfs.Concurrently(di, func(ctx context.Context) graphql.Marshaler {
+					return innerFunc(ctx, dfs)
+				})
+
+				// don't run the out.Concurrently() call below
+				out.Values[i] = graphql.Null
+				continue
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
 		default:
 			panic("unknown field " + strconv.Quote(field.Name))
 		}
@@ -62164,6 +62660,55 @@ func (ec *executionContext) _NDAInfo(ctx context.Context, sel ast.SelectionSet, 
 			}
 		case "agreedDts":
 			out.Values[i] = ec._NDAInfo_agreedDts(ctx, field, obj)
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch(ctx)
+	if out.Invalids > 0 {
+		return graphql.Null
+	}
+
+	atomic.AddInt32(&ec.deferred, int32(len(deferred)))
+
+	for label, dfs := range deferred {
+		ec.processDeferredGroup(graphql.DeferredGroup{
+			Label:    label,
+			Path:     graphql.GetPath(ctx),
+			FieldSet: dfs,
+			Context:  ctx,
+		})
+	}
+
+	return out
+}
+
+var newPlanDiscussionActivityMetaImplementors = []string{"NewPlanDiscussionActivityMeta", "ActivityMetaData"}
+
+func (ec *executionContext) _NewPlanDiscussionActivityMeta(ctx context.Context, sel ast.SelectionSet, obj *notifications.NewPlanDiscussionActivityMeta) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, newPlanDiscussionActivityMetaImplementors)
+
+	out := graphql.NewFieldSet(fields)
+	deferred := make(map[string]*graphql.FieldSet)
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("NewPlanDiscussionActivityMeta")
+		case "version":
+			out.Values[i] = ec._NewPlanDiscussionActivityMeta_version(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "type":
+			out.Values[i] = ec._NewPlanDiscussionActivityMeta_type(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "discussionID":
+			out.Values[i] = ec._NewPlanDiscussionActivityMeta_discussionID(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
 		default:
 			panic("unknown field " + strconv.Quote(field.Name))
 		}
@@ -70258,6 +70803,16 @@ func (ec *executionContext) marshalNActivity2ᚖgithubᚗcomᚋcmsgovᚋmintᚑa
 		return graphql.Null
 	}
 	return ec._Activity(ctx, sel, v)
+}
+
+func (ec *executionContext) marshalNActivityMetaData2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋnotificationsᚐActivityMetaData(ctx context.Context, sel ast.SelectionSet, v notifications.ActivityMetaData) graphql.Marshaler {
+	if v == nil {
+		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
+			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
+		}
+		return graphql.Null
+	}
+	return ec._ActivityMetaData(ctx, sel, v)
 }
 
 func (ec *executionContext) unmarshalNActivityType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋnotificationsᚐActivityType(ctx context.Context, v interface{}) (notifications.ActivityType, error) {

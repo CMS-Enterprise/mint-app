@@ -42,13 +42,28 @@ func NewActivity(actorID uuid.UUID, entityID uuid.UUID, activityType ActivityTyp
 	}
 }
 
+// parseRawActivityMetaData conditionally parses meta data from JSON to a specific meta data type
 func parseRawActivityMetaData(activityType ActivityType, rawMetaDataJSON interface{}) (ActivityMetaData, error) {
-	rawJSON := rawMetaDataJSON
+
+	var rawData []byte
+
+	// Check if rawMetaDataJSON is already a string
+	if str, ok := rawMetaDataJSON.(string); ok {
+		// Convert string to byte array
+		rawData = []byte(str)
+	} else if bytes, ok := rawMetaDataJSON.([]byte); ok {
+		// Use byte array directly
+		rawData = bytes
+	} else {
+		// Invalid type, return an error
+		return nil, fmt.Errorf("unsupported type for activityData: %T", rawMetaDataJSON)
+	}
+
 	switch activityType {
 	case ActivityNewPlanDiscussion:
 		// Deserialize the raw JSON into NewPlanDiscussionActivityMeta
 		meta := NewPlanDiscussionActivityMeta{}
-		if err := json.Unmarshal([]byte(rawJSON.(string)), &meta); err != nil {
+		if err := json.Unmarshal(rawData, &meta); err != nil {
 			// Handle error if unmarshaling fails
 			return nil, err
 		}

@@ -32,15 +32,15 @@ func (s *dataBaseCalls) ActivityGetByID(np sqlutils.NamedPreparer, activityID uu
 	if procErr != nil {
 		return nil, fmt.Errorf("issue retrieving activity: %w", procErr)
 	}
-	_ = parseRawActivityMetaData
+
 	// TODO: EASi-3294 finish implementing the parsing of meta data.
 
-	// meta, err := parseRawActivityMetaData(retActivity.ActivityType, retActivity.MetaDataRaw)
-	// if err != nil {
-	// 	return nil, fmt.Errorf("issue converting activity meta data to discrete type: %w", err)
+	meta, err := parseRawActivityMetaData(retActivity.ActivityType, retActivity.MetaDataRaw)
+	if err != nil {
+		return nil, fmt.Errorf("issue converting activity meta data to discrete type: %w", err)
 
-	// }
-	// retActivity.MetaData = meta
+	}
+	retActivity.MetaData = meta
 	return retActivity, nil
 }
 

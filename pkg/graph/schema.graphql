@@ -1807,6 +1807,21 @@ enum ActivityType {
   NEW_PLAN_DISCUSSION
   NEW_DISCUSSION_REPLY
 }
+"""
+"""
+union ActivityMetaData = NewPlanDiscussionActivityMeta | ActivityMetaBaseStruct
+
+type NewPlanDiscussionActivityMeta {
+  version: Int!
+  type: ActivityType!
+  discussionID: UUID!
+}
+
+type ActivityMetaBaseStruct {
+  version: Int!
+  type: ActivityType!
+  discussionID: UUID!
+}
 
 
 """
@@ -1817,6 +1832,7 @@ type Activity {
 	actorID: UUID! #TODO: return the actor? DataLoader?
 	entityID: UUID! #TODO: return the entity?
 	activityType: ActivityType!
+  metaData: ActivityMetaData!
 
   createdBy: UUID!
   createdByUserAccount: UserAccount!

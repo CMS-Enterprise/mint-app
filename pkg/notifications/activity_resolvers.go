@@ -18,21 +18,21 @@ func ActivityCreate(ctx context.Context, np sqlutils.NamedPreparer, activity *Ac
 	//TODO: EASI-3294: either switch here, or make distinct Calls.. Probably favor distinct calls
 	meta := createNewPlanDiscussionActivityMeta(activity.EntityID)
 	activity.MetaData = meta
-	activity, err := dbCall.ActivityCreate(np, activity)
+	retActivity, err := dbCall.ActivityCreate(np, activity)
 	if err != nil {
 		return nil, err
 	}
 
-	//TODO: create all notifications for all relevant users, either as
+	//TODO: EASI-3294 create all notifications for all relevant users, either as
 	//   a. part of this function
 	//   b. db trigger
 	//   c. another transaction?
-	_, err = userNotificationCreateAllPerActivity(ctx, np, activity)
+	_, err = userNotificationCreateAllPerActivity(ctx, np, retActivity)
 	if err != nil {
 		return nil, err
 	}
 
-	return activity, nil
+	return retActivity, nil
 
 }
 

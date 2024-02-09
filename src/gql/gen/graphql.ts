@@ -49,10 +49,20 @@ export type Activity = {
   createdDts: Scalars['Time']['output'];
   entityID: Scalars['UUID']['output'];
   id: Scalars['UUID']['output'];
+  metaData: ActivityMetaData;
   modifiedBy?: Maybe<Scalars['UUID']['output']>;
   modifiedByUserAccount?: Maybe<UserAccount>;
   modifiedDts?: Maybe<Scalars['Time']['output']>;
 };
+
+export type ActivityMetaBaseStruct = {
+  __typename: 'ActivityMetaBaseStruct';
+  discussionID: Scalars['UUID']['output'];
+  type: ActivityType;
+  version: Scalars['Int']['output'];
+};
+
+export type ActivityMetaData = ActivityMetaBaseStruct | NewPlanDiscussionActivityMeta;
 
 /** ActivityType represents the possible activities that happen in application that might result in a notification */
 export enum ActivityType {
@@ -981,6 +991,13 @@ export type NdaInfo = {
   __typename: 'NDAInfo';
   agreed: Scalars['Boolean']['output'];
   agreedDts?: Maybe<Scalars['Time']['output']>;
+};
+
+export type NewPlanDiscussionActivityMeta = {
+  __typename: 'NewPlanDiscussionActivityMeta';
+  discussionID: Scalars['UUID']['output'];
+  type: ActivityType;
+  version: Scalars['Int']['output'];
 };
 
 export enum NonClaimsBasedPayType {
