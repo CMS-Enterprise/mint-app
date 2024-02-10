@@ -2,17 +2,19 @@ import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
-
-import getFrequency from 'queries/Beneficiaries/getFrequency';
-import { GetFrequency_modelPlan_beneficiaries as BeneficiaryFrequencyType } from 'queries/Beneficiaries/types/GetFrequency';
 import {
   FrequencyType,
+  GetFrequencyDocument,
+  GetFrequencyQuery,
   OperationalNeedKey,
   OverlapType,
-  TaskStatus
-} from 'types/graphql-global-types';
+  TaskStatus,
+  YesNoType
+} from 'gql/gen/graphql';
 
 import Frequency from './index';
+
+type BeneficiaryFrequencyType = GetFrequencyQuery['modelPlan']['beneficiaries'];
 
 const modelID = 'ce3405a0-3399-4e3a-88d7-3cfc613d2905';
 const operationalNeedID = '081cb879-bd6f-4ead-b9cb-3a299de76390';
@@ -20,12 +22,18 @@ const operationalNeedID = '081cb879-bd6f-4ead-b9cb-3a299de76390';
 const mockData: BeneficiaryFrequencyType = {
   __typename: 'PlanBeneficiaries',
   id: '123',
-  beneficiarySelectionFrequency: FrequencyType.OTHER,
+  beneficiarySelectionFrequency: [FrequencyType.OTHER],
   beneficiarySelectionFrequencyNote: '',
+  beneficiarySelectionFrequencyContinually: 'other',
   beneficiarySelectionFrequencyOther: 'Very often',
+  beneficiaryRemovalFrequency: [FrequencyType.CONTINUALLY],
+  beneficiaryRemovalFrequencyNote: '',
+  beneficiaryRemovalFrequencyContinually: 'continually',
+  beneficiaryRemovalFrequencyOther: 'Not very often',
   beneficiaryOverlap: OverlapType.YES_NO_ISSUES,
   beneficiaryOverlapNote: '',
-  precedenceRules: 'lorem ipsum',
+  precedenceRules: [YesNoType.YES],
+  precedenceRulesYes: 'Yes precedence rules',
   readyForReviewByUserAccount: {
     commonName: 'ASDF',
     id: '000',
@@ -38,7 +46,7 @@ const mockData: BeneficiaryFrequencyType = {
 const beneficiaryMock = [
   {
     request: {
-      query: getFrequency,
+      query: GetFrequencyDocument,
       variables: { id: modelID }
     },
     result: {
@@ -89,9 +97,9 @@ describe('Model Plan Beneficiaries', () => {
     });
 
     await waitFor(() => {
-      expect(screen.getByTestId('beneficiaries-precedence-rules')).toHaveValue(
-        'lorem ipsum'
-      );
+      expect(
+        screen.getByTestId('beneficiaries-precedence-rules-YES-note')
+      ).toHaveValue('Yes precedence rules');
     });
   });
 

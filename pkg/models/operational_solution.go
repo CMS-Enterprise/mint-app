@@ -49,3 +49,19 @@ const (
 	OpSCompleted  OpSolutionStatus = "COMPLETED"
 	OpSAtRisk     OpSolutionStatus = "AT_RISK"
 )
+
+// opSolutionStatusHumanized maps OperationalSolutionStatuses to a human-readable string
+var opSolutionStatusHumanized = map[OpSolutionStatus]string{
+	OpSNotStarted: "Not Started",
+	OpSOnboarding: "Onboarding",
+	OpSBacklog:    "Backlog",
+	OpSInProgress: "In Progress",
+	OpSCompleted:  "Completed",
+	OpSAtRisk:     "At RisK",
+}
+
+// Humanize returns the human-readable string of a Operational Solution  Status
+// if a value is not found for the provided status, an empty string is returned
+func (oss OpSolutionStatus) Humanize() string {
+	return opSolutionStatusHumanized[oss]
+}

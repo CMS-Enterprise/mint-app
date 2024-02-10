@@ -2,11 +2,14 @@ import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
-
-import GetParticipantOptions from 'queries/ParticipantsAndProviders/GetParticipantOptions';
-import { GetParticipantOptions_modelPlan_participantsAndProviders as GetParticipantOptionsType } from 'queries/ParticipantsAndProviders/types/GetParticipantOptions';
+import {
+  GetParticipantOptionsDocument,
+  GetParticipantOptionsQuery
+} from 'gql/gen/graphql';
 
 import ParticipantOptions from './index';
+
+type GetParticipantOptionsType = GetParticipantOptionsQuery['modelPlan']['participantsAndProviders'];
 
 const participantOptionsMockData: GetParticipantOptionsType = {
   __typename: 'PlanParticipantsAndProviders',
@@ -25,7 +28,7 @@ const participantOptionsMockData: GetParticipantOptionsType = {
 const participantOptionsMock = [
   {
     request: {
-      query: GetParticipantOptions,
+      query: GetParticipantOptionsDocument,
       variables: { id: 'ce3405a0-3399-4e3a-88d7-3cfc613d2905' }
     },
     result: {

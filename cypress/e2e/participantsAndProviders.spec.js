@@ -38,9 +38,9 @@ describe('The Model Plan Participants and Providers Form', () => {
 
     cy.clickOutside();
 
-    cy.get('[data-testid="multiselect-tag--Medicare providers"]')
+    cy.get('[data-testid="multiselect-tag--Medicare providers/suppliers"]')
       .first()
-      .contains('Medicare providers');
+      .contains('Medicare providers/suppliers');
 
     cy.get('#participants-and-providers-medicare-type')
       .type('Oncology Providers')
@@ -108,15 +108,47 @@ describe('The Model Plan Participants and Providers Form', () => {
 
     // Page - /participants-and-providers/communication
 
+    cy.get('#participant-added-frequency-other')
+      .should('not.be.disabled')
+      .check({ force: true })
+      .should('be.checked');
+
+    cy.get('#participant-added-frequency-other-text')
+      .type('Sometimes')
+      .should('have.value', 'Sometimes');
+
+    cy.get('#participant-added-frequency-continually')
+      .should('not.be.disabled')
+      .check({ force: true })
+      .should('be.checked');
+
+    cy.get('#participant-added-frequency-continually-text')
+      .type('Every month')
+      .should('have.value', 'Every month');
+
+    cy.get('#participant-removed-frequency-other')
+      .should('not.be.disabled')
+      .check({ force: true })
+      .should('be.checked');
+
+    cy.get('#participant-removed-frequency-other-text')
+      .type('Sometimes')
+      .should('have.value', 'Sometimes');
+
+    cy.get('#participant-removed-frequency-continually')
+      .should('not.be.disabled')
+      .check({ force: true })
+      .should('be.checked');
+
+    cy.get('#participant-removed-frequency-continually-text')
+      .type('Every month')
+      .should('have.value', 'Every month');
+
     cy.get('#participants-and-providers-communication-method-IT_TOOL')
       .should('not.be.disabled')
       .as('communication')
       .check({ force: true });
     cy.get('@communication').should('be.checked');
-
-    cy.get('#participants-and-providers-risk-true')
-      .check({ force: true })
-      .should('be.checked');
 
     cy.get('#participants-and-providers-risk-type-OTHER')
       .check({ force: true })
@@ -147,6 +179,14 @@ describe('The Model Plan Participants and Providers Form', () => {
       .check({ force: true })
       .should('be.checked');
 
+    cy.get('#participants-and-providers-participant-eligibility-OTHER')
+      .check({ force: true })
+      .should('be.checked');
+
+    cy.get('#participants-and-providers-participant-eligibility-other')
+      .type('Providers are eligible in certain cases')
+      .should('have.value', 'Providers are eligible in certain cases');
+
     cy.get('#participants-and-providers-participant-id-OTHER')
       .check({ force: true })
       .should('be.checked');
@@ -159,12 +199,12 @@ describe('The Model Plan Participants and Providers Form', () => {
 
     // Page - /participants-and-providers/provider-options
 
-    cy.get('#participants-and-providers-additional-frequency-OTHER')
+    cy.get('#participants-and-providers-additional-frequency-other')
       .should('not.be.disabled')
       .check({ force: true })
       .should('be.checked');
 
-    cy.get('#participants-and-providers-additional-frequency-other')
+    cy.get('#participants-and-providers-additional-frequency-other-text')
       .type('Every other leap year')
       .should('have.value', 'Every other leap year');
 

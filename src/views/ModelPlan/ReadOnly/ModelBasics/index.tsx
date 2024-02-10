@@ -1,23 +1,22 @@
 import React, { Fragment, useContext } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useQuery } from '@apollo/client';
 import {
   Grid,
-  IconInfo,
+  Icon,
   Link as TrussLink,
   ProcessList,
   ProcessListHeading,
   ProcessListItem
 } from '@trussworks/react-uswds';
 import classNames from 'classnames';
+import { ModelCategory, useGetAllBasicsQuery } from 'gql/gen/graphql';
 
+import PageLoading from 'components/PageLoading';
 import SectionWrapper from 'components/shared/SectionWrapper';
 import Tooltip from 'components/shared/Tooltip';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
-import GetAllBasics from 'queries/ReadOnly/GetAllBasics';
-import { GetAllBasics as GetAllBasicsTypes } from 'queries/ReadOnly/types/GetAllBasics';
-import { ModelCategory } from 'types/graphql-global-types';
 import { formatDateUtc } from 'utils/date';
+import { sortOtherEnum } from 'utils/modelPlan';
 import { ModelInfoContext } from 'views/ModelInfoWrapper';
 import { NotFoundPartial } from 'views/NotFound';
 
@@ -55,7 +54,7 @@ const ReadOnlyModelBasics = ({
 
   const { modelName } = useContext(ModelInfoContext);
 
-  const { data, loading, error } = useQuery<GetAllBasicsTypes>(GetAllBasics, {
+  const { data, loading, error } = useGetAllBasicsQuery({
     variables: {
       id: modelID
     }
@@ -77,9 +76,9 @@ const ReadOnlyModelBasics = ({
     modelCategory,
     additionalModelCategories,
     cmsCenters,
-    cmsOther,
     cmmiGroups,
     modelType,
+    modelTypeOther,
     problem,
     goal,
     testInterventions,
@@ -106,6 +105,10 @@ const ReadOnlyModelBasics = ({
 
     return <em className="text-base">{basicsMiscT('na')}</em>;
   };
+
+  if (!data && loading) {
+    return <PageLoading testId="basics-page-loading" />;
+  }
 
   return (
     <div
@@ -231,7 +234,7 @@ const ReadOnlyModelBasics = ({
                     position="right"
                     className="mint-no-print"
                   >
-                    <IconInfo className="text-base-light" />
+                    <Icon.Info className="text-base-light" />
                   </Tooltip>
                 )}
               </span>
@@ -253,7 +256,7 @@ const ReadOnlyModelBasics = ({
                       label={basicsT(`modelCategory.optionsLabels.${group}`)}
                       position="right"
                     >
-                      <IconInfo className="text-base-light" />
+                      <Icon.Info className="text-base-light" />
                     </Tooltip>
                   </span>
                 </Fragment>
@@ -273,8 +276,7 @@ const ReadOnlyModelBasics = ({
             list: true,
             listItems: cmsCenters?.map((cmsCenter): string =>
               basicsT(`cmsCenters.options.${cmsCenter}`)
-            ),
-            listOtherItem: cmsOther
+            )
           }}
           secondSection={{
             heading: basicsT('cmmiGroups.label'),
@@ -292,7 +294,12 @@ const ReadOnlyModelBasics = ({
         'modelType',
         <ReadOnlySection
           heading={basicsT('modelType.label')}
-          copy={basicsT(`modelType.options.${modelType}`, '')}
+          list
+          listItems={modelType
+            ?.slice() // https://stackoverflow.com/a/66256576
+            .sort(sortOtherEnum)
+            ?.map((type): string => basicsT(`modelType.options.${type}`))}
+          listOtherItem={modelTypeOther}
         />
       )}
 

@@ -1,7 +1,6 @@
 import React, { useRef } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { Link, Route, Switch, useHistory, useParams } from 'react-router-dom';
-import { useMutation, useQuery } from '@apollo/client';
 import {
   Breadcrumb,
   BreadcrumbBar,
@@ -10,11 +9,19 @@ import {
   Fieldset,
   Grid,
   GridContainer,
-  IconArrowBack,
+  Icon,
   Label,
-  SummaryBox
+  SummaryBox,
+  SummaryBoxContent,
+  SummaryBoxHeading
 } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
+import {
+  GetParticipantsAndProvidersQuery,
+  ParticipantsType,
+  useGetParticipantsAndProvidersQuery,
+  useUpdatePlanParticipantsAndProvidersMutation
+} from 'gql/gen/graphql';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
@@ -29,15 +36,6 @@ import FieldGroup from 'components/shared/FieldGroup';
 import MultiSelect from 'components/shared/MultiSelect';
 import TextAreaField from 'components/shared/TextAreaField';
 import usePlanTranslation from 'hooks/usePlanTranslation';
-import GetParticipantsAndProviders from 'queries/ParticipantsAndProviders/GetParticipantsAndProviders';
-import {
-  GetParticipantsAndProviders as GetParticipantsAndProvidersType,
-  GetParticipantsAndProviders_modelPlan_participantsAndProviders as ParticipantsAndProvidersFormType,
-  GetParticipantsAndProvidersVariables
-} from 'queries/ParticipantsAndProviders/types/GetParticipantsAndProviders';
-import { UpdatePlanParticipantsAndProvidersVariables } from 'queries/ParticipantsAndProviders/types/UpdatePlanParticipantsAndProviders';
-import UpdatePlanParticipantsAndProviders from 'queries/ParticipantsAndProviders/UpdatePlanParticipantsAndProviders';
-import { ParticipantsType } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
 import { dirtyInput } from 'utils/formDiff';
 import { composeMultiSelectOptions } from 'utils/modelPlan';
@@ -49,6 +47,8 @@ import ParticipantOptions from './ParticipantOptions';
 import ProviderOptions from './ProviderOptions';
 
 import './index.scss';
+
+type ParticipantsAndProvidersFormType = GetParticipantsAndProvidersQuery['modelPlan']['participantsAndProviders'];
 
 export const ParticipantsAndProvidersContent = () => {
   const { t: participantsAndProvidersT } = useTranslation(
@@ -70,10 +70,7 @@ export const ParticipantsAndProvidersContent = () => {
 
   const history = useHistory();
 
-  const { data, loading, error } = useQuery<
-    GetParticipantsAndProvidersType,
-    GetParticipantsAndProvidersVariables
-  >(GetParticipantsAndProviders, {
+  const { data, loading, error } = useGetParticipantsAndProvidersQuery({
     variables: {
       id: modelID
     }
@@ -89,15 +86,12 @@ export const ParticipantsAndProvidersContent = () => {
     participantsCurrentlyInModels,
     participantsCurrentlyInModelsNote,
     modelApplicationLevel
-  } =
-    data?.modelPlan?.participantsAndProviders ||
-    ({} as ParticipantsAndProvidersFormType);
+  } = (data?.modelPlan?.participantsAndProviders ||
+    {}) as ParticipantsAndProvidersFormType;
 
   const modelName = data?.modelPlan?.modelName || '';
 
-  const [update] = useMutation<UpdatePlanParticipantsAndProvidersVariables>(
-    UpdatePlanParticipantsAndProviders
-  );
+  const [update] = useUpdatePlanParticipantsAndProvidersMutation();
 
   const handleFormSubmit = (redirect?: 'next' | 'back') => {
     update({
@@ -228,7 +222,6 @@ export const ParticipantsAndProvidersContent = () => {
                         <FieldGroup
                           scrollElement="participants"
                           error={!!flatErrors.participants}
-                          className="margin-top-4"
                         >
                           <Label
                             htmlFor="participants-and-providers-participants"
@@ -440,7 +433,7 @@ export const ParticipantsAndProvidersContent = () => {
                           className="usa-button usa-button--unstyled"
                           onClick={() => handleFormSubmit('back')}
                         >
-                          <IconArrowBack
+                          <Icon.ArrowBack
                             className="margin-right-1"
                             aria-hidden
                           />
@@ -451,21 +444,23 @@ export const ParticipantsAndProvidersContent = () => {
                   </Grid>
 
                   <Grid desktop={{ col: 6 }}>
-                    <SummaryBox
-                      heading={participantsAndProvidersMiscT(
-                        'participantsDifferenceHeading'
-                      )}
-                      className="margin-top-6 "
-                    >
-                      <ul>
-                        <li>
-                          <Trans i18nKey="participantsAndProvidersMisc:participantsDifferenceInfo" />
-                        </li>
+                    <SummaryBox className="margin-top-6 ">
+                      <SummaryBoxHeading headingLevel="h3">
+                        {participantsAndProvidersMiscT(
+                          'participantsDifferenceHeading'
+                        )}
+                      </SummaryBoxHeading>
+                      <SummaryBoxContent>
+                        <ul>
+                          <li>
+                            <Trans i18nKey="participantsAndProvidersMisc:participantsDifferenceInfo" />
+                          </li>
 
-                        <li>
-                          <Trans i18nKey="participantsAndProvidersMisc:participantsDifferenceInfo2" />
-                        </li>
-                      </ul>
+                          <li>
+                            <Trans i18nKey="participantsAndProvidersMisc:participantsDifferenceInfo2" />
+                          </li>
+                        </ul>
+                      </SummaryBoxContent>
                     </SummaryBox>
                   </Grid>
                 </Grid>

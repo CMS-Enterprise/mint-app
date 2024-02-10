@@ -5,6 +5,7 @@ import { Button, Grid, GridContainer } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 
 import UswdsReactLink from 'components/LinkWrapper';
+import Spinner from 'components/Spinner';
 import operationalNeedMap, { NeedMap } from 'data/operationalNeedMap';
 import GetOperationalNeed from 'queries/ITSolutions/GetOperationalNeed';
 import GetOperationalNeedAnswer from 'queries/ITSolutions/GetOperationalNeedAnswer';
@@ -96,7 +97,7 @@ const NeedQuestionAndAnswer = ({
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   // Fetch operational need answer to question
-  const { data: need } = useQuery<
+  const { data: need, loading } = useQuery<
     GetOperationalNeedType,
     GetOperationalNeedVariables
   >(GetOperationalNeed, {
@@ -156,11 +157,18 @@ const NeedQuestionAndAnswer = ({
 
   // Because of the dynamic nature of the input and return schema, having a standard TS type isn't applicable
   // Maybe reasearch into this further for better type safety
-  const { data } = useQuery(GetOperationalNeedAnswer, queryVariables);
+  const { data, loading: answerLoading } = useQuery(
+    GetOperationalNeedAnswer,
+    queryVariables
+  );
 
   const answers = useMemo(() => {
     return formatOperationalNeedAnswers(needConfig, data);
   }, [needConfig, data]);
+
+  if ((!need && loading) || (!data && answerLoading)) {
+    return <Spinner size="large" center testId="needs-spinner" />;
+  }
 
   const renderLinks = () => {
     if (isRenderingOnSolutionsDetails) {

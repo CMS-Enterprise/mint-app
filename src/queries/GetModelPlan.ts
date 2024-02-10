@@ -32,19 +32,27 @@ export default gql`
         id
         fileName
       }
-      crTdls {
+      crs {
+        id
+        idNumber
+      }
+      tdls {
         id
         idNumber
       }
       discussions {
         id
-        content
+        content {
+          rawContent
+        }
         createdBy
         createdDts
         replies {
           id
           discussionID
-          content
+          content {
+            rawContent
+          }
           createdBy
           createdDts
         }

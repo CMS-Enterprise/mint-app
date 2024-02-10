@@ -31,10 +31,6 @@ exports[`Get Access Article > matches snapshot 1`] = `
             xmlns="http://www.w3.org/2000/svg"
           >
             <path
-              d="M0 0h24v24H0z"
-              fill="none"
-            />
-            <path
               d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
             />
           </svg>
@@ -136,7 +132,7 @@ exports[`Get Access Article > matches snapshot 1`] = `
                 Use this chart to determine what job code to request by selecting the role that aligns most closely with what you do.
               </p>
               <table
-                class="usa-table usa-table--borderless src-components-Table-Table-module__fullwidth--fOyj6 src-components-Table-Table-module__fixed--RFjRe"
+                class="usa-table usa-table--borderless width-full src-components-Table-Table-module__fixed--Eq00W"
                 data-testid="table"
               >
                 <thead>
@@ -302,15 +298,15 @@ exports[`Get Access Article > matches snapshot 1`] = `
                     <td
                       class="text-baseline"
                     >
-                      MINT Contractor in 
+                      MINT_NON_CMS in 
                       <a
-                        aria-label="Open IDM in a new tab"
+                        aria-label="Open EUA in a new tab"
                         class="usa-link usa-link--external"
-                        href="https://home.idm.cms.gov/"
+                        href="https://eua.cms.gov"
                         rel="noopener noreferrer"
                         target="_blank"
                       >
-                        IDM
+                        EUA
                       </a>
                     </td>
                   </tr>
@@ -402,11 +398,17 @@ exports[`Get Access Article > matches snapshot 1`] = `
                       >
                         MINT_USER
                       </span>
-                       or 
+                      , 
                       <span
                         class="text-bold text-italic"
                       >
                         MINT_CONTRACTOR_FFS
+                      </span>
+                       or 
+                      <span
+                        class="text-bold text-italic"
+                      >
+                        MINT_NON_CMS
                       </span>
                        determined using the chart above) and click the 
                       <span

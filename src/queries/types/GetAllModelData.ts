@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { ModelStatus, ModelCategory, CMSCenter, CMMIGroup, ModelType, TaskStatus, AuthorityAllowance, WaiverType, AlternativePaymentModelType, KeyCharacteristic, GeographyType, GeographyApplication, AgreementType, ParticipantCommunicationType, ParticipantRiskType, ParticipantsIDType, ConfidenceType, RecruitmentType, ParticipantSelectionType, ParticipantsType, FrequencyType, ProviderAddType, ProviderLeaveType, OverlapType, BeneficiariesType, SelectionMethodType, TriStateAnswer, CcmInvolvmentType, DataStartsType, DataFrequencyType, EvaluationApproachType, DataForMonitoringType, DataToSendParticipantsType, DataFullTimeOrIncrementalType, MonitoringFileType, ModelLearningSystemType, AgencyOrStateHelpType, StakeholdersType, ContractorSupportType, BenchmarkForPerformanceType, PayType, ClaimsBasedPayType, ComplexityCalculationLevelType, AnticipatedPaymentFrequencyType, FundingSource, PayRecipient, NonClaimsBasedPayType, TeamRole, DiscussionUserRole } from "./../../types/graphql-global-types";
+import { ModelStatus, ModelCategory, CMSCenter, CMMIGroup, ModelType, TaskStatus, AuthorityAllowance, WaiverType, YesNoOtherType, AgencyOrStateHelpType, AlternativePaymentModelType, KeyCharacteristic, GeographyType, StatesAndTerritories, GeographyRegionType, GeographyApplication, AgreementType, FrequencyType, ParticipantCommunicationType, ParticipantRiskType, GainshareArrangementEligibility, ParticipantsIDType, ConfidenceType, RecruitmentType, ParticipantSelectionType, ParticipantsType, ProviderAddType, ProviderLeaveType, OverlapType, BeneficiariesType, SelectionMethodType, TriStateAnswer, YesNoType, CcmInvolvmentType, DataStartsType, EvaluationApproachType, DataForMonitoringType, DataToSendParticipantsType, DataFullTimeOrIncrementalType, MonitoringFileType, ModelLearningSystemType, StakeholdersType, ContractorSupportType, BenchmarkForPerformanceType, PayType, ClaimsBasedPayType, ComplexityCalculationLevelType, FundingSource, PayRecipient, NonClaimsBasedPayType, TeamRole, DiscussionUserRole } from "./../../types/graphql-global-types";
 
 // ====================================================
 // GraphQL query operation: GetAllModelData
@@ -27,8 +27,8 @@ export interface GetAllModelData_modelPlanCollection_basics {
   demoCode: string | null;
   cmsCenters: CMSCenter[];
   cmmiGroups: CMMIGroup[];
-  cmsOther: string | null;
-  modelType: ModelType | null;
+  modelType: ModelType[];
+  modelTypeOther: string | null;
   problem: string | null;
   goal: string | null;
   testInterventions: string | null;
@@ -50,6 +50,16 @@ export interface GetAllModelData_modelPlanCollection_basics {
   status: TaskStatus;
 }
 
+export interface GetAllModelData_modelPlanCollection_generalCharacteristics_resemblesExistingModelWhich {
+  __typename: "ExistingModelLinks";
+  names: string[];
+}
+
+export interface GetAllModelData_modelPlanCollection_generalCharacteristics_participationInModelPreconditionWhich {
+  __typename: "ExistingModelLinks";
+  names: string[];
+}
+
 export interface GetAllModelData_modelPlanCollection_generalCharacteristics_readyForReviewByUserAccount {
   __typename: "UserAccount";
   commonName: string;
@@ -69,9 +79,46 @@ export interface GetAllModelData_modelPlanCollection_generalCharacteristics {
   waiversRequiredNote: string | null;
   isNewModel: boolean | null;
   existingModel: string | null;
-  resemblesExistingModel: boolean | null;
+  resemblesExistingModel: YesNoOtherType | null;
+  /**
+   * For providing clarifying comments if Yes or No is selected for resemblesExistingModel
+   */
+  resemblesExistingModelWhyHow: string | null;
   resemblesExistingModelHow: string | null;
   resemblesExistingModelNote: string | null;
+  resemblesExistingModelWhich: GetAllModelData_modelPlanCollection_generalCharacteristics_resemblesExistingModelWhich | null;
+  /**
+   * For providing clarifying comments if Other is selected for resemblesExistingModel
+   */
+  resemblesExistingModelOtherSpecify: string | null;
+  /**
+   * For denoting the name of the other existing model that this model resembles
+   */
+  resemblesExistingModelOtherOption: string | null;
+  /**
+   * For answering if participation in other models is a precondition for participating in this model
+   */
+  participationInModelPrecondition: YesNoOtherType | null;
+  /**
+   * The collection of existing model links relevant to the participationInModelPrecondition question
+   */
+  participationInModelPreconditionWhich: GetAllModelData_modelPlanCollection_generalCharacteristics_participationInModelPreconditionWhich | null;
+  /**
+   * For providing clarifying comments if Other is selected for participationInModelPrecondition
+   */
+  participationInModelPreconditionOtherSpecify: string | null;
+  /**
+   * For denoting the name of the other existing model
+   */
+  participationInModelPreconditionOtherOption: string | null;
+  /**
+   * For providing clarifying comments if Yes or No is selected for participationInModelPrecondition
+   */
+  participationInModelPreconditionWhyHow: string | null;
+  /**
+   * A note field for participationInModelPrecondition
+   */
+  participationInModelPreconditionNote: string | null;
   hasComponentsOrTracks: boolean | null;
   hasComponentsOrTracksDiffer: string | null;
   hasComponentsOrTracksNote: string | null;
@@ -84,6 +131,9 @@ export interface GetAllModelData_modelPlanCollection_generalCharacteristics {
   communityPartnersInvolved: boolean | null;
   communityPartnersInvolvedDescription: string | null;
   communityPartnersInvolvedNote: string | null;
+  agencyOrStateHelp: AgencyOrStateHelpType[];
+  agencyOrStateHelpOther: string | null;
+  agencyOrStateHelpNote: string | null;
   alternativePaymentModelTypes: AlternativePaymentModelType[];
   alternativePaymentModelNote: string | null;
   keyCharacteristics: KeyCharacteristic[];
@@ -97,6 +147,8 @@ export interface GetAllModelData_modelPlanCollection_generalCharacteristics {
   planContractUpdatedNote: string | null;
   geographiesTargeted: boolean | null;
   geographiesTargetedTypes: GeographyType[];
+  geographiesStatesAndTerritories: StatesAndTerritories[];
+  geographiesRegionTypes: GeographyRegionType[];
   geographiesTargetedTypesOther: string | null;
   geographiesTargetedAppliedTo: GeographyApplication[];
   geographiesTargetedAppliedToOther: string | null;
@@ -120,11 +172,18 @@ export interface GetAllModelData_modelPlanCollection_participantsAndProviders_re
 export interface GetAllModelData_modelPlanCollection_participantsAndProviders {
   __typename: "PlanParticipantsAndProviders";
   id: UUID;
+  participantAddedFrequency: FrequencyType[];
+  participantAddedFrequencyContinually: string | null;
+  participantAddedFrequencyOther: string | null;
+  participantAddedFrequencyNote: string | null;
+  participantRemovedFrequency: FrequencyType[];
+  participantRemovedFrequencyContinually: string | null;
+  participantRemovedFrequencyOther: string | null;
+  participantRemovedFrequencyNote: string | null;
   communicationMethod: ParticipantCommunicationType[];
   communicationMethodOther: string | null;
   communicationNote: string | null;
-  participantAssumeRisk: boolean | null;
-  riskType: ParticipantRiskType | null;
+  riskType: ParticipantRiskType[];
   riskOther: string | null;
   riskNote: string | null;
   willRiskChange: boolean | null;
@@ -133,6 +192,8 @@ export interface GetAllModelData_modelPlanCollection_participantsAndProviders {
   coordinateWorkNote: string | null;
   gainsharePayments: boolean | null;
   gainsharePaymentsTrack: boolean | null;
+  gainsharePaymentsEligibility: GainshareArrangementEligibility[];
+  gainsharePaymentsEligibilityOther: string | null;
   gainsharePaymentsNote: string | null;
   participantsIds: ParticipantsIDType[];
   participantsIdsOther: string | null;
@@ -154,7 +215,8 @@ export interface GetAllModelData_modelPlanCollection_participantsAndProviders {
   participantsCurrentlyInModels: boolean | null;
   participantsCurrentlyInModelsNote: string | null;
   modelApplicationLevel: string | null;
-  providerAdditionFrequency: FrequencyType | null;
+  providerAdditionFrequency: FrequencyType[];
+  providerAdditionFrequencyContinually: string | null;
   providerAdditionFrequencyOther: string | null;
   providerAdditionFrequencyNote: string | null;
   providerAddMethod: ProviderAddType[];
@@ -163,6 +225,10 @@ export interface GetAllModelData_modelPlanCollection_participantsAndProviders {
   providerLeaveMethod: ProviderLeaveType[];
   providerLeaveMethodOther: string | null;
   providerLeaveMethodNote: string | null;
+  providerRemovalFrequency: FrequencyType[];
+  providerRemovalFrequencyContinually: string | null;
+  providerRemovalFrequencyOther: string | null;
+  providerRemovalFrequencyNote: string | null;
   providerOverlap: OverlapType | null;
   providerOverlapHierarchy: string | null;
   providerOverlapNote: string | null;
@@ -193,10 +259,18 @@ export interface GetAllModelData_modelPlanCollection_beneficiaries {
   excludeCertainCharacteristics: TriStateAnswer | null;
   excludeCertainCharacteristicsCriteria: string | null;
   excludeCertainCharacteristicsNote: string | null;
-  beneficiarySelectionFrequency: FrequencyType | null;
+  beneficiarySelectionFrequency: FrequencyType[];
+  beneficiarySelectionFrequencyContinually: string | null;
   beneficiarySelectionFrequencyNote: string | null;
   beneficiarySelectionFrequencyOther: string | null;
-  precedenceRules: string | null;
+  beneficiaryRemovalFrequency: FrequencyType[];
+  beneficiaryRemovalFrequencyContinually: string | null;
+  beneficiaryRemovalFrequencyNote: string | null;
+  beneficiaryRemovalFrequencyOther: string | null;
+  precedenceRules: YesNoType[];
+  precedenceRulesYes: string | null;
+  precedenceRulesNo: string | null;
+  precedenceRulesNote: string | null;
   numberPeopleImpacted: number | null;
   estimateConfidence: ConfidenceType | null;
   confidenceNote: string | null;
@@ -227,21 +301,27 @@ export interface GetAllModelData_modelPlanCollection_opsEvalAndLearning {
   useCcwForFileDistribiutionToParticipantsNote: string | null;
   developNewQualityMeasures: boolean | null;
   developNewQualityMeasuresNote: string | null;
-  qualityPerformanceImpactsPayment: boolean | null;
+  qualityPerformanceImpactsPayment: YesNoOtherType | null;
+  qualityPerformanceImpactsPaymentOther: string | null;
   qualityPerformanceImpactsPaymentNote: string | null;
   dataSharingStarts: DataStartsType | null;
   dataSharingStartsOther: string | null;
-  dataSharingFrequency: DataFrequencyType[];
+  dataSharingFrequency: FrequencyType[];
+  dataSharingFrequencyContinually: string | null;
   dataSharingFrequencyOther: string | null;
   dataSharingStartsNote: string | null;
   dataCollectionStarts: DataStartsType | null;
   dataCollectionStartsOther: string | null;
-  dataCollectionFrequency: DataFrequencyType[];
+  dataCollectionFrequency: FrequencyType[];
+  dataCollectionFrequencyContinually: string | null;
   dataCollectionFrequencyOther: string | null;
   dataCollectionFrequencyNote: string | null;
   qualityReportingStarts: DataStartsType | null;
   qualityReportingStartsOther: string | null;
   qualityReportingStartsNote: string | null;
+  qualityReportingFrequency: FrequencyType[];
+  qualityReportingFrequencyContinually: string | null;
+  qualityReportingFrequencyOther: string | null;
   evaluationApproaches: EvaluationApproachType[];
   evaluationApproachOther: string | null;
   evalutaionApproachNote: string | null;
@@ -280,9 +360,6 @@ export interface GetAllModelData_modelPlanCollection_opsEvalAndLearning {
   modelLearningSystemsOther: string | null;
   modelLearningSystemsNote: string | null;
   anticipatedChallenges: string | null;
-  agencyOrStateHelp: AgencyOrStateHelpType[];
-  agencyOrStateHelpOther: string | null;
-  agencyOrStateHelpNote: string | null;
   stakeholders: StakeholdersType[];
   stakeholdersOther: string | null;
   stakeholdersNote: string | null;
@@ -344,16 +421,24 @@ export interface GetAllModelData_modelPlanCollection_payments {
   payModelDifferentiation: string | null;
   expectedCalculationComplexityLevel: ComplexityCalculationLevelType | null;
   expectedCalculationComplexityLevelNote: string | null;
+  claimsProcessingPrecedence: boolean | null;
+  claimsProcessingPrecedenceOther: string | null;
+  claimsProcessingPrecedenceNote: string | null;
   canParticipantsSelectBetweenPaymentMechanisms: boolean | null;
   canParticipantsSelectBetweenPaymentMechanismsHow: string | null;
   canParticipantsSelectBetweenPaymentMechanismsNote: string | null;
-  anticipatedPaymentFrequency: AnticipatedPaymentFrequencyType[];
+  anticipatedPaymentFrequency: FrequencyType[];
+  anticipatedPaymentFrequencyContinually: string | null;
   anticipatedPaymentFrequencyOther: string | null;
   anticipatedPaymentFrequencyNote: string | null;
   fundingSource: FundingSource[];
+  fundingSourceMedicareAInfo: string | null;
+  fundingSourceMedicareBInfo: string | null;
   fundingSourceOther: string | null;
   fundingSourceNote: string | null;
   fundingSourceR: FundingSource[];
+  fundingSourceRMedicareAInfo: string | null;
+  fundingSourceRMedicareBInfo: string | null;
   fundingSourceROther: string | null;
   fundingSourceRNote: string | null;
   payRecipients: PayRecipient[];
@@ -373,6 +458,14 @@ export interface GetAllModelData_modelPlanCollection_payments {
   willRecoverPaymentsNote: string | null;
   anticipateReconcilingPaymentsRetrospectively: boolean | null;
   anticipateReconcilingPaymentsRetrospectivelyNote: string | null;
+  paymentReconciliationFrequency: FrequencyType[];
+  paymentReconciliationFrequencyContinually: string | null;
+  paymentReconciliationFrequencyOther: string | null;
+  paymentReconciliationFrequencyNote: string | null;
+  paymentDemandRecoupmentFrequency: FrequencyType[];
+  paymentDemandRecoupmentFrequencyContinually: string | null;
+  paymentDemandRecoupmentFrequencyOther: string | null;
+  paymentDemandRecoupmentFrequencyNote: string | null;
   paymentStartDate: Time | null;
   paymentStartDateNote: string | null;
   readyForReviewByUserAccount: GetAllModelData_modelPlanCollection_payments_readyForReviewByUserAccount | null;
@@ -398,9 +491,25 @@ export interface GetAllModelData_modelPlanCollection_collaborators {
   createdDts: Time;
 }
 
+export interface GetAllModelData_modelPlanCollection_discussions_content {
+  __typename: "TaggedContent";
+  /**
+   * RawContent is HTML. It is sanitized on the backend
+   */
+  rawContent: string;
+}
+
 export interface GetAllModelData_modelPlanCollection_discussions_createdByUserAccount {
   __typename: "UserAccount";
   commonName: string;
+}
+
+export interface GetAllModelData_modelPlanCollection_discussions_replies_content {
+  __typename: "TaggedContent";
+  /**
+   * RawContent is HTML. It is sanitized on the backend
+   */
+  rawContent: string;
 }
 
 export interface GetAllModelData_modelPlanCollection_discussions_replies_createdByUserAccount {
@@ -412,7 +521,7 @@ export interface GetAllModelData_modelPlanCollection_discussions_replies {
   __typename: "DiscussionReply";
   id: UUID;
   discussionID: UUID;
-  content: string | null;
+  content: GetAllModelData_modelPlanCollection_discussions_replies_content | null;
   createdByUserAccount: GetAllModelData_modelPlanCollection_discussions_replies_createdByUserAccount;
   userRole: DiscussionUserRole | null;
   userRoleDescription: string | null;
@@ -422,7 +531,7 @@ export interface GetAllModelData_modelPlanCollection_discussions_replies {
 export interface GetAllModelData_modelPlanCollection_discussions {
   __typename: "PlanDiscussion";
   id: UUID;
-  content: string | null;
+  content: GetAllModelData_modelPlanCollection_discussions_content | null;
   createdByUserAccount: GetAllModelData_modelPlanCollection_discussions_createdByUserAccount;
   userRole: DiscussionUserRole | null;
   userRoleDescription: string | null;

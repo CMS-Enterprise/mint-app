@@ -1,32 +1,37 @@
 import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
-import { render, screen, waitFor } from '@testing-library/react';
-
-import GetBasics from 'queries/Basics/GetBasics';
-import { GetBasics_modelPlan_basics as GetBasicsType } from 'queries/Basics/types/GetBasics';
+import { render, waitFor } from '@testing-library/react';
+import {
+  GetOverviewDocument,
+  GetOverviewQuery,
+  ModelType
+} from 'gql/gen/graphql';
 
 import Overview from './index';
 
-const overviewMockData: GetBasicsType = {
+type GetOverviewType = GetOverviewQuery['modelPlan']['basics'];
+
+const overviewMockData: GetOverviewType = {
   __typename: 'PlanBasics',
   id: '123',
-  modelType: null,
-  problem: '',
-  goal: '',
-  testInterventions: '',
-  note: ''
+  modelType: [ModelType.MANDATORY_NATIONAL],
+  problem: 'My problem',
+  goal: 'A goal',
+  testInterventions: 'Intervention',
+  note: 'Test note'
 };
 
 const mocks = [
   {
     request: {
-      query: GetBasics,
+      query: GetOverviewDocument,
       variables: { id: 'f11eb129-2c80-4080-9440-439cbe1a286f' }
     },
     result: {
       data: {
         modelPlan: {
+          __typename: 'ModelPlan',
           id: 'f11eb129-2c80-4080-9440-439cbe1a286f',
           modelName: 'My excellent plan that I just initiated',
           basics: overviewMockData
@@ -36,15 +41,15 @@ const mocks = [
   }
 ];
 
-describe('Model Plan Documents page', () => {
-  it('renders without errors', async () => {
-    render(
+describe('Basics overview page', () => {
+  it('renders without errors and matches snapshot', async () => {
+    const { asFragment, getByTestId } = render(
       <MemoryRouter
         initialEntries={[
           '/models/f11eb129-2c80-4080-9440-439cbe1a286f/task-list/overview'
         ]}
       >
-        <MockedProvider>
+        <MockedProvider mocks={mocks} addTypename={false} showWarnings>
           <Route path="/models/:modelID/task-list/overview">
             <Overview />
           </Route>
@@ -53,25 +58,9 @@ describe('Model Plan Documents page', () => {
     );
 
     await waitFor(() => {
-      expect(screen.getByTestId('model-plan-overview')).toBeInTheDocument();
+      expect(getByTestId('ModelType-Problem')).toHaveValue('My problem');
     });
-  });
-  it('matches snapshot', async () => {
-    const { asFragment } = render(
-      <MemoryRouter
-        initialEntries={[
-          '/models/f11eb129-2c80-4080-9440-439cbe1a286f/task-list/overview'
-        ]}
-      >
-        <MockedProvider mocks={mocks} addTypename={false}>
-          <Route path="/models/:modelID/task-list/overview">
-            <Overview />
-          </Route>
-        </MockedProvider>
-      </MemoryRouter>
-    );
-    await waitFor(() => {
-      expect(asFragment()).toMatchSnapshot();
-    });
+
+    expect(asFragment()).toMatchSnapshot();
   });
 });

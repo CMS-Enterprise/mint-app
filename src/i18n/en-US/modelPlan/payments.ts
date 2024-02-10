@@ -1,5 +1,7 @@
 import { TranslationPayments } from 'types/translation';
 
+import { frequencyOptions } from './miscellaneous';
+
 export const payments: TranslationPayments = {
   fundingSource: {
     gqlField: 'fundingSource',
@@ -13,28 +15,42 @@ export const payments: TranslationPayments = {
     options: {
       PATIENT_PROTECTION_AFFORDABLE_CARE_ACT:
         'Patient Protection Affordable Care Act (Sec 3021)',
-      TRUST_FUND: 'Trust Fund',
+      MEDICARE_PART_A_HI_TRUST_FUND: 'Medicare Part A (HI) Trust Fund',
+      MEDICARE_PART_B_SMI_TRUST_FUND: 'Medicare Part B (SMI) Trust Fund',
       OTHER: 'Other'
     },
-    filterGroups: ['dfsdm', 'ipc', 'oact']
-  },
-  fundingSourceTrustFundType: {
-    gqlField: 'fundingSourceTrustFundType',
-    goField: 'FundingSourceTrustFundType',
-    dbField: 'funding_source_trust_fund',
-    label: 'Which type(s)?',
-    dataType: 'enum',
-    formType: 'checkbox',
-    options: {
-      MEDICARE_PART_A_HI_TRUST_FUND: 'Medicare Part A (HI) Trust Fund',
-      MEDICARE_PART_B_SMI_TRUST_FUND: 'Medicare Part B (SMI) Trust Fund'
-    },
     optionsLabels: {
+      PATIENT_PROTECTION_AFFORDABLE_CARE_ACT: '',
       MEDICARE_PART_A_HI_TRUST_FUND:
         'Also known as the Hospital Insurance (HI) Trust Fund, this covers inpatient hospital care, skilled nursing facility care, home healthcare, and hospice care.',
       MEDICARE_PART_B_SMI_TRUST_FUND:
-        'Also known as the Supplementary Medical Insurance (SMI) Trust Fund, this covers physician services, outpatient care, medical supplies, preventive services, and other healthcare services not covered by Part A.'
+        'Also known as the Supplementary Medical Insurance (SMI) Trust Fund, this covers physician services, outpatient care, medical supplies, preventive services, and other healthcare services not covered by Part A.',
+      OTHER: ''
     },
+    optionsRelatedInfo: {
+      PATIENT_PROTECTION_AFFORDABLE_CARE_ACT: '',
+      MEDICARE_PART_A_HI_TRUST_FUND: 'fundingSourceMedicareAInfo',
+      MEDICARE_PART_B_SMI_TRUST_FUND: 'fundingSourceMedicareBInfo',
+      OTHER: 'fundingSourceOther'
+    },
+    filterGroups: ['dfsdm', 'ipc', 'oact']
+  },
+  fundingSourceMedicareAInfo: {
+    gqlField: 'fundingSourceMedicareAInfo',
+    goField: 'FundingSourceMedicareAInfo',
+    dbField: 'funding_source_medicare_a_info',
+    label: 'Additional details',
+    dataType: 'string',
+    formType: 'text',
+    filterGroups: ['dfsdm', 'ipc', 'oact']
+  },
+  fundingSourceMedicareBInfo: {
+    gqlField: 'fundingSourceMedicareBInfo',
+    goField: 'FundingSourceMedicareBInfo',
+    dbField: 'funding_source_medicare_b_info',
+    label: 'Additional details',
+    dataType: 'string',
+    formType: 'text',
     filterGroups: ['dfsdm', 'ipc', 'oact']
   },
   fundingSourceOther: {
@@ -68,28 +84,42 @@ export const payments: TranslationPayments = {
     options: {
       PATIENT_PROTECTION_AFFORDABLE_CARE_ACT:
         'Patient Protection Affordable Care Act (Sec 3021)',
-      TRUST_FUND: 'Trust Fund',
+      MEDICARE_PART_A_HI_TRUST_FUND: 'Medicare Part A (HI) Trust Fund',
+      MEDICARE_PART_B_SMI_TRUST_FUND: 'Medicare Part B (SMI) Trust Fund',
       OTHER: 'Other'
     },
-    filterGroups: ['dfsdm', 'ipc', 'oact']
-  },
-  fundingSourceRTrustFundType: {
-    gqlField: 'fundingSourceRTrustFundType',
-    goField: 'FundingSourceRTrustFundType',
-    dbField: 'funding_source_r_trust_fund',
-    label: 'Which type(s)?',
-    dataType: 'enum',
-    formType: 'checkbox',
-    options: {
-      MEDICARE_PART_A_HI_TRUST_FUND: 'Medicare Part A (HI) Trust Fund',
-      MEDICARE_PART_B_SMI_TRUST_FUND: 'Medicare Part B (SMI) Trust Fund'
-    },
     optionsLabels: {
+      PATIENT_PROTECTION_AFFORDABLE_CARE_ACT: '',
       MEDICARE_PART_A_HI_TRUST_FUND:
         'Also known as the Hospital Insurance (HI) Trust Fund, this covers inpatient hospital care, skilled nursing facility care, home healthcare, and hospice care.',
       MEDICARE_PART_B_SMI_TRUST_FUND:
-        'Also known as the Supplementary Medical Insurance (SMI) Trust Fund, this covers physician services, outpatient care, medical supplies, preventive services, and other healthcare services not covered by Part A.'
+        'Also known as the Supplementary Medical Insurance (SMI) Trust Fund, this covers physician services, outpatient care, medical supplies, preventive services, and other healthcare services not covered by Part A.',
+      OTHER: ''
     },
+    optionsRelatedInfo: {
+      PATIENT_PROTECTION_AFFORDABLE_CARE_ACT: '',
+      MEDICARE_PART_A_HI_TRUST_FUND: 'fundingSourceRMedicareAInfo',
+      MEDICARE_PART_B_SMI_TRUST_FUND: 'fundingSourceRMedicareBInfo',
+      OTHER: 'fundingSourceROther'
+    },
+    filterGroups: ['dfsdm', 'ipc', 'oact']
+  },
+  fundingSourceRMedicareAInfo: {
+    gqlField: 'fundingSourceRMedicareAInfo',
+    goField: 'FundingSourceRMedicareAInfo',
+    dbField: 'funding_source_r_medicare_a_info',
+    label: 'Additional details',
+    dataType: 'string',
+    formType: 'text',
+    filterGroups: ['dfsdm', 'ipc', 'oact']
+  },
+  fundingSourceRMedicareBInfo: {
+    gqlField: 'fundingSourceRMedicareBInfo',
+    goField: 'FundingSourceRMedicareBInfo',
+    dbField: 'funding_source_r_medicare_b_info',
+    label: 'Additional details',
+    dataType: 'string',
+    formType: 'text',
     filterGroups: ['dfsdm', 'ipc', 'oact']
   },
   fundingSourceROther: {
@@ -180,14 +210,16 @@ export const payments: TranslationPayments = {
     options: {
       ADJUSTMENTS_TO_FFS_PAYMENTS: 'Adjustments to FFS payments',
       CARE_MANAGEMENT_HOME_VISITS: 'Payments for care management home visits',
-      REDUCTIONS_TO_BENEFICIARY_COST_SHARING:
-        'Reductions to beneficiary cost-sharing',
+      PAYMENTS_FOR_POST_DISCHARGE_HOME_VISITS:
+        'Payments for post-discharge home visits',
+      SERVICES_NOT_COVERED_THROUGH_TRADITIONAL_MEDICARE:
+        'Payments for services not covered through Traditional Medicare',
       SNF_CLAIMS_WITHOUT_3DAY_HOSPITAL_ADMISSIONS:
         'Payments for SNF claims without 3-day hospital admissions',
       TELEHEALTH_SERVICES_NOT_TRADITIONAL_MEDICARE:
         'Payments for telehealth services not covered through Traditional Medicare',
-      SERVICES_NOT_COVERED_THROUGH_TRADITIONAL_MEDICARE:
-        'Payments for services not covered through Traditional Medicare',
+      REDUCTIONS_TO_BENEFICIARY_COST_SHARING:
+        'Reductions to beneficiary cost-sharing',
       OTHER: 'Other'
     },
     filterGroups: ['cmmi', 'oact']
@@ -196,7 +228,7 @@ export const payments: TranslationPayments = {
     gqlField: 'payClaimsOther',
     goField: 'PayClaimsOther',
     dbField: 'pay_claims_other',
-    label: 'Please describe the other payment frequency.',
+    label: 'Please describe the other claims-based payments you will pay',
     dataType: 'string',
     formType: 'textarea',
     filterGroups: ['cmmi', 'oact']
@@ -447,7 +479,6 @@ export const payments: TranslationPayments = {
         'Capitation/Population Based - Partial',
       CARE_COORDINATION_MANAGEMENT_FEE: 'Care Coordination/Management Fee',
       GLOBAL_BUDGET: 'Global Budget',
-      GRANTS: 'Grants',
       INCENTIVE_PAYMENT: 'Incentive Payment',
       MAPD_SHARED_SAVINGS:
         'Medicare Advantage Prescription Drug (MAPD) Shared Savings',
@@ -568,6 +599,39 @@ export const payments: TranslationPayments = {
     dataType: 'string',
     formType: 'textarea'
   },
+  claimsProcessingPrecedence: {
+    gqlField: 'claimsProcessingPrecedence',
+    goField: 'ClaimsProcessingPrecedence',
+    dbField: 'claims_processing_precedence',
+    label:
+      'Are there any business requirement(s) that address claims processing precedence order with the other model(s)?',
+    dataType: 'enum',
+    formType: 'checkbox',
+    options: {
+      true: 'Yes',
+      false: 'No'
+    },
+    optionsRelatedInfo: {
+      true: 'claimsProcessingPrecedenceOther',
+      false: ''
+    }
+  },
+  claimsProcessingPrecedenceOther: {
+    gqlField: 'claimsProcessingPrecedenceOther',
+    goField: 'ClaimsProcessingPrecedenceOther',
+    dbField: 'claims_processing_precedence_other',
+    label: 'Please specify',
+    dataType: 'string',
+    formType: 'text'
+  },
+  claimsProcessingPrecedenceNote: {
+    gqlField: 'claimsProcessingPrecedenceNote',
+    goField: 'ClaimsProcessingPrecedenceNote',
+    dbField: 'claims_processing_precedence_note',
+    label: 'Notes',
+    dataType: 'string',
+    formType: 'text'
+  },
   canParticipantsSelectBetweenPaymentMechanisms: {
     gqlField: 'canParticipantsSelectBetweenPaymentMechanisms',
     goField: 'CanParticipantsSelectBetweenPaymentMechanisms',
@@ -606,25 +670,32 @@ export const payments: TranslationPayments = {
     dbField: 'anticipated_payment_frequency',
     label: 'How often do you anticipate making payments?',
     dataType: 'enum',
-    formType: 'multiSelect',
-    multiSelectLabel: 'Selected payment frequency',
-    options: {
-      ANNUALLY: 'Annually',
-      BIANNUALLY: 'Semiannually',
-      QUARTERLY: 'Quarterly',
-      MONTHLY: 'Monthly',
-      SEMIMONTHLY: 'Semi-monthly',
-      WEEKLY: 'Weekly',
-      DAILY: 'Daily',
-      OTHER: 'Other'
+    formType: 'checkbox',
+    options: frequencyOptions,
+    optionsRelatedInfo: {
+      ANNUALLY: '',
+      SEMIANNUALLY: '',
+      QUARTERLY: '',
+      MONTHLY: '',
+      CONTINUALLY: 'anticipatedPaymentFrequencyContinually',
+      OTHER: 'anticipatedPaymentFrequencyOther'
     },
+    filterGroups: ['cmmi', 'dfsdm', 'ipc']
+  },
+  anticipatedPaymentFrequencyContinually: {
+    gqlField: 'anticipatedPaymentFrequencyContinually',
+    goField: 'AnticipatedPaymentFrequencyContinually',
+    dbField: 'anticipated_payment_frequency_continually',
+    label: 'Please specify',
+    dataType: 'string',
+    formType: 'textarea',
     filterGroups: ['cmmi', 'dfsdm', 'ipc']
   },
   anticipatedPaymentFrequencyOther: {
     gqlField: 'anticipatedPaymentFrequencyOther',
     goField: 'AnticipatedPaymentFrequencyOther',
     dbField: 'anticipated_payment_frequency_other',
-    label: 'Please describe the other payment frequency.',
+    label: 'Please specify',
     dataType: 'string',
     formType: 'textarea',
     filterGroups: ['cmmi', 'dfsdm', 'ipc']
@@ -681,6 +752,88 @@ export const payments: TranslationPayments = {
     dataType: 'string',
     formType: 'textarea',
     filterGroups: ['iddoc', 'ipc', 'pbg']
+  },
+  paymentReconciliationFrequency: {
+    gqlField: 'paymentReconciliationFrequency',
+    goField: 'PaymentReconciliationFrequency',
+    dbField: 'payment_reconciliation_frequency',
+    label: 'How often are payments reconciled?',
+    dataType: 'enum',
+    formType: 'checkbox',
+    options: frequencyOptions,
+    optionsRelatedInfo: {
+      ANNUALLY: '',
+      SEMIANNUALLY: '',
+      QUARTERLY: '',
+      MONTHLY: '',
+      CONTINUALLY: 'paymentReconciliationFrequencyContinually',
+      OTHER: 'paymentReconciliationFrequencyOther'
+    }
+  },
+  paymentReconciliationFrequencyContinually: {
+    gqlField: 'paymentReconciliationFrequencyContinually',
+    goField: 'PaymentReconciliationFrequencyContinually',
+    dbField: 'payment_reconciliation_frequency_continually',
+    label: 'Please specify',
+    dataType: 'string',
+    formType: 'textarea'
+  },
+  paymentReconciliationFrequencyOther: {
+    gqlField: 'paymentReconciliationFrequencyOther',
+    goField: 'PaymentReconciliationFrequencyOther',
+    dbField: 'payment_reconciliation_frequency_other',
+    label: 'Please specify',
+    dataType: 'string',
+    formType: 'textarea'
+  },
+  paymentReconciliationFrequencyNote: {
+    gqlField: 'paymentReconciliationFrequencyNote',
+    goField: 'PaymentReconciliationFrequencyNote',
+    dbField: 'payment_reconciliation_frequency_note',
+    label: 'Notes',
+    dataType: 'string',
+    formType: 'textarea'
+  },
+  paymentDemandRecoupmentFrequency: {
+    gqlField: 'paymentDemandRecoupmentFrequency',
+    goField: 'PaymentDemandRecoupmentFrequency',
+    dbField: 'payment_demand_recoupment_frequency',
+    label: 'How frequently do you anticipate making demands/recoupments?',
+    dataType: 'enum',
+    formType: 'checkbox',
+    options: frequencyOptions,
+    optionsRelatedInfo: {
+      ANNUALLY: '',
+      SEMIANNUALLY: '',
+      QUARTERLY: '',
+      MONTHLY: '',
+      CONTINUALLY: 'paymentDemandRecoupmentFrequencyContinually',
+      OTHER: 'paymentDemandRecoupmentFrequencyOther'
+    }
+  },
+  paymentDemandRecoupmentFrequencyContinually: {
+    gqlField: 'paymentDemandRecoupmentFrequencyContinually',
+    goField: 'PaymentDemandRecoupmentFrequencyContinually',
+    dbField: 'payment_demand_recoupment_frequency_continually',
+    label: 'Please specify',
+    dataType: 'string',
+    formType: 'textarea'
+  },
+  paymentDemandRecoupmentFrequencyOther: {
+    gqlField: 'paymentDemandRecoupmentFrequencyOther',
+    goField: 'PaymentReconciliationFrequencyOther',
+    dbField: 'payment_demand_recoupment_frequency_other',
+    label: 'Please specify',
+    dataType: 'string',
+    formType: 'textarea'
+  },
+  paymentDemandRecoupmentFrequencyNote: {
+    gqlField: 'paymentDemandRecoupmentFrequencyNote',
+    goField: 'PaymentReconciliationFrequencyNote',
+    dbField: 'payment_demand_recoupment_frequency_note',
+    label: 'Notes',
+    dataType: 'string',
+    formType: 'textarea'
   },
   paymentStartDate: {
     gqlField: 'paymentStartDate',

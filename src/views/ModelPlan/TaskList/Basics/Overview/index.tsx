@@ -1,44 +1,41 @@
-import React, { useRef } from 'react';
+import React, { Fragment, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useHistory, useParams } from 'react-router-dom';
-import { useMutation, useQuery } from '@apollo/client';
 import {
   Breadcrumb,
   BreadcrumbBar,
   BreadcrumbLink,
   Button,
   Fieldset,
-  IconArrowBack,
+  Icon,
   Label,
-  Radio
+  TextInput
 } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
+import {
+  GetOverviewQuery,
+  ModelType,
+  useGetOverviewQuery,
+  useUpdateBasicsMutation
+} from 'gql/gen/graphql';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import AutoSave from 'components/shared/AutoSave';
+import CheckboxField from 'components/shared/CheckboxField';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import TextAreaField from 'components/shared/TextAreaField';
 import usePlanTranslation from 'hooks/usePlanTranslation';
-import GetBasics from 'queries/Basics/GetBasics';
-import {
-  GetBasics as GetBasicsType,
-  GetBasics_modelPlan_basics as BasicsFormType,
-  GetBasicsVariables
-} from 'queries/Basics/types/GetBasics';
-import {
-  UpdatePlanBasics as UpdatebasicsType,
-  UpdatePlanBasicsVariables
-} from 'queries/Basics/types/UpdatePlanBasics';
-import UpdatePlanBasics from 'queries/Basics/UpdatePlanBasics';
 import { getKeys } from 'types/translation';
 import flattenErrors from 'utils/flattenErrors';
 import { dirtyInput } from 'utils/formDiff';
 import { NotFoundPartial } from 'views/NotFound';
+
+type BasicsFormType = GetOverviewQuery['modelPlan']['basics'];
 
 const Overview = () => {
   const { t: basicsT } = useTranslation('basics');
@@ -52,23 +49,25 @@ const Overview = () => {
   const formikRef = useRef<FormikProps<BasicsFormType>>(null);
   const history = useHistory();
 
-  const { data, loading, error } = useQuery<GetBasicsType, GetBasicsVariables>(
-    GetBasics,
-    {
-      variables: {
-        id: modelID
-      }
+  const { data, loading, error } = useGetOverviewQuery({
+    variables: {
+      id: modelID
     }
-  );
+  });
 
   const { modelName } = data?.modelPlan || {};
 
-  const { id, modelType, problem, goal, testInterventions, note } =
-    data?.modelPlan?.basics || ({} as BasicsFormType);
+  const {
+    id,
+    modelType,
+    modelTypeOther,
+    problem,
+    goal,
+    testInterventions,
+    note
+  } = (data?.modelPlan?.basics || {}) as BasicsFormType;
 
-  const [update] = useMutation<UpdatebasicsType, UpdatePlanBasicsVariables>(
-    UpdatePlanBasics
-  );
+  const [update] = useUpdateBasicsMutation();
 
   const handleFormSubmit = (redirect?: 'next' | 'back' | 'task-list') => {
     update({
@@ -99,7 +98,8 @@ const Overview = () => {
   const initialValues: BasicsFormType = {
     __typename: 'PlanBasics',
     id: id ?? '',
-    modelType: modelType ?? null,
+    modelType: modelType ?? [],
+    modelTypeOther: modelTypeOther ?? '',
     problem: problem ?? '',
     goal: goal ?? '',
     testInterventions: testInterventions ?? '',
@@ -204,22 +204,30 @@ const Overview = () => {
                     <FieldErrorMsg>{flatErrors.modelType}</FieldErrorMsg>
 
                     <Fieldset>
-                      <Field
-                        as={Radio}
-                        id="ModelType-Voluntary"
-                        name="modelType"
-                        label={modelTypeConfig.options.VOLUNTARY}
-                        value="VOLUNTARY"
-                        checked={values.modelType === 'VOLUNTARY'}
-                      />
-                      <Field
-                        as={Radio}
-                        id="ModelType-Mandatory"
-                        name="modelType"
-                        label={modelTypeConfig.options.MANDATORY}
-                        value="MANDATORY"
-                        checked={values.modelType === 'MANDATORY'}
-                      />
+                      {getKeys(modelTypeConfig.options).map(key => (
+                        <Fragment key={key}>
+                          <Field
+                            as={CheckboxField}
+                            id={`ModelType-${key}`}
+                            name="modelType"
+                            label={modelTypeConfig.options[key]}
+                            value={key}
+                            checked={values.modelType.includes(key)}
+                          />
+                        </Fragment>
+                      ))}
+
+                      {values.modelType?.includes(ModelType.OTHER) && (
+                        <div className="margin-left-4">
+                          <span>{basicsT('modelTypeOther.label')}</span>
+                          <Field
+                            as={TextInput}
+                            id="ModelType-Other"
+                            data-testid="ModelType-Other"
+                            name="modelTypeOther"
+                          />
+                        </div>
+                      )}
                     </Fieldset>
                   </FieldGroup>
 
@@ -232,6 +240,7 @@ const Overview = () => {
                       as={TextAreaField}
                       error={flatErrors.problem}
                       id="ModelType-Problem"
+                      data-testid="ModelType-Problem"
                       name="problem"
                       label={basicsT('problem.label')}
                     />
@@ -272,7 +281,7 @@ const Overview = () => {
                     <Button
                       type="button"
                       className="usa-button usa-button--outline margin-bottom-1"
-                      onClick={() => handleFormSubmit('task-list')}
+                      onClick={() => handleFormSubmit('back')}
                     >
                       {miscellaneousT('back')}
                     </Button>
@@ -291,7 +300,7 @@ const Overview = () => {
                     className="usa-button usa-button--unstyled"
                     onClick={() => handleFormSubmit('task-list')}
                   >
-                    <IconArrowBack className="margin-right-1" aria-hidden />
+                    <Icon.ArrowBack className="margin-right-1" aria-hidden />
 
                     {miscellaneousT('saveAndReturn')}
                   </Button>

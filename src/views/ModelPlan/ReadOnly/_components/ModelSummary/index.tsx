@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Button, Grid, IconExpandMore } from '@trussworks/react-uswds';
+import { Button, Grid, Icon } from '@trussworks/react-uswds';
 import classnames from 'classnames';
+import { GetCrtdLsQuery } from 'gql/gen/graphql';
 import i18next from 'i18next';
 
 import CollapsableLink from 'components/shared/CollapsableLink';
@@ -11,10 +12,13 @@ import {
 } from 'components/shared/DescriptionGroup';
 import {
   GetModelSummary_modelPlan_collaborators as CollaboratorsType,
-  GetModelSummary_modelPlan_crTdls as CRTDLsTypes,
   GetModelSummary_modelPlan_generalCharacteristics as CharacteristicsType
 } from 'queries/ReadOnly/types/GetModelSummary';
 import { formatDateLocal } from 'utils/date';
+
+type CRTDLsTypes =
+  | GetCrtdLsQuery['modelPlan']['crs'][0]
+  | GetCrtdLsQuery['modelPlan']['tdls'][0];
 
 type ModelSummaryProps = {
   characteristics: CharacteristicsType;
@@ -124,7 +128,7 @@ const ModelSummary = ({
               }}
             >
               {h(descriptionExpanded ? 'description.less' : 'description.more')}
-              <IconExpandMore className="expand-icon margin-left-05 margin-bottom-2px text-tbottom" />
+              <Icon.ExpandMore className="expand-icon margin-left-05 margin-bottom-2px text-tbottom" />
             </Button>
           </div>
         )}

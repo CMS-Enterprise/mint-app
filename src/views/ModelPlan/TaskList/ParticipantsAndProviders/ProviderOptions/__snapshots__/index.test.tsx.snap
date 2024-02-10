@@ -76,10 +76,6 @@ exports[`Model Plan ProviderOptions > matches snapshot 1`] = `
         xmlns="http://www.w3.org/2000/svg"
       >
         <path
-          d="M0 0h24v24H0z"
-          fill="none"
-        />
-        <path
           d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-7 9h-2V5h2v6zm0 4h-2v-2h2v2z"
         />
       </svg>
@@ -102,129 +98,154 @@ exports[`Model Plan ProviderOptions > matches snapshot 1`] = `
       data-testid="fieldset"
     >
       <div
-        class="usa-form-group margin-y-4 margin-bottom-8"
+        class="usa-form-group"
         data-scroll="providerAdditionFrequency"
       >
         <label
-          class="usa-label"
+          class="usa-label maxw-none"
           data-testid="label"
           for="participants-and-providers-additional-frequency"
         >
           How frequently are providers added?
         </label>
-        <fieldset
-          class="usa-fieldset"
-          data-testid="fieldset"
+        <div
+          class="mint-checkbox usa-checkbox"
         >
-          <div
-            class="usa-radio"
-            data-testid="radio"
+          <input
+            class="usa-checkbox__input"
+            id="participants-and-providers-additional-frequency-annually"
+            name="providerAdditionFrequency"
+            type="checkbox"
+            value="ANNUALLY"
+          />
+          <label
+            class="usa-checkbox__label"
+            for="participants-and-providers-additional-frequency-annually"
           >
-            <input
-              class="usa-radio__input"
-              id="participants-and-providers-additional-frequency-ANNUALLY"
-              name="providerAdditionFrequency"
-              type="radio"
-              value="ANNUALLY"
-            />
-            <label
-              class="usa-radio__label"
-              for="participants-and-providers-additional-frequency-ANNUALLY"
-            >
-              Annually
-            </label>
-          </div>
-          <div
-            class="usa-radio"
-            data-testid="radio"
+            Annually
+          </label>
+          <p
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+          />
+        </div>
+        <div
+          class="mint-checkbox usa-checkbox"
+        >
+          <input
+            class="usa-checkbox__input"
+            id="participants-and-providers-additional-frequency-semiannually"
+            name="providerAdditionFrequency"
+            type="checkbox"
+            value="SEMIANNUALLY"
+          />
+          <label
+            class="usa-checkbox__label"
+            for="participants-and-providers-additional-frequency-semiannually"
           >
-            <input
-              class="usa-radio__input"
-              id="participants-and-providers-additional-frequency-BIANNUALLY"
-              name="providerAdditionFrequency"
-              type="radio"
-              value="BIANNUALLY"
-            />
-            <label
-              class="usa-radio__label"
-              for="participants-and-providers-additional-frequency-BIANNUALLY"
-            >
-              Biannually
-            </label>
-          </div>
-          <div
-            class="usa-radio"
-            data-testid="radio"
+            Semi-annually
+          </label>
+          <p
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+          />
+        </div>
+        <div
+          class="mint-checkbox usa-checkbox"
+        >
+          <input
+            class="usa-checkbox__input"
+            id="participants-and-providers-additional-frequency-quarterly"
+            name="providerAdditionFrequency"
+            type="checkbox"
+            value="QUARTERLY"
+          />
+          <label
+            class="usa-checkbox__label"
+            for="participants-and-providers-additional-frequency-quarterly"
           >
-            <input
-              class="usa-radio__input"
-              id="participants-and-providers-additional-frequency-MONTHLY"
-              name="providerAdditionFrequency"
-              type="radio"
-              value="MONTHLY"
-            />
-            <label
-              class="usa-radio__label"
-              for="participants-and-providers-additional-frequency-MONTHLY"
-            >
-              Monthly
-            </label>
-          </div>
-          <div
-            class="usa-radio"
-            data-testid="radio"
+            Quarterly
+          </label>
+          <p
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+          />
+        </div>
+        <div
+          class="mint-checkbox usa-checkbox"
+        >
+          <input
+            class="usa-checkbox__input"
+            id="participants-and-providers-additional-frequency-monthly"
+            name="providerAdditionFrequency"
+            type="checkbox"
+            value="MONTHLY"
+          />
+          <label
+            class="usa-checkbox__label"
+            for="participants-and-providers-additional-frequency-monthly"
           >
-            <input
-              class="usa-radio__input"
-              id="participants-and-providers-additional-frequency-QUARTERLY"
-              name="providerAdditionFrequency"
-              type="radio"
-              value="QUARTERLY"
-            />
-            <label
-              class="usa-radio__label"
-              for="participants-and-providers-additional-frequency-QUARTERLY"
-            >
-              Quarterly
-            </label>
-          </div>
-          <div
-            class="usa-radio"
-            data-testid="radio"
+            Monthly
+          </label>
+          <p
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+          />
+        </div>
+        <div
+          class="mint-checkbox usa-checkbox"
+        >
+          <input
+            class="usa-checkbox__input"
+            id="participants-and-providers-additional-frequency-continually"
+            name="providerAdditionFrequency"
+            type="checkbox"
+            value="CONTINUALLY"
+          />
+          <label
+            class="usa-checkbox__label"
+            for="participants-and-providers-additional-frequency-continually"
           >
-            <input
-              class="usa-radio__input"
-              id="participants-and-providers-additional-frequency-ROLLING"
-              name="providerAdditionFrequency"
-              type="radio"
-              value="ROLLING"
-            />
-            <label
-              class="usa-radio__label"
-              for="participants-and-providers-additional-frequency-ROLLING"
-            >
-              Rolling
-            </label>
-          </div>
-          <div
-            class="usa-radio"
-            data-testid="radio"
+            Continually
+          </label>
+          <p
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+          />
+        </div>
+        <div
+          class="margin-left-4"
+        >
+          <label
+            class="usa-label text-normal margin-top-1"
+            data-testid="label"
+            for="participants-and-providers-additional-frequency-continually"
           >
-            <input
-              class="usa-radio__input"
-              id="participants-and-providers-additional-frequency-OTHER"
-              name="providerAdditionFrequency"
-              type="radio"
-              value="OTHER"
-            />
-            <label
-              class="usa-radio__label"
-              for="participants-and-providers-additional-frequency-OTHER"
-            >
-              Other
-            </label>
-          </div>
-        </fieldset>
+            Please specify
+          </label>
+          <input
+            class="usa-input"
+            data-testid="participants-and-providers-additional-frequency-continually-text"
+            id="participants-and-providers-additional-frequency-continually-text"
+            name="providerAdditionFrequencyContinually"
+            value="Continually"
+          />
+        </div>
+        <div
+          class="mint-checkbox usa-checkbox"
+        >
+          <input
+            class="usa-checkbox__input"
+            id="participants-and-providers-additional-frequency-other"
+            name="providerAdditionFrequency"
+            type="checkbox"
+            value="OTHER"
+          />
+          <label
+            class="usa-checkbox__label"
+            for="participants-and-providers-additional-frequency-other"
+          >
+            Other
+          </label>
+          <p
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+          />
+        </div>
         <div
           class="margin-top-4 margin-bottom-8"
         >
@@ -244,10 +265,6 @@ exports[`Model Plan ProviderOptions > matches snapshot 1`] = `
               xmlns="http://www.w3.org/2000/svg"
             >
               <path
-                d="M0 0h24v24H0z"
-                fill="none"
-              />
-              <path
                 d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
               />
             </svg>
@@ -257,7 +274,7 @@ exports[`Model Plan ProviderOptions > matches snapshot 1`] = `
       </div>
       <div
         class="usa-form-group margin-top-4"
-        data-scroll="providerAddMethod"
+        data-scroll="participants-and-providers-provider-add-method"
       >
         <label
           class="usa-label"
@@ -268,7 +285,7 @@ exports[`Model Plan ProviderOptions > matches snapshot 1`] = `
           How will you decide to add providers? Select all that apply.
         </label>
         <p
-          class="text-base margin-0 line-height-body-3"
+          class="text-base margin-top-1 margin-bottom-0 line-height-body-3"
         >
           Please include details on decision points, timing, and implications of adding them to the model in an additional note.
         </p>
@@ -413,10 +430,6 @@ exports[`Model Plan ProviderOptions > matches snapshot 1`] = `
                     xmlns="http://www.w3.org/2000/svg"
                   >
                     <path
-                      d="M0 0h24v24H0z"
-                      fill="none"
-                    />
-                    <path
                       d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
                     />
                   </svg>
@@ -427,7 +440,7 @@ exports[`Model Plan ProviderOptions > matches snapshot 1`] = `
         </div>
         <div
           class="usa-form-group"
-          data-scroll="providerAddMethodOther"
+          data-scroll="participants-and-providers-provider-add-method-other"
         >
           <label
             class="usa-label text-normal"
@@ -465,9 +478,167 @@ exports[`Model Plan ProviderOptions > matches snapshot 1`] = `
               xmlns="http://www.w3.org/2000/svg"
             >
               <path
-                d="M0 0h24v24H0z"
-                fill="none"
+                d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
               />
+            </svg>
+            Add an additional note
+          </button>
+        </div>
+      </div>
+      <div
+        class="usa-form-group margin-top-4"
+        data-scroll="participants-and-providers-leave-method"
+      >
+        <label
+          class="usa-label"
+          data-testid="label"
+          for="participants-and-providers-leave-method"
+        >
+          Can providers leave the model? Select all that apply.
+        </label>
+        <p
+          class="text-base margin-top-1 margin-bottom-0 line-height-body-3"
+        >
+          Please include details on decision points, timing, and implications of leaving the model in an additional note.
+        </p>
+        <div
+          class="mint-checkbox usa-checkbox"
+        >
+          <input
+            class="usa-checkbox__input"
+            id="participants-and-providers-leave-method-VARIES_BY_TYPE_OF_PROVIDER"
+            name="providerLeaveMethod"
+            type="checkbox"
+            value="VARIES_BY_TYPE_OF_PROVIDER"
+          />
+          <label
+            class="usa-checkbox__label"
+            for="participants-and-providers-leave-method-VARIES_BY_TYPE_OF_PROVIDER"
+          >
+            It varies by type of provider
+          </label>
+          <p
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+          />
+        </div>
+        <div
+          class="mint-checkbox usa-checkbox"
+        >
+          <input
+            class="usa-checkbox__input"
+            id="participants-and-providers-leave-method-NOT_ALLOWED_TO_LEAVE"
+            name="providerLeaveMethod"
+            type="checkbox"
+            value="NOT_ALLOWED_TO_LEAVE"
+          />
+          <label
+            class="usa-checkbox__label"
+            for="participants-and-providers-leave-method-NOT_ALLOWED_TO_LEAVE"
+          >
+            They are not allowed to leave
+          </label>
+          <p
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+          />
+        </div>
+        <div
+          class="mint-checkbox usa-checkbox"
+        >
+          <input
+            class="usa-checkbox__input"
+            id="participants-and-providers-leave-method-AFTER_A_CERTAIN_WITH_IMPLICATIONS"
+            name="providerLeaveMethod"
+            type="checkbox"
+            value="AFTER_A_CERTAIN_WITH_IMPLICATIONS"
+          />
+          <label
+            class="usa-checkbox__label"
+            for="participants-and-providers-leave-method-AFTER_A_CERTAIN_WITH_IMPLICATIONS"
+          >
+            They can leave after a certain date but there are implications
+          </label>
+          <p
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+          />
+        </div>
+        <div
+          class="mint-checkbox usa-checkbox"
+        >
+          <input
+            class="usa-checkbox__input"
+            id="participants-and-providers-leave-method-VOLUNTARILY_WITHOUT_IMPLICATIONS"
+            name="providerLeaveMethod"
+            type="checkbox"
+            value="VOLUNTARILY_WITHOUT_IMPLICATIONS"
+          />
+          <label
+            class="usa-checkbox__label"
+            for="participants-and-providers-leave-method-VOLUNTARILY_WITHOUT_IMPLICATIONS"
+          >
+            They can leave voluntarily at any time without implications
+          </label>
+          <p
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+          />
+        </div>
+        <div
+          class="mint-checkbox usa-checkbox"
+        >
+          <input
+            class="usa-checkbox__input"
+            id="participants-and-providers-leave-method-OTHER"
+            name="providerLeaveMethod"
+            type="checkbox"
+            value="OTHER"
+          />
+          <label
+            class="usa-checkbox__label"
+            for="participants-and-providers-leave-method-OTHER"
+          >
+            Other
+          </label>
+          <p
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+          />
+        </div>
+        <div
+          class="mint-checkbox usa-checkbox"
+        >
+          <input
+            class="usa-checkbox__input"
+            id="participants-and-providers-leave-method-NOT_APPLICABLE"
+            name="providerLeaveMethod"
+            type="checkbox"
+            value="NOT_APPLICABLE"
+          />
+          <label
+            class="usa-checkbox__label"
+            for="participants-and-providers-leave-method-NOT_APPLICABLE"
+          >
+            Not applicable
+          </label>
+          <p
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+          />
+        </div>
+        <div
+          class="margin-top-4 margin-bottom-8"
+        >
+          <button
+            class="usa-button usa-button usa-button--unstyled"
+            data-testid="add-note-toggle"
+            type="button"
+          >
+            <svg
+              aria-hidden="true"
+              class="usa-icon margin-right-1"
+              focusable="false"
+              height="1em"
+              role="img"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
               <path
                 d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
               />
@@ -476,168 +647,183 @@ exports[`Model Plan ProviderOptions > matches snapshot 1`] = `
           </button>
         </div>
       </div>
-      <legend
-        class="usa-label"
-      >
-        Can providers leave the model? Select all that apply.
-      </legend>
-      <p
-        class="text-base margin-0 line-height-body-3"
-      >
-        Please include details on decision points, timing, and implications of leaving the model in an additional note.
-      </p>
       <div
-        class="mint-checkbox usa-checkbox"
+        class="usa-form-group"
+        data-scroll="providerRemovalFrequency"
       >
-        <input
-          class="usa-checkbox__input"
-          id="participants-and-providers-leave-method-VARIES_BY_TYPE_OF_PROVIDER"
-          name="providerLeaveMethod"
-          type="checkbox"
-          value="VARIES_BY_TYPE_OF_PROVIDER"
-        />
         <label
-          class="usa-checkbox__label"
-          for="participants-and-providers-leave-method-VARIES_BY_TYPE_OF_PROVIDER"
+          class="usa-label maxw-none"
+          data-testid="label"
+          for="participants-and-providers-removal-frequency"
         >
-          It varies by type of provider
+          How frequently are providers removed?
         </label>
-        <p
-          class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
-        />
-      </div>
-      <div
-        class="mint-checkbox usa-checkbox"
-      >
-        <input
-          class="usa-checkbox__input"
-          id="participants-and-providers-leave-method-NOT_ALLOWED_TO_LEAVE"
-          name="providerLeaveMethod"
-          type="checkbox"
-          value="NOT_ALLOWED_TO_LEAVE"
-        />
-        <label
-          class="usa-checkbox__label"
-          for="participants-and-providers-leave-method-NOT_ALLOWED_TO_LEAVE"
+        <div
+          class="mint-checkbox usa-checkbox"
         >
-          They are not allowed to leave
-        </label>
-        <p
-          class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
-        />
-      </div>
-      <div
-        class="mint-checkbox usa-checkbox"
-      >
-        <input
-          class="usa-checkbox__input"
-          id="participants-and-providers-leave-method-AFTER_A_CERTAIN_WITH_IMPLICATIONS"
-          name="providerLeaveMethod"
-          type="checkbox"
-          value="AFTER_A_CERTAIN_WITH_IMPLICATIONS"
-        />
-        <label
-          class="usa-checkbox__label"
-          for="participants-and-providers-leave-method-AFTER_A_CERTAIN_WITH_IMPLICATIONS"
-        >
-          They can leave after a certain date but there are implications
-        </label>
-        <p
-          class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
-        />
-      </div>
-      <div
-        class="mint-checkbox usa-checkbox"
-      >
-        <input
-          class="usa-checkbox__input"
-          id="participants-and-providers-leave-method-VOLUNTARILY_WITHOUT_IMPLICATIONS"
-          name="providerLeaveMethod"
-          type="checkbox"
-          value="VOLUNTARILY_WITHOUT_IMPLICATIONS"
-        />
-        <label
-          class="usa-checkbox__label"
-          for="participants-and-providers-leave-method-VOLUNTARILY_WITHOUT_IMPLICATIONS"
-        >
-          They can leave voluntarily at any time without implications
-        </label>
-        <p
-          class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
-        />
-      </div>
-      <div
-        class="mint-checkbox usa-checkbox"
-      >
-        <input
-          class="usa-checkbox__input"
-          id="participants-and-providers-leave-method-OTHER"
-          name="providerLeaveMethod"
-          type="checkbox"
-          value="OTHER"
-        />
-        <label
-          class="usa-checkbox__label"
-          for="participants-and-providers-leave-method-OTHER"
-        >
-          Other
-        </label>
-        <p
-          class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
-        />
-      </div>
-      <div
-        class="mint-checkbox usa-checkbox"
-      >
-        <input
-          class="usa-checkbox__input"
-          id="participants-and-providers-leave-method-NOT_APPLICABLE"
-          name="providerLeaveMethod"
-          type="checkbox"
-          value="NOT_APPLICABLE"
-        />
-        <label
-          class="usa-checkbox__label"
-          for="participants-and-providers-leave-method-NOT_APPLICABLE"
-        >
-          Not applicable
-        </label>
-        <p
-          class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
-        />
-      </div>
-      <div
-        class="margin-top-4 margin-bottom-8"
-      >
-        <button
-          class="usa-button usa-button usa-button--unstyled"
-          data-testid="add-note-toggle"
-          type="button"
-        >
-          <svg
-            aria-hidden="true"
-            class="usa-icon margin-right-1"
-            focusable="false"
-            height="1em"
-            role="img"
-            viewBox="0 0 24 24"
-            width="1em"
-            xmlns="http://www.w3.org/2000/svg"
+          <input
+            class="usa-checkbox__input"
+            id="participants-and-providers-removal-frequency-annually"
+            name="providerRemovalFrequency"
+            type="checkbox"
+            value="ANNUALLY"
+          />
+          <label
+            class="usa-checkbox__label"
+            for="participants-and-providers-removal-frequency-annually"
           >
-            <path
-              d="M0 0h24v24H0z"
-              fill="none"
-            />
-            <path
-              d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
-            />
-          </svg>
-          Add an additional note
-        </button>
+            Annually
+          </label>
+          <p
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+          />
+        </div>
+        <div
+          class="mint-checkbox usa-checkbox"
+        >
+          <input
+            class="usa-checkbox__input"
+            id="participants-and-providers-removal-frequency-semiannually"
+            name="providerRemovalFrequency"
+            type="checkbox"
+            value="SEMIANNUALLY"
+          />
+          <label
+            class="usa-checkbox__label"
+            for="participants-and-providers-removal-frequency-semiannually"
+          >
+            Semi-annually
+          </label>
+          <p
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+          />
+        </div>
+        <div
+          class="mint-checkbox usa-checkbox"
+        >
+          <input
+            class="usa-checkbox__input"
+            id="participants-and-providers-removal-frequency-quarterly"
+            name="providerRemovalFrequency"
+            type="checkbox"
+            value="QUARTERLY"
+          />
+          <label
+            class="usa-checkbox__label"
+            for="participants-and-providers-removal-frequency-quarterly"
+          >
+            Quarterly
+          </label>
+          <p
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+          />
+        </div>
+        <div
+          class="mint-checkbox usa-checkbox"
+        >
+          <input
+            class="usa-checkbox__input"
+            id="participants-and-providers-removal-frequency-monthly"
+            name="providerRemovalFrequency"
+            type="checkbox"
+            value="MONTHLY"
+          />
+          <label
+            class="usa-checkbox__label"
+            for="participants-and-providers-removal-frequency-monthly"
+          >
+            Monthly
+          </label>
+          <p
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+          />
+        </div>
+        <div
+          class="mint-checkbox usa-checkbox"
+        >
+          <input
+            class="usa-checkbox__input"
+            id="participants-and-providers-removal-frequency-continually"
+            name="providerRemovalFrequency"
+            type="checkbox"
+            value="CONTINUALLY"
+          />
+          <label
+            class="usa-checkbox__label"
+            for="participants-and-providers-removal-frequency-continually"
+          >
+            Continually
+          </label>
+          <p
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+          />
+        </div>
+        <div
+          class="margin-left-4"
+        >
+          <label
+            class="usa-label text-normal margin-top-1"
+            data-testid="label"
+            for="participants-and-providers-removal-frequency-continually"
+          >
+            Please specify
+          </label>
+          <input
+            class="usa-input"
+            data-testid="participants-and-providers-removal-frequency-continually-text"
+            id="participants-and-providers-removal-frequency-continually-text"
+            name="providerRemovalFrequencyContinually"
+            value="Continually"
+          />
+        </div>
+        <div
+          class="mint-checkbox usa-checkbox"
+        >
+          <input
+            class="usa-checkbox__input"
+            id="participants-and-providers-removal-frequency-other"
+            name="providerRemovalFrequency"
+            type="checkbox"
+            value="OTHER"
+          />
+          <label
+            class="usa-checkbox__label"
+            for="participants-and-providers-removal-frequency-other"
+          >
+            Other
+          </label>
+          <p
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+          />
+        </div>
+        <div
+          class="margin-top-4 margin-bottom-8"
+        >
+          <div
+            class="usa-form-group"
+          >
+            <label
+              class="usa-label"
+              for="participants-and-providers-removal-frequency-note"
+              id="label-participants-and-providers-removal-frequency-note"
+            >
+              Notes
+            </label>
+            <textarea
+              aria-labelledby="label-participants-and-providers-removal-frequency-note hint-participants-and-providers-removal-frequency-note"
+              class="usa-textarea"
+              data-testid="participants-and-providers-removal-frequency-note"
+              id="participants-and-providers-removal-frequency-note"
+              name="providerRemovalFrequencyNote"
+            >
+              removal note
+            </textarea>
+          </div>
+        </div>
       </div>
       <div
         class="usa-form-group margin-y-4 margin-bottom-8"
-        data-scroll="providerOverlap"
+        data-scroll="participants-and-providers-provider-overlap"
       >
         <label
           class="usa-label"
@@ -724,10 +910,6 @@ exports[`Model Plan ProviderOptions > matches snapshot 1`] = `
               xmlns="http://www.w3.org/2000/svg"
             >
               <path
-                d="M0 0h24v24H0z"
-                fill="none"
-              />
-              <path
                 d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
               />
             </svg>
@@ -745,38 +927,31 @@ exports[`Model Plan ProviderOptions > matches snapshot 1`] = `
           <div
             class="usa-summary-box__body"
           >
-            <h3
-              class="usa-summary-box__heading"
-            />
-            <div
-              class="usa-summary-box__text"
+            <p
+              class="margin-0"
             >
+              Model Plan status
+            </p>
+            <div
+              class="mint-checkbox usa-checkbox"
+            >
+              <input
+                class="usa-checkbox__input"
+                data-testid="participants-and-providers-provider-status"
+                id="participants-and-providers-provider-status"
+                name="status"
+                type="checkbox"
+                value="IN_PROGRESS"
+              />
+              <label
+                class="usa-checkbox__label"
+                for="participants-and-providers-provider-status"
+              >
+                This section of the Model Plan (Participants and Providers) is ready for review.
+              </label>
               <p
-                class="margin-0"
-              >
-                Model Plan status
-              </p>
-              <div
-                class="mint-checkbox usa-checkbox"
-              >
-                <input
-                  class="usa-checkbox__input"
-                  data-testid="participants-and-providers-provider-status"
-                  id="participants-and-providers-provider-status"
-                  name="status"
-                  type="checkbox"
-                  value="IN_PROGRESS"
-                />
-                <label
-                  class="usa-checkbox__label"
-                  for="participants-and-providers-provider-status"
-                >
-                  This section of the Model Plan (Participants and Providers) is ready for review.
-                </label>
-                <p
-                  class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
-                />
-              </div>
+                class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+              />
             </div>
           </div>
         </div>
@@ -814,10 +989,6 @@ exports[`Model Plan ProviderOptions > matches snapshot 1`] = `
           width="1em"
           xmlns="http://www.w3.org/2000/svg"
         >
-          <path
-            d="M0 0h24v24H0z"
-            fill="none"
-          />
           <path
             d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"
           />

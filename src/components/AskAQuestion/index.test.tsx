@@ -3,57 +3,107 @@ import { Provider } from 'react-redux';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
+import {
+  DiscussionUserRole,
+  GetModelPlanDiscussionsDocument,
+  GetModelPlanDiscussionsQuery,
+  GetMostRecentRoleSelectionDocument
+} from 'gql/gen/graphql';
 import configureMockStore from 'redux-mock-store';
 
 import { ASSESSMENT } from 'constants/jobCodes';
-import GetModelPlanDiscussions from 'queries/Discussions/GetModelPlanDiscussions';
-import { GetModelPlanDiscussions as GetModelPlanDiscussionsType } from 'queries/Discussions/types/GetModelPlanDiscussions';
 
 import AskAQuestion from './index';
 
-const discussionResult = {
-  modelPlan: {
-    __typename: 'ModelPlan',
-    discussions: [
-      {
-        __typename: 'PlanDiscussion',
-        id: '123',
-        content: 'This is a question.',
-        createdBy: 'John Doe',
-        createdDts: '2022-05-12T15:01:39.190679Z',
-        replies: []
+type GetModelPlanDiscussionsType = GetModelPlanDiscussionsQuery['modelPlan'];
+
+const discussionResult: GetModelPlanDiscussionsType = {
+  __typename: 'ModelPlan',
+  id: '6532412',
+  isCollaborator: true,
+  discussions: [
+    {
+      __typename: 'PlanDiscussion',
+      id: '123',
+      content: {
+        __typename: 'TaggedContent',
+        rawContent: 'This is a question.'
       },
-      {
-        __typename: 'PlanDiscussion',
-        id: '456',
-        content: 'This is a second question.',
-        createdBy: 'Jane Doe',
-        createdDts: '2022-05-12T15:01:39.190679Z',
-        replies: [
-          {
-            __typename: 'DiscussionReply',
-            discussionID: '456',
-            id: 'abc',
-            content: 'This is an answer.',
-            createdBy: 'Jack Doe',
-            createdDts: '2022-05-12T15:01:39.190679Z'
+      createdBy: 'John Doe',
+      createdDts: '2022-05-12T15:01:39.190679Z',
+      userRole: DiscussionUserRole.IT_ARCHITECT,
+      userRoleDescription: '',
+      isAssessment: false,
+      createdByUserAccount: {
+        __typename: 'UserAccount',
+        commonName: 'Joe'
+      },
+      replies: []
+    },
+    {
+      __typename: 'PlanDiscussion',
+      id: '456',
+      content: {
+        __typename: 'TaggedContent',
+        rawContent: 'This is a second question.'
+      },
+      createdBy: 'Jane Doe',
+      createdDts: '2022-05-12T15:01:39.190679Z',
+      userRole: DiscussionUserRole.IT_ARCHITECT,
+      userRoleDescription: '',
+      isAssessment: false,
+      createdByUserAccount: {
+        __typename: 'UserAccount',
+        commonName: 'Joe'
+      },
+      replies: [
+        {
+          __typename: 'DiscussionReply',
+          discussionID: '456',
+          id: 'abc',
+          content: {
+            __typename: 'TaggedContent',
+            rawContent: 'This is an answer.'
+          },
+          createdBy: 'Jack Doe',
+          createdDts: '2022-05-12T15:01:39.190679Z',
+          userRole: DiscussionUserRole.IT_ARCHITECT,
+          userRoleDescription: '',
+          isAssessment: false,
+          createdByUserAccount: {
+            __typename: 'UserAccount',
+            commonName: 'Joe'
           }
-        ]
-      }
-    ]
-  }
-} as GetModelPlanDiscussionsType;
+        }
+      ]
+    }
+  ]
+};
 
 const modelID = 'f11eb129-2c80-4080-9440-439cbe1a286f';
 
 const mocks = [
   {
     request: {
-      query: GetModelPlanDiscussions,
+      query: GetModelPlanDiscussionsDocument,
       variables: { id: modelID }
     },
     result: {
-      data: discussionResult
+      data: { modelPlan: discussionResult }
+    }
+  },
+  {
+    request: {
+      query: GetMostRecentRoleSelectionDocument
+    },
+    result: {
+      data: {
+        mostRecentDiscussionRoleSelection: {
+          __typename: 'DiscussionRoleSelection',
+          userRole: DiscussionUserRole.IT_ARCHITECT,
+          userRoleDescription: ''
+        }
+      }
     }
   }
 ];

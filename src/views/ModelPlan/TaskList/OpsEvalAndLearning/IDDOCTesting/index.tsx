@@ -1,18 +1,23 @@
 import React, { Fragment, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useHistory, useParams } from 'react-router-dom';
-import { useMutation, useQuery } from '@apollo/client';
 import {
   Breadcrumb,
   BreadcrumbBar,
   BreadcrumbLink,
   Button,
   Fieldset,
-  IconArrowBack,
+  Icon,
   Label,
   TextInput
 } from '@trussworks/react-uswds';
-import { Field, FieldArray, Form, Formik, FormikProps } from 'formik';
+import { Field, Form, Formik, FormikProps } from 'formik';
+import {
+  GetIddocTestingQuery,
+  MonitoringFileType,
+  useGetIddocTestingQuery,
+  useUpdatePlanOpsEvalAndLearningMutation
+} from 'gql/gen/graphql';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
@@ -26,15 +31,6 @@ import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import TextAreaField from 'components/shared/TextAreaField';
 import usePlanTranslation from 'hooks/usePlanTranslation';
-import GetIDDOCTesting from 'queries/OpsEvalAndLearning/GetIDDOCTesting';
-import {
-  GetIDDOCTesting as GetIDDOCTestingType,
-  GetIDDOCTesting_modelPlan_opsEvalAndLearning as IDDOCTestingFormType,
-  GetIDDOCTestingVariables
-} from 'queries/OpsEvalAndLearning/types/GetIDDOCTesting';
-import { UpdatePlanOpsEvalAndLearningVariables } from 'queries/OpsEvalAndLearning/types/UpdatePlanOpsEvalAndLearning';
-import UpdatePlanOpsEvalAndLearning from 'queries/OpsEvalAndLearning/UpdatePlanOpsEvalAndLearning';
-import { MonitoringFileType } from 'types/graphql-global-types';
 import { getKeys } from 'types/translation';
 import flattenErrors from 'utils/flattenErrors';
 import { dirtyInput } from 'utils/formDiff';
@@ -46,6 +42,8 @@ import {
   renderCurrentPage,
   renderTotalPages
 } from '..';
+
+type IDDOCTestingFormType = GetIddocTestingQuery['modelPlan']['opsEvalAndLearning'];
 
 const IDDOCTesting = () => {
   const { t: opsEvalAndLearningT } = useTranslation('opsEvalAndLearning');
@@ -64,10 +62,7 @@ const IDDOCTesting = () => {
   const formikRef = useRef<FormikProps<IDDOCTestingFormType>>(null);
   const history = useHistory();
 
-  const { data, loading, error } = useQuery<
-    GetIDDOCTestingType,
-    GetIDDOCTestingVariables
-  >(GetIDDOCTesting, {
+  const { data, loading, error } = useGetIddocTestingQuery({
     variables: {
       id: modelID
     }
@@ -86,13 +81,11 @@ const IDDOCTesting = () => {
     dataMonitoringFileOther,
     dataResponseType,
     dataResponseFileFrequency
-  } = data?.modelPlan?.opsEvalAndLearning || ({} as IDDOCTestingFormType);
+  } = (data?.modelPlan?.opsEvalAndLearning || {}) as IDDOCTestingFormType;
 
   const modelName = data?.modelPlan?.modelName || '';
 
-  const [update] = useMutation<UpdatePlanOpsEvalAndLearningVariables>(
-    UpdatePlanOpsEvalAndLearning
-  );
+  const [update] = useUpdatePlanOpsEvalAndLearningMutation();
 
   const handleFormSubmit = (redirect?: 'next' | 'back' | 'task-list') => {
     update({
@@ -231,7 +224,7 @@ const IDDOCTesting = () => {
                   </Alert>
 
                   <FieldGroup
-                    scrollElement="uatNeeds"
+                    scrollElement="ops-eval-and-learning-uat-needs"
                     className="margin-top-6"
                     error={!!flatErrors.uatNeeds}
                   >
@@ -244,14 +237,13 @@ const IDDOCTesting = () => {
                     <Field
                       as={TextAreaField}
                       className="height-15"
-                      error={flatErrors.uatNeeds}
                       id="ops-eval-and-learning-uat-needs"
                       name="uatNeeds"
                     />
                   </FieldGroup>
 
                   <FieldGroup
-                    scrollElement="stcNeeds"
+                    scrollElement="ops-eval-and-learning-stc-needs"
                     className="margin-top-6"
                     error={!!flatErrors.stcNeeds}
                   >
@@ -264,7 +256,6 @@ const IDDOCTesting = () => {
                     <Field
                       as={TextAreaField}
                       className="height-15"
-                      error={flatErrors.stcNeeds}
                       id="ops-eval-and-learning-stc-needs"
                       data-testid="ops-eval-and-learning-stc-needs"
                       name="stcNeeds"
@@ -272,7 +263,7 @@ const IDDOCTesting = () => {
                   </FieldGroup>
 
                   <FieldGroup
-                    scrollElement="testingTimelines"
+                    scrollElement="ops-eval-and-learning-testing-timelines"
                     className="margin-top-6"
                     error={!!flatErrors.testingTimelines}
                   >
@@ -285,7 +276,6 @@ const IDDOCTesting = () => {
                     <Field
                       as={TextAreaField}
                       className="height-15"
-                      error={flatErrors.testingTimelines}
                       id="ops-eval-and-learning-testing-timelines"
                       name="testingTimelines"
                     />
@@ -298,84 +288,65 @@ const IDDOCTesting = () => {
 
                   <h3>{opsEvalAndLearningMiscT('dataMonitoring')}</h3>
 
-                  <FieldArray
-                    name="dataMonitoringFileTypes"
-                    render={arrayHelpers => (
-                      <>
-                        <legend className="usa-label maxw-none">
-                          {opsEvalAndLearningT('dataMonitoringFileTypes.label')}
-                        </legend>
+                  <FieldGroup scrollElement="ops-eval-and-learning-data-monitoring-file">
+                    <Label htmlFor="ops-eval-and-learning-data-monitoring-file">
+                      {opsEvalAndLearningT('dataMonitoringFileTypes.label')}
+                    </Label>
 
-                        <FieldErrorMsg>
-                          {flatErrors.dataMonitoringFileTypes}
-                        </FieldErrorMsg>
+                    <FieldErrorMsg>
+                      {flatErrors.dataMonitoringFileTypes}
+                    </FieldErrorMsg>
 
-                        {getKeys(dataMonitoringFileTypesConfig.options).map(
-                          type => {
-                            return (
-                              <Fragment key={type}>
-                                <Field
-                                  as={CheckboxField}
-                                  id={`ops-eval-and-learning-data-monitoring-file-${type}`}
-                                  name="dataMonitoringFileTypes"
-                                  label={
-                                    dataMonitoringFileTypesConfig.options[type]
-                                  }
-                                  value={type}
-                                  checked={values?.dataMonitoringFileTypes.includes(
-                                    type
-                                  )}
-                                  onChange={(
-                                    e: React.ChangeEvent<HTMLInputElement>
-                                  ) => {
-                                    if (e.target.checked) {
-                                      arrayHelpers.push(e.target.value);
-                                    } else {
-                                      const idx = values.dataMonitoringFileTypes.indexOf(
-                                        e.target.value as MonitoringFileType
-                                      );
-                                      arrayHelpers.remove(idx);
-                                    }
-                                  }}
-                                />
+                    {getKeys(dataMonitoringFileTypesConfig.options).map(
+                      type => {
+                        return (
+                          <Fragment key={type}>
+                            <Field
+                              as={CheckboxField}
+                              id={`ops-eval-and-learning-data-monitoring-file-${type}`}
+                              name="dataMonitoringFileTypes"
+                              label={
+                                dataMonitoringFileTypesConfig.options[type]
+                              }
+                              value={type}
+                              checked={values?.dataMonitoringFileTypes.includes(
+                                type
+                              )}
+                            />
 
-                                {type === MonitoringFileType.OTHER &&
-                                  values.dataMonitoringFileTypes.includes(
-                                    MonitoringFileType.OTHER
-                                  ) && (
-                                    <div className="margin-left-4 margin-top-neg-3">
-                                      <Label
-                                        htmlFor="ops-eval-and-learning-data-monitoring-file-other"
-                                        className="text-normal"
-                                      >
-                                        {opsEvalAndLearningT(
-                                          'dataMonitoringFileOther.label'
-                                        )}
-                                      </Label>
+                            {type === MonitoringFileType.OTHER &&
+                              values.dataMonitoringFileTypes.includes(
+                                MonitoringFileType.OTHER
+                              ) && (
+                                <div className="margin-left-4">
+                                  <Label
+                                    htmlFor="ops-eval-and-learning-data-monitoring-file-other"
+                                    className="text-normal"
+                                  >
+                                    {opsEvalAndLearningT(
+                                      'dataMonitoringFileOther.label'
+                                    )}
+                                  </Label>
 
-                                      <FieldErrorMsg>
-                                        {flatErrors.dataMonitoringFileOther}
-                                      </FieldErrorMsg>
+                                  <FieldErrorMsg>
+                                    {flatErrors.dataMonitoringFileOther}
+                                  </FieldErrorMsg>
 
-                                      <Field
-                                        as={TextAreaField}
-                                        className="maxw-none mint-textarea"
-                                        id="ops-eval-and-learning-data-monitoring-file-other"
-                                        maxLength={5000}
-                                        name="dataMonitoringFileOther"
-                                      />
-                                    </div>
-                                  )}
-                              </Fragment>
-                            );
-                          }
-                        )}
-                      </>
+                                  <Field
+                                    as={TextInput}
+                                    id="ops-eval-and-learning-data-monitoring-file-other"
+                                    name="dataMonitoringFileOther"
+                                  />
+                                </div>
+                              )}
+                          </Fragment>
+                        );
+                      }
                     )}
-                  />
+                  </FieldGroup>
 
                   <FieldGroup
-                    scrollElement="dataResponseType"
+                    scrollElement="ops-eval-and-learning-data-response-type"
                     className="margin-top-6"
                     error={!!flatErrors.dataResponseType}
                   >
@@ -387,7 +358,6 @@ const IDDOCTesting = () => {
 
                     <Field
                       as={TextInput}
-                      error={!!flatErrors.dataResponseType}
                       id="ops-eval-and-learning-data-response-type"
                       maxLength={50}
                       name="dataResponseType"
@@ -395,7 +365,7 @@ const IDDOCTesting = () => {
                   </FieldGroup>
 
                   <FieldGroup
-                    scrollElement="dataResponseFileFrequency"
+                    scrollElement="ops-eval-and-learning-data-file-frequency"
                     className="margin-top-6"
                     error={!!flatErrors.dataResponseFileFrequency}
                   >
@@ -409,7 +379,6 @@ const IDDOCTesting = () => {
 
                     <Field
                       as={TextInput}
-                      error={!!flatErrors.dataResponseFileFrequency}
                       id="ops-eval-and-learning-data-file-frequency"
                       maxLength={50}
                       name="dataResponseFileFrequency"
@@ -437,7 +406,7 @@ const IDDOCTesting = () => {
                     className="usa-button usa-button--unstyled"
                     onClick={() => handleFormSubmit('task-list')}
                   >
-                    <IconArrowBack className="margin-right-1" aria-hidden />
+                    <Icon.ArrowBack className="margin-right-1" aria-hidden />
 
                     {miscellaneousT('saveAndReturn')}
                   </Button>

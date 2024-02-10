@@ -68,29 +68,215 @@ exports[`Collaborator/Team Member page w/table > matches snapshot 1`] = `
           </h4>
           <a
             class="usa-button margin-bottom-2"
-            href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/collaborators/add-collaborator"
+            href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/collaborators/add-collaborator?view=add"
           >
             Add team member
           </a>
           <div
-            class="margin-y-10"
-            data-testid="page-loading"
+            class="collaborator-table"
           >
+            <table
+              class="usa-table usa-table--borderless width-full"
+              data-testid="table"
+            >
+              <caption
+                class="usa-sr-only"
+              >
+                requestsTable.caption
+              </caption>
+              <thead>
+                <tr
+                  role="row"
+                >
+                  <th
+                    aria-sort="none"
+                    class="table-header"
+                    colspan="1"
+                    role="columnheader"
+                    scope="col"
+                    style="padding-bottom: .5rem;"
+                  >
+                    <button
+                      class="usa-button usa-button--unstyled position-relative"
+                      style="cursor: pointer;"
+                      title="Toggle SortBy"
+                      type="button"
+                    >
+                      Name
+                      <svg
+                        class="usa-icon margin-left-05 position-absolute"
+                        data-testid="caret--sort"
+                        focusable="false"
+                        height="1em"
+                        role="img"
+                        viewBox="0 0 24 24"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M12 5.83 15.17 9l1.41-1.41L12 3 7.41 7.59 8.83 9 12 5.83zm0 12.34L8.83 15l-1.41 1.41L12 21l4.59-4.59L15.17 15 12 18.17z"
+                        />
+                      </svg>
+                    </button>
+                  </th>
+                  <th
+                    aria-sort="none"
+                    class="table-header"
+                    colspan="1"
+                    role="columnheader"
+                    scope="col"
+                    style="padding-bottom: .5rem;"
+                  >
+                    <button
+                      class="usa-button usa-button--unstyled position-relative"
+                      style="cursor: pointer;"
+                      title="Toggle SortBy"
+                      type="button"
+                    >
+                      Role
+                      <svg
+                        class="usa-icon margin-left-05 position-absolute"
+                        data-testid="caret--sort"
+                        focusable="false"
+                        height="1em"
+                        role="img"
+                        viewBox="0 0 24 24"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M12 5.83 15.17 9l1.41-1.41L12 3 7.41 7.59 8.83 9 12 5.83zm0 12.34L8.83 15l-1.41 1.41L12 21l4.59-4.59L15.17 15 12 18.17z"
+                        />
+                      </svg>
+                    </button>
+                  </th>
+                  <th
+                    aria-sort="none"
+                    class="table-header"
+                    colspan="1"
+                    role="columnheader"
+                    scope="col"
+                    style="padding-bottom: .5rem;"
+                  >
+                    <button
+                      class="usa-button usa-button--unstyled position-relative"
+                      style="cursor: pointer;"
+                      title="Toggle SortBy"
+                      type="button"
+                    >
+                      Date added
+                      <svg
+                        class="usa-icon margin-left-05 position-absolute"
+                        data-testid="caret--sort"
+                        focusable="false"
+                        height="1em"
+                        role="img"
+                        viewBox="0 0 24 24"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M12 5.83 15.17 9l1.41-1.41L12 3 7.41 7.59 8.83 9 12 5.83zm0 12.34L8.83 15l-1.41 1.41L12 21l4.59-4.59L15.17 15 12 18.17z"
+                        />
+                      </svg>
+                    </button>
+                  </th>
+                  <th
+                    aria-sort="none"
+                    class="table-header"
+                    colspan="1"
+                    role="columnheader"
+                    scope="col"
+                    style="padding-bottom: .5rem;"
+                  >
+                    <button
+                      class="usa-button usa-button--unstyled position-relative"
+                      type="button"
+                    >
+                      Actions
+                      <svg
+                        class="usa-icon margin-left-05 position-absolute"
+                        data-testid="caret--sort"
+                        focusable="false"
+                        height="1em"
+                        role="img"
+                        viewBox="0 0 24 24"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M12 5.83 15.17 9l1.41-1.41L12 3 7.41 7.59 8.83 9 12 5.83zm0 12.34L8.83 15l-1.41 1.41L12 21l4.59-4.59L15.17 15 12 18.17z"
+                        />
+                      </svg>
+                    </button>
+                  </th>
+                </tr>
+              </thead>
+              <tbody
+                role="rowgroup"
+              >
+                <tr
+                  role="row"
+                >
+                  <td
+                    role="cell"
+                    style="white-space: normal;"
+                  >
+                    <li
+                      class="display-flex flex-align-center"
+                    >
+                      <div
+                        class="display-flex flex-align-center flex-justify-center circle-4 margin-right-1 bg-accent-cool-lighter"
+                      >
+                        JD
+                      </div>
+                      <div
+                        class="margin-y-0"
+                      >
+                        <p
+                          class="margin-y-0"
+                        >
+                          John Doe
+                        </p>
+                        <p
+                          class="font-body-2xs margin-y-0"
+                        />
+                      </div>
+                    </li>
+                  </td>
+                  <td
+                    role="cell"
+                    style="white-space: normal;"
+                  >
+                    Model Lead
+                  </td>
+                  <td
+                    role="cell"
+                    style="white-space: normal;"
+                  >
+                    October 22, 2022
+                  </td>
+                  <td
+                    role="cell"
+                    style="white-space: normal;"
+                  >
+                    <a
+                      aria-label="Edit John Doe"
+                      class="usa-link margin-right-2"
+                      href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/collaborators/add-collaborator/61c7b30c-969d-4dd4-b13b-a5065f43be43?view=add"
+                    >
+                      Edit
+                    </a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
             <div
-              class="text-center"
+              aria-live="polite"
+              class="usa-sr-only usa-table__announcement-region"
             >
-              <span
-                aria-busy="true"
-                aria-valuetext="Loading the page"
-                class="mint-spinner mint-spinner--xl"
-                role="progressbar"
-              />
+              Requests table reset to default sort order
             </div>
-            <h1
-              class="margin-top-6 text-center"
-            >
-              Loading the page
-            </h1>
           </div>
           <div
             class="margin-top-5 display-block"
@@ -107,7 +293,7 @@ exports[`Collaborator/Team Member page w/table > matches snapshot 1`] = `
               data-testid="continue-to-tasklist"
               href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/task-list"
             >
-              Continue without adding team members
+              Continue to Model Plan task list
             </a>
           </div>
         </div>

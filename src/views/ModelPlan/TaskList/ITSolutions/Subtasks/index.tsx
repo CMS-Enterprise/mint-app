@@ -6,7 +6,7 @@ import {
   Button,
   Fieldset,
   Grid,
-  IconArrowBack,
+  Icon,
   Label,
   Radio,
   TextInput
@@ -16,6 +16,7 @@ import { Field, FieldArray, Form, Formik, FormikProps } from 'formik';
 import Breadcrumbs from 'components/Breadcrumbs';
 import Modal from 'components/Modal';
 import PageHeading from 'components/PageHeading';
+import PageLoading from 'components/PageLoading';
 import Alert from 'components/shared/Alert';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
@@ -249,6 +250,14 @@ const Subtasks = ({
     }
   };
 
+  if (!solution && loading) {
+    return <PageLoading />;
+  }
+
+  if (error) {
+    return <NotFound />;
+  }
+
   const renderModal = () => {
     return (
       <Modal
@@ -299,10 +308,6 @@ const Subtasks = ({
     },
     { text: managingSubtasks ? t('manageSubtasks') : t('addSubtask') }
   ];
-
-  if (error || (!solution && !loading)) {
-    return <NotFound />;
-  }
 
   return (
     <>
@@ -436,8 +441,8 @@ const Subtasks = ({
                                           </FieldErrorMsg>
                                           <Field
                                             as={TextInput}
-                                            error={!!flatErrors.name}
                                             id={`subtask-name--${index}`}
+                                            data-testid={`subtask-name--${index}`}
                                             maxLength={50}
                                             name={`subtasks[${index}].name`}
                                           />
@@ -561,7 +566,10 @@ const Subtasks = ({
                               )
                         }
                       >
-                        <IconArrowBack className="margin-right-1" aria-hidden />
+                        <Icon.ArrowBack
+                          className="margin-right-1"
+                          aria-hidden
+                        />
                         {fromManageSubtasks
                           ? t('returnToPreviousPage')
                           : t('returnToDetails')}

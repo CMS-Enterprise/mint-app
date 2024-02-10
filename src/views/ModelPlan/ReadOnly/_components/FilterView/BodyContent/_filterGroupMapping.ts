@@ -108,14 +108,21 @@ const FilterGroupMap: Record<typeof filterGroups[number], any> = {
       'providerLeaveMethodOther',
       'providerLeaveMethodNote'
     ],
-    beneficiaries: ['precedenceRules'],
+    beneficiaries: [
+      'precedenceRules',
+      'precedenceRulesYes',
+      'precedenceRulesNo',
+      'precedenceRulesNote'
+    ],
     payments: [
       'fundingSource',
-      'fundingSourceTrustFundType',
+      'fundingSourceMedicareAInfo',
+      'fundingSourceMedicareBInfo',
       'fundingSourceOther',
       'fundingSourceNote',
       'fundingSourceR',
-      'fundingSourceRTrustFundType',
+      'fundingSourceRMedicareAInfo',
+      'fundingSourceRMedicareBInfo',
       'fundingSourceROther',
       'fundingSourceRNote',
       'payClaims',
@@ -129,7 +136,13 @@ const FilterGroupMap: Record<typeof filterGroups[number], any> = {
     ]
   },
   dfsdm: {
-    basics: ['nameHistory', 'modelType', 'goal', 'performancePeriodStarts'],
+    basics: [
+      'nameHistory',
+      'modelType',
+      'modelTypeOther',
+      'goal',
+      'performancePeriodStarts'
+    ],
     'participants-and-providers': [
       'expectedNumberOfParticipants',
       'estimateConfidence',
@@ -137,11 +150,13 @@ const FilterGroupMap: Record<typeof filterGroups[number], any> = {
     ],
     payments: [
       'fundingSource',
-      'fundingSourceTrustFundType',
+      'fundingSourceMedicareAInfo',
+      'fundingSourceMedicareBInfo',
       'fundingSourceOther',
       'fundingSourceNote',
       'fundingSourceR',
-      'fundingSourceRTrustFundType',
+      'fundingSourceRMedicareAInfo',
+      'fundingSourceRMedicareBInfo',
       'fundingSourceROther',
       'fundingSourceRNote',
       'numberPaymentsPerPayCycle',
@@ -186,6 +201,7 @@ const FilterGroupMap: Record<typeof filterGroups[number], any> = {
       'cmsCenters',
       'cmmiGroups',
       'modelType',
+      'modelTypeOther',
       'goal',
       'completeICIP',
       'clearanceStarts',
@@ -221,11 +237,13 @@ const FilterGroupMap: Record<typeof filterGroups[number], any> = {
     ],
     payments: [
       'fundingSource',
-      'fundingSourceTrustFundType',
+      'fundingSourceMedicareAInfo',
+      'fundingSourceMedicareBInfo',
       'fundingSourceOther',
       'fundingSourceNote',
       'fundingSourceR',
-      'fundingSourceRTrustFundType',
+      'fundingSourceRMedicareAInfo',
+      'fundingSourceRMedicareBInfo',
       'fundingSourceROther',
       'fundingSourceRNote',
       'payType',
@@ -244,6 +262,8 @@ const FilterGroupMap: Record<typeof filterGroups[number], any> = {
       'willRecoverPaymentsNote',
       'anticipateReconcilingPaymentsRetrospectively',
       'anticipateReconcilingPaymentsRetrospectivelyNote',
+      'paymentDemandRecoupmentFrequency',
+      'paymentDemandRecoupmentFrequencyNote',
       'paymentStartDate',
       'paymentStartDateNote'
     ]
@@ -252,6 +272,7 @@ const FilterGroupMap: Record<typeof filterGroups[number], any> = {
     basics: [
       'nameHistory',
       'modelType',
+      'modelTypeOther',
       'goal',
       'announced',
       'performancePeriodStarts',
@@ -366,6 +387,7 @@ const FilterGroupMap: Record<typeof filterGroups[number], any> = {
     basics: [
       'nameHistory',
       'modelType',
+      'modelTypeOther',
       'goal',
       'announced',
       'performancePeriodStarts',
@@ -450,7 +472,10 @@ const FilterGroupMap: Record<typeof filterGroups[number], any> = {
       'estimateConfidence',
       'beneficiaryOverlap',
       'beneficiaryOverlapNote',
-      'precedenceRules'
+      'precedenceRules',
+      'precedenceRulesYes',
+      'precedenceRulesNo',
+      'precedenceRulesNote'
     ]
   },
   cbosc: {

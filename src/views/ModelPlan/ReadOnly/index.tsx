@@ -3,13 +3,9 @@ import { useTranslation } from 'react-i18next';
 import { RootStateOrAny, useSelector } from 'react-redux';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
-import {
-  Grid,
-  GridContainer,
-  IconArrowBack,
-  SummaryBox
-} from '@trussworks/react-uswds';
+import { Grid, GridContainer, Icon, SummaryBox } from '@trussworks/react-uswds';
 import classnames from 'classnames';
+import { GetCrtdLsQuery } from 'gql/gen/graphql';
 import { useFlags } from 'launchdarkly-react-client-sdk';
 
 import { FavoriteIcon } from 'components/FavoriteCard';
@@ -17,6 +13,7 @@ import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import Modal from 'components/Modal';
 import PageHeading from 'components/PageHeading';
+import PageLoading from 'components/PageLoading';
 import Alert from 'components/shared/Alert';
 import SectionWrapper from 'components/shared/SectionWrapper';
 import ShareExportModal from 'components/ShareExport';
@@ -58,6 +55,10 @@ import ReadOnlyPayments from './Payments';
 import ReadOnlyTeamInfo from './Team';
 
 import './index.scss';
+
+type CRTDLType =
+  | GetCrtdLsQuery['modelPlan']['crs'][0]
+  | GetCrtdLsQuery['modelPlan']['tdls'][0];
 
 export type subComponentProps = {
   route: string;
@@ -182,6 +183,15 @@ export const filteredViewOutput = (value: string) => {
     .value.toUpperCase();
 };
 
+// Checks if the url query param is a valid filteredView and converts to lowercase
+// Returns null for any query param that is not a valid filteredView
+export const getValidFilterViewParam = (param: string | null) => {
+  if (param && filterGroups.includes(param.toLowerCase())) {
+    return param.toLowerCase() as typeof filterGroups[number];
+  }
+  return null;
+};
+
 const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
   const { t: h } = useTranslation('generalReadOnly');
   const { t: filterViewT } = useTranslation('filterView');
@@ -201,7 +211,10 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
 
   const location = useLocation();
   const params = new URLSearchParams(location.search);
-  const filteredView = params.get('filter-view') as typeof filterGroups[number];
+  const filteredViewParam = params.get('filter-view');
+
+  const filteredView = getValidFilterViewParam(filteredViewParam);
+
   const isViewingFilteredGroup = filteredView !== null;
 
   const history = useHistory();
@@ -256,8 +269,14 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
     generalCharacteristics,
     collaborators,
     isCollaborator,
-    crTdls
+    crs,
+    tdls
   } = data?.modelPlan || ({} as GetModelSummaryTypes);
+
+  const planCRs = crs || [];
+  const planTDLs = tdls || [];
+
+  const crTdls = [...planCRs, ...planTDLs] as CRTDLType[];
 
   const hasEditAccess: boolean =
     !isHelpArticle &&
@@ -274,6 +293,10 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
 
   const subComponent = subComponents[subinfo];
 
+  if (!data && loading) {
+    return <PageLoading />;
+  }
+
   if ((!loading && error) || (!loading && !data?.modelPlan)) {
     return <NotFound />;
   }
@@ -288,7 +311,6 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
 
   const Summary = (
     <SummaryBox
-      heading=""
       className="padding-y-6 padding-x-2 border-0 bg-primary-lighter radius-0 margin-top-0"
       data-testid="read-only-model-summary"
     >
@@ -316,7 +338,7 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
                 to="/models"
                 className="display-flex flex-align-center margin-bottom-3"
               >
-                <IconArrowBack className="text-primary margin-right-1" />
+                <Icon.ArrowBack className="text-primary margin-right-1" />
                 {h('back')}
               </UswdsReactLink>
 
@@ -402,7 +424,7 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
       <Modal
         isOpen={isExportModalOpen}
         closeModal={() => setIsExportModalOpen(false)}
-        className="padding-0 radius-md"
+        className="padding-0 radius-md share-export-modal__container"
         navigation
         shouldCloseOnOverlayClick
       >
@@ -431,6 +453,7 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
         subComponents={subComponents}
         subinfo={subinfo}
         isHelpArticle={isHelpArticle}
+        isFilteredView={!!filteredView}
       />
 
       <GridContainer className="model-plan-alert-wrapper">

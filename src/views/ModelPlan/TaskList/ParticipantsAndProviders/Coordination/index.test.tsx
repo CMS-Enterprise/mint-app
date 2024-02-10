@@ -2,12 +2,16 @@ import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
-
-import GetCoordination from 'queries/ParticipantsAndProviders/GetCoordination';
-import { GetCoordination_modelPlan_participantsAndProviders as GetCoordinationType } from 'queries/ParticipantsAndProviders/types/GetCoordination';
-import { ParticipantsIDType } from 'types/graphql-global-types';
+import {
+  GainshareArrangementEligibility,
+  GetCoordinationDocument,
+  GetCoordinationQuery,
+  ParticipantsIdType
+} from 'gql/gen/graphql';
 
 import Coordination from './index';
+
+type GetCoordinationType = GetCoordinationQuery['modelPlan']['participantsAndProviders'];
 
 const coordinationMockData: GetCoordinationType = {
   __typename: 'PlanParticipantsAndProviders',
@@ -17,7 +21,9 @@ const coordinationMockData: GetCoordinationType = {
   gainsharePayments: null,
   gainsharePaymentsTrack: null,
   gainsharePaymentsNote: '',
-  participantsIds: [ParticipantsIDType.OTHER],
+  gainsharePaymentsEligibility: [GainshareArrangementEligibility.OTHER],
+  gainsharePaymentsEligibilityOther: 'Eligibility other',
+  participantsIds: [ParticipantsIdType.OTHER],
   participantsIdsOther: 'Candy Kingdom Operations Number',
   participantsIDSNote: ''
 };
@@ -25,7 +31,7 @@ const coordinationMockData: GetCoordinationType = {
 const coordinationMock = [
   {
     request: {
-      query: GetCoordination,
+      query: GetCoordinationDocument,
       variables: { id: 'ce3405a0-3399-4e3a-88d7-3cfc613d2905' }
     },
     result: {

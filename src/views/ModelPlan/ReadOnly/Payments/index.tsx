@@ -1,18 +1,23 @@
 import React, { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useQuery } from '@apollo/client';
 import classNames from 'classnames';
-import { FundingSource } from 'gql/gen/graphql';
+import {
+  ClaimsBasedPayType,
+  GetAllPaymentsQuery,
+  PayType,
+  useGetAllPaymentsQuery
+} from 'gql/gen/graphql';
 
-import GetAllPayments from 'queries/ReadOnly/GetAllPayments';
-import { GetAllPayments as GetModelPlanPaymentType } from 'queries/ReadOnly/types/GetAllPayments';
-import { ClaimsBasedPayType, PayType } from 'types/graphql-global-types';
+import usePlanTranslation from 'hooks/usePlanTranslation';
 import { formatDateUtc } from 'utils/date';
 import { ModelInfoContext } from 'views/ModelInfoWrapper';
 import { NotFoundPartial } from 'views/NotFound';
 
 import { checkGroupMap } from '../_components/FilterView/util';
-import ReadOnlySection from '../_components/ReadOnlySection';
+import ReadOnlySection, {
+  formatListItems,
+  formatListOtherItems
+} from '../_components/ReadOnlySection';
 import SideBySideReadOnlySection from '../_components/SideBySideReadOnlySection';
 import TitleAndStatus from '../_components/TitleAndStatus';
 import { ReadOnlyProps } from '../ModelBasics';
@@ -24,34 +29,36 @@ const ReadOnlyPayments = ({
   filteredQuestions
 }: ReadOnlyProps) => {
   const { t: paymentsT } = useTranslation('payments');
-
   const { t: paymentsMiscT } = useTranslation('paymentsMisc');
-
   const { t: prepareForClearanceT } = useTranslation('prepareForClearance');
 
   const { modelName } = useContext(ModelInfoContext);
 
-  const { data, loading, error } = useQuery<GetModelPlanPaymentType>(
-    GetAllPayments,
-    {
-      variables: {
-        id: modelID
-      }
+  const {
+    anticipatedPaymentFrequency: anticipatedPaymentFrequencyConfig,
+    paymentReconciliationFrequency: paymentReconciliationFrequencyConfig,
+    paymentDemandRecoupmentFrequency: paymentDemandRecoupmentFrequencyConfig,
+    fundingSource: fundingSourceConfig,
+    fundingSourceR: fundingSourceRConfig
+  } = usePlanTranslation('payments');
+
+  const { data, loading, error } = useGetAllPaymentsQuery({
+    variables: {
+      id: modelID
     }
-  );
+  });
 
   if ((!loading && error) || (!loading && !data)) {
     return <NotFoundPartial />;
   }
 
+  const allPaymentData = (data?.modelPlan.payments ||
+    {}) as GetAllPaymentsQuery['modelPlan']['payments'];
+
   const {
     fundingSource,
-    fundingSourceTrustFundType,
-    fundingSourceOther,
     fundingSourceNote,
     fundingSourceR,
-    fundingSourceRTrustFundType,
-    fundingSourceROther,
     fundingSourceRNote,
     payRecipients,
     payRecipientsOtherSpecification,
@@ -92,20 +99,26 @@ const ReadOnlyPayments = ({
     planningToUseInnovationPaymentContractorNote,
     expectedCalculationComplexityLevel,
     expectedCalculationComplexityLevelNote,
+    claimsProcessingPrecedence,
+    claimsProcessingPrecedenceOther,
+    claimsProcessingPrecedenceNote,
     canParticipantsSelectBetweenPaymentMechanisms,
     canParticipantsSelectBetweenPaymentMechanismsHow,
     canParticipantsSelectBetweenPaymentMechanismsNote,
     anticipatedPaymentFrequency,
-    anticipatedPaymentFrequencyOther,
     anticipatedPaymentFrequencyNote,
     willRecoverPayments,
     willRecoverPaymentsNote,
     anticipateReconcilingPaymentsRetrospectively,
     anticipateReconcilingPaymentsRetrospectivelyNote,
+    paymentReconciliationFrequency,
+    paymentReconciliationFrequencyNote,
+    paymentDemandRecoupmentFrequency,
+    paymentDemandRecoupmentFrequencyNote,
     paymentStartDate,
     paymentStartDateNote,
     status
-  } = data?.modelPlan.payments || {};
+  } = allPaymentData;
 
   const isClaims: boolean =
     payType?.includes(PayType.CLAIMS_BASED_PAYMENTS) || false;
@@ -155,26 +168,17 @@ const ReadOnlyPayments = ({
           <ReadOnlySection
             heading={paymentsT('fundingSource.readonlyLabel')}
             list
-            listItems={fundingSource?.map((type): string =>
-              paymentsT(`fundingSource.options.${type}`)
+            listItems={formatListItems(fundingSourceConfig, fundingSource)}
+            listOtherItems={formatListOtherItems(
+              fundingSourceConfig,
+              fundingSource,
+              allPaymentData
             )}
-            listOtherItem={fundingSourceOther}
+            tooltips={fundingSource?.map((type): string =>
+              paymentsT(`fundingSource.optionsLabels.${type}`)
+            )}
           />
         )}
-
-        {fundingSource?.includes(FundingSource.TRUST_FUND) &&
-          checkGroupMap(
-            isViewingFilteredView,
-            filteredQuestions,
-            'fundingSource',
-            <ReadOnlySection
-              heading={paymentsT('fundingSourceTrustFundType.label')}
-              list
-              listItems={fundingSourceTrustFundType?.map((type): string =>
-                paymentsT(`fundingSourceTrustFundType.options.${type}`)
-              )}
-            />
-          )}
 
         {fundingSourceNote &&
           checkGroupMap(
@@ -194,26 +198,17 @@ const ReadOnlyPayments = ({
           <ReadOnlySection
             heading={paymentsT('fundingSourceR.readonlyLabel')}
             list
-            listItems={fundingSourceR?.map((type): string =>
-              paymentsT(`fundingSourceR.options.${type}`)
+            listItems={formatListItems(fundingSourceRConfig, fundingSourceR)}
+            listOtherItems={formatListOtherItems(
+              fundingSourceRConfig,
+              fundingSourceR,
+              allPaymentData
             )}
-            listOtherItem={fundingSourceROther}
+            tooltips={fundingSourceR?.map((type): string =>
+              paymentsT(`fundingSourceR.optionsLabels.${type}`)
+            )}
           />
         )}
-
-        {fundingSourceR?.includes(FundingSource.TRUST_FUND) &&
-          checkGroupMap(
-            isViewingFilteredView,
-            filteredQuestions,
-            'fundingSourceR',
-            <ReadOnlySection
-              heading={paymentsT('fundingSourceRTrustFundType.label')}
-              list
-              listItems={fundingSourceRTrustFundType?.map((type): string =>
-                paymentsT(`fundingSourceRTrustFundType.options.${type}`)
-              )}
-            />
-          )}
 
         {fundingSourceRNote &&
           checkGroupMap(
@@ -594,6 +589,28 @@ const ReadOnlyPayments = ({
         {checkGroupMap(
           isViewingFilteredView,
           filteredQuestions,
+          'claimsProcessingPrecedence',
+          <SideBySideReadOnlySection
+            firstSection={{
+              heading: paymentsT('claimsProcessingPrecedence.label'),
+              copy: paymentsT(
+                `claimsProcessingPrecedence.options.${claimsProcessingPrecedence}`,
+                ''
+              ),
+              notes: claimsProcessingPrecedenceNote
+            }}
+            secondSection={
+              claimsProcessingPrecedence === true && {
+                heading: paymentsT('claimsProcessingPrecedenceOther.label'),
+                copy: claimsProcessingPrecedenceOther
+              }
+            }
+          />
+        )}
+
+        {checkGroupMap(
+          isViewingFilteredView,
+          filteredQuestions,
           'canParticipantsSelectBetweenPaymentMechanisms',
           <SideBySideReadOnlySection
             firstSection={{
@@ -615,6 +632,7 @@ const ReadOnlyPayments = ({
             }
           />
         )}
+
         {canParticipantsSelectBetweenPaymentMechanismsNote &&
           checkGroupMap(
             isViewingFilteredView,
@@ -635,10 +653,15 @@ const ReadOnlyPayments = ({
           <ReadOnlySection
             heading={paymentsT('anticipatedPaymentFrequency.label')}
             list
-            listItems={anticipatedPaymentFrequency?.map((type): string =>
-              paymentsT(`anticipatedPaymentFrequency.options.${type}`)
+            listItems={formatListItems(
+              anticipatedPaymentFrequencyConfig,
+              anticipatedPaymentFrequency
             )}
-            listOtherItem={anticipatedPaymentFrequencyOther}
+            listOtherItems={formatListOtherItems(
+              anticipatedPaymentFrequencyConfig,
+              anticipatedPaymentFrequency,
+              allPaymentData
+            )}
             notes={anticipatedPaymentFrequencyNote}
           />
         )}
@@ -672,6 +695,46 @@ const ReadOnlyPayments = ({
               ''
             )}
             notes={anticipateReconcilingPaymentsRetrospectivelyNote}
+          />
+        )}
+
+        {checkGroupMap(
+          isViewingFilteredView,
+          filteredQuestions,
+          'paymentReconciliationFrequency',
+          <ReadOnlySection
+            heading={paymentsT('paymentReconciliationFrequency.label')}
+            list
+            listItems={formatListItems(
+              paymentReconciliationFrequencyConfig,
+              paymentReconciliationFrequency
+            )}
+            listOtherItems={formatListOtherItems(
+              paymentReconciliationFrequencyConfig,
+              paymentReconciliationFrequency,
+              allPaymentData
+            )}
+            notes={paymentReconciliationFrequencyNote}
+          />
+        )}
+
+        {checkGroupMap(
+          isViewingFilteredView,
+          filteredQuestions,
+          'paymentDemandRecoupmentFrequency',
+          <ReadOnlySection
+            heading={paymentsT('paymentDemandRecoupmentFrequency.label')}
+            list
+            listItems={formatListItems(
+              paymentDemandRecoupmentFrequencyConfig,
+              paymentDemandRecoupmentFrequency
+            )}
+            listOtherItems={formatListOtherItems(
+              paymentDemandRecoupmentFrequencyConfig,
+              paymentDemandRecoupmentFrequency,
+              allPaymentData
+            )}
+            notes={paymentDemandRecoupmentFrequencyNote}
           />
         )}
 

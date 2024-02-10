@@ -15,13 +15,14 @@ import {
   Button,
   Grid,
   GridContainer,
-  IconArrowForward
+  Icon
 } from '@trussworks/react-uswds';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import Modal from 'components/Modal';
 import PageHeading from 'components/PageHeading';
+import PageLoading from 'components/PageLoading';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import GetClearanceStatuses from 'queries/PrepareForClearance/GetClearanceStatuses';
 import {
@@ -246,13 +247,17 @@ export const ClearanceReview = ({ modelID }: ClearanceReviewProps) => {
     );
   };
 
+  if (!data && loading) {
+    return <PageLoading />;
+  }
+
   if ((!loading && error) || (!loading && !data?.modelPlan) || cannotStart) {
     return <NotFoundPartial />;
   }
 
   return (
     <MainContent data-testid="clearance-review">
-      <GridContainer>
+      <GridContainer className="padding-x-0">
         <Grid desktop={{ col: 12 }}>
           <BreadcrumbBar variant="wrap" className="margin-bottom-4">
             <Breadcrumb>
@@ -335,7 +340,7 @@ export const ClearanceReview = ({ modelID }: ClearanceReviewProps) => {
                   routeMap[section]
                 ]?.heading?.toLowerCase()
               })}
-              <IconArrowForward className="margin-left-1" aria-hidden />
+              <Icon.ArrowForward className="margin-left-1" aria-hidden />
             </Button>
           )}
         </Grid>

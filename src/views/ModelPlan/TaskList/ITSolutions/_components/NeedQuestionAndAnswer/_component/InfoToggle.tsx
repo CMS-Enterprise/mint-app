@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { IconExpandLess, IconExpandMore } from '@trussworks/react-uswds';
+import { Icon } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import i18next from 'i18next';
 
@@ -45,9 +45,9 @@ const InfoToggle = ({
         )}
       >
         {infoToggle ? (
-          <IconExpandMore className="margin-right-05" />
+          <Icon.ExpandMore className="margin-right-05" />
         ) : (
-          <IconExpandLess className="margin-right-05 needs-question__rotate" />
+          <Icon.ExpandLess className="margin-right-05 needs-question__rotate" />
         )}
 
         {t('whyNeed')}

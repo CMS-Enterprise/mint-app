@@ -1,7 +1,13 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
+import { FundingSource } from 'gql/gen/graphql';
 
-import ReadOnlySection from './index';
+import { payments } from 'i18n/en-US/modelPlan/payments';
+
+import ReadOnlySection, {
+  formatListItems,
+  formatListOtherItems
+} from './index';
 
 describe('The Read Only Section', () => {
   describe('As a Non-list Component', () => {
@@ -17,11 +23,13 @@ describe('The Read Only Section', () => {
       expect(screen.getByText(defaultCopyProps.copy)).toBeInTheDocument();
     });
 
-    it('renders "No Answer Entered" if copy is empty', async () => {
+    it('renders "No additional information specified" if copy is empty', async () => {
       render(<ReadOnlySection {...defaultCopyProps} copy={null} />);
 
       expect(screen.getByText(defaultCopyProps.heading)).toBeInTheDocument();
-      expect(screen.getByText('No answer entered')).toBeInTheDocument();
+      expect(
+        screen.getByText('No additional information specified')
+      ).toBeInTheDocument();
     });
   });
 
@@ -53,6 +61,51 @@ describe('The Read Only Section', () => {
       expect(screen.getByText(defaultListProps.heading)).toBeInTheDocument();
       expect(screen.getByText('Other')).toBeInTheDocument();
       expect(screen.getByTestId('other-entry')).toBeInTheDocument();
+    });
+  });
+
+  describe('Util functions', () => {
+    it('orders enum values correctly', async () => {
+      const values: FundingSource[] = [
+        FundingSource.OTHER,
+        FundingSource.MEDICARE_PART_B_SMI_TRUST_FUND,
+        FundingSource.MEDICARE_PART_A_HI_TRUST_FUND
+      ];
+
+      const expectedOrder: string[] = [
+        'Medicare Part A (HI) Trust Fund',
+        'Medicare Part B (SMI) Trust Fund',
+        'Other'
+      ];
+
+      expect(formatListItems(payments.fundingSource, values)).toEqual(
+        expectedOrder
+      );
+    });
+
+    it('matches additionalInfo/other values to their corresponding values', async () => {
+      const values: FundingSource[] = [
+        FundingSource.OTHER,
+        FundingSource.MEDICARE_PART_B_SMI_TRUST_FUND,
+        FundingSource.MEDICARE_PART_A_HI_TRUST_FUND
+      ];
+
+      const allValues = {
+        fundingSource: values,
+        fundingSourceOther: 'Other',
+        fundingSourceMedicareAInfo: 'Medicare A',
+        fundingSourceMedicareBInfo: 'Medicare B'
+      };
+
+      const expectedOrder = [
+        allValues.fundingSourceMedicareAInfo,
+        allValues.fundingSourceMedicareBInfo,
+        allValues.fundingSourceOther
+      ];
+
+      expect(
+        formatListOtherItems(payments.fundingSource, values, allValues)
+      ).toEqual(expectedOrder);
     });
   });
 });

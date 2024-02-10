@@ -2,17 +2,18 @@ import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
-
-import GetComplexity from 'queries/Payments/GetComplexity';
-import { GetComplexity_modelPlan_payments as GetComplexityType } from 'queries/Payments/types/GetComplexity';
 import {
-  AnticipatedPaymentFrequencyType,
   ClaimsBasedPayType,
   ComplexityCalculationLevelType,
+  FrequencyType,
+  GetComplexityDocument,
+  GetComplexityQuery,
   PayType
-} from 'types/graphql-global-types';
+} from 'gql/gen/graphql';
 
 import ClaimsBasedPayment from './index';
+
+type GetComplexityType = GetComplexityQuery['modelPlan']['payments'];
 
 const mockData: GetComplexityType = {
   __typename: 'PlanPayments',
@@ -21,10 +22,13 @@ const mockData: GetComplexityType = {
   payClaims: [ClaimsBasedPayType.OTHER],
   expectedCalculationComplexityLevel: ComplexityCalculationLevelType.HIGH,
   expectedCalculationComplexityLevelNote: null,
+  claimsProcessingPrecedence: true,
+  claimsProcessingPrecedenceOther: 'other claims',
+  claimsProcessingPrecedenceNote: 'claim note',
   canParticipantsSelectBetweenPaymentMechanisms: true,
   canParticipantsSelectBetweenPaymentMechanismsHow: 'lorem ipsum',
   canParticipantsSelectBetweenPaymentMechanismsNote: null,
-  anticipatedPaymentFrequency: [AnticipatedPaymentFrequencyType.ANNUALLY],
+  anticipatedPaymentFrequency: [FrequencyType.ANNUALLY],
   anticipatedPaymentFrequencyOther: null,
   anticipatedPaymentFrequencyNote: null
 };
@@ -32,7 +36,7 @@ const mockData: GetComplexityType = {
 const paymentsMock = [
   {
     request: {
-      query: GetComplexity,
+      query: GetComplexityDocument,
       variables: { id: 'ce3405a0-3399-4e3a-88d7-3cfc613d2905' }
     },
     result: {

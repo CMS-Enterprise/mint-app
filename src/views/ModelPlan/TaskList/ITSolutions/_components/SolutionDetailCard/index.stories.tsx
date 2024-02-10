@@ -2,14 +2,13 @@ import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { Meta } from '@storybook/react';
 
+import { needQuestionAndAnswerMock } from 'data/mock/solutions';
 import { MessageProvider } from 'hooks/useMessage';
 import { GetOperationalSolution_operationalSolution as GetOperationalSolutionType } from 'queries/ITSolutions/types/GetOperationalSolution';
 import {
   OperationalSolutionKey,
   OpSolutionStatus
 } from 'types/graphql-global-types';
-
-import needQuestionAndAnswerMock from '../NeedQuestionAndAnswer/mocks';
 
 import SolutionDetailCard from '.';
 

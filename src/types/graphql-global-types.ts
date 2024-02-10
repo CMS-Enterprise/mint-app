@@ -33,17 +33,6 @@ export enum AlternativePaymentModelType {
   REGULAR = "REGULAR",
 }
 
-export enum AnticipatedPaymentFrequencyType {
-  ANNUALLY = "ANNUALLY",
-  BIANNUALLY = "BIANNUALLY",
-  DAILY = "DAILY",
-  MONTHLY = "MONTHLY",
-  OTHER = "OTHER",
-  QUARTERLY = "QUARTERLY",
-  SEMIMONTHLY = "SEMIMONTHLY",
-  WEEKLY = "WEEKLY",
-}
-
 export enum AuthorityAllowance {
   ACA = "ACA",
   CONGRESSIONALLY_MANDATED = "CONGRESSIONALLY_MANDATED",
@@ -66,6 +55,7 @@ export enum BeneficiariesType {
   MEDICARE_PART_D = "MEDICARE_PART_D",
   NA = "NA",
   OTHER = "OTHER",
+  UNDERSERVED = "UNDERSERVED",
 }
 
 export enum CMMIGroup {
@@ -78,11 +68,11 @@ export enum CMMIGroup {
 
 export enum CMSCenter {
   CENTER_FOR_CLINICAL_STANDARDS_AND_QUALITY = "CENTER_FOR_CLINICAL_STANDARDS_AND_QUALITY",
+  CENTER_FOR_MEDICAID_AND_CHIP_SERVICES = "CENTER_FOR_MEDICAID_AND_CHIP_SERVICES",
   CENTER_FOR_MEDICARE = "CENTER_FOR_MEDICARE",
   CENTER_FOR_PROGRAM_INTEGRITY = "CENTER_FOR_PROGRAM_INTEGRITY",
   CMMI = "CMMI",
   FEDERAL_COORDINATED_HEALTH_CARE_OFFICE = "FEDERAL_COORDINATED_HEALTH_CARE_OFFICE",
-  OTHER = "OTHER",
 }
 
 export enum CcmInvolvmentType {
@@ -102,6 +92,7 @@ export enum ClaimsBasedPayType {
   ADJUSTMENTS_TO_FFS_PAYMENTS = "ADJUSTMENTS_TO_FFS_PAYMENTS",
   CARE_MANAGEMENT_HOME_VISITS = "CARE_MANAGEMENT_HOME_VISITS",
   OTHER = "OTHER",
+  PAYMENTS_FOR_POST_DISCHARGE_HOME_VISITS = "PAYMENTS_FOR_POST_DISCHARGE_HOME_VISITS",
   REDUCTIONS_TO_BENEFICIARY_COST_SHARING = "REDUCTIONS_TO_BENEFICIARY_COST_SHARING",
   SERVICES_NOT_COVERED_THROUGH_TRADITIONAL_MEDICARE = "SERVICES_NOT_COVERED_THROUGH_TRADITIONAL_MEDICARE",
   SNF_CLAIMS_WITHOUT_3DAY_HOSPITAL_ADMISSIONS = "SNF_CLAIMS_WITHOUT_3DAY_HOSPITAL_ADMISSIONS",
@@ -141,18 +132,6 @@ export enum DataForMonitoringType {
   QUALITY_CLAIMS_BASED_MEASURES = "QUALITY_CLAIMS_BASED_MEASURES",
   QUALITY_REPORTED_MEASURES = "QUALITY_REPORTED_MEASURES",
   SITE_VISITS = "SITE_VISITS",
-}
-
-export enum DataFrequencyType {
-  ANNUALLY = "ANNUALLY",
-  BIANNUALLY = "BIANNUALLY",
-  DAILY = "DAILY",
-  MONTHLY = "MONTHLY",
-  NOT_PLANNING_TO_DO_THIS = "NOT_PLANNING_TO_DO_THIS",
-  OTHER = "OTHER",
-  QUARTERLY = "QUARTERLY",
-  SEMI_MONTHLY = "SEMI_MONTHLY",
-  WEEKLY = "WEEKLY",
 }
 
 export enum DataFullTimeOrIncrementalType {
@@ -203,6 +182,12 @@ export enum DocumentType {
   POLICY_PAPER = "POLICY_PAPER",
 }
 
+export enum EaseOfUse {
+  AGREE = "AGREE",
+  DISAGREE = "DISAGREE",
+  UNSURE = "UNSURE",
+}
+
 export enum EvaluationApproachType {
   COMPARISON_MATCH = "COMPARISON_MATCH",
   CONTROL_INTERVENTION = "CONTROL_INTERVENTION",
@@ -211,19 +196,32 @@ export enum EvaluationApproachType {
   OTHER = "OTHER",
 }
 
+export enum ExisitingModelLinkFieldType {
+  GEN_CHAR_PARTICIPATION_EXISTING_MODEL_WHICH = "GEN_CHAR_PARTICIPATION_EXISTING_MODEL_WHICH",
+  GEN_CHAR_RESEMBLES_EXISTING_MODEL_WHICH = "GEN_CHAR_RESEMBLES_EXISTING_MODEL_WHICH",
+}
+
 export enum FrequencyType {
   ANNUALLY = "ANNUALLY",
-  BIANNUALLY = "BIANNUALLY",
+  CONTINUALLY = "CONTINUALLY",
   MONTHLY = "MONTHLY",
   OTHER = "OTHER",
   QUARTERLY = "QUARTERLY",
-  ROLLING = "ROLLING",
+  SEMIANNUALLY = "SEMIANNUALLY",
 }
 
 export enum FundingSource {
+  MEDICARE_PART_A_HI_TRUST_FUND = "MEDICARE_PART_A_HI_TRUST_FUND",
+  MEDICARE_PART_B_SMI_TRUST_FUND = "MEDICARE_PART_B_SMI_TRUST_FUND",
   OTHER = "OTHER",
   PATIENT_PROTECTION_AFFORDABLE_CARE_ACT = "PATIENT_PROTECTION_AFFORDABLE_CARE_ACT",
-  TRUST_FUND = "TRUST_FUND",
+}
+
+export enum GainshareArrangementEligibility {
+  ALL_PROVIDERS = "ALL_PROVIDERS",
+  NO = "NO",
+  OTHER = "OTHER",
+  SOME_PROVIDERS = "SOME_PROVIDERS",
 }
 
 export enum GeographyApplication {
@@ -231,6 +229,12 @@ export enum GeographyApplication {
   OTHER = "OTHER",
   PARTICIPANTS = "PARTICIPANTS",
   PROVIDERS = "PROVIDERS",
+}
+
+export enum GeographyRegionType {
+  CBSA = "CBSA",
+  HRR = "HRR",
+  MSA = "MSA",
 }
 
 export enum GeographyType {
@@ -241,6 +245,8 @@ export enum GeographyType {
 
 export enum KeyCharacteristic {
   EPISODE_BASED = "EPISODE_BASED",
+  MEDICAID_MODEL = "MEDICAID_MODEL",
+  MEDICARE_FFS_MODEL = "MEDICARE_FFS_MODEL",
   OTHER = "OTHER",
   PART_C = "PART_C",
   PART_D = "PART_D",
@@ -249,6 +255,16 @@ export enum KeyCharacteristic {
   PREVENTATIVE = "PREVENTATIVE",
   SERVICE_DELIVERY = "SERVICE_DELIVERY",
   SHARED_SAVINGS = "SHARED_SAVINGS",
+}
+
+export enum MintUses {
+  CONTRIBUTE_DISCUSSIONS = "CONTRIBUTE_DISCUSSIONS",
+  EDIT_MODEL = "EDIT_MODEL",
+  OTHER = "OTHER",
+  SHARE_MODEL = "SHARE_MODEL",
+  TRACK_SOLUTIONS = "TRACK_SOLUTIONS",
+  VIEW_HELP = "VIEW_HELP",
+  VIEW_MODEL = "VIEW_MODEL",
 }
 
 export enum ModelCategory {
@@ -293,9 +309,22 @@ export enum ModelStatus {
 }
 
 export enum ModelType {
-  MANDATORY = "MANDATORY",
-  TBD = "TBD",
+  MANDATORY_NATIONAL = "MANDATORY_NATIONAL",
+  MANDATORY_REGIONAL_OR_STATE = "MANDATORY_REGIONAL_OR_STATE",
+  OTHER = "OTHER",
   VOLUNTARY = "VOLUNTARY",
+}
+
+export enum ModelViewFilter {
+  CBOSC = "CBOSC",
+  CCW = "CCW",
+  CMMI = "CMMI",
+  DFSDM = "DFSDM",
+  IDDOC = "IDDOC",
+  IPC = "IPC",
+  MDM = "MDM",
+  OACT = "OACT",
+  PBG = "PBG",
 }
 
 export enum MonitoringFileType {
@@ -313,7 +342,6 @@ export enum NonClaimsBasedPayType {
   CAPITATION_POPULATION_BASED_PARTIAL = "CAPITATION_POPULATION_BASED_PARTIAL",
   CARE_COORDINATION_MANAGEMENT_FEE = "CARE_COORDINATION_MANAGEMENT_FEE",
   GLOBAL_BUDGET = "GLOBAL_BUDGET",
-  GRANTS = "GRANTS",
   INCENTIVE_PAYMENT = "INCENTIVE_PAYMENT",
   MAPD_SHARED_SAVINGS = "MAPD_SHARED_SAVINGS",
   OTHER = "OTHER",
@@ -426,6 +454,7 @@ export enum ParticipantCommunicationType {
 
 export enum ParticipantRiskType {
   CAPITATION = "CAPITATION",
+  NOT_RISK_BASED = "NOT_RISK_BASED",
   ONE_SIDED = "ONE_SIDED",
   OTHER = "OTHER",
   TWO_SIDED = "TWO_SIDED",
@@ -451,6 +480,7 @@ export enum ParticipantsIDType {
 }
 
 export enum ParticipantsType {
+  ACCOUNTABLE_CARE_ORGANIZATION = "ACCOUNTABLE_CARE_ORGANIZATION",
   COMMERCIAL_PAYERS = "COMMERCIAL_PAYERS",
   COMMUNITY_BASED_ORGANIZATIONS = "COMMUNITY_BASED_ORGANIZATIONS",
   CONVENER = "CONVENER",
@@ -515,6 +545,29 @@ export enum RecruitmentType {
   OTHER = "OTHER",
 }
 
+export enum ReportAProblemSection {
+  HELP_CENTER = "HELP_CENTER",
+  IT_SOLUTIONS = "IT_SOLUTIONS",
+  OTHER = "OTHER",
+  READ_VIEW = "READ_VIEW",
+  TASK_LIST = "TASK_LIST",
+}
+
+export enum ReportAProblemSeverity {
+  DELAYED_TASK = "DELAYED_TASK",
+  MINOR = "MINOR",
+  OTHER = "OTHER",
+  PREVENTED_TASK = "PREVENTED_TASK",
+}
+
+export enum SatisfactionLevel {
+  DISSATISFIED = "DISSATISFIED",
+  NEUTRAL = "NEUTRAL",
+  SATISFIED = "SATISFIED",
+  VERY_DISSATISFIED = "VERY_DISSATISFIED",
+  VERY_SATISFIED = "VERY_SATISFIED",
+}
+
 export enum SelectionMethodType {
   HISTORICAL = "HISTORICAL",
   NA = "NA",
@@ -533,6 +586,66 @@ export enum StakeholdersType {
   PROFESSIONAL_ORGANIZATIONS = "PROFESSIONAL_ORGANIZATIONS",
   PROVIDERS = "PROVIDERS",
   STATES = "STATES",
+}
+
+export enum StatesAndTerritories {
+  AK = "AK",
+  AL = "AL",
+  AR = "AR",
+  AS = "AS",
+  AZ = "AZ",
+  CA = "CA",
+  CO = "CO",
+  CT = "CT",
+  DC = "DC",
+  DE = "DE",
+  FL = "FL",
+  GA = "GA",
+  GU = "GU",
+  HI = "HI",
+  IA = "IA",
+  ID = "ID",
+  IL = "IL",
+  IN = "IN",
+  KS = "KS",
+  KY = "KY",
+  LA = "LA",
+  MA = "MA",
+  MD = "MD",
+  ME = "ME",
+  MI = "MI",
+  MN = "MN",
+  MO = "MO",
+  MP = "MP",
+  MS = "MS",
+  MT = "MT",
+  NC = "NC",
+  ND = "ND",
+  NE = "NE",
+  NH = "NH",
+  NJ = "NJ",
+  NM = "NM",
+  NV = "NV",
+  NY = "NY",
+  OH = "OH",
+  OK = "OK",
+  OR = "OR",
+  PA = "PA",
+  PR = "PR",
+  RI = "RI",
+  SC = "SC",
+  SD = "SD",
+  TN = "TN",
+  TX = "TX",
+  UM = "UM",
+  UT = "UT",
+  VA = "VA",
+  VI = "VI",
+  VT = "VT",
+  WA = "WA",
+  WI = "WI",
+  WV = "WV",
+  WY = "WY",
 }
 
 export enum TaskListSection {
@@ -559,6 +672,8 @@ export enum TaskStatusInput {
 }
 
 export enum TeamRole {
+  CM_FFS_COUNTERPART = "CM_FFS_COUNTERPART",
+  COR = "COR",
   EVALUATION = "EVALUATION",
   IT_LEAD = "IT_LEAD",
   LEADERSHIP = "LEADERSHIP",
@@ -576,15 +691,21 @@ export enum TriStateAnswer {
   YES = "YES",
 }
 
-export enum TrustFundType {
-  MEDICARE_PART_A_HI_TRUST_FUND = "MEDICARE_PART_A_HI_TRUST_FUND",
-  MEDICARE_PART_B_SMI_TRUST_FUND = "MEDICARE_PART_B_SMI_TRUST_FUND",
-}
-
 export enum WaiverType {
   FRAUD_ABUSE = "FRAUD_ABUSE",
   MEDICAID = "MEDICAID",
   PROGRAM_PAYMENT = "PROGRAM_PAYMENT",
+}
+
+export enum YesNoOtherType {
+  NO = "NO",
+  OTHER = "OTHER",
+  YES = "YES",
+}
+
+export enum YesNoType {
+  NO = "NO",
+  YES = "YES",
 }
 
 export interface CreateOperationalSolutionSubtaskInput {
@@ -597,7 +718,7 @@ export interface CreateOperationalSolutionSubtaskInput {
  */
 export interface DiscussionReplyCreateInput {
   discussionID: UUID;
-  content: string;
+  content: TaggedHTML;
   userRole?: DiscussionUserRole | null;
   userRoleDescription?: string | null;
 }
@@ -637,9 +758,9 @@ export interface PlanBasicsChanges {
   modelCategory?: ModelCategory | null;
   additionalModelCategories?: ModelCategory[] | null;
   cmsCenters?: CMSCenter[] | null;
-  cmsOther?: string | null;
   cmmiGroups?: CMMIGroup[] | null;
-  modelType?: ModelType | null;
+  modelType?: ModelType[] | null;
+  modelTypeOther?: string | null;
   problem?: string | null;
   goal?: string | null;
   testInterventions?: string | null;
@@ -663,6 +784,7 @@ export interface PlanBeneficiariesChanges {
   beneficiaries?: BeneficiariesType[] | null;
   beneficiariesOther?: string | null;
   beneficiariesNote?: string | null;
+  diseaseSpecificGroup?: string | null;
   treatDualElligibleDifferent?: TriStateAnswer | null;
   treatDualElligibleDifferentHow?: string | null;
   treatDualElligibleDifferentNote?: string | null;
@@ -675,13 +797,38 @@ export interface PlanBeneficiariesChanges {
   beneficiarySelectionMethod?: SelectionMethodType[] | null;
   beneficiarySelectionOther?: string | null;
   beneficiarySelectionNote?: string | null;
-  beneficiarySelectionFrequency?: FrequencyType | null;
+  beneficiarySelectionFrequency?: FrequencyType[] | null;
+  beneficiarySelectionFrequencyContinually?: string | null;
   beneficiarySelectionFrequencyOther?: string | null;
   beneficiarySelectionFrequencyNote?: string | null;
+  beneficiaryRemovalFrequency?: FrequencyType[] | null;
+  beneficiaryRemovalFrequencyContinually?: string | null;
+  beneficiaryRemovalFrequencyOther?: string | null;
+  beneficiaryRemovalFrequencyNote?: string | null;
   beneficiaryOverlap?: OverlapType | null;
   beneficiaryOverlapNote?: string | null;
-  precedenceRules?: string | null;
+  precedenceRules?: YesNoType[] | null;
+  precedenceRulesYes?: string | null;
+  precedenceRulesNo?: string | null;
+  precedenceRulesNote?: string | null;
   status?: TaskStatusInput | null;
+}
+
+export interface PlanCRChanges {
+  idNumber?: string | null;
+  dateInitiated?: Time | null;
+  dateImplemented?: Time | null;
+  title?: string | null;
+  note?: string | null;
+}
+
+export interface PlanCRCreateInput {
+  modelPlanID: UUID;
+  idNumber: string;
+  dateInitiated: Time;
+  dateImplemented: Time;
+  title: string;
+  note?: string | null;
 }
 
 /**
@@ -693,38 +840,12 @@ export interface PlanCollaboratorCreateInput {
   teamRoles: TeamRole[];
 }
 
-export interface PlanCrTdlChanges {
-  idNumber?: string | null;
-  dateInitiated?: Time | null;
-  title?: string | null;
-  note?: string | null;
-}
-
-export interface PlanCrTdlCreateInput {
-  modelPlanID: UUID;
-  idNumber: string;
-  dateInitiated: Time;
-  title: string;
-  note?: string | null;
-}
-
-/**
- * PlanDiscussionChanges represents the possible changes you can make to a plan discussion when updating it.
- * Fields explicitly set with NULL will be unset, and omitted fields will be left unchanged.
- * https: // gqlgen.com/reference/changesets/
- */
-export interface PlanDiscussionChanges {
-  content?: string | null;
-  userRole?: DiscussionUserRole | null;
-  userRoleDescription?: string | null;
-}
-
 /**
  * PlanDiscussionCreateInput represents the necessary fields to create a plan discussion
  */
 export interface PlanDiscussionCreateInput {
   modelPlanID: UUID;
-  content: string;
+  content: TaggedHTML;
   userRole?: DiscussionUserRole | null;
   userRoleDescription?: string | null;
 }
@@ -742,6 +863,19 @@ export interface PlanDocumentInput {
 }
 
 /**
+ * PlanDocumentLinkInput
+ */
+export interface PlanDocumentLinkInput {
+  modelPlanID: UUID;
+  url: string;
+  name: string;
+  documentType: DocumentType;
+  restricted: boolean;
+  otherTypeDescription?: string | null;
+  optionalNotes?: string | null;
+}
+
+/**
  * PlanGeneralCharacteristicsChanges represents the possible changes you can make to a
  * general characteristics object when updating it.
  * Fields explicitly set with NULL will be unset, and omitted fields will be left unchanged.
@@ -749,13 +883,27 @@ export interface PlanDocumentInput {
  */
 export interface PlanGeneralCharacteristicsChanges {
   isNewModel?: boolean | null;
-  existingModel?: string | null;
-  resemblesExistingModel?: boolean | null;
+  currentModelPlanID?: UUID | null;
+  existingModelID?: number | null;
+  resemblesExistingModel?: YesNoOtherType | null;
+  resemblesExistingModelWhyHow?: string | null;
+  resemblesExistingModelOtherSpecify?: string | null;
+  resemblesExistingModelOtherSelected?: boolean | null;
+  resemblesExistingModelOtherOption?: string | null;
   resemblesExistingModelHow?: string | null;
   resemblesExistingModelNote?: string | null;
+  participationInModelPrecondition?: YesNoOtherType | null;
+  participationInModelPreconditionWhyHow?: string | null;
+  participationInModelPreconditionOtherSpecify?: string | null;
+  participationInModelPreconditionOtherSelected?: boolean | null;
+  participationInModelPreconditionOtherOption?: string | null;
+  participationInModelPreconditionNote?: string | null;
   hasComponentsOrTracks?: boolean | null;
   hasComponentsOrTracksDiffer?: string | null;
   hasComponentsOrTracksNote?: string | null;
+  agencyOrStateHelp?: AgencyOrStateHelpType[] | null;
+  agencyOrStateHelpOther?: string | null;
+  agencyOrStateHelpNote?: string | null;
   alternativePaymentModelTypes?: AlternativePaymentModelType[] | null;
   alternativePaymentModelNote?: string | null;
   keyCharacteristics?: KeyCharacteristic[] | null;
@@ -778,6 +926,8 @@ export interface PlanGeneralCharacteristicsChanges {
   communityPartnersInvolvedNote?: string | null;
   geographiesTargeted?: boolean | null;
   geographiesTargetedTypes?: GeographyType[] | null;
+  geographiesStatesAndTerritories?: StatesAndTerritories[] | null;
+  geographiesRegionTypes?: GeographyRegionType[] | null;
   geographiesTargetedTypesOther?: string | null;
   geographiesTargetedAppliedTo?: GeographyApplication[] | null;
   geographiesTargetedAppliedToOther?: string | null;
@@ -807,9 +957,6 @@ export interface PlanGeneralCharacteristicsChanges {
  * https: // gqlgen.com/reference/changesets/
  */
 export interface PlanOpsEvalAndLearningChanges {
-  agencyOrStateHelp?: AgencyOrStateHelpType[] | null;
-  agencyOrStateHelpOther?: string | null;
-  agencyOrStateHelpNote?: string | null;
   stakeholders?: StakeholdersType[] | null;
   stakeholdersOther?: string | null;
   stakeholdersNote?: string | null;
@@ -881,21 +1028,27 @@ export interface PlanOpsEvalAndLearningChanges {
   useCcwForFileDistribiutionToParticipantsNote?: string | null;
   developNewQualityMeasures?: boolean | null;
   developNewQualityMeasuresNote?: string | null;
-  qualityPerformanceImpactsPayment?: boolean | null;
+  qualityPerformanceImpactsPayment?: YesNoOtherType | null;
+  qualityPerformanceImpactsPaymentOther?: string | null;
   qualityPerformanceImpactsPaymentNote?: string | null;
   dataSharingStarts?: DataStartsType | null;
   dataSharingStartsOther?: string | null;
-  dataSharingFrequency?: DataFrequencyType[] | null;
+  dataSharingFrequency?: FrequencyType[] | null;
+  dataSharingFrequencyContinually?: string | null;
   dataSharingFrequencyOther?: string | null;
   dataSharingStartsNote?: string | null;
   dataCollectionStarts?: DataStartsType | null;
   dataCollectionStartsOther?: string | null;
-  dataCollectionFrequency?: DataFrequencyType[] | null;
+  dataCollectionFrequency?: FrequencyType[] | null;
+  dataCollectionFrequencyContinually?: string | null;
   dataCollectionFrequencyOther?: string | null;
   dataCollectionFrequencyNote?: string | null;
   qualityReportingStarts?: DataStartsType | null;
   qualityReportingStartsOther?: string | null;
   qualityReportingStartsNote?: string | null;
+  qualityReportingFrequency?: FrequencyType[] | null;
+  qualityReportingFrequencyContinually?: string | null;
+  qualityReportingFrequencyOther?: string | null;
   modelLearningSystems?: ModelLearningSystemType[] | null;
   modelLearningSystemsOther?: string | null;
   modelLearningSystemsNote?: string | null;
@@ -927,11 +1080,18 @@ export interface PlanParticipantsAndProvidersChanges {
   selectionMethod?: ParticipantSelectionType[] | null;
   selectionOther?: string | null;
   selectionNote?: string | null;
+  participantAddedFrequency?: FrequencyType[] | null;
+  participantAddedFrequencyContinually?: string | null;
+  participantAddedFrequencyOther?: string | null;
+  participantAddedFrequencyNote?: string | null;
+  participantRemovedFrequency?: FrequencyType[] | null;
+  participantRemovedFrequencyContinually?: string | null;
+  participantRemovedFrequencyOther?: string | null;
+  participantRemovedFrequencyNote?: string | null;
   communicationMethod?: ParticipantCommunicationType[] | null;
   communicationMethodOther?: string | null;
   communicationNote?: string | null;
-  participantAssumeRisk?: boolean | null;
-  riskType?: ParticipantRiskType | null;
+  riskType?: ParticipantRiskType[] | null;
   riskOther?: string | null;
   riskNote?: string | null;
   willRiskChange?: boolean | null;
@@ -941,10 +1101,13 @@ export interface PlanParticipantsAndProvidersChanges {
   gainsharePayments?: boolean | null;
   gainsharePaymentsTrack?: boolean | null;
   gainsharePaymentsNote?: string | null;
+  gainsharePaymentsEligibility?: GainshareArrangementEligibility[] | null;
+  gainsharePaymentsEligibilityOther?: string | null;
   participantsIds?: ParticipantsIDType[] | null;
   participantsIdsOther?: string | null;
   participantsIDSNote?: string | null;
-  providerAdditionFrequency?: FrequencyType | null;
+  providerAdditionFrequency?: FrequencyType[] | null;
+  providerAdditionFrequencyContinually?: string | null;
   providerAdditionFrequencyOther?: string | null;
   providerAdditionFrequencyNote?: string | null;
   providerAddMethod?: ProviderAddType[] | null;
@@ -953,6 +1116,10 @@ export interface PlanParticipantsAndProvidersChanges {
   providerLeaveMethod?: ProviderLeaveType[] | null;
   providerLeaveMethodOther?: string | null;
   providerLeaveMethodNote?: string | null;
+  providerRemovalFrequency?: FrequencyType[] | null;
+  providerRemovalFrequencyContinually?: string | null;
+  providerRemovalFrequencyOther?: string | null;
+  providerRemovalFrequencyNote?: string | null;
   providerOverlap?: OverlapType | null;
   providerOverlapHierarchy?: string | null;
   providerOverlapNote?: string | null;
@@ -961,11 +1128,13 @@ export interface PlanParticipantsAndProvidersChanges {
 
 export interface PlanPaymentsChanges {
   fundingSource?: FundingSource[] | null;
-  fundingSourceTrustFundType?: TrustFundType[] | null;
+  fundingSourceMedicareAInfo?: string | null;
+  fundingSourceMedicareBInfo?: string | null;
   fundingSourceOther?: string | null;
   fundingSourceNote?: string | null;
   fundingSourceR?: FundingSource[] | null;
-  fundingSourceRTrustFundType?: TrustFundType[] | null;
+  fundingSourceRMedicareAInfo?: string | null;
+  fundingSourceRMedicareBInfo?: string | null;
   fundingSourceROther?: string | null;
   fundingSourceRNote?: string | null;
   payRecipients?: PayRecipient[] | null;
@@ -1007,19 +1176,72 @@ export interface PlanPaymentsChanges {
   planningToUseInnovationPaymentContractorNote?: string | null;
   expectedCalculationComplexityLevel?: ComplexityCalculationLevelType | null;
   expectedCalculationComplexityLevelNote?: string | null;
+  claimsProcessingPrecedence?: boolean | null;
+  claimsProcessingPrecedenceOther?: string | null;
+  claimsProcessingPrecedenceNote?: string | null;
   canParticipantsSelectBetweenPaymentMechanisms?: boolean | null;
   canParticipantsSelectBetweenPaymentMechanismsHow?: string | null;
   canParticipantsSelectBetweenPaymentMechanismsNote?: string | null;
-  anticipatedPaymentFrequency?: AnticipatedPaymentFrequencyType[] | null;
+  anticipatedPaymentFrequency?: FrequencyType[] | null;
+  anticipatedPaymentFrequencyContinually?: string | null;
   anticipatedPaymentFrequencyOther?: string | null;
   anticipatedPaymentFrequencyNote?: string | null;
   willRecoverPayments?: boolean | null;
   willRecoverPaymentsNote?: string | null;
   anticipateReconcilingPaymentsRetrospectively?: boolean | null;
   anticipateReconcilingPaymentsRetrospectivelyNote?: string | null;
+  paymentReconciliationFrequency?: FrequencyType[] | null;
+  paymentReconciliationFrequencyContinually?: string | null;
+  paymentReconciliationFrequencyOther?: string | null;
+  paymentReconciliationFrequencyNote?: string | null;
+  paymentDemandRecoupmentFrequency?: FrequencyType[] | null;
+  paymentDemandRecoupmentFrequencyContinually?: string | null;
+  paymentDemandRecoupmentFrequencyOther?: string | null;
+  paymentDemandRecoupmentFrequencyNote?: string | null;
   paymentStartDate?: Time | null;
   paymentStartDateNote?: string | null;
   status?: TaskStatusInput | null;
+}
+
+export interface PlanTDLChanges {
+  idNumber?: string | null;
+  dateInitiated?: Time | null;
+  title?: string | null;
+  note?: string | null;
+}
+
+export interface PlanTDLCreateInput {
+  modelPlanID: UUID;
+  idNumber: string;
+  dateInitiated: Time;
+  title: string;
+  note?: string | null;
+}
+
+export interface ReportAProblemInput {
+  isAnonymousSubmission: boolean;
+  allowContact?: boolean | null;
+  section?: ReportAProblemSection | null;
+  sectionOther?: string | null;
+  whatDoing?: string | null;
+  whatWentWrong?: string | null;
+  severity?: ReportAProblemSeverity | null;
+  severityOther?: string | null;
+}
+
+/**
+ * The inputs to the user feedback form
+ */
+export interface SendFeedbackEmailInput {
+  isAnonymousSubmission: boolean;
+  allowContact?: boolean | null;
+  cmsRole?: string | null;
+  mintUsedFor?: MintUses[] | null;
+  mintUsedForOther?: string | null;
+  systemEasyToUse?: EaseOfUse | null;
+  systemEasyToUseOther?: string | null;
+  howSatisfied?: SatisfactionLevel | null;
+  howCanWeImprove?: string | null;
 }
 
 export interface UpdateOperationalSolutionSubtaskChangesInput {

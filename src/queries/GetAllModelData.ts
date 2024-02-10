@@ -21,8 +21,8 @@ export default gql`
         demoCode
         cmsCenters
         cmmiGroups
-        cmsOther
         modelType
+        modelTypeOther
         problem
         goal
         testInterventions
@@ -59,8 +59,22 @@ export default gql`
         isNewModel
         existingModel
         resemblesExistingModel
+        resemblesExistingModelWhyHow
         resemblesExistingModelHow
         resemblesExistingModelNote
+        resemblesExistingModelWhich {
+          names
+        }
+        resemblesExistingModelOtherSpecify
+        resemblesExistingModelOtherOption
+        participationInModelPrecondition
+        participationInModelPreconditionWhich {
+          names
+        }
+        participationInModelPreconditionOtherSpecify
+        participationInModelPreconditionOtherOption
+        participationInModelPreconditionWhyHow
+        participationInModelPreconditionNote
         hasComponentsOrTracks
         hasComponentsOrTracksDiffer
         hasComponentsOrTracksNote
@@ -73,6 +87,9 @@ export default gql`
         communityPartnersInvolved
         communityPartnersInvolvedDescription
         communityPartnersInvolvedNote
+        agencyOrStateHelp
+        agencyOrStateHelpOther
+        agencyOrStateHelpNote
         alternativePaymentModelTypes
         alternativePaymentModelNote
         keyCharacteristics
@@ -86,6 +103,8 @@ export default gql`
         planContractUpdatedNote
         geographiesTargeted
         geographiesTargetedTypes
+        geographiesStatesAndTerritories
+        geographiesRegionTypes
         geographiesTargetedTypesOther
         geographiesTargetedAppliedTo
         geographiesTargetedAppliedToOther
@@ -104,10 +123,17 @@ export default gql`
       }
       participantsAndProviders {
         id
+        participantAddedFrequency
+        participantAddedFrequencyContinually
+        participantAddedFrequencyOther
+        participantAddedFrequencyNote
+        participantRemovedFrequency
+        participantRemovedFrequencyContinually
+        participantRemovedFrequencyOther
+        participantRemovedFrequencyNote
         communicationMethod
         communicationMethodOther
         communicationNote
-        participantAssumeRisk
         riskType
         riskOther
         riskNote
@@ -117,6 +143,8 @@ export default gql`
         coordinateWorkNote
         gainsharePayments
         gainsharePaymentsTrack
+        gainsharePaymentsEligibility
+        gainsharePaymentsEligibilityOther
         gainsharePaymentsNote
         participantsIds
         participantsIdsOther
@@ -139,6 +167,7 @@ export default gql`
         participantsCurrentlyInModelsNote
         modelApplicationLevel
         providerAdditionFrequency
+        providerAdditionFrequencyContinually
         providerAdditionFrequencyOther
         providerAdditionFrequencyNote
         providerAddMethod
@@ -147,6 +176,10 @@ export default gql`
         providerLeaveMethod
         providerLeaveMethodOther
         providerLeaveMethodNote
+        providerRemovalFrequency
+        providerRemovalFrequencyContinually
+        providerRemovalFrequencyOther
+        providerRemovalFrequencyNote
         providerOverlap
         providerOverlapHierarchy
         providerOverlapNote
@@ -173,9 +206,17 @@ export default gql`
         excludeCertainCharacteristicsCriteria
         excludeCertainCharacteristicsNote
         beneficiarySelectionFrequency
+        beneficiarySelectionFrequencyContinually
         beneficiarySelectionFrequencyNote
         beneficiarySelectionFrequencyOther
+        beneficiaryRemovalFrequency
+        beneficiaryRemovalFrequencyContinually
+        beneficiaryRemovalFrequencyNote
+        beneficiaryRemovalFrequencyOther
         precedenceRules
+        precedenceRulesYes
+        precedenceRulesNo
+        precedenceRulesNote
         numberPeopleImpacted
         estimateConfidence
         confidenceNote
@@ -202,20 +243,26 @@ export default gql`
         developNewQualityMeasures
         developNewQualityMeasuresNote
         qualityPerformanceImpactsPayment
+        qualityPerformanceImpactsPaymentOther
         qualityPerformanceImpactsPaymentNote
         dataSharingStarts
         dataSharingStartsOther
         dataSharingFrequency
+        dataSharingFrequencyContinually
         dataSharingFrequencyOther
         dataSharingStartsNote
         dataCollectionStarts
         dataCollectionStartsOther
         dataCollectionFrequency
+        dataCollectionFrequencyContinually
         dataCollectionFrequencyOther
         dataCollectionFrequencyNote
         qualityReportingStarts
         qualityReportingStartsOther
         qualityReportingStartsNote
+        qualityReportingFrequency
+        qualityReportingFrequencyContinually
+        qualityReportingFrequencyOther
         evaluationApproaches
         evaluationApproachOther
         evalutaionApproachNote
@@ -254,9 +301,6 @@ export default gql`
         modelLearningSystemsOther
         modelLearningSystemsNote
         anticipatedChallenges
-        agencyOrStateHelp
-        agencyOrStateHelpOther
-        agencyOrStateHelpNote
         stakeholders
         stakeholdersOther
         stakeholdersNote
@@ -313,16 +357,24 @@ export default gql`
         payModelDifferentiation
         expectedCalculationComplexityLevel
         expectedCalculationComplexityLevelNote
+        claimsProcessingPrecedence
+        claimsProcessingPrecedenceOther
+        claimsProcessingPrecedenceNote
         canParticipantsSelectBetweenPaymentMechanisms
         canParticipantsSelectBetweenPaymentMechanismsHow
         canParticipantsSelectBetweenPaymentMechanismsNote
         anticipatedPaymentFrequency
+        anticipatedPaymentFrequencyContinually
         anticipatedPaymentFrequencyOther
         anticipatedPaymentFrequencyNote
         fundingSource
+        fundingSourceMedicareAInfo
+        fundingSourceMedicareBInfo
         fundingSourceOther
         fundingSourceNote
         fundingSourceR
+        fundingSourceRMedicareAInfo
+        fundingSourceRMedicareBInfo
         fundingSourceROther
         fundingSourceRNote
         payRecipients
@@ -342,6 +394,14 @@ export default gql`
         willRecoverPaymentsNote
         anticipateReconcilingPaymentsRetrospectively
         anticipateReconcilingPaymentsRetrospectivelyNote
+        paymentReconciliationFrequency
+        paymentReconciliationFrequencyContinually
+        paymentReconciliationFrequencyOther
+        paymentReconciliationFrequencyNote
+        paymentDemandRecoupmentFrequency
+        paymentDemandRecoupmentFrequencyContinually
+        paymentDemandRecoupmentFrequencyOther
+        paymentDemandRecoupmentFrequencyNote
         paymentStartDate
         paymentStartDateNote
         readyForReviewByUserAccount {
@@ -365,7 +425,9 @@ export default gql`
       }
       discussions {
         id
-        content
+        content {
+          rawContent
+        }
         createdByUserAccount {
           commonName
         }
@@ -375,7 +437,9 @@ export default gql`
         replies {
           id
           discussionID
-          content
+          content {
+            rawContent
+          }
           createdByUserAccount {
             commonName
           }

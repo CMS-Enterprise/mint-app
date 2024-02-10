@@ -12,7 +12,7 @@ import {
   CardGroup,
   Fieldset,
   Grid,
-  IconArrowBack
+  Icon
 } from '@trussworks/react-uswds';
 import { Form, Formik, FormikProps } from 'formik';
 import { partition } from 'lodash';
@@ -200,6 +200,10 @@ const SelectSolutions = () => {
     { text: update ? t('updateSolutions') : t('selectSolution') }
   ];
 
+  if (!data && loading) {
+    return <PageLoading />;
+  }
+
   if (error) {
     return <NotFound />;
   }
@@ -315,36 +319,31 @@ const SelectSolutions = () => {
                         {t('chooseCommonSolution')}
                       </legend>
 
-                      {loading ? (
-                        <PageLoading />
-                      ) : (
-                        <CardGroup>
-                          {commonSolutions.map(
-                            (solution: GetOperationalNeedSolutionsType) => (
-                              <CheckboxCard
-                                solution={solution}
-                                index={allTheSolutions.findIndex(x =>
-                                  x.id ===
-                                  '00000000-0000-0000-0000-000000000000'
-                                    ? x.name === solution.name
-                                    : x.id === solution.id
-                                )}
-                                // Default Operational Solutions start with an id full of zeroes.
-                                // if solution is default solution, then check name to find index
-                                // otherwise, continue to use id to find index
-                                key={`${
-                                  solution.nameOther
-                                    ?.toLowerCase()
-                                    .replaceAll(' ', '-') ||
-                                  solution.name
-                                    ?.toLowerCase()
-                                    .replaceAll(' ', '-')
-                                }--${solution.id}`}
-                              />
-                            )
-                          )}
-                        </CardGroup>
-                      )}
+                      <CardGroup>
+                        {commonSolutions.map(
+                          (solution: GetOperationalNeedSolutionsType) => (
+                            <CheckboxCard
+                              solution={solution}
+                              index={allTheSolutions.findIndex(x =>
+                                x.id === '00000000-0000-0000-0000-000000000000'
+                                  ? x.name === solution.name
+                                  : x.id === solution.id
+                              )}
+                              // Default Operational Solutions start with an id full of zeroes.
+                              // if solution is default solution, then check name to find index
+                              // otherwise, continue to use id to find index
+                              key={`${
+                                solution.nameOther
+                                  ?.toLowerCase()
+                                  .replaceAll(' ', '-') ||
+                                solution.name
+                                  ?.toLowerCase()
+                                  .replaceAll(' ', '-')
+                              }--${solution.id}`}
+                            />
+                          )
+                        )}
+                      </CardGroup>
 
                       {otherSolutions.length > 0 && (
                         <>
@@ -408,7 +407,10 @@ const SelectSolutions = () => {
                           )
                         }
                       >
-                        <IconArrowBack className="margin-right-1" aria-hidden />
+                        <Icon.ArrowBack
+                          className="margin-right-1"
+                          aria-hidden
+                        />
                         {update ? t('dontUpdate') : t('dontAdd')}
                       </Button>
                     </Fieldset>

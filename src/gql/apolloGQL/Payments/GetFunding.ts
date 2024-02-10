@@ -1,6 +1,6 @@
-import { graphql } from '../../gen/gql';
+import { gql } from '@apollo/client';
 
-export default graphql(/* GraphQL */ `
+export default gql(/* GraphQL */ `
   query GetFunding($id: UUID!) {
     modelPlan(id: $id) {
       id
@@ -8,11 +8,13 @@ export default graphql(/* GraphQL */ `
       payments {
         id
         fundingSource
-        fundingSourceTrustFundType
+        fundingSourceMedicareAInfo
+        fundingSourceMedicareBInfo
         fundingSourceOther
         fundingSourceNote
         fundingSourceR
-        fundingSourceRTrustFundType
+        fundingSourceRMedicareAInfo
+        fundingSourceRMedicareBInfo
         fundingSourceROther
         fundingSourceRNote
         payRecipients

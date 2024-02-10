@@ -1,15 +1,21 @@
 import React, { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useQuery } from '@apollo/client';
+import {
+  BeneficiariesType,
+  GetAllBeneficiariesQuery,
+  TriStateAnswer,
+  useGetAllBeneficiariesQuery
+} from 'gql/gen/graphql';
 
-import GetAllBeneficiaries from 'queries/ReadOnly/GetAllBeneficiaries';
-import { GetAllBeneficiaries as AllBeneficiariesTypes } from 'queries/ReadOnly/types/GetAllBeneficiaries';
-import { FrequencyType, TriStateAnswer } from 'types/graphql-global-types';
+import usePlanTranslation from 'hooks/usePlanTranslation';
 import { ModelInfoContext } from 'views/ModelInfoWrapper';
 import { NotFoundPartial } from 'views/NotFound';
 
 import { checkGroupMap } from '../_components/FilterView/util';
-import ReadOnlySection from '../_components/ReadOnlySection';
+import ReadOnlySection, {
+  formatListItems,
+  formatListOtherItems
+} from '../_components/ReadOnlySection';
 import SideBySideReadOnlySection from '../_components/SideBySideReadOnlySection';
 import TitleAndStatus from '../_components/TitleAndStatus';
 import { ReadOnlyProps } from '../ModelBasics';
@@ -26,23 +32,29 @@ const ReadOnlyBeneficiaries = ({
 
   const { t: prepareForClearanceT } = useTranslation('prepareForClearance');
 
+  const {
+    beneficiarySelectionFrequency: beneficiarySelectionFrequencyConfig,
+    beneficiaryRemovalFrequency: beneficiaryRemovalFrequencyConfig
+  } = usePlanTranslation('beneficiaries');
+
   const { modelName } = useContext(ModelInfoContext);
 
-  const { data, loading, error } = useQuery<AllBeneficiariesTypes>(
-    GetAllBeneficiaries,
-    {
-      variables: {
-        id: modelID
-      }
+  const { data, loading, error } = useGetAllBeneficiariesQuery({
+    variables: {
+      id: modelID
     }
-  );
+  });
 
   if ((!loading && error) || (!loading && !data?.modelPlan)) {
     return <NotFoundPartial />;
   }
 
+  const allbeneficiariesData = (data?.modelPlan.beneficiaries ||
+    {}) as GetAllBeneficiariesQuery['modelPlan']['beneficiaries'];
+
   const {
     beneficiaries,
+    diseaseSpecificGroup,
     beneficiariesOther,
     beneficiariesNote,
     treatDualElligibleDifferent,
@@ -58,13 +70,22 @@ const ReadOnlyBeneficiaries = ({
     beneficiarySelectionOther,
     beneficiarySelectionNote,
     beneficiarySelectionFrequency,
-    beneficiarySelectionFrequencyOther,
     beneficiarySelectionFrequencyNote,
+    beneficiaryRemovalFrequency,
+    beneficiaryRemovalFrequencyNote,
     beneficiaryOverlap,
     beneficiaryOverlapNote,
     precedenceRules,
+    precedenceRulesYes,
+    precedenceRulesNo,
+    precedenceRulesNote,
     status
-  } = data?.modelPlan.beneficiaries || {};
+  } = allbeneficiariesData;
+
+  const precedenceRulesInfo: Record<string, string | null | undefined> = {
+    precedenceRulesYes,
+    precedenceRulesNo
+  };
 
   return (
     <div
@@ -108,6 +129,17 @@ const ReadOnlyBeneficiaries = ({
             notes={beneficiariesNote}
           />
         )}
+
+        {beneficiaries?.includes(BeneficiariesType.DISEASE_SPECIFIC) &&
+          checkGroupMap(
+            isViewingFilteredView,
+            filteredQuestions,
+            'diseaseSpecificGroup',
+            <ReadOnlySection
+              heading={beneficiariesT('diseaseSpecificGroup.label')}
+              copy={diseaseSpecificGroup}
+            />
+          )}
 
         {checkGroupMap(
           isViewingFilteredView,
@@ -249,27 +281,43 @@ const ReadOnlyBeneficiaries = ({
       </div>
 
       <div>
-        {/* If "Other", then display "Other — Lorem ipsum." */}
-        {/* Else just display content, i.e. "LOI (Letter of interest)" */}
         {checkGroupMap(
           isViewingFilteredView,
           filteredQuestions,
           'beneficiarySelectionFrequency',
           <ReadOnlySection
             heading={beneficiariesT('beneficiarySelectionFrequency.label')}
-            copy={
-              beneficiarySelectionFrequency &&
-              (beneficiarySelectionFrequency === FrequencyType.OTHER
-                ? `${beneficiariesT(
-                    `beneficiarySelectionFrequency.options.${beneficiarySelectionFrequency}`,
-                    ''
-                  )} \u2014  ${beneficiarySelectionFrequencyOther}`
-                : beneficiariesT(
-                    `beneficiarySelectionFrequency.options.${beneficiarySelectionFrequency}`,
-                    ''
-                  ))
-            }
+            list
+            listItems={formatListItems(
+              beneficiarySelectionFrequencyConfig,
+              beneficiarySelectionFrequency
+            )}
+            listOtherItems={formatListOtherItems(
+              beneficiarySelectionFrequencyConfig,
+              beneficiarySelectionFrequency,
+              allbeneficiariesData
+            )}
             notes={beneficiarySelectionFrequencyNote}
+          />
+        )}
+
+        {checkGroupMap(
+          isViewingFilteredView,
+          filteredQuestions,
+          'beneficiaryRemovalFrequency',
+          <ReadOnlySection
+            heading={beneficiariesT('beneficiaryRemovalFrequency.label')}
+            list
+            listItems={formatListItems(
+              beneficiaryRemovalFrequencyConfig,
+              beneficiaryRemovalFrequency
+            )}
+            listOtherItems={formatListOtherItems(
+              beneficiaryRemovalFrequencyConfig,
+              beneficiaryRemovalFrequency,
+              allbeneficiariesData
+            )}
+            notes={beneficiaryRemovalFrequencyNote}
           />
         )}
 
@@ -289,14 +337,27 @@ const ReadOnlyBeneficiaries = ({
             notes={beneficiaryOverlapNote}
           />
         )}
-
         {checkGroupMap(
           isViewingFilteredView,
           filteredQuestions,
           'precedenceRules',
           <ReadOnlySection
             heading={beneficiariesT('precedenceRules.label')}
-            copy={precedenceRules}
+            list
+            listItems={precedenceRules?.map((type): string =>
+              beneficiariesT(`precedenceRules.options.${type}`)
+            )}
+            listOtherItems={precedenceRules?.map((type): string => {
+              return (
+                precedenceRulesInfo[
+                  beneficiariesT(
+                    `precedenceRules.optionsRelatedInfo.${type}`,
+                    ''
+                  )
+                ] || ''
+              );
+            })}
+            notes={precedenceRulesNote}
           />
         )}
       </div>

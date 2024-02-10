@@ -4,7 +4,10 @@ import { MockedProvider } from '@apollo/client/testing';
 import { render, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
-import { possibleSolutionsMock } from 'data/mock/solutions';
+import {
+  needQuestionAndAnswerMock,
+  possibleSolutionsMock
+} from 'data/mock/solutions';
 import { MessageProvider } from 'hooks/useMessage';
 import GetOperationalNeed from 'queries/ITSolutions/GetOperationalNeed';
 import { GetOperationalNeed_operationalNeed as GetOperationalNeedType } from 'queries/ITSolutions/types/GetOperationalNeed';
@@ -62,7 +65,8 @@ const mocks = [
       }
     }
   },
-  ...possibleSolutionsMock
+  ...possibleSolutionsMock,
+  ...needQuestionAndAnswerMock
 ];
 
 describe('IT Solutions NeedQuestionAndAnswer', () => {

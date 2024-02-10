@@ -112,13 +112,14 @@ func (s *Seeder) addPlanCollaborator(
 
 	collaborator, _, err := resolvers.CreatePlanCollaborator(
 		context.Background(),
+		s.Config.Store,
+		s.Config.Store,
 		s.Config.Logger,
 		emailService,
 		emailTemplateService,
 		email.AddressBook{},
 		input,
 		princ,
-		s.Config.Store,
 		true,
 		userhelpers.GetUserInfoAccountInfoWrapperFunc(stubFetchUserInfo),
 	)
@@ -128,17 +129,30 @@ func (s *Seeder) addPlanCollaborator(
 	return collaborator
 }
 
-// crTdlCreate is a wrapper for resolvers.PlanCrTdlCreate
+// addCR is a wrapper for resolvers.PlanCRCreate
 // It will panic if an error occurs, rather than bubbling the error up
 // It will always add the CR/TDL object with the principal value of the Model Plan's "createdBy"
-func (s *Seeder) addCrTdl(mp *models.ModelPlan, input *model.PlanCrTdlCreateInput) *models.PlanCrTdl {
+func (s *Seeder) addCR(mp *models.ModelPlan, input *model.PlanCRCreateInput) *models.PlanCR {
 	princ := s.getTestPrincipalByUUID(mp.CreatedBy)
 
-	collaborator, err := resolvers.PlanCrTdlCreate(s.Config.Logger, input, princ, s.Config.Store)
+	cr, err := resolvers.PlanCRCreate(s.Config.Logger, input, princ, s.Config.Store)
 	if err != nil {
 		panic(err)
 	}
-	return collaborator
+	return cr
+}
+
+// addTDL is a wrapper for resolvers.PlanTDLCreate
+// It will panic if an error occurs, rather than bubbling the error up
+// It will always add the CR/TDL object with the principal value of the Model Plan's "createdBy"
+func (s *Seeder) addTDL(mp *models.ModelPlan, input *model.PlanTDLCreateInput) *models.PlanTDL {
+	princ := s.getTestPrincipalByUUID(mp.CreatedBy)
+
+	tdl, err := resolvers.PlanTDLCreate(s.Config.Logger, input, princ, s.Config.Store)
+	if err != nil {
+		panic(err)
+	}
+	return tdl
 }
 
 // planDocumentCreate is a wrapper for resolvers.PlanDocumentCreate
@@ -215,12 +229,16 @@ func (s *Seeder) addOperationalSolution(
 	solType := models.OpSKMarx
 
 	operationalSolution, err := resolvers.OperationalSolutionCreate(
+		s.Config.Context,
+		s.Config.Store,
 		s.Config.Logger,
+		nil,
+		nil,
+		email.AddressBook{},
 		operationalNeedID,
 		&solType,
 		changes,
 		principal,
-		s.Config.Store,
 	)
 
 	if err != nil {
@@ -256,7 +274,7 @@ func (s *Seeder) addPlanDocumentSolutionLinks(
 
 func (s *Seeder) getTestPrincipalByUsername(userName string) *authentication.ApplicationPrincipal {
 
-	userAccount, _ := userhelpers.GetOrCreateUserAccount(context.Background(), s.Config.Store, userName, true, false, userhelpers.GetOktaAccountInfoWrapperFunction(userhelpers.GetUserInfoFromOktaLocal))
+	userAccount, _ := userhelpers.GetOrCreateUserAccount(context.Background(), s.Config.Store, s.Config.Store, userName, true, false, userhelpers.GetOktaAccountInfoWrapperFunction(userhelpers.GetUserInfoFromOktaLocal))
 
 	princ := &authentication.ApplicationPrincipal{
 		Username:          userName,
@@ -311,9 +329,10 @@ func (s *Seeder) operationalSolutionSubtasksCreate(
 // It will panic if an error occurs, rather than bubbling the error up
 func (s *Seeder) existingModelLinkCreate(
 	mp *models.ModelPlan,
+	fieldName models.ExisitingModelLinkFieldType,
 	existingModelIDs []int,
 	currentModelPlanIDs []uuid.UUID,
-) []*models.ExistingModelLink {
+) *models.ExistingModelLinks {
 
 	principal := s.getTestPrincipalByUUID(mp.CreatedBy)
 	links, err := resolvers.ExistingModelLinksUpdate(
@@ -321,6 +340,7 @@ func (s *Seeder) existingModelLinkCreate(
 		s.Config.Store,
 		principal,
 		mp.ID,
+		fieldName,
 		existingModelIDs,
 		currentModelPlanIDs,
 	)

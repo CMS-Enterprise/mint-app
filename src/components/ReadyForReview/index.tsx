@@ -15,7 +15,7 @@ type ReadyForReviewType = {
   status: TaskStatus;
   setFieldValue: (field: string, value: any) => void;
   readyForReviewBy: string | null | undefined;
-  readyForReviewDts: string | null;
+  readyForReviewDts: string | null | undefined;
 };
 
 const ReadyForReview = ({
@@ -37,7 +37,7 @@ const ReadyForReview = ({
 
   return (
     <FieldGroup className="margin-top-8 margin-bottom-3">
-      <SummaryBox heading="" className="bg-white border-base-light padding-2">
+      <SummaryBox className="bg-white border-base-light padding-2">
         <p className="margin-0">{t('modelPlanStatus')}</p>
         <Field
           as={CheckboxField}

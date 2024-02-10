@@ -1,13 +1,7 @@
 import React from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useQuery } from '@apollo/client';
-import {
-  Card,
-  CardHeader,
-  Grid,
-  IconMailOutline,
-  Link
-} from '@trussworks/react-uswds';
+import { Card, CardHeader, Grid, Icon, Link } from '@trussworks/react-uswds';
 
 import GetModelPlanCollaborators from 'queries/Collaborators/GetModelCollaborators';
 import {
@@ -38,14 +32,14 @@ const MemberCards = ({ collaborator }: { collaborator: CollaboratorsType }) => {
           target="_blank"
         >
           {collaborator.userAccount.email}
-          <IconMailOutline className="margin-left-05 margin-bottom-2px text-tbottom" />
+          <Icon.MailOutline className="margin-left-05 margin-bottom-2px text-tbottom" />
         </Link>
       </CardHeader>
       <div>
         <p className="margin-y-0">
           {collaborator.teamRoles
             .map((role: TeamRole) => {
-              return collaboratorsT(`teamRole.options.${role}`);
+              return collaboratorsT(`teamRoles.options.${role}`);
             })
             .join(', ')}
         </p>
@@ -56,22 +50,23 @@ const MemberCards = ({ collaborator }: { collaborator: CollaboratorsType }) => {
 
 const FilteredViewGroupings = ({
   collaborators,
-  role
+  role,
+  heading
 }: {
   collaborators: CollaboratorsType[];
-  role: TeamRole.MODEL_LEAD | TeamRole.PAYMENT;
+  role: TeamRole.MODEL_LEAD | TeamRole.PAYMENT | TeamRole.CM_FFS_COUNTERPART;
+  heading: string;
 }) => {
   const { t } = useTranslation('generalReadOnly');
   return (
     <div className="margin-bottom-3">
-      <h3 className="margin-top-0 margin-bottom-2">
-        {role === TeamRole.MODEL_LEAD
-          ? t('contactInfo.modelLeads')
-          : t('contactInfo.payment')}
-      </h3>
+      <h3 className="margin-top-0 margin-bottom-2">{heading}</h3>
       <Grid row gap style={{ rowGap: '2rem' }}>
         {collaborators.length === 0 && role === TeamRole.PAYMENT && (
-          <em className="text-base">{t('contactInfo.emptyState')}</em>
+          <em className="text-base">{t('contactInfo.emptyStatePayment')}</em>
+        )}
+        {collaborators.length === 0 && role === TeamRole.CM_FFS_COUNTERPART && (
+          <em className="text-base">{t('contactInfo.emptyStateCMFFS')}</em>
         )}
         {collaborators
           .filter(c => c.teamRoles.includes(role))
@@ -90,7 +85,7 @@ const FilteredViewGroupings = ({
                     target="_blank"
                   >
                     {collaborator.userAccount.email}
-                    <IconMailOutline className="margin-left-05 margin-bottom-2px text-tbottom" />
+                    <Icon.MailOutline className="margin-left-05 margin-bottom-2px text-tbottom" />
                   </Link>
                 </Grid>
               </React.Fragment>
@@ -110,6 +105,7 @@ const ReadOnlyTeamInfo = ({
   isViewingFilteredView?: boolean;
   filteredView?: string;
 }) => {
+  const { t } = useTranslation('generalReadOnly');
   const { data, loading, error } = useQuery<GetModelCollaborators>(
     GetModelPlanCollaborators,
     {
@@ -141,6 +137,7 @@ const ReadOnlyTeamInfo = ({
             collaborators={collaborators.filter(c =>
               c.teamRoles.includes(TeamRole.MODEL_LEAD)
             )}
+            heading={t('contactInfo.modelLeads')}
           />
           {filteredView === 'ipc' && (
             <FilteredViewGroupings
@@ -148,6 +145,16 @@ const ReadOnlyTeamInfo = ({
               collaborators={collaborators.filter(c =>
                 c.teamRoles.includes(TeamRole.PAYMENT)
               )}
+              heading={t('contactInfo.payment')}
+            />
+          )}
+          {filteredView === 'dfsdm' && (
+            <FilteredViewGroupings
+              role={TeamRole.CM_FFS_COUNTERPART}
+              collaborators={collaborators.filter(c =>
+                c.teamRoles.includes(TeamRole.CM_FFS_COUNTERPART)
+              )}
+              heading={t('contactInfo.cmFFS')}
             />
           )}
         </>

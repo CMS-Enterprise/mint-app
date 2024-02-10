@@ -1,30 +1,30 @@
 import React from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
-import { useQuery } from '@apollo/client';
 import {
   Button,
-  Dropdown,
   Fieldset,
   Label,
-  Textarea,
+  Select,
   TextInput
 } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
+import {
+  DiscussionUserRole,
+  useGetMostRecentRoleSelectionQuery
+} from 'gql/gen/graphql';
+import {
+  GetModelPlanDiscussions_modelPlan_discussions as DiscussionType,
+  GetModelPlanDiscussions_modelPlan_discussions_replies as ReplyType
+} from 'gql/gen/types/GetModelPlanDiscussions';
 import * as Yup from 'yup';
 
 import PageHeading from 'components/PageHeading';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
+import MentionTextArea from 'components/shared/MentionTextArea';
 import RequiredAsterisk from 'components/shared/RequiredAsterisk';
-import GetMostRecentRoleSelection from 'queries/Discussions/GetMostRecentRoleSelection';
-import {
-  GetModelPlanDiscussions_modelPlan_discussions as DiscussionType,
-  GetModelPlanDiscussions_modelPlan_discussions_replies as ReplyType
-} from 'queries/Discussions/types/GetModelPlanDiscussions';
-import { GetMostRecentRoleSelection as GetMostRecentRoleSelectionType } from 'queries/Discussions/types/GetMostRecentRoleSelection';
-import { DiscussionUserRole } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
 import { sortOtherEnum } from 'utils/modelPlan';
 
@@ -41,6 +41,7 @@ type QuestionAndReplyProps = {
   reply?: DiscussionType | ReplyType | null;
   setDiscussionReplyID?: (value: string | null | undefined) => void;
   setDiscussionType?: (value: 'question' | 'reply' | 'discussion') => void;
+  setDiscussionStatusMessage: (value: string) => void;
   setInitQuestion?: (value: boolean) => void;
 };
 
@@ -53,6 +54,7 @@ const QuestionAndReply = ({
   reply,
   setDiscussionReplyID,
   setDiscussionType,
+  setDiscussionStatusMessage,
   setInitQuestion
 }: QuestionAndReplyProps) => {
   const { t } = useTranslation('discussions');
@@ -64,9 +66,7 @@ const QuestionAndReply = ({
     content: Yup.string().trim().required(`Please enter a ${renderType}`)
   });
 
-  const { data, loading, error } = useQuery<GetMostRecentRoleSelectionType>(
-    GetMostRecentRoleSelection
-  );
+  const { data, loading, error } = useGetMostRecentRoleSelectionQuery();
 
   const mostRecentUserRole = data?.mostRecentDiscussionRoleSelection?.userRole;
   const mostRecentUserRoleDescription =
@@ -74,7 +74,10 @@ const QuestionAndReply = ({
 
   return (
     <>
-      <PageHeading headingLevel="h1" className="margin-y-0 line-height-sans-2">
+      <PageHeading
+        headingLevel="h1"
+        className="margin-top-0 margin-bottom-3 line-height-sans-2"
+      >
         {renderType === 'question'
           ? t('discussionPanelHeading')
           : t('discussionPanelReply')}
@@ -101,18 +104,26 @@ const QuestionAndReply = ({
             <DiscussionUserInfo discussionTopic={reply} />
 
             <div className="margin-left-5">
-              <p className="margin-y-0">{reply.content}</p>
+              <MentionTextArea
+                id={`mention-${discussionReplyID}`}
+                editable={false}
+                initialContent={reply.content?.rawContent}
+              />
             </div>
           </div>
 
-          <Replies originalDiscussion={reply as DiscussionType} />
+          <Replies
+            originalDiscussion={reply as DiscussionType}
+            discussionReplyID={discussionReplyID}
+          />
 
           <PageHeading
             headingLevel="h2"
-            className="margin-top-0 margin-bottom-1 line-height-sans-2"
+            className="margin-top-4 margin-bottom-1 line-height-sans-2"
           >
             {t('reply')}
           </PageHeading>
+
           <p className="margin-top-0 margin-bottom-3">
             <Trans
               i18nKey={t('allFieldsRequired')}
@@ -189,7 +200,7 @@ const QuestionAndReply = ({
                     <FieldErrorMsg>{flatErrors.userRole}</FieldErrorMsg>
 
                     <Field
-                      as={Dropdown}
+                      as={Select}
                       id="user-role"
                       name="userRole"
                       disabled={loading}
@@ -239,26 +250,34 @@ const QuestionAndReply = ({
                     scrollElement="content"
                     error={!!flatErrors.content}
                   >
-                    <Label htmlFor="discussion-content" className="text-normal">
+                    <Label
+                      htmlFor="discussion-content"
+                      className="text-normal margin-bottom-1"
+                    >
                       {renderType === 'question'
                         ? t('typeQuestion')
                         : t('typeReply')}
                       <RequiredAsterisk />
                     </Label>
+
+                    <p className="margin-top-0 text-base">{t('tagHint')}</p>
+
                     <FieldErrorMsg>{flatErrors.content}</FieldErrorMsg>
-                    <Field
-                      className="height-card"
-                      as={Textarea}
-                      error={!!flatErrors.content}
-                      id="discussion-content"
-                      name="content"
+
+                    <MentionTextArea
+                      id="mention-editor"
+                      setFieldValue={setFieldValue}
+                      editable
+                      disabled={loading}
                     />
                   </FieldGroup>
+
                   <div className="margin-y-5 display-block">
                     <Button
                       className="usa-button usa-button--outline margin-bottom-1"
                       type="button"
                       onClick={() => {
+                        setDiscussionStatusMessage('');
                         if (closeModal) {
                           closeModal();
                         }

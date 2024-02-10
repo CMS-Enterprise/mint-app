@@ -60,9 +60,11 @@ func (suite *ResolverSuite) createModelPlan(planName string) *models.ModelPlan {
 }
 
 func (suite *ResolverSuite) createPlanDiscussion(mp *models.ModelPlan, content string) *models.PlanDiscussion {
+	taggedContent, err := models.NewTaggedContentFromString(content)
+	suite.NoError(err)
 	input := &model.PlanDiscussionCreateInput{
 		ModelPlanID:         mp.ID,
-		Content:             content,
+		Content:             models.TaggedHTML(taggedContent),
 		UserRole:            models.DiscussionUserRolePointer(models.DiscussionRoleNoneOfTheAbove),
 		UserRoleDescription: models.StringPointer("test role"),
 	}
@@ -75,6 +77,7 @@ func (suite *ResolverSuite) createPlanDiscussion(mp *models.ModelPlan, content s
 		input,
 		suite.testConfigs.Principal,
 		suite.testConfigs.Store,
+		userhelpers.GetUserInfoAccountInfoWrapperFunc(suite.stubFetchUserInfo),
 	)
 	suite.NoError(err)
 	return pd
@@ -84,17 +87,25 @@ func (suite *ResolverSuite) createDiscussionReply(
 	pd *models.PlanDiscussion,
 	content string,
 ) *models.DiscussionReply {
+
+	taggedContent, err := models.NewTaggedContentFromString(content)
+	suite.NoError(err)
 	input := &model.DiscussionReplyCreateInput{
 		DiscussionID:        pd.ID,
-		Content:             content,
+		Content:             models.TaggedHTML(taggedContent),
 		UserRole:            models.DiscussionUserRolePointer(models.DiscussionRoleNoneOfTheAbove),
 		UserRoleDescription: models.StringPointer("this is a test"),
 	}
 	dr, err := CreateDiscussionReply(
+		suite.testConfigs.Context,
 		suite.testConfigs.Logger,
+		nil,
+		nil,
+		email.AddressBook{},
 		input,
 		suite.testConfigs.Principal,
 		suite.testConfigs.Store,
+		userhelpers.GetUserInfoAccountInfoWrapperFunc(suite.stubFetchUserInfo),
 	)
 	suite.NoError(err)
 	return dr
@@ -146,13 +157,14 @@ func (suite *ResolverSuite) createPlanCollaborator(mp *models.ModelPlan, userNam
 
 	collaborator, _, err := CreatePlanCollaborator(
 		context.Background(),
+		suite.testConfigs.Store,
+		suite.testConfigs.Store,
 		suite.testConfigs.Logger,
 		mockEmailService,
 		mockEmailTemplateService,
 		addressBook,
 		collaboratorInput,
 		suite.testConfigs.Principal,
-		suite.testConfigs.Store,
 		false,
 		userhelpers.GetUserInfoAccountInfoWrapperFunc(suite.stubFetchUserInfo),
 	)
@@ -160,17 +172,31 @@ func (suite *ResolverSuite) createPlanCollaborator(mp *models.ModelPlan, userNam
 	return collaborator
 }
 
-func (suite *ResolverSuite) createPlanCrTdl(mp *models.ModelPlan, idNumber string, dateInitated time.Time, title string, note string) *models.PlanCrTdl {
-	input := &model.PlanCrTdlCreateInput{
+func (suite *ResolverSuite) createPlanCR(mp *models.ModelPlan, idNumber string, dateInitated time.Time, dateImplemented time.Time, title string, note string) *models.PlanCR {
+	input := &model.PlanCRCreateInput{
+		ModelPlanID:     mp.ID,
+		IDNumber:        idNumber,
+		DateInitiated:   dateInitated,
+		DateImplemented: dateImplemented,
+		Title:           title,
+		Note:            &note,
+	}
+	cr, err := PlanCRCreate(suite.testConfigs.Logger, input, suite.testConfigs.Principal, suite.testConfigs.Store)
+	suite.NoError(err)
+	return cr
+}
+
+func (suite *ResolverSuite) createPlanTDL(mp *models.ModelPlan, idNumber string, dateInitated time.Time, title string, note string) *models.PlanTDL {
+	input := &model.PlanTDLCreateInput{
 		ModelPlanID:   mp.ID,
 		IDNumber:      idNumber,
 		DateInitiated: dateInitated,
 		Title:         title,
 		Note:          &note,
 	}
-	crTdl, err := PlanCrTdlCreate(suite.testConfigs.Logger, input, suite.testConfigs.Principal, suite.testConfigs.Store)
+	tdl, err := PlanTDLCreate(suite.testConfigs.Logger, input, suite.testConfigs.Principal, suite.testConfigs.Store)
 	suite.NoError(err)
-	return crTdl
+	return tdl
 }
 
 func (suite *ResolverSuite) createOperationalSolution() *models.OperationalSolution {
@@ -183,7 +209,7 @@ func (suite *ResolverSuite) createOperationalSolution() *models.OperationalSolut
 	changes := map[string]interface{}{
 		"nameOther": "AnotherSolution",
 	}
-	operationalSolution, _ := OperationalSolutionCreate(suite.testConfigs.Logger, need.ID, nil, changes, suite.testConfigs.Principal, suite.testConfigs.Store)
+	operationalSolution, _ := OperationalSolutionCreate(suite.testConfigs.Context, suite.testConfigs.Store, suite.testConfigs.Logger, nil, nil, email.AddressBook{}, need.ID, nil, changes, suite.testConfigs.Principal)
 	return operationalSolution
 }
 

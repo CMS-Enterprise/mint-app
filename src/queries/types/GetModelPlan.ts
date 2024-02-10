@@ -42,17 +42,39 @@ export interface GetModelPlan_modelPlan_documents {
   fileName: string;
 }
 
-export interface GetModelPlan_modelPlan_crTdls {
-  __typename: "PlanCrTdl";
+export interface GetModelPlan_modelPlan_crs {
+  __typename: "PlanCR";
   id: UUID;
   idNumber: string;
+}
+
+export interface GetModelPlan_modelPlan_tdls {
+  __typename: "PlanTDL";
+  id: UUID;
+  idNumber: string;
+}
+
+export interface GetModelPlan_modelPlan_discussions_content {
+  __typename: "TaggedContent";
+  /**
+   * RawContent is HTML. It is sanitized on the backend
+   */
+  rawContent: string;
+}
+
+export interface GetModelPlan_modelPlan_discussions_replies_content {
+  __typename: "TaggedContent";
+  /**
+   * RawContent is HTML. It is sanitized on the backend
+   */
+  rawContent: string;
 }
 
 export interface GetModelPlan_modelPlan_discussions_replies {
   __typename: "DiscussionReply";
   id: UUID;
   discussionID: UUID;
-  content: string | null;
+  content: GetModelPlan_modelPlan_discussions_replies_content | null;
   createdBy: UUID;
   createdDts: Time;
 }
@@ -60,7 +82,7 @@ export interface GetModelPlan_modelPlan_discussions_replies {
 export interface GetModelPlan_modelPlan_discussions {
   __typename: "PlanDiscussion";
   id: UUID;
-  content: string | null;
+  content: GetModelPlan_modelPlan_discussions_content | null;
   createdBy: UUID;
   createdDts: Time;
   replies: GetModelPlan_modelPlan_discussions_replies[];
@@ -143,7 +165,8 @@ export interface GetModelPlan_modelPlan {
   basics: GetModelPlan_modelPlan_basics;
   collaborators: GetModelPlan_modelPlan_collaborators[];
   documents: GetModelPlan_modelPlan_documents[];
-  crTdls: GetModelPlan_modelPlan_crTdls[];
+  crs: GetModelPlan_modelPlan_crs[];
+  tdls: GetModelPlan_modelPlan_tdls[];
   discussions: GetModelPlan_modelPlan_discussions[];
   generalCharacteristics: GetModelPlan_modelPlan_generalCharacteristics;
   participantsAndProviders: GetModelPlan_modelPlan_participantsAndProviders;

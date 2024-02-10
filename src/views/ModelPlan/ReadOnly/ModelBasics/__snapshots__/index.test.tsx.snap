@@ -140,7 +140,7 @@ exports[`Read Only Model Plan Summary -- Model Basics > matches snapshot 1`] = `
                 class="display-flex flex-align-center"
                 style="gap: 4px;"
               >
-                State-Based
+                State & Community-Based
                 <span
                   class="usa-tooltip"
                   data-testid="tooltipWrapper"
@@ -163,10 +163,6 @@ exports[`Read Only Model Plan Summary -- Model Basics > matches snapshot 1`] = `
                       xmlns="http://www.w3.org/2000/svg"
                     >
                       <path
-                        d="M0 0h24v24H0z"
-                        fill="none"
-                      />
-                      <path
                         d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
                       />
                     </svg>
@@ -177,9 +173,9 @@ exports[`Read Only Model Plan Summary -- Model Basics > matches snapshot 1`] = `
                     data-testid="tooltipBody"
                     id="tooltip-550000"
                     role="tooltip"
-                    title="Models in which a state serves as the main contractual participant"
+                    title="Models in which a state or community-based organization serves as the main contractual participant, including managed care organizations serving Medicaid beneficiaries."
                   >
-                    Models in which a state serves as the main contractual participant
+                    Models in which a state or community-based organization serves as the main contractual participant, including managed care organizations serving Medicaid beneficiaries.
                   </span>
                 </span>
               </span>
@@ -236,10 +232,6 @@ exports[`Read Only Model Plan Summary -- Model Basics > matches snapshot 1`] = `
                         xmlns="http://www.w3.org/2000/svg"
                       >
                         <path
-                          d="M0 0h24v24H0z"
-                          fill="none"
-                        />
-                        <path
                           d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
                         />
                       </svg>
@@ -293,17 +285,8 @@ exports[`Read Only Model Plan Summary -- Model Basics > matches snapshot 1`] = `
               <li
                 class="font-sans-md line-height-sans-4"
               >
-                Other
+                Center for Medicaid and CHIP Services (CMCS)
               </li>
-              <ul
-                data-testid="other-entry"
-              >
-                <li
-                  class="font-sans-md line-height-sans-4"
-                >
-                  The Center for Awesomeness
-                </li>
-              </ul>
             </ul>
           </div>
         </div>
@@ -354,11 +337,15 @@ exports[`Read Only Model Plan Summary -- Model Basics > matches snapshot 1`] = `
         >
           Model Type
         </p>
-        <p
-          class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+        <ul
+          class="margin-y-0 padding-left-3"
         >
-          Mandatory
-        </p>
+          <li
+            class="font-sans-md line-height-sans-4"
+          >
+            Mandatory national
+          </li>
+        </ul>
       </div>
     </div>
     <div

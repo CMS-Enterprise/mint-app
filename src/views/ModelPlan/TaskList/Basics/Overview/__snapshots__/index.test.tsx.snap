@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Model Plan Documents page > matches snapshot 1`] = `
+exports[`Basics overview page > renders without errors and matches snapshot 1`] = `
 <DocumentFragment>
   <div
     data-testid="model-plan-overview"
@@ -55,7 +55,7 @@ exports[`Model Plan Documents page > matches snapshot 1`] = `
       class="margin-top-0 margin-bottom-1 font-body-lg"
       data-testid="model-plan-name"
     >
-      for 
+      for My excellent plan that I just initiated
     </p>
     <p
       class="margin-bottom-2 font-body-md line-height-sans-4"
@@ -79,10 +79,6 @@ exports[`Model Plan Documents page > matches snapshot 1`] = `
           xmlns="http://www.w3.org/2000/svg"
         >
           <path
-            d="M0 0h24v24H0z"
-            fill="none"
-          />
-          <path
             d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-7 9h-2V5h2v6zm0 4h-2v-2h2v2z"
           />
         </svg>
@@ -102,7 +98,6 @@ exports[`Model Plan Documents page > matches snapshot 1`] = `
       <fieldset
         class="usa-fieldset"
         data-testid="fieldset"
-        disabled=""
       >
         <div
           class="usa-form-group margin-top-4"
@@ -120,40 +115,84 @@ exports[`Model Plan Documents page > matches snapshot 1`] = `
             data-testid="fieldset"
           >
             <div
-              class="usa-radio"
-              data-testid="radio"
+              class="mint-checkbox usa-checkbox"
             >
               <input
-                class="usa-radio__input"
-                id="ModelType-Voluntary"
+                class="usa-checkbox__input"
+                id="ModelType-VOLUNTARY"
                 name="modelType"
-                type="radio"
+                type="checkbox"
                 value="VOLUNTARY"
               />
               <label
-                class="usa-radio__label"
-                for="ModelType-Voluntary"
+                class="usa-checkbox__label"
+                for="ModelType-VOLUNTARY"
               >
                 Voluntary
               </label>
+              <p
+                class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+              />
             </div>
             <div
-              class="usa-radio"
-              data-testid="radio"
+              class="mint-checkbox usa-checkbox"
             >
               <input
-                class="usa-radio__input"
-                id="ModelType-Mandatory"
+                class="usa-checkbox__input"
+                id="ModelType-MANDATORY_NATIONAL"
                 name="modelType"
-                type="radio"
-                value="MANDATORY"
+                type="checkbox"
+                value="MANDATORY_NATIONAL"
               />
               <label
-                class="usa-radio__label"
-                for="ModelType-Mandatory"
+                class="usa-checkbox__label"
+                for="ModelType-MANDATORY_NATIONAL"
               >
-                Mandatory
+                Mandatory national
               </label>
+              <p
+                class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+              />
+            </div>
+            <div
+              class="mint-checkbox usa-checkbox"
+            >
+              <input
+                class="usa-checkbox__input"
+                id="ModelType-MANDATORY_REGIONAL_OR_STATE"
+                name="modelType"
+                type="checkbox"
+                value="MANDATORY_REGIONAL_OR_STATE"
+              />
+              <label
+                class="usa-checkbox__label"
+                for="ModelType-MANDATORY_REGIONAL_OR_STATE"
+              >
+                Mandatory regional or state
+              </label>
+              <p
+                class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+              />
+            </div>
+            <div
+              class="mint-checkbox usa-checkbox"
+            >
+              <input
+                class="usa-checkbox__input"
+                id="ModelType-OTHER"
+                name="modelType"
+                type="checkbox"
+                value="OTHER"
+              />
+              <label
+                class="usa-checkbox__label"
+                for="ModelType-OTHER"
+              >
+                Other
+              </label>
+              <p
+                class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+              />
             </div>
           </fieldset>
         </div>
@@ -171,9 +210,12 @@ exports[`Model Plan Documents page > matches snapshot 1`] = `
           <textarea
             aria-labelledby="label-ModelType-Problem hint-ModelType-Problem"
             class="usa-textarea"
+            data-testid="ModelType-Problem"
             id="ModelType-Problem"
             name="problem"
-          />
+          >
+            My problem
+          </textarea>
         </div>
         <div
           class="usa-form-group margin-top-4"
@@ -197,7 +239,9 @@ exports[`Model Plan Documents page > matches snapshot 1`] = `
             class="usa-textarea"
             id="ModelType-Goal"
             name="goal"
-          />
+          >
+            A goal
+          </textarea>
         </div>
         <div
           class="usa-form-group margin-top-4"
@@ -215,36 +259,33 @@ exports[`Model Plan Documents page > matches snapshot 1`] = `
             class="usa-textarea"
             id="ModelType-testInterventions"
             name="testInterventions"
-          />
+          >
+            Intervention
+          </textarea>
         </div>
         <div
           class="margin-top-4 margin-bottom-8"
         >
-          <button
-            class="usa-button usa-button usa-button--unstyled"
-            data-testid="add-note-toggle"
-            type="button"
+          <div
+            class="usa-form-group"
           >
-            <svg
-              aria-hidden="true"
-              class="usa-icon margin-right-1"
-              focusable="false"
-              height="1em"
-              role="img"
-              viewBox="0 0 24 24"
-              width="1em"
-              xmlns="http://www.w3.org/2000/svg"
+            <label
+              class="usa-label"
+              for="ModelType-note"
+              id="label-ModelType-note"
             >
-              <path
-                d="M0 0h24v24H0z"
-                fill="none"
-              />
-              <path
-                d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
-              />
-            </svg>
-            Add an additional note
-          </button>
+              Notes
+            </label>
+            <textarea
+              aria-labelledby="label-ModelType-note hint-ModelType-note"
+              class="usa-textarea"
+              data-testid="ModelType-note"
+              id="ModelType-note"
+              name="note"
+            >
+              Test note
+            </textarea>
+          </div>
         </div>
         <div
           class="margin-top-6 margin-bottom-3"
@@ -279,10 +320,6 @@ exports[`Model Plan Documents page > matches snapshot 1`] = `
             width="1em"
             xmlns="http://www.w3.org/2000/svg"
           >
-            <path
-              d="M0 0h24v24H0z"
-              fill="none"
-            />
             <path
               d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"
             />

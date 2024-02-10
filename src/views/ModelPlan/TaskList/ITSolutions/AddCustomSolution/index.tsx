@@ -6,7 +6,7 @@ import {
   Button,
   Fieldset,
   Grid,
-  IconArrowBack,
+  Icon,
   Label,
   TextInput
 } from '@trussworks/react-uswds';
@@ -44,6 +44,7 @@ import {
 import flattenErrors from 'utils/flattenErrors';
 import { translateOperationalSolutionKey } from 'utils/modelPlan';
 import { ModelInfoContext } from 'views/ModelInfoWrapper';
+import NotFound from 'views/NotFound';
 
 import ITSolutionsSidebar from '../_components/ITSolutionSidebar';
 import NeedQuestionAndAnswer from '../_components/NeedQuestionAndAnswer';
@@ -204,6 +205,17 @@ const AddCustomSolution = () => {
     }
   ];
 
+  if (!data && loading) {
+    return <PageLoading />;
+  }
+
+  if (
+    error ||
+    (!customOperationalSolution && !loading && !operationalSolutionID)
+  ) {
+    return <NotFound />;
+  }
+
   return (
     <>
       <Breadcrumbs items={breadcrumbs} />
@@ -309,7 +321,6 @@ const AddCustomSolution = () => {
 
                                 <Field
                                   as={TextInput}
-                                  error={!!flatErrors.nameOther}
                                   id="it-solution-custom-name-other"
                                   data-testid="it-solution-custom-name-other"
                                   maxLength={50}
@@ -335,7 +346,6 @@ const AddCustomSolution = () => {
 
                                 <Field
                                   as={TextInput}
-                                  error={!!flatErrors.otherHeader}
                                   id="it-solution-other-header"
                                   data-testid="it-solution-other-header"
                                   maxLength={50}
@@ -364,7 +374,6 @@ const AddCustomSolution = () => {
 
                               <Field
                                 as={TextInput}
-                                error={!!flatErrors.pocName}
                                 id="it-solution-custom-poc-name"
                                 data-testid="it-solution-custom-poc-name"
                                 maxLength={50}
@@ -391,7 +400,6 @@ const AddCustomSolution = () => {
 
                               <Field
                                 as={TextInput}
-                                error={!!flatErrors.pocEmail}
                                 id="it-solution-custom-poc-email"
                                 data-testid="it-solution-custom-poc-email"
                                 maxLength={50}
@@ -424,7 +432,7 @@ const AddCustomSolution = () => {
                                 history.goBack();
                               }}
                             >
-                              <IconArrowBack
+                              <Icon.ArrowBack
                                 className="margin-right-1"
                                 aria-hidden
                               />

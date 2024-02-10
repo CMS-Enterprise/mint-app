@@ -1,6 +1,6 @@
 import { DateTime } from 'luxon';
 
-type DateFormat = 'MM/dd/yyyy' | 'MMMM d, yyyy';
+type DateFormat = 'MM/dd/yyyy' | 'MMMM d, yyyy' | 'MMMM yyyy';
 
 /**
  * Output local timezoned dates from iso string.
@@ -88,7 +88,7 @@ export const getDaysElapsed = (discussionCreated: string) => {
   return dateString;
 };
 
-export const isDateInPast = (date: string | null): boolean => {
+export const isDateInPast = (date: string | null | undefined): boolean => {
   if (date && new Date() > new Date(date)) {
     return true;
   }

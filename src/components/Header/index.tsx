@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useLocation } from 'react-router-dom';
 import { useOktaAuth } from '@okta/okta-react';
-import { GovBanner, IconMenu } from '@trussworks/react-uswds';
+import { GovBanner, Icon } from '@trussworks/react-uswds';
 import classnames from 'classnames';
 
 import { NavContext } from 'components/Header/navContext';
@@ -149,7 +149,7 @@ export const Header = ({ children }: HeaderProps) => {
               className="usa-menu-btn"
               onClick={() => setIsMobileSideNavExpanded(true)}
             >
-              <IconMenu size={3} />
+              <Icon.Menu size={3} />
             </button>
           </div>
         ) : (

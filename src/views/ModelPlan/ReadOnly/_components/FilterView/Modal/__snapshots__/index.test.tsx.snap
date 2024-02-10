@@ -90,6 +90,7 @@ exports[`Filter View Modal > matches snapshot 1`] = `
           <input
             aria-activedescendant=""
             aria-autocomplete="list"
+            aria-controls="filter-group--list"
             aria-describedby="filter-group--assistiveHint"
             aria-expanded="false"
             aria-owns="filter-group--list"

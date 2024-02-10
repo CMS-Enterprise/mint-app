@@ -1,5 +1,7 @@
 import { TranslationBeneficiaries } from 'types/translation';
 
+import { frequencyOptions } from './miscellaneous';
+
 export const beneficiaries: TranslationBeneficiaries = {
   beneficiaries: {
     gqlField: 'participantsCurrentlyInModels',
@@ -13,10 +15,11 @@ export const beneficiaries: TranslationBeneficiaries = {
     options: {
       DISEASE_SPECIFIC: 'Disease-specific',
       DUALLY_ELIGIBLE: 'Dually-eligible beneficiaries',
-      MEDICAID: 'Medicaid',
+      MEDICAID: `Medicaid/Children's Health Insurance Program (CHIP)`,
       MEDICARE_ADVANTAGE: 'Medicare Advantage',
       MEDICARE_FFS: 'Medicare FFS beneficiaries',
-      MEDICARE_PART_D: 'Medicare Part D',
+      MEDICARE_PART_D: 'Prescription Drug (Medicare Part D)',
+      UNDERSERVED: 'Underserved',
       NA: 'Not applicable',
       OTHER: 'Other'
     },
@@ -28,9 +31,20 @@ export const beneficiaries: TranslationBeneficiaries = {
       MEDICARE_ADVANTAGE: '',
       MEDICARE_FFS: '',
       MEDICARE_PART_D: '',
+      UNDERSERVED: '',
       NA: '',
       OTHER: ''
     },
+    filterGroups: ['mdm']
+  },
+  diseaseSpecificGroup: {
+    gqlField: 'diseaseSpecificGroup',
+    goField: 'DiseaseSpecificGroup',
+    dbField: 'disease_specific_group',
+    label:
+      'Please describe the disease-specific groups this model will impact.',
+    dataType: 'string',
+    formType: 'text',
     filterGroups: ['mdm']
   },
   beneficiariesOther: {
@@ -161,8 +175,8 @@ export const beneficiaries: TranslationBeneficiaries = {
     multiSelectLabel: 'Selected methods',
     options: {
       HISTORICAL: 'Historical claims',
-      PROSPECTIVE: 'Assign/capture - prospective',
-      RETROSPECTIVE: 'Assign/capture - retrospective',
+      PROSPECTIVE: 'Prospective selection',
+      RETROSPECTIVE: 'Retrospective selection',
       VOLUNTARY: 'Voluntary alignment',
       PROVIDER_SIGN_UP: 'Beneficiary will sign up through their provider',
       OTHER: 'Other',
@@ -192,17 +206,27 @@ export const beneficiaries: TranslationBeneficiaries = {
     gqlField: 'beneficiarySelectionFrequency',
     goField: 'BeneficiarySelectionFrequency',
     dbField: 'beneficiary_selection_frequency',
-    label: 'How frequently are beneficiaries chosen?',
+    label: 'How frequently are beneficiaries added?',
     dataType: 'enum',
-    formType: 'radio',
-    options: {
-      ANNUALLY: 'Annually',
-      BIANNUALLY: 'Biannually',
-      MONTHLY: 'Monthly',
-      QUARTERLY: 'Quarterly',
-      ROLLING: 'Rolling',
-      OTHER: 'Other'
+    formType: 'checkbox',
+    options: frequencyOptions,
+    optionsRelatedInfo: {
+      ANNUALLY: '',
+      SEMIANNUALLY: '',
+      QUARTERLY: '',
+      MONTHLY: '',
+      CONTINUALLY: 'beneficiarySelectionFrequencyContinually',
+      OTHER: 'beneficiarySelectionFrequencyOther'
     },
+    filterGroups: ['cmmi']
+  },
+  beneficiarySelectionFrequencyContinually: {
+    gqlField: 'beneficiarySelectionFrequencyContinually',
+    goField: 'BeneficiarySelectionFrequencyContinually',
+    dbField: 'beneficiary_selection_frequency_continually',
+    label: 'Please specify',
+    dataType: 'string',
+    formType: 'text',
     filterGroups: ['cmmi']
   },
   beneficiarySelectionFrequencyOther: {
@@ -211,7 +235,7 @@ export const beneficiaries: TranslationBeneficiaries = {
     dbField: 'beneficiary_selection_frequency_other',
     label: 'Please specify',
     dataType: 'string',
-    formType: 'textarea',
+    formType: 'text',
     filterGroups: ['cmmi']
   },
   beneficiarySelectionFrequencyNote: {
@@ -220,7 +244,52 @@ export const beneficiaries: TranslationBeneficiaries = {
     dbField: 'beneficiary_selection_frequency_note',
     label: 'Notes',
     dataType: 'string',
-    formType: 'textarea',
+    formType: 'text',
+    filterGroups: ['cmmi']
+  },
+  beneficiaryRemovalFrequency: {
+    gqlField: 'beneficiaryRemovalFrequency',
+    goField: 'BeneficiaryRemovalFrequency',
+    dbField: 'beneficiary_removal_frequency',
+    label: 'How frequently are beneficiaries removed?',
+    dataType: 'enum',
+    formType: 'checkbox',
+    options: frequencyOptions,
+    optionsRelatedInfo: {
+      ANNUALLY: '',
+      SEMIANNUALLY: '',
+      QUARTERLY: '',
+      MONTHLY: '',
+      CONTINUALLY: 'beneficiaryRemovalFrequencyContinually',
+      OTHER: 'beneficiaryRemovalFrequencyOther'
+    },
+    filterGroups: ['cmmi']
+  },
+  beneficiaryRemovalFrequencyContinually: {
+    gqlField: 'beneficiaryRemovalFrequencyContinually',
+    goField: 'BeneficiaryRemovalFrequencyContinually',
+    dbField: 'beneficiary_removal_frequency_continually',
+    label: 'Please specify',
+    dataType: 'string',
+    formType: 'text',
+    filterGroups: ['cmmi']
+  },
+  beneficiaryRemovalFrequencyOther: {
+    gqlField: 'beneficiaryRemovalFrequencyOther',
+    goField: 'BeneficiaryRemovalFrequencyOther',
+    dbField: 'beneficiary_removal_frequency_other',
+    label: 'Please specify',
+    dataType: 'string',
+    formType: 'text',
+    filterGroups: ['cmmi']
+  },
+  beneficiaryRemovalFrequencyNote: {
+    gqlField: 'beneficiaryRemovalFrequencyNote',
+    goField: 'BeneficiaryRemovalFrequencyNote',
+    dbField: 'beneficiary_removal_frequency_note',
+    label: 'Notes',
+    dataType: 'string',
+    formType: 'text',
     filterGroups: ['cmmi']
   },
   beneficiaryOverlap: {
@@ -250,10 +319,45 @@ export const beneficiaries: TranslationBeneficiaries = {
   precedenceRules: {
     gqlField: 'precedenceRules',
     goField: 'PrecedenceRules',
-    dbField: 'beneficiary_overlap_note',
+    dbField: 'precedence_rules',
     label: 'Are there precedence rules between this model and other model(s)?',
     sublabel:
       'i.e. other models have precedence over you (e.g. mandatory or statutory models running at the same time as yours)',
+    dataType: 'enum',
+    formType: 'checkbox',
+    options: {
+      YES: 'Yes',
+      NO: 'No'
+    },
+    optionsRelatedInfo: {
+      YES: 'precedenceRulesYes',
+      NO: 'precedenceRulesNo'
+    },
+    filterGroups: ['mdm', 'oact']
+  },
+  precedenceRulesYes: {
+    gqlField: 'precedenceRulesYes',
+    goField: 'PrecedenceRulesYes',
+    dbField: 'precedence_rules_yes',
+    label: 'Please describe',
+    dataType: 'string',
+    formType: 'textarea',
+    filterGroups: ['mdm', 'oact']
+  },
+  precedenceRulesNo: {
+    gqlField: 'precedenceRulesNo',
+    goField: 'PrecedenceRulesNo',
+    dbField: 'precedence_rules_no',
+    label: 'Please describe',
+    dataType: 'string',
+    formType: 'textarea',
+    filterGroups: ['mdm', 'oact']
+  },
+  precedenceRulesNote: {
+    gqlField: 'precedenceRulesNote',
+    goField: 'PrecedenceRulesNote',
+    dbField: 'precedence_rules_note',
+    label: 'Notes',
     dataType: 'string',
     formType: 'textarea',
     filterGroups: ['mdm', 'oact']

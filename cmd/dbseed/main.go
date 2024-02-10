@@ -22,7 +22,7 @@ import (
 	"github.com/cmsgov/mint-app/pkg/storage"
 	"github.com/cmsgov/mint-app/pkg/upload"
 
-	ld "gopkg.in/launchdarkly/go-server-sdk.v5"
+	ld "github.com/launchdarkly/go-server-sdk/v6"
 )
 
 // The main entrypoint for the dbseed command.
@@ -117,10 +117,9 @@ func (s *Seeder) SeedData() {
 		email.AddressBook{},
 		planWithBasics,
 		map[string]interface{}{
-			"modelType":       models.MTVoluntary,
+			"modelType":       []models.ModelType{models.MTVoluntary},
 			"goal":            "Some goal",
-			"cmsCenters":      []string{"CMMI", "OTHER"},
-			"cmsOther":        "SOME OTHER CMS CENTER",
+			"cmsCenters":      []string{"CMMI"},
 			"cmmiGroups":      []string{"PATIENT_CARE_MODELS_GROUP", "SEAMLESS_CARE_MODELS_GROUP"},
 			"completeICIP":    "2020-05-13T20:47:50.12Z",
 			"phasedIn":        true,
@@ -128,7 +127,7 @@ func (s *Seeder) SeedData() {
 			"highLevelNote":   "Some high level note",
 		},
 	)
-	s.existingModelLinkCreate(planWithBasics, []int{links[3].ID, links[4].ID}, nil)
+	s.existingModelLinkCreate(planWithBasics, models.EMLFTGeneralCharacteristicsResemblesExistingModelWhich, []int{links[3].ID, links[4].ID}, nil)
 
 	// Seed a plan with collaborators
 	planWithCollaborators := s.createModelPlan("Plan With Collaborators", "MINT")
@@ -142,26 +141,27 @@ func (s *Seeder) SeedData() {
 			TeamRoles:   []models.TeamRole{models.TeamRoleLeadership},
 		})
 
-	s.existingModelLinkCreate(planWithCollaborators, []int{links[4].ID}, nil)
+	s.existingModelLinkCreate(planWithCollaborators, models.EMLFTGeneralCharacteristicsResemblesExistingModelWhich, []int{links[4].ID}, nil)
 
 	// Seed a plan with CRs / TDLs
 	planWithCrTDLs := s.createModelPlan("Plan With CRs and TDLs", "MINT")
-	s.addCrTdl(planWithCrTDLs, &model.PlanCrTdlCreateInput{
-		ModelPlanID:   planWithCrTDLs.ID,
-		IDNumber:      "CR-123",
-		DateInitiated: time.Now(),
-		Title:         "My CR",
-		Note:          nil,
+	s.addCR(planWithCrTDLs, &model.PlanCRCreateInput{
+		ModelPlanID:     planWithCrTDLs.ID,
+		IDNumber:        "CR-123",
+		DateInitiated:   time.Now(),
+		DateImplemented: time.Now(),
+		Title:           "My CR",
+		Note:            nil,
 	})
 	tdlNote := "My TDL note"
-	s.addCrTdl(planWithCrTDLs, &model.PlanCrTdlCreateInput{
+	s.addTDL(planWithCrTDLs, &model.PlanTDLCreateInput{
 		ModelPlanID:   planWithCrTDLs.ID,
 		IDNumber:      "TDL-123",
 		DateInitiated: time.Now(),
 		Title:         "My TDL",
 		Note:          &tdlNote,
 	})
-	s.existingModelLinkCreate(planWithCrTDLs, nil, []uuid.UUID{planWithCollaborators.ID, planWithBasics.ID})
+	s.existingModelLinkCreate(planWithCrTDLs, models.EMLFTGeneralCharacteristicsResemblesExistingModelWhich, nil, []uuid.UUID{planWithCollaborators.ID, planWithBasics.ID})
 
 	// Seed a plan that is already archived
 	archivedPlan := s.createModelPlan("Archived Plan", "MINT")
@@ -178,7 +178,7 @@ func (s *Seeder) SeedData() {
 
 	sampleModelName := "Enhancing Oncology Model"
 	sampleModelPlan := s.createModelPlan(sampleModelName, "MINT")
-	s.addCrTdl(planWithCrTDLs, &model.PlanCrTdlCreateInput{
+	s.addTDL(planWithCrTDLs, &model.PlanTDLCreateInput{
 		ModelPlanID:   sampleModelPlan.ID,
 		IDNumber:      "TDL-123",
 		DateInitiated: time.Now(),
@@ -203,10 +203,9 @@ func (s *Seeder) SeedData() {
 		map[string]interface{}{
 			"amsModelID":      "123",
 			"demoCode":        "1",
-			"modelType":       models.MTVoluntary,
+			"modelType":       []models.ModelType{models.MTVoluntary},
 			"goal":            "Some goal",
-			"cmsCenters":      []string{"CMMI", "OTHER"},
-			"cmsOther":        "SOME OTHER CMS CENTER",
+			"cmsCenters":      []string{"CMMI"},
 			"cmmiGroups":      []string{"PATIENT_CARE_MODELS_GROUP", "SEAMLESS_CARE_MODELS_GROUP"},
 			"completeICIP":    "2020-05-13T20:47:50.12Z",
 			"phasedIn":        true,

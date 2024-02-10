@@ -21,6 +21,7 @@ func NewModelPlan(createdBy uuid.UUID, modelName string) *ModelPlan {
 	}
 
 }
+func (m ModelPlan) isLinkedExistingModel() {}
 
 // GetModelPlanID returns the modelPlanID of the task list section
 func (m ModelPlan) GetModelPlanID() uuid.UUID {
@@ -87,6 +88,20 @@ var ModelStatusHumanized = map[ModelStatus]string{
 	ModelStatusEnded:                 "Ended",
 	ModelStatusPaused:                "Paused",
 	ModelStatusCanceled:              "Canceled",
+}
+
+// Humanize returns the human-readable string of a Model Status
+// if a value is not found for the provided status, an empty string is returned
+func (ms ModelStatus) Humanize() string {
+	return ModelStatusHumanized[ms]
+}
+
+// ValueOrEmpty returns either the string value of the Filter, or an empty string if it is nil
+func (mvf *ModelViewFilter) ValueOrEmpty() string {
+	if mvf == nil {
+		return ""
+	}
+	return string(*mvf)
 }
 
 // ModelViewFilter represents the possible filters for a model plan view

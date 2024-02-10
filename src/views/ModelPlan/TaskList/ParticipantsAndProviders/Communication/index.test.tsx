@@ -2,21 +2,32 @@ import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
-
-import GetCommunication from 'queries/ParticipantsAndProviders/GetCommunication';
-import { GetCommunication_modelPlan_participantsAndProviders as GetCommunicationType } from 'queries/ParticipantsAndProviders/types/GetCommunication';
-import { ParticipantRiskType } from 'types/graphql-global-types';
+import {
+  FrequencyType,
+  GetCommunicationDocument,
+  GetCommunicationQuery,
+  ParticipantRiskType
+} from 'gql/gen/graphql';
 
 import Communication from './index';
+
+type GetCommunicationType = GetCommunicationQuery['modelPlan']['participantsAndProviders'];
 
 const communicationMockData: GetCommunicationType = {
   __typename: 'PlanParticipantsAndProviders',
   id: '123',
+  participantAddedFrequency: [FrequencyType.CONTINUALLY],
+  participantAddedFrequencyContinually: 'participant added continually',
+  participantAddedFrequencyOther: '',
+  participantAddedFrequencyNote: 'My note',
+  participantRemovedFrequency: [FrequencyType.OTHER],
+  participantRemovedFrequencyContinually: '',
+  participantRemovedFrequencyOther: 'participant added other',
+  participantRemovedFrequencyNote: 'Second note',
   communicationMethod: [],
   communicationMethodOther: '',
   communicationNote: '',
-  participantAssumeRisk: true,
-  riskType: ParticipantRiskType.OTHER,
+  riskType: [ParticipantRiskType.OTHER],
   riskOther: 'Programmatic Risk',
   riskNote: '',
   willRiskChange: null,
@@ -26,7 +37,7 @@ const communicationMockData: GetCommunicationType = {
 const communicationMock = [
   {
     request: {
-      query: GetCommunication,
+      query: GetCommunicationDocument,
       variables: { id: 'ce3405a0-3399-4e3a-88d7-3cfc613d2905' }
     },
     result: {

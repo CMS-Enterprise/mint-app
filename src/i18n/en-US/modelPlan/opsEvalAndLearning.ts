@@ -1,41 +1,8 @@
 import { TranslationOpsEvalAndLearning } from 'types/translation';
 
+import { frequencyOptions } from './miscellaneous';
+
 export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
-  agencyOrStateHelp: {
-    gqlField: 'agencyOrStateHelp',
-    goField: 'AgencyOrStateHelp',
-    dbField: 'agency_or_state_help',
-    label:
-      'Will another Agency or State help design/operate the model? Select all that apply.',
-    readonlyLabel:
-      'Will another Agency or State help design/operate the model?',
-    dataType: 'enum',
-    formType: 'checkbox',
-    options: {
-      YES_STATE: 'Yes, we will partner with states',
-      YES_AGENCY_IDEAS: 'Yes, we will get ideas from another agency',
-      YES_AGENCY_IAA:
-        'Yes, we will get support from another agency through Inter Agency Agreement (IAA)',
-      NO: 'No',
-      OTHER: 'Other'
-    }
-  },
-  agencyOrStateHelpOther: {
-    gqlField: 'agencyOrStateHelpOther',
-    goField: 'AgencyOrStateHelpOther',
-    dbField: 'agency_or_state_help_other',
-    label: 'Please specify',
-    dataType: 'string',
-    formType: 'textarea'
-  },
-  agencyOrStateHelpNote: {
-    gqlField: 'agencyOrStateHelpNote',
-    goField: 'AgencyOrStateHelpNote',
-    dbField: 'agency_or_state_help_note',
-    label: 'Notes',
-    dataType: 'string',
-    formType: 'textarea'
-  },
   stakeholders: {
     gqlField: 'stakeholders',
     goField: 'Stakeholders',
@@ -199,7 +166,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     gqlField: 'captureParticipantInfo',
     goField: 'CaptureParticipantInfo',
     dbField: 'capture_participant_info',
-    label: 'Will you capture participant information?',
+    label: 'Will you collect participant information?',
     sublabel:
       'This means the participant record for a model would be included in the ACO-OS Entity File.',
     dataType: 'boolean',
@@ -513,7 +480,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     gqlField: 'riskAdjustNote',
     goField: 'RiskAdjustNote',
     dbField: 'risk_adjust_note',
-    label: 'Are data flow diagrams needed?',
+    label: 'Notes',
     dataType: 'string',
     formType: 'textarea'
   },
@@ -573,7 +540,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     gqlField: 'appealNote',
     goField: 'AppealNote',
     dbField: 'appeal_note',
-    label: 'Are data flow diagrams needed?',
+    label: 'Notes',
     dataType: 'string',
     formType: 'textarea'
   },
@@ -860,9 +827,19 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     dataType: 'boolean',
     formType: 'radio',
     options: {
-      true: 'Yes',
-      false: 'No'
+      YES: 'Yes',
+      NO: 'No',
+      OTHER: 'Other'
     },
+    filterGroups: ['cmmi']
+  },
+  qualityPerformanceImpactsPaymentOther: {
+    gqlField: 'qualityPerformanceImpactsPaymentOther',
+    goField: 'QualityPerformanceImpactsPaymentOther',
+    dbField: 'quality_performance_impacts_payment_other',
+    label: 'Please specify',
+    dataType: 'string',
+    formType: 'text',
     filterGroups: ['cmmi']
   },
   qualityPerformanceImpactsPaymentNote: {
@@ -871,7 +848,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     dbField: 'quality_performance_impacts_payment_note',
     label: 'Notes',
     dataType: 'string',
-    formType: 'textarea',
+    formType: 'text',
     filterGroups: ['cmmi']
   },
   dataSharingStarts: {
@@ -912,19 +889,25 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     dbField: 'data_sharing_frequency',
     label: 'How often do you anticipate sharing data?',
     dataType: 'enum',
-    formType: 'multiSelect',
-    multiSelectLabel: 'Data sharing frequency',
-    options: {
-      ANNUALLY: 'Annually',
-      BIANNUALLY: 'Biannually',
-      QUARTERLY: 'Quarterly',
-      MONTHLY: 'Monthly',
-      SEMI_MONTHLY: 'Semi-monthly',
-      WEEKLY: 'Weekly',
-      DAILY: 'Daily',
-      OTHER: 'Other',
-      NOT_PLANNING_TO_DO_THIS: 'Not planning to do this'
+    formType: 'checkbox',
+    options: frequencyOptions,
+    optionsRelatedInfo: {
+      ANNUALLY: '',
+      SEMIANNUALLY: '',
+      QUARTERLY: '',
+      MONTHLY: '',
+      CONTINUALLY: 'dataSharingFrequencyContinually',
+      OTHER: 'dataSharingFrequencyOther'
     },
+    filterGroups: ['cmmi', 'iddoc']
+  },
+  dataSharingFrequencyContinually: {
+    gqlField: 'dataSharingFrequencyContinually',
+    goField: 'DataSharingFrequencyContinually',
+    dbField: 'data_sharing_frequency_continually',
+    label: 'Please specify',
+    dataType: 'string',
+    formType: 'textarea',
     filterGroups: ['cmmi', 'iddoc']
   },
   dataSharingFrequencyOther: {
@@ -981,19 +964,25 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     dbField: 'data_collection_frequency',
     label: 'How often do you anticipate collecting data?',
     dataType: 'enum',
-    formType: 'multiSelect',
-    multiSelectLabel: 'Data collection frequency',
-    options: {
-      ANNUALLY: 'Annually',
-      BIANNUALLY: 'Biannually',
-      QUARTERLY: 'Quarterly',
-      MONTHLY: 'Monthly',
-      SEMI_MONTHLY: 'Semi-monthly',
-      WEEKLY: 'Weekly',
-      DAILY: 'Daily',
-      OTHER: 'Other',
-      NOT_PLANNING_TO_DO_THIS: 'Not planning to do this'
+    formType: 'checkbox',
+    options: frequencyOptions,
+    optionsRelatedInfo: {
+      ANNUALLY: '',
+      SEMIANNUALLY: '',
+      QUARTERLY: '',
+      MONTHLY: '',
+      CONTINUALLY: 'dataCollectionFrequencyContinually',
+      OTHER: 'dataCollectionFrequencyOther'
     },
+    filterGroups: ['cmmi']
+  },
+  dataCollectionFrequencyContinually: {
+    gqlField: 'dataCollectionFrequencyContinually',
+    goField: 'DataCollectionFrequencyContinually',
+    dbField: 'data_collection_frequency_continually',
+    label: 'Please specify',
+    dataType: 'string',
+    formType: 'textarea',
     filterGroups: ['cmmi']
   },
   dataCollectionFrequencyOther: {
@@ -1047,6 +1036,39 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     goField: 'QualityReportingStartsNote',
     dbField: 'quality_reporting_starts_note',
     label: 'Notes',
+    dataType: 'string',
+    formType: 'textarea'
+  },
+  qualityReportingFrequency: {
+    gqlField: 'qualityReportingFrequency',
+    goField: 'QualityReportingFrequency',
+    dbField: 'quality_reporting_frequency',
+    label: 'How frequently does quality reporting happen?',
+    dataType: 'enum',
+    formType: 'checkbox',
+    options: frequencyOptions,
+    optionsRelatedInfo: {
+      ANNUALLY: '',
+      SEMIANNUALLY: '',
+      QUARTERLY: '',
+      MONTHLY: '',
+      CONTINUALLY: 'qualityReportingFrequencyContinually',
+      OTHER: 'qualityReportingFrequencyOther'
+    }
+  },
+  qualityReportingFrequencyContinually: {
+    gqlField: 'qualityReportingFrequencyContinually',
+    goField: 'QualityReportingFrequencyContinually',
+    dbField: 'quality_reporting_frequency_continually',
+    label: 'Please specify',
+    dataType: 'string',
+    formType: 'textarea'
+  },
+  qualityReportingFrequencyOther: {
+    gqlField: 'qualityReportingFrequencyOther',
+    goField: 'QualityReportingFrequencyOther',
+    dbField: 'quality_reporting_frequency_other',
+    label: 'Please specify',
     dataType: 'string',
     formType: 'textarea'
   },

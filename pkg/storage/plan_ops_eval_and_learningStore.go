@@ -52,13 +52,14 @@ func (s *Store) PlanOpsEvalAndLearningGetByModelPlanIDLOADER(
 
 // PlanOpsEvalAndLearningCreate creates a new plan providers_and_participants object
 func (s *Store) PlanOpsEvalAndLearningCreate(
+	np NamedPreparer,
 	logger *zap.Logger,
 	oel *models.PlanOpsEvalAndLearning,
 ) (*models.PlanOpsEvalAndLearning, error) {
 
 	oel.ID = utilityUUID.ValueOrNewUUID(oel.ID)
 
-	stmt, err := s.db.PrepareNamed(planOpsEvalAndLearningCreateSQL)
+	stmt, err := np.PrepareNamed(planOpsEvalAndLearningCreateSQL)
 	if err != nil {
 		return nil, genericmodel.HandleModelCreationError(logger, err, oel)
 	}

@@ -1,34 +1,26 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useLocation } from 'react-router-dom';
-import { useMutation, useQuery } from '@apollo/client';
-import {
-  Accordion,
-  Button,
-  Grid,
-  IconAnnouncement
-} from '@trussworks/react-uswds';
+import { useMutation } from '@apollo/client';
+import { Accordion, Button, Grid, Icon } from '@trussworks/react-uswds';
 import classNames from 'classnames';
+import {
+  DiscussionUserRole,
+  useCreateModelPlanDiscussionMutation,
+  useGetModelPlanDiscussionsQuery
+} from 'gql/gen/graphql';
+import {
+  GetModelPlanDiscussions_modelPlan_discussions as DiscussionType,
+  GetModelPlanDiscussions_modelPlan_discussions_replies as ReplyType
+} from 'gql/gen/types/GetModelPlanDiscussions';
 
 import PageHeading from 'components/PageHeading';
 import PageLoading from 'components/PageLoading';
 import Alert from 'components/shared/Alert';
 import Expire from 'components/shared/Expire';
 import CreateModelPlanReply from 'queries/CreateModelPlanReply';
-import CreateModelPlanDiscussion from 'queries/Discussions/CreateModelPlanDiscussion';
-import GetModelPlanDiscussions from 'queries/Discussions/GetModelPlanDiscussions';
-import { CreateModelPlanDiscussion as CreateModelPlanDiscussionType } from 'queries/Discussions/types/CreateModelPlanDiscussion';
-import {
-  GetModelPlanDiscussions as GetModelPlanDiscussionsType,
-  GetModelPlanDiscussions_modelPlan_discussions as DiscussionType,
-  GetModelPlanDiscussions_modelPlan_discussions_replies as ReplyType,
-  GetModelPlanDiscussionsVariables
-} from 'queries/Discussions/types/GetModelPlanDiscussions';
 import { CreateModelPlanReply as CreateModelPlanReplyType } from 'queries/types/CreateModelPlanReply';
-import {
-  DiscussionUserRole,
-  PlanDiscussionCreateInput
-} from 'types/graphql-global-types';
+import { PlanDiscussionCreateInput } from 'types/graphql-global-types';
 
 import DiscussionModalWrapper from './DiscussionModalWrapper';
 import FormatDiscussion from './FormatDiscussion';
@@ -64,22 +56,17 @@ const Discussions = ({
     return new URLSearchParams(location.search);
   }, [location.search]);
 
-  const { data, loading, error, refetch } = useQuery<
-    GetModelPlanDiscussionsType,
-    GetModelPlanDiscussionsVariables
-  >(GetModelPlanDiscussions, {
+  const { data, loading, error, refetch } = useGetModelPlanDiscussionsQuery({
     variables: {
       id: modelID
     }
   });
 
   const discussions = useMemo(() => {
-    return data?.modelPlan?.discussions || ([] as DiscussionType[]);
+    return (data?.modelPlan?.discussions || []) as DiscussionType[];
   }, [data?.modelPlan?.discussions]);
 
-  const [createQuestion] = useMutation<CreateModelPlanDiscussionType>(
-    CreateModelPlanDiscussion
-  );
+  const [createQuestion] = useCreateModelPlanDiscussionMutation();
 
   const [createReply] = useMutation<CreateModelPlanReplyType>(
     CreateModelPlanReply
@@ -121,24 +108,12 @@ const Discussions = ({
       dis => dis.id === discussionReplyID
     );
 
-    if (discussionToReply && !loading) {
-      if (discussionToReply.replies.length === 0) {
-        setReply(discussionToReply);
-      } else {
-        setDiscussionReplyID(null);
-        queryParams.delete('discussionID');
-        history.replace({
-          search: queryParams.toString()
-        });
-        setInitQuestion(false);
-        setDiscussionStatusMessage(
-          t('alreadyAnswered', {
-            question: discussionToReply.content
-          })
-        );
-      }
+    if (discussionToReply && !loading && discussions.length) {
+      setIsDiscussionOpen(true);
+      setDiscussionType('reply');
+      setReply(discussionToReply);
     }
-  }, [discussionReplyID, discussions, loading, queryParams, history, t]);
+  }, [discussionReplyID, discussions, loading]);
 
   // Hook used to conditionally render each discussionType by its setter method
   useEffect(() => {
@@ -251,6 +226,7 @@ const Discussions = ({
                   setDiscussionType={setDiscussionType}
                   setReply={setReply}
                   setIsDiscussionOpen={setIsDiscussionOpen}
+                  setDiscussionStatusMessage={setDiscussionStatusMessage}
                 />
               ),
               expanded: true,
@@ -295,6 +271,26 @@ const Discussions = ({
     );
   };
 
+  const showStatusBanner = (errorOnly?: 'errorOnly') => {
+    if (discussionStatus !== 'error' && errorOnly) {
+      return <></>;
+    }
+    if (discussionStatusMessage && !alertClosed) {
+      return (
+        <Expire delay={45000} callback={setDiscussionStatusMessage}>
+          <Alert
+            type={discussionStatus}
+            className="margin-bottom-4"
+            closeAlert={closeAlert}
+          >
+            {discussionStatusMessage}
+          </Alert>
+        </Expire>
+      );
+    }
+    return <></>;
+  };
+
   const renderDiscussions = () => {
     return (
       <>
@@ -306,7 +302,7 @@ const Discussions = ({
         </PageHeading>
 
         <div className="display-flex margin-bottom-4">
-          <IconAnnouncement className="text-primary margin-right-1" />
+          <Icon.Announcement className="text-primary margin-right-1" />
           <Button
             type="button"
             unstyled
@@ -326,17 +322,7 @@ const Discussions = ({
         </div>
 
         {/* General error message for mutations that expires after 45 seconds */}
-        {discussionStatusMessage && !alertClosed && (
-          <Expire delay={45000} callback={setDiscussionStatusMessage}>
-            <Alert
-              type={discussionStatus}
-              className="margin-bottom-4"
-              closeAlert={closeAlert}
-            >
-              {discussionStatusMessage}
-            </Alert>
-          </Expire>
-        )}
+        {showStatusBanner()}
         {/* Render error if failed to fetch discussions */}
         {error ? (
           <Alert type="error" className="margin-bottom-4">
@@ -350,27 +336,32 @@ const Discussions = ({
   };
 
   const chooseRenderMethod = () => {
+    if (loading && !data) return <PageLoading />;
     if (readOnly || error || discussionType === 'discussion') {
       return renderDiscussions();
     }
     // If discussionType === "question" or "reply"
     return (
-      <QuestionAndReply
-        renderType={discussionType}
-        handleCreateDiscussion={handleCreateDiscussion}
-        reply={reply}
-        discussionReplyID={discussionReplyID}
-        setDiscussionReplyID={setDiscussionReplyID}
-        queryParams={queryParams}
-        setInitQuestion={setInitQuestion}
-        setDiscussionType={setDiscussionType}
-      />
+      <>
+        {showStatusBanner('errorOnly')}
+        <QuestionAndReply
+          renderType={discussionType}
+          handleCreateDiscussion={handleCreateDiscussion}
+          reply={reply}
+          discussionReplyID={discussionReplyID}
+          setDiscussionReplyID={setDiscussionReplyID}
+          queryParams={queryParams}
+          setDiscussionStatusMessage={setDiscussionStatusMessage}
+          setInitQuestion={setInitQuestion}
+          setDiscussionType={setDiscussionType}
+        />
+      </>
     );
   };
 
   return (
     <>
-      {loading && !discussions ? (
+      {!data && loading ? (
         <PageLoading />
       ) : (
         <Grid desktop={{ col: 12 }}>
@@ -381,12 +372,17 @@ const Discussions = ({
               closeModal={() => setIsDiscussionOpen(false)}
             >
               {discussionType !== 'discussion' && (
-                <QuestionAndReply
-                  renderType={discussionType}
-                  closeModal={() => setIsDiscussionOpen(false)}
-                  handleCreateDiscussion={handleCreateDiscussion}
-                  reply={reply}
-                />
+                <>
+                  {showStatusBanner('errorOnly')}
+                  <QuestionAndReply
+                    renderType={discussionType}
+                    discussionReplyID={discussionReplyID}
+                    setDiscussionStatusMessage={setDiscussionStatusMessage}
+                    closeModal={() => setIsDiscussionOpen(false)}
+                    handleCreateDiscussion={handleCreateDiscussion}
+                    reply={reply}
+                  />
+                </>
               )}
             </DiscussionModalWrapper>
           )}

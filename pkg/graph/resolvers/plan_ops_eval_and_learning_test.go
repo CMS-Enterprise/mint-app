@@ -13,18 +13,20 @@ func (suite *ResolverSuite) TestPlanOpsEvalAndLearningUpdate() {
 	suite.NoError(err)
 
 	changes := map[string]interface{}{
-		"stakeholdersNote":                  "These stakeholders might change",
-		"helpdeskUse":                       false,
-		"technicalContactsIdentified":       true,
-		"technicalContactsIdentifiedDetail": "Mrs. Robinson",
+		"stakeholdersNote":                   "These stakeholders might change",
+		"helpdeskUse":                        false,
+		"technicalContactsIdentified":        true,
+		"technicalContactsIdentifiedDetail":  "Mrs. Robinson",
+		"dataSharingFrequencyContinually":    "some test value for data sharing frequency",
+		"dataCollectionFrequencyContinually": "some test value for data collection frequency",
 	}
 
 	oel, err := PlanOpsEvalAndLearningUpdate(suite.testConfigs.Logger, oelExisting.ID, changes, suite.testConfigs.Principal, suite.testConfigs.Store)
 	suite.NoError(err)
 
-	suite.Nil(oel.AgencyOrStateHelp)
-	suite.Nil(oel.AgencyOrStateHelpOther)
-	suite.Nil(oel.AgencyOrStateHelpNote)
+	suite.EqualValues("some test value for data sharing frequency", *oel.DataSharingFrequencyContinually)
+	suite.EqualValues("some test value for data collection frequency", *oel.DataCollectionFrequencyContinually)
+
 	suite.Nil(oel.Stakeholders)
 	suite.Nil(oel.StakeholdersOther)
 	suite.Equal("These stakeholders might change", *oel.StakeholdersNote)
@@ -98,6 +100,7 @@ func (suite *ResolverSuite) TestPlanOpsEvalAndLearningUpdate() {
 	suite.Nil(oel.DevelopNewQualityMeasures)
 	suite.Nil(oel.DevelopNewQualityMeasuresNote)
 	suite.Nil(oel.QualityPerformanceImpactsPayment)
+	suite.Nil(oel.QualityPerformanceImpactsPaymentOther)
 	suite.Nil(oel.QualityPerformanceImpactsPaymentNote)
 	suite.Nil(oel.DataSharingStarts)
 	suite.Nil(oel.DataSharingStartsOther)
@@ -112,6 +115,9 @@ func (suite *ResolverSuite) TestPlanOpsEvalAndLearningUpdate() {
 	suite.Nil(oel.QualityReportingStarts)
 	suite.Nil(oel.QualityReportingStartsOther)
 	suite.Nil(oel.QualityReportingStartsNote)
+	suite.Nil(oel.QualityReportingFrequency)
+	suite.Nil(oel.QualityReportingFrequencyContinually)
+	suite.Nil(oel.QualityReportingFrequencyOther)
 	suite.Nil(oel.ModelLearningSystems)
 	suite.Nil(oel.ModelLearningSystemsOther)
 	suite.Nil(oel.ModelLearningSystemsNote)
@@ -130,9 +136,6 @@ func (suite *ResolverSuite) TestPlanOpsEvalAndLearningGetByModelPlanID() {
 	suite.Nil(oel.ModifiedBy)
 
 	//Assert these fields are nil upon creation
-	suite.Nil(oel.AgencyOrStateHelp)
-	suite.Nil(oel.AgencyOrStateHelpOther)
-	suite.Nil(oel.AgencyOrStateHelpNote)
 	suite.Nil(oel.Stakeholders)
 	suite.Nil(oel.StakeholdersOther)
 	suite.Nil(oel.StakeholdersNote)
@@ -205,6 +208,7 @@ func (suite *ResolverSuite) TestPlanOpsEvalAndLearningGetByModelPlanID() {
 	suite.Nil(oel.DevelopNewQualityMeasures)
 	suite.Nil(oel.DevelopNewQualityMeasuresNote)
 	suite.Nil(oel.QualityPerformanceImpactsPayment)
+	suite.Nil(oel.QualityPerformanceImpactsPaymentOther)
 	suite.Nil(oel.QualityPerformanceImpactsPaymentNote)
 	suite.Nil(oel.DataSharingStarts)
 	suite.Nil(oel.DataSharingStartsOther)
@@ -219,6 +223,9 @@ func (suite *ResolverSuite) TestPlanOpsEvalAndLearningGetByModelPlanID() {
 	suite.Nil(oel.QualityReportingStarts)
 	suite.Nil(oel.QualityReportingStartsOther)
 	suite.Nil(oel.QualityReportingStartsNote)
+	suite.Nil(oel.QualityReportingFrequency)
+	suite.Nil(oel.QualityReportingFrequencyContinually)
+	suite.Nil(oel.QualityReportingFrequencyOther)
 	suite.Nil(oel.ModelLearningSystems)
 	suite.Nil(oel.ModelLearningSystemsOther)
 	suite.Nil(oel.ModelLearningSystemsNote)

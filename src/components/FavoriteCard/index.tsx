@@ -1,13 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import {
-  Button,
-  Card,
-  Grid,
-  IconStar,
-  IconStarOutline,
-  Tag
-} from '@trussworks/react-uswds';
+import { Button, Card, Grid, Icon, Tag } from '@trussworks/react-uswds';
 import classnames from 'classnames';
 
 import UswdsReactLink from 'components/LinkWrapper';
@@ -40,7 +33,8 @@ const FavoriteCard = ({
     id,
     basics,
     collaborators,
-    crTdls,
+    crs,
+    tdls,
     modelName,
     nameHistory,
     status
@@ -49,7 +43,9 @@ const FavoriteCard = ({
   const filteredList = nameHistory.slice(1);
   const firstThreeNames = filteredList.slice(0, 3).join(', ');
 
-  const crtdlIDs = crTdls.map(crtdl => crtdl.idNumber);
+  const crtdlIDs = [...(crs || []), ...(tdls || [])].map(
+    crtdl => crtdl.idNumber
+  );
 
   return (
     <Card
@@ -65,7 +61,7 @@ const FavoriteCard = ({
               className="margin-right-2 width-auto"
               unstyled
             >
-              <IconStar size={5} />
+              <Icon.Star size={5} />
             </Button>
             <h3 className="bookmark__title margin-0">
               <UswdsReactLink to={`/models/${id}/read-only`}>
@@ -95,11 +91,8 @@ const FavoriteCard = ({
                 .filter(collaborator =>
                   collaborator.teamRoles.includes(TeamRole.MODEL_LEAD)
                 )
-                .map((collaborator, index) =>
-                  index === collaborators.length - 1
-                    ? collaborator.userAccount.commonName
-                    : `${collaborator.userAccount.commonName}, `
-                )}
+                .map(collaborator => collaborator.userAccount.commonName)
+                .join(', ')}
             </p>
           </Grid>
           <Grid desktop={{ col: 4 }}>
@@ -155,9 +148,9 @@ export const FavoriteIcon = ({
         }
       >
         {isFavorite ? (
-          <IconStar className="margin-right-05 bookmark__tag__icon" />
+          <Icon.Star className="margin-right-05 bookmark__tag__icon" />
         ) : (
-          <IconStarOutline className="margin-right-05 bookmark__tag__icon" />
+          <Icon.StarOutline className="margin-right-05 bookmark__tag__icon" />
         )}
 
         {isFavorite ? t('favorite.following') : t('favorite.follow')}

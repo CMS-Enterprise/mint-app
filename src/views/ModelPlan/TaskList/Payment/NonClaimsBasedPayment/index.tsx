@@ -1,7 +1,6 @@
 import React, { useRef } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { Link, useHistory, useParams } from 'react-router-dom';
-import { useMutation, useQuery } from '@apollo/client';
 import {
   Breadcrumb,
   BreadcrumbBar,
@@ -10,10 +9,18 @@ import {
   Fieldset,
   Grid,
   GridContainer,
-  IconArrowBack,
+  Icon,
   Label
 } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
+import {
+  ClaimsBasedPayType,
+  GetNonClaimsBasedPaymentQuery,
+  NonClaimsBasedPayType,
+  PayType,
+  useGetNonClaimsBasedPaymentQuery,
+  useUpdatePaymentsMutation
+} from 'gql/gen/graphql';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
@@ -29,19 +36,6 @@ import MultiSelect from 'components/shared/MultiSelect';
 import TextField from 'components/shared/TextField';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import useScrollElement from 'hooks/useScrollElement';
-import GetNonClaimsBasedPayment from 'queries/Payments/GetNonClaimsBasedPayment';
-import {
-  GetNonClaimsBasedPayment as GetNonClaimsBasedPaymentType,
-  GetNonClaimsBasedPayment_modelPlan_payments as NonClaimsBasedPaymentFormType,
-  GetNonClaimsBasedPaymentVariables
-} from 'queries/Payments/types/GetNonClaimsBasedPayment';
-import { UpdatePaymentsVariables } from 'queries/Payments/types/UpdatePayments';
-import UpdatePayments from 'queries/Payments/UpdatePayments';
-import {
-  ClaimsBasedPayType,
-  NonClaimsBasedPayType,
-  PayType
-} from 'types/graphql-global-types';
 import { getKeys } from 'types/translation';
 import flattenErrors from 'utils/flattenErrors';
 import { dirtyInput } from 'utils/formDiff';
@@ -49,6 +43,8 @@ import { composeMultiSelectOptions } from 'utils/modelPlan';
 import { NotFoundPartial } from 'views/NotFound';
 
 import { renderCurrentPage, renderTotalPages } from '..';
+
+type NonClaimsBasedPaymentFormType = GetNonClaimsBasedPaymentQuery['modelPlan']['payments'];
 
 const NonClaimsBasedPayment = () => {
   const { t: paymentsT } = useTranslation('payments');
@@ -68,10 +64,7 @@ const NonClaimsBasedPayment = () => {
   const formikRef = useRef<FormikProps<NonClaimsBasedPaymentFormType>>(null);
   const history = useHistory();
 
-  const { data, loading, error } = useQuery<
-    GetNonClaimsBasedPaymentType,
-    GetNonClaimsBasedPaymentVariables
-  >(GetNonClaimsBasedPayment, {
+  const { data, loading, error } = useGetNonClaimsBasedPaymentQuery({
     variables: {
       id: modelID
     }
@@ -94,7 +87,7 @@ const NonClaimsBasedPayment = () => {
     sharedSystemsInvolvedAdditionalClaimPaymentNote,
     planningToUseInnovationPaymentContractor,
     planningToUseInnovationPaymentContractorNote
-  } = data?.modelPlan?.payments || ({} as NonClaimsBasedPaymentFormType);
+  } = (data?.modelPlan?.payments || {}) as NonClaimsBasedPaymentFormType;
 
   const modelName = data?.modelPlan?.modelName || '';
 
@@ -102,7 +95,7 @@ const NonClaimsBasedPayment = () => {
     need => need.modifiedDts
   );
 
-  const [update] = useMutation<UpdatePaymentsVariables>(UpdatePayments);
+  const [update] = useUpdatePaymentsMutation();
 
   const handleFormSubmit = (
     redirect?: 'next' | 'back' | 'task-list' | string
@@ -202,7 +195,7 @@ const NonClaimsBasedPayment = () => {
         data-testid="model-plan-name"
       >
         <Trans i18nKey="modelPlanTaskList:subheading">
-          indexZero {modelName} indexTwo
+          indexZero {modelName || ' '} indexTwo
         </Trans>
       </p>
 
@@ -504,7 +497,7 @@ const NonClaimsBasedPayment = () => {
                           className="usa-button usa-button--unstyled"
                           onClick={() => handleFormSubmit('task-list')}
                         >
-                          <IconArrowBack
+                          <Icon.ArrowBack
                             className="margin-right-1"
                             aria-hidden
                           />

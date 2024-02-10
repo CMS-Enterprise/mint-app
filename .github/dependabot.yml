@@ -36,17 +36,21 @@ updates:
         update-types:
           - "minor"
           - "patch"
+    ignore:
+      - dependency-name: "github.com/99designs/gqlgen" # Ignoring until https://github.com/99designs/gqlgen/issues/2026 and https://jiraent.cms.gov/browse/EASI-3510 are fixed
   - package-ecosystem: "npm"
     directory: "/"
     schedule:
       interval: "weekly"
     open-pull-requests-limit: 1
     groups:
-      major:
-        patterns:
-          - "*"
-        update-types:
-          - "major"
+      # We currently have far too many major NPM packages to upgrade reasonably with dependabot.
+      # Let's uncomment this when we're ready to start upgrading them.
+      # major:
+      #   patterns:
+      #     - "*"
+      #   update-types:
+      #     - "major"
       other:
         patterns:
           - "*"

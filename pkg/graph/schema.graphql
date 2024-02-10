@@ -32,6 +32,10 @@ Any represents any GraphQL value.
 """
 scalar Any
 
+"""
+TaggedHTML represents an input type for HTML that could also include tags that reference another entity
+"""
+scalar TaggedHTML
 
 enum SortDirection {
   ASC
@@ -69,11 +73,11 @@ type ModelPlan {
   status: ModelStatus!
   isFavorite: Boolean!
   isCollaborator: Boolean!
-  crTdls: [PlanCrTdl!]!
+  crs: [PlanCR!]!
+  tdls: [PlanTDL!]!
   prepareForClearance: PrepareForClearance!
   nameHistory(sort: SortDirection! = DESC): [String!]!
   operationalNeeds: [OperationalNeed!]!
-  existingModelLinks: [ExistingModelLink!]!
 }
 
 type OperationalNeed {
@@ -116,6 +120,7 @@ type PossibleOperationalSolution {
     key: OperationalSolutionKey!
     treatAsOther: Boolean!
     pointsOfContact: [PossibleOperationalSolutionContact!]!
+    filterView: ModelViewFilter
 
     createdBy: UUID!
     createdByUserAccount: UserAccount!
@@ -180,7 +185,7 @@ ExistingModel represents a model that already exists outside of the scope of MIN
 """
 type ExistingModel {
   id: Int
-  modelName: String
+  modelName: String!
   stage: String!
   numberOfParticipants: String
   category: String
@@ -202,14 +207,26 @@ type ExistingModel {
   modifiedByUserAccount: UserAccount
   modifiedDts: Time
 }
+"""
+LinkedExistingModel is a union type that returns either an Existing Model, or a Model plan from the database
+"""
+union LinkedExistingModel =  ExistingModel | ModelPlan
+
+
+type ExistingModelLinks {
+  links: [ExistingModelLink!]!
+  fieldName: ExisitingModelLinkFieldType!
+  modelPlanID: UUID!
+  names: [String!]!
+}
 
 type ExistingModelLink {
   id: UUID
   modelPlanID: UUID!
   existingModelID: Int
-  existingModel: ExistingModel
   currentModelPlanID: UUID
-  currentModelPlan: ModelPlan
+  fieldName: ExisitingModelLinkFieldType!
+  model: LinkedExistingModel!
 
   createdBy: UUID!
   createdByUserAccount: UserAccount!
@@ -321,9 +338,9 @@ type PlanBasics {
   modelCategory: ModelCategory
   additionalModelCategories: [ModelCategory!]!
   cmsCenters: [CMSCenter!]!
-  cmsOther: String
   cmmiGroups: [CMMIGroup!]!
-  modelType: ModelType
+  modelType: [ModelType!]!
+  modelTypeOther: String
   problem: String
   goal: String
   testInterventions: String
@@ -372,9 +389,9 @@ input PlanBasicsChanges @goModel(model: "map[string]interface{}") {
   modelCategory: ModelCategory
   additionalModelCategories: [ModelCategory!]
   cmsCenters: [CMSCenter!]
-  cmsOther: String
   cmmiGroups: [CMMIGroup!]
-  modelType: ModelType
+  modelType: [ModelType!]
+  modelTypeOther: String
   problem: String
   goal: String
   testInterventions: String
@@ -407,13 +424,57 @@ type UserInfo {
   username: String!
 }
 
+
+"""
+TaggedEntity is the actual object represented by a tag in the data base.
+"""
+union TaggedEntity =  UserAccount | PossibleOperationalSolution
+
+"""
+TaggedContent represents content that has a tag in it. It is composed of the raw tag text, as well as the array of possible tags
+"""
+type TaggedContent {
+  """
+  RawContent is HTML. It is sanitized on the backend
+  """
+  rawContent: String!
+  tags: [Tag!]!
+}
+
+"""
+Tag represents an entity tagged in the database
+"""
+type Tag {
+  id: UUID!
+  tagType: TagType!
+  taggedField: String!
+  taggedContentTable: String!
+  taggedContentID: UUID!
+  entityUUID: UUID
+  entityIntID: Int
+
+  entity: TaggedEntity
+
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
+}
+
+enum TagType {
+    USER_ACCOUNT
+    POSSIBLE_SOLUTION
+}
+
 """
 PlanDiscussion represents plan discussion
 """
 type PlanDiscussion  {
 	id: UUID!
 	modelPlanID: UUID!
-	content: String
+	content: TaggedContent
   userRole: DiscussionUserRole
   userRoleDescription: String
   replies: [DiscussionReply!]!
@@ -433,21 +494,11 @@ PlanDiscussionCreateInput represents the necessary fields to create a plan discu
 """
 input PlanDiscussionCreateInput {
   modelPlanID: UUID!
-  content: String!
+  content: TaggedHTML!
   userRole: DiscussionUserRole
   userRoleDescription: String
 }
 
-"""
-PlanDiscussionChanges represents the possible changes you can make to a plan discussion when updating it.
-Fields explicitly set with NULL will be unset, and omitted fields will be left unchanged.
-https://gqlgen.com/reference/changesets/
-"""
-input PlanDiscussionChanges @goModel(model: "map[string]interface{}") {
-  content: String
-  userRole: DiscussionUserRole
-  userRoleDescription: String
-}
 
 """
 DiscussionReply represents a discussion reply
@@ -455,7 +506,7 @@ DiscussionReply represents a discussion reply
 type DiscussionReply  {
 	id: UUID!
 	discussionID: UUID!
-	content: String
+	content: TaggedContent
   userRole: DiscussionUserRole
   userRoleDescription: String
   isAssessment: Boolean!
@@ -473,18 +524,7 @@ DiscussionReplyCreateInput represents the necessary fields to create a discussio
 """
 input DiscussionReplyCreateInput {
   discussionID: UUID!
-  content: String!
-  userRole: DiscussionUserRole
-  userRoleDescription: String
-}
-
-"""
-DiscussionReplyChanges represents the possible changes you can make to a discussion reply when updating it.
-Fields explicitly set with NULL will be unset, and omitted fields will be left unchanged.
-https://gqlgen.com/reference/changesets/
-"""
-input DiscussionReplyChanges @goModel(model: "map[string]interface{}") {
-  content: String
+  content: TaggedHTML!
   userRole: DiscussionUserRole
   userRoleDescription: String
 }
@@ -499,14 +539,66 @@ type PlanGeneralCharacteristics {
   # Page 1
   isNewModel: Boolean
   existingModel: String
-  resemblesExistingModel: Boolean
+  currentModelPlanID: UUID
+  currentModelPlan: ModelPlan
+  existingModelID: Int
+  existingModelPlan: ExistingModel
+  resemblesExistingModel: YesNoOtherType
+  """
+  For providing clarifying comments if Yes or No is selected for resemblesExistingModel
+  """
+  resemblesExistingModelWhyHow: String
+  """
+  For providing clarifying comments if Other is selected for resemblesExistingModel
+  """
+  resemblesExistingModelOtherSpecify: String
+  """
+  For denoting if there is an other model that this model resembles if it's true that it resembles existing models.
+  """
+  resemblesExistingModelOtherSelected: Boolean
+  """
+  For denoting the name of the other existing model that this model resembles
+  """
+  resemblesExistingModelOtherOption: String
   resemblesExistingModelHow: String
   resemblesExistingModelNote: String
+  resemblesExistingModelWhich: ExistingModelLinks
+  """
+  For answering if participation in other models is a precondition for participating in this model
+  """
+  participationInModelPrecondition: YesNoOtherType
+  """
+  For providing clarifying comments if Yes or No is selected for participationInModelPrecondition
+  """
+  participationInModelPreconditionWhyHow: String
+  """
+  For providing clarifying comments if Other is selected for participationInModelPrecondition
+  """
+  participationInModelPreconditionOtherSpecify: String
+  """
+  For denoting if there is an other model that this model refers to.
+  """
+  participationInModelPreconditionOtherSelected: Boolean
+  """
+  For denoting the name of the other existing model
+  """
+  participationInModelPreconditionOtherOption: String
+  """
+  A note field for participationInModelPrecondition
+  """
+  participationInModelPreconditionNote: String
+  """
+  The collection of existing model links relevant to the participationInModelPrecondition question
+  """
+  participationInModelPreconditionWhich: ExistingModelLinks
   hasComponentsOrTracks: Boolean
   hasComponentsOrTracksDiffer: String
   hasComponentsOrTracksNote: String
 
   # Page 2
+  agencyOrStateHelp: [AgencyOrStateHelpType!]!
+  agencyOrStateHelpOther: String
+  agencyOrStateHelpNote: String
   alternativePaymentModelTypes: [AlternativePaymentModelType!]!
   alternativePaymentModelNote: String
   keyCharacteristics: [KeyCharacteristic!]!
@@ -533,6 +625,8 @@ type PlanGeneralCharacteristics {
   # Page 4
   geographiesTargeted: Boolean
   geographiesTargetedTypes: [GeographyType!]!
+  geographiesStatesAndTerritories: [StatesAndTerritories!]!
+  geographiesRegionTypes: [GeographyRegionType!]!
   geographiesTargetedTypesOther: String
   geographiesTargetedAppliedTo: [GeographyApplication!]!
   geographiesTargetedAppliedToOther: String
@@ -581,15 +675,59 @@ https://gqlgen.com/reference/changesets/
 input PlanGeneralCharacteristicsChanges @goModel(model: "map[string]interface{}") {
   # Page 1
   isNewModel: Boolean
-  existingModel: String
-  resemblesExistingModel: Boolean
+  currentModelPlanID: UUID
+  existingModelID: Int
+  resemblesExistingModel: YesNoOtherType
+  """
+  For providing clarifying comments if Yes or No is selected for resemblesExistingModel
+  """
+  resemblesExistingModelWhyHow: String
+  """
+  For providing clarifying comments if Other is selected for resemblesExistingModel
+  """
+  resemblesExistingModelOtherSpecify: String
+  """
+  For denoting if there is an other model that this model resembles if it's true that it resembles existing models.
+  """
+  resemblesExistingModelOtherSelected: Boolean
+  """
+  For denoting the name of the other existing model that this model resembles
+  """
+  resemblesExistingModelOtherOption: String
   resemblesExistingModelHow: String
   resemblesExistingModelNote: String
+  """
+  For answering if participation in other models is a precondition for participating in this model
+  """
+  participationInModelPrecondition: YesNoOtherType
+  """
+  For providing clarifying comments if Yes or No is selected for participationInModelPrecondition
+  """
+  participationInModelPreconditionWhyHow: String
+  """
+  For providing clarifying comments if Other is selected for participationInModelPrecondition
+  """
+  participationInModelPreconditionOtherSpecify: String
+  """
+  For denoting if there is an other model that this model refers to.
+  """
+  participationInModelPreconditionOtherSelected: Boolean
+  """
+  For denoting the name of the other existing model
+  """
+  participationInModelPreconditionOtherOption: String
+  """
+  A note field for participationInModelPrecondition
+  """
+  participationInModelPreconditionNote: String
   hasComponentsOrTracks: Boolean
   hasComponentsOrTracksDiffer: String
   hasComponentsOrTracksNote: String
 
   # Page 2
+  agencyOrStateHelp: [AgencyOrStateHelpType!]
+  agencyOrStateHelpOther: String
+  agencyOrStateHelpNote: String
   alternativePaymentModelTypes: [AlternativePaymentModelType!]
   alternativePaymentModelNote: String
   keyCharacteristics: [KeyCharacteristic!]
@@ -616,6 +754,8 @@ input PlanGeneralCharacteristicsChanges @goModel(model: "map[string]interface{}"
   # Page 4
   geographiesTargeted: Boolean
   geographiesTargetedTypes: [GeographyType!]
+  geographiesStatesAndTerritories: [StatesAndTerritories!]
+  geographiesRegionTypes: [GeographyRegionType!]
   geographiesTargetedTypesOther: String
   geographiesTargetedAppliedTo: [GeographyApplication!]
   geographiesTargetedAppliedToOther: String
@@ -652,6 +792,7 @@ type PlanBeneficiaries {
   beneficiaries: [BeneficiariesType!]!
   beneficiariesOther: String
   beneficiariesNote: String
+  diseaseSpecificGroup: String
   treatDualElligibleDifferent: TriStateAnswer
   treatDualElligibleDifferentHow: String
   treatDualElligibleDifferentNote: String
@@ -666,12 +807,20 @@ type PlanBeneficiaries {
   beneficiarySelectionOther: String
   beneficiarySelectionNote: String
   #Page 3
-  beneficiarySelectionFrequency: FrequencyType
+  beneficiarySelectionFrequency: [FrequencyType!]!
+  beneficiarySelectionFrequencyContinually: String
   beneficiarySelectionFrequencyOther: String
   beneficiarySelectionFrequencyNote: String
+  beneficiaryRemovalFrequency: [FrequencyType!]!
+  beneficiaryRemovalFrequencyContinually: String
+  beneficiaryRemovalFrequencyOther: String
+  beneficiaryRemovalFrequencyNote: String
   beneficiaryOverlap: OverlapType
   beneficiaryOverlapNote: String
-  precedenceRules: String
+  precedenceRules: [YesNoType!]!
+  precedenceRulesYes: String
+  precedenceRulesNo: String
+  precedenceRulesNote: String
 
   createdBy: UUID!
   createdByUserAccount: UserAccount!
@@ -695,6 +844,7 @@ input PlanBeneficiariesChanges @goModel(model: "map[string]interface{}") {
   beneficiaries: [BeneficiariesType!]
   beneficiariesOther: String
   beneficiariesNote: String
+  diseaseSpecificGroup: String
   treatDualElligibleDifferent: TriStateAnswer
   treatDualElligibleDifferentHow: String
   treatDualElligibleDifferentNote: String
@@ -709,12 +859,20 @@ input PlanBeneficiariesChanges @goModel(model: "map[string]interface{}") {
   beneficiarySelectionOther: String
   beneficiarySelectionNote: String
   #Page 3
-  beneficiarySelectionFrequency: FrequencyType
+  beneficiarySelectionFrequency: [FrequencyType!]
+  beneficiarySelectionFrequencyContinually: String
   beneficiarySelectionFrequencyOther: String
   beneficiarySelectionFrequencyNote: String
+  beneficiaryRemovalFrequency: [FrequencyType!]
+  beneficiaryRemovalFrequencyContinually: String
+  beneficiaryRemovalFrequencyOther: String
+  beneficiaryRemovalFrequencyNote: String
   beneficiaryOverlap: OverlapType
   beneficiaryOverlapNote: String
-  precedenceRules: String
+  precedenceRules: [YesNoType!]
+  precedenceRulesYes: String
+  precedenceRulesNo: String
+  precedenceRulesNote: String
 
   status: TaskStatusInput
 }
@@ -748,11 +906,18 @@ type PlanParticipantsAndProviders {
   selectionNote:                String
 
   #Page 3
+  participantAddedFrequency:                 [FrequencyType!]!
+  participantAddedFrequencyContinually:      String
+  participantAddedFrequencyOther:            String
+  participantAddedFrequencyNote:             String
+  participantRemovedFrequency:               [FrequencyType!]!
+  participantRemovedFrequencyContinually:    String
+  participantRemovedFrequencyOther:          String
+  participantRemovedFrequencyNote:           String
   communicationMethod:   [ParticipantCommunicationType!]!
   communicationMethodOther:   String
   communicationNote:     String
-  participantAssumeRisk: Boolean
-  riskType:              ParticipantRiskType
+  riskType:              [ParticipantRiskType!]!
   riskOther:             String
   riskNote:              String
   willRiskChange:        Boolean
@@ -764,12 +929,15 @@ type PlanParticipantsAndProviders {
   gainsharePayments:       Boolean
   gainsharePaymentsTrack: Boolean
   gainsharePaymentsNote:   String
+  gainsharePaymentsEligibility: [GainshareArrangementEligibility!]!
+  gainsharePaymentsEligibilityOther: String
   participantsIds:         [ParticipantsIDType!]!
   participantsIdsOther:    String
   participantsIDSNote:     String
 
   #Page 5
-  providerAdditionFrequency:      FrequencyType
+  providerAdditionFrequency:      [FrequencyType!]!
+  providerAdditionFrequencyContinually: String
   providerAdditionFrequencyOther: String
   providerAdditionFrequencyNote:  String
   providerAddMethod:              [ProviderAddType!]!
@@ -778,6 +946,10 @@ type PlanParticipantsAndProviders {
   providerLeaveMethod:            [ProviderLeaveType!]!
   providerLeaveMethodOther:       String
   providerLeaveMethodNote:        String
+  providerRemovalFrequency:       [FrequencyType!]!
+  providerRemovalFrequencyContinually: String
+  providerRemovalFrequencyOther:  String
+  providerRemovalFrequencyNote:   String
   providerOverlap:                OverlapType
   providerOverlapHierarchy:       String
   providerOverlapNote:            String
@@ -830,11 +1002,18 @@ input PlanParticipantsAndProvidersChanges @goModel(model: "map[string]interface{
   selectionNote:                String
 
   #Page 3
+  participantAddedFrequency:                 [FrequencyType!]
+  participantAddedFrequencyContinually:      String
+  participantAddedFrequencyOther:            String
+  participantAddedFrequencyNote:             String
+  participantRemovedFrequency:               [FrequencyType!]
+  participantRemovedFrequencyContinually:    String
+  participantRemovedFrequencyOther:          String
+  participantRemovedFrequencyNote:           String
   communicationMethod:   [ParticipantCommunicationType!]
   communicationMethodOther:   String
   communicationNote:     String
-  participantAssumeRisk: Boolean
-  riskType:              ParticipantRiskType
+  riskType:              [ParticipantRiskType!]
   riskOther:             String
   riskNote:              String
   willRiskChange:        Boolean
@@ -846,12 +1025,15 @@ input PlanParticipantsAndProvidersChanges @goModel(model: "map[string]interface{
   gainsharePayments:       Boolean
   gainsharePaymentsTrack: Boolean
   gainsharePaymentsNote:   String
+  gainsharePaymentsEligibility: [GainshareArrangementEligibility!]
+  gainsharePaymentsEligibilityOther: String
   participantsIds:         [ParticipantsIDType!]
   participantsIdsOther:    String
   participantsIDSNote:     String
 
   #Page 5
-  providerAdditionFrequency:      FrequencyType
+  providerAdditionFrequency:      [FrequencyType!]
+  providerAdditionFrequencyContinually: String
   providerAdditionFrequencyOther: String
   providerAdditionFrequencyNote:  String
   providerAddMethod:              [ProviderAddType!]
@@ -860,6 +1042,10 @@ input PlanParticipantsAndProvidersChanges @goModel(model: "map[string]interface{
   providerLeaveMethod:            [ProviderLeaveType!]
   providerLeaveMethodOther:       String
   providerLeaveMethodNote:        String
+  providerRemovalFrequency:       [FrequencyType!]
+  providerRemovalFrequencyContinually: String
+  providerRemovalFrequencyOther:  String
+  providerRemovalFrequencyNote:   String
   providerOverlap:                OverlapType
   providerOverlapHierarchy:       String
   providerOverlapNote:            String
@@ -876,11 +1062,13 @@ type PlanPayments {
 
   # Page 1
   fundingSource:                      [FundingSource!]!
-  fundingSourceTrustFundType:         [TrustFundType!]!
+  fundingSourceMedicareAInfo:         String
+  fundingSourceMedicareBInfo:         String
   fundingSourceOther:                 String
   fundingSourceNote:                  String
   fundingSourceR:                     [FundingSource!]!
-  fundingSourceRTrustFundType:        [TrustFundType!]!
+  fundingSourceRMedicareAInfo:        String
+  fundingSourceRMedicareBInfo:        String
   fundingSourceROther:                String
   fundingSourceRNote:                 String
   payRecipients:                      [PayRecipient!]!
@@ -932,10 +1120,14 @@ type PlanPayments {
   # Page 6
   expectedCalculationComplexityLevel:                ComplexityCalculationLevelType
   expectedCalculationComplexityLevelNote:            String
+  claimsProcessingPrecedence:                        Boolean
+  claimsProcessingPrecedenceOther:                   String
+  claimsProcessingPrecedenceNote:                    String
   canParticipantsSelectBetweenPaymentMechanisms:     Boolean
   canParticipantsSelectBetweenPaymentMechanismsHow:  String
   canParticipantsSelectBetweenPaymentMechanismsNote: String
-  anticipatedPaymentFrequency:                       [AnticipatedPaymentFrequencyType!]!
+  anticipatedPaymentFrequency:                       [FrequencyType!]!
+  anticipatedPaymentFrequencyContinually:            String
   anticipatedPaymentFrequencyOther:                  String
   anticipatedPaymentFrequencyNote:                   String
 
@@ -944,6 +1136,14 @@ type PlanPayments {
   willRecoverPaymentsNote:                           String
   anticipateReconcilingPaymentsRetrospectively:      Boolean
   anticipateReconcilingPaymentsRetrospectivelyNote:  String
+  paymentReconciliationFrequency:                    [FrequencyType!]!
+  paymentReconciliationFrequencyContinually:         String
+  paymentReconciliationFrequencyOther:               String
+  paymentReconciliationFrequencyNote:                String
+  paymentDemandRecoupmentFrequency:                  [FrequencyType!]!
+  paymentDemandRecoupmentFrequencyContinually:       String
+  paymentDemandRecoupmentFrequencyOther:             String
+  paymentDemandRecoupmentFrequencyNote:              String
   paymentStartDate:                                  Time
   paymentStartDateNote:                              String
 
@@ -968,12 +1168,16 @@ type PlanPayments {
 
 input PlanPaymentsChanges @goModel(model: "map[string]interface{}") {
   # Page 1
-  fundingSource:                      [FundingSource!]
-  fundingSourceTrustFundType:         [TrustFundType!]
+  fundingSource:                      [FundingSource!] #Combine these
+  fundingSourceMedicareAInfo:         String
+  fundingSourceMedicareBInfo:         String
+  # fundingSourceTrustFundType:         [TrustFundType!]
   fundingSourceOther:                 String
   fundingSourceNote:                  String
   fundingSourceR:                     [FundingSource!]
-  fundingSourceRTrustFundType:        [TrustFundType!]
+  fundingSourceRMedicareAInfo:        String
+  fundingSourceRMedicareBInfo:        String
+  # fundingSourceRTrustFundType:        [TrustFundType!]
   fundingSourceROther:                String
   fundingSourceRNote:                 String
   payRecipients:                      [PayRecipient!]
@@ -1025,10 +1229,14 @@ input PlanPaymentsChanges @goModel(model: "map[string]interface{}") {
   # Page 6
   expectedCalculationComplexityLevel:                       ComplexityCalculationLevelType
   expectedCalculationComplexityLevelNote:                   String
+  claimsProcessingPrecedence:                               Boolean
+  claimsProcessingPrecedenceOther:                          String
+  claimsProcessingPrecedenceNote:                           String
   canParticipantsSelectBetweenPaymentMechanisms:            Boolean
   canParticipantsSelectBetweenPaymentMechanismsHow:         String
   canParticipantsSelectBetweenPaymentMechanismsNote:        String
-  anticipatedPaymentFrequency:                              [AnticipatedPaymentFrequencyType!]
+  anticipatedPaymentFrequency:                              [FrequencyType!]
+  anticipatedPaymentFrequencyContinually:                   String
   anticipatedPaymentFrequencyOther:                         String
   anticipatedPaymentFrequencyNote:                         String
 
@@ -1037,6 +1245,14 @@ input PlanPaymentsChanges @goModel(model: "map[string]interface{}") {
   willRecoverPaymentsNote:                          String
   anticipateReconcilingPaymentsRetrospectively:      Boolean
   anticipateReconcilingPaymentsRetrospectivelyNote: String
+  paymentReconciliationFrequency:                    [FrequencyType!]
+  paymentReconciliationFrequencyContinually:         String
+  paymentReconciliationFrequencyOther:               String
+  paymentReconciliationFrequencyNote:                String
+  paymentDemandRecoupmentFrequency:                    [FrequencyType!]
+  paymentDemandRecoupmentFrequencyContinually:         String
+  paymentDemandRecoupmentFrequencyOther:               String
+  paymentDemandRecoupmentFrequencyNote:                String
   paymentStartDate:                                  Time
   paymentStartDateNote:                             String
 
@@ -1051,9 +1267,6 @@ type PlanOpsEvalAndLearning {
     modelPlanID: UUID!
 
     #Page 1
-    agencyOrStateHelp: [AgencyOrStateHelpType!]!
-    agencyOrStateHelpOther: String
-    agencyOrStateHelpNote: String
     stakeholders: [StakeholdersType!]!
     stakeholdersOther: String
     stakeholdersNote: String
@@ -1131,22 +1344,28 @@ type PlanOpsEvalAndLearning {
     useCcwForFileDistribiutionToParticipantsNote: String
     developNewQualityMeasures: Boolean
     developNewQualityMeasuresNote: String
-    qualityPerformanceImpactsPayment: Boolean
+    qualityPerformanceImpactsPayment: YesNoOtherType
+    qualityPerformanceImpactsPaymentOther: String
     qualityPerformanceImpactsPaymentNote: String
     #Page 8
     dataSharingStarts: DataStartsType
     dataSharingStartsOther: String
-    dataSharingFrequency: [DataFrequencyType!]!
+    dataSharingFrequency: [FrequencyType!]!
+    dataSharingFrequencyContinually: String
     dataSharingFrequencyOther: String
     dataSharingStartsNote: String
     dataCollectionStarts: DataStartsType
     dataCollectionStartsOther: String
-    dataCollectionFrequency: [DataFrequencyType!]!
+    dataCollectionFrequency: [FrequencyType!]!
+    dataCollectionFrequencyContinually: String
     dataCollectionFrequencyOther: String
     dataCollectionFrequencyNote: String
     qualityReportingStarts: DataStartsType
     qualityReportingStartsOther: String
     qualityReportingStartsNote: String
+    qualityReportingFrequency: [FrequencyType!]!
+    qualityReportingFrequencyContinually: String
+    qualityReportingFrequencyOther: String
     #Page 9
     modelLearningSystems: [ModelLearningSystemType!]!
     modelLearningSystemsOther: String
@@ -1179,9 +1398,6 @@ https://gqlgen.com/reference/changesets/
 input PlanOpsEvalAndLearningChanges @goModel(model: "map[string]interface{}") {
 
     #Page 1
-    agencyOrStateHelp: [AgencyOrStateHelpType!]
-    agencyOrStateHelpOther: String
-    agencyOrStateHelpNote: String
     stakeholders: [StakeholdersType!]
     stakeholdersOther: String
     stakeholdersNote: String
@@ -1259,22 +1475,28 @@ input PlanOpsEvalAndLearningChanges @goModel(model: "map[string]interface{}") {
     useCcwForFileDistribiutionToParticipantsNote: String
     developNewQualityMeasures: Boolean
     developNewQualityMeasuresNote: String
-    qualityPerformanceImpactsPayment: Boolean
+    qualityPerformanceImpactsPayment: YesNoOtherType
+    qualityPerformanceImpactsPaymentOther: String
     qualityPerformanceImpactsPaymentNote: String
     #Page 8
     dataSharingStarts: DataStartsType
     dataSharingStartsOther: String
-    dataSharingFrequency: [DataFrequencyType!]
+    dataSharingFrequency: [FrequencyType!]
+    dataSharingFrequencyContinually: String
     dataSharingFrequencyOther: String
     dataSharingStartsNote: String
     dataCollectionStarts: DataStartsType
     dataCollectionStartsOther: String
-    dataCollectionFrequency: [DataFrequencyType!]
+    dataCollectionFrequency: [FrequencyType!]
+    dataCollectionFrequencyContinually: String
     dataCollectionFrequencyOther: String
     dataCollectionFrequencyNote: String
     qualityReportingStarts: DataStartsType
     qualityReportingStartsOther: String
     qualityReportingStartsNote: String
+    qualityReportingFrequency: [FrequencyType!]
+    qualityReportingFrequencyContinually: String
+    qualityReportingFrequencyOther: String
     #Page 9
     modelLearningSystems: [ModelLearningSystemType!]
     modelLearningSystemsOther: String
@@ -1300,6 +1522,11 @@ input ReportAProblemInput {
   whatWentWrong: String
   severity: ReportAProblemSeverity
   severityOther: String
+}
+
+enum ExisitingModelLinkFieldType {
+  GEN_CHAR_RESEMBLES_EXISTING_MODEL_WHICH
+  GEN_CHAR_PARTICIPATION_EXISTING_MODEL_WHICH
 }
 
 enum ReportAProblemSection {
@@ -1332,7 +1559,25 @@ type PlanFavorite {
 
 }
 
-type PlanCrTdl {
+type PlanCR {
+    id: UUID!
+    modelPlanID: UUID!
+
+    idNumber: String!
+    dateInitiated: Time!
+    dateImplemented: Time # Required in the API, but can be nullable for historical entries before we migrated CRs and TDLs as different types
+    title: String!
+    note: String
+
+    createdBy: UUID!
+    createdByUserAccount: UserAccount!
+    createdDts: Time!
+    modifiedBy: UUID
+    modifiedByUserAccount: UserAccount
+    modifiedDts: Time
+}
+
+type PlanTDL {
     id: UUID!
     modelPlanID: UUID!
 
@@ -1349,7 +1594,25 @@ type PlanCrTdl {
     modifiedDts: Time
 }
 
-input PlanCrTdlCreateInput {
+input PlanCRCreateInput {
+    modelPlanID: UUID!
+
+    idNumber: String!
+    dateInitiated: Time!
+    dateImplemented: Time!
+    title: String!
+    note: String
+}
+
+input PlanCRChanges @goModel(model: "map[string]interface{}") {
+    idNumber: String
+    dateInitiated: Time
+    dateImplemented: Time
+    title: String
+    note: String
+}
+
+input PlanTDLCreateInput {
     modelPlanID: UUID!
 
     idNumber: String!
@@ -1358,7 +1621,7 @@ input PlanCrTdlCreateInput {
     note: String
 }
 
-input PlanCrTdlChanges @goModel(model: "map[string]interface{}") {
+input PlanTDLChanges @goModel(model: "map[string]interface{}") {
     idNumber: String
     dateInitiated: Time
     title: String
@@ -1617,7 +1880,9 @@ type Query {
   @hasAnyRole(roles: [MINT_USER, MINT_MAC])
   ndaInfo: NDAInfo!
   @hasAnyRole(roles: [MINT_USER, MINT_MAC])
-  crTdl(id: UUID!): PlanCrTdl!
+  planCR(id: UUID!): PlanCR!
+  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+  planTDL(id: UUID!): PlanTDL!
   @hasAnyRole(roles: [MINT_USER, MINT_MAC])
   operationalSolutions(operationalNeedID: UUID!, includeNotNeeded: Boolean! = false): [OperationalSolution!]!
   @hasAnyRole(roles: [MINT_USER, MINT_MAC])
@@ -1695,20 +1960,8 @@ deletePlanDocument(id: UUID!): Int!
 createPlanDiscussion(input: PlanDiscussionCreateInput!): PlanDiscussion!
 @hasAnyRole(roles: [MINT_USER, MINT_MAC])
 
-updatePlanDiscussion(id: UUID!, changes: PlanDiscussionChanges!): PlanDiscussion!
-@hasAnyRole(roles: [MINT_USER, MINT_MAC])
-
-deletePlanDiscussion(id: UUID!): PlanDiscussion!
-@hasRole(role: MINT_USER)
-
 createDiscussionReply(input: DiscussionReplyCreateInput!): DiscussionReply!
 @hasAnyRole(roles: [MINT_USER, MINT_MAC])
-
-updateDiscussionReply(id: UUID!, changes: DiscussionReplyChanges!): DiscussionReply!
-@hasAnyRole(roles: [MINT_USER, MINT_MAC])
-
-deleteDiscussionReply(id: UUID!): DiscussionReply!
-@hasRole(role: MINT_USER)
 
 lockTaskListSection(modelPlanID: UUID!, section: TaskListSection!): Boolean!
 @hasRole(role: MINT_USER)
@@ -1731,13 +1984,22 @@ addPlanFavorite(modelPlanID: UUID!): PlanFavorite!
 deletePlanFavorite(modelPlanID: UUID!): PlanFavorite!
 @hasAnyRole(roles: [MINT_USER, MINT_MAC])
 
-createPlanCrTdl(input: PlanCrTdlCreateInput!): PlanCrTdl!
+createPlanCR(input: PlanCRCreateInput!): PlanCR!
 @hasRole(role: MINT_USER)
 
-updatePlanCrTdl(id: UUID!, changes: PlanCrTdlChanges!): PlanCrTdl!
+createPlanTDL(input: PlanTDLCreateInput!): PlanTDL!
 @hasRole(role: MINT_USER)
 
-deletePlanCrTdl(id: UUID!): PlanCrTdl!
+updatePlanCR(id: UUID!, changes: PlanCRChanges!): PlanCR!
+@hasRole(role: MINT_USER)
+
+updatePlanTDL(id: UUID!, changes: PlanTDLChanges!): PlanTDL!
+@hasRole(role: MINT_USER)
+
+deletePlanCR(id: UUID!): PlanCR!
+@hasRole(role: MINT_USER)
+
+deletePlanTDL(id: UUID!): PlanTDL!
 @hasRole(role: MINT_USER)
 
 addOrUpdateCustomOperationalNeed(modelPlanID: UUID!, customNeedType: String! needed: Boolean!): OperationalNeed!
@@ -1767,7 +2029,11 @@ updateOperationalSolutionSubtasks(inputs: [UpdateOperationalSolutionSubtaskInput
 deleteOperationalSolutionSubtask(id: UUID!): Int!
 @hasRole(role: MINT_USER)
 
-updateExistingModelLinks(modelPlanID: UUID!, existingModelIDs: [Int!],currentModelPlanIDs: [UUID!]): [ExistingModelLink!]!
+"""
+This will update linked existing models, and relatede model plans for given model plan and fieldName.
+The fieldName allows it so you can create links for multiple sections of the model plan
+"""
+updateExistingModelLinks(modelPlanID: UUID!,fieldName: ExisitingModelLinkFieldType!,  existingModelIDs: [Int!],currentModelPlanIDs: [UUID!]): ExistingModelLinks!
 @hasRole(role: MINT_USER)
 
 shareModelPlan(modelPlanID: UUID!, viewFilter: ModelViewFilter, usernames: [String!]!, optionalMessage: String): Boolean!
@@ -1835,13 +2101,16 @@ enum TeamRole {
   QUALITY
   OACT
   PAYMENT
+  CM_FFS_COUNTERPART
+  COR
 }
 
 enum ModelType
 {
   VOLUNTARY
-  MANDATORY
-  TBD
+  MANDATORY_REGIONAL_OR_STATE
+  MANDATORY_NATIONAL
+  OTHER
 }
 
 enum ModelCategory {
@@ -1874,10 +2143,10 @@ enum CMSCenter {
   CMMI
   CENTER_FOR_MEDICARE
   FEDERAL_COORDINATED_HEALTH_CARE_OFFICE
+  CENTER_FOR_MEDICAID_AND_CHIP_SERVICES
   CENTER_FOR_CLINICAL_STANDARDS_AND_QUALITY
   CENTER_FOR_PROGRAM_INTEGRITY
-  OTHER
-}
+  }
 
 enum CMMIGroup {
   PATIENT_CARE_MODELS_GROUP
@@ -1914,6 +2183,8 @@ enum KeyCharacteristic {
   SERVICE_DELIVERY
   SHARED_SAVINGS
   OTHER
+  MEDICAID_MODEL
+  MEDICARE_FFS_MODEL
 }
 
 enum GeographyType {
@@ -1955,6 +2226,7 @@ enum BeneficiariesType {
   MEDICAID
   DUALLY_ELIGIBLE
   DISEASE_SPECIFIC
+  UNDERSERVED
   OTHER
   NA
 }
@@ -1978,14 +2250,16 @@ enum ConfidenceType {
   FAIRLY
   COMPLETELY
 }
+
 enum FrequencyType {
   ANNUALLY
-  BIANNUALLY
+  SEMIANNUALLY
   QUARTERLY
   MONTHLY
-  ROLLING
+  CONTINUALLY
   OTHER
 }
+
 enum TriStateAnswer {
   YES
   NO
@@ -2005,6 +2279,7 @@ enum ParticipantsType {
   COMMUNITY_BASED_ORGANIZATIONS
   NON_PROFIT_ORGANIZATIONS
   COMMERCIAL_PAYERS
+  ACCOUNTABLE_CARE_ORGANIZATION
   OTHER
 }
 
@@ -2031,10 +2306,12 @@ enum ParticipantCommunicationType {
   OTHER
   NO_COMMUNICATION
 }
+
 enum ParticipantRiskType {
   TWO_SIDED
   ONE_SIDED
   CAPITATION
+  NOT_RISK_BASED
   OTHER
 }
 
@@ -2143,16 +2420,10 @@ enum DataToSendParticipantsType {
     NOT_PLANNING_TO_SEND_DATA
 }
 
-enum DataFrequencyType {
-    ANNUALLY
-    BIANNUALLY
-    QUARTERLY
-    MONTHLY
-    SEMI_MONTHLY
-    WEEKLY
-    DAILY
+enum YesNoOtherType {
+    YES
+    NO
     OTHER
-    NOT_PLANNING_TO_DO_THIS
 }
 
 enum ModelLearningSystemType {
@@ -2190,13 +2461,9 @@ enum DataStartsType {
 
 enum FundingSource {
   PATIENT_PROTECTION_AFFORDABLE_CARE_ACT
-  TRUST_FUND
-  OTHER
-}
-
-enum TrustFundType {
   MEDICARE_PART_A_HI_TRUST_FUND
   MEDICARE_PART_B_SMI_TRUST_FUND
+  OTHER
 }
 
 enum PayRecipient {
@@ -2220,6 +2487,7 @@ enum ClaimsBasedPayType {
   SNF_CLAIMS_WITHOUT_3DAY_HOSPITAL_ADMISSIONS
   TELEHEALTH_SERVICES_NOT_TRADITIONAL_MEDICARE
   SERVICES_NOT_COVERED_THROUGH_TRADITIONAL_MEDICARE
+  PAYMENTS_FOR_POST_DISCHARGE_HOME_VISITS
   OTHER
 }
 
@@ -2230,7 +2498,6 @@ enum NonClaimsBasedPayType {
   CAPITATION_POPULATION_BASED_PARTIAL
   CARE_COORDINATION_MANAGEMENT_FEE
   GLOBAL_BUDGET
-  GRANTS
   INCENTIVE_PAYMENT
   MAPD_SHARED_SAVINGS
   SHARED_SAVINGS
@@ -2241,17 +2508,6 @@ enum ComplexityCalculationLevelType {
   LOW
   MIDDLE
   HIGH
-}
-
-enum AnticipatedPaymentFrequencyType {
-  ANNUALLY
-  BIANNUALLY
-  QUARTERLY
-  MONTHLY
-  SEMIMONTHLY
-  WEEKLY
-  DAILY
-  OTHER
 }
 
 enum OpSolutionStatus {
@@ -2526,4 +2782,82 @@ enum ModelViewFilter {
   MDM, # MASTER_DATA_MANAGEMENT
   OACT, # OFFICE_OF_THE_ACTUARY
   PBG, # PROVIDER_BILLING_GROUP
+}
+
+enum GainshareArrangementEligibility {
+  ALL_PROVIDERS,
+  SOME_PROVIDERS,
+  OTHER,
+  NO
+}
+
+enum YesNoType {
+  YES,
+  NO
+}
+
+enum StatesAndTerritories {
+  AL,
+  AK,
+  AZ,
+  AR,
+  CA,
+  CO,
+  CT,
+  DE,
+  DC,
+  FL,
+  GA,
+  HI,
+  ID,
+  IL,
+  IN,
+  IA,
+  KS,
+  KY,
+  LA,
+  ME,
+  MD,
+  MA,
+  MI,
+  MN,
+  MS,
+  MO,
+  MT,
+  NE,
+  NV,
+  NH,
+  NJ,
+  NM,
+  NY,
+  NC,
+  ND,
+  OH,
+  OK,
+  OR,
+  PA,
+  RI,
+  SC,
+  SD,
+  TN,
+  TX,
+  UT,
+  VT,
+  VA,
+  WA,
+  WV,
+  WI,
+  WY,
+  AS,
+  GU,
+  MP,
+  PR,
+  UM,
+  VI
+}
+
+enum GeographyRegionType {
+  CBSA,
+  HRR,
+  MSA
 }

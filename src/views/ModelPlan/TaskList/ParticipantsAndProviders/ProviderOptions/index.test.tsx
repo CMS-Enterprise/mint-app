@@ -2,24 +2,27 @@ import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
-
-import GetProviderOptions from 'queries/ParticipantsAndProviders/GetProviderOptions';
-import { GetProviderOptions_modelPlan_participantsAndProviders as GetProviderOptionsType } from 'queries/ParticipantsAndProviders/types/GetProviderOptions';
 import {
+  FrequencyType,
+  GetProviderOptionsDocument,
+  GetProviderOptionsQuery,
   OperationalNeedKey,
   ProviderAddType,
   TaskStatus
-} from 'types/graphql-global-types';
+} from 'gql/gen/graphql';
 
 import ProviderOptions from './index';
 
 const modelID = 'ce3405a0-3399-4e3a-88d7-3cfc613d2905';
 const operationalNeedID = '081cb879-bd6f-4ead-b9cb-3a299de76390';
 
+type GetProviderOptionsType = GetProviderOptionsQuery['modelPlan']['participantsAndProviders'];
+
 const providerOptionsMockData: GetProviderOptionsType = {
   __typename: 'PlanParticipantsAndProviders',
   id: '123',
-  providerAdditionFrequency: null,
+  providerAdditionFrequency: [FrequencyType.CONTINUALLY],
+  providerAdditionFrequencyContinually: 'Continually',
   providerAdditionFrequencyOther: '',
   providerAdditionFrequencyNote: '',
   providerAddMethod: [ProviderAddType.OTHER],
@@ -28,6 +31,10 @@ const providerOptionsMockData: GetProviderOptionsType = {
   providerLeaveMethod: [],
   providerLeaveMethodOther: '',
   providerLeaveMethodNote: '',
+  providerRemovalFrequency: [FrequencyType.CONTINUALLY],
+  providerRemovalFrequencyContinually: 'Continually',
+  providerRemovalFrequencyOther: '',
+  providerRemovalFrequencyNote: 'removal note',
   providerOverlap: null,
   providerOverlapHierarchy: '',
   providerOverlapNote: '',
@@ -43,7 +50,7 @@ const providerOptionsMockData: GetProviderOptionsType = {
 const providerOptionsMock = [
   {
     request: {
-      query: GetProviderOptions,
+      query: GetProviderOptionsDocument,
       variables: { id: modelID }
     },
     result: {

@@ -16,8 +16,8 @@ import (
 	"github.com/cmsgov/mint-app/pkg/shared/pubsub"
 	"github.com/cmsgov/mint-app/pkg/upload"
 
+	ld "github.com/launchdarkly/go-server-sdk/v6"
 	"go.uber.org/zap"
-	ld "gopkg.in/launchdarkly/go-server-sdk.v5"
 
 	"github.com/cmsgov/mint-app/pkg/storage"
 	"github.com/cmsgov/mint-app/pkg/testhelpers"
@@ -115,7 +115,7 @@ func getTestDependencies() (storage.DBConfig, *ld.LDClient, *zap.Logger, *models
 
 func getTestPrincipal(store *storage.Store, userName string) *authentication.ApplicationPrincipal {
 
-	userAccount, _ := userhelpers.GetOrCreateUserAccount(context.Background(), store, userName, true, false, userhelpers.GetOktaAccountInfoWrapperFunction(userhelpers.GetUserInfoFromOktaLocal))
+	userAccount, _ := userhelpers.GetOrCreateUserAccount(context.Background(), store, store, userName, true, false, userhelpers.GetOktaAccountInfoWrapperFunction(userhelpers.GetUserInfoFromOktaLocal))
 
 	princ := &authentication.ApplicationPrincipal{
 		Username:          userName,

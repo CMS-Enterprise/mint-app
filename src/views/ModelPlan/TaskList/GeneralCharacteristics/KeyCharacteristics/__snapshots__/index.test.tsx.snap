@@ -76,10 +76,6 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
         xmlns="http://www.w3.org/2000/svg"
       >
         <path
-          d="M0 0h24v24H0z"
-          fill="none"
-        />
-        <path
           d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-7 9h-2V5h2v6zm0 4h-2v-2h2v2z"
         />
       </svg>
@@ -101,6 +97,142 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
       class="usa-fieldset"
       data-testid="fieldset"
     >
+      <div
+        class="usa-form-group"
+      >
+        <label
+          class="usa-label"
+          data-testid="label"
+          for="plan-characteristics-agency-or-state-help"
+        >
+          Will another Agency or State help design/operate the model? Select all that apply.
+        </label>
+        <div
+          class="mint-checkbox usa-checkbox"
+        >
+          <input
+            class="usa-checkbox__input"
+            id="plan-characteristics-agency-or-state-help-YES_STATE"
+            name="agencyOrStateHelp"
+            type="checkbox"
+            value="YES_STATE"
+          />
+          <label
+            class="usa-checkbox__label"
+            for="plan-characteristics-agency-or-state-help-YES_STATE"
+          >
+            Yes, we will partner with states
+          </label>
+          <p
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+          />
+        </div>
+        <div
+          class="mint-checkbox usa-checkbox"
+        >
+          <input
+            class="usa-checkbox__input"
+            id="plan-characteristics-agency-or-state-help-YES_AGENCY_IDEAS"
+            name="agencyOrStateHelp"
+            type="checkbox"
+            value="YES_AGENCY_IDEAS"
+          />
+          <label
+            class="usa-checkbox__label"
+            for="plan-characteristics-agency-or-state-help-YES_AGENCY_IDEAS"
+          >
+            Yes, we will get ideas from another agency
+          </label>
+          <p
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+          />
+        </div>
+        <div
+          class="mint-checkbox usa-checkbox"
+        >
+          <input
+            class="usa-checkbox__input"
+            id="plan-characteristics-agency-or-state-help-YES_AGENCY_IAA"
+            name="agencyOrStateHelp"
+            type="checkbox"
+            value="YES_AGENCY_IAA"
+          />
+          <label
+            class="usa-checkbox__label"
+            for="plan-characteristics-agency-or-state-help-YES_AGENCY_IAA"
+          >
+            Yes, we will get support from another agency through Inter Agency Agreement (IAA)
+          </label>
+          <p
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+          />
+        </div>
+        <div
+          class="mint-checkbox usa-checkbox"
+        >
+          <input
+            class="usa-checkbox__input"
+            id="plan-characteristics-agency-or-state-help-NO"
+            name="agencyOrStateHelp"
+            type="checkbox"
+            value="NO"
+          />
+          <label
+            class="usa-checkbox__label"
+            for="plan-characteristics-agency-or-state-help-NO"
+          >
+            No
+          </label>
+          <p
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+          />
+        </div>
+        <div
+          class="mint-checkbox usa-checkbox"
+        >
+          <input
+            class="usa-checkbox__input"
+            id="plan-characteristics-agency-or-state-help-OTHER"
+            name="agencyOrStateHelp"
+            type="checkbox"
+            value="OTHER"
+          />
+          <label
+            class="usa-checkbox__label"
+            for="plan-characteristics-agency-or-state-help-OTHER"
+          >
+            Other
+          </label>
+          <p
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+          />
+        </div>
+        <div
+          class="margin-top-4 margin-bottom-8"
+        >
+          <button
+            class="usa-button usa-button usa-button--unstyled"
+            data-testid="add-note-toggle"
+            type="button"
+          >
+            <svg
+              aria-hidden="true"
+              class="usa-icon margin-right-1"
+              focusable="false"
+              height="1em"
+              role="img"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+              />
+            </svg>
+            Add an additional note
+          </button>
+        </div>
+      </div>
       <div
         class="usa-form-group margin-y-4 margin-bottom-8"
         data-scroll="alternativePaymentModelTypes"
@@ -233,10 +365,6 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
               width="1em"
               xmlns="http://www.w3.org/2000/svg"
             >
-              <path
-                d="M0 0h24v24H0z"
-                fill="none"
-              />
               <path
                 d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
               />
@@ -398,10 +526,6 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
                     xmlns="http://www.w3.org/2000/svg"
                   >
                     <path
-                      d="M0 0h24v24H0z"
-                      fill="none"
-                    />
-                    <path
                       d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
                     />
                   </svg>
@@ -429,10 +553,6 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
             width="1em"
             xmlns="http://www.w3.org/2000/svg"
           >
-            <path
-              d="M0 0h24v24H0z"
-              fill="none"
-            />
             <path
               d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
             />
@@ -498,10 +618,6 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
           width="1em"
           xmlns="http://www.w3.org/2000/svg"
         >
-          <path
-            d="M0 0h24v24H0z"
-            fill="none"
-          />
           <path
             d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"
           />

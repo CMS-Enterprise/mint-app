@@ -4,79 +4,88 @@ import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import {
+  DiscussionUserRole,
+  GetModelPlanDiscussionsDocument,
+  GetModelPlanDiscussionsQuery,
+  GetMostRecentRoleSelectionDocument,
+  GetMostRecentRoleSelectionQuery
+} from 'gql/gen/graphql';
 import configureMockStore from 'redux-mock-store';
 
 import { ASSESSMENT } from 'constants/jobCodes';
-import GetModelPlanDiscussions from 'queries/Discussions/GetModelPlanDiscussions';
-import GetMostRecentRoleSelection from 'queries/Discussions/GetMostRecentRoleSelection';
-import { GetModelPlanDiscussions as GetModelPlanDiscussionsType } from 'queries/Discussions/types/GetModelPlanDiscussions';
-import { GetMostRecentRoleSelection as GetMostRecentRoleSelectionType } from 'queries/Discussions/types/GetMostRecentRoleSelection';
-import { DiscussionUserRole } from 'types/graphql-global-types';
 
 import Discussions from './index';
 
-const discussionResult: GetModelPlanDiscussionsType = {
-  modelPlan: {
-    __typename: 'ModelPlan',
-    id: '00000000-0000-0000-0000-000000000000',
-    isCollaborator: true,
-    discussions: [
-      {
-        __typename: 'PlanDiscussion',
-        id: '123',
-        content: 'This is a question.',
-        createdBy: 'TIDA',
-        createdDts: '2022-05-12T15:01:39.190679Z',
-        userRole: DiscussionUserRole.CMS_SYSTEM_SERVICE_TEAM,
-        userRoleDescription: '',
-        isAssessment: false,
-        createdByUserAccount: {
-          __typename: 'UserAccount',
-          commonName: 'John Doe'
-        },
-        replies: []
+type GetModelPlanDiscussionsType = GetModelPlanDiscussionsQuery;
+
+const discussionResult: GetModelPlanDiscussionsType['modelPlan'] = {
+  __typename: 'ModelPlan',
+  id: '00000000-0000-0000-0000-000000000000',
+  isCollaborator: true,
+  discussions: [
+    {
+      __typename: 'PlanDiscussion',
+      id: '123',
+      content: {
+        __typename: 'TaggedContent',
+        rawContent: 'This is a question.'
       },
-      {
-        __typename: 'PlanDiscussion',
-        id: '456',
-        content: 'This is a second question.',
-        createdBy: 'JFCS',
-        createdDts: '2022-05-12T15:01:39.190679Z',
-        userRole: DiscussionUserRole.NONE_OF_THE_ABOVE,
-        userRoleDescription: 'Designer',
-        isAssessment: false,
-        createdByUserAccount: {
-          __typename: 'UserAccount',
-          commonName: 'Jane Doe'
-        },
-        replies: [
-          {
-            __typename: 'DiscussionReply',
-            discussionID: '456',
-            id: 'abc',
-            content: 'This is an answer.',
-            userRole: DiscussionUserRole.LEADERSHIP,
-            userRoleDescription: '',
-            isAssessment: false,
-            createdBy: 'UISX',
-            createdByUserAccount: {
-              __typename: 'UserAccount',
-              commonName: 'Jack Doe'
-            },
-            createdDts: '2022-05-12T15:01:39.190679Z'
-          }
-        ]
-      }
-    ]
-  }
+      createdBy: 'TIDA',
+      createdDts: '2022-05-12T15:01:39.190679Z',
+      userRole: DiscussionUserRole.CMS_SYSTEM_SERVICE_TEAM,
+      userRoleDescription: '',
+      isAssessment: false,
+      createdByUserAccount: {
+        __typename: 'UserAccount',
+        commonName: 'John Doe'
+      },
+      replies: []
+    },
+    {
+      __typename: 'PlanDiscussion',
+      id: '456',
+      content: {
+        __typename: 'TaggedContent',
+        rawContent: 'This is a second question.'
+      },
+      createdBy: 'JFCS',
+      createdDts: '2022-05-12T15:01:39.190679Z',
+      userRole: DiscussionUserRole.NONE_OF_THE_ABOVE,
+      userRoleDescription: 'Designer',
+      isAssessment: false,
+      createdByUserAccount: {
+        __typename: 'UserAccount',
+        commonName: 'Jane Doe'
+      },
+      replies: [
+        {
+          __typename: 'DiscussionReply',
+          discussionID: '456',
+          id: 'abc',
+          content: {
+            __typename: 'TaggedContent',
+            rawContent: 'This is an answer.'
+          },
+          userRole: DiscussionUserRole.LEADERSHIP,
+          userRoleDescription: '',
+          isAssessment: false,
+          createdBy: 'UISX',
+          createdByUserAccount: {
+            __typename: 'UserAccount',
+            commonName: 'Jack Doe'
+          },
+          createdDts: '2022-05-12T15:01:39.190679Z'
+        }
+      ]
+    }
+  ]
 };
 
-const mostRecentRoleResult: GetMostRecentRoleSelectionType = {
-  mostRecentDiscussionRoleSelection: {
-    __typename: 'DiscussionRoleSelection',
-    userRole: DiscussionUserRole.LEADERSHIP,
-    userRoleDescription: ''
-  }
+const mostRecentRoleResult: GetMostRecentRoleSelectionQuery['mostRecentDiscussionRoleSelection'] = {
+  __typename: 'DiscussionRoleSelection',
+  userRole: DiscussionUserRole.LEADERSHIP,
+  userRoleDescription: ''
 };
 
 const modelID = 'f11eb129-2c80-4080-9440-439cbe1a286f';
@@ -84,19 +93,19 @@ const modelID = 'f11eb129-2c80-4080-9440-439cbe1a286f';
 const mocks = [
   {
     request: {
-      query: GetModelPlanDiscussions,
+      query: GetModelPlanDiscussionsDocument,
       variables: { id: modelID }
     },
     result: {
-      data: discussionResult
+      data: { modelPlan: discussionResult }
     }
   },
   {
     request: {
-      query: GetMostRecentRoleSelection
+      query: GetMostRecentRoleSelectionDocument
     },
     result: {
-      data: mostRecentRoleResult
+      data: { mostRecentDiscussionRoleSelection: mostRecentRoleResult }
     }
   }
 ];
@@ -163,9 +172,15 @@ describe('Discussion Component', () => {
     );
 
     await waitFor(async () => {
-      screen.getByRole('button', { name: /Reply/ }).click();
+      userEvent.click(screen.getAllByRole('button', { name: /Reply/ })[0]);
+    });
 
-      expect(getByText(/This is a question./i)).toBeInTheDocument();
+    await waitFor(async () => {
+      expect(
+        getByText(
+          /This will display with your name to help others identify you./i
+        )
+      ).toBeInTheDocument();
     });
 
     const roleSelect = screen.getByRole('combobox', {
@@ -174,15 +189,9 @@ describe('Discussion Component', () => {
 
     userEvent.selectOptions(roleSelect, [DiscussionUserRole.MINT_TEAM]);
 
-    expect(roleSelect).toHaveValue(DiscussionUserRole.MINT_TEAM);
-
-    const feedbackField = screen.getByRole('textbox', {
-      name: /Type your reply/i
+    await waitFor(async () => {
+      expect(roleSelect).toHaveValue(DiscussionUserRole.MINT_TEAM);
     });
-
-    userEvent.type(feedbackField, 'Test feedback');
-
-    expect(feedbackField).toHaveValue('Test feedback');
   });
 
   it('renders the reply form from email generated url param', async () => {

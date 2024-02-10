@@ -76,10 +76,6 @@ exports[`Model Plan Payment > matches snapshot 1`] = `
         xmlns="http://www.w3.org/2000/svg"
       >
         <path
-          d="M0 0h24v24H0z"
-          fill="none"
-        />
-        <path
           d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-7 9h-2V5h2v6zm0 4h-2v-2h2v2z"
         />
       </svg>
@@ -117,68 +113,18 @@ exports[`Model Plan Payment > matches snapshot 1`] = `
               class="usa-form-group margin-top-4"
               data-scroll="fundingSource"
             >
-              <label
-                class="usa-label maxw-none"
-                data-testid="label"
-                for="fundingSource"
-              >
-                What will be the funding source for payments? Select all that apply.
-              </label>
               <fieldset
-                class="usa-fieldset"
+                class="usa-fieldset funding-source"
                 data-testid="fieldset"
               >
-                <div
-                  class="mint-checkbox usa-checkbox"
+                <label
+                  class="usa-label maxw-none margin-bottom-105"
+                  data-testid="label"
+                  for="fundingSourceType"
                 >
-                  <input
-                    class="usa-checkbox__input"
-                    id="payment-funding-source-PATIENT_PROTECTION_AFFORDABLE_CARE_ACT"
-                    name="fundingSource"
-                    type="checkbox"
-                    value="PATIENT_PROTECTION_AFFORDABLE_CARE_ACT"
-                  />
-                  <label
-                    class="usa-checkbox__label"
-                    for="payment-funding-source-PATIENT_PROTECTION_AFFORDABLE_CARE_ACT"
-                  >
-                    Patient Protection Affordable Care Act (Sec 3021)
-                  </label>
-                  <p
-                    class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
-                  />
-                </div>
-                <div
-                  class="mint-checkbox usa-checkbox"
-                >
-                  <input
-                    class="usa-checkbox__input"
-                    id="payment-funding-source-TRUST_FUND"
-                    name="fundingSource"
-                    type="checkbox"
-                    value="TRUST_FUND"
-                  />
-                  <label
-                    class="usa-checkbox__label"
-                    for="payment-funding-source-TRUST_FUND"
-                  >
-                    Trust Fund
-                  </label>
-                  <p
-                    class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
-                  />
-                </div>
-                <fieldset
-                  class="usa-fieldset margin-left-4"
-                  data-testid="fieldset"
-                >
-                  <label
-                    class="usa-label maxw-none text-normal"
-                    data-testid="label"
-                    for="fundingSourceTrustFundType"
-                  >
-                    Which type(s)?
-                  </label>
+                  What will be the funding source for payments? Select all that apply.
+                </label>
+                <div>
                   <div
                     class="display-flex flex-align-center"
                   >
@@ -186,16 +132,43 @@ exports[`Model Plan Payment > matches snapshot 1`] = `
                       class="mint-checkbox usa-checkbox"
                     >
                       <input
-                        checked=""
                         class="usa-checkbox__input"
-                        id="payment-funding-source-fundingSourceTrustFundType-MEDICARE_PART_A_HI_TRUST_FUND"
-                        name="fundingSourceTrustFundType"
+                        data-testid="payment-funding-source-fundingSource-PATIENT_PROTECTION_AFFORDABLE_CARE_ACT"
+                        id="payment-funding-source-fundingSource-PATIENT_PROTECTION_AFFORDABLE_CARE_ACT"
+                        name="fundingSource"
+                        type="checkbox"
+                        value="PATIENT_PROTECTION_AFFORDABLE_CARE_ACT"
+                      />
+                      <label
+                        class="usa-checkbox__label"
+                        for="payment-funding-source-fundingSource-PATIENT_PROTECTION_AFFORDABLE_CARE_ACT"
+                      >
+                        Patient Protection Affordable Care Act (Sec 3021)
+                      </label>
+                      <p
+                        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <div
+                    class="display-flex flex-align-center"
+                  >
+                    <div
+                      class="mint-checkbox usa-checkbox"
+                    >
+                      <input
+                        class="usa-checkbox__input"
+                        data-testid="payment-funding-source-fundingSource-MEDICARE_PART_A_HI_TRUST_FUND"
+                        id="payment-funding-source-fundingSource-MEDICARE_PART_A_HI_TRUST_FUND"
+                        name="fundingSource"
                         type="checkbox"
                         value="MEDICARE_PART_A_HI_TRUST_FUND"
                       />
                       <label
                         class="usa-checkbox__label"
-                        for="payment-funding-source-fundingSourceTrustFundType-MEDICARE_PART_A_HI_TRUST_FUND"
+                        for="payment-funding-source-fundingSource-MEDICARE_PART_A_HI_TRUST_FUND"
                       >
                         Medicare Part A (HI) Trust Fund
                       </label>
@@ -209,7 +182,7 @@ exports[`Model Plan Payment > matches snapshot 1`] = `
                     >
                       <div
                         aria-describedby="tooltip-550000"
-                        class="usa-tooltip__trigger margin-left-05 height-105"
+                        class="usa-tooltip__trigger margin-left-05"
                         data-testid="triggerElement"
                         position="right"
                         tabindex="0"
@@ -224,10 +197,6 @@ exports[`Model Plan Payment > matches snapshot 1`] = `
                           width="1em"
                           xmlns="http://www.w3.org/2000/svg"
                         >
-                          <path
-                            d="M0 0h24v24H0z"
-                            fill="none"
-                          />
                           <path
                             d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
                           />
@@ -245,6 +214,8 @@ exports[`Model Plan Payment > matches snapshot 1`] = `
                       </span>
                     </span>
                   </div>
+                </div>
+                <div>
                   <div
                     class="display-flex flex-align-center"
                   >
@@ -253,14 +224,15 @@ exports[`Model Plan Payment > matches snapshot 1`] = `
                     >
                       <input
                         class="usa-checkbox__input"
-                        id="payment-funding-source-fundingSourceTrustFundType-MEDICARE_PART_B_SMI_TRUST_FUND"
-                        name="fundingSourceTrustFundType"
+                        data-testid="payment-funding-source-fundingSource-MEDICARE_PART_B_SMI_TRUST_FUND"
+                        id="payment-funding-source-fundingSource-MEDICARE_PART_B_SMI_TRUST_FUND"
+                        name="fundingSource"
                         type="checkbox"
                         value="MEDICARE_PART_B_SMI_TRUST_FUND"
                       />
                       <label
                         class="usa-checkbox__label"
-                        for="payment-funding-source-fundingSourceTrustFundType-MEDICARE_PART_B_SMI_TRUST_FUND"
+                        for="payment-funding-source-fundingSource-MEDICARE_PART_B_SMI_TRUST_FUND"
                       >
                         Medicare Part B (SMI) Trust Fund
                       </label>
@@ -274,7 +246,7 @@ exports[`Model Plan Payment > matches snapshot 1`] = `
                     >
                       <div
                         aria-describedby="tooltip-550000"
-                        class="usa-tooltip__trigger margin-left-05 height-105"
+                        class="usa-tooltip__trigger margin-left-05"
                         data-testid="triggerElement"
                         position="right"
                         tabindex="0"
@@ -289,10 +261,6 @@ exports[`Model Plan Payment > matches snapshot 1`] = `
                           width="1em"
                           xmlns="http://www.w3.org/2000/svg"
                         >
-                          <path
-                            d="M0 0h24v24H0z"
-                            fill="none"
-                          />
                           <path
                             d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
                           />
@@ -310,26 +278,52 @@ exports[`Model Plan Payment > matches snapshot 1`] = `
                       </span>
                     </span>
                   </div>
-                </fieldset>
-                <div
-                  class="mint-checkbox usa-checkbox"
-                >
-                  <input
-                    class="usa-checkbox__input"
-                    id="payment-funding-source-OTHER"
-                    name="fundingSource"
-                    type="checkbox"
-                    value="OTHER"
-                  />
-                  <label
-                    class="usa-checkbox__label"
-                    for="payment-funding-source-OTHER"
+                  <div
+                    class="usa-form-group margin-left-4 margin-top-1 margin-bottom-2"
                   >
-                    Other
-                  </label>
-                  <p
-                    class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
-                  />
+                    <label
+                      class="usa-label text-normal"
+                      data-testid="label"
+                      for="fundingSourceMedicareBInfo"
+                    >
+                      Additional details
+                    </label>
+                    <input
+                      class="usa-input"
+                      data-testid="textInput"
+                      id="payment-fundingSource-medicare-b-info"
+                      maxlength="50"
+                      name="fundingSourceMedicareBInfo"
+                      value="PartB"
+                    />
+                  </div>
+                </div>
+                <div>
+                  <div
+                    class="display-flex flex-align-center"
+                  >
+                    <div
+                      class="mint-checkbox usa-checkbox"
+                    >
+                      <input
+                        class="usa-checkbox__input"
+                        data-testid="payment-funding-source-fundingSource-OTHER"
+                        id="payment-funding-source-fundingSource-OTHER"
+                        name="fundingSource"
+                        type="checkbox"
+                        value="OTHER"
+                      />
+                      <label
+                        class="usa-checkbox__label"
+                        for="payment-funding-source-fundingSource-OTHER"
+                      >
+                        Other
+                      </label>
+                      <p
+                        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                      />
+                    </div>
+                  </div>
                 </div>
               </fieldset>
               <div
@@ -350,10 +344,6 @@ exports[`Model Plan Payment > matches snapshot 1`] = `
                     width="1em"
                     xmlns="http://www.w3.org/2000/svg"
                   >
-                    <path
-                      d="M0 0h24v24H0z"
-                      fill="none"
-                    />
                     <path
                       d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
                     />
@@ -366,76 +356,198 @@ exports[`Model Plan Payment > matches snapshot 1`] = `
               class="usa-form-group margin-top-4"
               data-scroll="fundingSourceR"
             >
-              <label
-                class="usa-label maxw-none"
-                data-testid="label"
-                for="fundingSourceR"
-              >
-                What is the funding source for reconciliation or other expenditures? Select all that apply.
-              </label>
               <fieldset
-                class="usa-fieldset"
+                class="usa-fieldset funding-source"
                 data-testid="fieldset"
               >
-                <div
-                  class="mint-checkbox usa-checkbox"
+                <label
+                  class="usa-label maxw-none margin-bottom-105"
+                  data-testid="label"
+                  for="fundingSourceType"
                 >
-                  <input
-                    class="usa-checkbox__input"
-                    id="payment-funding-source-reconciliation-PATIENT_PROTECTION_AFFORDABLE_CARE_ACT"
-                    name="fundingSourceR"
-                    type="checkbox"
-                    value="PATIENT_PROTECTION_AFFORDABLE_CARE_ACT"
-                  />
-                  <label
-                    class="usa-checkbox__label"
-                    for="payment-funding-source-reconciliation-PATIENT_PROTECTION_AFFORDABLE_CARE_ACT"
+                  What is the funding source for reconciliation or other expenditures? Select all that apply.
+                </label>
+                <div>
+                  <div
+                    class="display-flex flex-align-center"
                   >
-                    Patient Protection Affordable Care Act (Sec 3021)
-                  </label>
-                  <p
-                    class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
-                  />
+                    <div
+                      class="mint-checkbox usa-checkbox"
+                    >
+                      <input
+                        class="usa-checkbox__input"
+                        data-testid="payment-funding-source-fundingSourceR-PATIENT_PROTECTION_AFFORDABLE_CARE_ACT"
+                        id="payment-funding-source-fundingSourceR-PATIENT_PROTECTION_AFFORDABLE_CARE_ACT"
+                        name="fundingSourceR"
+                        type="checkbox"
+                        value="PATIENT_PROTECTION_AFFORDABLE_CARE_ACT"
+                      />
+                      <label
+                        class="usa-checkbox__label"
+                        for="payment-funding-source-fundingSourceR-PATIENT_PROTECTION_AFFORDABLE_CARE_ACT"
+                      >
+                        Patient Protection Affordable Care Act (Sec 3021)
+                      </label>
+                      <p
+                        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                      />
+                    </div>
+                  </div>
                 </div>
-                <div
-                  class="mint-checkbox usa-checkbox"
-                >
-                  <input
-                    class="usa-checkbox__input"
-                    id="payment-funding-source-reconciliation-TRUST_FUND"
-                    name="fundingSourceR"
-                    type="checkbox"
-                    value="TRUST_FUND"
-                  />
-                  <label
-                    class="usa-checkbox__label"
-                    for="payment-funding-source-reconciliation-TRUST_FUND"
+                <div>
+                  <div
+                    class="display-flex flex-align-center"
                   >
-                    Trust Fund
-                  </label>
-                  <p
-                    class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
-                  />
+                    <div
+                      class="mint-checkbox usa-checkbox"
+                    >
+                      <input
+                        class="usa-checkbox__input"
+                        data-testid="payment-funding-source-fundingSourceR-MEDICARE_PART_A_HI_TRUST_FUND"
+                        id="payment-funding-source-fundingSourceR-MEDICARE_PART_A_HI_TRUST_FUND"
+                        name="fundingSourceR"
+                        type="checkbox"
+                        value="MEDICARE_PART_A_HI_TRUST_FUND"
+                      />
+                      <label
+                        class="usa-checkbox__label"
+                        for="payment-funding-source-fundingSourceR-MEDICARE_PART_A_HI_TRUST_FUND"
+                      >
+                        Medicare Part A (HI) Trust Fund
+                      </label>
+                      <p
+                        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                      />
+                    </div>
+                    <span
+                      class="usa-tooltip"
+                      data-testid="tooltipWrapper"
+                    >
+                      <div
+                        aria-describedby="tooltip-550000"
+                        class="usa-tooltip__trigger margin-left-05"
+                        data-testid="triggerElement"
+                        position="right"
+                        tabindex="0"
+                        title=""
+                      >
+                        <svg
+                          class="usa-icon text-base-light"
+                          focusable="false"
+                          height="1em"
+                          role="img"
+                          viewBox="0 0 24 24"
+                          width="1em"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
+                          />
+                        </svg>
+                      </div>
+                      <span
+                        aria-hidden="true"
+                        class="usa-tooltip__body"
+                        data-testid="tooltipBody"
+                        id="tooltip-550000"
+                        role="tooltip"
+                        title="Also known as the Hospital Insurance (HI) Trust Fund, this covers inpatient hospital care, skilled nursing facility care, home healthcare, and hospice care."
+                      >
+                        Also known as the Hospital Insurance (HI) Trust Fund, this covers inpatient hospital care, skilled nursing facility care, home healthcare, and hospice care.
+                      </span>
+                    </span>
+                  </div>
                 </div>
-                <div
-                  class="mint-checkbox usa-checkbox"
-                >
-                  <input
-                    class="usa-checkbox__input"
-                    id="payment-funding-source-reconciliation-OTHER"
-                    name="fundingSourceR"
-                    type="checkbox"
-                    value="OTHER"
-                  />
-                  <label
-                    class="usa-checkbox__label"
-                    for="payment-funding-source-reconciliation-OTHER"
+                <div>
+                  <div
+                    class="display-flex flex-align-center"
                   >
-                    Other
-                  </label>
-                  <p
-                    class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
-                  />
+                    <div
+                      class="mint-checkbox usa-checkbox"
+                    >
+                      <input
+                        class="usa-checkbox__input"
+                        data-testid="payment-funding-source-fundingSourceR-MEDICARE_PART_B_SMI_TRUST_FUND"
+                        id="payment-funding-source-fundingSourceR-MEDICARE_PART_B_SMI_TRUST_FUND"
+                        name="fundingSourceR"
+                        type="checkbox"
+                        value="MEDICARE_PART_B_SMI_TRUST_FUND"
+                      />
+                      <label
+                        class="usa-checkbox__label"
+                        for="payment-funding-source-fundingSourceR-MEDICARE_PART_B_SMI_TRUST_FUND"
+                      >
+                        Medicare Part B (SMI) Trust Fund
+                      </label>
+                      <p
+                        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                      />
+                    </div>
+                    <span
+                      class="usa-tooltip"
+                      data-testid="tooltipWrapper"
+                    >
+                      <div
+                        aria-describedby="tooltip-550000"
+                        class="usa-tooltip__trigger margin-left-05"
+                        data-testid="triggerElement"
+                        position="right"
+                        tabindex="0"
+                        title=""
+                      >
+                        <svg
+                          class="usa-icon text-base-light"
+                          focusable="false"
+                          height="1em"
+                          role="img"
+                          viewBox="0 0 24 24"
+                          width="1em"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
+                          />
+                        </svg>
+                      </div>
+                      <span
+                        aria-hidden="true"
+                        class="usa-tooltip__body"
+                        data-testid="tooltipBody"
+                        id="tooltip-550000"
+                        role="tooltip"
+                        title="Also known as the Supplementary Medical Insurance (SMI) Trust Fund, this covers physician services, outpatient care, medical supplies, preventive services, and other healthcare services not covered by Part A."
+                      >
+                        Also known as the Supplementary Medical Insurance (SMI) Trust Fund, this covers physician services, outpatient care, medical supplies, preventive services, and other healthcare services not covered by Part A.
+                      </span>
+                    </span>
+                  </div>
+                </div>
+                <div>
+                  <div
+                    class="display-flex flex-align-center"
+                  >
+                    <div
+                      class="mint-checkbox usa-checkbox"
+                    >
+                      <input
+                        class="usa-checkbox__input"
+                        data-testid="payment-funding-source-fundingSourceR-OTHER"
+                        id="payment-funding-source-fundingSourceR-OTHER"
+                        name="fundingSourceR"
+                        type="checkbox"
+                        value="OTHER"
+                      />
+                      <label
+                        class="usa-checkbox__label"
+                        for="payment-funding-source-fundingSourceR-OTHER"
+                      >
+                        Other
+                      </label>
+                      <p
+                        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                      />
+                    </div>
+                  </div>
                 </div>
               </fieldset>
               <div
@@ -456,10 +568,6 @@ exports[`Model Plan Payment > matches snapshot 1`] = `
                     width="1em"
                     xmlns="http://www.w3.org/2000/svg"
                   >
-                    <path
-                      d="M0 0h24v24H0z"
-                      fill="none"
-                    />
                     <path
                       d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
                     />
@@ -603,10 +711,6 @@ exports[`Model Plan Payment > matches snapshot 1`] = `
                     xmlns="http://www.w3.org/2000/svg"
                   >
                     <path
-                      d="M0 0h24v24H0z"
-                      fill="none"
-                    />
-                    <path
                       d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
                     />
                   </svg>
@@ -714,10 +818,6 @@ exports[`Model Plan Payment > matches snapshot 1`] = `
                     xmlns="http://www.w3.org/2000/svg"
                   >
                     <path
-                      d="M0 0h24v24H0z"
-                      fill="none"
-                    />
-                    <path
                       d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
                     />
                   </svg>
@@ -751,10 +851,6 @@ exports[`Model Plan Payment > matches snapshot 1`] = `
                 width="1em"
                 xmlns="http://www.w3.org/2000/svg"
               >
-                <path
-                  d="M0 0h24v24H0z"
-                  fill="none"
-                />
                 <path
                   d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"
                 />

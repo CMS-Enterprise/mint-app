@@ -45,10 +45,11 @@ func (suite *ResolverSuite) TestPlanBeneficiariesUpdate() {
 	suite.NoError(err)
 
 	changes := map[string]interface{}{
-		"treatDualElligibleDifferent": "YES",
-		"beneficiariesOther":          "The Gumdrop Kids",
-		"beneficiarySelectionMethod":  []string{model.SelectionMethodTypeOther.String(), model.SelectionMethodTypeHistorical.String()},
-		"beneficiarySelectionNote":    "Priority given to provider sign up",
+		"treatDualElligibleDifferent":              "YES",
+		"beneficiariesOther":                       "The Gumdrop Kids",
+		"beneficiarySelectionMethod":               []string{model.SelectionMethodTypeOther.String(), model.SelectionMethodTypeHistorical.String()},
+		"beneficiarySelectionNote":                 "Priority given to provider sign up",
+		"beneficiarySelectionFrequencyContinually": "some test value",
 	}
 	updatedBeneficiary, err := PlanBeneficiariesUpdate(suite.testConfigs.Logger, b.ID, changes, suite.testConfigs.Principal, suite.testConfigs.Store)
 	suite.NoError(err)
@@ -59,6 +60,7 @@ func (suite *ResolverSuite) TestPlanBeneficiariesUpdate() {
 	suite.EqualValues(*updatedBeneficiary.BeneficiariesOther, "The Gumdrop Kids")
 	suite.EqualValues(updatedBeneficiary.BeneficiarySelectionMethod, []string{model.SelectionMethodTypeOther.String(), model.SelectionMethodTypeHistorical.String()})
 	suite.EqualValues(*updatedBeneficiary.BeneficiarySelectionNote, "Priority given to provider sign up")
+	suite.EqualValues(*updatedBeneficiary.BeneficiarySelectionFrequencyContinually, "some test value")
 
 	// Assert that no other fields got updated
 	suite.Nil(updatedBeneficiary.Beneficiaries)
@@ -75,9 +77,16 @@ func (suite *ResolverSuite) TestPlanBeneficiariesUpdate() {
 	suite.Nil(updatedBeneficiary.BeneficiarySelectionFrequency)
 	suite.Nil(updatedBeneficiary.BeneficiarySelectionFrequencyOther)
 	suite.Nil(updatedBeneficiary.BeneficiarySelectionFrequencyNote)
+	suite.Nil(updatedBeneficiary.BeneficiaryRemovalFrequency)
+	suite.Nil(updatedBeneficiary.BeneficiaryRemovalFrequencyContinually)
+	suite.Nil(updatedBeneficiary.BeneficiaryRemovalFrequencyOther)
+	suite.Nil(updatedBeneficiary.BeneficiaryRemovalFrequencyNote)
 	suite.Nil(updatedBeneficiary.BeneficiaryOverlap)
 	suite.Nil(updatedBeneficiary.BeneficiaryOverlapNote)
 	suite.Nil(updatedBeneficiary.PrecedenceRules)
+	suite.Nil(updatedBeneficiary.PrecedenceRulesYes)
+	suite.Nil(updatedBeneficiary.PrecedenceRulesNo)
+	suite.Nil(updatedBeneficiary.PrecedenceRulesNote)
 
 }
 
@@ -111,8 +120,15 @@ func (suite *ResolverSuite) TestPlanBeneficiariesGetByModelPlanID() {
 	suite.Nil(b.BeneficiarySelectionFrequency)
 	suite.Nil(b.BeneficiarySelectionFrequencyOther)
 	suite.Nil(b.BeneficiarySelectionFrequencyNote)
+	suite.Nil(b.BeneficiaryRemovalFrequency)
+	suite.Nil(b.BeneficiaryRemovalFrequencyContinually)
+	suite.Nil(b.BeneficiaryRemovalFrequencyOther)
+	suite.Nil(b.BeneficiaryRemovalFrequencyNote)
 	suite.Nil(b.BeneficiaryOverlap)
 	suite.Nil(b.BeneficiaryOverlapNote)
 	suite.Nil(b.PrecedenceRules)
+	suite.Nil(b.PrecedenceRulesYes)
+	suite.Nil(b.PrecedenceRulesNo)
+	suite.Nil(b.PrecedenceRulesNote)
 
 }

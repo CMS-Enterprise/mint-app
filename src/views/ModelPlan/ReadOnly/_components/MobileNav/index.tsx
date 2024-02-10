@@ -1,11 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { NavLink } from 'react-router-dom';
-import {
-  IconArrowBack,
-  IconExpandLess,
-  IconExpandMore
-} from '@trussworks/react-uswds';
+import { Icon } from '@trussworks/react-uswds';
 
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 
@@ -18,13 +14,15 @@ interface MobileNavProps {
   subinfo: SubpageKey;
   isHelpArticle: boolean | undefined;
   solutionDetailRoute?: string;
+  isFilteredView?: boolean;
 }
 
 const MobileNav = ({
   subComponents,
   subinfo,
   isHelpArticle,
-  solutionDetailRoute
+  solutionDetailRoute,
+  isFilteredView
 }: MobileNavProps) => {
   const { t } = useTranslation('modelSummary');
   const { t: h } = useTranslation('generalReadOnly');
@@ -55,12 +53,14 @@ const MobileNav = ({
         aria-controls="read-only-model-plan__subNav"
       >
         <h3 className="padding-left-1">
-          {translationKey(`navigation.${subinfo}`)}
+          {isFilteredView
+            ? translationKey(`navigation.model-basics`)
+            : translationKey(`navigation.${subinfo}`)}
         </h3>
         {!isAccordionOpen ? (
-          <IconExpandMore size={3} />
+          <Icon.ExpandMore size={3} />
         ) : (
-          <IconExpandLess size={3} />
+          <Icon.ExpandLess size={3} />
         )}
       </button>
       {isAccordionOpen && (
@@ -90,7 +90,7 @@ const MobileNav = ({
                 to={solutionDetailRoute || '/models'}
                 className="display-flex flex-align-center"
               >
-                <IconArrowBack className="margin-right-1" />
+                <Icon.ArrowBack className="margin-right-1" />
                 {solutionDetailRoute ? hk('backToSolutions') : h('back')}
               </NavLink>
             </li>

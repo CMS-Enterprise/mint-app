@@ -25,10 +25,7 @@ export const ModelPlanOverviewContent = ({
 
   return (
     <>
-      <SummaryBox
-        heading=""
-        className="bg-base-lightest border-0 radius-0 padding-y-2 padding-x-2"
-      >
+      <SummaryBox className="bg-base-lightest border-0 radius-0 padding-y-2 padding-x-2">
         <p className="margin-top-0 margin-bottom-1">
           {help ? t('summaryBox.copyHelp') : t('summaryBox.copy')}
         </p>

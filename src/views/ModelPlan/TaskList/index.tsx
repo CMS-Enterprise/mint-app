@@ -9,7 +9,6 @@ import React, {
 import { Trans, useTranslation } from 'react-i18next';
 import { RootStateOrAny, useSelector } from 'react-redux';
 import { Link, useLocation, useParams } from 'react-router-dom';
-import { useQuery } from '@apollo/client';
 import {
   Breadcrumb,
   BreadcrumbBar,
@@ -17,10 +16,13 @@ import {
   Button,
   Grid,
   GridContainer,
-  IconAnnouncement,
-  SummaryBox
+  Icon,
+  SummaryBox,
+  SummaryBoxContent,
+  SummaryBoxHeading
 } from '@trussworks/react-uswds';
 import classNames from 'classnames';
+import { GetCrtdLsQuery } from 'gql/gen/graphql';
 import { useFlags } from 'launchdarkly-react-client-sdk';
 
 import UswdsReactLink from 'components/LinkWrapper';
@@ -30,6 +32,7 @@ import PageLoading from 'components/PageLoading';
 import Alert from 'components/shared/Alert';
 import Divider from 'components/shared/Divider';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
+import useCacheQuery from 'hooks/useCacheQuery';
 import GetModelPlan from 'queries/GetModelPlan';
 import { TaskListSubscription_onLockTaskListSectionContext_lockStatus as LockSectionType } from 'queries/TaskListSubscription/types/TaskListSubscription';
 import {
@@ -37,7 +40,6 @@ import {
   GetModelPlan_modelPlan as GetModelPlanTypes,
   GetModelPlan_modelPlan_basics as BasicsType,
   GetModelPlan_modelPlan_beneficiaries as BeneficiariesType,
-  GetModelPlan_modelPlan_crTdls as CRTDLType,
   GetModelPlan_modelPlan_discussions as DiscussionType,
   GetModelPlan_modelPlan_documents as DocumentType,
   GetModelPlan_modelPlan_generalCharacteristics as GeneralCharacteristicsType,
@@ -63,6 +65,10 @@ import TaskListSideNav from './_components/TaskListSideNav';
 import TaskListStatus from './_components/TaskListStatus';
 
 import './index.scss';
+
+type CRTDLType =
+  | GetCrtdLsQuery['modelPlan']['crs'][0]
+  | GetCrtdLsQuery['modelPlan']['tdls'][0];
 
 type ITSolutionsType = {
   modifiedDts: string | null;
@@ -139,7 +145,7 @@ const TaskList = () => {
 
   const { taskListSectionLocks } = useContext(SubscriptionContext);
 
-  const { data, loading, error } = useQuery<
+  const { data, loading, error } = useCacheQuery<
     GetModelPlanType,
     GetModelPlanVariables
   >(GetModelPlan, {
@@ -155,7 +161,8 @@ const TaskList = () => {
     basics,
     discussions,
     documents,
-    crTdls,
+    crs,
+    tdls,
     status,
     generalCharacteristics,
     participantsAndProviders,
@@ -166,6 +173,11 @@ const TaskList = () => {
     prepareForClearance,
     collaborators
   } = modelPlan;
+
+  const planCRs = crs || [];
+  const planTDLs = tdls || [];
+
+  const crTdls = [...planCRs, ...planTDLs] as CRTDLType[];
 
   const getITSolutionsStatus = (
     operationalNeedsArray: OperationalNeedsType[]
@@ -394,11 +406,9 @@ const DicussionBanner = ({
   const { t: d } = useTranslation('discussions');
 
   return (
-    <SummaryBox
-      heading={d('heading')}
-      className="bg-primary-lighter border-0 radius-0 padding-2"
-    >
-      <div
+    <SummaryBox className="bg-primary-lighter border-0 radius-0 padding-2">
+      <SummaryBoxHeading headingLevel="h3">{d('heading')}</SummaryBoxHeading>
+      <SummaryBoxContent
         className={classNames('margin-top-1', {
           'mint-header__basic': discussions?.length > 0
         })}
@@ -406,7 +416,7 @@ const DicussionBanner = ({
         {discussions?.length > 0 ? (
           <>
             <div className="display-flex flex-align-center">
-              <IconAnnouncement className="margin-right-1" />
+              <Icon.Announcement className="margin-right-1" />
               <div>
                 <strong>{discussions.length}</strong>
                 {d('discussionBanner.discussion', {
@@ -436,7 +446,7 @@ const DicussionBanner = ({
             .
           </>
         )}
-      </div>
+      </SummaryBoxContent>
     </SummaryBox>
   );
 };
@@ -453,55 +463,56 @@ const DocumentBanner = ({ documents, modelID, expand }: DocumentBannerType) => {
 
   return (
     <SummaryBox
-      heading=""
       className={classNames('bg-base-lightest border-0 radius-0 padding-2', {
         'model-plan-task-list__min-card': expand
       })}
     >
-      <h3 className="margin-0">
+      <SummaryBoxHeading headingLevel="h3" className="margin-0">
         {t('modelPlanTaskList:documentSummaryBox.heading')}
-      </h3>
+      </SummaryBoxHeading>
 
-      {documents?.length > 0 ? (
-        <>
-          <p
-            className="margin-0 padding-bottom-1 padding-top-05"
-            data-testid="document-items"
-          >
-            <strong>{documents.length} </strong>
-            {t('documentSummaryBox.document', { count: documents.length })}
-          </p>
+      <SummaryBoxContent>
+        {documents?.length > 0 ? (
+          <>
+            <p
+              className="margin-0 padding-bottom-1 padding-top-05"
+              data-testid="document-items"
+            >
+              <strong>{documents.length} </strong>
+              {t('documentSummaryBox.document', { count: documents.length })}
+            </p>
 
-          <UswdsReactLink
-            variant="unstyled"
-            className="margin-right-4 display-block margin-bottom-1"
-            to={`/models/${modelID}/documents`}
-          >
-            {t('documentSummaryBox.viewAll')}
-          </UswdsReactLink>
+            <UswdsReactLink
+              variant="unstyled"
+              className="margin-right-4 display-block margin-bottom-1"
+              to={`/models/${modelID}/documents`}
+            >
+              {t('documentSummaryBox.viewAll')}
+            </UswdsReactLink>
 
-          <UswdsReactLink
-            variant="unstyled"
-            to={`/models/${modelID}/documents/add-document`}
-          >
-            {t('documentSummaryBox.addAnother')}
-          </UswdsReactLink>
-        </>
-      ) : (
-        <>
-          <p className="margin-0 margin-bottom-1">
-            {t('documentSummaryBox.copy')}
-          </p>
+            <UswdsReactLink
+              variant="unstyled"
+              to={`/models/${modelID}/documents/add-document`}
+            >
+              {t('documentSummaryBox.addAnother')}
+            </UswdsReactLink>
+          </>
+        ) : (
+          <>
+            <p className="margin-0 margin-bottom-1">
+              {t('documentSummaryBox.copy')}
+            </p>
 
-          <UswdsReactLink
-            className="usa-button usa-button--outline"
-            variant="unstyled"
-            to={`/models/${modelID}/documents/add-document`}
-          >
-            {t('documentSummaryBox.cta')}
-          </UswdsReactLink>
-        </>
-      )}
+            <UswdsReactLink
+              className="usa-button usa-button--outline"
+              variant="unstyled"
+              to={`/models/${modelID}/documents/add-document`}
+            >
+              {t('documentSummaryBox.cta')}
+            </UswdsReactLink>
+          </>
+        )}
+      </SummaryBoxContent>
     </SummaryBox>
   );
 };
@@ -518,62 +529,63 @@ const CRTDLBanner = ({ crTdls, modelID, expand }: CRTDLBannerType) => {
 
   return (
     <SummaryBox
-      heading=""
       className={classNames('bg-base-lightest border-0 radius-0 padding-2', {
         'model-plan-task-list__min-card': expand
       })}
     >
-      <h3 className="margin-0">
+      <SummaryBoxHeading headingLevel="h3" className="margin-0">
         {t('modelPlanTaskList:crTDLsSummaryBox.heading')}
-      </h3>
+      </SummaryBoxHeading>
 
-      {crTdls?.length > 0 ? (
-        <>
-          <p
-            className="margin-0 padding-bottom-1 padding-top-05"
-            data-testid="cr-tdl-items"
-          >
-            {crTdls.map(
-              (crtdl, index) =>
-                index < 3 &&
-                `${crtdl.idNumber}${index !== crTdls.length - 1 ? ',' : ''} `
-            )}
-            {crTdls.length > 3 &&
-              `+${crTdls.length - 3} ${t('crTDLsSummaryBox.more')}`}{' '}
-          </p>
+      <SummaryBoxContent>
+        {crTdls?.length > 0 ? (
+          <>
+            <p
+              className="margin-0 padding-bottom-1 padding-top-05"
+              data-testid="cr-tdl-items"
+            >
+              {crTdls.map(
+                (crtdl, index) =>
+                  index < 3 &&
+                  `${crtdl.idNumber}${index !== crTdls.length - 1 ? ',' : ''} `
+              )}
+              {crTdls.length > 3 &&
+                `+${crTdls.length - 3} ${t('crTDLsSummaryBox.more')}`}{' '}
+            </p>
 
-          <UswdsReactLink
-            variant="unstyled"
-            className="margin-right-4 display-block margin-bottom-1"
-            to={`/models/${modelID}/cr-and-tdl`}
-          >
-            {t('crTDLsSummaryBox.viewAll')}
-          </UswdsReactLink>
+            <UswdsReactLink
+              variant="unstyled"
+              className="margin-right-4 display-block margin-bottom-1"
+              to={`/models/${modelID}/cr-and-tdl`}
+            >
+              {t('crTDLsSummaryBox.viewAll')}
+            </UswdsReactLink>
 
-          <UswdsReactLink
-            variant="unstyled"
-            to={`/models/${modelID}/cr-and-tdl/add-cr-and-tdl`}
-          >
-            {t('crTDLsSummaryBox.uploadAnother')}
-          </UswdsReactLink>
-        </>
-      ) : (
-        <>
-          <p className="margin-0 margin-bottom-1">
-            <Trans i18nKey="modelPlanTaskList:crTDLsSummaryBox.copy">
-              indexZero
-            </Trans>
-          </p>
+            <UswdsReactLink
+              variant="unstyled"
+              to={`/models/${modelID}/cr-and-tdl/add-cr-and-tdl`}
+            >
+              {t('crTDLsSummaryBox.uploadAnother')}
+            </UswdsReactLink>
+          </>
+        ) : (
+          <>
+            <p className="margin-0 margin-bottom-1">
+              <Trans i18nKey="modelPlanTaskList:crTDLsSummaryBox.copy">
+                indexZero
+              </Trans>
+            </p>
 
-          <UswdsReactLink
-            className="usa-button usa-button--outline"
-            variant="unstyled"
-            to={`/models/${modelID}/cr-and-tdl/add-cr-and-tdl`}
-          >
-            {t('crTDLsSummaryBox.add')}
-          </UswdsReactLink>
-        </>
-      )}
+            <UswdsReactLink
+              className="usa-button usa-button--outline"
+              variant="unstyled"
+              to={`/models/${modelID}/cr-and-tdl/add-cr-and-tdl`}
+            >
+              {t('crTDLsSummaryBox.add')}
+            </UswdsReactLink>
+          </>
+        )}
+      </SummaryBoxContent>
     </SummaryBox>
   );
 };

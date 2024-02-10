@@ -1,15 +1,20 @@
 import React, { useContext, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useQuery } from '@apollo/client';
+import {
+  KeyCharacteristic,
+  useGetAllGeneralCharacteristicsQuery
+} from 'gql/gen/graphql';
 
-import GetAllGeneralCharacteristics from 'queries/ReadOnly/GetAllGeneralCharacteristics';
-import { GetAllGeneralCharacteristics as GetAllGeneralCharacteristicsTypes } from 'queries/ReadOnly/types/GetAllGeneralCharacteristics';
-import { KeyCharacteristic } from 'types/graphql-global-types';
+import usePlanTranslation from 'hooks/usePlanTranslation';
+import { YesNoOtherType } from 'types/graphql-global-types';
 import { ModelInfoContext } from 'views/ModelInfoWrapper';
 import { NotFoundPartial } from 'views/NotFound';
 
 import { checkGroupMap } from '../_components/FilterView/util';
-import ReadOnlySection from '../_components/ReadOnlySection';
+import ReadOnlySection, {
+  formatListItems,
+  formatListOtherItems
+} from '../_components/ReadOnlySection';
 import SideBySideReadOnlySection from '../_components/SideBySideReadOnlySection';
 import TitleAndStatus from '../_components/TitleAndStatus';
 import { ReadOnlyProps } from '../ModelBasics';
@@ -29,39 +34,43 @@ const ReadOnlyGeneralCharacteristics = ({
   );
   const { t: prepareForClearanceT } = useTranslation('prepareForClearance');
 
+  const {
+    geographiesTargetedTypes: geographiesTargetedTypesConfig,
+    geographiesTargetedAppliedTo: geographiesTargetedAppliedToConfig
+  } = usePlanTranslation('generalCharacteristics');
+
   const { modelName } = useContext(ModelInfoContext);
 
-  const { data, loading, error } = useQuery<GetAllGeneralCharacteristicsTypes>(
-    GetAllGeneralCharacteristics,
-    {
-      variables: {
-        id: modelID
-      }
+  const { data, loading, error } = useGetAllGeneralCharacteristicsQuery({
+    variables: {
+      id: modelID
     }
-  );
-
-  const mappedExistingModels: (string | number)[] = useMemo(() => {
-    return (
-      data?.modelPlan?.existingModelLinks?.map(
-        link =>
-          (link.currentModelPlan?.modelName || link.existingModel?.modelName)!
-      ) || []
-    );
-  }, [data?.modelPlan?.existingModelLinks]);
-
-  if ((!loading && error) || (!loading && !data?.modelPlan)) {
-    return <NotFoundPartial />;
-  }
+  });
 
   const {
     isNewModel,
     existingModel,
     resemblesExistingModel,
+    resemblesExistingModelWhyHow,
     resemblesExistingModelHow,
+    resemblesExistingModelWhich,
     resemblesExistingModelNote,
+    resemblesExistingModelOtherSpecify,
+    resemblesExistingModelOtherSelected,
+    resemblesExistingModelOtherOption,
+    participationInModelPrecondition,
+    participationInModelPreconditionWhyHow,
+    participationInModelPreconditionWhich,
+    participationInModelPreconditionNote,
+    participationInModelPreconditionOtherSpecify,
+    participationInModelPreconditionOtherSelected,
+    participationInModelPreconditionOtherOption,
     hasComponentsOrTracks,
     hasComponentsOrTracksDiffer,
     hasComponentsOrTracksNote,
+    agencyOrStateHelp,
+    agencyOrStateHelpOther,
+    agencyOrStateHelpNote,
     alternativePaymentModelTypes,
     alternativePaymentModelNote,
     keyCharacteristics,
@@ -84,6 +93,8 @@ const ReadOnlyGeneralCharacteristics = ({
     communityPartnersInvolvedNote,
     geographiesTargeted,
     geographiesTargetedTypes,
+    geographiesStatesAndTerritories,
+    geographiesRegionTypes,
     geographiesTargetedTypesOther,
     geographiesTargetedAppliedTo,
     geographiesTargetedAppliedToOther,
@@ -105,6 +116,38 @@ const ReadOnlyGeneralCharacteristics = ({
     waiversRequiredNote,
     status
   } = data?.modelPlan?.generalCharacteristics || {};
+
+  // Add 'Other' to the resemblesExistingModelWhich list if resemblesExistingModelOtherSelected is true
+  const linkedResemblePlans = useMemo(() => {
+    const resemblesExistingModelWhichCopy = { ...resemblesExistingModelWhich }
+      .names;
+    const selectedPlans = [...(resemblesExistingModelWhichCopy || [])];
+    if (resemblesExistingModelOtherSelected) {
+      selectedPlans?.push('Other');
+    }
+    return selectedPlans;
+  }, [resemblesExistingModelWhich, resemblesExistingModelOtherSelected]);
+
+  // Add 'Other' to the participationInModelPrecondition list if participationInModelPreconditionOtherSelected is true
+  const participationPreconditionPlans = useMemo(() => {
+    const participationInModelPreconditionWhichCopy = {
+      ...participationInModelPreconditionWhich
+    }.names;
+    const selectedPlans = [
+      ...(participationInModelPreconditionWhichCopy || [])
+    ];
+    if (participationInModelPreconditionOtherSelected) {
+      selectedPlans?.push('Other');
+    }
+    return selectedPlans;
+  }, [
+    participationInModelPreconditionWhich,
+    participationInModelPreconditionOtherSelected
+  ]);
+
+  if ((!loading && error) || (!loading && !data?.modelPlan)) {
+    return <NotFoundPartial />;
+  }
 
   return (
     <div
@@ -168,30 +211,105 @@ const ReadOnlyGeneralCharacteristics = ({
               `resemblesExistingModel.options.${resemblesExistingModel}`,
               ''
             )}
+            otherItem={generalCharacteristicsT(
+              `resemblesExistingModel.options.OTHER`,
+              ''
+            )}
+            listOtherItem={resemblesExistingModelOtherSpecify}
           />
         )}
+
+        {(resemblesExistingModel === YesNoOtherType.YES ||
+          resemblesExistingModel === YesNoOtherType.NO) &&
+          checkGroupMap(
+            isViewingFilteredView,
+            filteredQuestions,
+            'resemblesExistingModelWhyHow',
+            <ReadOnlySection
+              heading={generalCharacteristicsT(
+                'resemblesExistingModelWhyHow.label'
+              )}
+              copy={resemblesExistingModelWhyHow}
+            />
+          )}
+
+        {resemblesExistingModel === YesNoOtherType.YES &&
+          checkGroupMap(
+            isViewingFilteredView,
+            filteredQuestions,
+            'resemblesExistingModelWhich',
+            <ReadOnlySection
+              heading={generalCharacteristicsT(
+                'resemblesExistingModelWhich.label'
+              )}
+              list
+              listItems={linkedResemblePlans}
+              listOtherItem={resemblesExistingModelOtherOption}
+            />
+          )}
+
+        {resemblesExistingModel === YesNoOtherType.YES &&
+          checkGroupMap(
+            isViewingFilteredView,
+            filteredQuestions,
+            'resemblesExistingModelHow',
+            <ReadOnlySection
+              heading={generalCharacteristicsT(
+                'resemblesExistingModelHow.label'
+              )}
+              copy={resemblesExistingModelHow}
+              notes={resemblesExistingModelNote}
+            />
+          )}
 
         {checkGroupMap(
           isViewingFilteredView,
           filteredQuestions,
-          'modelResemblance',
+          'participationInModelPrecondition',
           <ReadOnlySection
-            heading={generalCharacteristicsT('existingModelLinks.label')}
-            list
-            listItems={mappedExistingModels}
+            heading={generalCharacteristicsT(
+              'participationInModelPrecondition.label'
+            )}
+            copy={generalCharacteristicsT(
+              `participationInModelPrecondition.options.${participationInModelPrecondition}`,
+              ''
+            )}
+            otherItem={generalCharacteristicsT(
+              `participationInModelPrecondition.options.OTHER`,
+              ''
+            )}
+            listOtherItem={participationInModelPreconditionOtherSpecify}
           />
         )}
 
-        {checkGroupMap(
-          isViewingFilteredView,
-          filteredQuestions,
-          'resemblesExistingModelHow',
-          <ReadOnlySection
-            heading={generalCharacteristicsT('resemblesExistingModelHow.label')}
-            copy={resemblesExistingModelHow}
-            notes={resemblesExistingModelNote}
-          />
-        )}
+        {participationInModelPrecondition === YesNoOtherType.YES &&
+          checkGroupMap(
+            isViewingFilteredView,
+            filteredQuestions,
+            'participationInModelPreconditionWhich',
+            <ReadOnlySection
+              heading={generalCharacteristicsT(
+                'participationInModelPreconditionWhich.label'
+              )}
+              list
+              listItems={participationPreconditionPlans}
+              listOtherItem={participationInModelPreconditionOtherOption}
+            />
+          )}
+
+        {participationInModelPrecondition === YesNoOtherType.YES &&
+          checkGroupMap(
+            isViewingFilteredView,
+            filteredQuestions,
+            'participationInModelPreconditionWhyHow',
+            <ReadOnlySection
+              heading={generalCharacteristicsT(
+                'participationInModelPreconditionWhyHow.label'
+              )}
+              copy={participationInModelPreconditionWhyHow}
+              notes={participationInModelPreconditionNote}
+            />
+          )}
 
         {checkGroupMap(
           isViewingFilteredView,
@@ -228,6 +346,21 @@ const ReadOnlyGeneralCharacteristics = ({
             : 'margin-bottom-4 border-bottom-1px border-base-light padding-bottom-2'
         }`}
       >
+        {checkGroupMap(
+          isViewingFilteredView,
+          filteredQuestions,
+          'agencyOrStateHelp',
+          <ReadOnlySection
+            heading={generalCharacteristicsT('agencyOrStateHelp.readonlyLabel')}
+            list
+            listItems={agencyOrStateHelp?.map((type): string =>
+              generalCharacteristicsT(`agencyOrStateHelp.options.${type}`)
+            )}
+            listOtherItem={agencyOrStateHelpOther}
+            notes={agencyOrStateHelpNote}
+          />
+        )}
+
         {checkGroupMap(
           isViewingFilteredView,
           filteredQuestions,
@@ -456,33 +589,59 @@ const ReadOnlyGeneralCharacteristics = ({
           isViewingFilteredView,
           filteredQuestions,
           'geographiesTargetedTypes',
-          <SideBySideReadOnlySection
-            firstSection={{
-              heading: generalCharacteristicsT(
-                'geographiesTargetedTypes.label'
-              ),
-              list: true,
-              listItems: geographiesTargetedTypes?.map((type): string =>
-                generalCharacteristicsT(
-                  `geographiesTargetedTypes.options.${type}`
-                )
-              ),
-              listOtherItem: geographiesTargetedTypesOther
-            }}
-            secondSection={{
-              heading: generalCharacteristicsT(
-                'geographiesTargetedAppliedTo.label'
-              ),
-              list: true,
-              listItems: geographiesTargetedAppliedTo?.map((type): string =>
-                generalCharacteristicsT(
-                  `geographiesTargetedAppliedTo.options.${type}`
-                )
-              ),
-              listOtherItem: geographiesTargetedAppliedToOther
-            }}
+          <ReadOnlySection
+            heading={generalCharacteristicsT('geographiesTargetedTypes.label')}
+            list
+            listItems={formatListItems(
+              geographiesTargetedTypesConfig,
+              geographiesTargetedTypes
+            )}
+            listOtherItems={formatListOtherItems(
+              geographiesTargetedTypesConfig,
+              geographiesTargetedTypes,
+              {
+                geographiesStatesAndTerritories: geographiesStatesAndTerritories
+                  ?.map(
+                    state =>
+                      generalCharacteristicsT(
+                        `geographiesStatesAndTerritories.options.${state}`
+                      ).split(' - ')[1]
+                  )
+                  .join(', '),
+                geographiesRegionTypes:
+                  geographiesRegionTypes?.length !== 0 &&
+                  geographiesRegionTypes?.map(region => {
+                    return (
+                      <li key={region}>
+                        {generalCharacteristicsT(
+                          `geographiesRegionTypes.options.${region}`
+                        )}
+                      </li>
+                    );
+                  }),
+                geographiesTargetedTypesOther
+              }
+            )}
           />
         )}
+
+        {checkGroupMap(
+          isViewingFilteredView,
+          filteredQuestions,
+          'geographiesTargetedTypes',
+          <ReadOnlySection
+            heading={generalCharacteristicsT(
+              'geographiesTargetedAppliedTo.label'
+            )}
+            list
+            listItems={formatListItems(
+              geographiesTargetedAppliedToConfig,
+              geographiesTargetedAppliedTo
+            )}
+            listOtherItem={geographiesTargetedAppliedToOther}
+          />
+        )}
+
         {checkGroupMap(
           isViewingFilteredView,
           filteredQuestions,

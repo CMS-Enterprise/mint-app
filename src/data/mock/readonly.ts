@@ -1,46 +1,40 @@
-import { TrustFundType } from 'gql/gen/graphql';
-
-import GetModelPlanCollaborators from 'queries/Collaborators/GetModelCollaborators';
-import { GetModelCollaborators_modelPlan_collaborators as GetModelCollaboratorsType } from 'queries/Collaborators/types/GetModelCollaborators';
-import GetAllBasics from 'queries/ReadOnly/GetAllBasics';
-import GetAllBeneficiaries from 'queries/ReadOnly/GetAllBeneficiaries';
-import GetAllGeneralCharacteristics from 'queries/ReadOnly/GetAllGeneralCharacteristics';
-import GetAllParticipants from 'queries/ReadOnly/GetAllParticipants';
-import GetAllPayments from 'queries/ReadOnly/GetAllPayments';
-import GetModelSummary from 'queries/ReadOnly/GetModelSummary';
-import GetAllOpsEvalAndLearning from 'queries/ReadOnly/GettAllOpsEvalAndLearning';
-import { GetAllBasics_modelPlan_basics as GetAllBasicsTypes } from 'queries/ReadOnly/types/GetAllBasics';
-import { GetAllBeneficiaries_modelPlan_beneficiaries as AllBeneficiariesTypes } from 'queries/ReadOnly/types/GetAllBeneficiaries';
-import { GetAllGeneralCharacteristics_modelPlan_generalCharacteristics as GetAllGeneralCharacteristicsTypes } from 'queries/ReadOnly/types/GetAllGeneralCharacteristics';
-import { GetAllOpsEvalAndLearning_modelPlan_opsEvalAndLearning as AllOpsEvalAndLearningTypes } from 'queries/ReadOnly/types/GetAllOpsEvalAndLearning';
-import { GetAllParticipants_modelPlan_participantsAndProviders as GetAllParticipantsTypes } from 'queries/ReadOnly/types/GetAllParticipants';
-import { GetAllPayments_modelPlan_payments as PaymentTypes } from 'queries/ReadOnly/types/GetAllPayments';
-import { GetModelSummary_modelPlan as GetModelSummaryTypes } from 'queries/ReadOnly/types/GetModelSummary';
 import {
   AgencyOrStateHelpType,
   AgreementType,
   AlternativePaymentModelType,
-  AnticipatedPaymentFrequencyType,
   AuthorityAllowance,
   BenchmarkForPerformanceType,
   BeneficiariesType,
   CcmInvolvmentType,
   ClaimsBasedPayType,
-  CMMIGroup,
-  CMSCenter,
+  CmmiGroup,
+  CmsCenter,
   ComplexityCalculationLevelType,
   ConfidenceType,
   ContractorSupportType,
   DataForMonitoringType,
-  DataFrequencyType,
   DataFullTimeOrIncrementalType,
   DataStartsType,
   DataToSendParticipantsType,
   EvaluationApproachType,
   FrequencyType,
   FundingSource,
+  GainshareArrangementEligibility,
   GeographyApplication,
+  GeographyRegionType,
   GeographyType,
+  GetAllBasicsDocument,
+  GetAllBasicsQuery,
+  GetAllBeneficiariesDocument,
+  GetAllBeneficiariesQuery,
+  GetAllGeneralCharacteristicsDocument,
+  GetAllGeneralCharacteristicsQuery,
+  GetAllOpsEvalAndLearningDocument,
+  GetAllOpsEvalAndLearningQuery,
+  GetAllParticipantsAndProvidersDocument,
+  GetAllParticipantsAndProvidersQuery,
+  GetAllPaymentsDocument,
+  GetAllPaymentsQuery,
   KeyCharacteristic,
   ModelCategory,
   ModelLearningSystemType,
@@ -52,7 +46,7 @@ import {
   ParticipantCommunicationType,
   ParticipantRiskType,
   ParticipantSelectionType,
-  ParticipantsIDType,
+  ParticipantsIdType,
   ParticipantsType,
   PayRecipient,
   PayType,
@@ -61,13 +55,28 @@ import {
   RecruitmentType,
   SelectionMethodType,
   StakeholdersType,
+  StatesAndTerritories,
   TaskStatus,
   TeamRole,
   TriStateAnswer,
-  WaiverType
-} from 'types/graphql-global-types';
+  WaiverType,
+  YesNoOtherType,
+  YesNoType
+} from 'gql/gen/graphql';
+
+import GetModelPlanCollaborators from 'queries/Collaborators/GetModelCollaborators';
+import { GetModelCollaborators_modelPlan_collaborators as GetModelCollaboratorsType } from 'queries/Collaborators/types/GetModelCollaborators';
+import GetModelSummary from 'queries/ReadOnly/GetModelSummary';
+import { GetModelSummary_modelPlan as GetModelSummaryTypes } from 'queries/ReadOnly/types/GetModelSummary';
 
 export const modelID: string = 'f11eb129-2c80-4080-9440-439cbe1a286f';
+
+type GetAllBasicsTypes = GetAllBasicsQuery['modelPlan']['basics'];
+type GetAllGeneralCharacteristicsTypes = GetAllGeneralCharacteristicsQuery['modelPlan']['generalCharacteristics'];
+type GetAllParticipantsTypes = GetAllParticipantsAndProvidersQuery['modelPlan']['participantsAndProviders'];
+type AllBeneficiariesTypes = GetAllBeneficiariesQuery['modelPlan']['beneficiaries'];
+type AllOpsEvalAndLearningTypes = GetAllOpsEvalAndLearningQuery['modelPlan']['opsEvalAndLearning'];
+type PaymentTypes = GetAllPaymentsQuery['modelPlan']['payments'];
 
 const modelBasicsData: GetAllBasicsTypes = {
   __typename: 'PlanBasics',
@@ -76,13 +85,15 @@ const modelBasicsData: GetAllBasicsTypes = {
   amsModelID: '43532323',
   modelCategory: ModelCategory.STATE_BASED,
   additionalModelCategories: [ModelCategory.ACCOUNTABLE_CARE],
-  cmsCenters: [CMSCenter.CENTER_FOR_MEDICARE, CMSCenter.OTHER],
-  cmsOther: 'The Center for Awesomeness',
-  cmmiGroups: [
-    CMMIGroup.STATE_AND_POPULATION_HEALTH_GROUP,
-    CMMIGroup.POLICY_AND_PROGRAMS_GROUP
+  cmsCenters: [
+    CmsCenter.CENTER_FOR_MEDICARE,
+    CmsCenter.CENTER_FOR_MEDICAID_AND_CHIP_SERVICES
   ],
-  modelType: ModelType.MANDATORY,
+  cmmiGroups: [
+    CmmiGroup.STATE_AND_POPULATION_HEALTH_GROUP,
+    CmmiGroup.POLICY_AND_PROGRAMS_GROUP
+  ],
+  modelType: [ModelType.MANDATORY_NATIONAL],
   problem: 'There is not enough candy',
   goal: 'To get more candy',
   testInterventions: 'The great candy machine',
@@ -105,7 +116,7 @@ const modelBasicsData: GetAllBasicsTypes = {
 export const modelBasicsMocks = [
   {
     request: {
-      query: GetAllBasics,
+      query: GetAllBasicsDocument,
       variables: { id: modelID }
     },
     result: {
@@ -126,12 +137,28 @@ const generalCharacteristicData: GetAllGeneralCharacteristicsTypes = {
   id: '123',
   isNewModel: false,
   existingModel: 'Accountable Care Organizations (ACOs): General Information',
-  resemblesExistingModel: true,
+  resemblesExistingModel: YesNoOtherType.YES,
+  resemblesExistingModelWhyHow: 'We think it is right',
   resemblesExistingModelHow: null,
+  resemblesExistingModelOtherSpecify: '',
+  resemblesExistingModelOtherOption: 'Other model',
+  resemblesExistingModelOtherSelected: true,
   resemblesExistingModelNote: 'THIS IS A NEW NOTE',
+  participationInModelPrecondition: YesNoOtherType.YES,
+  participationInModelPreconditionWhyHow: 'It is a condition',
+  participationInModelPreconditionOtherSpecify: '',
+  participationInModelPreconditionOtherOption: 'Other model',
+  participationInModelPreconditionOtherSelected: true,
+  participationInModelPreconditionNote: 'Precondition note',
   hasComponentsOrTracks: true,
   hasComponentsOrTracksDiffer: 'In every way',
   hasComponentsOrTracksNote: 'Tracks note',
+  agencyOrStateHelp: [
+    AgencyOrStateHelpType.YES_STATE,
+    AgencyOrStateHelpType.OTHER
+  ],
+  agencyOrStateHelpOther: 'Agency other',
+  agencyOrStateHelpNote: 'State note',
   alternativePaymentModelTypes: [
     AlternativePaymentModelType.REGULAR,
     AlternativePaymentModelType.MIPS
@@ -161,7 +188,16 @@ const generalCharacteristicData: GetAllGeneralCharacteristicsTypes = {
   communityPartnersInvolvedDescription: 'Are community partners involved?\n\n',
   communityPartnersInvolvedNote: 'frwegqergqgrqwg planContractUpdatedNote',
   geographiesTargeted: true,
-  geographiesTargetedTypes: [GeographyType.OTHER],
+  geographiesTargetedTypes: [
+    GeographyType.OTHER,
+    GeographyType.STATE,
+    GeographyType.REGION
+  ],
+  geographiesStatesAndTerritories: [
+    StatesAndTerritories.CA,
+    StatesAndTerritories.IN
+  ],
+  geographiesRegionTypes: [GeographyRegionType.CBSA],
   geographiesTargetedTypesOther: 'Geography type other',
   geographiesTargetedAppliedTo: [
     GeographyApplication.BENEFICIARIES,
@@ -190,7 +226,7 @@ const generalCharacteristicData: GetAllGeneralCharacteristicsTypes = {
 export const generalCharacteristicMocks = [
   {
     request: {
-      query: GetAllGeneralCharacteristics,
+      query: GetAllGeneralCharacteristicsDocument,
       variables: { id: modelID }
     },
     result: {
@@ -234,14 +270,21 @@ const participantsAndProvidersData: GetAllParticipantsTypes = {
   ],
   selectionOther: 'Selection other',
   selectionNote: 'Note selection',
+  participantAddedFrequency: [FrequencyType.CONTINUALLY],
+  participantAddedFrequencyContinually: 'participant added continually',
+  participantAddedFrequencyOther: '',
+  participantAddedFrequencyNote: 'My note',
+  participantRemovedFrequency: [FrequencyType.OTHER],
+  participantRemovedFrequencyContinually: '',
+  participantRemovedFrequencyOther: 'participant added other',
+  participantRemovedFrequencyNote: 'Second note',
   communicationMethod: [
     ParticipantCommunicationType.IT_TOOL,
     ParticipantCommunicationType.MASS_EMAIL
   ],
   communicationMethodOther: 'Comm method other',
   communicationNote: 'Comm note',
-  participantAssumeRisk: true,
-  riskType: ParticipantRiskType.CAPITATION,
+  riskType: [ParticipantRiskType.CAPITATION],
   riskOther: 'Risk other',
   riskNote: 'Note risk',
   willRiskChange: true,
@@ -251,10 +294,13 @@ const participantsAndProvidersData: GetAllParticipantsTypes = {
   gainsharePayments: true,
   gainsharePaymentsTrack: true,
   gainsharePaymentsNote: 'Track note',
-  participantsIds: [ParticipantsIDType.CCNS],
+  gainsharePaymentsEligibility: [GainshareArrangementEligibility.OTHER],
+  gainsharePaymentsEligibilityOther: 'Other gainsharing',
+  participantsIds: [ParticipantsIdType.CCNS],
   participantsIdsOther: 'PArt ids other',
   participantsIDSNote: 'Note for particpants',
-  providerAdditionFrequency: FrequencyType.BIANNUALLY,
+  providerAdditionFrequency: [FrequencyType.OTHER],
+  providerAdditionFrequencyContinually: '',
   providerAdditionFrequencyOther: 'Freq other',
   providerAdditionFrequencyNote: 'Note freq',
   providerAddMethod: [ProviderAddType.RETROSPECTIVELY],
@@ -263,6 +309,10 @@ const participantsAndProvidersData: GetAllParticipantsTypes = {
   providerLeaveMethod: [ProviderLeaveType.NOT_APPLICABLE],
   providerLeaveMethodOther: 'Leave other',
   providerLeaveMethodNote: 'Note leave',
+  providerRemovalFrequency: [FrequencyType.CONTINUALLY],
+  providerRemovalFrequencyContinually: 'Freq cont',
+  providerRemovalFrequencyOther: '',
+  providerRemovalFrequencyNote: 'Note freq removal',
   providerOverlap: OverlapType.NO,
   providerOverlapHierarchy: 'This is the hierarchy',
   providerOverlapNote: 'Overlap note',
@@ -272,7 +322,7 @@ const participantsAndProvidersData: GetAllParticipantsTypes = {
 export const participantsAndProvidersMocks = [
   {
     request: {
-      query: GetAllParticipants,
+      query: GetAllParticipantsAndProvidersDocument,
       variables: { id: modelID }
     },
     result: {
@@ -295,6 +345,7 @@ const beneficiaryData: AllBeneficiariesTypes = {
     BeneficiariesType.DISEASE_SPECIFIC,
     BeneficiariesType.DUALLY_ELIGIBLE
   ],
+  diseaseSpecificGroup: 'Other disease group',
   beneficiariesOther: 'Other beneficiary',
   beneficiariesNote: 'Note beneficiary',
   treatDualElligibleDifferent: TriStateAnswer.YES,
@@ -309,19 +360,25 @@ const beneficiaryData: AllBeneficiariesTypes = {
   beneficiarySelectionMethod: [SelectionMethodType.HISTORICAL],
   beneficiarySelectionOther: 'Selection other',
   beneficiarySelectionNote: 'Note selection',
-  beneficiarySelectionFrequency: FrequencyType.ANNUALLY,
+  beneficiarySelectionFrequency: [FrequencyType.OTHER],
+  beneficiarySelectionFrequencyContinually: '',
   beneficiarySelectionFrequencyOther: 'Frequency other',
   beneficiarySelectionFrequencyNote: 'Note frequency',
+  beneficiaryRemovalFrequency: [FrequencyType.CONTINUALLY],
+  beneficiaryRemovalFrequencyContinually: 'Frequency continually',
+  beneficiaryRemovalFrequencyOther: '',
+  beneficiaryRemovalFrequencyNote: 'Note frequency',
   beneficiaryOverlap: OverlapType.YES_NEED_POLICIES,
   beneficiaryOverlapNote: 'Note overlap',
-  precedenceRules: 'Yes precedence rules',
+  precedenceRules: [YesNoType.YES],
+  precedenceRulesYes: 'Yes precedence rules',
   status: TaskStatus.IN_PROGRESS
 };
 
 export const benficiaryMocks = [
   {
     request: {
-      query: GetAllBeneficiaries,
+      query: GetAllBeneficiariesDocument,
       variables: { id: modelID }
     },
     result: {
@@ -341,12 +398,6 @@ const opsEvalAndLearningData: AllOpsEvalAndLearningTypes = {
   id: '123',
   modelPlanID: modelID,
   status: TaskStatus.IN_PROGRESS,
-  agencyOrStateHelp: [
-    AgencyOrStateHelpType.YES_STATE,
-    AgencyOrStateHelpType.OTHER
-  ],
-  agencyOrStateHelpOther: 'Agency other',
-  agencyOrStateHelpNote: 'State note',
   stakeholders: [
     StakeholdersType.BENEFICIARIES,
     StakeholdersType.PARTICIPANTS,
@@ -439,21 +490,24 @@ const opsEvalAndLearningData: AllOpsEvalAndLearningTypes = {
   useCcwForFileDistribiutionToParticipantsNote: 'Note for ccw disctro',
   developNewQualityMeasures: true,
   developNewQualityMeasuresNote: 'Note for develop measures',
-  qualityPerformanceImpactsPayment: true,
-  qualityPerformanceImpactsPaymentNote: 'Note for qual perf',
+  qualityPerformanceImpactsPayment: YesNoOtherType.OTHER,
+  qualityPerformanceImpactsPaymentOther: 'Other text',
   dataSharingStarts: DataStartsType.DURING_APPLICATION_PERIOD,
   dataSharingStartsOther: 'Data sharing starts other',
-  dataSharingFrequency: [DataFrequencyType.DAILY],
+  dataSharingFrequency: [FrequencyType.MONTHLY],
   dataSharingFrequencyOther: 'Data frequency other',
   dataSharingStartsNote: 'Note for data freq',
   dataCollectionStarts: DataStartsType.EARLY_IN_THE_FIRST_PERFORMANCE_YEAR,
   dataCollectionStartsOther: 'Other collection start',
-  dataCollectionFrequency: [DataFrequencyType.MONTHLY],
+  dataCollectionFrequency: [FrequencyType.ANNUALLY],
   dataCollectionFrequencyOther: 'Data freq other',
   dataCollectionFrequencyNote: 'Note for data freq',
   qualityReportingStarts: DataStartsType.LATER_IN_THE_FIRST_PERFORMANCE_YEAR,
   qualityReportingStartsOther: 'Other qual report',
   qualityReportingStartsNote: 'Note for qual report',
+  qualityReportingFrequency: [FrequencyType.OTHER],
+  qualityReportingFrequencyContinually: '',
+  qualityReportingFrequencyOther: 'Other frequency',
   modelLearningSystems: [
     ModelLearningSystemType.IT_PLATFORM_CONNECT,
     ModelLearningSystemType.NO_LEARNING_SYSTEM,
@@ -467,7 +521,7 @@ const opsEvalAndLearningData: AllOpsEvalAndLearningTypes = {
 export const opsEvalAndLearningMocks = [
   {
     request: {
-      query: GetAllOpsEvalAndLearning,
+      query: GetAllOpsEvalAndLearningDocument,
       variables: { id: modelID }
     },
     result: {
@@ -485,11 +539,13 @@ export const opsEvalAndLearningMocks = [
 const paymentsData: PaymentTypes = {
   __typename: 'PlanPayments',
   fundingSource: [FundingSource.PATIENT_PROTECTION_AFFORDABLE_CARE_ACT],
-  fundingSourceTrustFundType: [TrustFundType.MEDICARE_PART_A_HI_TRUST_FUND],
+  fundingSourceMedicareAInfo: 'PartA',
+  fundingSourceMedicareBInfo: 'PartB',
   fundingSourceOther: 'Other funding source',
   fundingSourceNote: 'Funding source note',
   fundingSourceR: [FundingSource.PATIENT_PROTECTION_AFFORDABLE_CARE_ACT],
-  fundingSourceRTrustFundType: [TrustFundType.MEDICARE_PART_A_HI_TRUST_FUND],
+  fundingSourceRMedicareAInfo: 'PartRA',
+  fundingSourceRMedicareBInfo: 'PartRB',
   fundingSourceROther: 'Other funding r',
   fundingSourceRNote: 'Funding r note',
   payRecipients: [PayRecipient.BENEFICIARIES],
@@ -531,17 +587,29 @@ const paymentsData: PaymentTypes = {
   planningToUseInnovationPaymentContractorNote: 'Contractor planning note',
   expectedCalculationComplexityLevel: ComplexityCalculationLevelType.HIGH,
   expectedCalculationComplexityLevelNote: 'Expected complexity note',
+  claimsProcessingPrecedence: true,
+  claimsProcessingPrecedenceOther: 'other claims',
+  claimsProcessingPrecedenceNote: 'claim note',
   canParticipantsSelectBetweenPaymentMechanisms: true,
   canParticipantsSelectBetweenPaymentMechanismsHow:
     'Can participants select how',
   canParticipantsSelectBetweenPaymentMechanismsNote: 'Payment mechanisms note',
-  anticipatedPaymentFrequency: [AnticipatedPaymentFrequencyType.BIANNUALLY],
+  anticipatedPaymentFrequency: [FrequencyType.SEMIANNUALLY],
+  anticipatedPaymentFrequencyContinually: 'Continually frequency',
   anticipatedPaymentFrequencyOther: 'Other frequency',
   anticipatedPaymentFrequencyNote: 'Payment frequency note',
   willRecoverPayments: true,
   willRecoverPaymentsNote: 'Will recover note',
   anticipateReconcilingPaymentsRetrospectively: true,
   anticipateReconcilingPaymentsRetrospectivelyNote: 'Anticipate note',
+  paymentReconciliationFrequency: [FrequencyType.CONTINUALLY],
+  paymentReconciliationFrequencyContinually: 'Continual Frequency',
+  paymentReconciliationFrequencyOther: '',
+  paymentReconciliationFrequencyNote: 'Reconciliation note',
+  paymentDemandRecoupmentFrequency: [FrequencyType.CONTINUALLY],
+  paymentDemandRecoupmentFrequencyContinually: 'Continual Frequency',
+  paymentDemandRecoupmentFrequencyOther: '',
+  paymentDemandRecoupmentFrequencyNote: 'Demand and Recoupment note',
   paymentStartDate: '2022-06-03T19:32:24.412662Z',
   paymentStartDateNote: 'Note for payment start date',
   status: TaskStatus.IN_PROGRESS
@@ -550,7 +618,7 @@ const paymentsData: PaymentTypes = {
 export const paymentsMocks = [
   {
     request: {
-      query: GetAllPayments,
+      query: GetAllPaymentsDocument,
       variables: { id: modelID }
     },
     result: {
@@ -598,10 +666,18 @@ const summaryData: GetModelSummaryTypes = {
       __typename: 'PlanCollaborator'
     }
   ],
-  crTdls: [
+  crs: [
     {
-      __typename: 'PlanCrTdl',
-      idNumber: 'TDL-123'
+      __typename: 'PlanCR',
+      id: '123',
+      idNumber: 'CR 123'
+    }
+  ],
+  tdls: [
+    {
+      __typename: 'PlanTDL',
+      id: '456',
+      idNumber: 'TDL 456'
     }
   ]
 };
@@ -666,7 +742,7 @@ export const collaboratorsMocks = [
         modelPlan: {
           __typename: 'ModelPlan',
           id: modelID,
-          modelName: 'My Model',
+          modelName: 'Testing Model Summary',
           collaborators: collaboratorsData
         }
       }

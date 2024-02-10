@@ -1,7 +1,6 @@
 import React, { useRef } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { Link, useHistory, useParams } from 'react-router-dom';
-import { useMutation, useQuery } from '@apollo/client';
 import {
   Breadcrumb,
   BreadcrumbBar,
@@ -10,15 +9,23 @@ import {
   Fieldset,
   Grid,
   GridContainer,
-  IconArrowBack,
+  Icon,
   Label
 } from '@trussworks/react-uswds';
 import { Form, Formik, FormikProps } from 'formik';
+import {
+  ClaimsBasedPayType,
+  GetRecoverQuery,
+  PayType,
+  useGetRecoverQuery,
+  useUpdatePaymentsMutation
+} from 'gql/gen/graphql';
 import { useFlags } from 'launchdarkly-react-client-sdk';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
 import BooleanRadio from 'components/BooleanRadioForm';
+import FrequencyForm from 'components/FrequencyForm';
 import ITSolutionsWarning from 'components/ITSolutionsWarning';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
@@ -30,15 +37,6 @@ import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import useScrollElement from 'hooks/useScrollElement';
-import GetRecover from 'queries/Payments/GetRecover';
-import {
-  GetRecover as GetRecoverType,
-  GetRecover_modelPlan_payments as RecoverFormType,
-  GetRecoverVariables
-} from 'queries/Payments/types/GetRecover';
-import { UpdatePaymentsVariables } from 'queries/Payments/types/UpdatePayments';
-import UpdatePayments from 'queries/Payments/UpdatePayments';
-import { ClaimsBasedPayType, PayType } from 'types/graphql-global-types';
 import { getKeys } from 'types/translation';
 import flattenErrors from 'utils/flattenErrors';
 import { dirtyInput } from 'utils/formDiff';
@@ -46,6 +44,8 @@ import sanitizeStatus from 'utils/status';
 import { NotFoundPartial } from 'views/NotFound';
 
 import { renderCurrentPage, renderTotalPages } from '..';
+
+type RecoverFormType = GetRecoverQuery['modelPlan']['payments'];
 
 const Recover = () => {
   const { t: paymentsT } = useTranslation('payments');
@@ -56,7 +56,9 @@ const Recover = () => {
 
   const {
     willRecoverPayments: willRecoverPaymentsConfig,
-    anticipateReconcilingPaymentsRetrospectively: anticipateReconcilingPaymentsRetrospectivelyConfig
+    anticipateReconcilingPaymentsRetrospectively: anticipateReconcilingPaymentsRetrospectivelyConfig,
+    paymentReconciliationFrequency: paymentReconciliationFrequencyConfig,
+    paymentDemandRecoupmentFrequency: paymentDemandRecoupmentFrequencyConfig
   } = usePlanTranslation('payments');
 
   const { modelID } = useParams<{ modelID: string }>();
@@ -72,14 +74,10 @@ const Recover = () => {
   const formikRef = useRef<FormikProps<InitialValueType>>(null);
   const history = useHistory();
 
-  const { data, loading, error } = useQuery<
-    GetRecoverType,
-    GetRecoverVariables
-  >(GetRecover, {
+  const { data, loading, error } = useGetRecoverQuery({
     variables: {
       id: modelID
-    },
-    fetchPolicy: 'network-only'
+    }
   });
 
   // If redirected from IT Solutions, scrolls to the relevant question
@@ -93,12 +91,20 @@ const Recover = () => {
     willRecoverPaymentsNote,
     anticipateReconcilingPaymentsRetrospectively,
     anticipateReconcilingPaymentsRetrospectivelyNote,
+    paymentReconciliationFrequency,
+    paymentReconciliationFrequencyContinually,
+    paymentReconciliationFrequencyOther,
+    paymentReconciliationFrequencyNote,
+    paymentDemandRecoupmentFrequency,
+    paymentDemandRecoupmentFrequencyContinually,
+    paymentDemandRecoupmentFrequencyOther,
+    paymentDemandRecoupmentFrequencyNote,
     paymentStartDate,
     paymentStartDateNote,
     readyForReviewByUserAccount,
     readyForReviewDts,
     status
-  } = data?.modelPlan?.payments || ({} as RecoverFormType);
+  } = (data?.modelPlan?.payments || {}) as RecoverFormType;
 
   const modelName = data?.modelPlan?.modelName || '';
 
@@ -108,7 +114,7 @@ const Recover = () => {
 
   useScrollElement(!loading);
 
-  const [update] = useMutation<UpdatePaymentsVariables>(UpdatePayments);
+  const [update] = useUpdatePaymentsMutation();
 
   const handleFormSubmit = (
     redirect?: 'back' | 'task-list' | 'next' | string
@@ -157,6 +163,20 @@ const Recover = () => {
       anticipateReconcilingPaymentsRetrospectively ?? null,
     anticipateReconcilingPaymentsRetrospectivelyNote:
       anticipateReconcilingPaymentsRetrospectivelyNote ?? '',
+    paymentReconciliationFrequency: paymentReconciliationFrequency ?? [],
+    paymentReconciliationFrequencyContinually:
+      paymentReconciliationFrequencyContinually ?? '',
+    paymentReconciliationFrequencyOther:
+      paymentReconciliationFrequencyOther ?? '',
+    paymentReconciliationFrequencyNote:
+      paymentReconciliationFrequencyNote ?? '',
+    paymentDemandRecoupmentFrequency: paymentDemandRecoupmentFrequency ?? [],
+    paymentDemandRecoupmentFrequencyContinually:
+      paymentDemandRecoupmentFrequencyContinually ?? '',
+    paymentDemandRecoupmentFrequencyOther:
+      paymentDemandRecoupmentFrequencyOther ?? '',
+    paymentDemandRecoupmentFrequencyNote:
+      paymentDemandRecoupmentFrequencyNote ?? '',
     paymentStartDate: paymentStartDate ?? '',
     paymentStartDateNote: paymentStartDateNote ?? '',
     status
@@ -191,7 +211,7 @@ const Recover = () => {
         data-testid="model-plan-name"
       >
         <Trans i18nKey="modelPlanTaskList:subheading">
-          indexZero {modelName} indexTwo
+          indexZero {modelName || ' '} indexTwo
         </Trans>
       </p>
 
@@ -348,6 +368,30 @@ const Recover = () => {
                           />
                         </FieldGroup>
 
+                        <FrequencyForm
+                          field="paymentReconciliationFrequency"
+                          values={values.paymentReconciliationFrequency}
+                          config={paymentReconciliationFrequencyConfig}
+                          nameSpace="payments"
+                          id="payment-reconciliation-frequency"
+                          label={paymentsT(
+                            'paymentReconciliationFrequency.label'
+                          )}
+                          disabled={loading}
+                        />
+
+                        <FrequencyForm
+                          field="paymentDemandRecoupmentFrequency"
+                          values={values.paymentDemandRecoupmentFrequency}
+                          config={paymentDemandRecoupmentFrequencyConfig}
+                          nameSpace="payments"
+                          id="payment-demand-recoupment-frequency"
+                          label={paymentsT(
+                            'paymentDemandRecoupmentFrequency.label'
+                          )}
+                          disabled={loading}
+                        />
+
                         {!loading && (
                           <>
                             <MINTDatePicker
@@ -407,7 +451,7 @@ const Recover = () => {
                           className="usa-button usa-button--unstyled"
                           onClick={() => handleFormSubmit('task-list')}
                         >
-                          <IconArrowBack
+                          <Icon.ArrowBack
                             className="margin-right-1"
                             aria-hidden
                           />

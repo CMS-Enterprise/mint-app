@@ -18,9 +18,10 @@ func (suite *ResolverSuite) TestPlanPaymentsUpdate() {
 	suite.NoError(err)
 
 	changes := map[string]interface{}{
-		"fundingSource":     []string{"TRUST_FUND"},
-		"fundingSourceNote": "Ello gov'na",
-		"payType":           []string{"CLAIMS_BASED_PAYMENTS"},
+		"fundingSource":                          []string{"OTHER"},
+		"fundingSourceNote":                      "Ello gov'na",
+		"payType":                                []string{"CLAIMS_BASED_PAYMENTS"},
+		"anticipatedPaymentFrequencyContinually": "some test value for anticipated payment frequency continually",
 	}
 
 	updatedPP, err := PlanPaymentsUpdate(suite.testConfigs.Logger, suite.testConfigs.Store, pp.ID, changes, suite.testConfigs.Principal)
@@ -29,14 +30,13 @@ func (suite *ResolverSuite) TestPlanPaymentsUpdate() {
 	suite.EqualValues(plan.ID, pp.ModelPlanID)
 	suite.EqualValues(models.TaskReady, pp.Status)
 	suite.EqualValues(suite.testConfigs.Principal.UserAccount.ID, pp.CreatedBy)
+	suite.EqualValues("some test value for anticipated payment frequency continually", *updatedPP.AnticipatedPaymentFrequencyContinually)
 	suite.Nil(pp.ModifiedBy)
 
 	//suite.Nil(updatedPP.FundingSource)
-	suite.Nil(updatedPP.FundingSourceTrustFundType)
 	suite.Nil(updatedPP.FundingSourceOther)
 	//suite.Nil(updatedPP.FundingSourceNote)
 	suite.Nil(updatedPP.FundingSourceR)
-	suite.Nil(updatedPP.FundingSourceRTrustFundType)
 	suite.Nil(updatedPP.FundingSourceROther)
 	suite.Nil(updatedPP.FundingSourceRNote)
 	suite.Nil(updatedPP.PayRecipients)
@@ -78,6 +78,9 @@ func (suite *ResolverSuite) TestPlanPaymentsUpdate() {
 	suite.Nil(updatedPP.PlanningToUseInnovationPaymentContractorNote)
 	suite.Nil(updatedPP.ExpectedCalculationComplexityLevel)
 	suite.Nil(updatedPP.ExpectedCalculationComplexityLevelNote)
+	suite.Nil(updatedPP.ClaimsProcessingPrecedence)
+	suite.Nil(updatedPP.ClaimsProcessingPrecedenceOther)
+	suite.Nil(updatedPP.ClaimsProcessingPrecedenceNote)
 	suite.Nil(updatedPP.CanParticipantsSelectBetweenPaymentMechanisms)
 	suite.Nil(updatedPP.CanParticipantsSelectBetweenPaymentMechanismsHow)
 	suite.Nil(updatedPP.CanParticipantsSelectBetweenPaymentMechanismsNote)
@@ -88,6 +91,14 @@ func (suite *ResolverSuite) TestPlanPaymentsUpdate() {
 	suite.Nil(updatedPP.WillRecoverPaymentsNote)
 	suite.Nil(updatedPP.AnticipateReconcilingPaymentsRetrospectively)
 	suite.Nil(updatedPP.AnticipateReconcilingPaymentsRetrospectivelyNote)
+	suite.Nil(updatedPP.PaymentReconciliationFrequency)
+	suite.Nil(updatedPP.PaymentReconciliationFrequencyContinually)
+	suite.Nil(updatedPP.PaymentReconciliationFrequencyOther)
+	suite.Nil(updatedPP.PaymentReconciliationFrequencyNote)
+	suite.Nil(updatedPP.PaymentDemandRecoupmentFrequency)
+	suite.Nil(updatedPP.PaymentDemandRecoupmentFrequencyContinually)
+	suite.Nil(updatedPP.PaymentDemandRecoupmentFrequencyOther)
+	suite.Nil(updatedPP.PaymentDemandRecoupmentFrequencyNote)
 	suite.Nil(updatedPP.PaymentStartDate)
 	suite.Nil(updatedPP.PaymentStartDateNote)
 }
@@ -107,11 +118,10 @@ func (suite *ResolverSuite) TestPlanPaymentsReadByModelPlan() {
 	//Asset these fields are nil upon creation
 
 	suite.Nil(pp.FundingSource)
-	suite.Nil(pp.FundingSourceTrustFundType)
+
 	suite.Nil(pp.FundingSourceOther)
 	suite.Nil(pp.FundingSourceNote)
 	suite.Nil(pp.FundingSourceR)
-	suite.Nil(pp.FundingSourceRTrustFundType)
 	suite.Nil(pp.FundingSourceROther)
 	suite.Nil(pp.FundingSourceRNote)
 	suite.Nil(pp.PayRecipients)
@@ -153,6 +163,9 @@ func (suite *ResolverSuite) TestPlanPaymentsReadByModelPlan() {
 	suite.Nil(pp.PlanningToUseInnovationPaymentContractorNote)
 	suite.Nil(pp.ExpectedCalculationComplexityLevel)
 	suite.Nil(pp.ExpectedCalculationComplexityLevelNote)
+	suite.Nil(pp.ClaimsProcessingPrecedence)
+	suite.Nil(pp.ClaimsProcessingPrecedenceOther)
+	suite.Nil(pp.ClaimsProcessingPrecedenceNote)
 	suite.Nil(pp.CanParticipantsSelectBetweenPaymentMechanisms)
 	suite.Nil(pp.CanParticipantsSelectBetweenPaymentMechanismsHow)
 	suite.Nil(pp.CanParticipantsSelectBetweenPaymentMechanismsNote)
@@ -163,6 +176,14 @@ func (suite *ResolverSuite) TestPlanPaymentsReadByModelPlan() {
 	suite.Nil(pp.WillRecoverPaymentsNote)
 	suite.Nil(pp.AnticipateReconcilingPaymentsRetrospectively)
 	suite.Nil(pp.AnticipateReconcilingPaymentsRetrospectivelyNote)
+	suite.Nil(pp.PaymentReconciliationFrequency)
+	suite.Nil(pp.PaymentReconciliationFrequencyContinually)
+	suite.Nil(pp.PaymentReconciliationFrequencyOther)
+	suite.Nil(pp.PaymentReconciliationFrequencyNote)
+	suite.Nil(pp.PaymentDemandRecoupmentFrequency)
+	suite.Nil(pp.PaymentDemandRecoupmentFrequencyContinually)
+	suite.Nil(pp.PaymentDemandRecoupmentFrequencyOther)
+	suite.Nil(pp.PaymentDemandRecoupmentFrequencyNote)
 	suite.Nil(pp.PaymentStartDate)
 	suite.Nil(pp.PaymentStartDateNote)
 }

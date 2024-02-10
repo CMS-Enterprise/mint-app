@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Model Plan Task List Basics page > disables and clears checkbox when user selects corresponding radio button 1`] = `
+exports[`Model Plan Basics page > disables and clears checkbox when user selects corresponding radio button 1`] = `
 <DocumentFragment>
   <main
     class="mint-main-content"
@@ -85,10 +85,6 @@ exports[`Model Plan Task List Basics page > disables and clears checkbox when us
               xmlns="http://www.w3.org/2000/svg"
             >
               <path
-                d="M0 0h24v24H0z"
-                fill="none"
-              />
-              <path
                 d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-7 9h-2V5h2v6zm0 4h-2v-2h2v2z"
               />
             </svg>
@@ -160,12 +156,12 @@ exports[`Model Plan Task List Basics page > disables and clears checkbox when us
                   </div>
                   <div
                     class="usa-form-group margin-top-4"
-                    data-scroll="abbreviation"
+                    data-scroll="plan-basics-abbreviation"
                   >
                     <label
                       class="usa-label"
                       data-testid="label"
-                      for="plan-basics-model-name"
+                      for="plan-basics-abbreviation"
                     >
                       Short name
                     </label>
@@ -218,7 +214,7 @@ exports[`Model Plan Task List Basics page > disables and clears checkbox when us
                       >
                         <div
                           class="usa-form-group margin-top-0"
-                          data-scroll="basics.amsModelID"
+                          data-scroll="plan-basics-ams-model-id"
                         >
                           <label
                             class="usa-label"
@@ -243,7 +239,7 @@ exports[`Model Plan Task List Basics page > disables and clears checkbox when us
                       >
                         <div
                           class="usa-form-group margin-top-0"
-                          data-scroll="basics.demoCode"
+                          data-scroll="plan-basics-demo-code"
                         >
                           <label
                             class="usa-label"
@@ -266,7 +262,7 @@ exports[`Model Plan Task List Basics page > disables and clears checkbox when us
                   </div>
                   <div
                     class="usa-form-group margin-top-4"
-                    data-scroll="modelCategory"
+                    data-scroll="plan-basics-model-category"
                   >
                     <label
                       class="usa-label"
@@ -328,10 +324,6 @@ exports[`Model Plan Task List Basics page > disables and clears checkbox when us
                                   xmlns="http://www.w3.org/2000/svg"
                                 >
                                   <path
-                                    d="M0 0h24v24H0z"
-                                    fill="none"
-                                  />
-                                  <path
                                     d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
                                   />
                                 </svg>
@@ -370,7 +362,7 @@ exports[`Model Plan Task List Basics page > disables and clears checkbox when us
                             class="display-flex flex-align-center"
                             style="gap: 4px;"
                           >
-                            Disease-Specific & Episodic
+                            Disease-Specific & Episode-Based
                             <span
                               class="usa-tooltip"
                               data-testid="tooltipWrapper"
@@ -392,10 +384,6 @@ exports[`Model Plan Task List Basics page > disables and clears checkbox when us
                                   width="1em"
                                   xmlns="http://www.w3.org/2000/svg"
                                 >
-                                  <path
-                                    d="M0 0h24v24H0z"
-                                    fill="none"
-                                  />
                                   <path
                                     d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
                                   />
@@ -458,10 +446,6 @@ exports[`Model Plan Task List Basics page > disables and clears checkbox when us
                                   xmlns="http://www.w3.org/2000/svg"
                                 >
                                   <path
-                                    d="M0 0h24v24H0z"
-                                    fill="none"
-                                  />
-                                  <path
                                     d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
                                   />
                                 </svg>
@@ -523,10 +507,6 @@ exports[`Model Plan Task List Basics page > disables and clears checkbox when us
                                   xmlns="http://www.w3.org/2000/svg"
                                 >
                                   <path
-                                    d="M0 0h24v24H0z"
-                                    fill="none"
-                                  />
-                                  <path
                                     d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
                                   />
                                 </svg>
@@ -537,9 +517,9 @@ exports[`Model Plan Task List Basics page > disables and clears checkbox when us
                                 data-testid="tooltipBody"
                                 id="tooltip-550000"
                                 role="tooltip"
-                                title="Models which seek to mitigate the total cost of care by improving access to and the affordability of prescription drugs covered under Part B or Part D, including gene cell therapy, accelerated approvals and biosimilars"
+                                title="Models that seek to improve access to and/or the affordability of prescription drugs covered under Medicare (Part B and D) or Medicaid."
                               >
-                                Models which seek to mitigate the total cost of care by improving access to and the affordability of prescription drugs covered under Part B or Part D, including gene cell therapy, accelerated approvals and biosimilars
+                                Models that seek to improve access to and/or the affordability of prescription drugs covered under Medicare (Part B and D) or Medicaid.
                               </span>
                             </span>
                           </span>
@@ -565,7 +545,7 @@ exports[`Model Plan Task List Basics page > disables and clears checkbox when us
                             class="display-flex flex-align-center"
                             style="gap: 4px;"
                           >
-                            State-Based
+                            State & Community-Based
                             <span
                               class="usa-tooltip"
                               data-testid="tooltipWrapper"
@@ -588,10 +568,6 @@ exports[`Model Plan Task List Basics page > disables and clears checkbox when us
                                   xmlns="http://www.w3.org/2000/svg"
                                 >
                                   <path
-                                    d="M0 0h24v24H0z"
-                                    fill="none"
-                                  />
-                                  <path
                                     d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
                                   />
                                 </svg>
@@ -602,9 +578,9 @@ exports[`Model Plan Task List Basics page > disables and clears checkbox when us
                                 data-testid="tooltipBody"
                                 id="tooltip-550000"
                                 role="tooltip"
-                                title="Models in which a state serves as the main contractual participant"
+                                title="Models in which a state or community-based organization serves as the main contractual participant, including managed care organizations serving Medicaid beneficiaries."
                               >
-                                Models in which a state serves as the main contractual participant
+                                Models in which a state or community-based organization serves as the main contractual participant, including managed care organizations serving Medicaid beneficiaries.
                               </span>
                             </span>
                           </span>
@@ -653,10 +629,6 @@ exports[`Model Plan Task List Basics page > disables and clears checkbox when us
                                   xmlns="http://www.w3.org/2000/svg"
                                 >
                                   <path
-                                    d="M0 0h24v24H0z"
-                                    fill="none"
-                                  />
-                                  <path
                                     d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
                                   />
                                 </svg>
@@ -667,9 +639,9 @@ exports[`Model Plan Task List Basics page > disables and clears checkbox when us
                                 data-testid="tooltipBody"
                                 id="tooltip-550000"
                                 role="tooltip"
-                                title="Models and demonstrations requiring testing as determined by Congress under Social Security Act 1115A"
+                                title="Models and demonstrations requiring testing as determined by Congress and/or the Secretary of Health and Human Services."
                               >
-                                Models and demonstrations requiring testing as determined by Congress under Social Security Act 1115A
+                                Models and demonstrations requiring testing as determined by Congress and/or the Secretary of Health and Human Services.
                               </span>
                             </span>
                           </span>
@@ -703,11 +675,12 @@ exports[`Model Plan Task List Basics page > disables and clears checkbox when us
                   </div>
                   <div
                     class="usa-form-group margin-top-4"
+                    data-scroll="plan-basics-model-additional-category"
                   >
                     <label
                       class="usa-label text-normal"
                       data-testid="label"
-                      for="basics.additionalModelCategories"
+                      for="plan-basics-model-additional-category"
                     >
                       Additional model categories
                     </label>
@@ -759,10 +732,6 @@ exports[`Model Plan Task List Basics page > disables and clears checkbox when us
                                 xmlns="http://www.w3.org/2000/svg"
                               >
                                 <path
-                                  d="M0 0h24v24H0z"
-                                  fill="none"
-                                />
-                                <path
                                   d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
                                 />
                               </svg>
@@ -803,7 +772,7 @@ exports[`Model Plan Task List Basics page > disables and clears checkbox when us
                           class="display-flex flex-align-center"
                           style="gap: 4px;"
                         >
-                          Disease-Specific & Episodic
+                          Disease-Specific & Episode-Based
                           <span
                             class="usa-tooltip"
                             data-testid="tooltipWrapper"
@@ -825,10 +794,6 @@ exports[`Model Plan Task List Basics page > disables and clears checkbox when us
                                 width="1em"
                                 xmlns="http://www.w3.org/2000/svg"
                               >
-                                <path
-                                  d="M0 0h24v24H0z"
-                                  fill="none"
-                                />
                                 <path
                                   d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
                                 />
@@ -893,10 +858,6 @@ exports[`Model Plan Task List Basics page > disables and clears checkbox when us
                                 xmlns="http://www.w3.org/2000/svg"
                               >
                                 <path
-                                  d="M0 0h24v24H0z"
-                                  fill="none"
-                                />
-                                <path
                                   d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
                                 />
                               </svg>
@@ -960,10 +921,6 @@ exports[`Model Plan Task List Basics page > disables and clears checkbox when us
                                 xmlns="http://www.w3.org/2000/svg"
                               >
                                 <path
-                                  d="M0 0h24v24H0z"
-                                  fill="none"
-                                />
-                                <path
                                   d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
                                 />
                               </svg>
@@ -974,9 +931,9 @@ exports[`Model Plan Task List Basics page > disables and clears checkbox when us
                               data-testid="tooltipBody"
                               id="tooltip-550000"
                               role="tooltip"
-                              title="Models which seek to mitigate the total cost of care by improving access to and the affordability of prescription drugs covered under Part B or Part D, including gene cell therapy, accelerated approvals and biosimilars"
+                              title="Models that seek to improve access to and/or the affordability of prescription drugs covered under Medicare (Part B and D) or Medicaid."
                             >
-                              Models which seek to mitigate the total cost of care by improving access to and the affordability of prescription drugs covered under Part B or Part D, including gene cell therapy, accelerated approvals and biosimilars
+                              Models that seek to improve access to and/or the affordability of prescription drugs covered under Medicare (Part B and D) or Medicaid.
                             </span>
                           </span>
                         </span>
@@ -1004,7 +961,7 @@ exports[`Model Plan Task List Basics page > disables and clears checkbox when us
                           class="display-flex flex-align-center"
                           style="gap: 4px;"
                         >
-                          State-Based
+                          State & Community-Based
                           <span
                             class="usa-tooltip"
                             data-testid="tooltipWrapper"
@@ -1027,10 +984,6 @@ exports[`Model Plan Task List Basics page > disables and clears checkbox when us
                                 xmlns="http://www.w3.org/2000/svg"
                               >
                                 <path
-                                  d="M0 0h24v24H0z"
-                                  fill="none"
-                                />
-                                <path
                                   d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
                                 />
                               </svg>
@@ -1041,9 +994,9 @@ exports[`Model Plan Task List Basics page > disables and clears checkbox when us
                               data-testid="tooltipBody"
                               id="tooltip-550000"
                               role="tooltip"
-                              title="Models in which a state serves as the main contractual participant"
+                              title="Models in which a state or community-based organization serves as the main contractual participant, including managed care organizations serving Medicaid beneficiaries."
                             >
-                              Models in which a state serves as the main contractual participant
+                              Models in which a state or community-based organization serves as the main contractual participant, including managed care organizations serving Medicaid beneficiaries.
                             </span>
                           </span>
                         </span>
@@ -1094,10 +1047,6 @@ exports[`Model Plan Task List Basics page > disables and clears checkbox when us
                                 xmlns="http://www.w3.org/2000/svg"
                               >
                                 <path
-                                  d="M0 0h24v24H0z"
-                                  fill="none"
-                                />
-                                <path
                                   d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
                                 />
                               </svg>
@@ -1108,9 +1057,9 @@ exports[`Model Plan Task List Basics page > disables and clears checkbox when us
                               data-testid="tooltipBody"
                               id="tooltip-550000"
                               role="tooltip"
-                              title="Models and demonstrations requiring testing as determined by Congress under Social Security Act 1115A"
+                              title="Models and demonstrations requiring testing as determined by Congress and/or the Secretary of Health and Human Services."
                             >
-                              Models and demonstrations requiring testing as determined by Congress under Social Security Act 1115A
+                              Models and demonstrations requiring testing as determined by Congress and/or the Secretary of Health and Human Services.
                             </span>
                           </span>
                         </span>
@@ -1122,174 +1071,150 @@ exports[`Model Plan Task List Basics page > disables and clears checkbox when us
                   </div>
                   <div
                     class="usa-form-group margin-top-4"
-                    data-scroll="cmsCenters"
+                    data-scroll="new-plan-cmsCenters"
                   >
-                    <fieldset
-                      class="usa-fieldset"
-                      data-testid="fieldset"
+                    <label
+                      class="usa-label"
+                      data-testid="label"
+                      for="new-plan-cmsCenters"
                     >
+                      CMS component
+                      <span
+                        aria-label="(Field required)"
+                        class="text-red margin-x-05"
+                      >
+                        *
+                      </span>
+                    </label>
+                    <div
+                      class="mint-checkbox usa-checkbox"
+                    >
+                      <input
+                        class="usa-checkbox__input"
+                        id="new-plan-cmsCenters-CMMI"
+                        name="basics.cmsCenters"
+                        type="checkbox"
+                        value="CMMI"
+                      />
                       <label
-                        class="usa-label"
-                        data-testid="label"
-                        for="plan-basics-cmsCenters"
+                        class="usa-checkbox__label"
+                        for="new-plan-cmsCenters-CMMI"
                       >
-                        CMS component
-                        <span
-                          aria-label="(Field required)"
-                          class="text-red margin-x-05"
-                        >
-                          *
-                        </span>
+                        Center for Medicare and Medicaid Innovation (CMMI)
                       </label>
-                      <div
-                        class="mint-checkbox usa-checkbox"
+                      <p
+                        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                      />
+                    </div>
+                    <div
+                      class="mint-checkbox usa-checkbox"
+                    >
+                      <input
+                        class="usa-checkbox__input"
+                        id="new-plan-cmsCenters-CENTER_FOR_CLINICAL_STANDARDS_AND_QUALITY"
+                        name="basics.cmsCenters"
+                        type="checkbox"
+                        value="CENTER_FOR_CLINICAL_STANDARDS_AND_QUALITY"
+                      />
+                      <label
+                        class="usa-checkbox__label"
+                        for="new-plan-cmsCenters-CENTER_FOR_CLINICAL_STANDARDS_AND_QUALITY"
                       >
-                        <input
-                          class="usa-checkbox__input"
-                          id="new-plan-cmsCenters-CMMI"
-                          name="basics.cmsCenters"
-                          type="checkbox"
-                          value="CMMI"
-                        />
-                        <label
-                          class="usa-checkbox__label"
-                          for="new-plan-cmsCenters-CMMI"
-                        >
-                          CMMI
-                        </label>
-                        <p
-                          class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
-                        />
-                      </div>
-                      <div
-                        class="mint-checkbox usa-checkbox"
+                        Center for Clinical Standards and Quality (CCSQ)
+                      </label>
+                      <p
+                        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                      />
+                    </div>
+                    <div
+                      class="mint-checkbox usa-checkbox"
+                    >
+                      <input
+                        class="usa-checkbox__input"
+                        id="new-plan-cmsCenters-CENTER_FOR_MEDICAID_AND_CHIP_SERVICES"
+                        name="basics.cmsCenters"
+                        type="checkbox"
+                        value="CENTER_FOR_MEDICAID_AND_CHIP_SERVICES"
+                      />
+                      <label
+                        class="usa-checkbox__label"
+                        for="new-plan-cmsCenters-CENTER_FOR_MEDICAID_AND_CHIP_SERVICES"
                       >
-                        <input
-                          class="usa-checkbox__input"
-                          id="new-plan-cmsCenters-CENTER_FOR_MEDICARE"
-                          name="basics.cmsCenters"
-                          type="checkbox"
-                          value="CENTER_FOR_MEDICARE"
-                        />
-                        <label
-                          class="usa-checkbox__label"
-                          for="new-plan-cmsCenters-CENTER_FOR_MEDICARE"
-                        >
-                          Center for Medicare (CM)
-                        </label>
-                        <p
-                          class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
-                        />
-                      </div>
-                      <div
-                        class="mint-checkbox usa-checkbox"
+                        Center for Medicaid and CHIP Services (CMCS)
+                      </label>
+                      <p
+                        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                      />
+                    </div>
+                    <div
+                      class="mint-checkbox usa-checkbox"
+                    >
+                      <input
+                        class="usa-checkbox__input"
+                        id="new-plan-cmsCenters-CENTER_FOR_MEDICARE"
+                        name="basics.cmsCenters"
+                        type="checkbox"
+                        value="CENTER_FOR_MEDICARE"
+                      />
+                      <label
+                        class="usa-checkbox__label"
+                        for="new-plan-cmsCenters-CENTER_FOR_MEDICARE"
                       >
-                        <input
-                          class="usa-checkbox__input"
-                          id="new-plan-cmsCenters-FEDERAL_COORDINATED_HEALTH_CARE_OFFICE"
-                          name="basics.cmsCenters"
-                          type="checkbox"
-                          value="FEDERAL_COORDINATED_HEALTH_CARE_OFFICE"
-                        />
-                        <label
-                          class="usa-checkbox__label"
-                          for="new-plan-cmsCenters-FEDERAL_COORDINATED_HEALTH_CARE_OFFICE"
-                        >
-                          Federal Coordinated Health Care
-                        </label>
-                        <p
-                          class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
-                        />
-                      </div>
-                      <div
-                        class="mint-checkbox usa-checkbox"
+                        Center for Medicare (CM)
+                      </label>
+                      <p
+                        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                      />
+                    </div>
+                    <div
+                      class="mint-checkbox usa-checkbox"
+                    >
+                      <input
+                        class="usa-checkbox__input"
+                        id="new-plan-cmsCenters-FEDERAL_COORDINATED_HEALTH_CARE_OFFICE"
+                        name="basics.cmsCenters"
+                        type="checkbox"
+                        value="FEDERAL_COORDINATED_HEALTH_CARE_OFFICE"
+                      />
+                      <label
+                        class="usa-checkbox__label"
+                        for="new-plan-cmsCenters-FEDERAL_COORDINATED_HEALTH_CARE_OFFICE"
                       >
-                        <input
-                          class="usa-checkbox__input"
-                          id="new-plan-cmsCenters-CENTER_FOR_CLINICAL_STANDARDS_AND_QUALITY"
-                          name="basics.cmsCenters"
-                          type="checkbox"
-                          value="CENTER_FOR_CLINICAL_STANDARDS_AND_QUALITY"
-                        />
-                        <label
-                          class="usa-checkbox__label"
-                          for="new-plan-cmsCenters-CENTER_FOR_CLINICAL_STANDARDS_AND_QUALITY"
-                        >
-                          Center for Clinical Standards and Quality (CCSQ)
-                        </label>
-                        <p
-                          class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
-                        />
-                      </div>
-                      <div
-                        class="mint-checkbox usa-checkbox"
+                        Federal Coordinated Health Care Office (FCHCO)
+                      </label>
+                      <p
+                        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                      />
+                    </div>
+                    <div
+                      class="mint-checkbox usa-checkbox"
+                    >
+                      <input
+                        class="usa-checkbox__input"
+                        id="new-plan-cmsCenters-CENTER_FOR_PROGRAM_INTEGRITY"
+                        name="basics.cmsCenters"
+                        type="checkbox"
+                        value="CENTER_FOR_PROGRAM_INTEGRITY"
+                      />
+                      <label
+                        class="usa-checkbox__label"
+                        for="new-plan-cmsCenters-CENTER_FOR_PROGRAM_INTEGRITY"
                       >
-                        <input
-                          class="usa-checkbox__input"
-                          id="new-plan-cmsCenters-CENTER_FOR_PROGRAM_INTEGRITY"
-                          name="basics.cmsCenters"
-                          type="checkbox"
-                          value="CENTER_FOR_PROGRAM_INTEGRITY"
-                        />
-                        <label
-                          class="usa-checkbox__label"
-                          for="new-plan-cmsCenters-CENTER_FOR_PROGRAM_INTEGRITY"
-                        >
-                          Center for Program Integrity (CPI)
-                        </label>
-                        <p
-                          class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
-                        />
-                      </div>
-                      <div
-                        class="mint-checkbox usa-checkbox"
-                      >
-                        <input
-                          class="usa-checkbox__input"
-                          id="new-plan-cmsCenters-OTHER"
-                          name="basics.cmsCenters"
-                          type="checkbox"
-                          value="OTHER"
-                        />
-                        <label
-                          class="usa-checkbox__label"
-                          for="new-plan-cmsCenters-OTHER"
-                        >
-                          Other
-                        </label>
-                        <p
-                          class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
-                        />
-                      </div>
-                      <div
-                        class="usa-form-group margin-top-4"
-                      >
-                        <label
-                          class="usa-label"
-                          data-testid="label"
-                          for="plan-basics-cmsCategory--Other"
-                        >
-                          Please specify
-                        </label>
-                        <textarea
-                          aria-labelledby="label-plan-basics-cmsCategory--Other hint-plan-basics-cmsCategory--Other"
-                          class="mint-textarea usa-textarea"
-                          id="plan-basics-cmsCategory--Other"
-                          maxlength="5000"
-                          name="basics.cmsOther"
-                        >
-                          The Center for Awesomeness 
-                        </textarea>
-                      </div>
-                    </fieldset>
+                        Center for Program Integrity (CPI)
+                      </label>
+                      <p
+                        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                      />
+                    </div>
                   </div>
                   <div
                     class="usa-form-group margin-top-4"
+                    data-scroll="new-plan-cmmiGroup"
                   >
                     <label
                       class="usa-label text-normal"
                       data-testid="label"
-                      for="basics.cmmiGroups"
+                      for="new-plan-cmmiGroup"
                     >
                       CMMI Group
                     </label>
@@ -1431,10 +1356,6 @@ exports[`Model Plan Task List Basics page > disables and clears checkbox when us
                       xmlns="http://www.w3.org/2000/svg"
                     >
                       <path
-                        d="M0 0h24v24H0z"
-                        fill="none"
-                      />
-                      <path
                         d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"
                       />
                     </svg>
@@ -1454,31 +1375,24 @@ exports[`Model Plan Task List Basics page > disables and clears checkbox when us
                 <div
                   class="usa-summary-box__body"
                 >
-                  <h3
-                    class="usa-summary-box__heading"
-                  />
-                  <div
-                    class="usa-summary-box__text"
+                  <p
+                    class="margin-y-0 text-bold"
                   >
-                    <p
-                      class="margin-y-0 text-bold"
-                    >
-                      Previous model names
-                    </p>
-                    <ul
-                      class="margin-top-1 margin-bottom-0 padding-left-2"
-                    >
-                      <li>
-                        First Name
-                      </li>
-                      <li>
-                        Second Name
-                      </li>
-                      <li>
-                        Third Name
-                      </li>
-                    </ul>
-                  </div>
+                    Previous model names
+                  </p>
+                  <ul
+                    class="margin-top-1 margin-bottom-0 padding-left-2"
+                  >
+                    <li>
+                      First Name
+                    </li>
+                    <li>
+                      Second Name
+                    </li>
+                    <li>
+                      Third Name
+                    </li>
+                  </ul>
                 </div>
               </div>
             </div>
@@ -1499,7 +1413,7 @@ exports[`Model Plan Task List Basics page > disables and clears checkbox when us
 </DocumentFragment>
 `;
 
-exports[`Model Plan Task List Basics page > matches snapshot 1`] = `
+exports[`Model Plan Basics page > matches snapshot 1`] = `
 <DocumentFragment>
   <main
     class="mint-main-content"
@@ -1584,10 +1498,6 @@ exports[`Model Plan Task List Basics page > matches snapshot 1`] = `
               xmlns="http://www.w3.org/2000/svg"
             >
               <path
-                d="M0 0h24v24H0z"
-                fill="none"
-              />
-              <path
                 d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-7 9h-2V5h2v6zm0 4h-2v-2h2v2z"
               />
             </svg>
@@ -1659,12 +1569,12 @@ exports[`Model Plan Task List Basics page > matches snapshot 1`] = `
                   </div>
                   <div
                     class="usa-form-group margin-top-4"
-                    data-scroll="abbreviation"
+                    data-scroll="plan-basics-abbreviation"
                   >
                     <label
                       class="usa-label"
                       data-testid="label"
-                      for="plan-basics-model-name"
+                      for="plan-basics-abbreviation"
                     >
                       Short name
                     </label>
@@ -1717,7 +1627,7 @@ exports[`Model Plan Task List Basics page > matches snapshot 1`] = `
                       >
                         <div
                           class="usa-form-group margin-top-0"
-                          data-scroll="basics.amsModelID"
+                          data-scroll="plan-basics-ams-model-id"
                         >
                           <label
                             class="usa-label"
@@ -1742,7 +1652,7 @@ exports[`Model Plan Task List Basics page > matches snapshot 1`] = `
                       >
                         <div
                           class="usa-form-group margin-top-0"
-                          data-scroll="basics.demoCode"
+                          data-scroll="plan-basics-demo-code"
                         >
                           <label
                             class="usa-label"
@@ -1765,7 +1675,7 @@ exports[`Model Plan Task List Basics page > matches snapshot 1`] = `
                   </div>
                   <div
                     class="usa-form-group margin-top-4"
-                    data-scroll="modelCategory"
+                    data-scroll="plan-basics-model-category"
                   >
                     <label
                       class="usa-label"
@@ -1827,10 +1737,6 @@ exports[`Model Plan Task List Basics page > matches snapshot 1`] = `
                                   xmlns="http://www.w3.org/2000/svg"
                                 >
                                   <path
-                                    d="M0 0h24v24H0z"
-                                    fill="none"
-                                  />
-                                  <path
                                     d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
                                   />
                                 </svg>
@@ -1869,7 +1775,7 @@ exports[`Model Plan Task List Basics page > matches snapshot 1`] = `
                             class="display-flex flex-align-center"
                             style="gap: 4px;"
                           >
-                            Disease-Specific & Episodic
+                            Disease-Specific & Episode-Based
                             <span
                               class="usa-tooltip"
                               data-testid="tooltipWrapper"
@@ -1891,10 +1797,6 @@ exports[`Model Plan Task List Basics page > matches snapshot 1`] = `
                                   width="1em"
                                   xmlns="http://www.w3.org/2000/svg"
                                 >
-                                  <path
-                                    d="M0 0h24v24H0z"
-                                    fill="none"
-                                  />
                                   <path
                                     d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
                                   />
@@ -1957,10 +1859,6 @@ exports[`Model Plan Task List Basics page > matches snapshot 1`] = `
                                   xmlns="http://www.w3.org/2000/svg"
                                 >
                                   <path
-                                    d="M0 0h24v24H0z"
-                                    fill="none"
-                                  />
-                                  <path
                                     d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
                                   />
                                 </svg>
@@ -2022,10 +1920,6 @@ exports[`Model Plan Task List Basics page > matches snapshot 1`] = `
                                   xmlns="http://www.w3.org/2000/svg"
                                 >
                                   <path
-                                    d="M0 0h24v24H0z"
-                                    fill="none"
-                                  />
-                                  <path
                                     d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
                                   />
                                 </svg>
@@ -2036,9 +1930,9 @@ exports[`Model Plan Task List Basics page > matches snapshot 1`] = `
                                 data-testid="tooltipBody"
                                 id="tooltip-550000"
                                 role="tooltip"
-                                title="Models which seek to mitigate the total cost of care by improving access to and the affordability of prescription drugs covered under Part B or Part D, including gene cell therapy, accelerated approvals and biosimilars"
+                                title="Models that seek to improve access to and/or the affordability of prescription drugs covered under Medicare (Part B and D) or Medicaid."
                               >
-                                Models which seek to mitigate the total cost of care by improving access to and the affordability of prescription drugs covered under Part B or Part D, including gene cell therapy, accelerated approvals and biosimilars
+                                Models that seek to improve access to and/or the affordability of prescription drugs covered under Medicare (Part B and D) or Medicaid.
                               </span>
                             </span>
                           </span>
@@ -2064,7 +1958,7 @@ exports[`Model Plan Task List Basics page > matches snapshot 1`] = `
                             class="display-flex flex-align-center"
                             style="gap: 4px;"
                           >
-                            State-Based
+                            State & Community-Based
                             <span
                               class="usa-tooltip"
                               data-testid="tooltipWrapper"
@@ -2087,10 +1981,6 @@ exports[`Model Plan Task List Basics page > matches snapshot 1`] = `
                                   xmlns="http://www.w3.org/2000/svg"
                                 >
                                   <path
-                                    d="M0 0h24v24H0z"
-                                    fill="none"
-                                  />
-                                  <path
                                     d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
                                   />
                                 </svg>
@@ -2101,9 +1991,9 @@ exports[`Model Plan Task List Basics page > matches snapshot 1`] = `
                                 data-testid="tooltipBody"
                                 id="tooltip-550000"
                                 role="tooltip"
-                                title="Models in which a state serves as the main contractual participant"
+                                title="Models in which a state or community-based organization serves as the main contractual participant, including managed care organizations serving Medicaid beneficiaries."
                               >
-                                Models in which a state serves as the main contractual participant
+                                Models in which a state or community-based organization serves as the main contractual participant, including managed care organizations serving Medicaid beneficiaries.
                               </span>
                             </span>
                           </span>
@@ -2152,10 +2042,6 @@ exports[`Model Plan Task List Basics page > matches snapshot 1`] = `
                                   xmlns="http://www.w3.org/2000/svg"
                                 >
                                   <path
-                                    d="M0 0h24v24H0z"
-                                    fill="none"
-                                  />
-                                  <path
                                     d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
                                   />
                                 </svg>
@@ -2166,9 +2052,9 @@ exports[`Model Plan Task List Basics page > matches snapshot 1`] = `
                                 data-testid="tooltipBody"
                                 id="tooltip-550000"
                                 role="tooltip"
-                                title="Models and demonstrations requiring testing as determined by Congress under Social Security Act 1115A"
+                                title="Models and demonstrations requiring testing as determined by Congress and/or the Secretary of Health and Human Services."
                               >
-                                Models and demonstrations requiring testing as determined by Congress under Social Security Act 1115A
+                                Models and demonstrations requiring testing as determined by Congress and/or the Secretary of Health and Human Services.
                               </span>
                             </span>
                           </span>
@@ -2202,11 +2088,12 @@ exports[`Model Plan Task List Basics page > matches snapshot 1`] = `
                   </div>
                   <div
                     class="usa-form-group margin-top-4"
+                    data-scroll="plan-basics-model-additional-category"
                   >
                     <label
                       class="usa-label text-normal"
                       data-testid="label"
-                      for="basics.additionalModelCategories"
+                      for="plan-basics-model-additional-category"
                     >
                       Additional model categories
                     </label>
@@ -2257,10 +2144,6 @@ exports[`Model Plan Task List Basics page > matches snapshot 1`] = `
                                 xmlns="http://www.w3.org/2000/svg"
                               >
                                 <path
-                                  d="M0 0h24v24H0z"
-                                  fill="none"
-                                />
-                                <path
                                   d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
                                 />
                               </svg>
@@ -2301,7 +2184,7 @@ exports[`Model Plan Task List Basics page > matches snapshot 1`] = `
                           class="display-flex flex-align-center"
                           style="gap: 4px;"
                         >
-                          Disease-Specific & Episodic
+                          Disease-Specific & Episode-Based
                           <span
                             class="usa-tooltip"
                             data-testid="tooltipWrapper"
@@ -2323,10 +2206,6 @@ exports[`Model Plan Task List Basics page > matches snapshot 1`] = `
                                 width="1em"
                                 xmlns="http://www.w3.org/2000/svg"
                               >
-                                <path
-                                  d="M0 0h24v24H0z"
-                                  fill="none"
-                                />
                                 <path
                                   d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
                                 />
@@ -2391,10 +2270,6 @@ exports[`Model Plan Task List Basics page > matches snapshot 1`] = `
                                 xmlns="http://www.w3.org/2000/svg"
                               >
                                 <path
-                                  d="M0 0h24v24H0z"
-                                  fill="none"
-                                />
-                                <path
                                   d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
                                 />
                               </svg>
@@ -2458,10 +2333,6 @@ exports[`Model Plan Task List Basics page > matches snapshot 1`] = `
                                 xmlns="http://www.w3.org/2000/svg"
                               >
                                 <path
-                                  d="M0 0h24v24H0z"
-                                  fill="none"
-                                />
-                                <path
                                   d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
                                 />
                               </svg>
@@ -2472,9 +2343,9 @@ exports[`Model Plan Task List Basics page > matches snapshot 1`] = `
                               data-testid="tooltipBody"
                               id="tooltip-550000"
                               role="tooltip"
-                              title="Models which seek to mitigate the total cost of care by improving access to and the affordability of prescription drugs covered under Part B or Part D, including gene cell therapy, accelerated approvals and biosimilars"
+                              title="Models that seek to improve access to and/or the affordability of prescription drugs covered under Medicare (Part B and D) or Medicaid."
                             >
-                              Models which seek to mitigate the total cost of care by improving access to and the affordability of prescription drugs covered under Part B or Part D, including gene cell therapy, accelerated approvals and biosimilars
+                              Models that seek to improve access to and/or the affordability of prescription drugs covered under Medicare (Part B and D) or Medicaid.
                             </span>
                           </span>
                         </span>
@@ -2503,7 +2374,7 @@ exports[`Model Plan Task List Basics page > matches snapshot 1`] = `
                           class="display-flex flex-align-center"
                           style="gap: 4px;"
                         >
-                          State-Based
+                          State & Community-Based
                           <span
                             class="usa-tooltip"
                             data-testid="tooltipWrapper"
@@ -2526,10 +2397,6 @@ exports[`Model Plan Task List Basics page > matches snapshot 1`] = `
                                 xmlns="http://www.w3.org/2000/svg"
                               >
                                 <path
-                                  d="M0 0h24v24H0z"
-                                  fill="none"
-                                />
-                                <path
                                   d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
                                 />
                               </svg>
@@ -2540,9 +2407,9 @@ exports[`Model Plan Task List Basics page > matches snapshot 1`] = `
                               data-testid="tooltipBody"
                               id="tooltip-550000"
                               role="tooltip"
-                              title="Models in which a state serves as the main contractual participant"
+                              title="Models in which a state or community-based organization serves as the main contractual participant, including managed care organizations serving Medicaid beneficiaries."
                             >
-                              Models in which a state serves as the main contractual participant
+                              Models in which a state or community-based organization serves as the main contractual participant, including managed care organizations serving Medicaid beneficiaries.
                             </span>
                           </span>
                         </span>
@@ -2593,10 +2460,6 @@ exports[`Model Plan Task List Basics page > matches snapshot 1`] = `
                                 xmlns="http://www.w3.org/2000/svg"
                               >
                                 <path
-                                  d="M0 0h24v24H0z"
-                                  fill="none"
-                                />
-                                <path
                                   d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
                                 />
                               </svg>
@@ -2607,9 +2470,9 @@ exports[`Model Plan Task List Basics page > matches snapshot 1`] = `
                               data-testid="tooltipBody"
                               id="tooltip-550000"
                               role="tooltip"
-                              title="Models and demonstrations requiring testing as determined by Congress under Social Security Act 1115A"
+                              title="Models and demonstrations requiring testing as determined by Congress and/or the Secretary of Health and Human Services."
                             >
-                              Models and demonstrations requiring testing as determined by Congress under Social Security Act 1115A
+                              Models and demonstrations requiring testing as determined by Congress and/or the Secretary of Health and Human Services.
                             </span>
                           </span>
                         </span>
@@ -2621,174 +2484,150 @@ exports[`Model Plan Task List Basics page > matches snapshot 1`] = `
                   </div>
                   <div
                     class="usa-form-group margin-top-4"
-                    data-scroll="cmsCenters"
+                    data-scroll="new-plan-cmsCenters"
                   >
-                    <fieldset
-                      class="usa-fieldset"
-                      data-testid="fieldset"
+                    <label
+                      class="usa-label"
+                      data-testid="label"
+                      for="new-plan-cmsCenters"
                     >
+                      CMS component
+                      <span
+                        aria-label="(Field required)"
+                        class="text-red margin-x-05"
+                      >
+                        *
+                      </span>
+                    </label>
+                    <div
+                      class="mint-checkbox usa-checkbox"
+                    >
+                      <input
+                        class="usa-checkbox__input"
+                        id="new-plan-cmsCenters-CMMI"
+                        name="basics.cmsCenters"
+                        type="checkbox"
+                        value="CMMI"
+                      />
                       <label
-                        class="usa-label"
-                        data-testid="label"
-                        for="plan-basics-cmsCenters"
+                        class="usa-checkbox__label"
+                        for="new-plan-cmsCenters-CMMI"
                       >
-                        CMS component
-                        <span
-                          aria-label="(Field required)"
-                          class="text-red margin-x-05"
-                        >
-                          *
-                        </span>
+                        Center for Medicare and Medicaid Innovation (CMMI)
                       </label>
-                      <div
-                        class="mint-checkbox usa-checkbox"
+                      <p
+                        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                      />
+                    </div>
+                    <div
+                      class="mint-checkbox usa-checkbox"
+                    >
+                      <input
+                        class="usa-checkbox__input"
+                        id="new-plan-cmsCenters-CENTER_FOR_CLINICAL_STANDARDS_AND_QUALITY"
+                        name="basics.cmsCenters"
+                        type="checkbox"
+                        value="CENTER_FOR_CLINICAL_STANDARDS_AND_QUALITY"
+                      />
+                      <label
+                        class="usa-checkbox__label"
+                        for="new-plan-cmsCenters-CENTER_FOR_CLINICAL_STANDARDS_AND_QUALITY"
                       >
-                        <input
-                          class="usa-checkbox__input"
-                          id="new-plan-cmsCenters-CMMI"
-                          name="basics.cmsCenters"
-                          type="checkbox"
-                          value="CMMI"
-                        />
-                        <label
-                          class="usa-checkbox__label"
-                          for="new-plan-cmsCenters-CMMI"
-                        >
-                          CMMI
-                        </label>
-                        <p
-                          class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
-                        />
-                      </div>
-                      <div
-                        class="mint-checkbox usa-checkbox"
+                        Center for Clinical Standards and Quality (CCSQ)
+                      </label>
+                      <p
+                        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                      />
+                    </div>
+                    <div
+                      class="mint-checkbox usa-checkbox"
+                    >
+                      <input
+                        class="usa-checkbox__input"
+                        id="new-plan-cmsCenters-CENTER_FOR_MEDICAID_AND_CHIP_SERVICES"
+                        name="basics.cmsCenters"
+                        type="checkbox"
+                        value="CENTER_FOR_MEDICAID_AND_CHIP_SERVICES"
+                      />
+                      <label
+                        class="usa-checkbox__label"
+                        for="new-plan-cmsCenters-CENTER_FOR_MEDICAID_AND_CHIP_SERVICES"
                       >
-                        <input
-                          class="usa-checkbox__input"
-                          id="new-plan-cmsCenters-CENTER_FOR_MEDICARE"
-                          name="basics.cmsCenters"
-                          type="checkbox"
-                          value="CENTER_FOR_MEDICARE"
-                        />
-                        <label
-                          class="usa-checkbox__label"
-                          for="new-plan-cmsCenters-CENTER_FOR_MEDICARE"
-                        >
-                          Center for Medicare (CM)
-                        </label>
-                        <p
-                          class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
-                        />
-                      </div>
-                      <div
-                        class="mint-checkbox usa-checkbox"
+                        Center for Medicaid and CHIP Services (CMCS)
+                      </label>
+                      <p
+                        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                      />
+                    </div>
+                    <div
+                      class="mint-checkbox usa-checkbox"
+                    >
+                      <input
+                        class="usa-checkbox__input"
+                        id="new-plan-cmsCenters-CENTER_FOR_MEDICARE"
+                        name="basics.cmsCenters"
+                        type="checkbox"
+                        value="CENTER_FOR_MEDICARE"
+                      />
+                      <label
+                        class="usa-checkbox__label"
+                        for="new-plan-cmsCenters-CENTER_FOR_MEDICARE"
                       >
-                        <input
-                          class="usa-checkbox__input"
-                          id="new-plan-cmsCenters-FEDERAL_COORDINATED_HEALTH_CARE_OFFICE"
-                          name="basics.cmsCenters"
-                          type="checkbox"
-                          value="FEDERAL_COORDINATED_HEALTH_CARE_OFFICE"
-                        />
-                        <label
-                          class="usa-checkbox__label"
-                          for="new-plan-cmsCenters-FEDERAL_COORDINATED_HEALTH_CARE_OFFICE"
-                        >
-                          Federal Coordinated Health Care
-                        </label>
-                        <p
-                          class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
-                        />
-                      </div>
-                      <div
-                        class="mint-checkbox usa-checkbox"
+                        Center for Medicare (CM)
+                      </label>
+                      <p
+                        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                      />
+                    </div>
+                    <div
+                      class="mint-checkbox usa-checkbox"
+                    >
+                      <input
+                        class="usa-checkbox__input"
+                        id="new-plan-cmsCenters-FEDERAL_COORDINATED_HEALTH_CARE_OFFICE"
+                        name="basics.cmsCenters"
+                        type="checkbox"
+                        value="FEDERAL_COORDINATED_HEALTH_CARE_OFFICE"
+                      />
+                      <label
+                        class="usa-checkbox__label"
+                        for="new-plan-cmsCenters-FEDERAL_COORDINATED_HEALTH_CARE_OFFICE"
                       >
-                        <input
-                          class="usa-checkbox__input"
-                          id="new-plan-cmsCenters-CENTER_FOR_CLINICAL_STANDARDS_AND_QUALITY"
-                          name="basics.cmsCenters"
-                          type="checkbox"
-                          value="CENTER_FOR_CLINICAL_STANDARDS_AND_QUALITY"
-                        />
-                        <label
-                          class="usa-checkbox__label"
-                          for="new-plan-cmsCenters-CENTER_FOR_CLINICAL_STANDARDS_AND_QUALITY"
-                        >
-                          Center for Clinical Standards and Quality (CCSQ)
-                        </label>
-                        <p
-                          class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
-                        />
-                      </div>
-                      <div
-                        class="mint-checkbox usa-checkbox"
+                        Federal Coordinated Health Care Office (FCHCO)
+                      </label>
+                      <p
+                        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                      />
+                    </div>
+                    <div
+                      class="mint-checkbox usa-checkbox"
+                    >
+                      <input
+                        class="usa-checkbox__input"
+                        id="new-plan-cmsCenters-CENTER_FOR_PROGRAM_INTEGRITY"
+                        name="basics.cmsCenters"
+                        type="checkbox"
+                        value="CENTER_FOR_PROGRAM_INTEGRITY"
+                      />
+                      <label
+                        class="usa-checkbox__label"
+                        for="new-plan-cmsCenters-CENTER_FOR_PROGRAM_INTEGRITY"
                       >
-                        <input
-                          class="usa-checkbox__input"
-                          id="new-plan-cmsCenters-CENTER_FOR_PROGRAM_INTEGRITY"
-                          name="basics.cmsCenters"
-                          type="checkbox"
-                          value="CENTER_FOR_PROGRAM_INTEGRITY"
-                        />
-                        <label
-                          class="usa-checkbox__label"
-                          for="new-plan-cmsCenters-CENTER_FOR_PROGRAM_INTEGRITY"
-                        >
-                          Center for Program Integrity (CPI)
-                        </label>
-                        <p
-                          class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
-                        />
-                      </div>
-                      <div
-                        class="mint-checkbox usa-checkbox"
-                      >
-                        <input
-                          class="usa-checkbox__input"
-                          id="new-plan-cmsCenters-OTHER"
-                          name="basics.cmsCenters"
-                          type="checkbox"
-                          value="OTHER"
-                        />
-                        <label
-                          class="usa-checkbox__label"
-                          for="new-plan-cmsCenters-OTHER"
-                        >
-                          Other
-                        </label>
-                        <p
-                          class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
-                        />
-                      </div>
-                      <div
-                        class="usa-form-group margin-top-4"
-                      >
-                        <label
-                          class="usa-label"
-                          data-testid="label"
-                          for="plan-basics-cmsCategory--Other"
-                        >
-                          Please specify
-                        </label>
-                        <textarea
-                          aria-labelledby="label-plan-basics-cmsCategory--Other hint-plan-basics-cmsCategory--Other"
-                          class="mint-textarea usa-textarea"
-                          id="plan-basics-cmsCategory--Other"
-                          maxlength="5000"
-                          name="basics.cmsOther"
-                        >
-                          The Center for Awesomeness 
-                        </textarea>
-                      </div>
-                    </fieldset>
+                        Center for Program Integrity (CPI)
+                      </label>
+                      <p
+                        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                      />
+                    </div>
                   </div>
                   <div
                     class="usa-form-group margin-top-4"
+                    data-scroll="new-plan-cmmiGroup"
                   >
                     <label
                       class="usa-label text-normal"
                       data-testid="label"
-                      for="basics.cmmiGroups"
+                      for="new-plan-cmmiGroup"
                     >
                       CMMI Group
                     </label>
@@ -2930,10 +2769,6 @@ exports[`Model Plan Task List Basics page > matches snapshot 1`] = `
                       xmlns="http://www.w3.org/2000/svg"
                     >
                       <path
-                        d="M0 0h24v24H0z"
-                        fill="none"
-                      />
-                      <path
                         d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"
                       />
                     </svg>
@@ -2953,31 +2788,24 @@ exports[`Model Plan Task List Basics page > matches snapshot 1`] = `
                 <div
                   class="usa-summary-box__body"
                 >
-                  <h3
-                    class="usa-summary-box__heading"
-                  />
-                  <div
-                    class="usa-summary-box__text"
+                  <p
+                    class="margin-y-0 text-bold"
                   >
-                    <p
-                      class="margin-y-0 text-bold"
-                    >
-                      Previous model names
-                    </p>
-                    <ul
-                      class="margin-top-1 margin-bottom-0 padding-left-2"
-                    >
-                      <li>
-                        First Name
-                      </li>
-                      <li>
-                        Second Name
-                      </li>
-                      <li>
-                        Third Name
-                      </li>
-                    </ul>
-                  </div>
+                    Previous model names
+                  </p>
+                  <ul
+                    class="margin-top-1 margin-bottom-0 padding-left-2"
+                  >
+                    <li>
+                      First Name
+                    </li>
+                    <li>
+                      Second Name
+                    </li>
+                    <li>
+                      Third Name
+                    </li>
+                  </ul>
                 </div>
               </div>
             </div>

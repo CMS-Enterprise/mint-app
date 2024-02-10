@@ -62,7 +62,7 @@ exports[`AddCustomSolution > matches snapshot 1`] = `
         class="usa-breadcrumb__list-item usa-current"
       >
         <span>
-          Add solution details
+          Update solution details
         </span>
       </li>
     </ol>
@@ -80,7 +80,7 @@ exports[`AddCustomSolution > matches snapshot 1`] = `
         class="mint-h1 margin-top-4 margin-bottom-2"
         tabindex="-1"
       >
-        Add a solution
+        Update solution details
       </h1>
       <p
         class="margin-top-0 margin-bottom-1 font-body-lg"
@@ -97,40 +97,12 @@ exports[`AddCustomSolution > matches snapshot 1`] = `
         class="tablet:grid-col-8"
         data-testid="grid"
       >
-        <div
-          class="grid-container padding-3 bg-base-lightest maxw-none"
-          data-testid="gridContainer"
-        >
-          <div
-            class="grid-row"
-            data-testid="grid"
-          >
-            <div
-              class="desktop:grid-col-12"
-              data-testid="grid"
-            >
-              <p
-                class="text-bold margin-y-1"
-              >
-                Operational need
-              </p>
-              <p
-                class="margin-top-0 font-body-sm"
-              />
-            </div>
-            <div
-              class="desktop:grid-col-12"
-              data-testid="grid"
-            >
-              <a
-                class="usa-link"
-                href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/task-list/it-solutions/update-need/"
-              >
-                Edit this operational need
-              </a>
-            </div>
-          </div>
-        </div>
+        <span
+          aria-valuetext="Loading"
+          class="mint-spinner mint-spinner--large center"
+          data-testid="needs-spinner"
+          role="progressbar"
+        />
       </div>
       <div
         class="grid-gap"
@@ -229,7 +201,7 @@ exports[`AddCustomSolution > matches snapshot 1`] = `
                   id="submit-custom-solution"
                   type="submit"
                 >
-                  Add solution details
+                  Update solution details
                 </button>
               </div>
               <button
@@ -248,14 +220,10 @@ exports[`AddCustomSolution > matches snapshot 1`] = `
                   xmlns="http://www.w3.org/2000/svg"
                 >
                   <path
-                    d="M0 0h24v24H0z"
-                    fill="none"
-                  />
-                  <path
                     d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"
                   />
                 </svg>
-                Don’t add and return to previous page
+                Don’t update and return to previous page
               </button>
             </fieldset>
           </form>
@@ -290,10 +258,6 @@ exports[`AddCustomSolution > matches snapshot 1`] = `
               width="1em"
               xmlns="http://www.w3.org/2000/svg"
             >
-              <path
-                d="M0 0h24v24H0z"
-                fill="none"
-              />
               <path
                 d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-7 9h-2V5h2v6zm0 4h-2v-2h2v2z"
               />

@@ -31,8 +31,8 @@ const csvFields = [
   'basics.demoCode',
   'basics.cmsCenters', // array
   'basics.cmmiGroups', // array
-  'basics.cmsOther',
   'basics.modelType',
+  'basics.modelTypeOther',
   'basics.problem',
   'basics.goal',
   'basics.testInterventions',
@@ -66,9 +66,18 @@ const csvFields = [
   'generalCharacteristics.isNewModel',
   'generalCharacteristics.existingModel',
   'generalCharacteristics.resemblesExistingModel',
-  'generalCharacteristics.existingModelLinks', // array
+  'generalCharacteristics.resemblesExistingModelWhyHow',
   'generalCharacteristics.resemblesExistingModelHow',
+  'generalCharacteristics.resemblesExistingModelOtherSpecify',
+  'generalCharacteristics.resemblesExistingModelWhich',
+  'generalCharacteristics.resemblesExistingModelOtherOption',
   'generalCharacteristics.resemblesExistingModelNote',
+  'generalCharacteristics.participationInModelPrecondition',
+  'generalCharacteristics.participationInModelPreconditionOtherSpecify',
+  'generalCharacteristics.participationInModelPreconditionWhich',
+  'generalCharacteristics.participationInModelPreconditionOtherOption',
+  'generalCharacteristics.participationInModelPreconditionWhyHow',
+  'generalCharacteristics.participationInModelPreconditionNote',
   'generalCharacteristics.hasComponentsOrTracks',
   'generalCharacteristics.hasComponentsOrTracksDiffer',
   'generalCharacteristics.hasComponentsOrTracksNote',
@@ -81,6 +90,9 @@ const csvFields = [
   'generalCharacteristics.communityPartnersInvolved',
   'generalCharacteristics.communityPartnersInvolvedDescription',
   'generalCharacteristics.communityPartnersInvolvedNote',
+  'generalCharacteristics.agencyOrStateHelp', // array
+  'generalCharacteristics.agencyOrStateHelpOther',
+  'generalCharacteristics.agencyOrStateHelpNote',
   'generalCharacteristics.alternativePaymentModelTypes', // array
   'generalCharacteristics.alternativePaymentModelNote',
   'generalCharacteristics.keyCharacteristics', // array
@@ -94,6 +106,8 @@ const csvFields = [
   'generalCharacteristics.planContractUpdatedNote',
   'generalCharacteristics.geographiesTargeted',
   'generalCharacteristics.geographiesTargetedTypes', // array
+  'generalCharacteristics.geographiesStatesAndTerritories', // array
+  'generalCharacteristics.geographiesRegionTypes', // array
   'generalCharacteristics.geographiesTargetedTypesOther',
   'generalCharacteristics.geographiesTargetedAppliedTo', // array
   'generalCharacteristics.geographiesTargetedAppliedToOther',
@@ -109,10 +123,17 @@ const csvFields = [
   'generalCharacteristics.status',
 
   // Participants and Providers
+  'participantsAndProviders.participantAddedFrequency',
+  'participantsAndProviders.participantAddedFrequencyContinually',
+  'participantsAndProviders.participantAddedFrequencyOther',
+  'participantsAndProviders.participantAddedFrequencyNote',
+  'participantsAndProviders.participantRemovedFrequency',
+  'participantsAndProviders.participantRemovedFrequencyContinually',
+  'participantsAndProviders.participantRemovedFrequencyOther',
+  'participantsAndProviders.participantRemovedFrequencyNote',
   'participantsAndProviders.communicationMethod', // array
   'participantsAndProviders.communicationMethodOther',
   'participantsAndProviders.communicationNote',
-  'participantsAndProviders.participantAssumeRisk',
   'participantsAndProviders.riskType',
   'participantsAndProviders.riskOther',
   'participantsAndProviders.riskNote',
@@ -122,6 +143,8 @@ const csvFields = [
   'participantsAndProviders.coordinateWorkNote',
   'participantsAndProviders.gainsharePayments',
   'participantsAndProviders.gainsharePaymentsTrack',
+  'participantsAndProviders.gainsharePaymentsEligibility',
+  'participantsAndProviders.gainsharePaymentsEligibilityOther',
   'participantsAndProviders.gainsharePaymentsNote',
   'participantsAndProviders.participantsIds', // array
   'participantsAndProviders.participantsIdsOther',
@@ -144,6 +167,7 @@ const csvFields = [
   'participantsAndProviders.participantsCurrentlyInModelsNote',
   'participantsAndProviders.modelApplicationLevel',
   'participantsAndProviders.providerAdditionFrequency',
+  'participantsAndProviders.providerAdditionFrequencyContinually',
   'participantsAndProviders.providerAdditionFrequencyOther',
   'participantsAndProviders.providerAdditionFrequencyNote',
   'participantsAndProviders.providerAddMethod', // array
@@ -152,6 +176,10 @@ const csvFields = [
   'participantsAndProviders.providerLeaveMethod', // array
   'participantsAndProviders.providerLeaveMethodOther',
   'participantsAndProviders.providerLeaveMethodNote',
+  'participantsAndProviders.providerRemovalFrequency',
+  'participantsAndProviders.providerRemovalFrequencyContinually',
+  'participantsAndProviders.providerRemovalFrequencyOther',
+  'participantsAndProviders.providerRemovalFrequencyNote',
   'participantsAndProviders.providerOverlap',
   'participantsAndProviders.providerOverlapHierarchy',
   'participantsAndProviders.providerOverlapNote',
@@ -175,9 +203,17 @@ const csvFields = [
   'beneficiaries.excludeCertainCharacteristicsCriteria',
   'beneficiaries.excludeCertainCharacteristicsNote',
   'beneficiaries.beneficiarySelectionFrequency',
+  'beneficiaries.beneficiarySelectionFrequencyContinually',
   'beneficiaries.beneficiarySelectionFrequencyNote',
   'beneficiaries.beneficiarySelectionFrequencyOther',
+  'beneficiaries.beneficiaryRemovalFrequency',
+  'beneficiaries.beneficiaryRemovalFrequencyContinually',
+  'beneficiaries.beneficiaryRemovalFrequencyNote',
+  'beneficiaries.beneficiaryRemovalFrequencyOther',
   'beneficiaries.precedenceRules',
+  'beneficiaries.precedenceRulesYes',
+  'beneficiaries.precedenceRulesNo',
+  'beneficiaries.precedenceRulesNote',
   'beneficiaries.numberPeopleImpacted',
   'beneficiaries.estimateConfidence',
   'beneficiaries.confidenceNote',
@@ -205,16 +241,21 @@ const csvFields = [
   'opsEvalAndLearning.dataSharingStarts',
   'opsEvalAndLearning.dataSharingStartsOther',
   'opsEvalAndLearning.dataSharingFrequency', // array
+  'opsEvalAndLearning.dataSharingFrequencyContinually',
   'opsEvalAndLearning.dataSharingFrequencyOther',
   'opsEvalAndLearning.dataSharingStartsNote',
   'opsEvalAndLearning.dataCollectionStarts',
   'opsEvalAndLearning.dataCollectionStartsOther',
   'opsEvalAndLearning.dataCollectionFrequency', // array
+  'opsEvalAndLearning.dataCollectionFrequencyContinually',
   'opsEvalAndLearning.dataCollectionFrequencyOther',
   'opsEvalAndLearning.dataCollectionFrequencyNote',
   'opsEvalAndLearning.qualityReportingStarts',
   'opsEvalAndLearning.qualityReportingStartsOther',
   'opsEvalAndLearning.qualityReportingStartsNote',
+  'opsEvalAndLearning.qualityReportingFrequency', // array
+  'opsEvalAndLearning.qualityReportingFrequencyContinually',
+  'opsEvalAndLearning.qualityReportingFrequencyOther',
   'opsEvalAndLearning.evaluationApproaches', // array
   'opsEvalAndLearning.evaluationApproachOther',
   'opsEvalAndLearning.evalutaionApproachNote',
@@ -253,9 +294,6 @@ const csvFields = [
   'opsEvalAndLearning.modelLearningSystemsOther',
   'opsEvalAndLearning.modelLearningSystemsNote',
   'opsEvalAndLearning.anticipatedChallenges',
-  'opsEvalAndLearning.agencyOrStateHelp', // array
-  'opsEvalAndLearning.agencyOrStateHelpOther',
-  'opsEvalAndLearning.agencyOrStateHelpNote',
   'opsEvalAndLearning.stakeholders', // array
   'opsEvalAndLearning.stakeholdersOther',
   'opsEvalAndLearning.stakeholdersNote',
@@ -310,16 +348,24 @@ const csvFields = [
   'payments.payModelDifferentiation',
   'payments.expectedCalculationComplexityLevel',
   'payments.expectedCalculationComplexityLevelNote',
+  'payments.claimsProcessingPrecedence',
+  'payments.claimsProcessingPrecedenceOther',
+  'payments.claimsProcessingPrecedenceNote',
   'payments.canParticipantsSelectBetweenPaymentMechanisms',
   'payments.canParticipantsSelectBetweenPaymentMechanismsHow',
   'payments.canParticipantsSelectBetweenPaymentMechanismsNote',
   'payments.anticipatedPaymentFrequency', // array
+  'payments.anticipatedPaymentFrequencyContinually',
   'payments.anticipatedPaymentFrequencyOther',
   'payments.anticipatedPaymentFrequencyNote',
   'payments.fundingSource', // array
+  'payments.fundingSourceMedicareAInfo',
+  'payments.fundingSourceMedicareBInfo',
   'payments.fundingSourceOther',
   'payments.fundingSourceNote',
   'payments.fundingSourceR', // array
+  'payments.fundingSourceRMedicareAInfo',
+  'payments.fundingSourceRMedicareBInfo',
   'payments.fundingSourceROther',
   'payments.fundingSourceRNote',
   'payments.payRecipients', // array
@@ -338,6 +384,14 @@ const csvFields = [
   'payments.willRecoverPaymentsNote',
   'payments.anticipateReconcilingPaymentsRetrospectively',
   'payments.anticipateReconcilingPaymentsRetrospectivelyNote',
+  'payments.paymentReconciliationFrequency',
+  'payments.paymentReconciliationFrequencyContinually',
+  'payments.paymentReconciliationFrequencyOther',
+  'payments.paymentReconciliationFrequencyNote',
+  'payments.paymentDemandRecoupmentFrequency',
+  'payments.paymentDemandRecoupmentFrequencyContinually',
+  'payments.paymentDemandRecoupmentFrequencyOther',
+  'payments.paymentDemandRecoupmentFrequencyNote',
   'payments.paymentStartDate',
   'payments.paymentStartDateNote',
   'payments.readyForReviewByUserAccount.commonName',
@@ -360,14 +414,14 @@ const csvFields = [
   {
     label: `${i18next.t<string>(
       'collaboratorsMisc:csvTitle'
-    )} ${i18next.t<string>('collaborators:teamRole.label')}`,
-    value: 'collaborators.teamRole'
+    )} ${i18next.t<string>('collaborators:teamRoles.label')}`,
+    value: 'collaborators.teamRoles'
   },
 
   // Discussions
   {
     label: i18next.t<string>('discussions:discussionCSV.content'),
-    value: 'discussions.content'
+    value: 'discussions.content.rawContent'
   },
   {
     label: i18next.t<string>('discussions:discussionCSV.createdBy'),
@@ -389,7 +443,7 @@ const csvFields = [
   // Discussion Replies
   {
     label: i18next.t<string>('discussions:replyCSV.content'),
-    value: 'discussions.replies.content'
+    value: 'discussions.replies.content.rawContent'
   },
   {
     label: i18next.t<string>('discussions:replyCSV.createdBy'),

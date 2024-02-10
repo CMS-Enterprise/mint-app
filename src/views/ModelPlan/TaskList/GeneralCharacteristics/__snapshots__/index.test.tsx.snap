@@ -76,10 +76,6 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
         xmlns="http://www.w3.org/2000/svg"
       >
         <path
-          d="M0 0h24v24H0z"
-          fill="none"
-        />
-        <path
           d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-7 9h-2V5h2v6zm0 4h-2v-2h2v2z"
         />
       </svg>
@@ -172,7 +168,7 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
             Start typing the name of the model
           </p>
           <div
-            class="usa-combo-box disabled"
+            class="usa-combo-box"
             data-enhanced="true"
             data-testid="combo-box"
           >
@@ -182,10 +178,17 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
               data-testid="combo-box-select"
               name="existingModel"
               tabindex="-1"
-            />
+            >
+              <option
+                value="other"
+              >
+                Other
+              </option>
+            </select>
             <input
               aria-activedescendant=""
               aria-autocomplete="list"
+              aria-controls="plan-characteristics-existing-model--list"
               aria-describedby="plan-characteristics-existing-model--assistiveHint"
               aria-expanded="false"
               aria-owns="plan-characteristics-existing-model--list"
@@ -193,7 +196,6 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
               autocomplete="off"
               class="usa-combo-box__input"
               data-testid="combo-box-input"
-              disabled=""
               id="plan-characteristics-existing-model"
               name="existingModel"
               role="combobox"
@@ -208,7 +210,6 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
                 aria-label="Clear the select contents"
                 class="usa-combo-box__clear-input"
                 data-testid="combo-box-clear-button"
-                disabled=""
                 hidden=""
                 type="button"
               >
@@ -228,7 +229,6 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
                 aria-label="Toggle the dropdown list"
                 class="usa-combo-box__toggle-list"
                 data-testid="combo-box-toggle"
-                disabled=""
                 tabindex="-1"
                 type="button"
               >
@@ -244,9 +244,18 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
               tabindex="-1"
             >
               <li
-                class="usa-combo-box__list-option--no-results"
+                aria-posinset="1"
+                aria-selected="false"
+                aria-setsize="1"
+                class="usa-combo-box__list-option"
+                data-testid="combo-box-option-other"
+                data-value="other"
+                id="plan-characteristics-existing-model--list--option-0"
+                role="option"
+                tabindex="-1"
+                value="other"
               >
-                No results found
+                Other
               </li>
             </ul>
             <div
@@ -270,55 +279,329 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
         data-scroll="resemblesExistingModel"
       >
         <label
-          class="usa-label"
+          class="usa-label maxw-none"
           data-testid="label"
           for="plan-characteristics-resembles-existing-model"
         >
           Does your proposed track/model resemble any existing models?
         </label>
-        <fieldset
-          class="usa-fieldset"
-          data-testid="fieldset"
+        <div
+          class="usa-radio"
+          data-testid="radio"
+        >
+          <input
+            class="usa-radio__input"
+            data-testid="plan-characteristics-resembles-existing-model-YES"
+            id="plan-characteristics-resembles-existing-model-YES"
+            name="resemblesExistingModel"
+            type="radio"
+            value="YES"
+          />
+          <label
+            class="usa-radio__label"
+            for="plan-characteristics-resembles-existing-model-YES"
+          >
+            Yes
+          </label>
+        </div>
+        <div
+          class="usa-radio"
+          data-testid="radio"
+        >
+          <input
+            class="usa-radio__input"
+            data-testid="plan-characteristics-resembles-existing-model-NO"
+            id="plan-characteristics-resembles-existing-model-NO"
+            name="resemblesExistingModel"
+            type="radio"
+            value="NO"
+          />
+          <label
+            class="usa-radio__label"
+            for="plan-characteristics-resembles-existing-model-NO"
+          >
+            No
+          </label>
+        </div>
+        <div
+          class="usa-radio"
+          data-testid="radio"
+        >
+          <input
+            class="usa-radio__input"
+            data-testid="plan-characteristics-resembles-existing-model-OTHER"
+            id="plan-characteristics-resembles-existing-model-OTHER"
+            name="resemblesExistingModel"
+            type="radio"
+            value="OTHER"
+          />
+          <label
+            class="usa-radio__label"
+            for="plan-characteristics-resembles-existing-model-OTHER"
+          >
+            Other
+          </label>
+        </div>
+        <div
+          class="margin-top-3"
+        >
+          <label
+            class="usa-label text-normal"
+            data-testid="label"
+            for="plan-characteristics-resembles-model-why-how"
+          >
+            Explain why and how the model made this decision.
+          </label>
+          <textarea
+            aria-labelledby="label-plan-characteristics-resembles-existing-model-why-how hint-plan-characteristics-resembles-existing-model-why-how"
+            class="height-15 usa-textarea"
+            data-testid="plan-characteristics-resembles-existing-model--why-how"
+            id="plan-characteristics-resembles-existing-model-why-how"
+            name="resemblesExistingModelWhyHow"
+          >
+            We think it is right
+          </textarea>
+        </div>
+        <div
+          class="margin-top-4 margin-bottom-8"
+        >
+          <button
+            class="usa-button usa-button usa-button--unstyled"
+            data-testid="add-note-toggle"
+            type="button"
+          >
+            <svg
+              aria-hidden="true"
+              class="usa-icon margin-right-1"
+              focusable="false"
+              height="1em"
+              role="img"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+              />
+            </svg>
+            Add an additional note
+          </button>
+        </div>
+      </div>
+      <div
+        class="usa-form-group margin-y-4 margin-bottom-8"
+        data-scroll="participationInModelPrecondition"
+      >
+        <label
+          class="usa-label maxw-none"
+          data-testid="label"
+          for="plan-characteristics-participation-model-precondition"
+        >
+          Is participation in another model a precondition for participation in this model?
+        </label>
+        <div
+          class="usa-radio"
+          data-testid="radio"
+        >
+          <input
+            class="usa-radio__input"
+            data-testid="plan-characteristics-participation-model-precondition-YES"
+            id="plan-characteristics-participation-model-precondition-YES"
+            name="participationInModelPrecondition"
+            type="radio"
+            value="YES"
+          />
+          <label
+            class="usa-radio__label"
+            for="plan-characteristics-participation-model-precondition-YES"
+          >
+            Yes
+          </label>
+        </div>
+        <div
+          class="usa-radio"
+          data-testid="radio"
+        >
+          <input
+            class="usa-radio__input"
+            data-testid="plan-characteristics-participation-model-precondition-NO"
+            id="plan-characteristics-participation-model-precondition-NO"
+            name="participationInModelPrecondition"
+            type="radio"
+            value="NO"
+          />
+          <label
+            class="usa-radio__label"
+            for="plan-characteristics-participation-model-precondition-NO"
+          >
+            No
+          </label>
+        </div>
+        <div
+          class="usa-radio"
+          data-testid="radio"
+        >
+          <input
+            class="usa-radio__input"
+            data-testid="plan-characteristics-participation-model-precondition-OTHER"
+            id="plan-characteristics-participation-model-precondition-OTHER"
+            name="participationInModelPrecondition"
+            type="radio"
+            value="OTHER"
+          />
+          <label
+            class="usa-radio__label"
+            for="plan-characteristics-participation-model-precondition-OTHER"
+          >
+            Other
+          </label>
+        </div>
+        <div
+          class="usa-form-group margin-top-4"
+          data-scroll="plan-characteristics-participation-model-precondition-which"
+        >
+          <label
+            class="usa-label text-normal maxw-none"
+            data-testid="label"
+            for="plan-characteristics-participation-model-precondition-which"
+            id="label-plan-characteristics-participation-model-precondition-which"
+          >
+            Which models?
+          </label>
+          <p
+            class="text-base margin-y-1"
+          >
+            Start typing the name of the model
+          </p>
+          <div>
+            <div
+              class="easi-multiselect usa-combo-box margin-top-1 css-b62m3t-container"
+              id="plan-characteristics-participation-model-precondition-which"
+            >
+              <span
+                class="css-1f43avz-a11yText-A11yText"
+                id="react-select-3-live-region"
+              />
+              <span
+                aria-atomic="false"
+                aria-live="polite"
+                aria-relevant="additions text"
+                class="css-1f43avz-a11yText-A11yText"
+              />
+              <div
+                class=" css-jvusj8-control"
+              >
+                <div
+                  class=" css-319lph-ValueContainer"
+                >
+                  <div
+                    class=" css-14el2xx-placeholder"
+                    id="react-select-3-placeholder"
+                  >
+                    0 selected
+                  </div>
+                  <div
+                    class=" css-6j8wv5-Input"
+                    data-value=""
+                  >
+                    <input
+                      aria-autocomplete="list"
+                      aria-describedby="react-select-3-placeholder"
+                      aria-expanded="false"
+                      aria-haspopup="true"
+                      aria-labelledby="label-plan-characteristics-participation-model-precondition-which"
+                      autocapitalize="none"
+                      autocomplete="off"
+                      autocorrect="off"
+                      class=""
+                      id="react-select-3-input"
+                      role="combobox"
+                      spellcheck="false"
+                      style="opacity: 1; width: 100%; grid-area: 1 / 2; min-width: 2px; border: 0px; margin: 0px; outline: 0; padding: 0px;"
+                      tabindex="0"
+                      type="text"
+                      value=""
+                    />
+                  </div>
+                </div>
+                <div
+                  class=" css-1hb7zxy-IndicatorsContainer"
+                >
+                  <span
+                    class=" css-1vtyy7d-indicatorSeparator"
+                  />
+                  <div
+                    aria-hidden="true"
+                    class=" css-1232v1p-indicatorContainer"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="css-tj5bde-Svg"
+                      focusable="false"
+                      height="20"
+                      viewBox="0 0 20 20"
+                      width="20"
+                    >
+                      <path
+                        d="M4.516 7.548c0.436-0.446 1.043-0.481 1.576 0l3.908 3.747 3.908-3.747c0.533-0.481 1.141-0.446 1.574 0 0.436 0.445 0.408 1.197 0 1.615-0.406 0.418-4.695 4.502-4.695 4.502-0.217 0.223-0.502 0.335-0.787 0.335s-0.57-0.112-0.789-0.335c0 0-4.287-4.084-4.695-4.502s-0.436-1.17 0-1.615z"
+                      />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <input
+                  name="participationInModelPreconditionLinks"
+                  type="hidden"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="usa-form-group margin-top-4"
+          data-scroll="participationInModelPreconditionWhyHow"
+        >
+          <label
+            class="usa-label text-normal"
+            data-testid="label"
+            for="plan-characteristics-participation-model-precondition-why-how"
+          >
+            Explain any details including if it is just part of the model.
+          </label>
+          <textarea
+            aria-labelledby="label-plan-characteristics-participation-model-precondition-why-how hint-plan-characteristics-participation-model-precondition-why-how"
+            class="height-15 usa-textarea"
+            id="plan-characteristics-participation-model-precondition-why-how"
+            name="participationInModelPreconditionWhyHow"
+          >
+            It is a condition
+          </textarea>
+        </div>
+        <div
+          class="margin-top-4 margin-bottom-8"
         >
           <div
-            class="usa-radio"
-            data-testid="radio"
+            class="usa-form-group"
           >
-            <input
-              class="usa-radio__input"
-              data-testid="plan-characteristics-resembles-existing-model-true"
-              id="plan-characteristics-resembles-existing-model-true"
-              name="resemblesExistingModel"
-              type="radio"
-              value="TRUE"
-            />
             <label
-              class="usa-radio__label"
-              for="plan-characteristics-resembles-existing-model-true"
+              class="usa-label"
+              for="plan-characteristics-participation-model-precondition-note"
+              id="label-plan-characteristics-participation-model-precondition-note"
             >
-              Yes
+              Notes
             </label>
-          </div>
-          <div
-            class="usa-radio"
-            data-testid="radio"
-          >
-            <input
-              class="usa-radio__input"
-              data-testid="plan-characteristics-resembles-existing-model-false"
-              id="plan-characteristics-resembles-existing-model-false"
-              name="resemblesExistingModel"
-              type="radio"
-              value="FALSE"
-            />
-            <label
-              class="usa-radio__label"
-              for="plan-characteristics-resembles-existing-model-false"
+            <textarea
+              aria-labelledby="label-plan-characteristics-participation-model-precondition-note hint-plan-characteristics-participation-model-precondition-note"
+              class="usa-textarea"
+              data-testid="plan-characteristics-participation-model-precondition-note"
+              id="plan-characteristics-participation-model-precondition-note"
+              name="participationInModelPreconditionNote"
             >
-              No
-            </label>
+              Precondition note
+            </textarea>
           </div>
-        </fieldset>
+        </div>
       </div>
       <div
         class="usa-form-group margin-y-4 margin-bottom-8"
@@ -450,10 +733,6 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
           width="1em"
           xmlns="http://www.w3.org/2000/svg"
         >
-          <path
-            d="M0 0h24v24H0z"
-            fill="none"
-          />
           <path
             d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"
           />

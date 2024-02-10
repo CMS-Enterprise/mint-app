@@ -2,7 +2,12 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
-import { render, screen, waitFor } from '@testing-library/react';
+import {
+  render,
+  screen,
+  waitFor,
+  waitForElementToBeRemoved
+} from '@testing-library/react';
 import configureMockStore from 'redux-mock-store';
 
 import { MessageProvider } from 'hooks/useMessage';
@@ -32,13 +37,14 @@ describe('The Model Plan Task List', () => {
       readyForClearanceDts: '2022-05-12T15:01:39.190679Z',
       status: 'READY'
     },
-    opsEvalAndLearning: [] as any,
-    generalCharacteristics: [] as any,
-    participantsAndProviders: [] as any,
-    beneficiaries: [] as any,
-    prepareForClearance: [] as any,
-    payments: [] as any,
-    crTdls: [] as any,
+    opsEvalAndLearning: {} as any,
+    generalCharacteristics: {} as any,
+    participantsAndProviders: {} as any,
+    beneficiaries: {} as any,
+    prepareForClearance: {} as any,
+    payments: {} as any,
+    crs: [],
+    tdls: [],
     operationalNeeds: [] as any,
     documents: [
       {
@@ -52,7 +58,10 @@ describe('The Model Plan Task List', () => {
       {
         __typename: 'PlanDiscussion',
         id: '123',
-        content: 'This is a question.',
+        content: {
+          __typename: 'TaggedContent',
+          rawContent: 'This is a question.'
+        },
         createdBy: 'John Doe',
         createdDts: '2022-05-12T15:01:39.190679Z',
         replies: []
@@ -60,7 +69,10 @@ describe('The Model Plan Task List', () => {
       {
         __typename: 'PlanDiscussion',
         id: '456',
-        content: 'This is a second question.',
+        content: {
+          __typename: 'TaggedHTML',
+          rawContent: 'This is a second question.'
+        },
         createdBy: 'Jane Doe',
         createdDts: '2022-05-12T15:01:39.190679Z',
         replies: [
@@ -68,7 +80,10 @@ describe('The Model Plan Task List', () => {
             __typename: 'DiscussionReply',
             discussionID: '456',
             id: 'abc',
-            content: 'This is an answer.',
+            content: {
+              __typename: 'TaggedHTML',
+              rawContent: 'This is an answer.'
+            },
             createdBy: 'Jack Doe',
             createdDts: '2022-05-12T15:01:39.190679Z'
           }
@@ -94,7 +109,7 @@ describe('The Model Plan Task List', () => {
   };
 
   it('renders without crashing', async () => {
-    render(
+    const { getByTestId } = render(
       <Provider store={store}>
         <MemoryRouter initialEntries={[`/models/${modelPlan.id}/task-list`]}>
           <MockedProvider
@@ -108,6 +123,8 @@ describe('The Model Plan Task List', () => {
         </MemoryRouter>
       </Provider>
     );
+
+    await waitForElementToBeRemoved(() => getByTestId('page-loading'));
 
     expect(
       await screen.findByTestId('model-plan-task-list')
@@ -140,7 +157,7 @@ describe('The Model Plan Task List', () => {
 
   it('displays the model plan task list steps', async () => {
     modelPlan.modelName = '';
-    render(
+    const { getByTestId } = render(
       <Provider store={store}>
         <MemoryRouter initialEntries={[`/models/${modelPlan.id}/task-list`]}>
           <MockedProvider
@@ -154,13 +171,15 @@ describe('The Model Plan Task List', () => {
         </MemoryRouter>
       </Provider>
     );
+
+    await waitForElementToBeRemoved(() => getByTestId('page-loading'));
 
     expect(await screen.findByTestId('task-list')).toBeInTheDocument();
   });
 
   it('displays the model plan name', async () => {
     modelPlan.modelName = "PM Butler's great plan";
-    render(
+    const { getByTestId } = render(
       <Provider store={store}>
         <MemoryRouter initialEntries={[`/models/${modelPlan.id}/task-list`]}>
           <MockedProvider
@@ -174,6 +193,8 @@ describe('The Model Plan Task List', () => {
         </MemoryRouter>
       </Provider>
     );
+
+    await waitForElementToBeRemoved(() => getByTestId('page-loading'));
 
     await waitFor(() => {
       expect(screen.getByTestId('model-plan-name').textContent).toContain(
@@ -184,7 +205,7 @@ describe('The Model Plan Task List', () => {
 
   describe('Statuses', () => {
     it('renders proper buttons for Model Basics', async () => {
-      render(
+      const { getByTestId } = render(
         <Provider store={store}>
           <MemoryRouter initialEntries={[`/models/${modelPlan.id}/task-list`]}>
             <MockedProvider
@@ -199,10 +220,9 @@ describe('The Model Plan Task List', () => {
         </Provider>
       );
 
+      await waitForElementToBeRemoved(() => getByTestId('page-loading'));
+
       await waitFor(() => {
-        // expect(screen.getByText('Ready to start')).toHaveClass(
-        //   'bg-accent-cool'
-        // );
         expect(screen.getAllByTestId('tasklist-tag')[0]).toHaveClass(
           'bg-accent-cool'
         );

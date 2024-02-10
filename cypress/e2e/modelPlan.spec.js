@@ -97,7 +97,7 @@ describe('The Model Plan Form', () => {
 
     cy.get('[data-testid="fieldset"]').should('not.be.disabled');
 
-    cy.get('#ModelType-Voluntary').check({ force: true }).should('be.checked');
+    cy.get('#ModelType-VOLUNTARY').check({ force: true }).should('be.checked');
 
     cy.get('#ModelType-Problem')
       .first()
@@ -179,7 +179,7 @@ describe('The Model Plan Form', () => {
 
     // updates model plan status
 
-    cy.get('.mint-tag').contains('Draft model plan');
+    cy.get('.mint-tag').contains('Draft Model Plan');
 
     cy.contains('a', 'Update').click();
 

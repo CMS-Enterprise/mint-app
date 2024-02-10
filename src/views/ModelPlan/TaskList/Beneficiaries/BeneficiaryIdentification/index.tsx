@@ -1,7 +1,6 @@
 import React, { useRef } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { Link, useHistory, useParams } from 'react-router-dom';
-import { useMutation, useQuery } from '@apollo/client';
 import {
   Breadcrumb,
   BreadcrumbBar,
@@ -10,11 +9,18 @@ import {
   Fieldset,
   Grid,
   GridContainer,
-  IconArrowBack,
+  Icon,
   Label,
   Radio
 } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
+import {
+  BeneficiariesType,
+  GetBeneficiaryIdentificationQuery,
+  TriStateAnswer,
+  useGetBeneficiaryIdentificationQuery,
+  useUpdateModelPlanBeneficiariesMutation
+} from 'gql/gen/graphql';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
@@ -29,20 +35,13 @@ import MultiSelect from 'components/shared/MultiSelect';
 import TextAreaField from 'components/shared/TextAreaField';
 import TextField from 'components/shared/TextField';
 import usePlanTranslation from 'hooks/usePlanTranslation';
-import GetBeneficiaryIdentification from 'queries/Beneficiaries/getBeneficiaryIndentification';
-import {
-  GetBeneficiaryIdentification as BeneficiaryIdentificationType,
-  GetBeneficiaryIdentification_modelPlan_beneficiaries as BeneficiaryIdentificationFormType,
-  GetBeneficiaryIdentificationVariables
-} from 'queries/Beneficiaries/types/GetBeneficiaryIdentification';
-import { UpdateModelPlanBeneficiariesVariables } from 'queries/Beneficiaries/types/UpdateModelPlanBeneficiaries';
-import UpdateModelPlanBeneficiaries from 'queries/Beneficiaries/UpdateModelPlanBeneficiaries';
-import { BeneficiariesType, TriStateAnswer } from 'types/graphql-global-types';
 import { getKeys } from 'types/translation';
 import flattenErrors from 'utils/flattenErrors';
 import { dirtyInput } from 'utils/formDiff';
 import { composeMultiSelectOptions } from 'utils/modelPlan';
 import { NotFoundPartial } from 'views/NotFound';
+
+type BeneficiaryIdentificationFormType = GetBeneficiaryIdentificationQuery['modelPlan']['beneficiaries'];
 
 const BeneficiaryIdentification = () => {
   const { t: beneficiariesT } = useTranslation('beneficiaries');
@@ -64,10 +63,7 @@ const BeneficiaryIdentification = () => {
   );
   const history = useHistory();
 
-  const { data, loading, error } = useQuery<
-    BeneficiaryIdentificationType,
-    GetBeneficiaryIdentificationVariables
-  >(GetBeneficiaryIdentification, {
+  const { data, loading, error } = useGetBeneficiaryIdentificationQuery({
     variables: {
       id: modelID
     }
@@ -76,6 +72,7 @@ const BeneficiaryIdentification = () => {
   const {
     id,
     beneficiaries,
+    diseaseSpecificGroup,
     beneficiariesOther,
     beneficiariesNote,
     treatDualElligibleDifferent,
@@ -84,14 +81,12 @@ const BeneficiaryIdentification = () => {
     excludeCertainCharacteristics,
     excludeCertainCharacteristicsCriteria,
     excludeCertainCharacteristicsNote
-  } =
-    data?.modelPlan?.beneficiaries || ({} as BeneficiaryIdentificationFormType);
+  } = (data?.modelPlan?.beneficiaries ||
+    {}) as BeneficiaryIdentificationFormType;
 
   const modelName = data?.modelPlan?.modelName || '';
 
-  const [update] = useMutation<UpdateModelPlanBeneficiariesVariables>(
-    UpdateModelPlanBeneficiaries
-  );
+  const [update] = useUpdateModelPlanBeneficiariesMutation();
 
   const handleFormSubmit = (redirect?: 'next' | 'back') => {
     update({
@@ -123,6 +118,7 @@ const BeneficiaryIdentification = () => {
     __typename: 'PlanBeneficiaries',
     id: id ?? '',
     beneficiaries: beneficiaries ?? '',
+    diseaseSpecificGroup: diseaseSpecificGroup ?? '',
     beneficiariesOther: beneficiariesOther ?? '',
     beneficiariesNote: beneficiariesNote ?? '',
     treatDualElligibleDifferent: treatDualElligibleDifferent ?? null,
@@ -254,6 +250,34 @@ const BeneficiaryIdentification = () => {
                             }}
                             initialValues={initialValues.beneficiaries}
                           />
+
+                          {(values?.beneficiaries || []).includes(
+                            BeneficiariesType.DISEASE_SPECIFIC
+                          ) && (
+                            <FieldGroup
+                              scrollElement="diseaseSpecificGroup"
+                              error={!!flatErrors.diseaseSpecificGroup}
+                            >
+                              <Label
+                                htmlFor="beneficiaries-disease-specific-group"
+                                className="text-normal"
+                              >
+                                {beneficiariesT('diseaseSpecificGroup.label')}
+                              </Label>
+
+                              <FieldErrorMsg>
+                                {flatErrors.diseaseSpecificGroup}
+                              </FieldErrorMsg>
+
+                              <Field
+                                as={TextField}
+                                error={flatErrors.diseaseSpecificGroup}
+                                id="beneficiaries-disease-specific-group"
+                                data-testid="beneficiaries-disease-specific-group"
+                                name="diseaseSpecificGroup"
+                              />
+                            </FieldGroup>
+                          )}
 
                           {(values?.beneficiaries || []).includes(
                             BeneficiariesType.OTHER
@@ -546,7 +570,7 @@ const BeneficiaryIdentification = () => {
                           className="usa-button usa-button--unstyled"
                           onClick={() => handleFormSubmit('back')}
                         >
-                          <IconArrowBack
+                          <Icon.ArrowBack
                             className="margin-right-1"
                             aria-hidden
                           />

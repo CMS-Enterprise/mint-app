@@ -1,0 +1,85 @@
+import { gql } from '@apollo/client';
+
+export default gql(/* GraphQL */ `
+  query GetAllPayments($id: UUID!) {
+    modelPlan(id: $id) {
+      id
+      payments {
+        fundingSource
+        fundingSourceMedicareAInfo
+        fundingSourceMedicareBInfo
+        fundingSourceOther
+        fundingSourceNote
+        fundingSourceR
+        fundingSourceRMedicareAInfo
+        fundingSourceRMedicareBInfo
+        fundingSourceROther
+        fundingSourceRNote
+        payRecipients
+        payRecipientsOtherSpecification
+        payRecipientsNote
+        payType
+        payTypeNote
+        payClaims
+        payClaimsOther
+        payClaimsNote
+        shouldAnyProvidersExcludedFFSSystems
+        shouldAnyProviderExcludedFFSSystemsNote
+        changesMedicarePhysicianFeeSchedule
+        changesMedicarePhysicianFeeScheduleNote
+        affectsMedicareSecondaryPayerClaims
+        affectsMedicareSecondaryPayerClaimsHow
+        affectsMedicareSecondaryPayerClaimsNote
+        payModelDifferentiation
+        creatingDependenciesBetweenServices
+        creatingDependenciesBetweenServicesNote
+        needsClaimsDataCollection
+        needsClaimsDataCollectionNote
+        providingThirdPartyFile
+        isContractorAwareTestDataRequirements
+        beneficiaryCostSharingLevelAndHandling
+        waiveBeneficiaryCostSharingForAnyServices
+        waiveBeneficiaryCostSharingServiceSpecification
+        waiverOnlyAppliesPartOfPayment
+        waiveBeneficiaryCostSharingNote
+        nonClaimsPayments
+        nonClaimsPaymentsNote
+        nonClaimsPaymentOther
+        paymentCalculationOwner
+        numberPaymentsPerPayCycle
+        numberPaymentsPerPayCycleNote
+        sharedSystemsInvolvedAdditionalClaimPayment
+        sharedSystemsInvolvedAdditionalClaimPaymentNote
+        planningToUseInnovationPaymentContractor
+        planningToUseInnovationPaymentContractorNote
+        expectedCalculationComplexityLevel
+        expectedCalculationComplexityLevelNote
+        claimsProcessingPrecedence
+        claimsProcessingPrecedenceOther
+        claimsProcessingPrecedenceNote
+        canParticipantsSelectBetweenPaymentMechanisms
+        canParticipantsSelectBetweenPaymentMechanismsHow
+        canParticipantsSelectBetweenPaymentMechanismsNote
+        anticipatedPaymentFrequency
+        anticipatedPaymentFrequencyContinually
+        anticipatedPaymentFrequencyOther
+        anticipatedPaymentFrequencyNote
+        willRecoverPayments
+        willRecoverPaymentsNote
+        anticipateReconcilingPaymentsRetrospectively
+        anticipateReconcilingPaymentsRetrospectivelyNote
+        paymentReconciliationFrequency
+        paymentReconciliationFrequencyContinually
+        paymentReconciliationFrequencyOther
+        paymentReconciliationFrequencyNote
+        paymentDemandRecoupmentFrequency
+        paymentDemandRecoupmentFrequencyContinually
+        paymentDemandRecoupmentFrequencyOther
+        paymentDemandRecoupmentFrequencyNote
+        paymentStartDate
+        paymentStartDateNote
+        status
+      }
+    }
+  }
+`);

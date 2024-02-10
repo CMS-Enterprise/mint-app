@@ -21,68 +21,61 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
           <div
             class="usa-summary-box__body"
           >
-            <h3
-              class="usa-summary-box__heading"
-            />
             <div
-              class="usa-summary-box__text"
+              class="grid-container padding-x-6"
+              data-testid="gridContainer"
             >
-              <div
-                class="grid-container padding-x-6"
-                data-testid="gridContainer"
+              <h1
+                aria-live="polite"
+                class="mint-h1 margin-0 line-height-sans-2 minh-6 margin-bottom-2"
+                tabindex="-1"
               >
-                <h1
-                  aria-live="polite"
-                  class="mint-h1 margin-0 line-height-sans-2 minh-6 margin-bottom-2"
-                  tabindex="-1"
+                Testing Model Summary 
+                <span
+                  class="font-sans-sm text-normal"
                 >
-                  Testing Model Summary 
-                  <span
-                    class="font-sans-sm text-normal"
-                  >
-                    (TMS)
-                  </span>
-                </h1>
+                  (TMS)
+                </span>
+              </h1>
+              <div
+                class="padding-0"
+                data-testid="task-list-status"
+              >
                 <div
-                  class="padding-0"
-                  data-testid="task-list-status"
+                  class="grid-row"
+                  data-testid="grid"
+                  style="gap: 16px;"
                 >
                   <div
-                    class="grid-row"
+                    class="display-flex flex-align-center"
                     data-testid="grid"
-                    style="gap: 16px;"
+                    style="gap: 10px;"
                   >
-                    <div
-                      class="display-flex flex-align-center"
-                      data-testid="grid"
-                      style="gap: 10px;"
+                    <p
+                      class="margin-y-0"
                     >
-                      <p
-                        class="margin-y-0"
-                      >
-                        Status:
-                      </p>
-                      <span
-                        class="mint-tag bg-base text-white margin-right-0"
-                        data-testid="tag"
-                      >
-                        Draft model plan
-                      </span>
-                    </div>
-                    <div
-                      class="display-flex flex-align-center flex-wrap"
-                      data-testid="grid"
+                      Status:
+                    </p>
+                    <span
+                      class="mint-tag bg-base text-white margin-right-0"
+                      data-testid="tag"
                     >
-                      <p
-                        class="margin-y-0 text-normal"
-                      >
-                        Last updated on 08/27/2022
-                      </p>
-                    </div>
-                    <div
-                      class="mint-no-print"
-                    />
+                      Draft Model Plan
+                    </span>
                   </div>
+                  <div
+                    class="display-flex flex-align-center flex-wrap"
+                    data-testid="grid"
+                  >
+                    <p
+                      class="margin-y-0 text-normal"
+                    >
+                      Last updated on 08/27/2022
+                    </p>
+                  </div>
+                  <div
+                    class="mint-no-print"
+                  />
                 </div>
               </div>
             </div>
@@ -112,10 +105,6 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                   width="1em"
                   xmlns="http://www.w3.org/2000/svg"
                 >
-                  <path
-                    d="M0 0h24v24H0z"
-                    fill="none"
-                  />
                   <path
                     d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"
                   />
@@ -321,7 +310,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                         class="display-flex flex-align-center"
                         style="gap: 4px;"
                       >
-                        State-Based
+                        State & Community-Based
                         <span
                           class="usa-tooltip"
                           data-testid="tooltipWrapper"
@@ -344,10 +333,6 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                               xmlns="http://www.w3.org/2000/svg"
                             >
                               <path
-                                d="M0 0h24v24H0z"
-                                fill="none"
-                              />
-                              <path
                                 d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
                               />
                             </svg>
@@ -358,9 +343,9 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                             data-testid="tooltipBody"
                             id="tooltip-550000"
                             role="tooltip"
-                            title="Models in which a state serves as the main contractual participant"
+                            title="Models in which a state or community-based organization serves as the main contractual participant, including managed care organizations serving Medicaid beneficiaries."
                           >
-                            Models in which a state serves as the main contractual participant
+                            Models in which a state or community-based organization serves as the main contractual participant, including managed care organizations serving Medicaid beneficiaries.
                           </span>
                         </span>
                       </span>
@@ -417,10 +402,6 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                                 xmlns="http://www.w3.org/2000/svg"
                               >
                                 <path
-                                  d="M0 0h24v24H0z"
-                                  fill="none"
-                                />
-                                <path
                                   d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
                                 />
                               </svg>
@@ -474,17 +455,8 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                       <li
                         class="font-sans-md line-height-sans-4"
                       >
-                        Other
+                        Center for Medicaid and CHIP Services (CMCS)
                       </li>
-                      <ul
-                        data-testid="other-entry"
-                      >
-                        <li
-                          class="font-sans-md line-height-sans-4"
-                        >
-                          The Center for Awesomeness
-                        </li>
-                      </ul>
                     </ul>
                   </div>
                 </div>
@@ -535,11 +507,15 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                 >
                   Model Type
                 </p>
-                <p
-                  class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                <ul
+                  class="margin-y-0 padding-left-3"
                 >
-                  Mandatory
-                </p>
+                  <li
+                    class="font-sans-md line-height-sans-4"
+                  >
+                    Mandatory national
+                  </li>
+                </ul>
               </div>
             </div>
             <div
@@ -959,6 +935,25 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                 data-testid="grid"
               >
                 <div
+                  class="read-only-section read-only-section--explain-why-and-how-the-model-made-this-decision margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    Explain why and how the model made this decision.
+                  </p>
+                  <p
+                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  >
+                    We think it is right
+                  </p>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
                   class="read-only-section read-only-section--which-existing-models-does-your-proposed-track-model-most-closely-resemble margin-bottom-3"
                 >
                   <p
@@ -966,15 +961,24 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                   >
                     Which existing models does your proposed track/model most closely resemble?
                   </p>
-                  <p
-                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  <ul
+                    class="margin-y-0 padding-left-3"
                   >
-                    <em
-                      class="text-base"
+                    <li
+                      class="font-sans-md line-height-sans-4"
                     >
-                      No answer entered
-                    </em>
-                  </p>
+                      Other
+                    </li>
+                    <ul
+                      data-testid="other-entry"
+                    >
+                      <li
+                        class="font-sans-md line-height-sans-4"
+                      >
+                        Other model
+                      </li>
+                    </ul>
+                  </ul>
                 </div>
               </div>
               <div
@@ -995,7 +999,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     <em
                       class="text-base"
                     >
-                      No answer entered
+                      No additional information specified
                     </em>
                   </p>
                 </div>
@@ -1015,6 +1019,95 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                       class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
                     >
                       THIS IS A NEW NOTE
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--is-participation-in-another-model-a-precondition-for-participation-in-this-model margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    Is participation in another model a precondition for participation in this model?
+                  </p>
+                  <p
+                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  >
+                    Yes
+                  </p>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--which-models margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    Which models?
+                  </p>
+                  <ul
+                    class="margin-y-0 padding-left-3"
+                  >
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Other
+                    </li>
+                    <ul
+                      data-testid="other-entry"
+                    >
+                      <li
+                        class="font-sans-md line-height-sans-4"
+                      >
+                        Other model
+                      </li>
+                    </ul>
+                  </ul>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--explain-any-details-including-if-it-is-just-part-of-the-model margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    Explain any details including if it is just part of the model.
+                  </p>
+                  <p
+                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  >
+                    It is a condition
+                  </p>
+                </div>
+                <div
+                  class="desktop:grid-col-12"
+                  data-testid="grid"
+                >
+                  <div
+                    class="read-only-section read-only-section--notes margin-bottom-3"
+                  >
+                    <p
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                    >
+                      Notes
+                    </p>
+                    <p
+                      class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                    >
+                      Precondition note
                     </p>
                   </div>
                 </div>
@@ -1080,6 +1173,62 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
             <div
               class="margin-bottom-4 border-bottom-1px border-base-light padding-bottom-2"
             >
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--will-another-agency-or-state-help-design-operate-the-model margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    Will another Agency or State help design/operate the model?
+                  </p>
+                  <ul
+                    class="margin-y-0 padding-left-3"
+                  >
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Yes, we will partner with states
+                    </li>
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Other
+                    </li>
+                    <ul
+                      data-testid="other-entry"
+                    >
+                      <li
+                        class="font-sans-md line-height-sans-4"
+                      >
+                        Agency other
+                      </li>
+                    </ul>
+                  </ul>
+                </div>
+                <div
+                  class="desktop:grid-col-12"
+                  data-testid="grid"
+                >
+                  <div
+                    class="read-only-section read-only-section--notes margin-bottom-3"
+                  >
+                    <p
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                    >
+                      Notes
+                    </p>
+                    <p
+                      class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                    >
+                      State note
+                    </p>
+                  </div>
+                </div>
+              </div>
               <div
                 class="desktop:grid-col-12"
                 data-testid="grid"
@@ -1439,87 +1588,101 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                 </div>
               </div>
               <div
-                class="grid-row grid-gap"
+                class="desktop:grid-col-12"
                 data-testid="grid"
               >
                 <div
-                  class="desktop:grid-col-6"
-                  data-testid="grid"
+                  class="read-only-section read-only-section--geography-type-is margin-bottom-3"
                 >
-                  <div
-                    class="desktop:grid-col-12"
-                    data-testid="grid"
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
                   >
-                    <div
-                      class="read-only-section read-only-section--geography-type-is margin-bottom-3"
+                    Geography type is
+                  </p>
+                  <ul
+                    class="margin-y-0 padding-left-3"
+                  >
+                    <li
+                      class="font-sans-md line-height-sans-4"
                     >
-                      <p
-                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                      States and territories
+                    </li>
+                    <ul
+                      data-testid="other-entry"
+                    >
+                      <li
+                        class="font-sans-md line-height-sans-4"
                       >
-                        Geography type is
-                      </p>
-                      <ul
-                        class="margin-y-0 padding-left-3"
+                        California, Indiana
+                      </li>
+                    </ul>
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Region
+                    </li>
+                    <ul
+                      data-testid="other-entry"
+                    >
+                      <li
+                        class="font-sans-md line-height-sans-4"
+                      />
+                      <li>
+                        Core-based statistical areas (CBSAs)
+                      </li>
+                    </ul>
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Other
+                    </li>
+                    <ul
+                      data-testid="other-entry"
+                    >
+                      <li
+                        class="font-sans-md line-height-sans-4"
                       >
-                        <li
-                          class="font-sans-md line-height-sans-4"
-                        >
-                          Other
-                        </li>
-                        <ul
-                          data-testid="other-entry"
-                        >
-                          <li
-                            class="font-sans-md line-height-sans-4"
-                          >
-                            Geography type other
-                          </li>
-                        </ul>
-                      </ul>
-                    </div>
-                  </div>
+                        Geography type other
+                      </li>
+                    </ul>
+                  </ul>
                 </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
                 <div
-                  class="desktop:grid-col-6"
-                  data-testid="grid"
+                  class="read-only-section read-only-section--geographies-are-applied-to margin-bottom-3"
                 >
-                  <div
-                    class="desktop:grid-col-12"
-                    data-testid="grid"
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
                   >
-                    <div
-                      class="read-only-section read-only-section--geographies-are-applied-to margin-bottom-3"
+                    Geographies are applied to
+                  </p>
+                  <ul
+                    class="margin-y-0 padding-left-3"
+                  >
+                    <li
+                      class="font-sans-md line-height-sans-4"
                     >
-                      <p
-                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                      Beneficiaries
+                    </li>
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Other
+                    </li>
+                    <ul
+                      data-testid="other-entry"
+                    >
+                      <li
+                        class="font-sans-md line-height-sans-4"
                       >
-                        Geographies are applied to
-                      </p>
-                      <ul
-                        class="margin-y-0 padding-left-3"
-                      >
-                        <li
-                          class="font-sans-md line-height-sans-4"
-                        >
-                          Beneficiaries
-                        </li>
-                        <li
-                          class="font-sans-md line-height-sans-4"
-                        >
-                          Other
-                        </li>
-                        <ul
-                          data-testid="other-entry"
-                        >
-                          <li
-                            class="font-sans-md line-height-sans-4"
-                          >
-                            Geography applied other
-                          </li>
-                        </ul>
-                      </ul>
-                    </div>
-                  </div>
+                        Geography applied other
+                      </li>
+                    </ul>
+                  </ul>
                 </div>
               </div>
               <div
@@ -1741,7 +1904,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      3021 (ACA)
+                      3021 Affordable Care Act (ACA)
                     </li>
                     <li
                       class="font-sans-md line-height-sans-4"
@@ -2204,6 +2367,108 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                 data-testid="grid"
               >
                 <div
+                  class="read-only-section read-only-section--how-frequently-are-participants-added margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    How frequently are participants added?
+                  </p>
+                  <ul
+                    class="margin-y-0 padding-left-3"
+                  >
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Continually
+                    </li>
+                    <ul
+                      data-testid="other-entry"
+                    >
+                      <li
+                        class="font-sans-md line-height-sans-4"
+                      >
+                        participant added continually
+                      </li>
+                    </ul>
+                  </ul>
+                </div>
+                <div
+                  class="desktop:grid-col-12"
+                  data-testid="grid"
+                >
+                  <div
+                    class="read-only-section read-only-section--notes margin-bottom-3"
+                  >
+                    <p
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                    >
+                      Notes
+                    </p>
+                    <p
+                      class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                    >
+                      My note
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--how-frequently-are-participants-removed margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    How frequently are participants removed?
+                  </p>
+                  <ul
+                    class="margin-y-0 padding-left-3"
+                  >
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Other
+                    </li>
+                    <ul
+                      data-testid="other-entry"
+                    >
+                      <li
+                        class="font-sans-md line-height-sans-4"
+                      >
+                        participant added other
+                      </li>
+                    </ul>
+                  </ul>
+                </div>
+                <div
+                  class="desktop:grid-col-12"
+                  data-testid="grid"
+                >
+                  <div
+                    class="read-only-section read-only-section--notes margin-bottom-3"
+                  >
+                    <p
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                    >
+                      Notes
+                    </p>
+                    <p
+                      class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                    >
+                      Second note
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
                   class="read-only-section read-only-section--how-will-you-communicate-with-participants margin-bottom-3"
                 >
                   <p
@@ -2247,55 +2512,44 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                 </div>
               </div>
               <div
-                class="grid-row grid-gap"
+                class="desktop:grid-col-12"
                 data-testid="grid"
               >
                 <div
-                  class="desktop:grid-col-6"
-                  data-testid="grid"
+                  class="read-only-section read-only-section--what-type-of-risk-will-the-participant-assume margin-bottom-3"
                 >
-                  <div
-                    class="desktop:grid-col-12"
-                    data-testid="grid"
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
                   >
-                    <div
-                      class="read-only-section read-only-section--will-the-participants-assume-risk margin-bottom-3"
+                    What type of risk will the participant assume?
+                  </p>
+                  <ul
+                    class="margin-y-0 padding-left-3"
+                  >
+                    <li
+                      class="font-sans-md line-height-sans-4"
                     >
-                      <p
-                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
-                      >
-                        Will the participants assume risk?
-                      </p>
-                      <p
-                        class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
-                      >
-                        Yes
-                      </p>
-                    </div>
-                  </div>
+                      Capitation
+                    </li>
+                  </ul>
                 </div>
                 <div
-                  class="desktop:grid-col-6"
+                  class="desktop:grid-col-12"
                   data-testid="grid"
                 >
                   <div
-                    class="desktop:grid-col-12"
-                    data-testid="grid"
+                    class="read-only-section read-only-section--notes margin-bottom-3"
                   >
-                    <div
-                      class="read-only-section read-only-section--what-type-of-risk-will-the-participant-assume margin-bottom-3"
+                    <p
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
                     >
-                      <p
-                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
-                      >
-                        What type of risk will the participant assume?
-                      </p>
-                      <p
-                        class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
-                      >
-                        Capitalization
-                      </p>
-                    </div>
+                      Notes
+                    </p>
+                    <p
+                      class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                    >
+                      Note risk
+                    </p>
                   </div>
                 </div>
               </div>
@@ -2456,6 +2710,38 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                 data-testid="grid"
               >
                 <div
+                  class="read-only-section read-only-section--are-providers-eligible-to-participate-in-gainsharing-arrangements margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    Are providers eligible to participate in gainsharing arrangements?
+                  </p>
+                  <ul
+                    class="margin-y-0 padding-left-3"
+                  >
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Other
+                    </li>
+                    <ul
+                      data-testid="other-entry"
+                    >
+                      <li
+                        class="font-sans-md line-height-sans-4"
+                      >
+                        Other gainsharing
+                      </li>
+                    </ul>
+                  </ul>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
                   class="read-only-section read-only-section--notes margin-bottom-3"
                 >
                   <p
@@ -2526,11 +2812,24 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                   >
                     How frequently are providers added?
                   </p>
-                  <p
-                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  <ul
+                    class="margin-y-0 padding-left-3"
                   >
-                    Biannually
-                  </p>
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Other
+                    </li>
+                    <ul
+                      data-testid="other-entry"
+                    >
+                      <li
+                        class="font-sans-md line-height-sans-4"
+                      >
+                        Freq other
+                      </li>
+                    </ul>
+                  </ul>
                 </div>
                 <div
                   class="desktop:grid-col-12"
@@ -2632,6 +2931,57 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                       class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
                     >
                       Note leave
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--how-frequently-are-providers-removed margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    How frequently are providers removed?
+                  </p>
+                  <ul
+                    class="margin-y-0 padding-left-3"
+                  >
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Continually
+                    </li>
+                    <ul
+                      data-testid="other-entry"
+                    >
+                      <li
+                        class="font-sans-md line-height-sans-4"
+                      >
+                        Freq cont
+                      </li>
+                    </ul>
+                  </ul>
+                </div>
+                <div
+                  class="desktop:grid-col-12"
+                  data-testid="grid"
+                >
+                  <div
+                    class="read-only-section read-only-section--notes margin-bottom-3"
+                  >
+                    <p
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                    >
+                      Notes
+                    </p>
+                    <p
+                      class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                    >
+                      Note freq removal
                     </p>
                   </div>
                 </div>
@@ -2751,6 +3101,25 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                       Note beneficiary
                     </p>
                   </div>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--please-describe-the-disease-specific-groups-this-model-will-impact margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    Please describe the disease-specific groups this model will impact.
+                  </p>
+                  <p
+                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  >
+                    Other disease group
+                  </p>
                 </div>
               </div>
               <div
@@ -2978,18 +3347,82 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                 data-testid="grid"
               >
                 <div
-                  class="read-only-section read-only-section--how-frequently-are-beneficiaries-chosen margin-bottom-3"
+                  class="read-only-section read-only-section--how-frequently-are-beneficiaries-added margin-bottom-3"
                 >
                   <p
                     class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
                   >
-                    How frequently are beneficiaries chosen?
+                    How frequently are beneficiaries added?
                   </p>
-                  <p
-                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  <ul
+                    class="margin-y-0 padding-left-3"
                   >
-                    Annually
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Other
+                    </li>
+                    <ul
+                      data-testid="other-entry"
+                    >
+                      <li
+                        class="font-sans-md line-height-sans-4"
+                      >
+                        Frequency other
+                      </li>
+                    </ul>
+                  </ul>
+                </div>
+                <div
+                  class="desktop:grid-col-12"
+                  data-testid="grid"
+                >
+                  <div
+                    class="read-only-section read-only-section--notes margin-bottom-3"
+                  >
+                    <p
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                    >
+                      Notes
+                    </p>
+                    <p
+                      class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                    >
+                      Note frequency
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--how-frequently-are-beneficiaries-removed margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    How frequently are beneficiaries removed?
                   </p>
+                  <ul
+                    class="margin-y-0 padding-left-3"
+                  >
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Continually
+                    </li>
+                    <ul
+                      data-testid="other-entry"
+                    >
+                      <li
+                        class="font-sans-md line-height-sans-4"
+                      >
+                        Frequency continually
+                      </li>
+                    </ul>
+                  </ul>
                 </div>
                 <div
                   class="desktop:grid-col-12"
@@ -3061,11 +3494,24 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                   >
                     Are there precedence rules between this model and other model(s)?
                   </p>
-                  <p
-                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  <ul
+                    class="margin-y-0 padding-left-3"
                   >
-                    Yes precedence rules
-                  </p>
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Yes
+                    </li>
+                    <ul
+                      data-testid="other-entry"
+                    >
+                      <li
+                        class="font-sans-md line-height-sans-4"
+                      >
+                        Yes precedence rules
+                      </li>
+                    </ul>
+                  </ul>
                 </div>
               </div>
             </div>
@@ -3100,62 +3546,6 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
             <div
               class="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light"
             >
-              <div
-                class="desktop:grid-col-12"
-                data-testid="grid"
-              >
-                <div
-                  class="read-only-section read-only-section--will-another-agency-or-state-help-design-operate-the-model margin-bottom-3"
-                >
-                  <p
-                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
-                  >
-                    Will another Agency or State help design/operate the model?
-                  </p>
-                  <ul
-                    class="margin-y-0 padding-left-3"
-                  >
-                    <li
-                      class="font-sans-md line-height-sans-4"
-                    >
-                      Yes, we will partner with states
-                    </li>
-                    <li
-                      class="font-sans-md line-height-sans-4"
-                    >
-                      Other
-                    </li>
-                    <ul
-                      data-testid="other-entry"
-                    >
-                      <li
-                        class="font-sans-md line-height-sans-4"
-                      >
-                        Agency other
-                      </li>
-                    </ul>
-                  </ul>
-                </div>
-                <div
-                  class="desktop:grid-col-12"
-                  data-testid="grid"
-                >
-                  <div
-                    class="read-only-section read-only-section--notes margin-bottom-3"
-                  >
-                    <p
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
-                    >
-                      Notes
-                    </p>
-                    <p
-                      class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
-                    >
-                      State note
-                    </p>
-                  </div>
-                </div>
-              </div>
               <div
                 class="desktop:grid-col-12"
                 data-testid="grid"
@@ -3458,12 +3848,12 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                 data-testid="grid"
               >
                 <div
-                  class="read-only-section read-only-section--will-you-capture-participant-information margin-bottom-3"
+                  class="read-only-section read-only-section--will-you-collect-participant-information margin-bottom-3"
                 >
                   <p
                     class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
                   >
-                    Will you capture participant information?
+                    Will you collect participant information?
                   </p>
                   <p
                     class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
@@ -4065,12 +4455,12 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                 data-testid="grid"
               >
                 <div
-                  class="read-only-section read-only-section--payments margin-bottom-3"
+                  class="read-only-section read-only-section--will-you-make-risk-adjustments-to-payments margin-bottom-3"
                 >
                   <p
                     class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
                   >
-                    Payments
+                    Will you make risk adjustments to payments?
                   </p>
                   <p
                     class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
@@ -4190,12 +4580,12 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                 data-testid="grid"
               >
                 <div
-                  class="read-only-section read-only-section--payments margin-bottom-3"
+                  class="read-only-section read-only-section--will-participants-be-able-to-appeal-payments margin-bottom-3"
                 >
                   <p
                     class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
                   >
-                    Payments
+                    Will participants be able to appeal payments?
                   </p>
                   <p
                     class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
@@ -4679,8 +5069,11 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      Daily
+                      Monthly
                     </li>
+                    <ul
+                      data-testid="other-entry"
+                    />
                   </ul>
                 </div>
                 <div
@@ -4740,8 +5133,11 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      Monthly
+                      Annually
                     </li>
+                    <ul
+                      data-testid="other-entry"
+                    />
                   </ul>
                 </div>
                 <div
@@ -4800,6 +5196,38 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                       Note for qual report
                     </p>
                   </div>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--how-frequently-does-quality-reporting-happen margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    How frequently does quality reporting happen?
+                  </p>
+                  <ul
+                    class="margin-y-0 padding-left-3"
+                  >
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Other
+                    </li>
+                    <ul
+                      data-testid="other-entry"
+                    >
+                      <li
+                        class="font-sans-md line-height-sans-4"
+                      >
+                        Other frequency
+                      </li>
+                    </ul>
+                  </ul>
                 </div>
               </div>
             </div>
@@ -4936,6 +5364,9 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     >
                       Patient Protection Affordable Care Act (Sec 3021)
                     </li>
+                    <ul
+                      data-testid="other-entry"
+                    />
                   </ul>
                 </div>
               </div>
@@ -4978,6 +5409,9 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     >
                       Patient Protection Affordable Care Act (Sec 3021)
                     </li>
+                    <ul
+                      data-testid="other-entry"
+                    />
                   </ul>
                 </div>
               </div>
@@ -5514,6 +5948,78 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     data-testid="grid"
                   >
                     <div
+                      class="read-only-section read-only-section--are-there-any-business-requirement-s--that-address-claims-processing-precedence-order-with-the-other-model-s margin-bottom-3"
+                    >
+                      <p
+                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                      >
+                        Are there any business requirement(s) that address claims processing precedence order with the other model(s)?
+                      </p>
+                      <p
+                        class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                      >
+                        Yes
+                      </p>
+                    </div>
+                    <div
+                      class="desktop:grid-col-12"
+                      data-testid="grid"
+                    >
+                      <div
+                        class="read-only-section read-only-section--notes margin-bottom-3"
+                      >
+                        <p
+                          class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                        >
+                          Notes
+                        </p>
+                        <p
+                          class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                        >
+                          claim note
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="desktop:grid-col-6"
+                  data-testid="grid"
+                >
+                  <div
+                    class="desktop:grid-col-12"
+                    data-testid="grid"
+                  >
+                    <div
+                      class="read-only-section read-only-section--please-specify margin-bottom-3"
+                    >
+                      <p
+                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                      >
+                        Please specify
+                      </p>
+                      <p
+                        class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                      >
+                        other claims
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="grid-row grid-gap"
+                data-testid="grid"
+              >
+                <div
+                  class="desktop:grid-col-6"
+                  data-testid="grid"
+                >
+                  <div
+                    class="desktop:grid-col-12"
+                    data-testid="grid"
+                  >
+                    <div
                       class="read-only-section read-only-section--will-participants-be-allowed-to-select-between-multiple-payment-mechanisms margin-bottom-3"
                     >
                       <p
@@ -5591,8 +6097,11 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      Semiannually
+                      Semi-annually
                     </li>
+                    <ul
+                      data-testid="other-entry"
+                    />
                   </ul>
                 </div>
                 <div
@@ -5698,6 +6207,108 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                 data-testid="grid"
               >
                 <div
+                  class="read-only-section read-only-section--how-often-are-payments-reconciled margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    How often are payments reconciled?
+                  </p>
+                  <ul
+                    class="margin-y-0 padding-left-3"
+                  >
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Continually
+                    </li>
+                    <ul
+                      data-testid="other-entry"
+                    >
+                      <li
+                        class="font-sans-md line-height-sans-4"
+                      >
+                        Continual Frequency
+                      </li>
+                    </ul>
+                  </ul>
+                </div>
+                <div
+                  class="desktop:grid-col-12"
+                  data-testid="grid"
+                >
+                  <div
+                    class="read-only-section read-only-section--notes margin-bottom-3"
+                  >
+                    <p
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                    >
+                      Notes
+                    </p>
+                    <p
+                      class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                    >
+                      Reconciliation note
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--how-frequently-do-you-anticipate-making-demands-recoupments margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    How frequently do you anticipate making demands/recoupments?
+                  </p>
+                  <ul
+                    class="margin-y-0 padding-left-3"
+                  >
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Continually
+                    </li>
+                    <ul
+                      data-testid="other-entry"
+                    >
+                      <li
+                        class="font-sans-md line-height-sans-4"
+                      >
+                        Continual Frequency
+                      </li>
+                    </ul>
+                  </ul>
+                </div>
+                <div
+                  class="desktop:grid-col-12"
+                  data-testid="grid"
+                >
+                  <div
+                    class="read-only-section read-only-section--notes margin-bottom-3"
+                  >
+                    <p
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                    >
+                      Notes
+                    </p>
+                    <p
+                      class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                    >
+                      Demand and Recoupment note
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
                   class="read-only-section read-only-section--when-will-payments-start margin-bottom-3"
                 >
                   <p
@@ -5787,10 +6398,6 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
           width="1em"
           xmlns="http://www.w3.org/2000/svg"
         >
-          <path
-            d="M0 0h24v24H0z"
-            fill="none"
-          />
           <path
             d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
           />
@@ -5908,6 +6515,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
               <input
                 aria-activedescendant=""
                 aria-autocomplete="list"
+                aria-controls="share-export-modal-share-filter-group--list"
                 aria-describedby="share-export-modal-share-filter-group--assistiveHint"
                 aria-expanded="false"
                 aria-owns="share-export-modal-share-filter-group--list"
@@ -6259,10 +6867,6 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                   width="1em"
                   xmlns="http://www.w3.org/2000/svg"
                 >
-                  <path
-                    d="M0 0h24v24H0z"
-                    fill="none"
-                  />
                   <path
                     d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"
                   />
@@ -6321,68 +6925,61 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
           <div
             class="usa-summary-box__body"
           >
-            <h3
-              class="usa-summary-box__heading"
-            />
             <div
-              class="usa-summary-box__text"
+              class="grid-container padding-x-6"
+              data-testid="gridContainer"
             >
-              <div
-                class="grid-container padding-x-6"
-                data-testid="gridContainer"
+              <h1
+                aria-live="polite"
+                class="mint-h1 margin-0 line-height-sans-2 minh-6 margin-bottom-2"
+                tabindex="-1"
               >
-                <h1
-                  aria-live="polite"
-                  class="mint-h1 margin-0 line-height-sans-2 minh-6 margin-bottom-2"
-                  tabindex="-1"
+                Testing Model Summary 
+                <span
+                  class="font-sans-sm text-normal"
                 >
-                  Testing Model Summary 
-                  <span
-                    class="font-sans-sm text-normal"
-                  >
-                    (TMS)
-                  </span>
-                </h1>
+                  (TMS)
+                </span>
+              </h1>
+              <div
+                class="padding-0"
+                data-testid="task-list-status"
+              >
                 <div
-                  class="padding-0"
-                  data-testid="task-list-status"
+                  class="grid-row"
+                  data-testid="grid"
+                  style="gap: 16px;"
                 >
                   <div
-                    class="grid-row"
+                    class="display-flex flex-align-center"
                     data-testid="grid"
-                    style="gap: 16px;"
+                    style="gap: 10px;"
                   >
-                    <div
-                      class="display-flex flex-align-center"
-                      data-testid="grid"
-                      style="gap: 10px;"
+                    <p
+                      class="margin-y-0"
                     >
-                      <p
-                        class="margin-y-0"
-                      >
-                        Status:
-                      </p>
-                      <span
-                        class="mint-tag bg-base text-white margin-right-0"
-                        data-testid="tag"
-                      >
-                        Draft model plan
-                      </span>
-                    </div>
-                    <div
-                      class="display-flex flex-align-center flex-wrap"
-                      data-testid="grid"
+                      Status:
+                    </p>
+                    <span
+                      class="mint-tag bg-base text-white margin-right-0"
+                      data-testid="tag"
                     >
-                      <p
-                        class="margin-y-0 text-normal"
-                      >
-                        Last updated on 08/27/2022
-                      </p>
-                    </div>
-                    <div
-                      class="mint-no-print"
-                    />
+                      Draft Model Plan
+                    </span>
                   </div>
+                  <div
+                    class="display-flex flex-align-center flex-wrap"
+                    data-testid="grid"
+                  >
+                    <p
+                      class="margin-y-0 text-normal"
+                    >
+                      Last updated on 08/27/2022
+                    </p>
+                  </div>
+                  <div
+                    class="mint-no-print"
+                  />
                 </div>
               </div>
             </div>
@@ -6412,10 +7009,6 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                   width="1em"
                   xmlns="http://www.w3.org/2000/svg"
                 >
-                  <path
-                    d="M0 0h24v24H0z"
-                    fill="none"
-                  />
                   <path
                     d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"
                   />
@@ -6621,7 +7214,7 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                         class="display-flex flex-align-center"
                         style="gap: 4px;"
                       >
-                        State-Based
+                        State & Community-Based
                         <span
                           class="usa-tooltip"
                           data-testid="tooltipWrapper"
@@ -6644,10 +7237,6 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                               xmlns="http://www.w3.org/2000/svg"
                             >
                               <path
-                                d="M0 0h24v24H0z"
-                                fill="none"
-                              />
-                              <path
                                 d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
                               />
                             </svg>
@@ -6658,9 +7247,9 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                             data-testid="tooltipBody"
                             id="tooltip-550000"
                             role="tooltip"
-                            title="Models in which a state serves as the main contractual participant"
+                            title="Models in which a state or community-based organization serves as the main contractual participant, including managed care organizations serving Medicaid beneficiaries."
                           >
-                            Models in which a state serves as the main contractual participant
+                            Models in which a state or community-based organization serves as the main contractual participant, including managed care organizations serving Medicaid beneficiaries.
                           </span>
                         </span>
                       </span>
@@ -6717,10 +7306,6 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                                 xmlns="http://www.w3.org/2000/svg"
                               >
                                 <path
-                                  d="M0 0h24v24H0z"
-                                  fill="none"
-                                />
-                                <path
                                   d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
                                 />
                               </svg>
@@ -6774,17 +7359,8 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                       <li
                         class="font-sans-md line-height-sans-4"
                       >
-                        Other
+                        Center for Medicaid and CHIP Services (CMCS)
                       </li>
-                      <ul
-                        data-testid="other-entry"
-                      >
-                        <li
-                          class="font-sans-md line-height-sans-4"
-                        >
-                          The Center for Awesomeness
-                        </li>
-                      </ul>
                     </ul>
                   </div>
                 </div>
@@ -6835,11 +7411,15 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                 >
                   Model Type
                 </p>
-                <p
-                  class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                <ul
+                  class="margin-y-0 padding-left-3"
                 >
-                  Mandatory
-                </p>
+                  <li
+                    class="font-sans-md line-height-sans-4"
+                  >
+                    Mandatory national
+                  </li>
+                </ul>
               </div>
             </div>
             <div
@@ -7259,6 +7839,25 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                 data-testid="grid"
               >
                 <div
+                  class="read-only-section read-only-section--explain-why-and-how-the-model-made-this-decision margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    Explain why and how the model made this decision.
+                  </p>
+                  <p
+                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  >
+                    We think it is right
+                  </p>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
                   class="read-only-section read-only-section--which-existing-models-does-your-proposed-track-model-most-closely-resemble margin-bottom-3"
                 >
                   <p
@@ -7266,15 +7865,24 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                   >
                     Which existing models does your proposed track/model most closely resemble?
                   </p>
-                  <p
-                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  <ul
+                    class="margin-y-0 padding-left-3"
                   >
-                    <em
-                      class="text-base"
+                    <li
+                      class="font-sans-md line-height-sans-4"
                     >
-                      No answer entered
-                    </em>
-                  </p>
+                      Other
+                    </li>
+                    <ul
+                      data-testid="other-entry"
+                    >
+                      <li
+                        class="font-sans-md line-height-sans-4"
+                      >
+                        Other model
+                      </li>
+                    </ul>
+                  </ul>
                 </div>
               </div>
               <div
@@ -7295,7 +7903,7 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                     <em
                       class="text-base"
                     >
-                      No answer entered
+                      No additional information specified
                     </em>
                   </p>
                 </div>
@@ -7315,6 +7923,95 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                       class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
                     >
                       THIS IS A NEW NOTE
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--is-participation-in-another-model-a-precondition-for-participation-in-this-model margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    Is participation in another model a precondition for participation in this model?
+                  </p>
+                  <p
+                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  >
+                    Yes
+                  </p>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--which-models margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    Which models?
+                  </p>
+                  <ul
+                    class="margin-y-0 padding-left-3"
+                  >
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Other
+                    </li>
+                    <ul
+                      data-testid="other-entry"
+                    >
+                      <li
+                        class="font-sans-md line-height-sans-4"
+                      >
+                        Other model
+                      </li>
+                    </ul>
+                  </ul>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--explain-any-details-including-if-it-is-just-part-of-the-model margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    Explain any details including if it is just part of the model.
+                  </p>
+                  <p
+                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  >
+                    It is a condition
+                  </p>
+                </div>
+                <div
+                  class="desktop:grid-col-12"
+                  data-testid="grid"
+                >
+                  <div
+                    class="read-only-section read-only-section--notes margin-bottom-3"
+                  >
+                    <p
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                    >
+                      Notes
+                    </p>
+                    <p
+                      class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                    >
+                      Precondition note
                     </p>
                   </div>
                 </div>
@@ -7380,6 +8077,62 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
             <div
               class="margin-bottom-4 border-bottom-1px border-base-light padding-bottom-2"
             >
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--will-another-agency-or-state-help-design-operate-the-model margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    Will another Agency or State help design/operate the model?
+                  </p>
+                  <ul
+                    class="margin-y-0 padding-left-3"
+                  >
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Yes, we will partner with states
+                    </li>
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Other
+                    </li>
+                    <ul
+                      data-testid="other-entry"
+                    >
+                      <li
+                        class="font-sans-md line-height-sans-4"
+                      >
+                        Agency other
+                      </li>
+                    </ul>
+                  </ul>
+                </div>
+                <div
+                  class="desktop:grid-col-12"
+                  data-testid="grid"
+                >
+                  <div
+                    class="read-only-section read-only-section--notes margin-bottom-3"
+                  >
+                    <p
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                    >
+                      Notes
+                    </p>
+                    <p
+                      class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                    >
+                      State note
+                    </p>
+                  </div>
+                </div>
+              </div>
               <div
                 class="desktop:grid-col-12"
                 data-testid="grid"
@@ -7739,87 +8492,101 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                 </div>
               </div>
               <div
-                class="grid-row grid-gap"
+                class="desktop:grid-col-12"
                 data-testid="grid"
               >
                 <div
-                  class="desktop:grid-col-6"
-                  data-testid="grid"
+                  class="read-only-section read-only-section--geography-type-is margin-bottom-3"
                 >
-                  <div
-                    class="desktop:grid-col-12"
-                    data-testid="grid"
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
                   >
-                    <div
-                      class="read-only-section read-only-section--geography-type-is margin-bottom-3"
+                    Geography type is
+                  </p>
+                  <ul
+                    class="margin-y-0 padding-left-3"
+                  >
+                    <li
+                      class="font-sans-md line-height-sans-4"
                     >
-                      <p
-                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                      States and territories
+                    </li>
+                    <ul
+                      data-testid="other-entry"
+                    >
+                      <li
+                        class="font-sans-md line-height-sans-4"
                       >
-                        Geography type is
-                      </p>
-                      <ul
-                        class="margin-y-0 padding-left-3"
+                        California, Indiana
+                      </li>
+                    </ul>
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Region
+                    </li>
+                    <ul
+                      data-testid="other-entry"
+                    >
+                      <li
+                        class="font-sans-md line-height-sans-4"
+                      />
+                      <li>
+                        Core-based statistical areas (CBSAs)
+                      </li>
+                    </ul>
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Other
+                    </li>
+                    <ul
+                      data-testid="other-entry"
+                    >
+                      <li
+                        class="font-sans-md line-height-sans-4"
                       >
-                        <li
-                          class="font-sans-md line-height-sans-4"
-                        >
-                          Other
-                        </li>
-                        <ul
-                          data-testid="other-entry"
-                        >
-                          <li
-                            class="font-sans-md line-height-sans-4"
-                          >
-                            Geography type other
-                          </li>
-                        </ul>
-                      </ul>
-                    </div>
-                  </div>
+                        Geography type other
+                      </li>
+                    </ul>
+                  </ul>
                 </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
                 <div
-                  class="desktop:grid-col-6"
-                  data-testid="grid"
+                  class="read-only-section read-only-section--geographies-are-applied-to margin-bottom-3"
                 >
-                  <div
-                    class="desktop:grid-col-12"
-                    data-testid="grid"
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
                   >
-                    <div
-                      class="read-only-section read-only-section--geographies-are-applied-to margin-bottom-3"
+                    Geographies are applied to
+                  </p>
+                  <ul
+                    class="margin-y-0 padding-left-3"
+                  >
+                    <li
+                      class="font-sans-md line-height-sans-4"
                     >
-                      <p
-                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                      Beneficiaries
+                    </li>
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Other
+                    </li>
+                    <ul
+                      data-testid="other-entry"
+                    >
+                      <li
+                        class="font-sans-md line-height-sans-4"
                       >
-                        Geographies are applied to
-                      </p>
-                      <ul
-                        class="margin-y-0 padding-left-3"
-                      >
-                        <li
-                          class="font-sans-md line-height-sans-4"
-                        >
-                          Beneficiaries
-                        </li>
-                        <li
-                          class="font-sans-md line-height-sans-4"
-                        >
-                          Other
-                        </li>
-                        <ul
-                          data-testid="other-entry"
-                        >
-                          <li
-                            class="font-sans-md line-height-sans-4"
-                          >
-                            Geography applied other
-                          </li>
-                        </ul>
-                      </ul>
-                    </div>
-                  </div>
+                        Geography applied other
+                      </li>
+                    </ul>
+                  </ul>
                 </div>
               </div>
               <div
@@ -8041,7 +8808,7 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      3021 (ACA)
+                      3021 Affordable Care Act (ACA)
                     </li>
                     <li
                       class="font-sans-md line-height-sans-4"
@@ -8504,6 +9271,108 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                 data-testid="grid"
               >
                 <div
+                  class="read-only-section read-only-section--how-frequently-are-participants-added margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    How frequently are participants added?
+                  </p>
+                  <ul
+                    class="margin-y-0 padding-left-3"
+                  >
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Continually
+                    </li>
+                    <ul
+                      data-testid="other-entry"
+                    >
+                      <li
+                        class="font-sans-md line-height-sans-4"
+                      >
+                        participant added continually
+                      </li>
+                    </ul>
+                  </ul>
+                </div>
+                <div
+                  class="desktop:grid-col-12"
+                  data-testid="grid"
+                >
+                  <div
+                    class="read-only-section read-only-section--notes margin-bottom-3"
+                  >
+                    <p
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                    >
+                      Notes
+                    </p>
+                    <p
+                      class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                    >
+                      My note
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--how-frequently-are-participants-removed margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    How frequently are participants removed?
+                  </p>
+                  <ul
+                    class="margin-y-0 padding-left-3"
+                  >
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Other
+                    </li>
+                    <ul
+                      data-testid="other-entry"
+                    >
+                      <li
+                        class="font-sans-md line-height-sans-4"
+                      >
+                        participant added other
+                      </li>
+                    </ul>
+                  </ul>
+                </div>
+                <div
+                  class="desktop:grid-col-12"
+                  data-testid="grid"
+                >
+                  <div
+                    class="read-only-section read-only-section--notes margin-bottom-3"
+                  >
+                    <p
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                    >
+                      Notes
+                    </p>
+                    <p
+                      class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                    >
+                      Second note
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
                   class="read-only-section read-only-section--how-will-you-communicate-with-participants margin-bottom-3"
                 >
                   <p
@@ -8547,55 +9416,44 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                 </div>
               </div>
               <div
-                class="grid-row grid-gap"
+                class="desktop:grid-col-12"
                 data-testid="grid"
               >
                 <div
-                  class="desktop:grid-col-6"
-                  data-testid="grid"
+                  class="read-only-section read-only-section--what-type-of-risk-will-the-participant-assume margin-bottom-3"
                 >
-                  <div
-                    class="desktop:grid-col-12"
-                    data-testid="grid"
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
                   >
-                    <div
-                      class="read-only-section read-only-section--will-the-participants-assume-risk margin-bottom-3"
+                    What type of risk will the participant assume?
+                  </p>
+                  <ul
+                    class="margin-y-0 padding-left-3"
+                  >
+                    <li
+                      class="font-sans-md line-height-sans-4"
                     >
-                      <p
-                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
-                      >
-                        Will the participants assume risk?
-                      </p>
-                      <p
-                        class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
-                      >
-                        Yes
-                      </p>
-                    </div>
-                  </div>
+                      Capitation
+                    </li>
+                  </ul>
                 </div>
                 <div
-                  class="desktop:grid-col-6"
+                  class="desktop:grid-col-12"
                   data-testid="grid"
                 >
                   <div
-                    class="desktop:grid-col-12"
-                    data-testid="grid"
+                    class="read-only-section read-only-section--notes margin-bottom-3"
                   >
-                    <div
-                      class="read-only-section read-only-section--what-type-of-risk-will-the-participant-assume margin-bottom-3"
+                    <p
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
                     >
-                      <p
-                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
-                      >
-                        What type of risk will the participant assume?
-                      </p>
-                      <p
-                        class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
-                      >
-                        Capitalization
-                      </p>
-                    </div>
+                      Notes
+                    </p>
+                    <p
+                      class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                    >
+                      Note risk
+                    </p>
                   </div>
                 </div>
               </div>
@@ -8756,6 +9614,38 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                 data-testid="grid"
               >
                 <div
+                  class="read-only-section read-only-section--are-providers-eligible-to-participate-in-gainsharing-arrangements margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    Are providers eligible to participate in gainsharing arrangements?
+                  </p>
+                  <ul
+                    class="margin-y-0 padding-left-3"
+                  >
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Other
+                    </li>
+                    <ul
+                      data-testid="other-entry"
+                    >
+                      <li
+                        class="font-sans-md line-height-sans-4"
+                      >
+                        Other gainsharing
+                      </li>
+                    </ul>
+                  </ul>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
                   class="read-only-section read-only-section--notes margin-bottom-3"
                 >
                   <p
@@ -8826,11 +9716,24 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                   >
                     How frequently are providers added?
                   </p>
-                  <p
-                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  <ul
+                    class="margin-y-0 padding-left-3"
                   >
-                    Biannually
-                  </p>
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Other
+                    </li>
+                    <ul
+                      data-testid="other-entry"
+                    >
+                      <li
+                        class="font-sans-md line-height-sans-4"
+                      >
+                        Freq other
+                      </li>
+                    </ul>
+                  </ul>
                 </div>
                 <div
                   class="desktop:grid-col-12"
@@ -8932,6 +9835,57 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                       class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
                     >
                       Note leave
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--how-frequently-are-providers-removed margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    How frequently are providers removed?
+                  </p>
+                  <ul
+                    class="margin-y-0 padding-left-3"
+                  >
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Continually
+                    </li>
+                    <ul
+                      data-testid="other-entry"
+                    >
+                      <li
+                        class="font-sans-md line-height-sans-4"
+                      >
+                        Freq cont
+                      </li>
+                    </ul>
+                  </ul>
+                </div>
+                <div
+                  class="desktop:grid-col-12"
+                  data-testid="grid"
+                >
+                  <div
+                    class="read-only-section read-only-section--notes margin-bottom-3"
+                  >
+                    <p
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                    >
+                      Notes
+                    </p>
+                    <p
+                      class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                    >
+                      Note freq removal
                     </p>
                   </div>
                 </div>
@@ -9051,6 +10005,25 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                       Note beneficiary
                     </p>
                   </div>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--please-describe-the-disease-specific-groups-this-model-will-impact margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    Please describe the disease-specific groups this model will impact.
+                  </p>
+                  <p
+                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  >
+                    Other disease group
+                  </p>
                 </div>
               </div>
               <div
@@ -9278,18 +10251,82 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                 data-testid="grid"
               >
                 <div
-                  class="read-only-section read-only-section--how-frequently-are-beneficiaries-chosen margin-bottom-3"
+                  class="read-only-section read-only-section--how-frequently-are-beneficiaries-added margin-bottom-3"
                 >
                   <p
                     class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
                   >
-                    How frequently are beneficiaries chosen?
+                    How frequently are beneficiaries added?
                   </p>
-                  <p
-                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  <ul
+                    class="margin-y-0 padding-left-3"
                   >
-                    Annually
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Other
+                    </li>
+                    <ul
+                      data-testid="other-entry"
+                    >
+                      <li
+                        class="font-sans-md line-height-sans-4"
+                      >
+                        Frequency other
+                      </li>
+                    </ul>
+                  </ul>
+                </div>
+                <div
+                  class="desktop:grid-col-12"
+                  data-testid="grid"
+                >
+                  <div
+                    class="read-only-section read-only-section--notes margin-bottom-3"
+                  >
+                    <p
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                    >
+                      Notes
+                    </p>
+                    <p
+                      class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                    >
+                      Note frequency
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--how-frequently-are-beneficiaries-removed margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    How frequently are beneficiaries removed?
                   </p>
+                  <ul
+                    class="margin-y-0 padding-left-3"
+                  >
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Continually
+                    </li>
+                    <ul
+                      data-testid="other-entry"
+                    >
+                      <li
+                        class="font-sans-md line-height-sans-4"
+                      >
+                        Frequency continually
+                      </li>
+                    </ul>
+                  </ul>
                 </div>
                 <div
                   class="desktop:grid-col-12"
@@ -9361,11 +10398,24 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                   >
                     Are there precedence rules between this model and other model(s)?
                   </p>
-                  <p
-                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  <ul
+                    class="margin-y-0 padding-left-3"
                   >
-                    Yes precedence rules
-                  </p>
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Yes
+                    </li>
+                    <ul
+                      data-testid="other-entry"
+                    >
+                      <li
+                        class="font-sans-md line-height-sans-4"
+                      >
+                        Yes precedence rules
+                      </li>
+                    </ul>
+                  </ul>
                 </div>
               </div>
             </div>
@@ -9400,62 +10450,6 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
             <div
               class="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light"
             >
-              <div
-                class="desktop:grid-col-12"
-                data-testid="grid"
-              >
-                <div
-                  class="read-only-section read-only-section--will-another-agency-or-state-help-design-operate-the-model margin-bottom-3"
-                >
-                  <p
-                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
-                  >
-                    Will another Agency or State help design/operate the model?
-                  </p>
-                  <ul
-                    class="margin-y-0 padding-left-3"
-                  >
-                    <li
-                      class="font-sans-md line-height-sans-4"
-                    >
-                      Yes, we will partner with states
-                    </li>
-                    <li
-                      class="font-sans-md line-height-sans-4"
-                    >
-                      Other
-                    </li>
-                    <ul
-                      data-testid="other-entry"
-                    >
-                      <li
-                        class="font-sans-md line-height-sans-4"
-                      >
-                        Agency other
-                      </li>
-                    </ul>
-                  </ul>
-                </div>
-                <div
-                  class="desktop:grid-col-12"
-                  data-testid="grid"
-                >
-                  <div
-                    class="read-only-section read-only-section--notes margin-bottom-3"
-                  >
-                    <p
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
-                    >
-                      Notes
-                    </p>
-                    <p
-                      class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
-                    >
-                      State note
-                    </p>
-                  </div>
-                </div>
-              </div>
               <div
                 class="desktop:grid-col-12"
                 data-testid="grid"
@@ -9758,12 +10752,12 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                 data-testid="grid"
               >
                 <div
-                  class="read-only-section read-only-section--will-you-capture-participant-information margin-bottom-3"
+                  class="read-only-section read-only-section--will-you-collect-participant-information margin-bottom-3"
                 >
                   <p
                     class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
                   >
-                    Will you capture participant information?
+                    Will you collect participant information?
                   </p>
                   <p
                     class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
@@ -10365,12 +11359,12 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                 data-testid="grid"
               >
                 <div
-                  class="read-only-section read-only-section--payments margin-bottom-3"
+                  class="read-only-section read-only-section--will-you-make-risk-adjustments-to-payments margin-bottom-3"
                 >
                   <p
                     class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
                   >
-                    Payments
+                    Will you make risk adjustments to payments?
                   </p>
                   <p
                     class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
@@ -10490,12 +11484,12 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                 data-testid="grid"
               >
                 <div
-                  class="read-only-section read-only-section--payments margin-bottom-3"
+                  class="read-only-section read-only-section--will-participants-be-able-to-appeal-payments margin-bottom-3"
                 >
                   <p
                     class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
                   >
-                    Payments
+                    Will participants be able to appeal payments?
                   </p>
                   <p
                     class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
@@ -10979,8 +11973,11 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      Daily
+                      Monthly
                     </li>
+                    <ul
+                      data-testid="other-entry"
+                    />
                   </ul>
                 </div>
                 <div
@@ -11040,8 +12037,11 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      Monthly
+                      Annually
                     </li>
+                    <ul
+                      data-testid="other-entry"
+                    />
                   </ul>
                 </div>
                 <div
@@ -11100,6 +12100,38 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                       Note for qual report
                     </p>
                   </div>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--how-frequently-does-quality-reporting-happen margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    How frequently does quality reporting happen?
+                  </p>
+                  <ul
+                    class="margin-y-0 padding-left-3"
+                  >
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Other
+                    </li>
+                    <ul
+                      data-testid="other-entry"
+                    >
+                      <li
+                        class="font-sans-md line-height-sans-4"
+                      >
+                        Other frequency
+                      </li>
+                    </ul>
+                  </ul>
                 </div>
               </div>
             </div>
@@ -11236,6 +12268,9 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                     >
                       Patient Protection Affordable Care Act (Sec 3021)
                     </li>
+                    <ul
+                      data-testid="other-entry"
+                    />
                   </ul>
                 </div>
               </div>
@@ -11278,6 +12313,9 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                     >
                       Patient Protection Affordable Care Act (Sec 3021)
                     </li>
+                    <ul
+                      data-testid="other-entry"
+                    />
                   </ul>
                 </div>
               </div>
@@ -11814,6 +12852,78 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                     data-testid="grid"
                   >
                     <div
+                      class="read-only-section read-only-section--are-there-any-business-requirement-s--that-address-claims-processing-precedence-order-with-the-other-model-s margin-bottom-3"
+                    >
+                      <p
+                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                      >
+                        Are there any business requirement(s) that address claims processing precedence order with the other model(s)?
+                      </p>
+                      <p
+                        class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                      >
+                        Yes
+                      </p>
+                    </div>
+                    <div
+                      class="desktop:grid-col-12"
+                      data-testid="grid"
+                    >
+                      <div
+                        class="read-only-section read-only-section--notes margin-bottom-3"
+                      >
+                        <p
+                          class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                        >
+                          Notes
+                        </p>
+                        <p
+                          class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                        >
+                          claim note
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="desktop:grid-col-6"
+                  data-testid="grid"
+                >
+                  <div
+                    class="desktop:grid-col-12"
+                    data-testid="grid"
+                  >
+                    <div
+                      class="read-only-section read-only-section--please-specify margin-bottom-3"
+                    >
+                      <p
+                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                      >
+                        Please specify
+                      </p>
+                      <p
+                        class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                      >
+                        other claims
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="grid-row grid-gap"
+                data-testid="grid"
+              >
+                <div
+                  class="desktop:grid-col-6"
+                  data-testid="grid"
+                >
+                  <div
+                    class="desktop:grid-col-12"
+                    data-testid="grid"
+                  >
+                    <div
                       class="read-only-section read-only-section--will-participants-be-allowed-to-select-between-multiple-payment-mechanisms margin-bottom-3"
                     >
                       <p
@@ -11891,8 +13001,11 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      Semiannually
+                      Semi-annually
                     </li>
+                    <ul
+                      data-testid="other-entry"
+                    />
                   </ul>
                 </div>
                 <div
@@ -11998,6 +13111,108 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                 data-testid="grid"
               >
                 <div
+                  class="read-only-section read-only-section--how-often-are-payments-reconciled margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    How often are payments reconciled?
+                  </p>
+                  <ul
+                    class="margin-y-0 padding-left-3"
+                  >
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Continually
+                    </li>
+                    <ul
+                      data-testid="other-entry"
+                    >
+                      <li
+                        class="font-sans-md line-height-sans-4"
+                      >
+                        Continual Frequency
+                      </li>
+                    </ul>
+                  </ul>
+                </div>
+                <div
+                  class="desktop:grid-col-12"
+                  data-testid="grid"
+                >
+                  <div
+                    class="read-only-section read-only-section--notes margin-bottom-3"
+                  >
+                    <p
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                    >
+                      Notes
+                    </p>
+                    <p
+                      class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                    >
+                      Reconciliation note
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--how-frequently-do-you-anticipate-making-demands-recoupments margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    How frequently do you anticipate making demands/recoupments?
+                  </p>
+                  <ul
+                    class="margin-y-0 padding-left-3"
+                  >
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Continually
+                    </li>
+                    <ul
+                      data-testid="other-entry"
+                    >
+                      <li
+                        class="font-sans-md line-height-sans-4"
+                      >
+                        Continual Frequency
+                      </li>
+                    </ul>
+                  </ul>
+                </div>
+                <div
+                  class="desktop:grid-col-12"
+                  data-testid="grid"
+                >
+                  <div
+                    class="read-only-section read-only-section--notes margin-bottom-3"
+                  >
+                    <p
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                    >
+                      Notes
+                    </p>
+                    <p
+                      class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                    >
+                      Demand and Recoupment note
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
                   class="read-only-section read-only-section--when-will-payments-start margin-bottom-3"
                 >
                   <p
@@ -12087,10 +13302,6 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
           width="1em"
           xmlns="http://www.w3.org/2000/svg"
         >
-          <path
-            d="M0 0h24v24H0z"
-            fill="none"
-          />
           <path
             d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
           />
@@ -12208,6 +13419,7 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
               <input
                 aria-activedescendant=""
                 aria-autocomplete="list"
+                aria-controls="share-export-modal-share-filter-group--list"
                 aria-describedby="share-export-modal-share-filter-group--assistiveHint"
                 aria-expanded="false"
                 aria-owns="share-export-modal-share-filter-group--list"
@@ -12559,10 +13771,6 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                   width="1em"
                   xmlns="http://www.w3.org/2000/svg"
                 >
-                  <path
-                    d="M0 0h24v24H0z"
-                    fill="none"
-                  />
                   <path
                     d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"
                   />

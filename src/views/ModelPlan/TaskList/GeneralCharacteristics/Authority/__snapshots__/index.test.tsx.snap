@@ -76,10 +76,6 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
         xmlns="http://www.w3.org/2000/svg"
       >
         <path
-          d="M0 0h24v24H0z"
-          fill="none"
-        />
-        <path
           d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-7 9h-2V5h2v6zm0 4h-2v-2h2v2z"
         />
       </svg>
@@ -103,7 +99,7 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
     >
       <div
         class="usa-form-group margin-y-4"
-        data-scroll="rulemakingRequired"
+        data-scroll="plan-characteristics-rulemaking-required"
       >
         <label
           class="usa-label"
@@ -140,7 +136,7 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
           >
             <div
               class="usa-form-group flex-1"
-              data-scroll="rulemakingRequiredDescription"
+              data-scroll="plan-characteristics-rulemaking-required-description"
             >
               <label
                 class="usa-label margin-bottom-1 text-normal"
@@ -200,100 +196,103 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
             xmlns="http://www.w3.org/2000/svg"
           >
             <path
-              d="M0 0h24v24H0z"
-              fill="none"
-            />
-            <path
               d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
             />
           </svg>
           Add an additional note
         </button>
       </div>
-      <legend
-        class="usa-label"
-      >
-        What authority allows CMMI to test the model?
-      </legend>
       <div
-        class="mint-checkbox usa-checkbox"
+        class="usa-form-group"
+        data-scroll="plan-characteristics-authority-allowance"
       >
-        <input
-          class="usa-checkbox__input"
-          id="plan-characteristics-authority-allowance-ACA"
-          name="authorityAllowances"
-          type="checkbox"
-          value="ACA"
-        />
         <label
-          class="usa-checkbox__label"
-          for="plan-characteristics-authority-allowance-ACA"
+          class="usa-label"
+          data-testid="label"
+          for="plan-characteristics-authority-allowance"
         >
-          3021 (ACA)
+          What authority allows CMMI to test the model?
         </label>
-        <p
-          class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
-        />
-      </div>
-      <div
-        class="mint-checkbox usa-checkbox"
-      >
-        <input
-          class="usa-checkbox__input"
-          id="plan-characteristics-authority-allowance-CONGRESSIONALLY_MANDATED"
-          name="authorityAllowances"
-          type="checkbox"
-          value="CONGRESSIONALLY_MANDATED"
-        />
-        <label
-          class="usa-checkbox__label"
-          for="plan-characteristics-authority-allowance-CONGRESSIONALLY_MANDATED"
+        <div
+          class="mint-checkbox usa-checkbox"
         >
-          Congressionally Mandated Demonstration
-        </label>
-        <p
-          class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
-        />
-      </div>
-      <div
-        class="mint-checkbox usa-checkbox"
-      >
-        <input
-          class="usa-checkbox__input"
-          id="plan-characteristics-authority-allowance-SSA_PART_B"
-          name="authorityAllowances"
-          type="checkbox"
-          value="SSA_PART_B"
-        />
-        <label
-          class="usa-checkbox__label"
-          for="plan-characteristics-authority-allowance-SSA_PART_B"
+          <input
+            class="usa-checkbox__input"
+            id="plan-characteristics-authority-allowance-ACA"
+            name="authorityAllowances"
+            type="checkbox"
+            value="ACA"
+          />
+          <label
+            class="usa-checkbox__label"
+            for="plan-characteristics-authority-allowance-ACA"
+          >
+            3021 Affordable Care Act (ACA)
+          </label>
+          <p
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+          />
+        </div>
+        <div
+          class="mint-checkbox usa-checkbox"
         >
-          Section 1833(e) (Part B services) of the Social Security Act
-        </label>
-        <p
-          class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
-        />
-      </div>
-      <div
-        class="mint-checkbox usa-checkbox"
-      >
-        <input
-          class="usa-checkbox__input"
-          id="plan-characteristics-authority-allowance-OTHER"
-          name="authorityAllowances"
-          type="checkbox"
-          value="OTHER"
-        />
-        <label
-          class="usa-checkbox__label"
-          for="plan-characteristics-authority-allowance-OTHER"
+          <input
+            class="usa-checkbox__input"
+            id="plan-characteristics-authority-allowance-CONGRESSIONALLY_MANDATED"
+            name="authorityAllowances"
+            type="checkbox"
+            value="CONGRESSIONALLY_MANDATED"
+          />
+          <label
+            class="usa-checkbox__label"
+            for="plan-characteristics-authority-allowance-CONGRESSIONALLY_MANDATED"
+          >
+            Congressionally Mandated Demonstration
+          </label>
+          <p
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+          />
+        </div>
+        <div
+          class="mint-checkbox usa-checkbox"
         >
-          Other
-        </label>
-        <p
-          class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
-        />
+          <input
+            class="usa-checkbox__input"
+            id="plan-characteristics-authority-allowance-SSA_PART_B"
+            name="authorityAllowances"
+            type="checkbox"
+            value="SSA_PART_B"
+          />
+          <label
+            class="usa-checkbox__label"
+            for="plan-characteristics-authority-allowance-SSA_PART_B"
+          >
+            Section 1833(e) (Part B services) of the Social Security Act
+          </label>
+          <p
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+          />
+        </div>
+        <div
+          class="mint-checkbox usa-checkbox"
+        >
+          <input
+            class="usa-checkbox__input"
+            id="plan-characteristics-authority-allowance-OTHER"
+            name="authorityAllowances"
+            type="checkbox"
+            value="OTHER"
+          />
+          <label
+            class="usa-checkbox__label"
+            for="plan-characteristics-authority-allowance-OTHER"
+          >
+            Other
+          </label>
+          <p
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+          />
+        </div>
       </div>
       <div
         class="margin-top-4 margin-bottom-8"
@@ -314,10 +313,6 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
             xmlns="http://www.w3.org/2000/svg"
           >
             <path
-              d="M0 0h24v24H0z"
-              fill="none"
-            />
-            <path
               d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
             />
           </svg>
@@ -326,7 +321,7 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
       </div>
       <div
         class="usa-form-group margin-y-4"
-        data-scroll="waiversRequired"
+        data-scroll="plan-characteristics-waivers-required"
       >
         <label
           class="usa-label"
@@ -398,10 +393,6 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
             xmlns="http://www.w3.org/2000/svg"
           >
             <path
-              d="M0 0h24v24H0z"
-              fill="none"
-            />
-            <path
               d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
             />
           </svg>
@@ -418,38 +409,31 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
           <div
             class="usa-summary-box__body"
           >
-            <h3
-              class="usa-summary-box__heading"
-            />
-            <div
-              class="usa-summary-box__text"
+            <p
+              class="margin-0"
             >
+              Model Plan status
+            </p>
+            <div
+              class="mint-checkbox usa-checkbox"
+            >
+              <input
+                class="usa-checkbox__input"
+                data-testid="characteristics-status"
+                id="characteristics-status"
+                name="status"
+                type="checkbox"
+                value="IN_PROGRESS"
+              />
+              <label
+                class="usa-checkbox__label"
+                for="characteristics-status"
+              >
+                This section of the Model Plan (General characteristics) is ready for review.
+              </label>
               <p
-                class="margin-0"
-              >
-                Model Plan status
-              </p>
-              <div
-                class="mint-checkbox usa-checkbox"
-              >
-                <input
-                  class="usa-checkbox__input"
-                  data-testid="characteristics-status"
-                  id="characteristics-status"
-                  name="status"
-                  type="checkbox"
-                  value="IN_PROGRESS"
-                />
-                <label
-                  class="usa-checkbox__label"
-                  for="characteristics-status"
-                >
-                  This section of the Model Plan (General characteristics) is ready for review.
-                </label>
-                <p
-                  class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
-                />
-              </div>
+                class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+              />
             </div>
           </div>
         </div>
@@ -487,10 +471,6 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
           width="1em"
           xmlns="http://www.w3.org/2000/svg"
         >
-          <path
-            d="M0 0h24v24H0z"
-            fill="none"
-          />
           <path
             d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"
           />

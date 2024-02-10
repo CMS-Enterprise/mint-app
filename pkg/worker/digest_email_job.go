@@ -80,7 +80,7 @@ func (w *Worker) DigestEmailJob(ctx context.Context, args ...interface{}) error 
 		return err
 	}
 
-	account, err := w.Store.UserAccountGetByID(userID)
+	account, err := w.Store.UserAccountGetByID(w.Store, userID)
 	if err != nil {
 		return err
 	}

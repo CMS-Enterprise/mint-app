@@ -12,6 +12,7 @@ type PlanBeneficiaries struct {
 	Beneficiaries                         pq.StringArray  `json:"beneficiaries" db:"beneficiaries"`
 	BeneficiariesOther                    *string         `json:"beneficiariesOther" db:"beneficiaries_other"`
 	BeneficiariesNote                     *string         `json:"beneficiariesNote" db:"beneficiaries_note"`
+	DiseaseSpecificGroup                  *string         `json:"diseaseSpecificGroup" db:"disease_specific_group"`
 	TreatDualElligibleDifferent           *TriStateAnswer `json:"treatDualElligibleDifferent" db:"treat_dual_elligible_different" statusWeight:"1"`
 	TreatDualElligibleDifferentHow        *string         `json:"treatDualElligibleDifferentHow" db:"treat_dual_elligible_different_how"`
 	TreatDualElligibleDifferentNote       *string         `json:"treatDualElligibleDifferentNote" db:"treat_dual_elligible_different_note"`
@@ -28,12 +29,20 @@ type PlanBeneficiaries struct {
 	BeneficiarySelectionNote   *string         `json:"beneficiarySelectionNote" db:"beneficiary_selection_note"`
 
 	// Page 3
-	BeneficiarySelectionFrequency      *FrequencyType `json:"beneficiarySelectionFrequency" db:"beneficiary_selection_frequency" statusWeight:"1"`
-	BeneficiarySelectionFrequencyOther *string        `json:"beneficiarySelectionFrequencyOther" db:"beneficiary_selection_frequency_other"`
-	BeneficiarySelectionFrequencyNote  *string        `json:"beneficiarySelectionFrequencyNote" db:"beneficiary_selection_frequency_note"`
-	BeneficiaryOverlap                 *OverlapType   `json:"beneficiaryOverlap" db:"beneficiary_overlap" statusWeight:"1"`
-	BeneficiaryOverlapNote             *string        `json:"beneficiaryOverlapNote" db:"beneficiary_overlap_note"`
-	PrecedenceRules                    *string        `json:"precedenceRules" db:"precedence_rules"`
+	BeneficiarySelectionFrequency            pq.StringArray `json:"beneficiarySelectionFrequency" db:"beneficiary_selection_frequency" statusWeight:"1"`
+	BeneficiarySelectionFrequencyContinually *string        `json:"beneficiarySelectionFrequencyContinually" db:"beneficiary_selection_frequency_continually"`
+	BeneficiarySelectionFrequencyOther       *string        `json:"beneficiarySelectionFrequencyOther" db:"beneficiary_selection_frequency_other"`
+	BeneficiarySelectionFrequencyNote        *string        `json:"beneficiarySelectionFrequencyNote" db:"beneficiary_selection_frequency_note"`
+	BeneficiaryRemovalFrequency              pq.StringArray `json:"beneficiaryRemovalFrequency" db:"beneficiary_removal_frequency" statusWeight:"1"`
+	BeneficiaryRemovalFrequencyContinually   *string        `json:"beneficiaryRemovalFrequencyContinually" db:"beneficiary_removal_frequency_continually"`
+	BeneficiaryRemovalFrequencyOther         *string        `json:"beneficiaryRemovalFrequencyOther" db:"beneficiary_removal_frequency_other"`
+	BeneficiaryRemovalFrequencyNote          *string        `json:"beneficiaryRemovalFrequencyNote" db:"beneficiary_removal_frequency_note"`
+	BeneficiaryOverlap                       *OverlapType   `json:"beneficiaryOverlap" db:"beneficiary_overlap" statusWeight:"1"`
+	BeneficiaryOverlapNote                   *string        `json:"beneficiaryOverlapNote" db:"beneficiary_overlap_note"`
+	PrecedenceRules                          pq.StringArray `json:"precedenceRules" db:"precedence_rules"`
+	PrecedenceRulesYes                       *string        `json:"precedenceRulesYes" db:"precedence_rules_yes"`
+	PrecedenceRulesNo                        *string        `json:"precedenceRulesNo" db:"precedence_rules_no"`
+	PrecedenceRulesNote                      *string        `json:"precedenceRulesNote" db:"precedence_rules_note"`
 }
 
 // NewPlanBeneficiaries returns a new plan Beneficiaries
@@ -42,3 +51,12 @@ func NewPlanBeneficiaries(tls baseTaskListSection) *PlanBeneficiaries {
 		baseTaskListSection: tls,
 	}
 }
+
+// YesNoType represents the yes no filter type
+type YesNoType string
+
+// These constants represent the yes no type types
+const (
+	YesNoTypeYes YesNoType = "YES"
+	YesNoTypeNo  YesNoType = "NO"
+)

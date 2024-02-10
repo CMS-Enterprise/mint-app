@@ -32,7 +32,7 @@ type CurrentUser struct {
 // DiscussionReplyCreateInput represents the necessary fields to create a discussion reply
 type DiscussionReplyCreateInput struct {
 	DiscussionID        uuid.UUID                  `json:"discussionID"`
-	Content             string                     `json:"content"`
+	Content             models.TaggedHTML          `json:"content"`
 	UserRole            *models.DiscussionUserRole `json:"userRole,omitempty"`
 	UserRoleDescription *string                    `json:"userRoleDescription,omitempty"`
 }
@@ -54,6 +54,15 @@ type PageParams struct {
 	Limit  int `json:"limit"`
 }
 
+type PlanCRCreateInput struct {
+	ModelPlanID     uuid.UUID `json:"modelPlanID"`
+	IDNumber        string    `json:"idNumber"`
+	DateInitiated   time.Time `json:"dateInitiated"`
+	DateImplemented time.Time `json:"dateImplemented"`
+	Title           string    `json:"title"`
+	Note            *string   `json:"note,omitempty"`
+}
+
 // PlanCollaboratorCreateInput represents the data required to create a collaborator on a plan
 type PlanCollaboratorCreateInput struct {
 	ModelPlanID uuid.UUID         `json:"modelPlanID"`
@@ -61,18 +70,10 @@ type PlanCollaboratorCreateInput struct {
 	TeamRoles   []models.TeamRole `json:"teamRoles"`
 }
 
-type PlanCrTdlCreateInput struct {
-	ModelPlanID   uuid.UUID `json:"modelPlanID"`
-	IDNumber      string    `json:"idNumber"`
-	DateInitiated time.Time `json:"dateInitiated"`
-	Title         string    `json:"title"`
-	Note          *string   `json:"note,omitempty"`
-}
-
 // PlanDiscussionCreateInput represents the necessary fields to create a plan discussion
 type PlanDiscussionCreateInput struct {
 	ModelPlanID         uuid.UUID                  `json:"modelPlanID"`
-	Content             string                     `json:"content"`
+	Content             models.TaggedHTML          `json:"content"`
 	UserRole            *models.DiscussionUserRole `json:"userRole,omitempty"`
 	UserRoleDescription *string                    `json:"userRoleDescription,omitempty"`
 }
@@ -96,6 +97,14 @@ type PlanDocumentLinkInput struct {
 	Restricted           bool                `json:"restricted"`
 	OtherTypeDescription *string             `json:"otherTypeDescription,omitempty"`
 	OptionalNotes        *string             `json:"optionalNotes,omitempty"`
+}
+
+type PlanTDLCreateInput struct {
+	ModelPlanID   uuid.UUID `json:"modelPlanID"`
+	IDNumber      string    `json:"idNumber"`
+	DateInitiated time.Time `json:"dateInitiated"`
+	Title         string    `json:"title"`
+	Note          *string   `json:"note,omitempty"`
 }
 
 type PrepareForClearance struct {
@@ -382,6 +391,7 @@ const (
 	BeneficiariesTypeMedicaid          BeneficiariesType = "MEDICAID"
 	BeneficiariesTypeDuallyEligible    BeneficiariesType = "DUALLY_ELIGIBLE"
 	BeneficiariesTypeDiseaseSpecific   BeneficiariesType = "DISEASE_SPECIFIC"
+	BeneficiariesTypeUnderserved       BeneficiariesType = "UNDERSERVED"
 	BeneficiariesTypeOther             BeneficiariesType = "OTHER"
 	BeneficiariesTypeNa                BeneficiariesType = "NA"
 )
@@ -393,13 +403,14 @@ var AllBeneficiariesType = []BeneficiariesType{
 	BeneficiariesTypeMedicaid,
 	BeneficiariesTypeDuallyEligible,
 	BeneficiariesTypeDiseaseSpecific,
+	BeneficiariesTypeUnderserved,
 	BeneficiariesTypeOther,
 	BeneficiariesTypeNa,
 }
 
 func (e BeneficiariesType) IsValid() bool {
 	switch e {
-	case BeneficiariesTypeMedicareFfs, BeneficiariesTypeMedicareAdvantage, BeneficiariesTypeMedicarePartD, BeneficiariesTypeMedicaid, BeneficiariesTypeDuallyEligible, BeneficiariesTypeDiseaseSpecific, BeneficiariesTypeOther, BeneficiariesTypeNa:
+	case BeneficiariesTypeMedicareFfs, BeneficiariesTypeMedicareAdvantage, BeneficiariesTypeMedicarePartD, BeneficiariesTypeMedicaid, BeneficiariesTypeDuallyEligible, BeneficiariesTypeDiseaseSpecific, BeneficiariesTypeUnderserved, BeneficiariesTypeOther, BeneficiariesTypeNa:
 		return true
 	}
 	return false
@@ -479,23 +490,23 @@ const (
 	CMSCenterCmmi                                 CMSCenter = "CMMI"
 	CMSCenterCenterForMedicare                    CMSCenter = "CENTER_FOR_MEDICARE"
 	CMSCenterFederalCoordinatedHealthCareOffice   CMSCenter = "FEDERAL_COORDINATED_HEALTH_CARE_OFFICE"
+	CMSCenterCenterForMedicaidAndChipServices     CMSCenter = "CENTER_FOR_MEDICAID_AND_CHIP_SERVICES"
 	CMSCenterCenterForClinicalStandardsAndQuality CMSCenter = "CENTER_FOR_CLINICAL_STANDARDS_AND_QUALITY"
 	CMSCenterCenterForProgramIntegrity            CMSCenter = "CENTER_FOR_PROGRAM_INTEGRITY"
-	CMSCenterOther                                CMSCenter = "OTHER"
 )
 
 var AllCMSCenter = []CMSCenter{
 	CMSCenterCmmi,
 	CMSCenterCenterForMedicare,
 	CMSCenterFederalCoordinatedHealthCareOffice,
+	CMSCenterCenterForMedicaidAndChipServices,
 	CMSCenterCenterForClinicalStandardsAndQuality,
 	CMSCenterCenterForProgramIntegrity,
-	CMSCenterOther,
 }
 
 func (e CMSCenter) IsValid() bool {
 	switch e {
-	case CMSCenterCmmi, CMSCenterCenterForMedicare, CMSCenterFederalCoordinatedHealthCareOffice, CMSCenterCenterForClinicalStandardsAndQuality, CMSCenterCenterForProgramIntegrity, CMSCenterOther:
+	case CMSCenterCmmi, CMSCenterCenterForMedicare, CMSCenterFederalCoordinatedHealthCareOffice, CMSCenterCenterForMedicaidAndChipServices, CMSCenterCenterForClinicalStandardsAndQuality, CMSCenterCenterForProgramIntegrity:
 		return true
 	}
 	return false
@@ -768,61 +779,6 @@ func (e DataForMonitoringType) MarshalGQL(w io.Writer) {
 	fmt.Fprint(w, strconv.Quote(e.String()))
 }
 
-type DataFrequencyType string
-
-const (
-	DataFrequencyTypeAnnually            DataFrequencyType = "ANNUALLY"
-	DataFrequencyTypeBiannually          DataFrequencyType = "BIANNUALLY"
-	DataFrequencyTypeQuarterly           DataFrequencyType = "QUARTERLY"
-	DataFrequencyTypeMonthly             DataFrequencyType = "MONTHLY"
-	DataFrequencyTypeSemiMonthly         DataFrequencyType = "SEMI_MONTHLY"
-	DataFrequencyTypeWeekly              DataFrequencyType = "WEEKLY"
-	DataFrequencyTypeDaily               DataFrequencyType = "DAILY"
-	DataFrequencyTypeOther               DataFrequencyType = "OTHER"
-	DataFrequencyTypeNotPlanningToDoThis DataFrequencyType = "NOT_PLANNING_TO_DO_THIS"
-)
-
-var AllDataFrequencyType = []DataFrequencyType{
-	DataFrequencyTypeAnnually,
-	DataFrequencyTypeBiannually,
-	DataFrequencyTypeQuarterly,
-	DataFrequencyTypeMonthly,
-	DataFrequencyTypeSemiMonthly,
-	DataFrequencyTypeWeekly,
-	DataFrequencyTypeDaily,
-	DataFrequencyTypeOther,
-	DataFrequencyTypeNotPlanningToDoThis,
-}
-
-func (e DataFrequencyType) IsValid() bool {
-	switch e {
-	case DataFrequencyTypeAnnually, DataFrequencyTypeBiannually, DataFrequencyTypeQuarterly, DataFrequencyTypeMonthly, DataFrequencyTypeSemiMonthly, DataFrequencyTypeWeekly, DataFrequencyTypeDaily, DataFrequencyTypeOther, DataFrequencyTypeNotPlanningToDoThis:
-		return true
-	}
-	return false
-}
-
-func (e DataFrequencyType) String() string {
-	return string(e)
-}
-
-func (e *DataFrequencyType) UnmarshalGQL(v interface{}) error {
-	str, ok := v.(string)
-	if !ok {
-		return fmt.Errorf("enums must be strings")
-	}
-
-	*e = DataFrequencyType(str)
-	if !e.IsValid() {
-		return fmt.Errorf("%s is not a valid DataFrequencyType", str)
-	}
-	return nil
-}
-
-func (e DataFrequencyType) MarshalGQL(w io.Writer) {
-	fmt.Fprint(w, strconv.Quote(e.String()))
-}
-
 type DataToSendParticipantsType string
 
 const (
@@ -964,6 +920,51 @@ func (e EvaluationApproachType) MarshalGQL(w io.Writer) {
 	fmt.Fprint(w, strconv.Quote(e.String()))
 }
 
+type GainshareArrangementEligibility string
+
+const (
+	GainshareArrangementEligibilityAllProviders  GainshareArrangementEligibility = "ALL_PROVIDERS"
+	GainshareArrangementEligibilitySomeProviders GainshareArrangementEligibility = "SOME_PROVIDERS"
+	GainshareArrangementEligibilityOther         GainshareArrangementEligibility = "OTHER"
+	GainshareArrangementEligibilityNo            GainshareArrangementEligibility = "NO"
+)
+
+var AllGainshareArrangementEligibility = []GainshareArrangementEligibility{
+	GainshareArrangementEligibilityAllProviders,
+	GainshareArrangementEligibilitySomeProviders,
+	GainshareArrangementEligibilityOther,
+	GainshareArrangementEligibilityNo,
+}
+
+func (e GainshareArrangementEligibility) IsValid() bool {
+	switch e {
+	case GainshareArrangementEligibilityAllProviders, GainshareArrangementEligibilitySomeProviders, GainshareArrangementEligibilityOther, GainshareArrangementEligibilityNo:
+		return true
+	}
+	return false
+}
+
+func (e GainshareArrangementEligibility) String() string {
+	return string(e)
+}
+
+func (e *GainshareArrangementEligibility) UnmarshalGQL(v interface{}) error {
+	str, ok := v.(string)
+	if !ok {
+		return fmt.Errorf("enums must be strings")
+	}
+
+	*e = GainshareArrangementEligibility(str)
+	if !e.IsValid() {
+		return fmt.Errorf("%s is not a valid GainshareArrangementEligibility", str)
+	}
+	return nil
+}
+
+func (e GainshareArrangementEligibility) MarshalGQL(w io.Writer) {
+	fmt.Fprint(w, strconv.Quote(e.String()))
+}
+
 type GeographyApplication string
 
 const (
@@ -1055,15 +1056,17 @@ func (e GeographyType) MarshalGQL(w io.Writer) {
 type KeyCharacteristic string
 
 const (
-	KeyCharacteristicEpisodeBased    KeyCharacteristic = "EPISODE_BASED"
-	KeyCharacteristicPartC           KeyCharacteristic = "PART_C"
-	KeyCharacteristicPartD           KeyCharacteristic = "PART_D"
-	KeyCharacteristicPayment         KeyCharacteristic = "PAYMENT"
-	KeyCharacteristicPopulationBased KeyCharacteristic = "POPULATION_BASED"
-	KeyCharacteristicPreventative    KeyCharacteristic = "PREVENTATIVE"
-	KeyCharacteristicServiceDelivery KeyCharacteristic = "SERVICE_DELIVERY"
-	KeyCharacteristicSharedSavings   KeyCharacteristic = "SHARED_SAVINGS"
-	KeyCharacteristicOther           KeyCharacteristic = "OTHER"
+	KeyCharacteristicEpisodeBased     KeyCharacteristic = "EPISODE_BASED"
+	KeyCharacteristicPartC            KeyCharacteristic = "PART_C"
+	KeyCharacteristicPartD            KeyCharacteristic = "PART_D"
+	KeyCharacteristicPayment          KeyCharacteristic = "PAYMENT"
+	KeyCharacteristicPopulationBased  KeyCharacteristic = "POPULATION_BASED"
+	KeyCharacteristicPreventative     KeyCharacteristic = "PREVENTATIVE"
+	KeyCharacteristicServiceDelivery  KeyCharacteristic = "SERVICE_DELIVERY"
+	KeyCharacteristicSharedSavings    KeyCharacteristic = "SHARED_SAVINGS"
+	KeyCharacteristicOther            KeyCharacteristic = "OTHER"
+	KeyCharacteristicMedicaidModel    KeyCharacteristic = "MEDICAID_MODEL"
+	KeyCharacteristicMedicareFfsModel KeyCharacteristic = "MEDICARE_FFS_MODEL"
 )
 
 var AllKeyCharacteristic = []KeyCharacteristic{
@@ -1076,11 +1079,13 @@ var AllKeyCharacteristic = []KeyCharacteristic{
 	KeyCharacteristicServiceDelivery,
 	KeyCharacteristicSharedSavings,
 	KeyCharacteristicOther,
+	KeyCharacteristicMedicaidModel,
+	KeyCharacteristicMedicareFfsModel,
 }
 
 func (e KeyCharacteristic) IsValid() bool {
 	switch e {
-	case KeyCharacteristicEpisodeBased, KeyCharacteristicPartC, KeyCharacteristicPartD, KeyCharacteristicPayment, KeyCharacteristicPopulationBased, KeyCharacteristicPreventative, KeyCharacteristicServiceDelivery, KeyCharacteristicSharedSavings, KeyCharacteristicOther:
+	case KeyCharacteristicEpisodeBased, KeyCharacteristicPartC, KeyCharacteristicPartD, KeyCharacteristicPayment, KeyCharacteristicPopulationBased, KeyCharacteristicPreventative, KeyCharacteristicServiceDelivery, KeyCharacteristicSharedSavings, KeyCharacteristicOther, KeyCharacteristicMedicaidModel, KeyCharacteristicMedicareFfsModel:
 		return true
 	}
 	return false
@@ -1306,7 +1311,6 @@ const (
 	NonClaimsBasedPayTypeCapitationPopulationBasedPartial NonClaimsBasedPayType = "CAPITATION_POPULATION_BASED_PARTIAL"
 	NonClaimsBasedPayTypeCareCoordinationManagementFee    NonClaimsBasedPayType = "CARE_COORDINATION_MANAGEMENT_FEE"
 	NonClaimsBasedPayTypeGlobalBudget                     NonClaimsBasedPayType = "GLOBAL_BUDGET"
-	NonClaimsBasedPayTypeGrants                           NonClaimsBasedPayType = "GRANTS"
 	NonClaimsBasedPayTypeIncentivePayment                 NonClaimsBasedPayType = "INCENTIVE_PAYMENT"
 	NonClaimsBasedPayTypeMapdSharedSavings                NonClaimsBasedPayType = "MAPD_SHARED_SAVINGS"
 	NonClaimsBasedPayTypeSharedSavings                    NonClaimsBasedPayType = "SHARED_SAVINGS"
@@ -1320,7 +1324,6 @@ var AllNonClaimsBasedPayType = []NonClaimsBasedPayType{
 	NonClaimsBasedPayTypeCapitationPopulationBasedPartial,
 	NonClaimsBasedPayTypeCareCoordinationManagementFee,
 	NonClaimsBasedPayTypeGlobalBudget,
-	NonClaimsBasedPayTypeGrants,
 	NonClaimsBasedPayTypeIncentivePayment,
 	NonClaimsBasedPayTypeMapdSharedSavings,
 	NonClaimsBasedPayTypeSharedSavings,
@@ -1329,7 +1332,7 @@ var AllNonClaimsBasedPayType = []NonClaimsBasedPayType{
 
 func (e NonClaimsBasedPayType) IsValid() bool {
 	switch e {
-	case NonClaimsBasedPayTypeAdvancedPayment, NonClaimsBasedPayTypeBundledEpisodeOfCare, NonClaimsBasedPayTypeCapitationPopulationBasedFull, NonClaimsBasedPayTypeCapitationPopulationBasedPartial, NonClaimsBasedPayTypeCareCoordinationManagementFee, NonClaimsBasedPayTypeGlobalBudget, NonClaimsBasedPayTypeGrants, NonClaimsBasedPayTypeIncentivePayment, NonClaimsBasedPayTypeMapdSharedSavings, NonClaimsBasedPayTypeSharedSavings, NonClaimsBasedPayTypeOther:
+	case NonClaimsBasedPayTypeAdvancedPayment, NonClaimsBasedPayTypeBundledEpisodeOfCare, NonClaimsBasedPayTypeCapitationPopulationBasedFull, NonClaimsBasedPayTypeCapitationPopulationBasedPartial, NonClaimsBasedPayTypeCareCoordinationManagementFee, NonClaimsBasedPayTypeGlobalBudget, NonClaimsBasedPayTypeIncentivePayment, NonClaimsBasedPayTypeMapdSharedSavings, NonClaimsBasedPayTypeSharedSavings, NonClaimsBasedPayTypeOther:
 		return true
 	}
 	return false
@@ -1517,6 +1520,7 @@ const (
 	ParticipantsTypeCommunityBasedOrganizations            ParticipantsType = "COMMUNITY_BASED_ORGANIZATIONS"
 	ParticipantsTypeNonProfitOrganizations                 ParticipantsType = "NON_PROFIT_ORGANIZATIONS"
 	ParticipantsTypeCommercialPayers                       ParticipantsType = "COMMERCIAL_PAYERS"
+	ParticipantsTypeAccountableCareOrganization            ParticipantsType = "ACCOUNTABLE_CARE_ORGANIZATION"
 	ParticipantsTypeOther                                  ParticipantsType = "OTHER"
 )
 
@@ -1534,12 +1538,13 @@ var AllParticipantsType = []ParticipantsType{
 	ParticipantsTypeCommunityBasedOrganizations,
 	ParticipantsTypeNonProfitOrganizations,
 	ParticipantsTypeCommercialPayers,
+	ParticipantsTypeAccountableCareOrganization,
 	ParticipantsTypeOther,
 }
 
 func (e ParticipantsType) IsValid() bool {
 	switch e {
-	case ParticipantsTypeMedicareProviders, ParticipantsTypeEntities, ParticipantsTypeConvener, ParticipantsTypeMedicareAdvantagePlans, ParticipantsTypeStandalonePartDPlans, ParticipantsTypeMedicareAdvantagePrescriptionDrugPlans, ParticipantsTypeStateMedicaidAgencies, ParticipantsTypeMedicaidManagedCareOrganizations, ParticipantsTypeMedicaidProviders, ParticipantsTypeStates, ParticipantsTypeCommunityBasedOrganizations, ParticipantsTypeNonProfitOrganizations, ParticipantsTypeCommercialPayers, ParticipantsTypeOther:
+	case ParticipantsTypeMedicareProviders, ParticipantsTypeEntities, ParticipantsTypeConvener, ParticipantsTypeMedicareAdvantagePlans, ParticipantsTypeStandalonePartDPlans, ParticipantsTypeMedicareAdvantagePrescriptionDrugPlans, ParticipantsTypeStateMedicaidAgencies, ParticipantsTypeMedicaidManagedCareOrganizations, ParticipantsTypeMedicaidProviders, ParticipantsTypeStates, ParticipantsTypeCommunityBasedOrganizations, ParticipantsTypeNonProfitOrganizations, ParticipantsTypeCommercialPayers, ParticipantsTypeAccountableCareOrganization, ParticipantsTypeOther:
 		return true
 	}
 	return false

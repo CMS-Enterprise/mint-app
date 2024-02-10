@@ -2,20 +2,36 @@ import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
-
-import GetGeneralCharacteristics from 'queries/GeneralCharacteristics/GetGeneralCharacteristics';
-import { GetGeneralCharacteristics_modelPlan_generalCharacteristics as GetGeneralCharacteristicsType } from 'queries/GeneralCharacteristics/types/GetGeneralCharacteristics';
+import {
+  GetExistingModelPlansDocument,
+  GetGeneralCharacteristicsDocument,
+  GetGeneralCharacteristicsQuery,
+  GetModelPlansBaseDocument,
+  ModelPlanFilter,
+  YesNoOtherType
+} from 'gql/gen/graphql';
 
 import { CharacteristicsContent, separateLinksByType } from './index';
 
-const generalCharacteristicsMockData: GetGeneralCharacteristicsType = {
+const generalCharacteristicsMockData: GetGeneralCharacteristicsQuery['modelPlan']['generalCharacteristics'] = {
   __typename: 'PlanGeneralCharacteristics',
   id: '123',
   isNewModel: false,
-  existingModel: 'Second Plan',
-  resemblesExistingModel: false,
+  existingModelID: null,
+  currentModelPlanID: '7467634',
+  resemblesExistingModel: YesNoOtherType.NO,
+  resemblesExistingModelWhyHow: 'We think it is right',
   resemblesExistingModelHow: '',
+  resemblesExistingModelOtherSpecify: '',
+  resemblesExistingModelOtherOption: 'Other model',
+  resemblesExistingModelOtherSelected: true,
   resemblesExistingModelNote: '',
+  participationInModelPrecondition: YesNoOtherType.YES,
+  participationInModelPreconditionWhyHow: 'It is a condition',
+  participationInModelPreconditionOtherSpecify: '',
+  participationInModelPreconditionOtherOption: 'Other model',
+  participationInModelPreconditionOtherSelected: true,
+  participationInModelPreconditionNote: 'Precondition note',
   hasComponentsOrTracks: true,
   hasComponentsOrTracksDiffer: 'Differ text',
   hasComponentsOrTracksNote: 'Component note'
@@ -24,7 +40,7 @@ const generalCharacteristicsMockData: GetGeneralCharacteristicsType = {
 const generalCharacteristicsMock = [
   {
     request: {
-      query: GetGeneralCharacteristics,
+      query: GetGeneralCharacteristicsDocument,
       variables: { id: 'ce3405a0-3399-4e3a-88d7-3cfc613d2905' }
     },
     result: {
@@ -34,6 +50,33 @@ const generalCharacteristicsMock = [
           modelName: 'My excellent plan that I just initiated',
           existingModelLinks: [],
           generalCharacteristics: generalCharacteristicsMockData
+        }
+      }
+    }
+  },
+  {
+    request: {
+      query: GetModelPlansBaseDocument,
+      variables: { filter: ModelPlanFilter.INCLUDE_ALL }
+    },
+    result: {
+      data: {
+        modelPlanCollection: {
+          id: 'ce3405a0-3399-4e3a-88d7-3cfc613d2905',
+          modelName: 'My excellent plan that I just initiated'
+        }
+      }
+    }
+  },
+  {
+    request: {
+      query: GetExistingModelPlansDocument
+    },
+    result: {
+      data: {
+        existingModelCollection: {
+          id: 'ce3405a0-3399-4e3a-88d7-3cfc613d29056',
+          modelName: 'My excellent plan that I just initiated 2'
         }
       }
     }
@@ -69,7 +112,7 @@ describe('Model Plan Characteristics', () => {
     });
   });
 
-  it('separates model plans by eixsing/current type', () => {
+  it('separates model plans by existing/current type', () => {
     const currentModelPlanIDs: any = [
       { id: 'ce3405a0-3399-4e3a-88d7-3cfc613d2905' }
     ];

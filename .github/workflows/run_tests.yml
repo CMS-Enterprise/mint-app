@@ -10,8 +10,8 @@ on:
         default: false
 
 env:
-  GIT_HASH: ${{ github.event.pull_request.head.sha || github.sha }}
-  GIT_REF_NAME: ${{ github.event.pull_request.head.ref || github.ref }}
+  GIT_HASH: ${{ github.sha }}
+  GIT_REF_NAME: ${{ github.ref }}
   SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
   POSTGRES_PASSWORD: mysecretpassword
   POSTGRES_USER: postgres
@@ -40,8 +40,6 @@ jobs:
     steps:
       - name: Check out code
         uses: actions/checkout@v4
-        with:
-          ref: ${{ env.GIT_HASH }}
       - name: Login to Docker Hub
         uses: docker/login-action@v3
         with:
@@ -56,7 +54,7 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
       - name: Run buildx bake
-        uses: docker/bake-action@v4.0.0
+        uses: docker/bake-action@v4.1.0
         with:
           files: "docker-compose.backend.yml"
           targets: "${{ matrix.service_name }}"
@@ -71,8 +69,6 @@ jobs:
     steps:
       - name: Check out code
         uses: actions/checkout@v4
-        with:
-          ref: ${{ env.GIT_HASH }}
       - name: Set up node
         uses: actions/setup-node@v4
         with:
@@ -92,7 +88,7 @@ jobs:
       - name: Build Frontend Assets
         run: yarn build
       - name: Upload Frontend assets
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: e2e-frontend-assets
           path: build/
@@ -168,7 +164,7 @@ jobs:
           s3 mb s3://${{ env.S3_BUCKET }}
 
       - name: Set up go
-        uses: actions/setup-go@v4
+        uses: actions/setup-go@v5
         with:
           go-version-file: 'go.mod'
 
@@ -208,15 +204,13 @@ jobs:
     steps:
       - name: Check out code
         uses: actions/checkout@v4
-        with:
-          ref: ${{ env.GIT_HASH }}
       - name: Set up node
         uses: actions/setup-node@v4
         with:
           node-version-file: '.nvmrc'
           cache: yarn
       - name: Set up go
-        uses: actions/setup-go@v4
+        uses: actions/setup-go@v5
         with:
           go-version-file: 'go.mod'
       - name: Install go modules
@@ -246,7 +240,7 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
       - name: Run buildx bake
-        uses: docker/bake-action@v4.0.0
+        uses: docker/bake-action@v4.1.0
         with:
           targets: mint,db_migrate
           files: "docker-compose.backend.yml"
@@ -261,7 +255,7 @@ jobs:
           scripts/dev down
           scripts/dev up:backend
       - name: Download Frontend assets
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: e2e-frontend-assets
           path: build/
@@ -277,14 +271,14 @@ jobs:
           scripts/dev down
       - name: Upload cypress videos
         if: ${{ always() }}
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: cypress-videos
           path: cypress/videos
           retention-days: 14
       - name: Upload cypress screenshots
         if: ${{ always() }}
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: cypress-screenshots
           path: cypress/screenshots
@@ -301,8 +295,6 @@ jobs:
     steps:
       - name: Check out code
         uses: actions/checkout@v4
-        with:
-          ref: ${{ env.GIT_HASH }}
       - name: Set up node
         uses: actions/setup-node@v4
         with:
@@ -311,7 +303,7 @@ jobs:
       - name: Install yarn dependencies
         run: yarn install --immutable
       - name: Set up go
-        uses: actions/setup-go@v4
+        uses: actions/setup-go@v5
         with:
           go-version-file: 'go.mod'
       - name: Install go modules
@@ -338,8 +330,6 @@ jobs:
     steps:
       - name: Check out code
         uses: actions/checkout@v4
-        with:
-          ref: ${{ env.GIT_HASH }}
       - name: Set up node
         uses: actions/setup-node@v4
         with:
@@ -362,8 +352,6 @@ jobs:
     steps:
       - name: Check out code
         uses: actions/checkout@v4
-        with:
-          ref: ${{ env.GIT_HASH }}
       - name: Set up node
         uses: actions/setup-node@v4
         with:

@@ -27,26 +27,34 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     goField: 'ResemblesExistingModel',
     dbField: 'resembles_existing_model',
     label: 'Does your proposed track/model resemble any existing models?',
-    dataType: 'boolean',
+    dataType: 'enum',
     formType: 'radio',
     options: {
-      true: 'Yes',
-      false: 'No'
+      YES: 'Yes',
+      NO: 'No',
+      OTHER: 'Other'
     }
   },
-  // This value doesn't really live in generalCharacteristics, but has
-  // it's own query to pull in linked model plans
-  existingModelLinks: {
-    gqlField: 'existingModelLinks',
-    goField: 'ExistingModelLinks',
-    dbField: 'existing_model_links',
+  resemblesExistingModelWhich: {
+    gqlField: 'resemblesExistingModelWhich',
+    goField: 'ResemblesExistingModelWhich',
+    dbField: 'resembles_existing_model_which',
     label:
       'Which existing models does your proposed track/model most closely resemble?',
     sublabel: 'Start typing the name of the model',
     multiSelectLabel: 'Selected models',
     dataType: 'string',
     formType: 'multiSelect',
-    isArray: true
+    isArray: true,
+    isModelLinks: true // Used to designate if a field is a ExistingModelLinks type with nested fields - ex: names
+  },
+  resemblesExistingModelWhyHow: {
+    gqlField: 'resemblesExistingModelWhyHow',
+    goField: 'ResemblesExistingModelWhyHow',
+    dbField: 'resembles_existing_model_why_how',
+    label: 'Explain why and how the model made this decision.',
+    dataType: 'string',
+    formType: 'textarea'
   },
   resemblesExistingModelHow: {
     gqlField: 'resemblesExistingModelHow',
@@ -56,10 +64,110 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     dataType: 'string',
     formType: 'textarea'
   },
+  resemblesExistingModelOtherSpecify: {
+    gqlField: 'resemblesExistingModelOtherSpecify',
+    goField: 'ResemblesExistingModelOtherSpecify',
+    dbField: 'resembles_existing_model_other_specify',
+    label: 'Please specify',
+    dataType: 'string',
+    formType: 'text'
+  },
+  // Not rendered in any form/ui
+  resemblesExistingModelOtherSelected: {
+    gqlField: 'resemblesExistingModelOtherSelected',
+    goField: 'ResemblesExistingModelOtherSelected',
+    dbField: 'resembles_existing_model_other_selected',
+    label: '',
+    dataType: 'boolean',
+    formType: 'radio',
+    options: {
+      true: '',
+      false: ''
+    }
+  },
+  resemblesExistingModelOtherOption: {
+    gqlField: 'resemblesExistingModelOtherOption',
+    goField: 'ResemblesExistingModelOtherOption',
+    dbField: 'resembles_existing_model_other_option',
+    label: 'Please specify other',
+    dataType: 'string',
+    formType: 'text'
+  },
   resemblesExistingModelNote: {
     gqlField: 'resemblesExistingModelNote',
     goField: 'ResemblesExistingModelNote',
     dbField: 'resembles_existing_model_note',
+    label: 'Note',
+    dataType: 'string',
+    formType: 'textarea'
+  },
+  participationInModelPrecondition: {
+    gqlField: 'participationInModelPrecondition',
+    goField: 'ParticipationInModelPrecondition',
+    dbField: 'participation_in_model_precondition',
+    label:
+      'Is participation in another model a precondition for participation in this model?',
+    dataType: 'enum',
+    formType: 'radio',
+    options: {
+      YES: 'Yes',
+      NO: 'No',
+      OTHER: 'Other'
+    }
+  },
+  participationInModelPreconditionOtherSpecify: {
+    gqlField: 'participationInModelPreconditionOtherSpecify',
+    goField: 'ParticipationInModelPreconditionOtherSpecify',
+    dbField: 'participation_in_model_precondition_other_specify',
+    label: 'Please specify',
+    dataType: 'string',
+    formType: 'text'
+  },
+  participationInModelPreconditionWhich: {
+    gqlField: 'participationInModelPreconditionWhich',
+    goField: 'ParticipationInModelPreconditionWhich',
+    dbField: 'participation_in_model_precondition_which',
+    label: 'Which models?',
+    sublabel: 'Start typing the name of the model',
+    multiSelectLabel: 'Selected models',
+    dataType: 'string',
+    formType: 'multiSelect',
+    isArray: true,
+    isModelLinks: true // Used to designate if a field is a ExistingModelLinks type with nested fields - ex: names
+  },
+  // Not rendered in any form/ui
+  participationInModelPreconditionOtherSelected: {
+    gqlField: 'participationInModelPreconditionOtherSelected',
+    goField: 'ParticipationInModelPreconditionOtherSelected',
+    dbField: 'participation_in_model_precondition_other_selected',
+    label: '',
+    dataType: 'boolean',
+    formType: 'radio',
+    options: {
+      true: '',
+      false: ''
+    }
+  },
+  participationInModelPreconditionOtherOption: {
+    gqlField: 'participationInModelPreconditionOtherOption',
+    goField: 'ParticipationInModelPreconditionOtherOption',
+    dbField: 'participation_in_model_precondition_other_option',
+    label: 'Please specify other',
+    dataType: 'string',
+    formType: 'text'
+  },
+  participationInModelPreconditionWhyHow: {
+    gqlField: 'participationInModelPreconditionWhyHow',
+    goField: 'ParticipationInModelPreconditionWhyHow',
+    dbField: 'participation_in_model_precondition_why_how',
+    label: 'Explain any details including if it is just part of the model.',
+    dataType: 'string',
+    formType: 'textarea'
+  },
+  participationInModelPreconditionNote: {
+    gqlField: 'participationInModelPreconditionNote',
+    goField: 'ParticipationInModelPreconditionNote',
+    dbField: 'participation_in_model_precondition_note',
     label: 'Note',
     dataType: 'string',
     formType: 'textarea'
@@ -89,6 +197,41 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     goField: 'HasComponentsOrTracksNote',
     dbField: 'has_components_or_tracks_note',
     label: 'Note',
+    dataType: 'string',
+    formType: 'textarea'
+  },
+  agencyOrStateHelp: {
+    gqlField: 'agencyOrStateHelp',
+    goField: 'AgencyOrStateHelp',
+    dbField: 'agency_or_state_help',
+    label:
+      'Will another Agency or State help design/operate the model? Select all that apply.',
+    readonlyLabel:
+      'Will another Agency or State help design/operate the model?',
+    dataType: 'enum',
+    formType: 'checkbox',
+    options: {
+      YES_STATE: 'Yes, we will partner with states',
+      YES_AGENCY_IDEAS: 'Yes, we will get ideas from another agency',
+      YES_AGENCY_IAA:
+        'Yes, we will get support from another agency through Inter Agency Agreement (IAA)',
+      NO: 'No',
+      OTHER: 'Other'
+    }
+  },
+  agencyOrStateHelpOther: {
+    gqlField: 'agencyOrStateHelpOther',
+    goField: 'AgencyOrStateHelpOther',
+    dbField: 'agency_or_state_help_other',
+    label: 'Please specify',
+    dataType: 'string',
+    formType: 'textarea'
+  },
+  agencyOrStateHelpNote: {
+    gqlField: 'agencyOrStateHelpNote',
+    goField: 'AgencyOrStateHelpNote',
+    dbField: 'agency_or_state_help_note',
+    label: 'Notes',
     dataType: 'string',
     formType: 'textarea'
   },
@@ -130,8 +273,10 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     multiSelectLabel: 'Selected key characteristics',
     options: {
       EPISODE_BASED: 'Episode-Based Model',
+      MEDICAID_MODEL: 'Medicaid Model',
       PART_C: 'Medicare-Advantage (Part C) Model',
-      PART_D: 'Part D Model',
+      MEDICARE_FFS_MODEL: 'Medicare Fee-for-Service (FFS) Model',
+      PART_D: 'Medicare Prescription Drug (Part D) Model',
       PAYMENT: 'Payment Model',
       POPULATION_BASED: 'Population-based Model',
       PREVENTATIVE: 'Preventative Model',
@@ -323,9 +468,97 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     dataType: 'enum',
     formType: 'checkbox',
     options: {
-      REGION: 'Region (CBSA, MSA, HRR, etc.)',
-      STATE: 'State',
+      STATE: 'States and territories',
+      REGION: 'Region',
       OTHER: 'Other'
+    },
+    optionsRelatedInfo: {
+      STATE: 'geographiesStatesAndTerritories',
+      REGION: 'geographiesRegionTypes',
+      OTHER: 'geographiesTargetedTypesOther'
+    },
+    filterGroups: ['iddoc', 'pbg']
+  },
+  geographiesStatesAndTerritories: {
+    gqlField: 'geographiesStatesAndTerritories',
+    goField: 'GeographiesStatesAndTerritories',
+    dbField: 'geographies_states_and_territories',
+    label: 'Which states and territories?',
+    multiSelectLabel: 'States and territories',
+    dataType: 'enum',
+    formType: 'multiSelect',
+    options: {
+      AL: 'AL - Alabama',
+      AK: 'AK - Alaska',
+      AZ: 'AZ - Arizona',
+      AR: 'AR - Arkansas',
+      CA: 'CA - California',
+      CO: 'CO - Colorado',
+      CT: 'CT - Connecticut',
+      DE: 'DE - Delaware',
+      DC: 'DC - District of Columbia',
+      FL: 'FL - Florida',
+      GA: 'GA - Georgia',
+      HI: 'HI - Hawaii',
+      ID: 'ID - Idaho',
+      IL: 'IL - Illinois',
+      IN: 'IN - Indiana',
+      IA: 'IA - Iowa',
+      KS: 'KS - Kansas',
+      KY: 'KY - Kentucky',
+      LA: 'LA - Louisiana',
+      ME: 'ME - Maine',
+      MD: 'MD - Maryland',
+      MA: 'MA - Massachusetts',
+      MI: 'MI - Michigan',
+      MN: 'MN - Minnesota',
+      MS: 'MS - Mississippi',
+      MO: 'MO - Missouri',
+      MT: 'MT - Montana',
+      NE: 'NE - Nebraska',
+      NV: 'NV - Nevada',
+      NH: 'NH - New Hampshire',
+      NJ: 'NJ - New Jersey',
+      NM: 'NM - New Mexico',
+      NY: 'NY - New York',
+      NC: 'NC - North Carolina',
+      ND: 'ND - North Dakota',
+      OH: 'OH - Ohio',
+      OK: 'OK - Oklahoma',
+      OR: 'OR - Oregon',
+      PA: 'PA - Pennsylvania',
+      RI: 'RI - Rhode Island',
+      SC: 'SC - South Carolina',
+      SD: 'SD - South Dakota',
+      TN: 'TN - Tennessee',
+      TX: 'TX - Texas',
+      UT: 'UT - Utah',
+      VT: 'VT - Vermont',
+      VA: 'VA - Virginia',
+      WA: 'WA - Washington',
+      WV: 'WV - West Virginia',
+      WI: 'WI - Wisconsin',
+      WY: 'WY - Wyoming',
+      AS: 'AS - American Samoa',
+      GU: 'GU - Guam',
+      MP: 'MP - Northern Mariana Islands',
+      PR: 'PR - Puerto Rico',
+      UM: 'UM - U.S. Minor Outlying Islands',
+      VI: 'VI - U.S. Virgin Islands'
+    },
+    filterGroups: ['iddoc', 'pbg']
+  },
+  geographiesRegionTypes: {
+    gqlField: 'geographiesRegionTypes',
+    goField: 'GeographiesRegionTypes',
+    dbField: 'geographies_region_types',
+    label: 'Geography region types',
+    dataType: 'enum',
+    formType: 'checkbox',
+    options: {
+      CBSA: 'Core-based statistical areas (CBSAs)',
+      HRR: 'Hospital Referral Regions (HRR)',
+      MSA: 'Metropolitan Statistical Areas (MSAs)'
     },
     filterGroups: ['iddoc', 'pbg']
   },
@@ -481,7 +714,7 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     dataType: 'enum',
     formType: 'checkbox',
     options: {
-      ACA: '3021 (ACA)',
+      ACA: '3021 Affordable Care Act (ACA)',
       CONGRESSIONALLY_MANDATED: 'Congressionally Mandated Demonstration',
       SSA_PART_B:
         'Section 1833(e) (Part B services) of the Social Security Act',

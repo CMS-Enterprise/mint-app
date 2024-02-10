@@ -55,6 +55,8 @@ const discussions = {
   assessment: 'MINT Team',
   viewMoreQuestions: 'View more questions',
   viewFewerQuestions: 'View fewer questions',
+  viewMoreReplies: 'View more replies',
+  viewFewerReplies: 'View fewer replies',
   alreadyAnswered:
     '“{{-question}}” has already been answered. You can view it in the answered questions below.',
   role: 'Your role',
@@ -87,7 +89,13 @@ const discussions = {
     userRoleDescription: 'User role description'
   },
   showReplies: 'Show replies',
-  hideReplies: 'Hide replies'
+  hideReplies: 'Hide replies',
+  tagHint:
+    'To tag a solution team or individual, type "@" and begin typing the name. Then, select the team or individual from the list you wish to notify.',
+  tagAlert:
+    'When you save your discussion, the selected team(s) and individual(s) will be notified via email.',
+  noResults:
+    'There are no teams or users that match your search. Please try again.'
 };
 
 export default discussions;

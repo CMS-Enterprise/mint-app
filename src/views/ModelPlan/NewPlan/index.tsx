@@ -42,7 +42,7 @@ const NewPlanContent = () => {
     }).then(response => {
       if (!response?.errors) {
         const { id } = response?.data?.createModelPlan;
-        history.push(`/models/${id}/collaborators`);
+        history.push(`/models/${id}/collaborators?view=add`);
       }
     });
   };
@@ -125,7 +125,6 @@ const NewPlanContent = () => {
 
                       <Field
                         as={TextInput}
-                        error={!!flatErrors.modelName}
                         id="new-plan-model-name"
                         maxLength={50}
                         name="modelName"

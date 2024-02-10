@@ -52,6 +52,33 @@ var planDiscussionCreatedSubjectTemplate string
 //go:embed templates/plan_discussion_created_body.html
 var planDiscussionCreatedBodyTemplate string
 
+// DiscussionReplyCreatedOriginatorTemplateName is the template name definition for the corresponding email template
+const DiscussionReplyCreatedOriginatorTemplateName string = "discussion_reply_created_originator"
+
+//go:embed templates/discussion_reply_created_originator_subject.html
+var discussionReplyCreatedOriginatorSubjectTemplate string
+
+//go:embed templates/discussion_reply_created_originator_body.html
+var discussionReplyCreatedOriginatorBodyTemplate string
+
+// PlanDiscussionTaggedPossibleSolutionTemplateName is the template name definition for the corresponding email template
+const PlanDiscussionTaggedPossibleSolutionTemplateName string = "plan_discussion_tagged_solution"
+
+//go:embed templates/plan_discussion_tagged_solution_subject.html
+var planDiscussionTaggedPossibleSolutionSubjectTemplate string
+
+//go:embed templates/plan_discussion_tagged_solution_body.html
+var planDiscussionTaggedPossibleSolutionBodyTemplate string
+
+// PlanDiscussionTaggedUserTemplateName is the template name definition for the corresponding email template
+const PlanDiscussionTaggedUserTemplateName string = "plan_discussion_tagged_user"
+
+//go:embed templates/plan_discussion_tagged_user_subject.html
+var planDiscussionTaggedUserSubjectTemplate string
+
+//go:embed templates/plan_discussion_tagged_user_body.html
+var planDiscussionTaggedUserBodyTemplate string
+
 // ModelPlanDateChangedTemplateName is the template name definition for the corresponding email template
 const ModelPlanDateChangedTemplateName string = "model_plan_date_changed"
 
@@ -82,6 +109,9 @@ var sharedAccessBannerTemplate string
 //go:embed templates/shared_footer.html
 var sharedFooterTemplate string
 
+//go:embed templates/shared_solution_poc_footer.html
+var sharedSolutionPOCFooterTemplate string
+
 // ReportAProblemTemplateName is the template name definition for the corresponding email template
 const ReportAProblemTemplateName string = "report_a_problem"
 
@@ -99,6 +129,15 @@ var sendFeedbackBodyTemplate string
 
 //go:embed templates/send_feedback_subject.html
 var sendFeedbackSubjectTemplate string
+
+// SolutionSelectedTemplateName is the template name for the solution selected email that is sent to solution POCS
+const SolutionSelectedTemplateName string = "solution_selected"
+
+//go:embed templates/solution_selected_body.html
+var solutionSelectedBodyTemplate string
+
+//go:embed templates/solution_selected_subject.html
+var solutionSelectedSubjectTemplate string
 
 // TemplateServiceImpl is an implementation-specific structure loading all resources necessary for server execution
 type TemplateServiceImpl struct {
@@ -146,6 +185,20 @@ func (t *TemplateServiceImpl) Load() error {
 	if err != nil {
 		return err
 	}
+	err = t.loadEmailTemplate(DiscussionReplyCreatedOriginatorTemplateName, discussionReplyCreatedOriginatorSubjectTemplate, discussionReplyCreatedOriginatorBodyTemplate)
+	if err != nil {
+		return err
+	}
+
+	err = t.loadEmailTemplate(PlanDiscussionTaggedUserTemplateName, planDiscussionTaggedUserSubjectTemplate, planDiscussionTaggedUserBodyTemplate)
+	if err != nil {
+		return err
+	}
+
+	err = t.loadEmailTemplate(PlanDiscussionTaggedPossibleSolutionTemplateName, planDiscussionTaggedPossibleSolutionSubjectTemplate, planDiscussionTaggedPossibleSolutionBodyTemplate)
+	if err != nil {
+		return err
+	}
 
 	err = t.loadEmailTemplate(ModelPlanDateChangedTemplateName, modelPlanDateChangedSubjectTemplate, modelPlanDateChangedBodyTemplate)
 	if err != nil {
@@ -163,6 +216,11 @@ func (t *TemplateServiceImpl) Load() error {
 	}
 
 	err = t.loadEmailTemplate(SendFeedbackTemplateName, sendFeedbackSubjectTemplate, sendFeedbackBodyTemplate)
+	if err != nil {
+		return err
+	}
+
+	err = t.loadEmailTemplate(SolutionSelectedTemplateName, solutionSelectedSubjectTemplate, solutionSelectedBodyTemplate)
 	if err != nil {
 		return err
 	}
@@ -184,10 +242,11 @@ func (t *TemplateServiceImpl) loadEmailTemplate(emailTemplateName string, subjec
 	}
 
 	predefinedTemplates := map[string]string{
-		"shared_style.html":         sharedStyleTemplate,
-		"shared_header.html":        sharedHeaderTemplate,
-		"shared_footer.html":        sharedFooterTemplate,
-		"shared_access_banner.html": sharedAccessBannerTemplate,
+		"shared_style.html":               sharedStyleTemplate,
+		"shared_header.html":              sharedHeaderTemplate,
+		"shared_footer.html":              sharedFooterTemplate,
+		"shared_access_banner.html":       sharedAccessBannerTemplate,
+		"shared_solution_poc_footer.html": sharedSolutionPOCFooterTemplate,
 	}
 
 	err = t.templateCache.LoadHTMLTemplateFromString(bodyEmailTemplateName, bodyTemplate, predefinedTemplates)

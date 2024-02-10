@@ -1,3 +1,5 @@
+import { FrequencyType } from 'gql/gen/graphql';
+
 export const miscellaneous: Record<string, string> = {
   mandatoryFields: 'All fields are mandatory',
   saveAndReturn: 'Save and return to task list',
@@ -23,7 +25,10 @@ export const miscellaneous: Record<string, string> = {
   notes: 'Notes',
   noneEntered: 'None entered',
   na: 'No answer entered',
+  noAdditionalInformation: 'No additional information specified',
   otherNotSpecified: 'Other not specified',
+  other: 'Other',
+  noAdditionalInfo: 'No additional information specified',
   dateWarning:
     'You’ve entered one or more dates that are in the past. Please double-check your dates to make sure they’re accurate.',
   helpText:
@@ -32,7 +37,18 @@ export const miscellaneous: Record<string, string> = {
   modelPlanCopy:
     'This section of the Model Plan ({{-sectionName}}) is ready for review.',
   markedReady: 'Marked ready for review by {{-reviewer}} on ',
-  validDate: 'Please use a valid date format.'
+  validDate: 'Please use a valid date format.',
+  apolloFailField: 'Failed to save field value/s'
+};
+
+// Reusable translated option for all frequency type questions
+export const frequencyOptions: Record<FrequencyType, string> = {
+  ANNUALLY: 'Annually',
+  SEMIANNUALLY: 'Semi-annually',
+  QUARTERLY: 'Quarterly',
+  MONTHLY: 'Monthly',
+  CONTINUALLY: 'Continually',
+  OTHER: 'Other'
 };
 
 export default miscellaneous;

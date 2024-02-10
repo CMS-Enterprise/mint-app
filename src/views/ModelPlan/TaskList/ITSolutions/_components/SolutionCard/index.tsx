@@ -6,18 +6,12 @@ Contains links to edit solution details or remove details
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useParams } from 'react-router-dom';
-import {
-  Card,
-  CardGroup,
-  Grid,
-  IconArrowForward,
-  IconMailOutline,
-  Link
-} from '@trussworks/react-uswds';
+import { Card, CardGroup, Grid, Icon, Link } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import Divider from 'components/shared/Divider';
+import Spinner from 'components/Spinner';
 import useHelpSolution from 'hooks/useHelpSolutions';
 import useModalSolutionState from 'hooks/useModalSolutionState';
 import { GetOperationalNeed_operationalNeed_solutions as GetOperationalNeedSolutionsType } from 'queries/ITSolutions/types/GetOperationalNeed';
@@ -61,11 +55,14 @@ const SolutionCard = ({
   const { t } = useTranslation('itSolutions');
   const { t: h } = useTranslation('generalReadOnly');
 
-  const { prevPathname, selectedSolution, renderModal } = useModalSolutionState(
-    solution.key
-  );
+  const {
+    prevPathname,
+    selectedSolution,
+    renderModal,
+    loading: modalLoading
+  } = useModalSolutionState(solution.key);
 
-  const helpSolutions = useHelpSolution();
+  const { helpSolutions, loading } = useHelpSolution();
 
   const solutionMap = findSolutionByKey(solution.key, helpSolutions);
 
@@ -81,6 +78,10 @@ const SolutionCard = ({
     OperationalSolutionKey.EXISTING_CMS_DATA_AND_PROCESS,
     OperationalSolutionKey.INTERNAL_STAFF
   ];
+
+  if (loading || modalLoading) {
+    return <Spinner size="large" center />;
+  }
 
   return (
     <>
@@ -164,7 +165,7 @@ const SolutionCard = ({
                   target="_blank"
                 >
                   <div>{solutionMap?.pointsOfContact[0].email}</div>
-                  <IconMailOutline className="margin-left-05 text-tbottom" />
+                  <Icon.MailOutline className="margin-left-05 text-tbottom" />
                 </Link>
               </Grid>
             ) : (
@@ -186,7 +187,7 @@ const SolutionCard = ({
                     target="_blank"
                   >
                     <div>{solution.pocEmail}</div>
-                    <IconMailOutline className="margin-left-05 text-tbottom" />
+                    <Icon.MailOutline className="margin-left-05 text-tbottom" />
                   </Link>
                 )}
               </Grid>
@@ -205,7 +206,7 @@ const SolutionCard = ({
                     to={detailRoute}
                   >
                     {t('aboutSolution')}
-                    <IconArrowForward className="margin-left-1" />
+                    <Icon.ArrowForward className="margin-left-1" />
                   </UswdsReactLink>
                 </>
               )}
@@ -231,7 +232,7 @@ const SolutionCard = ({
                   >
                     {t('updateTheseDetails')}
                     {!addingCustom && (
-                      <IconArrowForward className="margin-left-1" />
+                      <Icon.ArrowForward className="margin-left-1" />
                     )}
                   </UswdsReactLink>
 

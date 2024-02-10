@@ -68,13 +68,13 @@ func (s *Store) ModelPlanGetByModelPlanIDLOADER(_ *zap.Logger, paramTableJSON st
 	return planSlice, nil
 }
 
-// ModelPlanCreate creates a model plan
-func (s *Store) ModelPlanCreate(logger *zap.Logger, plan *models.ModelPlan) (*models.ModelPlan, error) {
-
+// ModelPlanCreate creates a model plan using a transaction
+func (s *Store) ModelPlanCreate(np NamedPreparer, logger *zap.Logger, plan *models.ModelPlan) (*models.ModelPlan, error) {
 	if plan.ID == uuid.Nil {
 		plan.ID = uuid.New()
 	}
-	stmt, err := s.db.PrepareNamed(modelPlanCreateSQL)
+
+	stmt, err := np.PrepareNamed(modelPlanCreateSQL)
 	if err != nil {
 		logger.Error(
 			fmt.Sprintf("Failed to create model plan with error %s", err),
@@ -134,10 +134,10 @@ func (s *Store) ModelPlanUpdate(logger *zap.Logger, plan *models.ModelPlan) (*mo
 }
 
 // ModelPlanGetByID returns a model plan for a given ID
-func (s *Store) ModelPlanGetByID(logger *zap.Logger, id uuid.UUID) (*models.ModelPlan, error) {
+func (s *Store) ModelPlanGetByID(np NamedPreparer, logger *zap.Logger, id uuid.UUID) (*models.ModelPlan, error) {
 
 	plan := models.ModelPlan{}
-	stmt, err := s.db.PrepareNamed(modelPlanGetByIDSQL)
+	stmt, err := np.PrepareNamed(modelPlanGetByIDSQL)
 	if err != nil {
 		return nil, fmt.Errorf("failed to prepare SQL statement: %w", err)
 	}

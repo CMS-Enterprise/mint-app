@@ -6,7 +6,7 @@ import {
   ButtonGroup,
   Grid,
   GridContainer,
-  IconArrowBack
+  Icon
 } from '@trussworks/react-uswds';
 
 import Breadcrumbs from 'components/Breadcrumbs';
@@ -116,7 +116,7 @@ const AddDocument = () => {
               onClick={() => history.goBack()}
               className="display-inline-flex flex-align-center margin-y-3 usa-button usa-button--unstyled"
             >
-              <IconArrowBack className="margin-right-1" aria-hidden />
+              <Icon.ArrowBack className="margin-right-1" aria-hidden />
               {t('dontAdd')}
             </Button>
           </div>

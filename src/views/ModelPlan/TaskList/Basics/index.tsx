@@ -1,7 +1,6 @@
-import React, { Fragment, useRef, useState } from 'react';
+import React, { Fragment, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, Route, Switch, useHistory, useParams } from 'react-router-dom';
-import { useMutation, useQuery } from '@apollo/client';
 import {
   Breadcrumb,
   BreadcrumbBar,
@@ -10,8 +9,7 @@ import {
   Fieldset,
   Grid,
   GridContainer,
-  IconArrowBack,
-  IconInfo,
+  Icon,
   Label,
   Link as TrussLink,
   Radio,
@@ -19,7 +17,14 @@ import {
   TextInput
 } from '@trussworks/react-uswds';
 import classNames from 'classnames';
-import { Field, FieldArray, Form, Formik, FormikProps } from 'formik';
+import { Field, Form, Formik, FormikProps } from 'formik';
+import {
+  CmsCenter,
+  GetBasicsQuery,
+  ModelCategory,
+  useGetBasicsQuery,
+  useUpdateModelPlanAndBasicsMutation
+} from 'gql/gen/graphql';
 
 import AskAQuestion from 'components/AskAQuestion';
 import MainContent from 'components/MainContent';
@@ -31,19 +36,9 @@ import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import RequiredAsterisk from 'components/shared/RequiredAsterisk';
-import TextAreaField from 'components/shared/TextAreaField';
 import Tooltip from 'components/shared/Tooltip';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import usePlanTranslation from 'hooks/usePlanTranslation';
-import GetModelPlanInfo from 'queries/Basics/GetModelPlanInfo';
-import {
-  GetModelPlanInfo as GetModelPlanInfoType,
-  GetModelPlanInfo_modelPlan as ModelFormType,
-  GetModelPlanInfoVariables
-} from 'queries/Basics/types/GetModelPlanInfo';
-import { UpdateModelPlanAndBasicsVariables } from 'queries/types/UpdateModelPlanAndBasics';
-import UpdateModelPlanAndBasics from 'queries/UpdateModelPlanAndBasics';
-import { CMSCenter, ModelCategory } from 'types/graphql-global-types';
 import { getKeys } from 'types/translation';
 import flattenErrors from 'utils/flattenErrors';
 import planBasicsSchema from 'validations/planBasics';
@@ -52,7 +47,7 @@ import { NotFoundPartial } from 'views/NotFound';
 import Milestones from './Milestones';
 import Overview from './Overview';
 
-type ModelPlanInfoFormType = Omit<ModelFormType, 'nameHistory'>;
+type ModelPlanInfoFormType = Omit<GetBasicsQuery['modelPlan'], 'nameHistory'>;
 
 const BasicsContent = () => {
   const { t: modelPlanT } = useTranslation('modelPlan');
@@ -75,25 +70,16 @@ const BasicsContent = () => {
 
   const history = useHistory();
 
-  const [areCmmiGroupsShown, setAreCmmiGroupsShown] = useState(
-    formikRef?.current?.values.basics.cmsCenters.includes(CMSCenter.CMMI)
-  );
-
-  const [showOther, setShowOther] = useState(
-    formikRef?.current?.values.basics.cmsCenters.includes(CMSCenter.OTHER)
-  );
-
-  const { data, loading, error } = useQuery<
-    GetModelPlanInfoType,
-    GetModelPlanInfoVariables
-  >(GetModelPlanInfo, {
+  const { data, loading, error } = useGetBasicsQuery({
     variables: {
       id: modelID
     }
   });
 
-  const { id, modelName, abbreviation, basics, nameHistory } =
-    data?.modelPlan || {};
+  const { nameHistory } = data?.modelPlan || {};
+
+  const { id, modelName, abbreviation, basics } = (data?.modelPlan ||
+    {}) as ModelPlanInfoFormType;
 
   const filteredNameHistory = nameHistory?.filter(
     previousName => previousName !== modelName
@@ -105,13 +91,10 @@ const BasicsContent = () => {
     modelCategory,
     additionalModelCategories,
     cmsCenters,
-    cmmiGroups,
-    cmsOther
+    cmmiGroups
   } = basics || {};
 
-  const [update] = useMutation<UpdateModelPlanAndBasicsVariables>(
-    UpdateModelPlanAndBasics
-  );
+  const [update] = useUpdateModelPlanAndBasicsMutation();
 
   const handleFormSubmit = (
     formikValues: ModelPlanInfoFormType,
@@ -121,12 +104,14 @@ const BasicsContent = () => {
       formikRef?.current?.setFieldError('modelName', 'Enter the Model name');
       return;
     }
+
     const {
       id: updateId,
       modelName: updateModelName,
       abbreviation: updateAbbreviation,
       basics: updateBasics
     } = formikValues;
+
     update({
       variables: {
         id: updateId,
@@ -141,8 +126,7 @@ const BasicsContent = () => {
           modelCategory: updateBasics.modelCategory,
           additionalModelCategories: updateBasics.additionalModelCategories,
           cmsCenters: updateBasics.cmsCenters,
-          cmmiGroups: updateBasics.cmmiGroups,
-          cmsOther: updateBasics.cmsOther
+          cmmiGroups: updateBasics.cmmiGroups
         }
       }
     })
@@ -173,26 +157,9 @@ const BasicsContent = () => {
       modelCategory: modelCategory ?? null,
       additionalModelCategories: additionalModelCategories ?? [],
       cmsCenters: cmsCenters ?? [],
-      cmmiGroups: cmmiGroups ?? [],
-      cmsOther: cmsOther ?? ''
+      cmmiGroups: cmmiGroups ?? []
     }
   };
-
-  // 4 options
-  // 1. Basics (name, category, CMS Component without CMMI and Other)
-  // 2. Basics + cmmi group
-  // 3. Basics + other group
-  // 4. Basics + Cmmi + Other
-  let validationSchema;
-  if (areCmmiGroupsShown && showOther) {
-    validationSchema = planBasicsSchema.pageOneSchemaWithOtherAndCmmi;
-  } else if (areCmmiGroupsShown) {
-    validationSchema = planBasicsSchema.pageOneSchemaWithCmmiGroups;
-  } else if (showOther) {
-    validationSchema = planBasicsSchema.pageOneSchemaWithOther;
-  } else {
-    validationSchema = planBasicsSchema.pageOneSchema;
-  }
 
   if ((!loading && error) || (!loading && !data?.modelPlan)) {
     return <NotFoundPartial />;
@@ -235,7 +202,7 @@ const BasicsContent = () => {
           handleFormSubmit(values, 'next');
         }}
         enableReinitialize
-        validationSchema={validationSchema}
+        validationSchema={planBasicsSchema.pageOneSchema}
         validateOnBlur={false}
         validateOnChange={false}
         validateOnMount={false}
@@ -296,7 +263,6 @@ const BasicsContent = () => {
 
                           <Field
                             as={TextInput}
-                            error={!!flatErrors.modelName}
                             id="plan-basics-model-name"
                             maxLength={50}
                             name="modelName"
@@ -304,11 +270,11 @@ const BasicsContent = () => {
                         </FieldGroup>
 
                         <FieldGroup
-                          scrollElement="abbreviation"
+                          scrollElement="plan-basics-abbreviation"
                           error={!!flatErrors.abbreviation}
                           className="margin-top-4"
                         >
-                          <Label htmlFor="plan-basics-model-name">
+                          <Label htmlFor="plan-basics-abbreviation">
                             {modelPlanT('abbreviation.label')}
                           </Label>
 
@@ -322,7 +288,6 @@ const BasicsContent = () => {
 
                           <Field
                             as={TextInput}
-                            error={!!flatErrors.abbreviation}
                             id="plan-basics-abbreviation"
                             maxLength={50}
                             name="abbreviation"
@@ -362,7 +327,7 @@ const BasicsContent = () => {
                           <Grid row gap>
                             <Grid desktop={{ col: 6 }}>
                               <FieldGroup
-                                scrollElement="basics.amsModelID"
+                                scrollElement="plan-basics-ams-model-id"
                                 error={!!flatErrors['basics.amsModelID']}
                                 className="margin-top-0"
                               >
@@ -376,7 +341,6 @@ const BasicsContent = () => {
 
                                 <Field
                                   as={TextInput}
-                                  error={!!flatErrors['basics.amsModelID']}
                                   id="plan-basics-ams-model-id"
                                   maxLength={50}
                                   name="basics.amsModelID"
@@ -385,7 +349,7 @@ const BasicsContent = () => {
                             </Grid>
                             <Grid desktop={{ col: 6 }}>
                               <FieldGroup
-                                scrollElement="basics.demoCode"
+                                scrollElement="plan-basics-demo-code"
                                 error={!!flatErrors['basics.demoCode']}
                                 className="margin-top-0"
                               >
@@ -399,7 +363,6 @@ const BasicsContent = () => {
 
                                 <Field
                                   as={TextInput}
-                                  error={!!flatErrors['basics.demoCode']}
                                   id="plan-basics-demo-code"
                                   maxLength={50}
                                   name="basics.demoCode"
@@ -410,7 +373,7 @@ const BasicsContent = () => {
                         </div>
 
                         <FieldGroup
-                          scrollElement="modelCategory"
+                          scrollElement="plan-basics-model-category"
                           error={!!flatErrors['basics.modelCategory']}
                           className="margin-top-4"
                         >
@@ -447,13 +410,15 @@ const BasicsContent = () => {
                                           }
                                           position="right"
                                         >
-                                          <IconInfo className="text-base-light" />
+                                          <Icon.Info className="text-base-light" />
                                         </Tooltip>
                                       )}
                                     </span>
                                   }
                                   value={key}
                                   checked={values.basics.modelCategory === key}
+                                  // the onChange below is necessary to have a dynamic interaction
+                                  // with the Additional Model Categories question
                                   onChange={() => {
                                     setFieldValue('basics.modelCategory', key);
                                     if (
@@ -476,13 +441,14 @@ const BasicsContent = () => {
                         </FieldGroup>
 
                         <FieldGroup
+                          scrollElement="plan-basics-model-additional-category"
                           error={
                             !!flatErrors['basics.additionalModelCategories']
                           }
                           className="margin-top-4"
                         >
                           <Label
-                            htmlFor="basics.additionalModelCategories"
+                            htmlFor="plan-basics-model-additional-category"
                             className="text-normal"
                           >
                             {basicsT('additionalModelCategories.label')}
@@ -528,7 +494,7 @@ const BasicsContent = () => {
                                           }
                                           position="right"
                                         >
-                                          <IconInfo className="text-base-light" />
+                                          <Icon.Info className="text-base-light" />
                                         </Tooltip>
                                       </span>
                                     }
@@ -543,103 +509,43 @@ const BasicsContent = () => {
                         </FieldGroup>
 
                         <FieldGroup
-                          scrollElement="cmsCenters"
+                          scrollElement="new-plan-cmsCenters"
                           error={!!flatErrors['basics.cmsCenters']}
                           className="margin-top-4"
                         >
-                          <Fieldset>
-                            <FieldArray
-                              name="basics.cmsCenters"
-                              render={arrayHelpers => (
-                                <>
-                                  <Label htmlFor="plan-basics-cmsCenters">
-                                    {basicsT('cmsCenters.label')}
-                                    <RequiredAsterisk />
-                                  </Label>
+                          <Label htmlFor="new-plan-cmsCenters">
+                            {basicsT('cmsCenters.label')}
+                            <RequiredAsterisk />
+                          </Label>
 
-                                  <FieldErrorMsg>
-                                    {flatErrors['basics.cmsCenters']}
-                                  </FieldErrorMsg>
+                          <FieldErrorMsg>
+                            {flatErrors['basics.cmsCenters']}
+                          </FieldErrorMsg>
 
-                                  {getKeys(cmsCentersConfig.options).map(
-                                    center => {
-                                      return (
-                                        <Field
-                                          key={center}
-                                          as={CheckboxField}
-                                          id={`new-plan-cmsCenters-${center}`}
-                                          name="basics.cmsCenters"
-                                          label={
-                                            cmsCentersConfig.options[center]
-                                          }
-                                          value={center}
-                                          checked={values.basics.cmsCenters.includes(
-                                            center
-                                          )}
-                                          onChange={(
-                                            e: React.ChangeEvent<HTMLInputElement>
-                                          ) => {
-                                            if (e.target.checked) {
-                                              arrayHelpers.push(e.target.value);
-                                            } else {
-                                              const idx = values.basics.cmsCenters.indexOf(
-                                                e.target.value as CMSCenter
-                                              );
-                                              arrayHelpers.remove(idx);
-                                            }
-                                            if (
-                                              e.target.value === CMSCenter.CMMI
-                                            ) {
-                                              setAreCmmiGroupsShown(
-                                                !areCmmiGroupsShown
-                                              );
-                                            }
-                                            if (
-                                              e.target.value === CMSCenter.OTHER
-                                            ) {
-                                              setShowOther(!showOther);
-                                            }
-                                          }}
-                                        />
-                                      );
-                                    }
-                                  )}
-
-                                  {values.basics.cmsCenters.includes(
-                                    CMSCenter.OTHER
-                                  ) && (
-                                    <FieldGroup
-                                      className="margin-top-4"
-                                      error={!!flatErrors['basics.cmsOther']}
-                                    >
-                                      <Label htmlFor="plan-basics-cmsCategory--Other">
-                                        {basicsT('cmsOther.label')}
-                                      </Label>
-
-                                      <FieldErrorMsg>
-                                        {flatErrors['basics.cmsOther']}
-                                      </FieldErrorMsg>
-
-                                      <Field
-                                        as={TextAreaField}
-                                        id="plan-basics-cmsCategory--Other"
-                                        maxLength={5000}
-                                        className="mint-textarea"
-                                        name="basics.cmsOther"
-                                      />
-                                    </FieldGroup>
-                                  )}
-                                </>
-                              )}
-                            />
-                          </Fieldset>
+                          {getKeys(cmsCentersConfig.options).map(center => {
+                            return (
+                              <Field
+                                key={center}
+                                as={CheckboxField}
+                                id={`new-plan-cmsCenters-${center}`}
+                                name="basics.cmsCenters"
+                                label={cmsCentersConfig.options[center]}
+                                value={center}
+                                checked={values.basics.cmsCenters.includes(
+                                  center
+                                )}
+                              />
+                            );
+                          })}
                         </FieldGroup>
+
                         <FieldGroup
+                          scrollElement="new-plan-cmmiGroup"
                           error={!!flatErrors['basics.cmmiGroups']}
                           className="margin-top-4"
                         >
                           <Label
-                            htmlFor="basics.cmmiGroups"
+                            htmlFor="new-plan-cmmiGroup"
                             className="text-normal"
                           >
                             {basicsT('cmmiGroups.label')}
@@ -660,7 +566,7 @@ const BasicsContent = () => {
                                   as={CheckboxField}
                                   disabled={
                                     !values.basics.cmsCenters.includes(
-                                      CMSCenter.CMMI
+                                      CmsCenter.CMMI
                                     )
                                   }
                                   id={`new-plan-cmmiGroup-${group}`}
@@ -690,7 +596,7 @@ const BasicsContent = () => {
                           className="usa-button usa-button--unstyled"
                           onClick={() => handleFormSubmit(values, 'back')}
                         >
-                          <IconArrowBack
+                          <Icon.ArrowBack
                             className="margin-right-1"
                             aria-hidden
                           />
@@ -703,7 +609,6 @@ const BasicsContent = () => {
                   <Grid desktop={{ col: 6 }}>
                     {filteredNameHistory && filteredNameHistory.length > 0 && (
                       <SummaryBox
-                        heading=""
                         className="margin-top-6"
                         data-testid="summary-box--previous-name"
                       >

@@ -52,8 +52,11 @@ func (suite *ResolverSuite) TestFetchPlanGeneralCharacteristicsByModelPlanID() {
 
 	// Many of the fields are nil upon creation
 	suite.Nil(gc.IsNewModel)
-	suite.Nil(gc.ExistingModel)
 	suite.Nil(gc.ResemblesExistingModel)
+	suite.Nil(gc.ResemblesExistingModelWhyHow)
+	suite.Nil(gc.ResemblesExistingModelOtherSpecify)
+	suite.Nil(gc.ResemblesExistingModelOtherSelected)
+	suite.Nil(gc.ResemblesExistingModelOtherOption)
 	suite.Nil(gc.ResemblesExistingModelHow)
 	suite.Nil(gc.ResemblesExistingModelNote)
 	suite.Nil(gc.HasComponentsOrTracks)
@@ -81,6 +84,8 @@ func (suite *ResolverSuite) TestFetchPlanGeneralCharacteristicsByModelPlanID() {
 	suite.Nil(gc.CommunityPartnersInvolvedNote)
 	suite.Nil(gc.GeographiesTargeted)
 	suite.Nil(gc.GeographiesTargetedTypes)
+	suite.Nil(gc.GeographiesStatesAndTerritories)
+	suite.Nil(gc.GeographiesRegionTypes)
 	suite.Nil(gc.GeographiesTargetedTypesOther)
 	suite.Nil(gc.GeographiesTargetedAppliedTo)
 	suite.Nil(gc.GeographiesTargetedAppliedToOther)
@@ -100,6 +105,9 @@ func (suite *ResolverSuite) TestFetchPlanGeneralCharacteristicsByModelPlanID() {
 	suite.Nil(gc.WaiversRequired)
 	suite.Nil(gc.WaiversRequiredTypes)
 	suite.Nil(gc.WaiversRequiredNote)
+	suite.Nil(gc.AgencyOrStateHelp)
+	suite.Nil(gc.AgencyOrStateHelpOther)
+	suite.Nil(gc.AgencyOrStateHelpNote)
 }
 
 func (suite *ResolverSuite) TestUpdatePlanGeneralCharacteristics() {
@@ -109,12 +117,18 @@ func (suite *ResolverSuite) TestUpdatePlanGeneralCharacteristics() {
 	suite.NoError(err)
 
 	changes := map[string]interface{}{
-		"hasComponentsOrTracks":        true,
-		"hasComponentsOrTracksDiffer":  "One track does something one way, the other does it another way",
-		"hasComponentsOrTracksNote":    "Look at the tracks carefully",
-		"alternativePaymentModelTypes": []string{model.AlternativePaymentModelTypeMips.String(), model.AlternativePaymentModelTypeAdvanced.String()},
-		"AlternativePaymentModelNote":  "Has 2 APM types!",
+		"hasComponentsOrTracks":           true,
+		"hasComponentsOrTracksDiffer":     "One track does something one way, the other does it another way",
+		"hasComponentsOrTracksNote":       "Look at the tracks carefully",
+		"alternativePaymentModelTypes":    []string{model.AlternativePaymentModelTypeMips.String(), model.AlternativePaymentModelTypeAdvanced.String()},
+		"AlternativePaymentModelNote":     "Has 2 APM types!",
+		"GeographiesStatesAndTerritories": []string{"AL", "AK", "AZ"},
+		"GeographiesRegionTypes":          []string{"CBSA", "HRR"},
+		"agencyOrStateHelp":               []string{"YES_STATE", "YES_AGENCY_IDEAS", "OTHER"},
+		"agencyOrStateHelpOther":          "Some other note",
+		"agencyOrStateHelpNote":           "Some note",
 	}
+
 	updatedGeneralCharacteristics, err := UpdatePlanGeneralCharacteristics(suite.testConfigs.Logger, gc.ID, changes, suite.testConfigs.Principal, suite.testConfigs.Store)
 	suite.NoError(err)
 	suite.EqualValues(suite.testConfigs.Principal.UserAccount.ID, *updatedGeneralCharacteristics.ModifiedBy)
@@ -126,11 +140,19 @@ func (suite *ResolverSuite) TestUpdatePlanGeneralCharacteristics() {
 	suite.EqualValues([]string{model.AlternativePaymentModelTypeMips.String(), model.AlternativePaymentModelTypeAdvanced.String()}, updatedGeneralCharacteristics.AlternativePaymentModelTypes)
 	suite.EqualValues("Has 2 APM types!", *updatedGeneralCharacteristics.AlternativePaymentModelNote)
 	suite.EqualValues(models.TaskInProgress, updatedGeneralCharacteristics.Status)
+	suite.EqualValues([]string{"AL", "AK", "AZ"}, updatedGeneralCharacteristics.GeographiesStatesAndTerritories)
+	suite.EqualValues([]string{"CBSA", "HRR"}, updatedGeneralCharacteristics.GeographiesRegionTypes)
+	suite.EqualValues([]string{"YES_STATE", "YES_AGENCY_IDEAS", "OTHER"}, updatedGeneralCharacteristics.AgencyOrStateHelp)
+	suite.EqualValues("Some other note", *updatedGeneralCharacteristics.AgencyOrStateHelpOther)
+	suite.EqualValues("Some note", *updatedGeneralCharacteristics.AgencyOrStateHelpNote)
 
 	// Assert that no other fields got updated
 	suite.Nil(updatedGeneralCharacteristics.IsNewModel)
-	suite.Nil(updatedGeneralCharacteristics.ExistingModel)
 	suite.Nil(updatedGeneralCharacteristics.ResemblesExistingModel)
+	suite.Nil(updatedGeneralCharacteristics.ResemblesExistingModelWhyHow)
+	suite.Nil(updatedGeneralCharacteristics.ResemblesExistingModelOtherSpecify)
+	suite.Nil(updatedGeneralCharacteristics.ResemblesExistingModelOtherSelected)
+	suite.Nil(updatedGeneralCharacteristics.ResemblesExistingModelOtherOption)
 	suite.Nil(updatedGeneralCharacteristics.ResemblesExistingModelHow)
 	suite.Nil(updatedGeneralCharacteristics.ResemblesExistingModelNote)
 	suite.Nil(updatedGeneralCharacteristics.KeyCharacteristics)

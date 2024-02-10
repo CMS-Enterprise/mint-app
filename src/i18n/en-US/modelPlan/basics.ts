@@ -10,10 +10,10 @@ export const basics: TranslationBasics = {
     formType: 'radio',
     options: {
       ACCOUNTABLE_CARE: 'Accountable Care',
-      DISEASE_SPECIFIC_AND_EPISODIC: 'Disease-Specific & Episodic',
+      DISEASE_SPECIFIC_AND_EPISODIC: 'Disease-Specific & Episode-Based',
       HEALTH_PLAN: 'Health Plan',
       PRESCRIPTION_DRUG: 'Prescription Drug',
-      STATE_BASED: 'State-Based',
+      STATE_BASED: 'State & Community-Based',
       STATUTORY: 'Statutory',
       TO_BE_DETERMINED: 'To be determined'
     },
@@ -24,11 +24,11 @@ export const basics: TranslationBasics = {
         'Models which aim to address deficits in care for a defined population with a specific shared disease or medical condition, procedure, or care episode',
       HEALTH_PLAN: 'Models comprising Medicare Advantage plans',
       PRESCRIPTION_DRUG:
-        'Models which seek to mitigate the total cost of care by improving access to and the affordability of prescription drugs covered under Part B or Part D, including gene cell therapy, accelerated approvals and biosimilars',
+        'Models that seek to improve access to and/or the affordability of prescription drugs covered under Medicare (Part B and D) or Medicaid.',
       STATE_BASED:
-        'Models in which a state serves as the main contractual participant',
+        'Models in which a state or community-based organization serves as the main contractual participant, including managed care organizations serving Medicaid beneficiaries.',
       STATUTORY:
-        'Models and demonstrations requiring testing as determined by Congress under Social Security Act 1115A',
+        'Models and demonstrations requiring testing as determined by Congress and/or the Secretary of Health and Human Services.',
       TO_BE_DETERMINED: 'To be determined'
     }
   },
@@ -43,10 +43,10 @@ export const basics: TranslationBasics = {
     formType: 'checkbox',
     options: {
       ACCOUNTABLE_CARE: 'Accountable Care',
-      DISEASE_SPECIFIC_AND_EPISODIC: 'Disease-Specific & Episodic',
+      DISEASE_SPECIFIC_AND_EPISODIC: 'Disease-Specific & Episode-Based',
       HEALTH_PLAN: 'Health Plan',
       PRESCRIPTION_DRUG: 'Prescription Drug',
-      STATE_BASED: 'State-Based',
+      STATE_BASED: 'State & Community-Based',
       STATUTORY: 'Statutory',
       TO_BE_DETERMINED: 'To be determined'
     },
@@ -57,11 +57,11 @@ export const basics: TranslationBasics = {
         'Models which aim to address deficits in care for a defined population with a specific shared disease or medical condition, procedure, or care episode',
       HEALTH_PLAN: 'Models comprising Medicare Advantage plans',
       PRESCRIPTION_DRUG:
-        'Models which seek to mitigate the total cost of care by improving access to and the affordability of prescription drugs covered under Part B or Part D, including gene cell therapy, accelerated approvals and biosimilars',
+        'Models that seek to improve access to and/or the affordability of prescription drugs covered under Medicare (Part B and D) or Medicaid.',
       STATE_BASED:
-        'Models in which a state serves as the main contractual participant',
+        'Models in which a state or community-based organization serves as the main contractual participant, including managed care organizations serving Medicaid beneficiaries.',
       STATUTORY:
-        'Models and demonstrations requiring testing as determined by Congress under Social Security Act 1115A',
+        'Models and demonstrations requiring testing as determined by Congress and/or the Secretary of Health and Human Services.',
       TO_BE_DETERMINED: 'To be determined'
     }
   },
@@ -89,23 +89,18 @@ export const basics: TranslationBasics = {
     dataType: 'enum',
     formType: 'checkbox',
     options: {
-      CMMI: 'CMMI',
-      CENTER_FOR_MEDICARE: 'Center for Medicare (CM)',
-      FEDERAL_COORDINATED_HEALTH_CARE_OFFICE: 'Federal Coordinated Health Care',
+      CMMI: 'Center for Medicare and Medicaid Innovation (CMMI)',
       CENTER_FOR_CLINICAL_STANDARDS_AND_QUALITY:
         'Center for Clinical Standards and Quality (CCSQ)',
-      CENTER_FOR_PROGRAM_INTEGRITY: 'Center for Program Integrity (CPI)',
-      OTHER: 'Other'
+      CENTER_FOR_MEDICAID_AND_CHIP_SERVICES:
+        'Center for Medicaid and CHIP Services (CMCS)',
+      CENTER_FOR_MEDICARE: 'Center for Medicare (CM)',
+      FEDERAL_COORDINATED_HEALTH_CARE_OFFICE:
+        'Federal Coordinated Health Care Office (FCHCO)',
+
+      CENTER_FOR_PROGRAM_INTEGRITY: 'Center for Program Integrity (CPI)'
     },
     filterGroups: ['ipc']
-  },
-  cmsOther: {
-    gqlField: 'cmsOther',
-    goField: 'CmsOther',
-    dbField: 'cms_other',
-    label: 'Please specify',
-    dataType: 'string',
-    formType: 'textarea'
   },
   cmmiGroups: {
     gqlField: 'cmmiGroups',
@@ -135,9 +130,19 @@ export const basics: TranslationBasics = {
     formType: 'radio',
     options: {
       VOLUNTARY: 'Voluntary',
-      MANDATORY: 'Mandatory',
-      TBD: 'To be determined'
+      MANDATORY_NATIONAL: 'Mandatory national',
+      MANDATORY_REGIONAL_OR_STATE: 'Mandatory regional or state',
+      OTHER: 'Other'
     },
+    filterGroups: ['dfsdm', 'ipc', 'iddoc', 'pbg']
+  },
+  modelTypeOther: {
+    gqlField: 'modelTypeOther',
+    goField: 'ModelTypeOther',
+    dbField: 'model_type_other',
+    label: 'Please specify',
+    dataType: 'string',
+    formType: 'textarea',
     filterGroups: ['dfsdm', 'ipc', 'iddoc', 'pbg']
   },
   problem: {

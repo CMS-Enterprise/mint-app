@@ -1,19 +1,23 @@
 import React, { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useHistory, useParams } from 'react-router-dom';
-import { useMutation, useQuery } from '@apollo/client';
 import {
   Breadcrumb,
   BreadcrumbBar,
   BreadcrumbLink,
   Button,
   Fieldset,
-  IconArrowBack,
+  Icon,
   Label,
   Radio,
   TextInput
 } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
+import {
+  GetIddocMonitoringQuery,
+  useGetIddocMonitoringQuery,
+  useUpdatePlanOpsEvalAndLearningMutation
+} from 'gql/gen/graphql';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
@@ -25,14 +29,6 @@ import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import usePlanTranslation from 'hooks/usePlanTranslation';
-import GetIDDOCMonitoring from 'queries/OpsEvalAndLearning/GetIDDOCMonitoring';
-import {
-  GetIDDOCMonitoring as GetIDDOCMonitoringType,
-  GetIDDOCMonitoring_modelPlan_opsEvalAndLearning as IDDOCMonitoringFormType,
-  GetIDDOCMonitoringVariables
-} from 'queries/OpsEvalAndLearning/types/GetIDDOCMonitoring';
-import { UpdatePlanOpsEvalAndLearningVariables } from 'queries/OpsEvalAndLearning/types/UpdatePlanOpsEvalAndLearning';
-import UpdatePlanOpsEvalAndLearning from 'queries/OpsEvalAndLearning/UpdatePlanOpsEvalAndLearning';
 import { getKeys } from 'types/translation';
 import flattenErrors from 'utils/flattenErrors';
 import { dirtyInput } from 'utils/formDiff';
@@ -44,6 +40,8 @@ import {
   renderCurrentPage,
   renderTotalPages
 } from '..';
+
+type IDDOCMonitoringFormType = GetIddocMonitoringQuery['modelPlan']['opsEvalAndLearning'];
 
 const IDDOCMonitoring = () => {
   const { t: opsEvalAndLearningT } = useTranslation('opsEvalAndLearning');
@@ -66,10 +64,7 @@ const IDDOCMonitoring = () => {
   const formikRef = useRef<FormikProps<IDDOCMonitoringFormType>>(null);
   const history = useHistory();
 
-  const { data, loading, error } = useQuery<
-    GetIDDOCMonitoringType,
-    GetIDDOCMonitoringVariables
-  >(GetIDDOCMonitoring, {
+  const { data, loading, error } = useGetIddocMonitoringQuery({
     variables: {
       id: modelID
     }
@@ -87,13 +82,11 @@ const IDDOCMonitoring = () => {
     produceBenefitEnhancementFiles,
     fileNamingConventions,
     dataMonitoringNote
-  } = data?.modelPlan?.opsEvalAndLearning || ({} as IDDOCMonitoringFormType);
+  } = (data?.modelPlan?.opsEvalAndLearning || {}) as IDDOCMonitoringFormType;
 
   const modelName = data?.modelPlan?.modelName || '';
 
-  const [update] = useMutation<UpdatePlanOpsEvalAndLearningVariables>(
-    UpdatePlanOpsEvalAndLearning
-  );
+  const [update] = useUpdatePlanOpsEvalAndLearningMutation();
 
   const handleFormSubmit = (redirect?: 'next' | 'back' | 'task-list') => {
     update({
@@ -367,7 +360,6 @@ const IDDOCMonitoring = () => {
 
                     <Field
                       as={TextInput}
-                      error={!!flatErrors.fileNamingConventions}
                       id="ops-eval-and-learning-file-naming-convention"
                       data-testid="ops-eval-and-learning-file-naming-convention"
                       maxLength={50}
@@ -401,7 +393,7 @@ const IDDOCMonitoring = () => {
                     className="usa-button usa-button--unstyled"
                     onClick={() => handleFormSubmit('task-list')}
                   >
-                    <IconArrowBack className="margin-right-1" aria-hidden />
+                    <Icon.ArrowBack className="margin-right-1" aria-hidden />
 
                     {miscellaneousT('saveAndReturn')}
                   </Button>

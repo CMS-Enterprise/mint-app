@@ -1,22 +1,29 @@
 import React, { Fragment, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useHistory, useParams } from 'react-router-dom';
-import { useMutation, useQuery } from '@apollo/client';
 import {
   Breadcrumb,
   BreadcrumbBar,
   BreadcrumbLink,
   Button,
   Fieldset,
-  IconArrowBack,
+  Icon,
   Label,
-  Radio
+  TextInput
 } from '@trussworks/react-uswds';
-import { Field, FieldArray, Form, Formik, FormikProps } from 'formik';
+import { Field, Form, Formik, FormikProps } from 'formik';
+import {
+  GetCommunicationQuery,
+  ParticipantCommunicationType,
+  ParticipantRiskType,
+  useGetCommunicationQuery,
+  useUpdatePlanParticipantsAndProvidersMutation
+} from 'gql/gen/graphql';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
 import BooleanRadio from 'components/BooleanRadioForm';
+import FrequencyForm from 'components/FrequencyForm';
 import ITSolutionsWarning from 'components/ITSolutionsWarning';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
@@ -25,25 +32,14 @@ import CheckboxField from 'components/shared/CheckboxField';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
-import TextAreaField from 'components/shared/TextAreaField';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import useScrollElement from 'hooks/useScrollElement';
-import GetCommunication from 'queries/ParticipantsAndProviders/GetCommunication';
-import {
-  GetCommunication as GetCommunicationType,
-  GetCommunication_modelPlan_participantsAndProviders as CommunicationFormType,
-  GetCommunicationVariables
-} from 'queries/ParticipantsAndProviders/types/GetCommunication';
-import { UpdatePlanParticipantsAndProvidersVariables } from 'queries/ParticipantsAndProviders/types/UpdatePlanParticipantsAndProviders';
-import UpdatePlanParticipantsAndProviders from 'queries/ParticipantsAndProviders/UpdatePlanParticipantsAndProviders';
-import {
-  ParticipantCommunicationType,
-  ParticipantRiskType
-} from 'types/graphql-global-types';
 import { getKeys } from 'types/translation';
 import flattenErrors from 'utils/flattenErrors';
 import { dirtyInput } from 'utils/formDiff';
 import { NotFoundPartial } from 'views/NotFound';
+
+type CommunicationFormType = GetCommunicationQuery['modelPlan']['participantsAndProviders'];
 
 export const Communication = () => {
   const { t: participantsAndProvidersT } = useTranslation(
@@ -55,8 +51,9 @@ export const Communication = () => {
   const { t: miscellaneousT } = useTranslation('miscellaneous');
 
   const {
+    participantAddedFrequency: participantAddedFrequencyConfig,
+    participantRemovedFrequency: participantRemovedFrequencyConfig,
     communicationMethod: communicationMethodConfig,
-    participantAssumeRisk: participantAssumeRiskConfig,
     riskType: riskTypeConfig,
     willRiskChange: willRiskChangeConfig
   } = usePlanTranslation('participantsAndProviders');
@@ -66,10 +63,7 @@ export const Communication = () => {
   const formikRef = useRef<FormikProps<CommunicationFormType>>(null);
   const history = useHistory();
 
-  const { data, loading, error } = useQuery<
-    GetCommunicationType,
-    GetCommunicationVariables
-  >(GetCommunication, {
+  const { data, loading, error } = useGetCommunicationQuery({
     variables: {
       id: modelID
     }
@@ -77,17 +71,24 @@ export const Communication = () => {
 
   const {
     id,
+    participantAddedFrequency,
+    participantAddedFrequencyContinually,
+    participantAddedFrequencyOther,
+    participantAddedFrequencyNote,
+    participantRemovedFrequency,
+    participantRemovedFrequencyContinually,
+    participantRemovedFrequencyOther,
+    participantRemovedFrequencyNote,
     communicationMethod,
     communicationMethodOther,
     communicationNote,
-    participantAssumeRisk,
     riskType,
     riskOther,
     riskNote,
     willRiskChange,
     willRiskChangeNote
-  } =
-    data?.modelPlan?.participantsAndProviders || ({} as CommunicationFormType);
+  } = (data?.modelPlan?.participantsAndProviders ||
+    {}) as CommunicationFormType;
 
   const modelName = data?.modelPlan?.modelName || '';
 
@@ -98,9 +99,7 @@ export const Communication = () => {
   // If redirected from IT Solutions, scrolls to the relevant question
   useScrollElement(!loading);
 
-  const [update] = useMutation<UpdatePlanParticipantsAndProvidersVariables>(
-    UpdatePlanParticipantsAndProviders
-  );
+  const [update] = useUpdatePlanParticipantsAndProvidersMutation();
 
   const handleFormSubmit = (
     redirect?: 'next' | 'back' | 'task-list' | string
@@ -139,10 +138,19 @@ export const Communication = () => {
   const initialValues: CommunicationFormType = {
     __typename: 'PlanParticipantsAndProviders',
     id: id ?? '',
+    participantAddedFrequency: participantAddedFrequency ?? [],
+    participantAddedFrequencyContinually:
+      participantAddedFrequencyContinually ?? '',
+    participantAddedFrequencyOther: participantAddedFrequencyOther ?? '',
+    participantAddedFrequencyNote: participantAddedFrequencyNote ?? '',
+    participantRemovedFrequency: participantRemovedFrequency ?? [],
+    participantRemovedFrequencyContinually:
+      participantRemovedFrequencyContinually ?? '',
+    participantRemovedFrequencyOther: participantRemovedFrequencyOther ?? '',
+    participantRemovedFrequencyNote: participantRemovedFrequencyNote ?? '',
     communicationMethod: communicationMethod ?? [],
     communicationMethodOther: communicationMethodOther ?? '',
     communicationNote: communicationNote ?? '',
-    participantAssumeRisk: participantAssumeRisk ?? null,
     riskType: riskType ?? null,
     riskOther: riskOther ?? '',
     riskNote: riskNote ?? '',
@@ -234,183 +242,144 @@ export const Communication = () => {
                 }}
               >
                 <Fieldset disabled={!!error || loading}>
+                  <FrequencyForm
+                    field="participantAddedFrequency"
+                    values={values.participantAddedFrequency}
+                    config={participantAddedFrequencyConfig}
+                    nameSpace="participantsAndProviders"
+                    id="participant-added-frequency"
+                    label={participantsAndProvidersT(
+                      'participantAddedFrequency.label'
+                    )}
+                    disabled={loading}
+                  />
+
+                  <FrequencyForm
+                    field="participantRemovedFrequency"
+                    values={values.participantRemovedFrequency}
+                    config={participantRemovedFrequencyConfig}
+                    nameSpace="participantsAndProviders"
+                    id="participant-removed-frequency"
+                    label={participantsAndProvidersT(
+                      'participantRemovedFrequency.label'
+                    )}
+                    disabled={loading}
+                  />
+
                   <FieldGroup
-                    scrollElement="communicationMethod"
+                    scrollElement="participants-and-providers-communication-method"
                     error={!!flatErrors.communicationMethod}
                   >
-                    <FieldArray
-                      name="communicationMethod"
-                      render={arrayHelpers => (
-                        <>
-                          <legend className="usa-label">
-                            {participantsAndProvidersT(
-                              'communicationMethod.label'
-                            )}
-                          </legend>
+                    <Label htmlFor="participants-and-providers-communication-method">
+                      {participantsAndProvidersT('communicationMethod.label')}
+                    </Label>
 
-                          {itSolutionsStarted && (
-                            <ITSolutionsWarning
-                              id="participants-and-providers-communication-method-warning"
-                              onClick={() =>
-                                handleFormSubmit(
-                                  `/models/${modelID}/task-list/it-solutions`
-                                )
-                              }
-                            />
-                          )}
+                    {itSolutionsStarted && (
+                      <ITSolutionsWarning
+                        id="participants-and-providers-communication-method-warning"
+                        onClick={() =>
+                          handleFormSubmit(
+                            `/models/${modelID}/task-list/it-solutions`
+                          )
+                        }
+                      />
+                    )}
 
-                          <FieldErrorMsg>
-                            {flatErrors.communicationMethod}
-                          </FieldErrorMsg>
+                    <FieldErrorMsg>
+                      {flatErrors.communicationMethod}
+                    </FieldErrorMsg>
 
-                          {getKeys(communicationMethodConfig.options).map(
-                            type => {
-                              return (
-                                <Fragment key={type}>
-                                  <Field
-                                    as={CheckboxField}
-                                    id={`participants-and-providers-communication-method-${type}`}
-                                    name="communicationMethod"
-                                    label={
-                                      communicationMethodConfig.options[type]
-                                    }
-                                    value={type}
-                                    checked={values?.communicationMethod.includes(
-                                      type
-                                    )}
-                                    onChange={(
-                                      e: React.ChangeEvent<HTMLInputElement>
-                                    ) => {
-                                      if (e.target.checked) {
-                                        arrayHelpers.push(e.target.value);
-                                      } else {
-                                        const idx = values.communicationMethod.indexOf(
-                                          e.target
-                                            .value as ParticipantCommunicationType
-                                        );
-                                        arrayHelpers.remove(idx);
-                                      }
-                                    }}
-                                  />
-
-                                  {type ===
-                                    ParticipantCommunicationType.OTHER &&
-                                    values.communicationMethod.includes(
-                                      ParticipantCommunicationType.OTHER
-                                    ) && (
-                                      <div className="margin-left-4">
-                                        <Label
-                                          htmlFor="participants-and-providers-communication-method-other"
-                                          className="text-normal"
-                                        >
-                                          {participantsAndProvidersT(
-                                            'communicationMethodOther.label'
-                                          )}
-                                        </Label>
-
-                                        <FieldErrorMsg>
-                                          {flatErrors.communicationMethodOther}
-                                        </FieldErrorMsg>
-
-                                        <Field
-                                          as={TextAreaField}
-                                          className="maxw-none mint-textarea"
-                                          id="participants-and-providers-communication-method-other"
-                                          maxLength={5000}
-                                          name="communicationMethodOther"
-                                        />
-                                      </div>
-                                    )}
-                                </Fragment>
-                              );
-                            }
-                          )}
-                          <AddNote
-                            id="participants-and-providers-communication-method-note"
-                            field="communicationNote"
+                    {getKeys(communicationMethodConfig.options).map(type => {
+                      return (
+                        <Fragment key={type}>
+                          <Field
+                            as={CheckboxField}
+                            id={`participants-and-providers-communication-method-${type}`}
+                            name="communicationMethod"
+                            label={communicationMethodConfig.options[type]}
+                            value={type}
+                            checked={values?.communicationMethod.includes(type)}
                           />
-                        </>
-                      )}
+
+                          {type === ParticipantCommunicationType.OTHER &&
+                            values.communicationMethod.includes(
+                              ParticipantCommunicationType.OTHER
+                            ) && (
+                              <div className="margin-left-4">
+                                <Label
+                                  htmlFor="participants-and-providers-communication-method-other"
+                                  className="text-normal"
+                                >
+                                  {participantsAndProvidersT(
+                                    'communicationMethodOther.label'
+                                  )}
+                                </Label>
+
+                                <FieldErrorMsg>
+                                  {flatErrors.communicationMethodOther}
+                                </FieldErrorMsg>
+
+                                <Field
+                                  as={TextInput}
+                                  id="participants-and-providers-communication-method-other"
+                                  name="communicationMethodOther"
+                                />
+                              </div>
+                            )}
+                        </Fragment>
+                      );
+                    })}
+                    <AddNote
+                      id="participants-and-providers-communication-method-note"
+                      field="communicationNote"
                     />
                   </FieldGroup>
 
                   <FieldGroup
-                    scrollElement="participantAssumeRisk"
-                    error={!!flatErrors.participantAssumeRisk}
+                    scrollElement="participants-and-providers-risk-type"
+                    error={!!flatErrors.riskType}
                     className="margin-y-4 margin-bottom-8"
                   >
-                    <Label htmlFor="participants-and-providers-risk">
-                      {participantsAndProvidersT('participantAssumeRisk.label')}
+                    <Label htmlFor="participants-and-providers-risk-type">
+                      {participantsAndProvidersT('riskType.label')}
                     </Label>
 
-                    <FieldErrorMsg>
-                      {flatErrors.participantAssumeRisk}
-                    </FieldErrorMsg>
+                    <FieldErrorMsg>{flatErrors.riskType}</FieldErrorMsg>
 
-                    <BooleanRadio
-                      field="participantAssumeRisk"
-                      id="participants-and-providers-risk"
-                      value={values.participantAssumeRisk}
-                      setFieldValue={setFieldValue}
-                      options={participantAssumeRiskConfig.options}
-                    />
+                    <Fieldset>
+                      {getKeys(riskTypeConfig.options).map(key => (
+                        <Fragment key={key}>
+                          <Field
+                            as={CheckboxField}
+                            id={`participants-and-providers-risk-type-${key}`}
+                            name="riskType"
+                            label={riskTypeConfig.options[key]}
+                            value={key}
+                            checked={values.riskType?.includes(key)}
+                          />
+                        </Fragment>
+                      ))}
+                      {values.riskType?.includes(ParticipantRiskType.OTHER) && (
+                        <div className="margin-left-4">
+                          <Label
+                            htmlFor="participants-and-providers-risk-type-other"
+                            className="text-normal"
+                          >
+                            {participantsAndProvidersT('riskOther.label')}
+                          </Label>
 
-                    {values.participantAssumeRisk && (
-                      <>
-                        <Label
-                          htmlFor="participants-and-providers-risk-type"
-                          className="text-normal"
-                        >
-                          {participantsAndProvidersT('riskType.label')}
-                        </Label>
+                          <FieldErrorMsg>{flatErrors.riskOther}</FieldErrorMsg>
 
-                        <FieldErrorMsg>{flatErrors.riskType}</FieldErrorMsg>
-
-                        <Fieldset>
-                          {getKeys(riskTypeConfig.options).map(key => (
-                            <Fragment key={key}>
-                              <Field
-                                as={Radio}
-                                id={`participants-and-providers-risk-type-${key}`}
-                                name="riskType"
-                                label={riskTypeConfig.options[key]}
-                                value={key}
-                                checked={values.riskType === key}
-                                onChange={() => {
-                                  setFieldValue('riskType', key);
-                                }}
-                              />
-                              {key === ParticipantRiskType.OTHER &&
-                                values.riskType === key && (
-                                  <div className="margin-left-4 margin-top-2">
-                                    <Label
-                                      htmlFor="participants-and-providers-risk-type-other"
-                                      className="text-normal"
-                                    >
-                                      {participantsAndProvidersT(
-                                        'riskOther.label'
-                                      )}
-                                    </Label>
-
-                                    <FieldErrorMsg>
-                                      {flatErrors.riskOther}
-                                    </FieldErrorMsg>
-
-                                    <Field
-                                      as={TextAreaField}
-                                      className="maxw-none mint-textarea"
-                                      id="participants-and-providers-risk-type-other"
-                                      data-testid="participants-and-providers-risk-type-other"
-                                      maxLength={5000}
-                                      name="riskOther"
-                                    />
-                                  </div>
-                                )}
-                            </Fragment>
-                          ))}
-                        </Fieldset>
-                      </>
-                    )}
+                          <Field
+                            as={TextInput}
+                            className="maxw-none mint-textarea"
+                            id="participants-and-providers-risk-type-other"
+                            data-testid="participants-and-providers-risk-type-other"
+                            name="riskOther"
+                          />
+                        </div>
+                      )}
+                    </Fieldset>
                     <AddNote
                       id="participants-and-providers-risk-note"
                       field="riskNote"
@@ -418,7 +387,7 @@ export const Communication = () => {
                   </FieldGroup>
 
                   <FieldGroup
-                    scrollElement="willRiskChange"
+                    scrollElement="participants-and-providers-risk-change"
                     error={!!flatErrors.willRiskChange}
                     className="margin-y-4 margin-bottom-8"
                   >
@@ -463,7 +432,7 @@ export const Communication = () => {
                     className="usa-button usa-button--unstyled"
                     onClick={() => handleFormSubmit('task-list')}
                   >
-                    <IconArrowBack className="margin-right-1" aria-hidden />
+                    <Icon.ArrowBack className="margin-right-1" aria-hidden />
 
                     {miscellaneousT('saveAndReturn')}
                   </Button>
@@ -484,7 +453,7 @@ export const Communication = () => {
         }}
       </Formik>
 
-      <PageNumber currentPage={4} totalPages={5} className="margin-y-6" />
+      <PageNumber currentPage={3} totalPages={5} className="margin-y-6" />
     </>
   );
 };

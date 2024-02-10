@@ -18,7 +18,6 @@ type PlanCollaborator struct {
 // NewPlanCollaborator returns a plan collaborator object
 func NewPlanCollaborator(createdBy uuid.UUID, modelPlanID uuid.UUID, userID uuid.UUID, teamRoles []TeamRole) *PlanCollaborator {
 	return &PlanCollaborator{
-		// UserID:              userID,
 		userIDRelation:    NewUserIDRelation(userID),
 		TeamRoles:         ConvertEnumsToStringArray(teamRoles),
 		modelPlanRelation: NewModelPlanRelation(modelPlanID),
@@ -31,13 +30,15 @@ type TeamRole string
 
 // These constants represent the different values of TeamRole
 const (
-	TeamRoleModelLead  TeamRole = "MODEL_LEAD"
-	TeamRoleModelTeam  TeamRole = "MODEL_TEAM"
-	TeamRoleLeadership TeamRole = "LEADERSHIP"
-	TeamRoleLearning   TeamRole = "LEARNING"
-	TeamRoleEvaluation TeamRole = "EVALUATION"
-	TeamRoleITLead     TeamRole = "IT_LEAD"
-	TeamRoleQuality    TeamRole = "QUALITY"
-	TeamRoleOACT       TeamRole = "OACT"
-	TeamRolePayment    TeamRole = "PAYMENT"
+	TeamRoleModelLead        TeamRole = "MODEL_LEAD"
+	TeamRoleModelTeam        TeamRole = "MODEL_TEAM"
+	TeamRoleLeadership       TeamRole = "LEADERSHIP"
+	TeamRoleLearning         TeamRole = "LEARNING"
+	TeamRoleEvaluation       TeamRole = "EVALUATION"
+	TeamRoleITLead           TeamRole = "IT_LEAD"
+	TeamRoleQuality          TeamRole = "QUALITY"
+	TeamRoleOACT             TeamRole = "OACT"
+	TeamRolePayment          TeamRole = "PAYMENT"
+	TeamRoleCMFFSCounterpart TeamRole = "CM_FFS_COUNTERPART"
+	TeamRoleCOR              TeamRole = "COR"
 )

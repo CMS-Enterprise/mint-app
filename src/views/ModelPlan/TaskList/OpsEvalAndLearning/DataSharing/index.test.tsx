@@ -2,12 +2,17 @@ import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
-
-import GetDataSharing from 'queries/OpsEvalAndLearning/GetDataSharing';
-import { GetDataSharing_modelPlan_opsEvalAndLearning as GetDataSharingType } from 'queries/OpsEvalAndLearning/types/GetDataSharing';
-import { CcmInvolvmentType, DataStartsType } from 'types/graphql-global-types';
+import {
+  CcmInvolvmentType,
+  DataStartsType,
+  FrequencyType,
+  GetDataSharingDocument,
+  GetDataSharingQuery
+} from 'gql/gen/graphql';
 
 import DataSharing from '.';
+
+type GetDataSharingType = GetDataSharingQuery['modelPlan']['opsEvalAndLearning'];
 
 const dataSharingMockData: GetDataSharingType = {
   __typename: 'PlanOpsEvalAndLearning',
@@ -18,22 +23,27 @@ const dataSharingMockData: GetDataSharingType = {
   dataSharingStarts: null,
   dataSharingStartsOther: '',
   dataSharingFrequency: [],
+  dataSharingFrequencyContinually: '',
   dataSharingFrequencyOther: '',
   dataSharingStartsNote: '',
   dataCollectionStarts: null,
   dataCollectionStartsOther: '',
   dataCollectionFrequency: [],
+  dataCollectionFrequencyContinually: '',
   dataCollectionFrequencyOther: '',
   dataCollectionFrequencyNote: '',
   qualityReportingStarts: DataStartsType.OTHER,
   qualityReportingStartsOther: 'Other Value',
-  qualityReportingStartsNote: ''
+  qualityReportingStartsNote: '',
+  qualityReportingFrequency: [FrequencyType.CONTINUALLY],
+  qualityReportingFrequencyContinually: 'continual frequency',
+  qualityReportingFrequencyOther: ''
 };
 
 const dataSharingMock = [
   {
     request: {
-      query: GetDataSharing,
+      query: GetDataSharingDocument,
       variables: { id: 'ce3405a0-3399-4e3a-88d7-3cfc613d2905' }
     },
     result: {

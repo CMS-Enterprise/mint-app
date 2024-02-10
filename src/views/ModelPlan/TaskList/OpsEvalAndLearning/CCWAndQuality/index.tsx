@@ -1,17 +1,24 @@
 import React, { Fragment, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useHistory, useParams } from 'react-router-dom';
-import { useMutation, useQuery } from '@apollo/client';
 import {
   Breadcrumb,
   BreadcrumbBar,
   BreadcrumbLink,
   Button,
   Fieldset,
-  IconArrowBack,
-  Label
+  Icon,
+  Label,
+  Radio,
+  TextInput
 } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
+import {
+  GetCcwAndQualityQuery,
+  useGetCcwAndQualityQuery,
+  useUpdatePlanOpsEvalAndLearningMutation,
+  YesNoOtherType
+} from 'gql/gen/graphql';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
@@ -26,14 +33,6 @@ import FieldGroup from 'components/shared/FieldGroup';
 import TextAreaField from 'components/shared/TextAreaField';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import useScrollElement from 'hooks/useScrollElement';
-import GetCCWAndQuality from 'queries/OpsEvalAndLearning/GetCCWAndQuality';
-import {
-  GetCCWAndQuality as GetCCWAndQualityType,
-  GetCCWAndQuality_modelPlan_opsEvalAndLearning as GetCCWAndQualityFormType,
-  GetCCWAndQualityVariables
-} from 'queries/OpsEvalAndLearning/types/GetCCWAndQuality';
-import { UpdatePlanOpsEvalAndLearningVariables } from 'queries/OpsEvalAndLearning/types/UpdatePlanOpsEvalAndLearning';
-import UpdatePlanOpsEvalAndLearning from 'queries/OpsEvalAndLearning/UpdatePlanOpsEvalAndLearning';
 import { getKeys } from 'types/translation';
 import flattenErrors from 'utils/flattenErrors';
 import { dirtyInput } from 'utils/formDiff';
@@ -45,6 +44,8 @@ import {
   renderCurrentPage,
   renderTotalPages
 } from '..';
+
+type GetCCWAndQualityFormType = GetCcwAndQualityQuery['modelPlan']['opsEvalAndLearning'];
 
 const CCWAndQuality = () => {
   const { t: opsEvalAndLearningT } = useTranslation('opsEvalAndLearning');
@@ -67,10 +68,7 @@ const CCWAndQuality = () => {
   const formikRef = useRef<FormikProps<GetCCWAndQualityFormType>>(null);
   const history = useHistory();
 
-  const { data, loading, error } = useQuery<
-    GetCCWAndQualityType,
-    GetCCWAndQualityVariables
-  >(GetCCWAndQuality, {
+  const { data, loading, error } = useGetCcwAndQualityQuery({
     variables: {
       id: modelID
     }
@@ -91,8 +89,9 @@ const CCWAndQuality = () => {
     developNewQualityMeasures,
     developNewQualityMeasuresNote,
     qualityPerformanceImpactsPayment,
+    qualityPerformanceImpactsPaymentOther,
     qualityPerformanceImpactsPaymentNote
-  } = data?.modelPlan?.opsEvalAndLearning || ({} as GetCCWAndQualityFormType);
+  } = (data?.modelPlan?.opsEvalAndLearning || {}) as GetCCWAndQualityFormType;
 
   const modelName = data?.modelPlan?.modelName || '';
 
@@ -103,9 +102,7 @@ const CCWAndQuality = () => {
   // If redirected from IT Solutions, scrolls to the relevant question
   useScrollElement(!loading);
 
-  const [update] = useMutation<UpdatePlanOpsEvalAndLearningVariables>(
-    UpdatePlanOpsEvalAndLearning
-  );
+  const [update] = useUpdatePlanOpsEvalAndLearningMutation();
 
   const handleFormSubmit = (redirect?: string) => {
     update({
@@ -157,6 +154,8 @@ const CCWAndQuality = () => {
     developNewQualityMeasures: developNewQualityMeasures ?? null,
     developNewQualityMeasuresNote: developNewQualityMeasuresNote ?? '',
     qualityPerformanceImpactsPayment: qualityPerformanceImpactsPayment ?? null,
+    qualityPerformanceImpactsPaymentOther:
+      qualityPerformanceImpactsPaymentOther ?? '',
     qualityPerformanceImpactsPaymentNote:
       qualityPerformanceImpactsPaymentNote ?? ''
   };
@@ -435,15 +434,52 @@ const CCWAndQuality = () => {
                           {flatErrors.qualityPerformanceImpactsPayment}
                         </FieldErrorMsg>
 
-                        <BooleanRadio
-                          field="qualityPerformanceImpactsPayment"
-                          id="ops-eval-and-learning-performance-impact"
-                          value={values.qualityPerformanceImpactsPayment}
-                          setFieldValue={setFieldValue}
-                          options={
+                        <Fieldset>
+                          {getKeys(
                             qualityPerformanceImpactsPaymentConfig.options
-                          }
-                        />
+                          ).map(key => (
+                            <Fragment key={key}>
+                              <Field
+                                as={Radio}
+                                id={`ops-eval-and-learning-performance-impact-${key}`}
+                                data-testid={`ops-eval-and-learning-performance-impact-${key}`}
+                                name="qualityPerformanceImpactsPayment"
+                                label={
+                                  qualityPerformanceImpactsPaymentConfig
+                                    .options[key]
+                                }
+                                value={key}
+                                checked={
+                                  values.qualityPerformanceImpactsPayment ===
+                                  key
+                                }
+                                onChange={() => {
+                                  setFieldValue(
+                                    'qualityPerformanceImpactsPayment',
+                                    key
+                                  );
+                                }}
+                              />
+
+                              {key === YesNoOtherType.OTHER &&
+                                values.qualityPerformanceImpactsPayment ===
+                                  YesNoOtherType.OTHER && (
+                                  <div className="margin-left-4 margin-top-1">
+                                    <Field
+                                      as={TextInput}
+                                      id="ops-eval-and-learning-performance-impact-other"
+                                      data-testid="ops-eval-and-learning-performance-impact-other"
+                                      disabled={
+                                        values.qualityPerformanceImpactsPayment !==
+                                        YesNoOtherType.OTHER
+                                      }
+                                      name="qualityPerformanceImpactsPaymentOther"
+                                    />
+                                  </div>
+                                )}
+                            </Fragment>
+                          ))}
+                        </Fieldset>
 
                         <AddNote
                           id="ops-eval-and-learning-performance-impact-note"
@@ -474,7 +510,7 @@ const CCWAndQuality = () => {
                     className="usa-button usa-button--unstyled"
                     onClick={() => handleFormSubmit('task-list')}
                   >
-                    <IconArrowBack className="margin-right-1" aria-hidden />
+                    <Icon.ArrowBack className="margin-right-1" aria-hidden />
 
                     {miscellaneousT('saveAndReturn')}
                   </Button>

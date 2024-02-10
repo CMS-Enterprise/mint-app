@@ -2,10 +2,11 @@ import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
-
-import GetOpsEvalAndLearning from 'queries/OpsEvalAndLearning/GetOpsEvalAndLearning';
-import { GetOpsEvalAndLearning_modelPlan_opsEvalAndLearning as GetOpsEvalAndLearningType } from 'queries/OpsEvalAndLearning/types/GetOpsEvalAndLearning';
-import { CcmInvolvmentType } from 'types/graphql-global-types';
+import {
+  CcmInvolvmentType,
+  GetOpsEvalAndLearningDocument,
+  GetOpsEvalAndLearningQuery
+} from 'gql/gen/graphql';
 
 import {
   isCCWInvolvement,
@@ -14,14 +15,13 @@ import {
   renderTotalPages
 } from './index';
 
+type GetOpsEvalAndLearningType = GetOpsEvalAndLearningQuery['modelPlan']['opsEvalAndLearning'];
+
 const opsEvalAndLearningMockData: GetOpsEvalAndLearningType = {
   __typename: 'PlanOpsEvalAndLearning',
   id: '123',
   ccmInvolvment: [],
   dataNeededForMonitoring: [],
-  agencyOrStateHelp: [],
-  agencyOrStateHelpOther: '',
-  agencyOrStateHelpNote: '',
   stakeholders: [],
   stakeholdersOther: '',
   stakeholdersNote: '',
@@ -38,7 +38,7 @@ const opsEvalAndLearningMockData: GetOpsEvalAndLearningType = {
 const opsEvalAndLearningMock = [
   {
     request: {
-      query: GetOpsEvalAndLearning,
+      query: GetOpsEvalAndLearningDocument,
       variables: { id: 'ce3405a0-3399-4e3a-88d7-3cfc613d2905' }
     },
     result: {

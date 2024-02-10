@@ -48,7 +48,10 @@ export default gql`
           id
         }
       }
-      crTdls @include(if: $isMAC) {
+      crs @include(if: $isMAC) {
+        idNumber
+      }
+      tdls @include(if: $isMAC) {
         idNumber
       }
     }

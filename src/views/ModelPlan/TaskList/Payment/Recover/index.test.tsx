@@ -2,16 +2,18 @@ import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
-
-import GetRecover from 'queries/Payments/GetRecover';
-import { GetRecover_modelPlan_payments as GetRecoverType } from 'queries/Payments/types/GetRecover';
 import {
   ClaimsBasedPayType,
+  FrequencyType,
+  GetRecoverDocument,
+  GetRecoverQuery,
   PayType,
   TaskStatus
-} from 'types/graphql-global-types';
+} from 'gql/gen/graphql';
 
 import Recover from './index';
+
+type GetRecoverType = GetRecoverQuery['modelPlan']['payments'];
 
 const mockData: GetRecoverType = {
   __typename: 'PlanPayments',
@@ -22,6 +24,14 @@ const mockData: GetRecoverType = {
   willRecoverPaymentsNote: 'string',
   anticipateReconcilingPaymentsRetrospectively: true,
   anticipateReconcilingPaymentsRetrospectivelyNote: 'string',
+  paymentReconciliationFrequency: [FrequencyType.CONTINUALLY],
+  paymentReconciliationFrequencyContinually: 'Continual Frequency',
+  paymentReconciliationFrequencyOther: '',
+  paymentReconciliationFrequencyNote: 'Reconciliation note',
+  paymentDemandRecoupmentFrequency: [FrequencyType.CONTINUALLY],
+  paymentDemandRecoupmentFrequencyContinually: 'Continual Frequency',
+  paymentDemandRecoupmentFrequencyOther: '',
+  paymentDemandRecoupmentFrequencyNote: 'Demand and Recoupment note',
   paymentStartDate: null,
   paymentStartDateNote: 'string',
   readyForReviewByUserAccount: {
@@ -36,7 +46,7 @@ const mockData: GetRecoverType = {
 const paymentsMock = [
   {
     request: {
-      query: GetRecover,
+      query: GetRecoverDocument,
       variables: { id: 'ce3405a0-3399-4e3a-88d7-3cfc613d2905' }
     },
     result: {

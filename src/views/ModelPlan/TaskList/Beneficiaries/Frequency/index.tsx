@@ -1,7 +1,6 @@
 import React, { Fragment, useRef } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { Link, useHistory, useParams } from 'react-router-dom';
-import { useMutation, useQuery } from '@apollo/client';
 import {
   Breadcrumb,
   BreadcrumbBar,
@@ -10,67 +9,64 @@ import {
   Fieldset,
   Grid,
   GridContainer,
-  IconArrowBack,
+  Icon,
   Label,
   Radio
 } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
+import {
+  GetFrequencyQuery,
+  useGetFrequencyQuery,
+  useUpdateModelPlanBeneficiariesMutation
+} from 'gql/gen/graphql';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
+import FrequencyForm from 'components/FrequencyForm';
 import ITSolutionsWarning from 'components/ITSolutionsWarning';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import ReadyForReview from 'components/ReadyForReview';
 import AutoSave from 'components/shared/AutoSave';
+import CheckboxField from 'components/shared/CheckboxField';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import TextAreaField from 'components/shared/TextAreaField';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import useScrollElement from 'hooks/useScrollElement';
-import getFrequency from 'queries/Beneficiaries/getFrequency';
-import {
-  GetFrequency as BeneficiaryFrequencyType,
-  GetFrequency_modelPlan_beneficiaries as FrequencyFormType,
-  GetFrequencyVariables
-} from 'queries/Beneficiaries/types/GetFrequency';
-import { UpdateModelPlanBeneficiariesVariables } from 'queries/Beneficiaries/types/UpdateModelPlanBeneficiaries';
-import UpdateModelPlanBeneficiaries from 'queries/Beneficiaries/UpdateModelPlanBeneficiaries';
-import { FrequencyType } from 'types/graphql-global-types';
 import { getKeys } from 'types/translation';
 import flattenErrors from 'utils/flattenErrors';
 import { dirtyInput } from 'utils/formDiff';
 import sanitizeStatus from 'utils/status';
 import { NotFoundPartial } from 'views/NotFound';
 
+type FrequencyFormType = GetFrequencyQuery['modelPlan']['beneficiaries'];
+
+// Omitting readyForReviewBy and readyForReviewDts from initialValues and getting submitted through Formik
+type InitialValueType = Omit<
+  FrequencyFormType,
+  'readyForReviewByUserAccount' | 'readyForReviewDts'
+>;
+
 const Frequency = () => {
   const { t: beneficiariesT } = useTranslation('beneficiaries');
-
   const { t: beneficiariesMiscT } = useTranslation('beneficiariesMisc');
-
   const { t: miscellaneousT } = useTranslation('miscellaneous');
 
   const {
     beneficiarySelectionFrequency: beneficiarySelectionFrequencyConfig,
-    beneficiaryOverlap: beneficiaryOverlapConfig
+    beneficiaryRemovalFrequency: beneficiaryRemovalFrequencyConfig,
+    beneficiaryOverlap: beneficiaryOverlapConfig,
+    precedenceRules: beneficiaryPrecedenceConfig
   } = usePlanTranslation('beneficiaries');
 
   const { modelID } = useParams<{ modelID: string }>();
 
-  // Omitting readyForReviewBy and readyForReviewDts from initialValues and getting submitted through Formik
-  type InitialValueType = Omit<
-    FrequencyFormType,
-    'readyForReviewByUserAccount' | 'readyForReviewDts'
-  >;
-
   const formikRef = useRef<FormikProps<InitialValueType>>(null);
   const history = useHistory();
 
-  const { data, loading, error } = useQuery<
-    BeneficiaryFrequencyType,
-    GetFrequencyVariables
-  >(getFrequency, {
+  const { data, loading, error } = useGetFrequencyQuery({
     variables: {
       id: modelID
     },
@@ -80,15 +76,23 @@ const Frequency = () => {
   const {
     id,
     beneficiarySelectionFrequency,
+    beneficiarySelectionFrequencyContinually,
     beneficiarySelectionFrequencyNote,
     beneficiarySelectionFrequencyOther,
+    beneficiaryRemovalFrequency,
+    beneficiaryRemovalFrequencyContinually,
+    beneficiaryRemovalFrequencyNote,
+    beneficiaryRemovalFrequencyOther,
     beneficiaryOverlap,
     beneficiaryOverlapNote,
     precedenceRules,
+    precedenceRulesYes,
+    precedenceRulesNo,
+    precedenceRulesNote,
     readyForReviewByUserAccount,
     readyForReviewDts,
     status
-  } = data?.modelPlan?.beneficiaries || ({} as FrequencyFormType);
+  } = (data?.modelPlan?.beneficiaries || {}) as FrequencyFormType;
 
   const modelName = data?.modelPlan?.modelName || '';
 
@@ -98,9 +102,7 @@ const Frequency = () => {
 
   useScrollElement(!loading);
 
-  const [update] = useMutation<UpdateModelPlanBeneficiariesVariables>(
-    UpdateModelPlanBeneficiaries
-  );
+  const [update] = useUpdateModelPlanBeneficiariesMutation();
 
   const handleFormSubmit = (
     redirect?: 'back' | 'task-list' | 'next' | string
@@ -144,12 +146,22 @@ const Frequency = () => {
     __typename: 'PlanBeneficiaries',
     id: id ?? '',
     beneficiarySelectionFrequency: beneficiarySelectionFrequency ?? null,
+    beneficiarySelectionFrequencyContinually:
+      beneficiarySelectionFrequencyContinually ?? '',
     beneficiarySelectionFrequencyNote: beneficiarySelectionFrequencyNote ?? '',
     beneficiarySelectionFrequencyOther:
       beneficiarySelectionFrequencyOther ?? '',
+    beneficiaryRemovalFrequency: beneficiaryRemovalFrequency ?? null,
+    beneficiaryRemovalFrequencyContinually:
+      beneficiaryRemovalFrequencyContinually ?? '',
+    beneficiaryRemovalFrequencyNote: beneficiaryRemovalFrequencyNote ?? '',
+    beneficiaryRemovalFrequencyOther: beneficiaryRemovalFrequencyOther ?? '',
     beneficiaryOverlap: beneficiaryOverlap ?? null,
     beneficiaryOverlapNote: beneficiaryOverlapNote ?? '',
-    precedenceRules: precedenceRules ?? '',
+    precedenceRules: precedenceRules ?? [],
+    precedenceRulesYes: precedenceRulesYes ?? '',
+    precedenceRulesNo: precedenceRulesNo ?? '',
+    precedenceRulesNote: precedenceRulesNote ?? '',
     status
   };
 
@@ -238,83 +250,29 @@ const Frequency = () => {
                         handleSubmit(e);
                       }}
                     >
-                      <FieldGroup
-                        scrollElement="beneficiarySelectionFrequency"
-                        error={!!flatErrors.beneficiarySelectionFrequency}
-                      >
-                        <Label htmlFor="beneficiaries-beneficiarySelectionFrequency">
-                          {beneficiariesT(
-                            'beneficiarySelectionFrequency.label'
-                          )}
-                        </Label>
+                      <FrequencyForm
+                        field="beneficiarySelectionFrequency"
+                        values={values.beneficiarySelectionFrequency}
+                        config={beneficiarySelectionFrequencyConfig}
+                        nameSpace="beneficiaries"
+                        id="beneficiary-selection-frequency"
+                        label={beneficiariesT(
+                          'beneficiarySelectionFrequency.label'
+                        )}
+                        disabled={loading}
+                      />
 
-                        <FieldErrorMsg>
-                          {flatErrors.beneficiarySelectionFrequency}
-                        </FieldErrorMsg>
-
-                        <Fieldset>
-                          {getKeys(
-                            beneficiarySelectionFrequencyConfig.options
-                          ).map(key => (
-                            <Fragment key={key}>
-                              <Field
-                                as={Radio}
-                                id={`beneficiaries-beneficiarySelectionFrequency-${key}`}
-                                name="beneficiarySelectionFrequency"
-                                label={
-                                  beneficiarySelectionFrequencyConfig.options[
-                                    key
-                                  ]
-                                }
-                                value={key}
-                                checked={
-                                  values.beneficiarySelectionFrequency === key
-                                }
-                                onChange={() => {
-                                  setFieldValue(
-                                    'beneficiarySelectionFrequency',
-                                    key
-                                  );
-                                }}
-                              />
-
-                              {key === FrequencyType.OTHER &&
-                                values.beneficiarySelectionFrequency ===
-                                  key && (
-                                  <div className="margin-left-4 margin-top-1">
-                                    <Label
-                                      htmlFor="beneficiaries-beneficiary-selection-frequency-other"
-                                      className="text-normal"
-                                    >
-                                      {beneficiariesT(
-                                        'beneficiarySelectionFrequencyOther.label'
-                                      )}
-                                    </Label>
-
-                                    <FieldErrorMsg>
-                                      {
-                                        flatErrors.beneficiarySelectionFrequencyOther
-                                      }
-                                    </FieldErrorMsg>
-
-                                    <Field
-                                      as={TextAreaField}
-                                      className="maxw-none mint-textarea"
-                                      id="beneficiaries-beneficiary-selection-frequency-other"
-                                      maxLength={5000}
-                                      name="beneficiarySelectionFrequencyOther"
-                                    />
-                                  </div>
-                                )}
-                            </Fragment>
-                          ))}
-                        </Fieldset>
-
-                        <AddNote
-                          id="beneficiaries-beneficiarySelectionFrequency-note"
-                          field="beneficiarySelectionFrequencyNote"
-                        />
-                      </FieldGroup>
+                      <FrequencyForm
+                        field="beneficiaryRemovalFrequency"
+                        values={values.beneficiaryRemovalFrequency}
+                        config={beneficiaryRemovalFrequencyConfig}
+                        nameSpace="beneficiaries"
+                        id="beneficiary-removal-frequency"
+                        label={beneficiariesT(
+                          'beneficiaryRemovalFrequency.label'
+                        )}
+                        disabled={loading}
+                      />
 
                       <FieldGroup
                         scrollElement="beneficiaryOverlap"
@@ -369,14 +327,11 @@ const Frequency = () => {
                         scrollElement="precedenceRules"
                         error={!!flatErrors.precedenceRules}
                       >
-                        <Label
-                          htmlFor="beneficiaries-precedence-rules"
-                          className="maxw-none"
-                        >
+                        <Label htmlFor="precedenceRules">
                           {beneficiariesT('precedenceRules.label')}
                         </Label>
 
-                        <p className="text-base margin-0 line-height-body-3">
+                        <p className="text-base margin-top-1 margin-bottom-0 line-height-body-3">
                           {beneficiariesT('precedenceRules.sublabel')}
                         </p>
 
@@ -384,13 +339,42 @@ const Frequency = () => {
                           {flatErrors.precedenceRules}
                         </FieldErrorMsg>
 
-                        <Field
-                          as={TextAreaField}
-                          className="height-15"
-                          error={flatErrors.precedenceRules}
-                          id="beneficiaries-precedence-rules"
-                          data-testid="beneficiaries-precedence-rules"
-                          name="precedenceRules"
+                        {getKeys(beneficiaryPrecedenceConfig.options).map(
+                          key => (
+                            <Fragment key={key}>
+                              <Field
+                                as={CheckboxField}
+                                id={`beneficiaries-precedence-rules-${key}`}
+                                data-testid={`beneficiaries-precedence-rules-${key}`}
+                                name="precedenceRules"
+                                label={beneficiaryPrecedenceConfig.options[key]}
+                                value={key}
+                                checked={values.precedenceRules.includes(key)}
+                              />
+
+                              {values.precedenceRules?.includes(key) && (
+                                <div className="margin-left-4">
+                                  <span>
+                                    {beneficiariesT(
+                                      `precedenceRules${beneficiaryPrecedenceConfig.options[key]}.label`
+                                    )}
+                                  </span>
+                                  <Field
+                                    as={TextAreaField}
+                                    className="height-15"
+                                    id={`beneficiaries-precedence-rules-${key}-note`}
+                                    data-testid={`beneficiaries-precedence-rules-${key}-note`}
+                                    name={`precedenceRules${beneficiaryPrecedenceConfig.options[key]}`}
+                                  />
+                                </div>
+                              )}
+                            </Fragment>
+                          )
+                        )}
+
+                        <AddNote
+                          id="beneficiaries-precedence-note"
+                          field="precedenceRulesNote"
                         />
                       </FieldGroup>
 
@@ -429,7 +413,10 @@ const Frequency = () => {
                         className="usa-button usa-button--unstyled"
                         onClick={() => handleFormSubmit('task-list')}
                       >
-                        <IconArrowBack className="margin-right-1" aria-hidden />
+                        <Icon.ArrowBack
+                          className="margin-right-1"
+                          aria-hidden
+                        />
 
                         {miscellaneousT('saveAndReturn')}
                       </Button>

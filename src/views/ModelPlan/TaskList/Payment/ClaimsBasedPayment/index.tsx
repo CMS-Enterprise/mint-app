@@ -1,7 +1,6 @@
 import React, { useRef } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { Link, useHistory, useParams } from 'react-router-dom';
-import { useMutation, useQuery } from '@apollo/client';
 import {
   Breadcrumb,
   BreadcrumbBar,
@@ -10,10 +9,17 @@ import {
   Fieldset,
   Grid,
   GridContainer,
-  IconArrowBack,
+  Icon,
   Label
 } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
+import {
+  ClaimsBasedPayType,
+  GetClaimsBasedPaymentQuery,
+  PayType,
+  useGetClaimsBasedPaymentQuery,
+  useUpdatePaymentsMutation
+} from 'gql/gen/graphql';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
@@ -30,15 +36,6 @@ import TextAreaField from 'components/shared/TextAreaField';
 import TextField from 'components/shared/TextField';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import useScrollElement from 'hooks/useScrollElement';
-import GetClaimsBasedPayment from 'queries/Payments/GetClaimsBasedPayment';
-import {
-  GetClaimsBasedPayment as GetClaimsBasedPaymentType,
-  GetClaimsBasedPayment_modelPlan_payments as ClaimsBasedPaymentFormType,
-  GetClaimsBasedPaymentVariables
-} from 'queries/Payments/types/GetClaimsBasedPayment';
-import { UpdatePaymentsVariables } from 'queries/Payments/types/UpdatePayments';
-import UpdatePayments from 'queries/Payments/UpdatePayments';
-import { ClaimsBasedPayType, PayType } from 'types/graphql-global-types';
 import { getKeys } from 'types/translation';
 import flattenErrors from 'utils/flattenErrors';
 import { dirtyInput } from 'utils/formDiff';
@@ -46,6 +43,8 @@ import { composeMultiSelectOptions } from 'utils/modelPlan';
 import { NotFoundPartial } from 'views/NotFound';
 
 import { renderCurrentPage, renderTotalPages } from '..';
+
+type ClaimsBasedPaymentFormType = GetClaimsBasedPaymentQuery['modelPlan']['payments'];
 
 const ClaimsBasedPayment = () => {
   const { t: paymentsT } = useTranslation('payments');
@@ -66,10 +65,7 @@ const ClaimsBasedPayment = () => {
   const formikRef = useRef<FormikProps<ClaimsBasedPaymentFormType>>(null);
   const history = useHistory();
 
-  const { data, loading, error } = useQuery<
-    GetClaimsBasedPaymentType,
-    GetClaimsBasedPaymentVariables
-  >(GetClaimsBasedPayment, {
+  const { data, loading, error } = useGetClaimsBasedPaymentQuery({
     variables: {
       id: modelID
     }
@@ -92,7 +88,7 @@ const ClaimsBasedPayment = () => {
     affectsMedicareSecondaryPayerClaimsHow,
     affectsMedicareSecondaryPayerClaimsNote,
     payModelDifferentiation
-  } = data?.modelPlan?.payments || ({} as ClaimsBasedPaymentFormType);
+  } = (data?.modelPlan?.payments || {}) as ClaimsBasedPaymentFormType;
 
   const modelName = data?.modelPlan?.modelName || '';
 
@@ -100,7 +96,7 @@ const ClaimsBasedPayment = () => {
     need => need.modifiedDts
   );
 
-  const [update] = useMutation<UpdatePaymentsVariables>(UpdatePayments);
+  const [update] = useUpdatePaymentsMutation();
 
   const handleFormSubmit = (
     redirect?: 'next' | 'back' | 'task-list' | string
@@ -186,7 +182,7 @@ const ClaimsBasedPayment = () => {
         data-testid="model-plan-name"
       >
         <Trans i18nKey="modelPlanTaskList:subheading">
-          indexZero {modelName} indexTwo
+          indexZero {modelName || ' '} indexTwo
         </Trans>
       </p>
 
@@ -530,7 +526,7 @@ const ClaimsBasedPayment = () => {
                           className="usa-button usa-button--unstyled"
                           onClick={() => handleFormSubmit('task-list')}
                         >
-                          <IconArrowBack
+                          <Icon.ArrowBack
                             className="margin-right-1"
                             aria-hidden
                           />

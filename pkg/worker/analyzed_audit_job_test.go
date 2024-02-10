@@ -35,8 +35,8 @@ func (suite *WorkerSuite) TestAnalyzedAuditJob() {
 	// Add Documents
 	suite.createPlanDocument(plan)
 
-	// Add CrTdls
-	suite.createPlanCrTdl(plan, "123-456", time.Now().UTC(), "Title", "Note")
+	// Add a CR
+	suite.createPlanCR(plan, "123-456", time.Now().UTC(), time.Now().Add(time.Hour*48).UTC(), "Title", "Note")
 
 	// Add collaborator. Only model leads should be added
 	modelLead := suite.createPlanCollaborator(
@@ -46,7 +46,7 @@ func (suite *WorkerSuite) TestAnalyzedAuditJob() {
 		[]models.TeamRole{models.TeamRoleModelLead},
 		"test@email.com",
 	)
-	modelLeadAccount, err := suite.testConfigs.Store.UserAccountGetByID(modelLead.UserID)
+	modelLeadAccount, err := suite.testConfigs.Store.UserAccountGetByID(suite.testConfigs.Store, modelLead.UserID)
 
 	suite.NoError(err)
 	collaborator := suite.createPlanCollaborator(
@@ -56,7 +56,7 @@ func (suite *WorkerSuite) TestAnalyzedAuditJob() {
 		[]models.TeamRole{models.TeamRoleModelTeam},
 		"test@email.com",
 	)
-	collaboratorAccount, err := suite.testConfigs.Store.UserAccountGetByID(collaborator.UserID)
+	collaboratorAccount, err := suite.testConfigs.Store.UserAccountGetByID(suite.testConfigs.Store, collaborator.UserID)
 
 	suite.NoError(err)
 
@@ -162,7 +162,7 @@ func (suite *WorkerSuite) TestAnalyzedAuditJob() {
 	// Dont create if there are no changes
 	mp := models.NewModelPlan(suite.testConfigs.Principal.UserAccount.ID, "NO CHANGES")
 
-	noChangeMp, err := suite.testConfigs.Store.ModelPlanCreate(suite.testConfigs.Logger, mp)
+	noChangeMp, err := suite.testConfigs.Store.ModelPlanCreate(suite.testConfigs.Store, suite.testConfigs.Logger, mp)
 	suite.NoError(err)
 	suite.NotNil(noChangeMp)
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Grid, IconEdit } from '@trussworks/react-uswds';
+import { Grid, Icon } from '@trussworks/react-uswds';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import Tag from 'components/shared/Tag';
@@ -60,7 +60,7 @@ const TaskListStatus = ({
                 to={`/models/${modelID}/status`}
                 className="display-flex flex-align-center"
               >
-                {icon && <IconEdit className="margin-right-1" />}
+                {icon && <Icon.Edit className="margin-right-1" />}
                 {updateLabel && t('update')}
               </UswdsReactLink>
             </div>
@@ -77,7 +77,7 @@ const TaskListStatus = ({
                     to={`/models/${modelID}/task-list`}
                     className="display-flex flex-align-center"
                   >
-                    <IconEdit className="margin-right-1" />
+                    <Icon.Edit className="margin-right-1" />
                     {t('edit')}
                   </UswdsReactLink>
                 </div>

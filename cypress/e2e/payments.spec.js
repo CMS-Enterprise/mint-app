@@ -15,44 +15,46 @@ describe('The Model Plan Payment Form', () => {
       expect(loc.pathname).to.match(/\/models\/.{36}\/task-list\/payment/);
     });
 
-    cy.get('#payment-funding-source-PATIENT_PROTECTION_AFFORDABLE_CARE_ACT')
+    cy.get(
+      '#payment-funding-source-fundingSource-PATIENT_PROTECTION_AFFORDABLE_CARE_ACT'
+    )
       .should('not.be.disabled')
       .check({ force: true })
       .should('be.checked');
 
-    cy.get('#payment-funding-source-TRUST_FUND')
-      .check({ force: true })
-      .should('be.checked');
-
     cy.get(
-      '#payment-funding-source-fundingSourceTrustFundType-MEDICARE_PART_A_HI_TRUST_FUND'
+      '#payment-funding-source-fundingSource-MEDICARE_PART_A_HI_TRUST_FUND'
     )
       .check({ force: true })
       .should('be.checked');
 
-    cy.get('#payment-funding-source-OTHER')
+    cy.get('#payment-fundingSource-medicare-a-info')
+      .type('Part A Type')
+      .should('have.value', 'Part A Type');
+
+    cy.get('#payment-funding-source-fundingSource-OTHER')
       .check({ force: true })
       .should('be.checked');
 
-    cy.get('#payment-funding-source-other')
+    cy.get('#payment-fundingSource-other')
       .type('Department of Motor Vehicles')
       .should('have.value', 'Department of Motor Vehicles');
 
     cy.get(
-      '#payment-funding-source-reconciliation-PATIENT_PROTECTION_AFFORDABLE_CARE_ACT'
+      '#payment-funding-source-fundingSourceR-PATIENT_PROTECTION_AFFORDABLE_CARE_ACT'
     )
-      .check({ force: true })
-      .should('be.checked');
-
-    cy.get('#payment-funding-source-reconciliation-TRUST_FUND')
       .check({ force: true })
       .should('be.checked');
 
     cy.get(
-      '#payment-funding-source-fundingSourceRTrustFundType-MEDICARE_PART_A_HI_TRUST_FUND'
+      '#payment-funding-source-fundingSourceR-MEDICARE_PART_A_HI_TRUST_FUND'
     )
       .check({ force: true })
       .should('be.checked');
+
+    cy.get('#payment-fundingSourceR-medicare-a-info')
+      .type('Part A Type R')
+      .should('have.value', 'Part A Type R');
 
     cy.get('#payment-pay-recipients-BENEFICIARIES')
       .check({ force: true })
@@ -213,6 +215,14 @@ describe('The Model Plan Payment Form', () => {
       .check({ force: true })
       .should('be.checked');
 
+    cy.get('#payment-claims-processing-precendece-true')
+      .check({ force: true })
+      .should('be.checked');
+
+    cy.get('#payment-claims-processing-precendece-other')
+      .type('One business requirement')
+      .should('have.value', 'One business requirement');
+
     cy.get('#payment-multiple-payments-true')
       .check({ force: true })
       .should('be.checked');
@@ -221,17 +231,15 @@ describe('The Model Plan Payment Form', () => {
       .type('Payment Funding Structure')
       .should('have.value', 'Payment Funding Structure');
 
-    cy.get('#payment-frequency-payments').within(() => {
-      cy.get("input[type='text']").click();
-    });
-
-    cy.get('[data-testid="option-OTHER"]')
+    cy.get('#anticipated-payment-frequency-quarterly')
       .check({ force: true })
       .should('be.checked');
 
-    cy.clickOutside();
+    cy.get('#anticipated-payment-frequency-other')
+      .check({ force: true })
+      .should('be.checked');
 
-    cy.get('#payment-frequency-payments-other')
+    cy.get('#anticipated-payment-frequency-other-text')
       .type('Payment Frequency Payments Other')
       .should('have.value', 'Payment Frequency Payments Other');
 
@@ -253,6 +261,30 @@ describe('The Model Plan Payment Form', () => {
     cy.get('#payment-anticipate-reconciling-payment-retro-true')
       .check({ force: true })
       .should('be.checked');
+
+    cy.get('#payment-reconciliation-frequency-quarterly')
+      .check({ force: true })
+      .should('be.checked');
+
+    cy.get('#payment-reconciliation-frequency-other')
+      .check({ force: true })
+      .should('be.checked');
+
+    cy.get('#payment-reconciliation-frequency-other-text')
+      .type('Payment Frequency Payments Other')
+      .should('have.value', 'Payment Frequency Payments Other');
+
+    cy.get('#payment-demand-recoupment-frequency-quarterly')
+      .check({ force: true })
+      .should('be.checked');
+
+    cy.get('#payment-demand-recoupment-frequency-other')
+      .check({ force: true })
+      .should('be.checked');
+
+    cy.get('#payment-demand-recoupment-frequency-other-text')
+      .type('Payment Demand Recoupment Frequency Other')
+      .should('have.value', 'Payment Demand Recoupment Frequency Other');
 
     cy.get('#payment-payment-start-date')
       .type('10/26/2028')

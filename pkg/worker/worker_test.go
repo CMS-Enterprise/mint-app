@@ -69,9 +69,11 @@ func (suite *WorkerSuite) createModelPlan(planName string) *models.ModelPlan {
 }
 
 func (suite *WorkerSuite) createPlanDiscussion(mp *models.ModelPlan, content string) *models.PlanDiscussion {
+	taggedContent, err := models.NewTaggedContentFromString(content)
+	suite.NoError(err)
 	input := &model.PlanDiscussionCreateInput{
 		ModelPlanID:         mp.ID,
-		Content:             content,
+		Content:             models.TaggedHTML(taggedContent),
 		UserRole:            models.DiscussionUserRolePointer(models.DiscussionRoleNoneOfTheAbove),
 		UserRoleDescription: models.StringPointer("test role"),
 	}
@@ -84,6 +86,7 @@ func (suite *WorkerSuite) createPlanDiscussion(mp *models.ModelPlan, content str
 		input,
 		suite.testConfigs.Principal,
 		suite.testConfigs.Store,
+		userhelpers.GetUserInfoAccountInfoWrapperFunc(suite.stubFetchUserInfo),
 	)
 	suite.NoError(err)
 	return pd
@@ -92,9 +95,9 @@ func (suite *WorkerSuite) createPlanDiscussion(mp *models.ModelPlan, content str
 func (suite *WorkerSuite) createPlanCollaborator(
 	mp *models.ModelPlan,
 	userName string,
-	fullName string,
+	_ string,
 	teamRoles []models.TeamRole,
-	emailAddress string,
+	_ string,
 ) *models.PlanCollaborator {
 	collaboratorInput := &model.PlanCollaboratorCreateInput{
 		ModelPlanID: mp.ID,
@@ -104,13 +107,14 @@ func (suite *WorkerSuite) createPlanCollaborator(
 
 	collaborator, _, err := resolvers.CreatePlanCollaborator(
 		context.Background(),
+		suite.testConfigs.Store,
+		suite.testConfigs.Store,
 		suite.testConfigs.Logger,
 		nil,
 		nil,
 		email.AddressBook{},
 		collaboratorInput,
 		suite.testConfigs.Principal,
-		suite.testConfigs.Store,
 		false,
 		userhelpers.GetUserInfoAccountInfoWrapperFunc(suite.stubFetchUserInfo),
 	)
@@ -118,17 +122,18 @@ func (suite *WorkerSuite) createPlanCollaborator(
 	return collaborator
 }
 
-func (suite *WorkerSuite) createPlanCrTdl(mp *models.ModelPlan, idNumber string, dateInitated time.Time, title string, note string) *models.PlanCrTdl {
-	input := &model.PlanCrTdlCreateInput{
-		ModelPlanID:   mp.ID,
-		IDNumber:      idNumber,
-		DateInitiated: dateInitated,
-		Title:         title,
-		Note:          &note,
+func (suite *WorkerSuite) createPlanCR(mp *models.ModelPlan, idNumber string, dateInitated time.Time, dateImplemented time.Time, title string, note string) *models.PlanCR {
+	input := &model.PlanCRCreateInput{
+		ModelPlanID:     mp.ID,
+		IDNumber:        idNumber,
+		DateInitiated:   dateInitated,
+		DateImplemented: dateImplemented,
+		Title:           title,
+		Note:            &note,
 	}
-	crTdl, err := resolvers.PlanCrTdlCreate(suite.testConfigs.Logger, input, suite.testConfigs.Principal, suite.testConfigs.Store)
+	cr, err := resolvers.PlanCRCreate(suite.testConfigs.Logger, input, suite.testConfigs.Principal, suite.testConfigs.Store)
 	suite.NoError(err)
-	return crTdl
+	return cr
 }
 
 func (suite *WorkerSuite) createPlanDocument(mp *models.ModelPlan) *models.PlanDocument {

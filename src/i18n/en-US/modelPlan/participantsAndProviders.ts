@@ -1,5 +1,7 @@
 import { TranslationParticipantsAndProviders } from 'types/translation';
 
+import { frequencyOptions } from './miscellaneous';
+
 export const participantsAndProviders: TranslationParticipantsAndProviders = {
   participants: {
     gqlField: 'participants',
@@ -11,17 +13,18 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     dataType: 'enum',
     formType: 'multiSelect',
     options: {
+      ACCOUNTABLE_CARE_ORGANIZATION: 'Accountable Care Organization (ACO)',
       COMMERCIAL_PAYERS: 'Commercial payers',
-      COMMUNITY_BASED_ORGANIZATIONS: 'Community-based organizations',
+      COMMUNITY_BASED_ORGANIZATIONS: 'Community-based organizations (CBO)',
       CONVENER: 'Convener',
-      ENTITIES: 'Entities (e.g., ACO, Direct Contracting Entity)',
+      ENTITIES: 'Legal Entities',
       MEDICAID_MANAGED_CARE_ORGANIZATIONS:
         'Medicaid Managed Care organizations',
       MEDICAID_PROVIDERS: 'Medicaid providers',
       MEDICARE_ADVANTAGE_PLANS: 'Medicare Advantage plans',
       MEDICARE_ADVANTAGE_PRESCRIPTION_DRUG_PLANS:
         'Medicare Advantage Prescription Drug (MAPD) plans',
-      MEDICARE_PROVIDERS: 'Medicare providers',
+      MEDICARE_PROVIDERS: 'Medicare providers/suppliers',
       NON_PROFIT_ORGANIZATIONS: 'Non-profit organizations',
       STANDALONE_PART_D_PLANS: 'Standalone Part D plans',
       STATES: 'States',
@@ -34,7 +37,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     gqlField: 'medicareProviderType',
     goField: 'MedicareProviderType',
     dbField: 'medicare_provider_type',
-    label: 'Which type of medicare providers?',
+    label: 'Which type of Medicare providers/suppliers?',
     dataType: 'string',
     formType: 'textarea',
     filterGroups: ['cbosc', 'cmmi', 'ipc', 'iddoc', 'pbg']
@@ -214,6 +217,88 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     formType: 'textarea',
     filterGroups: ['cmmi', 'iddoc', 'pbg']
   },
+  participantAddedFrequency: {
+    gqlField: 'participantAddedFrequency',
+    goField: 'ParticipantAddedFrequency',
+    dbField: 'participant_added_frequency',
+    label: 'How frequently are participants added?',
+    dataType: 'enum',
+    formType: 'checkbox',
+    options: frequencyOptions,
+    optionsRelatedInfo: {
+      ANNUALLY: '',
+      SEMIANNUALLY: '',
+      QUARTERLY: '',
+      MONTHLY: '',
+      CONTINUALLY: 'participantAddedFrequencyContinually',
+      OTHER: 'participantAddedFrequencyOther'
+    }
+  },
+  participantAddedFrequencyContinually: {
+    gqlField: 'participantAddedFrequencyContinually',
+    goField: 'ParticipantAddedFrequencyContinually',
+    dbField: 'participant_added_frequency_continually',
+    label: 'Please specify',
+    dataType: 'string',
+    formType: 'text'
+  },
+  participantAddedFrequencyOther: {
+    gqlField: 'participantAddedFrequencyOther',
+    goField: 'ParticipantAddedFrequencyOther',
+    dbField: 'participant_added_frequency_other',
+    label: 'Please specify',
+    dataType: 'string',
+    formType: 'text'
+  },
+  participantAddedFrequencyNote: {
+    gqlField: 'participantAddedFrequencyNote',
+    goField: 'ParticipantAddedFrequencyNote',
+    dbField: 'participant_added_frequency_note',
+    label: 'Notes',
+    dataType: 'string',
+    formType: 'text'
+  },
+  participantRemovedFrequency: {
+    gqlField: 'participantRemovedFrequency',
+    goField: 'ParticipantRemovedFrequency',
+    dbField: 'participant_removed_frequency',
+    label: 'How frequently are participants removed?',
+    dataType: 'enum',
+    formType: 'checkbox',
+    options: frequencyOptions,
+    optionsRelatedInfo: {
+      ANNUALLY: '',
+      SEMIANNUALLY: '',
+      QUARTERLY: '',
+      MONTHLY: '',
+      CONTINUALLY: 'participantRemovedFrequencyContinually',
+      OTHER: 'participantRemovedFrequencyOther'
+    }
+  },
+  participantRemovedFrequencyContinually: {
+    gqlField: 'participantRemovedFrequencyContinually',
+    goField: 'ParticipantRemovedFrequencyContinually',
+    dbField: 'participant_removed_frequency_continually',
+    label: 'Please specify',
+    dataType: 'string',
+    formType: 'text'
+  },
+  participantRemovedFrequencyOther: {
+    gqlField: 'participantRemovedFrequencyOther',
+    goField: 'ParticipantRemovedFrequencyOther',
+    dbField: 'participant_removed_frequency_other',
+    label: 'Please specify',
+    dataType: 'string',
+    formType: 'text'
+  },
+  participantRemovedFrequencyNote: {
+    gqlField: 'participantRemovedFrequencyNote',
+    goField: 'ParticipantRemovedFrequencyNote',
+    dbField: 'participant_removed_frequency_note',
+    label: 'Notes',
+    dataType: 'string',
+    formType: 'text'
+  },
   communicationMethod: {
     gqlField: 'communicationMethod',
     goField: 'CommunicationMethod',
@@ -248,29 +333,18 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     formType: 'textarea',
     filterGroups: ['cbosc']
   },
-  participantAssumeRisk: {
-    gqlField: 'participantAssumeRisk',
-    goField: 'ParticipantAssumeRisk',
-    dbField: 'participant_assume_risk',
-    label: 'Will the participants assume risk?',
-    dataType: 'boolean',
-    formType: 'radio',
-    options: {
-      true: 'Yes',
-      false: 'No'
-    }
-  },
   riskType: {
     gqlField: 'riskType',
     goField: 'RiskType',
     dbField: 'risk_type',
     label: 'What type of risk will the participant assume?',
     dataType: 'enum',
-    formType: 'radio',
+    formType: 'checkbox',
     options: {
-      CAPITATION: 'Capitalization',
-      ONE_SIDED: 'One-sided',
       TWO_SIDED: 'Two-sided',
+      ONE_SIDED: 'One-sided',
+      CAPITATION: 'Capitation',
+      NOT_RISK_BASED: 'Not risk-based',
       OTHER: 'Other'
     }
   },
@@ -355,6 +429,28 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
       false: 'No'
     }
   },
+  gainsharePaymentsEligibility: {
+    gqlField: 'gainsharePaymentsEligibility',
+    goField: 'GainsharePaymentsEligibility',
+    dbField: 'gainshare_payments_eligibility',
+    label: 'Are providers eligible to participate in gainsharing arrangements?',
+    dataType: 'enum',
+    formType: 'checkbox',
+    options: {
+      ALL_PROVIDERS: 'All providers',
+      SOME_PROVIDERS: 'Some providers',
+      OTHER: 'Other',
+      NO: 'No'
+    }
+  },
+  gainsharePaymentsEligibilityOther: {
+    gqlField: 'gainsharePaymentsEligibilityOther',
+    goField: 'GainsharePaymentsEligibilityOther',
+    dbField: 'gainshare_payments_eligibility_other',
+    label: 'Please specify',
+    dataType: 'string',
+    formType: 'text'
+  },
   gainsharePaymentsNote: {
     gqlField: 'gainsharePaymentsNote',
     goField: 'GainsharePaymentsNote',
@@ -406,15 +502,25 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     dbField: 'provider_addition_frequency',
     label: 'How frequently are providers added?',
     dataType: 'enum',
-    formType: 'radio',
-    options: {
-      ANNUALLY: 'Annually',
-      BIANNUALLY: 'Biannually',
-      MONTHLY: 'Monthly',
-      QUARTERLY: 'Quarterly',
-      ROLLING: 'Rolling',
-      OTHER: 'Other'
+    formType: 'checkbox',
+    options: frequencyOptions,
+    optionsRelatedInfo: {
+      ANNUALLY: '',
+      SEMIANNUALLY: '',
+      QUARTERLY: '',
+      MONTHLY: '',
+      CONTINUALLY: 'providerAdditionFrequencyContinually',
+      OTHER: 'providerAdditionFrequencyOther'
     },
+    filterGroups: ['oact', 'ipc']
+  },
+  providerAdditionFrequencyContinually: {
+    gqlField: 'providerAdditionFrequencyContinually',
+    goField: 'ProviderAdditionFrequencyContinually',
+    dbField: 'provide_addition_frequency_continually',
+    label: 'Please specify',
+    dataType: 'string',
+    formType: 'textarea',
     filterGroups: ['oact', 'ipc']
   },
   providerAdditionFrequencyOther: {
@@ -518,6 +624,47 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     dataType: 'string',
     formType: 'textarea',
     filterGroups: ['ipc', 'oact']
+  },
+  providerRemovalFrequency: {
+    gqlField: 'providerRemovalFrequency',
+    goField: 'ProviderRemovalFrequency',
+    dbField: 'provider_removal_frequency',
+    label: 'How frequently are providers removed?',
+    dataType: 'enum',
+    formType: 'checkbox',
+    options: frequencyOptions,
+    optionsRelatedInfo: {
+      ANNUALLY: '',
+      SEMIANNUALLY: '',
+      QUARTERLY: '',
+      MONTHLY: '',
+      CONTINUALLY: 'providerRemovalFrequencyContinually',
+      OTHER: 'providerRemovalFrequencyOther'
+    }
+  },
+  providerRemovalFrequencyContinually: {
+    gqlField: 'providerRemovalFrequencyContinually',
+    goField: 'ProviderRemovalFrequencyContinually',
+    dbField: 'provide_removal_frequency_continually',
+    label: 'Please specify',
+    dataType: 'string',
+    formType: 'text'
+  },
+  providerRemovalFrequencyOther: {
+    gqlField: 'providerRemovalFrequencyOther',
+    goField: 'ProviderRemovalFrequencyOther',
+    dbField: 'provider_removal_frequency_other',
+    label: 'Please specify',
+    dataType: 'string',
+    formType: 'text'
+  },
+  providerRemovalFrequencyNote: {
+    gqlField: 'providerRemovalFrequencyNote',
+    goField: 'ProviderRemovalFrequencyNote',
+    dbField: 'provider_removal_frequency_note',
+    label: 'Notes',
+    dataType: 'string',
+    formType: 'textarea'
   },
   providerOverlap: {
     gqlField: 'providerOverlap',

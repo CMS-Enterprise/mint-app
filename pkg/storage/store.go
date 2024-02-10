@@ -7,8 +7,8 @@ import (
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/facebookgo/clock"
 	"github.com/jmoiron/sqlx"
+	ld "github.com/launchdarkly/go-server-sdk/v6"
 	_ "github.com/lib/pq" // required for postgres driver in sql
-	ld "gopkg.in/launchdarkly/go-server-sdk.v5"
 )
 
 // Store performs database operations for MINT
@@ -29,6 +29,11 @@ type DBConfig struct {
 	SSLMode        string
 	UseIAM         bool
 	MaxConnections int
+}
+
+// PrepareNamed implements the INamedPreparer interface
+func (s *Store) PrepareNamed(query string) (*sqlx.NamedStmt, error) {
+	return s.db.PrepareNamed(query)
 }
 
 // NewStore creates a new Store struct

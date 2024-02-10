@@ -6,6 +6,7 @@ func (suite *ResolverSuite) TestIsPlanFavorited() {
 	plan := suite.createModelPlan("My Favorite Plan")
 
 	_, err := PlanFavoriteCreate(
+		suite.testConfigs.Store,
 		suite.testConfigs.Logger,
 		suite.testConfigs.Principal,
 		suite.testConfigs.Principal.Account().ID,
@@ -27,6 +28,7 @@ func (suite *ResolverSuite) TestPlanFavoriteCreate() {
 	plan := suite.createModelPlan("My Favorite Plan")
 
 	favorite, err := PlanFavoriteCreate(
+		suite.testConfigs.Store,
 		suite.testConfigs.Logger,
 		suite.testConfigs.Principal,
 		suite.testConfigs.Principal.Account().ID,
@@ -47,6 +49,7 @@ func (suite *ResolverSuite) TestPlanFavoriteDelete() {
 	plan := suite.createModelPlan("My Favorite Plan")
 
 	favorite, err := PlanFavoriteCreate(
+		suite.testConfigs.Store,
 		suite.testConfigs.Logger,
 		suite.testConfigs.Principal,
 		suite.testConfigs.Principal.Account().ID,
@@ -68,6 +71,7 @@ func (suite *ResolverSuite) TestPlanFavoriteGet() {
 	plan := suite.createModelPlan("My Favorite Plan")
 
 	favorite, err := PlanFavoriteCreate(
+		suite.testConfigs.Store,
 		suite.testConfigs.Logger,
 		suite.testConfigs.Principal,
 		suite.testConfigs.Principal.Account().ID,

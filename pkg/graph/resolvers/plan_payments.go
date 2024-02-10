@@ -12,16 +12,6 @@ import (
 	"github.com/cmsgov/mint-app/pkg/storage/loaders"
 )
 
-// PlanPaymentsCreate handles requests to create a Plan Payment
-func PlanPaymentsCreate(
-	logger *zap.Logger,
-	store *storage.Store,
-	payments *models.PlanPayments,
-) (*models.PlanPayments, error) {
-
-	return store.PlanPaymentsCreate(logger, payments)
-}
-
 // PlanPaymentsRead handles requests to find a Plan Payment by ID
 func PlanPaymentsRead(
 	logger *zap.Logger,

@@ -13,7 +13,7 @@ import {
 import { groupOptions } from '../util';
 
 type FilterViewModalProps = {
-  filteredView: string | null;
+  filteredView: string | null | undefined;
   closeModal: () => void;
 };
 
@@ -70,7 +70,7 @@ const FilterViewModal = ({
           />
         </Form>
 
-        <Alert noIcon type="info">
+        <Alert noIcon type="info" headingLevel="h4">
           <span className="margin-y-0 font-body-sm text-bold display-block">
             {t('alert.heading')}
           </span>

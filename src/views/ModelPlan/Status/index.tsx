@@ -7,11 +7,11 @@ import {
   BreadcrumbBar,
   BreadcrumbLink,
   Button,
-  Dropdown,
   Grid,
   GridContainer,
-  IconArrowBack,
-  Label
+  Icon,
+  Label,
+  Select
 } from '@trussworks/react-uswds';
 import { ErrorMessage, Field, Form, Formik, FormikProps } from 'formik';
 import * as Yup from 'yup';
@@ -132,7 +132,7 @@ const Status = () => {
                       <ErrorMessage name="status" />
 
                       <Field
-                        as={Dropdown}
+                        as={Select}
                         id="Status-Dropdown"
                         name="role"
                         value={values.status}
@@ -171,7 +171,7 @@ const Status = () => {
                         history.push(`/models/${modelID}/task-list/`)
                       }
                     >
-                      <IconArrowBack className="margin-right-1" aria-hidden />
+                      <Icon.ArrowBack className="margin-right-1" aria-hidden />
 
                       {modelPlanMiscT('return')}
                     </Button>

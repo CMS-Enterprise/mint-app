@@ -1,12 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
-import {
-  Button,
-  GridContainer,
-  IconInfo,
-  IconVisiblity
-} from '@trussworks/react-uswds';
+import { Button, GridContainer, Icon } from '@trussworks/react-uswds';
 
 import Tooltip from 'components/shared/Tooltip';
 
@@ -15,7 +10,7 @@ import { filterGroups } from '../BodyContent/_filterGroupMapping';
 import './index.scss';
 
 type FilterViewBannerProps = {
-  filteredView?: typeof filterGroups[number];
+  filteredView?: typeof filterGroups[number] | null;
   openFilterModal: () => void;
   openExportModal: () => void;
 };
@@ -41,7 +36,7 @@ const FilterViewBanner = ({
             className="display-flex flex-align-center"
             style={{ gap: '1rem' }}
           >
-            <IconVisiblity size={3} />
+            <Icon.Visibility size={3} />
             <div>
               {t('youAreViewing')} <strong>{filteredView ?? t('all')}</strong>{' '}
               {filteredView !== null ? t('information') : t('allInformation')}
@@ -49,7 +44,7 @@ const FilterViewBanner = ({
             {filteredView === null && (
               <div className="mint-no-print">
                 <Tooltip label={t('tooltip')} position="right">
-                  <IconInfo />
+                  <Icon.Info />
                 </Tooltip>
               </div>
             )}

@@ -9,19 +9,20 @@ import (
 
 // GoSimpleMailServiceConfig is a configuration structure to define the behavior of a GoSimpleMailService
 type GoSimpleMailServiceConfig struct {
-	Enabled        bool
-	Helo           string
-	Host           string
-	ClientAddress  string
-	Port           int
-	Authentication mail.AuthType
-	Username       string
-	Password       string
-	Encryption     mail.Encryption
-	ConnectTimeout time.Duration
-	SendTimeout    time.Duration
-	KeepAlive      bool
-	TLSConfig      *tls.Config
+	Enabled               bool
+	Helo                  string
+	Host                  string
+	ClientAddress         string
+	Port                  int
+	Authentication        mail.AuthType
+	Username              string
+	Password              string
+	Encryption            mail.Encryption
+	ConnectTimeout        time.Duration
+	SendTimeout           time.Duration
+	KeepAlive             bool
+	TLSConfig             *tls.Config
+	TaggedPOCEmailEnabled bool // this determines if a solution point of contact gets an email sent to them if they are tagged
 }
 
 // GetHelo returns the Helo configuration
@@ -92,4 +93,9 @@ func (g *GoSimpleMailServiceConfig) GetTLSConfig() *tls.Config {
 // GetEnabled returns the Enabled configuration
 func (g *GoSimpleMailServiceConfig) GetEnabled() bool {
 	return g.Enabled
+}
+
+// GetSendTaggedPOCEmails returns the boolean configuration of if the app should send emails to tagged solution points of contacts
+func (g *GoSimpleMailServiceConfig) GetSendTaggedPOCEmails() bool {
+	return g.TaggedPOCEmailEnabled
 }

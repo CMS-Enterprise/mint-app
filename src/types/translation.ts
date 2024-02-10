@@ -2,32 +2,30 @@
   Typed translation mappings for question centric architecture for a model plan
   Used to dynamically iterate/render questions, answers for functionality such as csv export and change history
 */
-import { FilterGroup } from 'views/ModelPlan/ReadOnly/_components/FilterView/BodyContent/_filterGroupMapping';
-
 import {
   AgencyOrStateHelpType,
   AgreementType,
   AlternativePaymentModelType,
-  AnticipatedPaymentFrequencyType,
   AuthorityAllowance,
   BenchmarkForPerformanceType,
   BeneficiariesType,
   CcmInvolvmentType,
   ClaimsBasedPayType,
-  CMMIGroup,
-  CMSCenter,
+  CmmiGroup,
+  CmsCenter,
   ComplexityCalculationLevelType,
   ConfidenceType,
   ContractorSupportType,
   DataForMonitoringType,
-  DataFrequencyType,
   DataFullTimeOrIncrementalType,
   DataStartsType,
   DataToSendParticipantsType,
   EvaluationApproachType,
   FrequencyType,
   FundingSource,
+  GainshareArrangementEligibility,
   GeographyApplication,
+  GeographyRegionType,
   GeographyType,
   KeyCharacteristic,
   ModelCategory,
@@ -40,7 +38,7 @@ import {
   ParticipantCommunicationType,
   ParticipantRiskType,
   ParticipantSelectionType,
-  ParticipantsIDType,
+  ParticipantsIdType,
   ParticipantsType,
   PayRecipient,
   PayType,
@@ -49,12 +47,16 @@ import {
   RecruitmentType,
   SelectionMethodType,
   StakeholdersType,
+  StatesAndTerritories,
   TaskStatus,
   TeamRole,
   TriStateAnswer,
-  TrustFundType,
-  WaiverType
-} from './graphql-global-types';
+  WaiverType,
+  YesNoOtherType,
+  YesNoType
+} from 'gql/gen/graphql';
+
+import { FilterGroup } from 'views/ModelPlan/ReadOnly/_components/FilterView/BodyContent/_filterGroupMapping';
 
 // Util used to preserve type defintions when mapping over keys of object
 // https://stackoverflow.com/questions/52856496/typescript-object-keys-return-string
@@ -90,6 +92,7 @@ export type TranslationFieldProperties = {
     | 'rangeInput';
   filterGroups?: FilterGroup[]; // Used to render questions within Readonly filter group view (Also CSV/PDF export)
   tags?: string[];
+  isModelLinks?: boolean; // Used to designate if a field is a ExistingModelLinks type with nested fields - ex: names
 };
 
 // Extended type for questions that have options - boolean, radio, checkbox, etc.
@@ -99,6 +102,7 @@ export type TranslationFieldPropertiesWithOptions<
 > = TranslationFieldProperties & {
   options: Record<T, string>;
   optionsLabels?: Record<T, string>;
+  optionsRelatedInfo?: Record<T, string>;
 };
 
 // Model Plan
@@ -118,11 +122,11 @@ export type TranslationBasics = {
   demoCode: TranslationFieldProperties;
   modelCategory: TranslationFieldPropertiesWithOptions<ModelCategory>;
   additionalModelCategories: TranslationFieldPropertiesWithOptions<ModelCategory>;
-  cmsCenters: TranslationFieldPropertiesWithOptions<CMSCenter>;
-  cmsOther: TranslationFieldProperties;
-  cmmiGroups: TranslationFieldPropertiesWithOptions<CMMIGroup>;
+  cmsCenters: TranslationFieldPropertiesWithOptions<CmsCenter>;
+  cmmiGroups: TranslationFieldPropertiesWithOptions<CmmiGroup>;
   // Overview
   modelType: TranslationFieldPropertiesWithOptions<ModelType>;
+  modelTypeOther: TranslationFieldProperties;
   problem: TranslationFieldProperties;
   goal: TranslationFieldProperties;
   testInterventions: TranslationFieldProperties;
@@ -147,14 +151,28 @@ export type TranslationBasics = {
 export type TranslationGeneralCharacteristics = {
   isNewModel: TranslationFieldPropertiesWithOptions<Bool>;
   existingModel: TranslationFieldProperties;
-  existingModelLinks: TranslationFieldProperties;
-  resemblesExistingModel: TranslationFieldPropertiesWithOptions<Bool>;
+  resemblesExistingModel: TranslationFieldPropertiesWithOptions<YesNoOtherType>;
+  resemblesExistingModelWhyHow: TranslationFieldProperties;
   resemblesExistingModelHow: TranslationFieldProperties;
   resemblesExistingModelNote: TranslationFieldProperties;
+  resemblesExistingModelWhich: TranslationFieldProperties;
+  resemblesExistingModelOtherSpecify: TranslationFieldProperties;
+  resemblesExistingModelOtherSelected: TranslationFieldPropertiesWithOptions<Bool>;
+  resemblesExistingModelOtherOption: TranslationFieldProperties;
+  participationInModelPrecondition: TranslationFieldPropertiesWithOptions<YesNoOtherType>;
+  participationInModelPreconditionWhich: TranslationFieldProperties;
+  participationInModelPreconditionOtherSpecify: TranslationFieldProperties;
+  participationInModelPreconditionOtherSelected: TranslationFieldPropertiesWithOptions<Bool>;
+  participationInModelPreconditionOtherOption: TranslationFieldProperties;
+  participationInModelPreconditionWhyHow: TranslationFieldProperties;
+  participationInModelPreconditionNote: TranslationFieldProperties;
   hasComponentsOrTracks: TranslationFieldPropertiesWithOptions<Bool>;
   hasComponentsOrTracksDiffer: TranslationFieldProperties;
   hasComponentsOrTracksNote: TranslationFieldProperties;
   // Key Characteristics
+  agencyOrStateHelp: TranslationFieldPropertiesWithOptions<AgencyOrStateHelpType>;
+  agencyOrStateHelpOther: TranslationFieldProperties;
+  agencyOrStateHelpNote: TranslationFieldProperties;
   alternativePaymentModelTypes: TranslationFieldPropertiesWithOptions<AlternativePaymentModelType>;
   alternativePaymentModelNote: TranslationFieldProperties;
   keyCharacteristics: TranslationFieldPropertiesWithOptions<KeyCharacteristic>;
@@ -180,6 +198,8 @@ export type TranslationGeneralCharacteristics = {
   geographiesTargeted: TranslationFieldPropertiesWithOptions<Bool>;
   geographiesTargetedTypes: TranslationFieldPropertiesWithOptions<GeographyType>;
   geographiesTargetedTypesOther: TranslationFieldProperties;
+  geographiesStatesAndTerritories: TranslationFieldPropertiesWithOptions<StatesAndTerritories>;
+  geographiesRegionTypes: TranslationFieldPropertiesWithOptions<GeographyRegionType>;
   geographiesTargetedAppliedTo: TranslationFieldPropertiesWithOptions<GeographyApplication>;
   geographiesTargetedAppliedToOther: TranslationFieldProperties;
   geographiesTargetedNote: TranslationFieldProperties;
@@ -223,10 +243,17 @@ export type TranslationParticipantsAndProviders = {
   selectionOther: TranslationFieldProperties;
   selectionNote: TranslationFieldProperties;
   // Communication
+  participantAddedFrequency: TranslationFieldPropertiesWithOptions<FrequencyType>;
+  participantAddedFrequencyContinually: TranslationFieldProperties;
+  participantAddedFrequencyOther: TranslationFieldProperties;
+  participantAddedFrequencyNote: TranslationFieldProperties;
+  participantRemovedFrequency: TranslationFieldPropertiesWithOptions<FrequencyType>;
+  participantRemovedFrequencyContinually: TranslationFieldProperties;
+  participantRemovedFrequencyOther: TranslationFieldProperties;
+  participantRemovedFrequencyNote: TranslationFieldProperties;
   communicationMethod: TranslationFieldPropertiesWithOptions<ParticipantCommunicationType>;
   communicationMethodOther: TranslationFieldProperties;
   communicationNote: TranslationFieldProperties;
-  participantAssumeRisk: TranslationFieldPropertiesWithOptions<Bool>;
   riskType: TranslationFieldPropertiesWithOptions<ParticipantRiskType>;
   riskOther: TranslationFieldProperties;
   riskNote: TranslationFieldProperties;
@@ -237,12 +264,15 @@ export type TranslationParticipantsAndProviders = {
   coordinateWorkNote: TranslationFieldProperties;
   gainsharePayments: TranslationFieldPropertiesWithOptions<Bool>;
   gainsharePaymentsTrack: TranslationFieldPropertiesWithOptions<Bool>;
+  gainsharePaymentsEligibility: TranslationFieldPropertiesWithOptions<GainshareArrangementEligibility>;
+  gainsharePaymentsEligibilityOther: TranslationFieldProperties;
   gainsharePaymentsNote: TranslationFieldProperties;
-  participantsIds: TranslationFieldPropertiesWithOptions<ParticipantsIDType>;
+  participantsIds: TranslationFieldPropertiesWithOptions<ParticipantsIdType>;
   participantsIdsOther: TranslationFieldProperties;
   participantsIDSNote: TranslationFieldProperties;
   // Provider Options
   providerAdditionFrequency: TranslationFieldPropertiesWithOptions<FrequencyType>;
+  providerAdditionFrequencyContinually: TranslationFieldProperties;
   providerAdditionFrequencyOther: TranslationFieldProperties;
   providerAdditionFrequencyNote: TranslationFieldProperties;
   providerAddMethod: TranslationFieldPropertiesWithOptions<ProviderAddType>;
@@ -251,6 +281,10 @@ export type TranslationParticipantsAndProviders = {
   providerLeaveMethod: TranslationFieldPropertiesWithOptions<ProviderLeaveType>;
   providerLeaveMethodOther: TranslationFieldProperties;
   providerLeaveMethodNote: TranslationFieldProperties;
+  providerRemovalFrequency: TranslationFieldPropertiesWithOptions<FrequencyType>;
+  providerRemovalFrequencyContinually: TranslationFieldProperties;
+  providerRemovalFrequencyOther: TranslationFieldProperties;
+  providerRemovalFrequencyNote: TranslationFieldProperties;
   providerOverlap: TranslationFieldPropertiesWithOptions<OverlapType>;
   providerOverlapHierarchy: TranslationFieldProperties;
   providerOverlapNote: TranslationFieldProperties;
@@ -260,6 +294,7 @@ export type TranslationParticipantsAndProviders = {
 // Beneficiaries
 export type TranslationBeneficiaries = {
   beneficiaries: TranslationFieldPropertiesWithOptions<BeneficiariesType>;
+  diseaseSpecificGroup: TranslationFieldProperties;
   beneficiariesOther: TranslationFieldProperties;
   beneficiariesNote: TranslationFieldProperties;
   treatDualElligibleDifferent: TranslationFieldPropertiesWithOptions<TriStateAnswer>;
@@ -277,19 +312,24 @@ export type TranslationBeneficiaries = {
   beneficiarySelectionOther: TranslationFieldProperties;
   // Frequency
   beneficiarySelectionFrequency: TranslationFieldPropertiesWithOptions<FrequencyType>;
-  beneficiarySelectionFrequencyNote: TranslationFieldProperties;
+  beneficiarySelectionFrequencyContinually: TranslationFieldProperties;
   beneficiarySelectionFrequencyOther: TranslationFieldProperties;
+  beneficiarySelectionFrequencyNote: TranslationFieldProperties;
+  beneficiaryRemovalFrequency: TranslationFieldPropertiesWithOptions<FrequencyType>;
+  beneficiaryRemovalFrequencyContinually: TranslationFieldProperties;
+  beneficiaryRemovalFrequencyOther: TranslationFieldProperties;
+  beneficiaryRemovalFrequencyNote: TranslationFieldProperties;
   beneficiaryOverlap: TranslationFieldPropertiesWithOptions<OverlapType>;
   beneficiaryOverlapNote: TranslationFieldProperties;
-  precedenceRules: TranslationFieldProperties;
+  precedenceRules: TranslationFieldPropertiesWithOptions<YesNoType>;
+  precedenceRulesYes: TranslationFieldProperties;
+  precedenceRulesNo: TranslationFieldProperties;
+  precedenceRulesNote: TranslationFieldProperties;
   status: TranslationFieldPropertiesWithOptions<TaskStatus>;
 };
 
 // Operations Evaluation and Learning
 export type TranslationOpsEvalAndLearning = {
-  agencyOrStateHelp: TranslationFieldPropertiesWithOptions<AgencyOrStateHelpType>;
-  agencyOrStateHelpOther: TranslationFieldProperties;
-  agencyOrStateHelpNote: TranslationFieldProperties;
   stakeholders: TranslationFieldPropertiesWithOptions<StakeholdersType>;
   stakeholdersOther: TranslationFieldProperties;
   stakeholdersNote: TranslationFieldProperties;
@@ -367,22 +407,28 @@ export type TranslationOpsEvalAndLearning = {
   useCcwForFileDistribiutionToParticipantsNote: TranslationFieldProperties;
   developNewQualityMeasures: TranslationFieldPropertiesWithOptions<Bool>;
   developNewQualityMeasuresNote: TranslationFieldProperties;
-  qualityPerformanceImpactsPayment: TranslationFieldPropertiesWithOptions<Bool>;
+  qualityPerformanceImpactsPayment: TranslationFieldPropertiesWithOptions<YesNoOtherType>;
+  qualityPerformanceImpactsPaymentOther: TranslationFieldProperties;
   qualityPerformanceImpactsPaymentNote: TranslationFieldProperties;
   // Data Sharing
   dataSharingStarts: TranslationFieldPropertiesWithOptions<DataStartsType>;
   dataSharingStartsOther: TranslationFieldProperties;
-  dataSharingFrequency: TranslationFieldPropertiesWithOptions<DataFrequencyType>;
+  dataSharingFrequency: TranslationFieldPropertiesWithOptions<FrequencyType>;
+  dataSharingFrequencyContinually: TranslationFieldProperties;
   dataSharingFrequencyOther: TranslationFieldProperties;
   dataSharingStartsNote: TranslationFieldProperties;
   dataCollectionStarts: TranslationFieldPropertiesWithOptions<DataStartsType>;
   dataCollectionStartsOther: TranslationFieldProperties;
-  dataCollectionFrequency: TranslationFieldPropertiesWithOptions<DataFrequencyType>;
+  dataCollectionFrequency: TranslationFieldPropertiesWithOptions<FrequencyType>;
+  dataCollectionFrequencyContinually: TranslationFieldProperties;
   dataCollectionFrequencyOther: TranslationFieldProperties;
   dataCollectionFrequencyNote: TranslationFieldProperties;
   qualityReportingStarts: TranslationFieldPropertiesWithOptions<DataStartsType>;
   qualityReportingStartsOther: TranslationFieldProperties;
   qualityReportingStartsNote: TranslationFieldProperties;
+  qualityReportingFrequency: TranslationFieldPropertiesWithOptions<FrequencyType>;
+  qualityReportingFrequencyContinually: TranslationFieldProperties;
+  qualityReportingFrequencyOther: TranslationFieldProperties;
   // Learning
   modelLearningSystems: TranslationFieldPropertiesWithOptions<ModelLearningSystemType>;
   modelLearningSystemsOther: TranslationFieldProperties;
@@ -394,11 +440,13 @@ export type TranslationOpsEvalAndLearning = {
 // Payments
 export type TranslationPayments = {
   fundingSource: TranslationFieldPropertiesWithOptions<FundingSource>;
-  fundingSourceTrustFundType: TranslationFieldPropertiesWithOptions<TrustFundType>;
+  fundingSourceMedicareAInfo: TranslationFieldProperties;
+  fundingSourceMedicareBInfo: TranslationFieldProperties;
   fundingSourceOther: TranslationFieldProperties;
   fundingSourceNote: TranslationFieldProperties;
   fundingSourceR: TranslationFieldPropertiesWithOptions<FundingSource>;
-  fundingSourceRTrustFundType: TranslationFieldPropertiesWithOptions<TrustFundType>;
+  fundingSourceRMedicareAInfo: TranslationFieldProperties;
+  fundingSourceRMedicareBInfo: TranslationFieldProperties;
   fundingSourceROther: TranslationFieldProperties;
   fundingSourceRNote: TranslationFieldProperties;
   payRecipients: TranslationFieldPropertiesWithOptions<PayRecipient>;
@@ -445,10 +493,14 @@ export type TranslationPayments = {
   // Complexity
   expectedCalculationComplexityLevel: TranslationFieldPropertiesWithOptions<ComplexityCalculationLevelType>;
   expectedCalculationComplexityLevelNote: TranslationFieldProperties;
+  claimsProcessingPrecedence: TranslationFieldPropertiesWithOptions<Bool>;
+  claimsProcessingPrecedenceOther: TranslationFieldProperties;
+  claimsProcessingPrecedenceNote: TranslationFieldProperties;
   canParticipantsSelectBetweenPaymentMechanisms: TranslationFieldPropertiesWithOptions<Bool>;
   canParticipantsSelectBetweenPaymentMechanismsHow: TranslationFieldProperties;
   canParticipantsSelectBetweenPaymentMechanismsNote: TranslationFieldProperties;
-  anticipatedPaymentFrequency: TranslationFieldPropertiesWithOptions<AnticipatedPaymentFrequencyType>;
+  anticipatedPaymentFrequency: TranslationFieldPropertiesWithOptions<FrequencyType>;
+  anticipatedPaymentFrequencyContinually: TranslationFieldProperties;
   anticipatedPaymentFrequencyOther: TranslationFieldProperties;
   anticipatedPaymentFrequencyNote: TranslationFieldProperties;
   // Recover Payment
@@ -456,6 +508,14 @@ export type TranslationPayments = {
   willRecoverPaymentsNote: TranslationFieldProperties;
   anticipateReconcilingPaymentsRetrospectively: TranslationFieldPropertiesWithOptions<Bool>;
   anticipateReconcilingPaymentsRetrospectivelyNote: TranslationFieldProperties;
+  paymentReconciliationFrequency: TranslationFieldPropertiesWithOptions<FrequencyType>;
+  paymentReconciliationFrequencyContinually: TranslationFieldProperties;
+  paymentReconciliationFrequencyOther: TranslationFieldProperties;
+  paymentReconciliationFrequencyNote: TranslationFieldProperties;
+  paymentDemandRecoupmentFrequency: TranslationFieldPropertiesWithOptions<FrequencyType>;
+  paymentDemandRecoupmentFrequencyContinually: TranslationFieldProperties;
+  paymentDemandRecoupmentFrequencyOther: TranslationFieldProperties;
+  paymentDemandRecoupmentFrequencyNote: TranslationFieldProperties;
   paymentStartDate: TranslationFieldProperties;
   paymentStartDateNote: TranslationFieldProperties;
   status: TranslationFieldPropertiesWithOptions<TaskStatus>;
@@ -463,7 +523,7 @@ export type TranslationPayments = {
 
 // Collaborators
 export type TranslationCollaborators = {
-  teamRole: TranslationFieldPropertiesWithOptions<TeamRole>;
+  teamRoles: TranslationFieldPropertiesWithOptions<TeamRole>;
   username: TranslationFieldProperties;
 };
 

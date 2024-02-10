@@ -25,3 +25,5 @@ type ExistingModel struct {
 	URL                           *string    `json:"url" db:"url"`
 	DisplayModelSummary           *bool      `json:"displayModelSummary" db:"display_model_summary"`
 }
+
+func (m ExistingModel) isLinkedExistingModel() {}

@@ -1,18 +1,34 @@
-import React, { useContext, useRef } from 'react';
+import React, { useContext, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
-import { useMutation, useQuery } from '@apollo/client';
 import {
   Button,
+  ButtonGroup,
+  DateInput,
+  DateInputGroup,
   DatePicker,
   Fieldset,
+  FormGroup,
   Grid,
   GridContainer,
   Label,
+  Select,
   Textarea,
   TextInput
 } from '@trussworks/react-uswds';
+import classNames from 'classnames';
 import { Field, Form, Formik, FormikProps } from 'formik';
+import {
+  GetCrQuery,
+  GetTdlQuery,
+  PlanCrCreateInput,
+  useCreateCrMutation,
+  useCreateTdlMutation,
+  useGetCrQuery,
+  useGetTdlQuery,
+  useUpdateCrMutation,
+  useUpdateTdlMutation
+} from 'gql/gen/graphql';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
@@ -23,111 +39,188 @@ import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import RequiredAsterisk from 'components/shared/RequiredAsterisk';
-import TextAreaField from 'components/shared/TextAreaField';
 import useMessage from 'hooks/useMessage';
-import CreateCRTDL from 'queries/CRTDL/CreateCRTDL';
-import GetCRTDL from 'queries/CRTDL/GetCRTDL';
-import {
-  CreateCRTDL as CreateCRTDLType,
-  CreateCRTDL_createPlanCrTdl as CreateCRTDLFormType,
-  CreateCRTDLVariables
-} from 'queries/CRTDL/types/CreateCRTDL';
-import {
-  GetCRTDL as GetCRTDLType,
-  GetCRTDLVariables
-} from 'queries/CRTDL/types/GetCRTDL';
-import {
-  UpdateCRTDL as UpdateCRTDLType,
-  UpdateCRTDL_updatePlanCrTdl as UpdateCRTDLIDType,
-  UpdateCRTDLVariables
-} from 'queries/CRTDL/types/UpdateCRTDL';
-import UpdateCRTDL from 'queries/CRTDL/UpdateCRTDL';
 import flattenErrors from 'utils/flattenErrors';
-import CRTDLValidationSchema from 'validations/crtdl';
+import { CRValidationSchema, TDLValidationSchema } from 'validations/crtdl';
 import { ModelInfoContext } from 'views/ModelInfoWrapper';
 
-interface CRTDLInputType extends CreateCRTDLFormType, UpdateCRTDLIDType {}
+import './index.scss';
 
-const initialFormValues: CRTDLInputType = {
-  __typename: 'PlanCrTdl',
-  id: '',
-  modelPlanID: '',
+type CRTDLType = Omit<
+  PlanCrCreateInput,
+  'modelPlanID' | '__typename' | 'id' | 'dateImplemented'
+>;
+
+interface CRTDLFormType extends CRTDLType {
+  dateImplementedMonth: string;
+  dateImplementedYear: string;
+}
+
+type CRTDLParamType = 'cr' | 'tdl' | null;
+
+const initialFormValues: CRTDLFormType = {
   title: '',
   idNumber: '',
   dateInitiated: '',
-  note: null
+  dateImplementedMonth: '',
+  dateImplementedYear: '',
+  note: ''
 };
 
 const AddCRTDL = () => {
-  const { modelID } = useParams<{ modelID: string }>();
-  const { crtdlID } = useParams<{ crtdlID: string }>();
   const { t: h } = useTranslation('draftModelPlan');
   const { t } = useTranslation('crtdl');
 
+  const { modelID } = useParams<{ modelID: string }>();
   const { modelName } = useContext(ModelInfoContext);
+
+  const history = useHistory();
+  const location = useLocation();
+
+  const params = new URLSearchParams(location.search);
+  const crtdlType = params.get('type') as CRTDLParamType;
+  const crtdlID = params.get('id');
+  const readOnly = location.hash === '#read-only';
 
   const { showMessageOnNextPage } = useMessage();
 
-  const formikRef = useRef<FormikProps<CRTDLInputType>>(null);
-
-  const history = useHistory();
-  const readOnly = useLocation().hash === '#read-only';
-
-  const { data, loading, error } = useQuery<GetCRTDLType, GetCRTDLVariables>(
-    GetCRTDL,
-    {
-      variables: {
-        id: crtdlID
-      },
-      skip: !crtdlID
-    }
+  const [crtdlFormType, setCrtdlFormType] = useState<CRTDLParamType>(
+    crtdlType || 'cr'
   );
 
-  const crtdl = data?.crTdl || initialFormValues;
+  const dateMonths: string[] = t('dateMonths', {
+    returnObjects: true
+  });
 
-  const [create] = useMutation<CreateCRTDLType, CreateCRTDLVariables>(
-    CreateCRTDL
-  );
+  const formikRef = useRef<FormikProps<CRTDLFormType>>(null);
 
-  const [update] = useMutation<UpdateCRTDLType, UpdateCRTDLVariables>(
-    UpdateCRTDL
-  );
+  const { data: crData, loading: crLoading, error: crError } = useGetCrQuery({
+    variables: {
+      id: crtdlID!
+    },
+    skip: !crtdlID || crtdlType !== 'cr'
+  });
 
-  const handleUpdateDraftModelPlan = (formikValues: CRTDLInputType) => {
-    const { __typename, modelPlanID, id, ...changes } = formikValues;
+  const {
+    data: tdlData,
+    loading: tdlLoading,
+    error: tdlError
+  } = useGetTdlQuery({
+    variables: {
+      id: crtdlID!
+    },
+    skip: !crtdlID || crtdlType !== 'tdl'
+  });
+
+  // Removing the metadata from the query payload to use in form
+  const cr = (crData?.planCR || {}) as GetCrQuery['planCR'];
+  const { __typename, id, dateImplemented, ...crFormData } = cr;
+
+  const crFormDataFormatted = { ...crFormData } as CRTDLFormType;
+
+  // Formating ISO date string to month and year number
+  if (dateImplemented) {
+    crFormDataFormatted.dateImplementedMonth = new Date(dateImplemented)
+      .getMonth()
+      .toString();
+    crFormDataFormatted.dateImplementedYear = new Date(dateImplemented)
+      .getFullYear()
+      .toString();
+  }
+
+  // Removing the metadata from the query payload to use in form
+  const tdl = (tdlData?.planTDL || {}) as GetTdlQuery['planTDL'];
+  const { __typename: tdlTypename, id: tdlId, ...tdlFormData } = tdl;
+
+  // Setting the form data from queries based on the type/query param
+  const selectedTypeData =
+    crtdlType === 'cr' ? crFormDataFormatted : tdlFormData;
+  const crtdl = Object.keys(selectedTypeData).length
+    ? (selectedTypeData as CRTDLFormType)
+    : (initialFormValues as CRTDLFormType);
+
+  const [createCR] = useCreateCrMutation();
+  const [createTDL] = useCreateTdlMutation();
+
+  const [updateCR] = useUpdateCrMutation();
+  const [updateTDL] = useUpdateTdlMutation();
+
+  const handleCreateOrUpdateCRTDL = (formikValues: CRTDLFormType) => {
+    const responseHandler = (response: any) => {
+      if (!response?.errors) {
+        showMessageOnNextPage(
+          <Alert
+            type="success"
+            slim
+            data-testid="mandatory-fields-alert"
+            className="margin-y-4"
+          >
+            <span className="mandatory-fields-alert__text">
+              {t(crtdlID ? 'successUpdate' : 'successAdd', {
+                crtdl: changes.idNumber,
+                modelName
+              })}
+            </span>
+          </Alert>
+        );
+        history.push(`/models/${modelID}/cr-and-tdl`);
+      }
+    };
+
+    const catchHandler = (errors: any) => {
+      formikRef?.current?.setErrors(errors);
+    };
+
+    // Removing dateImplemented from mutation input for TDL or to format CR date
+    const {
+      dateImplementedMonth,
+      dateImplementedYear,
+      ...changes
+    } = formikValues;
 
     if (crtdlID) {
-      update({
-        variables: {
-          id: crtdlID,
-          changes
-        }
-      })
-        .then(response => {
-          if (!response?.errors) {
-            showMessageOnNextPage(
-              <Alert
-                type="success"
-                slim
-                data-testid="mandatory-fields-alert"
-                className="margin-y-4"
-              >
-                <span className="mandatory-fields-alert__text">
-                  {t('successUpdate', {
-                    crtdl: changes.idNumber,
-                    modelName
-                  })}
-                </span>
-              </Alert>
-            );
-            history.push(`/models/${modelID}/cr-and-tdl`);
+      if (crtdlFormType === 'cr') {
+        updateCR({
+          variables: {
+            id: crtdlID,
+            changes: {
+              ...changes,
+              dateImplemented: new Date(
+                Number(dateImplementedYear),
+                Number(dateImplementedMonth)
+              ).toISOString()
+            }
           }
         })
-        .catch(errors => {
-          formikRef?.current?.setErrors(errors);
-        });
+          .then(responseHandler)
+          .catch(catchHandler);
+      } else {
+        updateTDL({
+          variables: {
+            id: crtdlID,
+            changes
+          }
+        })
+          .then(responseHandler)
+          .catch(catchHandler);
+      }
+    } else if (crtdlFormType === 'cr') {
+      createCR({
+        variables: {
+          input: {
+            modelPlanID: modelID,
+            ...changes,
+            dateImplemented: new Date(
+              Number(dateImplementedYear),
+              Number(dateImplementedMonth)
+            ).toISOString()
+          }
+        }
+      })
+        .then(responseHandler)
+        .catch(catchHandler);
     } else {
-      create({
+      createTDL({
         variables: {
           input: {
             modelPlanID: modelID,
@@ -135,29 +228,8 @@ const AddCRTDL = () => {
           }
         }
       })
-        .then(response => {
-          if (!response?.errors) {
-            showMessageOnNextPage(
-              <Alert
-                type="success"
-                slim
-                data-testid="mandatory-fields-alert"
-                className="margin-y-4"
-              >
-                <span className="mandatory-fields-alert__text">
-                  {t('successAdd', {
-                    crtdl: changes.idNumber,
-                    modelName
-                  })}
-                </span>
-              </Alert>
-            );
-            history.push(`/models/${modelID}/cr-and-tdl`);
-          }
-        })
-        .catch(errors => {
-          formikRef?.current?.setErrors(errors);
-        });
+        .then(responseHandler)
+        .catch(catchHandler);
     }
   };
 
@@ -178,7 +250,7 @@ const AddCRTDL = () => {
             {t('required2')}
           </p>
 
-          {error && (
+          {(crError || tdlError) && (
             <ErrorAlert
               testId="formik-validation-errors"
               classNames="margin-top-3"
@@ -191,14 +263,16 @@ const AddCRTDL = () => {
           <Formik
             initialValues={crtdl}
             enableReinitialize
-            onSubmit={handleUpdateDraftModelPlan}
-            validationSchema={CRTDLValidationSchema}
+            onSubmit={handleCreateOrUpdateCRTDL}
+            validationSchema={
+              crtdlFormType === 'cr' ? CRValidationSchema : TDLValidationSchema
+            }
             validateOnBlur={false}
             validateOnChange={false}
             validateOnMount={false}
             innerRef={formikRef}
           >
-            {(formikProps: FormikProps<CRTDLInputType>) => {
+            {(formikProps: FormikProps<CRTDLFormType>) => {
               const {
                 errors,
                 values,
@@ -220,7 +294,7 @@ const AddCRTDL = () => {
                 }
                 try {
                   setFieldValue(field, new Date(e.target.value).toISOString());
-                  delete errors[field as keyof CreateCRTDLFormType];
+                  delete errors[field as keyof CRTDLFormType];
                 } catch (err) {
                   setFieldError(field, t('validDate'));
                 }
@@ -251,9 +325,38 @@ const AddCRTDL = () => {
                       window.scrollTo(0, 0);
                     }}
                   >
-                    <Fieldset disabled={!!error || loading}>
+                    <Fieldset
+                      disabled={
+                        !!crError || crLoading || !!tdlError || tdlLoading
+                      }
+                    >
                       <Grid row>
-                        <Grid desktop={{ col: 6 }}>
+                        <ButtonGroup
+                          type="segmented"
+                          className="margin-top-4 margin-bottom-2"
+                        >
+                          <Button
+                            type="button"
+                            outline={crtdlFormType !== 'cr'}
+                            onClick={() => setCrtdlFormType('cr')}
+                            className={classNames({
+                              'margin-right-0': !!crtdlID
+                            })}
+                            disabled={!!crtdlID}
+                          >
+                            {t('crButton')}
+                          </Button>
+                          <Button
+                            type="button"
+                            outline={crtdlFormType !== 'tdl'}
+                            onClick={() => setCrtdlFormType('tdl')}
+                            disabled={!!crtdlID}
+                          >
+                            {t('tdlButton')}
+                          </Button>
+                        </ButtonGroup>
+
+                        <Grid desktop={{ col: 12 }}>
                           <FieldGroup
                             scrollElement="idNumber"
                             error={!!flatErrors.idNumber}
@@ -262,20 +365,47 @@ const AddCRTDL = () => {
                               {t('idNumber')}
                               <RequiredAsterisk />
                             </Label>
+
                             <div className="usa-hint margin-top-1">
-                              {t('idNumberInfo')}
+                              {t('idNumberInfo', {
+                                type: crtdlFormType?.toUpperCase()
+                              })}
                             </div>
+
                             <FieldErrorMsg>{flatErrors.idNumber}</FieldErrorMsg>
+
+                            <div className="input-maxw">
+                              <Field
+                                as={TextInput}
+                                id="cr-tdl-id-number"
+                                data-testid="cr-tdl-id-number"
+                                maxLength={50}
+                                name="idNumber"
+                              />
+                            </div>
+                          </FieldGroup>
+
+                          <FieldGroup
+                            scrollElement="title"
+                            error={!!flatErrors.title}
+                          >
+                            <Label htmlFor="cr-tdl-title">
+                              {t(`title.${crtdlFormType}`)}
+                              <RequiredAsterisk />
+                            </Label>
+
+                            <FieldErrorMsg>{flatErrors.title}</FieldErrorMsg>
                             <Field
                               as={TextInput}
-                              error={!!flatErrors.idNumber}
-                              id="cr-tdl-id-number"
-                              data-testid="cr-tdl-id-number"
-                              maxLength={50}
-                              name="idNumber"
+                              id="cr-tdl-title"
+                              data-testid="cr-tdl-title"
+                              name="title"
                             />
                           </FieldGroup>
-                          {!loading && (
+                        </Grid>
+
+                        <Grid desktop={{ col: 6 }}>
+                          {!crLoading && !tdlLoading && (
                             <FieldGroup
                               scrollElement="dateInitiated"
                               error={!!flatErrors.dateInitiated}
@@ -287,16 +417,18 @@ const AddCRTDL = () => {
                                 {t('dateInitiated')}
                                 <RequiredAsterisk />
                               </Label>
+
                               <div className="usa-hint margin-top-1">
                                 {h('datePlaceholder')}
                               </div>
+
                               <FieldErrorMsg>
                                 {flatErrors.dateInitiated}
                               </FieldErrorMsg>
+
                               <div className="width-card-lg position-relative">
                                 <Field
                                   as={DatePicker}
-                                  error={+!!flatErrors.dateInitiated}
                                   id="cr-tdl-date-initiated"
                                   data-testid="cr-tdl-date-initiated"
                                   maxLength={50}
@@ -315,40 +447,78 @@ const AddCRTDL = () => {
                       </Grid>
                       <Grid row>
                         <Grid desktop={{ col: 12 }}>
-                          <FieldGroup
-                            scrollElement="title"
-                            error={!!flatErrors.title}
-                          >
-                            <Label htmlFor="cr-tdl-title">
-                              {t('title')}
-                              <RequiredAsterisk />
-                            </Label>
+                          {crtdlFormType === 'cr' && (
+                            <Fieldset>
+                              <Label htmlFor="cr-tdl-title">
+                                {t('dateImplemented')}
+                                <RequiredAsterisk />
+                              </Label>
 
-                            <FieldErrorMsg>{flatErrors.title}</FieldErrorMsg>
-                            <Field
-                              as={TextAreaField}
-                              error={!!flatErrors.title}
-                              className="maxw-none mint-textarea"
-                              id="cr-tdl-title"
-                              data-testid="cr-tdl-title"
-                              maxLength={5000}
-                              name="title"
-                            />
-                          </FieldGroup>
-                          <Divider className="margin-y-4" />
+                              <div className="usa-hint margin-top-0">
+                                {t('dateImplementedInfo')}
+                              </div>
+
+                              <DateInputGroup className="display-flex flex-wrap margin-top-neg-1">
+                                <FormGroup className="usa-form-group--month usa-form-group--select width-card-lg margin-right-2">
+                                  <Label
+                                    htmlFor="date-implemented-month"
+                                    className="text-normal"
+                                  >
+                                    {t('dateMonth')}
+                                  </Label>
+                                  <Field
+                                    as={Select}
+                                    id="date-implemented-month"
+                                    name="dateImplementedMonth"
+                                  >
+                                    <option
+                                      key="default-select"
+                                      disabled
+                                      value=""
+                                    >
+                                      {t('dateSelect')}
+                                    </option>
+                                    {dateMonths.map((month, index) => (
+                                      <option value={index} key={month}>
+                                        {month}
+                                      </option>
+                                    ))}
+                                  </Field>
+                                </FormGroup>
+
+                                <Field
+                                  as={DateInput}
+                                  id="date-implemented-year"
+                                  className="width-10"
+                                  name="dateImplementedYear"
+                                  label={t('dateYear')}
+                                  unit="year"
+                                  maxLength={4}
+                                  minLength={4}
+                                />
+                              </DateInputGroup>
+                            </Fieldset>
+                          )}
+
+                          <Divider className="margin-top-4 margin-bottom-2" />
+
                           <FieldGroup
                             scrollElement="note"
                             error={!!flatErrors.note}
                           >
                             <Label htmlFor="cr-tdl-note">{t('notes')}</Label>
+
                             <div className="usa-hint margin-top-1">
-                              {t('notesInfo')}
+                              {t('notesInfo', {
+                                type: crtdlFormType?.toUpperCase()
+                              })}
                             </div>
+
                             <FieldErrorMsg>{flatErrors.note}</FieldErrorMsg>
+
                             <Field
                               as={Textarea}
                               className="height-15"
-                              error={flatErrors.note}
                               id="cr-tdl-note"
                               data-testid="cr-tdl-note"
                               value={values.note || ''}
@@ -365,11 +535,18 @@ const AddCRTDL = () => {
                           disabled={
                             !values.idNumber ||
                             !values.dateInitiated ||
-                            !values.title
+                            !values.title ||
+                            (crtdlFormType === 'cr' &&
+                              (!values.dateImplementedMonth ||
+                                !values.dateImplementedYear))
                           }
                           onClick={() => setErrors({})}
                         >
-                          {!crtdlID ? t('addCRTDL') : t('updateCRTDL')}
+                          {!crtdlID
+                            ? t('addCRTDLForm', {
+                                type: crtdlFormType?.toUpperCase()
+                              })
+                            : t('updateCRTDL')}
                         </Button>
                       </div>
                     </Fieldset>

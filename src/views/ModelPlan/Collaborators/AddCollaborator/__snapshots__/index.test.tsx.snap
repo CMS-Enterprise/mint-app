@@ -32,7 +32,6 @@ exports[`Adding a collaborator page > matches snapshot 1`] = `
           <fieldset
             class="usa-fieldset"
             data-testid="fieldset"
-            disabled=""
           >
             <div
               class="usa-form-group margin-top-0"
@@ -269,7 +268,7 @@ exports[`Adding a collaborator page > matches snapshot 1`] = `
         </form>
         <a
           class="usa-link"
-          href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/collaborators"
+          href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/collaborators?view=add"
         >
           <span>
             ← 

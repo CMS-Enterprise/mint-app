@@ -1,0 +1,31 @@
+{{template "shared_header.html"}}
+
+
+<h3>{{.SolutionName}} was tagged in</h3>
+<p>{{.ModelName}} {{ if .ModelAbbreviation}} ({{.ModelAbbreviation}}) {{end}} </p>
+<br/>
+<table>
+  <tr>
+    <td>
+      <div class="container-border">
+        <h2>Discussion</h2>
+        <br/>
+        <p><b>{{.UserName}}</b></p>
+        <p class="subtitle"> {{.Role}}</p>
+        <p>{{.DiscussionContent}}</p>
+        <p style="font-weight: normal">
+          <a href="{{.ClientAddress}}/models/{{.ModelID}}/read-only/discussions?discussionID={{.DiscussionID}}">
+            Respond to this discussion in MINT
+          </a>
+        </p>
+      </div>
+    </td>
+  </tr>
+</table>
+<br/>
+<br/>
+<hr/>
+<br/>
+{{template "shared_solution_poc_footer.html" .}}
+
+{{template "shared_footer.html"}}

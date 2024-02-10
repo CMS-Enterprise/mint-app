@@ -19,7 +19,7 @@ import {
   useTable
 } from 'react-table';
 import { useQuery } from '@apollo/client';
-import { IconArrowForward, Table as UswdsTable } from '@trussworks/react-uswds';
+import { Icon, Table as UswdsTable } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import i18next from 'i18next';
 import { useFlags } from 'launchdarkly-react-client-sdk';
@@ -155,7 +155,7 @@ const OperationalNeedsTable = ({
                 className="display-flex flex-align-center"
               >
                 {value}
-                <IconArrowForward className="margin-left-1" />
+                <Icon.ArrowForward className="margin-left-1" />
               </UswdsReactLink>
             );
           }
@@ -313,7 +313,7 @@ const OperationalNeedsTable = ({
     usePagination
   );
 
-  if (loading) {
+  if (!data && loading) {
     return <PageLoading />;
   }
 

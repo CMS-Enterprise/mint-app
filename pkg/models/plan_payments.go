@@ -6,29 +6,6 @@ import (
 	"github.com/lib/pq"
 )
 
-// AnticipatedPaymentFrequencyType is the enumeration of options for this category
-type AnticipatedPaymentFrequencyType string
-
-//goland:noinspection ALL
-const (
-	// AnticipatedPaymentFrequencyTypeAnnually indicates annual payments
-	AnticipatedPaymentFrequencyTypeAnnually AnticipatedPaymentFrequencyType = "ANNUALLY"
-	// AnticipatedPaymentFrequencyTypeBiannually indicates biannual payments
-	AnticipatedPaymentFrequencyTypeBiannually AnticipatedPaymentFrequencyType = "BIANNUALLY"
-	// AnticipatedPaymentFrequencyTypeQuarterly indicates payments every quarter
-	AnticipatedPaymentFrequencyTypeQuarterly AnticipatedPaymentFrequencyType = "QUARTERLY"
-	// AnticipatedPaymentFrequencyTypeMonthly indicates payments every month
-	AnticipatedPaymentFrequencyTypeMonthly AnticipatedPaymentFrequencyType = "MONTHLY"
-	// AnticipatedPaymentFrequencyTypeSemiMonthly indicates semi-monthly payments
-	AnticipatedPaymentFrequencyTypeSemiMonthly AnticipatedPaymentFrequencyType = "SEMIMONTHLY"
-	// AnticipatedPaymentFrequencyTypeWeekly indicates payments every week
-	AnticipatedPaymentFrequencyTypeWeekly AnticipatedPaymentFrequencyType = "WEEKLY"
-	// AnticipatedPaymentFrequencyTypeDaily indicates payments every day
-	AnticipatedPaymentFrequencyTypeDaily AnticipatedPaymentFrequencyType = "DAILY"
-	// AnticipatedPaymentFrequencyTypeOther indicates another form of payment than provided
-	AnticipatedPaymentFrequencyTypeOther AnticipatedPaymentFrequencyType = "OTHER"
-)
-
 // ComplexityCalculationLevelType is an enumeration of options for this category
 type ComplexityCalculationLevelType string
 
@@ -55,6 +32,8 @@ const (
 	ClaimsBasedPayTypeSNFClaimsWithout3DayHospitalAdmissions ClaimsBasedPayType = "SNF_CLAIMS_WITHOUT_3DAY_HOSPITAL_ADMISSIONS"
 	// ClaimsBasedPayTypeTeleHealthServicesNotTraditionalMedicare indicates TeleHealth services not traditional medicare
 	ClaimsBasedPayTypeTeleHealthServicesNotTraditionalMedicare ClaimsBasedPayType = "TELEHEALTH_SERVICES_NOT_TRADITIONAL_MEDICARE"
+	// ClaimsBasedPayTypePaymentsForPostDischargeHomeVisits indicates payments for post discharge home visits
+	PAYMENTS_FOR_POST_DISCHARGE_HOME_VISITS ClaimsBasedPayType = "PAYMENTS_FOR_POST_DISCHARGE_HOME_VISITS"
 )
 
 // FundingSource is an enumeration of options for this category
@@ -66,6 +45,10 @@ const (
 	FundingSourcePatientProtectionAffordableCareAct FundingSource = "PATIENT_PROTECTION_AFFORDABLE_CARE_ACT"
 	// FundingSourceTrustFund indicates the funding source is categorically trust fund
 	FundingSourceTrustFund FundingSource = "TRUST_FUND"
+
+	FundingSourceMedicareA FundingSource = "MEDICARE_PART_A_HI_TRUST_FUND"
+
+	FundingSourceMedicareB FundingSource = "MEDICARE_PART_B_SMI_TRUST_FUND"
 	// FundingSourceOther indicates the funding source is not included in the provided options
 	FundingSourceOther FundingSource = "Other"
 )
@@ -87,8 +70,6 @@ const (
 	NonClaimsBasedPaymentTypeCareCoordinationManagementFee NonClaimsBasedPaymentType = "CARE_COORDINATION_MANAGEMENT_FEE"
 	// NonClaimsBasedPaymentTypeGlobalBudget indicates global budget
 	NonClaimsBasedPaymentTypeGlobalBudget NonClaimsBasedPaymentType = "GLOBAL_BUDGET"
-	// NonClaimsBasedPaymentTypeGrants indicates grants
-	NonClaimsBasedPaymentTypeGrants NonClaimsBasedPaymentType = "GRANTS"
 	// NonClaimsBasedPaymentTypeIncentivePayment indicates incentive payment
 	NonClaimsBasedPaymentTypeIncentivePayment NonClaimsBasedPaymentType = "INCENTIVE_PAYMENT"
 	// NonClaimsBasedPaymentTypeMAPDSharedSavings indicates MAPD shared savings
@@ -129,26 +110,19 @@ const (
 	PayTypeGrants PayType = "GRANTS"
 )
 
-// TrustFundType is the enumeration of options for this category
-type TrustFundType string
-
-//goland:noinspection ALL
-const (
-	TrustFundTypeMedicarePartAHI  TrustFundType = "MEDICARE_PART_A_HI_TRUST_FUND"
-	TrustFundTypeMedicarePartBSMI TrustFundType = "MEDICARE_PART_B_SMI_TRUST_FUND"
-)
-
 // PlanPayments defines the data associated with a plan payments model
 type PlanPayments struct {
 	baseTaskListSection
 
 	// Page 1
 	FundingSource                   pq.StringArray `json:"fundingSource" db:"funding_source" statusWeight:"1"`
-	FundingSourceTrustFundType      pq.StringArray `json:"fundingSourceTrustFundType" db:"funding_source_trust_fund_type"`
+	FundingSourceMedicareAInfo      *string        `json:"fundingSourceMedicareAInfo" db:"funding_source_medicare_a_info"`
+	FundingSourceMedicareBInfo      *string        `json:"fundingSourceMedicareBInfo" db:"funding_source_medicare_b_info"`
 	FundingSourceOther              *string        `json:"fundingSourceOther" db:"funding_source_other"`
 	FundingSourceNote               *string        `json:"fundingSourceNote" db:"funding_source_note"`
 	FundingSourceR                  pq.StringArray `json:"fundingSourceR" db:"funding_source_r" statusWeight:"1"`
-	FundingSourceRTrustFundType     pq.StringArray `json:"fundingSourceRTrustFundType" db:"funding_source_r_trust_fund_type"`
+	FundingSourceRMedicareAInfo     *string        `json:"fundingSourceRMedicareAInfo" db:"funding_source_r_medicare_a_info"`
+	FundingSourceRMedicareBInfo     *string        `json:"fundingSourceRMedicareBInfo" db:"funding_source_r_medicare_b_info"`
 	FundingSourceROther             *string        `json:"fundingSourceROther" db:"funding_source_r_other"`
 	FundingSourceRNote              *string        `json:"fundingSourceRNote" db:"funding_source_r_note"`
 	PayRecipients                   pq.StringArray `json:"payRecipients" db:"pay_recipients" statusWeight:"1"`
@@ -200,20 +174,32 @@ type PlanPayments struct {
 	// Page 6
 	ExpectedCalculationComplexityLevel                *ComplexityCalculationLevelType `json:"expectedCalculationComplexityLevel" db:"expected_calculation_complexity_level" statusWeight:"1"`
 	ExpectedCalculationComplexityLevelNote            *string                         `json:"expectedCalculationComplexityLevelNote" db:"expected_calculation_complexity_level_note"`
+	ClaimsProcessingPrecedence                        *bool                           `json:"claimsProcessingPrecedence" db:"claims_processing_precedence"`
+	ClaimsProcessingPrecedenceOther                   *string                         `json:"claimsProcessingPrecedenceOther" db:"claims_processing_precedence_other"`
+	ClaimsProcessingPrecedenceNote                    *string                         `json:"claimsProcessingPrecedenceNote" db:"claims_processing_precedence_note"`
 	CanParticipantsSelectBetweenPaymentMechanisms     *bool                           `json:"canParticipantsSelectBetweenPaymentMechanisms" db:"can_participants_select_between_payment_mechanisms" statusWeight:"1"`
 	CanParticipantsSelectBetweenPaymentMechanismsHow  *string                         `json:"canParticipantsSelectBetweenPaymentMechanismsHow" db:"can_participants_select_between_payment_mechanisms_how"`
 	CanParticipantsSelectBetweenPaymentMechanismsNote *string                         `json:"canParticipantsSelectBetweenPaymentMechanismsNote" db:"can_participants_select_between_payment_mechanisms_note"`
 	AnticipatedPaymentFrequency                       pq.StringArray                  `json:"anticipatedPaymentFrequency" db:"anticipated_payment_frequency" statusWeight:"1"`
+	AnticipatedPaymentFrequencyContinually            *string                         `json:"anticipatedPaymentFrequencyContinually" db:"anticipated_payment_frequency_continually"`
 	AnticipatedPaymentFrequencyOther                  *string                         `json:"anticipatedPaymentFrequencyOther" db:"anticipated_payment_frequency_other"`
 	AnticipatedPaymentFrequencyNote                   *string                         `json:"anticipatedPaymentFrequencyNote" db:"anticipated_payment_frequency_note"`
 
 	// Page 7
-	WillRecoverPayments                              *bool      `json:"willRecoverPayments" db:"will_recover_payments" statusWeight:"1"`
-	WillRecoverPaymentsNote                          *string    `json:"willRecoverPaymentsNote" db:"will_recover_payments_note"`
-	AnticipateReconcilingPaymentsRetrospectively     *bool      `json:"anticipateReconcilingPaymentsRetrospectively" db:"anticipate_reconciling_payments_retrospectively" statusWeight:"1"`
-	AnticipateReconcilingPaymentsRetrospectivelyNote *string    `json:"anticipateReconcilingPaymentsRetrospectivelyNote" db:"anticipate_reconciling_payments_retrospectively_note"`
-	PaymentStartDate                                 *time.Time `json:"paymentStartDate" db:"payment_start_date" statusWeight:"1"`
-	PaymentStartDateNote                             *string    `json:"paymentStartDateNote" db:"payment_start_date_note"`
+	WillRecoverPayments                              *bool          `json:"willRecoverPayments" db:"will_recover_payments" statusWeight:"1"`
+	WillRecoverPaymentsNote                          *string        `json:"willRecoverPaymentsNote" db:"will_recover_payments_note"`
+	AnticipateReconcilingPaymentsRetrospectively     *bool          `json:"anticipateReconcilingPaymentsRetrospectively" db:"anticipate_reconciling_payments_retrospectively" statusWeight:"1"`
+	AnticipateReconcilingPaymentsRetrospectivelyNote *string        `json:"anticipateReconcilingPaymentsRetrospectivelyNote" db:"anticipate_reconciling_payments_retrospectively_note"`
+	PaymentReconciliationFrequency                   pq.StringArray `json:"paymentReconciliationFrequency" db:"payment_reconciliation_frequency" statusWeight:"1"`
+	PaymentReconciliationFrequencyContinually        *string        `json:"paymentReconciliationFrequencyContinually" db:"payment_reconciliation_frequency_continually"`
+	PaymentReconciliationFrequencyOther              *string        `json:"paymentReconciliationFrequencyOther" db:"payment_reconciliation_frequency_other"`
+	PaymentReconciliationFrequencyNote               *string        `json:"paymentReconciliationFrequencyNote" db:"payment_reconciliation_frequency_note"`
+	PaymentDemandRecoupmentFrequency                 pq.StringArray `json:"paymentDemandRecoupmentFrequency" db:"payment_demand_recoupment_frequency" statusWeight:"1"`
+	PaymentDemandRecoupmentFrequencyContinually      *string        `json:"paymentDemandRecoupmentFrequencyContinually" db:"payment_demand_recoupment_frequency_continually"`
+	PaymentDemandRecoupmentFrequencyOther            *string        `json:"paymentDemandRecoupmentFrequencyOther" db:"payment_demand_recoupment_frequency_other"`
+	PaymentDemandRecoupmentFrequencyNote             *string        `json:"paymentDemandRecoupmentFrequencyNote" db:"payment_demand_recoupment_frequency_note"`
+	PaymentStartDate                                 *time.Time     `json:"paymentStartDate" db:"payment_start_date" statusWeight:"1"`
+	PaymentStartDateNote                             *string        `json:"paymentStartDateNote" db:"payment_start_date_note"`
 }
 
 // NewPlanPayments returns a new PlanPayments object

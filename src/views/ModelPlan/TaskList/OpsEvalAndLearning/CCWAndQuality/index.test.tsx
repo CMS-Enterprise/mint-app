@@ -2,15 +2,17 @@ import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
-
-import GetCCWAndQuality from 'queries/OpsEvalAndLearning/GetCCWAndQuality';
-import { GetCCWAndQuality_modelPlan_opsEvalAndLearning as GetCCWAndQualityType } from 'queries/OpsEvalAndLearning/types/GetCCWAndQuality';
 import {
   CcmInvolvmentType,
-  DataForMonitoringType
-} from 'types/graphql-global-types';
+  DataForMonitoringType,
+  GetCcwAndQualityDocument,
+  GetCcwAndQualityQuery,
+  YesNoOtherType
+} from 'gql/gen/graphql';
 
 import CCWAndQuality from '.';
+
+type GetCCWAndQualityType = GetCcwAndQualityQuery['modelPlan']['opsEvalAndLearning'];
 
 const ccwAndQualityMockData: GetCCWAndQualityType = {
   __typename: 'PlanOpsEvalAndLearning',
@@ -29,14 +31,15 @@ const ccwAndQualityMockData: GetCCWAndQualityType = {
   useCcwForFileDistribiutionToParticipantsNote: '',
   developNewQualityMeasures: null,
   developNewQualityMeasuresNote: '',
-  qualityPerformanceImpactsPayment: true,
+  qualityPerformanceImpactsPayment: YesNoOtherType.YES,
+  qualityPerformanceImpactsPaymentOther: 't',
   qualityPerformanceImpactsPaymentNote: ''
 };
 
 const ccwAndQualityMock = [
   {
     request: {
-      query: GetCCWAndQuality,
+      query: GetCcwAndQualityDocument,
       variables: { id: 'ce3405a0-3399-4e3a-88d7-3cfc613d2905' }
     },
     result: {
@@ -82,7 +85,7 @@ describe('Model Plan Ops Eval and Learning CCW and Qualtiy', () => {
 
     await waitFor(() => {
       expect(
-        screen.getByTestId('ops-eval-and-learning-performance-impact-true')
+        screen.getByTestId('ops-eval-and-learning-performance-impact-YES')
       ).toBeChecked();
     });
   });
@@ -104,7 +107,7 @@ describe('Model Plan Ops Eval and Learning CCW and Qualtiy', () => {
 
     await waitFor(() => {
       expect(
-        screen.getByTestId('ops-eval-and-learning-performance-impact-true')
+        screen.getByTestId('ops-eval-and-learning-performance-impact-YES')
       ).toBeChecked();
     });
     expect(asFragment()).toMatchSnapshot();

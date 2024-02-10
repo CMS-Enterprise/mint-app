@@ -9,21 +9,23 @@ export const collaborators: TranslationCollaborators = {
     dataType: 'string',
     formType: 'select'
   },
-  teamRole: {
-    gqlField: 'teamRole',
-    goField: 'TeamRole',
-    dbField: 'team_role',
+  teamRoles: {
+    gqlField: 'teamRoles',
+    goField: 'TeamRoles',
+    dbField: 'team_roles',
     label: 'Team member role(s)',
     dataType: 'enum',
     formType: 'select',
     options: {
+      CM_FFS_COUNTERPART: 'CM FFS counterpart',
+      COR: `Contracting Officer's Representative (COR)`,
       EVALUATION: 'Evaluation',
       IT_LEAD: 'IT Lead',
       LEADERSHIP: 'Leadership',
       LEARNING: 'Learning',
       MODEL_LEAD: 'Model Lead',
       MODEL_TEAM: 'Model Team',
-      OACT: 'OACT',
+      OACT: 'Office of the Actuary (OACT)',
       PAYMENT: 'Payment',
       QUALITY: 'Quality'
     }
