@@ -6,13 +6,13 @@ import (
 	"strings"
 
 	"github.com/google/uuid"
-	"github.com/jmoiron/sqlx"
 	"github.com/samber/lo"
 	"go.uber.org/zap"
 
 	"github.com/cmsgov/mint-app/pkg/appcontext"
 	"github.com/cmsgov/mint-app/pkg/authentication"
 	"github.com/cmsgov/mint-app/pkg/models"
+	"github.com/cmsgov/mint-app/pkg/sqlutils"
 	"github.com/cmsgov/mint-app/pkg/storage"
 	"github.com/cmsgov/mint-app/pkg/userhelpers"
 )
@@ -162,7 +162,7 @@ func updateMentionAndRawContent(mention *models.HTMLMention, tHTML *models.Tagge
 
 // TagCollectionCreate converts an array of mentions, and creates an array in the database for unique tags.
 func TagCollectionCreate(logger *zap.Logger, store *storage.Store, principal authentication.Principal,
-	taggedField string, taggedTable string, taggedContentID uuid.UUID, mentions []*models.HTMLMention, tx *sqlx.Tx) ([]*models.Tag, *sqlx.Tx, error) {
+	taggedField string, taggedTable string, taggedContentID uuid.UUID, mentions []*models.HTMLMention, np sqlutils.NamedPreparer) ([]*models.Tag, error) {
 
 	tags := models.TagArrayFromHTMLMentions(taggedField, taggedTable, taggedContentID, mentions)
 
@@ -172,10 +172,10 @@ func TagCollectionCreate(logger *zap.Logger, store *storage.Store, principal aut
 		return key
 	})
 
-	retTags, tx2, err := store.TagCollectionCreate(logger, uniqTags, principal.Account().ID, tx) // Note, this will fail if any tag is invalid.
+	retTags, err := store.TagCollectionCreate(logger, uniqTags, principal.Account().ID, np) // Note, this will fail if any tag is invalid.
 	if err != nil {
-		return nil, tx, err
+		return nil, err
 	}
-	return retTags, tx2, nil
+	return retTags, nil
 
 }

@@ -5,6 +5,7 @@ import (
 
 	"github.com/cmsgov/mint-app/pkg/shared/utilitySQL"
 	"github.com/cmsgov/mint-app/pkg/shared/utilityUUID"
+	"github.com/cmsgov/mint-app/pkg/sqlutils"
 	"github.com/cmsgov/mint-app/pkg/storage/genericmodel"
 
 	"github.com/google/uuid"
@@ -53,7 +54,7 @@ func (s *Store) PlanPaymentsGetByModelPlanIDLOADER(
 
 // PlanPaymentsCreate creates a new plan payments row in the database and returns a copy to the caller
 func (s *Store) PlanPaymentsCreate(
-	np NamedPreparer,
+	np sqlutils.NamedPreparer,
 	logger *zap.Logger,
 	payments *models.PlanPayments) (*models.PlanPayments, error) {
 

@@ -6,6 +6,7 @@ import (
 	"fmt"
 
 	"github.com/cmsgov/mint-app/pkg/shared/utilitySQL"
+	"github.com/cmsgov/mint-app/pkg/sqlutils"
 	"github.com/cmsgov/mint-app/pkg/storage/genericmodel"
 
 	"github.com/google/uuid"
@@ -69,7 +70,7 @@ func (s *Store) ModelPlanGetByModelPlanIDLOADER(_ *zap.Logger, paramTableJSON st
 }
 
 // ModelPlanCreate creates a model plan using a transaction
-func (s *Store) ModelPlanCreate(np NamedPreparer, logger *zap.Logger, plan *models.ModelPlan) (*models.ModelPlan, error) {
+func (s *Store) ModelPlanCreate(np sqlutils.NamedPreparer, logger *zap.Logger, plan *models.ModelPlan) (*models.ModelPlan, error) {
 	if plan.ID == uuid.Nil {
 		plan.ID = uuid.New()
 	}
@@ -134,7 +135,7 @@ func (s *Store) ModelPlanUpdate(logger *zap.Logger, plan *models.ModelPlan) (*mo
 }
 
 // ModelPlanGetByID returns a model plan for a given ID
-func (s *Store) ModelPlanGetByID(np NamedPreparer, logger *zap.Logger, id uuid.UUID) (*models.ModelPlan, error) {
+func (s *Store) ModelPlanGetByID(np sqlutils.NamedPreparer, logger *zap.Logger, id uuid.UUID) (*models.ModelPlan, error) {
 
 	plan := models.ModelPlan{}
 	stmt, err := np.PrepareNamed(modelPlanGetByIDSQL)

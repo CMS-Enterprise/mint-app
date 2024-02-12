@@ -7,6 +7,7 @@ import (
 
 	"github.com/cmsgov/mint-app/pkg/authentication"
 	"github.com/cmsgov/mint-app/pkg/models"
+	"github.com/cmsgov/mint-app/pkg/sqlutils"
 	"github.com/cmsgov/mint-app/pkg/storage"
 )
 
@@ -24,7 +25,7 @@ func IsPlanFavorited(logger *zap.Logger, principal authentication.Principal, sto
 }
 
 // PlanFavoriteCreate creates a new plan favorite record in the database
-func PlanFavoriteCreate(np storage.NamedPreparer, logger *zap.Logger, principal authentication.Principal, userAccountID uuid.UUID, store *storage.Store, modelPlanID uuid.UUID) (*models.PlanFavorite, error) {
+func PlanFavoriteCreate(np sqlutils.NamedPreparer, logger *zap.Logger, principal authentication.Principal, userAccountID uuid.UUID, store *storage.Store, modelPlanID uuid.UUID) (*models.PlanFavorite, error) {
 
 	favorite := models.NewPlanFavorite(principal.Account().ID, userAccountID, modelPlanID)
 

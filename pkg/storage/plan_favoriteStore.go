@@ -7,6 +7,7 @@ import (
 	"go.uber.org/zap"
 
 	"github.com/cmsgov/mint-app/pkg/models"
+	"github.com/cmsgov/mint-app/pkg/sqlutils"
 
 	_ "embed"
 )
@@ -27,7 +28,7 @@ var planFavoriteGetCollectionByUserIDSQL string
 var planFavoriteGetUniqueUserIDsSQL string
 
 // PlanFavoriteCreate creates and returns a plan favorite object
-func (s *Store) PlanFavoriteCreate(np NamedPreparer, logger *zap.Logger, favorite models.PlanFavorite) (*models.PlanFavorite, error) {
+func (s *Store) PlanFavoriteCreate(np sqlutils.NamedPreparer, logger *zap.Logger, favorite models.PlanFavorite) (*models.PlanFavorite, error) {
 
 	if favorite.ID == uuid.Nil {
 		favorite.ID = uuid.New()

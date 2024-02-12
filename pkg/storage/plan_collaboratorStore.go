@@ -5,6 +5,7 @@ import (
 	"fmt"
 
 	"github.com/cmsgov/mint-app/pkg/shared/utilitySQL"
+	"github.com/cmsgov/mint-app/pkg/sqlutils"
 
 	"github.com/google/uuid"
 	"go.uber.org/zap"
@@ -57,7 +58,7 @@ func (s *Store) PlanCollaboratorGetByModelPlanIDLOADER(
 
 // PlanCollaboratorCreate creates a new plan collaborator
 func (s *Store) PlanCollaboratorCreate(
-	np NamedPreparer,
+	np sqlutils.NamedPreparer,
 	_ *zap.Logger,
 	collaborator *models.PlanCollaborator,
 ) (*models.PlanCollaborator, error) {
