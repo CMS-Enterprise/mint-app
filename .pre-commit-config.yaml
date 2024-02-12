@@ -84,7 +84,7 @@ repos:
         name: Lint GraphQL schema
         entry: scripts/pre-commit-graphql-schema-lint
         language: script
-        files: pkg/graph/schema.graphql
+        files: "pkg/graph/schema(/.*)?/.*\\.graphql"
 
   - repo: local
     hooks:
@@ -92,7 +92,7 @@ repos:
         name: Run GraphQL code generation
         entry: scripts/pre-commit-check-code-generation
         language: script
-        files: "pkg/graph/schema\\.graphql|pkg/graph/schema\\.resolvers\\.go|src/queries/.*\\.ts|src/queriesCodegen/.*\\.ts"
+        files: "pkg/graph/schema(/.*)?/.*\\.graphql|pkg/graph/schema/gqlresolvers/[^/]+\\.go|src/queriesCodegen/.*\\.ts"
         pass_filenames: false
 
   - repo: https://github.com/awslabs/git-secrets
