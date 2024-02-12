@@ -1,11 +1,16 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Grid, Icon } from '@trussworks/react-uswds';
+import i18next from 'i18next';
 
+import Alert from 'components/shared/Alert';
+import CollapsableLink from 'components/shared/CollapsableLink';
 import Tooltip from 'components/shared/Tooltip';
 import {
   getKeys,
-  TranslationFieldPropertiesWithOptions
+  TranslationFieldPropertiesWithOptions,
+  TranslationFieldPropertiesWithOptionsAndConditions,
+  TranslationPlan
 } from 'types/translation';
 
 export type ReadOnlySectionProps = {
@@ -20,6 +25,7 @@ export type ReadOnlySectionProps = {
     | undefined;
   tooltips?: (string | null | undefined)[];
   notes?: string | null;
+  relatedConditions?: (string | null | undefined)[] | null;
 };
 
 const ReadOnlySection = ({
@@ -31,9 +37,12 @@ const ReadOnlySection = ({
   listOtherItem,
   listOtherItems,
   tooltips,
-  notes
+  notes,
+  relatedConditions
 }: ReadOnlySectionProps) => {
   const { t: miscellaneousT } = useTranslation('miscellaneous');
+  const { t: readOnlyT } = useTranslation('generalReadOnly');
+
   const sectionName = heading
     .toLowerCase()
     .replace(/\W*$/g, '')
@@ -180,6 +189,31 @@ const ReadOnlySection = ({
       {notes && (
         <ReadOnlySection heading={miscellaneousT('notes')} copy={notes} />
       )}
+      {relatedConditions?.length && (
+        <>
+          <Alert type="info" slim className="margin-bottom-3">
+            {readOnlyT('questionNotApplicable', {
+              count: relatedConditions.length
+            })}
+          </Alert>
+
+          <CollapsableLink
+            id={heading}
+            label={readOnlyT('showOtherQuestions')}
+            closeLabel={readOnlyT('hideOtherQuestions')}
+            styleLeftBar={false}
+            className="margin-bottom-3"
+          >
+            <ul className="margin-y-0">
+              {relatedConditions.map(question => (
+                <li key={question} className="text-bold margin-bottom-1">
+                  {question}
+                </li>
+              ))}
+            </ul>
+          </CollapsableLink>
+        </>
+      )}
     </Grid>
   );
 };
@@ -211,6 +245,33 @@ export const formatListOtherItems = <T extends string | keyof T>(
     .map((option): string | null | undefined => {
       return values[config.optionsRelatedInfo?.[option]];
     });
+};
+
+/*
+  Util function for getting related child questions that do not need to be rendered
+  Using to render a toggle alert to show list of questions
+*/
+export const getRelatedUneededQuestions = <T extends string | keyof T, C>(
+  config:
+    | TranslationFieldPropertiesWithOptions<T>
+    | TranslationFieldPropertiesWithOptionsAndConditions<T, C>, // Translation config
+  value: T[] | undefined, // field value/enum array,
+  translationKey: keyof TranslationPlan
+): (string | null | undefined)[] | null => {
+  if (!config.childRelation) return null;
+  const hiddenQuestions: string[] = [];
+  getKeys(config.childRelation)
+    .filter(option => config.childRelation?.[option].length)
+    .forEach(option => {
+      if (!value?.includes(option)) {
+        config.childRelation?.[option].forEach(childField => {
+          hiddenQuestions.push(
+            i18next.t<string>(`${translationKey}:${childField}.label`)
+          );
+        });
+      }
+    });
+  return hiddenQuestions;
 };
 
 export default ReadOnlySection;

@@ -46,7 +46,7 @@ const NDABanner = ({ collapsable, landing, className }: NDABannerType) => {
                       labelPosition="bottom"
                       styleLeftBar={false}
                       iconPosition="left"
-                      className="margin-bottom-2"
+                      toggleClassName="margin-bottom-2"
                     >
                       <p className="padding-0 margin-0">{t('body')}</p>
                     </CollapsableLink>

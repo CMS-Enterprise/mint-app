@@ -15,7 +15,8 @@ import { NotFoundPartial } from 'views/NotFound';
 import { checkGroupMap } from '../_components/FilterView/util';
 import ReadOnlySection, {
   formatListItems,
-  formatListOtherItems
+  formatListOtherItems,
+  getRelatedUneededQuestions
 } from '../_components/ReadOnlySection';
 import SideBySideReadOnlySection from '../_components/SideBySideReadOnlySection';
 import TitleAndStatus from '../_components/TitleAndStatus';
@@ -37,6 +38,7 @@ const ReadOnlyParticipantsAndProviders = ({
   const { t: prepareForClearanceT } = useTranslation('prepareForClearance');
 
   const {
+    participants: participantsConfig,
     participantAddedFrequency: participantAddedFrequencyConfig,
     participantRemovedFrequency: participantRemovedFrequencyConfig,
     providerAdditionFrequency: providerAdditionFrequencyConfig,
@@ -156,6 +158,11 @@ const ReadOnlyParticipantsAndProviders = ({
             )}
             listOtherItem={participantsOther}
             notes={participantsNote}
+            relatedConditions={getRelatedUneededQuestions(
+              participantsConfig,
+              participants,
+              'participantsAndProviders'
+            )}
           />
         )}
 
