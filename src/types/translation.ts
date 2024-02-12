@@ -116,6 +116,8 @@ export type TranslationFieldPropertiesWithOptions<
   optionsLabels?: Record<T, string>;
   optionsRelatedInfo?: Record<T, string>;
   childRelation?: Record<T, string[]>;
+  otherKey?: T;
+  hasOther?: string;
 };
 
 // Extended type for questions that have options - boolean, radio, checkbox, etc.

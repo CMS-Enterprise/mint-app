@@ -18,6 +18,7 @@ import ReadOnlySection, {
   formatListOtherItems,
   getRelatedUneededQuestions
 } from '../_components/ReadOnlySection';
+import ReadOnlySectionNew from '../_components/ReadOnlySection/new';
 import SideBySideReadOnlySection from '../_components/SideBySideReadOnlySection';
 import TitleAndStatus from '../_components/TitleAndStatus';
 import { ReadOnlyProps } from '../ModelBasics';
@@ -150,7 +151,7 @@ const ReadOnlyParticipantsAndProviders = ({
           isViewingFilteredView,
           filteredQuestions,
           'participants',
-          <ReadOnlySection
+          <ReadOnlySectionNew
             heading={participantsAndProvidersT('participants.readonlyLabel')}
             list
             listItems={participants?.map((type): string =>
