@@ -11,6 +11,7 @@ This application has the following main components:
 ## Documentation
 
 - [Development environment setup](./docs/dev_environment_setup.md)
+- [Contributing](./CONTRIBUTING.md)
 - [Architecture Decision Records (ADRs)](./docs/adr)
 - [Frontend docs](./src/README.md)
 - [Backend docs](./pkg/README.md)
