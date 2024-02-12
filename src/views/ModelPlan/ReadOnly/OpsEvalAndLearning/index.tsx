@@ -631,9 +631,9 @@ const ReadOnlyOpsEvalAndLearning = ({
         {checkGroupMap(
           isViewingFilteredView,
           filteredQuestions,
-          'riskAdjustPayments',
+          'appealPayments',
           <ReadOnlySection
-            heading={opsEvalAndLearningT('riskAdjustPayments.readonlyLabel')}
+            heading={opsEvalAndLearningT('riskAdjustNote.label')}
             copy={riskAdjustNote}
           />
         )}
@@ -688,7 +688,7 @@ const ReadOnlyOpsEvalAndLearning = ({
           filteredQuestions,
           'appealPayments',
           <ReadOnlySection
-            heading={opsEvalAndLearningT('appealPayments.readonlyLabel')}
+            heading={opsEvalAndLearningT('appealNote.label')}
             copy={appealNote}
           />
         )}
