@@ -104,7 +104,7 @@
     "lint:fix": "eslint --fix '**/*.{ts,tsx}'",
     "cypress:open": "cypress open",
     "cypress:run": "DEBUG=cypress:server:util:process_profiler cypress run",
-    "generate": "graphql-codegen && apollo client:codegen --passthroughCustomScalars --localSchemaFile=pkg/graph/schema.graphql --target typescript  --tagName=gql --addTypename --globalTypesFile=src/types/graphql-global-types.ts types",
+    "generate": "graphql-codegen && apollo client:codegen --passthroughCustomScalars --localSchemaFile=pkg/graph/**/*.graphql --target typescript  --tagName=gql --addTypename --globalTypesFile=src/types/graphql-global-types.ts types",
     "storybook": "storybook dev -p 6006 -s public",
     "build-storybook": "storybook build -s public",
     "codegen": "graphql-codegen --config codegen.ts"
