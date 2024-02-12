@@ -1,5 +1,5 @@
 /*
-CheckboxCard component for selecting needed IT solutions
+CheckboxCard component for selecting needed Operational Solutions
 Integrated with Formik
 */
 

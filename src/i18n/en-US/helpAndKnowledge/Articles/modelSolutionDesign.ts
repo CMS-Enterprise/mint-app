@@ -7,7 +7,7 @@ const modelSolutionDesign = {
     items: [
       'Start a Model Plan',
       'Assemble the IT and operational team',
-      'Identify the IT solutions for the model’s operational needs'
+      'Identify the solutions for the model’s operational needs'
     ]
   },
   startModelPlan: {
@@ -82,7 +82,7 @@ const modelSolutionDesign = {
     }
   },
   identifySolutions: {
-    heading: '3.   Identify the IT solutions for the model’s operational needs',
+    heading: '3.   Identify the solutions for the model’s operational needs',
     purpose: 'Purpose',
     purposeDescription:
       'To identify the systems, data, and operational contracts needed to support a model. This step should identify the breadth of system and operational needs for a model.',
@@ -101,13 +101,13 @@ const modelSolutionDesign = {
         {
           heading: 'Iterate and complete the Model Plan',
           description:
-            'The model team should keep their Model Plan as up to date as possible, especially date related changes. As they answer questions within the Model Plan, operational needs are identified within the IT solutions and implementation status tracker. '
+            'The model team should keep their Model Plan as up to date as possible, especially date related changes. As they answer questions within the Model Plan, operational needs are identified within the operational solutions and implementation status tracker. '
         },
         {
           heading:
-            'Select the necessary IT solutions for the model’s operational needs',
+            'Select the necessary solutions for the model’s operational needs',
           description:
-            'Within the IT solutions and implementation status tracker, the Model Lead and IT Lead will work together to select the IT solutions the model keeping the milestones in mind.'
+            'Within the operational solutions and implementation status tracker, the Model Lead and IT Lead will work together to select the operational solutions the model will use, keeping the milestones in mind.'
         },
         {
           heading: 'Understand and plan for the data needs of the model',

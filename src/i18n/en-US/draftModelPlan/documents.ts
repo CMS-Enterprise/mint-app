@@ -3,7 +3,7 @@ const documents = {
   subheading: 'for <1>{{modelName}}</1>',
   breadcrumb: 'Model Plan task list',
   breadcrumb2: 'Upload Document',
-  itTracker: 'IT solutions tracker',
+  itTracker: 'Operational solutions tracker',
   solutionDetails: 'Solution details',
   description:
     'Upload any documents relevant to your Model Plan.  This could include recent concept documents, policy papers, or any additional model background information.',
@@ -40,7 +40,7 @@ const documents = {
     warning:
       'You will not be able to access this document after it is removed.',
     warning2:
-      'You will not be able to access this document after it is removed. It will also be removed from any linked solutions within the IT solutions tracker.',
+      'You will not be able to access this document after it is removed. It will also be removed from any linked solutions within the operational solutions tracker.',
     warningRemoveSolution:
       ' this document will delete it from your model completely, and you will no longer be able to access it. It will also be removed from any other linked solutions.',
     warningRemoveSolution2:

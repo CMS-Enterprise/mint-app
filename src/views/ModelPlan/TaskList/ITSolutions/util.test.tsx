@@ -24,7 +24,7 @@ const operationalNeed: any = {
   id: 'b7290d2c-0eae-4df4-8657-b22b5df3159e'
 };
 
-describe('IT Solutions Util', () => {
+describe('Operational Solutions Util', () => {
   it('returns formatted needed solutions', async () => {
     expect(
       filterNeedsFormatSolutions([

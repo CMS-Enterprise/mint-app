@@ -292,7 +292,7 @@ describe('The Model Plan Payment Form', () => {
 
     cy.contains(
       'button',
-      'Continue to IT solutions and implementation status'
+      'Continue to operational solutions and implementation status'
     ).click();
     cy.location().should(loc => {
       expect(loc.pathname).to.match(

@@ -886,7 +886,7 @@ export const paymentsMisc = {
   claims: 'Claims-Based Payments',
   nonClaims: 'Non-Claims-Based Payments',
   grants: 'Grants',
-  continueToITSolutions: 'Continue to IT solutions and implementation status'
+  continueToITSolutions: 'Continue to operational solutions tracker'
 };
 
 export default payments;

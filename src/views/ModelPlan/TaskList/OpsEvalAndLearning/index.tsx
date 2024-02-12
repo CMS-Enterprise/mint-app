@@ -154,7 +154,7 @@ export const OpsEvalAndLearningContent = () => {
     need => need.modifiedDts
   );
 
-  // If redirected from IT Solutions, scrolls to the relevant question
+  // If redirected from Operational Solutions, scrolls to the relevant question
   useScrollElement(!loading);
 
   const [update] = useUpdatePlanOpsEvalAndLearningMutation();

@@ -6,7 +6,7 @@ import { helpSolutions } from '../../solutionsMap';
 
 import Timeline from '.';
 
-describe('IT Solutions Timeline Components', () => {
+describe('Operational Solutions Timeline Components', () => {
   it.each(helpSolutions)(
     `matches the snapshot`,
     async solutionTimelineComponent => {
