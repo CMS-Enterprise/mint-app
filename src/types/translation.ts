@@ -92,7 +92,19 @@ export type TranslationFieldProperties = {
     | 'rangeInput';
   filterGroups?: FilterGroup[]; // Used to render questions within Readonly filter group view (Also CSV/PDF export)
   tags?: string[];
-  isModelLinks?: boolean; // Used to designate if a field is a ExistingModelLinks type with nested fields - ex: names
+  isModelLinks?: boolean; // Used to designate if a field is a ExistingModelLinks type with nested fields - ex: names,
+};
+
+// Extended type for questions that are conditionally rendered by a parent evaluation
+// Takes in a enum parameter fof Parent field to check for condition
+export type TranslationFieldPropertiesCondition<
+  T extends keyof T | string
+> = TranslationFieldProperties & {
+  parentRelation: {
+    field: string;
+    evaluation: T[];
+    evaluationMethod: 'includes' | 'equals';
+  };
 };
 
 // Extended type for questions that have options - boolean, radio, checkbox, etc.
@@ -103,6 +115,24 @@ export type TranslationFieldPropertiesWithOptions<
   options: Record<T, string>;
   optionsLabels?: Record<T, string>;
   optionsRelatedInfo?: Record<T, string>;
+  childRelation?: Record<T, string[]>;
+};
+
+// Extended type for questions that have options - boolean, radio, checkbox, etc.
+// Extended type for questions that are conditionally rendered by a parent evaluation
+// Takes in a enum parameter for translation key as well as enum parameter fof Parent field to check for condition
+export type TranslationFieldPropertiesWithOptionsAndConditions<
+  T extends keyof T | string,
+  C
+> = TranslationFieldProperties & {
+  options: Record<T, string>;
+  optionsLabels?: Record<T, string>;
+  optionsRelatedInfo?: Record<T, string>;
+  childRelation?: Record<T, string[]>;
+  parentRelation?: {
+    field: string;
+    evaluation: C[];
+  };
 };
 
 // Model Plan
@@ -225,8 +255,8 @@ export type TranslationGeneralCharacteristics = {
 // Participants and Providers
 export type TranslationParticipantsAndProviders = {
   participants: TranslationFieldPropertiesWithOptions<ParticipantsType>;
-  medicareProviderType: TranslationFieldProperties;
-  statesEngagement: TranslationFieldProperties;
+  medicareProviderType: TranslationFieldPropertiesCondition<ParticipantsType>;
+  statesEngagement: TranslationFieldPropertiesCondition<ParticipantsType>;
   participantsOther: TranslationFieldProperties;
   participantsNote: TranslationFieldProperties;
   participantsCurrentlyInModels: TranslationFieldPropertiesWithOptions<Bool>;

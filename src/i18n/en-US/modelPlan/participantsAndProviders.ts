@@ -1,3 +1,5 @@
+import { ParticipantsType } from 'gql/gen/graphql';
+
 import { TranslationParticipantsAndProviders } from 'types/translation';
 
 import { frequencyOptions } from './miscellaneous';
@@ -31,6 +33,23 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
       STATE_MEDICAID_AGENCIES: 'State Medicaid agencies',
       OTHER: 'Other'
     },
+    childRelation: {
+      ACCOUNTABLE_CARE_ORGANIZATION: [],
+      COMMERCIAL_PAYERS: [],
+      COMMUNITY_BASED_ORGANIZATIONS: [],
+      CONVENER: [],
+      ENTITIES: [],
+      MEDICAID_MANAGED_CARE_ORGANIZATIONS: [],
+      MEDICAID_PROVIDERS: [],
+      MEDICARE_ADVANTAGE_PLANS: [],
+      MEDICARE_ADVANTAGE_PRESCRIPTION_DRUG_PLANS: [],
+      MEDICARE_PROVIDERS: ['medicareProviderType'],
+      NON_PROFIT_ORGANIZATIONS: [],
+      STANDALONE_PART_D_PLANS: [],
+      STATES: ['statesEngagement'],
+      STATE_MEDICAID_AGENCIES: [],
+      OTHER: []
+    },
     filterGroups: ['cbosc', 'cmmi', 'ipc', 'iddoc', 'pbg']
   },
   medicareProviderType: {
@@ -40,6 +59,11 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     label: 'Which type of Medicare providers/suppliers?',
     dataType: 'string',
     formType: 'textarea',
+    parentRelation: {
+      field: 'participants',
+      evaluation: [ParticipantsType.MEDICARE_PROVIDERS],
+      evaluationMethod: 'includes'
+    },
     filterGroups: ['cbosc', 'cmmi', 'ipc', 'iddoc', 'pbg']
   },
   statesEngagement: {
@@ -49,6 +73,11 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     label: 'Please describe how states will engage with your model.',
     dataType: 'string',
     formType: 'textarea',
+    parentRelation: {
+      field: 'participants',
+      evaluation: [ParticipantsType.STATES],
+      evaluationMethod: 'includes'
+    },
     filterGroups: ['cbosc', 'cmmi', 'ipc', 'iddoc', 'pbg']
   },
   participantsOther: {
