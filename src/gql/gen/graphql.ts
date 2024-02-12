@@ -37,6 +37,37 @@ export enum ActionType {
   NORMAL = 'NORMAL'
 }
 
+/** Activity represents an event that happened in the application that could result in a notification. */
+export type Activity = {
+  __typename: 'Activity';
+  activityType: ActivityType;
+  actorID: Scalars['UUID']['output'];
+  createdBy: Scalars['UUID']['output'];
+  createdByUserAccount: UserAccount;
+  createdDts: Scalars['Time']['output'];
+  entityID: Scalars['UUID']['output'];
+  id: Scalars['UUID']['output'];
+  metaData: ActivityMetaData;
+  modifiedBy?: Maybe<Scalars['UUID']['output']>;
+  modifiedByUserAccount?: Maybe<UserAccount>;
+  modifiedDts?: Maybe<Scalars['Time']['output']>;
+};
+
+export type ActivityMetaBaseStruct = {
+  __typename: 'ActivityMetaBaseStruct';
+  type: ActivityType;
+  version: Scalars['Int']['output'];
+};
+
+export type ActivityMetaData = ActivityMetaBaseStruct | NewPlanDiscussionActivityMeta;
+
+/** ActivityType represents the possible activities that happen in application that might result in a notification */
+export enum ActivityType {
+  DAILY_DIGEST_COMPLETE = 'DAILY_DIGEST_COMPLETE',
+  NEW_DISCUSSION_REPLY = 'NEW_DISCUSSION_REPLY',
+  NEW_PLAN_DISCUSSION = 'NEW_PLAN_DISCUSSION'
+}
+
 export enum AgencyOrStateHelpType {
   NO = 'NO',
   OTHER = 'OTHER',
@@ -165,7 +196,9 @@ export type CreateOperationalSolutionSubtaskInput = {
 /** The current user of the application */
 export type CurrentUser = {
   __typename: 'CurrentUser';
+  account: UserAccount;
   launchDarkly: LaunchDarklySettings;
+  notifications: UserNotifications;
 };
 
 export enum DataForMonitoringType {
@@ -549,6 +582,10 @@ export type Mutation = {
   deletePlanTDL: PlanTdl;
   linkNewPlanDocument: PlanDocument;
   lockTaskListSection: Scalars['Boolean']['output'];
+  /** Marks all notifications for the current user as read, and returns the updated notifications */
+  markAllNotificationsAsRead: Array<UserNotification>;
+  /** Marks a single notification as read. It requires that the notification be owned by the context of the user sending this request, or it will fail */
+  markNotificationAsRead: UserNotification;
   removePlanDocumentSolutionLinks: Scalars['Boolean']['output'];
   reportAProblem: Scalars['Boolean']['output'];
   /** This mutation sends feedback about the MINT product to the MINT team */
@@ -706,6 +743,12 @@ export type MutationLockTaskListSectionArgs = {
 
 
 /** Mutations definition for the schema */
+export type MutationMarkNotificationAsReadArgs = {
+  notificationID: Scalars['UUID']['input'];
+};
+
+
+/** Mutations definition for the schema */
 export type MutationRemovePlanDocumentSolutionLinksArgs = {
   documentIDs: Array<Scalars['UUID']['input']>;
   solutionID: Scalars['UUID']['input'];
@@ -856,6 +899,13 @@ export type NdaInfo = {
   __typename: 'NDAInfo';
   agreed: Scalars['Boolean']['output'];
   agreedDts?: Maybe<Scalars['Time']['output']>;
+};
+
+export type NewPlanDiscussionActivityMeta = {
+  __typename: 'NewPlanDiscussionActivityMeta';
+  discussionID: Scalars['UUID']['output'];
+  type: ActivityType;
+  version: Scalars['Int']['output'];
 };
 
 export enum NonClaimsBasedPayType {
@@ -2295,6 +2345,8 @@ export type Query = {
   searchOktaUsers: Array<UserInfo>;
   taskListSectionLocks: Array<TaskListSectionLockStatus>;
   userAccount: UserAccount;
+  userNotificationPreferences: UserNotificationPreferences;
+  userNotifications: UserNotifications;
 };
 
 
@@ -2680,6 +2732,56 @@ export type UserInfo = {
   firstName: Scalars['String']['output'];
   lastName: Scalars['String']['output'];
   username: Scalars['String']['output'];
+};
+
+/** UserNotification represents a notification about a specific Activity */
+export type UserNotification = {
+  __typename: 'UserNotification';
+  activity: Activity;
+  activityID: Scalars['UUID']['output'];
+  content: UserNotificationContent;
+  createdBy: Scalars['UUID']['output'];
+  createdByUserAccount: UserAccount;
+  createdDts: Scalars['Time']['output'];
+  id: Scalars['UUID']['output'];
+  isRead: Scalars['Boolean']['output'];
+  modifiedBy?: Maybe<Scalars['UUID']['output']>;
+  modifiedByUserAccount?: Maybe<UserAccount>;
+  modifiedDts?: Maybe<Scalars['Time']['output']>;
+  userID: Scalars['UUID']['output'];
+};
+
+/** User Notification Content represents the possible data associated with a User Notification */
+export type UserNotificationContent = DiscussionReply | PlanDiscussion;
+
+/** UserNotificationPreferences represents a users preferences about what type and where to receive a notifiation */
+export type UserNotificationPreferences = {
+  __typename: 'UserNotificationPreferences';
+  createdBy: Scalars['UUID']['output'];
+  createdByUserAccount: UserAccount;
+  createdDts: Scalars['Time']['output'];
+  dailyDigestEmail: Scalars['Boolean']['output'];
+  dailyDigestInApp: Scalars['Boolean']['output'];
+  id: Scalars['UUID']['output'];
+  modifiedBy?: Maybe<Scalars['UUID']['output']>;
+  modifiedByUserAccount?: Maybe<UserAccount>;
+  modifiedDts?: Maybe<Scalars['Time']['output']>;
+  newDiscussionReplyEmail: Scalars['Boolean']['output'];
+  newDiscussionReplyInApp: Scalars['Boolean']['output'];
+  newPlanDiscussionEmail: Scalars['Boolean']['output'];
+  newPlanDiscussionInApp: Scalars['Boolean']['output'];
+  userID: Scalars['UUID']['output'];
+};
+
+/** This is a wrapper for all information for a user  */
+export type UserNotifications = {
+  __typename: 'UserNotifications';
+  /** This includes all notifiationcs */
+  notifications: Array<UserNotification>;
+  /** This returns the number of unread notifications */
+  numUnreadNotifications: Scalars['Int']['output'];
+  /** This renders only the unread notifications */
+  unreadNotifications: Array<UserNotification>;
 };
 
 export enum WaiverType {

@@ -1790,7 +1790,6 @@ type NewPlanDiscussionActivityMeta {
 type ActivityMetaBaseStruct {
   version: Int!
   type: ActivityType!
-  discussionID: UUID!
 }
 
 

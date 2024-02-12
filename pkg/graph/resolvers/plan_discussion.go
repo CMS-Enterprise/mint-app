@@ -9,6 +9,7 @@ import (
 	"github.com/jmoiron/sqlx"
 
 	"github.com/cmsgov/mint-app/pkg/email"
+	"github.com/cmsgov/mint-app/pkg/notifications"
 	"github.com/cmsgov/mint-app/pkg/shared/oddmail"
 	"github.com/cmsgov/mint-app/pkg/sqlutils"
 	"github.com/cmsgov/mint-app/pkg/storage/loaders"
@@ -67,6 +68,13 @@ func CreatePlanDiscussion(
 		}
 		discussion.Content.Tags = tags
 		discussion.Content.Mentions = planDiscussion.Content.Mentions // TODO, do this or send the other metions
+
+		// TODO: EASI-3295 Make this work for the tagged in activity type, instead of just the generic testing new
+		discussionActivity := notifications.NewActivity(principal.Account().ID, discussion.ID, notifications.ActivityNewPlanDiscussion)
+		_, activityErr := notifications.ActivityCreate(ctx, tx, discussionActivity)
+		if activityErr != nil {
+			return nil, activityErr
+		}
 
 		commonName := principal.Account().CommonName
 		modelPlan, err := ModelPlanGetByIDLOADER(ctx, input.ModelPlanID)
