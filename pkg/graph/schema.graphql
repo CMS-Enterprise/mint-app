@@ -13,6 +13,8 @@ The current user of the application
 """
 type CurrentUser {
   launchDarkly: LaunchDarklySettings!
+  account: UserAccount!
+  notifications: UserNotifications!
 }
 """
 UUIDs are represented using 36 ASCII characters, for example B0511859-ADE6-4A67-8969-16EC280C0E1A
@@ -1768,6 +1770,116 @@ enum SatisfactionLevel {
 }
 
 """
+ActivityType represents the possible activities that happen in application that might result in a notification
+"""
+enum ActivityType {
+  DAILY_DIGEST_COMPLETE
+  NEW_PLAN_DISCUSSION
+  NEW_DISCUSSION_REPLY
+}
+"""
+"""
+union ActivityMetaData = NewPlanDiscussionActivityMeta | ActivityMetaBaseStruct
+
+type NewPlanDiscussionActivityMeta {
+  version: Int!
+  type: ActivityType!
+  discussionID: UUID!
+}
+
+type ActivityMetaBaseStruct {
+  version: Int!
+  type: ActivityType!
+  discussionID: UUID!
+}
+
+
+"""
+Activity represents an event that happened in the application that could result in a notification.
+"""
+type Activity {
+  id: UUID!
+	actorID: UUID! #TODO: return the actor? DataLoader?
+	entityID: UUID! #TODO: return the entity?
+	activityType: ActivityType!
+  metaData: ActivityMetaData!
+
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
+
+}
+"""
+User Notification Content represents the possible data associated with a User Notification
+"""
+union UserNotificationContent = PlanDiscussion | DiscussionReply
+"""
+UserNotification represents a notification about a specific Activity
+"""
+type UserNotification {
+  id: UUID!
+	activityID: UUID!
+  # activityType: ActivityType #Maybe add this on this level so the FE doesn't need to query it?
+	userID: UUID! #probably not needed, it should be only visibile for the user
+  isRead: Boolean!
+  activity: Activity! # should we nest this?
+  content: UserNotificationContent!
+
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
+
+}
+
+"""
+This is a wrapper for all information for a user 
+"""
+type UserNotifications {
+"""
+This returns the number of unread notifications
+"""
+numUnreadNotifications: Int!
+"""
+This includes all notifiationcs
+"""
+notifications: [UserNotification!]!
+"""
+This renders only the unread notifications
+"""
+unreadNotifications: [UserNotification!]!
+}
+
+"""
+UserNotificationPreferences represents a users preferences about what type and where to receive a notifiation
+"""
+type UserNotificationPreferences {
+  id: UUID!
+	userID: UUID!
+
+  dailyDigestEmail: Boolean!
+  dailyDigestInApp: Boolean!
+  newPlanDiscussionEmail: Boolean!
+  newPlanDiscussionInApp: Boolean!
+  newDiscussionReplyEmail: Boolean!
+  newDiscussionReplyInApp: Boolean!
+
+
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
+
+}
+
+"""
 Query definition for the schema
 """
 type Query {
@@ -1812,6 +1924,8 @@ type Query {
   @hasAnyRole(roles:[MINT_USER, MINT_MAC])
   mostRecentDiscussionRoleSelection: DiscussionRoleSelection
   @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+  userNotificationPreferences: UserNotificationPreferences!
+  userNotifications:  UserNotifications!
 }
 
 enum ModelPlanFilter {
@@ -1951,6 +2065,14 @@ reportAProblem(input: ReportAProblemInput!): Boolean!
 This mutation sends feedback about the MINT product to the MINT team
 """
 sendFeedbackEmail(input: SendFeedbackEmailInput!): Boolean!
+"""
+Marks a single notification as read. It requires that the notification be owned by the context of the user sending this request, or it will fail
+"""
+markNotificationAsRead(notificationID: UUID!): UserNotification!
+"""
+Marks all notifications for the current user as read, and returns the updated notifications
+"""
+markAllNotificationsAsRead: [UserNotification!]!
 }
 
 type Subscription {
