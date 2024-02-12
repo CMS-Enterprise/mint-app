@@ -189,7 +189,7 @@ const ReadOnlySection = ({
       {notes && (
         <ReadOnlySection heading={miscellaneousT('notes')} copy={notes} />
       )}
-      {relatedConditions?.length && (
+      {!!relatedConditions?.length && (
         <>
           <Alert type="info" slim className="margin-bottom-3">
             {readOnlyT('questionNotApplicable', {
