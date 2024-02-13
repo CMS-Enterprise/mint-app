@@ -93,9 +93,9 @@ export type TranslationFieldProperties = {
   filterGroups?: FilterGroup[]; // Used to render questions within Readonly filter group view (Also CSV/PDF export)
   tags?: string[];
   isModelLinks?: boolean; // Used to designate if a field is a ExistingModelLinks type with nested fields - ex: names,
-  pageStart?: boolean;
-  adjacentPosition?: 'left' | 'right';
-  otherType?: boolean;
+  pageStart?: boolean; // Is the question the first question on a page - used for styling in ReadOnly
+  adjacentPosition?: 'left' | 'right'; // Should the questions be placed side by side in readonly
+  otherType?: boolean; // Is a question a followup to another that doesn't designate it's own readonly question/line
 };
 
 // Extended type for questions that are conditionally rendered by a parent evaluation
