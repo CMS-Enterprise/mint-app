@@ -93,7 +93,6 @@ export type TranslationFieldProperties = {
   filterGroups?: FilterGroup[]; // Used to render questions within Readonly filter group view (Also CSV/PDF export)
   tags?: string[];
   isModelLinks?: boolean; // Used to designate if a field is a ExistingModelLinks type with nested fields - ex: names,
-  notes?: () => TranslationFieldProperties;
 };
 
 // Extended type for questions that are conditionally rendered by a parent evaluation
@@ -102,9 +101,9 @@ export type TranslationFieldPropertiesWithCondition<
   T extends keyof T | string
 > = TranslationFieldProperties & {
   parentRelation: {
-    field: string;
-    evaluation: T[];
-    evaluationMethod: 'includes' | 'equals';
+    field: string; // Parent field name
+    evaluation: T[]; // The parent evaluation can have multiple answers that render the same child element
+    evaluationMethod: 'includes' | 'equals'; // If the parent value is an array or a single value
   };
 };
 
@@ -124,7 +123,7 @@ export type TranslationFieldPropertiesWithOptions<
 // Extended type for questions that have options - boolean, radio, checkbox, etc.
 // Extended type for questions that are conditionally rendered by a parent evaluation
 // Takes in a enum parameter for translation key as well as enum parameter fof Parent field to check for condition
-export type TranslationFieldPropertiesWithOptionsAndConditions<
+export type TranslationFieldPropertiesWithOptionsAndCondition<
   T extends keyof T | string,
   C
 > = TranslationFieldProperties & {

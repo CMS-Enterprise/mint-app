@@ -160,73 +160,63 @@ const ReadOnlyParticipantsAndProviders = ({
           filteredView={filteredView}
         />
 
-        {checkGroupMap(
-          isViewingFilteredView,
-          filteredQuestions,
-          'participants',
-          <ReadOnlySection
-            heading={participantsAndProvidersT('participants.readonlyLabel')}
-            list
-            listItems={participants?.map((type): string =>
-              participantsAndProvidersT(`participants.options.${type}`)
-            )}
-            listOtherItem={participantsOther}
-            notes={participantsNote}
-            relatedConditions={getRelatedUneededQuestions(
-              participantsConfig,
-              participants,
-              'participantsAndProviders'
-            )}
-          />
-        )}
+        <ReadOnlySectionNew
+          config={participantsAndProvidersConfig.medicareProviderType}
+          value={medicareProviderType}
+          values={allparticipantsAndProvidersData}
+          namespace="participantsAndProviders"
+          filteredView={filteredView}
+        />
 
-        {participants?.includes(ParticipantsType.MEDICARE_PROVIDERS) &&
-          checkGroupMap(
-            isViewingFilteredView,
-            filteredQuestions,
-            'medicareProviderType',
-            <ReadOnlySection
-              heading={participantsAndProvidersT('medicareProviderType.label')}
-              copy={medicareProviderType}
-            />
-          )}
+        <ReadOnlySectionNew
+          config={participantsAndProvidersConfig.statesEngagement}
+          value={statesEngagement}
+          values={allparticipantsAndProvidersData}
+          namespace="participantsAndProviders"
+          filteredView={filteredView}
+        />
 
-        {participants?.includes(ParticipantsType.STATES) &&
-          checkGroupMap(
-            isViewingFilteredView,
-            filteredQuestions,
-            'statesEngagement',
-            <ReadOnlySection
-              heading={participantsAndProvidersT('statesEngagement.label')}
-              copy={statesEngagement}
-            />
-          )}
+        <ReadOnlySectionNew
+          config={participantsAndProvidersConfig.participantsOther}
+          value={participantsOther}
+          values={allparticipantsAndProvidersData}
+          namespace="participantsAndProviders"
+          filteredView={filteredView}
+        />
 
-        {checkGroupMap(
-          isViewingFilteredView,
-          filteredQuestions,
-          'participantsCurrentlyInModels',
-          <ReadOnlySection
-            heading={participantsAndProvidersT(
-              'participantsCurrentlyInModels.label'
-            )}
-            copy={participantsAndProvidersT(
-              `participantsCurrentlyInModels.options.${participantsCurrentlyInModels}`,
-              ''
-            )}
-            notes={participantsCurrentlyInModelsNote}
-          />
-        )}
+        <ReadOnlySectionNew
+          config={participantsAndProvidersConfig.participantsNote}
+          value={participantsNote}
+          values={allparticipantsAndProvidersData}
+          namespace="participantsAndProviders"
+          filteredView={filteredView}
+        />
 
-        {checkGroupMap(
-          isViewingFilteredView,
-          filteredQuestions,
-          'modelApplicationLevel',
-          <ReadOnlySection
-            heading={participantsAndProvidersT('modelApplicationLevel.label')}
-            copy={modelApplicationLevel}
-          />
-        )}
+        <ReadOnlySectionNew
+          config={participantsAndProvidersConfig.participantsCurrentlyInModels}
+          value={participantsCurrentlyInModels}
+          values={allparticipantsAndProvidersData}
+          namespace="participantsAndProviders"
+          filteredView={filteredView}
+        />
+
+        <ReadOnlySectionNew
+          config={
+            participantsAndProvidersConfig.participantsCurrentlyInModelsNote
+          }
+          value={participantsCurrentlyInModelsNote}
+          values={allparticipantsAndProvidersData}
+          namespace="participantsAndProviders"
+          filteredView={filteredView}
+        />
+
+        <ReadOnlySectionNew
+          config={participantsAndProvidersConfig.modelApplicationLevel}
+          value={modelApplicationLevel}
+          values={allparticipantsAndProvidersData}
+          namespace="participantsAndProviders"
+          filteredView={filteredView}
+        />
       </div>
 
       <div

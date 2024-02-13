@@ -11,7 +11,7 @@ import {
   TranslationFieldProperties,
   TranslationFieldPropertiesWithCondition,
   TranslationFieldPropertiesWithOptions,
-  TranslationFieldPropertiesWithOptionsAndConditions,
+  TranslationFieldPropertiesWithOptionsAndCondition,
   TranslationPlan
 } from 'types/translation';
 
@@ -21,14 +21,16 @@ type ConfigType<T extends keyof T | string, C> =
   | TranslationFieldProperties
   | TranslationFieldPropertiesWithCondition<T>
   | TranslationFieldPropertiesWithOptions<T>
-  | TranslationFieldPropertiesWithOptionsAndConditions<T, C>;
+  | TranslationFieldPropertiesWithOptionsAndCondition<T, C>;
 
+// Type guard to check if config is of type TranslationFieldProperties
 const isTranslationFieldProperties = <T extends keyof T | string, C>(
   config: ConfigType<T, C>
 ): config is TranslationFieldProperties => {
   return !Object.hasOwn(config, 'options');
 };
 
+// Type guard to check if config is of type TranslationFieldPropertiesWithCondition
 const isTranslationFieldPropertiesWithCondition = <
   T extends keyof T | string,
   C
@@ -38,18 +40,20 @@ const isTranslationFieldPropertiesWithCondition = <
   return Object.hasOwn(config, 'parentRelation');
 };
 
+// Type guard to check if config is of type TranslationFieldPropertiesWithOptions
 const isTranslationFieldPropertiesWithOptions = <T extends keyof T | string, C>(
   config: ConfigType<T, C>
 ): config is TranslationFieldPropertiesWithOptions<T> => {
   return Object.hasOwn(config, 'options');
 };
 
-const isTranslationFieldPropertiesWithOptionsAndConditions = <
+// Type guard to check if config is of type TranslationFieldPropertiesWithOptionsAndCondition
+const isTranslationFieldPropertiesWithOptionsAndCondition = <
   T extends keyof T | string,
   C
 >(
   config: ConfigType<T, C>
-): config is TranslationFieldPropertiesWithOptionsAndConditions<T, C> => {
+): config is TranslationFieldPropertiesWithOptionsAndCondition<T, C> => {
   return (
     Object.hasOwn(config, 'parentRelation') &&
     Object.hasOwn(config, 'childRelation')
@@ -92,7 +96,7 @@ export const formatListOtherItems = <T extends string | keyof T>(
 export const getRelatedUneededQuestions = <T extends string | keyof T, C>(
   config:
     | TranslationFieldPropertiesWithOptions<T>
-    | TranslationFieldPropertiesWithOptionsAndConditions<T, C>, // Translation config
+    | TranslationFieldPropertiesWithOptionsAndCondition<T, C>, // Translation config
   value: T[] | undefined, // field value/enum array,
   translationKey: keyof TranslationPlan
 ): (string | null | undefined)[] | null => {
@@ -122,18 +126,22 @@ export const isHiddenByParentCondition = <T extends string | keyof T, C>(
   values: any
 ): boolean => {
   if (isTranslationFieldPropertiesWithCondition(config)) {
+    // If parent value is an array, check if evaluation exists
     if (config.parentRelation.evaluationMethod === 'includes') {
       if (
-        values[config.parentRelation.field].includes(
-          config.parentRelation.evaluation
+        !values[config.parentRelation.field]?.some((fieldValue: T) =>
+          config.parentRelation.evaluation.includes(fieldValue)
         )
       ) {
         return true;
       }
       return false;
     }
+    // If parent value is a single value, check if evaluation exits
     if (
-      values[config.parentRelation.field] === config.parentRelation.evaluation
+      !config.parentRelation.evaluation.includes(
+        values[config.parentRelation.field]
+      )
     ) {
       return true;
     }
@@ -168,20 +176,23 @@ const ReadOnlySectionNew = <T extends keyof T | string, C>({
   values: any;
   namespace: keyof TranslationPlan;
   filteredView?: typeof filterGroups[number];
-}) => {
+}): React.ReactElement | null => {
   const { t: miscellaneousT } = useTranslation('miscellaneous');
   const { t: readOnlyT } = useTranslation('generalReadOnly');
 
+  // Checks if current view is filtered, then check is question belongs to filter group
+  // If not, return null
   if (filteredView && !config?.filterGroups?.includes(filteredView)) {
-    return <></>;
+    return null;
   }
 
   if (isHiddenByParentCondition(config, values)) {
-    return <></>;
+    return null;
   }
 
   const heading = config.readonlyLabel || config.label;
 
+  // Used for id's/classes/metadata
   const sectionName = heading
     .toLowerCase()
     .replace(/\W*$/g, '')
@@ -189,7 +200,7 @@ const ReadOnlySectionNew = <T extends keyof T | string, C>({
 
   const hasOptionsManyOptions =
     isTranslationFieldPropertiesWithOptions(config) ||
-    isTranslationFieldPropertiesWithOptionsAndConditions(config);
+    isTranslationFieldPropertiesWithOptionsAndCondition(config);
 
   const listItems = hasOptionsManyOptions ? formatListItems(config, value) : [];
 
@@ -208,7 +219,7 @@ const ReadOnlySectionNew = <T extends keyof T | string, C>({
   };
 
   // Can render a single "Other" option or multiple additional information options
-  // as well as default text for both if not specified
+  // As well as default text for both if not specified
   const renderListItemOthers = (index: number) => {
     if (listOtherItems) {
       if (listOtherItems[index] === undefined) {
@@ -233,6 +244,7 @@ const ReadOnlySectionNew = <T extends keyof T | string, C>({
   };
 
   const renderCopyOrList = () => {
+    // Renders a single value
     if (
       isTranslationFieldProperties(config) &&
       !isTranslationFieldPropertiesWithOptions(config)
@@ -248,6 +260,8 @@ const ReadOnlySectionNew = <T extends keyof T | string, C>({
       );
     }
 
+    // Renders a single value with options (radio)
+    // Msy also renders a conditinal follow to the selection
     if (
       isTranslationFieldPropertiesWithOptions(config) &&
       config.formType === 'radio'
@@ -271,18 +285,9 @@ const ReadOnlySectionNew = <T extends keyof T | string, C>({
           </p>
         );
       }
-
-      return (
-        <p className="margin-y-0 font-body-md line-height-sans-4 text-pre-line">
-          {value || (
-            <em className="text-base">
-              {miscellaneousT('noAdditionalInformation')}
-            </em>
-          )}
-        </p>
-      );
     }
 
+    // Renders a list of selected values - multiselect, checkboxes
     return (
       <ul className="margin-y-0 padding-left-3">
         {listItems.map((item, index) => (
@@ -335,15 +340,6 @@ const ReadOnlySectionNew = <T extends keyof T | string, C>({
         </p>
         {renderCopyOrList()}
       </div>
-
-      {config.notes && (
-        <ReadOnlySectionNew
-          config={config.notes()}
-          value={values[config.notes().gqlField]}
-          values={values}
-          namespace={namespace}
-        />
-      )}
 
       {!!relatedConditions?.length && (
         <>

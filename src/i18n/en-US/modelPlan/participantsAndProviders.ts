@@ -50,8 +50,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
       STATE_MEDICAID_AGENCIES: [],
       OTHER: ['participantsOther']
     },
-    filterGroups: ['cbosc', 'cmmi', 'ipc', 'iddoc', 'pbg'],
-    notes: () => participantsAndProviders.participantsNote
+    filterGroups: ['cbosc', 'cmmi', 'ipc', 'iddoc', 'pbg']
   },
   medicareProviderType: {
     gqlField: 'medicareProviderType',
@@ -101,7 +100,8 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     dbField: 'participantsNote',
     label: 'Notes',
     dataType: 'string',
-    formType: 'textarea'
+    formType: 'textarea',
+    filterGroups: ['cbosc', 'cmmi', 'ipc', 'iddoc', 'pbg']
   },
   participantsCurrentlyInModels: {
     gqlField: 'participantsCurrentlyInModels',
