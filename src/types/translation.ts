@@ -99,10 +99,8 @@ export type TranslationFieldProperties = {
 };
 
 // Extended type for questions that are conditionally rendered by a parent evaluation
-// Takes in a enum parameter fof Parent field to check for condition
-export type TranslationFieldPropertiesWithCondition<
-  T extends keyof T | string
-> = TranslationFieldProperties & {
+// Takes in a enum/generic fof Parent field to check for condition
+type ParentRelation<T extends keyof T | string> = {
   parentRelation: {
     field: string; // Parent field name
     evaluation: T[]; // The parent evaluation can have multiple answers that render the same child element
@@ -110,34 +108,37 @@ export type TranslationFieldPropertiesWithCondition<
   };
 };
 
+// References the parent option/enum value as the key and the child field it references as the value
+type ChildRelation<T extends keyof T | string> = Record<T, string[]>;
+
 // Extended type for questions that have options - boolean, radio, checkbox, etc.
-// Takes in a enum parameter for translation key
-export type TranslationFieldPropertiesWithOptions<
-  T extends keyof T | string
-> = TranslationFieldProperties & {
+// Takes in a enum/generic for translation key
+type OptionsWithChildRelation<T extends keyof T | string> = {
   options: Record<T, string>;
   optionsLabels?: Record<T, string>;
   optionsRelatedInfo?: Record<T, string>;
-  childRelation?: Record<T, string[]>;
+  childRelation?: ChildRelation<T>;
 };
+
+// Apply/combine ParentRelation and TranslationFieldProperties to TranslationFieldPropertiesWithCondition
+export type TranslationFieldPropertiesWithCondition<
+  T extends keyof T | string
+> = TranslationFieldProperties & ParentRelation<T>;
+
+// Apply/combine OptionsWithChildRelation and TranslationFieldProperties to TranslationFieldPropertiesWithOptions
+export type TranslationFieldPropertiesWithOptions<
+  T extends keyof T | string
+> = TranslationFieldProperties & OptionsWithChildRelation<T>;
 
 // Extended type for questions that have options - boolean, radio, checkbox, etc.
 // Extended type for questions that are conditionally rendered by a parent evaluation
 // Takes in a enum parameter for translation key as well as enum parameter fof Parent field to check for condition
 export type TranslationFieldPropertiesWithOptionsAndCondition<
   T extends keyof T | string,
-  C
-> = TranslationFieldProperties & {
-  options: Record<T, string>;
-  optionsLabels?: Record<T, string>;
-  optionsRelatedInfo?: Record<T, string>;
-  childRelation?: Record<T, string[]>;
-  parentRelation?: {
-    field: string;
-    evaluation: C[];
-    evaluationMethod: 'includes' | 'equals'; // If the parent value is an array or a single value
-  };
-};
+  C extends keyof C | string
+> = TranslationFieldProperties &
+  OptionsWithChildRelation<T> &
+  ParentRelation<C>;
 
 // Model Plan
 export type TranslationModelPlan = {

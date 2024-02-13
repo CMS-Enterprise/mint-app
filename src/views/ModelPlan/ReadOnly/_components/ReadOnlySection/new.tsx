@@ -210,7 +210,7 @@ const ReadOnlySectionNew = <T extends keyof T | string, C>({
 
   const value = values[config.gqlField];
 
-  // Checks if current view is filtered, then check is question belongs to filter group
+  // Checks if current view is filtered, then check if question belongs to filter group
   // If not, return null
   if (filteredView && !config?.filterGroups?.includes(filteredView)) {
     return null;
