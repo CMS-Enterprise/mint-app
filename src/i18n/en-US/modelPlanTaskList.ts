@@ -99,7 +99,7 @@ const modelPlanTaskList = {
     itSolutions: {
       heading: 'Operational solutions and implementation status',
       team:
-        'Choose the solutions your model model will utilize. Many items in this section are populated based on responses to questions answered in previous sections.',
+        'Choose the solutions your model will utilize. Many items in this section are populated based on responses to questions answered in previous sections.',
       team2:
         'Track your progress towards implementation, see points of contact for operational services, and monitor deadlines. Keeping this information up-to-date will also help the MINT Team understand how best to help you.',
       assessment:
