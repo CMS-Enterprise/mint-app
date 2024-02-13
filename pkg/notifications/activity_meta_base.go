@@ -52,3 +52,7 @@ func (amb *ActivityMetaBaseStruct) Scan(src interface{}) error {
 
 	return nil
 }
+
+// func GenericScan(src interface{}) error {
+
+// }

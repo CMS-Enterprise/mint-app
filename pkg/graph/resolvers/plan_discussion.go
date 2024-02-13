@@ -69,12 +69,12 @@ func CreatePlanDiscussion(
 		discussion.Content.Tags = tags
 		discussion.Content.Mentions = planDiscussion.Content.Mentions // TODO, do this or send the other metions
 
-		// TODO: EASI-3295 Make this work for the tagged in activity type, instead of just the generic testing new
-		discussionActivity := notifications.NewActivity(principal.Account().ID, discussion.ID, notifications.ActivityNewPlanDiscussion)
-		_, activityErr := notifications.ActivityCreate(ctx, tx, discussionActivity)
-		if activityErr != nil {
-			return nil, activityErr
-		}
+		// // TODO: EASI-3295 Make this work for the tagged in activity type, instead of just the generic testing new
+		// discussionActivity := notifications.NewActivity(principal.Account().ID, discussion.ID, notifications.ActivityNewPlanDiscussion)
+		// _, activityErr := notifications.ActivityCreate(ctx, tx, discussionActivity)
+		// if activityErr != nil {
+		// 	return nil, activityErr
+		// }
 
 		commonName := principal.Account().CommonName
 		modelPlan, err := ModelPlanGetByIDLOADER(ctx, input.ModelPlanID)
@@ -110,6 +110,7 @@ func CreatePlanDiscussion(
 		go func() {
 			err = sendPlanDiscussionTagEmails(
 				ctx,
+				principal,
 				store,
 				logger,
 				emailService,
@@ -138,6 +139,7 @@ func CreatePlanDiscussion(
 
 func sendPlanDiscussionTagEmails(
 	ctx context.Context,
+	princ authentication.Principal,
 	store *storage.Store,
 	logger *zap.Logger,
 	emailService oddmail.EmailService,
@@ -163,6 +165,11 @@ func sendPlanDiscussionTagEmails(
 			taggedUserAccount, ok := entity.(*authentication.UserAccount)
 			if !ok {
 				errs = append(errs, fmt.Errorf("tagged entity was expectd to be a user account, but was not able to be cast to UserAccount. entity: %v", entity))
+			}
+			//TODO: EASI-3925, should we distinguish Replies vs discussions?
+			_, notifErr := notifications.ActivityTaggedUserInDiscussionCreate(ctx, store, princ.Account().ID, discussionID, tHTML.RawContent.String(), mention) //TODO: EASI-3925 Consider passing the whole object?
+			if notifErr != nil {
+				errs = append(errs, notifErr)
 			}
 			err := sendPlanDiscussionTaggedUserEmail(emailService, emailTemplateService, addressBook, tHTML, discussionID, modelPlan, taggedUserAccount, createdByUserName, createdByUserRole)
 			if err != nil {
@@ -479,6 +486,7 @@ func CreateDiscussionReply(
 
 		err = sendPlanDiscussionTagEmails(
 			ctx,
+			principal,
 			store,
 			logger,
 			emailService,

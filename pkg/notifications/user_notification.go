@@ -2,6 +2,7 @@ package notifications
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/google/uuid"
 
@@ -51,6 +52,26 @@ func userNotificationCreateAllPerActivity(ctx context.Context,
 	activity *Activity) ([]*UserNotification, error) {
 	var notifications []*UserNotification
 
+	switch activity.ActivityType {
+	case ActivityDigest:
+		fmt.Println("Handling DAILY_DIGEST_COMPLETE activity")
+	case ActivityAddedAsCollaborator:
+		fmt.Println("Handling ADDED_AS_COLLABORATOR activity")
+	case ActivityTaggedInDiscussion:
+		fmt.Println("Handling TAGGED_IN_DISCUSSION activity")
+	case ActivityTaggedInDiscussionReply:
+		fmt.Println("Handling TAGGED_IN_DISCUSSION_REPLY activity")
+	case ActivityNewDiscussionReply:
+		fmt.Println("Handling NEW_DISCUSSION_REPLY activity")
+	case ActivityModelPlanShared:
+		fmt.Println("Handling MODEL_PLAN_SHARED activity")
+	case ActivityNewPlanDiscussion:
+		fmt.Println("Handling NEW_PLAN_DISCUSSION activity")
+	default:
+		return nil, fmt.Errorf("unknown activity type, unable to create notifications")
+	}
+
+	//TODO: EASI-3925 update this to switch on Activities
 	originatorNotif, err := userNotificationCreate(ctx, np, activity, activity.ActorID) //TODO: get the actual users who need a notification, create a list, or handle in DB
 	if err != nil {
 		return nil, err

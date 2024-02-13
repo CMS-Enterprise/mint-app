@@ -70,6 +70,14 @@ func parseRawActivityMetaData(activityType ActivityType, rawMetaDataJSON interfa
 			return nil, err
 		}
 		return &meta, nil
+	case ActivityTaggedInDiscussion:
+		// Deserialize the raw JSON into NewPlanDiscussionActivityMeta
+		meta := TaggedInPlanDiscussionActivityMeta{}
+		if err := json.Unmarshal(rawData, &meta); err != nil {
+			// Handle error if unmarshaling fails
+			return nil, err
+		}
+		return &meta, nil
 
 	// Add cases for other ActivityTypes as needed
 

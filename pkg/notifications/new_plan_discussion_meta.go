@@ -19,8 +19,8 @@ func (d NewPlanDiscussionActivityMeta) GetDiscussionID() uuid.UUID {
 	return d.DiscussionID
 }
 
-// NewNewPlanDiscussionActivityMeta creates a New NewPlanDiscussionActivityMeta
-func NewNewPlanDiscussionActivityMeta(discussionID uuid.UUID) *NewPlanDiscussionActivityMeta {
+// newNewPlanDiscussionActivityMeta creates a New NewPlanDiscussionActivityMeta
+func newNewPlanDiscussionActivityMeta(discussionID uuid.UUID) *NewPlanDiscussionActivityMeta {
 	version := 0 //iterate this if this type ever updates
 	return &NewPlanDiscussionActivityMeta{
 		ActivityMetaBaseStruct: NewActivityMetaBaseStruct(ActivityNewPlanDiscussion, version),
