@@ -9,7 +9,7 @@ import Tooltip from 'components/shared/Tooltip';
 import {
   getKeys,
   TranslationFieldPropertiesWithOptions,
-  TranslationFieldPropertiesWithOptionsAndConditions,
+  TranslationFieldPropertiesWithOptionsAndParent,
   TranslationPlan
 } from 'types/translation';
 
@@ -251,10 +251,13 @@ export const formatListOtherItems = <T extends string | keyof T>(
   Util function for getting related child questions that do not need to be rendered
   Using to render a toggle alert to show list of questions
 */
-export const getRelatedUneededQuestions = <T extends string | keyof T, C>(
+export const getRelatedUneededQuestions = <
+  T extends string | keyof T,
+  C extends string | keyof C
+>(
   config:
     | TranslationFieldPropertiesWithOptions<T>
-    | TranslationFieldPropertiesWithOptionsAndConditions<T, C>, // Translation config
+    | TranslationFieldPropertiesWithOptionsAndParent<T, C>, // Translation config
   value: T[] | undefined, // field value/enum array,
   translationKey: keyof TranslationPlan
 ): (string | null | undefined)[] | null => {

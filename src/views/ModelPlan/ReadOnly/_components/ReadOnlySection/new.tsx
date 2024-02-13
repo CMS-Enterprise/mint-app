@@ -9,54 +9,57 @@ import Tooltip from 'components/shared/Tooltip';
 import {
   getKeys,
   TranslationFieldProperties,
-  TranslationFieldPropertiesWithCondition,
   TranslationFieldPropertiesWithOptions,
-  TranslationFieldPropertiesWithOptionsAndCondition,
+  TranslationFieldPropertiesWithOptionsAndParent,
+  TranslationFieldPropertiesWithParent,
   TranslationPlan
 } from 'types/translation';
 
 import { filterGroups } from '../FilterView/BodyContent/_filterGroupMapping';
 
-type ConfigType<T extends keyof T | string, C> =
+type ConfigType<T extends keyof T | string, C extends string | keyof C> =
   | TranslationFieldProperties
-  | TranslationFieldPropertiesWithCondition<T>
+  | TranslationFieldPropertiesWithParent<T>
   | TranslationFieldPropertiesWithOptions<T>
-  | TranslationFieldPropertiesWithOptionsAndCondition<T, C>;
+  | TranslationFieldPropertiesWithOptionsAndParent<T, C>;
 
 // Type guard to check if config is of type TranslationFieldProperties
-export const isTranslationFieldProperties = <T extends keyof T | string, C>(
+export const isTranslationFieldProperties = <
+  T extends keyof T | string,
+  C extends string | keyof C
+>(
   config: ConfigType<T, C>
 ): config is TranslationFieldProperties => {
   return !Object.hasOwn(config, 'options');
 };
 
-// Type guard to check if config is of type TranslationFieldPropertiesWithCondition
-export const isTranslationFieldPropertiesWithCondition = <
+// Type guard to check if config is of type TranslationFieldPropertiesWithParent
+export const isTranslationFieldPropertiesWithParent = <
   T extends keyof T | string,
-  C
+  C extends string | keyof C
 >(
   config: ConfigType<T, C>
-): config is TranslationFieldPropertiesWithCondition<T> => {
+): config is TranslationFieldPropertiesWithParent<T> => {
   return Object.hasOwn(config, 'parentRelation');
 };
 
 // Type guard to check if config is of type TranslationFieldPropertiesWithOptions
 export const isTranslationFieldPropertiesWithOptions = <
   T extends keyof T | string,
-  C
+  C extends string | keyof C
 >(
   config: ConfigType<T, C>
 ): config is TranslationFieldPropertiesWithOptions<T> => {
   return Object.hasOwn(config, 'options');
 };
 
-// Type guard to check if config is of type TranslationFieldPropertiesWithOptionsAndCondition
-export const isTranslationFieldPropertiesWithOptionsAndCondition = <
+// Type guard to check if config is of type TranslationFieldPropertiesWithOptionsAndParent
+export const isTranslationFieldPropertiesWithOptionsAndParent = <
   T extends keyof T | string,
-  C
+  C extends string | keyof C
 >(
   config: ConfigType<T, C>
-): config is TranslationFieldPropertiesWithOptionsAndCondition<T, C> => {
+): config is TranslationFieldPropertiesWithOptionsAndParent<T, C> => {
   return (
     Object.hasOwn(config, 'parentRelation') &&
     Object.hasOwn(config, 'childRelation')
@@ -96,10 +99,13 @@ export const formatListOtherItems = <T extends string | keyof T>(
   Util function for getting related child questions that do not need to be rendered
   Using to render a toggle alert to show list of questions
 */
-export const getRelatedUneededQuestions = <T extends string | keyof T, C>(
+export const getRelatedUneededQuestions = <
+  T extends string | keyof T,
+  C extends string | keyof C
+>(
   config:
     | TranslationFieldPropertiesWithOptions<T>
-    | TranslationFieldPropertiesWithOptionsAndCondition<T, C>, // Translation config
+    | TranslationFieldPropertiesWithOptionsAndParent<T, C>, // Translation config
   value: T[] | undefined, // field value/enum array,
   translationKey: keyof TranslationPlan
 ): (string | null | undefined)[] | null => {
@@ -144,11 +150,14 @@ export const getRelatedUneededQuestions = <T extends string | keyof T, C>(
 /*
   Util function for checking if question should not be rendered based on parent's answer/condition
 */
-export const isHiddenByParentCondition = <T extends string | keyof T, C>(
+export const isHiddenByParentCondition = <
+  T extends string | keyof T,
+  C extends string | keyof C
+>(
   config: ConfigType<T, C>,
   values: any
 ): boolean => {
-  if (isTranslationFieldPropertiesWithCondition(config)) {
+  if (isTranslationFieldPropertiesWithParent(config)) {
     // If parent value is an array, check if evaluation exists
     if (config.parentRelation.evaluationMethod === 'includes') {
       if (
@@ -192,14 +201,20 @@ const isEmpty = (value: any) => {
   return value == null || value.length === 0;
 };
 
-export type ReadOnlySectionNewProps<T extends keyof T | string, C> = {
+export type ReadOnlySectionNewProps<
+  T extends keyof T | string,
+  C extends string | keyof C
+> = {
   config: ConfigType<T, C>;
   values: any;
   namespace: keyof TranslationPlan;
   filteredView?: typeof filterGroups[number];
 };
 
-const ReadOnlySectionNew = <T extends keyof T | string, C>({
+const ReadOnlySectionNew = <
+  T extends keyof T | string,
+  C extends string | keyof C
+>({
   config,
   values,
   namespace,
@@ -230,7 +245,7 @@ const ReadOnlySectionNew = <T extends keyof T | string, C>({
 
   const hasOptionsManyOptions =
     (isTranslationFieldPropertiesWithOptions(config) ||
-      isTranslationFieldPropertiesWithOptionsAndCondition(config)) &&
+      isTranslationFieldPropertiesWithOptionsAndParent(config)) &&
     config.formType !== 'radio';
 
   const listItems = hasOptionsManyOptions ? formatListItems(config, value) : [];

@@ -120,8 +120,8 @@ type OptionsWithChildRelation<T extends keyof T | string> = {
   childRelation?: ChildRelation<T>;
 };
 
-// Apply/combine ParentRelation and TranslationFieldProperties to TranslationFieldPropertiesWithCondition
-export type TranslationFieldPropertiesWithCondition<
+// Apply/combine ParentRelation and TranslationFieldProperties to TranslationFieldPropertiesWithParent
+export type TranslationFieldPropertiesWithParent<
   T extends keyof T | string
 > = TranslationFieldProperties & ParentRelation<T>;
 
@@ -133,7 +133,7 @@ export type TranslationFieldPropertiesWithOptions<
 // Extended type for questions that have options - boolean, radio, checkbox, etc.
 // Extended type for questions that are conditionally rendered by a parent evaluation
 // Takes in a enum parameter for translation key as well as enum parameter fof Parent field to check for condition
-export type TranslationFieldPropertiesWithOptionsAndCondition<
+export type TranslationFieldPropertiesWithOptionsAndParent<
   T extends keyof T | string,
   C extends keyof C | string
 > = TranslationFieldProperties &
@@ -260,9 +260,9 @@ export type TranslationGeneralCharacteristics = {
 // Participants and Providers
 export type TranslationParticipantsAndProviders = {
   participants: TranslationFieldPropertiesWithOptions<ParticipantsType>;
-  medicareProviderType: TranslationFieldPropertiesWithCondition<ParticipantsType>;
-  statesEngagement: TranslationFieldPropertiesWithCondition<ParticipantsType>;
-  participantsOther: TranslationFieldPropertiesWithCondition<ParticipantsType>;
+  medicareProviderType: TranslationFieldPropertiesWithParent<ParticipantsType>;
+  statesEngagement: TranslationFieldPropertiesWithParent<ParticipantsType>;
+  participantsOther: TranslationFieldPropertiesWithParent<ParticipantsType>;
   participantsNote: TranslationFieldProperties;
   participantsCurrentlyInModels: TranslationFieldPropertiesWithOptions<Bool>;
   participantsCurrentlyInModelsNote: TranslationFieldProperties;
@@ -275,7 +275,7 @@ export type TranslationParticipantsAndProviders = {
   recruitmentOther: TranslationFieldProperties;
   recruitmentNote: TranslationFieldProperties;
   selectionMethod: TranslationFieldPropertiesWithOptions<ParticipantSelectionType>;
-  selectionOther: TranslationFieldPropertiesWithCondition<ParticipantSelectionType>;
+  selectionOther: TranslationFieldPropertiesWithParent<ParticipantSelectionType>;
   selectionNote: TranslationFieldProperties;
   // Communication
   participantAddedFrequency: TranslationFieldPropertiesWithOptions<FrequencyType>;
@@ -298,11 +298,11 @@ export type TranslationParticipantsAndProviders = {
   coordinateWork: TranslationFieldPropertiesWithOptions<Bool>;
   coordinateWorkNote: TranslationFieldProperties;
   gainsharePayments: TranslationFieldPropertiesWithOptions<Bool>;
-  gainsharePaymentsTrack: TranslationFieldPropertiesWithOptionsAndCondition<
+  gainsharePaymentsTrack: TranslationFieldPropertiesWithOptionsAndParent<
     Bool,
     Bool
   >;
-  gainsharePaymentsEligibility: TranslationFieldPropertiesWithOptionsAndCondition<
+  gainsharePaymentsEligibility: TranslationFieldPropertiesWithOptionsAndParent<
     GainshareArrangementEligibility,
     Bool
   >;
@@ -327,7 +327,7 @@ export type TranslationParticipantsAndProviders = {
   providerRemovalFrequencyOther: TranslationFieldProperties;
   providerRemovalFrequencyNote: TranslationFieldProperties;
   providerOverlap: TranslationFieldPropertiesWithOptions<OverlapType>;
-  providerOverlapHierarchy: TranslationFieldPropertiesWithCondition<OverlapType>;
+  providerOverlapHierarchy: TranslationFieldPropertiesWithParent<OverlapType>;
   providerOverlapNote: TranslationFieldProperties;
   status: TranslationFieldPropertiesWithOptions<TaskStatus>;
 };
