@@ -115,7 +115,9 @@ export const getRelatedUneededQuestions = <T extends string | keyof T, C>(
       // If the evaluation of the parent value triggers a child question, sort into appropriate arrays
       if (
         (Array.isArray(value) && !value?.includes(option)) ||
-        (!Array.isArray(value) && value !== option)
+        (!Array.isArray(value) &&
+          value !== undefined &&
+          String(value) !== option)
       ) {
         config.childRelation?.[option].forEach(childField => {
           neededRelations.push(childField);
@@ -189,7 +191,6 @@ const isEmpty = (value: any) => {
 
 export type ReadOnlySectionNewProps<T extends keyof T | string, C> = {
   config: ConfigType<T, C>;
-  value: any;
   values: any;
   namespace: keyof TranslationPlan;
   filteredView?: typeof filterGroups[number];
@@ -197,13 +198,14 @@ export type ReadOnlySectionNewProps<T extends keyof T | string, C> = {
 
 const ReadOnlySectionNew = <T extends keyof T | string, C>({
   config,
-  value,
   values,
   namespace,
   filteredView
 }: ReadOnlySectionNewProps<T, C>): React.ReactElement | null => {
   const { t: miscellaneousT } = useTranslation('miscellaneous');
   const { t: readOnlyT } = useTranslation('generalReadOnly');
+
+  const value = values[config.gqlField];
 
   // Checks if current view is filtered, then check is question belongs to filter group
   // If not, return null
