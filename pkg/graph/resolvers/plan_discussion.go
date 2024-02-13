@@ -107,10 +107,14 @@ func CreatePlanDiscussion(
 		}()
 
 		// send an email for each tag, which is unique compared to the mention
+		//TODO: EASI-3925, should we distinguish Replies vs discussions?
+		_, notifErr := notifications.ActivityTaggedUserInDiscussionCreate(ctx, store, principal.Account().ID, discussion.ID, discussion.Content) //TODO: EASI-3925 Consider passing the whole object?
+		if notifErr != nil {
+			return nil, fmt.Errorf("unable to generate notificatations")
+		}
 		go func() {
 			err = sendPlanDiscussionTagEmails(
 				ctx,
-				principal,
 				store,
 				logger,
 				emailService,
@@ -139,7 +143,6 @@ func CreatePlanDiscussion(
 
 func sendPlanDiscussionTagEmails(
 	ctx context.Context,
-	princ authentication.Principal,
 	store *storage.Store,
 	logger *zap.Logger,
 	emailService oddmail.EmailService,
@@ -164,12 +167,7 @@ func sendPlanDiscussionTagEmails(
 		case models.TagTypeUserAccount:
 			taggedUserAccount, ok := entity.(*authentication.UserAccount)
 			if !ok {
-				errs = append(errs, fmt.Errorf("tagged entity was expectd to be a user account, but was not able to be cast to UserAccount. entity: %v", entity))
-			}
-			//TODO: EASI-3925, should we distinguish Replies vs discussions?
-			_, notifErr := notifications.ActivityTaggedUserInDiscussionCreate(ctx, store, princ.Account().ID, discussionID, tHTML.RawContent.String(), mention) //TODO: EASI-3925 Consider passing the whole object?
-			if notifErr != nil {
-				errs = append(errs, notifErr)
+				errs = append(errs, fmt.Errorf("tagged entity was expected to be a user account, but was not able to be cast to UserAccount. entity: %v", entity))
 			}
 			err := sendPlanDiscussionTaggedUserEmail(emailService, emailTemplateService, addressBook, tHTML, discussionID, modelPlan, taggedUserAccount, createdByUserName, createdByUserRole)
 			if err != nil {
@@ -486,7 +484,6 @@ func CreateDiscussionReply(
 
 		err = sendPlanDiscussionTagEmails(
 			ctx,
-			principal,
 			store,
 			logger,
 			emailService,
