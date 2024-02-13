@@ -48,9 +48,10 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
       STANDALONE_PART_D_PLANS: [],
       STATES: ['statesEngagement'],
       STATE_MEDICAID_AGENCIES: [],
-      OTHER: []
+      OTHER: ['participantsOther']
     },
-    filterGroups: ['cbosc', 'cmmi', 'ipc', 'iddoc', 'pbg']
+    filterGroups: ['cbosc', 'cmmi', 'ipc', 'iddoc', 'pbg'],
+    notes: () => participantsAndProviders.participantsNote
   },
   medicareProviderType: {
     gqlField: 'medicareProviderType',
@@ -86,7 +87,13 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     dbField: 'participantsOther',
     label: 'Please describe the other participants engaging with this model',
     dataType: 'string',
-    formType: 'textarea'
+    formType: 'textarea',
+    parentRelation: {
+      field: 'participants',
+      evaluation: [ParticipantsType.OTHER],
+      evaluationMethod: 'includes'
+    },
+    filterGroups: ['cbosc', 'cmmi', 'ipc', 'iddoc', 'pbg']
   },
   participantsNote: {
     gqlField: 'participantsNote',

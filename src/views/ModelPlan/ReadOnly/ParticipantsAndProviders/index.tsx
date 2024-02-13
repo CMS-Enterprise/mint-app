@@ -26,6 +26,7 @@ import { ReadOnlyProps } from '../ModelBasics';
 const ReadOnlyParticipantsAndProviders = ({
   modelID,
   clearance,
+  filteredView,
   isViewingFilteredView,
   filteredQuestions
 }: ReadOnlyProps) => {
@@ -46,6 +47,10 @@ const ReadOnlyParticipantsAndProviders = ({
     providerRemovalFrequency: providerRemovalFrequencyConfig,
     riskType: riskTypeConfig
   } = usePlanTranslation('participantsAndProviders');
+
+  const participantsAndProvidersConfig = usePlanTranslation(
+    'participantsAndProviders'
+  );
 
   const { modelName } = useContext(ModelInfoContext);
 
@@ -147,11 +152,19 @@ const ReadOnlyParticipantsAndProviders = ({
             : 'margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light'
         }`}
       >
+        <ReadOnlySectionNew
+          config={participantsAndProvidersConfig.participants}
+          value={participants}
+          values={allparticipantsAndProvidersData}
+          namespace="participantsAndProviders"
+          filteredView={filteredView}
+        />
+
         {checkGroupMap(
           isViewingFilteredView,
           filteredQuestions,
           'participants',
-          <ReadOnlySectionNew
+          <ReadOnlySection
             heading={participantsAndProvidersT('participants.readonlyLabel')}
             list
             listItems={participants?.map((type): string =>

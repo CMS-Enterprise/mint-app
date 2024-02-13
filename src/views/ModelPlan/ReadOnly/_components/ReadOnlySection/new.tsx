@@ -9,53 +9,176 @@ import Tooltip from 'components/shared/Tooltip';
 import {
   getKeys,
   TranslationFieldProperties,
+  TranslationFieldPropertiesWithCondition,
   TranslationFieldPropertiesWithOptions,
   TranslationFieldPropertiesWithOptionsAndConditions,
   TranslationPlan
 } from 'types/translation';
 
+import { filterGroups } from '../FilterView/BodyContent/_filterGroupMapping';
+
 type ConfigType<T extends keyof T | string, C> =
   | TranslationFieldProperties
+  | TranslationFieldPropertiesWithCondition<T>
   | TranslationFieldPropertiesWithOptions<T>
   | TranslationFieldPropertiesWithOptionsAndConditions<T, C>;
 
 const isTranslationFieldProperties = <T extends keyof T | string, C>(
-  question: ConfigType<T, C>
-): question is TranslationFieldPropertiesWithOptions<T> => {
-  return !Object.hasOwn(question, 'options');
+  config: ConfigType<T, C>
+): config is TranslationFieldProperties => {
+  return !Object.hasOwn(config, 'options');
+};
+
+const isTranslationFieldPropertiesWithCondition = <
+  T extends keyof T | string,
+  C
+>(
+  config: ConfigType<T, C>
+): config is TranslationFieldPropertiesWithCondition<T> => {
+  return Object.hasOwn(config, 'parentRelation');
 };
 
 const isTranslationFieldPropertiesWithOptions = <T extends keyof T | string, C>(
-  question: ConfigType<T, C>
-): question is TranslationFieldPropertiesWithOptions<T> => {
-  return Object.hasOwn(question, 'options');
+  config: ConfigType<T, C>
+): config is TranslationFieldPropertiesWithOptions<T> => {
+  return Object.hasOwn(config, 'options');
 };
 
 const isTranslationFieldPropertiesWithOptionsAndConditions = <
   T extends keyof T | string,
   C
 >(
-  question: ConfigType<T, C>
-): question is TranslationFieldPropertiesWithOptions<T> => {
+  config: ConfigType<T, C>
+): config is TranslationFieldPropertiesWithOptionsAndConditions<T, C> => {
   return (
-    Object.hasOwn(question, 'parentRelation') &&
-    Object.hasOwn(question, 'childRelation')
+    Object.hasOwn(config, 'parentRelation') &&
+    Object.hasOwn(config, 'childRelation')
   );
+};
+
+/*
+  Util function for prepping data to listItems prop of ReadOnlySection
+  Using translation config instead of raw data allows us to ensure a predetermined order of render
+*/
+export const formatListItems = <T extends string | keyof T>(
+  config: TranslationFieldPropertiesWithOptions<T>, // Translation config
+  value: T[] | undefined // field value/enum array
+): string[] => {
+  return getKeys(config.options)
+    .filter(option => value?.includes(option))
+    .map((option): string => config.options[option]);
+};
+
+/*
+  Util function for prepping data to listOtherItems prop of ReadOnlySection
+  Using translation config instead of raw data allows us to ensure a predetermined order of render
+*/
+export const formatListOtherItems = <T extends string | keyof T>(
+  config: TranslationFieldPropertiesWithOptions<T>, // Translation config
+  value: T[] | undefined, // field value/enum array
+  values: any // All data for the task list section returned from query
+): (string | null | undefined)[] => {
+  return getKeys(config.options)
+    .filter(option => value?.includes(option))
+    .map((option): string | null | undefined => {
+      return values[config.optionsRelatedInfo?.[option]];
+    });
+};
+
+/*
+  Util function for getting related child questions that do not need to be rendered
+  Using to render a toggle alert to show list of questions
+*/
+export const getRelatedUneededQuestions = <T extends string | keyof T, C>(
+  config:
+    | TranslationFieldPropertiesWithOptions<T>
+    | TranslationFieldPropertiesWithOptionsAndConditions<T, C>, // Translation config
+  value: T[] | undefined, // field value/enum array,
+  translationKey: keyof TranslationPlan
+): (string | null | undefined)[] | null => {
+  if (!config.childRelation) return null;
+
+  const hiddenQuestions: string[] = [];
+
+  getKeys(config.childRelation)
+    .filter(option => config.childRelation?.[option].length)
+    .forEach(option => {
+      if (!value?.includes(option)) {
+        config.childRelation?.[option].forEach(childField => {
+          hiddenQuestions.push(
+            i18next.t<string>(`${translationKey}:${childField}.label`)
+          );
+        });
+      }
+    });
+  return hiddenQuestions;
+};
+
+/*
+  Util function for checking if question should not be rendered based on parent's answer/condition
+*/
+export const isHiddenByParentCondition = <T extends string | keyof T, C>(
+  config: ConfigType<T, C>,
+  values: any
+): boolean => {
+  if (isTranslationFieldPropertiesWithCondition(config)) {
+    if (config.parentRelation.evaluationMethod === 'includes') {
+      if (
+        values[config.parentRelation.field].includes(
+          config.parentRelation.evaluation
+        )
+      ) {
+        return true;
+      }
+      return false;
+    }
+    if (
+      values[config.parentRelation.field] === config.parentRelation.evaluation
+    ) {
+      return true;
+    }
+    return false;
+  }
+  return false;
+};
+
+/* Util function for prepping optionsLabels translation data to formatListTooltips prop of ReadOnlySection
+  Using translation config instead of raw data allows us to ensure a predetermined order of render
+*/
+export const formatListTooltips = <T extends string | keyof T>(
+  config: TranslationFieldPropertiesWithOptions<T>, // Translation config
+  value: T[] | undefined // field value/enum array
+): (string | null | undefined)[] => {
+  return getKeys(config.options)
+    .filter(option => value?.includes(option))
+    .map((option): string | null | undefined => {
+      return config.optionsLabels?.[option];
+    });
 };
 
 const ReadOnlySectionNew = <T extends keyof T | string, C>({
   config,
   value,
   values,
-  field
+  namespace,
+  filteredView
 }: {
   config: ConfigType<T, C>;
   value: any;
   values: any;
-  field: string;
+  namespace: keyof TranslationPlan;
+  filteredView?: typeof filterGroups[number];
 }) => {
   const { t: miscellaneousT } = useTranslation('miscellaneous');
   const { t: readOnlyT } = useTranslation('generalReadOnly');
+
+  if (filteredView && !config?.filterGroups?.includes(filteredView)) {
+    return <></>;
+  }
+
+  if (isHiddenByParentCondition(config, values)) {
+    return <></>;
+  }
 
   const heading = config.readonlyLabel || config.label;
 
@@ -64,26 +187,24 @@ const ReadOnlySectionNew = <T extends keyof T | string, C>({
     .replace(/\W*$/g, '')
     .replace(/\W/g, '-');
 
+  const hasOptionsManyOptions =
+    isTranslationFieldPropertiesWithOptions(config) ||
+    isTranslationFieldPropertiesWithOptionsAndConditions(config);
+
+  const listItems = hasOptionsManyOptions ? formatListItems(config, value) : [];
+
+  const tooltips = hasOptionsManyOptions
+    ? formatListTooltips(config, value)
+    : [];
+
+  const listOtherItems = hasOptionsManyOptions
+    ? formatListOtherItems(config, value, values)
+    : [];
+
   const isElement = (
     element: string | number | React.ReactElement | React.ReactNode
   ) => {
     return React.isValidElement(element);
-  };
-
-  // Legacy function to render "Other" option or translation for other not specifed
-  const renderListItemOther = (otherSelection: string | null | undefined) => {
-    if (otherSelection) {
-      return (
-        <li className="font-sans-md line-height-sans-4">{otherSelection}</li>
-      );
-    }
-    return (
-      <li className="font-sans-md line-height-sans-4">
-        <em className="text-base">
-          {miscellaneousT('noAdditionalInformation')}
-        </em>
-      </li>
-    );
   };
 
   // Can render a single "Other" option or multiple additional information options
@@ -112,7 +233,10 @@ const ReadOnlySectionNew = <T extends keyof T | string, C>({
   };
 
   const renderCopyOrList = () => {
-    if (isTranslationFieldProperties(config)) {
+    if (
+      isTranslationFieldProperties(config) &&
+      !isTranslationFieldPropertiesWithOptions(config)
+    ) {
       return (
         <div className="margin-y-0 font-body-md line-height-sans-4 text-pre-line">
           {value || (
@@ -159,12 +283,8 @@ const ReadOnlySectionNew = <T extends keyof T | string, C>({
       );
     }
 
-    const listItems = isTranslationFieldPropertiesWithOptions(config)
-      ? formatListItems(config, value)
-      : [];
-
     return (
-      <ul>
+      <ul className="margin-y-0 padding-left-3">
         {listItems.map((item, index) => (
           <React.Fragment
             key={
@@ -187,7 +307,6 @@ const ReadOnlySectionNew = <T extends keyof T | string, C>({
             </li>
             {(item === 'Other' || listOtherItems) && (
               <ul data-testid="other-entry">
-                {!listOtherItems && renderListItemOther(listOtherItem)}
                 {listOtherItems && renderListItemOthers(index)}
               </ul>
             )}
@@ -198,9 +317,13 @@ const ReadOnlySectionNew = <T extends keyof T | string, C>({
   };
 
   // If no notes are written, do not render
-  if (heading === miscellaneousT('notes') && !copy) {
+  if (heading === miscellaneousT('notes') && !value) {
     return null;
   }
+
+  const relatedConditions = isTranslationFieldPropertiesWithOptions(config)
+    ? getRelatedUneededQuestions(config, value, namespace)
+    : [];
 
   return (
     <Grid desktop={{ col: 12 }}>
@@ -212,9 +335,16 @@ const ReadOnlySectionNew = <T extends keyof T | string, C>({
         </p>
         {renderCopyOrList()}
       </div>
-      {notes && (
-        <ReadOnlySection heading={miscellaneousT('notes')} copy={notes} />
+
+      {config.notes && (
+        <ReadOnlySectionNew
+          config={config.notes()}
+          value={values[config.notes().gqlField]}
+          values={values}
+          namespace={namespace}
+        />
       )}
+
       {!!relatedConditions?.length && (
         <>
           <Alert type="info" slim className="margin-bottom-3">
@@ -242,62 +372,6 @@ const ReadOnlySectionNew = <T extends keyof T | string, C>({
       )}
     </Grid>
   );
-};
-
-/*
-  Util function for prepping data to listItems prop of ReadOnlySection
-  Using translation config instead of raw data allows us to ensure a predetermined order of render
-*/
-export const formatListItems = <T extends string | keyof T>(
-  config: TranslationFieldPropertiesWithOptions<T>, // Translation config
-  value: T[] | undefined // field value/enum array
-): string[] => {
-  return getKeys(config.options)
-    .filter(option => value?.includes(option))
-    .map((option): string => config.options[option]);
-};
-
-/*
-  Util function for prepping data to listOtherItems prop of ReadOnlySection
-  Using translation config instead of raw data allows us to ensure a predetermined order of render
-*/
-export const formatListOtherItems = <T extends string | keyof T>(
-  config: TranslationFieldPropertiesWithOptions<T>, // Translation config
-  value: T[] | undefined, // field value/enum array
-  values: any // All data for the task list section returned from query
-): (string | null | undefined)[] => {
-  return getKeys(config.options)
-    .filter(option => value?.includes(option))
-    .map((option): string | null | undefined => {
-      return values[config.optionsRelatedInfo?.[option]];
-    });
-};
-
-/*
-  Util function for getting related child questions that do not need to be rendered
-  Using to render a toggle alert to show list of questions
-*/
-export const getRelatedUneededQuestions = <T extends string | keyof T, C>(
-  config:
-    | TranslationFieldPropertiesWithOptions<T>
-    | TranslationFieldPropertiesWithOptionsAndConditions<T, C>, // Translation config
-  value: T[] | undefined, // field value/enum array,
-  translationKey: keyof TranslationPlan
-): (string | null | undefined)[] | null => {
-  if (!config.childRelation) return null;
-  const hiddenQuestions: string[] = [];
-  getKeys(config.childRelation)
-    .filter(option => config.childRelation?.[option].length)
-    .forEach(option => {
-      if (!value?.includes(option)) {
-        config.childRelation?.[option].forEach(childField => {
-          hiddenQuestions.push(
-            i18next.t<string>(`${translationKey}:${childField}.label`)
-          );
-        });
-      }
-    });
-  return hiddenQuestions;
 };
 
 export default ReadOnlySectionNew;

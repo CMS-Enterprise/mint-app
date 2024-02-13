@@ -93,11 +93,12 @@ export type TranslationFieldProperties = {
   filterGroups?: FilterGroup[]; // Used to render questions within Readonly filter group view (Also CSV/PDF export)
   tags?: string[];
   isModelLinks?: boolean; // Used to designate if a field is a ExistingModelLinks type with nested fields - ex: names,
+  notes?: () => TranslationFieldProperties;
 };
 
 // Extended type for questions that are conditionally rendered by a parent evaluation
 // Takes in a enum parameter fof Parent field to check for condition
-export type TranslationFieldPropertiesCondition<
+export type TranslationFieldPropertiesWithCondition<
   T extends keyof T | string
 > = TranslationFieldProperties & {
   parentRelation: {
@@ -257,9 +258,9 @@ export type TranslationGeneralCharacteristics = {
 // Participants and Providers
 export type TranslationParticipantsAndProviders = {
   participants: TranslationFieldPropertiesWithOptions<ParticipantsType>;
-  medicareProviderType: TranslationFieldPropertiesCondition<ParticipantsType>;
-  statesEngagement: TranslationFieldPropertiesCondition<ParticipantsType>;
-  participantsOther: TranslationFieldProperties;
+  medicareProviderType: TranslationFieldPropertiesWithCondition<ParticipantsType>;
+  statesEngagement: TranslationFieldPropertiesWithCondition<ParticipantsType>;
+  participantsOther: TranslationFieldPropertiesWithCondition<ParticipantsType>;
   participantsNote: TranslationFieldProperties;
   participantsCurrentlyInModels: TranslationFieldPropertiesWithOptions<Bool>;
   participantsCurrentlyInModelsNote: TranslationFieldProperties;

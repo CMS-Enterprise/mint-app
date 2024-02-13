@@ -219,7 +219,7 @@ const ReadOnlySection = ({
 };
 
 /*
-  Util function for prepping data to listItems prop of ReadOnlySection
+  Util function for prepping option data to listItems prop of ReadOnlySection
   Using translation config instead of raw data allows us to ensure a predetermined order of render
 */
 export const formatListItems = <T extends string | keyof T>(
@@ -272,6 +272,20 @@ export const getRelatedUneededQuestions = <T extends string | keyof T, C>(
       }
     });
   return hiddenQuestions;
+};
+
+/* Util function for prepping optionsLabels translation data to formatListTooltips prop of ReadOnlySection
+Using translation config instead of raw data allows us to ensure a predetermined order of render
+*/
+export const formatListTooltips = <T extends string | keyof T>(
+  config: TranslationFieldPropertiesWithOptions<T>, // Translation config
+  value: T[] | undefined // field value/enum array
+): (string | null | undefined)[] => {
+  return getKeys(config.options)
+    .filter(option => value?.includes(option))
+    .map((option): string | null | undefined => {
+      return config.optionsLabels?.[option];
+    });
 };
 
 export default ReadOnlySection;

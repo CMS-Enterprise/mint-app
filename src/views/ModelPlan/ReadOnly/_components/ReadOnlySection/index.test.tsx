@@ -1,12 +1,14 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { FundingSource } from 'gql/gen/graphql';
+import i18next from 'i18next';
 
 import { payments } from 'i18n/en-US/modelPlan/payments';
 
 import ReadOnlySection, {
   formatListItems,
-  formatListOtherItems
+  formatListOtherItems,
+  formatListTooltips
 } from './index';
 
 describe('The Read Only Section', () => {
@@ -106,6 +108,28 @@ describe('The Read Only Section', () => {
       expect(
         formatListOtherItems(payments.fundingSource, values, allValues)
       ).toEqual(expectedOrder);
+    });
+
+    it('orders tooltip/optionsLabels values correctly', async () => {
+      const values: FundingSource[] = [
+        FundingSource.OTHER,
+        FundingSource.MEDICARE_PART_B_SMI_TRUST_FUND,
+        FundingSource.MEDICARE_PART_A_HI_TRUST_FUND
+      ];
+
+      const expectedOrder: string[] = [
+        i18next.t<string>(
+          'payments:fundingSource.optionsLabels.MEDICARE_PART_A_HI_TRUST_FUND'
+        ),
+        i18next.t<string>(
+          'payments:fundingSource.optionsLabels.MEDICARE_PART_B_SMI_TRUST_FUND'
+        ),
+        ''
+      ];
+
+      expect(formatListTooltips(payments.fundingSource, values)).toEqual(
+        expectedOrder
+      );
     });
   });
 });
