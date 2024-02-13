@@ -4145,23 +4145,23 @@
     "@jridgewell/resolve-uri" "3.1.0"
     "@jridgewell/sourcemap-codec" "1.4.14"
 
-"@json2csv/formatters@^7.0.5":
-  version "7.0.5"
-  resolved "https://registry.yarnpkg.com/@json2csv/formatters/-/formatters-7.0.5.tgz#530193d4a584f9f6b410fd0a95a7f8185d15d759"
-  integrity sha512-ihONIB8S1ZG0ji5nDFpfCUPphVLnEKlLxDmDqRMjmPhzw8WCvyLX2trIrNHCf1t2IV8rx+1tNYaDb1dh87jHgA==
+"@json2csv/formatters@^7.0.6":
+  version "7.0.6"
+  resolved "https://registry.yarnpkg.com/@json2csv/formatters/-/formatters-7.0.6.tgz#a4f21daa9d64d6da9a297f7d7b97ba517870f780"
+  integrity sha512-hjIk1H1TR4ydU5ntIENEPgoMGW+Q7mJ+537sDFDbsk+Y3EPl2i4NfFVjw0NJRgT+ihm8X30M67mA8AS6jPidSA==
 
-"@json2csv/plainjs@^7.0.5":
-  version "7.0.5"
-  resolved "https://registry.yarnpkg.com/@json2csv/plainjs/-/plainjs-7.0.5.tgz#03ae99af741153ccc4422424a9d67d859f2dc9cc"
-  integrity sha512-iJsYEzgRZUhRb8LltCeuBQyexQVUbovRZFF73Lo0iIvi5SUWsfXGTtbriIROsOKgfZPtYxmkZV+FYlsnBu9ybQ==
+"@json2csv/plainjs@^7.0.6":
+  version "7.0.6"
+  resolved "https://registry.yarnpkg.com/@json2csv/plainjs/-/plainjs-7.0.6.tgz#e4149b26ec6f1c59a27c72534a91e971be397098"
+  integrity sha512-4Md7RPDCSYpmW1HWIpWBOqCd4vWfIqm53S3e/uzQ62iGi7L3r34fK/8nhOMEe+/eVfCx8+gdSCt1d74SlacQHw==
   dependencies:
-    "@json2csv/formatters" "^7.0.5"
-    "@streamparser/json" "^0.0.19"
+    "@json2csv/formatters" "^7.0.6"
+    "@streamparser/json" "^0.0.20"
 
-"@json2csv/transforms@^7.0.5":
-  version "7.0.5"
-  resolved "https://registry.yarnpkg.com/@json2csv/transforms/-/transforms-7.0.5.tgz#3fdea853c5d6cc70965e6248e12efa1c1e098905"
-  integrity sha512-zT8tW9jq1HWHR08Oyo39JfNMK756Qk4IPBtl6VZyEKoPbPiltnl3Zb2a1pg91x+wSjPNU3s5DDoSKI6FQGg5aw==
+"@json2csv/transforms@^7.0.6":
+  version "7.0.6"
+  resolved "https://registry.yarnpkg.com/@json2csv/transforms/-/transforms-7.0.6.tgz#2072979fd41906db70342d6fe864cc45d4cbe5c4"
+  integrity sha512-WURhLNL4rNa3PcvXCyy5alvuthnb2Pk9SiC3S7mQZSMbwkMa2E36upoWu9QCbfUpVR6xG1S1vkSdXUAKCjfxcQ==
 
 "@juggle/resize-observer@^3.3.1":
   version "3.4.0"
@@ -5726,10 +5726,10 @@
     "@types/express" "^4.7.0"
     file-system-cache "2.3.0"
 
-"@streamparser/json@^0.0.19":
-  version "0.0.19"
-  resolved "https://registry.yarnpkg.com/@streamparser/json/-/json-0.0.19.tgz#d9c264b54e366186ea4459bbb16c10238dc9e2a4"
-  integrity sha512-VTxtZGME6ZSWNCSjZ0Zd2LNNodx62XvmARb/liHIwGlInuuvoDzioLuRP8ajV8iLBknsTrsqpRDGlvzKSzpNEw==
+"@streamparser/json@^0.0.20":
+  version "0.0.20"
+  resolved "https://registry.yarnpkg.com/@streamparser/json/-/json-0.0.20.tgz#28c0255dea8d37f5d679d72c361f01edf70a770a"
+  integrity sha512-VqAAkydywPpkw63WQhPVKCD3SdwXuihCUVZbbiY3SfSTGQyHmwRoq27y4dmJdZuJwd5JIlQoMPyGvMbUPY0RKQ==
 
 "@svgr/babel-plugin-add-jsx-attribute@^7.0.0":
   version "7.0.0"
