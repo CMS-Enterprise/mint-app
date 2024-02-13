@@ -70,6 +70,7 @@ const ReadOnlyParticipantsAndProviders = ({
         </p>
       )}
 
+      {/* Map through all the translation config questions */}
       {getKeys(participantsAndProvidersConfig)
         .filter(field => field !== 'status')
         .map((field, index) => (
@@ -78,9 +79,10 @@ const ReadOnlyParticipantsAndProviders = ({
             className={classNames({
               'margin-top-4 padding-top-4 border-top-1px border-base-light':
                 !isViewingFilteredView &&
-                participantsAndProvidersConfig[field]?.pageStart
+                participantsAndProvidersConfig[field]?.pageStart // Add border if translation config contains property 'pageStart'
             })}
           >
+            {/* Checks if questions have config to be displayed side by side */}
             {participantsAndProvidersConfig[field]?.adjacentPosition ===
               'left' ||
             participantsAndProvidersConfig[field]?.adjacentPosition ===
@@ -96,24 +98,7 @@ const ReadOnlyParticipantsAndProviders = ({
                       filteredView={filteredView}
                     />
 
-                    {!isHiddenByParentCondition(
-                      participantsAndProvidersConfig[
-                        getKeys(participantsAndProvidersConfig)[index + 1]
-                      ],
-                      allparticipantsAndProvidersData
-                    ) && (
-                      <ReadOnlySectionNew
-                        config={
-                          participantsAndProvidersConfig[
-                            getKeys(participantsAndProvidersConfig)[index + 1]
-                          ]
-                        }
-                        values={allparticipantsAndProvidersData}
-                        namespace="participantsAndProviders"
-                        filteredView={filteredView}
-                      />
-                    )}
-
+                    {/* Checks if second question is condtional on the previous question before rendering */}
                     {!isHiddenByParentCondition(
                       participantsAndProvidersConfig[
                         getKeys(participantsAndProvidersConfig)[index + 1]
@@ -136,6 +121,7 @@ const ReadOnlyParticipantsAndProviders = ({
               </>
             ) : (
               <>
+                {/* Don't render questions of type 'otherType' as they are rendered within ReadOnlySectionNew */}
                 {!participantsAndProvidersConfig[field]?.otherType && (
                   <ReadOnlySectionNew
                     config={participantsAndProvidersConfig[field]}

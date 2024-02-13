@@ -8,8 +8,6 @@ const SideBySideReadOnlySectionNew = ({
 }) => {
   const [child1, child2] = children;
 
-  console.log(children);
-
   return (
     <Grid row gap>
       <Grid desktop={{ col: child2 ? 6 : 12 }}>{child1}</Grid>
