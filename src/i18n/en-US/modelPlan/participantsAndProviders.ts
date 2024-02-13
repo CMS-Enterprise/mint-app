@@ -1,4 +1,4 @@
-import { ParticipantsType } from 'gql/gen/graphql';
+import { ParticipantSelectionType, ParticipantsType } from 'gql/gen/graphql';
 
 import { TranslationParticipantsAndProviders } from 'types/translation';
 
@@ -240,6 +240,16 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
       OTHER: 'Other',
       NO_SELECTING_PARTICIPANTS: 'We won’t be selecting participants'
     },
+    optionsRelatedInfo: {
+      APPLICATION_REVIEW_AND_SCORING_TOOL: '',
+      APPLICATION_SUPPORT_CONTRACTOR: '',
+      BASIC_CRITERIA: '',
+      CMS_COMPONENT_OR_PROCESS: '',
+      MODEL_TEAM_REVIEW_APPLICATIONS: '',
+      SUPPORT_FROM_CMMI: '',
+      OTHER: 'selectionOther',
+      NO_SELECTING_PARTICIPANTS: '[]'
+    },
     filterGroups: ['cmmi', 'iddoc', 'pbg']
   },
   selectionOther: {
@@ -249,6 +259,11 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     label: 'Please describe the other participants engaging with this model',
     dataType: 'string',
     formType: 'textarea',
+    parentRelation: {
+      field: 'selectionMethod',
+      evaluation: [ParticipantSelectionType.OTHER],
+      evaluationMethod: 'includes'
+    },
     filterGroups: ['cmmi', 'iddoc', 'pbg']
   },
   selectionNote: {
@@ -356,6 +371,12 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
       OTHER: 'Other',
       NO_COMMUNICATION: 'We are not planning to communicate'
     },
+    optionsRelatedInfo: {
+      IT_TOOL: '',
+      MASS_EMAIL: '',
+      OTHER: 'communicationMethodOther',
+      NO_COMMUNICATION: ''
+    },
     filterGroups: ['cbosc']
   },
   communicationMethodOther: {
@@ -389,6 +410,13 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
       CAPITATION: 'Capitation',
       NOT_RISK_BASED: 'Not risk-based',
       OTHER: 'Other'
+    },
+    optionsRelatedInfo: {
+      TWO_SIDED: '',
+      ONE_SIDED: '',
+      CAPITATION: '',
+      NOT_RISK_BASED: '',
+      OTHER: 'riskOther'
     }
   },
   riskOther: {

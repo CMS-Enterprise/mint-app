@@ -435,7 +435,7 @@ export const ParticipantOptions = () => {
                         selectionMethodConfig.options
                       )}
                       selectedLabel={participantsAndProvidersT(
-                        'selectedParticipants'
+                        'selectionMethod.multiSelectLabel'
                       )}
                       onChange={(value: string[] | []) => {
                         setFieldValue('selectionMethod', value);

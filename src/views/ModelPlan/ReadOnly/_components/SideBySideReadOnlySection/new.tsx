@@ -5,22 +5,15 @@ import { isArray } from 'lodash';
 const SideBySideReadOnlySectionNew = ({
   children
 }: {
-  children: JSX.Element | JSX.Element[];
+  children: (false | JSX.Element | null | undefined)[];
 }) => {
-  let child1;
-  let child2;
-
-  if (isArray(children)) {
-    [child1, child2] = children;
-  }
+  const [child1, child2] = children;
 
   return (
     <Grid row gap>
-      <Grid desktop={{ col: isArray(children) ? 6 : 12 }}>
-        {isArray(children) ? child1 : children}
-      </Grid>
+      <Grid desktop={{ col: child2 ? 6 : 12 }}>{child1}</Grid>
 
-      {!!isArray(children) && <Grid desktop={{ col: 6 }}>{child2}</Grid>}
+      {child2 && <Grid desktop={{ col: 6 }}>{child2}</Grid>}
     </Grid>
   );
 };

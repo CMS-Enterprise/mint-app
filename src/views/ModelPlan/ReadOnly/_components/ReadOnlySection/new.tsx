@@ -164,6 +164,10 @@ export const formatListTooltips = <T extends string | keyof T>(
     });
 };
 
+const isEmpty = (value: any) => {
+  return value == null || value.length === 0;
+};
+
 export type ReadOnlySectionNewProps<T extends keyof T | string, C> = {
   config: ConfigType<T, C>;
   value: any;
@@ -201,8 +205,9 @@ const ReadOnlySectionNew = <T extends keyof T | string, C>({
     .replace(/\W/g, '-');
 
   const hasOptionsManyOptions =
-    isTranslationFieldPropertiesWithOptions(config) ||
-    isTranslationFieldPropertiesWithOptionsAndCondition(config);
+    (isTranslationFieldPropertiesWithOptions(config) ||
+      isTranslationFieldPropertiesWithOptionsAndCondition(config)) &&
+    config.formType !== 'radio';
 
   const listItems = hasOptionsManyOptions ? formatListItems(config, value) : [];
 
@@ -263,7 +268,7 @@ const ReadOnlySectionNew = <T extends keyof T | string, C>({
     }
 
     // Renders a single value with options (radio)
-    // Msy also renders a conditinal follow to the selection
+    // May also renders a conditinal follow to the selection
     if (
       isTranslationFieldPropertiesWithOptions(config) &&
       config.formType === 'radio'
@@ -274,14 +279,25 @@ const ReadOnlySectionNew = <T extends keyof T | string, C>({
 
       return (
         <p className="margin-y-0 font-body-md line-height-sans-4 text-pre-line">
-          {value && config.options[value]}
+          {!isEmpty(value) && config.options[value]}
           {hasChildField && childField && <span> - {childField}</span>}
-          {(!value || (hasChildField && !childField)) && (
+          {(isEmpty(value) || (hasChildField && !childField)) && (
             <i className="text-base">
-              {value && ' - '}
+              {!isEmpty(value) && ' - '}
               {miscellaneousT('noAdditionalInformation')}
             </i>
           )}
+        </p>
+      );
+    }
+
+    // If no values for checkbox/multiselect type questions
+    if (listItems.length === 0) {
+      return (
+        <p className="margin-y-0 font-body-md line-height-sans-4 text-pre-line">
+          <em className="text-base">
+            {miscellaneousT('noAdditionalInformation')}
+          </em>
         </p>
       );
     }
@@ -309,7 +325,7 @@ const ReadOnlySectionNew = <T extends keyof T | string, C>({
                 </span>
               )}
             </li>
-            {(item === 'Other' || listOtherItems) && (
+            {listOtherItems && (
               <ul data-testid="other-entry">
                 {listOtherItems && renderListItemOthers(index)}
               </ul>
