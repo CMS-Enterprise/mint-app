@@ -186,9 +186,11 @@ const ReadOnlySection = ({
         </p>
         {renderCopyOrList()}
       </div>
+
       {notes && (
         <ReadOnlySection heading={miscellaneousT('notes')} copy={notes} />
       )}
+
       {!!relatedConditions?.length && (
         <>
           <Alert type="info" slim className="margin-bottom-3">

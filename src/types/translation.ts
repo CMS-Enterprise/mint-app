@@ -140,6 +140,58 @@ export type TranslationFieldPropertiesWithOptionsAndParent<
   OptionsWithChildRelation<T> &
   ParentRelation<C>;
 
+export type TranslationConfigType<
+  T extends keyof T | string,
+  C extends string | keyof C
+> =
+  | TranslationFieldProperties
+  | TranslationFieldPropertiesWithParent<T>
+  | TranslationFieldPropertiesWithOptions<T>
+  | TranslationFieldPropertiesWithOptionsAndParent<T, C>;
+
+// Type guard to check if config is of type TranslationFieldProperties
+export const isTranslationFieldProperties = <
+  T extends keyof T | string,
+  C extends string | keyof C
+>(
+  config: TranslationConfigType<T, C>
+): config is TranslationFieldProperties => {
+  return !Object.hasOwn(config, 'options');
+};
+
+// Type guard to check if config is of type TranslationFieldPropertiesWithParent
+export const isTranslationFieldPropertiesWithParent = <
+  T extends keyof T | string,
+  C extends string | keyof C
+>(
+  config: TranslationConfigType<T, C>
+): config is TranslationFieldPropertiesWithParent<T> => {
+  return Object.hasOwn(config, 'parentRelation');
+};
+
+// Type guard to check if config is of type TranslationFieldPropertiesWithOptions
+export const isTranslationFieldPropertiesWithOptions = <
+  T extends keyof T | string,
+  C extends string | keyof C
+>(
+  config: TranslationConfigType<T, C>
+): config is TranslationFieldPropertiesWithOptions<T> => {
+  return Object.hasOwn(config, 'options');
+};
+
+// Type guard to check if config is of type TranslationFieldPropertiesWithOptionsAndParent
+export const isTranslationFieldPropertiesWithOptionsAndParent = <
+  T extends keyof T | string,
+  C extends string | keyof C
+>(
+  config: TranslationConfigType<T, C>
+): config is TranslationFieldPropertiesWithOptionsAndParent<T, C> => {
+  return (
+    Object.hasOwn(config, 'parentRelation') &&
+    Object.hasOwn(config, 'childRelation')
+  );
+};
+
 // Model Plan
 export type TranslationModelPlan = {
   modelName: TranslationFieldProperties;

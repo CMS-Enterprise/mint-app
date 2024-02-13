@@ -8,63 +8,17 @@ import CollapsableLink from 'components/shared/CollapsableLink';
 import Tooltip from 'components/shared/Tooltip';
 import {
   getKeys,
-  TranslationFieldProperties,
+  isTranslationFieldProperties,
+  isTranslationFieldPropertiesWithOptions,
+  isTranslationFieldPropertiesWithOptionsAndParent,
+  isTranslationFieldPropertiesWithParent,
+  TranslationConfigType,
   TranslationFieldPropertiesWithOptions,
   TranslationFieldPropertiesWithOptionsAndParent,
-  TranslationFieldPropertiesWithParent,
   TranslationPlan
 } from 'types/translation';
 
 import { filterGroups } from '../FilterView/BodyContent/_filterGroupMapping';
-
-type ConfigType<T extends keyof T | string, C extends string | keyof C> =
-  | TranslationFieldProperties
-  | TranslationFieldPropertiesWithParent<T>
-  | TranslationFieldPropertiesWithOptions<T>
-  | TranslationFieldPropertiesWithOptionsAndParent<T, C>;
-
-// Type guard to check if config is of type TranslationFieldProperties
-export const isTranslationFieldProperties = <
-  T extends keyof T | string,
-  C extends string | keyof C
->(
-  config: ConfigType<T, C>
-): config is TranslationFieldProperties => {
-  return !Object.hasOwn(config, 'options');
-};
-
-// Type guard to check if config is of type TranslationFieldPropertiesWithParent
-export const isTranslationFieldPropertiesWithParent = <
-  T extends keyof T | string,
-  C extends string | keyof C
->(
-  config: ConfigType<T, C>
-): config is TranslationFieldPropertiesWithParent<T> => {
-  return Object.hasOwn(config, 'parentRelation');
-};
-
-// Type guard to check if config is of type TranslationFieldPropertiesWithOptions
-export const isTranslationFieldPropertiesWithOptions = <
-  T extends keyof T | string,
-  C extends string | keyof C
->(
-  config: ConfigType<T, C>
-): config is TranslationFieldPropertiesWithOptions<T> => {
-  return Object.hasOwn(config, 'options');
-};
-
-// Type guard to check if config is of type TranslationFieldPropertiesWithOptionsAndParent
-export const isTranslationFieldPropertiesWithOptionsAndParent = <
-  T extends keyof T | string,
-  C extends string | keyof C
->(
-  config: ConfigType<T, C>
-): config is TranslationFieldPropertiesWithOptionsAndParent<T, C> => {
-  return (
-    Object.hasOwn(config, 'parentRelation') &&
-    Object.hasOwn(config, 'childRelation')
-  );
-};
 
 /*
   Util function for prepping data to listItems prop of ReadOnlySection
@@ -154,7 +108,7 @@ export const isHiddenByParentCondition = <
   T extends string | keyof T,
   C extends string | keyof C
 >(
-  config: ConfigType<T, C>,
+  config: TranslationConfigType<T, C>,
   values: any
 ): boolean => {
   if (isTranslationFieldPropertiesWithParent(config)) {
@@ -205,7 +159,7 @@ export type ReadOnlySectionNewProps<
   T extends keyof T | string,
   C extends string | keyof C
 > = {
-  config: ConfigType<T, C>;
+  config: TranslationConfigType<T, C>;
   values: any;
   namespace: keyof TranslationPlan;
   filteredView?: typeof filterGroups[number];
@@ -398,7 +352,7 @@ const ReadOnlySectionNew = <
 
       {!!relatedConditions?.length && (
         <>
-          <Alert type="info" slim className="margin-bottom-3">
+          <Alert type="info" noIcon className="margin-bottom-3">
             {readOnlyT('questionNotApplicable', {
               count: relatedConditions.length
             })}
