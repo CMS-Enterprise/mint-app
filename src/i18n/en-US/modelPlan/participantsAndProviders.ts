@@ -150,7 +150,9 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
       'Note: Sometimes RRCEG provides a minimum for the power calculation. Other times stakeholder research may inform the team about who are good candidates or might be interested in participating.',
     dataType: 'number',
     formType: 'rangeInput',
-    filterGroups: ['cbosc', 'ccw', 'dfsdm', 'ipc']
+    filterGroups: ['cbosc', 'ccw', 'dfsdm', 'ipc'],
+    pageStart: true,
+    adjacentPosition: 'left'
   },
   estimateConfidence: {
     gqlField: 'estimateConfidence',
@@ -165,7 +167,8 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
       FAIRLY: 'Fairly confident',
       COMPLETELY: 'Completely confident'
     },
-    filterGroups: ['cbosc', 'ccw', 'dfsdm', 'ipc']
+    filterGroups: ['cbosc', 'ccw', 'dfsdm', 'ipc'],
+    adjacentPosition: 'right'
   },
   confidenceNote: {
     gqlField: 'confidenceNote',
@@ -212,7 +215,8 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     dbField: 'recruitment_other',
     label: 'Please specify',
     dataType: 'string',
-    formType: 'textarea'
+    formType: 'textarea',
+    otherType: true
   },
   recruitmentNote: {
     gqlField: 'recruitmentNote',
@@ -263,6 +267,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     label: 'Please describe the other participants engaging with this model',
     dataType: 'string',
     formType: 'textarea',
+    otherType: true,
     parentRelation: {
       field: 'selectionMethod',
       evaluation: [ParticipantSelectionType.OTHER],
@@ -294,7 +299,9 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
       MONTHLY: '',
       CONTINUALLY: 'participantAddedFrequencyContinually',
       OTHER: 'participantAddedFrequencyOther'
-    }
+    },
+    filterGroups: ['ipc'],
+    pageStart: true
   },
   participantAddedFrequencyContinually: {
     gqlField: 'participantAddedFrequencyContinually',
@@ -302,7 +309,9 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     dbField: 'participant_added_frequency_continually',
     label: 'Please specify',
     dataType: 'string',
-    formType: 'text'
+    formType: 'text',
+    otherType: true,
+    filterGroups: ['ipc']
   },
   participantAddedFrequencyOther: {
     gqlField: 'participantAddedFrequencyOther',
@@ -310,7 +319,9 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     dbField: 'participant_added_frequency_other',
     label: 'Please specify',
     dataType: 'string',
-    formType: 'text'
+    formType: 'text',
+    otherType: true,
+    filterGroups: ['ipc']
   },
   participantAddedFrequencyNote: {
     gqlField: 'participantAddedFrequencyNote',
@@ -318,7 +329,8 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     dbField: 'participant_added_frequency_note',
     label: 'Notes',
     dataType: 'string',
-    formType: 'text'
+    formType: 'text',
+    filterGroups: ['ipc']
   },
   participantRemovedFrequency: {
     gqlField: 'participantRemovedFrequency',
@@ -335,7 +347,8 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
       MONTHLY: '',
       CONTINUALLY: 'participantRemovedFrequencyContinually',
       OTHER: 'participantRemovedFrequencyOther'
-    }
+    },
+    filterGroups: ['ipc']
   },
   participantRemovedFrequencyContinually: {
     gqlField: 'participantRemovedFrequencyContinually',
@@ -343,7 +356,9 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     dbField: 'participant_removed_frequency_continually',
     label: 'Please specify',
     dataType: 'string',
-    formType: 'text'
+    formType: 'text',
+    otherType: true,
+    filterGroups: ['ipc']
   },
   participantRemovedFrequencyOther: {
     gqlField: 'participantRemovedFrequencyOther',
@@ -351,7 +366,9 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     dbField: 'participant_removed_frequency_other',
     label: 'Please specify',
     dataType: 'string',
-    formType: 'text'
+    formType: 'text',
+    otherType: true,
+    filterGroups: ['ipc']
   },
   participantRemovedFrequencyNote: {
     gqlField: 'participantRemovedFrequencyNote',
@@ -359,7 +376,8 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     dbField: 'participant_removed_frequency_note',
     label: 'Notes',
     dataType: 'string',
-    formType: 'text'
+    formType: 'text',
+    filterGroups: ['ipc']
   },
   communicationMethod: {
     gqlField: 'communicationMethod',
@@ -381,7 +399,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
       OTHER: 'communicationMethodOther',
       NO_COMMUNICATION: ''
     },
-    filterGroups: ['cbosc']
+    filterGroups: ['cbosc', 'ipc']
   },
   communicationMethodOther: {
     gqlField: 'communicationMethodOther',
@@ -390,7 +408,8 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     label: 'Please specify',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['cbosc']
+    otherType: true,
+    filterGroups: ['cbosc', 'ipc']
   },
   communicationNote: {
     gqlField: 'communicationNote',
@@ -399,7 +418,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     label: 'Notes',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['cbosc']
+    filterGroups: ['cbosc', 'ipc']
   },
   riskType: {
     gqlField: 'riskType',
@@ -429,7 +448,8 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     dbField: 'risk_other',
     label: 'Please specify',
     dataType: 'string',
-    formType: 'textarea'
+    formType: 'textarea',
+    otherType: true
   },
   riskNote: {
     gqlField: 'riskNote',
@@ -470,7 +490,8 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     options: {
       true: 'Yes',
       false: 'No'
-    }
+    },
+    pageStart: true
   },
   coordinateWorkNote: {
     gqlField: 'coordinateWorkNote',
@@ -494,7 +515,8 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     childRelation: {
       true: ['gainsharePaymentsTrack', 'gainsharePaymentsEligibility'],
       false: []
-    }
+    },
+    adjacentPosition: 'left'
   },
   gainsharePaymentsTrack: {
     gqlField: 'gainsharePaymentsTrack',
@@ -511,7 +533,8 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
       field: 'gainsharePayments',
       evaluation: [Bool.true],
       evaluationMethod: 'equals'
-    }
+    },
+    adjacentPosition: 'right'
   },
   gainsharePaymentsEligibility: {
     gqlField: 'gainsharePaymentsEligibility',
@@ -544,7 +567,8 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     dbField: 'gainshare_payments_eligibility_other',
     label: 'Please specify',
     dataType: 'string',
-    formType: 'text'
+    formType: 'text',
+    otherType: true
   },
   gainsharePaymentsNote: {
     gqlField: 'gainsharePaymentsNote',
@@ -587,6 +611,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     label: 'Please specify',
     dataType: 'string',
     formType: 'textarea',
+    otherType: true,
     filterGroups: ['iddoc']
   },
   participantsIDSNote: {
@@ -614,7 +639,8 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
       CONTINUALLY: 'providerAdditionFrequencyContinually',
       OTHER: 'providerAdditionFrequencyOther'
     },
-    filterGroups: ['oact', 'ipc']
+    filterGroups: ['oact', 'ipc'],
+    pageStart: true
   },
   providerAdditionFrequencyContinually: {
     gqlField: 'providerAdditionFrequencyContinually',
@@ -623,6 +649,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     label: 'Please specify',
     dataType: 'string',
     formType: 'textarea',
+    otherType: true,
     filterGroups: ['oact', 'ipc']
   },
   providerAdditionFrequencyOther: {
@@ -632,6 +659,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     label: 'Please specify',
     dataType: 'string',
     formType: 'textarea',
+    otherType: true,
     filterGroups: ['oact', 'ipc']
   },
   providerAdditionFrequencyNote: {
@@ -685,6 +713,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
       'Please describe the other method for deciding which providers to add.',
     dataType: 'string',
     formType: 'textarea',
+    otherType: true,
     filterGroups: ['ipc', 'oact']
   },
   providerAddMethodNote: {
@@ -733,7 +762,8 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     label: 'Please specify',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['ipc', 'oact']
+    filterGroups: ['ipc', 'oact'],
+    otherType: true
   },
   providerLeaveMethodNote: {
     gqlField: 'providerLeaveMethodNote',
@@ -767,7 +797,8 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     dbField: 'provide_removal_frequency_continually',
     label: 'Please specify',
     dataType: 'string',
-    formType: 'text'
+    formType: 'text',
+    otherType: true
   },
   providerRemovalFrequencyOther: {
     gqlField: 'providerRemovalFrequencyOther',
@@ -775,7 +806,8 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     dbField: 'provider_removal_frequency_other',
     label: 'Please specify',
     dataType: 'string',
-    formType: 'text'
+    formType: 'text',
+    otherType: true
   },
   providerRemovalFrequencyNote: {
     gqlField: 'providerRemovalFrequencyNote',

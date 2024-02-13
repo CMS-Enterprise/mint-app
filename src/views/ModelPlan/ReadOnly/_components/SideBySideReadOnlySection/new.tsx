@@ -1,6 +1,5 @@
 import React from 'react';
 import { Grid } from '@trussworks/react-uswds';
-import { isArray } from 'lodash';
 
 const SideBySideReadOnlySectionNew = ({
   children
@@ -8,6 +7,8 @@ const SideBySideReadOnlySectionNew = ({
   children: (false | JSX.Element | null | undefined)[];
 }) => {
   const [child1, child2] = children;
+
+  console.log(children);
 
   return (
     <Grid row gap>

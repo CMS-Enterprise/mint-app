@@ -24,14 +24,14 @@ type ConfigType<T extends keyof T | string, C> =
   | TranslationFieldPropertiesWithOptionsAndCondition<T, C>;
 
 // Type guard to check if config is of type TranslationFieldProperties
-const isTranslationFieldProperties = <T extends keyof T | string, C>(
+export const isTranslationFieldProperties = <T extends keyof T | string, C>(
   config: ConfigType<T, C>
 ): config is TranslationFieldProperties => {
   return !Object.hasOwn(config, 'options');
 };
 
 // Type guard to check if config is of type TranslationFieldPropertiesWithCondition
-const isTranslationFieldPropertiesWithCondition = <
+export const isTranslationFieldPropertiesWithCondition = <
   T extends keyof T | string,
   C
 >(
@@ -41,14 +41,17 @@ const isTranslationFieldPropertiesWithCondition = <
 };
 
 // Type guard to check if config is of type TranslationFieldPropertiesWithOptions
-const isTranslationFieldPropertiesWithOptions = <T extends keyof T | string, C>(
+export const isTranslationFieldPropertiesWithOptions = <
+  T extends keyof T | string,
+  C
+>(
   config: ConfigType<T, C>
 ): config is TranslationFieldPropertiesWithOptions<T> => {
   return Object.hasOwn(config, 'options');
 };
 
 // Type guard to check if config is of type TranslationFieldPropertiesWithOptionsAndCondition
-const isTranslationFieldPropertiesWithOptionsAndCondition = <
+export const isTranslationFieldPropertiesWithOptionsAndCondition = <
   T extends keyof T | string,
   C
 >(
@@ -279,7 +282,8 @@ const ReadOnlySectionNew = <T extends keyof T | string, C>({
     ) {
       return (
         <div className="margin-y-0 font-body-md line-height-sans-4 text-pre-line">
-          {value || (
+          {!isEmpty(value) && value}
+          {isEmpty(value) && (
             <em className="text-base">
               {miscellaneousT('noAdditionalInformation')}
             </em>
