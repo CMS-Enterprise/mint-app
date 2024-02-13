@@ -1,12 +1,16 @@
 -- Create the new type
 CREATE TYPE ACTIVITY_TYPE AS ENUM (
   'DAILY_DIGEST_COMPLETE',
-  'NEW_PLAN_DISCUSSION',
-  'NEW_DISCUSSION_REPLY'
+  'ADDED_AS_COLLABORATOR',
+  'TAGGED_IN_DISCUSSION',
+  'TAGGED_IN_DISCUSSION_REPLY',
+  'NEW_DISCUSSION_REPLY',
+  'MODEL_PLAN_SHARED',
+  'NEW_PLAN_DISCUSSION'  -- //TODO: EASI-3925 , this one isn't explicitly referenced
 );
 
 -- TODO: should these be in a new schema?
-CREATE TABLE activity ( --TODO settle on naming. The word event is reserved
+CREATE TABLE activity (
     id UUID PRIMARY KEY NOT NULL,
     actor_id UUID NOT NULL REFERENCES user_account(id), --foreign key to user table
     entity_id UUID NOT NULL,
@@ -23,7 +27,7 @@ CREATE TABLE activity ( --TODO settle on naming. The word event is reserved
 
 --NOTE these tables likely doesn't need to be audited. It is an audit table by itself. If we want, we can audit it though
 
-CREATE TABLE user_notification ( --TODO settle on naming. The word notification is reserved
+CREATE TABLE user_notification (
     id UUID PRIMARY KEY NOT NULL,
     activity_id UUID NOT NULL REFERENCES activity(id), --foreign key to user table
     user_id UUID NOT NULL REFERENCES user_account(id),

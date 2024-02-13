@@ -1774,10 +1774,16 @@ ActivityType represents the possible activities that happen in application that 
 """
 enum ActivityType {
   DAILY_DIGEST_COMPLETE
-  NEW_PLAN_DISCUSSION
+  ADDED_AS_COLLABORATOR
+  TAGGED_IN_DISCUSSION
+  TAGGED_IN_DISCUSSION_REPLY
   NEW_DISCUSSION_REPLY
+  MODEL_PLAN_SHARED
+  NEW_PLAN_DISCUSSION
 }
+
 """
+AcitivyMetaData is a type that represents all the data that can be captured in an Activity
 """
 union ActivityMetaData = NewPlanDiscussionActivityMeta | ActivityMetaBaseStruct
 

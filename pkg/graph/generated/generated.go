@@ -9491,7 +9491,7 @@ type OperationalSolution {
     operationalNeedID: UUID!
 
     solutionType: Int
-    needed: Boolean # if null, it has not been selectd
+    needed: Boolean # if null, it has not been selected
     name: String
     key: OperationalSolutionKey
     nameOther: String
@@ -9617,10 +9617,16 @@ ActivityType represents the possible activities that happen in application that 
 """
 enum ActivityType {
   DAILY_DIGEST_COMPLETE
-  NEW_PLAN_DISCUSSION
+  ADDED_AS_COLLABORATOR
+  TAGGED_IN_DISCUSSION
+  TAGGED_IN_DISCUSSION_REPLY
   NEW_DISCUSSION_REPLY
+  MODEL_PLAN_SHARED
+  NEW_PLAN_DISCUSSION
 }
+
 """
+AcitivyMetaData is a type that represents all the data that can be captured in an Activity
 """
 union ActivityMetaData = NewPlanDiscussionActivityMeta | ActivityMetaBaseStruct
 
@@ -9665,7 +9671,7 @@ type UserNotification {
   id: UUID!
 	activityID: UUID!
   # activityType: ActivityType #Maybe add this on this level so the FE doesn't need to query it?
-	userID: UUID! #probably not needed, it should be only visibile for the user
+	userID: UUID! #probably not needed, it should be only visible for the user
   isRead: Boolean!
   activity: Activity! # should we nest this?
   content: UserNotificationContent!
@@ -9688,7 +9694,7 @@ This returns the number of unread notifications
 """
 numUnreadNotifications: Int!
 """
-This includes all notifiationcs
+This includes all notifications
 """
 notifications: [UserNotification!]!
 """
@@ -9698,7 +9704,7 @@ unreadNotifications: [UserNotification!]!
 }
 
 """
-UserNotificationPreferences represents a users preferences about what type and where to receive a notifiation
+UserNotificationPreferences represents a users preferences about what type and where to receive a notification
 """
 type UserNotificationPreferences {
   id: UUID!
@@ -9892,7 +9898,7 @@ deleteOperationalSolutionSubtask(id: UUID!): Int!
 @hasRole(role: MINT_USER)
 
 """
-This will update linked existing models, and relatede model plans for given model plan and fieldName.
+This will update linked existing models, and related model plans for given model plan and fieldName.
 The fieldName allows it so you can create links for multiple sections of the model plan
 """
 updateExistingModelLinks(modelPlanID: UUID!,fieldName: ExisitingModelLinkFieldType!,  existingModelIDs: [Int!],currentModelPlanIDs: [UUID!]): ExistingModelLinks!

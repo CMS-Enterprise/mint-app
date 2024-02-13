@@ -59,13 +59,18 @@ export type ActivityMetaBaseStruct = {
   version: Scalars['Int']['output'];
 };
 
+/** AcitivyMetaData is a type that represents all the data that can be captured in an Activity */
 export type ActivityMetaData = ActivityMetaBaseStruct | NewPlanDiscussionActivityMeta;
 
 /** ActivityType represents the possible activities that happen in application that might result in a notification */
 export enum ActivityType {
+  ADDED_AS_COLLABORATOR = 'ADDED_AS_COLLABORATOR',
   DAILY_DIGEST_COMPLETE = 'DAILY_DIGEST_COMPLETE',
+  MODEL_PLAN_SHARED = 'MODEL_PLAN_SHARED',
   NEW_DISCUSSION_REPLY = 'NEW_DISCUSSION_REPLY',
-  NEW_PLAN_DISCUSSION = 'NEW_PLAN_DISCUSSION'
+  NEW_PLAN_DISCUSSION = 'NEW_PLAN_DISCUSSION',
+  TAGGED_IN_DISCUSSION = 'TAGGED_IN_DISCUSSION',
+  TAGGED_IN_DISCUSSION_REPLY = 'TAGGED_IN_DISCUSSION_REPLY'
 }
 
 export enum AgencyOrStateHelpType {
@@ -595,7 +600,7 @@ export type Mutation = {
   unlockTaskListSection: Scalars['Boolean']['output'];
   updateCustomOperationalNeedByID: OperationalNeed;
   /**
-   * This will update linked existing models, and relatede model plans for given model plan and fieldName.
+   * This will update linked existing models, and related model plans for given model plan and fieldName.
    * The fieldName allows it so you can create links for multiple sections of the model plan
    */
   updateExistingModelLinks: ExistingModelLinks;
@@ -2754,7 +2759,7 @@ export type UserNotification = {
 /** User Notification Content represents the possible data associated with a User Notification */
 export type UserNotificationContent = DiscussionReply | PlanDiscussion;
 
-/** UserNotificationPreferences represents a users preferences about what type and where to receive a notifiation */
+/** UserNotificationPreferences represents a users preferences about what type and where to receive a notification */
 export type UserNotificationPreferences = {
   __typename: 'UserNotificationPreferences';
   createdBy: Scalars['UUID']['output'];
@@ -2776,7 +2781,7 @@ export type UserNotificationPreferences = {
 /** This is a wrapper for all information for a user  */
 export type UserNotifications = {
   __typename: 'UserNotifications';
-  /** This includes all notifiationcs */
+  /** This includes all notifications */
   notifications: Array<UserNotification>;
   /** This returns the number of unread notifications */
   numUnreadNotifications: Scalars['Int']['output'];

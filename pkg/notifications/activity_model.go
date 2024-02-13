@@ -12,9 +12,13 @@ type ActivityType string
 
 // These constants represent the different values of ActivityType
 const (
-	ActivityDigest             ActivityType = "DAILY_DIGEST_COMPLETE"
-	ActivityNewPlanDiscussion  ActivityType = "NEW_PLAN_DISCUSSION"
-	ActivityNewDiscussionReply ActivityType = "NEW_DISCUSSION_REPLY"
+	ActivityDigest                  ActivityType = "DAILY_DIGEST_COMPLETE"
+	ActivityAddedAsCollaborator     ActivityType = "ADDED_AS_COLLABORATOR"
+	ActivityTaggedInDiscussion      ActivityType = "TAGGED_IN_DISCUSSION"
+	ActivityTaggedInDiscussionReply ActivityType = "TAGGED_IN_DISCUSSION_REPLY"
+	ActivityNewDiscussionReply      ActivityType = "NEW_DISCUSSION_REPLY"
+	ActivityModelPlanShared         ActivityType = "MODEL_PLAN_SHARED"
+	ActivityNewPlanDiscussion       ActivityType = "NEW_PLAN_DISCUSSION"
 )
 
 // Activity represents a discrete event that has happened in the application that might be notifiable.
