@@ -1,7 +1,7 @@
 import { aliasQuery } from '../support/graphql-test-utils';
 import verifyStatus from '../support/verifyRequestStatus';
 
-describe('The Model Plan IT solutions tracker', () => {
+describe('The Model Plan Operational solutions tracker', () => {
   beforeEach(() => {
     cy.localLogin({ name: 'MINT', role: 'MINT_USER_NONPROD' });
 
@@ -16,7 +16,7 @@ describe('The Model Plan IT solutions tracker', () => {
     });
   });
 
-  it('completes a Model Plan IT solutions tracker', () => {
+  it('completes a Model Plan Operational solutions tracker', () => {
     cy.clickPlanTableByName('Empty Plan');
 
     // Enter into op eval and learning and answer helpdesk op needs question
@@ -50,7 +50,7 @@ describe('The Model Plan IT solutions tracker', () => {
       .should('eq', 200)
       .wait(250);
 
-    // Click into the it solutions tracker for helpdesk op needs
+    // Click into the operational solutions tracker for helpdesk op needs
     cy.get('[data-testid="needs-table"] tbody tr')
       .should('have.length', 1)
       .first()
@@ -161,7 +161,7 @@ describe('The Model Plan IT solutions tracker', () => {
       .should('eq', 200)
       .wait(250);
 
-    // Verifying solutions are added on the IT solutions tracker
+    // Verifying solutions are added on the Operational solutions tracker
     cy.get('[data-testid="needs-table"] tbody tr')
       .should('have.length', 3)
       .first()

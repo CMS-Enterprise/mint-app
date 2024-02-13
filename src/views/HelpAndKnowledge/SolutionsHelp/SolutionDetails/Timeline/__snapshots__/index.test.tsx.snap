@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`IT Solutions Timeline Components > matches the snapshot > 4innovation 1`] = `
+exports[`Operational Solutions Timeline Components > matches the snapshot > 4innovation 1`] = `
 <DocumentFragment>
   <div>
     <h2
@@ -175,7 +175,7 @@ exports[`IT Solutions Timeline Components > matches the snapshot > 4innovation 1
 </DocumentFragment>
 `;
 
-exports[`IT Solutions Timeline Components > matches the snapshot > Accountable Care Organization - Operational System 1`] = `
+exports[`Operational Solutions Timeline Components > matches the snapshot > Accountable Care Organization - Operational System 1`] = `
 <DocumentFragment>
   <div>
     <h2
@@ -350,7 +350,7 @@ exports[`IT Solutions Timeline Components > matches the snapshot > Accountable C
 </DocumentFragment>
 `;
 
-exports[`IT Solutions Timeline Components > matches the snapshot > Automated Plan Payment System 1`] = `
+exports[`Operational Solutions Timeline Components > matches the snapshot > Automated Plan Payment System 1`] = `
 <DocumentFragment>
   <div>
     <h2
@@ -403,7 +403,7 @@ exports[`IT Solutions Timeline Components > matches the snapshot > Automated Pla
 </DocumentFragment>
 `;
 
-exports[`IT Solutions Timeline Components > matches the snapshot > Beneficiary Claims Data API 1`] = `
+exports[`Operational Solutions Timeline Components > matches the snapshot > Beneficiary Claims Data API 1`] = `
 <DocumentFragment>
   <div>
     <h2
@@ -490,7 +490,7 @@ exports[`IT Solutions Timeline Components > matches the snapshot > Beneficiary C
 </DocumentFragment>
 `;
 
-exports[`IT Solutions Timeline Components > matches the snapshot > CMS Box 1`] = `
+exports[`Operational Solutions Timeline Components > matches the snapshot > CMS Box 1`] = `
 <DocumentFragment>
   <div>
     <h2
@@ -565,7 +565,7 @@ exports[`IT Solutions Timeline Components > matches the snapshot > CMS Box 1`] =
 </DocumentFragment>
 `;
 
-exports[`IT Solutions Timeline Components > matches the snapshot > CMS Qualtrics 1`] = `
+exports[`Operational Solutions Timeline Components > matches the snapshot > CMS Qualtrics 1`] = `
 <DocumentFragment>
   <div>
     <h2
@@ -640,7 +640,7 @@ exports[`IT Solutions Timeline Components > matches the snapshot > CMS Qualtrics
 </DocumentFragment>
 `;
 
-exports[`IT Solutions Timeline Components > matches the snapshot > CPI Vetting 1`] = `
+exports[`Operational Solutions Timeline Components > matches the snapshot > CPI Vetting 1`] = `
 <DocumentFragment>
   <div>
     <h2
@@ -683,7 +683,7 @@ exports[`IT Solutions Timeline Components > matches the snapshot > CPI Vetting 1
 </DocumentFragment>
 `;
 
-exports[`IT Solutions Timeline Components > matches the snapshot > Centralized Data Exchange 1`] = `
+exports[`Operational Solutions Timeline Components > matches the snapshot > Centralized Data Exchange 1`] = `
 <DocumentFragment>
   <div>
     <h2
@@ -771,7 +771,7 @@ exports[`IT Solutions Timeline Components > matches the snapshot > Centralized D
 </DocumentFragment>
 `;
 
-exports[`IT Solutions Timeline Components > matches the snapshot > Chronic Conditions Warehouse 1`] = `
+exports[`Operational Solutions Timeline Components > matches the snapshot > Chronic Conditions Warehouse 1`] = `
 <DocumentFragment>
   <div>
     <h2
@@ -924,7 +924,7 @@ exports[`IT Solutions Timeline Components > matches the snapshot > Chronic Condi
 </DocumentFragment>
 `;
 
-exports[`IT Solutions Timeline Components > matches the snapshot > Consolidated Business Operations Support Center 1`] = `
+exports[`Operational Solutions Timeline Components > matches the snapshot > Consolidated Business Operations Support Center 1`] = `
 <DocumentFragment>
   <div>
     <h2
@@ -1052,7 +1052,7 @@ exports[`IT Solutions Timeline Components > matches the snapshot > Consolidated 
 </DocumentFragment>
 `;
 
-exports[`IT Solutions Timeline Components > matches the snapshot > Electronic File Transfer 1`] = `
+exports[`Operational Solutions Timeline Components > matches the snapshot > Electronic File Transfer 1`] = `
 <DocumentFragment>
   <div>
     <h2
@@ -1095,7 +1095,7 @@ exports[`IT Solutions Timeline Components > matches the snapshot > Electronic Fi
 </DocumentFragment>
 `;
 
-exports[`IT Solutions Timeline Components > matches the snapshot > Expanded Data Feedback Reporting 1`] = `
+exports[`Operational Solutions Timeline Components > matches the snapshot > Expanded Data Feedback Reporting 1`] = `
 <DocumentFragment>
   <div>
     <h2
@@ -1168,7 +1168,7 @@ exports[`IT Solutions Timeline Components > matches the snapshot > Expanded Data
 </DocumentFragment>
 `;
 
-exports[`IT Solutions Timeline Components > matches the snapshot > GovDelivery 1`] = `
+exports[`Operational Solutions Timeline Components > matches the snapshot > GovDelivery 1`] = `
 <DocumentFragment>
   <div>
     <h2
@@ -1250,7 +1250,7 @@ exports[`IT Solutions Timeline Components > matches the snapshot > GovDelivery 1
 </DocumentFragment>
 `;
 
-exports[`IT Solutions Timeline Components > matches the snapshot > GrantSolutions 1`] = `
+exports[`Operational Solutions Timeline Components > matches the snapshot > GrantSolutions 1`] = `
 <DocumentFragment>
   <div>
     <h2
@@ -1300,7 +1300,7 @@ exports[`IT Solutions Timeline Components > matches the snapshot > GrantSolution
 </DocumentFragment>
 `;
 
-exports[`IT Solutions Timeline Components > matches the snapshot > Health Data Reporting 1`] = `
+exports[`Operational Solutions Timeline Components > matches the snapshot > Health Data Reporting 1`] = `
 <DocumentFragment>
   <div>
     <h2
@@ -1394,7 +1394,7 @@ If the model will use HDR’s pre-fill option, the model team’s implementation
 </DocumentFragment>
 `;
 
-exports[`IT Solutions Timeline Components > matches the snapshot > Health Plan Management System 1`] = `
+exports[`Operational Solutions Timeline Components > matches the snapshot > Health Plan Management System 1`] = `
 <DocumentFragment>
   <div>
     <h2
@@ -1437,7 +1437,7 @@ exports[`IT Solutions Timeline Components > matches the snapshot > Health Plan M
 </DocumentFragment>
 `;
 
-exports[`IT Solutions Timeline Components > matches the snapshot > Healthcare Integrated General Ledger Accounting System 1`] = `
+exports[`Operational Solutions Timeline Components > matches the snapshot > Healthcare Integrated General Ledger Accounting System 1`] = `
 <DocumentFragment>
   <div>
     <h2
@@ -1464,7 +1464,7 @@ exports[`IT Solutions Timeline Components > matches the snapshot > Healthcare In
 </DocumentFragment>
 `;
 
-exports[`IT Solutions Timeline Components > matches the snapshot > Innovation Payment Contractor 1`] = `
+exports[`Operational Solutions Timeline Components > matches the snapshot > Innovation Payment Contractor 1`] = `
 <DocumentFragment>
   <div>
     <h2
@@ -1612,7 +1612,7 @@ The Model team will receive an implementation milestone schedule that identifies
 </DocumentFragment>
 `;
 
-exports[`IT Solutions Timeline Components > matches the snapshot > Innovation Support Platform 1`] = `
+exports[`Operational Solutions Timeline Components > matches the snapshot > Innovation Support Platform 1`] = `
 <DocumentFragment>
   <div>
     <h2
@@ -1740,7 +1740,7 @@ exports[`IT Solutions Timeline Components > matches the snapshot > Innovation Su
 </DocumentFragment>
 `;
 
-exports[`IT Solutions Timeline Components > matches the snapshot > Integrated Data Repository 1`] = `
+exports[`Operational Solutions Timeline Components > matches the snapshot > Integrated Data Repository 1`] = `
 <DocumentFragment>
   <div>
     <h2
@@ -1783,7 +1783,7 @@ exports[`IT Solutions Timeline Components > matches the snapshot > Integrated Da
 </DocumentFragment>
 `;
 
-exports[`IT Solutions Timeline Components > matches the snapshot > Learning and Diffusion Group 1`] = `
+exports[`Operational Solutions Timeline Components > matches the snapshot > Learning and Diffusion Group 1`] = `
 <DocumentFragment>
   <div>
     <h2
@@ -1833,7 +1833,7 @@ exports[`IT Solutions Timeline Components > matches the snapshot > Learning and 
 </DocumentFragment>
 `;
 
-exports[`IT Solutions Timeline Components > matches the snapshot > Legal Vertical 1`] = `
+exports[`Operational Solutions Timeline Components > matches the snapshot > Legal Vertical 1`] = `
 <DocumentFragment>
   <div>
     <h2
@@ -1916,7 +1916,7 @@ exports[`IT Solutions Timeline Components > matches the snapshot > Legal Vertica
 </DocumentFragment>
 `;
 
-exports[`IT Solutions Timeline Components > matches the snapshot > Master Data Management 1`] = `
+exports[`Operational Solutions Timeline Components > matches the snapshot > Master Data Management 1`] = `
 <DocumentFragment>
   <div>
     <h2
@@ -2014,7 +2014,7 @@ exports[`IT Solutions Timeline Components > matches the snapshot > Master Data M
 </DocumentFragment>
 `;
 
-exports[`IT Solutions Timeline Components > matches the snapshot > Measure and Instrument Development and Support 1`] = `
+exports[`Operational Solutions Timeline Components > matches the snapshot > Measure and Instrument Development and Support 1`] = `
 <DocumentFragment>
   <div>
     <h2
@@ -2127,7 +2127,7 @@ exports[`IT Solutions Timeline Components > matches the snapshot > Measure and I
 </DocumentFragment>
 `;
 
-exports[`IT Solutions Timeline Components > matches the snapshot > Medicare Advantage Prescription Drug System 1`] = `
+exports[`Operational Solutions Timeline Components > matches the snapshot > Medicare Advantage Prescription Drug System 1`] = `
 <DocumentFragment>
   <div>
     <h2
@@ -2170,7 +2170,7 @@ exports[`IT Solutions Timeline Components > matches the snapshot > Medicare Adva
 </DocumentFragment>
 `;
 
-exports[`IT Solutions Timeline Components > matches the snapshot > Outlook Mailbox 1`] = `
+exports[`Operational Solutions Timeline Components > matches the snapshot > Outlook Mailbox 1`] = `
 <DocumentFragment>
   <div>
     <h2
@@ -2306,7 +2306,7 @@ exports[`IT Solutions Timeline Components > matches the snapshot > Outlook Mailb
 </DocumentFragment>
 `;
 
-exports[`IT Solutions Timeline Components > matches the snapshot > Quality Vertical 1`] = `
+exports[`Operational Solutions Timeline Components > matches the snapshot > Quality Vertical 1`] = `
 <DocumentFragment>
   <div>
     <h2
@@ -2374,7 +2374,7 @@ exports[`IT Solutions Timeline Components > matches the snapshot > Quality Verti
 </DocumentFragment>
 `;
 
-exports[`IT Solutions Timeline Components > matches the snapshot > Research, Measurement, Assessment, Design, and Analysis 1`] = `
+exports[`Operational Solutions Timeline Components > matches the snapshot > Research, Measurement, Assessment, Design, and Analysis 1`] = `
 <DocumentFragment>
   <div>
     <h2
@@ -2401,7 +2401,7 @@ exports[`IT Solutions Timeline Components > matches the snapshot > Research, Mea
 </DocumentFragment>
 `;
 
-exports[`IT Solutions Timeline Components > matches the snapshot > Salesforce Application Review and Scoring 1`] = `
+exports[`Operational Solutions Timeline Components > matches the snapshot > Salesforce Application Review and Scoring 1`] = `
 <DocumentFragment>
   <div>
     <h2
@@ -2533,7 +2533,7 @@ exports[`IT Solutions Timeline Components > matches the snapshot > Salesforce Ap
 </DocumentFragment>
 `;
 
-exports[`IT Solutions Timeline Components > matches the snapshot > Salesforce CONNECT 1`] = `
+exports[`Operational Solutions Timeline Components > matches the snapshot > Salesforce CONNECT 1`] = `
 <DocumentFragment>
   <div>
     <h2
@@ -2665,7 +2665,7 @@ exports[`IT Solutions Timeline Components > matches the snapshot > Salesforce CO
 </DocumentFragment>
 `;
 
-exports[`IT Solutions Timeline Components > matches the snapshot > Salesforce Letter of Intent 1`] = `
+exports[`Operational Solutions Timeline Components > matches the snapshot > Salesforce Letter of Intent 1`] = `
 <DocumentFragment>
   <div>
     <h2
@@ -2797,7 +2797,7 @@ exports[`IT Solutions Timeline Components > matches the snapshot > Salesforce Le
 </DocumentFragment>
 `;
 
-exports[`IT Solutions Timeline Components > matches the snapshot > Salesforce Project Officer Support Tool / Portal 1`] = `
+exports[`Operational Solutions Timeline Components > matches the snapshot > Salesforce Project Officer Support Tool / Portal 1`] = `
 <DocumentFragment>
   <div>
     <h2
@@ -2929,7 +2929,7 @@ exports[`IT Solutions Timeline Components > matches the snapshot > Salesforce Pr
 </DocumentFragment>
 `;
 
-exports[`IT Solutions Timeline Components > matches the snapshot > Salesforce Request for Application 1`] = `
+exports[`Operational Solutions Timeline Components > matches the snapshot > Salesforce Request for Application 1`] = `
 <DocumentFragment>
   <div>
     <h2
@@ -3061,7 +3061,7 @@ exports[`IT Solutions Timeline Components > matches the snapshot > Salesforce Re
 </DocumentFragment>
 `;
 
-exports[`IT Solutions Timeline Components > matches the snapshot > Shared Systems 1`] = `
+exports[`Operational Solutions Timeline Components > matches the snapshot > Shared Systems 1`] = `
 <DocumentFragment>
   <div>
     <h2

@@ -31,7 +31,7 @@ const solution: SolutionCardType = {
 
 const mocks = [...possibleSolutionsMock];
 
-describe('IT Solutions SolutionCard', () => {
+describe('Operational Solutions SolutionCard', () => {
   it('renders default card correctly', async () => {
     const { getByText, getByTestId } = render(
       <MemoryRouter

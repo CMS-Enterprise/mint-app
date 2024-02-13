@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`IT Solutions HelpBox > matches snapshot 1`] = `
+exports[`Operational Solutions HelpBox > matches snapshot 1`] = `
 <DocumentFragment>
   <div
     class="padding-3 bg-primary-dark text-white"
@@ -20,7 +20,7 @@ exports[`IT Solutions HelpBox > matches snapshot 1`] = `
       data-testid="add-new-operational-need"
       href="//add-an-operational-need"
     >
-      Add an operational need or IT solution
+      Add an operational need or solution
     </a>
   </div>
 </DocumentFragment>

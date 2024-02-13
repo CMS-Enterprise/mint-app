@@ -70,7 +70,7 @@ const returnNeeds = (needed: boolean | null) => {
 const mockStore = configureMockStore();
 const store = mockStore({ auth: { euaId: 'MINT' } });
 
-describe('IT Solutions Home', () => {
+describe('Operational Solutions Home', () => {
   it('renders possible needs without errors', async () => {
     const needed = null;
 

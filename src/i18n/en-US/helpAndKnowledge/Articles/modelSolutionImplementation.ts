@@ -23,7 +23,7 @@ const modelSolutionImplementation = {
         {
           heading: 'Determine priority',
           description:
-            'Based on the IT solutions and implementation status tracker populated in the previous phase, the IT Lead will work with the Model Lead to determine which projects need to begin first. Working with some systems takes longer than others. The IT Lead will help model teams with the necessary timing.'
+            'Based on the operational solutions and implementation status tracker populated in the previous phase, the IT Lead will work with the Model Lead to determine which projects need to begin first. Working with some systems takes longer than others. The IT Lead will help model teams with the necessary timing.'
         },
         {
           heading: 'Start work with the product/project teams',
