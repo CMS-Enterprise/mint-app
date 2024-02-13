@@ -1,6 +1,10 @@
-import { ParticipantSelectionType, ParticipantsType } from 'gql/gen/graphql';
+import {
+  OverlapType,
+  ParticipantSelectionType,
+  ParticipantsType
+} from 'gql/gen/graphql';
 
-import { TranslationParticipantsAndProviders } from 'types/translation';
+import { Bool, TranslationParticipantsAndProviders } from 'types/translation';
 
 import { frequencyOptions } from './miscellaneous';
 
@@ -486,6 +490,10 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     options: {
       true: 'Yes',
       false: 'No'
+    },
+    childRelation: {
+      true: ['gainsharePaymentsTrack', 'gainsharePaymentsEligibility'],
+      false: []
     }
   },
   gainsharePaymentsTrack: {
@@ -498,6 +506,11 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     options: {
       true: 'Yes',
       false: 'No'
+    },
+    parentRelation: {
+      field: 'gainsharePayments',
+      evaluation: [Bool.true],
+      evaluationMethod: 'equals'
     }
   },
   gainsharePaymentsEligibility: {
@@ -512,6 +525,17 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
       SOME_PROVIDERS: 'Some providers',
       OTHER: 'Other',
       NO: 'No'
+    },
+    optionsRelatedInfo: {
+      ALL_PROVIDERS: '',
+      SOME_PROVIDERS: '',
+      OTHER: 'gainsharePaymentsEligibilityOther',
+      NO: ''
+    },
+    parentRelation: {
+      field: 'gainsharePayments',
+      evaluation: [Bool.true],
+      evaluationMethod: 'equals'
     }
   },
   gainsharePaymentsEligibilityOther: {
@@ -546,6 +570,13 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
       TINS: 'TINs',
       OTHER: 'Other',
       NO_IDENTIFIERS: 'No, we will not collect provider identifiers'
+    },
+    optionsRelatedInfo: {
+      CCNS: '',
+      NPIS: '',
+      TINS: '',
+      OTHER: 'participantsIdsOther',
+      NO_IDENTIFIERS: ''
     },
     filterGroups: ['iddoc']
   },
@@ -635,6 +666,15 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
       OTHER: 'Other',
       NA: 'Not applicable'
     },
+    optionsRelatedInfo: {
+      PROSPECTIVELY: '',
+      RETROSPECTIVELY: '',
+      VOLUNTARILY: '',
+      MANDATORILY: '',
+      ONLINE_TOOLS: '',
+      OTHER: 'providerAddMethodOther',
+      NA: ''
+    },
     filterGroups: ['ipc', 'oact']
   },
   providerAddMethodOther: {
@@ -675,6 +715,14 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
         'They can leave voluntarily at any time without implications',
       OTHER: 'Other',
       NOT_APPLICABLE: 'Not applicable'
+    },
+    optionsRelatedInfo: {
+      VARIES_BY_TYPE_OF_PROVIDER: '',
+      NOT_ALLOWED_TO_LEAVE: '',
+      AFTER_A_CERTAIN_WITH_IMPLICATIONS: '',
+      VOLUNTARILY_WITHOUT_IMPLICATIONS: '',
+      OTHER: 'providerLeaveMethodOther',
+      NOT_APPLICABLE: ''
     },
     filterGroups: ['ipc', 'oact']
   },
@@ -750,6 +798,11 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
       YES_NO_ISSUES: 'Yes, and the overlaps would not be an issue',
       NO: 'No'
     },
+    childRelation: {
+      YES_NEED_POLICIES: ['providerOverlapHierarchy'],
+      YES_NO_ISSUES: ['providerOverlapHierarchy'],
+      NO: []
+    },
     filterGroups: ['iddoc', 'pbg']
   },
   providerOverlapHierarchy: {
@@ -760,6 +813,11 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
       'If model providers can be in multiple models that may interact, please note the desired hierarchy of how any payment changes or edits should be applied.',
     dataType: 'string',
     formType: 'textarea',
+    parentRelation: {
+      field: 'providerOverlap',
+      evaluation: [OverlapType.YES_NEED_POLICIES, OverlapType.YES_NO_ISSUES],
+      evaluationMethod: 'equals'
+    },
     filterGroups: ['iddoc', 'pbg']
   },
   providerOverlapNote: {

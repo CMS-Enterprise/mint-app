@@ -407,156 +407,119 @@ const ReadOnlyParticipantsAndProviders = ({
           )}
         </SideBySideReadOnlySectionNew>
 
-        {checkGroupMap(
-          isViewingFilteredView,
-          filteredQuestions,
-          'gainsharePayments',
-          <SideBySideReadOnlySection
-            firstSection={{
-              heading: participantsAndProvidersT('gainsharePayments.label'),
-              copy: participantsAndProvidersT(
-                `gainsharePayments.options.${gainsharePayments}`,
-                ''
-              )
-            }}
-            secondSection={
-              gainsharePayments === true && {
-                heading: participantsAndProvidersT(
-                  'gainsharePaymentsTrack.label'
-                ),
-                copy: participantsAndProvidersT(
-                  `gainsharePaymentsTrack.options.${gainsharePaymentsTrack}`,
-                  ''
-                )
-              }
-            }
-          />
-        )}
+        <ReadOnlySectionNew
+          config={participantsAndProvidersConfig.gainsharePaymentsEligibility}
+          value={gainsharePaymentsEligibility}
+          values={allparticipantsAndProvidersData}
+          namespace="participantsAndProviders"
+          filteredView={filteredView}
+        />
 
-        {gainsharePayments &&
-          checkGroupMap(
-            isViewingFilteredView,
-            filteredQuestions,
-            'gainsharePaymentsEligibility',
-            <ReadOnlySection
-              heading={participantsAndProvidersT(
-                'gainsharePaymentsEligibility.label'
-              )}
-              list
-              listItems={gainsharePaymentsEligibility?.map((type): string =>
-                participantsAndProvidersT(
-                  `gainsharePaymentsEligibility.options.${type}`
-                )
-              )}
-              listOtherItem={gainsharePaymentsEligibilityOther}
-            />
-          )}
+        <ReadOnlySectionNew
+          config={participantsAndProvidersConfig.gainsharePaymentsNote}
+          value={gainsharePaymentsNote}
+          values={allparticipantsAndProvidersData}
+          namespace="participantsAndProviders"
+          filteredView={filteredView}
+        />
 
-        {gainsharePaymentsNote &&
-          checkGroupMap(
-            isViewingFilteredView,
-            filteredQuestions,
-            'gainsharePayments',
-            <ReadOnlySection
-              heading={participantsAndProvidersT('gainsharePaymentsNote.label')}
-              copy={gainsharePaymentsNote}
-            />
-          )}
-
-        {checkGroupMap(
-          isViewingFilteredView,
-          filteredQuestions,
-          'participantsIds',
-          <ReadOnlySection
-            heading={participantsAndProvidersT('participantsIds.label')}
-            list
-            listItems={participantsIds?.map((type): string =>
-              participantsAndProvidersT(`participantsIds.options.${type}`)
-            )}
-            listOtherItem={participantsIdsOther}
-            notes={participantsIDSNote}
-          />
-        )}
+        <ReadOnlySectionNew
+          config={participantsAndProvidersConfig.participantsIds}
+          value={participantsIds}
+          values={allparticipantsAndProvidersData}
+          namespace="participantsAndProviders"
+          filteredView={filteredView}
+        />
       </div>
 
       <div>
-        {/* {checkGroupMap(
-          isViewingFilteredView,
-          filteredQuestions,
-          'providerAdditionFrequency',
-          <ReadOnlySection
-            heading={participantsAndProvidersT(
-              'providerAdditionFrequency.label'
-            )}
-            list
-            listItems={formatListItems(
-              providerAdditionFrequencyConfig,
-              providerAdditionFrequency
-            )}
-            listOtherItems={formatListOtherItems(
-              providerAdditionFrequencyConfig,
-              providerAdditionFrequency,
-              allparticipantsAndProvidersData
-            )}
-            notes={providerAdditionFrequencyNote}
-          />
-        )} */}
+        <ReadOnlySectionNew
+          config={participantsAndProvidersConfig.providerAdditionFrequency}
+          value={providerAdditionFrequency}
+          values={allparticipantsAndProvidersData}
+          namespace="participantsAndProviders"
+          filteredView={filteredView}
+        />
 
-        {checkGroupMap(
-          isViewingFilteredView,
-          filteredQuestions,
-          'providerAddMethod',
-          <ReadOnlySection
-            heading={participantsAndProvidersT(
-              'providerAddMethod.readonlyLabel'
-            )}
-            list
-            listItems={providerAddMethod?.map((type): string =>
-              participantsAndProvidersT(`providerAddMethod.options.${type}`)
-            )}
-            listOtherItem={providerAddMethodOther}
-            notes={providerAddMethodNote}
-          />
-        )}
+        <ReadOnlySectionNew
+          config={participantsAndProvidersConfig.providerAdditionFrequencyNote}
+          value={providerAdditionFrequencyNote}
+          values={allparticipantsAndProvidersData}
+          namespace="participantsAndProviders"
+          filteredView={filteredView}
+        />
 
-        {checkGroupMap(
-          isViewingFilteredView,
-          filteredQuestions,
-          'providerLeaveMethod',
-          <ReadOnlySection
-            heading={participantsAndProvidersT(
-              'providerLeaveMethod.readonlyLabel'
-            )}
-            list
-            listItems={providerLeaveMethod?.map((type): string =>
-              participantsAndProvidersT(`providerLeaveMethod.options.${type}`)
-            )}
-            listOtherItem={providerLeaveMethodOther}
-            notes={providerLeaveMethodNote}
-          />
-        )}
+        <ReadOnlySectionNew
+          config={participantsAndProvidersConfig.providerAddMethod}
+          value={providerAddMethod}
+          values={allparticipantsAndProvidersData}
+          namespace="participantsAndProviders"
+          filteredView={filteredView}
+        />
 
-        {/* {checkGroupMap(
-          isViewingFilteredView,
-          filteredQuestions,
-          'providerRemovalFrequency',
-          <ReadOnlySection
-            heading={participantsAndProvidersT(
-              'providerRemovalFrequency.label'
-            )}
-            list
-            listItems={formatListItems(
-              providerRemovalFrequencyConfig,
-              providerRemovalFrequency
-            )}
-            listOtherItems={formatListOtherItems(
-              providerRemovalFrequencyConfig,
-              providerRemovalFrequency,
-              allparticipantsAndProvidersData
-            )}
-            notes={providerRemovalFrequencyNote}
-          />
-        )} */}
+        <ReadOnlySectionNew
+          config={participantsAndProvidersConfig.providerAddMethodNote}
+          value={providerAddMethodNote}
+          values={allparticipantsAndProvidersData}
+          namespace="participantsAndProviders"
+          filteredView={filteredView}
+        />
+
+        <ReadOnlySectionNew
+          config={participantsAndProvidersConfig.providerLeaveMethod}
+          value={providerLeaveMethod}
+          values={allparticipantsAndProvidersData}
+          namespace="participantsAndProviders"
+          filteredView={filteredView}
+        />
+
+        <ReadOnlySectionNew
+          config={participantsAndProvidersConfig.providerLeaveMethodNote}
+          value={providerLeaveMethodNote}
+          values={allparticipantsAndProvidersData}
+          namespace="participantsAndProviders"
+          filteredView={filteredView}
+        />
+
+        <ReadOnlySectionNew
+          config={participantsAndProvidersConfig.providerRemovalFrequency}
+          value={providerRemovalFrequency}
+          values={allparticipantsAndProvidersData}
+          namespace="participantsAndProviders"
+          filteredView={filteredView}
+        />
+
+        <ReadOnlySectionNew
+          config={participantsAndProvidersConfig.providerRemovalFrequencyNote}
+          value={providerRemovalFrequencyNote}
+          values={allparticipantsAndProvidersData}
+          namespace="participantsAndProviders"
+          filteredView={filteredView}
+        />
+
+        <ReadOnlySectionNew
+          config={participantsAndProvidersConfig.providerOverlap}
+          value={providerOverlap}
+          values={allparticipantsAndProvidersData}
+          namespace="participantsAndProviders"
+          filteredView={filteredView}
+        />
+
+        <ReadOnlySectionNew
+          config={participantsAndProvidersConfig.providerOverlapHierarchy}
+          value={providerOverlapHierarchy}
+          values={allparticipantsAndProvidersData}
+          namespace="participantsAndProviders"
+          filteredView={filteredView}
+        />
+
+        <ReadOnlySectionNew
+          config={participantsAndProvidersConfig.providerOverlapNote}
+          value={providerOverlapNote}
+          values={allparticipantsAndProvidersData}
+          namespace="participantsAndProviders"
+          filteredView={filteredView}
+        />
 
         {checkGroupMap(
           isViewingFilteredView,

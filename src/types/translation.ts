@@ -132,6 +132,7 @@ export type TranslationFieldPropertiesWithOptionsAndCondition<
   parentRelation?: {
     field: string;
     evaluation: C[];
+    evaluationMethod: 'includes' | 'equals'; // If the parent value is an array or a single value
   };
 };
 
@@ -293,8 +294,14 @@ export type TranslationParticipantsAndProviders = {
   coordinateWork: TranslationFieldPropertiesWithOptions<Bool>;
   coordinateWorkNote: TranslationFieldProperties;
   gainsharePayments: TranslationFieldPropertiesWithOptions<Bool>;
-  gainsharePaymentsTrack: TranslationFieldPropertiesWithOptions<Bool>;
-  gainsharePaymentsEligibility: TranslationFieldPropertiesWithOptions<GainshareArrangementEligibility>;
+  gainsharePaymentsTrack: TranslationFieldPropertiesWithOptionsAndCondition<
+    Bool,
+    Bool
+  >;
+  gainsharePaymentsEligibility: TranslationFieldPropertiesWithOptionsAndCondition<
+    GainshareArrangementEligibility,
+    Bool
+  >;
   gainsharePaymentsEligibilityOther: TranslationFieldProperties;
   gainsharePaymentsNote: TranslationFieldProperties;
   participantsIds: TranslationFieldPropertiesWithOptions<ParticipantsIdType>;
@@ -316,7 +323,7 @@ export type TranslationParticipantsAndProviders = {
   providerRemovalFrequencyOther: TranslationFieldProperties;
   providerRemovalFrequencyNote: TranslationFieldProperties;
   providerOverlap: TranslationFieldPropertiesWithOptions<OverlapType>;
-  providerOverlapHierarchy: TranslationFieldProperties;
+  providerOverlapHierarchy: TranslationFieldPropertiesWithCondition<OverlapType>;
   providerOverlapNote: TranslationFieldProperties;
   status: TranslationFieldPropertiesWithOptions<TaskStatus>;
 };

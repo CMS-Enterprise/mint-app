@@ -102,20 +102,38 @@ export const getRelatedUneededQuestions = <T extends string | keyof T, C>(
 ): (string | null | undefined)[] | null => {
   if (!config.childRelation) return null;
 
-  const hiddenQuestions: string[] = [];
+  // Creating to arrays to hold values of needed and unneeded hidden questions
+  // For instances like `providerOverlap` where the multiple parent evaluations triggers the same rendered question
+  // Allows to remove dupe neededRelations
+  let unneededRelations: string[] = [];
+  const neededRelations: string[] = [];
 
   getKeys(config.childRelation)
+    // Check if question has conditional child questions
     .filter(option => config.childRelation?.[option].length)
     .forEach(option => {
-      if (!value?.includes(option)) {
+      // If the evaluation of the parent value triggers a child question, sort into appropriate arrays
+      if (
+        (Array.isArray(value) && !value?.includes(option)) ||
+        (!Array.isArray(value) && value !== option)
+      ) {
         config.childRelation?.[option].forEach(childField => {
-          hiddenQuestions.push(
-            i18next.t<string>(`${translationKey}:${childField}.label`)
-          );
+          neededRelations.push(childField);
         });
+      } else if (config.childRelation?.[option]) {
+        unneededRelations = [
+          ...unneededRelations,
+          ...config.childRelation?.[option]
+        ];
       }
     });
-  return hiddenQuestions;
+
+  // Removes dupe relations and converts to translated string
+  const uniqueQuestions = neededRelations
+    .filter(relation => !unneededRelations.includes(relation))
+    .map(relation => i18next.t<string>(`${translationKey}:${relation}.label`));
+
+  return [...new Set(uniqueQuestions)];
 };
 
 /*
@@ -140,7 +158,7 @@ export const isHiddenByParentCondition = <T extends string | keyof T, C>(
     // If parent value is a single value, check if evaluation exits
     if (
       !config.parentRelation.evaluation.includes(
-        values[config.parentRelation.field]
+        values[config.parentRelation.field]?.toString()
       )
     ) {
       return true;
@@ -164,6 +182,7 @@ export const formatListTooltips = <T extends string | keyof T>(
     });
 };
 
+// Used to count 'false' values as a truthy value
 const isEmpty = (value: any) => {
   return value == null || value.length === 0;
 };
@@ -273,7 +292,7 @@ const ReadOnlySectionNew = <T extends keyof T | string, C>({
       isTranslationFieldPropertiesWithOptions(config) &&
       config.formType === 'radio'
     ) {
-      const hasChildField = config?.optionsRelatedInfo?.[value];
+      const hasChildField = config.optionsRelatedInfo?.[value];
 
       const childField = hasChildField ? values[hasChildField] : null;
 
