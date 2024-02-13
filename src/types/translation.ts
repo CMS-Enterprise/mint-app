@@ -109,16 +109,25 @@ type ParentRelation<T extends keyof T | string> = {
 };
 
 // References the parent option/enum value as the key and the child field it references as the value
-type ChildRelation<T extends keyof T | string> = Record<T, string[]>;
+// Child relations only pertain to specific questions that remain hidden in readonly per Figma
+// This does not include generic "Other" questions or single line followups, unless specifically stated
+type ChildRelation<T extends keyof T | string> = {
+  childRelation: Record<T, string[]>;
+};
 
 // Extended type for questions that have options - boolean, radio, checkbox, etc.
 // Takes in a enum/generic for translation key
-type OptionsWithChildRelation<T extends keyof T | string> = {
+type TranslationOptions<T extends keyof T | string> = {
   options: Record<T, string>;
   optionsLabels?: Record<T, string>;
   optionsRelatedInfo?: Record<T, string>;
-  childRelation?: ChildRelation<T>;
 };
+
+// Extended type for questions that have options - boolean, radio, checkbox, etc.
+// Takes in a enum/generic for translation key
+type OptionsWithChildRelation<
+  T extends keyof T | string
+> = TranslationOptions<T> & ChildRelation<T>;
 
 // Apply/combine ParentRelation and TranslationFieldProperties to TranslationFieldPropertiesWithParent
 export type TranslationFieldPropertiesWithParent<
@@ -128,7 +137,13 @@ export type TranslationFieldPropertiesWithParent<
 // Apply/combine OptionsWithChildRelation and TranslationFieldProperties to TranslationFieldPropertiesWithOptions
 export type TranslationFieldPropertiesWithOptions<
   T extends keyof T | string
-> = TranslationFieldProperties & OptionsWithChildRelation<T>;
+> = TranslationFieldProperties & TranslationOptions<T>;
+
+// Extended type for questions that have options - boolean, radio, checkbox, etc. as well as conditional children
+// Takes in a enum/generic for translation key
+export type TranslationFieldPropertiesWithOptionsAndChildren<
+  T extends keyof T | string
+> = TranslationFieldProperties & OptionsWithChildRelation<T> & ChildRelation<T>;
 
 // Extended type for questions that have options - boolean, radio, checkbox, etc.
 // Extended type for questions that are conditionally rendered by a parent evaluation
@@ -136,9 +151,7 @@ export type TranslationFieldPropertiesWithOptions<
 export type TranslationFieldPropertiesWithOptionsAndParent<
   T extends keyof T | string,
   C extends keyof C | string
-> = TranslationFieldProperties &
-  OptionsWithChildRelation<T> &
-  ParentRelation<C>;
+> = TranslationFieldProperties & TranslationOptions<T> & ParentRelation<C>;
 
 export type TranslationConfigType<
   T extends keyof T | string,
@@ -147,6 +160,7 @@ export type TranslationConfigType<
   | TranslationFieldProperties
   | TranslationFieldPropertiesWithParent<T>
   | TranslationFieldPropertiesWithOptions<T>
+  | TranslationFieldPropertiesWithOptionsAndChildren<T>
   | TranslationFieldPropertiesWithOptionsAndParent<T, C>;
 
 // Type guard to check if config is of type TranslationFieldProperties
@@ -177,6 +191,19 @@ export const isTranslationFieldPropertiesWithOptions = <
   config: TranslationConfigType<T, C>
 ): config is TranslationFieldPropertiesWithOptions<T> => {
   return Object.hasOwn(config, 'options');
+};
+
+// Type guard to check if config is of type TranslationFieldPropertiesWithOptions
+export const isTranslationFieldPropertiesWithOptionsAndChildren = <
+  T extends keyof T | string,
+  C extends string | keyof C
+>(
+  config: TranslationConfigType<T, C>
+): config is TranslationFieldPropertiesWithOptionsAndChildren<T> => {
+  return (
+    Object.hasOwn(config, 'childRelation') &&
+    !Object.hasOwn(config, 'parentRelation')
+  );
 };
 
 // Type guard to check if config is of type TranslationFieldPropertiesWithOptionsAndParent
@@ -311,7 +338,7 @@ export type TranslationGeneralCharacteristics = {
 
 // Participants and Providers
 export type TranslationParticipantsAndProviders = {
-  participants: TranslationFieldPropertiesWithOptions<ParticipantsType>;
+  participants: TranslationFieldPropertiesWithOptionsAndChildren<ParticipantsType>;
   medicareProviderType: TranslationFieldPropertiesWithParent<ParticipantsType>;
   statesEngagement: TranslationFieldPropertiesWithParent<ParticipantsType>;
   participantsOther: TranslationFieldPropertiesWithParent<ParticipantsType>;
@@ -349,7 +376,7 @@ export type TranslationParticipantsAndProviders = {
   // Coordination
   coordinateWork: TranslationFieldPropertiesWithOptions<Bool>;
   coordinateWorkNote: TranslationFieldProperties;
-  gainsharePayments: TranslationFieldPropertiesWithOptions<Bool>;
+  gainsharePayments: TranslationFieldPropertiesWithOptionsAndChildren<Bool>;
   gainsharePaymentsTrack: TranslationFieldPropertiesWithOptionsAndParent<
     Bool,
     Bool

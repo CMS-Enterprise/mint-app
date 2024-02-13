@@ -10,10 +10,12 @@ import {
   getKeys,
   isTranslationFieldProperties,
   isTranslationFieldPropertiesWithOptions,
+  isTranslationFieldPropertiesWithOptionsAndChildren,
   isTranslationFieldPropertiesWithOptionsAndParent,
   isTranslationFieldPropertiesWithParent,
   TranslationConfigType,
   TranslationFieldPropertiesWithOptions,
+  TranslationFieldPropertiesWithOptionsAndChildren,
   TranslationFieldPropertiesWithOptionsAndParent,
   TranslationPlan
 } from 'types/translation';
@@ -59,11 +61,12 @@ export const getRelatedUneededQuestions = <
 >(
   config:
     | TranslationFieldPropertiesWithOptions<T>
+    | TranslationFieldPropertiesWithOptionsAndChildren<T>
     | TranslationFieldPropertiesWithOptionsAndParent<T, C>, // Translation config
   value: T[] | undefined, // field value/enum array,
   translationKey: keyof TranslationPlan
 ): (string | null | undefined)[] | null => {
-  if (!config.childRelation) return null;
+  if (!isTranslationFieldPropertiesWithOptionsAndChildren(config)) return null;
 
   // Creating to arrays to hold values of needed and unneeded hidden questions
   // For instances like `providerOverlap` where the multiple parent evaluations triggers the same rendered question
@@ -77,7 +80,7 @@ export const getRelatedUneededQuestions = <
     .forEach(option => {
       // If the evaluation of the parent value triggers a child question, sort into appropriate arrays
       if (
-        (Array.isArray(value) && !value?.includes(option)) ||
+        (Array.isArray(value) && !value?.includes(option as T)) ||
         (!Array.isArray(value) &&
           value !== undefined &&
           String(value) !== option)
