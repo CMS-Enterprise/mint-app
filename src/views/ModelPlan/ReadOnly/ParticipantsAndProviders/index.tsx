@@ -20,6 +20,7 @@ import ReadOnlySection, {
 } from '../_components/ReadOnlySection';
 import ReadOnlySectionNew from '../_components/ReadOnlySection/new';
 import SideBySideReadOnlySection from '../_components/SideBySideReadOnlySection';
+import SideBySideReadOnlySectionNew from '../_components/SideBySideReadOnlySection/new';
 import TitleAndStatus from '../_components/TitleAndStatus';
 import { ReadOnlyProps } from '../ModelBasics';
 
@@ -226,62 +227,39 @@ const ReadOnlyParticipantsAndProviders = ({
             : 'margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light'
         }`}
       >
-        {checkGroupMap(
-          isViewingFilteredView,
-          filteredQuestions,
-          'expectedNumberOfParticipants',
-          <SideBySideReadOnlySection
-            firstSection={{
-              heading: participantsAndProvidersT(
-                'expectedNumberOfParticipants.label'
-              ),
-              copy: expectedNumberOfParticipants?.toString()
-            }}
-            secondSection={{
-              heading: participantsAndProvidersT('estimateConfidence.label'),
-              copy:
-                estimateConfidence &&
-                participantsAndProvidersT(
-                  `estimateConfidence.options.${estimateConfidence}`,
-                  ''
-                ),
-              listOtherItem: riskOther
-            }}
+        <SideBySideReadOnlySectionNew>
+          <ReadOnlySectionNew
+            config={participantsAndProvidersConfig.expectedNumberOfParticipants}
+            value={expectedNumberOfParticipants}
+            values={allparticipantsAndProvidersData}
+            namespace="participantsAndProviders"
+            filteredView={filteredView}
           />
-        )}
 
-        {checkGroupMap(
-          isViewingFilteredView,
-          filteredQuestions,
-          'expectedNumberOfParticipants',
-          <ReadOnlySection
-            heading={participantsAndProvidersT('confidenceNote.label')}
-            copy={confidenceNote}
+          <ReadOnlySectionNew
+            config={participantsAndProvidersConfig.estimateConfidence}
+            value={estimateConfidence}
+            values={allparticipantsAndProvidersData}
+            namespace="participantsAndProviders"
+            filteredView={filteredView}
           />
-        )}
+        </SideBySideReadOnlySectionNew>
 
-        {/* If "Other", then display "Other — Lorem ipsum." */}
-        {/* Else just display content, i.e. "LOI (Letter of interest)" */}
-        {checkGroupMap(
-          isViewingFilteredView,
-          filteredQuestions,
-          'recruitmentMethod',
-          <ReadOnlySection
-            heading={participantsAndProvidersT('recruitmentMethod.label')}
-            copy={
-              recruitmentMethod &&
-              (recruitmentMethod === RecruitmentType.OTHER
-                ? `${participantsAndProvidersT(
-                    `recruitmentMethod.options.${recruitmentMethod}`
-                  )} \u2014  ${recruitmentOther}`
-                : participantsAndProvidersT(
-                    `recruitmentMethod.options.${recruitmentMethod}`,
-                    ''
-                  ))
-            }
-            notes={recruitmentNote}
-          />
-        )}
+        <ReadOnlySectionNew
+          config={participantsAndProvidersConfig.confidenceNote}
+          value={confidenceNote}
+          values={allparticipantsAndProvidersData}
+          namespace="participantsAndProviders"
+          filteredView={filteredView}
+        />
+
+        <ReadOnlySectionNew
+          config={participantsAndProvidersConfig.recruitmentMethod}
+          value={recruitmentMethod}
+          values={allparticipantsAndProvidersData}
+          namespace="participantsAndProviders"
+          filteredView={filteredView}
+        />
 
         {checkGroupMap(
           isViewingFilteredView,

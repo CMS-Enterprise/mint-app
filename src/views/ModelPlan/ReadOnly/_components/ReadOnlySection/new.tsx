@@ -164,19 +164,21 @@ export const formatListTooltips = <T extends string | keyof T>(
     });
 };
 
+export type ReadOnlySectionNewProps<T extends keyof T | string, C> = {
+  config: ConfigType<T, C>;
+  value: any;
+  values: any;
+  namespace: keyof TranslationPlan;
+  filteredView?: typeof filterGroups[number];
+};
+
 const ReadOnlySectionNew = <T extends keyof T | string, C>({
   config,
   value,
   values,
   namespace,
   filteredView
-}: {
-  config: ConfigType<T, C>;
-  value: any;
-  values: any;
-  namespace: keyof TranslationPlan;
-  filteredView?: typeof filterGroups[number];
-}): React.ReactElement | null => {
+}: ReadOnlySectionNewProps<T, C>): React.ReactElement | null => {
   const { t: miscellaneousT } = useTranslation('miscellaneous');
   const { t: readOnlyT } = useTranslation('generalReadOnly');
 
@@ -266,25 +268,22 @@ const ReadOnlySectionNew = <T extends keyof T | string, C>({
       isTranslationFieldPropertiesWithOptions(config) &&
       config.formType === 'radio'
     ) {
-      if (
-        value &&
-        config.otherKey &&
-        value === config.options[config.otherKey] &&
-        config.hasOther
-      ) {
-        const childField = values[config.hasOther];
+      const hasChildField = config?.optionsRelatedInfo?.[value];
 
-        return (
-          <p className="margin-y-0 font-body-md line-height-sans-4 text-pre-line">
-            {value} {childField && <span>- {childField}</span>}{' '}
-            {!childField && (
-              <i className="text-base">
-                - {miscellaneousT('noAdditionalInformation')}
-              </i>
-            )}
-          </p>
-        );
-      }
+      const childField = hasChildField ? values[hasChildField] : null;
+
+      return (
+        <p className="margin-y-0 font-body-md line-height-sans-4 text-pre-line">
+          {value && config.options[value]}
+          {hasChildField && childField && <span> - {childField}</span>}
+          {(!value || (hasChildField && !childField)) && (
+            <i className="text-base">
+              {value && ' - '}
+              {miscellaneousT('noAdditionalInformation')}
+            </i>
+          )}
+        </p>
+      );
     }
 
     // Renders a list of selected values - multiselect, checkboxes

@@ -193,6 +193,13 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
       NOFO: 'CMMI writes, Office of General Council (OGC) reviews and approves',
       OTHER: '',
       NA: ''
+    },
+    optionsRelatedInfo: {
+      APPLICATION_COLLECTION_TOOL: '',
+      LOI: '',
+      NOFO: '',
+      OTHER: 'recruitmentOther',
+      NA: ''
     }
   },
   recruitmentOther: {
