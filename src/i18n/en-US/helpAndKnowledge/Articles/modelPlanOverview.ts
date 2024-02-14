@@ -3,7 +3,7 @@ const modelPlanOverview = {
   overviewHeading: 'Overview for adding a model',
   title: 'Overview for adding a model',
   description:
-    'Within MINT, you can start a new Model Plan to analyze the operational and implementation needs of the model upload and access documents related to your model request, like concept documents or policy papers track the IT solutions the model will use and track its status through implementation',
+    'Within MINT, you can start a new Model Plan to analyze the operational and implementation needs of the model upload and access documents related to your model request, like concept documents or policy papers track the operational solutions the model will use and track its status through implementation',
   getStartedButton: 'Get started',
   summaryBox: {
     copy: 'Use this service to:',
@@ -14,7 +14,7 @@ const modelPlanOverview = {
       upload:
         'upload and access documents related to your model request, like concept documents or policy papers',
       track:
-        'track the IT solutions the model will use and track its status through implementation'
+        'track the operational solutions the model will use and track its status through implementation'
     },
     email:
       'If you have any questions, you can reach the MINT Team at: <1>MINTTeam@cms.hhs.gov</1>.'
@@ -40,9 +40,9 @@ const modelPlanOverview = {
         'Work with the MINT Team and other administrative teams to iterate on model requirements.'
     },
     fourth: {
-      heading: 'Track your IT solutions',
+      heading: 'Track your operational solutions',
       description:
-        'Work with your IT Lead or BSG to determine which IT solutions your model will use for the operational needs. Then, track the implementation status of those solutions to stay organized throughout the process.'
+        'Work with your IT Lead or BSG to determine which solutions your model will use for the operational needs. Then, track the implementation status of those solutions to stay organized throughout the process.'
     },
     fifth: {
       heading: 'Finalize your Model Plan and prepare for clearance',

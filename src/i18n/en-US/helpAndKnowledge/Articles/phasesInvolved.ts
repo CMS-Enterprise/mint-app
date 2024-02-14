@@ -12,7 +12,7 @@ const phasesInvolved = {
       activities: [
         'Start a Model Plan',
         'Assemble the IT and operational team',
-        'Identify the IT solutions for the model’s operational needs'
+        'Identify the solutions for the model’s operational needs'
       ],
       linkText: 'Learn more about this phase',
       link: '/help-and-knowledge/model-and-solution-design'

@@ -14,7 +14,7 @@ import NeedQuestionAndAnswer from '.';
 const modelID = 'ce3405a0-3399-4e3a-88d7-3cfc613d2905';
 const operationalNeedID = '081cb879-bd6f-4ead-b9cb-3a299de76390';
 
-describe('IT Solutions NeedQuestionAndAnswer', () => {
+describe('Operational Solutions NeedQuestionAndAnswer', () => {
   it('renders correctly', async () => {
     const { getByText, getByTestId } = render(
       <MemoryRouter

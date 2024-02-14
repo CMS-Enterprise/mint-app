@@ -70,7 +70,7 @@ exports[`The Model Plan Steps Overview static page > matches the snapshot 1`] = 
               upload and access documents related to your model request, like concept documents or policy papers
             </li>
             <li>
-              track the IT solutions the model will use and track its status through implementation
+              track the operational solutions the model will use and track its status through implementation
             </li>
           </ul>
           <p
@@ -152,10 +152,10 @@ exports[`The Model Plan Steps Overview static page > matches the snapshot 1`] = 
               className="usa-process-list__heading"
               data-testid="processListHeading"
             >
-              Track your IT solutions
+              Track your operational solutions
             </h3>
             <p>
-              Work with your IT Lead or BSG to determine which IT solutions your model will use for the operational needs. Then, track the implementation status of those solutions to stay organized throughout the process.
+              Work with your IT Lead or BSG to determine which solutions your model will use for the operational needs. Then, track the implementation status of those solutions to stay organized throughout the process.
             </p>
           </li>
           <li
