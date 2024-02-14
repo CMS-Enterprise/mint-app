@@ -33,6 +33,10 @@ const ReadOnlyBody = ({
                 !isViewingFilteredView && config[field]?.pageStart // Add border if translation config contains property 'pageStart'
             })}
           >
+            {!isViewingFilteredView && config[field]?.readonlyHeader && (
+              <h3 className="margin-top-0">{config[field].readonlyHeader}</h3>
+            )}
+
             {/* Checks if questions have config to be displayed side by side */}
             {config[field]?.adjacentPosition === 'left' ||
             config[field]?.adjacentPosition === 'right' ? (

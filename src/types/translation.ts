@@ -93,6 +93,7 @@ export type TranslationFieldProperties = {
   tags?: string[];
   isModelLinks?: boolean; // Used to designate if a field is a ExistingModelLinks type with nested fields - ex: names,
   pageStart?: boolean; // Is the question the first question on a page - used for styling in ReadOnly
+  readonlyHeader?: string; // Indicates if a header is required at the start of the question/section.  Normally used in conjunction with pageStart
   adjacentPosition?: 'left' | 'right'; // Should the questions be placed side by side in readonly
   otherType?: boolean; // Is a question a followup to another that doesn't designate it's own readonly question/line
 };
