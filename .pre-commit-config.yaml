@@ -84,7 +84,7 @@ repos:
         name: Lint GraphQL schema
         entry: scripts/pre-commit-graphql-schema-lint
         language: script
-        files: pkg/graph/schema.graphql
+        files: "pkg/graph/schema/.*\\.graphql"
 
   - repo: local
     hooks:

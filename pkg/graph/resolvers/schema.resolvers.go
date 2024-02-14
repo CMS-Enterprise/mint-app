@@ -199,23 +199,6 @@ func (r *mutationResolver) DeletePlanCollaborator(ctx context.Context, id uuid.U
 	return DeletePlanCollaborator(logger, id, principal, r.store)
 }
 
-// UpdatePlanBasics is the resolver for the updatePlanBasics field.
-func (r *mutationResolver) UpdatePlanBasics(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanBasics, error) {
-	principal := appcontext.Principal(ctx)
-	logger := appcontext.ZLogger(ctx)
-
-	return UpdatePlanBasics(
-		logger,
-		id,
-		changes,
-		principal,
-		r.store,
-		r.emailService,
-		r.emailTemplateService,
-		r.addressBook,
-	)
-}
-
 // UpdatePlanGeneralCharacteristics is the resolver for the updatePlanGeneralCharacteristics field.
 func (r *mutationResolver) UpdatePlanGeneralCharacteristics(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanGeneralCharacteristics, error) {
 	principal := appcontext.Principal(ctx)
@@ -531,30 +514,6 @@ func (r *operationalSolutionResolver) Documents(ctx context.Context, obj *models
 // OperationalSolutionSubtasks is the resolver for the operationalSolutionSubtasks field.
 func (r *operationalSolutionResolver) OperationalSolutionSubtasks(ctx context.Context, obj *models.OperationalSolution) ([]*models.OperationalSolutionSubtask, error) {
 	return OperationalSolutionSubtaskGetBySolutionIDLOADER(ctx, obj.ID)
-}
-
-// AdditionalModelCategories is the resolver for the additionalModelCategories field.
-func (r *planBasicsResolver) AdditionalModelCategories(ctx context.Context, obj *models.PlanBasics) ([]models.ModelCategory, error) {
-	modelCategories := models.ConvertEnums[models.ModelCategory](obj.AdditionalModelCategories)
-	return modelCategories, nil
-}
-
-// CmsCenters is the resolver for the cmsCenters field.
-func (r *planBasicsResolver) CmsCenters(ctx context.Context, obj *models.PlanBasics) ([]model.CMSCenter, error) {
-	cmsCenters := models.ConvertEnums[model.CMSCenter](obj.CMSCenters)
-	return cmsCenters, nil
-}
-
-// CmmiGroups is the resolver for the cmmiGroups field.
-func (r *planBasicsResolver) CmmiGroups(ctx context.Context, obj *models.PlanBasics) ([]model.CMMIGroup, error) {
-	cmmiGroups := models.ConvertEnums[model.CMMIGroup](obj.CMMIGroups)
-	return cmmiGroups, nil
-}
-
-// ModelType is the resolver for the modelType field.
-func (r *planBasicsResolver) ModelType(ctx context.Context, obj *models.PlanBasics) ([]models.ModelType, error) {
-	modelTypes := models.ConvertEnums[models.ModelType](obj.ModelType)
-	return modelTypes, nil
 }
 
 // Beneficiaries is the resolver for the beneficiaries field.
@@ -1134,9 +1093,6 @@ func (r *Resolver) OperationalSolution() generated.OperationalSolutionResolver {
 	return &operationalSolutionResolver{r}
 }
 
-// PlanBasics returns generated.PlanBasicsResolver implementation.
-func (r *Resolver) PlanBasics() generated.PlanBasicsResolver { return &planBasicsResolver{r} }
-
 // PlanBeneficiaries returns generated.PlanBeneficiariesResolver implementation.
 func (r *Resolver) PlanBeneficiaries() generated.PlanBeneficiariesResolver {
 	return &planBeneficiariesResolver{r}
@@ -1203,7 +1159,6 @@ type modelPlanResolver struct{ *Resolver }
 type mutationResolver struct{ *Resolver }
 type operationalNeedResolver struct{ *Resolver }
 type operationalSolutionResolver struct{ *Resolver }
-type planBasicsResolver struct{ *Resolver }
 type planBeneficiariesResolver struct{ *Resolver }
 type planCollaboratorResolver struct{ *Resolver }
 type planDiscussionResolver struct{ *Resolver }

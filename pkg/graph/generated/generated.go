@@ -1040,7 +1040,6 @@ type MutationResolver interface {
 	CreatePlanCollaborator(ctx context.Context, input model.PlanCollaboratorCreateInput) (*models.PlanCollaborator, error)
 	UpdatePlanCollaborator(ctx context.Context, id uuid.UUID, newRoles []models.TeamRole) (*models.PlanCollaborator, error)
 	DeletePlanCollaborator(ctx context.Context, id uuid.UUID) (*models.PlanCollaborator, error)
-	UpdatePlanBasics(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanBasics, error)
 	UpdatePlanGeneralCharacteristics(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanGeneralCharacteristics, error)
 	UpdatePlanBeneficiaries(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanBeneficiaries, error)
 	UpdatePlanParticipantsAndProviders(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanParticipantsAndProviders, error)
@@ -1076,6 +1075,7 @@ type MutationResolver interface {
 	ShareModelPlan(ctx context.Context, modelPlanID uuid.UUID, viewFilter *models.ModelViewFilter, usernames []string, optionalMessage *string) (bool, error)
 	ReportAProblem(ctx context.Context, input model.ReportAProblemInput) (bool, error)
 	SendFeedbackEmail(ctx context.Context, input model.SendFeedbackEmailInput) (bool, error)
+	UpdatePlanBasics(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanBasics, error)
 }
 type OperationalNeedResolver interface {
 	Solutions(ctx context.Context, obj *models.OperationalNeed, includeNotNeeded bool) ([]*models.OperationalSolution, error)
@@ -7394,7 +7394,134 @@ func (ec *executionContext) introspectType(name string) (*introspection.Type, er
 }
 
 var sources = []*ast.Source{
-	{Name: "../schema.graphql", Input: `
+	{Name: "../schema/plan_basics.graphql", Input: `"""
+Represents plan basics
+"""
+type PlanBasics {
+  id: UUID!
+  modelPlanID: UUID!
+
+  demoCode: String
+  amsModelID: String
+
+  modelCategory: ModelCategory
+  additionalModelCategories: [ModelCategory!]!
+  cmsCenters: [CMSCenter!]!
+  cmmiGroups: [CMMIGroup!]!
+  modelType: [ModelType!]!
+  modelTypeOther: String
+  problem: String
+  goal: String
+  testInterventions: String
+  note: String
+
+  # Milestones
+  completeICIP: Time
+  clearanceStarts: Time
+  clearanceEnds: Time
+  announced: Time
+  applicationsStart: Time
+  applicationsEnd: Time
+  performancePeriodStarts: Time
+  performancePeriodEnds: Time
+  wrapUpEnds: Time
+  highLevelNote: String
+  phasedIn: Boolean
+  phasedInNote: String
+
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
+
+  readyForReviewBy: UUID
+  readyForReviewByUserAccount: UserAccount
+  readyForReviewDts: Time
+  readyForClearanceBy: UUID
+  readyForClearanceByUserAccount: UserAccount
+  readyForClearanceDts: Time
+
+  status: TaskStatus!
+}
+
+"""
+PlanBasicsChanges represents the possible changes you can make to a Plan Basics object when updating it.
+Fields explicitly set with NULL will be unset, and omitted fields will be left unchanged.
+https://gqlgen.com/reference/changesets/
+"""
+input PlanBasicsChanges @goModel(model: "map[string]interface{}") {
+  demoCode: String
+  amsModelID: String
+
+  modelCategory: ModelCategory
+  additionalModelCategories: [ModelCategory!]
+  cmsCenters: [CMSCenter!]
+  cmmiGroups: [CMMIGroup!]
+  modelType: [ModelType!]
+  modelTypeOther: String
+  problem: String
+  goal: String
+  testInterventions: String
+  note: String
+
+  # Milestones
+  completeICIP: Time
+  clearanceStarts: Time
+  clearanceEnds: Time
+  announced: Time
+  applicationsStart: Time
+  applicationsEnd: Time
+  performancePeriodStarts: Time
+  performancePeriodEnds: Time
+  wrapUpEnds: Time
+  highLevelNote: String
+  phasedIn: Boolean
+  phasedInNote: String
+  status: TaskStatusInput
+}
+
+enum ModelCategory {
+  ACCOUNTABLE_CARE
+  DISEASE_SPECIFIC_AND_EPISODIC
+  HEALTH_PLAN
+  PRESCRIPTION_DRUG
+  STATE_BASED
+  STATUTORY
+  TO_BE_DETERMINED
+}
+
+enum CMSCenter {
+  CMMI
+  CENTER_FOR_MEDICARE
+  FEDERAL_COORDINATED_HEALTH_CARE_OFFICE
+  CENTER_FOR_MEDICAID_AND_CHIP_SERVICES
+  CENTER_FOR_CLINICAL_STANDARDS_AND_QUALITY
+  CENTER_FOR_PROGRAM_INTEGRITY
+}
+
+enum CMMIGroup {
+  PATIENT_CARE_MODELS_GROUP
+  POLICY_AND_PROGRAMS_GROUP
+  SEAMLESS_CARE_MODELS_GROUP
+  STATE_AND_POPULATION_HEALTH_GROUP
+  TBD
+}
+
+enum ModelType {
+  VOLUNTARY
+  MANDATORY_REGIONAL_OR_STATE
+  MANDATORY_NATIONAL
+  OTHER
+}
+
+extend type Mutation {
+  updatePlanBasics(id: UUID!, changes: PlanBasicsChanges!): PlanBasics!
+  @hasRole(role: MINT_USER)
+}
+`, BuiltIn: false},
+	{Name: "../schema/schema.graphql", Input: `
 
 """
 The current user's Launch Darkly key
@@ -7714,94 +7841,6 @@ input PlanDocumentLinkInput {
   restricted: Boolean!
   otherTypeDescription: String
   optionalNotes: String
-}
-
-"""
-Represents plan basics
-"""
-type PlanBasics {
-  id: UUID!
-  modelPlanID: UUID!
-
-  demoCode: String
-  amsModelID: String
-
-  modelCategory: ModelCategory
-  additionalModelCategories: [ModelCategory!]!
-  cmsCenters: [CMSCenter!]!
-  cmmiGroups: [CMMIGroup!]!
-  modelType: [ModelType!]!
-  modelTypeOther: String
-  problem: String
-  goal: String
-  testInterventions: String
-  note: String
-
-  # Milestones
-  completeICIP: Time
-  clearanceStarts: Time
-  clearanceEnds: Time
-  announced: Time
-  applicationsStart: Time
-  applicationsEnd: Time
-  performancePeriodStarts: Time
-  performancePeriodEnds: Time
-  wrapUpEnds: Time
-  highLevelNote: String
-  phasedIn: Boolean
-  phasedInNote: String
-
-  createdBy: UUID!
-  createdByUserAccount: UserAccount!
-  createdDts: Time!
-  modifiedBy: UUID
-  modifiedByUserAccount: UserAccount
-  modifiedDts: Time
-
-  readyForReviewBy: UUID
-  readyForReviewByUserAccount: UserAccount
-  readyForReviewDts: Time
-  readyForClearanceBy: UUID
-  readyForClearanceByUserAccount: UserAccount
-  readyForClearanceDts: Time
-
-  status: TaskStatus!
-}
-
-"""
-PlanBasicsChanges represents the possible changes you can make to a Plan Basics object when updating it.
-Fields explicitly set with NULL will be unset, and omitted fields will be left unchanged.
-https://gqlgen.com/reference/changesets/
-"""
-input PlanBasicsChanges @goModel(model: "map[string]interface{}") {
-  demoCode: String
-  amsModelID: String
-
-  modelCategory: ModelCategory
-  additionalModelCategories: [ModelCategory!]
-  cmsCenters: [CMSCenter!]
-  cmmiGroups: [CMMIGroup!]
-  modelType: [ModelType!]
-  modelTypeOther: String
-  problem: String
-  goal: String
-  testInterventions: String
-  note: String
-
-  # Milestones
-  completeICIP: Time
-  clearanceStarts: Time
-  clearanceEnds: Time
-  announced: Time
-  applicationsStart: Time
-  applicationsEnd: Time
-  performancePeriodStarts: Time
-  performancePeriodEnds: Time
-  wrapUpEnds: Time
-  highLevelNote: String
-  phasedIn: Boolean
-  phasedInNote: String
-  status: TaskStatusInput
 }
 
 """
@@ -9235,9 +9274,6 @@ updatePlanCollaborator(id: UUID!, newRoles: [TeamRole!]!): PlanCollaborator!
 deletePlanCollaborator(id: UUID!): PlanCollaborator!
 @hasRole(role: MINT_USER)
 
-updatePlanBasics(id: UUID!, changes: PlanBasicsChanges!): PlanBasics!
-@hasRole(role: MINT_USER)
-
 updatePlanGeneralCharacteristics(id: UUID!, changes: PlanGeneralCharacteristicsChanges!): PlanGeneralCharacteristics!
 @hasRole(role: MINT_USER)
 
@@ -9407,24 +9443,6 @@ enum TeamRole {
   COR
 }
 
-enum ModelType
-{
-  VOLUNTARY
-  MANDATORY_REGIONAL_OR_STATE
-  MANDATORY_NATIONAL
-  OTHER
-}
-
-enum ModelCategory {
-  ACCOUNTABLE_CARE
-  DISEASE_SPECIFIC_AND_EPISODIC
-  HEALTH_PLAN
-  PRESCRIPTION_DRUG
-  STATE_BASED
-  STATUTORY
-  TO_BE_DETERMINED
-}
-
 enum ModelStatus {
 	PLAN_DRAFT
 	PLAN_COMPLETE
@@ -9439,23 +9457,6 @@ enum ModelStatus {
   CANCELED
   ACTIVE
   ENDED
-}
-
-enum CMSCenter {
-  CMMI
-  CENTER_FOR_MEDICARE
-  FEDERAL_COORDINATED_HEALTH_CARE_OFFICE
-  CENTER_FOR_MEDICAID_AND_CHIP_SERVICES
-  CENTER_FOR_CLINICAL_STANDARDS_AND_QUALITY
-  CENTER_FOR_PROGRAM_INTEGRITY
-  }
-
-enum CMMIGroup {
-  PATIENT_CARE_MODELS_GROUP
-  POLICY_AND_PROGRAMS_GROUP
-  SEAMLESS_CARE_MODELS_GROUP
-  STATE_AND_POPULATION_HEALTH_GROUP
-  TBD
 }
 
 enum DocumentType {
@@ -17086,165 +17087,6 @@ func (ec *executionContext) fieldContext_Mutation_deletePlanCollaborator(ctx con
 	return fc, nil
 }
 
-func (ec *executionContext) _Mutation_updatePlanBasics(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Mutation_updatePlanBasics(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		directive0 := func(rctx context.Context) (interface{}, error) {
-			ctx = rctx // use context from middleware stack in children
-			return ec.resolvers.Mutation().UpdatePlanBasics(rctx, fc.Args["id"].(uuid.UUID), fc.Args["changes"].(map[string]interface{}))
-		}
-		directive1 := func(ctx context.Context) (interface{}, error) {
-			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
-			if err != nil {
-				return nil, err
-			}
-			if ec.directives.HasRole == nil {
-				return nil, errors.New("directive hasRole is not implemented")
-			}
-			return ec.directives.HasRole(ctx, nil, directive0, role)
-		}
-
-		tmp, err := directive1(rctx)
-		if err != nil {
-			return nil, graphql.ErrorOnPath(ctx, err)
-		}
-		if tmp == nil {
-			return nil, nil
-		}
-		if data, ok := tmp.(*models.PlanBasics); ok {
-			return data, nil
-		}
-		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/cmsgov/mint-app/pkg/models.PlanBasics`, tmp)
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(*models.PlanBasics)
-	fc.Result = res
-	return ec.marshalNPlanBasics2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanBasics(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_Mutation_updatePlanBasics(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "Mutation",
-		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			switch field.Name {
-			case "id":
-				return ec.fieldContext_PlanBasics_id(ctx, field)
-			case "modelPlanID":
-				return ec.fieldContext_PlanBasics_modelPlanID(ctx, field)
-			case "demoCode":
-				return ec.fieldContext_PlanBasics_demoCode(ctx, field)
-			case "amsModelID":
-				return ec.fieldContext_PlanBasics_amsModelID(ctx, field)
-			case "modelCategory":
-				return ec.fieldContext_PlanBasics_modelCategory(ctx, field)
-			case "additionalModelCategories":
-				return ec.fieldContext_PlanBasics_additionalModelCategories(ctx, field)
-			case "cmsCenters":
-				return ec.fieldContext_PlanBasics_cmsCenters(ctx, field)
-			case "cmmiGroups":
-				return ec.fieldContext_PlanBasics_cmmiGroups(ctx, field)
-			case "modelType":
-				return ec.fieldContext_PlanBasics_modelType(ctx, field)
-			case "modelTypeOther":
-				return ec.fieldContext_PlanBasics_modelTypeOther(ctx, field)
-			case "problem":
-				return ec.fieldContext_PlanBasics_problem(ctx, field)
-			case "goal":
-				return ec.fieldContext_PlanBasics_goal(ctx, field)
-			case "testInterventions":
-				return ec.fieldContext_PlanBasics_testInterventions(ctx, field)
-			case "note":
-				return ec.fieldContext_PlanBasics_note(ctx, field)
-			case "completeICIP":
-				return ec.fieldContext_PlanBasics_completeICIP(ctx, field)
-			case "clearanceStarts":
-				return ec.fieldContext_PlanBasics_clearanceStarts(ctx, field)
-			case "clearanceEnds":
-				return ec.fieldContext_PlanBasics_clearanceEnds(ctx, field)
-			case "announced":
-				return ec.fieldContext_PlanBasics_announced(ctx, field)
-			case "applicationsStart":
-				return ec.fieldContext_PlanBasics_applicationsStart(ctx, field)
-			case "applicationsEnd":
-				return ec.fieldContext_PlanBasics_applicationsEnd(ctx, field)
-			case "performancePeriodStarts":
-				return ec.fieldContext_PlanBasics_performancePeriodStarts(ctx, field)
-			case "performancePeriodEnds":
-				return ec.fieldContext_PlanBasics_performancePeriodEnds(ctx, field)
-			case "wrapUpEnds":
-				return ec.fieldContext_PlanBasics_wrapUpEnds(ctx, field)
-			case "highLevelNote":
-				return ec.fieldContext_PlanBasics_highLevelNote(ctx, field)
-			case "phasedIn":
-				return ec.fieldContext_PlanBasics_phasedIn(ctx, field)
-			case "phasedInNote":
-				return ec.fieldContext_PlanBasics_phasedInNote(ctx, field)
-			case "createdBy":
-				return ec.fieldContext_PlanBasics_createdBy(ctx, field)
-			case "createdByUserAccount":
-				return ec.fieldContext_PlanBasics_createdByUserAccount(ctx, field)
-			case "createdDts":
-				return ec.fieldContext_PlanBasics_createdDts(ctx, field)
-			case "modifiedBy":
-				return ec.fieldContext_PlanBasics_modifiedBy(ctx, field)
-			case "modifiedByUserAccount":
-				return ec.fieldContext_PlanBasics_modifiedByUserAccount(ctx, field)
-			case "modifiedDts":
-				return ec.fieldContext_PlanBasics_modifiedDts(ctx, field)
-			case "readyForReviewBy":
-				return ec.fieldContext_PlanBasics_readyForReviewBy(ctx, field)
-			case "readyForReviewByUserAccount":
-				return ec.fieldContext_PlanBasics_readyForReviewByUserAccount(ctx, field)
-			case "readyForReviewDts":
-				return ec.fieldContext_PlanBasics_readyForReviewDts(ctx, field)
-			case "readyForClearanceBy":
-				return ec.fieldContext_PlanBasics_readyForClearanceBy(ctx, field)
-			case "readyForClearanceByUserAccount":
-				return ec.fieldContext_PlanBasics_readyForClearanceByUserAccount(ctx, field)
-			case "readyForClearanceDts":
-				return ec.fieldContext_PlanBasics_readyForClearanceDts(ctx, field)
-			case "status":
-				return ec.fieldContext_PlanBasics_status(ctx, field)
-			}
-			return nil, fmt.Errorf("no field named %q was found under type PlanBasics", field.Name)
-		},
-	}
-	defer func() {
-		if r := recover(); r != nil {
-			err = ec.Recover(ctx, r)
-			ec.Error(ctx, err)
-		}
-	}()
-	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Mutation_updatePlanBasics_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
-		ec.Error(ctx, err)
-		return fc, err
-	}
-	return fc, nil
-}
-
 func (ec *executionContext) _Mutation_updatePlanGeneralCharacteristics(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_Mutation_updatePlanGeneralCharacteristics(ctx, field)
 	if err != nil {
@@ -21395,6 +21237,165 @@ func (ec *executionContext) fieldContext_Mutation_sendFeedbackEmail(ctx context.
 	}()
 	ctx = graphql.WithFieldContext(ctx, fc)
 	if fc.Args, err = ec.field_Mutation_sendFeedbackEmail_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Mutation_updatePlanBasics(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Mutation_updatePlanBasics(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		directive0 := func(rctx context.Context) (interface{}, error) {
+			ctx = rctx // use context from middleware stack in children
+			return ec.resolvers.Mutation().UpdatePlanBasics(rctx, fc.Args["id"].(uuid.UUID), fc.Args["changes"].(map[string]interface{}))
+		}
+		directive1 := func(ctx context.Context) (interface{}, error) {
+			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
+			if err != nil {
+				return nil, err
+			}
+			if ec.directives.HasRole == nil {
+				return nil, errors.New("directive hasRole is not implemented")
+			}
+			return ec.directives.HasRole(ctx, nil, directive0, role)
+		}
+
+		tmp, err := directive1(rctx)
+		if err != nil {
+			return nil, graphql.ErrorOnPath(ctx, err)
+		}
+		if tmp == nil {
+			return nil, nil
+		}
+		if data, ok := tmp.(*models.PlanBasics); ok {
+			return data, nil
+		}
+		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/cmsgov/mint-app/pkg/models.PlanBasics`, tmp)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*models.PlanBasics)
+	fc.Result = res
+	return ec.marshalNPlanBasics2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanBasics(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Mutation_updatePlanBasics(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Mutation",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_PlanBasics_id(ctx, field)
+			case "modelPlanID":
+				return ec.fieldContext_PlanBasics_modelPlanID(ctx, field)
+			case "demoCode":
+				return ec.fieldContext_PlanBasics_demoCode(ctx, field)
+			case "amsModelID":
+				return ec.fieldContext_PlanBasics_amsModelID(ctx, field)
+			case "modelCategory":
+				return ec.fieldContext_PlanBasics_modelCategory(ctx, field)
+			case "additionalModelCategories":
+				return ec.fieldContext_PlanBasics_additionalModelCategories(ctx, field)
+			case "cmsCenters":
+				return ec.fieldContext_PlanBasics_cmsCenters(ctx, field)
+			case "cmmiGroups":
+				return ec.fieldContext_PlanBasics_cmmiGroups(ctx, field)
+			case "modelType":
+				return ec.fieldContext_PlanBasics_modelType(ctx, field)
+			case "modelTypeOther":
+				return ec.fieldContext_PlanBasics_modelTypeOther(ctx, field)
+			case "problem":
+				return ec.fieldContext_PlanBasics_problem(ctx, field)
+			case "goal":
+				return ec.fieldContext_PlanBasics_goal(ctx, field)
+			case "testInterventions":
+				return ec.fieldContext_PlanBasics_testInterventions(ctx, field)
+			case "note":
+				return ec.fieldContext_PlanBasics_note(ctx, field)
+			case "completeICIP":
+				return ec.fieldContext_PlanBasics_completeICIP(ctx, field)
+			case "clearanceStarts":
+				return ec.fieldContext_PlanBasics_clearanceStarts(ctx, field)
+			case "clearanceEnds":
+				return ec.fieldContext_PlanBasics_clearanceEnds(ctx, field)
+			case "announced":
+				return ec.fieldContext_PlanBasics_announced(ctx, field)
+			case "applicationsStart":
+				return ec.fieldContext_PlanBasics_applicationsStart(ctx, field)
+			case "applicationsEnd":
+				return ec.fieldContext_PlanBasics_applicationsEnd(ctx, field)
+			case "performancePeriodStarts":
+				return ec.fieldContext_PlanBasics_performancePeriodStarts(ctx, field)
+			case "performancePeriodEnds":
+				return ec.fieldContext_PlanBasics_performancePeriodEnds(ctx, field)
+			case "wrapUpEnds":
+				return ec.fieldContext_PlanBasics_wrapUpEnds(ctx, field)
+			case "highLevelNote":
+				return ec.fieldContext_PlanBasics_highLevelNote(ctx, field)
+			case "phasedIn":
+				return ec.fieldContext_PlanBasics_phasedIn(ctx, field)
+			case "phasedInNote":
+				return ec.fieldContext_PlanBasics_phasedInNote(ctx, field)
+			case "createdBy":
+				return ec.fieldContext_PlanBasics_createdBy(ctx, field)
+			case "createdByUserAccount":
+				return ec.fieldContext_PlanBasics_createdByUserAccount(ctx, field)
+			case "createdDts":
+				return ec.fieldContext_PlanBasics_createdDts(ctx, field)
+			case "modifiedBy":
+				return ec.fieldContext_PlanBasics_modifiedBy(ctx, field)
+			case "modifiedByUserAccount":
+				return ec.fieldContext_PlanBasics_modifiedByUserAccount(ctx, field)
+			case "modifiedDts":
+				return ec.fieldContext_PlanBasics_modifiedDts(ctx, field)
+			case "readyForReviewBy":
+				return ec.fieldContext_PlanBasics_readyForReviewBy(ctx, field)
+			case "readyForReviewByUserAccount":
+				return ec.fieldContext_PlanBasics_readyForReviewByUserAccount(ctx, field)
+			case "readyForReviewDts":
+				return ec.fieldContext_PlanBasics_readyForReviewDts(ctx, field)
+			case "readyForClearanceBy":
+				return ec.fieldContext_PlanBasics_readyForClearanceBy(ctx, field)
+			case "readyForClearanceByUserAccount":
+				return ec.fieldContext_PlanBasics_readyForClearanceByUserAccount(ctx, field)
+			case "readyForClearanceDts":
+				return ec.fieldContext_PlanBasics_readyForClearanceDts(ctx, field)
+			case "status":
+				return ec.fieldContext_PlanBasics_status(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type PlanBasics", field.Name)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Mutation_updatePlanBasics_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
 		ec.Error(ctx, err)
 		return fc, err
 	}
@@ -57470,13 +57471,6 @@ func (ec *executionContext) _Mutation(ctx context.Context, sel ast.SelectionSet)
 			if out.Values[i] == graphql.Null {
 				out.Invalids++
 			}
-		case "updatePlanBasics":
-			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
-				return ec._Mutation_updatePlanBasics(ctx, field)
-			})
-			if out.Values[i] == graphql.Null {
-				out.Invalids++
-			}
 		case "updatePlanGeneralCharacteristics":
 			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
 				return ec._Mutation_updatePlanGeneralCharacteristics(ctx, field)
@@ -57709,6 +57703,13 @@ func (ec *executionContext) _Mutation(ctx context.Context, sel ast.SelectionSet)
 		case "sendFeedbackEmail":
 			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
 				return ec._Mutation_sendFeedbackEmail(ctx, field)
+			})
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "updatePlanBasics":
+			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
+				return ec._Mutation_updatePlanBasics(ctx, field)
 			})
 			if out.Values[i] == graphql.Null {
 				out.Invalids++

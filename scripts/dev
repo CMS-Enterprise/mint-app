@@ -397,7 +397,7 @@ end
 
 namespace :gql do
   task :lint_schema do
-    sh "yarn run graphql-schema-linter pkg/graph/**/*.graphql"
+    sh "yarn run graphql-schema-linter 'pkg/graph/schema/**/*.graphql'"
   end
 
   namespace :generate do
