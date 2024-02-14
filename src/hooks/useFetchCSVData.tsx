@@ -25,6 +25,7 @@ import {
 import { getKeys } from 'types/translation';
 import { formatDateLocal, formatDateUtc } from 'utils/date';
 import { csvFields, fieldsToUnwind } from 'utils/export/CsvData';
+import { filterGroupKey } from 'views/ModelPlan/ReadOnly/_components/FilterView/BodyContent/_filterGroupMapping';
 import { isHiddenByParentCondition } from 'views/ModelPlan/ReadOnly/_components/ReadOnlySection/new';
 
 interface CSVModelPlanType extends AllModelDataType, SingleModelPlanType {}
@@ -218,7 +219,7 @@ export const selectFilteredFields = (
     if (taskListSection === 'nameHistory') {
       if (
         allPlanTranslation[taskListSection]?.filterGroups?.includes(
-          filteredGroup
+          filterGroupKey[filteredGroup]
         )
       ) {
         // Push to array to become a column in exported csv
@@ -229,7 +230,7 @@ export const selectFilteredFields = (
     getKeys(allPlanTranslation[taskListSection]).forEach((field: any) => {
       if (
         allPlanTranslation[taskListSection][field]?.filterGroups?.includes(
-          filteredGroup
+          filterGroupKey[filteredGroup]
         )
       ) {
         // Push to array to become a column in exported csv
