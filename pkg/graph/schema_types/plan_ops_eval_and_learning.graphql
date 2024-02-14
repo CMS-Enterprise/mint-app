@@ -1,3 +1,8 @@
+#import './scalars.graphql'
+#import '../schema_enums/enums.graphql'
+#import '../schema_enums/plan_ops_eval_and_learning.graphql'
+#import './user_account.graphql'
+
 """
 PlanOpsEvalAndLearning represents the task list section that deals with information regarding the Ops Eval and Learning
 """

@@ -6781,9 +6781,64 @@ func (ec *executionContext) introspectType(name string) (*introspection.Type, er
 }
 
 var sources = []*ast.Source{
-	{Name: "../schema.graphql", Input: `#import "./schema_enums/enums.graphql"
-#import "./schema_types/scalars.graphql"
-#import "./schema_types/plan_ops_eval_and_learning.graphql"
+	{Name: "../schema.graphql", Input: `#import 'schema_enums/enums.graphql'
+#import 'schema_enums/plan_ops_eval_and_learning.graphql'
+#import 'schema_types/scalars.graphql'
+#import 'schema_types/user_account.graphql'
+#import 'schema_types/plan_ops_eval_and_learning.graphql'
+
+"""
+https://gqlgen.com/reference/file-upload/
+Represents a multipart file upload
+"""
+scalar Upload
+
+
+"""
+ModelPlan represent the data point for plans about a model. It is the central data type in the application
+"""
+type ModelPlan {
+  id: UUID!
+  modelName: String!
+  abbreviation: String
+  archived: Boolean!
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
+  basics: PlanBasics!
+  generalCharacteristics: PlanGeneralCharacteristics!
+  participantsAndProviders: PlanParticipantsAndProviders!
+  beneficiaries: PlanBeneficiaries!
+  opsEvalAndLearning: PlanOpsEvalAndLearning!
+  collaborators: [PlanCollaborator!]!
+  documents: [PlanDocument!]!
+  discussions: [PlanDiscussion!]!
+  payments: PlanPayments!
+  status: ModelStatus!
+  isFavorite: Boolean!
+  isCollaborator: Boolean!
+  crTdls: [PlanCrTdl!]!
+  prepareForClearance: PrepareForClearance!
+  nameHistory(sort: SortDirection! = DESC): [String!]!
+  operationalNeeds: [OperationalNeed!]!
+  existingModelLinks: [ExistingModelLink!]!
+}
+
+"""
+ModelPlanChanges represents the possible changes you can make to a model plan when updating it.
+Fields explicitly set with NULL will be unset, and omitted fields will be left unchanged.
+https://gqlgen.com/reference/changesets/
+"""
+input ModelPlanChanges @goModel(model: "map[string]interface{}") {
+  modelName: String
+  abbreviation: String
+  someNumbers: [Int!]
+  archived: Boolean
+  status: ModelStatus
+}
 
 """
 The current user's Launch Darkly key
@@ -8222,29 +8277,6 @@ type Subscription {
 
   onLockTaskListSectionContext(modelPlanID: UUID!): TaskListSectionLockStatusChanged!
   @hasRole(role: MINT_USER)
-}
-
-directive @hasRole(role: Role!) on FIELD_DEFINITION
-
-directive @hasAnyRole(roles: [Role!]!) on FIELD_DEFINITION
-
-# https://gqlgen.com/config/#inline-config-with-directives
-directive @goModel(
-  model: String
-  models: [String!]
-) on OBJECT | INPUT_OBJECT | SCALAR | ENUM | INTERFACE | UNION
-
-type UserAccount {
-  id: UUID!
-  username: String!
-  isEUAID: Boolean
-  commonName: String!
-  locale: String!
-  email: String!
-  givenName: String!
-  familyName: String!
-  zoneInfo: String!
-  hasLoggedIn: Boolean
 }`, BuiltIn: false},
 	{Name: "../schema_enums/enums.graphql", Input: `enum SortDirection {
   ASC
@@ -8884,7 +8916,7 @@ enum GQLTableName {
   userAccount
 }
 # lint-enable enum-values-all-caps`, BuiltIn: false},
-	{Name: "../schema_enums/ops_eval_and_learning.graphql", Input: `enum AgencyOrStateHelpType {
+	{Name: "../schema_enums/plan_ops_eval_and_learning.graphql", Input: `enum AgencyOrStateHelpType {
   YES_STATE
   YES_AGENCY_IDEAS
   YES_AGENCY_IAA
@@ -9001,52 +9033,12 @@ enum DataStartsType {
   NOT_PLANNING_TO_DO_THIS
   OTHER
 }`, BuiltIn: false},
-	{Name: "../schema_types/model_plan.graphql", Input: `"""
-ModelPlan represent the data point for plans about a model. It is the central data type in the application
-"""
-type ModelPlan {
-  id: UUID!
-  modelName: String!
-  abbreviation: String
-  archived: Boolean!
-  createdBy: UUID!
-  createdByUserAccount: UserAccount!
-  createdDts: Time!
-  modifiedBy: UUID
-  modifiedByUserAccount: UserAccount
-  modifiedDts: Time
-  basics: PlanBasics!
-  generalCharacteristics: PlanGeneralCharacteristics!
-  participantsAndProviders: PlanParticipantsAndProviders!
-  beneficiaries: PlanBeneficiaries!
-  opsEvalAndLearning: PlanOpsEvalAndLearning!
-  collaborators: [PlanCollaborator!]!
-  documents: [PlanDocument!]!
-  discussions: [PlanDiscussion!]!
-  payments: PlanPayments!
-  status: ModelStatus!
-  isFavorite: Boolean!
-  isCollaborator: Boolean!
-  crTdls: [PlanCrTdl!]!
-  prepareForClearance: PrepareForClearance!
-  nameHistory(sort: SortDirection! = DESC): [String!]!
-  operationalNeeds: [OperationalNeed!]!
-  existingModelLinks: [ExistingModelLink!]!
-}
+	{Name: "../schema_types/plan_ops_eval_and_learning.graphql", Input: `#import './scalars.graphql'
+#import '../schema_enums/enums.graphql'
+#import '../schema_enums/plan_ops_eval_and_learning.graphql'
+#import './user_account.graphql'
 
 """
-ModelPlanChanges represents the possible changes you can make to a model plan when updating it.
-Fields explicitly set with NULL will be unset, and omitted fields will be left unchanged.
-https://gqlgen.com/reference/changesets/
-"""
-input ModelPlanChanges @goModel(model: "map[string]interface{}") {
-  modelName: String
-  abbreviation: String
-  someNumbers: [Int!]
-  archived: Boolean
-  status: ModelStatus
-}`, BuiltIn: false},
-	{Name: "../schema_types/plan_ops_eval_and_learning.graphql", Input: `"""
 PlanOpsEvalAndLearning represents the task list section that deals with information regarding the Ops Eval and Learning
 """
 type PlanOpsEvalAndLearning {
@@ -9313,11 +9305,32 @@ Any represents any GraphQL value.
 """
 scalar Any
 
-"""
-https://gqlgen.com/reference/file-upload/
-Represents a multipart file upload
-"""
-scalar Upload`, BuiltIn: false},
+#import '../schema_enums/enums.graphql'
+
+""" -------------------- DIRECTIVES -------------------- """
+directive @hasRole(role: Role!) on FIELD_DEFINITION
+
+directive @hasAnyRole(roles: [Role!]!) on FIELD_DEFINITION
+
+# https://gqlgen.com/config/#inline-config-with-directives
+directive @goModel(
+  model: String
+  models: [String!]
+) on OBJECT | INPUT_OBJECT | SCALAR | ENUM | INTERFACE | UNION`, BuiltIn: false},
+	{Name: "../schema_types/user_account.graphql", Input: `#import './scalars.graphql'
+
+type UserAccount {
+  id: UUID!
+  username: String!
+  isEUAID: Boolean
+  commonName: String!
+  locale: String!
+  email: String!
+  givenName: String!
+  familyName: String!
+  zoneInfo: String!
+  hasLoggedIn: Boolean
+}`, BuiltIn: false},
 }
 var parsedSchema = gqlparser.MustLoadSchema(sources...)
 

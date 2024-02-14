@@ -42,6 +42,101 @@ func (r *existingModelLinkResolver) CurrentModelPlan(ctx context.Context, obj *m
 	return resolvers.ModelPlanGetByIDLOADER(ctx, *obj.CurrentModelPlanID) //TODO, implement loader, or this will be many queries
 }
 
+// Basics is the resolver for the basics field.
+func (r *modelPlanResolver) Basics(ctx context.Context, obj *models.ModelPlan) (*models.PlanBasics, error) {
+	return resolvers.PlanBasicsGetByModelPlanIDLOADER(ctx, obj.ID)
+}
+
+// GeneralCharacteristics is the resolver for the generalCharacteristics field.
+func (r *modelPlanResolver) GeneralCharacteristics(ctx context.Context, obj *models.ModelPlan) (*models.PlanGeneralCharacteristics, error) {
+	return resolvers.PlanGeneralCharacteristicsGetByModelPlanIDLOADER(ctx, obj.ID)
+}
+
+// ParticipantsAndProviders is the resolver for the participantsAndProviders field.
+func (r *modelPlanResolver) ParticipantsAndProviders(ctx context.Context, obj *models.ModelPlan) (*models.PlanParticipantsAndProviders, error) {
+	return resolvers.PlanParticipantsAndProvidersGetByModelPlanIDLOADER(ctx, obj.ID)
+}
+
+// Beneficiaries is the resolver for the beneficiaries field.
+func (r *modelPlanResolver) Beneficiaries(ctx context.Context, obj *models.ModelPlan) (*models.PlanBeneficiaries, error) {
+	return resolvers.PlanBeneficiariesGetByModelPlanIDLOADER(ctx, obj.ID)
+}
+
+// OpsEvalAndLearning is the resolver for the opsEvalAndLearning field.
+func (r *modelPlanResolver) OpsEvalAndLearning(ctx context.Context, obj *models.ModelPlan) (*models.PlanOpsEvalAndLearning, error) {
+	return resolvers.PlanOpsEvalAndLearningGetByModelPlanIDLOADER(ctx, obj.ID)
+}
+
+// Collaborators is the resolver for the collaborators field.
+func (r *modelPlanResolver) Collaborators(ctx context.Context, obj *models.ModelPlan) ([]*models.PlanCollaborator, error) {
+	return resolvers.PlanCollaboratorGetByModelPlanIDLOADER(ctx, obj.ID)
+}
+
+// Documents is the resolver for the documents field.
+func (r *modelPlanResolver) Documents(ctx context.Context, obj *models.ModelPlan) ([]*models.PlanDocument, error) {
+	logger := appcontext.ZLogger(ctx)
+	principal := appcontext.Principal(ctx)
+
+	documents, err := resolvers.PlanDocumentsReadByModelPlanID(logger, obj.ID, principal, r.store, r.s3Client)
+	return documents, err
+}
+
+// Discussions is the resolver for the discussions field.
+func (r *modelPlanResolver) Discussions(ctx context.Context, obj *models.ModelPlan) ([]*models.PlanDiscussion, error) {
+	return resolvers.PlanDiscussionGetByModelPlanIDLOADER(ctx, obj.ID)
+}
+
+// Payments is the resolver for the payments field.
+func (r *modelPlanResolver) Payments(ctx context.Context, obj *models.ModelPlan) (*models.PlanPayments, error) {
+	return resolvers.PlanPaymentsGetByModelPlanIDLOADER(ctx, obj.ID)
+}
+
+// IsFavorite is the resolver for the isFavorite field.
+func (r *modelPlanResolver) IsFavorite(ctx context.Context, obj *models.ModelPlan) (bool, error) {
+	// TODO: should this be a data loader?
+	principal := appcontext.Principal(ctx)
+	logger := appcontext.ZLogger(ctx)
+
+	return resolvers.IsPlanFavorited(logger, principal, r.store, obj.ID)
+}
+
+// IsCollaborator is the resolver for the isCollaborator field.
+func (r *modelPlanResolver) IsCollaborator(ctx context.Context, obj *models.ModelPlan) (bool, error) {
+	principal := appcontext.Principal(ctx)
+	logger := appcontext.ZLogger(ctx)
+
+	return resolvers.IsPlanCollaborator(logger, principal, r.store, obj.ID)
+}
+
+// CrTdls is the resolver for the crTdls field.
+func (r *modelPlanResolver) CrTdls(ctx context.Context, obj *models.ModelPlan) ([]*models.PlanCrTdl, error) {
+	logger := appcontext.ZLogger(ctx)
+	return resolvers.PlanCrTdlsGetByModelPlanID(logger, obj.ID, r.store)
+}
+
+// PrepareForClearance is the resolver for the prepareForClearance field.
+func (r *modelPlanResolver) PrepareForClearance(ctx context.Context, obj *models.ModelPlan) (*model.PrepareForClearance, error) {
+	logger := appcontext.ZLogger(ctx)
+	return resolvers.ReadyForClearanceRead(logger, r.store, obj.ID)
+}
+
+// NameHistory is the resolver for the nameHistory field.
+func (r *modelPlanResolver) NameHistory(ctx context.Context, obj *models.ModelPlan, sort models.SortDirection) ([]string, error) {
+	logger := appcontext.ZLogger(ctx)
+
+	return resolvers.ModelPlanNameHistory(logger, obj.ID, sort, r.store)
+}
+
+// OperationalNeeds is the resolver for the operationalNeeds field.
+func (r *modelPlanResolver) OperationalNeeds(ctx context.Context, obj *models.ModelPlan) ([]*models.OperationalNeed, error) {
+	return resolvers.OperationalNeedCollectionGetByModelPlanIDLOADER(ctx, obj.ID)
+}
+
+// ExistingModelLinks is the resolver for the existingModelLinks field.
+func (r *modelPlanResolver) ExistingModelLinks(ctx context.Context, obj *models.ModelPlan) ([]*models.ExistingModelLink, error) {
+	return resolvers.ExistingModelLinkGetByModelPlanIDLOADER(ctx, obj.ID)
+}
+
 // CreateModelPlan is the resolver for the createModelPlan field.
 func (r *mutationResolver) CreateModelPlan(ctx context.Context, modelName string) (*models.ModelPlan, error) {
 	logger := appcontext.ZLogger(ctx)
@@ -822,6 +917,9 @@ func (r *Resolver) ExistingModelLink() generated.ExistingModelLinkResolver {
 	return &existingModelLinkResolver{r}
 }
 
+// ModelPlan returns generated.ModelPlanResolver implementation.
+func (r *Resolver) ModelPlan() generated.ModelPlanResolver { return &modelPlanResolver{r} }
+
 // Mutation returns generated.MutationResolver implementation.
 func (r *Resolver) Mutation() generated.MutationResolver { return &mutationResolver{r} }
 
@@ -882,6 +980,7 @@ func (r *Resolver) Subscription() generated.SubscriptionResolver { return &subsc
 
 type auditChangeResolver struct{ *Resolver }
 type existingModelLinkResolver struct{ *Resolver }
+type modelPlanResolver struct{ *Resolver }
 type mutationResolver struct{ *Resolver }
 type operationalNeedResolver struct{ *Resolver }
 type operationalSolutionResolver struct{ *Resolver }

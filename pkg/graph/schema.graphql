@@ -1,3 +1,62 @@
+#import 'schema_enums/enums.graphql'
+#import 'schema_enums/plan_ops_eval_and_learning.graphql'
+#import 'schema_types/scalars.graphql'
+#import 'schema_types/user_account.graphql'
+#import 'schema_types/plan_ops_eval_and_learning.graphql'
+
+"""
+https://gqlgen.com/reference/file-upload/
+Represents a multipart file upload
+"""
+scalar Upload
+
+
+"""
+ModelPlan represent the data point for plans about a model. It is the central data type in the application
+"""
+type ModelPlan {
+  id: UUID!
+  modelName: String!
+  abbreviation: String
+  archived: Boolean!
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
+  basics: PlanBasics!
+  generalCharacteristics: PlanGeneralCharacteristics!
+  participantsAndProviders: PlanParticipantsAndProviders!
+  beneficiaries: PlanBeneficiaries!
+  opsEvalAndLearning: PlanOpsEvalAndLearning!
+  collaborators: [PlanCollaborator!]!
+  documents: [PlanDocument!]!
+  discussions: [PlanDiscussion!]!
+  payments: PlanPayments!
+  status: ModelStatus!
+  isFavorite: Boolean!
+  isCollaborator: Boolean!
+  crTdls: [PlanCrTdl!]!
+  prepareForClearance: PrepareForClearance!
+  nameHistory(sort: SortDirection! = DESC): [String!]!
+  operationalNeeds: [OperationalNeed!]!
+  existingModelLinks: [ExistingModelLink!]!
+}
+
+"""
+ModelPlanChanges represents the possible changes you can make to a model plan when updating it.
+Fields explicitly set with NULL will be unset, and omitted fields will be left unchanged.
+https://gqlgen.com/reference/changesets/
+"""
+input ModelPlanChanges @goModel(model: "map[string]interface{}") {
+  modelName: String
+  abbreviation: String
+  someNumbers: [Int!]
+  archived: Boolean
+  status: ModelStatus
+}
+
 """
 The current user's Launch Darkly key
 """
@@ -1435,27 +1494,4 @@ type Subscription {
 
   onLockTaskListSectionContext(modelPlanID: UUID!): TaskListSectionLockStatusChanged!
   @hasRole(role: MINT_USER)
-}
-
-directive @hasRole(role: Role!) on FIELD_DEFINITION
-
-directive @hasAnyRole(roles: [Role!]!) on FIELD_DEFINITION
-
-# https://gqlgen.com/config/#inline-config-with-directives
-directive @goModel(
-  model: String
-  models: [String!]
-) on OBJECT | INPUT_OBJECT | SCALAR | ENUM | INTERFACE | UNION
-
-type UserAccount {
-  id: UUID!
-  username: String!
-  isEUAID: Boolean
-  commonName: String!
-  locale: String!
-  email: String!
-  givenName: String!
-  familyName: String!
-  zoneInfo: String!
-  hasLoggedIn: Boolean
 }
