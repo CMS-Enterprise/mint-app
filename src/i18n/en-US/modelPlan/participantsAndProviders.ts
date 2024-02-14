@@ -38,22 +38,22 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
       STATE_MEDICAID_AGENCIES: 'State Medicaid agencies',
       OTHER: 'Other'
     },
-    childRelation: {
-      ACCOUNTABLE_CARE_ORGANIZATION: [],
-      COMMERCIAL_PAYERS: [],
-      COMMUNITY_BASED_ORGANIZATIONS: [],
-      CONVENER: [],
-      ENTITIES: [],
-      MEDICAID_MANAGED_CARE_ORGANIZATIONS: [],
-      MEDICAID_PROVIDERS: [],
-      MEDICARE_ADVANTAGE_PLANS: [],
-      MEDICARE_ADVANTAGE_PRESCRIPTION_DRUG_PLANS: [],
-      MEDICARE_PROVIDERS: ['medicareProviderType'],
-      NON_PROFIT_ORGANIZATIONS: [],
-      STANDALONE_PART_D_PLANS: [],
-      STATES: ['statesEngagement'],
-      STATE_MEDICAID_AGENCIES: [],
-      OTHER: ['participantsOther']
+    optionsRelatedInfo: {
+      ACCOUNTABLE_CARE_ORGANIZATION: '',
+      COMMERCIAL_PAYERS: '',
+      COMMUNITY_BASED_ORGANIZATIONS: '',
+      CONVENER: '',
+      ENTITIES: '',
+      MEDICAID_MANAGED_CARE_ORGANIZATIONS: '',
+      MEDICAID_PROVIDERS: '',
+      MEDICARE_ADVANTAGE_PLANS: '',
+      MEDICARE_ADVANTAGE_PRESCRIPTION_DRUG_PLANS: '',
+      MEDICARE_PROVIDERS: 'medicareProviderType',
+      NON_PROFIT_ORGANIZATIONS: '',
+      STANDALONE_PART_D_PLANS: '',
+      STATES: 'statesEngagement',
+      STATE_MEDICAID_AGENCIES: '',
+      OTHER: 'participantsOther'
     },
     filterGroups: [
       ModelViewFilter.CBOSC,

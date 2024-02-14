@@ -1,3 +1,5 @@
+import { OverlapType } from 'gql/gen/graphql';
+
 import basics from 'i18n/en-US/modelPlan/basics';
 import beneficiaries from 'i18n/en-US/modelPlan/beneficiaries';
 import generalCharacteristics from 'i18n/en-US/modelPlan/generalCharacteristics';
@@ -120,17 +122,17 @@ describe('fetch csv utils', () => {
 
   it('removes unneeded data/conditional data', () => {
     const dataFields = [
-      'participantsAndProviders.participants',
-      'participantsAndProviders.medicareProviderType'
+      'participantsAndProviders.providerOverlap',
+      'participantsAndProviders.providerOverlapHierarchy'
     ];
 
     const data = {
       participantsAndProviders: {
-        participants: ['STATES', 'OTHER']
+        providerOverlap: [OverlapType.NO]
       }
     };
 
-    const returnData = ['participantsAndProviders.participants'];
+    const returnData = ['participantsAndProviders.providerOverlap'];
 
     expect(removedUnneededData(data, allPlanTranslation, dataFields)).toEqual(
       returnData

@@ -1,10 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import {
-  FundingSource,
-  ParticipantsType,
-  RecruitmentType
-} from 'gql/gen/graphql';
+import { FundingSource, OverlapType, RecruitmentType } from 'gql/gen/graphql';
 import i18next from 'i18next';
 
 import { participantsAndProviders } from 'i18n/en-US/modelPlan/participantsAndProviders';
@@ -23,12 +19,8 @@ const defaultProps = {
   config: participantsAndProviders.modelApplicationLevel,
   namespace: 'participantsAndProviders' as keyof TranslationPlan,
   values: {
-    participants: [
-      ParticipantsType.CONVENER,
-      ParticipantsType.STATES,
-      ParticipantsType.OTHER
-    ],
-    medicareProviderType: 'My medicare',
+    providerOverlap: [OverlapType.NO],
+    providerOverlapHierarchy: 'Overlap heirarchy',
     modelApplicationLevel: 'Top level',
     recruitmentMethod: [RecruitmentType.OTHER],
     recruitmentOther: 'Other recruitment'
@@ -157,18 +149,16 @@ describe('The Read Only Section', () => {
     });
 
     it('gets a list of realted, unneeded questions', async () => {
-      const value: ParticipantsType[] = [
-        ParticipantsType.CONVENER,
-        ParticipantsType.STATES,
-        ParticipantsType.OTHER
-      ];
+      const value: OverlapType[] = [OverlapType.NO];
 
       const expectedQuestions: string[] = [
-        i18next.t<string>('participantsAndProviders:medicareProviderType.label')
+        i18next.t<string>(
+          'participantsAndProviders:providerOverlapHierarchy.label'
+        )
       ];
 
       const relatedQuestions = getRelatedUneededQuestions(
-        participantsAndProviders.participants,
+        participantsAndProviders.providerOverlap,
         value,
         'participantsAndProviders'
       );
@@ -180,7 +170,7 @@ describe('The Read Only Section', () => {
       const expectedEvaluation = true;
 
       const childQuestion = isHiddenByParentCondition(
-        participantsAndProviders.medicareProviderType,
+        participantsAndProviders.providerOverlapHierarchy,
         defaultProps.values
       );
 
@@ -191,7 +181,7 @@ describe('The Read Only Section', () => {
       const expectedEvaluation = false;
 
       const childQuestion = isHiddenByParentCondition(
-        participantsAndProviders.participants,
+        participantsAndProviders.providerOverlap,
         defaultProps.values
       );
 

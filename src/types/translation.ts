@@ -337,7 +337,7 @@ export type TranslationGeneralCharacteristics = {
 
 // Participants and Providers
 export type TranslationParticipantsAndProviders = {
-  participants: TranslationFieldPropertiesWithOptionsAndChildren<ParticipantsType>;
+  participants: TranslationFieldPropertiesWithOptions<ParticipantsType>;
   medicareProviderType: TranslationFieldPropertiesWithParent<ParticipantsType>;
   statesEngagement: TranslationFieldPropertiesWithParent<ParticipantsType>;
   participantsOther: TranslationFieldPropertiesWithParent<ParticipantsType>;
