@@ -405,7 +405,7 @@ export type TranslationParticipantsAndProviders = {
   providerRemovalFrequencyContinually: TranslationFieldProperties;
   providerRemovalFrequencyOther: TranslationFieldProperties;
   providerRemovalFrequencyNote: TranslationFieldProperties;
-  providerOverlap: TranslationFieldPropertiesWithOptions<OverlapType>;
+  providerOverlap: TranslationFieldPropertiesWithOptionsAndChildren<OverlapType>;
   providerOverlapHierarchy: TranslationFieldPropertiesWithParent<OverlapType>;
   providerOverlapNote: TranslationFieldProperties;
   status: TranslationFieldPropertiesWithOptions<TaskStatus>;

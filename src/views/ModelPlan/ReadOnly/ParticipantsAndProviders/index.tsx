@@ -72,7 +72,7 @@ const ReadOnlyParticipantsAndProviders = ({
 
       {/* Map through all the translation config questions */}
       {getKeys(participantsAndProvidersConfig)
-        .filter(field => field !== 'status')
+        .filter(field => field !== 'status') // Don't render status(in progress/ready for review, etc) field
         .map((field, index) => (
           <div
             key={field}

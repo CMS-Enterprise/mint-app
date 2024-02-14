@@ -363,8 +363,12 @@ const ReadOnlySectionNew = <
 
           <CollapsableLink
             id={heading}
-            label={readOnlyT('showOtherQuestions')}
-            closeLabel={readOnlyT('hideOtherQuestions')}
+            label={readOnlyT('showOtherQuestions', {
+              count: relatedConditions.length
+            })}
+            closeLabel={readOnlyT('hideOtherQuestions', {
+              count: relatedConditions.length
+            })}
             styleLeftBar={false}
             className="margin-bottom-3"
           >
