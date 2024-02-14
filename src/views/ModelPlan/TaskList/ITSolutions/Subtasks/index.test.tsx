@@ -75,7 +75,7 @@ const mockData = [
   ...possibleSolutionsMock
 ];
 
-describe('IT Solutions Add Subtasks', () => {
+describe('Operational Solutions Add Subtasks', () => {
   it('renders correctly', async () => {
     await act(async () => {
       const { getByTestId, getByRole } = render(
@@ -162,7 +162,7 @@ describe('IT Solutions Add Subtasks', () => {
   });
 });
 
-describe('IT Solutions Manage Subtasks', () => {
+describe('Operational Solutions Manage Subtasks', () => {
   it('renders correctly', async () => {
     await act(async () => {
       const { getByTestId } = render(

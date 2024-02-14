@@ -5,7 +5,7 @@ import { OpSolutionStatus } from 'types/graphql-global-types';
 
 import OperationalNeedsStatusTag from '.';
 
-describe('IT Solutions HelpBox', () => {
+describe('Operational Solutions HelpBox', () => {
   it('rendered status tag text', async () => {
     const { getByTestId } = render(
       <OperationalNeedsStatusTag status={OpSolutionStatus.COMPLETED} />

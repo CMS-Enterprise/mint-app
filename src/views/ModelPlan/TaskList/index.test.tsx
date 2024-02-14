@@ -183,7 +183,7 @@ describe('The Model Plan Task List', () => {
     ).toBeInTheDocument();
   });
 
-  it('gets the last modified date of it solutions', async () => {
+  it('gets the last modified date of operational solutions', async () => {
     const expectedDate: string = '2023-05-21T13:38:11.998962Z';
 
     const lastUpdated = getLatestModifiedDate([

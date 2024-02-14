@@ -93,7 +93,7 @@ const utilizingSolutions = {
     heading:
       'Did you know you can track the status for your operational solutions within MINT?',
     description:
-      'Model teams should work with their IT Lead to complete the IT solutions and implementation status tracker within the Model Plan to stay organized.'
+      'Model teams should work with their IT Lead to complete the operational solutions and implementation status tracker within the Model Plan to stay organized.'
   }
 };
 

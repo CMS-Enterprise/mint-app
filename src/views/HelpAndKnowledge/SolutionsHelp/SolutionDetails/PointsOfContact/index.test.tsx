@@ -11,7 +11,7 @@ import PointsOfContact from '.';
 
 const mocks = [...possibleSolutionsMock];
 
-describe('IT Solutions Points of Contact Components', () => {
+describe('Operational Solutions Points of Contact Components', () => {
   it.each(helpSolutions)(`matches the snapshot`, async solutionPoCComponent => {
     const { asFragment } = render(
       <MemoryRouter

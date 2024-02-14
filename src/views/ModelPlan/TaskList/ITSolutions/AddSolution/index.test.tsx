@@ -88,7 +88,7 @@ const mocks = [
   ...needQuestionAndAnswerMock
 ];
 
-describe('IT Solutions AddSolution', async () => {
+describe('Operational Solutions AddSolution', async () => {
   await act(async () => {
     it('renders correctly', async () => {
       const { getByTestId } = render(
