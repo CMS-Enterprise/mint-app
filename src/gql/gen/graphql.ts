@@ -616,6 +616,7 @@ export type Mutation = {
   updatePlanParticipantsAndProviders: PlanParticipantsAndProviders;
   updatePlanPayments: PlanPayments;
   updatePlanTDL: PlanTdl;
+  updateUserNotificationPreferences: UserNotificationPreferences;
   uploadNewPlanDocument: PlanDocument;
 };
 
@@ -891,6 +892,12 @@ export type MutationUpdatePlanPaymentsArgs = {
 export type MutationUpdatePlanTdlArgs = {
   changes: PlanTdlChanges;
   id: Scalars['UUID']['input'];
+};
+
+
+/** Mutations definition for the schema */
+export type MutationUpdateUserNotificationPreferencesArgs = {
+  changes: UserNotificationPreferencesChanges;
 };
 
 
@@ -2792,6 +2799,24 @@ export type UserNotificationPreferences = {
   taggedInDiscussionReplyEmail: Scalars['Boolean']['output'];
   taggedInDiscussionReplyInApp: Scalars['Boolean']['output'];
   userID: Scalars['UUID']['output'];
+};
+
+/** UserNotificationPreferencesChanges represents the ways that a UserNotifications Preferences object can be updated */
+export type UserNotificationPreferencesChanges = {
+  addedAsCollaboratorEmail: Scalars['Boolean']['input'];
+  addedAsCollaboratorInApp: Scalars['Boolean']['input'];
+  dailyDigestCompleteEmail: Scalars['Boolean']['input'];
+  dailyDigestCompleteInApp: Scalars['Boolean']['input'];
+  modelPlanSharedEmail: Scalars['Boolean']['input'];
+  modelPlanSharedInApp: Scalars['Boolean']['input'];
+  newDiscussionReplyEmail: Scalars['Boolean']['input'];
+  newDiscussionReplyInApp: Scalars['Boolean']['input'];
+  newPlanDiscussionEmail: Scalars['Boolean']['input'];
+  newPlanDiscussionInApp: Scalars['Boolean']['input'];
+  taggedInDiscussionEmail: Scalars['Boolean']['input'];
+  taggedInDiscussionInApp: Scalars['Boolean']['input'];
+  taggedInDiscussionReplyEmail: Scalars['Boolean']['input'];
+  taggedInDiscussionReplyInApp: Scalars['Boolean']['input'];
 };
 
 /** This is a wrapper for all information for a user  */

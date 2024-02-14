@@ -256,6 +256,7 @@ type ComplexityRoot struct {
 		UpdatePlanParticipantsAndProviders func(childComplexity int, id uuid.UUID, changes map[string]interface{}) int
 		UpdatePlanPayments                 func(childComplexity int, id uuid.UUID, changes map[string]interface{}) int
 		UpdatePlanTdl                      func(childComplexity int, id uuid.UUID, changes map[string]interface{}) int
+		UpdateUserNotificationPreferences  func(childComplexity int, changes map[string]interface{}) int
 		UploadNewPlanDocument              func(childComplexity int, input model.PlanDocumentInput) int
 	}
 
@@ -1170,6 +1171,7 @@ type MutationResolver interface {
 	SendFeedbackEmail(ctx context.Context, input model.SendFeedbackEmailInput) (bool, error)
 	MarkNotificationAsRead(ctx context.Context, notificationID uuid.UUID) (*notifications.UserNotification, error)
 	MarkAllNotificationsAsRead(ctx context.Context) ([]*notifications.UserNotification, error)
+	UpdateUserNotificationPreferences(ctx context.Context, changes map[string]interface{}) (*models.UserNotificationPreferences, error)
 }
 type OperationalNeedResolver interface {
 	Solutions(ctx context.Context, obj *models.OperationalNeed, includeNotNeeded bool) ([]*models.OperationalSolution, error)
@@ -2608,6 +2610,18 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Mutation.UpdatePlanTdl(childComplexity, args["id"].(uuid.UUID), args["changes"].(map[string]interface{})), true
+
+	case "Mutation.updateUserNotificationPreferences":
+		if e.complexity.Mutation.UpdateUserNotificationPreferences == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_updateUserNotificationPreferences_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Mutation.UpdateUserNotificationPreferences(childComplexity, args["changes"].(map[string]interface{})), true
 
 	case "Mutation.uploadNewPlanDocument":
 		if e.complexity.Mutation.UploadNewPlanDocument == nil {
@@ -9847,6 +9861,34 @@ type UserNotificationPreferences {
 }
 
 """
+UserNotificationPreferencesChanges represents the ways that a UserNotifications Preferences object can be updated
+"""
+input UserNotificationPreferencesChanges @goModel(model: "map[string]interface{}")  {
+
+  dailyDigestCompleteEmail: Boolean!
+  dailyDigestCompleteInApp: Boolean!
+
+  addedAsCollaboratorEmail: Boolean!
+  addedAsCollaboratorInApp: Boolean!
+
+  taggedInDiscussionEmail: Boolean!
+  taggedInDiscussionInApp: Boolean!
+
+  taggedInDiscussionReplyEmail: Boolean!
+  taggedInDiscussionReplyInApp: Boolean!
+
+  newDiscussionReplyEmail: Boolean!
+  newDiscussionReplyInApp: Boolean!
+
+  modelPlanSharedEmail: Boolean!
+  modelPlanSharedInApp: Boolean!
+
+  newPlanDiscussionEmail: Boolean! #TODO: EASI-3925 this is not explicitly requested
+  newPlanDiscussionInApp: Boolean!
+
+}
+
+"""
 Query definition for the schema
 """
 type Query {
@@ -10040,6 +10082,8 @@ markNotificationAsRead(notificationID: UUID!): UserNotification!
 Marks all notifications for the current user as read, and returns the updated notifications
 """
 markAllNotificationsAsRead: [UserNotification!]!
+
+updateUserNotificationPreferences(changes: UserNotificationPreferencesChanges!): UserNotificationPreferences!
 }
 
 type Subscription {
@@ -11670,6 +11714,21 @@ func (ec *executionContext) field_Mutation_updatePlanTDL_args(ctx context.Contex
 		}
 	}
 	args["changes"] = arg1
+	return args, nil
+}
+
+func (ec *executionContext) field_Mutation_updateUserNotificationPreferences_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+	var err error
+	args := map[string]interface{}{}
+	var arg0 map[string]interface{}
+	if tmp, ok := rawArgs["changes"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("changes"))
+		arg0, err = ec.unmarshalNUserNotificationPreferencesChanges2map(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["changes"] = arg0
 	return args, nil
 }
 
@@ -22981,6 +23040,107 @@ func (ec *executionContext) fieldContext_Mutation_markAllNotificationsAsRead(ctx
 			}
 			return nil, fmt.Errorf("no field named %q was found under type UserNotification", field.Name)
 		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Mutation_updateUserNotificationPreferences(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Mutation_updateUserNotificationPreferences(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Mutation().UpdateUserNotificationPreferences(rctx, fc.Args["changes"].(map[string]interface{}))
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*models.UserNotificationPreferences)
+	fc.Result = res
+	return ec.marshalNUserNotificationPreferences2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐUserNotificationPreferences(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Mutation_updateUserNotificationPreferences(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Mutation",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_UserNotificationPreferences_id(ctx, field)
+			case "userID":
+				return ec.fieldContext_UserNotificationPreferences_userID(ctx, field)
+			case "dailyDigestCompleteEmail":
+				return ec.fieldContext_UserNotificationPreferences_dailyDigestCompleteEmail(ctx, field)
+			case "dailyDigestCompleteInApp":
+				return ec.fieldContext_UserNotificationPreferences_dailyDigestCompleteInApp(ctx, field)
+			case "addedAsCollaboratorEmail":
+				return ec.fieldContext_UserNotificationPreferences_addedAsCollaboratorEmail(ctx, field)
+			case "addedAsCollaboratorInApp":
+				return ec.fieldContext_UserNotificationPreferences_addedAsCollaboratorInApp(ctx, field)
+			case "taggedInDiscussionEmail":
+				return ec.fieldContext_UserNotificationPreferences_taggedInDiscussionEmail(ctx, field)
+			case "taggedInDiscussionInApp":
+				return ec.fieldContext_UserNotificationPreferences_taggedInDiscussionInApp(ctx, field)
+			case "taggedInDiscussionReplyEmail":
+				return ec.fieldContext_UserNotificationPreferences_taggedInDiscussionReplyEmail(ctx, field)
+			case "taggedInDiscussionReplyInApp":
+				return ec.fieldContext_UserNotificationPreferences_taggedInDiscussionReplyInApp(ctx, field)
+			case "newDiscussionReplyEmail":
+				return ec.fieldContext_UserNotificationPreferences_newDiscussionReplyEmail(ctx, field)
+			case "newDiscussionReplyInApp":
+				return ec.fieldContext_UserNotificationPreferences_newDiscussionReplyInApp(ctx, field)
+			case "modelPlanSharedEmail":
+				return ec.fieldContext_UserNotificationPreferences_modelPlanSharedEmail(ctx, field)
+			case "modelPlanSharedInApp":
+				return ec.fieldContext_UserNotificationPreferences_modelPlanSharedInApp(ctx, field)
+			case "newPlanDiscussionEmail":
+				return ec.fieldContext_UserNotificationPreferences_newPlanDiscussionEmail(ctx, field)
+			case "newPlanDiscussionInApp":
+				return ec.fieldContext_UserNotificationPreferences_newPlanDiscussionInApp(ctx, field)
+			case "createdBy":
+				return ec.fieldContext_UserNotificationPreferences_createdBy(ctx, field)
+			case "createdByUserAccount":
+				return ec.fieldContext_UserNotificationPreferences_createdByUserAccount(ctx, field)
+			case "createdDts":
+				return ec.fieldContext_UserNotificationPreferences_createdDts(ctx, field)
+			case "modifiedBy":
+				return ec.fieldContext_UserNotificationPreferences_modifiedBy(ctx, field)
+			case "modifiedByUserAccount":
+				return ec.fieldContext_UserNotificationPreferences_modifiedByUserAccount(ctx, field)
+			case "modifiedDts":
+				return ec.fieldContext_UserNotificationPreferences_modifiedDts(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type UserNotificationPreferences", field.Name)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Mutation_updateUserNotificationPreferences_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
 	}
 	return fc, nil
 }
@@ -61875,6 +62035,13 @@ func (ec *executionContext) _Mutation(ctx context.Context, sel ast.SelectionSet)
 			if out.Values[i] == graphql.Null {
 				out.Invalids++
 			}
+		case "updateUserNotificationPreferences":
+			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
+				return ec._Mutation_updateUserNotificationPreferences(ctx, field)
+			})
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
 		default:
 			panic("unknown field " + strconv.Quote(field.Name))
 		}
@@ -75034,6 +75201,10 @@ func (ec *executionContext) marshalNUserNotificationPreferences2ᚖgithubᚗcom�
 		return graphql.Null
 	}
 	return ec._UserNotificationPreferences(ctx, sel, v)
+}
+
+func (ec *executionContext) unmarshalNUserNotificationPreferencesChanges2map(ctx context.Context, v interface{}) (map[string]interface{}, error) {
+	return v.(map[string]interface{}), nil
 }
 
 func (ec *executionContext) marshalNUserNotifications2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋnotificationsᚐUserNotifications(ctx context.Context, sel ast.SelectionSet, v notifications.UserNotifications) graphql.Marshaler {

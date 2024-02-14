@@ -10,8 +10,9 @@ import (
 )
 
 // BaseStructPreUpdate applies incoming changes from to a TaskList Section, and validates it's status
+// It modifies the base struct object bs that is passed to it.
 func BaseStructPreUpdate(logger *zap.Logger, bs models.IBaseStruct, changes map[string]interface{}, principal authentication.Principal, store *storage.Store, applyChanges bool, checkAccess bool) error {
-
+	//TODO: EASI-3925 Update this to take a named preparer instead of a store
 	err := bs.SetModifiedBy(principal)
 	if err != nil {
 		return err
