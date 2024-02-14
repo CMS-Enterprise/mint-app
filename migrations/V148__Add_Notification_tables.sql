@@ -77,4 +77,6 @@ CREATE TABLE user_notification_preferences (
 
 )
 
--- TODO: EASI-3294 Add auditing, probably just the preferences table.
+-- //TODO: EASI-3294 Add auditing, probably just the preferences table.
+
+-- //TODO: EASI-3295 add notification preferences for all existing users in the database
