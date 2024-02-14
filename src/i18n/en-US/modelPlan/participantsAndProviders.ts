@@ -1,4 +1,5 @@
 import {
+  ModelViewFilter,
   OverlapType,
   ParticipantSelectionType,
   ParticipantsType
@@ -54,7 +55,13 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
       STATE_MEDICAID_AGENCIES: [],
       OTHER: ['participantsOther']
     },
-    filterGroups: ['cbosc', 'cmmi', 'ipc', 'iddoc', 'pbg']
+    filterGroups: [
+      ModelViewFilter.CBOSC,
+      ModelViewFilter.CMMI,
+      ModelViewFilter.IPC,
+      ModelViewFilter.IDDOC,
+      ModelViewFilter.PBG
+    ]
   },
   medicareProviderType: {
     gqlField: 'medicareProviderType',
@@ -68,7 +75,13 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
       evaluation: [ParticipantsType.MEDICARE_PROVIDERS],
       evaluationMethod: 'includes'
     },
-    filterGroups: ['cbosc', 'cmmi', 'ipc', 'iddoc', 'pbg']
+    filterGroups: [
+      ModelViewFilter.CBOSC,
+      ModelViewFilter.CMMI,
+      ModelViewFilter.IPC,
+      ModelViewFilter.IDDOC,
+      ModelViewFilter.PBG
+    ]
   },
   statesEngagement: {
     gqlField: 'statesEngagement',
@@ -82,7 +95,13 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
       evaluation: [ParticipantsType.STATES],
       evaluationMethod: 'includes'
     },
-    filterGroups: ['cbosc', 'cmmi', 'ipc', 'iddoc', 'pbg']
+    filterGroups: [
+      ModelViewFilter.CBOSC,
+      ModelViewFilter.CMMI,
+      ModelViewFilter.IPC,
+      ModelViewFilter.IDDOC,
+      ModelViewFilter.PBG
+    ]
   },
   participantsOther: {
     gqlField: 'participantsOther',
@@ -96,7 +115,13 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
       evaluation: [ParticipantsType.OTHER],
       evaluationMethod: 'includes'
     },
-    filterGroups: ['cbosc', 'cmmi', 'ipc', 'iddoc', 'pbg']
+    filterGroups: [
+      ModelViewFilter.CBOSC,
+      ModelViewFilter.CMMI,
+      ModelViewFilter.IPC,
+      ModelViewFilter.IDDOC,
+      ModelViewFilter.PBG
+    ]
   },
   participantsNote: {
     gqlField: 'participantsNote',
@@ -105,7 +130,13 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     label: 'Notes',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['cbosc', 'cmmi', 'ipc', 'iddoc', 'pbg']
+    filterGroups: [
+      ModelViewFilter.CBOSC,
+      ModelViewFilter.CMMI,
+      ModelViewFilter.IPC,
+      ModelViewFilter.IDDOC,
+      ModelViewFilter.PBG
+    ]
   },
   participantsCurrentlyInModels: {
     gqlField: 'participantsCurrentlyInModels',
@@ -138,7 +169,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
       '(e.g., all services identified at the CPT or ICD-10 code level, epsiode of care for a specific span of time, all hospitals unpaid under the Inpatient Prospective Payment System in a certain state)',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['iddoc', 'pbg']
+    filterGroups: [ModelViewFilter.IDDOC, ModelViewFilter.PBG]
   },
 
   expectedNumberOfParticipants: {
@@ -150,7 +181,12 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
       'Note: Sometimes RRCEG provides a minimum for the power calculation. Other times stakeholder research may inform the team about who are good candidates or might be interested in participating.',
     dataType: 'number',
     formType: 'rangeInput',
-    filterGroups: ['cbosc', 'ccw', 'dfsdm', 'ipc'],
+    filterGroups: [
+      ModelViewFilter.CBOSC,
+      ModelViewFilter.CCW,
+      ModelViewFilter.DFSDM,
+      ModelViewFilter.IPC
+    ],
     pageStart: true,
     adjacentPosition: 'left'
   },
@@ -167,7 +203,12 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
       FAIRLY: 'Fairly confident',
       COMPLETELY: 'Completely confident'
     },
-    filterGroups: ['cbosc', 'ccw', 'dfsdm', 'ipc'],
+    filterGroups: [
+      ModelViewFilter.CBOSC,
+      ModelViewFilter.CCW,
+      ModelViewFilter.DFSDM,
+      ModelViewFilter.IPC
+    ],
     adjacentPosition: 'right'
   },
   confidenceNote: {
@@ -177,7 +218,12 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     label: 'Notes',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['cbosc', 'ccw', 'dfsdm', 'ipc']
+    filterGroups: [
+      ModelViewFilter.CBOSC,
+      ModelViewFilter.CCW,
+      ModelViewFilter.DFSDM,
+      ModelViewFilter.IPC
+    ]
   },
   recruitmentMethod: {
     gqlField: 'recruitmentMethod',
@@ -258,7 +304,11 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
       OTHER: 'selectionOther',
       NO_SELECTING_PARTICIPANTS: '[]'
     },
-    filterGroups: ['cmmi', 'iddoc', 'pbg']
+    filterGroups: [
+      ModelViewFilter.CMMI,
+      ModelViewFilter.IDDOC,
+      ModelViewFilter.PBG
+    ]
   },
   selectionOther: {
     gqlField: 'selectionOther',
@@ -273,7 +323,11 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
       evaluation: [ParticipantSelectionType.OTHER],
       evaluationMethod: 'includes'
     },
-    filterGroups: ['cmmi', 'iddoc', 'pbg']
+    filterGroups: [
+      ModelViewFilter.CMMI,
+      ModelViewFilter.IDDOC,
+      ModelViewFilter.PBG
+    ]
   },
   selectionNote: {
     gqlField: 'selectionNote',
@@ -282,7 +336,11 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     label: 'Notes',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['cmmi', 'iddoc', 'pbg']
+    filterGroups: [
+      ModelViewFilter.CMMI,
+      ModelViewFilter.IDDOC,
+      ModelViewFilter.PBG
+    ]
   },
   participantAddedFrequency: {
     gqlField: 'participantAddedFrequency',
@@ -300,7 +358,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
       CONTINUALLY: 'participantAddedFrequencyContinually',
       OTHER: 'participantAddedFrequencyOther'
     },
-    filterGroups: ['ipc'],
+    filterGroups: [ModelViewFilter.IPC],
     pageStart: true
   },
   participantAddedFrequencyContinually: {
@@ -311,7 +369,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     dataType: 'string',
     formType: 'text',
     otherType: true,
-    filterGroups: ['ipc']
+    filterGroups: [ModelViewFilter.IPC]
   },
   participantAddedFrequencyOther: {
     gqlField: 'participantAddedFrequencyOther',
@@ -321,7 +379,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     dataType: 'string',
     formType: 'text',
     otherType: true,
-    filterGroups: ['ipc']
+    filterGroups: [ModelViewFilter.IPC]
   },
   participantAddedFrequencyNote: {
     gqlField: 'participantAddedFrequencyNote',
@@ -330,7 +388,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     label: 'Notes',
     dataType: 'string',
     formType: 'text',
-    filterGroups: ['ipc']
+    filterGroups: [ModelViewFilter.IPC]
   },
   participantRemovedFrequency: {
     gqlField: 'participantRemovedFrequency',
@@ -348,7 +406,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
       CONTINUALLY: 'participantRemovedFrequencyContinually',
       OTHER: 'participantRemovedFrequencyOther'
     },
-    filterGroups: ['ipc']
+    filterGroups: [ModelViewFilter.IPC]
   },
   participantRemovedFrequencyContinually: {
     gqlField: 'participantRemovedFrequencyContinually',
@@ -358,7 +416,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     dataType: 'string',
     formType: 'text',
     otherType: true,
-    filterGroups: ['ipc']
+    filterGroups: [ModelViewFilter.IPC]
   },
   participantRemovedFrequencyOther: {
     gqlField: 'participantRemovedFrequencyOther',
@@ -368,7 +426,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     dataType: 'string',
     formType: 'text',
     otherType: true,
-    filterGroups: ['ipc']
+    filterGroups: [ModelViewFilter.IPC]
   },
   participantRemovedFrequencyNote: {
     gqlField: 'participantRemovedFrequencyNote',
@@ -377,7 +435,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     label: 'Notes',
     dataType: 'string',
     formType: 'text',
-    filterGroups: ['ipc']
+    filterGroups: [ModelViewFilter.IPC]
   },
   communicationMethod: {
     gqlField: 'communicationMethod',
@@ -399,7 +457,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
       OTHER: 'communicationMethodOther',
       NO_COMMUNICATION: ''
     },
-    filterGroups: ['cbosc', 'ipc']
+    filterGroups: [ModelViewFilter.CBOSC, ModelViewFilter.IPC]
   },
   communicationMethodOther: {
     gqlField: 'communicationMethodOther',
@@ -409,7 +467,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     dataType: 'string',
     formType: 'textarea',
     otherType: true,
-    filterGroups: ['cbosc', 'ipc']
+    filterGroups: [ModelViewFilter.CBOSC, ModelViewFilter.IPC]
   },
   communicationNote: {
     gqlField: 'communicationNote',
@@ -418,7 +476,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     label: 'Notes',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['cbosc', 'ipc']
+    filterGroups: [ModelViewFilter.CBOSC, ModelViewFilter.IPC]
   },
   riskType: {
     gqlField: 'riskType',
@@ -602,7 +660,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
       OTHER: 'participantsIdsOther',
       NO_IDENTIFIERS: ''
     },
-    filterGroups: ['iddoc']
+    filterGroups: [ModelViewFilter.IDDOC]
   },
   participantsIdsOther: {
     gqlField: 'participantsIdsOther',
@@ -612,7 +670,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     dataType: 'string',
     formType: 'textarea',
     otherType: true,
-    filterGroups: ['iddoc']
+    filterGroups: [ModelViewFilter.IDDOC]
   },
   participantsIDSNote: {
     gqlField: 'participantsIDSNote',
@@ -621,7 +679,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     label: 'Notes',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['iddoc']
+    filterGroups: [ModelViewFilter.IDDOC]
   },
   providerAdditionFrequency: {
     gqlField: 'providerAdditionFrequency',
@@ -639,7 +697,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
       CONTINUALLY: 'providerAdditionFrequencyContinually',
       OTHER: 'providerAdditionFrequencyOther'
     },
-    filterGroups: ['oact', 'ipc'],
+    filterGroups: [ModelViewFilter.OACT, ModelViewFilter.IPC],
     pageStart: true
   },
   providerAdditionFrequencyContinually: {
@@ -650,7 +708,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     dataType: 'string',
     formType: 'textarea',
     otherType: true,
-    filterGroups: ['oact', 'ipc']
+    filterGroups: [ModelViewFilter.OACT, ModelViewFilter.IPC]
   },
   providerAdditionFrequencyOther: {
     gqlField: 'providerAdditionFrequencyOther',
@@ -660,7 +718,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     dataType: 'string',
     formType: 'textarea',
     otherType: true,
-    filterGroups: ['oact', 'ipc']
+    filterGroups: [ModelViewFilter.OACT, ModelViewFilter.IPC]
   },
   providerAdditionFrequencyNote: {
     gqlField: 'providerAdditionFrequencyNote',
@@ -669,7 +727,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     label: 'Notes',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['oact', 'ipc']
+    filterGroups: [ModelViewFilter.OACT, ModelViewFilter.IPC]
   },
   providerAddMethod: {
     gqlField: 'providerAddMethod',
@@ -703,7 +761,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
       OTHER: 'providerAddMethodOther',
       NA: ''
     },
-    filterGroups: ['ipc', 'oact']
+    filterGroups: [ModelViewFilter.IPC, ModelViewFilter.OACT]
   },
   providerAddMethodOther: {
     gqlField: 'providerAddMethodOther',
@@ -714,7 +772,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     dataType: 'string',
     formType: 'textarea',
     otherType: true,
-    filterGroups: ['ipc', 'oact']
+    filterGroups: [ModelViewFilter.IPC, ModelViewFilter.OACT]
   },
   providerAddMethodNote: {
     gqlField: 'providerAddMethodNote',
@@ -723,7 +781,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     label: 'Notes',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['ipc', 'oact']
+    filterGroups: [ModelViewFilter.IPC, ModelViewFilter.OACT]
   },
   providerLeaveMethod: {
     gqlField: 'providerLeaveMethod',
@@ -753,7 +811,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
       OTHER: 'providerLeaveMethodOther',
       NOT_APPLICABLE: ''
     },
-    filterGroups: ['ipc', 'oact']
+    filterGroups: [ModelViewFilter.IPC, ModelViewFilter.OACT]
   },
   providerLeaveMethodOther: {
     gqlField: 'providerLeaveMethodOther',
@@ -762,7 +820,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     label: 'Please specify',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['ipc', 'oact'],
+    filterGroups: [ModelViewFilter.IPC, ModelViewFilter.OACT],
     otherType: true
   },
   providerLeaveMethodNote: {
@@ -772,7 +830,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     label: 'Notes',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['ipc', 'oact']
+    filterGroups: [ModelViewFilter.IPC, ModelViewFilter.OACT]
   },
   providerRemovalFrequency: {
     gqlField: 'providerRemovalFrequency',
@@ -835,7 +893,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
       YES_NO_ISSUES: ['providerOverlapHierarchy'],
       NO: []
     },
-    filterGroups: ['iddoc', 'pbg']
+    filterGroups: [ModelViewFilter.IDDOC, ModelViewFilter.PBG]
   },
   providerOverlapHierarchy: {
     gqlField: 'providerOverlapHierarchy',
@@ -850,7 +908,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
       evaluation: [OverlapType.YES_NEED_POLICIES, OverlapType.YES_NO_ISSUES],
       evaluationMethod: 'equals'
     },
-    filterGroups: ['iddoc', 'pbg']
+    filterGroups: [ModelViewFilter.IDDOC, ModelViewFilter.PBG]
   },
   providerOverlapNote: {
     gqlField: 'providerOverlapNote',
@@ -859,7 +917,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     label: 'Notes',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['iddoc', 'pbg']
+    filterGroups: [ModelViewFilter.IDDOC, ModelViewFilter.PBG]
   },
   status: {
     gqlField: 'status',

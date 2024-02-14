@@ -32,6 +32,7 @@ import {
   ModelLearningSystemType,
   ModelStatus,
   ModelType,
+  ModelViewFilter,
   MonitoringFileType,
   NonClaimsBasedPayType,
   OverlapType,
@@ -55,8 +56,6 @@ import {
   YesNoOtherType,
   YesNoType
 } from 'gql/gen/graphql';
-
-import { FilterGroup } from 'views/ModelPlan/ReadOnly/_components/FilterView/BodyContent/_filterGroupMapping';
 
 // Util used to preserve type defintions when mapping over keys of object
 // https://stackoverflow.com/questions/52856496/typescript-object-keys-return-string
@@ -90,7 +89,7 @@ export type TranslationFieldProperties = {
     | 'multiSelect'
     | 'datePicker'
     | 'rangeInput';
-  filterGroups?: FilterGroup[]; // Used to render questions within Readonly filter group view (Also CSV/PDF export)
+  filterGroups?: ModelViewFilter[]; // Used to render questions within Readonly filter group view (Also CSV/PDF export)
   tags?: string[];
   isModelLinks?: boolean; // Used to designate if a field is a ExistingModelLinks type with nested fields - ex: names,
   pageStart?: boolean; // Is the question the first question on a page - used for styling in ReadOnly

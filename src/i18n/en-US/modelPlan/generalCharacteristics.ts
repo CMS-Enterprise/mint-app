@@ -1,3 +1,5 @@
+import { ModelViewFilter } from 'gql/gen/graphql';
+
 import { TranslationGeneralCharacteristics } from 'types/translation';
 
 export const generalCharacteristics: TranslationGeneralCharacteristics = {
@@ -251,7 +253,7 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
       REGULAR: 'Regular APM',
       NOT_APM: 'It is not an APM'
     },
-    filterGroups: ['cmmi', 'oact']
+    filterGroups: [ModelViewFilter.CMMI, ModelViewFilter.OACT]
   },
   alternativePaymentModelNote: {
     gqlField: 'alternativePaymentModelNote',
@@ -260,7 +262,7 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     label: 'Notes',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['cmmi', 'oact']
+    filterGroups: [ModelViewFilter.CMMI, ModelViewFilter.OACT]
   },
   keyCharacteristics: {
     gqlField: 'keyCharacteristics',
@@ -284,7 +286,11 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
       SHARED_SAVINGS: 'Shared Savings Model',
       OTHER: 'Other'
     },
-    filterGroups: ['cmmi', 'iddoc', 'pbg']
+    filterGroups: [
+      ModelViewFilter.CMMI,
+      ModelViewFilter.IDDOC,
+      ModelViewFilter.PBG
+    ]
   },
   keyCharacteristicsNote: {
     gqlField: 'keyCharacteristicsNote',
@@ -293,7 +299,11 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     label: 'Notes',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['cmmi', 'iddoc', 'pbg']
+    filterGroups: [
+      ModelViewFilter.CMMI,
+      ModelViewFilter.IDDOC,
+      ModelViewFilter.PBG
+    ]
   },
   keyCharacteristicsOther: {
     gqlField: 'keyCharacteristicsOther',
@@ -458,7 +468,7 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
       true: 'Yes',
       false: 'No'
     },
-    filterGroups: ['iddoc', 'pbg']
+    filterGroups: [ModelViewFilter.IDDOC, ModelViewFilter.PBG]
   },
   geographiesTargetedTypes: {
     gqlField: 'geographiesTargetedTypes',
@@ -477,7 +487,7 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
       REGION: 'geographiesRegionTypes',
       OTHER: 'geographiesTargetedTypesOther'
     },
-    filterGroups: ['iddoc', 'pbg']
+    filterGroups: [ModelViewFilter.IDDOC, ModelViewFilter.PBG]
   },
   geographiesStatesAndTerritories: {
     gqlField: 'geographiesStatesAndTerritories',
@@ -546,7 +556,7 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
       UM: 'UM - U.S. Minor Outlying Islands',
       VI: 'VI - U.S. Virgin Islands'
     },
-    filterGroups: ['iddoc', 'pbg']
+    filterGroups: [ModelViewFilter.IDDOC, ModelViewFilter.PBG]
   },
   geographiesRegionTypes: {
     gqlField: 'geographiesRegionTypes',
@@ -560,7 +570,7 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
       HRR: 'Hospital Referral Regions (HRR)',
       MSA: 'Metropolitan Statistical Areas (MSAs)'
     },
-    filterGroups: ['iddoc', 'pbg']
+    filterGroups: [ModelViewFilter.IDDOC, ModelViewFilter.PBG]
   },
   geographiesTargetedTypesOther: {
     gqlField: 'geographiesTargetedTypesOther',
@@ -569,7 +579,7 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     label: 'Please specify what the other geography type is.',
     dataType: 'string',
     formType: 'text',
-    filterGroups: ['iddoc', 'pbg']
+    filterGroups: [ModelViewFilter.IDDOC, ModelViewFilter.PBG]
   },
   geographiesTargetedAppliedTo: {
     gqlField: 'geographiesTargetedAppliedTo',
@@ -584,7 +594,7 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
       PROVIDERS: 'Providers',
       OTHER: 'Other'
     },
-    filterGroups: ['iddoc', 'pbg']
+    filterGroups: [ModelViewFilter.IDDOC, ModelViewFilter.PBG]
   },
   geographiesTargetedAppliedToOther: {
     gqlField: 'geographiesTargetedAppliedToOther',
@@ -593,7 +603,7 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     label: 'Please specify what the geographies are applied to.',
     dataType: 'string',
     formType: 'text',
-    filterGroups: ['iddoc', 'pbg']
+    filterGroups: [ModelViewFilter.IDDOC, ModelViewFilter.PBG]
   },
   geographiesTargetedNote: {
     gqlField: 'geographiesTargetedNote',
@@ -602,7 +612,7 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     label: 'Notes',
     dataType: 'boolean',
     formType: 'radio',
-    filterGroups: ['iddoc', 'pbg']
+    filterGroups: [ModelViewFilter.IDDOC, ModelViewFilter.PBG]
   },
   participationOptions: {
     gqlField: 'participationOptions',
@@ -615,7 +625,7 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
       true: 'Yes',
       false: 'No'
     },
-    filterGroups: ['cmmi']
+    filterGroups: [ModelViewFilter.CMMI]
   },
   participationOptionsNote: {
     gqlField: 'participationOptionsNote',
@@ -624,7 +634,7 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     label: 'Notes',
     dataType: 'boolean',
     formType: 'radio',
-    filterGroups: ['cmmi']
+    filterGroups: [ModelViewFilter.CMMI]
   },
   agreementTypes: {
     gqlField: 'agreementTypes',
@@ -640,7 +650,7 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
       PARTICIPATION: 'Participation Agreement',
       OTHER: 'Other'
     },
-    filterGroups: ['cmmi']
+    filterGroups: [ModelViewFilter.CMMI]
   },
   agreementTypesOther: {
     gqlField: 'agreementTypesOther',
@@ -649,7 +659,7 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     label: 'Please specify',
     dataType: 'string',
     formType: 'text',
-    filterGroups: ['cmmi']
+    filterGroups: [ModelViewFilter.CMMI]
   },
   multiplePatricipationAgreementsNeeded: {
     gqlField: 'multiplePatricipationAgreementsNeeded',
@@ -664,7 +674,7 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
       true: 'Yes',
       false: 'No'
     },
-    filterGroups: ['cmmi']
+    filterGroups: [ModelViewFilter.CMMI]
   },
   multiplePatricipationAgreementsNeededNote: {
     gqlField: 'multiplePatricipationAgreementsNeededNote',
@@ -673,7 +683,7 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     label: 'Notes',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['cmmi']
+    filterGroups: [ModelViewFilter.CMMI]
   },
   rulemakingRequired: {
     gqlField: 'rulemakingRequired',
@@ -686,7 +696,11 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
       true: 'Yes',
       false: 'No'
     },
-    filterGroups: ['iddoc', 'ipc', 'pbg']
+    filterGroups: [
+      ModelViewFilter.IDDOC,
+      ModelViewFilter.IPC,
+      ModelViewFilter.PBG
+    ]
   },
   rulemakingRequiredDescription: {
     gqlField: 'multiplePatricipationAgreementsNeeded',
@@ -696,7 +710,11 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
       'Which rule do you anticipate using and what is the target date of display for that regulation?',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['iddoc', 'ipc', 'pbg']
+    filterGroups: [
+      ModelViewFilter.IDDOC,
+      ModelViewFilter.IPC,
+      ModelViewFilter.PBG
+    ]
   },
   rulemakingRequiredNote: {
     gqlField: 'rulemakingRequiredNote',
@@ -720,7 +738,7 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
         'Section 1833(e) (Part B services) of the Social Security Act',
       OTHER: 'Other'
     },
-    filterGroups: ['cmmi']
+    filterGroups: [ModelViewFilter.CMMI]
   },
   authorityAllowancesOther: {
     gqlField: 'authorityAllowancesOther',
@@ -729,7 +747,7 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     label: 'Please specify',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['cmmi']
+    filterGroups: [ModelViewFilter.CMMI]
   },
   authorityAllowancesNote: {
     gqlField: 'authorityAllowancesNote',
@@ -738,7 +756,7 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     label: 'Notes',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['cmmi']
+    filterGroups: [ModelViewFilter.CMMI]
   },
   waiversRequired: {
     gqlField: 'waiversRequired',
@@ -751,7 +769,7 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
       true: 'Yes',
       false: 'No'
     },
-    filterGroups: ['cmmi']
+    filterGroups: [ModelViewFilter.CMMI]
   },
   waiversRequiredTypes: {
     gqlField: 'waiversRequiredTypes',
@@ -772,7 +790,7 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
       PROGRAM_PAYMENT:
         '(Note: CMMI writes, Office of General Council (OGC) adivses, full clearance process is required)'
     },
-    filterGroups: ['cmmi']
+    filterGroups: [ModelViewFilter.CMMI]
   },
   waiversRequiredNote: {
     gqlField: 'waiversRequiredNote',
@@ -781,7 +799,7 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     label: 'Notes',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['cmmi']
+    filterGroups: [ModelViewFilter.CMMI]
   },
   status: {
     gqlField: 'status',

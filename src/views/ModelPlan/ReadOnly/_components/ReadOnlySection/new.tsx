@@ -20,7 +20,7 @@ import {
   TranslationPlan
 } from 'types/translation';
 
-import { filterGroups } from '../FilterView/BodyContent/_filterGroupMapping';
+import { filterGroupKey } from '../FilterView/BodyContent/_filterGroupMapping';
 
 /*
   Util function for prepping data to listItems prop of ReadOnlySection
@@ -165,7 +165,7 @@ export type ReadOnlySectionNewProps<
   config: TranslationConfigType<T, C>;
   values: any;
   namespace: keyof TranslationPlan;
-  filteredView?: typeof filterGroups[number];
+  filteredView?: keyof typeof filterGroupKey;
 };
 
 const ReadOnlySectionNew = <
@@ -184,7 +184,11 @@ const ReadOnlySectionNew = <
 
   // Checks if current view is filtered, then check if question belongs to filter group
   // If not, return null
-  if (filteredView && !config?.filterGroups?.includes(filteredView)) {
+  if (
+    filteredView &&
+    filterGroupKey[filteredView] &&
+    !config?.filterGroups?.includes(filterGroupKey[filteredView])
+  ) {
     return null;
   }
 
