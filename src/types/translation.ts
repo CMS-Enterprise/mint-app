@@ -153,6 +153,7 @@ export type TranslationFieldPropertiesWithOptionsAndParent<
   C extends keyof C | string
 > = TranslationFieldProperties & TranslationOptions<T> & ParentRelation<C>;
 
+// Union type for all translation types
 export type TranslationConfigType<
   T extends keyof T | string,
   C extends keyof C | string
@@ -193,7 +194,7 @@ export const isTranslationFieldPropertiesWithOptions = <
   return Object.hasOwn(config, 'options');
 };
 
-// Type guard to check if config is of type TranslationFieldPropertiesWithOptions
+// Type guard to check if config is of type TranslationFieldPropertiesWithOptionsAndChildren
 export const isTranslationFieldPropertiesWithOptionsAndChildren = <
   T extends keyof T | string,
   C extends keyof C | string
