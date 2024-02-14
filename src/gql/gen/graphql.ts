@@ -203,6 +203,7 @@ export type CurrentUser = {
   __typename: 'CurrentUser';
   account: UserAccount;
   launchDarkly: LaunchDarklySettings;
+  notificationPreferences: UserNotificationPreferences;
   notifications: UserNotifications;
 };
 
@@ -2357,8 +2358,6 @@ export type Query = {
   searchOktaUsers: Array<UserInfo>;
   taskListSectionLocks: Array<TaskListSectionLockStatus>;
   userAccount: UserAccount;
-  userNotificationPreferences: UserNotificationPreferences;
-  userNotifications: UserNotifications;
 };
 
 

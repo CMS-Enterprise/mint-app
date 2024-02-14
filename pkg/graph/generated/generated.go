@@ -107,9 +107,10 @@ type ComplexityRoot struct {
 	}
 
 	CurrentUser struct {
-		Account       func(childComplexity int) int
-		LaunchDarkly  func(childComplexity int) int
-		Notifications func(childComplexity int) int
+		Account                 func(childComplexity int) int
+		LaunchDarkly            func(childComplexity int) int
+		NotificationPreferences func(childComplexity int) int
+		Notifications           func(childComplexity int) int
 	}
 
 	DiscussionReply struct {
@@ -972,8 +973,6 @@ type ComplexityRoot struct {
 		SearchOktaUsers                   func(childComplexity int, searchTerm string) int
 		TaskListSectionLocks              func(childComplexity int, modelPlanID uuid.UUID) int
 		UserAccount                       func(childComplexity int, username string) int
-		UserNotificationPreferences       func(childComplexity int) int
-		UserNotifications                 func(childComplexity int) int
 	}
 
 	Subscription struct {
@@ -1098,6 +1097,7 @@ type CurrentUserResolver interface {
 	LaunchDarkly(ctx context.Context, obj *models.CurrentUser) (*model.LaunchDarklySettings, error)
 	Account(ctx context.Context, obj *models.CurrentUser) (*authentication.UserAccount, error)
 	Notifications(ctx context.Context, obj *models.CurrentUser) (*notifications.UserNotifications, error)
+	NotificationPreferences(ctx context.Context, obj *models.CurrentUser) (*models.UserNotificationPreferences, error)
 }
 type DiscussionReplyResolver interface {
 	Content(ctx context.Context, obj *models.DiscussionReply) (*models.TaggedContent, error)
@@ -1339,8 +1339,6 @@ type QueryResolver interface {
 	UserAccount(ctx context.Context, username string) (*authentication.UserAccount, error)
 	ExistingModelLink(ctx context.Context, id uuid.UUID) (*models.ExistingModelLink, error)
 	MostRecentDiscussionRoleSelection(ctx context.Context) (*models.DiscussionRoleSelection, error)
-	UserNotificationPreferences(ctx context.Context) (*models.UserNotificationPreferences, error)
-	UserNotifications(ctx context.Context) (*notifications.UserNotifications, error)
 }
 type SubscriptionResolver interface {
 	OnTaskListSectionLocksChanged(ctx context.Context, modelPlanID uuid.UUID) (<-chan *model.TaskListSectionLockStatusChanged, error)
@@ -1539,6 +1537,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.CurrentUser.LaunchDarkly(childComplexity), true
+
+	case "CurrentUser.notificationPreferences":
+		if e.complexity.CurrentUser.NotificationPreferences == nil {
+			break
+		}
+
+		return e.complexity.CurrentUser.NotificationPreferences(childComplexity), true
 
 	case "CurrentUser.notifications":
 		if e.complexity.CurrentUser.Notifications == nil {
@@ -7230,20 +7235,6 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Query.UserAccount(childComplexity, args["username"].(string)), true
 
-	case "Query.userNotificationPreferences":
-		if e.complexity.Query.UserNotificationPreferences == nil {
-			break
-		}
-
-		return e.complexity.Query.UserNotificationPreferences(childComplexity), true
-
-	case "Query.userNotifications":
-		if e.complexity.Query.UserNotifications == nil {
-			break
-		}
-
-		return e.complexity.Query.UserNotifications(childComplexity), true
-
 	case "Subscription.onLockTaskListSectionContext":
 		if e.complexity.Subscription.OnLockTaskListSectionContext == nil {
 			break
@@ -7971,6 +7962,7 @@ type CurrentUser {
   launchDarkly: LaunchDarklySettings!
   account: UserAccount!
   notifications: UserNotifications!
+  notificationPreferences: UserNotificationPreferences!
 }
 """
 UUIDs are represented using 36 ASCII characters, for example B0511859-ADE6-4A67-8969-16EC280C0E1A
@@ -9933,8 +9925,6 @@ type Query {
   @hasAnyRole(roles:[MINT_USER, MINT_MAC])
   mostRecentDiscussionRoleSelection: DiscussionRoleSelection
   @hasAnyRole(roles: [MINT_USER, MINT_MAC])
-  userNotificationPreferences: UserNotificationPreferences!
-  userNotifications:  UserNotifications!
 }
 
 enum ModelPlanFilter {
@@ -13264,6 +13254,96 @@ func (ec *executionContext) fieldContext_CurrentUser_notifications(ctx context.C
 				return ec.fieldContext_UserNotifications_unreadNotifications(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type UserNotifications", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _CurrentUser_notificationPreferences(ctx context.Context, field graphql.CollectedField, obj *models.CurrentUser) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_CurrentUser_notificationPreferences(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.CurrentUser().NotificationPreferences(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*models.UserNotificationPreferences)
+	fc.Result = res
+	return ec.marshalNUserNotificationPreferences2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐUserNotificationPreferences(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_CurrentUser_notificationPreferences(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "CurrentUser",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_UserNotificationPreferences_id(ctx, field)
+			case "userID":
+				return ec.fieldContext_UserNotificationPreferences_userID(ctx, field)
+			case "dailyDigestCompleteEmail":
+				return ec.fieldContext_UserNotificationPreferences_dailyDigestCompleteEmail(ctx, field)
+			case "dailyDigestCompleteInApp":
+				return ec.fieldContext_UserNotificationPreferences_dailyDigestCompleteInApp(ctx, field)
+			case "addedAsCollaboratorEmail":
+				return ec.fieldContext_UserNotificationPreferences_addedAsCollaboratorEmail(ctx, field)
+			case "addedAsCollaboratorInApp":
+				return ec.fieldContext_UserNotificationPreferences_addedAsCollaboratorInApp(ctx, field)
+			case "taggedInDiscussionEmail":
+				return ec.fieldContext_UserNotificationPreferences_taggedInDiscussionEmail(ctx, field)
+			case "taggedInDiscussionInApp":
+				return ec.fieldContext_UserNotificationPreferences_taggedInDiscussionInApp(ctx, field)
+			case "taggedInDiscussionReplyEmail":
+				return ec.fieldContext_UserNotificationPreferences_taggedInDiscussionReplyEmail(ctx, field)
+			case "taggedInDiscussionReplyInApp":
+				return ec.fieldContext_UserNotificationPreferences_taggedInDiscussionReplyInApp(ctx, field)
+			case "newDiscussionReplyEmail":
+				return ec.fieldContext_UserNotificationPreferences_newDiscussionReplyEmail(ctx, field)
+			case "newDiscussionReplyInApp":
+				return ec.fieldContext_UserNotificationPreferences_newDiscussionReplyInApp(ctx, field)
+			case "modelPlanSharedEmail":
+				return ec.fieldContext_UserNotificationPreferences_modelPlanSharedEmail(ctx, field)
+			case "modelPlanSharedInApp":
+				return ec.fieldContext_UserNotificationPreferences_modelPlanSharedInApp(ctx, field)
+			case "newPlanDiscussionEmail":
+				return ec.fieldContext_UserNotificationPreferences_newPlanDiscussionEmail(ctx, field)
+			case "newPlanDiscussionInApp":
+				return ec.fieldContext_UserNotificationPreferences_newPlanDiscussionInApp(ctx, field)
+			case "createdBy":
+				return ec.fieldContext_UserNotificationPreferences_createdBy(ctx, field)
+			case "createdByUserAccount":
+				return ec.fieldContext_UserNotificationPreferences_createdByUserAccount(ctx, field)
+			case "createdDts":
+				return ec.fieldContext_UserNotificationPreferences_createdDts(ctx, field)
+			case "modifiedBy":
+				return ec.fieldContext_UserNotificationPreferences_modifiedBy(ctx, field)
+			case "modifiedByUserAccount":
+				return ec.fieldContext_UserNotificationPreferences_modifiedByUserAccount(ctx, field)
+			case "modifiedDts":
+				return ec.fieldContext_UserNotificationPreferences_modifiedDts(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type UserNotificationPreferences", field.Name)
 		},
 	}
 	return fc, nil
@@ -50847,6 +50927,8 @@ func (ec *executionContext) fieldContext_Query_currentUser(ctx context.Context, 
 				return ec.fieldContext_CurrentUser_account(ctx, field)
 			case "notifications":
 				return ec.fieldContext_CurrentUser_notifications(ctx, field)
+			case "notificationPreferences":
+				return ec.fieldContext_CurrentUser_notificationPreferences(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type CurrentUser", field.Name)
 		},
@@ -53111,148 +53193,6 @@ func (ec *executionContext) fieldContext_Query_mostRecentDiscussionRoleSelection
 				return ec.fieldContext_DiscussionRoleSelection_userRoleDescription(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type DiscussionRoleSelection", field.Name)
-		},
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _Query_userNotificationPreferences(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Query_userNotificationPreferences(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Query().UserNotificationPreferences(rctx)
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(*models.UserNotificationPreferences)
-	fc.Result = res
-	return ec.marshalNUserNotificationPreferences2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐUserNotificationPreferences(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_Query_userNotificationPreferences(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "Query",
-		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			switch field.Name {
-			case "id":
-				return ec.fieldContext_UserNotificationPreferences_id(ctx, field)
-			case "userID":
-				return ec.fieldContext_UserNotificationPreferences_userID(ctx, field)
-			case "dailyDigestCompleteEmail":
-				return ec.fieldContext_UserNotificationPreferences_dailyDigestCompleteEmail(ctx, field)
-			case "dailyDigestCompleteInApp":
-				return ec.fieldContext_UserNotificationPreferences_dailyDigestCompleteInApp(ctx, field)
-			case "addedAsCollaboratorEmail":
-				return ec.fieldContext_UserNotificationPreferences_addedAsCollaboratorEmail(ctx, field)
-			case "addedAsCollaboratorInApp":
-				return ec.fieldContext_UserNotificationPreferences_addedAsCollaboratorInApp(ctx, field)
-			case "taggedInDiscussionEmail":
-				return ec.fieldContext_UserNotificationPreferences_taggedInDiscussionEmail(ctx, field)
-			case "taggedInDiscussionInApp":
-				return ec.fieldContext_UserNotificationPreferences_taggedInDiscussionInApp(ctx, field)
-			case "taggedInDiscussionReplyEmail":
-				return ec.fieldContext_UserNotificationPreferences_taggedInDiscussionReplyEmail(ctx, field)
-			case "taggedInDiscussionReplyInApp":
-				return ec.fieldContext_UserNotificationPreferences_taggedInDiscussionReplyInApp(ctx, field)
-			case "newDiscussionReplyEmail":
-				return ec.fieldContext_UserNotificationPreferences_newDiscussionReplyEmail(ctx, field)
-			case "newDiscussionReplyInApp":
-				return ec.fieldContext_UserNotificationPreferences_newDiscussionReplyInApp(ctx, field)
-			case "modelPlanSharedEmail":
-				return ec.fieldContext_UserNotificationPreferences_modelPlanSharedEmail(ctx, field)
-			case "modelPlanSharedInApp":
-				return ec.fieldContext_UserNotificationPreferences_modelPlanSharedInApp(ctx, field)
-			case "newPlanDiscussionEmail":
-				return ec.fieldContext_UserNotificationPreferences_newPlanDiscussionEmail(ctx, field)
-			case "newPlanDiscussionInApp":
-				return ec.fieldContext_UserNotificationPreferences_newPlanDiscussionInApp(ctx, field)
-			case "createdBy":
-				return ec.fieldContext_UserNotificationPreferences_createdBy(ctx, field)
-			case "createdByUserAccount":
-				return ec.fieldContext_UserNotificationPreferences_createdByUserAccount(ctx, field)
-			case "createdDts":
-				return ec.fieldContext_UserNotificationPreferences_createdDts(ctx, field)
-			case "modifiedBy":
-				return ec.fieldContext_UserNotificationPreferences_modifiedBy(ctx, field)
-			case "modifiedByUserAccount":
-				return ec.fieldContext_UserNotificationPreferences_modifiedByUserAccount(ctx, field)
-			case "modifiedDts":
-				return ec.fieldContext_UserNotificationPreferences_modifiedDts(ctx, field)
-			}
-			return nil, fmt.Errorf("no field named %q was found under type UserNotificationPreferences", field.Name)
-		},
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _Query_userNotifications(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Query_userNotifications(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Query().UserNotifications(rctx)
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(*notifications.UserNotifications)
-	fc.Result = res
-	return ec.marshalNUserNotifications2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋnotificationsᚐUserNotifications(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_Query_userNotifications(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "Query",
-		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			switch field.Name {
-			case "numUnreadNotifications":
-				return ec.fieldContext_UserNotifications_numUnreadNotifications(ctx, field)
-			case "notifications":
-				return ec.fieldContext_UserNotifications_notifications(ctx, field)
-			case "unreadNotifications":
-				return ec.fieldContext_UserNotifications_unreadNotifications(ctx, field)
-			}
-			return nil, fmt.Errorf("no field named %q was found under type UserNotifications", field.Name)
 		},
 	}
 	return fc, nil
@@ -60299,6 +60239,42 @@ func (ec *executionContext) _CurrentUser(ctx context.Context, sel ast.SelectionS
 					}
 				}()
 				res = ec._CurrentUser_notifications(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
+				return res
+			}
+
+			if field.Deferrable != nil {
+				dfs, ok := deferred[field.Deferrable.Label]
+				di := 0
+				if ok {
+					dfs.AddField(field)
+					di = len(dfs.Values) - 1
+				} else {
+					dfs = graphql.NewFieldSet([]graphql.CollectedField{field})
+					deferred[field.Deferrable.Label] = dfs
+				}
+				dfs.Concurrently(di, func(ctx context.Context) graphql.Marshaler {
+					return innerFunc(ctx, dfs)
+				})
+
+				// don't run the out.Concurrently() call below
+				out.Values[i] = graphql.Null
+				continue
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+		case "notificationPreferences":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._CurrentUser_notificationPreferences(ctx, field, obj)
 				if res == graphql.Null {
 					atomic.AddUint32(&fs.Invalids, 1)
 				}
@@ -68906,50 +68882,6 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 					}
 				}()
 				res = ec._Query_mostRecentDiscussionRoleSelection(ctx, field)
-				return res
-			}
-
-			rrm := func(ctx context.Context) graphql.Marshaler {
-				return ec.OperationContext.RootResolverMiddleware(ctx,
-					func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
-			}
-
-			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return rrm(innerCtx) })
-		case "userNotificationPreferences":
-			field := field
-
-			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
-				defer func() {
-					if r := recover(); r != nil {
-						ec.Error(ctx, ec.Recover(ctx, r))
-					}
-				}()
-				res = ec._Query_userNotificationPreferences(ctx, field)
-				if res == graphql.Null {
-					atomic.AddUint32(&fs.Invalids, 1)
-				}
-				return res
-			}
-
-			rrm := func(ctx context.Context) graphql.Marshaler {
-				return ec.OperationContext.RootResolverMiddleware(ctx,
-					func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
-			}
-
-			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return rrm(innerCtx) })
-		case "userNotifications":
-			field := field
-
-			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
-				defer func() {
-					if r := recover(); r != nil {
-						ec.Error(ctx, ec.Recover(ctx, r))
-					}
-				}()
-				res = ec._Query_userNotifications(ctx, field)
-				if res == graphql.Null {
-					atomic.AddUint32(&fs.Invalids, 1)
-				}
 				return res
 			}
 

@@ -41,6 +41,12 @@ func (r *currentUserResolver) Notifications(ctx context.Context, obj *models.Cur
 	return resolvers.CurrentUserNotificationsGet(ctx, r.store)
 }
 
+// NotificationPreferences is the resolver for the notificationPreferences field.
+func (r *currentUserResolver) NotificationPreferences(ctx context.Context, obj *models.CurrentUser) (*models.UserNotificationPreferences, error) {
+	princ := appcontext.Principal(ctx)
+	return resolvers.UserNotificationPreferencesGetByUserID(ctx, r.store, princ.Account().ID)
+}
+
 // Content is the resolver for the content field.
 func (r *discussionReplyResolver) Content(ctx context.Context, obj *models.DiscussionReply) (*models.TaggedContent, error) {
 	logger := appcontext.ZLogger(ctx)
@@ -1103,19 +1109,6 @@ func (r *queryResolver) MostRecentDiscussionRoleSelection(ctx context.Context) (
 	return resolvers.GetMostRecentDiscussionRoleSelection(logger, r.store, principal)
 }
 
-// UserNotificationPreferences is the resolver for the userNotificationPreferences field.
-func (r *queryResolver) UserNotificationPreferences(ctx context.Context) (*models.UserNotificationPreferences, error) {
-	principal := appcontext.Principal(ctx)
-
-	return resolvers.UserNotificationPreferencesGetByUserID(ctx, r.store, principal.Account().ID)
-}
-
-// UserNotifications is the resolver for the userNotifications field.
-func (r *queryResolver) UserNotifications(ctx context.Context) (*notifications.UserNotifications, error) {
-	principal := appcontext.Principal(ctx)
-	return notifications.UserNotificationCollectionGetByUser(ctx, r.store, principal)
-}
-
 // OnTaskListSectionLocksChanged is the resolver for the onTaskListSectionLocksChanged field.
 func (r *subscriptionResolver) OnTaskListSectionLocksChanged(ctx context.Context, modelPlanID uuid.UUID) (<-chan *model.TaskListSectionLockStatusChanged, error) {
 	principal := appcontext.Principal(ctx)
@@ -1280,3 +1273,19 @@ type subscriptionResolver struct{ *Resolver }
 type tagResolver struct{ *Resolver }
 type taggedContentResolver struct{ *Resolver }
 type userNotificationResolver struct{ *Resolver }
+
+// !!! WARNING !!!
+// The code below was going to be deleted when updating resolvers. It has been copied here so you have
+// one last chance to move it out of harms way if you want. There are two reasons this happens:
+//   - When renaming or deleting a resolver the old code will be put in here. You can safely delete
+//     it when you're done.
+//   - You have helper methods in this file. Move them out to keep these resolver files clean.
+func (r *queryResolver) UserNotificationPreferences(ctx context.Context) (*models.UserNotificationPreferences, error) {
+	principal := appcontext.Principal(ctx)
+
+	return resolvers.UserNotificationPreferencesGetByUserID(ctx, r.store, principal.Account().ID)
+}
+func (r *queryResolver) UserNotifications(ctx context.Context) (*notifications.UserNotifications, error) {
+	principal := appcontext.Principal(ctx)
+	return notifications.UserNotificationCollectionGetByUser(ctx, r.store, principal)
+}

@@ -15,6 +15,7 @@ type CurrentUser {
   launchDarkly: LaunchDarklySettings!
   account: UserAccount!
   notifications: UserNotifications!
+  notificationPreferences: UserNotificationPreferences!
 }
 """
 UUIDs are represented using 36 ASCII characters, for example B0511859-ADE6-4A67-8969-16EC280C0E1A
@@ -1977,8 +1978,6 @@ type Query {
   @hasAnyRole(roles:[MINT_USER, MINT_MAC])
   mostRecentDiscussionRoleSelection: DiscussionRoleSelection
   @hasAnyRole(roles: [MINT_USER, MINT_MAC])
-  userNotificationPreferences: UserNotificationPreferences!
-  userNotifications:  UserNotifications!
 }
 
 enum ModelPlanFilter {
