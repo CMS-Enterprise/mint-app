@@ -12,7 +12,7 @@ var userNotificationCreateSQL string
 //go:embed SQL/user_notification/collection_get_by_user_id.sql
 var userNotificationCollectionGetByUserIDSQL string
 
-// userNotificationMarkAsReadByIDSQL marks a userNotification object in the database as read. It requires that the user who owns the notification be the user who is modifiying the entry
+// userNotificationMarkAsReadByIDSQL marks a userNotification object in the database as read. It requires that the user who owns the notification be the user who is modifying the entry
 //
 //go:embed SQL/user_notification/mark_as_read_by_id.sql
 var userNotificationMarkAsReadByIDSQL string

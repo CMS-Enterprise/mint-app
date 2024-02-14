@@ -48,8 +48,8 @@ CREATE TABLE user_notification_preferences (
     id UUID PRIMARY KEY NOT NULL,
     user_id UUID NOT NULL REFERENCES user_account(id),
 
-    daily_digest_complete_email BOOLEAN NOT NULL DEFAULT TRUE
-    daily_digest_complete_in_app BOOLEAN NOT NULL DEFAULT TRUE
+    daily_digest_complete_email BOOLEAN NOT NULL DEFAULT TRUE,
+    daily_digest_complete_in_app BOOLEAN NOT NULL DEFAULT TRUE,
 
     added_as_collaborator_email BOOLEAN NOT NULL DEFAULT TRUE,
     added_as_collaborator_in_app BOOLEAN NOT NULL DEFAULT TRUE,
@@ -68,16 +68,6 @@ CREATE TABLE user_notification_preferences (
 
     new_plan_discussion_email BOOLEAN NOT NULL DEFAULT TRUE,
     new_plan_discussion_in_app BOOLEAN NOT NULL DEFAULT TRUE,
-
-
-    -- daily_digest_email BOOLEAN NOT NULL DEFAULT TRUE,
-    -- daily_digest_in_app BOOLEAN NOT NULL DEFAULT TRUE,
-
-    -- new_plan_discussion_email BOOLEAN NOT NULL DEFAULT TRUE,
-    -- new_plan_discussion_in_app BOOLEAN NOT NULL DEFAULT TRUE,
-
-    -- new_discussion_reply_email BOOLEAN NOT NULL DEFAULT TRUE,
-    -- new_discussion_reply_in_app BOOLEAN NOT NULL DEFAULT TRUE,
 
     --META DATA
     created_by UUID NOT NULL REFERENCES user_account(id),
