@@ -32,7 +32,8 @@ CREATE TABLE user_notification (
     activity_id UUID NOT NULL REFERENCES activity(id), --foreign key to user table
     user_id UUID NOT NULL REFERENCES user_account(id),
     is_read  BOOLEAN NOT NULL DEFAULT FALSE,
-    --TODO: EASI-3294 We might want to add more fields that distinguish events that are different from the parent activity (EG what specific model plans did a user follow at the time of a digest (it could change))
+    -- //TODO: EASI-3294 We might want to add more fields that distinguish events that are different from the parent activity (EG what specific model plans did a user follow at the time of a digest (it could change))
+    -- //TODO: EASI-3295 consider adding an archived column, so we always insert a record. If user has preferences not to receive a certain type of notification, just set archived to true.
 
 
     --META DATA
@@ -47,14 +48,36 @@ CREATE TABLE user_notification_preferences (
     id UUID PRIMARY KEY NOT NULL,
     user_id UUID NOT NULL REFERENCES user_account(id),
 
-    daily_digest_email BOOLEAN NOT NULL DEFAULT TRUE,
-    daily_digest_in_app BOOLEAN NOT NULL DEFAULT TRUE,
+    daily_digest_complete_email BOOLEAN NOT NULL DEFAULT TRUE
+    daily_digest_complete_in_app BOOLEAN NOT NULL DEFAULT TRUE
+
+    added_as_collaborator_email BOOLEAN NOT NULL DEFAULT TRUE,
+    added_as_collaborator_in_app BOOLEAN NOT NULL DEFAULT TRUE,
+
+    tagged_in_discussion_email BOOLEAN NOT NULL DEFAULT TRUE,
+    tagged_in_discussion_in_app BOOLEAN NOT NULL DEFAULT TRUE,
+
+    tagged_in_discussion_reply_email BOOLEAN NOT NULL DEFAULT TRUE,
+    tagged_in_discussion_reply_in_app BOOLEAN NOT NULL DEFAULT TRUE,
+
+    new_discussion_reply_email BOOLEAN NOT NULL DEFAULT TRUE,
+    new_discussion_reply_in_app BOOLEAN NOT NULL DEFAULT TRUE,
+
+    model_plan_shared_email BOOLEAN NOT NULL DEFAULT TRUE,
+    model_plan_shared_in_app BOOLEAN NOT NULL DEFAULT TRUE,
 
     new_plan_discussion_email BOOLEAN NOT NULL DEFAULT TRUE,
     new_plan_discussion_in_app BOOLEAN NOT NULL DEFAULT TRUE,
 
-    new_discussion_reply_email BOOLEAN NOT NULL DEFAULT TRUE,
-    new_discussion_reply_in_app BOOLEAN NOT NULL DEFAULT TRUE,
+
+    -- daily_digest_email BOOLEAN NOT NULL DEFAULT TRUE,
+    -- daily_digest_in_app BOOLEAN NOT NULL DEFAULT TRUE,
+
+    -- new_plan_discussion_email BOOLEAN NOT NULL DEFAULT TRUE,
+    -- new_plan_discussion_in_app BOOLEAN NOT NULL DEFAULT TRUE,
+
+    -- new_discussion_reply_email BOOLEAN NOT NULL DEFAULT TRUE,
+    -- new_discussion_reply_in_app BOOLEAN NOT NULL DEFAULT TRUE,
 
     --META DATA
     created_by UUID NOT NULL REFERENCES user_account(id),

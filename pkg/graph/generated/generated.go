@@ -1059,20 +1059,28 @@ type ComplexityRoot struct {
 	}
 
 	UserNotificationPreferences struct {
-		CreatedBy               func(childComplexity int) int
-		CreatedByUserAccount    func(childComplexity int) int
-		CreatedDts              func(childComplexity int) int
-		DailyDigestEmail        func(childComplexity int) int
-		DailyDigestInApp        func(childComplexity int) int
-		ID                      func(childComplexity int) int
-		ModifiedBy              func(childComplexity int) int
-		ModifiedByUserAccount   func(childComplexity int) int
-		ModifiedDts             func(childComplexity int) int
-		NewDiscussionReplyEmail func(childComplexity int) int
-		NewDiscussionReplyInApp func(childComplexity int) int
-		NewPlanDiscussionEmail  func(childComplexity int) int
-		NewPlanDiscussionInApp  func(childComplexity int) int
-		UserID                  func(childComplexity int) int
+		AddedAsCollaboratorEmail     func(childComplexity int) int
+		AddedAsCollaboratorInApp     func(childComplexity int) int
+		CreatedBy                    func(childComplexity int) int
+		CreatedByUserAccount         func(childComplexity int) int
+		CreatedDts                   func(childComplexity int) int
+		DailyDigestCompleteEmail     func(childComplexity int) int
+		DailyDigestCompleteInApp     func(childComplexity int) int
+		ID                           func(childComplexity int) int
+		ModelPlanSharedEmail         func(childComplexity int) int
+		ModelPlanSharedInApp         func(childComplexity int) int
+		ModifiedBy                   func(childComplexity int) int
+		ModifiedByUserAccount        func(childComplexity int) int
+		ModifiedDts                  func(childComplexity int) int
+		NewDiscussionReplyEmail      func(childComplexity int) int
+		NewDiscussionReplyInApp      func(childComplexity int) int
+		NewPlanDiscussionEmail       func(childComplexity int) int
+		NewPlanDiscussionInApp       func(childComplexity int) int
+		TaggedInDiscussionEmail      func(childComplexity int) int
+		TaggedInDiscussionInApp      func(childComplexity int) int
+		TaggedInDiscussionReplyEmail func(childComplexity int) int
+		TaggedInDiscussionReplyInApp func(childComplexity int) int
+		UserID                       func(childComplexity int) int
 	}
 
 	UserNotifications struct {
@@ -7624,6 +7632,20 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.UserNotification.UserID(childComplexity), true
 
+	case "UserNotificationPreferences.addedAsCollaboratorEmail":
+		if e.complexity.UserNotificationPreferences.AddedAsCollaboratorEmail == nil {
+			break
+		}
+
+		return e.complexity.UserNotificationPreferences.AddedAsCollaboratorEmail(childComplexity), true
+
+	case "UserNotificationPreferences.addedAsCollaboratorInApp":
+		if e.complexity.UserNotificationPreferences.AddedAsCollaboratorInApp == nil {
+			break
+		}
+
+		return e.complexity.UserNotificationPreferences.AddedAsCollaboratorInApp(childComplexity), true
+
 	case "UserNotificationPreferences.createdBy":
 		if e.complexity.UserNotificationPreferences.CreatedBy == nil {
 			break
@@ -7645,19 +7667,19 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.UserNotificationPreferences.CreatedDts(childComplexity), true
 
-	case "UserNotificationPreferences.dailyDigestEmail":
-		if e.complexity.UserNotificationPreferences.DailyDigestEmail == nil {
+	case "UserNotificationPreferences.dailyDigestCompleteEmail":
+		if e.complexity.UserNotificationPreferences.DailyDigestCompleteEmail == nil {
 			break
 		}
 
-		return e.complexity.UserNotificationPreferences.DailyDigestEmail(childComplexity), true
+		return e.complexity.UserNotificationPreferences.DailyDigestCompleteEmail(childComplexity), true
 
-	case "UserNotificationPreferences.dailyDigestInApp":
-		if e.complexity.UserNotificationPreferences.DailyDigestInApp == nil {
+	case "UserNotificationPreferences.dailyDigestCompleteInApp":
+		if e.complexity.UserNotificationPreferences.DailyDigestCompleteInApp == nil {
 			break
 		}
 
-		return e.complexity.UserNotificationPreferences.DailyDigestInApp(childComplexity), true
+		return e.complexity.UserNotificationPreferences.DailyDigestCompleteInApp(childComplexity), true
 
 	case "UserNotificationPreferences.id":
 		if e.complexity.UserNotificationPreferences.ID == nil {
@@ -7665,6 +7687,20 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.UserNotificationPreferences.ID(childComplexity), true
+
+	case "UserNotificationPreferences.modelPlanSharedEmail":
+		if e.complexity.UserNotificationPreferences.ModelPlanSharedEmail == nil {
+			break
+		}
+
+		return e.complexity.UserNotificationPreferences.ModelPlanSharedEmail(childComplexity), true
+
+	case "UserNotificationPreferences.modelPlanSharedInApp":
+		if e.complexity.UserNotificationPreferences.ModelPlanSharedInApp == nil {
+			break
+		}
+
+		return e.complexity.UserNotificationPreferences.ModelPlanSharedInApp(childComplexity), true
 
 	case "UserNotificationPreferences.modifiedBy":
 		if e.complexity.UserNotificationPreferences.ModifiedBy == nil {
@@ -7714,6 +7750,34 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.UserNotificationPreferences.NewPlanDiscussionInApp(childComplexity), true
+
+	case "UserNotificationPreferences.taggedInDiscussionEmail":
+		if e.complexity.UserNotificationPreferences.TaggedInDiscussionEmail == nil {
+			break
+		}
+
+		return e.complexity.UserNotificationPreferences.TaggedInDiscussionEmail(childComplexity), true
+
+	case "UserNotificationPreferences.taggedInDiscussionInApp":
+		if e.complexity.UserNotificationPreferences.TaggedInDiscussionInApp == nil {
+			break
+		}
+
+		return e.complexity.UserNotificationPreferences.TaggedInDiscussionInApp(childComplexity), true
+
+	case "UserNotificationPreferences.taggedInDiscussionReplyEmail":
+		if e.complexity.UserNotificationPreferences.TaggedInDiscussionReplyEmail == nil {
+			break
+		}
+
+		return e.complexity.UserNotificationPreferences.TaggedInDiscussionReplyEmail(childComplexity), true
+
+	case "UserNotificationPreferences.taggedInDiscussionReplyInApp":
+		if e.complexity.UserNotificationPreferences.TaggedInDiscussionReplyInApp == nil {
+			break
+		}
+
+		return e.complexity.UserNotificationPreferences.TaggedInDiscussionReplyInApp(childComplexity), true
 
 	case "UserNotificationPreferences.userID":
 		if e.complexity.UserNotificationPreferences.UserID == nil {
@@ -9751,12 +9815,26 @@ type UserNotificationPreferences {
   id: UUID!
 	userID: UUID!
 
-  dailyDigestEmail: Boolean!
-  dailyDigestInApp: Boolean!
-  newPlanDiscussionEmail: Boolean!
-  newPlanDiscussionInApp: Boolean!
+  dailyDigestCompleteEmail: Boolean!
+  dailyDigestCompleteInApp: Boolean!
+
+  addedAsCollaboratorEmail: Boolean!
+  addedAsCollaboratorInApp: Boolean!
+
+  taggedInDiscussionEmail: Boolean!
+  taggedInDiscussionInApp: Boolean!
+
+  taggedInDiscussionReplyEmail: Boolean!
+  taggedInDiscussionReplyInApp: Boolean!
+
   newDiscussionReplyEmail: Boolean!
   newDiscussionReplyInApp: Boolean!
+
+  modelPlanSharedEmail: Boolean!
+  modelPlanSharedInApp: Boolean!
+
+  newPlanDiscussionEmail: Boolean! #TODO: EASI-3925 this is not explicitly requested
+  newPlanDiscussionInApp: Boolean!
 
 
   createdBy: UUID!
@@ -52921,18 +52999,34 @@ func (ec *executionContext) fieldContext_Query_userNotificationPreferences(ctx c
 				return ec.fieldContext_UserNotificationPreferences_id(ctx, field)
 			case "userID":
 				return ec.fieldContext_UserNotificationPreferences_userID(ctx, field)
-			case "dailyDigestEmail":
-				return ec.fieldContext_UserNotificationPreferences_dailyDigestEmail(ctx, field)
-			case "dailyDigestInApp":
-				return ec.fieldContext_UserNotificationPreferences_dailyDigestInApp(ctx, field)
-			case "newPlanDiscussionEmail":
-				return ec.fieldContext_UserNotificationPreferences_newPlanDiscussionEmail(ctx, field)
-			case "newPlanDiscussionInApp":
-				return ec.fieldContext_UserNotificationPreferences_newPlanDiscussionInApp(ctx, field)
+			case "dailyDigestCompleteEmail":
+				return ec.fieldContext_UserNotificationPreferences_dailyDigestCompleteEmail(ctx, field)
+			case "dailyDigestCompleteInApp":
+				return ec.fieldContext_UserNotificationPreferences_dailyDigestCompleteInApp(ctx, field)
+			case "addedAsCollaboratorEmail":
+				return ec.fieldContext_UserNotificationPreferences_addedAsCollaboratorEmail(ctx, field)
+			case "addedAsCollaboratorInApp":
+				return ec.fieldContext_UserNotificationPreferences_addedAsCollaboratorInApp(ctx, field)
+			case "taggedInDiscussionEmail":
+				return ec.fieldContext_UserNotificationPreferences_taggedInDiscussionEmail(ctx, field)
+			case "taggedInDiscussionInApp":
+				return ec.fieldContext_UserNotificationPreferences_taggedInDiscussionInApp(ctx, field)
+			case "taggedInDiscussionReplyEmail":
+				return ec.fieldContext_UserNotificationPreferences_taggedInDiscussionReplyEmail(ctx, field)
+			case "taggedInDiscussionReplyInApp":
+				return ec.fieldContext_UserNotificationPreferences_taggedInDiscussionReplyInApp(ctx, field)
 			case "newDiscussionReplyEmail":
 				return ec.fieldContext_UserNotificationPreferences_newDiscussionReplyEmail(ctx, field)
 			case "newDiscussionReplyInApp":
 				return ec.fieldContext_UserNotificationPreferences_newDiscussionReplyInApp(ctx, field)
+			case "modelPlanSharedEmail":
+				return ec.fieldContext_UserNotificationPreferences_modelPlanSharedEmail(ctx, field)
+			case "modelPlanSharedInApp":
+				return ec.fieldContext_UserNotificationPreferences_modelPlanSharedInApp(ctx, field)
+			case "newPlanDiscussionEmail":
+				return ec.fieldContext_UserNotificationPreferences_newPlanDiscussionEmail(ctx, field)
+			case "newPlanDiscussionInApp":
+				return ec.fieldContext_UserNotificationPreferences_newPlanDiscussionInApp(ctx, field)
 			case "createdBy":
 				return ec.fieldContext_UserNotificationPreferences_createdBy(ctx, field)
 			case "createdByUserAccount":
@@ -55940,8 +56034,8 @@ func (ec *executionContext) fieldContext_UserNotificationPreferences_userID(ctx 
 	return fc, nil
 }
 
-func (ec *executionContext) _UserNotificationPreferences_dailyDigestEmail(ctx context.Context, field graphql.CollectedField, obj *models.UserNotificationPreferences) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_UserNotificationPreferences_dailyDigestEmail(ctx, field)
+func (ec *executionContext) _UserNotificationPreferences_dailyDigestCompleteEmail(ctx context.Context, field graphql.CollectedField, obj *models.UserNotificationPreferences) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_UserNotificationPreferences_dailyDigestCompleteEmail(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -55954,7 +56048,7 @@ func (ec *executionContext) _UserNotificationPreferences_dailyDigestEmail(ctx co
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.DailyDigestEmail, nil
+		return obj.DailyDigestCompleteEmail, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -55971,7 +56065,7 @@ func (ec *executionContext) _UserNotificationPreferences_dailyDigestEmail(ctx co
 	return ec.marshalNBoolean2bool(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_UserNotificationPreferences_dailyDigestEmail(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_UserNotificationPreferences_dailyDigestCompleteEmail(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "UserNotificationPreferences",
 		Field:      field,
@@ -55984,8 +56078,8 @@ func (ec *executionContext) fieldContext_UserNotificationPreferences_dailyDigest
 	return fc, nil
 }
 
-func (ec *executionContext) _UserNotificationPreferences_dailyDigestInApp(ctx context.Context, field graphql.CollectedField, obj *models.UserNotificationPreferences) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_UserNotificationPreferences_dailyDigestInApp(ctx, field)
+func (ec *executionContext) _UserNotificationPreferences_dailyDigestCompleteInApp(ctx context.Context, field graphql.CollectedField, obj *models.UserNotificationPreferences) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_UserNotificationPreferences_dailyDigestCompleteInApp(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -55998,7 +56092,7 @@ func (ec *executionContext) _UserNotificationPreferences_dailyDigestInApp(ctx co
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.DailyDigestInApp, nil
+		return obj.DailyDigestCompleteInApp, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -56015,7 +56109,7 @@ func (ec *executionContext) _UserNotificationPreferences_dailyDigestInApp(ctx co
 	return ec.marshalNBoolean2bool(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_UserNotificationPreferences_dailyDigestInApp(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_UserNotificationPreferences_dailyDigestCompleteInApp(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "UserNotificationPreferences",
 		Field:      field,
@@ -56028,8 +56122,8 @@ func (ec *executionContext) fieldContext_UserNotificationPreferences_dailyDigest
 	return fc, nil
 }
 
-func (ec *executionContext) _UserNotificationPreferences_newPlanDiscussionEmail(ctx context.Context, field graphql.CollectedField, obj *models.UserNotificationPreferences) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_UserNotificationPreferences_newPlanDiscussionEmail(ctx, field)
+func (ec *executionContext) _UserNotificationPreferences_addedAsCollaboratorEmail(ctx context.Context, field graphql.CollectedField, obj *models.UserNotificationPreferences) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_UserNotificationPreferences_addedAsCollaboratorEmail(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -56042,7 +56136,7 @@ func (ec *executionContext) _UserNotificationPreferences_newPlanDiscussionEmail(
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.NewPlanDiscussionEmail, nil
+		return obj.AddedAsCollaboratorEmail, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -56059,7 +56153,7 @@ func (ec *executionContext) _UserNotificationPreferences_newPlanDiscussionEmail(
 	return ec.marshalNBoolean2bool(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_UserNotificationPreferences_newPlanDiscussionEmail(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_UserNotificationPreferences_addedAsCollaboratorEmail(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "UserNotificationPreferences",
 		Field:      field,
@@ -56072,8 +56166,8 @@ func (ec *executionContext) fieldContext_UserNotificationPreferences_newPlanDisc
 	return fc, nil
 }
 
-func (ec *executionContext) _UserNotificationPreferences_newPlanDiscussionInApp(ctx context.Context, field graphql.CollectedField, obj *models.UserNotificationPreferences) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_UserNotificationPreferences_newPlanDiscussionInApp(ctx, field)
+func (ec *executionContext) _UserNotificationPreferences_addedAsCollaboratorInApp(ctx context.Context, field graphql.CollectedField, obj *models.UserNotificationPreferences) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_UserNotificationPreferences_addedAsCollaboratorInApp(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -56086,7 +56180,7 @@ func (ec *executionContext) _UserNotificationPreferences_newPlanDiscussionInApp(
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.NewPlanDiscussionInApp, nil
+		return obj.AddedAsCollaboratorInApp, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -56103,7 +56197,183 @@ func (ec *executionContext) _UserNotificationPreferences_newPlanDiscussionInApp(
 	return ec.marshalNBoolean2bool(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_UserNotificationPreferences_newPlanDiscussionInApp(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_UserNotificationPreferences_addedAsCollaboratorInApp(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "UserNotificationPreferences",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Boolean does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _UserNotificationPreferences_taggedInDiscussionEmail(ctx context.Context, field graphql.CollectedField, obj *models.UserNotificationPreferences) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_UserNotificationPreferences_taggedInDiscussionEmail(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.TaggedInDiscussionEmail, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(bool)
+	fc.Result = res
+	return ec.marshalNBoolean2bool(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_UserNotificationPreferences_taggedInDiscussionEmail(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "UserNotificationPreferences",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Boolean does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _UserNotificationPreferences_taggedInDiscussionInApp(ctx context.Context, field graphql.CollectedField, obj *models.UserNotificationPreferences) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_UserNotificationPreferences_taggedInDiscussionInApp(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.TaggedInDiscussionInApp, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(bool)
+	fc.Result = res
+	return ec.marshalNBoolean2bool(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_UserNotificationPreferences_taggedInDiscussionInApp(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "UserNotificationPreferences",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Boolean does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _UserNotificationPreferences_taggedInDiscussionReplyEmail(ctx context.Context, field graphql.CollectedField, obj *models.UserNotificationPreferences) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_UserNotificationPreferences_taggedInDiscussionReplyEmail(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.TaggedInDiscussionReplyEmail, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(bool)
+	fc.Result = res
+	return ec.marshalNBoolean2bool(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_UserNotificationPreferences_taggedInDiscussionReplyEmail(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "UserNotificationPreferences",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Boolean does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _UserNotificationPreferences_taggedInDiscussionReplyInApp(ctx context.Context, field graphql.CollectedField, obj *models.UserNotificationPreferences) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_UserNotificationPreferences_taggedInDiscussionReplyInApp(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.TaggedInDiscussionReplyInApp, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(bool)
+	fc.Result = res
+	return ec.marshalNBoolean2bool(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_UserNotificationPreferences_taggedInDiscussionReplyInApp(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "UserNotificationPreferences",
 		Field:      field,
@@ -56192,6 +56462,182 @@ func (ec *executionContext) _UserNotificationPreferences_newDiscussionReplyInApp
 }
 
 func (ec *executionContext) fieldContext_UserNotificationPreferences_newDiscussionReplyInApp(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "UserNotificationPreferences",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Boolean does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _UserNotificationPreferences_modelPlanSharedEmail(ctx context.Context, field graphql.CollectedField, obj *models.UserNotificationPreferences) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_UserNotificationPreferences_modelPlanSharedEmail(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ModelPlanSharedEmail, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(bool)
+	fc.Result = res
+	return ec.marshalNBoolean2bool(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_UserNotificationPreferences_modelPlanSharedEmail(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "UserNotificationPreferences",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Boolean does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _UserNotificationPreferences_modelPlanSharedInApp(ctx context.Context, field graphql.CollectedField, obj *models.UserNotificationPreferences) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_UserNotificationPreferences_modelPlanSharedInApp(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ModelPlanSharedInApp, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(bool)
+	fc.Result = res
+	return ec.marshalNBoolean2bool(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_UserNotificationPreferences_modelPlanSharedInApp(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "UserNotificationPreferences",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Boolean does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _UserNotificationPreferences_newPlanDiscussionEmail(ctx context.Context, field graphql.CollectedField, obj *models.UserNotificationPreferences) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_UserNotificationPreferences_newPlanDiscussionEmail(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.NewPlanDiscussionEmail, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(bool)
+	fc.Result = res
+	return ec.marshalNBoolean2bool(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_UserNotificationPreferences_newPlanDiscussionEmail(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "UserNotificationPreferences",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Boolean does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _UserNotificationPreferences_newPlanDiscussionInApp(ctx context.Context, field graphql.CollectedField, obj *models.UserNotificationPreferences) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_UserNotificationPreferences_newPlanDiscussionInApp(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.NewPlanDiscussionInApp, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(bool)
+	fc.Result = res
+	return ec.marshalNBoolean2bool(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_UserNotificationPreferences_newPlanDiscussionInApp(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "UserNotificationPreferences",
 		Field:      field,
@@ -69177,23 +69623,43 @@ func (ec *executionContext) _UserNotificationPreferences(ctx context.Context, se
 			if out.Values[i] == graphql.Null {
 				atomic.AddUint32(&out.Invalids, 1)
 			}
-		case "dailyDigestEmail":
-			out.Values[i] = ec._UserNotificationPreferences_dailyDigestEmail(ctx, field, obj)
+		case "dailyDigestCompleteEmail":
+			out.Values[i] = ec._UserNotificationPreferences_dailyDigestCompleteEmail(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
 				atomic.AddUint32(&out.Invalids, 1)
 			}
-		case "dailyDigestInApp":
-			out.Values[i] = ec._UserNotificationPreferences_dailyDigestInApp(ctx, field, obj)
+		case "dailyDigestCompleteInApp":
+			out.Values[i] = ec._UserNotificationPreferences_dailyDigestCompleteInApp(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
 				atomic.AddUint32(&out.Invalids, 1)
 			}
-		case "newPlanDiscussionEmail":
-			out.Values[i] = ec._UserNotificationPreferences_newPlanDiscussionEmail(ctx, field, obj)
+		case "addedAsCollaboratorEmail":
+			out.Values[i] = ec._UserNotificationPreferences_addedAsCollaboratorEmail(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
 				atomic.AddUint32(&out.Invalids, 1)
 			}
-		case "newPlanDiscussionInApp":
-			out.Values[i] = ec._UserNotificationPreferences_newPlanDiscussionInApp(ctx, field, obj)
+		case "addedAsCollaboratorInApp":
+			out.Values[i] = ec._UserNotificationPreferences_addedAsCollaboratorInApp(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "taggedInDiscussionEmail":
+			out.Values[i] = ec._UserNotificationPreferences_taggedInDiscussionEmail(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "taggedInDiscussionInApp":
+			out.Values[i] = ec._UserNotificationPreferences_taggedInDiscussionInApp(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "taggedInDiscussionReplyEmail":
+			out.Values[i] = ec._UserNotificationPreferences_taggedInDiscussionReplyEmail(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "taggedInDiscussionReplyInApp":
+			out.Values[i] = ec._UserNotificationPreferences_taggedInDiscussionReplyInApp(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
 				atomic.AddUint32(&out.Invalids, 1)
 			}
@@ -69204,6 +69670,26 @@ func (ec *executionContext) _UserNotificationPreferences(ctx context.Context, se
 			}
 		case "newDiscussionReplyInApp":
 			out.Values[i] = ec._UserNotificationPreferences_newDiscussionReplyInApp(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "modelPlanSharedEmail":
+			out.Values[i] = ec._UserNotificationPreferences_modelPlanSharedEmail(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "modelPlanSharedInApp":
+			out.Values[i] = ec._UserNotificationPreferences_modelPlanSharedInApp(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "newPlanDiscussionEmail":
+			out.Values[i] = ec._UserNotificationPreferences_newPlanDiscussionEmail(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "newPlanDiscussionInApp":
+			out.Values[i] = ec._UserNotificationPreferences_newPlanDiscussionInApp(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
 				atomic.AddUint32(&out.Invalids, 1)
 			}

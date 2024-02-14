@@ -1873,12 +1873,26 @@ type UserNotificationPreferences {
   id: UUID!
 	userID: UUID!
 
-  dailyDigestEmail: Boolean!
-  dailyDigestInApp: Boolean!
-  newPlanDiscussionEmail: Boolean!
-  newPlanDiscussionInApp: Boolean!
+  dailyDigestCompleteEmail: Boolean!
+  dailyDigestCompleteInApp: Boolean!
+
+  addedAsCollaboratorEmail: Boolean!
+  addedAsCollaboratorInApp: Boolean!
+
+  taggedInDiscussionEmail: Boolean!
+  taggedInDiscussionInApp: Boolean!
+
+  taggedInDiscussionReplyEmail: Boolean!
+  taggedInDiscussionReplyInApp: Boolean!
+
   newDiscussionReplyEmail: Boolean!
   newDiscussionReplyInApp: Boolean!
+
+  modelPlanSharedEmail: Boolean!
+  modelPlanSharedInApp: Boolean!
+
+  newPlanDiscussionEmail: Boolean! #TODO: EASI-3925 this is not explicitly requested
+  newPlanDiscussionInApp: Boolean!
 
 
   createdBy: UUID!
