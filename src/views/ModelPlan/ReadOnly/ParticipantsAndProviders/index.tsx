@@ -1,20 +1,15 @@
 import React, { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
-import classNames from 'classnames';
 import {
   GetAllParticipantsAndProvidersQuery,
   useGetAllParticipantsAndProvidersQuery
 } from 'gql/gen/graphql';
 
 import usePlanTranslation from 'hooks/usePlanTranslation';
-import { getKeys } from 'types/translation';
 import { ModelInfoContext } from 'views/ModelInfoWrapper';
 import { NotFoundPartial } from 'views/NotFound';
 
-import ReadOnlySectionNew, {
-  isHiddenByParentCondition
-} from '../_components/ReadOnlySection/new';
-import SideBySideReadOnlySectionNew from '../_components/SideBySideReadOnlySection/new';
+import ReadOnlyBody from '../_components/Body';
 import TitleAndStatus from '../_components/TitleAndStatus';
 import { ReadOnlyProps } from '../ModelBasics';
 
@@ -70,70 +65,12 @@ const ReadOnlyParticipantsAndProviders = ({
         </p>
       )}
 
-      {/* Map through all the translation config questions */}
-      {getKeys(participantsAndProvidersConfig)
-        .filter(field => field !== 'status') // Don't render status(in progress/ready for review, etc) field
-        .map((field, index) => (
-          <div
-            key={field}
-            className={classNames({
-              'margin-top-4 padding-top-4 border-top-1px border-base-light':
-                !isViewingFilteredView &&
-                participantsAndProvidersConfig[field]?.pageStart // Add border if translation config contains property 'pageStart'
-            })}
-          >
-            {/* Checks if questions have config to be displayed side by side */}
-            {participantsAndProvidersConfig[field]?.adjacentPosition ===
-              'left' ||
-            participantsAndProvidersConfig[field]?.adjacentPosition ===
-              'right' ? (
-              <>
-                {participantsAndProvidersConfig[field]?.adjacentPosition ===
-                  'left' && (
-                  <SideBySideReadOnlySectionNew>
-                    <ReadOnlySectionNew
-                      config={participantsAndProvidersConfig[field]}
-                      values={allparticipantsAndProvidersData}
-                      namespace="participantsAndProviders"
-                      filteredView={filteredView}
-                    />
-
-                    {/* Checks if second question is condtional on the previous question before rendering */}
-                    {!isHiddenByParentCondition(
-                      participantsAndProvidersConfig[
-                        getKeys(participantsAndProvidersConfig)[index + 1]
-                      ],
-                      allparticipantsAndProvidersData
-                    ) && (
-                      <ReadOnlySectionNew
-                        config={
-                          participantsAndProvidersConfig[
-                            getKeys(participantsAndProvidersConfig)[index + 1]
-                          ]
-                        }
-                        values={allparticipantsAndProvidersData}
-                        namespace="participantsAndProviders"
-                        filteredView={filteredView}
-                      />
-                    )}
-                  </SideBySideReadOnlySectionNew>
-                )}
-              </>
-            ) : (
-              <>
-                {/* Don't render questions of type 'otherType' as they are rendered within ReadOnlySectionNew */}
-                {!participantsAndProvidersConfig[field]?.otherType && (
-                  <ReadOnlySectionNew
-                    config={participantsAndProvidersConfig[field]}
-                    values={allparticipantsAndProvidersData}
-                    namespace="participantsAndProviders"
-                    filteredView={filteredView}
-                  />
-                )}
-              </>
-            )}
-          </div>
-        ))}
+      <ReadOnlyBody
+        data={allparticipantsAndProvidersData}
+        config={participantsAndProvidersConfig}
+        isViewingFilteredView={isViewingFilteredView}
+        filteredView={filteredView}
+      />
     </div>
   );
 };

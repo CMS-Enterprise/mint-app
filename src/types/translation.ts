@@ -657,3 +657,12 @@ export type TranslationPlan = {
   payments: TranslationPayments;
   collaborators: TranslationCollaborators;
 };
+
+export type TranslationPlanSection =
+  | TranslationPlan['basics']
+  | TranslationPlan['beneficiaries']
+  | TranslationPlan['generalCharacteristics']
+  | TranslationPlan['participantsAndProviders']
+  | TranslationPlan['beneficiaries']
+  | TranslationPlan['opsEvalAndLearning']
+  | TranslationPlan['payments'];
