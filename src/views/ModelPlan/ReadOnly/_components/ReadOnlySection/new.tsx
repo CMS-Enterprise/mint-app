@@ -277,7 +277,9 @@ const ReadOnlySectionNew = <
       return (
         <p className="margin-y-0 font-body-md line-height-sans-4 text-pre-line">
           {!isEmpty(value) && config.options[value]}
-          {hasChildField && childField && <span> - {childField}</span>}
+          {hasChildField && childField && (
+            <span data-testid="other-entry"> - {childField}</span>
+          )}
           {(isEmpty(value) || (hasChildField && !childField)) && (
             <i className="text-base">
               {!isEmpty(value) && ' - '}
@@ -323,9 +325,7 @@ const ReadOnlySectionNew = <
               )}
             </li>
             {listOtherItems && (
-              <ul data-testid="other-entry">
-                {listOtherItems && renderListItemOthers(index)}
-              </ul>
+              <ul>{listOtherItems && renderListItemOthers(index)}</ul>
             )}
           </React.Fragment>
         ))}
