@@ -155,7 +155,7 @@ export type TranslationFieldPropertiesWithOptionsAndParent<
 
 export type TranslationConfigType<
   T extends keyof T | string,
-  C extends string | keyof C
+  C extends keyof C | string
 > =
   | TranslationFieldProperties
   | TranslationFieldPropertiesWithParent<T>
@@ -166,7 +166,7 @@ export type TranslationConfigType<
 // Type guard to check if config is of type TranslationFieldProperties
 export const isTranslationFieldProperties = <
   T extends keyof T | string,
-  C extends string | keyof C
+  C extends keyof C | string
 >(
   config: TranslationConfigType<T, C>
 ): config is TranslationFieldProperties => {
@@ -176,7 +176,7 @@ export const isTranslationFieldProperties = <
 // Type guard to check if config is of type TranslationFieldPropertiesWithParent
 export const isTranslationFieldPropertiesWithParent = <
   T extends keyof T | string,
-  C extends string | keyof C
+  C extends keyof C | string
 >(
   config: TranslationConfigType<T, C>
 ): config is TranslationFieldPropertiesWithParent<T> => {
@@ -186,7 +186,7 @@ export const isTranslationFieldPropertiesWithParent = <
 // Type guard to check if config is of type TranslationFieldPropertiesWithOptions
 export const isTranslationFieldPropertiesWithOptions = <
   T extends keyof T | string,
-  C extends string | keyof C
+  C extends keyof C | string
 >(
   config: TranslationConfigType<T, C>
 ): config is TranslationFieldPropertiesWithOptions<T> => {
@@ -196,7 +196,7 @@ export const isTranslationFieldPropertiesWithOptions = <
 // Type guard to check if config is of type TranslationFieldPropertiesWithOptions
 export const isTranslationFieldPropertiesWithOptionsAndChildren = <
   T extends keyof T | string,
-  C extends string | keyof C
+  C extends keyof C | string
 >(
   config: TranslationConfigType<T, C>
 ): config is TranslationFieldPropertiesWithOptionsAndChildren<T> => {
@@ -209,7 +209,7 @@ export const isTranslationFieldPropertiesWithOptionsAndChildren = <
 // Type guard to check if config is of type TranslationFieldPropertiesWithOptionsAndParent
 export const isTranslationFieldPropertiesWithOptionsAndParent = <
   T extends keyof T | string,
-  C extends string | keyof C
+  C extends keyof C | string
 >(
   config: TranslationConfigType<T, C>
 ): config is TranslationFieldPropertiesWithOptionsAndParent<T, C> => {
