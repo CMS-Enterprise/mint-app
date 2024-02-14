@@ -36,6 +36,7 @@ type UserNotificationPreferences struct {
 func NewUserNotificationPreferences(userID uuid.UUID) *UserNotificationPreferences {
 	return &UserNotificationPreferences{
 		baseStruct:               NewBaseStruct(userID),
+		UserID:                   userID,
 		DailyDigestCompleteEmail: true,
 		DailyDigestCompleteInApp: true,
 		NewPlanDiscussionEmail:   true,

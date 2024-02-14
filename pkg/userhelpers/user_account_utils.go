@@ -8,6 +8,7 @@ import (
 	"net/http"
 
 	"github.com/google/uuid"
+	"github.com/jmoiron/sqlx"
 
 	"github.com/cmsgov/mint-app/pkg/appcontext"
 	"github.com/cmsgov/mint-app/pkg/authentication"
@@ -70,11 +71,25 @@ func GetOrCreateUserAccount(ctx context.Context, np sqlutils.NamedPreparer, stor
 	userAccount.HasLoggedIn = hasLoggedIn
 
 	if userAccount.ID == uuid.Nil {
-		newAccount, newErr := store.UserAccountInsertByUsername(np, userAccount)
-		if newErr != nil {
-			return nil, newErr
+		createdAccount, err := sqlutils.WithTransaction[authentication.UserAccount](store, func(tx *sqlx.Tx) (*authentication.UserAccount, error) {
+			newAccount, newErr := store.UserAccountInsertByUsername(tx, userAccount)
+			if newErr != nil {
+				return nil, newErr
+			}
+			pref := models.NewUserNotificationPreferences(newAccount.ID)
+
+			_, preferencesErr := storage.UserNotificationPreferencesCreate(tx, pref)
+			if preferencesErr != nil {
+				return nil, preferencesErr
+			}
+			return newAccount, nil
+
+		})
+		if err != nil {
+			return nil, err
 		}
-		return newAccount, nil
+		return createdAccount, nil
+
 	}
 
 	updatedAccount, updateErr := store.UserAccountUpdateByUserName(np, userAccount)

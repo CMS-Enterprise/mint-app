@@ -16,6 +16,7 @@ import (
 	"github.com/cmsgov/mint-app/pkg/appconfig"
 	"github.com/cmsgov/mint-app/pkg/authentication"
 	"github.com/cmsgov/mint-app/pkg/models"
+	"github.com/cmsgov/mint-app/pkg/sqlutils"
 	"github.com/cmsgov/mint-app/pkg/testhelpers"
 )
 
@@ -101,7 +102,20 @@ func getTestPrincipal(store *Store, userName string) (*authentication.Applicatio
 		HasLoggedIn: true,
 	}
 
-	newAccount, newErr := store.UserAccountInsertByUsername(store, userAccount)
+	newAccount, newErr := sqlutils.WithTransaction[authentication.UserAccount](store, func(tx *sqlx.Tx) (*authentication.UserAccount, error) {
+		newAccount, newErr := store.UserAccountInsertByUsername(tx, userAccount)
+		if newErr != nil {
+			return nil, newErr
+		}
+		pref := models.NewUserNotificationPreferences(newAccount.ID)
+
+		_, preferencesErr := UserNotificationPreferencesCreate(tx, pref)
+		if preferencesErr != nil {
+			return nil, preferencesErr
+		}
+		return newAccount, nil
+
+	})
 	if newErr != nil {
 		return nil, newErr
 	}
