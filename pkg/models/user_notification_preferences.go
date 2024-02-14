@@ -35,13 +35,28 @@ type UserNotificationPreferences struct {
 // NewUserNotificationPreferences returns a New UserNotificationPreferences
 func NewUserNotificationPreferences(userID uuid.UUID) *UserNotificationPreferences {
 	return &UserNotificationPreferences{
-		baseStruct:               NewBaseStruct(userID),
-		UserID:                   userID,
+		baseStruct: NewBaseStruct(userID),
+		UserID:     userID,
+
 		DailyDigestCompleteEmail: true,
 		DailyDigestCompleteInApp: true,
-		NewPlanDiscussionEmail:   true,
-		NewPlanDiscussionInApp:   true,
-		NewDiscussionReplyEmail:  true,
-		NewDiscussionReplyInApp:  true,
+
+		AddedAsCollaboratorEmail: true,
+		AddedAsCollaboratorInApp: true,
+
+		TaggedInDiscussionEmail: true,
+		TaggedInDiscussionInApp: true,
+
+		TaggedInDiscussionReplyEmail: true,
+		TaggedInDiscussionReplyInApp: true,
+
+		NewDiscussionReplyEmail: true,
+		NewDiscussionReplyInApp: true,
+
+		ModelPlanSharedEmail: true,
+		ModelPlanSharedInApp: true,
+
+		NewPlanDiscussionEmail: true,
+		NewPlanDiscussionInApp: true,
 	}
 }
