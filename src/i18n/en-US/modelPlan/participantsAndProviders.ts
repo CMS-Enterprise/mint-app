@@ -72,8 +72,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     formType: 'textarea',
     parentRelation: {
       field: 'participants',
-      evaluation: [ParticipantsType.MEDICARE_PROVIDERS],
-      evaluationMethod: 'includes'
+      evaluation: [ParticipantsType.MEDICARE_PROVIDERS]
     },
     filterGroups: [
       ModelViewFilter.CBOSC,
@@ -92,8 +91,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     formType: 'textarea',
     parentRelation: {
       field: 'participants',
-      evaluation: [ParticipantsType.STATES],
-      evaluationMethod: 'includes'
+      evaluation: [ParticipantsType.STATES]
     },
     filterGroups: [
       ModelViewFilter.CBOSC,
@@ -112,8 +110,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     formType: 'textarea',
     parentRelation: {
       field: 'participants',
-      evaluation: [ParticipantsType.OTHER],
-      evaluationMethod: 'includes'
+      evaluation: [ParticipantsType.OTHER]
     },
     filterGroups: [
       ModelViewFilter.CBOSC,
@@ -320,8 +317,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     otherType: true,
     parentRelation: {
       field: 'selectionMethod',
-      evaluation: [ParticipantSelectionType.OTHER],
-      evaluationMethod: 'includes'
+      evaluation: [ParticipantSelectionType.OTHER]
     },
     filterGroups: [
       ModelViewFilter.CMMI,
@@ -589,8 +585,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     },
     parentRelation: {
       field: 'gainsharePayments',
-      evaluation: [Bool.true],
-      evaluationMethod: 'equals'
+      evaluation: [Bool.true]
     },
     adjacentPosition: 'right'
   },
@@ -615,8 +610,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     },
     parentRelation: {
       field: 'gainsharePayments',
-      evaluation: [Bool.true],
-      evaluationMethod: 'equals'
+      evaluation: [Bool.true]
     }
   },
   gainsharePaymentsEligibilityOther: {
@@ -905,8 +899,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     formType: 'textarea',
     parentRelation: {
       field: 'providerOverlap',
-      evaluation: [OverlapType.YES_NEED_POLICIES, OverlapType.YES_NO_ISSUES],
-      evaluationMethod: 'equals'
+      evaluation: [OverlapType.YES_NEED_POLICIES, OverlapType.YES_NO_ISSUES]
     },
     filterGroups: [ModelViewFilter.IDDOC, ModelViewFilter.PBG]
   },

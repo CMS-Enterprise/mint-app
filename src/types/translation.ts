@@ -103,7 +103,6 @@ type ParentRelation<T extends keyof T | string> = {
   parentRelation: {
     field: string; // Parent field name
     evaluation: T[]; // The parent evaluation can have multiple answers that render the same child element
-    evaluationMethod: 'includes' | 'equals'; // If the parent value is an array or a single value
   };
 };
 

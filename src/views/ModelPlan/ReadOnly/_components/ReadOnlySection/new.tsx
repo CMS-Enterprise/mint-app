@@ -116,7 +116,7 @@ export const isHiddenByParentCondition = <
 ): boolean => {
   if (isTranslationFieldPropertiesWithParent(config)) {
     // If parent value is an array, check if evaluation exists
-    if (config.parentRelation.evaluationMethod === 'includes') {
+    if (Array.isArray(values[config.parentRelation.field])) {
       if (
         !values[config.parentRelation.field]?.some((fieldValue: T) =>
           config.parentRelation.evaluation.includes(fieldValue)
