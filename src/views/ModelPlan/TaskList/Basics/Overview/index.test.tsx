@@ -16,6 +16,7 @@ const overviewMockData: GetOverviewType = {
   __typename: 'PlanBasics',
   id: '123',
   modelType: [ModelType.MANDATORY_NATIONAL],
+  modelTypeOther: 'Other model type',
   problem: 'My problem',
   goal: 'A goal',
   testInterventions: 'Intervention',

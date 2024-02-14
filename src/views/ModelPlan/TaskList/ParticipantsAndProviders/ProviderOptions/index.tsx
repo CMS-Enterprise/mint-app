@@ -157,7 +157,7 @@ export const ProviderOptions = () => {
   const initialValues: InitialValueType = {
     __typename: 'PlanParticipantsAndProviders',
     id: id ?? '',
-    providerAdditionFrequency: providerAdditionFrequency ?? null,
+    providerAdditionFrequency: providerAdditionFrequency ?? [],
     providerAdditionFrequencyContinually:
       providerAdditionFrequencyContinually ?? '',
     providerAdditionFrequencyOther: providerAdditionFrequencyOther ?? '',
@@ -168,7 +168,7 @@ export const ProviderOptions = () => {
     providerLeaveMethod: providerLeaveMethod ?? [],
     providerLeaveMethodOther: providerLeaveMethodOther ?? '',
     providerLeaveMethodNote: providerLeaveMethodNote ?? '',
-    providerRemovalFrequency: providerRemovalFrequency ?? null,
+    providerRemovalFrequency: providerRemovalFrequency ?? [],
     providerRemovalFrequencyContinually:
       providerRemovalFrequencyContinually ?? '',
     providerRemovalFrequencyOther: providerRemovalFrequencyOther ?? '',

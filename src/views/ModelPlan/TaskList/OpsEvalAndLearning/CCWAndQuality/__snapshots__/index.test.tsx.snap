@@ -365,14 +365,14 @@ exports[`Model Plan Ops Eval and Learning CCW and Qualtiy > matches snapshot 1`]
               class="usa-alert__text"
             >
               <span>
-                Changing your answer to this question may also affect your selections in the IT solutions and implementation status tracker.  
+                Changing your answer to this question may also affect your selections in the operational solutions and implementation status tracker.  
                 <button
                   class="usa-button usa-button usa-button--unstyled"
                   data-testid="button"
                   id="ops-eval-and-learning-data-needed-warning"
                   type="button"
                 >
-                  Go to IT solutions tracker.
+                  Go to operational solutions tracker.
                 </button>
               </span>
             </p>

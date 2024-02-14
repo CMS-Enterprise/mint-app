@@ -6,7 +6,7 @@ import { helpSolutions } from '../../solutionsMap';
 
 import About from '.';
 
-describe('IT Solutions About Components', () => {
+describe('Operational Solutions About Components', () => {
   it.each(helpSolutions)(
     `matches the snapshot`,
     async solutionAboutComponent => {

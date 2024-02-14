@@ -21,6 +21,7 @@ export default gql(/* GraphQL */ `
         payModelDifferentiation
       }
       operationalNeeds {
+        id
         modifiedDts
       }
     }

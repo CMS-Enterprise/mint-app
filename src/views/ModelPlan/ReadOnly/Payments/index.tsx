@@ -16,7 +16,8 @@ import { NotFoundPartial } from 'views/NotFound';
 import { checkGroupMap } from '../_components/FilterView/util';
 import ReadOnlySection, {
   formatListItems,
-  formatListOtherItems
+  formatListOtherItems,
+  formatListTooltips
 } from '../_components/ReadOnlySection';
 import SideBySideReadOnlySection from '../_components/SideBySideReadOnlySection';
 import TitleAndStatus from '../_components/TitleAndStatus';
@@ -174,9 +175,7 @@ const ReadOnlyPayments = ({
               fundingSource,
               allPaymentData
             )}
-            tooltips={fundingSource?.map((type): string =>
-              paymentsT(`fundingSource.optionsLabels.${type}`)
-            )}
+            tooltips={formatListTooltips(fundingSourceConfig, fundingSource)}
           />
         )}
 
@@ -204,9 +203,7 @@ const ReadOnlyPayments = ({
               fundingSourceR,
               allPaymentData
             )}
-            tooltips={fundingSourceR?.map((type): string =>
-              paymentsT(`fundingSourceR.optionsLabels.${type}`)
-            )}
+            tooltips={formatListTooltips(fundingSourceRConfig, fundingSourceR)}
           />
         )}
 

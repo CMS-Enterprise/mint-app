@@ -25,6 +25,7 @@ export default gql(/* GraphQL */ `
         payClaims
       }
       operationalNeeds {
+        id
         modifiedDts
       }
     }

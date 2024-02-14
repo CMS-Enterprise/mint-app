@@ -48,7 +48,9 @@ const performanceMock = [
           opsEvalAndLearning: performanceMockData,
           operationalNeeds: [
             {
-              modifiedDts: ''
+              __typename: 'OperationalNeed',
+              id: '424213',
+              modifiedDts: null
             }
           ]
         }

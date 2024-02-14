@@ -49,7 +49,9 @@ const opsEvalAndLearningMock = [
           opsEvalAndLearning: opsEvalAndLearningMockData,
           operationalNeeds: [
             {
-              modifiedDts: ''
+              __typename: 'OperationalNeed',
+              id: '424213',
+              modifiedDts: null
             }
           ]
         }

@@ -96,7 +96,7 @@ export const Communication = () => {
     need => need.modifiedDts
   );
 
-  // If redirected from IT Solutions, scrolls to the relevant question
+  // If redirected from Operational Solutions, scrolls to the relevant question
   useScrollElement(!loading);
 
   const [update] = useUpdatePlanParticipantsAndProvidersMutation();
@@ -151,7 +151,7 @@ export const Communication = () => {
     communicationMethod: communicationMethod ?? [],
     communicationMethodOther: communicationMethodOther ?? '',
     communicationNote: communicationNote ?? '',
-    riskType: riskType ?? null,
+    riskType: riskType ?? [],
     riskOther: riskOther ?? '',
     riskNote: riskNote ?? '',
     willRiskChange: willRiskChange ?? null,

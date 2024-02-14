@@ -140,9 +140,9 @@ exports[`ModelSolutionDesign > matches the snapshot 1`] = `
                   >
                     <a
                       class="display-flex flex-align-center"
-                      href="#identify-the-it-solutions-for-the-model’s-operational-needs"
+                      href="#identify-the-solutions-for-the-model’s-operational-needs"
                     >
-                      Identify the IT solutions for the model’s operational needs
+                      Identify the solutions for the model’s operational needs
                       <svg
                         class="usa-icon"
                         focusable="false"
@@ -381,9 +381,9 @@ exports[`ModelSolutionDesign > matches the snapshot 1`] = `
         </ol>
         <h2
           class="margin-top-7 margin-bottom-2"
-          id="identify-the-it-solutions-for-the-model’s-operational-needs"
+          id="identify-the-solutions-for-the-model’s-operational-needs"
         >
-          3.   Identify the IT solutions for the model’s operational needs
+          3.   Identify the solutions for the model’s operational needs
         </h2>
         <h3
           class="margin-top-3 margin-bottom-1"
@@ -444,7 +444,7 @@ exports[`ModelSolutionDesign > matches the snapshot 1`] = `
             <p
               class="margin-top-105"
             >
-              The model team should keep their Model Plan as up to date as possible, especially date related changes. As they answer questions within the Model Plan, operational needs are identified within the IT solutions and implementation status tracker. 
+              The model team should keep their Model Plan as up to date as possible, especially date related changes. As they answer questions within the Model Plan, operational needs are identified within the operational solutions and implementation status tracker. 
             </p>
           </li>
           <li
@@ -454,12 +454,12 @@ exports[`ModelSolutionDesign > matches the snapshot 1`] = `
               class="usa-process-list__heading font-body-sm"
               data-testid="processListHeading"
             >
-              Select the necessary IT solutions for the model’s operational needs
+              Select the necessary solutions for the model’s operational needs
             </h5>
             <p
               class="margin-top-105"
             >
-              Within the IT solutions and implementation status tracker, the Model Lead and IT Lead will work together to select the IT solutions the model keeping the milestones in mind.
+              Within the operational solutions and implementation status tracker, the Model Lead and IT Lead will work together to select the operational solutions the model will use, keeping the milestones in mind.
             </p>
           </li>
           <li

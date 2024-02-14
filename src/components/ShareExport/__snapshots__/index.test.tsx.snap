@@ -967,6 +967,11 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
+                      name
+                    </li>
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
                       Other
                     </li>
                     <ul
@@ -3513,6 +3518,25 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     </ul>
                   </ul>
                 </div>
+                <div
+                  class="desktop:grid-col-12"
+                  data-testid="grid"
+                >
+                  <div
+                    class="read-only-section read-only-section--notes margin-bottom-3"
+                  >
+                    <p
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                    >
+                      Notes
+                    </p>
+                    <p
+                      class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                    >
+                      Precedence note
+                    </p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -4455,12 +4479,12 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                 data-testid="grid"
               >
                 <div
-                  class="read-only-section read-only-section--will-you-make-risk-adjustments-to-payments margin-bottom-3"
+                  class="read-only-section read-only-section--notes margin-bottom-3"
                 >
                   <p
                     class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
                   >
-                    Will you make risk adjustments to payments?
+                    Notes
                   </p>
                   <p
                     class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
@@ -4580,12 +4604,12 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                 data-testid="grid"
               >
                 <div
-                  class="read-only-section read-only-section--will-participants-be-able-to-appeal-payments margin-bottom-3"
+                  class="read-only-section read-only-section--notes margin-bottom-3"
                 >
                   <p
                     class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
                   >
-                    Will participants be able to appeal payments?
+                    Notes
                   </p>
                   <p
                     class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
@@ -7871,6 +7895,11 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
+                      name
+                    </li>
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
                       Other
                     </li>
                     <ul
@@ -10417,6 +10446,25 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                     </ul>
                   </ul>
                 </div>
+                <div
+                  class="desktop:grid-col-12"
+                  data-testid="grid"
+                >
+                  <div
+                    class="read-only-section read-only-section--notes margin-bottom-3"
+                  >
+                    <p
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                    >
+                      Notes
+                    </p>
+                    <p
+                      class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                    >
+                      Precedence note
+                    </p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -11359,12 +11407,12 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                 data-testid="grid"
               >
                 <div
-                  class="read-only-section read-only-section--will-you-make-risk-adjustments-to-payments margin-bottom-3"
+                  class="read-only-section read-only-section--notes margin-bottom-3"
                 >
                   <p
                     class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
                   >
-                    Will you make risk adjustments to payments?
+                    Notes
                   </p>
                   <p
                     class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
@@ -11484,12 +11532,12 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                 data-testid="grid"
               >
                 <div
-                  class="read-only-section read-only-section--will-participants-be-able-to-appeal-payments margin-bottom-3"
+                  class="read-only-section read-only-section--notes margin-bottom-3"
                 >
                   <p
                     class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
                   >
-                    Will participants be able to appeal payments?
+                    Notes
                   </p>
                   <p
                     class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"

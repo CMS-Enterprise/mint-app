@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`IT Solutions NeedQuestionAndAnswer > matches snapshot 1`] = `
+exports[`Operational Solutions NeedQuestionAndAnswer > matches snapshot 1`] = `
 <DocumentFragment>
   <nav
     aria-label="Breadcrumbs"
@@ -41,7 +41,7 @@ exports[`IT Solutions NeedQuestionAndAnswer > matches snapshot 1`] = `
           href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/task-list/it-solutions"
         >
           <span>
-            IT solutions tracker
+            Operational solutions tracker
           </span>
         </a>
       </li>

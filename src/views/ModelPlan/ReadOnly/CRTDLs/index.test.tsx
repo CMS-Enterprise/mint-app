@@ -84,7 +84,7 @@ describe('Read Only CR and TDLs page', () => {
     );
 
     await waitFor(() => {
-      expect(screen.getByText('CR and TDLs')).toBeInTheDocument();
+      expect(screen.getByText('FFS CRs and TDLs')).toBeInTheDocument();
       expect(screen.getByTestId('cr-tdl-table-cr')).toBeInTheDocument();
       expect(screen.queryAllByText('Edit')[0].closest('a')).toHaveAttribute(
         'href',
@@ -110,7 +110,7 @@ describe('Read Only CR and TDLs page', () => {
       </MemoryRouter>
     );
     await waitFor(() => {
-      expect(screen.getByText('CR and TDLs')).toBeInTheDocument();
+      expect(screen.getByText('FFS CRs and TDLs')).toBeInTheDocument();
       expect(screen.getByTestId('cr-tdl-table-cr')).toBeInTheDocument();
       expect(screen.queryAllByText('Edit')[0].closest('a')).toHaveAttribute(
         'href',

@@ -25,6 +25,7 @@ export interface GetParticipantOptions_modelPlan_participantsAndProviders {
 
 export interface GetParticipantOptions_modelPlan_operationalNeeds {
   __typename: "OperationalNeed";
+  id: UUID;
   modifiedDts: Time | null;
 }
 

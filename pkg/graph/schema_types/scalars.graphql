@@ -14,11 +14,6 @@ Maps an arbitrary GraphQL value to a map[string]interface{} Go type.
 scalar Map
 
 """
-Any represents any GraphQL value.
-"""
-scalar Any
-
-"""
 TaggedHTML represents an input type for HTML that could also include tags that reference another entity
 """
 scalar TaggedHTML

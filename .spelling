@@ -221,8 +221,6 @@ Performant
 serializable
 OpenSearch
 Opensearch
-OpensearchProject
-OpenSearch-Dashboards
 mint-logstash
 Logstash
 audit.change_table
@@ -241,3 +239,7 @@ textarea
 PoC
 ToastUI
 hacky
+EASI-3294
+genericized
+notifications_poc
+bugfix
