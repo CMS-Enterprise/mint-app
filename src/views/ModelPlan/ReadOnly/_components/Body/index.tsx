@@ -3,7 +3,7 @@ import classNames from 'classnames';
 
 import { getKeys, TranslationPlanSection } from 'types/translation';
 
-import { filterGroups } from '../FilterView/BodyContent/_filterGroupMapping';
+import { filterGroupKey } from '../FilterView/BodyContent/_filterGroupMapping';
 import ReadOnlySectionNew, {
   isHiddenByParentCondition
 } from '../ReadOnlySection/new';
@@ -18,7 +18,7 @@ const ReadOnlyBody = ({
   data: any;
   config: TranslationPlanSection;
   isViewingFilteredView?: boolean;
-  filteredView?: typeof filterGroups[number];
+  filteredView?: keyof typeof filterGroupKey;
 }) => {
   return (
     <>
