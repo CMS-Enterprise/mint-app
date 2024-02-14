@@ -2080,33 +2080,25 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     >
                       Medicaid providers
                     </li>
-                    <ul
-                      data-testid="other-entry"
-                    />
+                    <ul />
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
                       States
                     </li>
-                    <ul
-                      data-testid="other-entry"
-                    />
+                    <ul />
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
                       State Medicaid agencies
                     </li>
-                    <ul
-                      data-testid="other-entry"
-                    />
+                    <ul />
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
                       Other
                     </li>
-                    <ul
-                      data-testid="other-entry"
-                    />
+                    <ul />
                   </ul>
                 </div>
                 <div
@@ -2449,17 +2441,13 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     >
                       Use an application review and scoring tool
                     </li>
-                    <ul
-                      data-testid="other-entry"
-                    />
+                    <ul />
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
                       Another CMS component or process will provide support
                     </li>
-                    <ul
-                      data-testid="other-entry"
-                    />
+                    <ul />
                   </ul>
                 </div>
               </div>
@@ -2513,9 +2501,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     >
                       Continually
                     </li>
-                    <ul
-                      data-testid="other-entry"
-                    >
+                    <ul>
                       <li
                         class="font-sans-md line-height-sans-4"
                       >
@@ -2578,9 +2564,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     >
                       Other
                     </li>
-                    <ul
-                      data-testid="other-entry"
-                    >
+                    <ul>
                       <li
                         class="font-sans-md line-height-sans-4"
                       >
@@ -2643,17 +2627,13 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     >
                       Manage ongoing communications with participants using an IT tool
                     </li>
-                    <ul
-                      data-testid="other-entry"
-                    />
+                    <ul />
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
                       Send mass emails to new participants
                     </li>
-                    <ul
-                      data-testid="other-entry"
-                    />
+                    <ul />
                   </ul>
                 </div>
               </div>
@@ -2707,9 +2687,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     >
                       Capitation
                     </li>
-                    <ul
-                      data-testid="other-entry"
-                    />
+                    <ul />
                   </ul>
                 </div>
               </div>
@@ -2915,9 +2893,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     >
                       Other
                     </li>
-                    <ul
-                      data-testid="other-entry"
-                    >
+                    <ul>
                       <li
                         class="font-sans-md line-height-sans-4"
                       >
@@ -2977,9 +2953,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     >
                       CCNs
                     </li>
-                    <ul
-                      data-testid="other-entry"
-                    />
+                    <ul />
                   </ul>
                 </div>
               </div>
@@ -3033,9 +3007,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     >
                       Other
                     </li>
-                    <ul
-                      data-testid="other-entry"
-                    >
+                    <ul>
                       <li
                         class="font-sans-md line-height-sans-4"
                       >
@@ -3098,9 +3070,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     >
                       Add retrospectively (once an interaction happens this year)
                     </li>
-                    <ul
-                      data-testid="other-entry"
-                    />
+                    <ul />
                   </ul>
                 </div>
               </div>
@@ -3154,9 +3124,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     >
                       Not applicable
                     </li>
-                    <ul
-                      data-testid="other-entry"
-                    />
+                    <ul />
                   </ul>
                 </div>
               </div>
@@ -3210,9 +3178,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     >
                       Continually
                     </li>
-                    <ul
-                      data-testid="other-entry"
-                    >
+                    <ul>
                       <li
                         class="font-sans-md line-height-sans-4"
                       >
@@ -9321,33 +9287,25 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                     >
                       Medicaid providers
                     </li>
-                    <ul
-                      data-testid="other-entry"
-                    />
+                    <ul />
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
                       States
                     </li>
-                    <ul
-                      data-testid="other-entry"
-                    />
+                    <ul />
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
                       State Medicaid agencies
                     </li>
-                    <ul
-                      data-testid="other-entry"
-                    />
+                    <ul />
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
                       Other
                     </li>
-                    <ul
-                      data-testid="other-entry"
-                    />
+                    <ul />
                   </ul>
                 </div>
                 <div
@@ -9690,17 +9648,13 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                     >
                       Use an application review and scoring tool
                     </li>
-                    <ul
-                      data-testid="other-entry"
-                    />
+                    <ul />
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
                       Another CMS component or process will provide support
                     </li>
-                    <ul
-                      data-testid="other-entry"
-                    />
+                    <ul />
                   </ul>
                 </div>
               </div>
@@ -9754,9 +9708,7 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                     >
                       Continually
                     </li>
-                    <ul
-                      data-testid="other-entry"
-                    >
+                    <ul>
                       <li
                         class="font-sans-md line-height-sans-4"
                       >
@@ -9819,9 +9771,7 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                     >
                       Other
                     </li>
-                    <ul
-                      data-testid="other-entry"
-                    >
+                    <ul>
                       <li
                         class="font-sans-md line-height-sans-4"
                       >
@@ -9884,17 +9834,13 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                     >
                       Manage ongoing communications with participants using an IT tool
                     </li>
-                    <ul
-                      data-testid="other-entry"
-                    />
+                    <ul />
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
                       Send mass emails to new participants
                     </li>
-                    <ul
-                      data-testid="other-entry"
-                    />
+                    <ul />
                   </ul>
                 </div>
               </div>
@@ -9948,9 +9894,7 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                     >
                       Capitation
                     </li>
-                    <ul
-                      data-testid="other-entry"
-                    />
+                    <ul />
                   </ul>
                 </div>
               </div>
@@ -10156,9 +10100,7 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                     >
                       Other
                     </li>
-                    <ul
-                      data-testid="other-entry"
-                    >
+                    <ul>
                       <li
                         class="font-sans-md line-height-sans-4"
                       >
@@ -10218,9 +10160,7 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                     >
                       CCNs
                     </li>
-                    <ul
-                      data-testid="other-entry"
-                    />
+                    <ul />
                   </ul>
                 </div>
               </div>
@@ -10274,9 +10214,7 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                     >
                       Other
                     </li>
-                    <ul
-                      data-testid="other-entry"
-                    >
+                    <ul>
                       <li
                         class="font-sans-md line-height-sans-4"
                       >
@@ -10339,9 +10277,7 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                     >
                       Add retrospectively (once an interaction happens this year)
                     </li>
-                    <ul
-                      data-testid="other-entry"
-                    />
+                    <ul />
                   </ul>
                 </div>
               </div>
@@ -10395,9 +10331,7 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                     >
                       Not applicable
                     </li>
-                    <ul
-                      data-testid="other-entry"
-                    />
+                    <ul />
                   </ul>
                 </div>
               </div>
@@ -10451,9 +10385,7 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                     >
                       Continually
                     </li>
-                    <ul
-                      data-testid="other-entry"
-                    >
+                    <ul>
                       <li
                         class="font-sans-md line-height-sans-4"
                       >
