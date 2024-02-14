@@ -66,7 +66,7 @@ const generalReadOnly = {
   questionNotApplicable_other:
     'There are {{count}} additional questions that are not applicable for this model based on the answers selected in the question above.',
   showOtherQuestions_one: 'Show other question',
-  showOtherQuestions_Other: 'Show other questions',
+  showOtherQuestions_other: 'Show other questions',
   hideOtherQuestions_one: 'Hide other question',
   hideOtherQuestions_other: 'Hide other questions'
 };
