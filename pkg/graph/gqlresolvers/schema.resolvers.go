@@ -1097,7 +1097,9 @@ func (r *queryResolver) MostRecentDiscussionRoleSelection(ctx context.Context) (
 
 // UserNotificationPreferences is the resolver for the userNotificationPreferences field.
 func (r *queryResolver) UserNotificationPreferences(ctx context.Context) (*models.UserNotificationPreferences, error) {
-	panic(fmt.Errorf("not implemented: UserNotificationPreferences - userNotificationPreferences"))
+	principal := appcontext.Principal(ctx)
+
+	return resolvers.UserNotificationPreferencesGetByUserID(ctx, r.store, principal.Account().ID)
 }
 
 // UserNotifications is the resolver for the userNotifications field.
