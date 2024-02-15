@@ -108,9 +108,9 @@ func CreatePlanDiscussion(
 
 		// send an email for each tag, which is unique compared to the mention
 		//TODO: EASI-3925, should we distinguish Replies vs discussions?
-		_, notifErr := notifications.ActivityTaggedUserInDiscussionCreate(ctx, store, principal.Account().ID, discussion.ID, discussion.Content) //TODO: EASI-3925 Consider passing the whole object?
-		if notifErr != nil {
-			return nil, fmt.Errorf("unable to generate notificatations")
+		_, notificationErr := notifications.ActivityTaggedUserInDiscussionCreate(ctx, store, principal.Account().ID, discussion.ID, discussion.Content) //TODO: EASI-3925 Consider passing the whole object?
+		if notificationErr != nil {
+			return nil, fmt.Errorf("unable to generate notifications, %w", notificationErr)
 		}
 		go func() {
 			err = sendPlanDiscussionTagEmails(
