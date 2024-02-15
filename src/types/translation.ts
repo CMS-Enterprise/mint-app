@@ -95,18 +95,18 @@ export type TranslationFieldProperties = {
   pageStart?: boolean; // Is the question the first question on a page - used for styling in ReadOnly
   readonlyHeader?: string; // Indicates if a header is required at the start of the question/section.  Normally used in conjunction with pageStart
   adjacentPosition?: 'left' | 'right'; // Should the questions be placed side by side in readonly
-  otherType?: boolean; // Is a question a followup to another that doesn't designate it's own readonly question/line
+  otherType?: boolean; // Is a question a followup to another that doesn't designate it's own readonly question/line,
 };
 
 /* 
   Extended type for questions that are conditionally rendered by a parent evaluation
   Takes in a enum/generic for Parent field to check for condition
 */
-type ParentRelation<T extends keyof T | string> = {
-  parentRelation: {
-    field: string; // Parent field name
-    evaluation: T[]; // The parent evaluation can have multiple answers that render the same child element
-  };
+type ParentRelation<
+  T extends keyof T | string,
+  C extends keyof C | string | void = void
+> = {
+  parentRelation: () => TranslationConfigType<T, C>;
 };
 
 /* 
@@ -114,8 +114,11 @@ type ParentRelation<T extends keyof T | string> = {
   Child relations only pertain to specific questions that remain hidden in readonly per Figma
   This does not include generic "Other" questions or single line followups, unless specifically stated
 */
-type ChildRelation<T extends keyof T | string> = {
-  childRelation: Partial<Record<T, string[]>>;
+type ChildRelation<
+  T extends keyof T | string,
+  C extends keyof C | string | void = void
+> = {
+  childRelation: Partial<Record<T, (() => TranslationConfigType<T, C>)[]>>;
 };
 
 /* 
@@ -133,15 +136,17 @@ type TranslationOptions<T extends keyof T | string> = {
   Takes in a enum/generic for translation key
 */
 type OptionsWithChildRelation<
-  T extends keyof T | string
-> = TranslationOptions<T> & ChildRelation<T>;
+  T extends keyof T | string,
+  C extends keyof C | string | void = void
+> = TranslationOptions<T> & ChildRelation<T, C>;
 
 /* 
   Apply/combine ParentRelation and TranslationFieldProperties to TranslationFieldPropertiesWithParent
 */
 export type TranslationFieldPropertiesWithParent<
-  T extends keyof T | string
-> = TranslationFieldProperties & ParentRelation<T>;
+  T extends keyof T | string,
+  C extends keyof C | string | void = void
+> = TranslationFieldProperties & ParentRelation<T, C>;
 
 /* 
   Apply/combine OptionsWithChildRelation and TranslationFieldProperties to TranslationFieldPropertiesWithOptions
@@ -155,8 +160,9 @@ export type TranslationFieldPropertiesWithOptions<
   Takes in a enum/generic for translation key
 */
 export type TranslationFieldPropertiesWithOptionsAndChildren<
-  T extends keyof T | string
-> = TranslationFieldProperties & OptionsWithChildRelation<T>;
+  T extends keyof T | string,
+  C extends keyof C | string | void = void
+> = TranslationFieldProperties & OptionsWithChildRelation<T, C>;
 
 /* 
   Extended type for questions that have options - boolean, radio, checkbox, etc.
@@ -165,20 +171,20 @@ export type TranslationFieldPropertiesWithOptionsAndChildren<
 */
 export type TranslationFieldPropertiesWithOptionsAndParent<
   T extends keyof T | string,
-  C extends keyof C | string
-> = TranslationFieldProperties & TranslationOptions<T> & ParentRelation<C>;
+  C extends keyof C | string | void = void
+> = TranslationFieldProperties & TranslationOptions<T> & ParentRelation<T, C>;
 
 /* 
   Union type for all translation types
 */
 export type TranslationConfigType<
   T extends keyof T | string,
-  C extends keyof C | string
+  C extends keyof C | string | void = void
 > =
   | TranslationFieldProperties
-  | TranslationFieldPropertiesWithParent<T>
+  | TranslationFieldPropertiesWithParent<T, C>
   | TranslationFieldPropertiesWithOptions<T>
-  | TranslationFieldPropertiesWithOptionsAndChildren<T>
+  | TranslationFieldPropertiesWithOptionsAndChildren<T, C>
   | TranslationFieldPropertiesWithOptionsAndParent<T, C>;
 
 /* 
@@ -186,7 +192,7 @@ export type TranslationConfigType<
 */
 export const isTranslationFieldProperties = <
   T extends keyof T | string,
-  C extends keyof C | string
+  C extends keyof C | string | void = void
 >(
   config: TranslationConfigType<T, C>
 ): config is TranslationFieldProperties => {
@@ -198,10 +204,10 @@ export const isTranslationFieldProperties = <
 */
 export const isTranslationFieldPropertiesWithParent = <
   T extends keyof T | string,
-  C extends keyof C | string
+  C extends keyof C | string | void = void
 >(
   config: TranslationConfigType<T, C>
-): config is TranslationFieldPropertiesWithParent<T> => {
+): config is TranslationFieldPropertiesWithParent<T, C> => {
   return Object.hasOwn(config, 'parentRelation');
 };
 
@@ -210,7 +216,7 @@ export const isTranslationFieldPropertiesWithParent = <
 */
 export const isTranslationFieldPropertiesWithOptions = <
   T extends keyof T | string,
-  C extends keyof C | string
+  C extends keyof C | string | void = void
 >(
   config: TranslationConfigType<T, C>
 ): config is TranslationFieldPropertiesWithOptions<T> => {
@@ -222,10 +228,10 @@ export const isTranslationFieldPropertiesWithOptions = <
 */
 export const isTranslationFieldPropertiesWithOptionsAndChildren = <
   T extends keyof T | string,
-  C extends keyof C | string
+  C extends keyof C | string | void = void
 >(
   config: TranslationConfigType<T, C>
-): config is TranslationFieldPropertiesWithOptionsAndChildren<T> => {
+): config is TranslationFieldPropertiesWithOptionsAndChildren<T, C> => {
   return (
     Object.hasOwn(config, 'childRelation') &&
     !Object.hasOwn(config, 'parentRelation')
@@ -237,7 +243,7 @@ export const isTranslationFieldPropertiesWithOptionsAndChildren = <
 */
 export const isTranslationFieldPropertiesWithOptionsAndParent = <
   T extends keyof T | string,
-  C extends keyof C | string
+  C extends keyof C | string | void = void
 >(
   config: TranslationConfigType<T, C>
 ): config is TranslationFieldPropertiesWithOptionsAndParent<T, C> => {
@@ -375,9 +381,9 @@ export type TranslationGeneralCharacteristics = {
 */
 export type TranslationParticipantsAndProviders = {
   participants: TranslationFieldPropertiesWithOptions<ParticipantsType>;
-  medicareProviderType: TranslationFieldPropertiesWithParent<ParticipantsType>;
-  statesEngagement: TranslationFieldPropertiesWithParent<ParticipantsType>;
-  participantsOther: TranslationFieldPropertiesWithParent<ParticipantsType>;
+  medicareProviderType: TranslationFieldProperties;
+  statesEngagement: TranslationFieldProperties;
+  participantsOther: TranslationFieldProperties;
   participantsNote: TranslationFieldProperties;
   participantsCurrentlyInModels: TranslationFieldPropertiesWithOptions<Bool>;
   participantsCurrentlyInModelsNote: TranslationFieldProperties;
@@ -412,7 +418,10 @@ export type TranslationParticipantsAndProviders = {
   // Coordination
   coordinateWork: TranslationFieldPropertiesWithOptions<Bool>;
   coordinateWorkNote: TranslationFieldProperties;
-  gainsharePayments: TranslationFieldPropertiesWithOptionsAndChildren<Bool>;
+  gainsharePayments: TranslationFieldPropertiesWithOptionsAndChildren<
+    Bool,
+    Bool
+  >;
   gainsharePaymentsTrack: TranslationFieldPropertiesWithOptionsAndParent<
     Bool,
     Bool
@@ -441,7 +450,10 @@ export type TranslationParticipantsAndProviders = {
   providerRemovalFrequencyContinually: TranslationFieldProperties;
   providerRemovalFrequencyOther: TranslationFieldProperties;
   providerRemovalFrequencyNote: TranslationFieldProperties;
-  providerOverlap: TranslationFieldPropertiesWithOptionsAndChildren<OverlapType>;
+  providerOverlap: TranslationFieldPropertiesWithOptionsAndChildren<
+    OverlapType,
+    OverlapType
+  >;
   providerOverlapHierarchy: TranslationFieldPropertiesWithParent<OverlapType>;
   providerOverlapNote: TranslationFieldProperties;
   status: TranslationFieldPropertiesWithOptions<TaskStatus>;

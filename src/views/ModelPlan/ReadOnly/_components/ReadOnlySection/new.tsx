@@ -1,7 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Grid, Icon } from '@trussworks/react-uswds';
-import i18next from 'i18next';
 
 import Alert from 'components/shared/Alert';
 import CollapsableLink from 'components/shared/CollapsableLink';
@@ -16,8 +15,7 @@ import {
   TranslationConfigType,
   TranslationFieldPropertiesWithOptions,
   TranslationFieldPropertiesWithOptionsAndChildren,
-  TranslationFieldPropertiesWithOptionsAndParent,
-  TranslationPlan
+  TranslationFieldPropertiesWithOptionsAndParent
 } from 'types/translation';
 
 import { filterGroupKey } from '../FilterView/BodyContent/_filterGroupMapping';
@@ -61,10 +59,9 @@ export const getRelatedUneededQuestions = <
 >(
   config:
     | TranslationFieldPropertiesWithOptions<T>
-    | TranslationFieldPropertiesWithOptionsAndChildren<T>
+    | TranslationFieldPropertiesWithOptionsAndChildren<T, C>
     | TranslationFieldPropertiesWithOptionsAndParent<T, C>, // Translation config
-  value: T[] | undefined, // field value/enum array,
-  translationKey: keyof TranslationPlan
+  value: T[] | undefined // field value/enum array,
 ): (string | null | undefined)[] | null => {
   if (!isTranslationFieldPropertiesWithOptionsAndChildren(config)) return null;
 
@@ -74,32 +71,29 @@ export const getRelatedUneededQuestions = <
   let unneededRelations: string[] = [];
   const neededRelations: string[] = [];
 
-  getKeys(config.childRelation)
-    // Check if question has conditional child questions
-    .filter(option => config.childRelation?.[option]?.length)
-    .forEach(option => {
-      // If the evaluation of the parent value triggers a child question, sort into appropriate arrays
-      if (
-        (Array.isArray(value) && !value?.includes(option as T)) ||
-        (!Array.isArray(value) &&
-          value !== undefined &&
-          String(value) !== option)
-      ) {
-        config.childRelation?.[option]?.forEach(childField => {
-          neededRelations.push(childField);
-        });
-      } else if (config.childRelation?.[option]?.length) {
-        unneededRelations = [
-          ...unneededRelations,
-          ...(config.childRelation?.[option] as [])
-        ];
-      }
-    });
+  getKeys(config.childRelation).forEach(option => {
+    // If the evaluation of the parent value triggers a child question, sort into appropriate arrays
+    if (
+      (Array.isArray(value) && !value?.includes(option as T)) ||
+      (!Array.isArray(value) && value !== undefined && String(value) !== option)
+    ) {
+      config.childRelation?.[option]?.forEach(childField => {
+        neededRelations.push(childField().label);
+      });
+    } else {
+      unneededRelations = [
+        ...unneededRelations,
+        ...(config.childRelation?.[option]?.map(
+          childField => childField().label
+        ) as [])
+      ];
+    }
+  });
 
   // Removes dupe relations and converts to translated string
   const uniqueQuestions = neededRelations
     .filter(relation => !unneededRelations.includes(relation))
-    .map(relation => i18next.t<string>(`${translationKey}:${relation}.label`));
+    .map(relation => relation);
 
   return [...new Set(uniqueQuestions)];
 };
@@ -116,22 +110,26 @@ export const isHiddenByParentCondition = <
 ): boolean => {
   if (isTranslationFieldPropertiesWithParent(config)) {
     // If parent value is an array, check if evaluation exists
-    if (Array.isArray(values[config.parentRelation.field])) {
+
+    const parentConfig = config.parentRelation() as TranslationFieldPropertiesWithOptionsAndChildren<
+      T,
+      C
+    >;
+
+    const parentValue: T = values[parentConfig.gqlField];
+
+    if (Array.isArray(parentValue)) {
       if (
-        !values[config.parentRelation.field]?.some((fieldValue: T) =>
-          config.parentRelation.evaluation.includes(fieldValue)
-        )
+        !values[parentConfig.gqlField]?.some((fieldValue: T) => {
+          return parentConfig.childRelation[fieldValue]?.includes(() => config);
+        })
       ) {
         return true;
       }
       return false;
     }
     // If parent value is a single value, check if evaluation exits
-    if (
-      !config.parentRelation.evaluation.includes(
-        values[config.parentRelation.field]?.toString()
-      )
-    ) {
+    if (!parentConfig.childRelation[parentValue]?.includes(() => config)) {
       return true;
     }
     return false;
@@ -164,7 +162,6 @@ export type ReadOnlySectionNewProps<
 > = {
   config: TranslationConfigType<T, C>;
   values: any;
-  namespace: keyof TranslationPlan;
   filteredView?: keyof typeof filterGroupKey;
 };
 
@@ -174,7 +171,6 @@ const ReadOnlySectionNew = <
 >({
   config,
   values,
-  namespace,
   filteredView
 }: ReadOnlySectionNewProps<T, C>): React.ReactElement | null => {
   const { t: miscellaneousT } = useTranslation('miscellaneous');
@@ -268,13 +264,13 @@ const ReadOnlySectionNew = <
       isTranslationFieldPropertiesWithOptions(config) &&
       config.formType === 'radio'
     ) {
-      const hasChildField = config.optionsRelatedInfo?.[value];
+      const hasChildField = config.optionsRelatedInfo?.[value as T];
 
       const childField = hasChildField ? values[hasChildField] : null;
 
       return (
         <p className="margin-y-0 font-body-md line-height-sans-4 text-pre-line">
-          {!isEmpty(value) && config.options[value]}
+          {!isEmpty(value) && config.options[value as T]}
           {hasChildField && childField && (
             <span data-testid="other-entry"> - {childField}</span>
           )}
@@ -333,7 +329,7 @@ const ReadOnlySectionNew = <
   }
 
   const relatedConditions = isTranslationFieldPropertiesWithOptions(config)
-    ? getRelatedUneededQuestions(config, value, namespace)
+    ? getRelatedUneededQuestions(config, value)
     : [];
 
   return (

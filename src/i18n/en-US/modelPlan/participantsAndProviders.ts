@@ -1,11 +1,6 @@
-import {
-  ModelViewFilter,
-  OverlapType,
-  ParticipantSelectionType,
-  ParticipantsType
-} from 'gql/gen/graphql';
+import { ModelViewFilter } from 'gql/gen/graphql';
 
-import { Bool, TranslationParticipantsAndProviders } from 'types/translation';
+import { TranslationParticipantsAndProviders } from 'types/translation';
 
 import { frequencyOptions } from './miscellaneous';
 
@@ -58,10 +53,6 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     label: 'Which type of Medicare providers/suppliers?',
     dataType: 'string',
     formType: 'textarea',
-    parentRelation: {
-      field: 'participants',
-      evaluation: [ParticipantsType.MEDICARE_PROVIDERS]
-    },
     filterGroups: [
       ModelViewFilter.CBOSC,
       ModelViewFilter.CMMI,
@@ -77,10 +68,6 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     label: 'Please describe how states will engage with your model.',
     dataType: 'string',
     formType: 'textarea',
-    parentRelation: {
-      field: 'participants',
-      evaluation: [ParticipantsType.STATES]
-    },
     filterGroups: [
       ModelViewFilter.CBOSC,
       ModelViewFilter.CMMI,
@@ -96,10 +83,6 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     label: 'Please describe the other participants engaging with this model',
     dataType: 'string',
     formType: 'textarea',
-    parentRelation: {
-      field: 'participants',
-      evaluation: [ParticipantsType.OTHER]
-    },
     filterGroups: [
       ModelViewFilter.CBOSC,
       ModelViewFilter.CMMI,
@@ -288,10 +271,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     dataType: 'string',
     formType: 'textarea',
     otherType: true,
-    parentRelation: {
-      field: 'selectionMethod',
-      evaluation: [ParticipantSelectionType.OTHER]
-    },
+    parentRelation: () => participantsAndProviders.selectionMethod,
     filterGroups: [
       ModelViewFilter.CMMI,
       ModelViewFilter.IDDOC,
@@ -525,7 +505,10 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
       false: 'No'
     },
     childRelation: {
-      true: ['gainsharePaymentsTrack', 'gainsharePaymentsEligibility']
+      true: [
+        () => participantsAndProviders.gainsharePaymentsTrack,
+        () => participantsAndProviders.gainsharePaymentsEligibility
+      ]
     },
     adjacentPosition: 'left'
   },
@@ -540,10 +523,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
       true: 'Yes',
       false: 'No'
     },
-    parentRelation: {
-      field: 'gainsharePayments',
-      evaluation: [Bool.true]
-    },
+    parentRelation: () => participantsAndProviders.gainsharePayments,
     adjacentPosition: 'right'
   },
   gainsharePaymentsEligibility: {
@@ -562,10 +542,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     optionsRelatedInfo: {
       OTHER: 'gainsharePaymentsEligibilityOther'
     },
-    parentRelation: {
-      field: 'gainsharePayments',
-      evaluation: [Bool.true]
-    }
+    parentRelation: () => participantsAndProviders.gainsharePayments
   },
   gainsharePaymentsEligibilityOther: {
     gqlField: 'gainsharePaymentsEligibilityOther',
@@ -814,8 +791,10 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
       NO: 'No'
     },
     childRelation: {
-      YES_NEED_POLICIES: ['providerOverlapHierarchy'],
-      YES_NO_ISSUES: ['providerOverlapHierarchy']
+      YES_NEED_POLICIES: [
+        () => participantsAndProviders.providerOverlapHierarchy
+      ],
+      YES_NO_ISSUES: [() => participantsAndProviders.providerOverlapHierarchy]
     },
     filterGroups: [ModelViewFilter.IDDOC, ModelViewFilter.PBG]
   },
@@ -827,10 +806,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
       'If model providers can be in multiple models that may interact, please note the desired hierarchy of how any payment changes or edits should be applied.',
     dataType: 'string',
     formType: 'textarea',
-    parentRelation: {
-      field: 'providerOverlap',
-      evaluation: [OverlapType.YES_NEED_POLICIES, OverlapType.YES_NO_ISSUES]
-    },
+    parentRelation: () => participantsAndProviders.providerOverlap,
     filterGroups: [ModelViewFilter.IDDOC, ModelViewFilter.PBG]
   },
   providerOverlapNote: {

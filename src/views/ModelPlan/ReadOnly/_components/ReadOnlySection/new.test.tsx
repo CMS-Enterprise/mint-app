@@ -5,7 +5,6 @@ import i18next from 'i18next';
 
 import { participantsAndProviders } from 'i18n/en-US/modelPlan/participantsAndProviders';
 import { payments } from 'i18n/en-US/modelPlan/payments';
-import { TranslationPlan } from 'types/translation';
 
 import ReadOnlySectionNew, {
   formatListItems,
@@ -17,7 +16,6 @@ import ReadOnlySectionNew, {
 
 const defaultProps = {
   config: participantsAndProviders.modelApplicationLevel,
-  namespace: 'participantsAndProviders' as keyof TranslationPlan,
   values: {
     providerOverlap: [OverlapType.NO],
     providerOverlapHierarchy: 'Overlap heirarchy',

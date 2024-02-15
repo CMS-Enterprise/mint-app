@@ -44,7 +44,6 @@ const ReadOnlyBody = ({
                     <ReadOnlySectionNew
                       config={config[field]}
                       values={data}
-                      namespace="participantsAndProviders"
                       filteredView={filteredView}
                     />
 
@@ -56,7 +55,6 @@ const ReadOnlyBody = ({
                       <ReadOnlySectionNew
                         config={config[getKeys(config)[index + 1]]}
                         values={data}
-                        namespace="participantsAndProviders"
                         filteredView={filteredView}
                       />
                     )}
@@ -70,7 +68,6 @@ const ReadOnlyBody = ({
                   <ReadOnlySectionNew
                     config={config[field]}
                     values={data}
-                    namespace="participantsAndProviders"
                     filteredView={filteredView}
                   />
                 )}
