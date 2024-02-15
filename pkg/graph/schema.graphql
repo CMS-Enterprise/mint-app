@@ -1786,7 +1786,7 @@ enum ActivityType {
 """
 AcitivyMetaData is a type that represents all the data that can be captured in an Activity
 """
-union ActivityMetaData = ActivityMetaBaseStruct | TaggedInPlanDiscussionActivityMeta | NewPlanDiscussionActivityMeta
+union ActivityMetaData = ActivityMetaBaseStruct | TaggedInPlanDiscussionActivityMeta  | TaggedInDiscussionReplyActivityMeta | NewPlanDiscussionActivityMeta
 
 type NewPlanDiscussionActivityMeta {
   version: Int!
@@ -1799,6 +1799,15 @@ type TaggedInPlanDiscussionActivityMeta {
   discussionID: UUID!
   content: String! # //TODO: EASI-3925 Should this be the tagged Content Type? That might be better.. 
 }
+
+type TaggedInDiscussionReplyActivityMeta {
+  version: Int!
+  type: ActivityType!
+  discussionID: UUID!
+  replyID: UUID!
+  content: String! # //TODO: EASI-3925 Should this be the tagged Content Type? That might be better.. 
+}
+
 
 type ActivityMetaBaseStruct {
   version: Int!

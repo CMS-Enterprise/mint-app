@@ -14,39 +14,41 @@ import (
 	"github.com/cmsgov/mint-app/pkg/storage"
 )
 
-// TaggedInPlanDiscussionActivityMeta represents the notification data that is relevant to being tagged in a new Plan Discussion
-type TaggedInPlanDiscussionActivityMeta struct {
+// TaggedInDiscussionReplyActivityMeta represents the notification data that is relevant to being tagged in a new Plan Discussion
+type TaggedInDiscussionReplyActivityMeta struct {
 	ActivityMetaBaseStruct
 	DiscussionID uuid.UUID `json:"discussionID" db:"discussion_id"` //TODO: EASI-2395 Note this is somewhat like a discussion relation, but in a different package
+	ReplyID      uuid.UUID `json:"replyID" db:"reply_id"`           //TODO: EASI-2395 Note this is somewhat like a discussion relation, but in a different package
 	Content      string
 }
 
 // newNewPlanDiscussionActivityMeta creates a New NewPlanDiscussionActivityMeta
-func newTaggedInPlanDiscussionActivityMeta(discussionID uuid.UUID, content string) *TaggedInPlanDiscussionActivityMeta {
+func newTaggedInDiscussionReplyActivityMeta(discussionID uuid.UUID, replyID uuid.UUID, content string) *TaggedInDiscussionReplyActivityMeta {
 	version := 0 //iterate this if this type ever updates
-	return &TaggedInPlanDiscussionActivityMeta{
+	return &TaggedInDiscussionReplyActivityMeta{
 		ActivityMetaBaseStruct: NewActivityMetaBaseStruct(ActivityNewPlanDiscussion, version),
 		DiscussionID:           discussionID,
+		ReplyID:                replyID,
 		Content:                content,
 	}
 
 }
 
-func newTaggedInPlanDiscussionActivity(actorID uuid.UUID, discussionID uuid.UUID, content string) *Activity {
+func newTaggedInDiscussionReplyActivity(actorID uuid.UUID, discussionID uuid.UUID, replyID uuid.UUID, content string) *Activity {
 	return &Activity{
 		baseStruct:   NewBaseStruct(actorID),
 		ActorID:      actorID,
 		EntityID:     discussionID,
-		ActivityType: ActivityTaggedInDiscussion,
-		MetaData:     newTaggedInPlanDiscussionActivityMeta(discussionID, content),
+		ActivityType: ActivityTaggedInDiscussionReply,
+		MetaData:     newTaggedInDiscussionReplyActivityMeta(discussionID, replyID, content),
 	}
 }
 
-// ActivityTaggedInDiscussionCreate creates an activity for when a User is Tagged in a Discussion.
+// ActivityTaggedInDiscussionReplyCreate creates an activity for when a User is Tagged in a Discussion Reply.
 // It also creates all the relevant notifications for every tag. Currently, only tagged users get a notification
-func ActivityTaggedInDiscussionCreate(ctx context.Context, np sqlutils.NamedPreparer, actorID uuid.UUID, discussionID uuid.UUID, discussionContent models.TaggedHTML) (*Activity, error) {
+func ActivityTaggedInDiscussionReplyCreate(ctx context.Context, np sqlutils.NamedPreparer, actorID uuid.UUID, discussionID uuid.UUID, replyID uuid.UUID, replyContent models.TaggedHTML) (*Activity, error) {
 
-	activity := newTaggedInPlanDiscussionActivity(actorID, discussionID, discussionContent.RawContent.String())
+	activity := newTaggedInDiscussionReplyActivity(actorID, discussionID, replyID, replyContent.RawContent.String())
 
 	retActivity, actErr := activityCreate(ctx, np, activity)
 	if actErr != nil {
@@ -54,7 +56,7 @@ func ActivityTaggedInDiscussionCreate(ctx context.Context, np sqlutils.NamedPrep
 	}
 	var errs []error
 	// TODO: EASI-3925 make a decision about error handling here. We don't really want notifications to cause a transaction to rollback.
-	for _, mention := range discussionContent.UniqueMentions() { // Get only unique mentions so we don't send multiple emails if someone is tagged in the same content twice
+	for _, mention := range replyContent.UniqueMentions() { // Get only unique mentions so we don't send multiple emails if someone is tagged in the same content twice
 		if mention.Entity == nil {
 			err := fmt.Errorf("there is no entity in this mention. Unable to generate a notification")
 			errs = append(errs, err)
@@ -66,13 +68,6 @@ func ActivityTaggedInDiscussionCreate(ctx context.Context, np sqlutils.NamedPrep
 
 		switch mention.Type {
 		case models.TagTypeUserAccount:
-
-			//TODO: EASI-3925 make this respect user preferences? Or we do we want the SQL to do that?
-			// taggedUserAccount, ok := entity.(*authentication.UserAccount)
-			// if !ok {
-			// 	err = fmt.Errorf("tagged entity was expected to be a user account, but was not able to be cast to UserAccount. entity: %v", entity)
-			// 	continue // non blocking
-			// }
 
 			if mention.EntityUUID == nil {
 				err := fmt.Errorf("this html mention entity UUID is nil. Unable to create a notification")
@@ -86,7 +81,7 @@ func ActivityTaggedInDiscussionCreate(ctx context.Context, np sqlutils.NamedPrep
 				errs = append(errs, fmt.Errorf("unable to get user notification preference, Notification not created %w", err))
 			}
 
-			_, err = userNotificationCreate(ctx, np, activity, *mention.EntityUUID, pref.TaggedInDiscussionInApp, pref.TaggedInDiscussionEmail)
+			_, err = userNotificationCreate(ctx, np, activity, *mention.EntityUUID, pref.TaggedInDiscussionReplyInApp, pref.TaggedInDiscussionReplyEmail)
 			if err != nil {
 				return nil, err
 			}
@@ -97,7 +92,7 @@ func ActivityTaggedInDiscussionCreate(ctx context.Context, np sqlutils.NamedPrep
 		}
 	}
 	if len(errs) > 0 {
-		return nil, fmt.Errorf("error generating tagged in discussion notifications. First error: %v", errs[0])
+		return nil, fmt.Errorf("error generating tagged in discussion reply notifications. First error: %v", errs[0])
 	}
 
 	return retActivity, nil
@@ -108,14 +103,14 @@ func ActivityTaggedInDiscussionCreate(ctx context.Context, np sqlutils.NamedPrep
 
 // Value allows us to satisfy the valuer interface so we can write to the database
 // We need to do a specific implementation instead of relying on the implementation of the embedded struct, as that will only serialize the common data
-func (d TaggedInPlanDiscussionActivityMeta) Value() (driver.Value, error) {
+func (d TaggedInDiscussionReplyActivityMeta) Value() (driver.Value, error) {
 
 	j, err := json.Marshal(d)
 	return j, err
 }
 
 // Scan implements the scanner interface so we can translate the JSONb from the db to an object in GO
-func (d *TaggedInPlanDiscussionActivityMeta) Scan(src interface{}) error {
+func (d *TaggedInDiscussionReplyActivityMeta) Scan(src interface{}) error {
 	if src == nil {
 		return nil
 	}

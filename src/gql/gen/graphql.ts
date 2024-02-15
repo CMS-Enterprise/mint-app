@@ -60,7 +60,7 @@ export type ActivityMetaBaseStruct = {
 };
 
 /** AcitivyMetaData is a type that represents all the data that can be captured in an Activity */
-export type ActivityMetaData = ActivityMetaBaseStruct | NewPlanDiscussionActivityMeta | TaggedInPlanDiscussionActivityMeta;
+export type ActivityMetaData = ActivityMetaBaseStruct | NewPlanDiscussionActivityMeta | TaggedInDiscussionReplyActivityMeta | TaggedInPlanDiscussionActivityMeta;
 
 /** ActivityType represents the possible activities that happen in application that might result in a notification */
 export enum ActivityType {
@@ -2652,6 +2652,15 @@ export type TaggedContent = {
 
 /** TaggedEntity is the actual object represented by a tag in the data base. */
 export type TaggedEntity = PossibleOperationalSolution | UserAccount;
+
+export type TaggedInDiscussionReplyActivityMeta = {
+  __typename: 'TaggedInDiscussionReplyActivityMeta';
+  content: Scalars['String']['output'];
+  discussionID: Scalars['UUID']['output'];
+  replyID: Scalars['UUID']['output'];
+  type: ActivityType;
+  version: Scalars['Int']['output'];
+};
 
 export type TaggedInPlanDiscussionActivityMeta = {
   __typename: 'TaggedInPlanDiscussionActivityMeta';

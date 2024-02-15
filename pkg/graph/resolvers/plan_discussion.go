@@ -108,7 +108,7 @@ func CreatePlanDiscussion(
 
 		// send an email for each tag, which is unique compared to the mention
 		//TODO: EASI-3925, should we distinguish Replies vs discussions?
-		_, notificationErr := notifications.ActivityTaggedUserInDiscussionCreate(ctx, store, principal.Account().ID, discussion.ID, discussion.Content) //TODO: EASI-3925 Consider passing the whole object?
+		_, notificationErr := notifications.ActivityTaggedInDiscussionCreate(ctx, store, principal.Account().ID, discussion.ID, discussion.Content) //TODO: EASI-3925 Consider passing the whole object?
 		if notificationErr != nil {
 			return nil, fmt.Errorf("unable to generate notifications, %w", notificationErr)
 		}
@@ -452,6 +452,12 @@ func CreateDiscussionReply(
 	modelPlan, err := ModelPlanGetByIDLOADER(ctx, discussion.ModelPlanID)
 	if err != nil {
 		return reply, err
+	}
+	// Create Activity and notifications in the DB
+	// TODO EASI-3925 should we cause the discussion or reply to not be saved if there is an error creating a notification
+	_, notificationErr := notifications.ActivityTaggedInDiscussionReplyCreate(ctx, store, principal.Account().ID, discussion.ID, reply.ID, reply.Content)
+	if notificationErr != nil {
+		return nil, fmt.Errorf("unable to generate notifications, %w", notificationErr)
 	}
 	go func() {
 
