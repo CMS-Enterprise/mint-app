@@ -156,7 +156,10 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
       ModelViewFilter.IPC
     ],
     isPageStart: true,
-    adjacentPosition: 'estimateConfidence'
+    adjacentPositioning: {
+      position: 'left',
+      adjacentField: 'estimateConfidence'
+    }
   },
   estimateConfidence: {
     gqlField: 'estimateConfidence',
@@ -177,7 +180,10 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
       ModelViewFilter.DFSDM,
       ModelViewFilter.IPC
     ],
-    adjacentPosition: 'right'
+    adjacentPositioning: {
+      position: 'right',
+      adjacentField: 'expectedNumberOfParticipants'
+    }
   },
   confidenceNote: {
     gqlField: 'confidenceNote',
@@ -509,7 +515,10 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
         () => participantsAndProviders.gainsharePaymentsEligibility
       ]
     },
-    adjacentPosition: 'gainsharePaymentsTrack'
+    adjacentPositioning: {
+      position: 'left',
+      adjacentField: 'gainsharePaymentsTrack'
+    }
   },
   gainsharePaymentsTrack: {
     gqlField: 'gainsharePaymentsTrack',
@@ -523,7 +532,10 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
       false: 'No'
     },
     parentRelation: () => participantsAndProviders.gainsharePayments,
-    adjacentPosition: 'right'
+    adjacentPositioning: {
+      position: 'right',
+      adjacentField: 'gainsharePayments'
+    }
   },
   gainsharePaymentsEligibility: {
     gqlField: 'gainsharePaymentsEligibility',

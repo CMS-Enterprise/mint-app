@@ -36,9 +36,11 @@ const ReadOnlyBody = ({
             )}
 
             {/* Checks if questions have config to be displayed side by side */}
-            {config[field]?.adjacentPosition ? (
+            {config[field]?.adjacentPositioning ? (
               <>
-                {config[field]?.adjacentPosition !== 'right' && (
+                {/* Presence of adjacentPositioning will render in a SideBySideReadOnlySectionNew component 
+                    Config position of 'left' will render and condtionally render the following component where adjacentPositioning.adjacentField is the reference */}
+                {config[field]?.adjacentPositioning?.position === 'left' && (
                   <SideBySideReadOnlySectionNew>
                     <ReadOnlySectionNew
                       config={config[field]}
@@ -46,19 +48,21 @@ const ReadOnlyBody = ({
                       filteredView={filteredView}
                     />
 
-                    {/* Checks if second question is condtional on the previous question before rendering */}
+                    {/* Checks if second question is condtional on the previous question before rendering
+                        References the string/key (ex: 'estimateConfidence') of adjacentPositioning.adjacentField 
+                    */}
                     {!isHiddenByParentCondition(
                       config[
-                        config[field]
-                          .adjacentPosition! as keyof TranslationPlanSection
+                        config[field].adjacentPositioning
+                          ?.adjacentField as keyof TranslationPlanSection
                       ],
                       data
                     ) && (
                       <ReadOnlySectionNew
                         config={
                           config[
-                            config[field]
-                              .adjacentPosition! as keyof TranslationPlanSection
+                            config[field].adjacentPositioning
+                              ?.adjacentField as keyof TranslationPlanSection
                           ]
                         }
                         values={data}
