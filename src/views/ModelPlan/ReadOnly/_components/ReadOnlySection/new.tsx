@@ -110,14 +110,14 @@ export const compareClosure = <
   parentConfig: TranslationFieldPropertiesWithOptionsAndChildren<T, C>,
   childConfig: TranslationConfigType<T, C>
 ): boolean => {
-  let hidden = true;
+  // Default to true if there is no child/parent relationship defined for the value
+  const hidden = !parentConfig.childRelation[parentValue];
 
-  parentConfig.childRelation[parentValue]?.forEach(child => {
-    if (child() === childConfig) {
-      hidden = false;
-    }
-  });
-  return hidden;
+  return (
+    !parentConfig.childRelation[parentValue]?.some(child => {
+      return child() === childConfig;
+    }) || hidden
+  );
 };
 
 /*
@@ -142,14 +142,21 @@ export const isHiddenByParentCondition = <
 
   // If parent value is an array, check if evaluation exists
   if (Array.isArray(parentValue)) {
-    if (
-      !values[parentConfig.gqlField]?.some((fieldValue: T) => {
-        return compareClosure(fieldValue, parentConfig, config);
-      })
-    ) {
+    // Filter data based on parent mapping
+    const containsParentRelationship = values[parentConfig.gqlField]?.filter(
+      (fieldValue: T) => {
+        return getKeys(parentConfig.childRelation).includes(fieldValue);
+      }
+    );
+
+    if (containsParentRelationship.length === 0) {
       return true;
     }
-    return false;
+
+    // Returns true to hide question if parent condition isn't met, false if met
+    return containsParentRelationship?.some((fieldValue: T) => {
+      return compareClosure(fieldValue, parentConfig, config);
+    });
   }
 
   return compareClosure(parentValue, parentConfig, config);
