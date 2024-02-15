@@ -74,27 +74,22 @@ export const getRelatedUneededQuestions = <
   let unneededRelations: string[] = [];
   const neededRelations: string[] = [];
 
-  getKeys(config.childRelation)
-    // Check if question has conditional child questions
-    .filter(option => config.childRelation?.[option]?.length)
-    .forEach(option => {
-      // If the evaluation of the parent value triggers a child question, sort into appropriate arrays
-      if (
-        (Array.isArray(value) && !value?.includes(option as T)) ||
-        (!Array.isArray(value) &&
-          value !== undefined &&
-          String(value) !== option)
-      ) {
-        config.childRelation?.[option]?.forEach(childField => {
-          neededRelations.push(childField);
-        });
-      } else if (config.childRelation?.[option]?.length) {
-        unneededRelations = [
-          ...unneededRelations,
-          ...(config.childRelation?.[option] as [])
-        ];
-      }
-    });
+  getKeys(config.childRelation).forEach(option => {
+    // If the evaluation of the parent value triggers a child question, sort into appropriate arrays
+    if (
+      (Array.isArray(value) && !value?.includes(option as T)) ||
+      (!Array.isArray(value) && value !== undefined && String(value) !== option)
+    ) {
+      config.childRelation?.[option]?.forEach(childField => {
+        neededRelations.push(childField);
+      });
+    } else if (config.childRelation?.[option]?.length) {
+      unneededRelations = [
+        ...unneededRelations,
+        ...(config.childRelation?.[option] as [])
+      ];
+    }
+  });
 
   // Removes dupe relations and converts to translated string
   const uniqueQuestions = neededRelations
