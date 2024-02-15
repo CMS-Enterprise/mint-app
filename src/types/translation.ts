@@ -115,7 +115,7 @@ type ParentRelation<T extends keyof T | string> = {
   This does not include generic "Other" questions or single line followups, unless specifically stated
 */
 type ChildRelation<T extends keyof T | string> = {
-  childRelation: Record<T, string[]>;
+  childRelation: Partial<Record<T, string[]>>;
 };
 
 /* 
@@ -124,8 +124,8 @@ type ChildRelation<T extends keyof T | string> = {
 */
 type TranslationOptions<T extends keyof T | string> = {
   options: Record<T, string>;
-  optionsLabels?: Record<T, string>;
-  optionsRelatedInfo?: Record<T, string>;
+  optionsLabels?: Partial<Record<T, string>>;
+  optionsRelatedInfo?: Partial<Record<T, string>>; // T values should/could be a subset of the keys of enum values
 };
 
 /* 
@@ -156,7 +156,7 @@ export type TranslationFieldPropertiesWithOptions<
 */
 export type TranslationFieldPropertiesWithOptionsAndChildren<
   T extends keyof T | string
-> = TranslationFieldProperties & OptionsWithChildRelation<T> & ChildRelation<T>;
+> = TranslationFieldProperties & OptionsWithChildRelation<T>;
 
 /* 
   Extended type for questions that have options - boolean, radio, checkbox, etc.

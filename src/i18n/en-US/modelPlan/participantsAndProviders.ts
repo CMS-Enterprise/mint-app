@@ -39,20 +39,8 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
       OTHER: 'Other'
     },
     optionsRelatedInfo: {
-      ACCOUNTABLE_CARE_ORGANIZATION: '',
-      COMMERCIAL_PAYERS: '',
-      COMMUNITY_BASED_ORGANIZATIONS: '',
-      CONVENER: '',
-      ENTITIES: '',
-      MEDICAID_MANAGED_CARE_ORGANIZATIONS: '',
-      MEDICAID_PROVIDERS: '',
-      MEDICARE_ADVANTAGE_PLANS: '',
-      MEDICARE_ADVANTAGE_PRESCRIPTION_DRUG_PLANS: '',
       MEDICARE_PROVIDERS: 'medicareProviderType',
-      NON_PROFIT_ORGANIZATIONS: '',
-      STANDALONE_PART_D_PLANS: '',
       STATES: 'statesEngagement',
-      STATE_MEDICAID_AGENCIES: '',
       OTHER: 'participantsOther'
     },
     filterGroups: [
@@ -238,18 +226,10 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
       NA: 'Not applicable'
     },
     optionsLabels: {
-      APPLICATION_COLLECTION_TOOL: '',
-      LOI: '',
-      NOFO: 'CMMI writes, Office of General Council (OGC) reviews and approves',
-      OTHER: '',
-      NA: ''
+      NOFO: 'CMMI writes, Office of General Council (OGC) reviews and approves'
     },
     optionsRelatedInfo: {
-      APPLICATION_COLLECTION_TOOL: '',
-      LOI: '',
-      NOFO: '',
-      OTHER: 'recruitmentOther',
-      NA: ''
+      OTHER: 'recruitmentOther'
     }
   },
   recruitmentOther: {
@@ -292,14 +272,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
       NO_SELECTING_PARTICIPANTS: 'We won’t be selecting participants'
     },
     optionsRelatedInfo: {
-      APPLICATION_REVIEW_AND_SCORING_TOOL: '',
-      APPLICATION_SUPPORT_CONTRACTOR: '',
-      BASIC_CRITERIA: '',
-      CMS_COMPONENT_OR_PROCESS: '',
-      MODEL_TEAM_REVIEW_APPLICATIONS: '',
-      SUPPORT_FROM_CMMI: '',
-      OTHER: 'selectionOther',
-      NO_SELECTING_PARTICIPANTS: '[]'
+      OTHER: 'selectionOther'
     },
     filterGroups: [
       ModelViewFilter.CMMI,
@@ -347,10 +320,6 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     formType: 'checkbox',
     options: frequencyOptions,
     optionsRelatedInfo: {
-      ANNUALLY: '',
-      SEMIANNUALLY: '',
-      QUARTERLY: '',
-      MONTHLY: '',
       CONTINUALLY: 'participantAddedFrequencyContinually',
       OTHER: 'participantAddedFrequencyOther'
     },
@@ -395,10 +364,6 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     formType: 'checkbox',
     options: frequencyOptions,
     optionsRelatedInfo: {
-      ANNUALLY: '',
-      SEMIANNUALLY: '',
-      QUARTERLY: '',
-      MONTHLY: '',
       CONTINUALLY: 'participantRemovedFrequencyContinually',
       OTHER: 'participantRemovedFrequencyOther'
     },
@@ -448,10 +413,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
       NO_COMMUNICATION: 'We are not planning to communicate'
     },
     optionsRelatedInfo: {
-      IT_TOOL: '',
-      MASS_EMAIL: '',
-      OTHER: 'communicationMethodOther',
-      NO_COMMUNICATION: ''
+      OTHER: 'communicationMethodOther'
     },
     filterGroups: [ModelViewFilter.CBOSC, ModelViewFilter.IPC]
   },
@@ -489,10 +451,6 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
       OTHER: 'Other'
     },
     optionsRelatedInfo: {
-      TWO_SIDED: '',
-      ONE_SIDED: '',
-      CAPITATION: '',
-      NOT_RISK_BASED: '',
       OTHER: 'riskOther'
     }
   },
@@ -567,8 +525,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
       false: 'No'
     },
     childRelation: {
-      true: ['gainsharePaymentsTrack', 'gainsharePaymentsEligibility'],
-      false: []
+      true: ['gainsharePaymentsTrack', 'gainsharePaymentsEligibility']
     },
     adjacentPosition: 'left'
   },
@@ -603,10 +560,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
       NO: 'No'
     },
     optionsRelatedInfo: {
-      ALL_PROVIDERS: '',
-      SOME_PROVIDERS: '',
-      OTHER: 'gainsharePaymentsEligibilityOther',
-      NO: ''
+      OTHER: 'gainsharePaymentsEligibilityOther'
     },
     parentRelation: {
       field: 'gainsharePayments',
@@ -648,11 +602,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
       NO_IDENTIFIERS: 'No, we will not collect provider identifiers'
     },
     optionsRelatedInfo: {
-      CCNS: '',
-      NPIS: '',
-      TINS: '',
-      OTHER: 'participantsIdsOther',
-      NO_IDENTIFIERS: ''
+      OTHER: 'participantsIdsOther'
     },
     filterGroups: [ModelViewFilter.IDDOC]
   },
@@ -684,10 +634,6 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     formType: 'checkbox',
     options: frequencyOptions,
     optionsRelatedInfo: {
-      ANNUALLY: '',
-      SEMIANNUALLY: '',
-      QUARTERLY: '',
-      MONTHLY: '',
       CONTINUALLY: 'providerAdditionFrequencyContinually',
       OTHER: 'providerAdditionFrequencyOther'
     },
@@ -747,13 +693,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
       NA: 'Not applicable'
     },
     optionsRelatedInfo: {
-      PROSPECTIVELY: '',
-      RETROSPECTIVELY: '',
-      VOLUNTARILY: '',
-      MANDATORILY: '',
-      ONLINE_TOOLS: '',
-      OTHER: 'providerAddMethodOther',
-      NA: ''
+      OTHER: 'providerAddMethodOther'
     },
     filterGroups: [ModelViewFilter.IPC, ModelViewFilter.OACT]
   },
@@ -798,12 +738,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
       NOT_APPLICABLE: 'Not applicable'
     },
     optionsRelatedInfo: {
-      VARIES_BY_TYPE_OF_PROVIDER: '',
-      NOT_ALLOWED_TO_LEAVE: '',
-      AFTER_A_CERTAIN_WITH_IMPLICATIONS: '',
-      VOLUNTARILY_WITHOUT_IMPLICATIONS: '',
-      OTHER: 'providerLeaveMethodOther',
-      NOT_APPLICABLE: ''
+      OTHER: 'providerLeaveMethodOther'
     },
     filterGroups: [ModelViewFilter.IPC, ModelViewFilter.OACT]
   },
@@ -835,10 +770,6 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     formType: 'checkbox',
     options: frequencyOptions,
     optionsRelatedInfo: {
-      ANNUALLY: '',
-      SEMIANNUALLY: '',
-      QUARTERLY: '',
-      MONTHLY: '',
       CONTINUALLY: 'providerRemovalFrequencyContinually',
       OTHER: 'providerRemovalFrequencyOther'
     }
@@ -884,8 +815,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     },
     childRelation: {
       YES_NEED_POLICIES: ['providerOverlapHierarchy'],
-      YES_NO_ISSUES: ['providerOverlapHierarchy'],
-      NO: []
+      YES_NO_ISSUES: ['providerOverlapHierarchy']
     },
     filterGroups: [ModelViewFilter.IDDOC, ModelViewFilter.PBG]
   },

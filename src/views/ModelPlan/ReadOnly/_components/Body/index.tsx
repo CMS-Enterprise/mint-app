@@ -12,12 +12,10 @@ import SideBySideReadOnlySectionNew from '../SideBySideReadOnlySection/new';
 const ReadOnlyBody = ({
   data,
   config,
-  isViewingFilteredView,
   filteredView
 }: {
   data: any;
   config: TranslationPlanSection;
-  isViewingFilteredView?: boolean;
   filteredView?: keyof typeof filterGroupKey;
 }) => {
   return (
@@ -30,10 +28,10 @@ const ReadOnlyBody = ({
             key={field}
             className={classNames({
               'margin-top-4 padding-top-4 border-top-1px border-base-light':
-                !isViewingFilteredView && config[field]?.pageStart // Add border if translation config contains property 'pageStart'
+                !filteredView && config[field]?.pageStart // Add border if translation config contains property 'pageStart'
             })}
           >
-            {!isViewingFilteredView && config[field]?.readonlyHeader && (
+            {!filteredView && config[field]?.readonlyHeader && (
               <h3 className="margin-top-0">{config[field].readonlyHeader}</h3>
             )}
 

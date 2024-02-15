@@ -68,7 +68,6 @@ const ReadOnlyParticipantsAndProviders = ({
       <ReadOnlyBody
         data={allparticipantsAndProvidersData}
         config={participantsAndProvidersConfig}
-        isViewingFilteredView={isViewingFilteredView}
         filteredView={filteredView}
       />
     </div>

@@ -76,7 +76,7 @@ export const getRelatedUneededQuestions = <
 
   getKeys(config.childRelation)
     // Check if question has conditional child questions
-    .filter(option => config.childRelation?.[option].length)
+    .filter(option => config.childRelation?.[option]?.length)
     .forEach(option => {
       // If the evaluation of the parent value triggers a child question, sort into appropriate arrays
       if (
@@ -85,13 +85,13 @@ export const getRelatedUneededQuestions = <
           value !== undefined &&
           String(value) !== option)
       ) {
-        config.childRelation?.[option].forEach(childField => {
+        config.childRelation?.[option]?.forEach(childField => {
           neededRelations.push(childField);
         });
-      } else if (config.childRelation?.[option]) {
+      } else if (config.childRelation?.[option]?.length) {
         unneededRelations = [
           ...unneededRelations,
-          ...config.childRelation?.[option]
+          ...(config.childRelation?.[option] as [])
         ];
       }
     });
@@ -219,12 +219,6 @@ const ReadOnlySectionNew = <
     ? formatListOtherItems(config, value, values)
     : [];
 
-  const isElement = (
-    element: string | number | React.ReactElement | React.ReactNode
-  ) => {
-    return React.isValidElement(element);
-  };
-
   // Can render a single "Other" option or multiple additional information options
   // As well as default text for both if not specified
   const renderListItemOthers = (index: number) => {
@@ -309,11 +303,7 @@ const ReadOnlySectionNew = <
     return (
       <ul className="margin-y-0 padding-left-3">
         {listItems.map((item, index) => (
-          <React.Fragment
-            key={
-              isElement(listItems[index]) ? index : `${sectionName}--${item}`
-            }
-          >
+          <React.Fragment key={`${sectionName}--${item}`}>
             <li className="font-sans-md line-height-sans-4">
               {item}
               {tooltips && tooltips[index] && (
