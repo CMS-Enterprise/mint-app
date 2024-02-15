@@ -455,6 +455,7 @@ func CreateDiscussionReply(
 	}
 	// Create Activity and notifications in the DB
 	// TODO EASI-3925 should we cause the discussion or reply to not be saved if there is an error creating a notification
+	// TODO EASI-3925 use a transaction
 	_, notificationErr := notifications.ActivityTaggedInDiscussionReplyCreate(ctx, store, principal.Account().ID, discussion.ID, reply.ID, reply.Content)
 	if notificationErr != nil {
 		return nil, fmt.Errorf("unable to generate notifications, %w", notificationErr)
