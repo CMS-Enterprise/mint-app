@@ -271,7 +271,6 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     dataType: 'string',
     formType: 'textarea',
     isOtherType: true,
-    parentRelation: () => participantsAndProviders.selectionMethod,
     filterGroups: [
       ModelViewFilter.CMMI,
       ModelViewFilter.IDDOC,

@@ -394,7 +394,7 @@ export type TranslationParticipantsAndProviders = {
   recruitmentOther: TranslationFieldProperties;
   recruitmentNote: TranslationFieldProperties;
   selectionMethod: TranslationFieldPropertiesWithOptions<ParticipantSelectionType>;
-  selectionOther: TranslationFieldPropertiesWithParent<ParticipantSelectionType>;
+  selectionOther: TranslationFieldProperties;
   selectionNote: TranslationFieldProperties;
   // Communication
   participantAddedFrequency: TranslationFieldPropertiesWithOptions<FrequencyType>;
