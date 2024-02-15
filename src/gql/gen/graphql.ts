@@ -2813,20 +2813,20 @@ export type UserNotificationPreferences = {
 
 /** UserNotificationPreferencesChanges represents the ways that a UserNotifications Preferences object can be updated */
 export type UserNotificationPreferencesChanges = {
-  addedAsCollaboratorEmail: Scalars['Boolean']['input'];
-  addedAsCollaboratorInApp: Scalars['Boolean']['input'];
-  dailyDigestCompleteEmail: Scalars['Boolean']['input'];
-  dailyDigestCompleteInApp: Scalars['Boolean']['input'];
-  modelPlanSharedEmail: Scalars['Boolean']['input'];
-  modelPlanSharedInApp: Scalars['Boolean']['input'];
-  newDiscussionReplyEmail: Scalars['Boolean']['input'];
-  newDiscussionReplyInApp: Scalars['Boolean']['input'];
-  newPlanDiscussionEmail: Scalars['Boolean']['input'];
-  newPlanDiscussionInApp: Scalars['Boolean']['input'];
-  taggedInDiscussionEmail: Scalars['Boolean']['input'];
-  taggedInDiscussionInApp: Scalars['Boolean']['input'];
-  taggedInDiscussionReplyEmail: Scalars['Boolean']['input'];
-  taggedInDiscussionReplyInApp: Scalars['Boolean']['input'];
+  addedAsCollaboratorEmail?: InputMaybe<Scalars['Boolean']['input']>;
+  addedAsCollaboratorInApp?: InputMaybe<Scalars['Boolean']['input']>;
+  dailyDigestCompleteEmail?: InputMaybe<Scalars['Boolean']['input']>;
+  dailyDigestCompleteInApp?: InputMaybe<Scalars['Boolean']['input']>;
+  modelPlanSharedEmail?: InputMaybe<Scalars['Boolean']['input']>;
+  modelPlanSharedInApp?: InputMaybe<Scalars['Boolean']['input']>;
+  newDiscussionReplyEmail?: InputMaybe<Scalars['Boolean']['input']>;
+  newDiscussionReplyInApp?: InputMaybe<Scalars['Boolean']['input']>;
+  newPlanDiscussionEmail?: InputMaybe<Scalars['Boolean']['input']>;
+  newPlanDiscussionInApp?: InputMaybe<Scalars['Boolean']['input']>;
+  taggedInDiscussionEmail?: InputMaybe<Scalars['Boolean']['input']>;
+  taggedInDiscussionInApp?: InputMaybe<Scalars['Boolean']['input']>;
+  taggedInDiscussionReplyEmail?: InputMaybe<Scalars['Boolean']['input']>;
+  taggedInDiscussionReplyInApp?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 /** This is a wrapper for all information for a user  */

@@ -9927,26 +9927,26 @@ UserNotificationPreferencesChanges represents the ways that a UserNotifications 
 """
 input UserNotificationPreferencesChanges @goModel(model: "map[string]interface{}")  {
 
-  dailyDigestCompleteEmail: Boolean!
-  dailyDigestCompleteInApp: Boolean!
+  dailyDigestCompleteEmail: Boolean
+  dailyDigestCompleteInApp: Boolean
 
-  addedAsCollaboratorEmail: Boolean!
-  addedAsCollaboratorInApp: Boolean!
+  addedAsCollaboratorEmail: Boolean
+  addedAsCollaboratorInApp: Boolean
 
-  taggedInDiscussionEmail: Boolean!
-  taggedInDiscussionInApp: Boolean!
+  taggedInDiscussionEmail: Boolean
+  taggedInDiscussionInApp: Boolean
 
-  taggedInDiscussionReplyEmail: Boolean!
-  taggedInDiscussionReplyInApp: Boolean!
+  taggedInDiscussionReplyEmail: Boolean
+  taggedInDiscussionReplyInApp: Boolean
 
-  newDiscussionReplyEmail: Boolean!
-  newDiscussionReplyInApp: Boolean!
+  newDiscussionReplyEmail: Boolean
+  newDiscussionReplyInApp: Boolean
 
-  modelPlanSharedEmail: Boolean!
-  modelPlanSharedInApp: Boolean!
+  modelPlanSharedEmail: Boolean
+  modelPlanSharedInApp: Boolean
 
-  newPlanDiscussionEmail: Boolean! #TODO: EASI-3925 this is not explicitly requested
-  newPlanDiscussionInApp: Boolean!
+  newPlanDiscussionEmail: Boolean #TODO: EASI-3925 this is not explicitly requested
+  newPlanDiscussionInApp: Boolean
 
 }
 

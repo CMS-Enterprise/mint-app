@@ -26,7 +26,7 @@ func UserNotificationPreferencesUpdate(ctx context.Context, logger *zap.Logger, 
 		return nil, err
 	}
 
-	err = BaseStructPreUpdate(logger, existingPreferences, changes, principal, store, true, true)
+	err = BaseStructPreUpdate(logger, existingPreferences, changes, principal, store, true, false)
 	if err != nil {
 		return nil, err
 	}

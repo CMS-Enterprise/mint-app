@@ -2022,6 +2022,237 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "Notifications",
+			"item": [
+				{
+					"name": "GetNotifications",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let notifications = pm.response.json().data.currentUser.notifications.notifications",
+									"if (notifications.length > 0) {",
+									"    userNotificationID = notifications[0].id",
+									"    pm.collectionVariables.set(\"userNotificationID\", userNotificationID);",
+									"}",
+									"",
+									"",
+									"// for (let i =0; i< notifications.length; i++){",
+									"//     subtaskID = notifications[i].id",
+									"//     pm.collectionVariables.set(\"operationalSolutionSubtaskID\"+i, subtaskID);",
+									"// }"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query currentUser {\n  currentUser {\n    notifications {\n      numUnreadNotifications\n      notifications {\n        __typename\n        id\n        isRead\n        isArchived\n        emailSent\n        activity {\n          activityType\n          entityID\n          actorID\n                    metaData {\n            __typename\n            ... on TaggedInPlanDiscussionActivityMeta{\n                version\n                type\n                discussionID\n                content\n            }\n            ... on TaggedInDiscussionReplyActivityMeta {\n                version\n                type\n                discussionID\n                replyID\n                content\n            }\n          }\n          createdByUserAccount {\n            commonName\n          }\n        }\n        createdByUserAccount {\n          commonName\n        }\n      }\n    }\n  }\n}\n",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8085/api/graph/query",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8085",
+							"path": [
+								"api",
+								"graph",
+								"query"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetNotificationPreferences",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query currentUser {\n  currentUser {\n    notificationPreferences {\n        dailyDigestCompleteEmail\n        dailyDigestCompleteInApp\n\n        addedAsCollaboratorEmail\n        addedAsCollaboratorInApp\n\n        taggedInDiscussionEmail\n        taggedInDiscussionInApp\n\n        taggedInDiscussionReplyEmail\n        taggedInDiscussionReplyInApp\n\n        newDiscussionReplyEmail\n        newDiscussionReplyInApp\n\n        modelPlanSharedEmail\n        modelPlanSharedInApp\n\n        newPlanDiscussionEmail\n        newPlanDiscussionInApp\n\n      }\n    }\n  }\n\n",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8085/api/graph/query",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8085",
+							"path": [
+								"api",
+								"graph",
+								"query"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "MarkNotificationAsRead",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation notifications {\n    markNotificationAsRead(notificationID: \"{{userNotificationID}}\")\n   {\n    id\n    isRead\n    activity {\n      activityType\n      entityID\n      actorID\n      createdByUserAccount {\n        commonName\n      }\n    }\n    createdByUserAccount {\n      commonName\n    }\n  }\n}\n",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8085/api/graph/query",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8085",
+							"path": [
+								"api",
+								"graph",
+								"query"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "MarkAllNotificationAsRead",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation notifications {\n    markAllNotificationsAsRead\n   {\n    id\n    isRead\n    activity {\n      activityType\n      entityID\n      actorID\n      createdByUserAccount {\n        commonName\n      }\n    }\n    createdByUserAccount {\n      commonName\n    }\n  }\n}\n",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8085/api/graph/query",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8085",
+							"path": [
+								"api",
+								"graph",
+								"query"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get CurrentUser",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query currentUser {\n  currentUser {\n    launchDarkly {\n      userKey\n    }\n    account {\n      commonName\n      email\n    }\n    notifications {\n      numUnreadNotifications\n      notifications {\n        __typename\n        id\n        isRead\n        isArchived\n        emailSent\n        activity {\n          activityType\n          entityID\n          actorID\n          metaData {\n            __typename\n            ... on TaggedInPlanDiscussionActivityMeta{\n                version\n                type\n                discussionID\n                content\n            }\n            ... on TaggedInDiscussionReplyActivityMeta {\n                version\n                type\n                discussionID\n                replyID\n                content\n            }\n          }\n          createdByUserAccount {\n            commonName\n          }\n        }\n        createdByUserAccount {\n          commonName\n        }\n      }\n    }\n  }\n}\n",
+								"variables": "{}"
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "NotificationPreferencesUpdate",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation NotificationUpdate {\nupdateUserNotificationPreferences( changes:{\n    dailyDigestCompleteEmail: false\n    dailyDigestCompleteInApp: true\n    \n    addedAsCollaboratorEmail: true\n    addedAsCollaboratorInApp: true\n\n    taggedInDiscussionEmail: true\n    taggedInDiscussionInApp: true\n\n    taggedInDiscussionReplyEmail: true\n    taggedInDiscussionReplyInApp: true\n\n    newDiscussionReplyEmail: true\n    newDiscussionReplyInApp: true\n\n    modelPlanSharedEmail: true\n    modelPlanSharedInApp: true\n\n    newPlanDiscussionEmail: true\n    newPlanDiscussionInApp: true    \n    \n\n}) {\n\n    # notificationPreferences {\n        dailyDigestCompleteEmail\n        dailyDigestCompleteInApp\n\n        addedAsCollaboratorEmail\n        addedAsCollaboratorInApp\n\n        taggedInDiscussionEmail\n        taggedInDiscussionInApp\n\n        taggedInDiscussionReplyEmail\n        taggedInDiscussionReplyInApp\n\n        newDiscussionReplyEmail\n        newDiscussionReplyInApp\n\n        modelPlanSharedEmail\n        modelPlanSharedInApp\n\n        newPlanDiscussionEmail\n        newPlanDiscussionInApp\n\n      \n    }\n}\n",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8085/api/graph/query",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8085",
+							"path": [
+								"api",
+								"graph",
+								"query"
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		}
 	],
 	"auth": {
@@ -2142,6 +2373,10 @@
 		},
 		{
 			"key": "userID",
+			"value": ""
+		},
+		{
+			"key": "userNotificationID",
 			"value": ""
 		}
 	]
