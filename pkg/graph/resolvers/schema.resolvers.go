@@ -221,13 +221,6 @@ func (r *mutationResolver) UpdatePlanParticipantsAndProviders(ctx context.Contex
 	return PlanParticipantsAndProvidersUpdate(logger, id, changes, principal, r.store)
 }
 
-// UpdatePlanOpsEvalAndLearning is the resolver for the updatePlanOpsEvalAndLearning field.
-func (r *mutationResolver) UpdatePlanOpsEvalAndLearning(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanOpsEvalAndLearning, error) {
-	principal := appcontext.Principal(ctx)
-	logger := appcontext.ZLogger(ctx)
-	return PlanOpsEvalAndLearningUpdate(logger, id, changes, principal, r.store)
-}
-
 // UploadNewPlanDocument is the resolver for the uploadNewPlanDocument field.
 func (r *mutationResolver) UploadNewPlanDocument(ctx context.Context, input model.PlanDocumentInput) (*models.PlanDocument, error) {
 	principal := appcontext.Principal(ctx)
@@ -688,72 +681,6 @@ func (r *planGeneralCharacteristicsResolver) WaiversRequiredTypes(ctx context.Co
 	return waiverTypes, nil
 }
 
-// Stakeholders is the resolver for the stakeholders field.
-func (r *planOpsEvalAndLearningResolver) Stakeholders(ctx context.Context, obj *models.PlanOpsEvalAndLearning) ([]model.StakeholdersType, error) {
-	stakeholdersTypes := models.ConvertEnums[model.StakeholdersType](obj.Stakeholders)
-	return stakeholdersTypes, nil
-}
-
-// ContractorSupport is the resolver for the contractorSupport field.
-func (r *planOpsEvalAndLearningResolver) ContractorSupport(ctx context.Context, obj *models.PlanOpsEvalAndLearning) ([]model.ContractorSupportType, error) {
-	contractorSupportTypes := models.ConvertEnums[model.ContractorSupportType](obj.ContractorSupport)
-	return contractorSupportTypes, nil
-}
-
-// DataMonitoringFileTypes is the resolver for the dataMonitoringFileTypes field.
-func (r *planOpsEvalAndLearningResolver) DataMonitoringFileTypes(ctx context.Context, obj *models.PlanOpsEvalAndLearning) ([]model.MonitoringFileType, error) {
-	monitoringFileTypes := models.ConvertEnums[model.MonitoringFileType](obj.DataMonitoringFileTypes)
-	return monitoringFileTypes, nil
-}
-
-// EvaluationApproaches is the resolver for the evaluationApproaches field.
-func (r *planOpsEvalAndLearningResolver) EvaluationApproaches(ctx context.Context, obj *models.PlanOpsEvalAndLearning) ([]model.EvaluationApproachType, error) {
-	evaluationApproachTypes := models.ConvertEnums[model.EvaluationApproachType](obj.EvaluationApproaches)
-	return evaluationApproachTypes, nil
-}
-
-// CcmInvolvment is the resolver for the ccmInvolvment field.
-func (r *planOpsEvalAndLearningResolver) CcmInvolvment(ctx context.Context, obj *models.PlanOpsEvalAndLearning) ([]model.CcmInvolvmentType, error) {
-	ccmInvolvmentTypes := models.ConvertEnums[model.CcmInvolvmentType](obj.CcmInvolvment)
-	return ccmInvolvmentTypes, nil
-}
-
-// DataNeededForMonitoring is the resolver for the dataNeededForMonitoring field.
-func (r *planOpsEvalAndLearningResolver) DataNeededForMonitoring(ctx context.Context, obj *models.PlanOpsEvalAndLearning) ([]model.DataForMonitoringType, error) {
-	dataForMonitoringTypes := models.ConvertEnums[model.DataForMonitoringType](obj.DataNeededForMonitoring)
-	return dataForMonitoringTypes, nil
-}
-
-// DataToSendParticicipants is the resolver for the dataToSendParticicipants field.
-func (r *planOpsEvalAndLearningResolver) DataToSendParticicipants(ctx context.Context, obj *models.PlanOpsEvalAndLearning) ([]model.DataToSendParticipantsType, error) {
-	dataToSendParticipantsTypes := models.ConvertEnums[model.DataToSendParticipantsType](obj.DataToSendParticicipants)
-	return dataToSendParticipantsTypes, nil
-}
-
-// DataSharingFrequency is the resolver for the dataSharingFrequency field.
-func (r *planOpsEvalAndLearningResolver) DataSharingFrequency(ctx context.Context, obj *models.PlanOpsEvalAndLearning) ([]models.FrequencyType, error) {
-	dataFrequencyTypes := models.ConvertEnums[models.FrequencyType](obj.DataSharingFrequency)
-	return dataFrequencyTypes, nil
-}
-
-// DataCollectionFrequency is the resolver for the dataCollectionFrequency field.
-func (r *planOpsEvalAndLearningResolver) DataCollectionFrequency(ctx context.Context, obj *models.PlanOpsEvalAndLearning) ([]models.FrequencyType, error) {
-	dataFrequencyTypes := models.ConvertEnums[models.FrequencyType](obj.DataCollectionFrequency)
-	return dataFrequencyTypes, nil
-}
-
-// QualityReportingFrequency is the resolver for the qualityReportingFrequency field.
-func (r *planOpsEvalAndLearningResolver) QualityReportingFrequency(ctx context.Context, obj *models.PlanOpsEvalAndLearning) ([]models.FrequencyType, error) {
-	dataFrequencyTypes := models.ConvertEnums[models.FrequencyType](obj.QualityReportingFrequency)
-	return dataFrequencyTypes, nil
-}
-
-// ModelLearningSystems is the resolver for the modelLearningSystems field.
-func (r *planOpsEvalAndLearningResolver) ModelLearningSystems(ctx context.Context, obj *models.PlanOpsEvalAndLearning) ([]model.ModelLearningSystemType, error) {
-	modelLearningSystemTypes := models.ConvertEnums[model.ModelLearningSystemType](obj.ModelLearningSystems)
-	return modelLearningSystemTypes, nil
-}
-
 // Participants is the resolver for the participants field.
 func (r *planParticipantsAndProvidersResolver) Participants(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]model.ParticipantsType, error) {
 	participants := models.ConvertEnums[model.ParticipantsType](obj.Participants)
@@ -1116,11 +1043,6 @@ func (r *Resolver) PlanGeneralCharacteristics() generated.PlanGeneralCharacteris
 	return &planGeneralCharacteristicsResolver{r}
 }
 
-// PlanOpsEvalAndLearning returns generated.PlanOpsEvalAndLearningResolver implementation.
-func (r *Resolver) PlanOpsEvalAndLearning() generated.PlanOpsEvalAndLearningResolver {
-	return &planOpsEvalAndLearningResolver{r}
-}
-
 // PlanParticipantsAndProviders returns generated.PlanParticipantsAndProvidersResolver implementation.
 func (r *Resolver) PlanParticipantsAndProviders() generated.PlanParticipantsAndProvidersResolver {
 	return &planParticipantsAndProvidersResolver{r}
@@ -1164,7 +1086,6 @@ type planCollaboratorResolver struct{ *Resolver }
 type planDiscussionResolver struct{ *Resolver }
 type planDocumentResolver struct{ *Resolver }
 type planGeneralCharacteristicsResolver struct{ *Resolver }
-type planOpsEvalAndLearningResolver struct{ *Resolver }
 type planParticipantsAndProvidersResolver struct{ *Resolver }
 type planPaymentsResolver struct{ *Resolver }
 type possibleOperationalNeedResolver struct{ *Resolver }
