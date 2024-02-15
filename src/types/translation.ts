@@ -102,11 +102,8 @@ export type TranslationFieldProperties = {
   Extended type for questions that are conditionally rendered by a parent evaluation
   Takes in a enum/generic for Parent field to check for condition
 */
-type ParentRelation<
-  T extends keyof T | string,
-  C extends keyof C | string | void = void
-> = {
-  parentRelation: () => TranslationConfigType<T, C>;
+type ParentRelation<T extends keyof T | string> = {
+  parentRelation: () => TranslationConfigType<T>;
 };
 
 /* 
@@ -144,9 +141,8 @@ type OptionsWithChildRelation<
   Apply/combine ParentRelation and TranslationFieldProperties to TranslationFieldPropertiesWithParent
 */
 export type TranslationFieldPropertiesWithParent<
-  T extends keyof T | string,
-  C extends keyof C | string | void = void
-> = TranslationFieldProperties & ParentRelation<T, C>;
+  T extends keyof T | string
+> = TranslationFieldProperties & ParentRelation<T>;
 
 /* 
   Apply/combine OptionsWithChildRelation and TranslationFieldProperties to TranslationFieldPropertiesWithOptions
@@ -172,7 +168,7 @@ export type TranslationFieldPropertiesWithOptionsAndChildren<
 export type TranslationFieldPropertiesWithOptionsAndParent<
   T extends keyof T | string,
   C extends keyof C | string | void = void
-> = TranslationFieldProperties & TranslationOptions<T> & ParentRelation<T, C>;
+> = TranslationFieldProperties & TranslationOptions<T> & ParentRelation<T>;
 
 /* 
   Union type for all translation types
@@ -182,7 +178,7 @@ export type TranslationConfigType<
   C extends keyof C | string | void = void
 > =
   | TranslationFieldProperties
-  | TranslationFieldPropertiesWithParent<T, C>
+  | TranslationFieldPropertiesWithParent<T>
   | TranslationFieldPropertiesWithOptions<T>
   | TranslationFieldPropertiesWithOptionsAndChildren<T, C>
   | TranslationFieldPropertiesWithOptionsAndParent<T, C>;
@@ -207,7 +203,7 @@ export const isTranslationFieldPropertiesWithParent = <
   C extends keyof C | string | void = void
 >(
   config: TranslationConfigType<T, C>
-): config is TranslationFieldPropertiesWithParent<T, C> => {
+): config is TranslationFieldPropertiesWithParent<T> => {
   return Object.hasOwn(config, 'parentRelation');
 };
 

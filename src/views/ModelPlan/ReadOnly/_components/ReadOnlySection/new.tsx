@@ -262,13 +262,13 @@ const ReadOnlySectionNew = <
       isTranslationFieldPropertiesWithOptions(config) &&
       config.formType === 'radio'
     ) {
-      const hasChildField = config.optionsRelatedInfo?.[value as T];
+      const hasChildField = config.optionsRelatedInfo?.[value];
 
       const childField = hasChildField ? values[hasChildField] : null;
 
       return (
         <p className="margin-y-0 font-body-md line-height-sans-4 text-pre-line">
-          {!isEmpty(value) && config.options[value as T]}
+          {!isEmpty(value) && config.options[value]}
           {hasChildField && childField && (
             <span data-testid="other-entry"> - {childField}</span>
           )}
