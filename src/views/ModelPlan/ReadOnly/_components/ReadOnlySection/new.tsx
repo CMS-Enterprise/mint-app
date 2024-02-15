@@ -108,31 +108,29 @@ export const isHiddenByParentCondition = <
   config: TranslationConfigType<T, C>,
   values: any
 ): boolean => {
-  if (isTranslationFieldPropertiesWithParent(config)) {
-    // If parent value is an array, check if evaluation exists
+  if (!isTranslationFieldPropertiesWithParent(config)) return false;
 
-    const parentConfig = config.parentRelation() as TranslationFieldPropertiesWithOptionsAndChildren<
-      T,
-      C
-    >;
+  const parentConfig = config.parentRelation() as TranslationFieldPropertiesWithOptionsAndChildren<
+    T,
+    C
+  >;
 
-    const parentValue: T = values[parentConfig.gqlField];
+  const parentValue: T = values[parentConfig.gqlField];
 
-    if (Array.isArray(parentValue)) {
-      if (
-        !values[parentConfig.gqlField]?.some((fieldValue: T) => {
-          return parentConfig.childRelation[fieldValue]?.includes(() => config);
-        })
-      ) {
-        return true;
-      }
-      return false;
-    }
-    // If parent value is a single value, check if evaluation exits
-    if (!parentConfig.childRelation[parentValue]?.includes(() => config)) {
+  // If parent value is an array, check if evaluation exists
+  if (Array.isArray(parentValue)) {
+    if (
+      !values[parentConfig.gqlField]?.some((fieldValue: T) => {
+        return parentConfig.childRelation[fieldValue]?.includes(() => config);
+      })
+    ) {
       return true;
     }
     return false;
+  }
+  // If parent value is a single value, check if evaluation exits
+  if (!parentConfig.childRelation[parentValue]?.includes(() => config)) {
+    return true;
   }
   return false;
 };
