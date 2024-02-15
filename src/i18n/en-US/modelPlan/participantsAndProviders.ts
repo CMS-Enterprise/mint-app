@@ -155,7 +155,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
       ModelViewFilter.DFSDM,
       ModelViewFilter.IPC
     ],
-    pageStart: true,
+    isPageStart: true,
     adjacentPosition: 'left'
   },
   estimateConfidence: {
@@ -222,7 +222,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     label: 'Please specify',
     dataType: 'string',
     formType: 'textarea',
-    otherType: true
+    isOtherType: true
   },
   recruitmentNote: {
     gqlField: 'recruitmentNote',
@@ -270,7 +270,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     label: 'Please describe the other participants engaging with this model',
     dataType: 'string',
     formType: 'textarea',
-    otherType: true,
+    isOtherType: true,
     parentRelation: () => participantsAndProviders.selectionMethod,
     filterGroups: [
       ModelViewFilter.CMMI,
@@ -304,7 +304,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
       OTHER: 'participantAddedFrequencyOther'
     },
     filterGroups: [ModelViewFilter.IPC],
-    pageStart: true
+    isPageStart: true
   },
   participantAddedFrequencyContinually: {
     gqlField: 'participantAddedFrequencyContinually',
@@ -313,7 +313,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     label: 'Please specify',
     dataType: 'string',
     formType: 'text',
-    otherType: true,
+    isOtherType: true,
     filterGroups: [ModelViewFilter.IPC]
   },
   participantAddedFrequencyOther: {
@@ -323,7 +323,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     label: 'Please specify',
     dataType: 'string',
     formType: 'text',
-    otherType: true,
+    isOtherType: true,
     filterGroups: [ModelViewFilter.IPC]
   },
   participantAddedFrequencyNote: {
@@ -356,7 +356,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     label: 'Please specify',
     dataType: 'string',
     formType: 'text',
-    otherType: true,
+    isOtherType: true,
     filterGroups: [ModelViewFilter.IPC]
   },
   participantRemovedFrequencyOther: {
@@ -366,7 +366,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     label: 'Please specify',
     dataType: 'string',
     formType: 'text',
-    otherType: true,
+    isOtherType: true,
     filterGroups: [ModelViewFilter.IPC]
   },
   participantRemovedFrequencyNote: {
@@ -404,7 +404,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     label: 'Please specify',
     dataType: 'string',
     formType: 'textarea',
-    otherType: true,
+    isOtherType: true,
     filterGroups: [ModelViewFilter.CBOSC, ModelViewFilter.IPC]
   },
   communicationNote: {
@@ -441,7 +441,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     label: 'Please specify',
     dataType: 'string',
     formType: 'textarea',
-    otherType: true
+    isOtherType: true
   },
   riskNote: {
     gqlField: 'riskNote',
@@ -483,7 +483,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
       true: 'Yes',
       false: 'No'
     },
-    pageStart: true
+    isPageStart: true
   },
   coordinateWorkNote: {
     gqlField: 'coordinateWorkNote',
@@ -551,7 +551,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     label: 'Please specify',
     dataType: 'string',
     formType: 'text',
-    otherType: true
+    isOtherType: true
   },
   gainsharePaymentsNote: {
     gqlField: 'gainsharePaymentsNote',
@@ -590,7 +590,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     label: 'Please specify',
     dataType: 'string',
     formType: 'textarea',
-    otherType: true,
+    isOtherType: true,
     filterGroups: [ModelViewFilter.IDDOC]
   },
   participantsIDSNote: {
@@ -615,7 +615,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
       OTHER: 'providerAdditionFrequencyOther'
     },
     filterGroups: [ModelViewFilter.OACT, ModelViewFilter.IPC],
-    pageStart: true
+    isPageStart: true
   },
   providerAdditionFrequencyContinually: {
     gqlField: 'providerAdditionFrequencyContinually',
@@ -624,7 +624,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     label: 'Please specify',
     dataType: 'string',
     formType: 'textarea',
-    otherType: true,
+    isOtherType: true,
     filterGroups: [ModelViewFilter.OACT, ModelViewFilter.IPC]
   },
   providerAdditionFrequencyOther: {
@@ -634,7 +634,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     label: 'Please specify',
     dataType: 'string',
     formType: 'textarea',
-    otherType: true,
+    isOtherType: true,
     filterGroups: [ModelViewFilter.OACT, ModelViewFilter.IPC]
   },
   providerAdditionFrequencyNote: {
@@ -682,7 +682,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
       'Please describe the other method for deciding which providers to add.',
     dataType: 'string',
     formType: 'textarea',
-    otherType: true,
+    isOtherType: true,
     filterGroups: [ModelViewFilter.IPC, ModelViewFilter.OACT]
   },
   providerAddMethodNote: {
@@ -727,7 +727,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     dataType: 'string',
     formType: 'textarea',
     filterGroups: [ModelViewFilter.IPC, ModelViewFilter.OACT],
-    otherType: true
+    isOtherType: true
   },
   providerLeaveMethodNote: {
     gqlField: 'providerLeaveMethodNote',
@@ -758,7 +758,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     label: 'Please specify',
     dataType: 'string',
     formType: 'text',
-    otherType: true
+    isOtherType: true
   },
   providerRemovalFrequencyOther: {
     gqlField: 'providerRemovalFrequencyOther',
@@ -767,7 +767,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     label: 'Please specify',
     dataType: 'string',
     formType: 'text',
-    otherType: true
+    isOtherType: true
   },
   providerRemovalFrequencyNote: {
     gqlField: 'providerRemovalFrequencyNote',

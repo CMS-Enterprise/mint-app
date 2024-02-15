@@ -28,7 +28,7 @@ const ReadOnlyBody = ({
             key={field}
             className={classNames({
               'margin-top-4 padding-top-4 border-top-1px border-base-light':
-                !filteredView && config[field]?.pageStart // Add border if translation config contains property 'pageStart'
+                !filteredView && config[field]?.isPageStart // Add border if translation config contains property 'isPageStart'
             })}
           >
             {!filteredView && config[field]?.readonlyHeader && (
@@ -63,8 +63,8 @@ const ReadOnlyBody = ({
               </>
             ) : (
               <>
-                {/* Don't render questions of type 'otherType' as they are rendered within ReadOnlySectionNew */}
-                {!config[field]?.otherType && (
+                {/* Don't render questions of type 'isOtherType' as they are rendered within ReadOnlySectionNew */}
+                {!config[field]?.isOtherType && (
                   <ReadOnlySectionNew
                     config={config[field]}
                     values={data}
