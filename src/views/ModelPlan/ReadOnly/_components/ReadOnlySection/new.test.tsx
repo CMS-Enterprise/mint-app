@@ -157,8 +157,7 @@ describe('The Read Only Section', () => {
 
       const relatedQuestions = getRelatedUneededQuestions(
         participantsAndProviders.providerOverlap,
-        value,
-        'participantsAndProviders'
+        value
       );
 
       expect(relatedQuestions).toEqual(expectedQuestions);

@@ -101,6 +101,7 @@ export type TranslationFieldProperties = {
 /* 
   Extended type for questions that are conditionally rendered by a parent evaluation
   Takes in a enum/generic for Parent field to check for condition
+  Closure is needed to access parent scope of object
 */
 type ParentRelation<T extends keyof T | string> = {
   parentRelation: () => TranslationConfigType<T>;
@@ -110,6 +111,7 @@ type ParentRelation<T extends keyof T | string> = {
   References the parent option/enum value as the key and the child field it references as the value
   Child relations only pertain to specific questions that remain hidden in readonly per Figma
   This does not include generic "Other" questions or single line followups, unless specifically stated
+  Closure is needed to access parent scope of object
 */
 type ChildRelation<
   T extends keyof T | string,

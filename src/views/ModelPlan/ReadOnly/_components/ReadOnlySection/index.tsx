@@ -1,7 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Grid, Icon } from '@trussworks/react-uswds';
-import i18next from 'i18next';
 
 import Alert from 'components/shared/Alert';
 import CollapsableLink from 'components/shared/CollapsableLink';
@@ -11,8 +10,7 @@ import {
   isTranslationFieldPropertiesWithOptionsAndChildren,
   TranslationFieldPropertiesWithOptions,
   TranslationFieldPropertiesWithOptionsAndChildren,
-  TranslationFieldPropertiesWithOptionsAndParent,
-  TranslationPlan
+  TranslationFieldPropertiesWithOptionsAndParent
 } from 'types/translation';
 
 export type ReadOnlySectionProps = {
@@ -265,10 +263,9 @@ export const getRelatedUneededQuestions = <
 >(
   config:
     | TranslationFieldPropertiesWithOptions<T>
-    | TranslationFieldPropertiesWithOptionsAndChildren<T>
+    | TranslationFieldPropertiesWithOptionsAndChildren<T, C>
     | TranslationFieldPropertiesWithOptionsAndParent<T, C>, // Translation config
-  value: T[] | undefined, // field value/enum array,
-  translationKey: keyof TranslationPlan
+  value: T[] | undefined // field value/enum array,
 ): (string | null | undefined)[] | null => {
   if (!isTranslationFieldPropertiesWithOptionsAndChildren(config)) return null;
 
@@ -278,32 +275,29 @@ export const getRelatedUneededQuestions = <
   let unneededRelations: string[] = [];
   const neededRelations: string[] = [];
 
-  getKeys(config.childRelation)
-    // Check if question has conditional child questions
-    .filter(option => config.childRelation?.[option].length)
-    .forEach(option => {
-      // If the evaluation of the parent value triggers a child question, sort into appropriate arrays
-      if (
-        (Array.isArray(value) && !value?.includes(option as T)) ||
-        (!Array.isArray(value) &&
-          value !== undefined &&
-          String(value) !== option)
-      ) {
-        config.childRelation?.[option].forEach(childField => {
-          neededRelations.push(childField);
-        });
-      } else if (config.childRelation?.[option]) {
-        unneededRelations = [
-          ...unneededRelations,
-          ...config.childRelation?.[option]
-        ];
-      }
-    });
+  getKeys(config.childRelation).forEach(option => {
+    // If the evaluation of the parent value triggers a child question, sort into appropriate arrays
+    if (
+      (Array.isArray(value) && !value?.includes(option as T)) ||
+      (!Array.isArray(value) && value !== undefined && String(value) !== option)
+    ) {
+      config.childRelation?.[option]?.forEach(childField => {
+        neededRelations.push(childField().label);
+      });
+    } else {
+      unneededRelations = [
+        ...unneededRelations,
+        ...(config.childRelation?.[option]?.map(
+          childField => childField().label
+        ) as [])
+      ];
+    }
+  });
 
   // Removes dupe relations and converts to translated string
   const uniqueQuestions = neededRelations
     .filter(relation => !unneededRelations.includes(relation))
-    .map(relation => i18next.t<string>(`${translationKey}:${relation}.label`));
+    .map(relation => relation);
 
   return [...new Set(uniqueQuestions)];
 };

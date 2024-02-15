@@ -74,7 +74,7 @@ export const getRelatedUneededQuestions = <
   getKeys(config.childRelation).forEach(option => {
     // If the evaluation of the parent value triggers a child question, sort into appropriate arrays
     if (
-      (Array.isArray(value) && !value?.includes(option as T)) ||
+      (Array.isArray(value) && !value?.includes(option)) ||
       (!Array.isArray(value) && value !== undefined && String(value) !== option)
     ) {
       config.childRelation?.[option]?.forEach(childField => {
@@ -110,6 +110,7 @@ export const isHiddenByParentCondition = <
 ): boolean => {
   if (!isTranslationFieldPropertiesWithParent(config)) return false;
 
+  // Typescript is not inferring the parent config type, but we know it has options with children
   const parentConfig = config.parentRelation() as TranslationFieldPropertiesWithOptionsAndChildren<
     T,
     C
