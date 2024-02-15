@@ -266,8 +266,9 @@ const ReadOnlySectionNew = <
     ) {
       return (
         <div className="margin-y-0 font-body-md line-height-sans-4 text-pre-line">
-          {!isEmpty(value) && value}
-          {isEmpty(value) && (
+          {!isEmpty(value) ? (
+            value
+          ) : (
             <em className="text-base">
               {miscellaneousT('noAdditionalInformation')}
             </em>
