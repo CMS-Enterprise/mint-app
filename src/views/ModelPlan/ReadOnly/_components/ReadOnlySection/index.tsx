@@ -280,7 +280,7 @@ export const getRelatedUneededQuestions = <
 
   getKeys(config.childRelation)
     // Check if question has conditional child questions
-    .filter(option => config.childRelation?.[option].length)
+    .filter(option => config.childRelation?.[option]?.length)
     .forEach(option => {
       // If the evaluation of the parent value triggers a child question, sort into appropriate arrays
       if (
@@ -289,13 +289,13 @@ export const getRelatedUneededQuestions = <
           value !== undefined &&
           String(value) !== option)
       ) {
-        config.childRelation?.[option].forEach(childField => {
+        config.childRelation?.[option]?.forEach(childField => {
           neededRelations.push(childField);
         });
       } else if (config.childRelation?.[option]) {
         unneededRelations = [
           ...unneededRelations,
-          ...config.childRelation?.[option]
+          ...(config.childRelation?.[option] as [])
         ];
       }
     });
