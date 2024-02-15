@@ -2,7 +2,6 @@ package notifications
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/google/uuid"
 
@@ -37,56 +36,59 @@ func userNotificationCreate(
 	activity *Activity,
 	// The id of the user the notification is for
 	userID uuid.UUID,
+	// whether or not a user set a preference to send in app notifications
+	inAppNotification bool,
+	// whether or not a user set a preference to receive an email notification
+	emailNotification bool,
 ) (*UserNotification, error) {
-	notif := NewUserNotification(activity.ActorID, activity.ID)
+	notif := NewUserNotification(activity.ActorID, activity.ID, inAppNotification, emailNotification)
 	notif.UserID = userID
 
 	return dbCall.UserNotificationCreate(np, notif)
 
 }
 
-// userNotificationCreateAllPerActivity is a helper function that will create notifications based on the new activity that is being writen to the database.
-func userNotificationCreateAllPerActivity(ctx context.Context,
-	np sqlutils.NamedPreparer,
-	// the activity this notification is in regards to
-	activity *Activity) ([]*UserNotification, error) {
-	var notifications []*UserNotification
+// // userNotificationCreateAllPerActivity is a helper function that will create notifications based on the new activity that is being writen to the database.
+// func userNotificationCreateAllPerActivity(ctx context.Context,
+// 	np sqlutils.NamedPreparer,
+// 	// the activity this notification is in regards to
+// 	activity *Activity) ([]*UserNotification, error) {
+// 	var notifications []*UserNotification
 
-	switch activity.ActivityType {
-	case ActivityDigest:
-		fmt.Println("Handling DAILY_DIGEST_COMPLETE activity")
-	case ActivityAddedAsCollaborator:
-		fmt.Println("Handling ADDED_AS_COLLABORATOR activity")
-	case ActivityTaggedInDiscussion:
-		fmt.Println("Handling TAGGED_IN_DISCUSSION activity")
-	case ActivityTaggedInDiscussionReply:
-		fmt.Println("Handling TAGGED_IN_DISCUSSION_REPLY activity")
-	case ActivityNewDiscussionReply:
-		fmt.Println("Handling NEW_DISCUSSION_REPLY activity")
-	case ActivityModelPlanShared:
-		fmt.Println("Handling MODEL_PLAN_SHARED activity")
-	case ActivityNewPlanDiscussion:
-		fmt.Println("Handling NEW_PLAN_DISCUSSION activity")
-	default:
-		return nil, fmt.Errorf("unknown activity type, unable to create notifications")
-	}
+// 	switch activity.ActivityType {
+// 	case ActivityDigest:
+// 		fmt.Println("Handling DAILY_DIGEST_COMPLETE activity")
+// 	case ActivityAddedAsCollaborator:
+// 		fmt.Println("Handling ADDED_AS_COLLABORATOR activity")
+// 	case ActivityTaggedInDiscussion:
+// 		fmt.Println("Handling TAGGED_IN_DISCUSSION activity")
+// 	case ActivityTaggedInDiscussionReply:
+// 		fmt.Println("Handling TAGGED_IN_DISCUSSION_REPLY activity")
+// 	case ActivityNewDiscussionReply:
+// 		fmt.Println("Handling NEW_DISCUSSION_REPLY activity")
+// 	case ActivityModelPlanShared:
+// 		fmt.Println("Handling MODEL_PLAN_SHARED activity")
+// 	case ActivityNewPlanDiscussion:
+// 		fmt.Println("Handling NEW_PLAN_DISCUSSION activity")
+// 	default:
+// 		return nil, fmt.Errorf("unknown activity type, unable to create notifications")
+// 	}
 
-	//TODO: EASI-3925 update this to switch on Activities
-	originatorNotif, err := userNotificationCreate(ctx, np, activity, activity.ActorID) //TODO: get the actual users who need a notification, create a list, or handle in DB
-	if err != nil {
-		return nil, err
-	}
-	notifications = append(notifications, originatorNotif)
+// 	//TODO: EASI-3925 update this to switch on Activities
+// 	originatorNotif, err := userNotificationCreate(ctx, np, activity, activity.ActorID) //TODO: get the actual users who need a notification, create a list, or handle in DB
+// 	if err != nil {
+// 		return nil, err
+// 	}
+// 	notifications = append(notifications, originatorNotif)
 
-	/* TODO: EASI-3294
-	1. Find users to be notified base on the notification type
-	2. Build a notification, create the notification
+// 	/* TODO: EASI-3294
+// 	1. Find users to be notified base on the notification type
+// 	2. Build a notification, create the notification
 
+// 	*/
+// 	return notifications, nil
 
-	*/
-	return notifications, nil
-
-}
+// }
 
 // UserNotificationMarkAsRead marks a single notification as read in the database
 func UserNotificationMarkAsRead(_ context.Context,

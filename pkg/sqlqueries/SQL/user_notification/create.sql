@@ -3,6 +3,8 @@ INSERT INTO public.user_notification(
     activity_id,
     user_id,
     is_read,
+    is_archived,
+    email_sent,
     created_by
 )
 VALUES (
@@ -10,12 +12,17 @@ VALUES (
     :activity_id,
     :user_id,
     :is_read,
+    :is_archived,
+    :email_sent,
     :created_by
 )
-RETURNING id,
+RETURNING
+id,
 activity_id,
 user_id,
 is_read,
+is_archived,
+email_sent,
 created_by,
 created_dts,
 modified_by,

@@ -1837,6 +1837,8 @@ type UserNotification {
   # activityType: ActivityType #Maybe add this on this level so the FE doesn't need to query it?
 	userID: UUID! #probably not needed, it should be only visible for the user
   isRead: Boolean!
+  isArchived: Boolean!
+  emailSent: Boolean!
   activity: Activity! # should we nest this?
   content: UserNotificationContent!
 

@@ -22,7 +22,10 @@ func (s *dataBaseCalls) UserNotificationCollectionGetByUserID(np sqlutils.NamedP
 }
 
 // UserNotificationCreate a notification record in the database
-func (s *dataBaseCalls) UserNotificationCreate(np sqlutils.NamedPreparer, notification *UserNotification) (*UserNotification, error) {
+func (s *dataBaseCalls) UserNotificationCreate(
+	np sqlutils.NamedPreparer,
+	notification *UserNotification,
+) (*UserNotification, error) {
 
 	if notification.ID == uuid.Nil {
 		notification.ID = uuid.New()

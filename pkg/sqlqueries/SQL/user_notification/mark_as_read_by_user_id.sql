@@ -5,10 +5,13 @@ SET
     modified_dts = CURRENT_TIMESTAMP
 WHERE
     user_id = :modified_by AND is_read = FALSE
-RETURNING id,
+RETURNING
+id,
 activity_id,
 user_id,
 is_read,
+is_archived,
+email_sent,
 created_by,
 created_dts,
 modified_by,

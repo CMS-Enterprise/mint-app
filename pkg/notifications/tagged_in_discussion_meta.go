@@ -11,6 +11,7 @@ import (
 
 	"github.com/cmsgov/mint-app/pkg/models"
 	"github.com/cmsgov/mint-app/pkg/sqlutils"
+	"github.com/cmsgov/mint-app/pkg/storage"
 )
 
 // TaggedInPlanDiscussionActivityMeta represents the notification data that is relevant to being tagged in a new Plan Discussion
@@ -66,6 +67,7 @@ func ActivityTaggedUserInDiscussionCreate(ctx context.Context, np sqlutils.Named
 
 		switch mention.Type {
 		case models.TagTypeUserAccount:
+
 			//TODO: EASI-3925 make this respect user preferences? Or we do we want the SQL to do that?
 			// taggedUserAccount, ok := entity.(*authentication.UserAccount)
 			// if !ok {
@@ -80,7 +82,12 @@ func ActivityTaggedUserInDiscussionCreate(ctx context.Context, np sqlutils.Named
 				continue
 
 			}
-			_, err := userNotificationCreate(ctx, np, activity, *mention.EntityUUID)
+			pref, err := storage.UserNotificationPreferencesGetByUserID(np, *mention.EntityUUID)
+			if err != nil {
+				errs = append(errs, fmt.Errorf("unable to get user notification preference, Notification not created %w", err))
+			}
+
+			_, err = userNotificationCreate(ctx, np, activity, *mention.EntityUUID, pref.TaggedInDiscussionInApp, pref.TaggedInDiscussionEmail)
 			if err != nil {
 				return nil, err
 			}

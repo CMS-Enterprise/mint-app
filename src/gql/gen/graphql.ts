@@ -2762,7 +2762,9 @@ export type UserNotification = {
   createdBy: Scalars['UUID']['output'];
   createdByUserAccount: UserAccount;
   createdDts: Scalars['Time']['output'];
+  emailSent: Scalars['Boolean']['output'];
   id: Scalars['UUID']['output'];
+  isArchived: Scalars['Boolean']['output'];
   isRead: Scalars['Boolean']['output'];
   modifiedBy?: Maybe<Scalars['UUID']['output']>;
   modifiedByUserAccount?: Maybe<UserAccount>;

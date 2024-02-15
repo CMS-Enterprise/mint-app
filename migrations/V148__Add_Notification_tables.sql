@@ -32,9 +32,9 @@ CREATE TABLE user_notification (
     activity_id UUID NOT NULL REFERENCES activity(id), --foreign key to user table
     user_id UUID NOT NULL REFERENCES user_account(id),
     is_read  BOOLEAN NOT NULL DEFAULT FALSE,
+    is_archived  BOOLEAN NOT NULL DEFAULT FALSE,
+    email_sent  BOOLEAN NOT NULL,
     -- //TODO: EASI-3294 We might want to add more fields that distinguish events that are different from the parent activity (EG what specific model plans did a user follow at the time of a digest (it could change))
-    -- //TODO: EASI-3295 consider adding an archived column, so we always insert a record. If user has preferences not to receive a certain type of notification, just set archived to true.
-
 
     --META DATA
     created_by UUID NOT NULL REFERENCES user_account(id), --Who wrote this row, not necessarily the actor, though it could be the same
