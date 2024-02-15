@@ -156,7 +156,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
       ModelViewFilter.IPC
     ],
     isPageStart: true,
-    adjacentPosition: 'left'
+    adjacentPosition: 'estimateConfidence'
   },
   estimateConfidence: {
     gqlField: 'estimateConfidence',
@@ -509,7 +509,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
         () => participantsAndProviders.gainsharePaymentsEligibility
       ]
     },
-    adjacentPosition: 'left'
+    adjacentPosition: 'gainsharePaymentsTrack'
   },
   gainsharePaymentsTrack: {
     gqlField: 'gainsharePaymentsTrack',

@@ -36,10 +36,9 @@ const ReadOnlyBody = ({
             )}
 
             {/* Checks if questions have config to be displayed side by side */}
-            {config[field]?.adjacentPosition === 'left' ||
-            config[field]?.adjacentPosition === 'right' ? (
+            {config[field]?.adjacentPosition ? (
               <>
-                {config[field]?.adjacentPosition === 'left' && (
+                {config[field]?.adjacentPosition !== 'right' && (
                   <SideBySideReadOnlySectionNew>
                     <ReadOnlySectionNew
                       config={config[field]}
@@ -49,11 +48,19 @@ const ReadOnlyBody = ({
 
                     {/* Checks if second question is condtional on the previous question before rendering */}
                     {!isHiddenByParentCondition(
-                      config[getKeys(config)[index + 1]],
+                      config[
+                        config[field]
+                          .adjacentPosition! as keyof TranslationPlanSection
+                      ],
                       data
                     ) && (
                       <ReadOnlySectionNew
-                        config={config[getKeys(config)[index + 1]]}
+                        config={
+                          config[
+                            config[field]
+                              .adjacentPosition! as keyof TranslationPlanSection
+                          ]
+                        }
                         values={data}
                         filteredView={filteredView}
                       />

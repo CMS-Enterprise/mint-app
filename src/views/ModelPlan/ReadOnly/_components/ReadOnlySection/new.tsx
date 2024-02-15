@@ -21,7 +21,7 @@ import {
 import { filterGroupKey } from '../FilterView/BodyContent/_filterGroupMapping';
 
 /*
-  Util function for prepping data to listItems prop of ReadOnlySection
+  Util for prepping data to listItems prop of ReadOnlySection
   Using translation config instead of raw data allows us to ensure a predetermined order of render
 */
 export const formatListItems = <T extends string | keyof T>(
@@ -34,7 +34,7 @@ export const formatListItems = <T extends string | keyof T>(
 };
 
 /*
-  Util function for prepping data to listOtherItems prop of ReadOnlySection
+  Util for prepping data to listOtherItems prop of ReadOnlySection
   Using translation config instead of raw data allows us to ensure a predetermined order of render
 */
 export const formatListOtherItems = <T extends string | keyof T>(
@@ -50,7 +50,7 @@ export const formatListOtherItems = <T extends string | keyof T>(
 };
 
 /*
-  Util function for getting related child questions that do not need to be rendered
+  Util for getting related child questions that do not need to be rendered
   Using to render a toggle alert to show list of questions
 */
 export const getRelatedUneededQuestions = <
@@ -99,7 +99,29 @@ export const getRelatedUneededQuestions = <
 };
 
 /*
-  Util function for checking if question should not be rendered based on parent's answer/condition
+  Util for comparing closures of parent/child
+  Allows to map and conditionally hide/render child based on parent value
+*/
+export const compareClosure = <
+  T extends string | keyof T,
+  C extends string | keyof C
+>(
+  parentValue: T,
+  parentConfig: TranslationFieldPropertiesWithOptionsAndChildren<T, C>,
+  childConfig: TranslationConfigType<T, C>
+): boolean => {
+  let hidden = true;
+
+  parentConfig.childRelation[parentValue]?.forEach(child => {
+    if (child() === childConfig) {
+      hidden = false;
+    }
+  });
+  return hidden;
+};
+
+/*
+  Util for checking if question should not be rendered based on parent's answer/condition
 */
 export const isHiddenByParentCondition = <
   T extends string | keyof T,
@@ -122,21 +144,18 @@ export const isHiddenByParentCondition = <
   if (Array.isArray(parentValue)) {
     if (
       !values[parentConfig.gqlField]?.some((fieldValue: T) => {
-        return parentConfig.childRelation[fieldValue]?.includes(() => config);
+        return compareClosure(fieldValue, parentConfig, config);
       })
     ) {
       return true;
     }
     return false;
   }
-  // If parent value is a single value, check if evaluation exits
-  if (!parentConfig.childRelation[parentValue]?.includes(() => config)) {
-    return true;
-  }
-  return false;
+
+  return compareClosure(parentValue, parentConfig, config);
 };
 
-/* Util function for prepping optionsLabels translation data to formatListTooltips prop of ReadOnlySection
+/* Util for prepping optionsLabels translation data to formatListTooltips prop of ReadOnlySection
   Using translation config instead of raw data allows us to ensure a predetermined order of render
 */
 export const formatListTooltips = <T extends string | keyof T>(

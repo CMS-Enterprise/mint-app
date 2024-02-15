@@ -5,8 +5,10 @@ import i18next from 'i18next';
 
 import { participantsAndProviders } from 'i18n/en-US/modelPlan/participantsAndProviders';
 import { payments } from 'i18n/en-US/modelPlan/payments';
+import { Bool } from 'types/translation';
 
 import ReadOnlySectionNew, {
+  compareClosure,
   formatListItems,
   formatListOtherItems,
   formatListTooltips,
@@ -17,7 +19,7 @@ import ReadOnlySectionNew, {
 const defaultProps = {
   config: participantsAndProviders.modelApplicationLevel,
   values: {
-    providerOverlap: [OverlapType.NO],
+    providerOverlap: OverlapType.NO,
     providerOverlapHierarchy: 'Overlap heirarchy',
     modelApplicationLevel: 'Top level',
     recruitmentMethod: [RecruitmentType.OTHER],
@@ -180,6 +182,18 @@ describe('The Read Only Section', () => {
       const childQuestion = isHiddenByParentCondition(
         participantsAndProviders.providerOverlap,
         defaultProps.values
+      );
+
+      expect(childQuestion).toEqual(expectedEvaluation);
+    });
+
+    it('compares closures of parent/child translation configuration, child should now be hidden', async () => {
+      const expectedEvaluation = false;
+
+      const childQuestion = compareClosure(
+        Bool.true,
+        participantsAndProviders.gainsharePayments,
+        participantsAndProviders.gainsharePaymentsTrack
       );
 
       expect(childQuestion).toEqual(expectedEvaluation);
