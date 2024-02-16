@@ -2094,7 +2094,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "query currentUser {\n  currentUser {\n    notificationPreferences {\n        dailyDigestCompleteEmail\n        dailyDigestCompleteInApp\n\n        addedAsCollaboratorEmail\n        addedAsCollaboratorInApp\n\n        taggedInDiscussionEmail\n        taggedInDiscussionInApp\n\n        taggedInDiscussionReplyEmail\n        taggedInDiscussionReplyInApp\n\n        newDiscussionReplyEmail\n        newDiscussionReplyInApp\n\n        modelPlanSharedEmail\n        modelPlanSharedInApp\n\n        newPlanDiscussionEmail\n        newPlanDiscussionInApp\n\n      }\n    }\n  }\n\n",
+								"query": "query currentUser {\n  currentUser {\n    notificationPreferences {\n        dailyDigestComplete\n\n        addedAsCollaborator\n\n        taggedInDiscussion\n\n        taggedInDiscussionReply\n\n        newDiscussionReply\n\n        modelPlanShared\n\n      }\n    }\n  }\n\n",
 								"variables": ""
 							}
 						},
@@ -2232,7 +2232,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation NotificationUpdate {\nupdateUserNotificationPreferences( changes:{\n    dailyDigestCompleteEmail: false\n    dailyDigestCompleteInApp: true\n    \n    addedAsCollaboratorEmail: true\n    addedAsCollaboratorInApp: true\n\n    taggedInDiscussionEmail: true\n    taggedInDiscussionInApp: true\n\n    taggedInDiscussionReplyEmail: true\n    taggedInDiscussionReplyInApp: true\n\n    newDiscussionReplyEmail: true\n    newDiscussionReplyInApp: true\n\n    modelPlanSharedEmail: true\n    modelPlanSharedInApp: true\n\n    newPlanDiscussionEmail: true\n    newPlanDiscussionInApp: true    \n    \n\n}) {\n\n    # notificationPreferences {\n        dailyDigestCompleteEmail\n        dailyDigestCompleteInApp\n\n        addedAsCollaboratorEmail\n        addedAsCollaboratorInApp\n\n        taggedInDiscussionEmail\n        taggedInDiscussionInApp\n\n        taggedInDiscussionReplyEmail\n        taggedInDiscussionReplyInApp\n\n        newDiscussionReplyEmail\n        newDiscussionReplyInApp\n\n        modelPlanSharedEmail\n        modelPlanSharedInApp\n\n        newPlanDiscussionEmail\n        newPlanDiscussionInApp\n\n      \n    }\n}\n",
+								"query": "mutation NotificationPreferencesUpdate {\nupdateUserNotificationPreferences( changes:{\n    dailyDigestComplete: IN_APP_ONLY\n    \n    addedAsCollaborator: ALL\n\n    taggedInDiscussion: ALL\n\n    taggedInDiscussionReply: ALL\n\n    newDiscussionReply: ALL\n\n    modelPlanShared: ALL\n\n    \n\n}) {\n\n    # notificationPreferences {\n        dailyDigestComplete\n\n        addedAsCollaborator\n\n        taggedInDiscussion\n\n        taggedInDiscussionReply\n\n        newDiscussionReply\n\n        modelPlanShared\n\n      \n    }\n}\n",
 								"variables": ""
 							}
 						},
