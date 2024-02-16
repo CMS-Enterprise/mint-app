@@ -1129,11 +1129,9 @@ type MutationResolver interface {
 	CreatePlanCollaborator(ctx context.Context, input model.PlanCollaboratorCreateInput) (*models.PlanCollaborator, error)
 	UpdatePlanCollaborator(ctx context.Context, id uuid.UUID, newRoles []models.TeamRole) (*models.PlanCollaborator, error)
 	DeletePlanCollaborator(ctx context.Context, id uuid.UUID) (*models.PlanCollaborator, error)
-	UpdatePlanBasics(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanBasics, error)
 	UpdatePlanGeneralCharacteristics(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanGeneralCharacteristics, error)
 	UpdatePlanBeneficiaries(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanBeneficiaries, error)
 	UpdatePlanParticipantsAndProviders(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanParticipantsAndProviders, error)
-	UpdatePlanOpsEvalAndLearning(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanOpsEvalAndLearning, error)
 	UploadNewPlanDocument(ctx context.Context, input model.PlanDocumentInput) (*models.PlanDocument, error)
 	LinkNewPlanDocument(ctx context.Context, input model.PlanDocumentLinkInput) (*models.PlanDocument, error)
 	DeletePlanDocument(ctx context.Context, id uuid.UUID) (int, error)
@@ -1168,6 +1166,8 @@ type MutationResolver interface {
 	MarkNotificationAsRead(ctx context.Context, notificationID uuid.UUID) (*notifications.UserNotification, error)
 	MarkAllNotificationsAsRead(ctx context.Context) ([]*notifications.UserNotification, error)
 	UpdateUserNotificationPreferences(ctx context.Context, changes map[string]interface{}) (*models.UserNotificationPreferences, error)
+	UpdatePlanBasics(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanBasics, error)
+	UpdatePlanOpsEvalAndLearning(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanOpsEvalAndLearning, error)
 }
 type OperationalNeedResolver interface {
 	Solutions(ctx context.Context, obj *models.OperationalNeed, includeNotNeeded bool) ([]*models.OperationalSolution, error)
@@ -7913,9 +7913,7 @@ func (ec *executionContext) introspectType(name string) (*introspection.Type, er
 }
 
 var sources = []*ast.Source{
-	{Name: "../schema.graphql", Input: `
-
-"""
+	{Name: "../schema/schema.graphql", Input: `"""
 The current user's Launch Darkly key
 """
 type LaunchDarklySettings {
@@ -7932,33 +7930,11 @@ type CurrentUser {
   notifications: UserNotifications!
   notificationPreferences: UserNotificationPreferences!
 }
-"""
-UUIDs are represented using 36 ASCII characters, for example B0511859-ADE6-4A67-8969-16EC280C0E1A
-"""
-scalar UUID
-"""
-Time values are represented as strings using RFC3339 format, for example 2019-10-12T07:20:50G.52Z
-"""
-scalar Time
-"""
-Maps an arbitrary GraphQL value to a map[string]interface{} Go type.
-"""
-scalar Map
-
-"""
-TaggedHTML represents an input type for HTML that could also include tags that reference another entity
-"""
-scalar TaggedHTML
 
 enum SortDirection {
   ASC
   DESC
 }
-"""
-https://gqlgen.com/reference/file-upload/
-Represents a multipart file upload
-"""
-scalar Upload
 
 """
 ModelPlan represent the data point for plans about a model. It is the central data type in the application
@@ -8236,94 +8212,6 @@ input PlanDocumentLinkInput {
   restricted: Boolean!
   otherTypeDescription: String
   optionalNotes: String
-}
-
-"""
-Represents plan basics
-"""
-type PlanBasics {
-  id: UUID!
-  modelPlanID: UUID!
-
-  demoCode: String
-  amsModelID: String
-
-  modelCategory: ModelCategory
-  additionalModelCategories: [ModelCategory!]!
-  cmsCenters: [CMSCenter!]!
-  cmmiGroups: [CMMIGroup!]!
-  modelType: [ModelType!]!
-  modelTypeOther: String
-  problem: String
-  goal: String
-  testInterventions: String
-  note: String
-
-  # Milestones
-  completeICIP: Time
-  clearanceStarts: Time
-  clearanceEnds: Time
-  announced: Time
-  applicationsStart: Time
-  applicationsEnd: Time
-  performancePeriodStarts: Time
-  performancePeriodEnds: Time
-  wrapUpEnds: Time
-  highLevelNote: String
-  phasedIn: Boolean
-  phasedInNote: String
-
-  createdBy: UUID!
-  createdByUserAccount: UserAccount!
-  createdDts: Time!
-  modifiedBy: UUID
-  modifiedByUserAccount: UserAccount
-  modifiedDts: Time
-
-  readyForReviewBy: UUID
-  readyForReviewByUserAccount: UserAccount
-  readyForReviewDts: Time
-  readyForClearanceBy: UUID
-  readyForClearanceByUserAccount: UserAccount
-  readyForClearanceDts: Time
-
-  status: TaskStatus!
-}
-
-"""
-PlanBasicsChanges represents the possible changes you can make to a Plan Basics object when updating it.
-Fields explicitly set with NULL will be unset, and omitted fields will be left unchanged.
-https://gqlgen.com/reference/changesets/
-"""
-input PlanBasicsChanges @goModel(model: "map[string]interface{}") {
-  demoCode: String
-  amsModelID: String
-
-  modelCategory: ModelCategory
-  additionalModelCategories: [ModelCategory!]
-  cmsCenters: [CMSCenter!]
-  cmmiGroups: [CMMIGroup!]
-  modelType: [ModelType!]
-  modelTypeOther: String
-  problem: String
-  goal: String
-  testInterventions: String
-  note: String
-
-  # Milestones
-  completeICIP: Time
-  clearanceStarts: Time
-  clearanceEnds: Time
-  announced: Time
-  applicationsStart: Time
-  applicationsEnd: Time
-  performancePeriodStarts: Time
-  performancePeriodEnds: Time
-  wrapUpEnds: Time
-  highLevelNote: String
-  phasedIn: Boolean
-  phasedInNote: String
-  status: TaskStatusInput
 }
 
 """
@@ -9173,252 +9061,6 @@ input PlanPaymentsChanges @goModel(model: "map[string]interface{}") {
 }
 
 """
-PlanOpsEvalAndLearning represents the task list section that deals with information regarding the Ops Eval and Learning
-"""
-type PlanOpsEvalAndLearning {
-    id: UUID!
-    modelPlanID: UUID!
-
-    #Page 1
-    stakeholders: [StakeholdersType!]!
-    stakeholdersOther: String
-    stakeholdersNote: String
-    helpdeskUse: Boolean
-    helpdeskUseNote: String
-    contractorSupport: [ContractorSupportType!]!
-    contractorSupportOther: String
-    contractorSupportHow: String
-    contractorSupportNote: String
-    iddocSupport: Boolean
-    iddocSupportNote: String
-    #Page 2
-    technicalContactsIdentified: Boolean
-    technicalContactsIdentifiedDetail: String
-    technicalContactsIdentifiedNote: String
-    captureParticipantInfo: Boolean
-    captureParticipantInfoNote: String
-    icdOwner: String
-    draftIcdDueDate: Time
-    icdNote: String
-    #Page 3
-    uatNeeds: String
-    stcNeeds: String
-    testingTimelines: String
-    testingNote: String
-    dataMonitoringFileTypes: [MonitoringFileType!]!
-    dataMonitoringFileOther: String
-    dataResponseType: String
-    dataResponseFileFrequency: String
-    #Page 4
-    dataFullTimeOrIncremental: DataFullTimeOrIncrementalType
-    eftSetUp: Boolean
-    unsolicitedAdjustmentsIncluded: Boolean
-    dataFlowDiagramsNeeded: Boolean
-    produceBenefitEnhancementFiles: Boolean
-    fileNamingConventions: String
-    dataMonitoringNote: String
-    #Page 5
-    benchmarkForPerformance: BenchmarkForPerformanceType
-    benchmarkForPerformanceNote: String
-    computePerformanceScores: Boolean
-    computePerformanceScoresNote: String
-    riskAdjustPerformance: Boolean
-    riskAdjustFeedback: Boolean
-    riskAdjustPayments: Boolean
-    riskAdjustOther: Boolean
-    riskAdjustNote: String
-    appealPerformance: Boolean
-    appealFeedback: Boolean
-    appealPayments: Boolean
-    appealOther: Boolean
-    appealNote: String
-    #Page 6
-    evaluationApproaches: [EvaluationApproachType!]!
-    evaluationApproachOther: String
-    evalutaionApproachNote: String
-    ccmInvolvment: [CcmInvolvmentType!]!
-    ccmInvolvmentOther: String
-    ccmInvolvmentNote: String
-    dataNeededForMonitoring: [DataForMonitoringType!]!
-    dataNeededForMonitoringOther: String
-    dataNeededForMonitoringNote: String
-    dataToSendParticicipants: [DataToSendParticipantsType!]!
-    dataToSendParticicipantsOther: String
-    dataToSendParticicipantsNote: String
-    shareCclfData: Boolean
-    shareCclfDataNote: String
-    #Page 7
-    sendFilesBetweenCcw: Boolean
-    sendFilesBetweenCcwNote: String
-    appToSendFilesToKnown: Boolean
-    appToSendFilesToWhich: String
-    appToSendFilesToNote: String
-    useCcwForFileDistribiutionToParticipants: Boolean
-    useCcwForFileDistribiutionToParticipantsNote: String
-    developNewQualityMeasures: Boolean
-    developNewQualityMeasuresNote: String
-    qualityPerformanceImpactsPayment: YesNoOtherType
-    qualityPerformanceImpactsPaymentOther: String
-    qualityPerformanceImpactsPaymentNote: String
-    #Page 8
-    dataSharingStarts: DataStartsType
-    dataSharingStartsOther: String
-    dataSharingFrequency: [FrequencyType!]!
-    dataSharingFrequencyContinually: String
-    dataSharingFrequencyOther: String
-    dataSharingStartsNote: String
-    dataCollectionStarts: DataStartsType
-    dataCollectionStartsOther: String
-    dataCollectionFrequency: [FrequencyType!]!
-    dataCollectionFrequencyContinually: String
-    dataCollectionFrequencyOther: String
-    dataCollectionFrequencyNote: String
-    qualityReportingStarts: DataStartsType
-    qualityReportingStartsOther: String
-    qualityReportingStartsNote: String
-    qualityReportingFrequency: [FrequencyType!]!
-    qualityReportingFrequencyContinually: String
-    qualityReportingFrequencyOther: String
-    #Page 9
-    modelLearningSystems: [ModelLearningSystemType!]!
-    modelLearningSystemsOther: String
-    modelLearningSystemsNote: String
-    anticipatedChallenges: String
-
-    createdBy: UUID!
-    createdByUserAccount: UserAccount!
-    createdDts: Time!
-    modifiedBy: UUID
-    modifiedByUserAccount: UserAccount
-    modifiedDts: Time
-
-    readyForReviewBy: UUID
-    readyForReviewByUserAccount: UserAccount
-    readyForReviewDts: Time
-    readyForClearanceBy: UUID
-    readyForClearanceByUserAccount: UserAccount
-    readyForClearanceDts: Time
-
-    status: TaskStatus!
-}
-
-"""
-PlanOpsEvalAndLearningChanges represents the possible changes you can make to a
-ops, eval and learning object when updating it.
-Fields explicitly set with NULL will be unset, and omitted fields will be left unchanged.
-https://gqlgen.com/reference/changesets/
-"""
-input PlanOpsEvalAndLearningChanges @goModel(model: "map[string]interface{}") {
-
-    #Page 1
-    stakeholders: [StakeholdersType!]
-    stakeholdersOther: String
-    stakeholdersNote: String
-    helpdeskUse: Boolean
-    helpdeskUseNote: String
-    contractorSupport: [ContractorSupportType!]
-    contractorSupportOther: String
-    contractorSupportHow: String
-    contractorSupportNote: String
-    iddocSupport: Boolean
-    iddocSupportNote: String
-    #Page 2
-    technicalContactsIdentified: Boolean
-    technicalContactsIdentifiedDetail: String
-    technicalContactsIdentifiedNote: String
-    captureParticipantInfo: Boolean
-    captureParticipantInfoNote: String
-    icdOwner: String
-    draftIcdDueDate: Time
-    icdNote: String
-    #Page 3
-    uatNeeds: String
-    stcNeeds: String
-    testingTimelines: String
-    testingNote: String
-    dataMonitoringFileTypes: [MonitoringFileType!]
-    dataMonitoringFileOther: String
-    dataResponseType: String
-    dataResponseFileFrequency: String
-    #Page 4
-    dataFullTimeOrIncremental: DataFullTimeOrIncrementalType
-    eftSetUp: Boolean
-    unsolicitedAdjustmentsIncluded: Boolean
-    dataFlowDiagramsNeeded: Boolean
-    produceBenefitEnhancementFiles: Boolean
-    fileNamingConventions: String
-    dataMonitoringNote: String
-    #Page 5
-    benchmarkForPerformance: BenchmarkForPerformanceType
-    benchmarkForPerformanceNote: String
-    computePerformanceScores: Boolean
-    computePerformanceScoresNote: String
-    riskAdjustPerformance: Boolean
-    riskAdjustFeedback: Boolean
-    riskAdjustPayments: Boolean
-    riskAdjustOther: Boolean
-    riskAdjustNote: String
-    appealPerformance: Boolean
-    appealFeedback: Boolean
-    appealPayments: Boolean
-    appealOther: Boolean
-    appealNote: String
-    #Page 6
-    evaluationApproaches: [EvaluationApproachType!]
-    evaluationApproachOther: String
-    evalutaionApproachNote: String
-    ccmInvolvment: [CcmInvolvmentType!]
-    ccmInvolvmentOther: String
-    ccmInvolvmentNote: String
-    dataNeededForMonitoring: [DataForMonitoringType!]
-    dataNeededForMonitoringOther: String
-    dataNeededForMonitoringNote: String
-    dataToSendParticicipants: [DataToSendParticipantsType!]
-    dataToSendParticicipantsOther: String
-    dataToSendParticicipantsNote: String
-    shareCclfData: Boolean
-    shareCclfDataNote: String
-    #Page 7
-    sendFilesBetweenCcw: Boolean
-    sendFilesBetweenCcwNote: String
-    appToSendFilesToKnown: Boolean
-    appToSendFilesToWhich: String
-    appToSendFilesToNote: String
-    useCcwForFileDistribiutionToParticipants: Boolean
-    useCcwForFileDistribiutionToParticipantsNote: String
-    developNewQualityMeasures: Boolean
-    developNewQualityMeasuresNote: String
-    qualityPerformanceImpactsPayment: YesNoOtherType
-    qualityPerformanceImpactsPaymentOther: String
-    qualityPerformanceImpactsPaymentNote: String
-    #Page 8
-    dataSharingStarts: DataStartsType
-    dataSharingStartsOther: String
-    dataSharingFrequency: [FrequencyType!]
-    dataSharingFrequencyContinually: String
-    dataSharingFrequencyOther: String
-    dataSharingStartsNote: String
-    dataCollectionStarts: DataStartsType
-    dataCollectionStartsOther: String
-    dataCollectionFrequency: [FrequencyType!]
-    dataCollectionFrequencyContinually: String
-    dataCollectionFrequencyOther: String
-    dataCollectionFrequencyNote: String
-    qualityReportingStarts: DataStartsType
-    qualityReportingStartsOther: String
-    qualityReportingStartsNote: String
-    qualityReportingFrequency: [FrequencyType!]
-    qualityReportingFrequencyContinually: String
-    qualityReportingFrequencyOther: String
-    #Page 9
-    modelLearningSystems: [ModelLearningSystemType!]
-    modelLearningSystemsOther: String
-    modelLearningSystemsNote: String
-    anticipatedChallenges: String
-
-    status: TaskStatusInput
-}
-"""
 NDAInfo represents whether a user has agreed to an NDA or not. If agreed to previously, there will be a datestamp visible
 """
 type NDAInfo {
@@ -9564,7 +9206,7 @@ type OperationalSolution {
     operationalNeedID: UUID!
 
     solutionType: Int
-    needed: Boolean # if null, it has not been selected
+    needed: Boolean # if null, it has not been selectd
     name: String
     key: OperationalSolutionKey
     nameOther: String
@@ -9684,7 +9326,6 @@ enum SatisfactionLevel {
   DISSATISFIED
   VERY_DISSATISFIED
 }
-
 """
 ActivityType represents the possible activities that happen in application that might result in a notification
 """
@@ -9803,16 +9444,16 @@ type UserNotificationPreferences {
   dailyDigestComplete: UserNotificationPreferenceFlag!
 
   addedAsCollaborator: UserNotificationPreferenceFlag!
-  
+
   taggedInDiscussion: UserNotificationPreferenceFlag!
- 
+
   taggedInDiscussionReply: UserNotificationPreferenceFlag!
 
   newDiscussionReply: UserNotificationPreferenceFlag!
 
   modelPlanShared: UserNotificationPreferenceFlag!
 
-  
+
   createdBy: UUID!
   createdByUserAccount: UserAccount!
   createdDts: Time!
@@ -9831,9 +9472,9 @@ input UserNotificationPreferencesChanges @goModel(model: "map[string]interface{}
   dailyDigestComplete: UserNotificationPreferenceFlag
 
   addedAsCollaborator: UserNotificationPreferenceFlag
-  
+
   taggedInDiscussion: UserNotificationPreferenceFlag
- 
+
   taggedInDiscussionReply: UserNotificationPreferenceFlag
 
   newDiscussionReply: UserNotificationPreferenceFlag
@@ -9842,6 +9483,7 @@ input UserNotificationPreferencesChanges @goModel(model: "map[string]interface{}
 
 
 }
+
 
 """
 Query definition for the schema
@@ -9915,9 +9557,6 @@ updatePlanCollaborator(id: UUID!, newRoles: [TeamRole!]!): PlanCollaborator!
 deletePlanCollaborator(id: UUID!): PlanCollaborator!
 @hasRole(role: MINT_USER)
 
-updatePlanBasics(id: UUID!, changes: PlanBasicsChanges!): PlanBasics!
-@hasRole(role: MINT_USER)
-
 updatePlanGeneralCharacteristics(id: UUID!, changes: PlanGeneralCharacteristicsChanges!): PlanGeneralCharacteristics!
 @hasRole(role: MINT_USER)
 
@@ -9925,9 +9564,6 @@ updatePlanBeneficiaries(id: UUID!, changes: PlanBeneficiariesChanges!): PlanBene
 @hasRole(role: MINT_USER)
 
 updatePlanParticipantsAndProviders(id: UUID!, changes: PlanParticipantsAndProvidersChanges!): PlanParticipantsAndProviders!
-@hasRole(role: MINT_USER)
-
-updatePlanOpsEvalAndLearning(id: UUID!, changes: PlanOpsEvalAndLearningChanges!): PlanOpsEvalAndLearning!
 @hasRole(role: MINT_USER)
 
 uploadNewPlanDocument(input: PlanDocumentInput!): PlanDocument!
@@ -10012,7 +9648,7 @@ deleteOperationalSolutionSubtask(id: UUID!): Int!
 @hasRole(role: MINT_USER)
 
 """
-This will update linked existing models, and related model plans for given model plan and fieldName.
+This will update linked existing models, and relatede model plans for given model plan and fieldName.
 The fieldName allows it so you can create links for multiple sections of the model plan
 """
 updateExistingModelLinks(modelPlanID: UUID!,fieldName: ExisitingModelLinkFieldType!,  existingModelIDs: [Int!],currentModelPlanIDs: [UUID!]): ExistingModelLinks!
@@ -10027,6 +9663,8 @@ reportAProblem(input: ReportAProblemInput!): Boolean!
 This mutation sends feedback about the MINT product to the MINT team
 """
 sendFeedbackEmail(input: SendFeedbackEmailInput!): Boolean!
+
+
 """
 Marks a single notification as read. It requires that the notification be owned by the context of the user sending this request, or it will fail
 """
@@ -10036,6 +9674,10 @@ Marks all notifications for the current user as read, and returns the updated no
 """
 markAllNotificationsAsRead: [UserNotification!]!
 
+
+"""
+Sets the notification preferences of a user.
+"""
 updateUserNotificationPreferences(changes: UserNotificationPreferencesChanges!): UserNotificationPreferences!
 }
 
@@ -10097,24 +9739,6 @@ enum TeamRole {
   COR
 }
 
-enum ModelType
-{
-  VOLUNTARY
-  MANDATORY_REGIONAL_OR_STATE
-  MANDATORY_NATIONAL
-  OTHER
-}
-
-enum ModelCategory {
-  ACCOUNTABLE_CARE
-  DISEASE_SPECIFIC_AND_EPISODIC
-  HEALTH_PLAN
-  PRESCRIPTION_DRUG
-  STATE_BASED
-  STATUTORY
-  TO_BE_DETERMINED
-}
-
 enum ModelStatus {
 	PLAN_DRAFT
 	PLAN_COMPLETE
@@ -10129,23 +9753,6 @@ enum ModelStatus {
   CANCELED
   ACTIVE
   ENDED
-}
-
-enum CMSCenter {
-  CMMI
-  CENTER_FOR_MEDICARE
-  FEDERAL_COORDINATED_HEALTH_CARE_OFFICE
-  CENTER_FOR_MEDICAID_AND_CHIP_SERVICES
-  CENTER_FOR_CLINICAL_STANDARDS_AND_QUALITY
-  CENTER_FOR_PROGRAM_INTEGRITY
-  }
-
-enum CMMIGroup {
-  PATIENT_CARE_MODELS_GROUP
-  POLICY_AND_PROGRAMS_GROUP
-  SEAMLESS_CARE_MODELS_GROUP
-  STATE_AND_POPULATION_HEALTH_GROUP
-  TBD
 }
 
 enum DocumentType {
@@ -10243,15 +9850,6 @@ enum ConfidenceType {
   COMPLETELY
 }
 
-enum FrequencyType {
-  ANNUALLY
-  SEMIANNUALLY
-  QUARTERLY
-  MONTHLY
-  CONTINUALLY
-  OTHER
-}
-
 enum TriStateAnswer {
   YES
   NO
@@ -10335,121 +9933,13 @@ OTHER
 NOT_APPLICABLE
 }
 
-
-#Ops Eval and Learning types begin
-
 enum AgencyOrStateHelpType {
-    YES_STATE
-    YES_AGENCY_IDEAS
-    YES_AGENCY_IAA
-    NO
-    OTHER
+  YES_STATE
+  YES_AGENCY_IDEAS
+  YES_AGENCY_IAA
+  NO
+  OTHER
 }
-
-enum StakeholdersType {
-    BENEFICIARIES
-    COMMUNITY_ORGANIZATIONS
-    PARTICIPANTS
-    PROFESSIONAL_ORGANIZATIONS
-    PROVIDERS
-    STATES
-    OTHER
-}
-
-
-enum ContractorSupportType {
-    ONE
-    MULTIPLE
-    NONE
-    OTHER
-}
-
-enum MonitoringFileType {
-    BENEFICIARY
-    PROVIDER
-    PART_A
-    PART_B
-    OTHER
-}
-
-enum EvaluationApproachType {
-    CONTROL_INTERVENTION
-    COMPARISON_MATCH
-    INTERRUPTED_TIME
-    NON_MEDICARE_DATA
-    OTHER
-}
-
-enum CcmInvolvmentType {
-    YES_EVALUATION
-    YES__IMPLEMENTATION
-    NO
-    OTHER
-}
-
-enum DataForMonitoringType {
-    SITE_VISITS
-    MEDICARE_CLAIMS
-    MEDICAID_CLAIMS
-    ENCOUNTER_DATA
-    NO_PAY_CLAIMS
-    QUALITY_CLAIMS_BASED_MEASURES
-    QUALITY_REPORTED_MEASURES
-    CLINICAL_DATA
-    NON_CLINICAL_DATA
-    NON_MEDICAL_DATA
-    OTHER
-    NOT_PLANNING_TO_COLLECT_DATA
-}
-
-enum DataToSendParticipantsType {
-    BASELINE_HISTORICAL_DATA
-    CLAIMS_LEVEL_DATA
-    BENEFICIARY_LEVEL_DATA
-    PARTICIPANT_LEVEL_DATA
-    PROVIDER_LEVEL_DATA
-    OTHER_MIPS_DATA
-    NOT_PLANNING_TO_SEND_DATA
-}
-
-enum YesNoOtherType {
-    YES
-    NO
-    OTHER
-}
-
-enum ModelLearningSystemType {
-    LEARNING_CONTRACTOR
-    IT_PLATFORM_CONNECT
-    PARTICIPANT_COLLABORATION
-    EDUCATE_BENEFICIARIES
-    OTHER
-    NO_LEARNING_SYSTEM
-}
-
-
-enum DataFullTimeOrIncrementalType {
-    FULL_TIME
-    INCREMENTAL
-}
-
-enum BenchmarkForPerformanceType {
-    YES_RECONCILE
-    YES_NO_RECONCILE
-    NO
-}
-
-enum DataStartsType {
-    DURING_APPLICATION_PERIOD
-    SHORTLY_BEFORE_THE_START_DATE
-    EARLY_IN_THE_FIRST_PERFORMANCE_YEAR
-    LATER_IN_THE_FIRST_PERFORMANCE_YEAR
-    IN_THE_SUBSEQUENT_PERFORMANCE_YEAR
-    AT_SOME_OTHER_POINT_IN_TIME
-    NOT_PLANNING_TO_DO_THIS
-    OTHER
-}
-#Ops Eval and Learning types end
 
 enum FundingSource {
   PATIENT_PROTECTION_AFFORDABLE_CARE_ACT
@@ -10592,16 +10082,6 @@ enum OperationalSolutionSubtaskStatus {
   IN_PROGRESS,
   DONE
 }
-
-directive @hasRole(role: Role!) on FIELD_DEFINITION
-
-directive @hasAnyRole(roles: [Role!]!) on FIELD_DEFINITION
-
-# https://gqlgen.com/config/#inline-config-with-directives
-directive @goModel(
-  model: String
-  models: [String!]
-) on OBJECT | INPUT_OBJECT | SCALAR | ENUM | INTERFACE | UNION
 
 type UserAccount {
 	id: UUID!
@@ -10751,6 +10231,536 @@ enum GeographyRegionType {
   MSA
 }
 `, BuiltIn: false},
+	{Name: "../schema/types/directives.graphql", Input: `directive @hasRole(role: Role!) on FIELD_DEFINITION
+
+directive @hasAnyRole(roles: [Role!]!) on FIELD_DEFINITION
+
+# https://gqlgen.com/config/#inline-config-with-directives
+directive @goModel(
+  model: String
+  models: [String!]
+) on OBJECT | INPUT_OBJECT | SCALAR | ENUM | INTERFACE | UNION`, BuiltIn: false},
+	{Name: "../schema/types/plan_basics.graphql", Input: `"""
+Represents plan basics
+"""
+type PlanBasics {
+  id: UUID!
+  modelPlanID: UUID!
+
+  demoCode: String
+  amsModelID: String
+
+  modelCategory: ModelCategory
+  additionalModelCategories: [ModelCategory!]!
+  cmsCenters: [CMSCenter!]!
+  cmmiGroups: [CMMIGroup!]!
+  modelType: [ModelType!]!
+  modelTypeOther: String
+  problem: String
+  goal: String
+  testInterventions: String
+  note: String
+
+  # Milestones
+  completeICIP: Time
+  clearanceStarts: Time
+  clearanceEnds: Time
+  announced: Time
+  applicationsStart: Time
+  applicationsEnd: Time
+  performancePeriodStarts: Time
+  performancePeriodEnds: Time
+  wrapUpEnds: Time
+  highLevelNote: String
+  phasedIn: Boolean
+  phasedInNote: String
+
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
+
+  readyForReviewBy: UUID
+  readyForReviewByUserAccount: UserAccount
+  readyForReviewDts: Time
+  readyForClearanceBy: UUID
+  readyForClearanceByUserAccount: UserAccount
+  readyForClearanceDts: Time
+
+  status: TaskStatus!
+}
+
+"""
+PlanBasicsChanges represents the possible changes you can make to a Plan Basics object when updating it.
+Fields explicitly set with NULL will be unset, and omitted fields will be left unchanged.
+https://gqlgen.com/reference/changesets/
+"""
+input PlanBasicsChanges @goModel(model: "map[string]interface{}") {
+  demoCode: String
+  amsModelID: String
+
+  modelCategory: ModelCategory
+  additionalModelCategories: [ModelCategory!]
+  cmsCenters: [CMSCenter!]
+  cmmiGroups: [CMMIGroup!]
+  modelType: [ModelType!]
+  modelTypeOther: String
+  problem: String
+  goal: String
+  testInterventions: String
+  note: String
+
+  # Milestones
+  completeICIP: Time
+  clearanceStarts: Time
+  clearanceEnds: Time
+  announced: Time
+  applicationsStart: Time
+  applicationsEnd: Time
+  performancePeriodStarts: Time
+  performancePeriodEnds: Time
+  wrapUpEnds: Time
+  highLevelNote: String
+  phasedIn: Boolean
+  phasedInNote: String
+  status: TaskStatusInput
+}
+
+enum ModelCategory {
+  ACCOUNTABLE_CARE
+  DISEASE_SPECIFIC_AND_EPISODIC
+  HEALTH_PLAN
+  PRESCRIPTION_DRUG
+  STATE_BASED
+  STATUTORY
+  TO_BE_DETERMINED
+}
+
+enum CMSCenter {
+  CMMI
+  CENTER_FOR_MEDICARE
+  FEDERAL_COORDINATED_HEALTH_CARE_OFFICE
+  CENTER_FOR_MEDICAID_AND_CHIP_SERVICES
+  CENTER_FOR_CLINICAL_STANDARDS_AND_QUALITY
+  CENTER_FOR_PROGRAM_INTEGRITY
+}
+
+enum CMMIGroup {
+  PATIENT_CARE_MODELS_GROUP
+  POLICY_AND_PROGRAMS_GROUP
+  SEAMLESS_CARE_MODELS_GROUP
+  STATE_AND_POPULATION_HEALTH_GROUP
+  TBD
+}
+
+enum ModelType {
+  VOLUNTARY
+  MANDATORY_REGIONAL_OR_STATE
+  MANDATORY_NATIONAL
+  OTHER
+}
+
+extend type Mutation {
+  updatePlanBasics(id: UUID!, changes: PlanBasicsChanges!): PlanBasics!
+  @hasRole(role: MINT_USER)
+}
+`, BuiltIn: false},
+	{Name: "../schema/types/plan_ops_eval_and_learning.graphql", Input: `enum StakeholdersType {
+  BENEFICIARIES
+  COMMUNITY_ORGANIZATIONS
+  PARTICIPANTS
+  PROFESSIONAL_ORGANIZATIONS
+  PROVIDERS
+  STATES
+  OTHER
+}
+
+enum ContractorSupportType {
+  ONE
+  MULTIPLE
+  NONE
+  OTHER
+}
+
+enum MonitoringFileType {
+  BENEFICIARY
+  PROVIDER
+  PART_A
+  PART_B
+  OTHER
+}
+
+enum EvaluationApproachType {
+  CONTROL_INTERVENTION
+  COMPARISON_MATCH
+  INTERRUPTED_TIME
+  NON_MEDICARE_DATA
+  OTHER
+}
+
+enum CcmInvolvmentType {
+  YES_EVALUATION
+  YES__IMPLEMENTATION
+  NO
+  OTHER
+}
+
+enum DataForMonitoringType {
+  SITE_VISITS
+  MEDICARE_CLAIMS
+  MEDICAID_CLAIMS
+  ENCOUNTER_DATA
+  NO_PAY_CLAIMS
+  QUALITY_CLAIMS_BASED_MEASURES
+  QUALITY_REPORTED_MEASURES
+  CLINICAL_DATA
+  NON_CLINICAL_DATA
+  NON_MEDICAL_DATA
+  OTHER
+  NOT_PLANNING_TO_COLLECT_DATA
+}
+
+enum DataToSendParticipantsType {
+  BASELINE_HISTORICAL_DATA
+  CLAIMS_LEVEL_DATA
+  BENEFICIARY_LEVEL_DATA
+  PARTICIPANT_LEVEL_DATA
+  PROVIDER_LEVEL_DATA
+  OTHER_MIPS_DATA
+  NOT_PLANNING_TO_SEND_DATA
+}
+
+enum ModelLearningSystemType {
+  LEARNING_CONTRACTOR
+  IT_PLATFORM_CONNECT
+  PARTICIPANT_COLLABORATION
+  EDUCATE_BENEFICIARIES
+  OTHER
+  NO_LEARNING_SYSTEM
+}
+
+enum DataFullTimeOrIncrementalType {
+  FULL_TIME
+  INCREMENTAL
+}
+
+enum BenchmarkForPerformanceType {
+  YES_RECONCILE
+  YES_NO_RECONCILE
+  NO
+}
+
+enum DataStartsType {
+  DURING_APPLICATION_PERIOD
+  SHORTLY_BEFORE_THE_START_DATE
+  EARLY_IN_THE_FIRST_PERFORMANCE_YEAR
+  LATER_IN_THE_FIRST_PERFORMANCE_YEAR
+  IN_THE_SUBSEQUENT_PERFORMANCE_YEAR
+  AT_SOME_OTHER_POINT_IN_TIME
+  NOT_PLANNING_TO_DO_THIS
+  OTHER
+}
+
+"""
+PlanOpsEvalAndLearning represents the task list section that deals with information regarding the Ops Eval and Learning
+"""
+type PlanOpsEvalAndLearning {
+  id: UUID!
+  modelPlanID: UUID!
+
+  #Page 1
+  stakeholders: [StakeholdersType!]!
+  stakeholdersOther: String
+  stakeholdersNote: String
+  helpdeskUse: Boolean
+  helpdeskUseNote: String
+  contractorSupport: [ContractorSupportType!]!
+  contractorSupportOther: String
+  contractorSupportHow: String
+  contractorSupportNote: String
+  iddocSupport: Boolean
+  iddocSupportNote: String
+
+  #Page 2
+  technicalContactsIdentified: Boolean
+  technicalContactsIdentifiedDetail: String
+  technicalContactsIdentifiedNote: String
+  captureParticipantInfo: Boolean
+  captureParticipantInfoNote: String
+  icdOwner: String
+  draftIcdDueDate: Time
+  icdNote: String
+
+  #Page 3
+  uatNeeds: String
+  stcNeeds: String
+  testingTimelines: String
+  testingNote: String
+  dataMonitoringFileTypes: [MonitoringFileType!]!
+  dataMonitoringFileOther: String
+  dataResponseType: String
+  dataResponseFileFrequency: String
+
+  #Page 4
+  dataFullTimeOrIncremental: DataFullTimeOrIncrementalType
+  eftSetUp: Boolean
+  unsolicitedAdjustmentsIncluded: Boolean
+  dataFlowDiagramsNeeded: Boolean
+  produceBenefitEnhancementFiles: Boolean
+  fileNamingConventions: String
+  dataMonitoringNote: String
+
+  #Page 5
+  benchmarkForPerformance: BenchmarkForPerformanceType
+  benchmarkForPerformanceNote: String
+  computePerformanceScores: Boolean
+  computePerformanceScoresNote: String
+  riskAdjustPerformance: Boolean
+  riskAdjustFeedback: Boolean
+  riskAdjustPayments: Boolean
+  riskAdjustOther: Boolean
+  riskAdjustNote: String
+  appealPerformance: Boolean
+  appealFeedback: Boolean
+  appealPayments: Boolean
+  appealOther: Boolean
+  appealNote: String
+
+  #Page 6
+  evaluationApproaches: [EvaluationApproachType!]!
+  evaluationApproachOther: String
+  evalutaionApproachNote: String
+  ccmInvolvment: [CcmInvolvmentType!]!
+  ccmInvolvmentOther: String
+  ccmInvolvmentNote: String
+  dataNeededForMonitoring: [DataForMonitoringType!]!
+  dataNeededForMonitoringOther: String
+  dataNeededForMonitoringNote: String
+  dataToSendParticicipants: [DataToSendParticipantsType!]!
+  dataToSendParticicipantsOther: String
+  dataToSendParticicipantsNote: String
+  shareCclfData: Boolean
+  shareCclfDataNote: String
+
+  #Page 7
+  sendFilesBetweenCcw: Boolean
+  sendFilesBetweenCcwNote: String
+  appToSendFilesToKnown: Boolean
+  appToSendFilesToWhich: String
+  appToSendFilesToNote: String
+  useCcwForFileDistribiutionToParticipants: Boolean
+  useCcwForFileDistribiutionToParticipantsNote: String
+  developNewQualityMeasures: Boolean
+  developNewQualityMeasuresNote: String
+  qualityPerformanceImpactsPayment: YesNoOtherType
+  qualityPerformanceImpactsPaymentOther: String
+  qualityPerformanceImpactsPaymentNote: String
+
+  #Page 8
+  dataSharingStarts: DataStartsType
+  dataSharingStartsOther: String
+  dataSharingFrequency: [FrequencyType!]!
+  dataSharingFrequencyContinually: String
+  dataSharingFrequencyOther: String
+  dataSharingStartsNote: String
+  dataCollectionStarts: DataStartsType
+  dataCollectionStartsOther: String
+  dataCollectionFrequency: [FrequencyType!]!
+  dataCollectionFrequencyContinually: String
+  dataCollectionFrequencyOther: String
+  dataCollectionFrequencyNote: String
+  qualityReportingStarts: DataStartsType
+  qualityReportingStartsOther: String
+  qualityReportingStartsNote: String
+  qualityReportingFrequency: [FrequencyType!]!
+  qualityReportingFrequencyContinually: String
+  qualityReportingFrequencyOther: String
+
+  #Page 9
+  modelLearningSystems: [ModelLearningSystemType!]!
+  modelLearningSystemsOther: String
+  modelLearningSystemsNote: String
+  anticipatedChallenges: String
+
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
+
+  readyForReviewBy: UUID
+  readyForReviewByUserAccount: UserAccount
+  readyForReviewDts: Time
+  readyForClearanceBy: UUID
+  readyForClearanceByUserAccount: UserAccount
+  readyForClearanceDts: Time
+
+  status: TaskStatus!
+}
+
+"""
+PlanOpsEvalAndLearningChanges represents the possible changes you can make to a
+ops, eval and learning object when updating it.
+Fields explicitly set with NULL will be unset, and omitted fields will be left unchanged.
+https://gqlgen.com/reference/changesets/
+"""
+input PlanOpsEvalAndLearningChanges @goModel(model: "map[string]interface{}") {
+
+  #Page 1
+  stakeholders: [StakeholdersType!]
+  stakeholdersOther: String
+  stakeholdersNote: String
+  helpdeskUse: Boolean
+  helpdeskUseNote: String
+  contractorSupport: [ContractorSupportType!]
+  contractorSupportOther: String
+  contractorSupportHow: String
+  contractorSupportNote: String
+  iddocSupport: Boolean
+  iddocSupportNote: String
+  #Page 2
+  technicalContactsIdentified: Boolean
+  technicalContactsIdentifiedDetail: String
+  technicalContactsIdentifiedNote: String
+  captureParticipantInfo: Boolean
+  captureParticipantInfoNote: String
+  icdOwner: String
+  draftIcdDueDate: Time
+  icdNote: String
+  #Page 3
+  uatNeeds: String
+  stcNeeds: String
+  testingTimelines: String
+  testingNote: String
+  dataMonitoringFileTypes: [MonitoringFileType!]
+  dataMonitoringFileOther: String
+  dataResponseType: String
+  dataResponseFileFrequency: String
+  #Page 4
+  dataFullTimeOrIncremental: DataFullTimeOrIncrementalType
+  eftSetUp: Boolean
+  unsolicitedAdjustmentsIncluded: Boolean
+  dataFlowDiagramsNeeded: Boolean
+  produceBenefitEnhancementFiles: Boolean
+  fileNamingConventions: String
+  dataMonitoringNote: String
+  #Page 5
+  benchmarkForPerformance: BenchmarkForPerformanceType
+  benchmarkForPerformanceNote: String
+  computePerformanceScores: Boolean
+  computePerformanceScoresNote: String
+  riskAdjustPerformance: Boolean
+  riskAdjustFeedback: Boolean
+  riskAdjustPayments: Boolean
+  riskAdjustOther: Boolean
+  riskAdjustNote: String
+  appealPerformance: Boolean
+  appealFeedback: Boolean
+  appealPayments: Boolean
+  appealOther: Boolean
+  appealNote: String
+  #Page 6
+  evaluationApproaches: [EvaluationApproachType!]
+  evaluationApproachOther: String
+  evalutaionApproachNote: String
+  ccmInvolvment: [CcmInvolvmentType!]
+  ccmInvolvmentOther: String
+  ccmInvolvmentNote: String
+  dataNeededForMonitoring: [DataForMonitoringType!]
+  dataNeededForMonitoringOther: String
+  dataNeededForMonitoringNote: String
+  dataToSendParticicipants: [DataToSendParticipantsType!]
+  dataToSendParticicipantsOther: String
+  dataToSendParticicipantsNote: String
+  shareCclfData: Boolean
+  shareCclfDataNote: String
+  #Page 7
+  sendFilesBetweenCcw: Boolean
+  sendFilesBetweenCcwNote: String
+  appToSendFilesToKnown: Boolean
+  appToSendFilesToWhich: String
+  appToSendFilesToNote: String
+  useCcwForFileDistribiutionToParticipants: Boolean
+  useCcwForFileDistribiutionToParticipantsNote: String
+  developNewQualityMeasures: Boolean
+  developNewQualityMeasuresNote: String
+  qualityPerformanceImpactsPayment: YesNoOtherType
+  qualityPerformanceImpactsPaymentOther: String
+  qualityPerformanceImpactsPaymentNote: String
+  #Page 8
+  dataSharingStarts: DataStartsType
+  dataSharingStartsOther: String
+  dataSharingFrequency: [FrequencyType!]
+  dataSharingFrequencyContinually: String
+  dataSharingFrequencyOther: String
+  dataSharingStartsNote: String
+  dataCollectionStarts: DataStartsType
+  dataCollectionStartsOther: String
+  dataCollectionFrequency: [FrequencyType!]
+  dataCollectionFrequencyContinually: String
+  dataCollectionFrequencyOther: String
+  dataCollectionFrequencyNote: String
+  qualityReportingStarts: DataStartsType
+  qualityReportingStartsOther: String
+  qualityReportingStartsNote: String
+  qualityReportingFrequency: [FrequencyType!]
+  qualityReportingFrequencyContinually: String
+  qualityReportingFrequencyOther: String
+  #Page 9
+  modelLearningSystems: [ModelLearningSystemType!]
+  modelLearningSystemsOther: String
+  modelLearningSystemsNote: String
+  anticipatedChallenges: String
+
+  status: TaskStatusInput
+}
+
+extend type Mutation {
+  updatePlanOpsEvalAndLearning(id: UUID!, changes: PlanOpsEvalAndLearningChanges!): PlanOpsEvalAndLearning!
+  @hasRole(role: MINT_USER)
+}`, BuiltIn: false},
+	{Name: "../schema/types/scalars.graphql", Input: `"""
+UUIDs are represented using 36 ASCII characters, for example B0511859-ADE6-4A67-8969-16EC280C0E1A
+"""
+scalar UUID
+
+"""
+Time values are represented as strings using RFC3339 format, for example 2019-10-12T07:20:50G.52Z
+"""
+scalar Time
+
+"""
+Maps an arbitrary GraphQL value to a map[string]interface{} Go type.
+"""
+scalar Map
+
+"""
+TaggedHTML represents an input type for HTML that could also include tags that reference another entity
+"""
+scalar TaggedHTML
+
+"""
+https://gqlgen.com/reference/file-upload/
+Represents a multipart file upload
+"""
+scalar Upload`, BuiltIn: false},
+	{Name: "../schema/types/shared_enums.graphql", Input: `enum FrequencyType {
+  ANNUALLY
+  SEMIANNUALLY
+  QUARTERLY
+  MONTHLY
+  CONTINUALLY
+  OTHER
+}
+
+enum YesNoOtherType {
+  YES
+  NO
+  OTHER
+}`, BuiltIn: false},
 }
 var parsedSchema = gqlparser.MustLoadSchema(sources...)
 
@@ -18605,165 +18615,6 @@ func (ec *executionContext) fieldContext_Mutation_deletePlanCollaborator(ctx con
 	return fc, nil
 }
 
-func (ec *executionContext) _Mutation_updatePlanBasics(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Mutation_updatePlanBasics(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		directive0 := func(rctx context.Context) (interface{}, error) {
-			ctx = rctx // use context from middleware stack in children
-			return ec.resolvers.Mutation().UpdatePlanBasics(rctx, fc.Args["id"].(uuid.UUID), fc.Args["changes"].(map[string]interface{}))
-		}
-		directive1 := func(ctx context.Context) (interface{}, error) {
-			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
-			if err != nil {
-				return nil, err
-			}
-			if ec.directives.HasRole == nil {
-				return nil, errors.New("directive hasRole is not implemented")
-			}
-			return ec.directives.HasRole(ctx, nil, directive0, role)
-		}
-
-		tmp, err := directive1(rctx)
-		if err != nil {
-			return nil, graphql.ErrorOnPath(ctx, err)
-		}
-		if tmp == nil {
-			return nil, nil
-		}
-		if data, ok := tmp.(*models.PlanBasics); ok {
-			return data, nil
-		}
-		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/cmsgov/mint-app/pkg/models.PlanBasics`, tmp)
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(*models.PlanBasics)
-	fc.Result = res
-	return ec.marshalNPlanBasics2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanBasics(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_Mutation_updatePlanBasics(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "Mutation",
-		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			switch field.Name {
-			case "id":
-				return ec.fieldContext_PlanBasics_id(ctx, field)
-			case "modelPlanID":
-				return ec.fieldContext_PlanBasics_modelPlanID(ctx, field)
-			case "demoCode":
-				return ec.fieldContext_PlanBasics_demoCode(ctx, field)
-			case "amsModelID":
-				return ec.fieldContext_PlanBasics_amsModelID(ctx, field)
-			case "modelCategory":
-				return ec.fieldContext_PlanBasics_modelCategory(ctx, field)
-			case "additionalModelCategories":
-				return ec.fieldContext_PlanBasics_additionalModelCategories(ctx, field)
-			case "cmsCenters":
-				return ec.fieldContext_PlanBasics_cmsCenters(ctx, field)
-			case "cmmiGroups":
-				return ec.fieldContext_PlanBasics_cmmiGroups(ctx, field)
-			case "modelType":
-				return ec.fieldContext_PlanBasics_modelType(ctx, field)
-			case "modelTypeOther":
-				return ec.fieldContext_PlanBasics_modelTypeOther(ctx, field)
-			case "problem":
-				return ec.fieldContext_PlanBasics_problem(ctx, field)
-			case "goal":
-				return ec.fieldContext_PlanBasics_goal(ctx, field)
-			case "testInterventions":
-				return ec.fieldContext_PlanBasics_testInterventions(ctx, field)
-			case "note":
-				return ec.fieldContext_PlanBasics_note(ctx, field)
-			case "completeICIP":
-				return ec.fieldContext_PlanBasics_completeICIP(ctx, field)
-			case "clearanceStarts":
-				return ec.fieldContext_PlanBasics_clearanceStarts(ctx, field)
-			case "clearanceEnds":
-				return ec.fieldContext_PlanBasics_clearanceEnds(ctx, field)
-			case "announced":
-				return ec.fieldContext_PlanBasics_announced(ctx, field)
-			case "applicationsStart":
-				return ec.fieldContext_PlanBasics_applicationsStart(ctx, field)
-			case "applicationsEnd":
-				return ec.fieldContext_PlanBasics_applicationsEnd(ctx, field)
-			case "performancePeriodStarts":
-				return ec.fieldContext_PlanBasics_performancePeriodStarts(ctx, field)
-			case "performancePeriodEnds":
-				return ec.fieldContext_PlanBasics_performancePeriodEnds(ctx, field)
-			case "wrapUpEnds":
-				return ec.fieldContext_PlanBasics_wrapUpEnds(ctx, field)
-			case "highLevelNote":
-				return ec.fieldContext_PlanBasics_highLevelNote(ctx, field)
-			case "phasedIn":
-				return ec.fieldContext_PlanBasics_phasedIn(ctx, field)
-			case "phasedInNote":
-				return ec.fieldContext_PlanBasics_phasedInNote(ctx, field)
-			case "createdBy":
-				return ec.fieldContext_PlanBasics_createdBy(ctx, field)
-			case "createdByUserAccount":
-				return ec.fieldContext_PlanBasics_createdByUserAccount(ctx, field)
-			case "createdDts":
-				return ec.fieldContext_PlanBasics_createdDts(ctx, field)
-			case "modifiedBy":
-				return ec.fieldContext_PlanBasics_modifiedBy(ctx, field)
-			case "modifiedByUserAccount":
-				return ec.fieldContext_PlanBasics_modifiedByUserAccount(ctx, field)
-			case "modifiedDts":
-				return ec.fieldContext_PlanBasics_modifiedDts(ctx, field)
-			case "readyForReviewBy":
-				return ec.fieldContext_PlanBasics_readyForReviewBy(ctx, field)
-			case "readyForReviewByUserAccount":
-				return ec.fieldContext_PlanBasics_readyForReviewByUserAccount(ctx, field)
-			case "readyForReviewDts":
-				return ec.fieldContext_PlanBasics_readyForReviewDts(ctx, field)
-			case "readyForClearanceBy":
-				return ec.fieldContext_PlanBasics_readyForClearanceBy(ctx, field)
-			case "readyForClearanceByUserAccount":
-				return ec.fieldContext_PlanBasics_readyForClearanceByUserAccount(ctx, field)
-			case "readyForClearanceDts":
-				return ec.fieldContext_PlanBasics_readyForClearanceDts(ctx, field)
-			case "status":
-				return ec.fieldContext_PlanBasics_status(ctx, field)
-			}
-			return nil, fmt.Errorf("no field named %q was found under type PlanBasics", field.Name)
-		},
-	}
-	defer func() {
-		if r := recover(); r != nil {
-			err = ec.Recover(ctx, r)
-			ec.Error(ctx, err)
-		}
-	}()
-	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Mutation_updatePlanBasics_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
-		ec.Error(ctx, err)
-		return fc, err
-	}
-	return fc, nil
-}
-
 func (ec *executionContext) _Mutation_updatePlanGeneralCharacteristics(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_Mutation_updatePlanGeneralCharacteristics(ctx, field)
 	if err != nil {
@@ -19411,309 +19262,6 @@ func (ec *executionContext) fieldContext_Mutation_updatePlanParticipantsAndProvi
 	}()
 	ctx = graphql.WithFieldContext(ctx, fc)
 	if fc.Args, err = ec.field_Mutation_updatePlanParticipantsAndProviders_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
-		ec.Error(ctx, err)
-		return fc, err
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _Mutation_updatePlanOpsEvalAndLearning(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Mutation_updatePlanOpsEvalAndLearning(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		directive0 := func(rctx context.Context) (interface{}, error) {
-			ctx = rctx // use context from middleware stack in children
-			return ec.resolvers.Mutation().UpdatePlanOpsEvalAndLearning(rctx, fc.Args["id"].(uuid.UUID), fc.Args["changes"].(map[string]interface{}))
-		}
-		directive1 := func(ctx context.Context) (interface{}, error) {
-			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
-			if err != nil {
-				return nil, err
-			}
-			if ec.directives.HasRole == nil {
-				return nil, errors.New("directive hasRole is not implemented")
-			}
-			return ec.directives.HasRole(ctx, nil, directive0, role)
-		}
-
-		tmp, err := directive1(rctx)
-		if err != nil {
-			return nil, graphql.ErrorOnPath(ctx, err)
-		}
-		if tmp == nil {
-			return nil, nil
-		}
-		if data, ok := tmp.(*models.PlanOpsEvalAndLearning); ok {
-			return data, nil
-		}
-		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/cmsgov/mint-app/pkg/models.PlanOpsEvalAndLearning`, tmp)
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(*models.PlanOpsEvalAndLearning)
-	fc.Result = res
-	return ec.marshalNPlanOpsEvalAndLearning2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanOpsEvalAndLearning(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_Mutation_updatePlanOpsEvalAndLearning(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "Mutation",
-		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			switch field.Name {
-			case "id":
-				return ec.fieldContext_PlanOpsEvalAndLearning_id(ctx, field)
-			case "modelPlanID":
-				return ec.fieldContext_PlanOpsEvalAndLearning_modelPlanID(ctx, field)
-			case "stakeholders":
-				return ec.fieldContext_PlanOpsEvalAndLearning_stakeholders(ctx, field)
-			case "stakeholdersOther":
-				return ec.fieldContext_PlanOpsEvalAndLearning_stakeholdersOther(ctx, field)
-			case "stakeholdersNote":
-				return ec.fieldContext_PlanOpsEvalAndLearning_stakeholdersNote(ctx, field)
-			case "helpdeskUse":
-				return ec.fieldContext_PlanOpsEvalAndLearning_helpdeskUse(ctx, field)
-			case "helpdeskUseNote":
-				return ec.fieldContext_PlanOpsEvalAndLearning_helpdeskUseNote(ctx, field)
-			case "contractorSupport":
-				return ec.fieldContext_PlanOpsEvalAndLearning_contractorSupport(ctx, field)
-			case "contractorSupportOther":
-				return ec.fieldContext_PlanOpsEvalAndLearning_contractorSupportOther(ctx, field)
-			case "contractorSupportHow":
-				return ec.fieldContext_PlanOpsEvalAndLearning_contractorSupportHow(ctx, field)
-			case "contractorSupportNote":
-				return ec.fieldContext_PlanOpsEvalAndLearning_contractorSupportNote(ctx, field)
-			case "iddocSupport":
-				return ec.fieldContext_PlanOpsEvalAndLearning_iddocSupport(ctx, field)
-			case "iddocSupportNote":
-				return ec.fieldContext_PlanOpsEvalAndLearning_iddocSupportNote(ctx, field)
-			case "technicalContactsIdentified":
-				return ec.fieldContext_PlanOpsEvalAndLearning_technicalContactsIdentified(ctx, field)
-			case "technicalContactsIdentifiedDetail":
-				return ec.fieldContext_PlanOpsEvalAndLearning_technicalContactsIdentifiedDetail(ctx, field)
-			case "technicalContactsIdentifiedNote":
-				return ec.fieldContext_PlanOpsEvalAndLearning_technicalContactsIdentifiedNote(ctx, field)
-			case "captureParticipantInfo":
-				return ec.fieldContext_PlanOpsEvalAndLearning_captureParticipantInfo(ctx, field)
-			case "captureParticipantInfoNote":
-				return ec.fieldContext_PlanOpsEvalAndLearning_captureParticipantInfoNote(ctx, field)
-			case "icdOwner":
-				return ec.fieldContext_PlanOpsEvalAndLearning_icdOwner(ctx, field)
-			case "draftIcdDueDate":
-				return ec.fieldContext_PlanOpsEvalAndLearning_draftIcdDueDate(ctx, field)
-			case "icdNote":
-				return ec.fieldContext_PlanOpsEvalAndLearning_icdNote(ctx, field)
-			case "uatNeeds":
-				return ec.fieldContext_PlanOpsEvalAndLearning_uatNeeds(ctx, field)
-			case "stcNeeds":
-				return ec.fieldContext_PlanOpsEvalAndLearning_stcNeeds(ctx, field)
-			case "testingTimelines":
-				return ec.fieldContext_PlanOpsEvalAndLearning_testingTimelines(ctx, field)
-			case "testingNote":
-				return ec.fieldContext_PlanOpsEvalAndLearning_testingNote(ctx, field)
-			case "dataMonitoringFileTypes":
-				return ec.fieldContext_PlanOpsEvalAndLearning_dataMonitoringFileTypes(ctx, field)
-			case "dataMonitoringFileOther":
-				return ec.fieldContext_PlanOpsEvalAndLearning_dataMonitoringFileOther(ctx, field)
-			case "dataResponseType":
-				return ec.fieldContext_PlanOpsEvalAndLearning_dataResponseType(ctx, field)
-			case "dataResponseFileFrequency":
-				return ec.fieldContext_PlanOpsEvalAndLearning_dataResponseFileFrequency(ctx, field)
-			case "dataFullTimeOrIncremental":
-				return ec.fieldContext_PlanOpsEvalAndLearning_dataFullTimeOrIncremental(ctx, field)
-			case "eftSetUp":
-				return ec.fieldContext_PlanOpsEvalAndLearning_eftSetUp(ctx, field)
-			case "unsolicitedAdjustmentsIncluded":
-				return ec.fieldContext_PlanOpsEvalAndLearning_unsolicitedAdjustmentsIncluded(ctx, field)
-			case "dataFlowDiagramsNeeded":
-				return ec.fieldContext_PlanOpsEvalAndLearning_dataFlowDiagramsNeeded(ctx, field)
-			case "produceBenefitEnhancementFiles":
-				return ec.fieldContext_PlanOpsEvalAndLearning_produceBenefitEnhancementFiles(ctx, field)
-			case "fileNamingConventions":
-				return ec.fieldContext_PlanOpsEvalAndLearning_fileNamingConventions(ctx, field)
-			case "dataMonitoringNote":
-				return ec.fieldContext_PlanOpsEvalAndLearning_dataMonitoringNote(ctx, field)
-			case "benchmarkForPerformance":
-				return ec.fieldContext_PlanOpsEvalAndLearning_benchmarkForPerformance(ctx, field)
-			case "benchmarkForPerformanceNote":
-				return ec.fieldContext_PlanOpsEvalAndLearning_benchmarkForPerformanceNote(ctx, field)
-			case "computePerformanceScores":
-				return ec.fieldContext_PlanOpsEvalAndLearning_computePerformanceScores(ctx, field)
-			case "computePerformanceScoresNote":
-				return ec.fieldContext_PlanOpsEvalAndLearning_computePerformanceScoresNote(ctx, field)
-			case "riskAdjustPerformance":
-				return ec.fieldContext_PlanOpsEvalAndLearning_riskAdjustPerformance(ctx, field)
-			case "riskAdjustFeedback":
-				return ec.fieldContext_PlanOpsEvalAndLearning_riskAdjustFeedback(ctx, field)
-			case "riskAdjustPayments":
-				return ec.fieldContext_PlanOpsEvalAndLearning_riskAdjustPayments(ctx, field)
-			case "riskAdjustOther":
-				return ec.fieldContext_PlanOpsEvalAndLearning_riskAdjustOther(ctx, field)
-			case "riskAdjustNote":
-				return ec.fieldContext_PlanOpsEvalAndLearning_riskAdjustNote(ctx, field)
-			case "appealPerformance":
-				return ec.fieldContext_PlanOpsEvalAndLearning_appealPerformance(ctx, field)
-			case "appealFeedback":
-				return ec.fieldContext_PlanOpsEvalAndLearning_appealFeedback(ctx, field)
-			case "appealPayments":
-				return ec.fieldContext_PlanOpsEvalAndLearning_appealPayments(ctx, field)
-			case "appealOther":
-				return ec.fieldContext_PlanOpsEvalAndLearning_appealOther(ctx, field)
-			case "appealNote":
-				return ec.fieldContext_PlanOpsEvalAndLearning_appealNote(ctx, field)
-			case "evaluationApproaches":
-				return ec.fieldContext_PlanOpsEvalAndLearning_evaluationApproaches(ctx, field)
-			case "evaluationApproachOther":
-				return ec.fieldContext_PlanOpsEvalAndLearning_evaluationApproachOther(ctx, field)
-			case "evalutaionApproachNote":
-				return ec.fieldContext_PlanOpsEvalAndLearning_evalutaionApproachNote(ctx, field)
-			case "ccmInvolvment":
-				return ec.fieldContext_PlanOpsEvalAndLearning_ccmInvolvment(ctx, field)
-			case "ccmInvolvmentOther":
-				return ec.fieldContext_PlanOpsEvalAndLearning_ccmInvolvmentOther(ctx, field)
-			case "ccmInvolvmentNote":
-				return ec.fieldContext_PlanOpsEvalAndLearning_ccmInvolvmentNote(ctx, field)
-			case "dataNeededForMonitoring":
-				return ec.fieldContext_PlanOpsEvalAndLearning_dataNeededForMonitoring(ctx, field)
-			case "dataNeededForMonitoringOther":
-				return ec.fieldContext_PlanOpsEvalAndLearning_dataNeededForMonitoringOther(ctx, field)
-			case "dataNeededForMonitoringNote":
-				return ec.fieldContext_PlanOpsEvalAndLearning_dataNeededForMonitoringNote(ctx, field)
-			case "dataToSendParticicipants":
-				return ec.fieldContext_PlanOpsEvalAndLearning_dataToSendParticicipants(ctx, field)
-			case "dataToSendParticicipantsOther":
-				return ec.fieldContext_PlanOpsEvalAndLearning_dataToSendParticicipantsOther(ctx, field)
-			case "dataToSendParticicipantsNote":
-				return ec.fieldContext_PlanOpsEvalAndLearning_dataToSendParticicipantsNote(ctx, field)
-			case "shareCclfData":
-				return ec.fieldContext_PlanOpsEvalAndLearning_shareCclfData(ctx, field)
-			case "shareCclfDataNote":
-				return ec.fieldContext_PlanOpsEvalAndLearning_shareCclfDataNote(ctx, field)
-			case "sendFilesBetweenCcw":
-				return ec.fieldContext_PlanOpsEvalAndLearning_sendFilesBetweenCcw(ctx, field)
-			case "sendFilesBetweenCcwNote":
-				return ec.fieldContext_PlanOpsEvalAndLearning_sendFilesBetweenCcwNote(ctx, field)
-			case "appToSendFilesToKnown":
-				return ec.fieldContext_PlanOpsEvalAndLearning_appToSendFilesToKnown(ctx, field)
-			case "appToSendFilesToWhich":
-				return ec.fieldContext_PlanOpsEvalAndLearning_appToSendFilesToWhich(ctx, field)
-			case "appToSendFilesToNote":
-				return ec.fieldContext_PlanOpsEvalAndLearning_appToSendFilesToNote(ctx, field)
-			case "useCcwForFileDistribiutionToParticipants":
-				return ec.fieldContext_PlanOpsEvalAndLearning_useCcwForFileDistribiutionToParticipants(ctx, field)
-			case "useCcwForFileDistribiutionToParticipantsNote":
-				return ec.fieldContext_PlanOpsEvalAndLearning_useCcwForFileDistribiutionToParticipantsNote(ctx, field)
-			case "developNewQualityMeasures":
-				return ec.fieldContext_PlanOpsEvalAndLearning_developNewQualityMeasures(ctx, field)
-			case "developNewQualityMeasuresNote":
-				return ec.fieldContext_PlanOpsEvalAndLearning_developNewQualityMeasuresNote(ctx, field)
-			case "qualityPerformanceImpactsPayment":
-				return ec.fieldContext_PlanOpsEvalAndLearning_qualityPerformanceImpactsPayment(ctx, field)
-			case "qualityPerformanceImpactsPaymentOther":
-				return ec.fieldContext_PlanOpsEvalAndLearning_qualityPerformanceImpactsPaymentOther(ctx, field)
-			case "qualityPerformanceImpactsPaymentNote":
-				return ec.fieldContext_PlanOpsEvalAndLearning_qualityPerformanceImpactsPaymentNote(ctx, field)
-			case "dataSharingStarts":
-				return ec.fieldContext_PlanOpsEvalAndLearning_dataSharingStarts(ctx, field)
-			case "dataSharingStartsOther":
-				return ec.fieldContext_PlanOpsEvalAndLearning_dataSharingStartsOther(ctx, field)
-			case "dataSharingFrequency":
-				return ec.fieldContext_PlanOpsEvalAndLearning_dataSharingFrequency(ctx, field)
-			case "dataSharingFrequencyContinually":
-				return ec.fieldContext_PlanOpsEvalAndLearning_dataSharingFrequencyContinually(ctx, field)
-			case "dataSharingFrequencyOther":
-				return ec.fieldContext_PlanOpsEvalAndLearning_dataSharingFrequencyOther(ctx, field)
-			case "dataSharingStartsNote":
-				return ec.fieldContext_PlanOpsEvalAndLearning_dataSharingStartsNote(ctx, field)
-			case "dataCollectionStarts":
-				return ec.fieldContext_PlanOpsEvalAndLearning_dataCollectionStarts(ctx, field)
-			case "dataCollectionStartsOther":
-				return ec.fieldContext_PlanOpsEvalAndLearning_dataCollectionStartsOther(ctx, field)
-			case "dataCollectionFrequency":
-				return ec.fieldContext_PlanOpsEvalAndLearning_dataCollectionFrequency(ctx, field)
-			case "dataCollectionFrequencyContinually":
-				return ec.fieldContext_PlanOpsEvalAndLearning_dataCollectionFrequencyContinually(ctx, field)
-			case "dataCollectionFrequencyOther":
-				return ec.fieldContext_PlanOpsEvalAndLearning_dataCollectionFrequencyOther(ctx, field)
-			case "dataCollectionFrequencyNote":
-				return ec.fieldContext_PlanOpsEvalAndLearning_dataCollectionFrequencyNote(ctx, field)
-			case "qualityReportingStarts":
-				return ec.fieldContext_PlanOpsEvalAndLearning_qualityReportingStarts(ctx, field)
-			case "qualityReportingStartsOther":
-				return ec.fieldContext_PlanOpsEvalAndLearning_qualityReportingStartsOther(ctx, field)
-			case "qualityReportingStartsNote":
-				return ec.fieldContext_PlanOpsEvalAndLearning_qualityReportingStartsNote(ctx, field)
-			case "qualityReportingFrequency":
-				return ec.fieldContext_PlanOpsEvalAndLearning_qualityReportingFrequency(ctx, field)
-			case "qualityReportingFrequencyContinually":
-				return ec.fieldContext_PlanOpsEvalAndLearning_qualityReportingFrequencyContinually(ctx, field)
-			case "qualityReportingFrequencyOther":
-				return ec.fieldContext_PlanOpsEvalAndLearning_qualityReportingFrequencyOther(ctx, field)
-			case "modelLearningSystems":
-				return ec.fieldContext_PlanOpsEvalAndLearning_modelLearningSystems(ctx, field)
-			case "modelLearningSystemsOther":
-				return ec.fieldContext_PlanOpsEvalAndLearning_modelLearningSystemsOther(ctx, field)
-			case "modelLearningSystemsNote":
-				return ec.fieldContext_PlanOpsEvalAndLearning_modelLearningSystemsNote(ctx, field)
-			case "anticipatedChallenges":
-				return ec.fieldContext_PlanOpsEvalAndLearning_anticipatedChallenges(ctx, field)
-			case "createdBy":
-				return ec.fieldContext_PlanOpsEvalAndLearning_createdBy(ctx, field)
-			case "createdByUserAccount":
-				return ec.fieldContext_PlanOpsEvalAndLearning_createdByUserAccount(ctx, field)
-			case "createdDts":
-				return ec.fieldContext_PlanOpsEvalAndLearning_createdDts(ctx, field)
-			case "modifiedBy":
-				return ec.fieldContext_PlanOpsEvalAndLearning_modifiedBy(ctx, field)
-			case "modifiedByUserAccount":
-				return ec.fieldContext_PlanOpsEvalAndLearning_modifiedByUserAccount(ctx, field)
-			case "modifiedDts":
-				return ec.fieldContext_PlanOpsEvalAndLearning_modifiedDts(ctx, field)
-			case "readyForReviewBy":
-				return ec.fieldContext_PlanOpsEvalAndLearning_readyForReviewBy(ctx, field)
-			case "readyForReviewByUserAccount":
-				return ec.fieldContext_PlanOpsEvalAndLearning_readyForReviewByUserAccount(ctx, field)
-			case "readyForReviewDts":
-				return ec.fieldContext_PlanOpsEvalAndLearning_readyForReviewDts(ctx, field)
-			case "readyForClearanceBy":
-				return ec.fieldContext_PlanOpsEvalAndLearning_readyForClearanceBy(ctx, field)
-			case "readyForClearanceByUserAccount":
-				return ec.fieldContext_PlanOpsEvalAndLearning_readyForClearanceByUserAccount(ctx, field)
-			case "readyForClearanceDts":
-				return ec.fieldContext_PlanOpsEvalAndLearning_readyForClearanceDts(ctx, field)
-			case "status":
-				return ec.fieldContext_PlanOpsEvalAndLearning_status(ctx, field)
-			}
-			return nil, fmt.Errorf("no field named %q was found under type PlanOpsEvalAndLearning", field.Name)
-		},
-	}
-	defer func() {
-		if r := recover(); r != nil {
-			err = ec.Recover(ctx, r)
-			ec.Error(ctx, err)
-		}
-	}()
-	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Mutation_updatePlanOpsEvalAndLearning_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
 		ec.Error(ctx, err)
 		return fc, err
 	}
@@ -23158,6 +22706,468 @@ func (ec *executionContext) fieldContext_Mutation_updateUserNotificationPreferen
 	}()
 	ctx = graphql.WithFieldContext(ctx, fc)
 	if fc.Args, err = ec.field_Mutation_updateUserNotificationPreferences_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Mutation_updatePlanBasics(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Mutation_updatePlanBasics(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		directive0 := func(rctx context.Context) (interface{}, error) {
+			ctx = rctx // use context from middleware stack in children
+			return ec.resolvers.Mutation().UpdatePlanBasics(rctx, fc.Args["id"].(uuid.UUID), fc.Args["changes"].(map[string]interface{}))
+		}
+		directive1 := func(ctx context.Context) (interface{}, error) {
+			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
+			if err != nil {
+				return nil, err
+			}
+			if ec.directives.HasRole == nil {
+				return nil, errors.New("directive hasRole is not implemented")
+			}
+			return ec.directives.HasRole(ctx, nil, directive0, role)
+		}
+
+		tmp, err := directive1(rctx)
+		if err != nil {
+			return nil, graphql.ErrorOnPath(ctx, err)
+		}
+		if tmp == nil {
+			return nil, nil
+		}
+		if data, ok := tmp.(*models.PlanBasics); ok {
+			return data, nil
+		}
+		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/cmsgov/mint-app/pkg/models.PlanBasics`, tmp)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*models.PlanBasics)
+	fc.Result = res
+	return ec.marshalNPlanBasics2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanBasics(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Mutation_updatePlanBasics(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Mutation",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_PlanBasics_id(ctx, field)
+			case "modelPlanID":
+				return ec.fieldContext_PlanBasics_modelPlanID(ctx, field)
+			case "demoCode":
+				return ec.fieldContext_PlanBasics_demoCode(ctx, field)
+			case "amsModelID":
+				return ec.fieldContext_PlanBasics_amsModelID(ctx, field)
+			case "modelCategory":
+				return ec.fieldContext_PlanBasics_modelCategory(ctx, field)
+			case "additionalModelCategories":
+				return ec.fieldContext_PlanBasics_additionalModelCategories(ctx, field)
+			case "cmsCenters":
+				return ec.fieldContext_PlanBasics_cmsCenters(ctx, field)
+			case "cmmiGroups":
+				return ec.fieldContext_PlanBasics_cmmiGroups(ctx, field)
+			case "modelType":
+				return ec.fieldContext_PlanBasics_modelType(ctx, field)
+			case "modelTypeOther":
+				return ec.fieldContext_PlanBasics_modelTypeOther(ctx, field)
+			case "problem":
+				return ec.fieldContext_PlanBasics_problem(ctx, field)
+			case "goal":
+				return ec.fieldContext_PlanBasics_goal(ctx, field)
+			case "testInterventions":
+				return ec.fieldContext_PlanBasics_testInterventions(ctx, field)
+			case "note":
+				return ec.fieldContext_PlanBasics_note(ctx, field)
+			case "completeICIP":
+				return ec.fieldContext_PlanBasics_completeICIP(ctx, field)
+			case "clearanceStarts":
+				return ec.fieldContext_PlanBasics_clearanceStarts(ctx, field)
+			case "clearanceEnds":
+				return ec.fieldContext_PlanBasics_clearanceEnds(ctx, field)
+			case "announced":
+				return ec.fieldContext_PlanBasics_announced(ctx, field)
+			case "applicationsStart":
+				return ec.fieldContext_PlanBasics_applicationsStart(ctx, field)
+			case "applicationsEnd":
+				return ec.fieldContext_PlanBasics_applicationsEnd(ctx, field)
+			case "performancePeriodStarts":
+				return ec.fieldContext_PlanBasics_performancePeriodStarts(ctx, field)
+			case "performancePeriodEnds":
+				return ec.fieldContext_PlanBasics_performancePeriodEnds(ctx, field)
+			case "wrapUpEnds":
+				return ec.fieldContext_PlanBasics_wrapUpEnds(ctx, field)
+			case "highLevelNote":
+				return ec.fieldContext_PlanBasics_highLevelNote(ctx, field)
+			case "phasedIn":
+				return ec.fieldContext_PlanBasics_phasedIn(ctx, field)
+			case "phasedInNote":
+				return ec.fieldContext_PlanBasics_phasedInNote(ctx, field)
+			case "createdBy":
+				return ec.fieldContext_PlanBasics_createdBy(ctx, field)
+			case "createdByUserAccount":
+				return ec.fieldContext_PlanBasics_createdByUserAccount(ctx, field)
+			case "createdDts":
+				return ec.fieldContext_PlanBasics_createdDts(ctx, field)
+			case "modifiedBy":
+				return ec.fieldContext_PlanBasics_modifiedBy(ctx, field)
+			case "modifiedByUserAccount":
+				return ec.fieldContext_PlanBasics_modifiedByUserAccount(ctx, field)
+			case "modifiedDts":
+				return ec.fieldContext_PlanBasics_modifiedDts(ctx, field)
+			case "readyForReviewBy":
+				return ec.fieldContext_PlanBasics_readyForReviewBy(ctx, field)
+			case "readyForReviewByUserAccount":
+				return ec.fieldContext_PlanBasics_readyForReviewByUserAccount(ctx, field)
+			case "readyForReviewDts":
+				return ec.fieldContext_PlanBasics_readyForReviewDts(ctx, field)
+			case "readyForClearanceBy":
+				return ec.fieldContext_PlanBasics_readyForClearanceBy(ctx, field)
+			case "readyForClearanceByUserAccount":
+				return ec.fieldContext_PlanBasics_readyForClearanceByUserAccount(ctx, field)
+			case "readyForClearanceDts":
+				return ec.fieldContext_PlanBasics_readyForClearanceDts(ctx, field)
+			case "status":
+				return ec.fieldContext_PlanBasics_status(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type PlanBasics", field.Name)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Mutation_updatePlanBasics_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Mutation_updatePlanOpsEvalAndLearning(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Mutation_updatePlanOpsEvalAndLearning(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		directive0 := func(rctx context.Context) (interface{}, error) {
+			ctx = rctx // use context from middleware stack in children
+			return ec.resolvers.Mutation().UpdatePlanOpsEvalAndLearning(rctx, fc.Args["id"].(uuid.UUID), fc.Args["changes"].(map[string]interface{}))
+		}
+		directive1 := func(ctx context.Context) (interface{}, error) {
+			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
+			if err != nil {
+				return nil, err
+			}
+			if ec.directives.HasRole == nil {
+				return nil, errors.New("directive hasRole is not implemented")
+			}
+			return ec.directives.HasRole(ctx, nil, directive0, role)
+		}
+
+		tmp, err := directive1(rctx)
+		if err != nil {
+			return nil, graphql.ErrorOnPath(ctx, err)
+		}
+		if tmp == nil {
+			return nil, nil
+		}
+		if data, ok := tmp.(*models.PlanOpsEvalAndLearning); ok {
+			return data, nil
+		}
+		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/cmsgov/mint-app/pkg/models.PlanOpsEvalAndLearning`, tmp)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*models.PlanOpsEvalAndLearning)
+	fc.Result = res
+	return ec.marshalNPlanOpsEvalAndLearning2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanOpsEvalAndLearning(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Mutation_updatePlanOpsEvalAndLearning(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Mutation",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_PlanOpsEvalAndLearning_id(ctx, field)
+			case "modelPlanID":
+				return ec.fieldContext_PlanOpsEvalAndLearning_modelPlanID(ctx, field)
+			case "stakeholders":
+				return ec.fieldContext_PlanOpsEvalAndLearning_stakeholders(ctx, field)
+			case "stakeholdersOther":
+				return ec.fieldContext_PlanOpsEvalAndLearning_stakeholdersOther(ctx, field)
+			case "stakeholdersNote":
+				return ec.fieldContext_PlanOpsEvalAndLearning_stakeholdersNote(ctx, field)
+			case "helpdeskUse":
+				return ec.fieldContext_PlanOpsEvalAndLearning_helpdeskUse(ctx, field)
+			case "helpdeskUseNote":
+				return ec.fieldContext_PlanOpsEvalAndLearning_helpdeskUseNote(ctx, field)
+			case "contractorSupport":
+				return ec.fieldContext_PlanOpsEvalAndLearning_contractorSupport(ctx, field)
+			case "contractorSupportOther":
+				return ec.fieldContext_PlanOpsEvalAndLearning_contractorSupportOther(ctx, field)
+			case "contractorSupportHow":
+				return ec.fieldContext_PlanOpsEvalAndLearning_contractorSupportHow(ctx, field)
+			case "contractorSupportNote":
+				return ec.fieldContext_PlanOpsEvalAndLearning_contractorSupportNote(ctx, field)
+			case "iddocSupport":
+				return ec.fieldContext_PlanOpsEvalAndLearning_iddocSupport(ctx, field)
+			case "iddocSupportNote":
+				return ec.fieldContext_PlanOpsEvalAndLearning_iddocSupportNote(ctx, field)
+			case "technicalContactsIdentified":
+				return ec.fieldContext_PlanOpsEvalAndLearning_technicalContactsIdentified(ctx, field)
+			case "technicalContactsIdentifiedDetail":
+				return ec.fieldContext_PlanOpsEvalAndLearning_technicalContactsIdentifiedDetail(ctx, field)
+			case "technicalContactsIdentifiedNote":
+				return ec.fieldContext_PlanOpsEvalAndLearning_technicalContactsIdentifiedNote(ctx, field)
+			case "captureParticipantInfo":
+				return ec.fieldContext_PlanOpsEvalAndLearning_captureParticipantInfo(ctx, field)
+			case "captureParticipantInfoNote":
+				return ec.fieldContext_PlanOpsEvalAndLearning_captureParticipantInfoNote(ctx, field)
+			case "icdOwner":
+				return ec.fieldContext_PlanOpsEvalAndLearning_icdOwner(ctx, field)
+			case "draftIcdDueDate":
+				return ec.fieldContext_PlanOpsEvalAndLearning_draftIcdDueDate(ctx, field)
+			case "icdNote":
+				return ec.fieldContext_PlanOpsEvalAndLearning_icdNote(ctx, field)
+			case "uatNeeds":
+				return ec.fieldContext_PlanOpsEvalAndLearning_uatNeeds(ctx, field)
+			case "stcNeeds":
+				return ec.fieldContext_PlanOpsEvalAndLearning_stcNeeds(ctx, field)
+			case "testingTimelines":
+				return ec.fieldContext_PlanOpsEvalAndLearning_testingTimelines(ctx, field)
+			case "testingNote":
+				return ec.fieldContext_PlanOpsEvalAndLearning_testingNote(ctx, field)
+			case "dataMonitoringFileTypes":
+				return ec.fieldContext_PlanOpsEvalAndLearning_dataMonitoringFileTypes(ctx, field)
+			case "dataMonitoringFileOther":
+				return ec.fieldContext_PlanOpsEvalAndLearning_dataMonitoringFileOther(ctx, field)
+			case "dataResponseType":
+				return ec.fieldContext_PlanOpsEvalAndLearning_dataResponseType(ctx, field)
+			case "dataResponseFileFrequency":
+				return ec.fieldContext_PlanOpsEvalAndLearning_dataResponseFileFrequency(ctx, field)
+			case "dataFullTimeOrIncremental":
+				return ec.fieldContext_PlanOpsEvalAndLearning_dataFullTimeOrIncremental(ctx, field)
+			case "eftSetUp":
+				return ec.fieldContext_PlanOpsEvalAndLearning_eftSetUp(ctx, field)
+			case "unsolicitedAdjustmentsIncluded":
+				return ec.fieldContext_PlanOpsEvalAndLearning_unsolicitedAdjustmentsIncluded(ctx, field)
+			case "dataFlowDiagramsNeeded":
+				return ec.fieldContext_PlanOpsEvalAndLearning_dataFlowDiagramsNeeded(ctx, field)
+			case "produceBenefitEnhancementFiles":
+				return ec.fieldContext_PlanOpsEvalAndLearning_produceBenefitEnhancementFiles(ctx, field)
+			case "fileNamingConventions":
+				return ec.fieldContext_PlanOpsEvalAndLearning_fileNamingConventions(ctx, field)
+			case "dataMonitoringNote":
+				return ec.fieldContext_PlanOpsEvalAndLearning_dataMonitoringNote(ctx, field)
+			case "benchmarkForPerformance":
+				return ec.fieldContext_PlanOpsEvalAndLearning_benchmarkForPerformance(ctx, field)
+			case "benchmarkForPerformanceNote":
+				return ec.fieldContext_PlanOpsEvalAndLearning_benchmarkForPerformanceNote(ctx, field)
+			case "computePerformanceScores":
+				return ec.fieldContext_PlanOpsEvalAndLearning_computePerformanceScores(ctx, field)
+			case "computePerformanceScoresNote":
+				return ec.fieldContext_PlanOpsEvalAndLearning_computePerformanceScoresNote(ctx, field)
+			case "riskAdjustPerformance":
+				return ec.fieldContext_PlanOpsEvalAndLearning_riskAdjustPerformance(ctx, field)
+			case "riskAdjustFeedback":
+				return ec.fieldContext_PlanOpsEvalAndLearning_riskAdjustFeedback(ctx, field)
+			case "riskAdjustPayments":
+				return ec.fieldContext_PlanOpsEvalAndLearning_riskAdjustPayments(ctx, field)
+			case "riskAdjustOther":
+				return ec.fieldContext_PlanOpsEvalAndLearning_riskAdjustOther(ctx, field)
+			case "riskAdjustNote":
+				return ec.fieldContext_PlanOpsEvalAndLearning_riskAdjustNote(ctx, field)
+			case "appealPerformance":
+				return ec.fieldContext_PlanOpsEvalAndLearning_appealPerformance(ctx, field)
+			case "appealFeedback":
+				return ec.fieldContext_PlanOpsEvalAndLearning_appealFeedback(ctx, field)
+			case "appealPayments":
+				return ec.fieldContext_PlanOpsEvalAndLearning_appealPayments(ctx, field)
+			case "appealOther":
+				return ec.fieldContext_PlanOpsEvalAndLearning_appealOther(ctx, field)
+			case "appealNote":
+				return ec.fieldContext_PlanOpsEvalAndLearning_appealNote(ctx, field)
+			case "evaluationApproaches":
+				return ec.fieldContext_PlanOpsEvalAndLearning_evaluationApproaches(ctx, field)
+			case "evaluationApproachOther":
+				return ec.fieldContext_PlanOpsEvalAndLearning_evaluationApproachOther(ctx, field)
+			case "evalutaionApproachNote":
+				return ec.fieldContext_PlanOpsEvalAndLearning_evalutaionApproachNote(ctx, field)
+			case "ccmInvolvment":
+				return ec.fieldContext_PlanOpsEvalAndLearning_ccmInvolvment(ctx, field)
+			case "ccmInvolvmentOther":
+				return ec.fieldContext_PlanOpsEvalAndLearning_ccmInvolvmentOther(ctx, field)
+			case "ccmInvolvmentNote":
+				return ec.fieldContext_PlanOpsEvalAndLearning_ccmInvolvmentNote(ctx, field)
+			case "dataNeededForMonitoring":
+				return ec.fieldContext_PlanOpsEvalAndLearning_dataNeededForMonitoring(ctx, field)
+			case "dataNeededForMonitoringOther":
+				return ec.fieldContext_PlanOpsEvalAndLearning_dataNeededForMonitoringOther(ctx, field)
+			case "dataNeededForMonitoringNote":
+				return ec.fieldContext_PlanOpsEvalAndLearning_dataNeededForMonitoringNote(ctx, field)
+			case "dataToSendParticicipants":
+				return ec.fieldContext_PlanOpsEvalAndLearning_dataToSendParticicipants(ctx, field)
+			case "dataToSendParticicipantsOther":
+				return ec.fieldContext_PlanOpsEvalAndLearning_dataToSendParticicipantsOther(ctx, field)
+			case "dataToSendParticicipantsNote":
+				return ec.fieldContext_PlanOpsEvalAndLearning_dataToSendParticicipantsNote(ctx, field)
+			case "shareCclfData":
+				return ec.fieldContext_PlanOpsEvalAndLearning_shareCclfData(ctx, field)
+			case "shareCclfDataNote":
+				return ec.fieldContext_PlanOpsEvalAndLearning_shareCclfDataNote(ctx, field)
+			case "sendFilesBetweenCcw":
+				return ec.fieldContext_PlanOpsEvalAndLearning_sendFilesBetweenCcw(ctx, field)
+			case "sendFilesBetweenCcwNote":
+				return ec.fieldContext_PlanOpsEvalAndLearning_sendFilesBetweenCcwNote(ctx, field)
+			case "appToSendFilesToKnown":
+				return ec.fieldContext_PlanOpsEvalAndLearning_appToSendFilesToKnown(ctx, field)
+			case "appToSendFilesToWhich":
+				return ec.fieldContext_PlanOpsEvalAndLearning_appToSendFilesToWhich(ctx, field)
+			case "appToSendFilesToNote":
+				return ec.fieldContext_PlanOpsEvalAndLearning_appToSendFilesToNote(ctx, field)
+			case "useCcwForFileDistribiutionToParticipants":
+				return ec.fieldContext_PlanOpsEvalAndLearning_useCcwForFileDistribiutionToParticipants(ctx, field)
+			case "useCcwForFileDistribiutionToParticipantsNote":
+				return ec.fieldContext_PlanOpsEvalAndLearning_useCcwForFileDistribiutionToParticipantsNote(ctx, field)
+			case "developNewQualityMeasures":
+				return ec.fieldContext_PlanOpsEvalAndLearning_developNewQualityMeasures(ctx, field)
+			case "developNewQualityMeasuresNote":
+				return ec.fieldContext_PlanOpsEvalAndLearning_developNewQualityMeasuresNote(ctx, field)
+			case "qualityPerformanceImpactsPayment":
+				return ec.fieldContext_PlanOpsEvalAndLearning_qualityPerformanceImpactsPayment(ctx, field)
+			case "qualityPerformanceImpactsPaymentOther":
+				return ec.fieldContext_PlanOpsEvalAndLearning_qualityPerformanceImpactsPaymentOther(ctx, field)
+			case "qualityPerformanceImpactsPaymentNote":
+				return ec.fieldContext_PlanOpsEvalAndLearning_qualityPerformanceImpactsPaymentNote(ctx, field)
+			case "dataSharingStarts":
+				return ec.fieldContext_PlanOpsEvalAndLearning_dataSharingStarts(ctx, field)
+			case "dataSharingStartsOther":
+				return ec.fieldContext_PlanOpsEvalAndLearning_dataSharingStartsOther(ctx, field)
+			case "dataSharingFrequency":
+				return ec.fieldContext_PlanOpsEvalAndLearning_dataSharingFrequency(ctx, field)
+			case "dataSharingFrequencyContinually":
+				return ec.fieldContext_PlanOpsEvalAndLearning_dataSharingFrequencyContinually(ctx, field)
+			case "dataSharingFrequencyOther":
+				return ec.fieldContext_PlanOpsEvalAndLearning_dataSharingFrequencyOther(ctx, field)
+			case "dataSharingStartsNote":
+				return ec.fieldContext_PlanOpsEvalAndLearning_dataSharingStartsNote(ctx, field)
+			case "dataCollectionStarts":
+				return ec.fieldContext_PlanOpsEvalAndLearning_dataCollectionStarts(ctx, field)
+			case "dataCollectionStartsOther":
+				return ec.fieldContext_PlanOpsEvalAndLearning_dataCollectionStartsOther(ctx, field)
+			case "dataCollectionFrequency":
+				return ec.fieldContext_PlanOpsEvalAndLearning_dataCollectionFrequency(ctx, field)
+			case "dataCollectionFrequencyContinually":
+				return ec.fieldContext_PlanOpsEvalAndLearning_dataCollectionFrequencyContinually(ctx, field)
+			case "dataCollectionFrequencyOther":
+				return ec.fieldContext_PlanOpsEvalAndLearning_dataCollectionFrequencyOther(ctx, field)
+			case "dataCollectionFrequencyNote":
+				return ec.fieldContext_PlanOpsEvalAndLearning_dataCollectionFrequencyNote(ctx, field)
+			case "qualityReportingStarts":
+				return ec.fieldContext_PlanOpsEvalAndLearning_qualityReportingStarts(ctx, field)
+			case "qualityReportingStartsOther":
+				return ec.fieldContext_PlanOpsEvalAndLearning_qualityReportingStartsOther(ctx, field)
+			case "qualityReportingStartsNote":
+				return ec.fieldContext_PlanOpsEvalAndLearning_qualityReportingStartsNote(ctx, field)
+			case "qualityReportingFrequency":
+				return ec.fieldContext_PlanOpsEvalAndLearning_qualityReportingFrequency(ctx, field)
+			case "qualityReportingFrequencyContinually":
+				return ec.fieldContext_PlanOpsEvalAndLearning_qualityReportingFrequencyContinually(ctx, field)
+			case "qualityReportingFrequencyOther":
+				return ec.fieldContext_PlanOpsEvalAndLearning_qualityReportingFrequencyOther(ctx, field)
+			case "modelLearningSystems":
+				return ec.fieldContext_PlanOpsEvalAndLearning_modelLearningSystems(ctx, field)
+			case "modelLearningSystemsOther":
+				return ec.fieldContext_PlanOpsEvalAndLearning_modelLearningSystemsOther(ctx, field)
+			case "modelLearningSystemsNote":
+				return ec.fieldContext_PlanOpsEvalAndLearning_modelLearningSystemsNote(ctx, field)
+			case "anticipatedChallenges":
+				return ec.fieldContext_PlanOpsEvalAndLearning_anticipatedChallenges(ctx, field)
+			case "createdBy":
+				return ec.fieldContext_PlanOpsEvalAndLearning_createdBy(ctx, field)
+			case "createdByUserAccount":
+				return ec.fieldContext_PlanOpsEvalAndLearning_createdByUserAccount(ctx, field)
+			case "createdDts":
+				return ec.fieldContext_PlanOpsEvalAndLearning_createdDts(ctx, field)
+			case "modifiedBy":
+				return ec.fieldContext_PlanOpsEvalAndLearning_modifiedBy(ctx, field)
+			case "modifiedByUserAccount":
+				return ec.fieldContext_PlanOpsEvalAndLearning_modifiedByUserAccount(ctx, field)
+			case "modifiedDts":
+				return ec.fieldContext_PlanOpsEvalAndLearning_modifiedDts(ctx, field)
+			case "readyForReviewBy":
+				return ec.fieldContext_PlanOpsEvalAndLearning_readyForReviewBy(ctx, field)
+			case "readyForReviewByUserAccount":
+				return ec.fieldContext_PlanOpsEvalAndLearning_readyForReviewByUserAccount(ctx, field)
+			case "readyForReviewDts":
+				return ec.fieldContext_PlanOpsEvalAndLearning_readyForReviewDts(ctx, field)
+			case "readyForClearanceBy":
+				return ec.fieldContext_PlanOpsEvalAndLearning_readyForClearanceBy(ctx, field)
+			case "readyForClearanceByUserAccount":
+				return ec.fieldContext_PlanOpsEvalAndLearning_readyForClearanceByUserAccount(ctx, field)
+			case "readyForClearanceDts":
+				return ec.fieldContext_PlanOpsEvalAndLearning_readyForClearanceDts(ctx, field)
+			case "status":
+				return ec.fieldContext_PlanOpsEvalAndLearning_status(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type PlanOpsEvalAndLearning", field.Name)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Mutation_updatePlanOpsEvalAndLearning_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
 		ec.Error(ctx, err)
 		return fc, err
 	}
@@ -61525,13 +61535,6 @@ func (ec *executionContext) _Mutation(ctx context.Context, sel ast.SelectionSet)
 			if out.Values[i] == graphql.Null {
 				out.Invalids++
 			}
-		case "updatePlanBasics":
-			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
-				return ec._Mutation_updatePlanBasics(ctx, field)
-			})
-			if out.Values[i] == graphql.Null {
-				out.Invalids++
-			}
 		case "updatePlanGeneralCharacteristics":
 			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
 				return ec._Mutation_updatePlanGeneralCharacteristics(ctx, field)
@@ -61549,13 +61552,6 @@ func (ec *executionContext) _Mutation(ctx context.Context, sel ast.SelectionSet)
 		case "updatePlanParticipantsAndProviders":
 			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
 				return ec._Mutation_updatePlanParticipantsAndProviders(ctx, field)
-			})
-			if out.Values[i] == graphql.Null {
-				out.Invalids++
-			}
-		case "updatePlanOpsEvalAndLearning":
-			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
-				return ec._Mutation_updatePlanOpsEvalAndLearning(ctx, field)
 			})
 			if out.Values[i] == graphql.Null {
 				out.Invalids++
@@ -61785,6 +61781,20 @@ func (ec *executionContext) _Mutation(ctx context.Context, sel ast.SelectionSet)
 		case "updateUserNotificationPreferences":
 			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
 				return ec._Mutation_updateUserNotificationPreferences(ctx, field)
+			})
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "updatePlanBasics":
+			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
+				return ec._Mutation_updatePlanBasics(ctx, field)
+			})
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "updatePlanOpsEvalAndLearning":
+			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
+				return ec._Mutation_updatePlanOpsEvalAndLearning(ctx, field)
 			})
 			if out.Values[i] == graphql.Null {
 				out.Invalids++

@@ -600,7 +600,7 @@ export type Mutation = {
   unlockTaskListSection: Scalars['Boolean']['output'];
   updateCustomOperationalNeedByID: OperationalNeed;
   /**
-   * This will update linked existing models, and related model plans for given model plan and fieldName.
+   * This will update linked existing models, and relatede model plans for given model plan and fieldName.
    * The fieldName allows it so you can create links for multiple sections of the model plan
    */
   updateExistingModelLinks: ExistingModelLinks;
@@ -616,6 +616,7 @@ export type Mutation = {
   updatePlanParticipantsAndProviders: PlanParticipantsAndProviders;
   updatePlanPayments: PlanPayments;
   updatePlanTDL: PlanTdl;
+  /** Sets the notification preferences of a user. */
   updateUserNotificationPreferences: UserNotificationPreferences;
   uploadNewPlanDocument: PlanDocument;
 };

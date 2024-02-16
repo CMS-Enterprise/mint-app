@@ -101,7 +101,7 @@ const mockAuthReducer = {
 const mockStore = configureMockStore();
 const store = mockStore({ auth: mockAuthReducer });
 
-describe('IT Solutions Link Documents', () => {
+describe('Operational Solutions Link Documents', () => {
   it('renders correctly', async () => {
     await act(async () => {
       const { getByTestId } = render(

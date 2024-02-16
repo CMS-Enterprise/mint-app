@@ -1803,7 +1803,7 @@ const helpAndKnowledge = {
   heading: 'Help and Knowledge Center',
   home: 'Home',
   description:
-    'Get help with the creation of your Model Plan and the implementation of IT solutions.',
+    'Get help with the creation of your Model Plan and the implementation of operational solutions.',
   read: 'Read',
   all: 'All help articles',
   'getting-started': 'Getting started',

@@ -1,13 +1,13 @@
 const itSolutions = {
-  heading: 'IT solutions and implementation status tracker',
-  headingReadOnly: 'IT solutions',
-  breadcrumb: 'IT solutions tracker',
+  heading: 'Operational solutions and implementation status tracker',
+  headingReadOnly: 'Operational solutions',
+  breadcrumb: 'Operational solutions tracker',
   summaryBox: {
     useTracker: 'Use this tracker to',
     listItem: {
       one:
-        'select the IT solutions you plan to use to satisfy your model’s operational needs',
-      two: 'update and manage the implementation status of those IT solutions',
+        'select the solutions you plan to use to satisfy your model’s operational needs',
+      two: 'update and manage the implementation status of those solutions',
       three:
         'add additional operational services and solutions for your model as needs arise'
     },
@@ -46,10 +46,10 @@ const itSolutions = {
     title: 'Operational Needs Table',
     needs: 'Selected operational needs and solutions',
     needsInfo:
-      'The operational needs below have been selected based on your answers to questions in your Model Plan. You may use the table below to select IT solutions and track the implementation status of those solutions.',
+      'The operational needs below have been selected based on your answers to questions in your Model Plan. You may use the table below to select operational solutions and track the implementation status of those solutions.',
     otherNeeds: 'Other operational needs',
     otherNeedsInfo:
-      'The operational needs below are not required for your model either because you have not yet answered the relevant question as a part of your Model Plan, or because you have answered it in a way that means you do not need an IT solution for that need.',
+      'The operational needs below are not required for your model either because you have not yet answered the relevant question as a part of your Model Plan, or because you have answered it in a way that means you do not need an operational solution for that need.',
     need: 'Operational needs',
     solution: 'Solution',
     finishBy: 'Must finish by',
@@ -74,7 +74,7 @@ const itSolutions = {
     noNeedsReadonly:
       'There aren’t any operational needs that require solutions yet.',
     noNeedsInfo:
-      'If you have additional operational needs you want to track, add an operational need or IT solution below.',
+      'If you have additional operational needs you want to track, add an operational need or solution below.',
     noNeedsReadonlyInfo: 'Check back again later for updates.',
     noNeedsReadonlyEditInfo:
       'To determine the operational needs, fill out more of the Model Plan.'
@@ -91,13 +91,13 @@ const itSolutions = {
   },
 
   warningRedirect:
-    'Changing your answer to this question may also affect your selections in the IT solutions and implementation status tracker.  ',
-  goToITSolutions: 'Go to IT solutions tracker.',
+    'Changing your answer to this question may also affect your selections in the operational solutions and implementation status tracker.  ',
+  goToITSolutions: 'Go to operational solutions tracker.',
   helpBox: {
     heading: 'Don’t see what you’re looking for?',
     info:
       'Sometimes models have operational needs that are not uncovered in the Model Plan. If you want to track the status of additional workstreams, you may add them here.',
-    button: 'Add an operational need or IT solution'
+    button: 'Add an operational need or solution'
   },
   selectSolution: 'Select this solution',
   updateSolutions: 'Update solution selections',

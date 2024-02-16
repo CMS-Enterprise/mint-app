@@ -39,7 +39,7 @@ export interface UpdateExistingModelLinks_updateExistingModelLinks {
 
 export interface UpdateExistingModelLinks {
   /**
-   * This will update linked existing models, and related model plans for given model plan and fieldName.
+   * This will update linked existing models, and relatede model plans for given model plan and fieldName.
    * The fieldName allows it so you can create links for multiple sections of the model plan
    */
   updateExistingModelLinks: UpdateExistingModelLinks_updateExistingModelLinks;

@@ -94,7 +94,7 @@ const mocks = [
   ...possibleSolutionsMock
 ];
 
-describe('IT Solutions NeedQuestionAndAnswer', () => {
+describe('Operational Solutions NeedQuestionAndAnswer', () => {
   it('renders correctly', async () => {
     const { getByText, getByRole } = render(
       <MemoryRouter

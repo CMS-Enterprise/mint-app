@@ -69,7 +69,7 @@ const mocks = [
   ...needQuestionAndAnswerMock
 ];
 
-describe('IT Solutions NeedQuestionAndAnswer', () => {
+describe('Operational Solutions NeedQuestionAndAnswer', () => {
   it('renders correctly', async () => {
     const { getByText, getAllByTestId, getByRole } = render(
       <MemoryRouter

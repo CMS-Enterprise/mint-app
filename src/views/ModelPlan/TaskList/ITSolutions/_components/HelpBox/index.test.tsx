@@ -4,7 +4,7 @@ import { render } from '@testing-library/react';
 
 import HelpBox from '.';
 
-describe('IT Solutions HelpBox', () => {
+describe('Operational Solutions HelpBox', () => {
   it('matches snapshot', async () => {
     const { asFragment } = render(
       <MemoryRouter
