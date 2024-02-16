@@ -1,5 +1,5 @@
 module.exports = {
-  schemaPaths: ['pkg/graph/**/*.graphql'],
+  schemaPaths: ['pkg/graph/schema/**/*.graphql'],
   rules: [
     //   "arguments-have-descriptions",
     'defined-types-are-used',

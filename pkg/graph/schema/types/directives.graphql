@@ -1,0 +1,9 @@
+directive @hasRole(role: Role!) on FIELD_DEFINITION
+
+directive @hasAnyRole(roles: [Role!]!) on FIELD_DEFINITION
+
+# https://gqlgen.com/config/#inline-config-with-directives
+directive @goModel(
+  model: String
+  models: [String!]
+) on OBJECT | INPUT_OBJECT | SCALAR | ENUM | INTERFACE | UNION
