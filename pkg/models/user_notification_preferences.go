@@ -16,7 +16,6 @@ type UserNotificationPreferences struct {
 	TaggedInDiscussionReply UserNotificationPreferenceFlag `json:"taggedInDiscussionReply" db:"tagged_in_discussion_reply"`
 	NewDiscussionReply      UserNotificationPreferenceFlag `json:"newDiscussionReply" db:"new_discussion_reply"`
 	ModelPlanShared         UserNotificationPreferenceFlag `json:"modelPlanShared" db:"model_plan_shared"`
-	NewPlanDiscussion       UserNotificationPreferenceFlag `json:"newPlanDiscussion" db:"new_plan_discussion"`
 }
 
 // NewUserNotificationPreferences returns a New UserNotificationPreferences
@@ -31,7 +30,6 @@ func NewUserNotificationPreferences(userID uuid.UUID) *UserNotificationPreferenc
 		TaggedInDiscussionReply: UserNotificationPreferenceAll,
 		NewDiscussionReply:      UserNotificationPreferenceAll,
 		ModelPlanShared:         UserNotificationPreferenceAll,
-		NewPlanDiscussion:       UserNotificationPreferenceAll,
 	}
 }
 

@@ -2808,7 +2808,6 @@ export type UserNotificationPreferencesChanges = {
   dailyDigestComplete?: InputMaybe<UserNotificationPreferenceFlag>;
   modelPlanShared?: InputMaybe<UserNotificationPreferenceFlag>;
   newDiscussionReply?: InputMaybe<UserNotificationPreferenceFlag>;
-  newPlanDiscussion?: InputMaybe<UserNotificationPreferenceFlag>;
   taggedInDiscussion?: InputMaybe<UserNotificationPreferenceFlag>;
   taggedInDiscussionReply?: InputMaybe<UserNotificationPreferenceFlag>;
 };

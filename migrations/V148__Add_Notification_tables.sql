@@ -15,7 +15,7 @@ CREATE TYPE USER_NOTIFICATION_PREFERENCE_FLAG AS ENUM (
     'NONE'
 );
 
--- TODO: should these be in a new schema?
+
 CREATE TABLE activity (
     id UUID PRIMARY KEY NOT NULL,
     actor_id UUID NOT NULL REFERENCES user_account(id), --foreign key to user table
@@ -31,7 +31,6 @@ CREATE TABLE activity (
 
 );
 
---NOTE these tables likely doesn't need to be audited. It is an audit table by itself. If we want, we can audit it though
 
 CREATE TABLE user_notification (
     id UUID PRIMARY KEY NOT NULL,
@@ -76,3 +75,4 @@ CREATE TABLE user_notification_preferences (
 -- //TODO: EASI-3294 Add auditing, probably just the preferences table.
 
 -- //TODO: EASI-3295 add notification preferences for all existing users in the database
+-- TODO EASI-3295 add comments to the table

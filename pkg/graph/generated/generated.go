@@ -9706,7 +9706,7 @@ type TaggedInPlanDiscussionActivityMeta {
   version: Int!
   type: ActivityType!
   discussionID: UUID!
-  content: String! # //TODO: EASI-3925 Should this be the tagged Content Type? That might be better.. 
+  content: String!
 }
 
 type TaggedInDiscussionReplyActivityMeta {
@@ -9714,7 +9714,7 @@ type TaggedInDiscussionReplyActivityMeta {
   type: ActivityType!
   discussionID: UUID!
   replyID: UUID!
-  content: String! # //TODO: EASI-3925 Should this be the tagged Content Type? That might be better.. 
+  content: String!
 }
 
 
@@ -9840,7 +9840,6 @@ input UserNotificationPreferencesChanges @goModel(model: "map[string]interface{}
 
   modelPlanShared: UserNotificationPreferenceFlag
 
-  newPlanDiscussion: UserNotificationPreferenceFlag #TODO: EASI-3925 this is not explicitly requested
 
 }
 
