@@ -1,0 +1,58 @@
+"""
+User Notification Content represents the possible data associated with a User Notification
+"""
+union UserNotificationContent = PlanDiscussion | DiscussionReply
+"""
+UserNotification represents a notification about a specific Activity
+"""
+type UserNotification {
+  id: UUID!
+	activityID: UUID!
+  # activityType: ActivityType #TODO EASI-3925 #Maybe add this on this level so the FE doesn't need to query it? //TODO EASI-3925
+	userID: UUID! #probably not needed, it should be only visible for the user
+  isRead: Boolean!
+  isArchived: Boolean!
+  emailSent: Boolean!
+  activity: Activity! # should we nest this?
+  content: UserNotificationContent!
+
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
+
+}
+
+"""
+This is a wrapper for all information for a user 
+"""
+type UserNotifications {
+"""
+This returns the number of unread notifications
+"""
+numUnreadNotifications: Int!
+"""
+This includes all notifications
+"""
+notifications: [UserNotification!]!
+"""
+This renders only the unread notifications
+"""
+unreadNotifications: [UserNotification!]!
+}
+
+
+extend type Mutation {
+"""
+Marks a single notification as read. It requires that the notification be owned by the context of the user sending this request, or it will fail
+"""
+markNotificationAsRead(notificationID: UUID!): UserNotification!
+"""
+Marks all notifications for the current user as read, and returns the updated notifications
+"""
+markAllNotificationsAsRead: [UserNotification!]!
+
+  
+}

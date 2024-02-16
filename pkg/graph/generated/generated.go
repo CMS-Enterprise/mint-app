@@ -1163,10 +1163,10 @@ type MutationResolver interface {
 	ShareModelPlan(ctx context.Context, modelPlanID uuid.UUID, viewFilter *models.ModelViewFilter, usernames []string, optionalMessage *string) (bool, error)
 	ReportAProblem(ctx context.Context, input model.ReportAProblemInput) (bool, error)
 	SendFeedbackEmail(ctx context.Context, input model.SendFeedbackEmailInput) (bool, error)
-	MarkNotificationAsRead(ctx context.Context, notificationID uuid.UUID) (*notifications.UserNotification, error)
-	MarkAllNotificationsAsRead(ctx context.Context) ([]*notifications.UserNotification, error)
 	UpdatePlanBasics(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanBasics, error)
 	UpdatePlanOpsEvalAndLearning(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanOpsEvalAndLearning, error)
+	MarkNotificationAsRead(ctx context.Context, notificationID uuid.UUID) (*notifications.UserNotification, error)
+	MarkAllNotificationsAsRead(ctx context.Context) ([]*notifications.UserNotification, error)
 	UpdateUserNotificationPreferences(ctx context.Context, changes map[string]interface{}) (*models.UserNotificationPreferences, error)
 }
 type OperationalNeedResolver interface {
@@ -9383,52 +9383,6 @@ type Activity {
   modifiedDts: Time
 
 }
-"""
-User Notification Content represents the possible data associated with a User Notification
-"""
-union UserNotificationContent = PlanDiscussion | DiscussionReply
-"""
-UserNotification represents a notification about a specific Activity
-"""
-type UserNotification {
-  id: UUID!
-	activityID: UUID!
-  # activityType: ActivityType #Maybe add this on this level so the FE doesn't need to query it?
-	userID: UUID! #probably not needed, it should be only visible for the user
-  isRead: Boolean!
-  isArchived: Boolean!
-  emailSent: Boolean!
-  activity: Activity! # should we nest this?
-  content: UserNotificationContent!
-
-  createdBy: UUID!
-  createdByUserAccount: UserAccount!
-  createdDts: Time!
-  modifiedBy: UUID
-  modifiedByUserAccount: UserAccount
-  modifiedDts: Time
-
-}
-
-"""
-This is a wrapper for all information for a user 
-"""
-type UserNotifications {
-"""
-This returns the number of unread notifications
-"""
-numUnreadNotifications: Int!
-"""
-This includes all notifications
-"""
-notifications: [UserNotification!]!
-"""
-This renders only the unread notifications
-"""
-unreadNotifications: [UserNotification!]!
-}
-
-
 
 
 """
@@ -9609,16 +9563,6 @@ reportAProblem(input: ReportAProblemInput!): Boolean!
 This mutation sends feedback about the MINT product to the MINT team
 """
 sendFeedbackEmail(input: SendFeedbackEmailInput!): Boolean!
-
-
-"""
-Marks a single notification as read. It requires that the notification be owned by the context of the user sending this request, or it will fail
-"""
-markNotificationAsRead(notificationID: UUID!): UserNotification!
-"""
-Marks all notifications for the current user as read, and returns the updated notifications
-"""
-markAllNotificationsAsRead: [UserNotification!]!
 
 
 }
@@ -10703,6 +10647,65 @@ enum YesNoOtherType {
   NO
   OTHER
 }`, BuiltIn: false},
+	{Name: "../schema/types/user_notification.graphql", Input: `"""
+User Notification Content represents the possible data associated with a User Notification
+"""
+union UserNotificationContent = PlanDiscussion | DiscussionReply
+"""
+UserNotification represents a notification about a specific Activity
+"""
+type UserNotification {
+  id: UUID!
+	activityID: UUID!
+  # activityType: ActivityType #TODO EASI-3925 #Maybe add this on this level so the FE doesn't need to query it? //TODO EASI-3925
+	userID: UUID! #probably not needed, it should be only visible for the user
+  isRead: Boolean!
+  isArchived: Boolean!
+  emailSent: Boolean!
+  activity: Activity! # should we nest this?
+  content: UserNotificationContent!
+
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
+
+}
+
+"""
+This is a wrapper for all information for a user 
+"""
+type UserNotifications {
+"""
+This returns the number of unread notifications
+"""
+numUnreadNotifications: Int!
+"""
+This includes all notifications
+"""
+notifications: [UserNotification!]!
+"""
+This renders only the unread notifications
+"""
+unreadNotifications: [UserNotification!]!
+}
+
+
+extend type Mutation {
+"""
+Marks a single notification as read. It requires that the notification be owned by the context of the user sending this request, or it will fail
+"""
+markNotificationAsRead(notificationID: UUID!): UserNotification!
+"""
+Marks all notifications for the current user as read, and returns the updated notifications
+"""
+markAllNotificationsAsRead: [UserNotification!]!
+
+  
+}
+`, BuiltIn: false},
 	{Name: "../schema/types/user_notification_preferences.graphql", Input: `enum UserNotificationPreferenceFlag {
   ALL,
   IN_APP_ONLY,
@@ -22475,165 +22478,6 @@ func (ec *executionContext) fieldContext_Mutation_sendFeedbackEmail(ctx context.
 	return fc, nil
 }
 
-func (ec *executionContext) _Mutation_markNotificationAsRead(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Mutation_markNotificationAsRead(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Mutation().MarkNotificationAsRead(rctx, fc.Args["notificationID"].(uuid.UUID))
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(*notifications.UserNotification)
-	fc.Result = res
-	return ec.marshalNUserNotification2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋnotificationsᚐUserNotification(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_Mutation_markNotificationAsRead(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "Mutation",
-		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			switch field.Name {
-			case "id":
-				return ec.fieldContext_UserNotification_id(ctx, field)
-			case "activityID":
-				return ec.fieldContext_UserNotification_activityID(ctx, field)
-			case "userID":
-				return ec.fieldContext_UserNotification_userID(ctx, field)
-			case "isRead":
-				return ec.fieldContext_UserNotification_isRead(ctx, field)
-			case "isArchived":
-				return ec.fieldContext_UserNotification_isArchived(ctx, field)
-			case "emailSent":
-				return ec.fieldContext_UserNotification_emailSent(ctx, field)
-			case "activity":
-				return ec.fieldContext_UserNotification_activity(ctx, field)
-			case "content":
-				return ec.fieldContext_UserNotification_content(ctx, field)
-			case "createdBy":
-				return ec.fieldContext_UserNotification_createdBy(ctx, field)
-			case "createdByUserAccount":
-				return ec.fieldContext_UserNotification_createdByUserAccount(ctx, field)
-			case "createdDts":
-				return ec.fieldContext_UserNotification_createdDts(ctx, field)
-			case "modifiedBy":
-				return ec.fieldContext_UserNotification_modifiedBy(ctx, field)
-			case "modifiedByUserAccount":
-				return ec.fieldContext_UserNotification_modifiedByUserAccount(ctx, field)
-			case "modifiedDts":
-				return ec.fieldContext_UserNotification_modifiedDts(ctx, field)
-			}
-			return nil, fmt.Errorf("no field named %q was found under type UserNotification", field.Name)
-		},
-	}
-	defer func() {
-		if r := recover(); r != nil {
-			err = ec.Recover(ctx, r)
-			ec.Error(ctx, err)
-		}
-	}()
-	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Mutation_markNotificationAsRead_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
-		ec.Error(ctx, err)
-		return fc, err
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _Mutation_markAllNotificationsAsRead(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Mutation_markAllNotificationsAsRead(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Mutation().MarkAllNotificationsAsRead(rctx)
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.([]*notifications.UserNotification)
-	fc.Result = res
-	return ec.marshalNUserNotification2ᚕᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋnotificationsᚐUserNotificationᚄ(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_Mutation_markAllNotificationsAsRead(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "Mutation",
-		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			switch field.Name {
-			case "id":
-				return ec.fieldContext_UserNotification_id(ctx, field)
-			case "activityID":
-				return ec.fieldContext_UserNotification_activityID(ctx, field)
-			case "userID":
-				return ec.fieldContext_UserNotification_userID(ctx, field)
-			case "isRead":
-				return ec.fieldContext_UserNotification_isRead(ctx, field)
-			case "isArchived":
-				return ec.fieldContext_UserNotification_isArchived(ctx, field)
-			case "emailSent":
-				return ec.fieldContext_UserNotification_emailSent(ctx, field)
-			case "activity":
-				return ec.fieldContext_UserNotification_activity(ctx, field)
-			case "content":
-				return ec.fieldContext_UserNotification_content(ctx, field)
-			case "createdBy":
-				return ec.fieldContext_UserNotification_createdBy(ctx, field)
-			case "createdByUserAccount":
-				return ec.fieldContext_UserNotification_createdByUserAccount(ctx, field)
-			case "createdDts":
-				return ec.fieldContext_UserNotification_createdDts(ctx, field)
-			case "modifiedBy":
-				return ec.fieldContext_UserNotification_modifiedBy(ctx, field)
-			case "modifiedByUserAccount":
-				return ec.fieldContext_UserNotification_modifiedByUserAccount(ctx, field)
-			case "modifiedDts":
-				return ec.fieldContext_UserNotification_modifiedDts(ctx, field)
-			}
-			return nil, fmt.Errorf("no field named %q was found under type UserNotification", field.Name)
-		},
-	}
-	return fc, nil
-}
-
 func (ec *executionContext) _Mutation_updatePlanBasics(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_Mutation_updatePlanBasics(ctx, field)
 	if err != nil {
@@ -23092,6 +22936,165 @@ func (ec *executionContext) fieldContext_Mutation_updatePlanOpsEvalAndLearning(c
 	if fc.Args, err = ec.field_Mutation_updatePlanOpsEvalAndLearning_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
 		ec.Error(ctx, err)
 		return fc, err
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Mutation_markNotificationAsRead(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Mutation_markNotificationAsRead(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Mutation().MarkNotificationAsRead(rctx, fc.Args["notificationID"].(uuid.UUID))
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*notifications.UserNotification)
+	fc.Result = res
+	return ec.marshalNUserNotification2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋnotificationsᚐUserNotification(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Mutation_markNotificationAsRead(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Mutation",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_UserNotification_id(ctx, field)
+			case "activityID":
+				return ec.fieldContext_UserNotification_activityID(ctx, field)
+			case "userID":
+				return ec.fieldContext_UserNotification_userID(ctx, field)
+			case "isRead":
+				return ec.fieldContext_UserNotification_isRead(ctx, field)
+			case "isArchived":
+				return ec.fieldContext_UserNotification_isArchived(ctx, field)
+			case "emailSent":
+				return ec.fieldContext_UserNotification_emailSent(ctx, field)
+			case "activity":
+				return ec.fieldContext_UserNotification_activity(ctx, field)
+			case "content":
+				return ec.fieldContext_UserNotification_content(ctx, field)
+			case "createdBy":
+				return ec.fieldContext_UserNotification_createdBy(ctx, field)
+			case "createdByUserAccount":
+				return ec.fieldContext_UserNotification_createdByUserAccount(ctx, field)
+			case "createdDts":
+				return ec.fieldContext_UserNotification_createdDts(ctx, field)
+			case "modifiedBy":
+				return ec.fieldContext_UserNotification_modifiedBy(ctx, field)
+			case "modifiedByUserAccount":
+				return ec.fieldContext_UserNotification_modifiedByUserAccount(ctx, field)
+			case "modifiedDts":
+				return ec.fieldContext_UserNotification_modifiedDts(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type UserNotification", field.Name)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Mutation_markNotificationAsRead_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Mutation_markAllNotificationsAsRead(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Mutation_markAllNotificationsAsRead(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Mutation().MarkAllNotificationsAsRead(rctx)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.([]*notifications.UserNotification)
+	fc.Result = res
+	return ec.marshalNUserNotification2ᚕᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋnotificationsᚐUserNotificationᚄ(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Mutation_markAllNotificationsAsRead(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Mutation",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_UserNotification_id(ctx, field)
+			case "activityID":
+				return ec.fieldContext_UserNotification_activityID(ctx, field)
+			case "userID":
+				return ec.fieldContext_UserNotification_userID(ctx, field)
+			case "isRead":
+				return ec.fieldContext_UserNotification_isRead(ctx, field)
+			case "isArchived":
+				return ec.fieldContext_UserNotification_isArchived(ctx, field)
+			case "emailSent":
+				return ec.fieldContext_UserNotification_emailSent(ctx, field)
+			case "activity":
+				return ec.fieldContext_UserNotification_activity(ctx, field)
+			case "content":
+				return ec.fieldContext_UserNotification_content(ctx, field)
+			case "createdBy":
+				return ec.fieldContext_UserNotification_createdBy(ctx, field)
+			case "createdByUserAccount":
+				return ec.fieldContext_UserNotification_createdByUserAccount(ctx, field)
+			case "createdDts":
+				return ec.fieldContext_UserNotification_createdDts(ctx, field)
+			case "modifiedBy":
+				return ec.fieldContext_UserNotification_modifiedBy(ctx, field)
+			case "modifiedByUserAccount":
+				return ec.fieldContext_UserNotification_modifiedByUserAccount(ctx, field)
+			case "modifiedDts":
+				return ec.fieldContext_UserNotification_modifiedDts(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type UserNotification", field.Name)
+		},
 	}
 	return fc, nil
 }
@@ -61771,20 +61774,6 @@ func (ec *executionContext) _Mutation(ctx context.Context, sel ast.SelectionSet)
 			if out.Values[i] == graphql.Null {
 				out.Invalids++
 			}
-		case "markNotificationAsRead":
-			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
-				return ec._Mutation_markNotificationAsRead(ctx, field)
-			})
-			if out.Values[i] == graphql.Null {
-				out.Invalids++
-			}
-		case "markAllNotificationsAsRead":
-			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
-				return ec._Mutation_markAllNotificationsAsRead(ctx, field)
-			})
-			if out.Values[i] == graphql.Null {
-				out.Invalids++
-			}
 		case "updatePlanBasics":
 			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
 				return ec._Mutation_updatePlanBasics(ctx, field)
@@ -61795,6 +61784,20 @@ func (ec *executionContext) _Mutation(ctx context.Context, sel ast.SelectionSet)
 		case "updatePlanOpsEvalAndLearning":
 			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
 				return ec._Mutation_updatePlanOpsEvalAndLearning(ctx, field)
+			})
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "markNotificationAsRead":
+			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
+				return ec._Mutation_markNotificationAsRead(ctx, field)
+			})
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "markAllNotificationsAsRead":
+			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
+				return ec._Mutation_markAllNotificationsAsRead(ctx, field)
 			})
 			if out.Values[i] == graphql.Null {
 				out.Invalids++

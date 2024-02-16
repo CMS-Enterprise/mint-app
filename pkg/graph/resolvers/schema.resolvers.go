@@ -6,7 +6,6 @@ package resolvers
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/google/uuid"
 
@@ -508,18 +507,6 @@ func (r *mutationResolver) SendFeedbackEmail(ctx context.Context, input model.Se
 	return SendFeedbackEmail(r.emailService, r.emailTemplateService, r.addressBook, principal, input)
 }
 
-// MarkNotificationAsRead is the resolver for the markNotificationAsRead field.
-func (r *mutationResolver) MarkNotificationAsRead(ctx context.Context, notificationID uuid.UUID) (*notifications.UserNotification, error) {
-	principal := appcontext.Principal(ctx)
-	return notifications.UserNotificationMarkAsRead(ctx, r.store, r.store, principal, notificationID)
-}
-
-// MarkAllNotificationsAsRead is the resolver for the markAllNotificationsAsRead field.
-func (r *mutationResolver) MarkAllNotificationsAsRead(ctx context.Context) ([]*notifications.UserNotification, error) {
-	principal := appcontext.Principal(ctx)
-	return notifications.UserNotificationMarkAllAsRead(ctx, r.store, r.store, principal)
-}
-
 // Solutions is the resolver for the solutions field.
 func (r *operationalNeedResolver) Solutions(ctx context.Context, obj *models.OperationalNeed, includeNotNeeded bool) ([]*models.OperationalSolution, error) {
 	return OperationaSolutionsAndPossibleGetByOPNeedIDLOADER(ctx, obj.ID, includeNotNeeded)
@@ -1010,18 +997,6 @@ func (r *taggedContentResolver) RawContent(ctx context.Context, obj *models.Tagg
 	return obj.RawContent.String(), nil
 }
 
-// Activity is the resolver for the activity field.
-func (r *userNotificationResolver) Activity(ctx context.Context, obj *notifications.UserNotification) (*notifications.Activity, error) {
-	return notifications.ActivityGetByID(ctx, r.store, obj.ActivityID)
-	//TODO: EASI-3295  Use a data loader
-}
-
-// Content is the resolver for the content field.
-func (r *userNotificationResolver) Content(ctx context.Context, obj *notifications.UserNotification) (models.UserNotificationContent, error) {
-	//TODO: EASI-3295  Implement this content resolver, either on the notification or the activity level. Use data loaders
-	panic(fmt.Errorf("not implemented: Content - content"))
-}
-
 // AuditChange returns generated.AuditChangeResolver implementation.
 func (r *Resolver) AuditChange() generated.AuditChangeResolver { return &auditChangeResolver{r} }
 
@@ -1112,11 +1087,6 @@ func (r *Resolver) Tag() generated.TagResolver { return &tagResolver{r} }
 // TaggedContent returns generated.TaggedContentResolver implementation.
 func (r *Resolver) TaggedContent() generated.TaggedContentResolver { return &taggedContentResolver{r} }
 
-// UserNotification returns generated.UserNotificationResolver implementation.
-func (r *Resolver) UserNotification() generated.UserNotificationResolver {
-	return &userNotificationResolver{r}
-}
-
 type auditChangeResolver struct{ *Resolver }
 type currentUserResolver struct{ *Resolver }
 type discussionReplyResolver struct{ *Resolver }
@@ -1139,4 +1109,3 @@ type queryResolver struct{ *Resolver }
 type subscriptionResolver struct{ *Resolver }
 type tagResolver struct{ *Resolver }
 type taggedContentResolver struct{ *Resolver }
-type userNotificationResolver struct{ *Resolver }
