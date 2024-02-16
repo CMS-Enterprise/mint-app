@@ -1,3 +1,5 @@
+import { ModelViewFilter } from 'gql/gen/graphql';
+
 import { TranslationBasics } from 'types/translation';
 
 export const basics: TranslationBasics = {
@@ -100,7 +102,7 @@ export const basics: TranslationBasics = {
 
       CENTER_FOR_PROGRAM_INTEGRITY: 'Center for Program Integrity (CPI)'
     },
-    filterGroups: ['ipc']
+    filterGroups: [ModelViewFilter.IPC]
   },
   cmmiGroups: {
     gqlField: 'cmmiGroups',
@@ -119,7 +121,7 @@ export const basics: TranslationBasics = {
         'State and Population Health Group (SPHG)',
       TBD: 'To be determined'
     },
-    filterGroups: ['ipc']
+    filterGroups: [ModelViewFilter.IPC]
   },
   modelType: {
     gqlField: 'modelType',
@@ -134,7 +136,12 @@ export const basics: TranslationBasics = {
       MANDATORY_REGIONAL_OR_STATE: 'Mandatory regional or state',
       OTHER: 'Other'
     },
-    filterGroups: ['dfsdm', 'ipc', 'iddoc', 'pbg']
+    filterGroups: [
+      ModelViewFilter.DFSDM,
+      ModelViewFilter.IPC,
+      ModelViewFilter.IDDOC,
+      ModelViewFilter.PBG
+    ]
   },
   modelTypeOther: {
     gqlField: 'modelTypeOther',
@@ -143,7 +150,12 @@ export const basics: TranslationBasics = {
     label: 'Please specify',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['dfsdm', 'ipc', 'iddoc', 'pbg']
+    filterGroups: [
+      ModelViewFilter.DFSDM,
+      ModelViewFilter.IPC,
+      ModelViewFilter.IDDOC,
+      ModelViewFilter.PBG
+    ]
   },
   problem: {
     gqlField: 'problem',
@@ -162,7 +174,12 @@ export const basics: TranslationBasics = {
       'Please include the high level goal of the program and a description of the project.',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['dfsdm', 'ipc', 'iddoc', 'pbg']
+    filterGroups: [
+      ModelViewFilter.DFSDM,
+      ModelViewFilter.IPC,
+      ModelViewFilter.IDDOC,
+      ModelViewFilter.PBG
+    ]
   },
   testInterventions: {
     gqlField: 'testInterventions',
@@ -187,7 +204,7 @@ export const basics: TranslationBasics = {
     label: 'Complete ICIP',
     dataType: 'date',
     formType: 'datePicker',
-    filterGroups: ['ipc']
+    filterGroups: [ModelViewFilter.IPC]
   },
   clearanceStarts: {
     gqlField: 'clearanceStarts',
@@ -196,7 +213,7 @@ export const basics: TranslationBasics = {
     label: 'Clearance start date',
     dataType: 'date',
     formType: 'datePicker',
-    filterGroups: ['ipc']
+    filterGroups: [ModelViewFilter.IPC]
   },
   clearanceEnds: {
     gqlField: 'clearanceEnds',
@@ -205,7 +222,7 @@ export const basics: TranslationBasics = {
     label: 'Clearance end date',
     dataType: 'date',
     formType: 'datePicker',
-    filterGroups: ['ipc']
+    filterGroups: [ModelViewFilter.IPC]
   },
   announced: {
     gqlField: 'announced',
@@ -214,7 +231,12 @@ export const basics: TranslationBasics = {
     label: 'Announce model',
     dataType: 'date',
     formType: 'datePicker',
-    filterGroups: ['cbosc', 'iddoc', 'ipc', 'pbg']
+    filterGroups: [
+      ModelViewFilter.CBOSC,
+      ModelViewFilter.IDDOC,
+      ModelViewFilter.IPC,
+      ModelViewFilter.PBG
+    ]
   },
   applicationsStart: {
     gqlField: 'applicationsStart',
@@ -223,7 +245,7 @@ export const basics: TranslationBasics = {
     label: 'Application start date',
     dataType: 'date',
     formType: 'datePicker',
-    filterGroups: ['cbosc', 'ipc']
+    filterGroups: [ModelViewFilter.CBOSC, ModelViewFilter.IPC]
   },
   applicationsEnd: {
     gqlField: 'applicationsEnd',
@@ -232,7 +254,7 @@ export const basics: TranslationBasics = {
     label: 'Application end date',
     dataType: 'date',
     formType: 'datePicker',
-    filterGroups: ['ipc']
+    filterGroups: [ModelViewFilter.IPC]
   },
   performancePeriodStarts: {
     gqlField: 'performancePeriodStarts',
@@ -241,7 +263,14 @@ export const basics: TranslationBasics = {
     label: 'Performance start date',
     dataType: 'date',
     formType: 'datePicker',
-    filterGroups: ['cbosc', 'ccw', 'dfsdm', 'iddoc', 'ipc', 'pbg']
+    filterGroups: [
+      ModelViewFilter.CBOSC,
+      ModelViewFilter.CCW,
+      ModelViewFilter.DFSDM,
+      ModelViewFilter.IDDOC,
+      ModelViewFilter.IPC,
+      ModelViewFilter.PBG
+    ]
   },
   performancePeriodEnds: {
     gqlField: 'performancePeriodEnds',
@@ -250,7 +279,7 @@ export const basics: TranslationBasics = {
     label: 'Performance end date',
     dataType: 'date',
     formType: 'datePicker',
-    filterGroups: ['ipc']
+    filterGroups: [ModelViewFilter.IPC]
   },
   highLevelNote: {
     gqlField: 'highLevelNote',
@@ -267,7 +296,7 @@ export const basics: TranslationBasics = {
     label: 'Model wrap-up end date',
     dataType: 'date',
     formType: 'datePicker',
-    filterGroups: ['ipc']
+    filterGroups: [ModelViewFilter.IPC]
   },
   phasedIn: {
     gqlField: 'phasedIn',
@@ -283,7 +312,7 @@ export const basics: TranslationBasics = {
       true: 'Yes',
       false: 'No'
     },
-    filterGroups: ['iddoc', 'pbg']
+    filterGroups: [ModelViewFilter.IDDOC, ModelViewFilter.PBG]
   },
   phasedInNote: {
     gqlField: 'phasedInNote',
@@ -292,7 +321,7 @@ export const basics: TranslationBasics = {
     label: 'Notes',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['iddoc', 'pbg']
+    filterGroups: [ModelViewFilter.IDDOC, ModelViewFilter.PBG]
   },
   status: {
     gqlField: 'status',

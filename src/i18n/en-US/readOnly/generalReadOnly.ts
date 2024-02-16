@@ -60,7 +60,15 @@ const generalReadOnly = {
     label: 'Share/export navigation',
     allModels: 'All model plan information',
     documentTitle: 'MINT Model Plan'
-  }
+  },
+  questionNotApplicable_one:
+    'There is {{count}} additional question that is not applicable for this model based on the answers selected in the question above.',
+  questionNotApplicable_other:
+    'There are {{count}} additional questions that are not applicable for this model based on the answers selected in the question above.',
+  showOtherQuestions_one: 'Show other question',
+  showOtherQuestions_other: 'Show other questions',
+  hideOtherQuestions_one: 'Hide other question',
+  hideOtherQuestions_other: 'Hide other questions'
 };
 
 export default generalReadOnly;

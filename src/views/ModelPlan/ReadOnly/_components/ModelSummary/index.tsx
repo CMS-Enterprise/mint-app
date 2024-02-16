@@ -95,7 +95,7 @@ const ModelSummary = ({
 
   return (
     <CollapsableLink
-      className="margin-top-3 padding-0"
+      toggleClassName="margin-top-3 padding-0"
       labelPosition="top"
       iconPosition="left"
       closeLabel={h('hideSummary')}

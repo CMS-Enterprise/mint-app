@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { Button, Icon } from '@trussworks/react-uswds';
+import classNames from 'classnames';
 
 import './index.scss';
 
 type CollapsableLinkProps = {
   id: string;
   className?: string;
+  toggleClassName?: string;
   children: React.ReactNode | React.ReactNodeArray;
   label: string;
   closeLabel?: string;
@@ -20,6 +22,7 @@ type CollapsableLinkProps = {
 const CollapsableLink = ({
   id,
   className,
+  toggleClassName,
   children,
   label,
   closeLabel,
@@ -63,7 +66,7 @@ const CollapsableLink = ({
       }}
       aria-expanded={isOpen}
       aria-controls={id}
-      className={className}
+      className={toggleClassName}
       unstyled
       data-testid="collapsable-link"
     >
@@ -72,16 +75,17 @@ const CollapsableLink = ({
     </Button>
   );
   return (
-    <div className="mint-collapsable-link">
+    <div className={classNames(className, 'mint-collapsable-link')}>
       {labelPosition === 'top' && collapseButton}
       {isOpen && (
         <div
           id={id}
-          className={
+          className={classNames(
+            labelPosition === 'top' ? 'padding-bottom-0' : '',
             styleLeftBar
               ? 'mint-collapsable-link__content'
               : 'mint-collapsable-link__content-no-bar'
-          }
+          )}
         >
           {children}
         </div>

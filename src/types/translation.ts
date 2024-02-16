@@ -32,6 +32,7 @@ import {
   ModelLearningSystemType,
   ModelStatus,
   ModelType,
+  ModelViewFilter,
   MonitoringFileType,
   NonClaimsBasedPayType,
   OverlapType,
@@ -55,8 +56,6 @@ import {
   YesNoOtherType,
   YesNoType
 } from 'gql/gen/graphql';
-
-import { FilterGroup } from 'views/ModelPlan/ReadOnly/_components/FilterView/BodyContent/_filterGroupMapping';
 
 // Util used to preserve type defintions when mapping over keys of object
 // https://stackoverflow.com/questions/52856496/typescript-object-keys-return-string
@@ -90,22 +89,175 @@ export type TranslationFieldProperties = {
     | 'multiSelect'
     | 'datePicker'
     | 'rangeInput';
-  filterGroups?: FilterGroup[]; // Used to render questions within Readonly filter group view (Also CSV/PDF export)
+  filterGroups?: ModelViewFilter[]; // Used to render questions within Readonly filter group view (Also CSV/PDF export)
   tags?: string[];
-  isModelLinks?: boolean; // Used to designate if a field is a ExistingModelLinks type with nested fields - ex: names
+  isModelLinks?: boolean; // Used to designate if a field is a ExistingModelLinks type with nested fields - ex: names,
+  isPageStart?: boolean; // Is the question the first question on a page - used for styling in ReadOnly
+  readonlyHeader?: string; // Indicates if a header is required at the start of the question/section.  Normally used in conjunction with pageStart
+  adjacentPositioning?: {
+    // Designates if question should be rendered side by side. 'adjacentField' is the reference to the other field to be rendered adjacent to the current
+    position: 'left' | 'right';
+    adjacentField: string;
+  };
+  isOtherType?: boolean; // Is a question a followup to another that doesn't designate it's own readonly question/line,
 };
 
-// Extended type for questions that have options - boolean, radio, checkbox, etc.
-// Takes in a enum parameter for translation key
+/* 
+  Extended type for questions that are conditionally rendered by a parent evaluation
+  Takes in a enum/generic for Parent field to check for condition
+  Closure is needed to access parent scope of object
+*/
+type ParentRelation<T extends keyof T | string> = {
+  parentRelation: () => TranslationConfigType<T>;
+};
+
+/* 
+  References the parent option/enum value as the key and the child field it references as the value
+  Child relations only pertain to specific questions that remain hidden in readonly per Figma
+  This does not include generic "Other" questions or single line followups, unless specifically stated
+  Closure is needed to access parent scope of object
+*/
+type ChildRelation<
+  T extends keyof T | string,
+  C extends keyof C | string | void = void
+> = {
+  childRelation: Partial<Record<T, (() => TranslationConfigType<T, C>)[]>>;
+};
+
+/* 
+  Extended type for questions that have options - boolean, radio, checkbox, etc.
+  Takes in a enum/generic for translation key
+*/
+type TranslationOptions<T extends keyof T | string> = {
+  options: Record<T, string>;
+  optionsLabels?: Partial<Record<T, string>>;
+  optionsRelatedInfo?: Partial<Record<T, string>>; // T values should/could be a subset of the keys of enum values
+};
+
+/* 
+  Extended type for questions that have options - boolean, radio, checkbox, etc.
+  Takes in a enum/generic for translation key
+*/
+type OptionsWithChildRelation<
+  T extends keyof T | string,
+  C extends keyof C | string | void = void
+> = TranslationOptions<T> & ChildRelation<T, C>;
+
+/* 
+  Apply/combine ParentRelation and TranslationFieldProperties to TranslationFieldPropertiesWithParent
+*/
+export type TranslationFieldPropertiesWithParent<
+  T extends keyof T | string
+> = TranslationFieldProperties & ParentRelation<T>;
+
+/* 
+  Apply/combine OptionsWithChildRelation and TranslationFieldProperties to TranslationFieldPropertiesWithOptions
+*/
 export type TranslationFieldPropertiesWithOptions<
   T extends keyof T | string
-> = TranslationFieldProperties & {
-  options: Record<T, string>;
-  optionsLabels?: Record<T, string>;
-  optionsRelatedInfo?: Record<T, string>;
+> = TranslationFieldProperties & TranslationOptions<T>;
+
+/* 
+  Extended type for questions that have options - boolean, radio, checkbox, etc. as well as conditional children
+  Takes in a enum/generic for translation key
+*/
+export type TranslationFieldPropertiesWithOptionsAndChildren<
+  T extends keyof T | string,
+  C extends keyof C | string | void = void
+> = TranslationFieldProperties & OptionsWithChildRelation<T, C>;
+
+/* 
+  Extended type for questions that have options - boolean, radio, checkbox, etc.
+  Extended type for questions that are conditionally rendered by a parent evaluation
+  Takes in a enum parameter for translation key as well as enum parameter fof Parent field to check for condition
+*/
+export type TranslationFieldPropertiesWithOptionsAndParent<
+  T extends keyof T | string,
+  C extends keyof C | string | void = void
+> = TranslationFieldProperties & TranslationOptions<T> & ParentRelation<T>;
+
+/* 
+  Union type for all translation types
+*/
+export type TranslationConfigType<
+  T extends keyof T | string,
+  C extends keyof C | string | void = void
+> =
+  | TranslationFieldProperties
+  | TranslationFieldPropertiesWithParent<T>
+  | TranslationFieldPropertiesWithOptions<T>
+  | TranslationFieldPropertiesWithOptionsAndChildren<T, C>
+  | TranslationFieldPropertiesWithOptionsAndParent<T, C>;
+
+/* 
+  Type guard to check if config is of type TranslationFieldProperties
+*/
+export const isTranslationFieldProperties = <
+  T extends keyof T | string,
+  C extends keyof C | string | void = void
+>(
+  config: TranslationConfigType<T, C>
+): config is TranslationFieldProperties => {
+  return !Object.hasOwn(config, 'options');
 };
 
-// Model Plan
+/* 
+  Type guard to check if config is of type TranslationFieldPropertiesWithParent
+*/
+export const isTranslationFieldPropertiesWithParent = <
+  T extends keyof T | string,
+  C extends keyof C | string | void = void
+>(
+  config: TranslationConfigType<T, C>
+): config is TranslationFieldPropertiesWithParent<T> => {
+  return Object.hasOwn(config, 'parentRelation');
+};
+
+/* 
+  Type guard to check if config is of type TranslationFieldPropertiesWithOptions
+*/
+export const isTranslationFieldPropertiesWithOptions = <
+  T extends keyof T | string,
+  C extends keyof C | string | void = void
+>(
+  config: TranslationConfigType<T, C>
+): config is TranslationFieldPropertiesWithOptions<T> => {
+  return Object.hasOwn(config, 'options');
+};
+
+/* 
+  Type guard to check if config is of type TranslationFieldPropertiesWithOptionsAndChildren
+*/
+export const isTranslationFieldPropertiesWithOptionsAndChildren = <
+  T extends keyof T | string,
+  C extends keyof C | string | void = void
+>(
+  config: TranslationConfigType<T, C>
+): config is TranslationFieldPropertiesWithOptionsAndChildren<T, C> => {
+  return (
+    Object.hasOwn(config, 'childRelation') &&
+    !Object.hasOwn(config, 'parentRelation')
+  );
+};
+
+/* 
+  Type guard to check if config is of type TranslationFieldPropertiesWithOptionsAndParent
+*/
+export const isTranslationFieldPropertiesWithOptionsAndParent = <
+  T extends keyof T | string,
+  C extends keyof C | string | void = void
+>(
+  config: TranslationConfigType<T, C>
+): config is TranslationFieldPropertiesWithOptionsAndParent<T, C> => {
+  return (
+    Object.hasOwn(config, 'parentRelation') &&
+    Object.hasOwn(config, 'childRelation')
+  );
+};
+
+/* 
+  Model Plan
+*/
 export type TranslationModelPlan = {
   modelName: TranslationFieldProperties;
   previousName: TranslationFieldProperties;
@@ -115,7 +267,9 @@ export type TranslationModelPlan = {
   status: TranslationFieldPropertiesWithOptions<ModelStatus>;
 };
 
-// Basics
+/* 
+  Basics
+*/
 export type TranslationBasics = {
   // Model Plan
   amsModelID: TranslationFieldProperties;
@@ -147,7 +301,9 @@ export type TranslationBasics = {
   status: TranslationFieldPropertiesWithOptions<TaskStatus>;
 };
 
-// General Characteristics
+/* 
+  General Characteristics
+*/
 export type TranslationGeneralCharacteristics = {
   isNewModel: TranslationFieldPropertiesWithOptions<Bool>;
   existingModel: TranslationFieldProperties;
@@ -222,7 +378,9 @@ export type TranslationGeneralCharacteristics = {
   status: TranslationFieldPropertiesWithOptions<TaskStatus>;
 };
 
-// Participants and Providers
+/* 
+  Participants and Providers
+*/
 export type TranslationParticipantsAndProviders = {
   participants: TranslationFieldPropertiesWithOptions<ParticipantsType>;
   medicareProviderType: TranslationFieldProperties;
@@ -262,9 +420,18 @@ export type TranslationParticipantsAndProviders = {
   // Coordination
   coordinateWork: TranslationFieldPropertiesWithOptions<Bool>;
   coordinateWorkNote: TranslationFieldProperties;
-  gainsharePayments: TranslationFieldPropertiesWithOptions<Bool>;
-  gainsharePaymentsTrack: TranslationFieldPropertiesWithOptions<Bool>;
-  gainsharePaymentsEligibility: TranslationFieldPropertiesWithOptions<GainshareArrangementEligibility>;
+  gainsharePayments: TranslationFieldPropertiesWithOptionsAndChildren<
+    Bool,
+    Bool
+  >;
+  gainsharePaymentsTrack: TranslationFieldPropertiesWithOptionsAndParent<
+    Bool,
+    Bool
+  >;
+  gainsharePaymentsEligibility: TranslationFieldPropertiesWithOptionsAndParent<
+    GainshareArrangementEligibility,
+    Bool
+  >;
   gainsharePaymentsEligibilityOther: TranslationFieldProperties;
   gainsharePaymentsNote: TranslationFieldProperties;
   participantsIds: TranslationFieldPropertiesWithOptions<ParticipantsIdType>;
@@ -285,13 +452,18 @@ export type TranslationParticipantsAndProviders = {
   providerRemovalFrequencyContinually: TranslationFieldProperties;
   providerRemovalFrequencyOther: TranslationFieldProperties;
   providerRemovalFrequencyNote: TranslationFieldProperties;
-  providerOverlap: TranslationFieldPropertiesWithOptions<OverlapType>;
-  providerOverlapHierarchy: TranslationFieldProperties;
+  providerOverlap: TranslationFieldPropertiesWithOptionsAndChildren<
+    OverlapType,
+    OverlapType
+  >;
+  providerOverlapHierarchy: TranslationFieldPropertiesWithParent<OverlapType>;
   providerOverlapNote: TranslationFieldProperties;
   status: TranslationFieldPropertiesWithOptions<TaskStatus>;
 };
 
-// Beneficiaries
+/* 
+  Beneficiaries
+*/
 export type TranslationBeneficiaries = {
   beneficiaries: TranslationFieldPropertiesWithOptions<BeneficiariesType>;
   diseaseSpecificGroup: TranslationFieldProperties;
@@ -328,7 +500,9 @@ export type TranslationBeneficiaries = {
   status: TranslationFieldPropertiesWithOptions<TaskStatus>;
 };
 
-// Operations Evaluation and Learning
+/* 
+  Operations Evaluation and Learning
+*/
 export type TranslationOpsEvalAndLearning = {
   stakeholders: TranslationFieldPropertiesWithOptions<StakeholdersType>;
   stakeholdersOther: TranslationFieldProperties;
@@ -437,7 +611,9 @@ export type TranslationOpsEvalAndLearning = {
   status: TranslationFieldPropertiesWithOptions<TaskStatus>;
 };
 
-// Payments
+/* 
+  Payments
+*/
 export type TranslationPayments = {
   fundingSource: TranslationFieldPropertiesWithOptions<FundingSource>;
   fundingSourceMedicareAInfo: TranslationFieldProperties;
@@ -521,7 +697,9 @@ export type TranslationPayments = {
   status: TranslationFieldPropertiesWithOptions<TaskStatus>;
 };
 
-// Collaborators
+/* 
+  Collaborators
+*/
 export type TranslationCollaborators = {
   teamRoles: TranslationFieldPropertiesWithOptions<TeamRole>;
   username: TranslationFieldProperties;
@@ -537,3 +715,12 @@ export type TranslationPlan = {
   payments: TranslationPayments;
   collaborators: TranslationCollaborators;
 };
+
+export type TranslationPlanSection =
+  | TranslationPlan['basics']
+  | TranslationPlan['beneficiaries']
+  | TranslationPlan['generalCharacteristics']
+  | TranslationPlan['participantsAndProviders']
+  | TranslationPlan['beneficiaries']
+  | TranslationPlan['opsEvalAndLearning']
+  | TranslationPlan['payments'];

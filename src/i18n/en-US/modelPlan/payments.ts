@@ -1,3 +1,5 @@
+import { ModelViewFilter } from 'gql/gen/graphql';
+
 import { TranslationPayments } from 'types/translation';
 
 import { frequencyOptions } from './miscellaneous';
@@ -33,7 +35,11 @@ export const payments: TranslationPayments = {
       MEDICARE_PART_B_SMI_TRUST_FUND: 'fundingSourceMedicareBInfo',
       OTHER: 'fundingSourceOther'
     },
-    filterGroups: ['dfsdm', 'ipc', 'oact']
+    filterGroups: [
+      ModelViewFilter.DFSDM,
+      ModelViewFilter.IPC,
+      ModelViewFilter.OACT
+    ]
   },
   fundingSourceMedicareAInfo: {
     gqlField: 'fundingSourceMedicareAInfo',
@@ -42,7 +48,11 @@ export const payments: TranslationPayments = {
     label: 'Additional details',
     dataType: 'string',
     formType: 'text',
-    filterGroups: ['dfsdm', 'ipc', 'oact']
+    filterGroups: [
+      ModelViewFilter.DFSDM,
+      ModelViewFilter.IPC,
+      ModelViewFilter.OACT
+    ]
   },
   fundingSourceMedicareBInfo: {
     gqlField: 'fundingSourceMedicareBInfo',
@@ -51,7 +61,11 @@ export const payments: TranslationPayments = {
     label: 'Additional details',
     dataType: 'string',
     formType: 'text',
-    filterGroups: ['dfsdm', 'ipc', 'oact']
+    filterGroups: [
+      ModelViewFilter.DFSDM,
+      ModelViewFilter.IPC,
+      ModelViewFilter.OACT
+    ]
   },
   fundingSourceOther: {
     gqlField: 'fundingSourceOther',
@@ -60,7 +74,11 @@ export const payments: TranslationPayments = {
     label: 'Please describe the funding source.',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['dfsdm', 'ipc', 'oact']
+    filterGroups: [
+      ModelViewFilter.DFSDM,
+      ModelViewFilter.IPC,
+      ModelViewFilter.OACT
+    ]
   },
   fundingSourceNote: {
     gqlField: 'fundingSourceNote',
@@ -69,7 +87,11 @@ export const payments: TranslationPayments = {
     label: 'Notes',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['dfsdm', 'ipc', 'oact']
+    filterGroups: [
+      ModelViewFilter.DFSDM,
+      ModelViewFilter.IPC,
+      ModelViewFilter.OACT
+    ]
   },
   fundingSourceR: {
     gqlField: 'fundingSourceR',
@@ -102,7 +124,11 @@ export const payments: TranslationPayments = {
       MEDICARE_PART_B_SMI_TRUST_FUND: 'fundingSourceRMedicareBInfo',
       OTHER: 'fundingSourceROther'
     },
-    filterGroups: ['dfsdm', 'ipc', 'oact']
+    filterGroups: [
+      ModelViewFilter.DFSDM,
+      ModelViewFilter.IPC,
+      ModelViewFilter.OACT
+    ]
   },
   fundingSourceRMedicareAInfo: {
     gqlField: 'fundingSourceRMedicareAInfo',
@@ -111,7 +137,11 @@ export const payments: TranslationPayments = {
     label: 'Additional details',
     dataType: 'string',
     formType: 'text',
-    filterGroups: ['dfsdm', 'ipc', 'oact']
+    filterGroups: [
+      ModelViewFilter.DFSDM,
+      ModelViewFilter.IPC,
+      ModelViewFilter.OACT
+    ]
   },
   fundingSourceRMedicareBInfo: {
     gqlField: 'fundingSourceRMedicareBInfo',
@@ -120,7 +150,11 @@ export const payments: TranslationPayments = {
     label: 'Additional details',
     dataType: 'string',
     formType: 'text',
-    filterGroups: ['dfsdm', 'ipc', 'oact']
+    filterGroups: [
+      ModelViewFilter.DFSDM,
+      ModelViewFilter.IPC,
+      ModelViewFilter.OACT
+    ]
   },
   fundingSourceROther: {
     gqlField: 'fundingSourceROther',
@@ -129,7 +163,11 @@ export const payments: TranslationPayments = {
     label: 'Please describe the funding source.',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['dfsdm', 'ipc', 'oact']
+    filterGroups: [
+      ModelViewFilter.DFSDM,
+      ModelViewFilter.IPC,
+      ModelViewFilter.OACT
+    ]
   },
   fundingSourceRNote: {
     gqlField: 'fundingSourceRNote',
@@ -138,7 +176,11 @@ export const payments: TranslationPayments = {
     label: 'Notes',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['dfsdm', 'ipc', 'oact']
+    filterGroups: [
+      ModelViewFilter.DFSDM,
+      ModelViewFilter.IPC,
+      ModelViewFilter.OACT
+    ]
   },
   payRecipients: {
     gqlField: 'payRecipients',
@@ -186,7 +228,7 @@ export const payments: TranslationPayments = {
       NON_CLAIMS_BASED_PAYMENTS: 'Non-Claims-Based Payments',
       GRANTS: 'Grants'
     },
-    filterGroups: ['cmmi', 'ipc']
+    filterGroups: [ModelViewFilter.CMMI, ModelViewFilter.IPC]
   },
   payTypeNote: {
     gqlField: 'payTypeNote',
@@ -195,7 +237,7 @@ export const payments: TranslationPayments = {
     label: 'Notes',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['cmmi', 'ipc']
+    filterGroups: [ModelViewFilter.CMMI, ModelViewFilter.IPC]
   },
   payClaims: {
     gqlField: 'payClaims',
@@ -222,7 +264,7 @@ export const payments: TranslationPayments = {
         'Reductions to beneficiary cost-sharing',
       OTHER: 'Other'
     },
-    filterGroups: ['cmmi', 'oact']
+    filterGroups: [ModelViewFilter.CMMI, ModelViewFilter.OACT]
   },
   payClaimsOther: {
     gqlField: 'payClaimsOther',
@@ -231,7 +273,7 @@ export const payments: TranslationPayments = {
     label: 'Please describe the other claims-based payments you will pay',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['cmmi', 'oact']
+    filterGroups: [ModelViewFilter.CMMI, ModelViewFilter.OACT]
   },
   payClaimsNote: {
     gqlField: 'payClaimsNote',
@@ -240,7 +282,7 @@ export const payments: TranslationPayments = {
     label: 'Notes',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['cmmi', 'oact']
+    filterGroups: [ModelViewFilter.CMMI, ModelViewFilter.OACT]
   },
   shouldAnyProvidersExcludedFFSSystems: {
     gqlField: 'shouldAnyProvidersExcludedFFSSystems',
@@ -254,7 +296,7 @@ export const payments: TranslationPayments = {
       true: 'Yes',
       false: 'No'
     },
-    filterGroups: ['iddoc', 'pbg']
+    filterGroups: [ModelViewFilter.IDDOC, ModelViewFilter.PBG]
   },
   shouldAnyProviderExcludedFFSSystemsNote: {
     gqlField: 'shouldAnyProviderExcludedFFSSystemsNote',
@@ -263,7 +305,7 @@ export const payments: TranslationPayments = {
     label: 'Notes',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['iddoc', 'pbg']
+    filterGroups: [ModelViewFilter.IDDOC, ModelViewFilter.PBG]
   },
   changesMedicarePhysicianFeeSchedule: {
     gqlField: 'changesMedicarePhysicianFeeSchedule',
@@ -278,7 +320,7 @@ export const payments: TranslationPayments = {
       true: 'Yes',
       false: 'No'
     },
-    filterGroups: ['iddoc', 'pbg']
+    filterGroups: [ModelViewFilter.IDDOC, ModelViewFilter.PBG]
   },
   changesMedicarePhysicianFeeScheduleNote: {
     gqlField: 'changesMedicarePhysicianFeeScheduleNote',
@@ -287,7 +329,7 @@ export const payments: TranslationPayments = {
     label: 'Notes',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['iddoc', 'pbg']
+    filterGroups: [ModelViewFilter.IDDOC, ModelViewFilter.PBG]
   },
   affectsMedicareSecondaryPayerClaims: {
     gqlField: 'affectsMedicareSecondaryPayerClaims',
@@ -300,7 +342,7 @@ export const payments: TranslationPayments = {
       true: 'Yes',
       false: 'No'
     },
-    filterGroups: ['iddoc', 'pbg']
+    filterGroups: [ModelViewFilter.IDDOC, ModelViewFilter.PBG]
   },
   affectsMedicareSecondaryPayerClaimsHow: {
     gqlField: 'affectsMedicareSecondaryPayerClaimsHow',
@@ -309,7 +351,7 @@ export const payments: TranslationPayments = {
     label: 'How so?',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['iddoc', 'pbg']
+    filterGroups: [ModelViewFilter.IDDOC, ModelViewFilter.PBG]
   },
   affectsMedicareSecondaryPayerClaimsNote: {
     gqlField: 'affectsMedicareSecondaryPayerClaimsNote',
@@ -318,7 +360,7 @@ export const payments: TranslationPayments = {
     label: 'Notes',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['iddoc', 'pbg']
+    filterGroups: [ModelViewFilter.IDDOC, ModelViewFilter.PBG]
   },
   payModelDifferentiation: {
     gqlField: 'payModelDifferentiation',
@@ -328,7 +370,7 @@ export const payments: TranslationPayments = {
       'How does the model differ from current policy, especially in terms of payment rates and periodicity of payment?',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['iddoc', 'pbg']
+    filterGroups: [ModelViewFilter.IDDOC, ModelViewFilter.PBG]
   },
   creatingDependenciesBetweenServices: {
     gqlField: 'creatingDependenciesBetweenServices',
@@ -343,7 +385,7 @@ export const payments: TranslationPayments = {
       true: 'Yes',
       false: 'No'
     },
-    filterGroups: ['iddoc', 'pbg']
+    filterGroups: [ModelViewFilter.IDDOC, ModelViewFilter.PBG]
   },
   creatingDependenciesBetweenServicesNote: {
     gqlField: 'creatingDependenciesBetweenServicesNote',
@@ -352,7 +394,7 @@ export const payments: TranslationPayments = {
     label: 'Notes',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['iddoc', 'pbg']
+    filterGroups: [ModelViewFilter.IDDOC, ModelViewFilter.PBG]
   },
   needsClaimsDataCollection: {
     gqlField: 'needsClaimsDataCollection',
@@ -367,7 +409,7 @@ export const payments: TranslationPayments = {
       true: 'Yes',
       false: 'No'
     },
-    filterGroups: ['iddoc', 'pbg']
+    filterGroups: [ModelViewFilter.IDDOC, ModelViewFilter.PBG]
   },
   needsClaimsDataCollectionNote: {
     gqlField: 'needsClaimsDataCollectionNote',
@@ -376,7 +418,7 @@ export const payments: TranslationPayments = {
     label: 'Notes',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['iddoc', 'pbg']
+    filterGroups: [ModelViewFilter.IDDOC, ModelViewFilter.PBG]
   },
   providingThirdPartyFile: {
     gqlField: 'providingThirdPartyFile',
@@ -390,7 +432,7 @@ export const payments: TranslationPayments = {
       true: 'Yes',
       false: 'No'
     },
-    filterGroups: ['iddoc', 'pbg']
+    filterGroups: [ModelViewFilter.IDDOC, ModelViewFilter.PBG]
   },
   isContractorAwareTestDataRequirements: {
     gqlField: 'isContractorAwareTestDataRequirements',
@@ -404,7 +446,7 @@ export const payments: TranslationPayments = {
       true: 'Yes',
       false: 'No'
     },
-    filterGroups: ['iddoc', 'pbg']
+    filterGroups: [ModelViewFilter.IDDOC, ModelViewFilter.PBG]
   },
   beneficiaryCostSharingLevelAndHandling: {
     gqlField: 'beneficiaryCostSharingLevelAndHandling',
@@ -414,7 +456,11 @@ export const payments: TranslationPayments = {
       'What is the intended level of beneficiary cost-sharing and how will it be handled?',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['iddoc', 'oact', 'pbg']
+    filterGroups: [
+      ModelViewFilter.IDDOC,
+      ModelViewFilter.OACT,
+      ModelViewFilter.PBG
+    ]
   },
   waiveBeneficiaryCostSharingForAnyServices: {
     gqlField: 'waiveBeneficiaryCostSharingForAnyServices',
@@ -428,7 +474,11 @@ export const payments: TranslationPayments = {
       true: 'Yes',
       false: 'No'
     },
-    filterGroups: ['iddoc', 'oact', 'pbg']
+    filterGroups: [
+      ModelViewFilter.IDDOC,
+      ModelViewFilter.OACT,
+      ModelViewFilter.PBG
+    ]
   },
   waiveBeneficiaryCostSharingServiceSpecification: {
     gqlField: 'waiveBeneficiaryCostSharingServiceSpecification',
@@ -437,7 +487,11 @@ export const payments: TranslationPayments = {
     label: 'Please specify which services.',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['iddoc', 'oact', 'pbg']
+    filterGroups: [
+      ModelViewFilter.IDDOC,
+      ModelViewFilter.OACT,
+      ModelViewFilter.PBG
+    ]
   },
   waiverOnlyAppliesPartOfPayment: {
     gqlField: 'waiverOnlyAppliesPartOfPayment',
@@ -452,7 +506,7 @@ export const payments: TranslationPayments = {
       true: 'Yes',
       false: 'No'
     },
-    filterGroups: ['iddoc', 'pbg']
+    filterGroups: [ModelViewFilter.IDDOC, ModelViewFilter.PBG]
   },
   waiveBeneficiaryCostSharingNote: {
     gqlField: 'waiveBeneficiaryCostSharingNote',
@@ -461,7 +515,11 @@ export const payments: TranslationPayments = {
     label: 'Notes',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['iddoc', 'oact', 'pbg']
+    filterGroups: [
+      ModelViewFilter.IDDOC,
+      ModelViewFilter.OACT,
+      ModelViewFilter.PBG
+    ]
   },
   nonClaimsPayments: {
     gqlField: 'nonClaimsPayments',
@@ -485,7 +543,12 @@ export const payments: TranslationPayments = {
       SHARED_SAVINGS: 'Shared Savings',
       OTHER: 'Other'
     },
-    filterGroups: ['cmmi', 'iddoc', 'ipc', 'pbg']
+    filterGroups: [
+      ModelViewFilter.CMMI,
+      ModelViewFilter.IDDOC,
+      ModelViewFilter.IPC,
+      ModelViewFilter.PBG
+    ]
   },
   nonClaimsPaymentOther: {
     gqlField: 'nonClaimsPaymentOther',
@@ -494,7 +557,12 @@ export const payments: TranslationPayments = {
     label: 'Please describe the other non-claims-based payments you will pay.',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['cmmi', 'iddoc', 'ipc', 'pbg']
+    filterGroups: [
+      ModelViewFilter.CMMI,
+      ModelViewFilter.IDDOC,
+      ModelViewFilter.IPC,
+      ModelViewFilter.PBG
+    ]
   },
   nonClaimsPaymentsNote: {
     gqlField: 'nonClaimsPaymentsNote',
@@ -503,7 +571,12 @@ export const payments: TranslationPayments = {
     label: 'Notes',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['cmmi', 'iddoc', 'ipc', 'pbg']
+    filterGroups: [
+      ModelViewFilter.CMMI,
+      ModelViewFilter.IDDOC,
+      ModelViewFilter.IPC,
+      ModelViewFilter.PBG
+    ]
   },
   paymentCalculationOwner: {
     gqlField: 'paymentCalculationOwner',
@@ -521,7 +594,7 @@ export const payments: TranslationPayments = {
     sublabel: 'This only applies if you are making non-claims-based payments',
     dataType: 'string',
     formType: 'text',
-    filterGroups: ['dfsdm', 'ipc']
+    filterGroups: [ModelViewFilter.DFSDM, ModelViewFilter.IPC]
   },
   numberPaymentsPerPayCycleNote: {
     gqlField: 'numberPaymentsPerPayCycleNote',
@@ -530,7 +603,7 @@ export const payments: TranslationPayments = {
     label: 'Notes',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['dfsdm', 'ipc']
+    filterGroups: [ModelViewFilter.DFSDM, ModelViewFilter.IPC]
   },
   sharedSystemsInvolvedAdditionalClaimPayment: {
     gqlField: 'sharedSystemsInvolvedAdditionalClaimPayment',
@@ -544,7 +617,7 @@ export const payments: TranslationPayments = {
       true: 'Yes',
       false: 'No'
     },
-    filterGroups: ['ccw']
+    filterGroups: [ModelViewFilter.CCW]
   },
   sharedSystemsInvolvedAdditionalClaimPaymentNote: {
     gqlField: 'sharedSystemsInvolvedAdditionalClaimPaymentNote',
@@ -553,7 +626,7 @@ export const payments: TranslationPayments = {
     label: 'Notes',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['ccw']
+    filterGroups: [ModelViewFilter.CCW]
   },
   planningToUseInnovationPaymentContractor: {
     gqlField: 'planningToUseInnovationPaymentContractor',
@@ -567,7 +640,12 @@ export const payments: TranslationPayments = {
       true: 'Yes',
       false: 'No'
     },
-    filterGroups: ['dfsdm', 'ipc', 'iddoc', 'pbg']
+    filterGroups: [
+      ModelViewFilter.DFSDM,
+      ModelViewFilter.IPC,
+      ModelViewFilter.IDDOC,
+      ModelViewFilter.PBG
+    ]
   },
   planningToUseInnovationPaymentContractorNote: {
     gqlField: 'planningToUseInnovationPaymentContractorNote',
@@ -576,7 +654,12 @@ export const payments: TranslationPayments = {
     label: 'Notes',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['dfsdm', 'ipc', 'iddoc', 'pbg']
+    filterGroups: [
+      ModelViewFilter.DFSDM,
+      ModelViewFilter.IPC,
+      ModelViewFilter.IDDOC,
+      ModelViewFilter.PBG
+    ]
   },
   expectedCalculationComplexityLevel: {
     gqlField: 'expectedCalculationComplexityLevel',
@@ -644,7 +727,7 @@ export const payments: TranslationPayments = {
       true: 'Yes',
       false: 'No'
     },
-    filterGroups: ['cmmi']
+    filterGroups: [ModelViewFilter.CMMI]
   },
   canParticipantsSelectBetweenPaymentMechanismsHow: {
     gqlField: 'canParticipantsSelectBetweenPaymentMechanismsHow',
@@ -653,7 +736,7 @@ export const payments: TranslationPayments = {
     label: 'Please describe',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['cmmi']
+    filterGroups: [ModelViewFilter.CMMI]
   },
   canParticipantsSelectBetweenPaymentMechanismsNote: {
     gqlField: 'canParticipantsSelectBetweenPaymentMechanismsNote',
@@ -662,7 +745,7 @@ export const payments: TranslationPayments = {
     label: 'Notes',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['cmmi']
+    filterGroups: [ModelViewFilter.CMMI]
   },
   anticipatedPaymentFrequency: {
     gqlField: 'anticipatedPaymentFrequency',
@@ -680,7 +763,11 @@ export const payments: TranslationPayments = {
       CONTINUALLY: 'anticipatedPaymentFrequencyContinually',
       OTHER: 'anticipatedPaymentFrequencyOther'
     },
-    filterGroups: ['cmmi', 'dfsdm', 'ipc']
+    filterGroups: [
+      ModelViewFilter.CMMI,
+      ModelViewFilter.DFSDM,
+      ModelViewFilter.IPC
+    ]
   },
   anticipatedPaymentFrequencyContinually: {
     gqlField: 'anticipatedPaymentFrequencyContinually',
@@ -689,7 +776,11 @@ export const payments: TranslationPayments = {
     label: 'Please specify',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['cmmi', 'dfsdm', 'ipc']
+    filterGroups: [
+      ModelViewFilter.CMMI,
+      ModelViewFilter.DFSDM,
+      ModelViewFilter.IPC
+    ]
   },
   anticipatedPaymentFrequencyOther: {
     gqlField: 'anticipatedPaymentFrequencyOther',
@@ -698,7 +789,11 @@ export const payments: TranslationPayments = {
     label: 'Please specify',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['cmmi', 'dfsdm', 'ipc']
+    filterGroups: [
+      ModelViewFilter.CMMI,
+      ModelViewFilter.DFSDM,
+      ModelViewFilter.IPC
+    ]
   },
   anticipatedPaymentFrequencyNote: {
     gqlField: 'anticipatedPaymentFrequencyNote',
@@ -707,7 +802,11 @@ export const payments: TranslationPayments = {
     label: 'Notes',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['cmmi', 'dfsdm', 'ipc']
+    filterGroups: [
+      ModelViewFilter.CMMI,
+      ModelViewFilter.DFSDM,
+      ModelViewFilter.IPC
+    ]
   },
   willRecoverPayments: {
     gqlField: 'willRecoverPayments',
@@ -720,7 +819,7 @@ export const payments: TranslationPayments = {
       true: 'Yes',
       false: 'No'
     },
-    filterGroups: ['cmmi', 'ipc']
+    filterGroups: [ModelViewFilter.CMMI, ModelViewFilter.IPC]
   },
   willRecoverPaymentsNote: {
     gqlField: 'willRecoverPaymentsNote',
@@ -729,7 +828,7 @@ export const payments: TranslationPayments = {
     label: 'Notes',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['cmmi', 'ipc']
+    filterGroups: [ModelViewFilter.CMMI, ModelViewFilter.IPC]
   },
   anticipateReconcilingPaymentsRetrospectively: {
     gqlField: 'anticipateReconcilingPaymentsRetrospectively',
@@ -742,7 +841,11 @@ export const payments: TranslationPayments = {
       true: 'Yes',
       false: 'No'
     },
-    filterGroups: ['iddoc', 'ipc', 'pbg']
+    filterGroups: [
+      ModelViewFilter.IDDOC,
+      ModelViewFilter.IPC,
+      ModelViewFilter.PBG
+    ]
   },
   anticipateReconcilingPaymentsRetrospectivelyNote: {
     gqlField: 'anticipateReconcilingPaymentsRetrospectivelyNote',
@@ -751,7 +854,11 @@ export const payments: TranslationPayments = {
     label: 'Notes',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['iddoc', 'ipc', 'pbg']
+    filterGroups: [
+      ModelViewFilter.IDDOC,
+      ModelViewFilter.IPC,
+      ModelViewFilter.PBG
+    ]
   },
   paymentReconciliationFrequency: {
     gqlField: 'paymentReconciliationFrequency',
@@ -845,7 +952,7 @@ export const payments: TranslationPayments = {
       'Note: If you are unsure of an approximate date, please select the first day of the approximate month.',
     dataType: 'date',
     formType: 'datePicker',
-    filterGroups: ['dfsdm', 'ipc']
+    filterGroups: [ModelViewFilter.DFSDM, ModelViewFilter.IPC]
   },
   paymentStartDateNote: {
     gqlField: 'paymentStartDateNote',

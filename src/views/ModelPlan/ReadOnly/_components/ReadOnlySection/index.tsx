@@ -2,10 +2,15 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Grid, Icon } from '@trussworks/react-uswds';
 
+import Alert from 'components/shared/Alert';
+import CollapsableLink from 'components/shared/CollapsableLink';
 import Tooltip from 'components/shared/Tooltip';
 import {
   getKeys,
-  TranslationFieldPropertiesWithOptions
+  isTranslationFieldPropertiesWithOptionsAndChildren,
+  TranslationFieldPropertiesWithOptions,
+  TranslationFieldPropertiesWithOptionsAndChildren,
+  TranslationFieldPropertiesWithOptionsAndParent
 } from 'types/translation';
 
 export type ReadOnlySectionProps = {
@@ -20,6 +25,7 @@ export type ReadOnlySectionProps = {
     | undefined;
   tooltips?: (string | null | undefined)[];
   notes?: string | null;
+  relatedConditions?: (string | null | undefined)[] | null;
 };
 
 const ReadOnlySection = ({
@@ -31,9 +37,12 @@ const ReadOnlySection = ({
   listOtherItem,
   listOtherItems,
   tooltips,
-  notes
+  notes,
+  relatedConditions
 }: ReadOnlySectionProps) => {
   const { t: miscellaneousT } = useTranslation('miscellaneous');
+  const { t: readOnlyT } = useTranslation('generalReadOnly');
+
   const sectionName = heading
     .toLowerCase()
     .replace(/\W*$/g, '')
@@ -177,8 +186,39 @@ const ReadOnlySection = ({
         </p>
         {renderCopyOrList()}
       </div>
+
       {notes && (
         <ReadOnlySection heading={miscellaneousT('notes')} copy={notes} />
+      )}
+
+      {!!relatedConditions?.length && (
+        <>
+          <Alert type="info" slim className="margin-bottom-3">
+            {readOnlyT('questionNotApplicable', {
+              count: relatedConditions.length
+            })}
+          </Alert>
+
+          <CollapsableLink
+            id={heading}
+            label={readOnlyT('showOtherQuestions', {
+              count: relatedConditions.length
+            })}
+            closeLabel={readOnlyT('hideOtherQuestions', {
+              count: relatedConditions.length
+            })}
+            styleLeftBar={false}
+            className="margin-bottom-3"
+          >
+            <ul className="margin-y-0">
+              {relatedConditions.map(question => (
+                <li key={question} className="text-bold margin-bottom-1">
+                  {question}
+                </li>
+              ))}
+            </ul>
+          </CollapsableLink>
+        </>
       )}
     </Grid>
   );
@@ -214,8 +254,56 @@ export const formatListOtherItems = <T extends string | keyof T>(
 };
 
 /*
-  Util function for prepping optionsLabels translation data to formatListTooltips prop of ReadOnlySection
-  Using translation config instead of raw data allows us to ensure a predetermined order of render
+  Util function for getting related child questions that do not need to be rendered
+  Using to render a toggle alert to show list of questions
+*/
+export const getRelatedUneededQuestions = <
+  T extends string | keyof T,
+  C extends string | keyof C
+>(
+  config:
+    | TranslationFieldPropertiesWithOptions<T>
+    | TranslationFieldPropertiesWithOptionsAndChildren<T, C>
+    | TranslationFieldPropertiesWithOptionsAndParent<T, C>, // Translation config
+  value: T[] | undefined // field value/enum array,
+): (string | null | undefined)[] | null => {
+  if (!isTranslationFieldPropertiesWithOptionsAndChildren(config)) return null;
+
+  // Creating to arrays to hold values of needed and unneeded hidden questions
+  // For instances like `providerOverlap` where the multiple parent evaluations triggers the same rendered question
+  // Allows to remove dupe neededRelations
+  let unneededRelations: string[] = [];
+  const neededRelations: string[] = [];
+
+  getKeys(config.childRelation).forEach(option => {
+    // If the evaluation of the parent value triggers a child question, sort into appropriate arrays
+    if (
+      (Array.isArray(value) && !value?.includes(option as T)) ||
+      (!Array.isArray(value) && value !== undefined && String(value) !== option)
+    ) {
+      config.childRelation?.[option]?.forEach(childField => {
+        neededRelations.push(childField().label);
+      });
+    } else {
+      unneededRelations = [
+        ...unneededRelations,
+        ...(config.childRelation?.[option]?.map(
+          childField => childField().label
+        ) as [])
+      ];
+    }
+  });
+
+  // Removes dupe relations and converts to translated string
+  const uniqueQuestions = neededRelations
+    .filter(relation => !unneededRelations.includes(relation))
+    .map(relation => relation);
+
+  return [...new Set(uniqueQuestions)];
+};
+
+/* Util function for prepping optionsLabels translation data to formatListTooltips prop of ReadOnlySection
+Using translation config instead of raw data allows us to ensure a predetermined order of render
 */
 export const formatListTooltips = <T extends string | keyof T>(
   config: TranslationFieldPropertiesWithOptions<T>, // Translation config
