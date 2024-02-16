@@ -4498,10 +4498,10 @@
     "@babel/runtime" "^7.11.2"
     compare-versions "^4.1.2"
 
-"@okta/okta-signin-widget@^7.9.1":
-  version "7.10.0"
-  resolved "https://registry.yarnpkg.com/@okta/okta-signin-widget/-/okta-signin-widget-7.10.0.tgz#d37956af426cb5c635407937960e5a8f865c8aa3"
-  integrity sha512-JYOzqF28C9/rDo/NVUJukYS3DpU13lCSvJiouEKniVwN2Q8MkiA26RWiRgkXV/7KU0Dq1x/ZdtNaXrFmTjMVYQ==
+"@okta/okta-signin-widget@^7.15.1":
+  version "7.15.1"
+  resolved "https://registry.yarnpkg.com/@okta/okta-signin-widget/-/okta-signin-widget-7.15.1.tgz#46d8c52c3a8a6f954c767036c524da96707536be"
+  integrity sha512-szG5X8hfUYmjTWMpAQHOH1sefCeGPMgdiPTejCBTqN0W8M2hWAkQEUrGzf1cA3WU2eXwx0pAyYhl4YKCfbGoaw==
   dependencies:
     "@okta/okta-auth-js" "~7.0.0"
     "@sindresorhus/to-milliseconds" "^1.0.0"
@@ -4515,7 +4515,6 @@
     chokidar "^3.5.1"
     clipboard "^1.5.16"
     cross-fetch "^3.1.5"
-    ejs "^3.1.7"
     handlebars "^4.7.7"
     jquery "^3.6.0"
     parse-ms "^2.0.0"
@@ -9745,7 +9744,7 @@ ejs@^3.1.6:
   dependencies:
     jake "^10.8.5"
 
-ejs@^3.1.7, ejs@^3.1.8:
+ejs@^3.1.8:
   version "3.1.9"
   resolved "https://registry.yarnpkg.com/ejs/-/ejs-3.1.9.tgz#03c9e8777fe12686a9effcef22303ca3d8eeb361"
   integrity sha512-rC+QVNMJWv+MtPgkt0y+0rVEIdbtxVADApW9JXrUVlzHetgcyczP/E7DJmWJ4fJCZF2cPcBk0laWO9ZHMG3DmQ==
