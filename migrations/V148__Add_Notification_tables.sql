@@ -1,12 +1,19 @@
 -- Create the new type
 CREATE TYPE ACTIVITY_TYPE AS ENUM (
-  'DAILY_DIGEST_COMPLETE',
-  'ADDED_AS_COLLABORATOR',
-  'TAGGED_IN_DISCUSSION',
-  'TAGGED_IN_DISCUSSION_REPLY',
-  'NEW_DISCUSSION_REPLY',
-  'MODEL_PLAN_SHARED',
-  'NEW_PLAN_DISCUSSION'  -- //TODO: EASI-3925 , this one isn't explicitly referenced
+    'DAILY_DIGEST_COMPLETE',
+    'ADDED_AS_COLLABORATOR',
+    'TAGGED_IN_DISCUSSION',
+    'TAGGED_IN_DISCUSSION_REPLY',
+    'NEW_DISCUSSION_REPLY',
+    'MODEL_PLAN_SHARED',
+    'NEW_PLAN_DISCUSSION'  -- //TODO: EASI-3925 , this one isn't explicitly referenced
+);
+
+CREATE TYPE UserNotificationPreferenceFlag AS ENUM (
+    'ALL',
+    'IN_APP_ONLY',
+    'EMAIL_ONLY',
+    'NONE'
 );
 
 -- TODO: should these be in a new schema?
@@ -15,7 +22,7 @@ CREATE TABLE activity (
     actor_id UUID NOT NULL REFERENCES user_account(id), --foreign key to user table
     entity_id UUID NOT NULL,
     activity_type ACTIVITY_TYPE NOT NULL,
-    meta_data jsonb NOT NULL,
+    meta_data JSONB NOT NULL,
 
     --META DATA
     created_by UUID NOT NULL REFERENCES user_account(id), --Who wrote this row, not necessarily the actor, though it could be the same
@@ -48,26 +55,19 @@ CREATE TABLE user_notification_preferences (
     id UUID PRIMARY KEY NOT NULL,
     user_id UUID NOT NULL REFERENCES user_account(id),
 
-    daily_digest_complete_email BOOLEAN NOT NULL DEFAULT TRUE,
-    daily_digest_complete_in_app BOOLEAN NOT NULL DEFAULT TRUE,
+    daily_digest_complete UserNotificationPreferenceFlag NOT NULL DEFAULT 'ALL',
 
-    added_as_collaborator_email BOOLEAN NOT NULL DEFAULT TRUE,
-    added_as_collaborator_in_app BOOLEAN NOT NULL DEFAULT TRUE,
+    added_as_collaborator UserNotificationPreferenceFlag NOT NULL DEFAULT 'ALL',
 
-    tagged_in_discussion_email BOOLEAN NOT NULL DEFAULT TRUE,
-    tagged_in_discussion_in_app BOOLEAN NOT NULL DEFAULT TRUE,
+    tagged_in_discussion UserNotificationPreferenceFlag NOT NULL DEFAULT 'ALL',
 
-    tagged_in_discussion_reply_email BOOLEAN NOT NULL DEFAULT TRUE,
-    tagged_in_discussion_reply_in_app BOOLEAN NOT NULL DEFAULT TRUE,
+    tagged_in_discussion_reply UserNotificationPreferenceFlag NOT NULL DEFAULT 'ALL',
 
-    new_discussion_reply_email BOOLEAN NOT NULL DEFAULT TRUE,
-    new_discussion_reply_in_app BOOLEAN NOT NULL DEFAULT TRUE,
+    new_discussion_reply UserNotificationPreferenceFlag NOT NULL DEFAULT 'ALL',
 
-    model_plan_shared_email BOOLEAN NOT NULL DEFAULT TRUE,
-    model_plan_shared_in_app BOOLEAN NOT NULL DEFAULT TRUE,
+    model_plan_shared UserNotificationPreferenceFlag NOT NULL DEFAULT 'ALL',
 
-    new_plan_discussion_email BOOLEAN NOT NULL DEFAULT TRUE,
-    new_plan_discussion_in_app BOOLEAN NOT NULL DEFAULT TRUE,
+    new_plan_discussion UserNotificationPreferenceFlag NOT NULL DEFAULT 'ALL',
 
     --META DATA
     created_by UUID NOT NULL REFERENCES user_account(id),

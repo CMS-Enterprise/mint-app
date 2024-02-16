@@ -10,26 +10,13 @@ type UserNotificationPreferences struct {
 	// The id of the user this preferences object is for
 	UserID uuid.UUID `json:"userID" db:"user_id"`
 
-	DailyDigestCompleteEmail bool `json:"dailyDigestCompleteEmail" db:"daily_digest_complete_email"`
-	DailyDigestCompleteInApp bool `json:"dailyDigestCompleteInApp" db:"daily_digest_complete_in_app"`
-
-	AddedAsCollaboratorEmail bool `json:"addedAsCollaboratorEmail" db:"added_as_collaborator_email"`
-	AddedAsCollaboratorInApp bool `json:"addedAsCollaboratorInApp" db:"added_as_collaborator_in_app"`
-
-	TaggedInDiscussionEmail bool `json:"taggedInDiscussionEmail" db:"tagged_in_discussion_email"`
-	TaggedInDiscussionInApp bool `json:"taggedInDiscussionInApp" db:"tagged_in_discussion_in_app"`
-
-	TaggedInDiscussionReplyEmail bool `json:"taggedInDiscussionReplyEmail" db:"tagged_in_discussion_reply_email"`
-	TaggedInDiscussionReplyInApp bool `json:"taggedInDiscussionReplyInApp" db:"tagged_in_discussion_reply_in_app"`
-
-	NewDiscussionReplyEmail bool `json:"newDiscussionReplyEmail" db:"new_discussion_reply_email"`
-	NewDiscussionReplyInApp bool `json:"newDiscussionReplyInApp" db:"new_discussion_reply_in_app"`
-
-	ModelPlanSharedEmail bool `json:"modelPlanSharedEmail" db:"model_plan_shared_email"`
-	ModelPlanSharedInApp bool `json:"modelPlanSharedInApp" db:"model_plan_shared_in_app"`
-
-	NewPlanDiscussionEmail bool `json:"newPlanDiscussionEmail" db:"new_plan_discussion_email"`
-	NewPlanDiscussionInApp bool `json:"newPlanDiscussionInApp" db:"new_plan_discussion_in_app"`
+	DailyDigestComplete     UserNotificationPreferenceFlag `json:"dailyDigestComplete" db:"daily_digest_complete"`
+	AddedAsCollaborator     UserNotificationPreferenceFlag `json:"addedAsCollaborator" db:"added_as_collaborator"`
+	TaggedInDiscussion      UserNotificationPreferenceFlag `json:"taggedInDiscussion" db:"tagged_in_discussion"`
+	TaggedInDiscussionReply UserNotificationPreferenceFlag `json:"taggedInDiscussionReply" db:"tagged_in_discussion_reply"`
+	NewDiscussionReply      UserNotificationPreferenceFlag `json:"newDiscussionReply" db:"new_discussion_reply"`
+	ModelPlanShared         UserNotificationPreferenceFlag `json:"modelPlanShared" db:"model_plan_shared"`
+	NewPlanDiscussion       UserNotificationPreferenceFlag `json:"newPlanDiscussion" db:"new_plan_discussion"`
 }
 
 // NewUserNotificationPreferences returns a New UserNotificationPreferences
@@ -38,25 +25,33 @@ func NewUserNotificationPreferences(userID uuid.UUID) *UserNotificationPreferenc
 		baseStruct: NewBaseStruct(userID),
 		UserID:     userID,
 
-		DailyDigestCompleteEmail: true,
-		DailyDigestCompleteInApp: true,
-
-		AddedAsCollaboratorEmail: true,
-		AddedAsCollaboratorInApp: true,
-
-		TaggedInDiscussionEmail: true,
-		TaggedInDiscussionInApp: true,
-
-		TaggedInDiscussionReplyEmail: true,
-		TaggedInDiscussionReplyInApp: true,
-
-		NewDiscussionReplyEmail: true,
-		NewDiscussionReplyInApp: true,
-
-		ModelPlanSharedEmail: true,
-		ModelPlanSharedInApp: true,
-
-		NewPlanDiscussionEmail: true,
-		NewPlanDiscussionInApp: true,
+		DailyDigestComplete:     UserNotificationPreferenceAll,
+		AddedAsCollaborator:     UserNotificationPreferenceAll,
+		TaggedInDiscussion:      UserNotificationPreferenceAll,
+		TaggedInDiscussionReply: UserNotificationPreferenceAll,
+		NewDiscussionReply:      UserNotificationPreferenceAll,
+		ModelPlanShared:         UserNotificationPreferenceAll,
+		NewPlanDiscussion:       UserNotificationPreferenceAll,
 	}
+}
+
+// UserNotificationPreferenceFlag is an enum that represents the role of a user in a Discussion
+type UserNotificationPreferenceFlag string
+
+// These constants represent the possible values of a DiscussionUserRole
+const (
+	UserNotificationPreferenceAll       UserNotificationPreferenceFlag = "ALL"
+	UserNotificationPreferenceInAppOnly UserNotificationPreferenceFlag = "IN_APP_ONLY"
+	UserNotificationPreferenceEmailOnly UserNotificationPreferenceFlag = "EMAIL_ONLY"
+	UserNotificationPreferenceNone      UserNotificationPreferenceFlag = "NONE"
+)
+
+// InApp translates notification preferences to a bool. True means the user desires an in app notification for this notification type
+func (unp UserNotificationPreferenceFlag) InApp() bool {
+	return unp == UserNotificationPreferenceAll || unp == UserNotificationPreferenceInAppOnly
+}
+
+// SendEmail translates notification preferences to a bool. True means the user desires an email for this notification type
+func (unp UserNotificationPreferenceFlag) SendEmail() bool {
+	return unp == UserNotificationPreferenceAll || unp == UserNotificationPreferenceEmailOnly
 }

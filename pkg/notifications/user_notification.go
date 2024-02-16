@@ -6,6 +6,7 @@ import (
 	"github.com/google/uuid"
 
 	"github.com/cmsgov/mint-app/pkg/authentication"
+	"github.com/cmsgov/mint-app/pkg/models"
 	"github.com/cmsgov/mint-app/pkg/sqlutils"
 	"github.com/cmsgov/mint-app/pkg/storage"
 )
@@ -36,12 +37,12 @@ func userNotificationCreate(
 	activity *Activity,
 	// The id of the user the notification is for
 	userID uuid.UUID,
-	// whether or not a user set a preference to send in app notifications
-	inAppNotification bool,
-	// whether or not a user set a preference to receive an email notification
-	emailNotification bool,
+	// the preference of a user about specific notification types
+	notificationPreference models.UserNotificationPreferenceFlag,
+
 ) (*UserNotification, error) {
-	notif := NewUserNotification(activity.ActorID, activity.ID, inAppNotification, emailNotification)
+
+	notif := NewUserNotification(activity.ActorID, activity.ID, notificationPreference.InApp(), notificationPreference.SendEmail())
 	notif.UserID = userID
 
 	return dbCall.UserNotificationCreate(np, notif)

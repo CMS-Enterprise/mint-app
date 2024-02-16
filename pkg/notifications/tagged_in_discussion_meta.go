@@ -86,7 +86,7 @@ func ActivityTaggedInDiscussionCreate(ctx context.Context, np sqlutils.NamedPrep
 				errs = append(errs, fmt.Errorf("unable to get user notification preference, Notification not created %w", err))
 			}
 
-			_, err = userNotificationCreate(ctx, np, activity, *mention.EntityUUID, pref.TaggedInDiscussionInApp, pref.TaggedInDiscussionEmail)
+			_, err = userNotificationCreate(ctx, np, activity, *mention.EntityUUID, pref.TaggedInDiscussion)
 			if err != nil {
 				return nil, err
 			}

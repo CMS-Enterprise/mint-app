@@ -1878,6 +1878,12 @@ This renders only the unread notifications
 unreadNotifications: [UserNotification!]!
 }
 
+enum UserNotificationPreferenceFlag {
+  ALL,
+  IN_APP_ONLY,
+  EMAIL_ONLY,
+  NONE
+}
 """
 UserNotificationPreferences represents a users preferences about what type and where to receive a notification
 """
@@ -1885,28 +1891,21 @@ type UserNotificationPreferences {
   id: UUID!
 	userID: UUID!
 
-  dailyDigestCompleteEmail: Boolean!
-  dailyDigestCompleteInApp: Boolean!
+  dailyDigestComplete: UserNotificationPreferenceFlag!
 
-  addedAsCollaboratorEmail: Boolean!
-  addedAsCollaboratorInApp: Boolean!
+  addedAsCollaborator: UserNotificationPreferenceFlag!
+  
+  taggedInDiscussion: UserNotificationPreferenceFlag!
+ 
+  taggedInDiscussionReply: UserNotificationPreferenceFlag!
 
-  taggedInDiscussionEmail: Boolean!
-  taggedInDiscussionInApp: Boolean!
+  newDiscussionReply: UserNotificationPreferenceFlag!
 
-  taggedInDiscussionReplyEmail: Boolean!
-  taggedInDiscussionReplyInApp: Boolean!
+  modelPlanShared: UserNotificationPreferenceFlag!
 
-  newDiscussionReplyEmail: Boolean!
-  newDiscussionReplyInApp: Boolean!
+  newPlanDiscussion: UserNotificationPreferenceFlag! #TODO: EASI-3925 this is not explicitly requested
 
-  modelPlanSharedEmail: Boolean!
-  modelPlanSharedInApp: Boolean!
-
-  newPlanDiscussionEmail: Boolean! #TODO: EASI-3925 this is not explicitly requested
-  newPlanDiscussionInApp: Boolean!
-
-
+  
   createdBy: UUID!
   createdByUserAccount: UserAccount!
   createdDts: Time!
@@ -1916,31 +1915,25 @@ type UserNotificationPreferences {
 
 }
 
+
 """
 UserNotificationPreferencesChanges represents the ways that a UserNotifications Preferences object can be updated
 """
 input UserNotificationPreferencesChanges @goModel(model: "map[string]interface{}")  {
 
-  dailyDigestCompleteEmail: Boolean
-  dailyDigestCompleteInApp: Boolean
+  dailyDigestComplete: UserNotificationPreferenceFlag
 
-  addedAsCollaboratorEmail: Boolean
-  addedAsCollaboratorInApp: Boolean
+  addedAsCollaborator: UserNotificationPreferenceFlag
+  
+  taggedInDiscussion: UserNotificationPreferenceFlag
+ 
+  taggedInDiscussionReply: UserNotificationPreferenceFlag
 
-  taggedInDiscussionEmail: Boolean
-  taggedInDiscussionInApp: Boolean
+  newDiscussionReply: UserNotificationPreferenceFlag
 
-  taggedInDiscussionReplyEmail: Boolean
-  taggedInDiscussionReplyInApp: Boolean
+  modelPlanShared: UserNotificationPreferenceFlag
 
-  newDiscussionReplyEmail: Boolean
-  newDiscussionReplyInApp: Boolean
-
-  modelPlanSharedEmail: Boolean
-  modelPlanSharedInApp: Boolean
-
-  newPlanDiscussionEmail: Boolean #TODO: EASI-3925 this is not explicitly requested
-  newPlanDiscussionInApp: Boolean
+  newPlanDiscussion: UserNotificationPreferenceFlag #TODO: EASI-3925 this is not explicitly requested
 
 }
 

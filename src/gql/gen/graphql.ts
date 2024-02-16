@@ -2784,49 +2784,42 @@ export type UserNotification = {
 /** User Notification Content represents the possible data associated with a User Notification */
 export type UserNotificationContent = DiscussionReply | PlanDiscussion;
 
+export enum UserNotificationPreferenceFlag {
+  ALL = 'ALL',
+  EMAIL_ONLY = 'EMAIL_ONLY',
+  IN_APP_ONLY = 'IN_APP_ONLY',
+  NONE = 'NONE'
+}
+
 /** UserNotificationPreferences represents a users preferences about what type and where to receive a notification */
 export type UserNotificationPreferences = {
   __typename: 'UserNotificationPreferences';
-  addedAsCollaboratorEmail: Scalars['Boolean']['output'];
-  addedAsCollaboratorInApp: Scalars['Boolean']['output'];
+  addedAsCollaborator: UserNotificationPreferenceFlag;
   createdBy: Scalars['UUID']['output'];
   createdByUserAccount: UserAccount;
   createdDts: Scalars['Time']['output'];
-  dailyDigestCompleteEmail: Scalars['Boolean']['output'];
-  dailyDigestCompleteInApp: Scalars['Boolean']['output'];
+  dailyDigestComplete: UserNotificationPreferenceFlag;
   id: Scalars['UUID']['output'];
-  modelPlanSharedEmail: Scalars['Boolean']['output'];
-  modelPlanSharedInApp: Scalars['Boolean']['output'];
+  modelPlanShared: UserNotificationPreferenceFlag;
   modifiedBy?: Maybe<Scalars['UUID']['output']>;
   modifiedByUserAccount?: Maybe<UserAccount>;
   modifiedDts?: Maybe<Scalars['Time']['output']>;
-  newDiscussionReplyEmail: Scalars['Boolean']['output'];
-  newDiscussionReplyInApp: Scalars['Boolean']['output'];
-  newPlanDiscussionEmail: Scalars['Boolean']['output'];
-  newPlanDiscussionInApp: Scalars['Boolean']['output'];
-  taggedInDiscussionEmail: Scalars['Boolean']['output'];
-  taggedInDiscussionInApp: Scalars['Boolean']['output'];
-  taggedInDiscussionReplyEmail: Scalars['Boolean']['output'];
-  taggedInDiscussionReplyInApp: Scalars['Boolean']['output'];
+  newDiscussionReply: UserNotificationPreferenceFlag;
+  newPlanDiscussion: UserNotificationPreferenceFlag;
+  taggedInDiscussion: UserNotificationPreferenceFlag;
+  taggedInDiscussionReply: UserNotificationPreferenceFlag;
   userID: Scalars['UUID']['output'];
 };
 
 /** UserNotificationPreferencesChanges represents the ways that a UserNotifications Preferences object can be updated */
 export type UserNotificationPreferencesChanges = {
-  addedAsCollaboratorEmail?: InputMaybe<Scalars['Boolean']['input']>;
-  addedAsCollaboratorInApp?: InputMaybe<Scalars['Boolean']['input']>;
-  dailyDigestCompleteEmail?: InputMaybe<Scalars['Boolean']['input']>;
-  dailyDigestCompleteInApp?: InputMaybe<Scalars['Boolean']['input']>;
-  modelPlanSharedEmail?: InputMaybe<Scalars['Boolean']['input']>;
-  modelPlanSharedInApp?: InputMaybe<Scalars['Boolean']['input']>;
-  newDiscussionReplyEmail?: InputMaybe<Scalars['Boolean']['input']>;
-  newDiscussionReplyInApp?: InputMaybe<Scalars['Boolean']['input']>;
-  newPlanDiscussionEmail?: InputMaybe<Scalars['Boolean']['input']>;
-  newPlanDiscussionInApp?: InputMaybe<Scalars['Boolean']['input']>;
-  taggedInDiscussionEmail?: InputMaybe<Scalars['Boolean']['input']>;
-  taggedInDiscussionInApp?: InputMaybe<Scalars['Boolean']['input']>;
-  taggedInDiscussionReplyEmail?: InputMaybe<Scalars['Boolean']['input']>;
-  taggedInDiscussionReplyInApp?: InputMaybe<Scalars['Boolean']['input']>;
+  addedAsCollaborator?: InputMaybe<UserNotificationPreferenceFlag>;
+  dailyDigestComplete?: InputMaybe<UserNotificationPreferenceFlag>;
+  modelPlanShared?: InputMaybe<UserNotificationPreferenceFlag>;
+  newDiscussionReply?: InputMaybe<UserNotificationPreferenceFlag>;
+  newPlanDiscussion?: InputMaybe<UserNotificationPreferenceFlag>;
+  taggedInDiscussion?: InputMaybe<UserNotificationPreferenceFlag>;
+  taggedInDiscussionReply?: InputMaybe<UserNotificationPreferenceFlag>;
 };
 
 /** This is a wrapper for all information for a user  */
