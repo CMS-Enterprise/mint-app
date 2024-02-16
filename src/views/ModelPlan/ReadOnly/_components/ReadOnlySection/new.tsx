@@ -393,7 +393,7 @@ const ReadOnlySectionNew = <
     // Renders a list of selected values - multiselect, checkboxes
     return (
       <ul className="margin-y-0 padding-left-3">
-        {listItemValues.map((item: any, index: number) => (
+        {listItemValues.map((item: string, index: number) => (
           <React.Fragment key={`${sectionName}--${item}`}>
             <li className="font-sans-md line-height-sans-4">
               {item}
