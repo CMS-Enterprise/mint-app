@@ -130,7 +130,7 @@ type ChildRelation<
 */
 type TranslationOptions<T extends keyof T | string> = {
   options: Record<T, string>;
-  readonlyOptions?: Partial<Record<T, string>>;
+  readonlyOptions?: Partial<Record<T, string>>; // An alternative set of translations for options specific to readonly
   optionsLabels?: Partial<Record<T, string>>;
   optionsRelatedInfo?: Partial<Record<T, string>>; // T values should/could be a subset of the keys of enum values
 };
@@ -403,9 +403,12 @@ export type TranslationGeneralCharacteristics = {
   geographiesTargetedNote: TranslationFieldProperties;
   participationOptions: TranslationFieldPropertiesWithOptions<Bool>;
   participationOptionsNote: TranslationFieldProperties;
-  agreementTypes: TranslationFieldPropertiesWithOptions<AgreementType>;
+  agreementTypes: TranslationFieldPropertiesWithOptionsAndChildren<AgreementType>;
   agreementTypesOther: TranslationFieldProperties;
-  multiplePatricipationAgreementsNeeded: TranslationFieldPropertiesWithOptions<Bool>;
+  multiplePatricipationAgreementsNeeded: TranslationFieldPropertiesWithOptionsAndParent<
+    Bool,
+    AgreementType
+  >;
   multiplePatricipationAgreementsNeededNote: TranslationFieldProperties;
   // Authority
   rulemakingRequired: TranslationFieldPropertiesWithOptions<Bool>;

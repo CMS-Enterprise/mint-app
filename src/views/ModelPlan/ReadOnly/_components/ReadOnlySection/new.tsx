@@ -228,6 +228,7 @@ export type ReadOnlySectionNewProps<
   C extends string | keyof C
 > = {
   config: TranslationConfigType<T, C>;
+  allConfig: Record<string, TranslationConfigType<T, C>>;
   values: any;
   filteredView?: keyof typeof filterGroupKey;
 };
@@ -237,6 +238,7 @@ const ReadOnlySectionNew = <
   C extends string | keyof C
 >({
   config,
+  allConfig,
   values,
   filteredView
 }: ReadOnlySectionNewProps<T, C>): React.ReactElement | null => {
@@ -304,11 +306,15 @@ const ReadOnlySectionNew = <
     );
   };
 
-  const renderCopyOrList = () => {
+  const renderCopyOrList = (
+    listConfig: TranslationConfigType<T, C>,
+    listItemValues: any,
+    tooltipValues: (string | null | undefined)[]
+  ) => {
     // Renders a single value
     if (
-      isTranslationFieldProperties(config) &&
-      !isTranslationFieldPropertiesWithOptions(config)
+      isTranslationFieldProperties(listConfig) &&
+      !isTranslationFieldPropertiesWithOptions(listConfig)
     ) {
       return (
         <div className="margin-y-0 font-body-md line-height-sans-4 text-pre-line">
@@ -326,31 +332,53 @@ const ReadOnlySectionNew = <
     // Renders a single value with options (radio)
     // May also renders a conditinal follow to the selection
     if (
-      isTranslationFieldPropertiesWithOptions(config) &&
-      config.formType === 'radio'
+      isTranslationFieldPropertiesWithOptions(listConfig) &&
+      listConfig.formType === 'radio'
     ) {
-      const hasChildField = config.optionsRelatedInfo?.[value];
+      // Checks if configuration exists to optionally render a child's value with the radio value
+      const hasChildField = listConfig.optionsRelatedInfo?.[value as T];
 
       const childField = hasChildField ? values[hasChildField] : null;
 
+      // Checks if the child field is an array to render as a bulleted list beneath the radio selection
+      const isChildMultiple: boolean = Array.isArray(childField);
+
+      // Ensures the the child has configuration to translate the options in array
+      const childHasOptions = allConfig[
+        hasChildField as T
+      ] as TranslationFieldPropertiesWithOptions<T>;
+
       return (
-        <p className="margin-y-0 font-body-md line-height-sans-4 text-pre-line">
-          {!isEmpty(value) && config.options[value]}
-          {hasChildField && childField && (
+        <div className="margin-y-0 font-body-md line-height-sans-4 text-pre-line">
+          {!isEmpty(value) && listConfig.options[value as T]}
+
+          {/* Renders a string next to the hyphenated value of the radio option */}
+          {hasChildField && childField && !isChildMultiple && (
             <span data-testid="other-entry"> - {childField}</span>
           )}
+
+          {/* Renders a list beneath a selection of a radio value */}
+          {childHasOptions &&
+            childHasOptions.options &&
+            renderCopyOrList(
+              childHasOptions,
+              formatListItems(childHasOptions, values[hasChildField]),
+              tooltipValues
+            )}
+
+          {/* Render default empty value */}
           {(isEmpty(value) || (hasChildField && !childField)) && (
             <i className="text-base">
               {!isEmpty(value) && ' - '}
               {miscellaneousT('noAdditionalInformation')}
             </i>
           )}
-        </p>
+        </div>
       );
     }
 
     // If no values for checkbox/multiselect type questions
-    if (listItems.length === 0) {
+    if (listItemValues.length === 0) {
       return (
         <p className="margin-y-0 font-body-md line-height-sans-4 text-pre-line">
           <em className="text-base">
@@ -363,14 +391,14 @@ const ReadOnlySectionNew = <
     // Renders a list of selected values - multiselect, checkboxes
     return (
       <ul className="margin-y-0 padding-left-3">
-        {listItems.map((item, index) => (
+        {listItemValues.map((item: any, index: number) => (
           <React.Fragment key={`${sectionName}--${item}`}>
             <li className="font-sans-md line-height-sans-4">
               {item}
-              {tooltips && tooltips[index] && (
+              {tooltipValues && tooltipValues[index] && (
                 <span className="top-2px position-relative">
                   <Tooltip
-                    label={tooltips[index]!}
+                    label={tooltipValues[index]!}
                     position="right"
                     className="margin-left-05"
                   >
@@ -405,7 +433,7 @@ const ReadOnlySectionNew = <
         <p className="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line">
           {heading}
         </p>
-        {renderCopyOrList()}
+        {renderCopyOrList(config, listItems, tooltips)}
       </div>
 
       {!!relatedConditions?.length && (

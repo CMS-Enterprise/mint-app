@@ -572,8 +572,6 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
       OTHER: 'Other'
     },
     optionsRelatedInfo: {
-      // STATE: 'geographiesStatesAndTerritories',
-      // REGION: 'geographiesRegionTypes',
       OTHER: 'geographiesTargetedTypesOther'
     },
     parentRelation: () => generalCharacteristics.geographiesTargeted,
@@ -752,6 +750,9 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
       PROVIDERS: 'Providers',
       OTHER: 'Other'
     },
+    optionsRelatedInfo: {
+      OTHER: 'geographiesTargetedAppliedToOther'
+    },
     parentRelation: () => generalCharacteristics.geographiesTargeted,
     filterGroups: [ModelViewFilter.IDDOC, ModelViewFilter.PBG]
   },
@@ -804,11 +805,19 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     sublabel:
       'Note: CMMI writes, Office of General Council (OGC) approves both types of agreements',
     dataType: 'boolean',
-    formType: 'radio',
+    formType: 'checkbox',
     options: {
       COOPERATIVE: 'Co-Operative Agreement/Grant',
       PARTICIPATION: 'Participation Agreement',
       OTHER: 'Other'
+    },
+    optionsRelatedInfo: {
+      OTHER: 'agreementTypesOther'
+    },
+    childRelation: {
+      PARTICIPATION: [
+        () => generalCharacteristics.multiplePatricipationAgreementsNeeded
+      ]
     },
     filterGroups: [ModelViewFilter.CMMI]
   },
@@ -819,6 +828,7 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     label: 'Please specify',
     dataType: 'string',
     formType: 'text',
+    isOtherType: true,
     filterGroups: [ModelViewFilter.CMMI]
   },
   multiplePatricipationAgreementsNeeded: {
@@ -834,6 +844,7 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
       true: 'Yes',
       false: 'No'
     },
+    parentRelation: () => generalCharacteristics.agreementTypes,
     filterGroups: [ModelViewFilter.CMMI]
   },
   multiplePatricipationAgreementsNeededNote: {
@@ -850,11 +861,16 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     goField: 'RulemakingRequired',
     dbField: 'rulemaking_required',
     label: 'Is rulemaking required?',
+    readonlyLabel:
+      'Is rulemaking required? If so, which rule do you anticipate using and what is the target date of display for that regulation?',
     dataType: 'boolean',
     formType: 'radio',
     options: {
       true: 'Yes',
       false: 'No'
+    },
+    optionsRelatedInfo: {
+      true: 'rulemakingRequiredDescription'
     },
     filterGroups: [
       ModelViewFilter.IDDOC,
@@ -870,6 +886,7 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
       'Which rule do you anticipate using and what is the target date of display for that regulation?',
     dataType: 'string',
     formType: 'textarea',
+    isOtherType: true,
     filterGroups: [
       ModelViewFilter.IDDOC,
       ModelViewFilter.IPC,
@@ -898,6 +915,9 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
         'Section 1833(e) (Part B services) of the Social Security Act',
       OTHER: 'Other'
     },
+    optionsRelatedInfo: {
+      OTHER: 'authorityAllowancesOther'
+    },
     filterGroups: [ModelViewFilter.CMMI]
   },
   authorityAllowancesOther: {
@@ -907,6 +927,7 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     label: 'Please specify',
     dataType: 'string',
     formType: 'textarea',
+    isOtherType: true,
     filterGroups: [ModelViewFilter.CMMI]
   },
   authorityAllowancesNote: {
@@ -923,11 +944,15 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     goField: 'WaiversRequired',
     dbField: 'waivers_required',
     label: 'Are waivers required?',
+    readonlyLabel: 'Are waivers required? If so, which types of waivers?',
     dataType: 'boolean',
     formType: 'radio',
     options: {
       true: 'Yes',
       false: 'No'
+    },
+    optionsRelatedInfo: {
+      true: 'waiversRequiredTypes'
     },
     filterGroups: [ModelViewFilter.CMMI]
   },
@@ -939,6 +964,7 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     readonlyLabel: 'Which types of waivers are required?',
     dataType: 'enum',
     formType: 'checkbox',
+    isOtherType: true,
     options: {
       FRAUD_ABUSE: 'Fraud and Abuse',
       MEDICAID: 'Medicaid',

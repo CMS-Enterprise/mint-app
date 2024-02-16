@@ -44,6 +44,7 @@ const ReadOnlyBody = ({
                   <SideBySideReadOnlySectionNew>
                     <ReadOnlySectionNew
                       config={config[field]}
+                      allConfig={config}
                       values={data}
                       filteredView={filteredView}
                     />
@@ -65,6 +66,7 @@ const ReadOnlyBody = ({
                               ?.adjacentField as keyof TranslationPlanSection
                           ]
                         }
+                        allConfig={config}
                         values={data}
                         filteredView={filteredView}
                       />
@@ -78,6 +80,7 @@ const ReadOnlyBody = ({
                 {!config[field]?.isOtherType && (
                   <ReadOnlySectionNew
                     config={config[field]}
+                    allConfig={config}
                     values={data}
                     filteredView={filteredView}
                   />
