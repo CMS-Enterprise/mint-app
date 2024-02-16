@@ -305,18 +305,24 @@ export type TranslationBasics = {
   General Characteristics
 */
 export type TranslationGeneralCharacteristics = {
-  isNewModel: TranslationFieldPropertiesWithOptions<Bool>;
-  existingModel: TranslationFieldProperties;
-  resemblesExistingModel: TranslationFieldPropertiesWithOptions<YesNoOtherType>;
+  isNewModel: TranslationFieldPropertiesWithOptionsAndChildren<Bool>;
+  existingModel: TranslationFieldPropertiesWithParent<Bool>;
+  resemblesExistingModel: TranslationFieldPropertiesWithOptionsAndChildren<YesNoOtherType>;
   resemblesExistingModelWhyHow: TranslationFieldProperties;
-  resemblesExistingModelHow: TranslationFieldProperties;
+  resemblesExistingModelHow: TranslationFieldPropertiesWithParent<YesNoOtherType>;
   resemblesExistingModelNote: TranslationFieldProperties;
-  resemblesExistingModelWhich: TranslationFieldProperties;
+  resemblesExistingModelWhich: TranslationFieldPropertiesWithOptionsAndParent<
+    'Other',
+    YesNoOtherType
+  >;
   resemblesExistingModelOtherSpecify: TranslationFieldProperties;
   resemblesExistingModelOtherSelected: TranslationFieldPropertiesWithOptions<Bool>;
   resemblesExistingModelOtherOption: TranslationFieldProperties;
-  participationInModelPrecondition: TranslationFieldPropertiesWithOptions<YesNoOtherType>;
-  participationInModelPreconditionWhich: TranslationFieldProperties;
+  participationInModelPrecondition: TranslationFieldPropertiesWithOptionsAndChildren<YesNoOtherType>;
+  participationInModelPreconditionWhich: TranslationFieldPropertiesWithOptionsAndParent<
+    'Other',
+    YesNoOtherType
+  >;
   participationInModelPreconditionOtherSpecify: TranslationFieldProperties;
   participationInModelPreconditionOtherSelected: TranslationFieldPropertiesWithOptions<Bool>;
   participationInModelPreconditionOtherOption: TranslationFieldProperties;
@@ -331,14 +337,14 @@ export type TranslationGeneralCharacteristics = {
   agencyOrStateHelpNote: TranslationFieldProperties;
   alternativePaymentModelTypes: TranslationFieldPropertiesWithOptions<AlternativePaymentModelType>;
   alternativePaymentModelNote: TranslationFieldProperties;
-  keyCharacteristics: TranslationFieldPropertiesWithOptions<KeyCharacteristic>;
+  keyCharacteristics: TranslationFieldPropertiesWithOptionsAndChildren<KeyCharacteristic>;
   keyCharacteristicsNote: TranslationFieldProperties;
   keyCharacteristicsOther: TranslationFieldProperties;
-  collectPlanBids: TranslationFieldPropertiesWithOptions<Bool>;
+  collectPlanBids: TranslationFieldPropertiesWithOptionsAndParent<Bool>;
   collectPlanBidsNote: TranslationFieldProperties;
-  managePartCDEnrollment: TranslationFieldPropertiesWithOptions<Bool>;
+  managePartCDEnrollment: TranslationFieldPropertiesWithOptionsAndParent<Bool>;
   managePartCDEnrollmentNote: TranslationFieldProperties;
-  planContractUpdated: TranslationFieldPropertiesWithOptions<Bool>;
+  planContractUpdated: TranslationFieldPropertiesWithOptionsAndParent<Bool>;
   planContractUpdatedNote: TranslationFieldProperties;
   // Involvements
   careCoordinationInvolved: TranslationFieldPropertiesWithOptions<Bool>;
@@ -351,12 +357,12 @@ export type TranslationGeneralCharacteristics = {
   communityPartnersInvolvedDescription: TranslationFieldProperties;
   communityPartnersInvolvedNote: TranslationFieldProperties;
   // Targets and Options
-  geographiesTargeted: TranslationFieldPropertiesWithOptions<Bool>;
-  geographiesTargetedTypes: TranslationFieldPropertiesWithOptions<GeographyType>;
+  geographiesTargeted: TranslationFieldPropertiesWithOptionsAndChildren<Bool>;
+  geographiesTargetedTypes: TranslationFieldPropertiesWithOptionsAndParent<GeographyType>;
   geographiesTargetedTypesOther: TranslationFieldProperties;
   geographiesStatesAndTerritories: TranslationFieldPropertiesWithOptions<StatesAndTerritories>;
   geographiesRegionTypes: TranslationFieldPropertiesWithOptions<GeographyRegionType>;
-  geographiesTargetedAppliedTo: TranslationFieldPropertiesWithOptions<GeographyApplication>;
+  geographiesTargetedAppliedTo: TranslationFieldPropertiesWithOptionsAndParent<GeographyApplication>;
   geographiesTargetedAppliedToOther: TranslationFieldProperties;
   geographiesTargetedNote: TranslationFieldProperties;
   participationOptions: TranslationFieldPropertiesWithOptions<Bool>;

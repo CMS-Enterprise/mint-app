@@ -28,6 +28,8 @@ export const formatListItems = <T extends string | keyof T>(
   config: TranslationFieldPropertiesWithOptions<T>, // Translation config
   value: T[] | undefined // field value/enum array
 ): string[] => {
+  if (config.isModelLinks) return value as string[];
+
   return getKeys(config.options)
     .filter(option => value?.includes(option))
     .map((option): string => config.options[option]);
@@ -42,6 +44,14 @@ export const formatListOtherItems = <T extends string | keyof T>(
   value: T[] | undefined, // field value/enum array
   values: any // All data for the task list section returned from query
 ): (string | null | undefined)[] => {
+  if (config.isModelLinks) {
+    return (value as (string | null | undefined)[])?.map(option => {
+      return option
+        ? values[config.optionsRelatedInfo?.[option as T]]
+        : undefined;
+    });
+  }
+
   return getKeys(config.options)
     .filter(option => value?.includes(option))
     .map((option): string | null | undefined => {
@@ -243,26 +253,23 @@ const ReadOnlySectionNew = <
   // Can render a single "Other" option or multiple additional information options
   // As well as default text for both if not specified
   const renderListItemOthers = (index: number) => {
-    if (listOtherItems) {
-      if (listOtherItems[index] === undefined) {
-        return null;
-      }
-      if (listOtherItems[index]) {
-        return (
-          <li className="font-sans-md line-height-sans-4">
-            {listOtherItems[index]}
-          </li>
-        );
-      }
+    if (listOtherItems[index] === undefined) {
+      return null;
+    }
+    if (listOtherItems[index]) {
       return (
-        <li className="font-sans-md line-height-sans-4 ">
-          <em className="text-base">
-            {miscellaneousT('noAdditionalInformation')}
-          </em>
+        <li className="font-sans-md line-height-sans-4">
+          {listOtherItems[index]}
         </li>
       );
     }
-    return null;
+    return (
+      <li className="font-sans-md line-height-sans-4 ">
+        <em className="text-base">
+          {miscellaneousT('noAdditionalInformation')}
+        </em>
+      </li>
+    );
   };
 
   const renderCopyOrList = () => {
