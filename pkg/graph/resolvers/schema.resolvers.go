@@ -520,14 +520,6 @@ func (r *mutationResolver) MarkAllNotificationsAsRead(ctx context.Context) ([]*n
 	return notifications.UserNotificationMarkAllAsRead(ctx, r.store, r.store, principal)
 }
 
-// UpdateUserNotificationPreferences is the resolver for the updateUserNotificationPreferences field.
-func (r *mutationResolver) UpdateUserNotificationPreferences(ctx context.Context, changes map[string]interface{}) (*models.UserNotificationPreferences, error) {
-	principal := appcontext.Principal(ctx)
-	logger := appcontext.ZLogger(ctx)
-
-	return UserNotificationPreferencesUpdate(ctx, logger, principal, r.store, changes)
-}
-
 // Solutions is the resolver for the solutions field.
 func (r *operationalNeedResolver) Solutions(ctx context.Context, obj *models.OperationalNeed, includeNotNeeded bool) ([]*models.OperationalSolution, error) {
 	return OperationaSolutionsAndPossibleGetByOPNeedIDLOADER(ctx, obj.ID, includeNotNeeded)
