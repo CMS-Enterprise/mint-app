@@ -15,34 +15,12 @@ import (
 	"github.com/cmsgov/mint-app/pkg/graph/generated"
 	"github.com/cmsgov/mint-app/pkg/graph/model"
 	"github.com/cmsgov/mint-app/pkg/models"
-	"github.com/cmsgov/mint-app/pkg/notifications"
 	"github.com/cmsgov/mint-app/pkg/userhelpers"
 )
 
 // Fields is the resolver for the fields field.
 func (r *auditChangeResolver) Fields(ctx context.Context, obj *models.AuditChange) (map[string]interface{}, error) {
 	return obj.Fields.ToInterface()
-}
-
-// LaunchDarkly is the resolver for the launchDarkly field.
-func (r *currentUserResolver) LaunchDarkly(ctx context.Context, obj *models.CurrentUser) (*model.LaunchDarklySettings, error) {
-	return CurrentUserLaunchDarklySettingsGet(ctx, r.ldClient)
-}
-
-// Account is the resolver for the account field.
-func (r *currentUserResolver) Account(ctx context.Context, obj *models.CurrentUser) (*authentication.UserAccount, error) {
-	return CurrentUserAccountGet(ctx)
-}
-
-// Notifications is the resolver for the notifications field.
-func (r *currentUserResolver) Notifications(ctx context.Context, obj *models.CurrentUser) (*notifications.UserNotifications, error) {
-	return CurrentUserNotificationsGet(ctx, r.store)
-}
-
-// NotificationPreferences is the resolver for the notificationPreferences field.
-func (r *currentUserResolver) NotificationPreferences(ctx context.Context, obj *models.CurrentUser) (*models.UserNotificationPreferences, error) {
-	princ := appcontext.Principal(ctx)
-	return UserNotificationPreferencesGetByUserID(ctx, r.store, princ.Account().ID)
 }
 
 // Content is the resolver for the content field.
@@ -830,11 +808,6 @@ func (r *possibleOperationalSolutionResolver) PointsOfContact(ctx context.Contex
 	return PossibleOperationalSolutionContactsGetByPossibleSolutionID(ctx, obj.ID)
 }
 
-// CurrentUser is the resolver for the currentUser field.
-func (r *queryResolver) CurrentUser(ctx context.Context) (*models.CurrentUser, error) {
-	return &models.CurrentUser{}, nil
-}
-
 // ModelPlan is the resolver for the modelPlan field.
 func (r *queryResolver) ModelPlan(ctx context.Context, id uuid.UUID) (*models.ModelPlan, error) {
 	logger := appcontext.ZLogger(ctx)
@@ -1000,9 +973,6 @@ func (r *taggedContentResolver) RawContent(ctx context.Context, obj *models.Tagg
 // AuditChange returns generated.AuditChangeResolver implementation.
 func (r *Resolver) AuditChange() generated.AuditChangeResolver { return &auditChangeResolver{r} }
 
-// CurrentUser returns generated.CurrentUserResolver implementation.
-func (r *Resolver) CurrentUser() generated.CurrentUserResolver { return &currentUserResolver{r} }
-
 // DiscussionReply returns generated.DiscussionReplyResolver implementation.
 func (r *Resolver) DiscussionReply() generated.DiscussionReplyResolver {
 	return &discussionReplyResolver{r}
@@ -1088,7 +1058,6 @@ func (r *Resolver) Tag() generated.TagResolver { return &tagResolver{r} }
 func (r *Resolver) TaggedContent() generated.TaggedContentResolver { return &taggedContentResolver{r} }
 
 type auditChangeResolver struct{ *Resolver }
-type currentUserResolver struct{ *Resolver }
 type discussionReplyResolver struct{ *Resolver }
 type existingModelLinkResolver struct{ *Resolver }
 type existingModelLinksResolver struct{ *Resolver }
