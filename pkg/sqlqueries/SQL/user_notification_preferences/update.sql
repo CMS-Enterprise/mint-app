@@ -6,7 +6,6 @@ SET
     tagged_in_discussion_reply = :tagged_in_discussion_reply,
     new_discussion_reply = :new_discussion_reply,
     model_plan_shared = :model_plan_shared,
-    new_plan_discussion = :new_plan_discussion,
     modified_by = :modified_by,
     modified_dts = CURRENT_TIMESTAMP
 WHERE 
@@ -20,7 +19,6 @@ tagged_in_discussion,
 tagged_in_discussion_reply,
 new_discussion_reply,
 model_plan_shared,
-new_plan_discussion,
 created_by,
 created_dts,
 modified_by,

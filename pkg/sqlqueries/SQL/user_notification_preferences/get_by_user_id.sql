@@ -7,7 +7,6 @@ SELECT
     tagged_in_discussion_reply,
     new_discussion_reply,
     model_plan_shared,
-    new_plan_discussion,
     created_by,
     created_dts,
     modified_by,
