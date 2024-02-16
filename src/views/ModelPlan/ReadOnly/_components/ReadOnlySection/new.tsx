@@ -227,8 +227,8 @@ export type ReadOnlySectionNewProps<
   T extends keyof T | string,
   C extends string | keyof C
 > = {
-  config: TranslationConfigType<T, C>;
-  allConfig: Record<string, TranslationConfigType<T, C>>;
+  field: string; // Any gql field name
+  translations: Record<string, TranslationConfigType<T, C>>;
   values: any;
   filteredView?: keyof typeof filterGroupKey;
 };
@@ -237,13 +237,15 @@ const ReadOnlySectionNew = <
   T extends keyof T | string,
   C extends string | keyof C
 >({
-  config,
-  allConfig,
+  field,
+  translations,
   values,
   filteredView
 }: ReadOnlySectionNewProps<T, C>): React.ReactElement | null => {
   const { t: miscellaneousT } = useTranslation('miscellaneous');
   const { t: readOnlyT } = useTranslation('generalReadOnly');
+
+  const config = translations[field];
 
   const value = values[config.gqlField];
 
@@ -344,7 +346,7 @@ const ReadOnlySectionNew = <
       const isChildMultiple: boolean = Array.isArray(childField);
 
       // Ensures the the child has configuration to translate the options in array
-      const childHasOptions = allConfig[
+      const childHasOptions = translations[
         hasChildField as T
       ] as TranslationFieldPropertiesWithOptions<T>;
 

@@ -43,8 +43,8 @@ const ReadOnlyBody = ({
                 {config[field]?.adjacentPositioning?.position === 'left' && (
                   <SideBySideReadOnlySectionNew>
                     <ReadOnlySectionNew
-                      config={config[field]}
-                      allConfig={config}
+                      field={field}
+                      translations={config}
                       values={data}
                       filteredView={filteredView}
                     />
@@ -60,13 +60,11 @@ const ReadOnlyBody = ({
                       data
                     ) && (
                       <ReadOnlySectionNew
-                        config={
-                          config[
-                            config[field].adjacentPositioning
-                              ?.adjacentField as keyof TranslationPlanSection
-                          ]
+                        field={
+                          config[field].adjacentPositioning
+                            ?.adjacentField as keyof TranslationPlanSection
                         }
-                        allConfig={config}
+                        translations={config}
                         values={data}
                         filteredView={filteredView}
                       />
@@ -79,8 +77,8 @@ const ReadOnlyBody = ({
                 {/* Don't render questions of type 'isOtherType' as they are rendered within ReadOnlySectionNew */}
                 {!config[field]?.isOtherType && (
                   <ReadOnlySectionNew
-                    config={config[field]}
-                    allConfig={config}
+                    field={field}
+                    translations={config}
                     values={data}
                     filteredView={filteredView}
                   />
