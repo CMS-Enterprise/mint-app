@@ -59,8 +59,8 @@ export type ActivityMetaBaseStruct = {
   version: Scalars['Int']['output'];
 };
 
-/** AcitivyMetaData is a type that represents all the data that can be captured in an Activity */
-export type ActivityMetaData = ActivityMetaBaseStruct | NewPlanDiscussionActivityMeta | TaggedInDiscussionReplyActivityMeta | TaggedInPlanDiscussionActivityMeta;
+/** ActivityMetaData is a type that represents all the data that can be captured in an Activity */
+export type ActivityMetaData = ActivityMetaBaseStruct | TaggedInDiscussionReplyActivityMeta | TaggedInPlanDiscussionActivityMeta;
 
 /** ActivityType represents the possible activities that happen in application that might result in a notification */
 export enum ActivityType {
@@ -68,7 +68,6 @@ export enum ActivityType {
   DAILY_DIGEST_COMPLETE = 'DAILY_DIGEST_COMPLETE',
   MODEL_PLAN_SHARED = 'MODEL_PLAN_SHARED',
   NEW_DISCUSSION_REPLY = 'NEW_DISCUSSION_REPLY',
-  NEW_PLAN_DISCUSSION = 'NEW_PLAN_DISCUSSION',
   TAGGED_IN_DISCUSSION = 'TAGGED_IN_DISCUSSION',
   TAGGED_IN_DISCUSSION_REPLY = 'TAGGED_IN_DISCUSSION_REPLY'
 }
@@ -912,13 +911,6 @@ export type NdaInfo = {
   __typename: 'NDAInfo';
   agreed: Scalars['Boolean']['output'];
   agreedDts?: Maybe<Scalars['Time']['output']>;
-};
-
-export type NewPlanDiscussionActivityMeta = {
-  __typename: 'NewPlanDiscussionActivityMeta';
-  discussionID: Scalars['UUID']['output'];
-  type: ActivityType;
-  version: Scalars['Int']['output'];
 };
 
 export enum NonClaimsBasedPayType {
@@ -2805,7 +2797,6 @@ export type UserNotificationPreferences = {
   modifiedByUserAccount?: Maybe<UserAccount>;
   modifiedDts?: Maybe<Scalars['Time']['output']>;
   newDiscussionReply: UserNotificationPreferenceFlag;
-  newPlanDiscussion: UserNotificationPreferenceFlag;
   taggedInDiscussion: UserNotificationPreferenceFlag;
   taggedInDiscussionReply: UserNotificationPreferenceFlag;
   userID: Scalars['UUID']['output'];

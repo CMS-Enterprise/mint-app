@@ -1780,19 +1780,13 @@ enum ActivityType {
   TAGGED_IN_DISCUSSION_REPLY
   NEW_DISCUSSION_REPLY
   MODEL_PLAN_SHARED
-  NEW_PLAN_DISCUSSION
 }
 
 """
-AcitivyMetaData is a type that represents all the data that can be captured in an Activity
+ActivityMetaData is a type that represents all the data that can be captured in an Activity
 """
-union ActivityMetaData = ActivityMetaBaseStruct | TaggedInPlanDiscussionActivityMeta  | TaggedInDiscussionReplyActivityMeta | NewPlanDiscussionActivityMeta
+union ActivityMetaData = ActivityMetaBaseStruct | TaggedInPlanDiscussionActivityMeta  | TaggedInDiscussionReplyActivityMeta
 
-type NewPlanDiscussionActivityMeta {
-  version: Int!
-  type: ActivityType!
-  discussionID: UUID!
-}
 type TaggedInPlanDiscussionActivityMeta {
   version: Int!
   type: ActivityType!
@@ -1902,8 +1896,6 @@ type UserNotificationPreferences {
   newDiscussionReply: UserNotificationPreferenceFlag!
 
   modelPlanShared: UserNotificationPreferenceFlag!
-
-  newPlanDiscussion: UserNotificationPreferenceFlag! #TODO: EASI-3925 this is not explicitly requested
 
   
   createdBy: UUID!

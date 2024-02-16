@@ -266,12 +266,6 @@ type ComplexityRoot struct {
 		AgreedDts func(childComplexity int) int
 	}
 
-	NewPlanDiscussionActivityMeta struct {
-		DiscussionID func(childComplexity int) int
-		Type         func(childComplexity int) int
-		Version      func(childComplexity int) int
-	}
-
 	OperationalNeed struct {
 		CreatedBy             func(childComplexity int) int
 		CreatedByUserAccount  func(childComplexity int) int
@@ -1080,7 +1074,6 @@ type ComplexityRoot struct {
 		ModifiedByUserAccount   func(childComplexity int) int
 		ModifiedDts             func(childComplexity int) int
 		NewDiscussionReply      func(childComplexity int) int
-		NewPlanDiscussion       func(childComplexity int) int
 		TaggedInDiscussion      func(childComplexity int) int
 		TaggedInDiscussionReply func(childComplexity int) int
 		UserID                  func(childComplexity int) int
@@ -2656,27 +2649,6 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.NDAInfo.AgreedDts(childComplexity), true
-
-	case "NewPlanDiscussionActivityMeta.discussionID":
-		if e.complexity.NewPlanDiscussionActivityMeta.DiscussionID == nil {
-			break
-		}
-
-		return e.complexity.NewPlanDiscussionActivityMeta.DiscussionID(childComplexity), true
-
-	case "NewPlanDiscussionActivityMeta.type":
-		if e.complexity.NewPlanDiscussionActivityMeta.Type == nil {
-			break
-		}
-
-		return e.complexity.NewPlanDiscussionActivityMeta.Type(childComplexity), true
-
-	case "NewPlanDiscussionActivityMeta.version":
-		if e.complexity.NewPlanDiscussionActivityMeta.Version == nil {
-			break
-		}
-
-		return e.complexity.NewPlanDiscussionActivityMeta.Version(childComplexity), true
 
 	case "OperationalNeed.createdBy":
 		if e.complexity.OperationalNeed.CreatedBy == nil {
@@ -7766,13 +7738,6 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.UserNotificationPreferences.NewDiscussionReply(childComplexity), true
 
-	case "UserNotificationPreferences.newPlanDiscussion":
-		if e.complexity.UserNotificationPreferences.NewPlanDiscussion == nil {
-			break
-		}
-
-		return e.complexity.UserNotificationPreferences.NewPlanDiscussion(childComplexity), true
-
 	case "UserNotificationPreferences.taggedInDiscussion":
 		if e.complexity.UserNotificationPreferences.TaggedInDiscussion == nil {
 			break
@@ -9730,19 +9695,13 @@ enum ActivityType {
   TAGGED_IN_DISCUSSION_REPLY
   NEW_DISCUSSION_REPLY
   MODEL_PLAN_SHARED
-  NEW_PLAN_DISCUSSION
 }
 
 """
-AcitivyMetaData is a type that represents all the data that can be captured in an Activity
+ActivityMetaData is a type that represents all the data that can be captured in an Activity
 """
-union ActivityMetaData = ActivityMetaBaseStruct | TaggedInPlanDiscussionActivityMeta  | TaggedInDiscussionReplyActivityMeta | NewPlanDiscussionActivityMeta
+union ActivityMetaData = ActivityMetaBaseStruct | TaggedInPlanDiscussionActivityMeta  | TaggedInDiscussionReplyActivityMeta
 
-type NewPlanDiscussionActivityMeta {
-  version: Int!
-  type: ActivityType!
-  discussionID: UUID!
-}
 type TaggedInPlanDiscussionActivityMeta {
   version: Int!
   type: ActivityType!
@@ -9852,8 +9811,6 @@ type UserNotificationPreferences {
   newDiscussionReply: UserNotificationPreferenceFlag!
 
   modelPlanShared: UserNotificationPreferenceFlag!
-
-  newPlanDiscussion: UserNotificationPreferenceFlag! #TODO: EASI-3925 this is not explicitly requested
 
   
   createdBy: UUID!
@@ -13321,8 +13278,6 @@ func (ec *executionContext) fieldContext_CurrentUser_notificationPreferences(ctx
 				return ec.fieldContext_UserNotificationPreferences_newDiscussionReply(ctx, field)
 			case "modelPlanShared":
 				return ec.fieldContext_UserNotificationPreferences_modelPlanShared(ctx, field)
-			case "newPlanDiscussion":
-				return ec.fieldContext_UserNotificationPreferences_newPlanDiscussion(ctx, field)
 			case "createdBy":
 				return ec.fieldContext_UserNotificationPreferences_createdBy(ctx, field)
 			case "createdByUserAccount":
@@ -23180,8 +23135,6 @@ func (ec *executionContext) fieldContext_Mutation_updateUserNotificationPreferen
 				return ec.fieldContext_UserNotificationPreferences_newDiscussionReply(ctx, field)
 			case "modelPlanShared":
 				return ec.fieldContext_UserNotificationPreferences_modelPlanShared(ctx, field)
-			case "newPlanDiscussion":
-				return ec.fieldContext_UserNotificationPreferences_newPlanDiscussion(ctx, field)
 			case "createdBy":
 				return ec.fieldContext_UserNotificationPreferences_createdBy(ctx, field)
 			case "createdByUserAccount":
@@ -23292,138 +23245,6 @@ func (ec *executionContext) fieldContext_NDAInfo_agreedDts(ctx context.Context, 
 		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return nil, errors.New("field of type Time does not have child fields")
-		},
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _NewPlanDiscussionActivityMeta_version(ctx context.Context, field graphql.CollectedField, obj *notifications.NewPlanDiscussionActivityMeta) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_NewPlanDiscussionActivityMeta_version(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.Version, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(int)
-	fc.Result = res
-	return ec.marshalNInt2int(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_NewPlanDiscussionActivityMeta_version(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "NewPlanDiscussionActivityMeta",
-		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type Int does not have child fields")
-		},
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _NewPlanDiscussionActivityMeta_type(ctx context.Context, field graphql.CollectedField, obj *notifications.NewPlanDiscussionActivityMeta) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_NewPlanDiscussionActivityMeta_type(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.Type, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(notifications.ActivityType)
-	fc.Result = res
-	return ec.marshalNActivityType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋnotificationsᚐActivityType(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_NewPlanDiscussionActivityMeta_type(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "NewPlanDiscussionActivityMeta",
-		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type ActivityType does not have child fields")
-		},
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _NewPlanDiscussionActivityMeta_discussionID(ctx context.Context, field graphql.CollectedField, obj *notifications.NewPlanDiscussionActivityMeta) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_NewPlanDiscussionActivityMeta_discussionID(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.DiscussionID, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(uuid.UUID)
-	fc.Result = res
-	return ec.marshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_NewPlanDiscussionActivityMeta_discussionID(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "NewPlanDiscussionActivityMeta",
-		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type UUID does not have child fields")
 		},
 	}
 	return fc, nil
@@ -56693,50 +56514,6 @@ func (ec *executionContext) fieldContext_UserNotificationPreferences_modelPlanSh
 	return fc, nil
 }
 
-func (ec *executionContext) _UserNotificationPreferences_newPlanDiscussion(ctx context.Context, field graphql.CollectedField, obj *models.UserNotificationPreferences) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_UserNotificationPreferences_newPlanDiscussion(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.NewPlanDiscussion, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(models.UserNotificationPreferenceFlag)
-	fc.Result = res
-	return ec.marshalNUserNotificationPreferenceFlag2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐUserNotificationPreferenceFlag(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_UserNotificationPreferences_newPlanDiscussion(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "UserNotificationPreferences",
-		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type UserNotificationPreferenceFlag does not have child fields")
-		},
-	}
-	return fc, nil
-}
-
 func (ec *executionContext) _UserNotificationPreferences_createdBy(ctx context.Context, field graphql.CollectedField, obj *models.UserNotificationPreferences) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_UserNotificationPreferences_createdBy(ctx, field)
 	if err != nil {
@@ -59748,11 +59525,6 @@ func (ec *executionContext) _ActivityMetaData(ctx context.Context, sel ast.Selec
 			return graphql.Null
 		}
 		return ec._TaggedInDiscussionReplyActivityMeta(ctx, sel, obj)
-	case *notifications.NewPlanDiscussionActivityMeta:
-		if obj == nil {
-			return graphql.Null
-		}
-		return ec._NewPlanDiscussionActivityMeta(ctx, sel, obj)
 	default:
 		panic(fmt.Errorf("unexpected type %T", obj))
 	}
@@ -62059,55 +61831,6 @@ func (ec *executionContext) _NDAInfo(ctx context.Context, sel ast.SelectionSet, 
 			}
 		case "agreedDts":
 			out.Values[i] = ec._NDAInfo_agreedDts(ctx, field, obj)
-		default:
-			panic("unknown field " + strconv.Quote(field.Name))
-		}
-	}
-	out.Dispatch(ctx)
-	if out.Invalids > 0 {
-		return graphql.Null
-	}
-
-	atomic.AddInt32(&ec.deferred, int32(len(deferred)))
-
-	for label, dfs := range deferred {
-		ec.processDeferredGroup(graphql.DeferredGroup{
-			Label:    label,
-			Path:     graphql.GetPath(ctx),
-			FieldSet: dfs,
-			Context:  ctx,
-		})
-	}
-
-	return out
-}
-
-var newPlanDiscussionActivityMetaImplementors = []string{"NewPlanDiscussionActivityMeta", "ActivityMetaData"}
-
-func (ec *executionContext) _NewPlanDiscussionActivityMeta(ctx context.Context, sel ast.SelectionSet, obj *notifications.NewPlanDiscussionActivityMeta) graphql.Marshaler {
-	fields := graphql.CollectFields(ec.OperationContext, sel, newPlanDiscussionActivityMetaImplementors)
-
-	out := graphql.NewFieldSet(fields)
-	deferred := make(map[string]*graphql.FieldSet)
-	for i, field := range fields {
-		switch field.Name {
-		case "__typename":
-			out.Values[i] = graphql.MarshalString("NewPlanDiscussionActivityMeta")
-		case "version":
-			out.Values[i] = ec._NewPlanDiscussionActivityMeta_version(ctx, field, obj)
-			if out.Values[i] == graphql.Null {
-				out.Invalids++
-			}
-		case "type":
-			out.Values[i] = ec._NewPlanDiscussionActivityMeta_type(ctx, field, obj)
-			if out.Values[i] == graphql.Null {
-				out.Invalids++
-			}
-		case "discussionID":
-			out.Values[i] = ec._NewPlanDiscussionActivityMeta_discussionID(ctx, field, obj)
-			if out.Values[i] == graphql.Null {
-				out.Invalids++
-			}
 		default:
 			panic("unknown field " + strconv.Quote(field.Name))
 		}
@@ -69818,11 +69541,6 @@ func (ec *executionContext) _UserNotificationPreferences(ctx context.Context, se
 			}
 		case "modelPlanShared":
 			out.Values[i] = ec._UserNotificationPreferences_modelPlanShared(ctx, field, obj)
-			if out.Values[i] == graphql.Null {
-				atomic.AddUint32(&out.Invalids, 1)
-			}
-		case "newPlanDiscussion":
-			out.Values[i] = ec._UserNotificationPreferences_newPlanDiscussion(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
 				atomic.AddUint32(&out.Invalids, 1)
 			}

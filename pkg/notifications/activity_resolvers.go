@@ -40,11 +40,6 @@ func activityCreate(_ context.Context, np sqlutils.NamedPreparer, activity *Acti
 
 }
 
-// createNewPlanDiscussionActivityMeta creates the relevant meta data object for a new plan Discussion activity
-func createNewPlanDiscussionActivityMeta(discussionID uuid.UUID) ActivityMetaData {
-	return newNewPlanDiscussionActivityMeta(discussionID)
-}
-
 // ActivityGetByID Returns an activity from the database
 func ActivityGetByID(_ context.Context, np sqlutils.NamedPreparer, id uuid.UUID) (*Activity, error) {
 

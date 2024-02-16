@@ -5,11 +5,10 @@ CREATE TYPE ACTIVITY_TYPE AS ENUM (
     'TAGGED_IN_DISCUSSION',
     'TAGGED_IN_DISCUSSION_REPLY',
     'NEW_DISCUSSION_REPLY',
-    'MODEL_PLAN_SHARED',
-    'NEW_PLAN_DISCUSSION'  -- //TODO: EASI-3925 , this one isn't explicitly referenced
+    'MODEL_PLAN_SHARED'
 );
 
-CREATE TYPE UserNotificationPreferenceFlag AS ENUM (
+CREATE TYPE USER_NOTIFICATION_PREFERENCE_FLAG AS ENUM (
     'ALL',
     'IN_APP_ONLY',
     'EMAIL_ONLY',
@@ -41,7 +40,6 @@ CREATE TABLE user_notification (
     is_read  BOOLEAN NOT NULL DEFAULT FALSE,
     is_archived  BOOLEAN NOT NULL DEFAULT FALSE,
     email_sent  BOOLEAN NOT NULL,
-    -- //TODO: EASI-3294 We might want to add more fields that distinguish events that are different from the parent activity (EG what specific model plans did a user follow at the time of a digest (it could change))
 
     --META DATA
     created_by UUID NOT NULL REFERENCES user_account(id), --Who wrote this row, not necessarily the actor, though it could be the same
@@ -55,19 +53,17 @@ CREATE TABLE user_notification_preferences (
     id UUID PRIMARY KEY NOT NULL,
     user_id UUID NOT NULL REFERENCES user_account(id),
 
-    daily_digest_complete UserNotificationPreferenceFlag NOT NULL DEFAULT 'ALL',
+    daily_digest_complete USER_NOTIFICATION_PREFERENCE_FLAG NOT NULL DEFAULT 'ALL',
 
-    added_as_collaborator UserNotificationPreferenceFlag NOT NULL DEFAULT 'ALL',
+    added_as_collaborator USER_NOTIFICATION_PREFERENCE_FLAG NOT NULL DEFAULT 'ALL',
 
-    tagged_in_discussion UserNotificationPreferenceFlag NOT NULL DEFAULT 'ALL',
+    tagged_in_discussion USER_NOTIFICATION_PREFERENCE_FLAG NOT NULL DEFAULT 'ALL',
 
-    tagged_in_discussion_reply UserNotificationPreferenceFlag NOT NULL DEFAULT 'ALL',
+    tagged_in_discussion_reply USER_NOTIFICATION_PREFERENCE_FLAG NOT NULL DEFAULT 'ALL',
 
-    new_discussion_reply UserNotificationPreferenceFlag NOT NULL DEFAULT 'ALL',
+    new_discussion_reply USER_NOTIFICATION_PREFERENCE_FLAG NOT NULL DEFAULT 'ALL',
 
-    model_plan_shared UserNotificationPreferenceFlag NOT NULL DEFAULT 'ALL',
-
-    new_plan_discussion UserNotificationPreferenceFlag NOT NULL DEFAULT 'ALL',
+    model_plan_shared USER_NOTIFICATION_PREFERENCE_FLAG NOT NULL DEFAULT 'ALL',
 
     --META DATA
     created_by UUID NOT NULL REFERENCES user_account(id),

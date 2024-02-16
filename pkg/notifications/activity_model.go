@@ -18,7 +18,6 @@ const (
 	ActivityTaggedInDiscussionReply ActivityType = "TAGGED_IN_DISCUSSION_REPLY"
 	ActivityNewDiscussionReply      ActivityType = "NEW_DISCUSSION_REPLY"
 	ActivityModelPlanShared         ActivityType = "MODEL_PLAN_SHARED"
-	ActivityNewPlanDiscussion       ActivityType = "NEW_PLAN_DISCUSSION"
 )
 
 // Activity represents a discrete event that has happened in the application that might be notifiable.
@@ -62,14 +61,6 @@ func parseRawActivityMetaData(activityType ActivityType, rawMetaDataJSON interfa
 	}
 
 	switch activityType {
-	case ActivityNewPlanDiscussion:
-		// Deserialize the raw JSON into NewPlanDiscussionActivityMeta
-		meta := NewPlanDiscussionActivityMeta{}
-		if err := json.Unmarshal(rawData, &meta); err != nil {
-			// Handle error if unmarshaling fails
-			return nil, err
-		}
-		return &meta, nil
 	case ActivityTaggedInDiscussion:
 		// Deserialize the raw JSON into TaggedInPlanDiscussionActivityMeta
 		meta := TaggedInPlanDiscussionActivityMeta{}

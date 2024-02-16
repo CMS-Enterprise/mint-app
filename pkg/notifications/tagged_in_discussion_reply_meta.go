@@ -26,7 +26,7 @@ type TaggedInDiscussionReplyActivityMeta struct {
 func newTaggedInDiscussionReplyActivityMeta(discussionID uuid.UUID, replyID uuid.UUID, content string) *TaggedInDiscussionReplyActivityMeta {
 	version := 0 //iterate this if this type ever updates
 	return &TaggedInDiscussionReplyActivityMeta{
-		ActivityMetaBaseStruct: NewActivityMetaBaseStruct(ActivityNewPlanDiscussion, version),
+		ActivityMetaBaseStruct: NewActivityMetaBaseStruct(ActivityTaggedInDiscussionReply, version),
 		DiscussionID:           discussionID,
 		ReplyID:                replyID,
 		Content:                content,
