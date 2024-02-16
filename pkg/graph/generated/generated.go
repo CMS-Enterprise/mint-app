@@ -9326,63 +9326,6 @@ enum SatisfactionLevel {
   DISSATISFIED
   VERY_DISSATISFIED
 }
-"""
-ActivityType represents the possible activities that happen in application that might result in a notification
-"""
-enum ActivityType {
-  DAILY_DIGEST_COMPLETE
-  ADDED_AS_COLLABORATOR
-  TAGGED_IN_DISCUSSION
-  TAGGED_IN_DISCUSSION_REPLY
-  NEW_DISCUSSION_REPLY
-  MODEL_PLAN_SHARED
-}
-
-"""
-ActivityMetaData is a type that represents all the data that can be captured in an Activity
-"""
-union ActivityMetaData = ActivityMetaBaseStruct | TaggedInPlanDiscussionActivityMeta  | TaggedInDiscussionReplyActivityMeta
-
-type TaggedInPlanDiscussionActivityMeta {
-  version: Int!
-  type: ActivityType!
-  discussionID: UUID!
-  content: String!
-}
-
-type TaggedInDiscussionReplyActivityMeta {
-  version: Int!
-  type: ActivityType!
-  discussionID: UUID!
-  replyID: UUID!
-  content: String!
-}
-
-
-type ActivityMetaBaseStruct {
-  version: Int!
-  type: ActivityType!
-}
-
-
-"""
-Activity represents an event that happened in the application that could result in a notification.
-"""
-type Activity {
-  id: UUID!
-	actorID: UUID! #TODO: return the actor? DataLoader?
-	entityID: UUID! #TODO: return the entity?
-	activityType: ActivityType!
-  metaData: ActivityMetaData!
-
-  createdBy: UUID!
-  createdByUserAccount: UserAccount!
-  createdDts: Time!
-  modifiedBy: UUID
-  modifiedByUserAccount: UserAccount
-  modifiedDts: Time
-
-}
 
 
 """
@@ -10115,6 +10058,64 @@ enum GeographyRegionType {
   CBSA,
   HRR,
   MSA
+}
+`, BuiltIn: false},
+	{Name: "../schema/types/activity.graphql", Input: `"""
+ActivityType represents the possible activities that happen in application that might result in a notification
+"""
+enum ActivityType {
+  DAILY_DIGEST_COMPLETE
+  ADDED_AS_COLLABORATOR
+  TAGGED_IN_DISCUSSION
+  TAGGED_IN_DISCUSSION_REPLY
+  NEW_DISCUSSION_REPLY
+  MODEL_PLAN_SHARED
+}
+
+"""
+ActivityMetaData is a type that represents all the data that can be captured in an Activity
+"""
+union ActivityMetaData = ActivityMetaBaseStruct | TaggedInPlanDiscussionActivityMeta  | TaggedInDiscussionReplyActivityMeta
+
+type TaggedInPlanDiscussionActivityMeta {
+  version: Int!
+  type: ActivityType!
+  discussionID: UUID!
+  content: String!
+}
+
+type TaggedInDiscussionReplyActivityMeta {
+  version: Int!
+  type: ActivityType!
+  discussionID: UUID!
+  replyID: UUID!
+  content: String!
+}
+
+
+type ActivityMetaBaseStruct {
+  version: Int!
+  type: ActivityType!
+}
+
+
+"""
+Activity represents an event that happened in the application that could result in a notification.
+"""
+type Activity {
+  id: UUID!
+	actorID: UUID! #TODO: EASI-3925 return the actor? DataLoader?
+	entityID: UUID! #TODO: EASI-3925 return the entity?
+	activityType: ActivityType!
+  metaData: ActivityMetaData!
+
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
+
 }
 `, BuiltIn: false},
 	{Name: "../schema/types/directives.graphql", Input: `directive @hasRole(role: Role!) on FIELD_DEFINITION
