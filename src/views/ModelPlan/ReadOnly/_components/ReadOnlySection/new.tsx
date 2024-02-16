@@ -12,10 +12,12 @@ import {
   isTranslationFieldPropertiesWithOptionsAndChildren,
   isTranslationFieldPropertiesWithOptionsAndParent,
   isTranslationFieldPropertiesWithParent,
+  isTranslationFieldPropertiesWithParentAndChildren,
   TranslationConfigType,
   TranslationFieldPropertiesWithOptions,
   TranslationFieldPropertiesWithOptionsAndChildren,
-  TranslationFieldPropertiesWithOptionsAndParent
+  TranslationFieldPropertiesWithOptionsAndParent,
+  TranslationFieldPropertiesWithParentAndChildren
 } from 'types/translation';
 
 import { filterGroupKey } from '../FilterView/BodyContent/_filterGroupMapping';
@@ -39,8 +41,13 @@ export const formatListItems = <T extends string | keyof T>(
   Util for prepping data to listOtherItems prop of ReadOnlySection
   Using translation config instead of raw data allows us to ensure a predetermined order of render
 */
-export const formatListOtherItems = <T extends string | keyof T>(
-  config: TranslationFieldPropertiesWithOptions<T>, // Translation config
+export const formatListOtherItems = <
+  T extends string | keyof T,
+  C extends string | keyof C
+>(
+  config:
+    | TranslationFieldPropertiesWithOptions<T>
+    | TranslationFieldPropertiesWithParentAndChildren<T, C>, // Translation config
   value: T[] | undefined, // field value/enum array
   values: any // All data for the task list section returned from query
 ): (string | null | undefined)[] => {
@@ -55,7 +62,32 @@ export const formatListOtherItems = <T extends string | keyof T>(
   return getKeys(config.options)
     .filter(option => value?.includes(option))
     .map((option): string | null | undefined => {
-      return values[config.optionsRelatedInfo?.[option]];
+      if (values[config.optionsRelatedInfo?.[option]]) {
+        return values[config.optionsRelatedInfo?.[option]];
+      }
+
+      // If the a child also has children, format them together to be rendered in a string
+      if (isTranslationFieldPropertiesWithParentAndChildren(config)) {
+        const childOption = config.childRelation[option as T];
+        if (childOption) {
+          return childOption
+            .map(child => {
+              const childConfig = child();
+              if (isTranslationFieldPropertiesWithOptions(childConfig)) {
+                return values[childConfig.gqlField]
+                  .map((childValue: T) =>
+                    childConfig.readonlyOptions
+                      ? childConfig.readonlyOptions[childValue]
+                      : childConfig.options[childValue]
+                  )
+                  .join(', ');
+              }
+              return undefined;
+            })
+            .join('');
+        }
+      }
+      return undefined;
     });
 };
 

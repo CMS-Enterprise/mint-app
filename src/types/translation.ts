@@ -130,6 +130,7 @@ type ChildRelation<
 */
 type TranslationOptions<T extends keyof T | string> = {
   options: Record<T, string>;
+  readonlyOptions?: Partial<Record<T, string>>;
   optionsLabels?: Partial<Record<T, string>>;
   optionsRelatedInfo?: Partial<Record<T, string>>; // T values should/could be a subset of the keys of enum values
 };
@@ -177,6 +178,17 @@ export type TranslationFieldPropertiesWithOptionsAndParent<
 > = TranslationFieldProperties & TranslationOptions<T> & ParentRelation<T>;
 
 /* 
+  Extended type for questions that are conditionally rendered by a parent evaluation and have condtionally rendered children as well
+  Takes in a enum parameter for translation key as well as enum parameter fof Parent field to check for condition
+*/
+export type TranslationFieldPropertiesWithParentAndChildren<
+  T extends keyof T | string,
+  C extends keyof C | string | void = void
+> = TranslationFieldProperties &
+  TranslationFieldPropertiesWithOptionsAndChildren<T> &
+  ParentRelation<T>;
+
+/* 
   Union type for all translation types
 */
 export type TranslationConfigType<
@@ -187,7 +199,8 @@ export type TranslationConfigType<
   | TranslationFieldPropertiesWithParent<T>
   | TranslationFieldPropertiesWithOptions<T>
   | TranslationFieldPropertiesWithOptionsAndChildren<T, C>
-  | TranslationFieldPropertiesWithOptionsAndParent<T, C>;
+  | TranslationFieldPropertiesWithOptionsAndParent<T, C>
+  | TranslationFieldPropertiesWithParentAndChildren<T, C>;
 
 /* 
   Type guard to check if config is of type TranslationFieldProperties
@@ -249,6 +262,20 @@ export const isTranslationFieldPropertiesWithOptionsAndParent = <
 >(
   config: TranslationConfigType<T, C>
 ): config is TranslationFieldPropertiesWithOptionsAndParent<T, C> => {
+  return (
+    Object.hasOwn(config, 'parentRelation') && Object.hasOwn(config, 'options')
+  );
+};
+
+/* 
+  Type guard to check if config is of type isTranslationFieldPropertiesWithParentAndChildren
+*/
+export const isTranslationFieldPropertiesWithParentAndChildren = <
+  T extends keyof T | string,
+  C extends keyof C | string | void = void
+>(
+  config: TranslationConfigType<T, C>
+): config is TranslationFieldPropertiesWithParentAndChildren<T, C> => {
   return (
     Object.hasOwn(config, 'parentRelation') &&
     Object.hasOwn(config, 'childRelation')
@@ -358,10 +385,19 @@ export type TranslationGeneralCharacteristics = {
   communityPartnersInvolvedNote: TranslationFieldProperties;
   // Targets and Options
   geographiesTargeted: TranslationFieldPropertiesWithOptionsAndChildren<Bool>;
-  geographiesTargetedTypes: TranslationFieldPropertiesWithOptionsAndParent<GeographyType>;
+  geographiesTargetedTypes: TranslationFieldPropertiesWithParentAndChildren<
+    GeographyType,
+    Bool
+  >;
   geographiesTargetedTypesOther: TranslationFieldProperties;
-  geographiesStatesAndTerritories: TranslationFieldPropertiesWithOptions<StatesAndTerritories>;
-  geographiesRegionTypes: TranslationFieldPropertiesWithOptions<GeographyRegionType>;
+  geographiesStatesAndTerritories: TranslationFieldPropertiesWithOptionsAndParent<
+    StatesAndTerritories,
+    GeographyType
+  >;
+  geographiesRegionTypes: TranslationFieldPropertiesWithOptionsAndParent<
+    GeographyRegionType,
+    GeographyType
+  >;
   geographiesTargetedAppliedTo: TranslationFieldPropertiesWithOptionsAndParent<GeographyApplication>;
   geographiesTargetedAppliedToOther: TranslationFieldProperties;
   geographiesTargetedNote: TranslationFieldProperties;
