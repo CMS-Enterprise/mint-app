@@ -1,32 +1,26 @@
-import React, { Fragment, useContext } from 'react';
+import React, { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   Grid,
-  Icon,
   Link as TrussLink,
   ProcessList,
   ProcessListHeading,
   ProcessListItem
 } from '@trussworks/react-uswds';
 import classNames from 'classnames';
-import { ModelCategory, useGetAllBasicsQuery } from 'gql/gen/graphql';
+import { GetAllBasicsQuery, useGetAllBasicsQuery } from 'gql/gen/graphql';
 
 import PageLoading from 'components/PageLoading';
 import SectionWrapper from 'components/shared/SectionWrapper';
-import Tooltip from 'components/shared/Tooltip';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
+import usePlanTranslation from 'hooks/usePlanTranslation';
 import { formatDateUtc } from 'utils/date';
-import { sortOtherEnum } from 'utils/modelPlan';
 import { ModelInfoContext } from 'views/ModelInfoWrapper';
 import { NotFoundPartial } from 'views/NotFound';
 
-import {
-  checkGroupMap,
-  hasQuestions,
-  highLevelTimelineQuestions
-} from '../_components/FilterView/util';
+import ReadOnlyBody from '../_components/Body';
 import ReadOnlySection from '../_components/ReadOnlySection';
-import SideBySideReadOnlySection from '../_components/SideBySideReadOnlySection';
+import ReadOnlySectionNew from '../_components/ReadOnlySection/new';
 import TitleAndStatus from '../_components/TitleAndStatus';
 
 import './index.scss';
@@ -50,6 +44,9 @@ const ReadOnlyModelBasics = ({
   const { t: basicsMiscT } = useTranslation('basicsMisc');
   const { t: prepareForClearanceT } = useTranslation('prepareForClearance');
 
+  const modelPlanConfig = usePlanTranslation('modelPlan');
+  const basicsConfig = usePlanTranslation('basics');
+
   const isTablet = useCheckResponsiveScreen('tablet', 'smaller');
 
   const { modelName } = useContext(ModelInfoContext);
@@ -59,6 +56,9 @@ const ReadOnlyModelBasics = ({
       id: modelID
     }
   });
+
+  const allBasicsData = (data?.modelPlan.basics ||
+    {}) as GetAllBasicsQuery['modelPlan']['basics'];
 
   if ((!loading && error) || (!loading && !data?.modelPlan)) {
     return <NotFoundPartial />;
@@ -73,16 +73,6 @@ const ReadOnlyModelBasics = ({
   const {
     demoCode,
     amsModelID,
-    modelCategory,
-    additionalModelCategories,
-    cmsCenters,
-    cmmiGroups,
-    modelType,
-    modelTypeOther,
-    problem,
-    goal,
-    testInterventions,
-    note,
     completeICIP,
     clearanceStarts,
     clearanceEnds,
@@ -92,11 +82,44 @@ const ReadOnlyModelBasics = ({
     performancePeriodStarts,
     performancePeriodEnds,
     wrapUpEnds,
+    highLevelNote,
     phasedIn,
     phasedInNote,
-    highLevelNote,
     status
   } = data?.modelPlan?.basics || {};
+
+  // Removing unneeded configurations from basicsConfig
+  // Removed configurations will be manually rendered
+  const {
+    demoCode: demoCodeRemoved,
+    amsModelID: amsModelIDRemoved,
+    completeICIP: completeICIPRemoved,
+    clearanceStarts: clearanceStartsRemoved,
+    clearanceEnds: clearanceEndsRemoved,
+    announced: announcedRemoved,
+    applicationsStart: applicationsStartRemoved,
+    applicationsEnd: applicationsEndRemoved,
+    performancePeriodStarts: performancePeriodStartsRemoved,
+    performancePeriodEnds: performancePeriodEndsRemoved,
+    wrapUpEnds: wrapUpEndsRemoved,
+    highLevelNote: highLevelNoteRemoved,
+    phasedIn: phasedInRemoved,
+    phasedInNote: phasedInNoteRemoved,
+    ...filteredBasicsConfig
+  } = basicsConfig;
+
+  const timelineConfig = {
+    completeICIP: basicsConfig.completeICIP,
+    clearanceStarts: basicsConfig.clearanceStarts,
+    clearanceEnds: basicsConfig.clearanceEnds,
+    announced: basicsConfig.announced,
+    applicationsStart: basicsConfig.applicationsStart,
+    applicationsEnd: basicsConfig.applicationsEnd,
+    performancePeriodStarts: basicsConfig.performancePeriodStarts,
+    performancePeriodEnds: basicsConfig.performancePeriodEnds,
+    wrapUpEnds: basicsConfig.wrapUpEnds,
+    highLevelNote: basicsConfig.highLevelNote
+  };
 
   const dateOrNoAnswer = (value: string | null | undefined) => {
     if (value) {
@@ -131,16 +154,12 @@ const ReadOnlyModelBasics = ({
         </p>
       )}
 
-      {checkGroupMap(
-        isViewingFilteredView,
-        filteredQuestions,
-        'nameHistory',
-        <ReadOnlySection
-          heading={basicsMiscT('previousNames')}
-          list
-          listItems={filteredNameHistory}
-        />
-      )}
+      <ReadOnlySectionNew
+        field="nameHistory"
+        translations={modelPlanConfig}
+        values={{ nameHistory: filteredNameHistory }}
+        filteredView={filteredView}
+      />
 
       {/* Other Identifiers section */}
       {!isViewingFilteredView && (
@@ -210,229 +229,18 @@ const ReadOnlyModelBasics = ({
         </div>
       )}
 
-      {checkGroupMap(
-        isViewingFilteredView,
-        filteredQuestions,
-        'modelCategory',
-        <SideBySideReadOnlySection
-          firstSection={{
-            heading: basicsT('modelCategory.label'),
-            copy: !modelCategory ? (
-              ''
-            ) : (
-              <span
-                className="display-flex flex-align-center"
-                style={{ gap: '4px' }}
-              >
-                {basicsT(`modelCategory.options.${modelCategory}`, '')}
-
-                {modelCategory !== ModelCategory.TO_BE_DETERMINED && (
-                  <Tooltip
-                    label={basicsT(
-                      `modelCategory.optionsLabels.${modelCategory}`
-                    )}
-                    position="right"
-                    className="mint-no-print"
-                  >
-                    <Icon.Info className="text-base-light" />
-                  </Tooltip>
-                )}
-              </span>
-            )
-          }}
-          secondSection={{
-            heading: basicsT('additionalModelCategories.label'),
-            list: true,
-            listItems: additionalModelCategories?.map(group => {
-              return (
-                <Fragment key={group}>
-                  <span
-                    className="display-flex flex-align-center"
-                    style={{ gap: '4px' }}
-                  >
-                    {basicsT(`modelCategory.options.${group}`)}
-
-                    <Tooltip
-                      label={basicsT(`modelCategory.optionsLabels.${group}`)}
-                      position="right"
-                    >
-                      <Icon.Info className="text-base-light" />
-                    </Tooltip>
-                  </span>
-                </Fragment>
-              );
-            })
-          }}
-        />
-      )}
-
-      {checkGroupMap(
-        isViewingFilteredView,
-        filteredQuestions,
-        'cmsCenters',
-        <SideBySideReadOnlySection
-          firstSection={{
-            heading: basicsT('cmsCenters.label'),
-            list: true,
-            listItems: cmsCenters?.map((cmsCenter): string =>
-              basicsT(`cmsCenters.options.${cmsCenter}`)
-            )
-          }}
-          secondSection={{
-            heading: basicsT('cmmiGroups.label'),
-            list: true,
-            listItems: cmmiGroups?.map((cmmiGroup): string =>
-              basicsT(`cmmiGroups.options.${cmmiGroup}`)
-            )
-          }}
-        />
-      )}
-
-      {checkGroupMap(
-        isViewingFilteredView,
-        filteredQuestions,
-        'modelType',
-        <ReadOnlySection
-          heading={basicsT('modelType.label')}
-          list
-          listItems={modelType
-            ?.slice() // https://stackoverflow.com/a/66256576
-            .sort(sortOtherEnum)
-            ?.map((type): string => basicsT(`modelType.options.${type}`))}
-          listOtherItem={modelTypeOther}
-        />
-      )}
-
-      {checkGroupMap(
-        isViewingFilteredView,
-        filteredQuestions,
-        'problem',
-        <ReadOnlySection heading={basicsT('problem.label')} copy={problem} />
-      )}
-
-      {checkGroupMap(
-        isViewingFilteredView,
-        filteredQuestions,
-        'goal',
-        <ReadOnlySection heading={basicsT('goal.label')} copy={goal} />
-      )}
-
-      {checkGroupMap(
-        isViewingFilteredView,
-        filteredQuestions,
-        'testInterventions',
-        <ReadOnlySection
-          heading={basicsT('testInterventions.label')}
-          copy={testInterventions}
-        />
-      )}
-
-      {checkGroupMap(
-        isViewingFilteredView,
-        filteredQuestions,
-        'note',
-        <ReadOnlySection heading={basicsT('note.label')} copy={note} />
-      )}
+      <ReadOnlyBody
+        data={allBasicsData}
+        config={filteredBasicsConfig}
+        filteredView={filteredView}
+      />
 
       {isViewingFilteredView && filteredView !== 'ipc' ? (
-        <>
-          {checkGroupMap(
-            isViewingFilteredView,
-            filteredQuestions,
-            'completeICIP',
-            <ReadOnlySection
-              heading={basicsT('completeICIP.label')}
-              copy={completeICIP && formatDateUtc(completeICIP, 'MM/dd/yyyy')}
-            />
-          )}
-
-          {checkGroupMap(
-            isViewingFilteredView,
-            filteredQuestions,
-            'clearanceStarts',
-            <SideBySideReadOnlySection
-              firstSection={{
-                heading: basicsT('clearanceStarts.label'),
-                copy:
-                  clearanceStarts &&
-                  formatDateUtc(clearanceStarts, 'MM/dd/yyyy')
-              }}
-              secondSection={{
-                heading: basicsT('clearanceEnds.label'),
-                copy:
-                  clearanceEnds && formatDateUtc(clearanceEnds, 'MM/dd/yyyy')
-              }}
-            />
-          )}
-
-          {checkGroupMap(
-            isViewingFilteredView,
-            filteredQuestions,
-            'announced',
-            <ReadOnlySection
-              heading={basicsT('announced.label')}
-              copy={announced && formatDateUtc(announced, 'MM/dd/yyyy')}
-            />
-          )}
-
-          {checkGroupMap(
-            isViewingFilteredView,
-            filteredQuestions,
-            'applicationsStart',
-            <SideBySideReadOnlySection
-              firstSection={{
-                heading: basicsT('applicationsStart.label'),
-                copy:
-                  applicationsStart &&
-                  formatDateUtc(applicationsStart, 'MM/dd/yyyy')
-              }}
-              secondSection={{
-                heading: basicsT('applicationsEnd.label'),
-                copy:
-                  applicationsEnd &&
-                  formatDateUtc(applicationsEnd, 'MM/dd/yyyy')
-              }}
-            />
-          )}
-
-          {checkGroupMap(
-            isViewingFilteredView,
-            filteredQuestions,
-            'performancePeriodStarts',
-            <SideBySideReadOnlySection
-              firstSection={{
-                heading: basicsT('performancePeriodStarts.label'),
-                copy:
-                  performancePeriodStarts &&
-                  formatDateUtc(performancePeriodStarts, 'MM/dd/yyyy')
-              }}
-              secondSection={{
-                heading: basicsT('performancePeriodEnds.label'),
-                copy:
-                  performancePeriodEnds &&
-                  formatDateUtc(performancePeriodEnds, 'MM/dd/yyyy')
-              }}
-            />
-          )}
-
-          {checkGroupMap(
-            isViewingFilteredView,
-            filteredQuestions,
-            'wrapUpEnds',
-            <ReadOnlySection
-              heading={basicsT('wrapUpEnds.label')}
-              copy={wrapUpEnds && formatDateUtc(wrapUpEnds, 'MM/dd/yyyy')}
-            />
-          )}
-
-          {filteredQuestions &&
-            hasQuestions(filteredQuestions, highLevelTimelineQuestions) && (
-              <ReadOnlySection
-                heading={basicsT('highLevelNote.label')}
-                copy={highLevelNote}
-              />
-            )}
-        </>
+        <ReadOnlyBody
+          data={allBasicsData}
+          config={timelineConfig}
+          filteredView={filteredView}
+        />
       ) : (
         <SectionWrapper
           className={classNames(
@@ -598,16 +406,19 @@ const ReadOnlyModelBasics = ({
         </SectionWrapper>
       )}
 
-      {checkGroupMap(
-        isViewingFilteredView,
-        filteredQuestions,
-        'phasedIn',
-        <ReadOnlySection
-          heading={basicsT('phasedIn.label')}
-          copy={basicsT(`phasedIn.options.${phasedIn}`, '')} // Default to empty string if bool is null
-          notes={phasedInNote}
-        />
-      )}
+      <ReadOnlySectionNew
+        field="phasedIn"
+        translations={basicsConfig}
+        values={{ phasedIn }}
+        filteredView={filteredView}
+      />
+
+      <ReadOnlySectionNew
+        field="phasedInNote"
+        translations={basicsConfig}
+        values={{ phasedInNote }}
+        filteredView={filteredView}
+      />
     </div>
   );
 };

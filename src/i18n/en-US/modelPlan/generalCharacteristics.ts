@@ -13,6 +13,9 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     options: {
       true: 'New model',
       false: 'New track of an existing model'
+    },
+    childRelation: {
+      false: [() => generalCharacteristics.existingModel]
     }
   },
   existingModel: {
@@ -22,7 +25,8 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     label: 'Which existing model?',
     sublabel: 'Start typing the name of the model',
     dataType: 'string',
-    formType: 'select'
+    formType: 'select',
+    parentRelation: () => generalCharacteristics.isNewModel
   },
   resemblesExistingModel: {
     gqlField: 'resemblesExistingModel',
@@ -35,7 +39,28 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
       YES: 'Yes',
       NO: 'No',
       OTHER: 'Other'
+    },
+    optionsRelatedInfo: {
+      OTHER: 'resemblesExistingModelOtherSpecify'
+    },
+    childRelation: {
+      YES: [
+        () => generalCharacteristics.resemblesExistingModelWhich,
+        () => generalCharacteristics.resemblesExistingModelHow
+      ],
+      NO: [
+        () => generalCharacteristics.resemblesExistingModelWhich,
+        () => generalCharacteristics.resemblesExistingModelHow
+      ]
     }
+  },
+  resemblesExistingModelWhyHow: {
+    gqlField: 'resemblesExistingModelWhyHow',
+    goField: 'ResemblesExistingModelWhyHow',
+    dbField: 'resembles_existing_model_why_how',
+    label: 'Explain why and how the model made this decision.',
+    dataType: 'string',
+    formType: 'textarea'
   },
   resemblesExistingModelWhich: {
     gqlField: 'resemblesExistingModelWhich',
@@ -48,15 +73,14 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     dataType: 'string',
     formType: 'multiSelect',
     isArray: true,
-    isModelLinks: true // Used to designate if a field is a ExistingModelLinks type with nested fields - ex: names
-  },
-  resemblesExistingModelWhyHow: {
-    gqlField: 'resemblesExistingModelWhyHow',
-    goField: 'ResemblesExistingModelWhyHow',
-    dbField: 'resembles_existing_model_why_how',
-    label: 'Explain why and how the model made this decision.',
-    dataType: 'string',
-    formType: 'textarea'
+    isModelLinks: true, // Used to designate if a field is a ExistingModelLinks type with nested fields - ex: names,
+    parentRelation: () => generalCharacteristics.resemblesExistingModel,
+    options: {
+      Other: 'Other'
+    },
+    optionsRelatedInfo: {
+      Other: 'resemblesExistingModelOtherOption'
+    }
   },
   resemblesExistingModelHow: {
     gqlField: 'resemblesExistingModelHow',
@@ -64,7 +88,8 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     dbField: 'resembles_existing_model_how',
     label: 'In what way does the new model resemble the selected model(s)?',
     dataType: 'string',
-    formType: 'textarea'
+    formType: 'textarea',
+    parentRelation: () => generalCharacteristics.resemblesExistingModel
   },
   resemblesExistingModelOtherSpecify: {
     gqlField: 'resemblesExistingModelOtherSpecify',
@@ -72,7 +97,8 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     dbField: 'resembles_existing_model_other_specify',
     label: 'Please specify',
     dataType: 'string',
-    formType: 'text'
+    formType: 'text',
+    isOtherType: true
   },
   // Not rendered in any form/ui
   resemblesExistingModelOtherSelected: {
@@ -82,6 +108,7 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     label: '',
     dataType: 'boolean',
     formType: 'radio',
+    isOtherType: true,
     options: {
       true: '',
       false: ''
@@ -93,7 +120,8 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     dbField: 'resembles_existing_model_other_option',
     label: 'Please specify other',
     dataType: 'string',
-    formType: 'text'
+    formType: 'text',
+    isOtherType: true
   },
   resemblesExistingModelNote: {
     gqlField: 'resemblesExistingModelNote',
@@ -115,6 +143,12 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
       YES: 'Yes',
       NO: 'No',
       OTHER: 'Other'
+    },
+    optionsRelatedInfo: {
+      OTHER: 'participationInModelPreconditionOtherSpecify'
+    },
+    childRelation: {
+      YES: [() => generalCharacteristics.participationInModelPreconditionWhich]
     }
   },
   participationInModelPreconditionOtherSpecify: {
@@ -123,7 +157,8 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     dbField: 'participation_in_model_precondition_other_specify',
     label: 'Please specify',
     dataType: 'string',
-    formType: 'text'
+    formType: 'text',
+    isOtherType: true
   },
   participationInModelPreconditionWhich: {
     gqlField: 'participationInModelPreconditionWhich',
@@ -135,7 +170,15 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     dataType: 'string',
     formType: 'multiSelect',
     isArray: true,
-    isModelLinks: true // Used to designate if a field is a ExistingModelLinks type with nested fields - ex: names
+    isModelLinks: true, // Used to designate if a field is a ExistingModelLinks type with nested fields - ex: names
+    parentRelation: () =>
+      generalCharacteristics.participationInModelPrecondition,
+    options: {
+      Other: 'Other'
+    },
+    optionsRelatedInfo: {
+      Other: 'participationInModelPreconditionOtherOption'
+    }
   },
   // Not rendered in any form/ui
   participationInModelPreconditionOtherSelected: {
@@ -145,6 +188,7 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     label: '',
     dataType: 'boolean',
     formType: 'radio',
+    isOtherType: true,
     options: {
       true: '',
       false: ''
@@ -156,7 +200,8 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     dbField: 'participation_in_model_precondition_other_option',
     label: 'Please specify other',
     dataType: 'string',
-    formType: 'text'
+    formType: 'text',
+    isOtherType: true
   },
   participationInModelPreconditionWhyHow: {
     gqlField: 'participationInModelPreconditionWhyHow',
@@ -179,11 +224,16 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     goField: 'HasComponentsOrTracks',
     dbField: 'has_components_or_tracks',
     label: 'Are there different components/tracks?',
+    readonlyLabel:
+      'Are there different components/tracks? If so, how do the tracks differ?',
     dataType: 'boolean',
     formType: 'radio',
     options: {
       true: 'Yes',
       false: 'No'
+    },
+    optionsRelatedInfo: {
+      true: 'hasComponentsOrTracksDiffer'
     }
   },
   hasComponentsOrTracksDiffer: {
@@ -192,7 +242,8 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     dbField: 'has_components_or_tracks_differ',
     label: 'How do the tracks differ?',
     dataType: 'string',
-    formType: 'textarea'
+    formType: 'textarea',
+    isOtherType: true
   },
   hasComponentsOrTracksNote: {
     gqlField: 'hasComponentsOrTracksNote',
@@ -212,6 +263,7 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
       'Will another Agency or State help design/operate the model?',
     dataType: 'enum',
     formType: 'checkbox',
+    isPageStart: true,
     options: {
       YES_STATE: 'Yes, we will partner with states',
       YES_AGENCY_IDEAS: 'Yes, we will get ideas from another agency',
@@ -219,6 +271,9 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
         'Yes, we will get support from another agency through Inter Agency Agreement (IAA)',
       NO: 'No',
       OTHER: 'Other'
+    },
+    optionsRelatedInfo: {
+      OTHER: 'agencyOrStateHelpOther'
     }
   },
   agencyOrStateHelpOther: {
@@ -227,7 +282,8 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     dbField: 'agency_or_state_help_other',
     label: 'Please specify',
     dataType: 'string',
-    formType: 'textarea'
+    formType: 'textarea',
+    isOtherType: true
   },
   agencyOrStateHelpNote: {
     gqlField: 'agencyOrStateHelpNote',
@@ -286,11 +342,35 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
       SHARED_SAVINGS: 'Shared Savings Model',
       OTHER: 'Other'
     },
+    optionsRelatedInfo: {
+      OTHER: 'keyCharacteristicsOther'
+    },
+    childRelation: {
+      PART_C: [
+        () => generalCharacteristics.collectPlanBids,
+        () => generalCharacteristics.managePartCDEnrollment,
+        () => generalCharacteristics.planContractUpdated
+      ],
+      PART_D: [
+        () => generalCharacteristics.collectPlanBids,
+        () => generalCharacteristics.managePartCDEnrollment,
+        () => generalCharacteristics.planContractUpdated
+      ]
+    },
     filterGroups: [
       ModelViewFilter.CMMI,
       ModelViewFilter.IDDOC,
       ModelViewFilter.PBG
     ]
+  },
+  keyCharacteristicsOther: {
+    gqlField: 'keyCharacteristicsOther',
+    goField: 'KeyCharacteristicsOther',
+    dbField: 'key_characteristics_other',
+    label: 'Please describe the other key characteristics',
+    dataType: 'string',
+    formType: 'text',
+    isOtherType: true
   },
   keyCharacteristicsNote: {
     gqlField: 'keyCharacteristicsNote',
@@ -305,14 +385,6 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
       ModelViewFilter.PBG
     ]
   },
-  keyCharacteristicsOther: {
-    gqlField: 'keyCharacteristicsOther',
-    goField: 'KeyCharacteristicsOther',
-    dbField: 'key_characteristics_other',
-    label: 'Please describe the other key characteristics',
-    dataType: 'string',
-    formType: 'text'
-  },
   collectPlanBids: {
     gqlField: 'collectPlanBids',
     goField: 'CollectPlanBids',
@@ -323,7 +395,8 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     options: {
       true: 'Yes',
       false: 'No'
-    }
+    },
+    parentRelation: () => generalCharacteristics.keyCharacteristics
   },
   collectPlanBidsNote: {
     gqlField: 'collectPlanBidsNote',
@@ -343,7 +416,8 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     options: {
       true: 'Yes',
       false: 'No'
-    }
+    },
+    parentRelation: () => generalCharacteristics.keyCharacteristics
   },
   managePartCDEnrollmentNote: {
     gqlField: 'managePartCDEnrollmentNote',
@@ -363,7 +437,8 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     options: {
       true: 'Yes',
       false: 'No'
-    }
+    },
+    parentRelation: () => generalCharacteristics.keyCharacteristics
   },
   planContractUpdatedNote: {
     gqlField: 'planContractUpdatedNote',
@@ -378,11 +453,16 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     goField: 'CareCoordinationInvolved',
     dbField: 'care_coordination_involved',
     label: 'Is care coordination involved?',
+    readonlyLabel: 'Is care coordination involved? How so?',
     dataType: 'boolean',
     formType: 'radio',
+    isPageStart: true,
     options: {
       true: 'Yes',
       false: 'No'
+    },
+    optionsRelatedInfo: {
+      true: 'careCoordinationInvolvedDescription'
     }
   },
   careCoordinationInvolvedDescription: {
@@ -391,7 +471,8 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     dbField: 'care_coordination_involved_description',
     label: 'How so?',
     dataType: 'string',
-    formType: 'textarea'
+    formType: 'textarea',
+    isOtherType: true
   },
   careCoordinationInvolvedNote: {
     gqlField: 'careCoordinationInvolvedNote',
@@ -406,11 +487,15 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     goField: 'AdditionalServicesInvolved',
     dbField: 'additional_services_involved',
     label: 'Are additional services involved?',
+    readonlyLabel: 'Are additional services involved? How so?',
     dataType: 'boolean',
     formType: 'radio',
     options: {
       true: 'Yes',
       false: 'No'
+    },
+    optionsRelatedInfo: {
+      true: 'additionalServicesInvolvedDescription'
     }
   },
   additionalServicesInvolvedDescription: {
@@ -419,7 +504,8 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     dbField: 'additional_services_involved_description',
     label: 'How so?',
     dataType: 'string',
-    formType: 'textarea'
+    formType: 'textarea',
+    isOtherType: true
   },
   additionalServicesInvolvedNote: {
     gqlField: 'additionalServicesInvolvedNote',
@@ -434,11 +520,15 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     goField: 'CommunityPartnersInvolved',
     dbField: 'community_partners_involved',
     label: 'Are community partners involved?',
+    readonlyLabel: 'Are community partners involved? How so?',
     dataType: 'boolean',
     formType: 'radio',
     options: {
       true: 'Yes',
       false: 'No'
+    },
+    optionsRelatedInfo: {
+      true: 'communityPartnersInvolvedDescription'
     }
   },
   communityPartnersInvolvedDescription: {
@@ -447,7 +537,8 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     dbField: 'community_partners_involved',
     label: 'How so?',
     dataType: 'string',
-    formType: 'textarea'
+    formType: 'textarea',
+    isOtherType: true
   },
   communityPartnersInvolvedNote: {
     gqlField: 'communityPartnersInvolvedNote',
@@ -464,9 +555,16 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     label: 'Is the model targeted at specific geographies?',
     dataType: 'boolean',
     formType: 'radio',
+    isPageStart: true,
     options: {
       true: 'Yes',
       false: 'No'
+    },
+    childRelation: {
+      true: [
+        () => generalCharacteristics.geographiesTargetedTypes,
+        () => generalCharacteristics.geographiesTargetedAppliedTo
+      ]
     },
     filterGroups: [ModelViewFilter.IDDOC, ModelViewFilter.PBG]
   },
@@ -483,9 +581,12 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
       OTHER: 'Other'
     },
     optionsRelatedInfo: {
-      STATE: 'geographiesStatesAndTerritories',
-      REGION: 'geographiesRegionTypes',
       OTHER: 'geographiesTargetedTypesOther'
+    },
+    parentRelation: () => generalCharacteristics.geographiesTargeted,
+    childRelation: {
+      STATE: [() => generalCharacteristics.geographiesStatesAndTerritories],
+      REGION: [() => generalCharacteristics.geographiesRegionTypes]
     },
     filterGroups: [ModelViewFilter.IDDOC, ModelViewFilter.PBG]
   },
@@ -497,6 +598,7 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     multiSelectLabel: 'States and territories',
     dataType: 'enum',
     formType: 'multiSelect',
+    isOtherType: true,
     options: {
       AL: 'AL - Alabama',
       AK: 'AK - Alaska',
@@ -556,6 +658,66 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
       UM: 'UM - U.S. Minor Outlying Islands',
       VI: 'VI - U.S. Virgin Islands'
     },
+    readonlyOptions: {
+      AL: 'Alabama',
+      AK: 'Alaska',
+      AZ: 'Arizona',
+      AR: 'Arkansas',
+      CA: 'California',
+      CO: 'Colorado',
+      CT: 'Connecticut',
+      DE: 'Delaware',
+      DC: 'District of Columbia',
+      FL: 'Florida',
+      GA: 'Georgia',
+      HI: 'Hawaii',
+      ID: 'Idaho',
+      IL: 'Illinois',
+      IN: 'Indiana',
+      IA: 'Iowa',
+      KS: 'Kansas',
+      KY: 'Kentucky',
+      LA: 'Louisiana',
+      ME: 'Maine',
+      MD: 'Maryland',
+      MA: 'Massachusetts',
+      MI: 'Michigan',
+      MN: 'Minnesota',
+      MS: 'Mississippi',
+      MO: 'Missouri',
+      MT: 'Montana',
+      NE: 'Nebraska',
+      NV: 'Nevada',
+      NH: 'New Hampshire',
+      NJ: 'New Jersey',
+      NM: 'New Mexico',
+      NY: 'New York',
+      NC: 'North Carolina',
+      ND: 'North Dakota',
+      OH: 'Ohio',
+      OK: 'Oklahoma',
+      OR: 'Oregon',
+      PA: 'Pennsylvania',
+      RI: 'Rhode Island',
+      SC: 'South Carolina',
+      SD: 'South Dakota',
+      TN: 'Tennessee',
+      TX: 'Texas',
+      UT: 'Utah',
+      VT: 'Vermont',
+      VA: 'Virginia',
+      WA: 'Washington',
+      WV: 'West Virginia',
+      WI: 'Wisconsin',
+      WY: 'Wyoming',
+      AS: 'American Samoa',
+      GU: 'Guam',
+      MP: 'Northern Mariana Islands',
+      PR: 'Puerto Rico',
+      UM: 'U.S. Minor Outlying Islands',
+      VI: 'U.S. Virgin Islands'
+    },
+    parentRelation: () => generalCharacteristics.geographiesTargetedTypes,
     filterGroups: [ModelViewFilter.IDDOC, ModelViewFilter.PBG]
   },
   geographiesRegionTypes: {
@@ -565,11 +727,13 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     label: 'Geography region types',
     dataType: 'enum',
     formType: 'checkbox',
+    isOtherType: true,
     options: {
       CBSA: 'Core-based statistical areas (CBSAs)',
       HRR: 'Hospital Referral Regions (HRR)',
       MSA: 'Metropolitan Statistical Areas (MSAs)'
     },
+    parentRelation: () => generalCharacteristics.geographiesTargetedTypes,
     filterGroups: [ModelViewFilter.IDDOC, ModelViewFilter.PBG]
   },
   geographiesTargetedTypesOther: {
@@ -579,6 +743,7 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     label: 'Please specify what the other geography type is.',
     dataType: 'string',
     formType: 'text',
+    isOtherType: true,
     filterGroups: [ModelViewFilter.IDDOC, ModelViewFilter.PBG]
   },
   geographiesTargetedAppliedTo: {
@@ -594,6 +759,10 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
       PROVIDERS: 'Providers',
       OTHER: 'Other'
     },
+    optionsRelatedInfo: {
+      OTHER: 'geographiesTargetedAppliedToOther'
+    },
+    parentRelation: () => generalCharacteristics.geographiesTargeted,
     filterGroups: [ModelViewFilter.IDDOC, ModelViewFilter.PBG]
   },
   geographiesTargetedAppliedToOther: {
@@ -603,6 +772,7 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     label: 'Please specify what the geographies are applied to.',
     dataType: 'string',
     formType: 'text',
+    isOtherType: true,
     filterGroups: [ModelViewFilter.IDDOC, ModelViewFilter.PBG]
   },
   geographiesTargetedNote: {
@@ -644,11 +814,19 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     sublabel:
       'Note: CMMI writes, Office of General Council (OGC) approves both types of agreements',
     dataType: 'boolean',
-    formType: 'radio',
+    formType: 'checkbox',
     options: {
       COOPERATIVE: 'Co-Operative Agreement/Grant',
       PARTICIPATION: 'Participation Agreement',
       OTHER: 'Other'
+    },
+    optionsRelatedInfo: {
+      OTHER: 'agreementTypesOther'
+    },
+    childRelation: {
+      PARTICIPATION: [
+        () => generalCharacteristics.multiplePatricipationAgreementsNeeded
+      ]
     },
     filterGroups: [ModelViewFilter.CMMI]
   },
@@ -659,6 +837,7 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     label: 'Please specify',
     dataType: 'string',
     formType: 'text',
+    isOtherType: true,
     filterGroups: [ModelViewFilter.CMMI]
   },
   multiplePatricipationAgreementsNeeded: {
@@ -674,6 +853,7 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
       true: 'Yes',
       false: 'No'
     },
+    parentRelation: () => generalCharacteristics.agreementTypes,
     filterGroups: [ModelViewFilter.CMMI]
   },
   multiplePatricipationAgreementsNeededNote: {
@@ -690,11 +870,16 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     goField: 'RulemakingRequired',
     dbField: 'rulemaking_required',
     label: 'Is rulemaking required?',
+    readonlyLabel:
+      'Is rulemaking required? If so, which rule do you anticipate using and what is the target date of display for that regulation?',
     dataType: 'boolean',
     formType: 'radio',
     options: {
       true: 'Yes',
       false: 'No'
+    },
+    optionsRelatedInfo: {
+      true: 'rulemakingRequiredDescription'
     },
     filterGroups: [
       ModelViewFilter.IDDOC,
@@ -710,6 +895,7 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
       'Which rule do you anticipate using and what is the target date of display for that regulation?',
     dataType: 'string',
     formType: 'textarea',
+    isOtherType: true,
     filterGroups: [
       ModelViewFilter.IDDOC,
       ModelViewFilter.IPC,
@@ -738,6 +924,9 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
         'Section 1833(e) (Part B services) of the Social Security Act',
       OTHER: 'Other'
     },
+    optionsRelatedInfo: {
+      OTHER: 'authorityAllowancesOther'
+    },
     filterGroups: [ModelViewFilter.CMMI]
   },
   authorityAllowancesOther: {
@@ -747,6 +936,7 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     label: 'Please specify',
     dataType: 'string',
     formType: 'textarea',
+    isOtherType: true,
     filterGroups: [ModelViewFilter.CMMI]
   },
   authorityAllowancesNote: {
@@ -763,11 +953,15 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     goField: 'WaiversRequired',
     dbField: 'waivers_required',
     label: 'Are waivers required?',
+    readonlyLabel: 'Are waivers required? If so, which types of waivers?',
     dataType: 'boolean',
     formType: 'radio',
     options: {
       true: 'Yes',
       false: 'No'
+    },
+    optionsRelatedInfo: {
+      true: 'waiversRequiredTypes'
     },
     filterGroups: [ModelViewFilter.CMMI]
   },
@@ -779,6 +973,7 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     readonlyLabel: 'Which types of waivers are required?',
     dataType: 'enum',
     formType: 'checkbox',
+    isOtherType: true,
     options: {
       FRAUD_ABUSE: 'Fraud and Abuse',
       MEDICAID: 'Medicaid',

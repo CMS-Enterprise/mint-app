@@ -17,7 +17,8 @@ import ReadOnlySectionNew, {
 } from './new';
 
 const defaultProps = {
-  config: participantsAndProviders.modelApplicationLevel,
+  field: 'modelApplicationLevel',
+  translations: participantsAndProviders,
   values: {
     providerOverlap: OverlapType.NO,
     providerOverlapHierarchy: 'Overlap heirarchy',
@@ -68,7 +69,7 @@ describe('The Read Only Section', () => {
     it('renders Other entry', async () => {
       const listData = { ...defaultProps };
 
-      listData.config = participantsAndProviders.recruitmentMethod;
+      listData.field = 'recruitmentMethod';
 
       render(<ReadOnlySectionNew {...listData} />);
 

@@ -12,10 +12,12 @@ import {
   isTranslationFieldPropertiesWithOptionsAndChildren,
   isTranslationFieldPropertiesWithOptionsAndParent,
   isTranslationFieldPropertiesWithParent,
+  isTranslationFieldPropertiesWithParentAndChildren,
   TranslationConfigType,
   TranslationFieldPropertiesWithOptions,
   TranslationFieldPropertiesWithOptionsAndChildren,
-  TranslationFieldPropertiesWithOptionsAndParent
+  TranslationFieldPropertiesWithOptionsAndParent,
+  TranslationFieldPropertiesWithParentAndChildren
 } from 'types/translation';
 
 import { filterGroupKey } from '../FilterView/BodyContent/_filterGroupMapping';
@@ -28,6 +30,8 @@ export const formatListItems = <T extends string | keyof T>(
   config: TranslationFieldPropertiesWithOptions<T>, // Translation config
   value: T[] | undefined // field value/enum array
 ): string[] => {
+  if (config.isModelLinks) return value as string[];
+
   return getKeys(config.options)
     .filter(option => value?.includes(option))
     .map((option): string => config.options[option]);
@@ -37,15 +41,53 @@ export const formatListItems = <T extends string | keyof T>(
   Util for prepping data to listOtherItems prop of ReadOnlySection
   Using translation config instead of raw data allows us to ensure a predetermined order of render
 */
-export const formatListOtherItems = <T extends string | keyof T>(
-  config: TranslationFieldPropertiesWithOptions<T>, // Translation config
+export const formatListOtherItems = <
+  T extends string | keyof T,
+  C extends string | keyof C
+>(
+  config:
+    | TranslationFieldPropertiesWithOptions<T>
+    | TranslationFieldPropertiesWithParentAndChildren<T, C>, // Translation config
   value: T[] | undefined, // field value/enum array
   values: any // All data for the task list section returned from query
 ): (string | null | undefined)[] => {
+  if (config.isModelLinks) {
+    return (value as (string | null | undefined)[])?.map(option => {
+      return option
+        ? values[config.optionsRelatedInfo?.[option as T]]
+        : undefined;
+    });
+  }
+
   return getKeys(config.options)
     .filter(option => value?.includes(option))
     .map((option): string | null | undefined => {
-      return values[config.optionsRelatedInfo?.[option]];
+      if (values[config.optionsRelatedInfo?.[option]]) {
+        return values[config.optionsRelatedInfo?.[option]];
+      }
+
+      // If the a child also has children, format them together to be rendered in a string
+      if (isTranslationFieldPropertiesWithParentAndChildren(config)) {
+        const childOption = config.childRelation[option as T];
+        if (childOption) {
+          return childOption
+            .map(child => {
+              const childConfig = child();
+              if (isTranslationFieldPropertiesWithOptions(childConfig)) {
+                return values[childConfig.gqlField]
+                  .map((childValue: T) =>
+                    childConfig.readonlyOptions
+                      ? childConfig.readonlyOptions[childValue]
+                      : childConfig.options[childValue]
+                  )
+                  .join(', ');
+              }
+              return undefined;
+            })
+            .join('');
+        }
+      }
+      return undefined;
     });
 };
 
@@ -127,10 +169,10 @@ export const isHiddenByParentCondition = <
   T extends string | keyof T,
   C extends string | keyof C
 >(
-  config: TranslationConfigType<T, C>,
+  config: TranslationConfigType<T, C> | undefined,
   values: any
 ): boolean => {
-  if (!isTranslationFieldPropertiesWithParent(config)) return false;
+  if (!config || !isTranslationFieldPropertiesWithParent(config)) return false;
 
   // Typescript is not inferring the parent config type, but we know it has options with children
   const parentConfig = config.parentRelation() as TranslationFieldPropertiesWithOptionsAndChildren<
@@ -185,7 +227,8 @@ export type ReadOnlySectionNewProps<
   T extends keyof T | string,
   C extends string | keyof C
 > = {
-  config: TranslationConfigType<T, C>;
+  field: string; // Any gql field name
+  translations: Record<string, TranslationConfigType<T, C>>;
   values: any;
   filteredView?: keyof typeof filterGroupKey;
 };
@@ -194,12 +237,15 @@ const ReadOnlySectionNew = <
   T extends keyof T | string,
   C extends string | keyof C
 >({
-  config,
+  field,
+  translations,
   values,
   filteredView
 }: ReadOnlySectionNewProps<T, C>): React.ReactElement | null => {
   const { t: miscellaneousT } = useTranslation('miscellaneous');
   const { t: readOnlyT } = useTranslation('generalReadOnly');
+
+  const config = translations[field];
 
   const value = values[config.gqlField];
 
@@ -243,33 +289,34 @@ const ReadOnlySectionNew = <
   // Can render a single "Other" option or multiple additional information options
   // As well as default text for both if not specified
   const renderListItemOthers = (index: number) => {
-    if (listOtherItems) {
-      if (listOtherItems[index] === undefined) {
-        return null;
-      }
-      if (listOtherItems[index]) {
-        return (
-          <li className="font-sans-md line-height-sans-4">
-            {listOtherItems[index]}
-          </li>
-        );
-      }
+    if (listOtherItems[index] === undefined) {
+      return null;
+    }
+    if (listOtherItems[index]) {
       return (
-        <li className="font-sans-md line-height-sans-4 ">
-          <em className="text-base">
-            {miscellaneousT('noAdditionalInformation')}
-          </em>
+        <li className="font-sans-md line-height-sans-4">
+          {listOtherItems[index]}
         </li>
       );
     }
-    return null;
+    return (
+      <li className="font-sans-md line-height-sans-4 ">
+        <em className="text-base">
+          {miscellaneousT('noAdditionalInformation')}
+        </em>
+      </li>
+    );
   };
 
-  const renderCopyOrList = () => {
+  const renderCopyOrList = (
+    listConfig: TranslationConfigType<T, C>,
+    listItemValues: any,
+    tooltipValues: (string | null | undefined)[]
+  ) => {
     // Renders a single value
     if (
-      isTranslationFieldProperties(config) &&
-      !isTranslationFieldPropertiesWithOptions(config)
+      isTranslationFieldProperties(listConfig) &&
+      !isTranslationFieldPropertiesWithOptions(listConfig)
     ) {
       return (
         <div className="margin-y-0 font-body-md line-height-sans-4 text-pre-line">
@@ -285,33 +332,74 @@ const ReadOnlySectionNew = <
     }
 
     // Renders a single value with options (radio)
-    // May also renders a conditinal follow to the selection
+    // May also renders a conditinal followup value/s to the selection
     if (
-      isTranslationFieldPropertiesWithOptions(config) &&
-      config.formType === 'radio'
+      isTranslationFieldPropertiesWithOptions(listConfig) &&
+      listConfig.formType === 'radio'
     ) {
-      const hasChildField = config.optionsRelatedInfo?.[value];
+      // Checks if configuration exists to optionally render a child's value with the radio value
+      const childField = listConfig.optionsRelatedInfo?.[value as T];
 
-      const childField = hasChildField ? values[hasChildField] : null;
+      const childFieldValue = childField ? values[childField] : null;
+
+      // Checks if the child field is an array to render as a bulleted list beneath the radio selection
+      const isChildMultiple: boolean = Array.isArray(childFieldValue);
+
+      // Ensures the the child has configuration to translate the options in array
+      const childHasOptions = translations[
+        childField as T
+      ] as TranslationFieldPropertiesWithOptions<T>;
+
+      // Checks if a single radio value has a mapped tooltip/optionsLabel
+      let radioTooltip: string | undefined;
+      if (listConfig.optionsLabels) {
+        radioTooltip = listConfig.optionsLabels[value as T];
+      }
 
       return (
-        <p className="margin-y-0 font-body-md line-height-sans-4 text-pre-line">
-          {!isEmpty(value) && config.options[value]}
-          {hasChildField && childField && (
-            <span data-testid="other-entry"> - {childField}</span>
+        <div className="margin-y-0 font-body-md line-height-sans-4 text-pre-line">
+          {!isEmpty(value) && listConfig.options[value as T]}
+
+          {/* Renders a tooltip if mapped to the selected radio value */}
+          {radioTooltip && (
+            <span className="top-2px position-relative">
+              <Tooltip
+                label={radioTooltip}
+                position="right"
+                className="margin-left-05"
+              >
+                <Icon.Info className="text-base-light" />
+              </Tooltip>
+            </span>
           )}
-          {(isEmpty(value) || (hasChildField && !childField)) && (
+
+          {/* Renders a string next to the hyphenated value of the radio option */}
+          {childField && childFieldValue && !isChildMultiple && (
+            <span data-testid="other-entry"> - {childFieldValue}</span>
+          )}
+
+          {/* Renders a list beneath a selection of a radio value */}
+          {childHasOptions &&
+            childHasOptions.options &&
+            renderCopyOrList(
+              childHasOptions,
+              formatListItems(childHasOptions, values[childField]),
+              tooltipValues
+            )}
+
+          {/* Render default empty value */}
+          {(isEmpty(value) || (childField && !childFieldValue)) && (
             <i className="text-base">
               {!isEmpty(value) && ' - '}
               {miscellaneousT('noAdditionalInformation')}
             </i>
           )}
-        </p>
+        </div>
       );
     }
 
     // If no values for checkbox/multiselect type questions
-    if (listItems.length === 0) {
+    if (listItemValues.length === 0) {
       return (
         <p className="margin-y-0 font-body-md line-height-sans-4 text-pre-line">
           <em className="text-base">
@@ -324,14 +412,14 @@ const ReadOnlySectionNew = <
     // Renders a list of selected values - multiselect, checkboxes
     return (
       <ul className="margin-y-0 padding-left-3">
-        {listItems.map((item, index) => (
+        {listItemValues.map((item: string, index: number) => (
           <React.Fragment key={`${sectionName}--${item}`}>
             <li className="font-sans-md line-height-sans-4">
               {item}
-              {tooltips && tooltips[index] && (
+              {tooltipValues && tooltipValues[index] && (
                 <span className="top-2px position-relative">
                   <Tooltip
-                    label={tooltips[index]!}
+                    label={tooltipValues[index]!}
                     position="right"
                     className="margin-left-05"
                   >
@@ -366,7 +454,7 @@ const ReadOnlySectionNew = <
         <p className="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line">
           {heading}
         </p>
-        {renderCopyOrList()}
+        {renderCopyOrList(config, listItems, tooltips)}
       </div>
 
       {!!relatedConditions?.length && (

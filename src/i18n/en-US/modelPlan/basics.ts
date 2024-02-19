@@ -10,6 +10,10 @@ export const basics: TranslationBasics = {
     label: 'Primary model category',
     dataType: 'enum',
     formType: 'radio',
+    adjacentPositioning: {
+      position: 'left',
+      adjacentField: 'additionalModelCategories'
+    },
     options: {
       ACCOUNTABLE_CARE: 'Accountable Care',
       DISEASE_SPECIFIC_AND_EPISODIC: 'Disease-Specific & Episode-Based',
@@ -43,6 +47,10 @@ export const basics: TranslationBasics = {
       'If your model doesn’t fall into any additional categories, you can skip this.',
     dataType: 'string',
     formType: 'checkbox',
+    adjacentPositioning: {
+      position: 'right',
+      adjacentField: 'modelCategory'
+    },
     options: {
       ACCOUNTABLE_CARE: 'Accountable Care',
       DISEASE_SPECIFIC_AND_EPISODIC: 'Disease-Specific & Episode-Based',
@@ -90,6 +98,10 @@ export const basics: TranslationBasics = {
     label: 'CMS component',
     dataType: 'enum',
     formType: 'checkbox',
+    adjacentPositioning: {
+      position: 'left',
+      adjacentField: 'cmmiGroups'
+    },
     options: {
       CMMI: 'Center for Medicare and Medicaid Innovation (CMMI)',
       CENTER_FOR_CLINICAL_STANDARDS_AND_QUALITY:
@@ -113,6 +125,10 @@ export const basics: TranslationBasics = {
       'You only need to select the CMMI group if CMMI is selected as the main CMS component.',
     dataType: 'enum',
     formType: 'checkbox',
+    adjacentPositioning: {
+      position: 'right',
+      adjacentField: 'cmsCenters'
+    },
     options: {
       PATIENT_CARE_MODELS_GROUP: 'Patient Care Models Group (PCMG)',
       POLICY_AND_PROGRAMS_GROUP: 'Policy and Programs Group (PPG)',
@@ -129,12 +145,15 @@ export const basics: TranslationBasics = {
     dbField: 'model_type',
     label: 'Model Type',
     dataType: 'enum',
-    formType: 'radio',
+    formType: 'checkbox',
     options: {
       VOLUNTARY: 'Voluntary',
       MANDATORY_NATIONAL: 'Mandatory national',
       MANDATORY_REGIONAL_OR_STATE: 'Mandatory regional or state',
       OTHER: 'Other'
+    },
+    optionsRelatedInfo: {
+      OTHER: 'modelTypeOther'
     },
     filterGroups: [
       ModelViewFilter.DFSDM,
@@ -150,6 +169,7 @@ export const basics: TranslationBasics = {
     label: 'Please specify',
     dataType: 'string',
     formType: 'textarea',
+    isOtherType: true,
     filterGroups: [
       ModelViewFilter.DFSDM,
       ModelViewFilter.IPC,
@@ -263,6 +283,10 @@ export const basics: TranslationBasics = {
     label: 'Performance start date',
     dataType: 'date',
     formType: 'datePicker',
+    adjacentPositioning: {
+      position: 'left',
+      adjacentField: 'performancePeriodEnds'
+    },
     filterGroups: [
       ModelViewFilter.CBOSC,
       ModelViewFilter.CCW,
@@ -279,7 +303,15 @@ export const basics: TranslationBasics = {
     label: 'Performance end date',
     dataType: 'date',
     formType: 'datePicker',
-    filterGroups: [ModelViewFilter.IPC]
+    adjacentPositioning: {
+      position: 'right',
+      adjacentField: 'performancePeriodStarts'
+    },
+    filterGroups: [
+      ModelViewFilter.IPC,
+      ModelViewFilter.IDDOC,
+      ModelViewFilter.PBG
+    ]
   },
   highLevelNote: {
     gqlField: 'highLevelNote',
@@ -308,6 +340,7 @@ export const basics: TranslationBasics = {
       'That is, the basic model would start at the earliest possible date but additional facets could be phased in at a later quarter.',
     dataType: 'boolean',
     formType: 'radio',
+    isPageStart: true,
     options: {
       true: 'Yes',
       false: 'No'

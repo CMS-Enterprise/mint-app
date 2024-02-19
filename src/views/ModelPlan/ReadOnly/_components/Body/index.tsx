@@ -15,7 +15,7 @@ const ReadOnlyBody = ({
   filteredView
 }: {
   data: any;
-  config: TranslationPlanSection;
+  config: Partial<TranslationPlanSection>;
   filteredView?: keyof typeof filterGroupKey;
 }) => {
   return (
@@ -32,7 +32,7 @@ const ReadOnlyBody = ({
             })}
           >
             {!filteredView && config[field]?.readonlyHeader && (
-              <h3 className="margin-top-0">{config[field].readonlyHeader}</h3>
+              <h3 className="margin-top-0">{config[field]?.readonlyHeader}</h3>
             )}
 
             {/* Checks if questions have config to be displayed side by side */}
@@ -43,7 +43,8 @@ const ReadOnlyBody = ({
                 {config[field]?.adjacentPositioning?.position === 'left' && (
                   <SideBySideReadOnlySectionNew>
                     <ReadOnlySectionNew
-                      config={config[field]}
+                      field={field}
+                      translations={config}
                       values={data}
                       filteredView={filteredView}
                     />
@@ -53,18 +54,17 @@ const ReadOnlyBody = ({
                     */}
                     {!isHiddenByParentCondition(
                       config[
-                        config[field].adjacentPositioning
+                        config[field]?.adjacentPositioning
                           ?.adjacentField as keyof TranslationPlanSection
                       ],
                       data
                     ) && (
                       <ReadOnlySectionNew
-                        config={
-                          config[
-                            config[field].adjacentPositioning
-                              ?.adjacentField as keyof TranslationPlanSection
-                          ]
+                        field={
+                          config[field]?.adjacentPositioning
+                            ?.adjacentField as keyof TranslationPlanSection
                         }
+                        translations={config}
                         values={data}
                         filteredView={filteredView}
                       />
@@ -77,7 +77,8 @@ const ReadOnlyBody = ({
                 {/* Don't render questions of type 'isOtherType' as they are rendered within ReadOnlySectionNew */}
                 {!config[field]?.isOtherType && (
                   <ReadOnlySectionNew
-                    config={config[field]}
+                    field={field}
+                    translations={config}
                     values={data}
                     filteredView={filteredView}
                   />

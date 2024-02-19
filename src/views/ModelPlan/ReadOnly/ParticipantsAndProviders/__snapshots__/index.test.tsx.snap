@@ -194,11 +194,11 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
           >
             Are the participants in CMMI models now?
           </p>
-          <p
+          <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
           >
             Yes
-          </p>
+          </div>
         </div>
       </div>
     </div>
@@ -295,11 +295,11 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
               >
                 What is your level of confidence on this estimate?
               </p>
-              <p
+              <div
                 class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
               >
                 Fairly confident
-              </p>
+              </div>
             </div>
           </div>
         </div>
@@ -346,11 +346,11 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
           >
             How will you recruit the participants?
           </p>
-          <p
+          <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
           >
             Not applicable
-          </p>
+          </div>
         </div>
       </div>
     </div>
@@ -695,11 +695,11 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
           >
             Will the risk arrangement change as the model progresses?
           </p>
-          <p
+          <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
           >
             Yes
-          </p>
+          </div>
         </div>
       </div>
     </div>
@@ -741,11 +741,11 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
           >
             Will the participants coordinate the work of others?
           </p>
-          <p
+          <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
           >
             Yes
-          </p>
+          </div>
         </div>
       </div>
     </div>
@@ -795,11 +795,11 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
               >
                 Will there be gainsharing payments?
               </p>
-              <p
+              <div
                 class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
               >
                 Yes
-              </p>
+              </div>
             </div>
           </div>
         </div>
@@ -819,11 +819,11 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
               >
                 Will you track gainsharing payments?
               </p>
-              <p
+              <div
                 class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
               >
                 Yes
-              </p>
+              </div>
             </div>
           </div>
         </div>
@@ -1195,11 +1195,11 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
           >
             Will the providers overlap with other models?
           </p>
-          <p
+          <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
           >
             No
-          </p>
+          </div>
         </div>
         <div
           class="usa-alert usa-alert--info usa-alert--no-icon flex margin-bottom-3"
