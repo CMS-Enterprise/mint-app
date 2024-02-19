@@ -1599,6 +1599,11 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
                   >
                     Yes
+                    <span
+                      data-testid="other-entry"
+                    >
+                       - Care description
+                    </span>
                   </div>
                 </div>
               </div>
@@ -8990,6 +8995,11 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                     class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
                   >
                     Yes
+                    <span
+                      data-testid="other-entry"
+                    >
+                       - Care description
+                    </span>
                   </div>
                 </div>
               </div>

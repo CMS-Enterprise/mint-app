@@ -460,6 +460,9 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     options: {
       true: 'Yes',
       false: 'No'
+    },
+    optionsRelatedInfo: {
+      true: 'careCoordinationInvolvedDescription'
     }
   },
   careCoordinationInvolvedDescription: {
