@@ -70,9 +70,18 @@ CREATE TABLE user_notification_preferences (
     modified_by UUID REFERENCES user_account(id),
     modified_dts TIMESTAMP WITH TIME ZONE
 
-)
+);
 
--- //TODO: EASI-3294 Add auditing, probably just the preferences table.
+/* Enable Auditing for new table*/
+SELECT audit.AUDIT_TABLE('public', 'user_notification_preferences', 'id', 'user_id', '{created_by,created_dts,modified_by,modified_dts}'::TEXT[], '{}'::TEXT[]);
 
--- //TODO: EASI-3295 add notification preferences for all existing users in the database
+/* Insert a record for each existing current user*/
+INSERT INTO user_notification_preferences (id, user_id, created_by)
+SELECT
+    GEN_RANDOM_UUID() AS id, -- Generate a new UUID for each record
+    id AS user_id, -- User ID from user_account table
+    '00000001-0001-0001-0001-000000000001' AS created_by --System Account
+FROM
+    user_account;
+
 -- TODO EASI-3295 add comments to the table
