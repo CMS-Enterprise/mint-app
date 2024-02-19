@@ -18,7 +18,6 @@ import (
 	"github.com/cmsgov/mint-app/pkg/authentication"
 	"github.com/cmsgov/mint-app/pkg/graph/model"
 	"github.com/cmsgov/mint-app/pkg/models"
-	"github.com/cmsgov/mint-app/pkg/notifications"
 	"github.com/google/uuid"
 	gqlparser "github.com/vektah/gqlparser/v2"
 	"github.com/vektah/gqlparser/v2/ast"
@@ -1092,7 +1091,7 @@ type AuditChangeResolver interface {
 type CurrentUserResolver interface {
 	LaunchDarkly(ctx context.Context, obj *models.CurrentUser) (*model.LaunchDarklySettings, error)
 	Account(ctx context.Context, obj *models.CurrentUser) (*authentication.UserAccount, error)
-	Notifications(ctx context.Context, obj *models.CurrentUser) (*notifications.UserNotifications, error)
+	Notifications(ctx context.Context, obj *models.CurrentUser) (*models.UserNotifications, error)
 	NotificationPreferences(ctx context.Context, obj *models.CurrentUser) (*models.UserNotificationPreferences, error)
 }
 type DiscussionReplyResolver interface {
@@ -1165,8 +1164,8 @@ type MutationResolver interface {
 	SendFeedbackEmail(ctx context.Context, input model.SendFeedbackEmailInput) (bool, error)
 	UpdatePlanBasics(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanBasics, error)
 	UpdatePlanOpsEvalAndLearning(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanOpsEvalAndLearning, error)
-	MarkNotificationAsRead(ctx context.Context, notificationID uuid.UUID) (*notifications.UserNotification, error)
-	MarkAllNotificationsAsRead(ctx context.Context) ([]*notifications.UserNotification, error)
+	MarkNotificationAsRead(ctx context.Context, notificationID uuid.UUID) (*models.UserNotification, error)
+	MarkAllNotificationsAsRead(ctx context.Context) ([]*models.UserNotification, error)
 	UpdateUserNotificationPreferences(ctx context.Context, changes map[string]interface{}) (*models.UserNotificationPreferences, error)
 }
 type OperationalNeedResolver interface {
@@ -1347,8 +1346,8 @@ type TaggedContentResolver interface {
 	RawContent(ctx context.Context, obj *models.TaggedContent) (string, error)
 }
 type UserNotificationResolver interface {
-	Activity(ctx context.Context, obj *notifications.UserNotification) (*notifications.Activity, error)
-	Content(ctx context.Context, obj *notifications.UserNotification) (models.UserNotificationContent, error)
+	Activity(ctx context.Context, obj *models.UserNotification) (*models.Activity, error)
+	Content(ctx context.Context, obj *models.UserNotification) (models.UserNotificationContent, error)
 }
 
 type executableSchema struct {
@@ -12064,7 +12063,7 @@ func (ec *executionContext) field___Type_fields_args(ctx context.Context, rawArg
 
 // region    **************************** field.gotpl *****************************
 
-func (ec *executionContext) _Activity_id(ctx context.Context, field graphql.CollectedField, obj *notifications.Activity) (ret graphql.Marshaler) {
+func (ec *executionContext) _Activity_id(ctx context.Context, field graphql.CollectedField, obj *models.Activity) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_Activity_id(ctx, field)
 	if err != nil {
 		return graphql.Null
@@ -12108,7 +12107,7 @@ func (ec *executionContext) fieldContext_Activity_id(ctx context.Context, field 
 	return fc, nil
 }
 
-func (ec *executionContext) _Activity_actorID(ctx context.Context, field graphql.CollectedField, obj *notifications.Activity) (ret graphql.Marshaler) {
+func (ec *executionContext) _Activity_actorID(ctx context.Context, field graphql.CollectedField, obj *models.Activity) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_Activity_actorID(ctx, field)
 	if err != nil {
 		return graphql.Null
@@ -12152,7 +12151,7 @@ func (ec *executionContext) fieldContext_Activity_actorID(ctx context.Context, f
 	return fc, nil
 }
 
-func (ec *executionContext) _Activity_entityID(ctx context.Context, field graphql.CollectedField, obj *notifications.Activity) (ret graphql.Marshaler) {
+func (ec *executionContext) _Activity_entityID(ctx context.Context, field graphql.CollectedField, obj *models.Activity) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_Activity_entityID(ctx, field)
 	if err != nil {
 		return graphql.Null
@@ -12196,7 +12195,7 @@ func (ec *executionContext) fieldContext_Activity_entityID(ctx context.Context, 
 	return fc, nil
 }
 
-func (ec *executionContext) _Activity_activityType(ctx context.Context, field graphql.CollectedField, obj *notifications.Activity) (ret graphql.Marshaler) {
+func (ec *executionContext) _Activity_activityType(ctx context.Context, field graphql.CollectedField, obj *models.Activity) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_Activity_activityType(ctx, field)
 	if err != nil {
 		return graphql.Null
@@ -12222,9 +12221,9 @@ func (ec *executionContext) _Activity_activityType(ctx context.Context, field gr
 		}
 		return graphql.Null
 	}
-	res := resTmp.(notifications.ActivityType)
+	res := resTmp.(models.ActivityType)
 	fc.Result = res
-	return ec.marshalNActivityType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋnotificationsᚐActivityType(ctx, field.Selections, res)
+	return ec.marshalNActivityType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐActivityType(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Activity_activityType(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -12240,7 +12239,7 @@ func (ec *executionContext) fieldContext_Activity_activityType(ctx context.Conte
 	return fc, nil
 }
 
-func (ec *executionContext) _Activity_metaData(ctx context.Context, field graphql.CollectedField, obj *notifications.Activity) (ret graphql.Marshaler) {
+func (ec *executionContext) _Activity_metaData(ctx context.Context, field graphql.CollectedField, obj *models.Activity) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_Activity_metaData(ctx, field)
 	if err != nil {
 		return graphql.Null
@@ -12266,9 +12265,9 @@ func (ec *executionContext) _Activity_metaData(ctx context.Context, field graphq
 		}
 		return graphql.Null
 	}
-	res := resTmp.(notifications.ActivityMetaData)
+	res := resTmp.(models.ActivityMetaData)
 	fc.Result = res
-	return ec.marshalNActivityMetaData2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋnotificationsᚐActivityMetaData(ctx, field.Selections, res)
+	return ec.marshalNActivityMetaData2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐActivityMetaData(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Activity_metaData(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -12284,7 +12283,7 @@ func (ec *executionContext) fieldContext_Activity_metaData(ctx context.Context, 
 	return fc, nil
 }
 
-func (ec *executionContext) _Activity_createdBy(ctx context.Context, field graphql.CollectedField, obj *notifications.Activity) (ret graphql.Marshaler) {
+func (ec *executionContext) _Activity_createdBy(ctx context.Context, field graphql.CollectedField, obj *models.Activity) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_Activity_createdBy(ctx, field)
 	if err != nil {
 		return graphql.Null
@@ -12328,7 +12327,7 @@ func (ec *executionContext) fieldContext_Activity_createdBy(ctx context.Context,
 	return fc, nil
 }
 
-func (ec *executionContext) _Activity_createdByUserAccount(ctx context.Context, field graphql.CollectedField, obj *notifications.Activity) (ret graphql.Marshaler) {
+func (ec *executionContext) _Activity_createdByUserAccount(ctx context.Context, field graphql.CollectedField, obj *models.Activity) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_Activity_createdByUserAccount(ctx, field)
 	if err != nil {
 		return graphql.Null
@@ -12394,7 +12393,7 @@ func (ec *executionContext) fieldContext_Activity_createdByUserAccount(ctx conte
 	return fc, nil
 }
 
-func (ec *executionContext) _Activity_createdDts(ctx context.Context, field graphql.CollectedField, obj *notifications.Activity) (ret graphql.Marshaler) {
+func (ec *executionContext) _Activity_createdDts(ctx context.Context, field graphql.CollectedField, obj *models.Activity) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_Activity_createdDts(ctx, field)
 	if err != nil {
 		return graphql.Null
@@ -12438,7 +12437,7 @@ func (ec *executionContext) fieldContext_Activity_createdDts(ctx context.Context
 	return fc, nil
 }
 
-func (ec *executionContext) _Activity_modifiedBy(ctx context.Context, field graphql.CollectedField, obj *notifications.Activity) (ret graphql.Marshaler) {
+func (ec *executionContext) _Activity_modifiedBy(ctx context.Context, field graphql.CollectedField, obj *models.Activity) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_Activity_modifiedBy(ctx, field)
 	if err != nil {
 		return graphql.Null
@@ -12479,7 +12478,7 @@ func (ec *executionContext) fieldContext_Activity_modifiedBy(ctx context.Context
 	return fc, nil
 }
 
-func (ec *executionContext) _Activity_modifiedByUserAccount(ctx context.Context, field graphql.CollectedField, obj *notifications.Activity) (ret graphql.Marshaler) {
+func (ec *executionContext) _Activity_modifiedByUserAccount(ctx context.Context, field graphql.CollectedField, obj *models.Activity) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_Activity_modifiedByUserAccount(ctx, field)
 	if err != nil {
 		return graphql.Null
@@ -12542,7 +12541,7 @@ func (ec *executionContext) fieldContext_Activity_modifiedByUserAccount(ctx cont
 	return fc, nil
 }
 
-func (ec *executionContext) _Activity_modifiedDts(ctx context.Context, field graphql.CollectedField, obj *notifications.Activity) (ret graphql.Marshaler) {
+func (ec *executionContext) _Activity_modifiedDts(ctx context.Context, field graphql.CollectedField, obj *models.Activity) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_Activity_modifiedDts(ctx, field)
 	if err != nil {
 		return graphql.Null
@@ -12583,7 +12582,7 @@ func (ec *executionContext) fieldContext_Activity_modifiedDts(ctx context.Contex
 	return fc, nil
 }
 
-func (ec *executionContext) _ActivityMetaBaseStruct_version(ctx context.Context, field graphql.CollectedField, obj *notifications.ActivityMetaBaseStruct) (ret graphql.Marshaler) {
+func (ec *executionContext) _ActivityMetaBaseStruct_version(ctx context.Context, field graphql.CollectedField, obj *models.ActivityMetaBaseStruct) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_ActivityMetaBaseStruct_version(ctx, field)
 	if err != nil {
 		return graphql.Null
@@ -12627,7 +12626,7 @@ func (ec *executionContext) fieldContext_ActivityMetaBaseStruct_version(ctx cont
 	return fc, nil
 }
 
-func (ec *executionContext) _ActivityMetaBaseStruct_type(ctx context.Context, field graphql.CollectedField, obj *notifications.ActivityMetaBaseStruct) (ret graphql.Marshaler) {
+func (ec *executionContext) _ActivityMetaBaseStruct_type(ctx context.Context, field graphql.CollectedField, obj *models.ActivityMetaBaseStruct) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_ActivityMetaBaseStruct_type(ctx, field)
 	if err != nil {
 		return graphql.Null
@@ -12653,9 +12652,9 @@ func (ec *executionContext) _ActivityMetaBaseStruct_type(ctx context.Context, fi
 		}
 		return graphql.Null
 	}
-	res := resTmp.(notifications.ActivityType)
+	res := resTmp.(models.ActivityType)
 	fc.Result = res
-	return ec.marshalNActivityType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋnotificationsᚐActivityType(ctx, field.Selections, res)
+	return ec.marshalNActivityType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐActivityType(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_ActivityMetaBaseStruct_type(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -13219,9 +13218,9 @@ func (ec *executionContext) _CurrentUser_notifications(ctx context.Context, fiel
 		}
 		return graphql.Null
 	}
-	res := resTmp.(*notifications.UserNotifications)
+	res := resTmp.(*models.UserNotifications)
 	fc.Result = res
-	return ec.marshalNUserNotifications2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋnotificationsᚐUserNotifications(ctx, field.Selections, res)
+	return ec.marshalNUserNotifications2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐUserNotifications(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_CurrentUser_notifications(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -22969,9 +22968,9 @@ func (ec *executionContext) _Mutation_markNotificationAsRead(ctx context.Context
 		}
 		return graphql.Null
 	}
-	res := resTmp.(*notifications.UserNotification)
+	res := resTmp.(*models.UserNotification)
 	fc.Result = res
-	return ec.marshalNUserNotification2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋnotificationsᚐUserNotification(ctx, field.Selections, res)
+	return ec.marshalNUserNotification2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐUserNotification(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Mutation_markNotificationAsRead(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -23054,9 +23053,9 @@ func (ec *executionContext) _Mutation_markAllNotificationsAsRead(ctx context.Con
 		}
 		return graphql.Null
 	}
-	res := resTmp.([]*notifications.UserNotification)
+	res := resTmp.([]*models.UserNotification)
 	fc.Result = res
-	return ec.marshalNUserNotification2ᚕᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋnotificationsᚐUserNotificationᚄ(ctx, field.Selections, res)
+	return ec.marshalNUserNotification2ᚕᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐUserNotificationᚄ(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Mutation_markAllNotificationsAsRead(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -54119,7 +54118,7 @@ func (ec *executionContext) fieldContext_TaggedContent_tags(ctx context.Context,
 	return fc, nil
 }
 
-func (ec *executionContext) _TaggedInDiscussionReplyActivityMeta_version(ctx context.Context, field graphql.CollectedField, obj *notifications.TaggedInDiscussionReplyActivityMeta) (ret graphql.Marshaler) {
+func (ec *executionContext) _TaggedInDiscussionReplyActivityMeta_version(ctx context.Context, field graphql.CollectedField, obj *models.TaggedInDiscussionReplyActivityMeta) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_TaggedInDiscussionReplyActivityMeta_version(ctx, field)
 	if err != nil {
 		return graphql.Null
@@ -54163,7 +54162,7 @@ func (ec *executionContext) fieldContext_TaggedInDiscussionReplyActivityMeta_ver
 	return fc, nil
 }
 
-func (ec *executionContext) _TaggedInDiscussionReplyActivityMeta_type(ctx context.Context, field graphql.CollectedField, obj *notifications.TaggedInDiscussionReplyActivityMeta) (ret graphql.Marshaler) {
+func (ec *executionContext) _TaggedInDiscussionReplyActivityMeta_type(ctx context.Context, field graphql.CollectedField, obj *models.TaggedInDiscussionReplyActivityMeta) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_TaggedInDiscussionReplyActivityMeta_type(ctx, field)
 	if err != nil {
 		return graphql.Null
@@ -54189,9 +54188,9 @@ func (ec *executionContext) _TaggedInDiscussionReplyActivityMeta_type(ctx contex
 		}
 		return graphql.Null
 	}
-	res := resTmp.(notifications.ActivityType)
+	res := resTmp.(models.ActivityType)
 	fc.Result = res
-	return ec.marshalNActivityType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋnotificationsᚐActivityType(ctx, field.Selections, res)
+	return ec.marshalNActivityType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐActivityType(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_TaggedInDiscussionReplyActivityMeta_type(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -54207,7 +54206,7 @@ func (ec *executionContext) fieldContext_TaggedInDiscussionReplyActivityMeta_typ
 	return fc, nil
 }
 
-func (ec *executionContext) _TaggedInDiscussionReplyActivityMeta_discussionID(ctx context.Context, field graphql.CollectedField, obj *notifications.TaggedInDiscussionReplyActivityMeta) (ret graphql.Marshaler) {
+func (ec *executionContext) _TaggedInDiscussionReplyActivityMeta_discussionID(ctx context.Context, field graphql.CollectedField, obj *models.TaggedInDiscussionReplyActivityMeta) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_TaggedInDiscussionReplyActivityMeta_discussionID(ctx, field)
 	if err != nil {
 		return graphql.Null
@@ -54251,7 +54250,7 @@ func (ec *executionContext) fieldContext_TaggedInDiscussionReplyActivityMeta_dis
 	return fc, nil
 }
 
-func (ec *executionContext) _TaggedInDiscussionReplyActivityMeta_replyID(ctx context.Context, field graphql.CollectedField, obj *notifications.TaggedInDiscussionReplyActivityMeta) (ret graphql.Marshaler) {
+func (ec *executionContext) _TaggedInDiscussionReplyActivityMeta_replyID(ctx context.Context, field graphql.CollectedField, obj *models.TaggedInDiscussionReplyActivityMeta) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_TaggedInDiscussionReplyActivityMeta_replyID(ctx, field)
 	if err != nil {
 		return graphql.Null
@@ -54295,7 +54294,7 @@ func (ec *executionContext) fieldContext_TaggedInDiscussionReplyActivityMeta_rep
 	return fc, nil
 }
 
-func (ec *executionContext) _TaggedInDiscussionReplyActivityMeta_content(ctx context.Context, field graphql.CollectedField, obj *notifications.TaggedInDiscussionReplyActivityMeta) (ret graphql.Marshaler) {
+func (ec *executionContext) _TaggedInDiscussionReplyActivityMeta_content(ctx context.Context, field graphql.CollectedField, obj *models.TaggedInDiscussionReplyActivityMeta) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_TaggedInDiscussionReplyActivityMeta_content(ctx, field)
 	if err != nil {
 		return graphql.Null
@@ -54339,7 +54338,7 @@ func (ec *executionContext) fieldContext_TaggedInDiscussionReplyActivityMeta_con
 	return fc, nil
 }
 
-func (ec *executionContext) _TaggedInPlanDiscussionActivityMeta_version(ctx context.Context, field graphql.CollectedField, obj *notifications.TaggedInPlanDiscussionActivityMeta) (ret graphql.Marshaler) {
+func (ec *executionContext) _TaggedInPlanDiscussionActivityMeta_version(ctx context.Context, field graphql.CollectedField, obj *models.TaggedInPlanDiscussionActivityMeta) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_TaggedInPlanDiscussionActivityMeta_version(ctx, field)
 	if err != nil {
 		return graphql.Null
@@ -54383,7 +54382,7 @@ func (ec *executionContext) fieldContext_TaggedInPlanDiscussionActivityMeta_vers
 	return fc, nil
 }
 
-func (ec *executionContext) _TaggedInPlanDiscussionActivityMeta_type(ctx context.Context, field graphql.CollectedField, obj *notifications.TaggedInPlanDiscussionActivityMeta) (ret graphql.Marshaler) {
+func (ec *executionContext) _TaggedInPlanDiscussionActivityMeta_type(ctx context.Context, field graphql.CollectedField, obj *models.TaggedInPlanDiscussionActivityMeta) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_TaggedInPlanDiscussionActivityMeta_type(ctx, field)
 	if err != nil {
 		return graphql.Null
@@ -54409,9 +54408,9 @@ func (ec *executionContext) _TaggedInPlanDiscussionActivityMeta_type(ctx context
 		}
 		return graphql.Null
 	}
-	res := resTmp.(notifications.ActivityType)
+	res := resTmp.(models.ActivityType)
 	fc.Result = res
-	return ec.marshalNActivityType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋnotificationsᚐActivityType(ctx, field.Selections, res)
+	return ec.marshalNActivityType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐActivityType(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_TaggedInPlanDiscussionActivityMeta_type(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -54427,7 +54426,7 @@ func (ec *executionContext) fieldContext_TaggedInPlanDiscussionActivityMeta_type
 	return fc, nil
 }
 
-func (ec *executionContext) _TaggedInPlanDiscussionActivityMeta_discussionID(ctx context.Context, field graphql.CollectedField, obj *notifications.TaggedInPlanDiscussionActivityMeta) (ret graphql.Marshaler) {
+func (ec *executionContext) _TaggedInPlanDiscussionActivityMeta_discussionID(ctx context.Context, field graphql.CollectedField, obj *models.TaggedInPlanDiscussionActivityMeta) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_TaggedInPlanDiscussionActivityMeta_discussionID(ctx, field)
 	if err != nil {
 		return graphql.Null
@@ -54471,7 +54470,7 @@ func (ec *executionContext) fieldContext_TaggedInPlanDiscussionActivityMeta_disc
 	return fc, nil
 }
 
-func (ec *executionContext) _TaggedInPlanDiscussionActivityMeta_content(ctx context.Context, field graphql.CollectedField, obj *notifications.TaggedInPlanDiscussionActivityMeta) (ret graphql.Marshaler) {
+func (ec *executionContext) _TaggedInPlanDiscussionActivityMeta_content(ctx context.Context, field graphql.CollectedField, obj *models.TaggedInPlanDiscussionActivityMeta) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_TaggedInPlanDiscussionActivityMeta_content(ctx, field)
 	if err != nil {
 		return graphql.Null
@@ -55509,7 +55508,7 @@ func (ec *executionContext) fieldContext_UserInfo_username(ctx context.Context, 
 	return fc, nil
 }
 
-func (ec *executionContext) _UserNotification_id(ctx context.Context, field graphql.CollectedField, obj *notifications.UserNotification) (ret graphql.Marshaler) {
+func (ec *executionContext) _UserNotification_id(ctx context.Context, field graphql.CollectedField, obj *models.UserNotification) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_UserNotification_id(ctx, field)
 	if err != nil {
 		return graphql.Null
@@ -55553,7 +55552,7 @@ func (ec *executionContext) fieldContext_UserNotification_id(ctx context.Context
 	return fc, nil
 }
 
-func (ec *executionContext) _UserNotification_activityID(ctx context.Context, field graphql.CollectedField, obj *notifications.UserNotification) (ret graphql.Marshaler) {
+func (ec *executionContext) _UserNotification_activityID(ctx context.Context, field graphql.CollectedField, obj *models.UserNotification) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_UserNotification_activityID(ctx, field)
 	if err != nil {
 		return graphql.Null
@@ -55597,7 +55596,7 @@ func (ec *executionContext) fieldContext_UserNotification_activityID(ctx context
 	return fc, nil
 }
 
-func (ec *executionContext) _UserNotification_userID(ctx context.Context, field graphql.CollectedField, obj *notifications.UserNotification) (ret graphql.Marshaler) {
+func (ec *executionContext) _UserNotification_userID(ctx context.Context, field graphql.CollectedField, obj *models.UserNotification) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_UserNotification_userID(ctx, field)
 	if err != nil {
 		return graphql.Null
@@ -55641,7 +55640,7 @@ func (ec *executionContext) fieldContext_UserNotification_userID(ctx context.Con
 	return fc, nil
 }
 
-func (ec *executionContext) _UserNotification_isRead(ctx context.Context, field graphql.CollectedField, obj *notifications.UserNotification) (ret graphql.Marshaler) {
+func (ec *executionContext) _UserNotification_isRead(ctx context.Context, field graphql.CollectedField, obj *models.UserNotification) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_UserNotification_isRead(ctx, field)
 	if err != nil {
 		return graphql.Null
@@ -55685,7 +55684,7 @@ func (ec *executionContext) fieldContext_UserNotification_isRead(ctx context.Con
 	return fc, nil
 }
 
-func (ec *executionContext) _UserNotification_isArchived(ctx context.Context, field graphql.CollectedField, obj *notifications.UserNotification) (ret graphql.Marshaler) {
+func (ec *executionContext) _UserNotification_isArchived(ctx context.Context, field graphql.CollectedField, obj *models.UserNotification) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_UserNotification_isArchived(ctx, field)
 	if err != nil {
 		return graphql.Null
@@ -55729,7 +55728,7 @@ func (ec *executionContext) fieldContext_UserNotification_isArchived(ctx context
 	return fc, nil
 }
 
-func (ec *executionContext) _UserNotification_emailSent(ctx context.Context, field graphql.CollectedField, obj *notifications.UserNotification) (ret graphql.Marshaler) {
+func (ec *executionContext) _UserNotification_emailSent(ctx context.Context, field graphql.CollectedField, obj *models.UserNotification) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_UserNotification_emailSent(ctx, field)
 	if err != nil {
 		return graphql.Null
@@ -55773,7 +55772,7 @@ func (ec *executionContext) fieldContext_UserNotification_emailSent(ctx context.
 	return fc, nil
 }
 
-func (ec *executionContext) _UserNotification_activity(ctx context.Context, field graphql.CollectedField, obj *notifications.UserNotification) (ret graphql.Marshaler) {
+func (ec *executionContext) _UserNotification_activity(ctx context.Context, field graphql.CollectedField, obj *models.UserNotification) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_UserNotification_activity(ctx, field)
 	if err != nil {
 		return graphql.Null
@@ -55799,9 +55798,9 @@ func (ec *executionContext) _UserNotification_activity(ctx context.Context, fiel
 		}
 		return graphql.Null
 	}
-	res := resTmp.(*notifications.Activity)
+	res := resTmp.(*models.Activity)
 	fc.Result = res
-	return ec.marshalNActivity2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋnotificationsᚐActivity(ctx, field.Selections, res)
+	return ec.marshalNActivity2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐActivity(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_UserNotification_activity(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -55841,7 +55840,7 @@ func (ec *executionContext) fieldContext_UserNotification_activity(ctx context.C
 	return fc, nil
 }
 
-func (ec *executionContext) _UserNotification_content(ctx context.Context, field graphql.CollectedField, obj *notifications.UserNotification) (ret graphql.Marshaler) {
+func (ec *executionContext) _UserNotification_content(ctx context.Context, field graphql.CollectedField, obj *models.UserNotification) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_UserNotification_content(ctx, field)
 	if err != nil {
 		return graphql.Null
@@ -55885,7 +55884,7 @@ func (ec *executionContext) fieldContext_UserNotification_content(ctx context.Co
 	return fc, nil
 }
 
-func (ec *executionContext) _UserNotification_createdBy(ctx context.Context, field graphql.CollectedField, obj *notifications.UserNotification) (ret graphql.Marshaler) {
+func (ec *executionContext) _UserNotification_createdBy(ctx context.Context, field graphql.CollectedField, obj *models.UserNotification) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_UserNotification_createdBy(ctx, field)
 	if err != nil {
 		return graphql.Null
@@ -55929,7 +55928,7 @@ func (ec *executionContext) fieldContext_UserNotification_createdBy(ctx context.
 	return fc, nil
 }
 
-func (ec *executionContext) _UserNotification_createdByUserAccount(ctx context.Context, field graphql.CollectedField, obj *notifications.UserNotification) (ret graphql.Marshaler) {
+func (ec *executionContext) _UserNotification_createdByUserAccount(ctx context.Context, field graphql.CollectedField, obj *models.UserNotification) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_UserNotification_createdByUserAccount(ctx, field)
 	if err != nil {
 		return graphql.Null
@@ -55995,7 +55994,7 @@ func (ec *executionContext) fieldContext_UserNotification_createdByUserAccount(c
 	return fc, nil
 }
 
-func (ec *executionContext) _UserNotification_createdDts(ctx context.Context, field graphql.CollectedField, obj *notifications.UserNotification) (ret graphql.Marshaler) {
+func (ec *executionContext) _UserNotification_createdDts(ctx context.Context, field graphql.CollectedField, obj *models.UserNotification) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_UserNotification_createdDts(ctx, field)
 	if err != nil {
 		return graphql.Null
@@ -56039,7 +56038,7 @@ func (ec *executionContext) fieldContext_UserNotification_createdDts(ctx context
 	return fc, nil
 }
 
-func (ec *executionContext) _UserNotification_modifiedBy(ctx context.Context, field graphql.CollectedField, obj *notifications.UserNotification) (ret graphql.Marshaler) {
+func (ec *executionContext) _UserNotification_modifiedBy(ctx context.Context, field graphql.CollectedField, obj *models.UserNotification) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_UserNotification_modifiedBy(ctx, field)
 	if err != nil {
 		return graphql.Null
@@ -56080,7 +56079,7 @@ func (ec *executionContext) fieldContext_UserNotification_modifiedBy(ctx context
 	return fc, nil
 }
 
-func (ec *executionContext) _UserNotification_modifiedByUserAccount(ctx context.Context, field graphql.CollectedField, obj *notifications.UserNotification) (ret graphql.Marshaler) {
+func (ec *executionContext) _UserNotification_modifiedByUserAccount(ctx context.Context, field graphql.CollectedField, obj *models.UserNotification) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_UserNotification_modifiedByUserAccount(ctx, field)
 	if err != nil {
 		return graphql.Null
@@ -56143,7 +56142,7 @@ func (ec *executionContext) fieldContext_UserNotification_modifiedByUserAccount(
 	return fc, nil
 }
 
-func (ec *executionContext) _UserNotification_modifiedDts(ctx context.Context, field graphql.CollectedField, obj *notifications.UserNotification) (ret graphql.Marshaler) {
+func (ec *executionContext) _UserNotification_modifiedDts(ctx context.Context, field graphql.CollectedField, obj *models.UserNotification) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_UserNotification_modifiedDts(ctx, field)
 	if err != nil {
 		return graphql.Null
@@ -56835,7 +56834,7 @@ func (ec *executionContext) fieldContext_UserNotificationPreferences_modifiedDts
 	return fc, nil
 }
 
-func (ec *executionContext) _UserNotifications_numUnreadNotifications(ctx context.Context, field graphql.CollectedField, obj *notifications.UserNotifications) (ret graphql.Marshaler) {
+func (ec *executionContext) _UserNotifications_numUnreadNotifications(ctx context.Context, field graphql.CollectedField, obj *models.UserNotifications) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_UserNotifications_numUnreadNotifications(ctx, field)
 	if err != nil {
 		return graphql.Null
@@ -56879,7 +56878,7 @@ func (ec *executionContext) fieldContext_UserNotifications_numUnreadNotification
 	return fc, nil
 }
 
-func (ec *executionContext) _UserNotifications_notifications(ctx context.Context, field graphql.CollectedField, obj *notifications.UserNotifications) (ret graphql.Marshaler) {
+func (ec *executionContext) _UserNotifications_notifications(ctx context.Context, field graphql.CollectedField, obj *models.UserNotifications) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_UserNotifications_notifications(ctx, field)
 	if err != nil {
 		return graphql.Null
@@ -56905,9 +56904,9 @@ func (ec *executionContext) _UserNotifications_notifications(ctx context.Context
 		}
 		return graphql.Null
 	}
-	res := resTmp.([]*notifications.UserNotification)
+	res := resTmp.([]*models.UserNotification)
 	fc.Result = res
-	return ec.marshalNUserNotification2ᚕᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋnotificationsᚐUserNotificationᚄ(ctx, field.Selections, res)
+	return ec.marshalNUserNotification2ᚕᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐUserNotificationᚄ(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_UserNotifications_notifications(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -56953,7 +56952,7 @@ func (ec *executionContext) fieldContext_UserNotifications_notifications(ctx con
 	return fc, nil
 }
 
-func (ec *executionContext) _UserNotifications_unreadNotifications(ctx context.Context, field graphql.CollectedField, obj *notifications.UserNotifications) (ret graphql.Marshaler) {
+func (ec *executionContext) _UserNotifications_unreadNotifications(ctx context.Context, field graphql.CollectedField, obj *models.UserNotifications) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_UserNotifications_unreadNotifications(ctx, field)
 	if err != nil {
 		return graphql.Null
@@ -56979,9 +56978,9 @@ func (ec *executionContext) _UserNotifications_unreadNotifications(ctx context.C
 		}
 		return graphql.Null
 	}
-	res := resTmp.([]*notifications.UserNotification)
+	res := resTmp.([]*models.UserNotification)
 	fc.Result = res
-	return ec.marshalNUserNotification2ᚕᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋnotificationsᚐUserNotificationᚄ(ctx, field.Selections, res)
+	return ec.marshalNUserNotification2ᚕᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐUserNotificationᚄ(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_UserNotifications_unreadNotifications(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -59528,21 +59527,21 @@ func (ec *executionContext) unmarshalInputUpdateOperationalSolutionSubtaskInput(
 
 // region    ************************** interface.gotpl ***************************
 
-func (ec *executionContext) _ActivityMetaData(ctx context.Context, sel ast.SelectionSet, obj notifications.ActivityMetaData) graphql.Marshaler {
+func (ec *executionContext) _ActivityMetaData(ctx context.Context, sel ast.SelectionSet, obj models.ActivityMetaData) graphql.Marshaler {
 	switch obj := (obj).(type) {
 	case nil:
 		return graphql.Null
-	case *notifications.ActivityMetaBaseStruct:
+	case *models.ActivityMetaBaseStruct:
 		if obj == nil {
 			return graphql.Null
 		}
 		return ec._ActivityMetaBaseStruct(ctx, sel, obj)
-	case *notifications.TaggedInPlanDiscussionActivityMeta:
+	case *models.TaggedInPlanDiscussionActivityMeta:
 		if obj == nil {
 			return graphql.Null
 		}
 		return ec._TaggedInPlanDiscussionActivityMeta(ctx, sel, obj)
-	case *notifications.TaggedInDiscussionReplyActivityMeta:
+	case *models.TaggedInDiscussionReplyActivityMeta:
 		if obj == nil {
 			return graphql.Null
 		}
@@ -59627,7 +59626,7 @@ func (ec *executionContext) _UserNotificationContent(ctx context.Context, sel as
 
 var activityImplementors = []string{"Activity"}
 
-func (ec *executionContext) _Activity(ctx context.Context, sel ast.SelectionSet, obj *notifications.Activity) graphql.Marshaler {
+func (ec *executionContext) _Activity(ctx context.Context, sel ast.SelectionSet, obj *models.Activity) graphql.Marshaler {
 	fields := graphql.CollectFields(ec.OperationContext, sel, activityImplementors)
 
 	out := graphql.NewFieldSet(fields)
@@ -59769,7 +59768,7 @@ func (ec *executionContext) _Activity(ctx context.Context, sel ast.SelectionSet,
 
 var activityMetaBaseStructImplementors = []string{"ActivityMetaBaseStruct", "ActivityMetaData"}
 
-func (ec *executionContext) _ActivityMetaBaseStruct(ctx context.Context, sel ast.SelectionSet, obj *notifications.ActivityMetaBaseStruct) graphql.Marshaler {
+func (ec *executionContext) _ActivityMetaBaseStruct(ctx context.Context, sel ast.SelectionSet, obj *models.ActivityMetaBaseStruct) graphql.Marshaler {
 	fields := graphql.CollectFields(ec.OperationContext, sel, activityMetaBaseStructImplementors)
 
 	out := graphql.NewFieldSet(fields)
@@ -68945,7 +68944,7 @@ func (ec *executionContext) _TaggedContent(ctx context.Context, sel ast.Selectio
 
 var taggedInDiscussionReplyActivityMetaImplementors = []string{"TaggedInDiscussionReplyActivityMeta", "ActivityMetaData"}
 
-func (ec *executionContext) _TaggedInDiscussionReplyActivityMeta(ctx context.Context, sel ast.SelectionSet, obj *notifications.TaggedInDiscussionReplyActivityMeta) graphql.Marshaler {
+func (ec *executionContext) _TaggedInDiscussionReplyActivityMeta(ctx context.Context, sel ast.SelectionSet, obj *models.TaggedInDiscussionReplyActivityMeta) graphql.Marshaler {
 	fields := graphql.CollectFields(ec.OperationContext, sel, taggedInDiscussionReplyActivityMetaImplementors)
 
 	out := graphql.NewFieldSet(fields)
@@ -69004,7 +69003,7 @@ func (ec *executionContext) _TaggedInDiscussionReplyActivityMeta(ctx context.Con
 
 var taggedInPlanDiscussionActivityMetaImplementors = []string{"TaggedInPlanDiscussionActivityMeta", "ActivityMetaData"}
 
-func (ec *executionContext) _TaggedInPlanDiscussionActivityMeta(ctx context.Context, sel ast.SelectionSet, obj *notifications.TaggedInPlanDiscussionActivityMeta) graphql.Marshaler {
+func (ec *executionContext) _TaggedInPlanDiscussionActivityMeta(ctx context.Context, sel ast.SelectionSet, obj *models.TaggedInPlanDiscussionActivityMeta) graphql.Marshaler {
 	fields := graphql.CollectFields(ec.OperationContext, sel, taggedInPlanDiscussionActivityMetaImplementors)
 
 	out := graphql.NewFieldSet(fields)
@@ -69298,7 +69297,7 @@ func (ec *executionContext) _UserInfo(ctx context.Context, sel ast.SelectionSet,
 
 var userNotificationImplementors = []string{"UserNotification"}
 
-func (ec *executionContext) _UserNotification(ctx context.Context, sel ast.SelectionSet, obj *notifications.UserNotification) graphql.Marshaler {
+func (ec *executionContext) _UserNotification(ctx context.Context, sel ast.SelectionSet, obj *models.UserNotification) graphql.Marshaler {
 	fields := graphql.CollectFields(ec.OperationContext, sel, userNotificationImplementors)
 
 	out := graphql.NewFieldSet(fields)
@@ -69674,7 +69673,7 @@ func (ec *executionContext) _UserNotificationPreferences(ctx context.Context, se
 
 var userNotificationsImplementors = []string{"UserNotifications"}
 
-func (ec *executionContext) _UserNotifications(ctx context.Context, sel ast.SelectionSet, obj *notifications.UserNotifications) graphql.Marshaler {
+func (ec *executionContext) _UserNotifications(ctx context.Context, sel ast.SelectionSet, obj *models.UserNotifications) graphql.Marshaler {
 	fields := graphql.CollectFields(ec.OperationContext, sel, userNotificationsImplementors)
 
 	out := graphql.NewFieldSet(fields)
@@ -70057,11 +70056,11 @@ func (ec *executionContext) marshalNActionType2githubᚗcomᚋcmsgovᚋmintᚑap
 	return v
 }
 
-func (ec *executionContext) marshalNActivity2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋnotificationsᚐActivity(ctx context.Context, sel ast.SelectionSet, v notifications.Activity) graphql.Marshaler {
+func (ec *executionContext) marshalNActivity2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐActivity(ctx context.Context, sel ast.SelectionSet, v models.Activity) graphql.Marshaler {
 	return ec._Activity(ctx, sel, &v)
 }
 
-func (ec *executionContext) marshalNActivity2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋnotificationsᚐActivity(ctx context.Context, sel ast.SelectionSet, v *notifications.Activity) graphql.Marshaler {
+func (ec *executionContext) marshalNActivity2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐActivity(ctx context.Context, sel ast.SelectionSet, v *models.Activity) graphql.Marshaler {
 	if v == nil {
 		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
 			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
@@ -70071,7 +70070,7 @@ func (ec *executionContext) marshalNActivity2ᚖgithubᚗcomᚋcmsgovᚋmintᚑa
 	return ec._Activity(ctx, sel, v)
 }
 
-func (ec *executionContext) marshalNActivityMetaData2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋnotificationsᚐActivityMetaData(ctx context.Context, sel ast.SelectionSet, v notifications.ActivityMetaData) graphql.Marshaler {
+func (ec *executionContext) marshalNActivityMetaData2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐActivityMetaData(ctx context.Context, sel ast.SelectionSet, v models.ActivityMetaData) graphql.Marshaler {
 	if v == nil {
 		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
 			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
@@ -70081,13 +70080,13 @@ func (ec *executionContext) marshalNActivityMetaData2githubᚗcomᚋcmsgovᚋmin
 	return ec._ActivityMetaData(ctx, sel, v)
 }
 
-func (ec *executionContext) unmarshalNActivityType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋnotificationsᚐActivityType(ctx context.Context, v interface{}) (notifications.ActivityType, error) {
+func (ec *executionContext) unmarshalNActivityType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐActivityType(ctx context.Context, v interface{}) (models.ActivityType, error) {
 	tmp, err := graphql.UnmarshalString(v)
-	res := notifications.ActivityType(tmp)
+	res := models.ActivityType(tmp)
 	return res, graphql.ErrorOnPath(ctx, err)
 }
 
-func (ec *executionContext) marshalNActivityType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋnotificationsᚐActivityType(ctx context.Context, sel ast.SelectionSet, v notifications.ActivityType) graphql.Marshaler {
+func (ec *executionContext) marshalNActivityType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐActivityType(ctx context.Context, sel ast.SelectionSet, v models.ActivityType) graphql.Marshaler {
 	res := graphql.MarshalString(string(v))
 	if res == graphql.Null {
 		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
@@ -74827,11 +74826,11 @@ func (ec *executionContext) marshalNUserInfo2ᚖgithubᚗcomᚋcmsgovᚋmintᚑa
 	return ec._UserInfo(ctx, sel, v)
 }
 
-func (ec *executionContext) marshalNUserNotification2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋnotificationsᚐUserNotification(ctx context.Context, sel ast.SelectionSet, v notifications.UserNotification) graphql.Marshaler {
+func (ec *executionContext) marshalNUserNotification2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐUserNotification(ctx context.Context, sel ast.SelectionSet, v models.UserNotification) graphql.Marshaler {
 	return ec._UserNotification(ctx, sel, &v)
 }
 
-func (ec *executionContext) marshalNUserNotification2ᚕᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋnotificationsᚐUserNotificationᚄ(ctx context.Context, sel ast.SelectionSet, v []*notifications.UserNotification) graphql.Marshaler {
+func (ec *executionContext) marshalNUserNotification2ᚕᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐUserNotificationᚄ(ctx context.Context, sel ast.SelectionSet, v []*models.UserNotification) graphql.Marshaler {
 	ret := make(graphql.Array, len(v))
 	var wg sync.WaitGroup
 	isLen1 := len(v) == 1
@@ -74855,7 +74854,7 @@ func (ec *executionContext) marshalNUserNotification2ᚕᚖgithubᚗcomᚋcmsgov
 			if !isLen1 {
 				defer wg.Done()
 			}
-			ret[i] = ec.marshalNUserNotification2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋnotificationsᚐUserNotification(ctx, sel, v[i])
+			ret[i] = ec.marshalNUserNotification2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐUserNotification(ctx, sel, v[i])
 		}
 		if isLen1 {
 			f(i)
@@ -74875,7 +74874,7 @@ func (ec *executionContext) marshalNUserNotification2ᚕᚖgithubᚗcomᚋcmsgov
 	return ret
 }
 
-func (ec *executionContext) marshalNUserNotification2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋnotificationsᚐUserNotification(ctx context.Context, sel ast.SelectionSet, v *notifications.UserNotification) graphql.Marshaler {
+func (ec *executionContext) marshalNUserNotification2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐUserNotification(ctx context.Context, sel ast.SelectionSet, v *models.UserNotification) graphql.Marshaler {
 	if v == nil {
 		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
 			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
@@ -74929,11 +74928,11 @@ func (ec *executionContext) unmarshalNUserNotificationPreferencesChanges2map(ctx
 	return v.(map[string]interface{}), nil
 }
 
-func (ec *executionContext) marshalNUserNotifications2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋnotificationsᚐUserNotifications(ctx context.Context, sel ast.SelectionSet, v notifications.UserNotifications) graphql.Marshaler {
+func (ec *executionContext) marshalNUserNotifications2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐUserNotifications(ctx context.Context, sel ast.SelectionSet, v models.UserNotifications) graphql.Marshaler {
 	return ec._UserNotifications(ctx, sel, &v)
 }
 
-func (ec *executionContext) marshalNUserNotifications2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋnotificationsᚐUserNotifications(ctx context.Context, sel ast.SelectionSet, v *notifications.UserNotifications) graphql.Marshaler {
+func (ec *executionContext) marshalNUserNotifications2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐUserNotifications(ctx context.Context, sel ast.SelectionSet, v *models.UserNotifications) graphql.Marshaler {
 	if v == nil {
 		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
 			ec.Errorf(ctx, "the requested element is null which the schema does not allow")

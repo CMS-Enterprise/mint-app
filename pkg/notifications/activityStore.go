@@ -5,18 +5,19 @@ import (
 
 	"github.com/google/uuid"
 
+	"github.com/cmsgov/mint-app/pkg/models"
 	"github.com/cmsgov/mint-app/pkg/sqlqueries"
 	"github.com/cmsgov/mint-app/pkg/sqlutils"
 )
 
 // ActivityCreate creates a new activity in the database
-func (s *dataBaseCalls) ActivityCreate(np sqlutils.NamedPreparer, activity *Activity) (*Activity, error) {
+func (s *dataBaseCalls) ActivityCreate(np sqlutils.NamedPreparer, activity *models.Activity) (*models.Activity, error) {
 	if activity.ID == uuid.Nil {
 		activity.ID = uuid.New()
 	}
 	// Set the raw data that gets saved to the DB.
 	activity.MetaDataRaw = activity.MetaData
-	retActivity, procErr := sqlutils.GetProcedure[Activity](np, sqlqueries.Activity.Create, activity)
+	retActivity, procErr := sqlutils.GetProcedure[models.Activity](np, sqlqueries.Activity.Create, activity)
 	if procErr != nil {
 		return nil, fmt.Errorf("issue creating new activity: %w", procErr)
 	}
@@ -24,11 +25,11 @@ func (s *dataBaseCalls) ActivityCreate(np sqlutils.NamedPreparer, activity *Acti
 }
 
 // ActivityGetByID returns an existing activity from the database
-func (s *dataBaseCalls) ActivityGetByID(np sqlutils.NamedPreparer, activityID uuid.UUID) (*Activity, error) {
+func (s *dataBaseCalls) ActivityGetByID(np sqlutils.NamedPreparer, activityID uuid.UUID) (*models.Activity, error) {
 
 	arg := map[string]interface{}{"id": activityID}
 
-	retActivity, procErr := sqlutils.GetProcedure[Activity](np, sqlqueries.Activity.GetByID, arg)
+	retActivity, procErr := sqlutils.GetProcedure[models.Activity](np, sqlqueries.Activity.GetByID, arg)
 	if procErr != nil {
 		return nil, fmt.Errorf("issue retrieving activity: %w", procErr)
 	}
@@ -43,12 +44,12 @@ func (s *dataBaseCalls) ActivityGetByID(np sqlutils.NamedPreparer, activityID uu
 }
 
 // ActivityGetByIDLoader returns a collection of existing activity from the database
-func (s *dataBaseCalls) ActivityGetByIDLoader(np sqlutils.NamedPreparer, paramTableJSON string) ([]*Activity, error) {
+func (s *dataBaseCalls) ActivityGetByIDLoader(np sqlutils.NamedPreparer, paramTableJSON string) ([]*models.Activity, error) {
 	arg := map[string]interface{}{
 		"paramTableJSON": paramTableJSON,
 	}
 
-	retActivities, err := sqlutils.SelectProcedure[Activity](np, sqlqueries.Activity.GetByIDLoader, arg)
+	retActivities, err := sqlutils.SelectProcedure[models.Activity](np, sqlqueries.Activity.GetByIDLoader, arg)
 	if err != nil {
 		return nil, fmt.Errorf("issue selecting activities by ID with the data loader, %w", err)
 	}

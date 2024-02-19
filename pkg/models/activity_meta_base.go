@@ -1,4 +1,4 @@
-package notifications
+package models
 
 import (
 	"database/sql/driver"

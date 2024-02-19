@@ -16,14 +16,14 @@ func UserNotificationCollectionGetByUser(
 	ctx context.Context,
 	store *storage.Store,
 	principal authentication.Principal,
-) (*UserNotifications, error) {
+) (*models.UserNotifications, error) {
 
 	//TODO: EASI-3294 do we want to make this resolver take a NamedPreparer? That way we can selectively create notifications as part of a transaction here
 	notifications, err := dbCall.UserNotificationCollectionGetByUserID(store, principal.Account().ID)
 	if err != nil {
 		return nil, err
 	}
-	return &UserNotifications{
+	return &models.UserNotifications{
 		Notifications: notifications,
 	}, nil
 
@@ -34,15 +34,15 @@ func userNotificationCreate(
 	ctx context.Context,
 	np sqlutils.NamedPreparer,
 	// the activity this notification is in regards to
-	activity *Activity,
+	activity *models.Activity,
 	// The id of the user the notification is for
 	userID uuid.UUID,
 	// the preference of a user about specific notification types
 	notificationPreference models.UserNotificationPreferenceFlag,
 
-) (*UserNotification, error) {
+) (*models.UserNotification, error) {
 
-	notif := NewUserNotification(activity.ActorID, activity.ID, notificationPreference.InApp(), notificationPreference.SendEmail())
+	notif := models.NewUserNotification(activity.ActorID, activity.ID, notificationPreference.InApp(), notificationPreference.SendEmail())
 	notif.UserID = userID
 
 	return dbCall.UserNotificationCreate(np, notif)
@@ -97,7 +97,7 @@ func UserNotificationMarkAsRead(_ context.Context,
 	np sqlutils.NamedPreparer,
 	principal authentication.Principal,
 	// the id of the notification
-	notificationID uuid.UUID) (*UserNotification, error) {
+	notificationID uuid.UUID) (*models.UserNotification, error) {
 
 	return dbCall.UserNotificationMarkRead(np, notificationID, principal.Account().ID)
 
@@ -107,7 +107,7 @@ func UserNotificationMarkAsRead(_ context.Context,
 func UserNotificationMarkAllAsRead(_ context.Context,
 	store *storage.Store,
 	np sqlutils.NamedPreparer,
-	principal authentication.Principal) ([]*UserNotification, error) {
+	principal authentication.Principal) ([]*models.UserNotification, error) {
 
 	return dbCall.UserNotificationMarkAllAsRead(np, principal.Account().ID)
 

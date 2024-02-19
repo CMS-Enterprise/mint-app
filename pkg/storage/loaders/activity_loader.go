@@ -10,6 +10,7 @@ import (
 	"go.uber.org/zap"
 
 	"github.com/cmsgov/mint-app/pkg/appcontext"
+	"github.com/cmsgov/mint-app/pkg/models"
 	"github.com/cmsgov/mint-app/pkg/notifications"
 )
 
@@ -43,7 +44,7 @@ func (loaders *DataLoaders) activityGetByIDLoaderBatch(ctx context.Context, keys
 }
 
 // ActivityGetByID returns an activity by it's ID utilizing a data loaders
-func ActivityGetByID(ctx context.Context, activityID uuid.UUID) (*notifications.Activity, error) {
+func ActivityGetByID(ctx context.Context, activityID uuid.UUID) (*models.Activity, error) {
 
 	allLoaders := Loaders(ctx)
 	activityLoader := allLoaders.ActivityLoader
@@ -57,6 +58,6 @@ func ActivityGetByID(ctx context.Context, activityID uuid.UUID) (*notifications.
 		return nil, err
 	}
 
-	return result.(*notifications.Activity), nil
+	return result.(*models.Activity), nil
 
 }

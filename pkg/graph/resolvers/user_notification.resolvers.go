@@ -18,25 +18,25 @@ import (
 )
 
 // MarkNotificationAsRead is the resolver for the markNotificationAsRead field.
-func (r *mutationResolver) MarkNotificationAsRead(ctx context.Context, notificationID uuid.UUID) (*notifications.UserNotification, error) {
+func (r *mutationResolver) MarkNotificationAsRead(ctx context.Context, notificationID uuid.UUID) (*models.UserNotification, error) {
 	principal := appcontext.Principal(ctx)
 	return notifications.UserNotificationMarkAsRead(ctx, r.store, r.store, principal, notificationID)
 }
 
 // MarkAllNotificationsAsRead is the resolver for the markAllNotificationsAsRead field.
-func (r *mutationResolver) MarkAllNotificationsAsRead(ctx context.Context) ([]*notifications.UserNotification, error) {
+func (r *mutationResolver) MarkAllNotificationsAsRead(ctx context.Context) ([]*models.UserNotification, error) {
 	principal := appcontext.Principal(ctx)
 	return notifications.UserNotificationMarkAllAsRead(ctx, r.store, r.store, principal)
 }
 
 // Activity is the resolver for the activity field.
-func (r *userNotificationResolver) Activity(ctx context.Context, obj *notifications.UserNotification) (*notifications.Activity, error) {
+func (r *userNotificationResolver) Activity(ctx context.Context, obj *models.UserNotification) (*models.Activity, error) {
 	return loaders.ActivityGetByID(ctx, obj.ActivityID)
 	// return notifications.ActivityGetByID(ctx, r.store, obj.ActivityID)
 }
 
 // Content is the resolver for the content field.
-func (r *userNotificationResolver) Content(ctx context.Context, obj *notifications.UserNotification) (models.UserNotificationContent, error) {
+func (r *userNotificationResolver) Content(ctx context.Context, obj *models.UserNotification) (models.UserNotificationContent, error) {
 	//TODO: EASI-3295  Implement this content resolver, either on the notification or the activity level. Use data loaders
 	panic(fmt.Errorf("not implemented: Content - content"))
 }

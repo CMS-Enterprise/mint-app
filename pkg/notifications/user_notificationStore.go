@@ -5,16 +5,17 @@ import (
 
 	"github.com/google/uuid"
 
+	"github.com/cmsgov/mint-app/pkg/models"
 	"github.com/cmsgov/mint-app/pkg/sqlqueries"
 	"github.com/cmsgov/mint-app/pkg/sqlutils"
 )
 
 // UserNotificationCollectionGetByUserID returns all Notifications for a user for a given User Account
-func (s *dataBaseCalls) UserNotificationCollectionGetByUserID(np sqlutils.NamedPreparer, userAccountID uuid.UUID) ([]*UserNotification, error) {
+func (s *dataBaseCalls) UserNotificationCollectionGetByUserID(np sqlutils.NamedPreparer, userAccountID uuid.UUID) ([]*models.UserNotification, error) {
 
 	arg := map[string]interface{}{"user_id": userAccountID}
 
-	notifCollection, procErr := sqlutils.SelectProcedure[UserNotification](np, sqlqueries.UserNotification.CollectionGetByUserID, arg)
+	notifCollection, procErr := sqlutils.SelectProcedure[models.UserNotification](np, sqlqueries.UserNotification.CollectionGetByUserID, arg)
 	if procErr != nil {
 		return nil, fmt.Errorf("issue getting notification collection by userID (%s)  : %w", userAccountID, procErr)
 	}
@@ -24,13 +25,13 @@ func (s *dataBaseCalls) UserNotificationCollectionGetByUserID(np sqlutils.NamedP
 // UserNotificationCreate a notification record in the database
 func (s *dataBaseCalls) UserNotificationCreate(
 	np sqlutils.NamedPreparer,
-	notification *UserNotification,
-) (*UserNotification, error) {
+	notification *models.UserNotification,
+) (*models.UserNotification, error) {
 
 	if notification.ID == uuid.Nil {
 		notification.ID = uuid.New()
 	}
-	retNotif, procErr := sqlutils.GetProcedure[UserNotification](np, sqlqueries.UserNotification.Create, notification)
+	retNotif, procErr := sqlutils.GetProcedure[models.UserNotification](np, sqlqueries.UserNotification.Create, notification)
 	if procErr != nil {
 		return nil, fmt.Errorf("issue creating new notification: %w", procErr)
 	}
@@ -44,14 +45,14 @@ func (s *dataBaseCalls) UserNotificationMarkRead(
 	// the id of the notification
 	notificationID uuid.UUID,
 	// the uuid of the user account that owns the notification
-	userAccountID uuid.UUID) (*UserNotification, error) {
+	userAccountID uuid.UUID) (*models.UserNotification, error) {
 
 	arg := map[string]interface{}{
 		"id":          notificationID,
 		"modified_by": userAccountID,
 	}
 
-	retNotif, procErr := sqlutils.GetProcedure[UserNotification](np, sqlqueries.UserNotification.MarksAsReadByID, arg)
+	retNotif, procErr := sqlutils.GetProcedure[models.UserNotification](np, sqlqueries.UserNotification.MarksAsReadByID, arg)
 	if procErr != nil {
 		return nil, fmt.Errorf("issue marking notification as read: %w", procErr)
 	}
@@ -63,11 +64,11 @@ func (s *dataBaseCalls) UserNotificationMarkAllAsRead(
 	np sqlutils.NamedPreparer,
 
 	// the uuid of the user account that owns the notification
-	userAccountID uuid.UUID) ([]*UserNotification, error) {
+	userAccountID uuid.UUID) ([]*models.UserNotification, error) {
 
 	arg := map[string]interface{}{"modified_by": userAccountID}
 
-	notifCollection, procErr := sqlutils.SelectProcedure[UserNotification](np, sqlqueries.UserNotification.MarkCollectionAsReadByUserID, arg)
+	notifCollection, procErr := sqlutils.SelectProcedure[models.UserNotification](np, sqlqueries.UserNotification.MarkCollectionAsReadByUserID, arg)
 	if procErr != nil {
 		return nil, fmt.Errorf("issue marking notification collection as read by userID (%s)  : %w", userAccountID, procErr)
 	}

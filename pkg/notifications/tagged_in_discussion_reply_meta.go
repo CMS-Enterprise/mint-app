@@ -2,9 +2,6 @@ package notifications
 
 import (
 	"context"
-	"database/sql/driver"
-	"encoding/json"
-	"errors"
 	"fmt"
 
 	"github.com/google/uuid"
@@ -14,41 +11,11 @@ import (
 	"github.com/cmsgov/mint-app/pkg/storage"
 )
 
-// TaggedInDiscussionReplyActivityMeta represents the notification data that is relevant to being tagged in a new Plan Discussion
-type TaggedInDiscussionReplyActivityMeta struct {
-	ActivityMetaBaseStruct
-	DiscussionID uuid.UUID `json:"discussionID"` //TODO: EASI-2395 Note this is somewhat like a discussion relation, but in a different package
-	ReplyID      uuid.UUID `json:"replyID"`      //TODO: EASI-2395 Note this is somewhat like a discussion relation, but in a different package
-	Content      string    `json:"content"`
-}
-
-// newNewPlanDiscussionActivityMeta creates a New NewPlanDiscussionActivityMeta
-func newTaggedInDiscussionReplyActivityMeta(discussionID uuid.UUID, replyID uuid.UUID, content string) *TaggedInDiscussionReplyActivityMeta {
-	version := 0 //iterate this if this type ever updates
-	return &TaggedInDiscussionReplyActivityMeta{
-		ActivityMetaBaseStruct: NewActivityMetaBaseStruct(ActivityTaggedInDiscussionReply, version),
-		DiscussionID:           discussionID,
-		ReplyID:                replyID,
-		Content:                content,
-	}
-
-}
-
-func newTaggedInDiscussionReplyActivity(actorID uuid.UUID, discussionID uuid.UUID, replyID uuid.UUID, content string) *Activity {
-	return &Activity{
-		baseStruct:   NewBaseStruct(actorID),
-		ActorID:      actorID,
-		EntityID:     discussionID,
-		ActivityType: ActivityTaggedInDiscussionReply,
-		MetaData:     newTaggedInDiscussionReplyActivityMeta(discussionID, replyID, content),
-	}
-}
-
 // ActivityTaggedInDiscussionReplyCreate creates an activity for when a User is Tagged in a Discussion Reply.
 // It also creates all the relevant notifications for every tag. Currently, only tagged users get a notification
-func ActivityTaggedInDiscussionReplyCreate(ctx context.Context, np sqlutils.NamedPreparer, actorID uuid.UUID, discussionID uuid.UUID, replyID uuid.UUID, replyContent models.TaggedHTML) (*Activity, error) {
+func ActivityTaggedInDiscussionReplyCreate(ctx context.Context, np sqlutils.NamedPreparer, actorID uuid.UUID, discussionID uuid.UUID, replyID uuid.UUID, replyContent models.TaggedHTML) (*models.Activity, error) {
 
-	activity := newTaggedInDiscussionReplyActivity(actorID, discussionID, replyID, replyContent.RawContent.String())
+	activity := models.NewTaggedInDiscussionReplyActivity(actorID, discussionID, replyID, replyContent.RawContent.String())
 
 	retActivity, actErr := activityCreate(ctx, np, activity)
 	if actErr != nil {
@@ -97,31 +64,4 @@ func ActivityTaggedInDiscussionReplyCreate(ctx context.Context, np sqlutils.Name
 
 	return retActivity, nil
 
-}
-
-// TODO EASI-3925 --> Refactor these all to have a generic scan / value
-
-// Value allows us to satisfy the valuer interface so we can write to the database
-// We need to do a specific implementation instead of relying on the implementation of the embedded struct, as that will only serialize the common data
-func (d TaggedInDiscussionReplyActivityMeta) Value() (driver.Value, error) {
-
-	j, err := json.Marshal(d)
-	return j, err
-}
-
-// Scan implements the scanner interface so we can translate the JSONb from the db to an object in GO
-func (d *TaggedInDiscussionReplyActivityMeta) Scan(src interface{}) error {
-	if src == nil {
-		return nil
-	}
-	source, ok := src.([]byte)
-	if !ok {
-		return errors.New("type assertion .([]byte) failed")
-	}
-	err := json.Unmarshal(source, d)
-	if err != nil {
-		return err
-	}
-
-	return nil
 }

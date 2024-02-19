@@ -7,6 +7,7 @@ import (
 	"github.com/cmsgov/mint-app/pkg/authentication"
 	"github.com/cmsgov/mint-app/pkg/flags"
 	"github.com/cmsgov/mint-app/pkg/graph/model"
+	"github.com/cmsgov/mint-app/pkg/models"
 	"github.com/cmsgov/mint-app/pkg/notifications"
 	"github.com/cmsgov/mint-app/pkg/storage"
 
@@ -34,7 +35,7 @@ func CurrentUserAccountGet(ctx context.Context) (*authentication.UserAccount, er
 }
 
 // CurrentUserNotificationsGet returns the notifications for the Current User
-func CurrentUserNotificationsGet(ctx context.Context, store *storage.Store) (*notifications.UserNotifications, error) {
+func CurrentUserNotificationsGet(ctx context.Context, store *storage.Store) (*models.UserNotifications, error) {
 	princ := appcontext.Principal(ctx)
 	return notifications.UserNotificationCollectionGetByUser(ctx, store, princ)
 }
