@@ -100,6 +100,7 @@ export type TranslationFieldProperties = {
     adjacentField: string;
   };
   isOtherType?: boolean; // Is a question a followup to another that doesn't designate it's own readonly question/line,
+  hideRelatedQuestionAlert?: boolean; // Ex: CCW and Quality questions do not need to render the alert immediately following the question
 };
 
 /* 
@@ -554,37 +555,58 @@ export type TranslationOpsEvalAndLearning = {
   stakeholdersNote: TranslationFieldProperties;
   helpdeskUse: TranslationFieldPropertiesWithOptions<Bool>;
   helpdeskUseNote: TranslationFieldProperties;
-  contractorSupport: TranslationFieldPropertiesWithOptions<ContractorSupportType>;
+  contractorSupport: TranslationFieldPropertiesWithOptionsAndChildren<ContractorSupportType>;
   contractorSupportOther: TranslationFieldProperties;
-  contractorSupportHow: TranslationFieldProperties;
+  contractorSupportHow: TranslationFieldPropertiesWithParent<ContractorSupportType>;
   contractorSupportNote: TranslationFieldProperties;
-  iddocSupport: TranslationFieldPropertiesWithOptions<Bool>;
+  iddocSupport: TranslationFieldPropertiesWithOptionsAndChildren<Bool>;
   iddocSupportNote: TranslationFieldProperties;
   // IDDOC
-  technicalContactsIdentified: TranslationFieldPropertiesWithOptions<Bool>;
+  technicalContactsIdentified: TranslationFieldPropertiesWithOptionsAndParent<
+    Bool,
+    Bool
+  >;
   technicalContactsIdentifiedDetail: TranslationFieldProperties;
   technicalContactsIdentifiedNote: TranslationFieldProperties;
-  captureParticipantInfo: TranslationFieldPropertiesWithOptions<Bool>;
+  captureParticipantInfo: TranslationFieldPropertiesWithOptionsAndParent<
+    Bool,
+    Bool
+  >;
   captureParticipantInfoNote: TranslationFieldProperties;
-  icdOwner: TranslationFieldProperties;
-  draftIcdDueDate: TranslationFieldProperties;
-  icdNote: TranslationFieldProperties;
+  icdOwner: TranslationFieldPropertiesWithParent<Bool>;
+  draftIcdDueDate: TranslationFieldPropertiesWithParent<Bool>;
+  icdNote: TranslationFieldPropertiesWithParent<Bool>;
   // IDDOC Testing
-  uatNeeds: TranslationFieldProperties;
-  stcNeeds: TranslationFieldProperties;
-  testingTimelines: TranslationFieldProperties;
+  uatNeeds: TranslationFieldPropertiesWithParent<Bool>;
+  stcNeeds: TranslationFieldPropertiesWithParent<Bool>;
+  testingTimelines: TranslationFieldPropertiesWithParent<Bool>;
   testingNote: TranslationFieldProperties;
-  dataMonitoringFileTypes: TranslationFieldPropertiesWithOptions<MonitoringFileType>;
+  dataMonitoringFileTypes: TranslationFieldPropertiesWithOptionsAndParent<
+    MonitoringFileType,
+    Bool
+  >;
   dataMonitoringFileOther: TranslationFieldProperties;
-  dataResponseType: TranslationFieldProperties;
-  dataResponseFileFrequency: TranslationFieldProperties;
+  dataResponseType: TranslationFieldPropertiesWithParent<Bool>;
+  dataResponseFileFrequency: TranslationFieldPropertiesWithParent<Bool>;
   // IDDOC Monitoring
-  dataFullTimeOrIncremental: TranslationFieldPropertiesWithOptions<DataFullTimeOrIncrementalType>;
-  eftSetUp: TranslationFieldPropertiesWithOptions<Bool>;
-  unsolicitedAdjustmentsIncluded: TranslationFieldPropertiesWithOptions<Bool>;
-  dataFlowDiagramsNeeded: TranslationFieldPropertiesWithOptions<Bool>;
-  produceBenefitEnhancementFiles: TranslationFieldPropertiesWithOptions<Bool>;
-  fileNamingConventions: TranslationFieldProperties;
+  dataFullTimeOrIncremental: TranslationFieldPropertiesWithOptionsAndParent<
+    DataFullTimeOrIncrementalType,
+    Bool
+  >;
+  eftSetUp: TranslationFieldPropertiesWithOptionsAndParent<Bool, Bool>;
+  unsolicitedAdjustmentsIncluded: TranslationFieldPropertiesWithOptionsAndParent<
+    Bool,
+    Bool
+  >;
+  dataFlowDiagramsNeeded: TranslationFieldPropertiesWithOptionsAndParent<
+    Bool,
+    Bool
+  >;
+  produceBenefitEnhancementFiles: TranslationFieldPropertiesWithOptionsAndParent<
+    Bool,
+    Bool
+  >;
+  fileNamingConventions: TranslationFieldPropertiesWithParent<Bool>;
   dataMonitoringNote: TranslationFieldProperties;
   // Performance
   benchmarkForPerformance: TranslationFieldPropertiesWithOptions<BenchmarkForPerformanceType>;
@@ -605,10 +627,10 @@ export type TranslationOpsEvalAndLearning = {
   evaluationApproaches: TranslationFieldPropertiesWithOptions<EvaluationApproachType>;
   evaluationApproachOther: TranslationFieldProperties;
   evalutaionApproachNote: TranslationFieldProperties;
-  ccmInvolvment: TranslationFieldPropertiesWithOptions<CcmInvolvmentType>;
+  ccmInvolvment: TranslationFieldPropertiesWithOptionsAndChildren<CcmInvolvmentType>;
   ccmInvolvmentOther: TranslationFieldProperties;
   ccmInvolvmentNote: TranslationFieldProperties;
-  dataNeededForMonitoring: TranslationFieldPropertiesWithOptions<DataForMonitoringType>;
+  dataNeededForMonitoring: TranslationFieldPropertiesWithOptionsAndChildren<DataForMonitoringType>;
   dataNeededForMonitoringOther: TranslationFieldProperties;
   dataNeededForMonitoringNote: TranslationFieldProperties;
   dataToSendParticicipants: TranslationFieldPropertiesWithOptions<DataToSendParticipantsType>;
@@ -617,16 +639,31 @@ export type TranslationOpsEvalAndLearning = {
   shareCclfData: TranslationFieldPropertiesWithOptions<Bool>;
   shareCclfDataNote: TranslationFieldProperties;
   // CCW And Quality
-  sendFilesBetweenCcw: TranslationFieldPropertiesWithOptions<Bool>;
+  sendFilesBetweenCcw: TranslationFieldPropertiesWithOptionsAndParent<
+    Bool,
+    Bool
+  >;
   sendFilesBetweenCcwNote: TranslationFieldProperties;
-  appToSendFilesToKnown: TranslationFieldPropertiesWithOptions<Bool>;
+  appToSendFilesToKnown: TranslationFieldPropertiesWithOptionsAndParent<
+    Bool,
+    Bool
+  >;
   appToSendFilesToWhich: TranslationFieldProperties;
   appToSendFilesToNote: TranslationFieldProperties;
-  useCcwForFileDistribiutionToParticipants: TranslationFieldPropertiesWithOptions<Bool>;
+  useCcwForFileDistribiutionToParticipants: TranslationFieldPropertiesWithOptionsAndParent<
+    Bool,
+    Bool
+  >;
   useCcwForFileDistribiutionToParticipantsNote: TranslationFieldProperties;
-  developNewQualityMeasures: TranslationFieldPropertiesWithOptions<Bool>;
+  developNewQualityMeasures: TranslationFieldPropertiesWithOptionsAndParent<
+    Bool,
+    DataForMonitoringType
+  >;
   developNewQualityMeasuresNote: TranslationFieldProperties;
-  qualityPerformanceImpactsPayment: TranslationFieldPropertiesWithOptions<YesNoOtherType>;
+  qualityPerformanceImpactsPayment: TranslationFieldPropertiesWithOptionsAndParent<
+    YesNoOtherType,
+    DataForMonitoringType
+  >;
   qualityPerformanceImpactsPaymentOther: TranslationFieldProperties;
   qualityPerformanceImpactsPaymentNote: TranslationFieldProperties;
   // Data Sharing

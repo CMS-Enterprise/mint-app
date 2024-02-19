@@ -243,11 +243,15 @@ const ReadOnlySectionNew = <
   filteredView
 }: ReadOnlySectionNewProps<T, C>): React.ReactElement | null => {
   const { t: miscellaneousT } = useTranslation('miscellaneous');
-  const { t: readOnlyT } = useTranslation('generalReadOnly');
 
   const config = translations[field];
 
   const value = values[config.gqlField];
+
+  // Don't render if isOtherType - will be rendered as a part of parent value
+  if (config.isOtherType) {
+    return null;
+  }
 
   // Checks if current view is filtered, then check if question belongs to filter group
   // If not, return null
@@ -457,36 +461,58 @@ const ReadOnlySectionNew = <
         {renderCopyOrList(config, listItems, tooltips)}
       </div>
 
-      {!!relatedConditions?.length && (
-        <>
-          <Alert type="info" noIcon className="margin-bottom-3">
-            {readOnlyT('questionNotApplicable', {
-              count: relatedConditions.length
-            })}
-          </Alert>
-
-          <CollapsableLink
-            id={heading}
-            label={readOnlyT('showOtherQuestions', {
-              count: relatedConditions.length
-            })}
-            closeLabel={readOnlyT('hideOtherQuestions', {
-              count: relatedConditions.length
-            })}
-            styleLeftBar={false}
-            className="margin-bottom-3"
-          >
-            <ul className="margin-y-0">
-              {relatedConditions.map(question => (
-                <li key={question} className="text-bold margin-bottom-1">
-                  {question}
-                </li>
-              ))}
-            </ul>
-          </CollapsableLink>
-        </>
-      )}
+      <RelatedUnneededQuestions
+        id={heading}
+        relatedConditions={relatedConditions}
+        hideAlert={config.hideRelatedQuestionAlert}
+      />
     </Grid>
+  );
+};
+
+export const RelatedUnneededQuestions = ({
+  id,
+  relatedConditions,
+  hideAlert
+}: {
+  id: string;
+  relatedConditions: (string | null | undefined)[] | null;
+  hideAlert?: boolean;
+}) => {
+  const { t: readOnlyT } = useTranslation('generalReadOnly');
+
+  if (!relatedConditions?.length || hideAlert) {
+    return null;
+  }
+
+  return (
+    <>
+      <Alert type="info" noIcon className="margin-bottom-3">
+        {readOnlyT('questionNotApplicable', {
+          count: relatedConditions.length
+        })}
+      </Alert>
+
+      <CollapsableLink
+        id={id}
+        label={readOnlyT('showOtherQuestions', {
+          count: relatedConditions.length
+        })}
+        closeLabel={readOnlyT('hideOtherQuestions', {
+          count: relatedConditions.length
+        })}
+        styleLeftBar={false}
+        className="margin-bottom-3"
+      >
+        <ul className="margin-y-0">
+          {relatedConditions.map(question => (
+            <li key={question} className="text-bold margin-bottom-1">
+              {question}
+            </li>
+          ))}
+        </ul>
+      </CollapsableLink>
+    </>
   );
 };
 
