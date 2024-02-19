@@ -308,7 +308,7 @@ exports[`Model Plan Basics page > disables and clears checkbox when user selects
                             >
                               <div
                                 aria-describedby="tooltip-550000"
-                                class="usa-tooltip__trigger"
+                                class="usa-tooltip__trigger mint-no-print"
                                 data-testid="triggerElement"
                                 position="right"
                                 tabindex="0"
@@ -369,7 +369,7 @@ exports[`Model Plan Basics page > disables and clears checkbox when user selects
                             >
                               <div
                                 aria-describedby="tooltip-550000"
-                                class="usa-tooltip__trigger"
+                                class="usa-tooltip__trigger mint-no-print"
                                 data-testid="triggerElement"
                                 position="right"
                                 tabindex="0"
@@ -430,7 +430,7 @@ exports[`Model Plan Basics page > disables and clears checkbox when user selects
                             >
                               <div
                                 aria-describedby="tooltip-550000"
-                                class="usa-tooltip__trigger"
+                                class="usa-tooltip__trigger mint-no-print"
                                 data-testid="triggerElement"
                                 position="right"
                                 tabindex="0"
@@ -491,7 +491,7 @@ exports[`Model Plan Basics page > disables and clears checkbox when user selects
                             >
                               <div
                                 aria-describedby="tooltip-550000"
-                                class="usa-tooltip__trigger"
+                                class="usa-tooltip__trigger mint-no-print"
                                 data-testid="triggerElement"
                                 position="right"
                                 tabindex="0"
@@ -552,7 +552,7 @@ exports[`Model Plan Basics page > disables and clears checkbox when user selects
                             >
                               <div
                                 aria-describedby="tooltip-550000"
-                                class="usa-tooltip__trigger"
+                                class="usa-tooltip__trigger mint-no-print"
                                 data-testid="triggerElement"
                                 position="right"
                                 tabindex="0"
@@ -613,7 +613,7 @@ exports[`Model Plan Basics page > disables and clears checkbox when user selects
                             >
                               <div
                                 aria-describedby="tooltip-550000"
-                                class="usa-tooltip__trigger"
+                                class="usa-tooltip__trigger mint-no-print"
                                 data-testid="triggerElement"
                                 position="right"
                                 tabindex="0"
@@ -716,7 +716,7 @@ exports[`Model Plan Basics page > disables and clears checkbox when user selects
                           >
                             <div
                               aria-describedby="tooltip-550000"
-                              class="usa-tooltip__trigger"
+                              class="usa-tooltip__trigger mint-no-print"
                               data-testid="triggerElement"
                               position="right"
                               tabindex="0"
@@ -779,7 +779,7 @@ exports[`Model Plan Basics page > disables and clears checkbox when user selects
                           >
                             <div
                               aria-describedby="tooltip-550000"
-                              class="usa-tooltip__trigger"
+                              class="usa-tooltip__trigger mint-no-print"
                               data-testid="triggerElement"
                               position="right"
                               tabindex="0"
@@ -842,7 +842,7 @@ exports[`Model Plan Basics page > disables and clears checkbox when user selects
                           >
                             <div
                               aria-describedby="tooltip-550000"
-                              class="usa-tooltip__trigger"
+                              class="usa-tooltip__trigger mint-no-print"
                               data-testid="triggerElement"
                               position="right"
                               tabindex="0"
@@ -905,7 +905,7 @@ exports[`Model Plan Basics page > disables and clears checkbox when user selects
                           >
                             <div
                               aria-describedby="tooltip-550000"
-                              class="usa-tooltip__trigger"
+                              class="usa-tooltip__trigger mint-no-print"
                               data-testid="triggerElement"
                               position="right"
                               tabindex="0"
@@ -968,7 +968,7 @@ exports[`Model Plan Basics page > disables and clears checkbox when user selects
                           >
                             <div
                               aria-describedby="tooltip-550000"
-                              class="usa-tooltip__trigger"
+                              class="usa-tooltip__trigger mint-no-print"
                               data-testid="triggerElement"
                               position="right"
                               tabindex="0"
@@ -1031,7 +1031,7 @@ exports[`Model Plan Basics page > disables and clears checkbox when user selects
                           >
                             <div
                               aria-describedby="tooltip-550000"
-                              class="usa-tooltip__trigger"
+                              class="usa-tooltip__trigger mint-no-print"
                               data-testid="triggerElement"
                               position="right"
                               tabindex="0"
@@ -1721,7 +1721,7 @@ exports[`Model Plan Basics page > matches snapshot 1`] = `
                             >
                               <div
                                 aria-describedby="tooltip-550000"
-                                class="usa-tooltip__trigger"
+                                class="usa-tooltip__trigger mint-no-print"
                                 data-testid="triggerElement"
                                 position="right"
                                 tabindex="0"
@@ -1782,7 +1782,7 @@ exports[`Model Plan Basics page > matches snapshot 1`] = `
                             >
                               <div
                                 aria-describedby="tooltip-550000"
-                                class="usa-tooltip__trigger"
+                                class="usa-tooltip__trigger mint-no-print"
                                 data-testid="triggerElement"
                                 position="right"
                                 tabindex="0"
@@ -1843,7 +1843,7 @@ exports[`Model Plan Basics page > matches snapshot 1`] = `
                             >
                               <div
                                 aria-describedby="tooltip-550000"
-                                class="usa-tooltip__trigger"
+                                class="usa-tooltip__trigger mint-no-print"
                                 data-testid="triggerElement"
                                 position="right"
                                 tabindex="0"
@@ -1904,7 +1904,7 @@ exports[`Model Plan Basics page > matches snapshot 1`] = `
                             >
                               <div
                                 aria-describedby="tooltip-550000"
-                                class="usa-tooltip__trigger"
+                                class="usa-tooltip__trigger mint-no-print"
                                 data-testid="triggerElement"
                                 position="right"
                                 tabindex="0"
@@ -1965,7 +1965,7 @@ exports[`Model Plan Basics page > matches snapshot 1`] = `
                             >
                               <div
                                 aria-describedby="tooltip-550000"
-                                class="usa-tooltip__trigger"
+                                class="usa-tooltip__trigger mint-no-print"
                                 data-testid="triggerElement"
                                 position="right"
                                 tabindex="0"
@@ -2026,7 +2026,7 @@ exports[`Model Plan Basics page > matches snapshot 1`] = `
                             >
                               <div
                                 aria-describedby="tooltip-550000"
-                                class="usa-tooltip__trigger"
+                                class="usa-tooltip__trigger mint-no-print"
                                 data-testid="triggerElement"
                                 position="right"
                                 tabindex="0"
@@ -2128,7 +2128,7 @@ exports[`Model Plan Basics page > matches snapshot 1`] = `
                           >
                             <div
                               aria-describedby="tooltip-550000"
-                              class="usa-tooltip__trigger"
+                              class="usa-tooltip__trigger mint-no-print"
                               data-testid="triggerElement"
                               position="right"
                               tabindex="0"
@@ -2191,7 +2191,7 @@ exports[`Model Plan Basics page > matches snapshot 1`] = `
                           >
                             <div
                               aria-describedby="tooltip-550000"
-                              class="usa-tooltip__trigger"
+                              class="usa-tooltip__trigger mint-no-print"
                               data-testid="triggerElement"
                               position="right"
                               tabindex="0"
@@ -2254,7 +2254,7 @@ exports[`Model Plan Basics page > matches snapshot 1`] = `
                           >
                             <div
                               aria-describedby="tooltip-550000"
-                              class="usa-tooltip__trigger"
+                              class="usa-tooltip__trigger mint-no-print"
                               data-testid="triggerElement"
                               position="right"
                               tabindex="0"
@@ -2317,7 +2317,7 @@ exports[`Model Plan Basics page > matches snapshot 1`] = `
                           >
                             <div
                               aria-describedby="tooltip-550000"
-                              class="usa-tooltip__trigger"
+                              class="usa-tooltip__trigger mint-no-print"
                               data-testid="triggerElement"
                               position="right"
                               tabindex="0"
@@ -2381,7 +2381,7 @@ exports[`Model Plan Basics page > matches snapshot 1`] = `
                           >
                             <div
                               aria-describedby="tooltip-550000"
-                              class="usa-tooltip__trigger"
+                              class="usa-tooltip__trigger mint-no-print"
                               data-testid="triggerElement"
                               position="right"
                               tabindex="0"
@@ -2444,7 +2444,7 @@ exports[`Model Plan Basics page > matches snapshot 1`] = `
                           >
                             <div
                               aria-describedby="tooltip-550000"
-                              class="usa-tooltip__trigger"
+                              class="usa-tooltip__trigger mint-no-print"
                               data-testid="triggerElement"
                               position="right"
                               tabindex="0"
