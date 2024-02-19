@@ -67,14 +67,7 @@ func CreatePlanDiscussion(
 			return discussion, err
 		}
 		discussion.Content.Tags = tags
-		discussion.Content.Mentions = planDiscussion.Content.Mentions // TODO, do this or send the other mentions
-
-		// // TODO: EASI-3295 Make this work for the tagged in activity type, instead of just the generic testing new
-		// discussionActivity := notifications.NewActivity(principal.Account().ID, discussion.ID, notifications.ActivityNewPlanDiscussion)
-		// _, activityErr := notifications.ActivityCreate(ctx, tx, discussionActivity)
-		// if activityErr != nil {
-		// 	return nil, activityErr
-		// }
+		discussion.Content.Mentions = planDiscussion.Content.Mentions
 
 		commonName := principal.Account().CommonName
 		modelPlan, err := ModelPlanGetByIDLOADER(ctx, input.ModelPlanID)
@@ -110,7 +103,7 @@ func CreatePlanDiscussion(
 		//TODO: EASI-3925, should we distinguish Replies vs discussions?
 		//TODO: EASI-3925 Get notification preferences here and pass it, We need to connect the idea of an email and the user notification preference. Should we the activity create the email?
 
-		_, notificationErr := notifications.ActivityTaggedInDiscussionCreate(ctx, tx, principal.Account().ID, discussion.ID, discussion.Content) //TODO: EASI-3925 Consider passing the whole object?
+		_, notificationErr := notifications.ActivityTaggedInDiscussionCreate(ctx, tx, principal.Account().ID, discussion.ID, discussion.Content)
 		if notificationErr != nil {
 			return nil, fmt.Errorf("unable to generate notifications, %w", notificationErr)
 		}
@@ -118,6 +111,7 @@ func CreatePlanDiscussion(
 			err = sendPlanDiscussionTagEmails(
 				ctx,
 				store,
+				true,
 				logger,
 				emailService,
 				emailTemplateService,
@@ -143,9 +137,11 @@ func CreatePlanDiscussion(
 	return newDiscussion, err
 }
 
+// Handles send an email for when a tagged entity is tagged in either a plan discussion or discussion reply
 func sendPlanDiscussionTagEmails(
 	ctx context.Context,
-	store *storage.Store, //TODO: EASI-3925 named preparer ? so this always takes a transaction?
+	np sqlutils.NamedPreparer,
+	isDiscussion bool, // true for discussion, false for
 	logger *zap.Logger,
 	emailService oddmail.EmailService,
 	emailTemplateService email.TemplateService,
@@ -171,7 +167,18 @@ func sendPlanDiscussionTagEmails(
 			if !ok {
 				errs = append(errs, fmt.Errorf("tagged entity was expected to be a user account, but was not able to be cast to UserAccount. entity: %v", entity))
 			}
-			err := sendPlanDiscussionTaggedUserEmail(emailService, emailTemplateService, addressBook, tHTML, discussionID, modelPlan, taggedUserAccount, createdByUserName, createdByUserRole)
+			pref, err := storage.UserNotificationPreferencesGetByUserID(np, *mention.EntityUUID)
+			if err != nil {
+				errs = append(errs, fmt.Errorf("unable to get user notification preference, Notification not created %w", err))
+			}
+
+			// Early return if
+			if (isDiscussion && !pref.TaggedInDiscussion.SendEmail()) || // is a discussion, and user doesn't want  discussion tag emails
+				(!isDiscussion && !pref.TaggedInDiscussionReply.SendEmail()) { // is a reply, and user doesn't want  discussion reply tag emails
+
+				continue
+			}
+			err = sendPlanDiscussionTaggedUserEmail(emailService, emailTemplateService, addressBook, tHTML, discussionID, modelPlan, taggedUserAccount, createdByUserName, createdByUserRole)
 			if err != nil {
 				errs = append(errs, err) //non blocking
 				continue
@@ -180,7 +187,7 @@ func sendPlanDiscussionTagEmails(
 
 			soln, ok := entity.(*models.PossibleOperationalSolution)
 			if !ok {
-				errs = append(errs, fmt.Errorf("tagged entity was expectd to be a possible solution, but was not able to be cast to PossibleOperationalSolution. entity: %v", entity))
+				errs = append(errs, fmt.Errorf("tagged entity was expected to be a possible solution, but was not able to be cast to PossibleOperationalSolution. entity: %v", entity))
 			}
 
 			config := emailService.GetConfig()
@@ -494,6 +501,7 @@ func CreateDiscussionReply(
 		err = sendPlanDiscussionTagEmails(
 			ctx,
 			store,
+			false,
 			logger,
 			emailService,
 			emailTemplateService,
