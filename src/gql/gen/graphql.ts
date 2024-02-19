@@ -2766,7 +2766,7 @@ export type UserNotification = {
   createdDts: Scalars['Time']['output'];
   emailSent: Scalars['Boolean']['output'];
   id: Scalars['UUID']['output'];
-  isArchived: Scalars['Boolean']['output'];
+  inAppSent: Scalars['Boolean']['output'];
   isRead: Scalars['Boolean']['output'];
   modifiedBy?: Maybe<Scalars['UUID']['output']>;
   modifiedByUserAccount?: Maybe<UserAccount>;

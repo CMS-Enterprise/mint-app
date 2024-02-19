@@ -1053,7 +1053,7 @@ type ComplexityRoot struct {
 		CreatedDts            func(childComplexity int) int
 		EmailSent             func(childComplexity int) int
 		ID                    func(childComplexity int) int
-		IsArchived            func(childComplexity int) int
+		InAppSent             func(childComplexity int) int
 		IsRead                func(childComplexity int) int
 		ModifiedBy            func(childComplexity int) int
 		ModifiedByUserAccount func(childComplexity int) int
@@ -7618,12 +7618,12 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.UserNotification.ID(childComplexity), true
 
-	case "UserNotification.isArchived":
-		if e.complexity.UserNotification.IsArchived == nil {
+	case "UserNotification.inAppSent":
+		if e.complexity.UserNotification.InAppSent == nil {
 			break
 		}
 
-		return e.complexity.UserNotification.IsArchived(childComplexity), true
+		return e.complexity.UserNotification.InAppSent(childComplexity), true
 
 	case "UserNotification.isRead":
 		if e.complexity.UserNotification.IsRead == nil {
@@ -10662,7 +10662,7 @@ type UserNotification {
   # activityType: ActivityType #TODO EASI-3925 #Maybe add this on this level so the FE doesn't need to query it? //TODO EASI-3925
 	userID: UUID! #probably not needed, it should be only visible for the user
   isRead: Boolean!
-  isArchived: Boolean!
+  inAppSent: Boolean!
   emailSent: Boolean!
   activity: Activity! # should we nest this?
   content: UserNotificationContent!
@@ -22989,8 +22989,8 @@ func (ec *executionContext) fieldContext_Mutation_markNotificationAsRead(ctx con
 				return ec.fieldContext_UserNotification_userID(ctx, field)
 			case "isRead":
 				return ec.fieldContext_UserNotification_isRead(ctx, field)
-			case "isArchived":
-				return ec.fieldContext_UserNotification_isArchived(ctx, field)
+			case "inAppSent":
+				return ec.fieldContext_UserNotification_inAppSent(ctx, field)
 			case "emailSent":
 				return ec.fieldContext_UserNotification_emailSent(ctx, field)
 			case "activity":
@@ -23074,8 +23074,8 @@ func (ec *executionContext) fieldContext_Mutation_markAllNotificationsAsRead(ctx
 				return ec.fieldContext_UserNotification_userID(ctx, field)
 			case "isRead":
 				return ec.fieldContext_UserNotification_isRead(ctx, field)
-			case "isArchived":
-				return ec.fieldContext_UserNotification_isArchived(ctx, field)
+			case "inAppSent":
+				return ec.fieldContext_UserNotification_inAppSent(ctx, field)
 			case "emailSent":
 				return ec.fieldContext_UserNotification_emailSent(ctx, field)
 			case "activity":
@@ -55684,8 +55684,8 @@ func (ec *executionContext) fieldContext_UserNotification_isRead(ctx context.Con
 	return fc, nil
 }
 
-func (ec *executionContext) _UserNotification_isArchived(ctx context.Context, field graphql.CollectedField, obj *models.UserNotification) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_UserNotification_isArchived(ctx, field)
+func (ec *executionContext) _UserNotification_inAppSent(ctx context.Context, field graphql.CollectedField, obj *models.UserNotification) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_UserNotification_inAppSent(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -55698,7 +55698,7 @@ func (ec *executionContext) _UserNotification_isArchived(ctx context.Context, fi
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.IsArchived, nil
+		return obj.InAppSent, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -55715,7 +55715,7 @@ func (ec *executionContext) _UserNotification_isArchived(ctx context.Context, fi
 	return ec.marshalNBoolean2bool(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_UserNotification_isArchived(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_UserNotification_inAppSent(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "UserNotification",
 		Field:      field,
@@ -56925,8 +56925,8 @@ func (ec *executionContext) fieldContext_UserNotifications_notifications(ctx con
 				return ec.fieldContext_UserNotification_userID(ctx, field)
 			case "isRead":
 				return ec.fieldContext_UserNotification_isRead(ctx, field)
-			case "isArchived":
-				return ec.fieldContext_UserNotification_isArchived(ctx, field)
+			case "inAppSent":
+				return ec.fieldContext_UserNotification_inAppSent(ctx, field)
 			case "emailSent":
 				return ec.fieldContext_UserNotification_emailSent(ctx, field)
 			case "activity":
@@ -56999,8 +56999,8 @@ func (ec *executionContext) fieldContext_UserNotifications_unreadNotifications(c
 				return ec.fieldContext_UserNotification_userID(ctx, field)
 			case "isRead":
 				return ec.fieldContext_UserNotification_isRead(ctx, field)
-			case "isArchived":
-				return ec.fieldContext_UserNotification_isArchived(ctx, field)
+			case "inAppSent":
+				return ec.fieldContext_UserNotification_inAppSent(ctx, field)
 			case "emailSent":
 				return ec.fieldContext_UserNotification_emailSent(ctx, field)
 			case "activity":
@@ -69326,8 +69326,8 @@ func (ec *executionContext) _UserNotification(ctx context.Context, sel ast.Selec
 			if out.Values[i] == graphql.Null {
 				atomic.AddUint32(&out.Invalids, 1)
 			}
-		case "isArchived":
-			out.Values[i] = ec._UserNotification_isArchived(ctx, field, obj)
+		case "inAppSent":
+			out.Values[i] = ec._UserNotification_inAppSent(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
 				atomic.AddUint32(&out.Invalids, 1)
 			}

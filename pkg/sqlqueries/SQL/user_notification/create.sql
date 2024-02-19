@@ -3,7 +3,7 @@ INSERT INTO public.user_notification(
     activity_id,
     user_id,
     is_read,
-    is_archived,
+    in_app_sent,
     email_sent,
     created_by
 )
@@ -12,7 +12,7 @@ VALUES (
     :activity_id,
     :user_id,
     :is_read,
-    :is_archived,
+    :in_app_sent,
     :email_sent,
     :created_by
 )
@@ -21,7 +21,7 @@ id,
 activity_id,
 user_id,
 is_read,
-is_archived,
+in_app_sent,
 email_sent,
 created_by,
 created_dts,

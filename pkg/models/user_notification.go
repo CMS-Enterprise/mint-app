@@ -13,7 +13,7 @@ type UserNotification struct {
 	// The if of the entity this notification is about
 	ActivityID uuid.UUID `json:"activityID" db:"activity_id"`
 	IsRead     bool      `json:"isRead" db:"is_read"`
-	IsArchived bool      `json:"isArchived" db:"is_archived"` //TODO: EASI-3925 Switch to in_App_sent
+	InAppSent  bool      `json:"inAppSent" db:"in_app_sent"` //TODO: EASI-3925 Switch to in_App_sent
 	EmailSent  bool      `json:"emailSent" db:"email_sent"`
 }
 
@@ -30,7 +30,7 @@ func NewUserNotification(
 		baseStruct: NewBaseStruct(userID),
 		ActivityID: activityID,
 		IsRead:     !inAppNotification, // set to read if user doesn't want notifications
-		IsArchived: !inAppNotification, // set to archived if user doesn't want notifications
+		InAppSent:  inAppNotification,  // set to archived if user doesn't want notifications
 		EmailSent:  emailNotification,  // set that an email should be sent for this
 	}
 }

@@ -37,7 +37,7 @@ CREATE TABLE user_notification (
     activity_id UUID NOT NULL REFERENCES activity(id), --foreign key to user table
     user_id UUID NOT NULL REFERENCES user_account(id),
     is_read  BOOLEAN NOT NULL DEFAULT FALSE,
-    is_archived  BOOLEAN NOT NULL DEFAULT FALSE,
+    in_app_sent  BOOLEAN NOT NULL,
     email_sent  BOOLEAN NOT NULL,
 
     --META DATA
