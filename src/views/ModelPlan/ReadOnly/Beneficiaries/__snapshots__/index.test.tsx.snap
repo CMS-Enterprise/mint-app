@@ -55,7 +55,7 @@ exports[`Read Only Model Plan Summary -- Beneficiaries > matches snapshot 1`] = 
                   data-testid="tooltipWrapper"
                 >
                   <div
-                    aria-describedby="tooltip-890103"
+                    aria-describedby="tooltip-880933"
                     class="usa-tooltip__trigger mint-no-print margin-left-05"
                     data-testid="triggerElement"
                     position="right"
@@ -80,7 +80,7 @@ exports[`Read Only Model Plan Summary -- Beneficiaries > matches snapshot 1`] = 
                     aria-hidden="true"
                     class="usa-tooltip__body"
                     data-testid="tooltipBody"
-                    id="tooltip-890103"
+                    id="tooltip-880933"
                     role="tooltip"
                     title="(based on a diagnosis, procedure code, condition, etc.)"
                   >
