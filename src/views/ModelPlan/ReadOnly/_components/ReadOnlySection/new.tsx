@@ -62,8 +62,8 @@ export const formatListOtherItems = <
   return getKeys(config.options)
     .filter(option => value?.includes(option))
     .map((option): string | null | undefined => {
-      if (values[config.optionsRelatedInfo?.[option]]) {
-        return values[config.optionsRelatedInfo?.[option]];
+      if (config.optionsRelatedInfo?.[option]) {
+        return values[config.optionsRelatedInfo?.[option]] || '';
       }
 
       // If the a child also has children, format them together to be rendered in a string
