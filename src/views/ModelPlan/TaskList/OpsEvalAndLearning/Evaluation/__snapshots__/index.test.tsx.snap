@@ -389,26 +389,24 @@ exports[`Model Plan Ops Eval and Learning > matches snapshot 1`] = `
               aria-live="polite"
               aria-relevant="additions text"
               class="css-1f43avz-a11yText-A11yText"
-              role="log"
             />
             <div
-              class=" css-1vl89cy-control"
+              class=" css-jvusj8-control"
             >
               <div
-                class=" css-1fdsijx-ValueContainer"
+                class=" css-319lph-ValueContainer"
               >
                 <div
-                  class=" css-1jqq78o-placeholder"
+                  class=" css-14el2xx-placeholder"
                   id="react-select-4-placeholder"
                 >
                   0 selected
                 </div>
                 <div
-                  class=" css-qbdosj-Input"
+                  class=" css-6j8wv5-Input"
                   data-value=""
                 >
                   <input
-                    aria-activedescendant=""
                     aria-autocomplete="list"
                     aria-describedby="react-select-4-placeholder"
                     aria-expanded="false"
@@ -432,11 +430,11 @@ exports[`Model Plan Ops Eval and Learning > matches snapshot 1`] = `
                 class=" css-1hb7zxy-IndicatorsContainer"
               >
                 <span
-                  class=" css-16b81-indicatorSeparator"
+                  class=" css-1vtyy7d-indicatorSeparator"
                 />
                 <div
                   aria-hidden="true"
-                  class=" css-gjng1h-indicatorContainer"
+                  class=" css-1232v1p-indicatorContainer"
                 >
                   <svg
                     aria-hidden="true"
@@ -457,7 +455,6 @@ exports[`Model Plan Ops Eval and Learning > matches snapshot 1`] = `
               <input
                 name="dataNeededForMonitoring"
                 type="hidden"
-                value=""
               />
             </div>
           </div>
@@ -514,26 +511,24 @@ exports[`Model Plan Ops Eval and Learning > matches snapshot 1`] = `
               aria-live="polite"
               aria-relevant="additions text"
               class="css-1f43avz-a11yText-A11yText"
-              role="log"
             />
             <div
-              class=" css-1vl89cy-control"
+              class=" css-jvusj8-control"
             >
               <div
-                class=" css-1fdsijx-ValueContainer"
+                class=" css-319lph-ValueContainer"
               >
                 <div
-                  class=" css-1jqq78o-placeholder"
+                  class=" css-14el2xx-placeholder"
                   id="react-select-5-placeholder"
                 >
                   0 selected
                 </div>
                 <div
-                  class=" css-qbdosj-Input"
+                  class=" css-6j8wv5-Input"
                   data-value=""
                 >
                   <input
-                    aria-activedescendant=""
                     aria-autocomplete="list"
                     aria-describedby="react-select-5-placeholder"
                     aria-expanded="false"
@@ -557,11 +552,11 @@ exports[`Model Plan Ops Eval and Learning > matches snapshot 1`] = `
                 class=" css-1hb7zxy-IndicatorsContainer"
               >
                 <span
-                  class=" css-16b81-indicatorSeparator"
+                  class=" css-1vtyy7d-indicatorSeparator"
                 />
                 <div
                   aria-hidden="true"
-                  class=" css-gjng1h-indicatorContainer"
+                  class=" css-1232v1p-indicatorContainer"
                 >
                   <svg
                     aria-hidden="true"
@@ -582,7 +577,6 @@ exports[`Model Plan Ops Eval and Learning > matches snapshot 1`] = `
               <input
                 name="dataToSendParticicipants"
                 type="hidden"
-                value=""
               />
             </div>
           </div>

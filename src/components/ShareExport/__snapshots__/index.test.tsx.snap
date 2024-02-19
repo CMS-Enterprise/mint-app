@@ -7245,26 +7245,24 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     aria-live="polite"
                     aria-relevant="additions text"
                     class="css-1f43avz-a11yText-A11yText"
-                    role="log"
                   />
                   <div
-                    class="cedar-contact-select__control css-1vl89cy-control"
+                    class="cedar-contact-select__control css-jvusj8-control"
                   >
                     <div
-                      class="cedar-contact-select__value-container cedar-contact-select__value-container--is-multi css-1fdsijx-ValueContainer"
+                      class="cedar-contact-select__value-container cedar-contact-select__value-container--is-multi css-319lph-ValueContainer"
                     >
                       <div
-                        class="cedar-contact-select__placeholder css-1jqq78o-placeholder"
+                        class="cedar-contact-select__placeholder css-14el2xx-placeholder"
                         id="react-select-share-model-recipients-placeholder"
                       >
                         0 selected
                       </div>
                       <div
-                        class="cedar-contact-select__input-container css-qbdosj-Input"
+                        class="cedar-contact-select__input-container css-6j8wv5-Input"
                         data-value=""
                       >
                         <input
-                          aria-activedescendant=""
                           aria-autocomplete="list"
                           aria-describedby="react-select-share-model-recipients-placeholder"
                           aria-expanded="false"
@@ -7288,11 +7286,11 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                       class="cedar-contact-select__indicators css-1hb7zxy-IndicatorsContainer"
                     >
                       <span
-                        class="cedar-contact-select__indicator-separator css-16b81-indicatorSeparator"
+                        class="cedar-contact-select__indicator-separator css-1vtyy7d-indicatorSeparator"
                       />
                       <div
                         aria-hidden="true"
-                        class="cedar-contact-select__indicator cedar-contact-select__dropdown-indicator css-gjng1h-indicatorContainer"
+                        class="cedar-contact-select__indicator cedar-contact-select__dropdown-indicator css-1232v1p-indicatorContainer"
                       >
                         <svg
                           aria-hidden="true"
@@ -7313,7 +7311,6 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     <input
                       name="usernames"
                       type="hidden"
-                      value=""
                     />
                   </div>
                 </div>
@@ -14639,26 +14636,24 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                     aria-live="polite"
                     aria-relevant="additions text"
                     class="css-1f43avz-a11yText-A11yText"
-                    role="log"
                   />
                   <div
-                    class="cedar-contact-select__control css-1vl89cy-control"
+                    class="cedar-contact-select__control css-jvusj8-control"
                   >
                     <div
-                      class="cedar-contact-select__value-container cedar-contact-select__value-container--is-multi css-1fdsijx-ValueContainer"
+                      class="cedar-contact-select__value-container cedar-contact-select__value-container--is-multi css-319lph-ValueContainer"
                     >
                       <div
-                        class="cedar-contact-select__placeholder css-1jqq78o-placeholder"
+                        class="cedar-contact-select__placeholder css-14el2xx-placeholder"
                         id="react-select-share-model-recipients-placeholder"
                       >
                         0 selected
                       </div>
                       <div
-                        class="cedar-contact-select__input-container css-qbdosj-Input"
+                        class="cedar-contact-select__input-container css-6j8wv5-Input"
                         data-value=""
                       >
                         <input
-                          aria-activedescendant=""
                           aria-autocomplete="list"
                           aria-describedby="react-select-share-model-recipients-placeholder"
                           aria-expanded="false"
@@ -14682,11 +14677,11 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                       class="cedar-contact-select__indicators css-1hb7zxy-IndicatorsContainer"
                     >
                       <span
-                        class="cedar-contact-select__indicator-separator css-16b81-indicatorSeparator"
+                        class="cedar-contact-select__indicator-separator css-1vtyy7d-indicatorSeparator"
                       />
                       <div
                         aria-hidden="true"
-                        class="cedar-contact-select__indicator cedar-contact-select__dropdown-indicator css-gjng1h-indicatorContainer"
+                        class="cedar-contact-select__indicator cedar-contact-select__dropdown-indicator css-1232v1p-indicatorContainer"
                       >
                         <svg
                           aria-hidden="true"
@@ -14707,7 +14702,6 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                     <input
                       name="usernames"
                       type="hidden"
-                      value=""
                     />
                   </div>
                 </div>
