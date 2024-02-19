@@ -239,7 +239,7 @@ const isEmpty = (value: any) => {
 
 export type ReadOnlySectionNewProps<
   T extends keyof T | string,
-  C extends string | keyof C
+  C extends keyof C | string
 > = {
   field: string; // Any gql field name
   translations: Record<string, TranslationConfigType<T, C>>;
@@ -249,7 +249,7 @@ export type ReadOnlySectionNewProps<
 
 const ReadOnlySectionNew = <
   T extends keyof T | string,
-  C extends string | keyof C
+  C extends keyof C | string
 >({
   field,
   translations,
