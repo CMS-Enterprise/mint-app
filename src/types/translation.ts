@@ -710,43 +710,82 @@ export type TranslationPayments = {
   payRecipients: TranslationFieldPropertiesWithOptions<PayRecipient>;
   payRecipientsOtherSpecification: TranslationFieldProperties;
   payRecipientsNote: TranslationFieldProperties;
-  payType: TranslationFieldPropertiesWithOptions<PayType>;
+  payType: TranslationFieldPropertiesWithOptionsAndChildren<PayType>;
   payTypeNote: TranslationFieldProperties;
   // Claims Based Payment
-  payClaims: TranslationFieldPropertiesWithOptions<ClaimsBasedPayType>;
+  payClaims: TranslationFieldPropertiesWithParentAndChildren<
+    ClaimsBasedPayType,
+    PayType
+  >;
   payClaimsOther: TranslationFieldProperties;
   payClaimsNote: TranslationFieldProperties;
-  shouldAnyProvidersExcludedFFSSystems: TranslationFieldPropertiesWithOptions<Bool>;
+  shouldAnyProvidersExcludedFFSSystems: TranslationFieldPropertiesWithOptionsAndParent<
+    Bool,
+    PayType
+  >;
   shouldAnyProviderExcludedFFSSystemsNote: TranslationFieldProperties;
-  changesMedicarePhysicianFeeSchedule: TranslationFieldPropertiesWithOptions<Bool>;
+  changesMedicarePhysicianFeeSchedule: TranslationFieldPropertiesWithOptionsAndParent<
+    Bool,
+    PayType
+  >;
   changesMedicarePhysicianFeeScheduleNote: TranslationFieldProperties;
-  affectsMedicareSecondaryPayerClaims: TranslationFieldPropertiesWithOptions<Bool>;
+  affectsMedicareSecondaryPayerClaims: TranslationFieldPropertiesWithOptionsAndParent<
+    Bool,
+    PayType
+  >;
   affectsMedicareSecondaryPayerClaimsHow: TranslationFieldProperties;
   affectsMedicareSecondaryPayerClaimsNote: TranslationFieldProperties;
-  payModelDifferentiation: TranslationFieldProperties;
+  payModelDifferentiation: TranslationFieldPropertiesWithParent<PayType>;
   // Anticipating Dependencies
-  creatingDependenciesBetweenServices: TranslationFieldPropertiesWithOptions<Bool>;
+  creatingDependenciesBetweenServices: TranslationFieldPropertiesWithOptionsAndParent<
+    Bool,
+    PayType
+  >;
   creatingDependenciesBetweenServicesNote: TranslationFieldProperties;
-  needsClaimsDataCollection: TranslationFieldPropertiesWithOptions<Bool>;
+  needsClaimsDataCollection: TranslationFieldPropertiesWithOptionsAndParent<
+    Bool,
+    PayType
+  >;
   needsClaimsDataCollectionNote: TranslationFieldProperties;
-  providingThirdPartyFile: TranslationFieldPropertiesWithOptions<Bool>;
-  isContractorAwareTestDataRequirements: TranslationFieldPropertiesWithOptions<Bool>;
+  providingThirdPartyFile: TranslationFieldPropertiesWithOptionsAndParent<
+    Bool,
+    PayType
+  >;
+  isContractorAwareTestDataRequirements: TranslationFieldPropertiesWithOptionsAndParent<
+    Bool,
+    PayType
+  >;
   // Beneficiary Cost Sharing
-  beneficiaryCostSharingLevelAndHandling: TranslationFieldProperties;
-  waiveBeneficiaryCostSharingForAnyServices: TranslationFieldPropertiesWithOptions<Bool>;
+  beneficiaryCostSharingLevelAndHandling: TranslationFieldPropertiesWithParent<ClaimsBasedPayType>;
+  waiveBeneficiaryCostSharingForAnyServices: TranslationFieldPropertiesWithOptionsAndParent<
+    Bool,
+    ClaimsBasedPayType
+  >;
   waiveBeneficiaryCostSharingServiceSpecification: TranslationFieldProperties;
-  waiverOnlyAppliesPartOfPayment: TranslationFieldPropertiesWithOptions<Bool>;
+  waiverOnlyAppliesPartOfPayment: TranslationFieldPropertiesWithOptionsAndParent<
+    Bool,
+    ClaimsBasedPayType
+  >;
   waiveBeneficiaryCostSharingNote: TranslationFieldProperties;
   // Non-Claims Based Payments
-  nonClaimsPayments: TranslationFieldPropertiesWithOptions<NonClaimsBasedPayType>;
+  nonClaimsPayments: TranslationFieldPropertiesWithOptionsAndParent<
+    NonClaimsBasedPayType,
+    PayType
+  >;
   nonClaimsPaymentsNote: TranslationFieldProperties;
   nonClaimsPaymentOther: TranslationFieldProperties;
-  paymentCalculationOwner: TranslationFieldProperties;
-  numberPaymentsPerPayCycle: TranslationFieldProperties;
+  paymentCalculationOwner: TranslationFieldPropertiesWithParent<PayType>;
+  numberPaymentsPerPayCycle: TranslationFieldPropertiesWithParent<PayType>;
   numberPaymentsPerPayCycleNote: TranslationFieldProperties;
-  sharedSystemsInvolvedAdditionalClaimPayment: TranslationFieldPropertiesWithOptions<Bool>;
+  sharedSystemsInvolvedAdditionalClaimPayment: TranslationFieldPropertiesWithOptionsAndParent<
+    Bool,
+    PayType
+  >;
   sharedSystemsInvolvedAdditionalClaimPaymentNote: TranslationFieldProperties;
-  planningToUseInnovationPaymentContractor: TranslationFieldPropertiesWithOptions<Bool>;
+  planningToUseInnovationPaymentContractor: TranslationFieldPropertiesWithOptionsAndParent<
+    Bool,
+    PayType
+  >;
   planningToUseInnovationPaymentContractorNote: TranslationFieldProperties;
   // Complexity
   expectedCalculationComplexityLevel: TranslationFieldPropertiesWithOptions<ComplexityCalculationLevelType>;

@@ -103,9 +103,14 @@ export const getRelatedUneededQuestions = <
     | TranslationFieldPropertiesWithOptions<T>
     | TranslationFieldPropertiesWithOptionsAndChildren<T, C>
     | TranslationFieldPropertiesWithOptionsAndParent<T, C>, // Translation config
-  value: T[] | undefined // field value/enum array,
+  value: T[] | undefined, // field value/enum array,
+  singleChildCheck?: T // If only want to check unneeded children for a specific value of the parent
 ): (string | null | undefined)[] | null => {
-  if (!isTranslationFieldPropertiesWithOptionsAndChildren(config)) return null;
+  if (
+    !isTranslationFieldPropertiesWithOptionsAndChildren(config) &&
+    !isTranslationFieldPropertiesWithParentAndChildren(config)
+  )
+    return null;
 
   // Creating to arrays to hold values of needed and unneeded hidden questions
   // For instances like `providerOverlap` where the multiple parent evaluations triggers the same rendered question
@@ -113,7 +118,16 @@ export const getRelatedUneededQuestions = <
   let unneededRelations: string[] = [];
   const neededRelations: string[] = [];
 
-  getKeys(config.childRelation).forEach(option => {
+  let children = config.childRelation;
+
+  // Check if only checking for a single value, then reassign obj
+  if (singleChildCheck) {
+    children = {
+      [singleChildCheck]: config.childRelation[singleChildCheck]
+    } as Partial<Record<T, (() => TranslationConfigType<T, C>)[]>>;
+  }
+
+  getKeys(children).forEach(option => {
     // If the evaluation of the parent value triggers a child question, sort into appropriate arrays
     if (
       (Array.isArray(value) && !value?.includes(option)) ||
