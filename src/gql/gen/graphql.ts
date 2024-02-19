@@ -2761,7 +2761,6 @@ export type UserNotification = {
   __typename: 'UserNotification';
   activity: Activity;
   activityID: Scalars['UUID']['output'];
-  content: UserNotificationContent;
   createdBy: Scalars['UUID']['output'];
   createdByUserAccount: UserAccount;
   createdDts: Scalars['Time']['output'];
@@ -2774,9 +2773,6 @@ export type UserNotification = {
   modifiedDts?: Maybe<Scalars['Time']['output']>;
   userID: Scalars['UUID']['output'];
 };
-
-/** User Notification Content represents the possible data associated with a User Notification */
-export type UserNotificationContent = DiscussionReply | PlanDiscussion;
 
 export enum UserNotificationPreferenceFlag {
   ALL = 'ALL',

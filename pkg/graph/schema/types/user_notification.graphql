@@ -1,7 +1,4 @@
-"""
-User Notification Content represents the possible data associated with a User Notification
-"""
-union UserNotificationContent = PlanDiscussion | DiscussionReply
+
 """
 UserNotification represents a notification about a specific Activity
 """
@@ -14,7 +11,7 @@ type UserNotification {
   inAppSent: Boolean!
   emailSent: Boolean!
   activity: Activity! # should we nest this?
-  content: UserNotificationContent!
+
 
   createdBy: UUID!
   createdByUserAccount: UserAccount!

@@ -14,8 +14,6 @@ type PlanDiscussion struct {
 	IsAssessment        bool                `json:"isAssessment" db:"is_assessment"`
 }
 
-func (d PlanDiscussion) isUserNotificationContent() {}
-
 // NewPlanDiscussion returns a New PlanDiscussion with a status of UNANSWERED
 func NewPlanDiscussion(
 	principal uuid.UUID,
@@ -44,8 +42,6 @@ type DiscussionReply struct {
 	UserRoleDescription *string             `json:"userRoleDescription" db:"user_role_description"`
 	IsAssessment        bool                `json:"isAssessment" db:"is_assessment"`
 }
-
-func (dr DiscussionReply) isUserNotificationContent() {}
 
 // NewDiscussionReply returns a new Discussion Reply
 func NewDiscussionReply(

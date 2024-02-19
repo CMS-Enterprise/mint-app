@@ -6,7 +6,6 @@ package resolvers
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/google/uuid"
 
@@ -33,12 +32,6 @@ func (r *mutationResolver) MarkAllNotificationsAsRead(ctx context.Context) ([]*m
 func (r *userNotificationResolver) Activity(ctx context.Context, obj *models.UserNotification) (*models.Activity, error) {
 	return loaders.ActivityGetByID(ctx, obj.ActivityID)
 	// return notifications.ActivityGetByID(ctx, r.store, obj.ActivityID)
-}
-
-// Content is the resolver for the content field.
-func (r *userNotificationResolver) Content(ctx context.Context, obj *models.UserNotification) (models.UserNotificationContent, error) {
-	//TODO: EASI-3295  Implement this content resolver, either on the notification or the activity level. Use data loaders
-	panic(fmt.Errorf("not implemented: Content - content"))
 }
 
 // UserNotification returns generated.UserNotificationResolver implementation.
