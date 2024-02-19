@@ -6,8 +6,8 @@ import { frequencyOptions } from './miscellaneous';
 
 export const beneficiaries: TranslationBeneficiaries = {
   beneficiaries: {
-    gqlField: 'participantsCurrentlyInModels',
-    goField: 'ParticipantsCurrentlyInModels',
+    gqlField: 'beneficiaries',
+    goField: 'Beneficiaries',
     dbField: 'beneficiaries',
     label: 'Who are the beneficiaries of this model? Select all that apply.',
     readonlyLabel: 'Who are the beneficiaries of this model?',
@@ -27,15 +27,11 @@ export const beneficiaries: TranslationBeneficiaries = {
     },
     optionsLabels: {
       DISEASE_SPECIFIC:
-        '(based on a diagnosis, procedure code, condition, etc.)',
-      DUALLY_ELIGIBLE: '',
-      MEDICAID: '',
-      MEDICARE_ADVANTAGE: '',
-      MEDICARE_FFS: '',
-      MEDICARE_PART_D: '',
-      UNDERSERVED: '',
-      NA: '',
-      OTHER: ''
+        '(based on a diagnosis, procedure code, condition, etc.)'
+    },
+    optionsRelatedInfo: {
+      DISEASE_SPECIFIC: 'diseaseSpecificGroup',
+      OTHER: 'beneficiariesOther'
     },
     filterGroups: [ModelViewFilter.MDM]
   },
@@ -47,6 +43,7 @@ export const beneficiaries: TranslationBeneficiaries = {
       'Please describe the disease-specific groups this model will impact.',
     dataType: 'string',
     formType: 'text',
+    isOtherType: true,
     filterGroups: [ModelViewFilter.MDM]
   },
   beneficiariesOther: {
@@ -56,6 +53,7 @@ export const beneficiaries: TranslationBeneficiaries = {
     label: 'Please describe the other groups this model will impact.',
     dataType: 'string',
     formType: 'textarea',
+    isOtherType: true,
     filterGroups: [ModelViewFilter.MDM]
   },
   beneficiariesNote: {
@@ -73,12 +71,17 @@ export const beneficiaries: TranslationBeneficiaries = {
     dbField: 'treat_dual_elligible_different',
     label:
       'Should dually-eligible beneficiaries be treated differently than non-dually eligibles?',
+    readonlyLabel:
+      'Should dually-eligible beneficiaries be treated differently than non-dually eligibles? How so?',
     dataType: 'boolean',
     formType: 'radio',
     options: {
       YES: 'Yes',
       NO: 'No',
       TBD: 'Not applicable'
+    },
+    optionsRelatedInfo: {
+      YES: 'treatDualElligibleDifferentHow'
     },
     filterGroups: [ModelViewFilter.IDDOC, ModelViewFilter.PBG]
   },
@@ -89,6 +92,7 @@ export const beneficiaries: TranslationBeneficiaries = {
     label: 'How so?',
     dataType: 'string',
     formType: 'textarea',
+    isOtherType: true,
     filterGroups: [ModelViewFilter.IDDOC, ModelViewFilter.PBG]
   },
   treatDualElligibleDifferentNote: {
@@ -106,12 +110,17 @@ export const beneficiaries: TranslationBeneficiaries = {
     dbField: 'exclude_certain_characteristics',
     label:
       'Should beneficiaries with certain characteristics or enrollments be excluded?',
+    readonlyLabel:
+      'Should beneficiaries with certain characteristics or enrollments be excluded? How so, what are the exclusionary criteria?',
     dataType: 'boolean',
     formType: 'radio',
     options: {
       YES: 'Yes',
       NO: 'No',
       TBD: 'Not applicable'
+    },
+    optionsRelatedInfo: {
+      YES: 'excludeCertainCharacteristicsCriteria'
     },
     filterGroups: [ModelViewFilter.IDDOC, ModelViewFilter.PBG]
   },
@@ -122,6 +131,7 @@ export const beneficiaries: TranslationBeneficiaries = {
     label: 'What are the exclusionary criteria?',
     dataType: 'string',
     formType: 'textarea',
+    isOtherType: true,
     filterGroups: [ModelViewFilter.IDDOC, ModelViewFilter.PBG]
   },
   excludeCertainCharacteristicsNote: {
@@ -140,6 +150,7 @@ export const beneficiaries: TranslationBeneficiaries = {
     label: 'How many people do you think will be impacted by this model?',
     dataType: 'number',
     formType: 'rangeInput',
+    isPageStart: true,
     filterGroups: [ModelViewFilter.MDM]
   },
   estimateConfidence: {
@@ -195,6 +206,9 @@ export const beneficiaries: TranslationBeneficiaries = {
       OTHER: 'Other',
       NA: 'Not applicable'
     },
+    optionsRelatedInfo: {
+      OTHER: 'beneficiarySelectionOther'
+    },
     filterGroups: [ModelViewFilter.CMMI]
   },
   beneficiarySelectionOther: {
@@ -204,6 +218,7 @@ export const beneficiaries: TranslationBeneficiaries = {
     label: 'Please describe the other method for choosing beneficiaries.',
     dataType: 'string',
     formType: 'textarea',
+    isOtherType: true,
     filterGroups: [ModelViewFilter.CMMI]
   },
   beneficiarySelectionNote: {
@@ -222,6 +237,7 @@ export const beneficiaries: TranslationBeneficiaries = {
     label: 'How frequently are beneficiaries added?',
     dataType: 'enum',
     formType: 'checkbox',
+    isPageStart: true,
     options: frequencyOptions,
     optionsRelatedInfo: {
       ANNUALLY: '',
@@ -240,6 +256,7 @@ export const beneficiaries: TranslationBeneficiaries = {
     label: 'Please specify',
     dataType: 'string',
     formType: 'text',
+    isOtherType: true,
     filterGroups: [ModelViewFilter.CMMI]
   },
   beneficiarySelectionFrequencyOther: {
@@ -249,6 +266,7 @@ export const beneficiaries: TranslationBeneficiaries = {
     label: 'Please specify',
     dataType: 'string',
     formType: 'text',
+    isOtherType: true,
     filterGroups: [ModelViewFilter.CMMI]
   },
   beneficiarySelectionFrequencyNote: {
@@ -285,6 +303,7 @@ export const beneficiaries: TranslationBeneficiaries = {
     label: 'Please specify',
     dataType: 'string',
     formType: 'text',
+    isOtherType: true,
     filterGroups: [ModelViewFilter.CMMI]
   },
   beneficiaryRemovalFrequencyOther: {
@@ -294,6 +313,7 @@ export const beneficiaries: TranslationBeneficiaries = {
     label: 'Please specify',
     dataType: 'string',
     formType: 'text',
+    isOtherType: true,
     filterGroups: [ModelViewFilter.CMMI]
   },
   beneficiaryRemovalFrequencyNote: {
@@ -355,6 +375,7 @@ export const beneficiaries: TranslationBeneficiaries = {
     label: 'Please describe',
     dataType: 'string',
     formType: 'textarea',
+    isOtherType: true,
     filterGroups: [ModelViewFilter.MDM, ModelViewFilter.OACT]
   },
   precedenceRulesNo: {
@@ -364,6 +385,7 @@ export const beneficiaries: TranslationBeneficiaries = {
     label: 'Please describe',
     dataType: 'string',
     formType: 'textarea',
+    isOtherType: true,
     filterGroups: [ModelViewFilter.MDM, ModelViewFilter.OACT]
   },
   precedenceRulesNote: {

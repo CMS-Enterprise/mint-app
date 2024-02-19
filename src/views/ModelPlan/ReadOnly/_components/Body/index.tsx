@@ -28,12 +28,18 @@ const ReadOnlyBody = ({
             key={field}
             className={classNames({
               'margin-top-4 padding-top-4 border-top-1px border-base-light':
-                !filteredView && config[field]?.isPageStart // Add border if translation config contains property 'isPageStart'
+                !filteredView &&
+                config[field]?.isPageStart &&
+                !isHiddenByParentCondition(config[field], data) // Add border if translation config contains property 'isPageStart'
             })}
           >
-            {!filteredView && config[field]?.readonlyHeader && (
-              <h3 className="margin-top-0">{config[field]?.readonlyHeader}</h3>
-            )}
+            {!filteredView &&
+              config[field]?.readonlyHeader &&
+              !isHiddenByParentCondition(config[field], data) && (
+                <h3 className="margin-top-0">
+                  {config[field]?.readonlyHeader}
+                </h3>
+              )}
 
             {/* Checks if questions have config to be displayed side by side */}
             {config[field]?.adjacentPositioning ? (
@@ -73,17 +79,12 @@ const ReadOnlyBody = ({
                 )}
               </>
             ) : (
-              <>
-                {/* Don't render questions of type 'isOtherType' as they are rendered within ReadOnlySectionNew */}
-                {!config[field]?.isOtherType && (
-                  <ReadOnlySectionNew
-                    field={field}
-                    translations={config}
-                    values={data}
-                    filteredView={filteredView}
-                  />
-                )}
-              </>
+              <ReadOnlySectionNew
+                field={field}
+                translations={config}
+                values={data}
+                filteredView={filteredView}
+              />
             )}
           </div>
         ))}
