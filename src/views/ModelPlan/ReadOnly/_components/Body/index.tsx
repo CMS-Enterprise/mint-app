@@ -15,7 +15,7 @@ const ReadOnlyBody = ({
   filteredView
 }: {
   data: any;
-  config: TranslationPlanSection;
+  config: Partial<TranslationPlanSection>;
   filteredView?: keyof typeof filterGroupKey;
 }) => {
   return (
@@ -32,7 +32,7 @@ const ReadOnlyBody = ({
             })}
           >
             {!filteredView && config[field]?.readonlyHeader && (
-              <h3 className="margin-top-0">{config[field].readonlyHeader}</h3>
+              <h3 className="margin-top-0">{config[field]?.readonlyHeader}</h3>
             )}
 
             {/* Checks if questions have config to be displayed side by side */}
@@ -54,14 +54,14 @@ const ReadOnlyBody = ({
                     */}
                     {!isHiddenByParentCondition(
                       config[
-                        config[field].adjacentPositioning
+                        config[field]?.adjacentPositioning
                           ?.adjacentField as keyof TranslationPlanSection
                       ],
                       data
                     ) && (
                       <ReadOnlySectionNew
                         field={
-                          config[field].adjacentPositioning
+                          config[field]?.adjacentPositioning
                             ?.adjacentField as keyof TranslationPlanSection
                         }
                         translations={config}

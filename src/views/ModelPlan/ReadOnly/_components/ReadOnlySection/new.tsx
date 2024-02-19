@@ -169,10 +169,10 @@ export const isHiddenByParentCondition = <
   T extends string | keyof T,
   C extends string | keyof C
 >(
-  config: TranslationConfigType<T, C>,
+  config: TranslationConfigType<T, C> | undefined,
   values: any
 ): boolean => {
-  if (!isTranslationFieldPropertiesWithParent(config)) return false;
+  if (!config || !isTranslationFieldPropertiesWithParent(config)) return false;
 
   // Typescript is not inferring the parent config type, but we know it has options with children
   const parentConfig = config.parentRelation() as TranslationFieldPropertiesWithOptionsAndChildren<
@@ -332,31 +332,50 @@ const ReadOnlySectionNew = <
     }
 
     // Renders a single value with options (radio)
-    // May also renders a conditinal follow to the selection
+    // May also renders a conditinal followup value/s to the selection
     if (
       isTranslationFieldPropertiesWithOptions(listConfig) &&
       listConfig.formType === 'radio'
     ) {
       // Checks if configuration exists to optionally render a child's value with the radio value
-      const hasChildField = listConfig.optionsRelatedInfo?.[value as T];
+      const childField = listConfig.optionsRelatedInfo?.[value as T];
 
-      const childField = hasChildField ? values[hasChildField] : null;
+      const childFieldValue = childField ? values[childField] : null;
 
       // Checks if the child field is an array to render as a bulleted list beneath the radio selection
-      const isChildMultiple: boolean = Array.isArray(childField);
+      const isChildMultiple: boolean = Array.isArray(childFieldValue);
 
       // Ensures the the child has configuration to translate the options in array
       const childHasOptions = translations[
-        hasChildField as T
+        childField as T
       ] as TranslationFieldPropertiesWithOptions<T>;
+
+      // Checks if a single radio value has a mapped tooltip/optionsLabel
+      let radioTooltip: string | undefined;
+      if (listConfig.optionsLabels) {
+        radioTooltip = listConfig.optionsLabels[value as T];
+      }
 
       return (
         <div className="margin-y-0 font-body-md line-height-sans-4 text-pre-line">
           {!isEmpty(value) && listConfig.options[value as T]}
 
+          {/* Renders a tooltip if mapped to the selected radio value */}
+          {radioTooltip && (
+            <span className="top-2px position-relative">
+              <Tooltip
+                label={radioTooltip}
+                position="right"
+                className="margin-left-05"
+              >
+                <Icon.Info className="text-base-light" />
+              </Tooltip>
+            </span>
+          )}
+
           {/* Renders a string next to the hyphenated value of the radio option */}
-          {hasChildField && childField && !isChildMultiple && (
-            <span data-testid="other-entry"> - {childField}</span>
+          {childField && childFieldValue && !isChildMultiple && (
+            <span data-testid="other-entry"> - {childFieldValue}</span>
           )}
 
           {/* Renders a list beneath a selection of a radio value */}
@@ -364,12 +383,12 @@ const ReadOnlySectionNew = <
             childHasOptions.options &&
             renderCopyOrList(
               childHasOptions,
-              formatListItems(childHasOptions, values[hasChildField]),
+              formatListItems(childHasOptions, values[childField]),
               tooltipValues
             )}
 
           {/* Render default empty value */}
-          {(isEmpty(value) || (hasChildField && !childField)) && (
+          {(isEmpty(value) || (childField && !childFieldValue)) && (
             <i className="text-base">
               {!isEmpty(value) && ' - '}
               {miscellaneousT('noAdditionalInformation')}

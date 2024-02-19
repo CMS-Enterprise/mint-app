@@ -15,7 +15,7 @@ export const filterGroupKey: Record<string, ModelViewFilter> = {
   ccw: ModelViewFilter.CCW,
   cmmi: ModelViewFilter.CMMI,
   dfsdm: ModelViewFilter.DFSDM,
-  iccod: ModelViewFilter.IDDOC,
+  iddoc: ModelViewFilter.IDDOC,
   ipc: ModelViewFilter.IPC,
   mdm: ModelViewFilter.MDM,
   oact: ModelViewFilter.OACT,
