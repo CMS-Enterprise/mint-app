@@ -33,8 +33,6 @@ func (s *dataBaseCalls) ActivityGetByID(np sqlutils.NamedPreparer, activityID uu
 		return nil, fmt.Errorf("issue retrieving activity: %w", procErr)
 	}
 
-	// TODO: EASi-3294 finish implementing the parsing of meta data.
-
 	meta, err := parseRawActivityMetaData(retActivity.ActivityType, retActivity.MetaDataRaw)
 	if err != nil {
 		return nil, fmt.Errorf("issue converting activity meta data to discrete type: %w", err)
@@ -44,4 +42,16 @@ func (s *dataBaseCalls) ActivityGetByID(np sqlutils.NamedPreparer, activityID uu
 	return retActivity, nil
 }
 
-// func
+// ActivityGetByIDLoader returns a collection of existing activity from the database
+func (s *dataBaseCalls) ActivityGetByIDLoader(np sqlutils.NamedPreparer, paramTableJSON string) ([]*Activity, error) {
+	arg := map[string]interface{}{
+		"paramTableJSON": paramTableJSON,
+	}
+
+	retActivities, err := sqlutils.SelectProcedure[Activity](np, sqlqueries.Activity.GetByIDLoader, arg)
+	if err != nil {
+		return nil, fmt.Errorf("issue selecting activities by ID with the data loader, %w", err)
+	}
+	//Note: This doesn't parse metaData here, that is the repsonsibility of the parent function
+	return retActivities, nil
+}

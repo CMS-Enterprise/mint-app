@@ -14,6 +14,7 @@ import (
 	"github.com/cmsgov/mint-app/pkg/graph/generated"
 	"github.com/cmsgov/mint-app/pkg/models"
 	"github.com/cmsgov/mint-app/pkg/notifications"
+	"github.com/cmsgov/mint-app/pkg/storage/loaders"
 )
 
 // MarkNotificationAsRead is the resolver for the markNotificationAsRead field.
@@ -30,8 +31,8 @@ func (r *mutationResolver) MarkAllNotificationsAsRead(ctx context.Context) ([]*n
 
 // Activity is the resolver for the activity field.
 func (r *userNotificationResolver) Activity(ctx context.Context, obj *notifications.UserNotification) (*notifications.Activity, error) {
-	return notifications.ActivityGetByID(ctx, r.store, obj.ActivityID)
-	//TODO: EASI-3295  Use a data loader
+	return loaders.ActivityGetByID(ctx, obj.ActivityID)
+	// return notifications.ActivityGetByID(ctx, r.store, obj.ActivityID)
 }
 
 // Content is the resolver for the content field.

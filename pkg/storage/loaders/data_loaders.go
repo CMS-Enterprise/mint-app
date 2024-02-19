@@ -1,3 +1,4 @@
+// Package loaders is a responsible for batched data calls
 package loaders
 
 import "github.com/cmsgov/mint-app/pkg/storage"
@@ -26,6 +27,8 @@ type DataLoaders struct {
 	ModelPlanLoader                *WrappedDataLoader
 
 	PossibleOperationSolutionContactLoader *WrappedDataLoader
+
+	ActivityLoader *WrappedDataLoader
 }
 
 // NewDataLoaders instantiates data loaders for the middleware
@@ -57,6 +60,8 @@ func NewDataLoaders(store *storage.Store) *DataLoaders {
 	loaders.ModelPlanLoader = newWrappedDataLoader(loaders.GetModelPlanByModelPlanID)
 
 	loaders.PossibleOperationSolutionContactLoader = newWrappedDataLoader(loaders.PossibleOperationalSolutionContactsGetByPossibleSolutionID)
+
+	loaders.ActivityLoader = newWrappedDataLoader(loaders.activityGetByIDLoaderBatch)
 
 	return loaders
 }
