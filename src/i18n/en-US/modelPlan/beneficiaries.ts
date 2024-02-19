@@ -27,15 +27,7 @@ export const beneficiaries: TranslationBeneficiaries = {
     },
     optionsLabels: {
       DISEASE_SPECIFIC:
-        '(based on a diagnosis, procedure code, condition, etc.)',
-      DUALLY_ELIGIBLE: '',
-      MEDICAID: '',
-      MEDICARE_ADVANTAGE: '',
-      MEDICARE_FFS: '',
-      MEDICARE_PART_D: '',
-      UNDERSERVED: '',
-      NA: '',
-      OTHER: ''
+        '(based on a diagnosis, procedure code, condition, etc.)'
     },
     optionsRelatedInfo: {
       DISEASE_SPECIFIC: 'diseaseSpecificGroup',
