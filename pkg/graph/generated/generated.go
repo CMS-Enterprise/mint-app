@@ -41,6 +41,7 @@ type Config struct {
 }
 
 type ResolverRoot interface {
+	Activity() ActivityResolver
 	AuditChange() AuditChangeResolver
 	CurrentUser() CurrentUserResolver
 	DiscussionReply() DiscussionReplyResolver
@@ -77,6 +78,7 @@ type ComplexityRoot struct {
 	Activity struct {
 		ActivityType          func(childComplexity int) int
 		ActorID               func(childComplexity int) int
+		ActorUserAccount      func(childComplexity int) int
 		CreatedBy             func(childComplexity int) int
 		CreatedByUserAccount  func(childComplexity int) int
 		CreatedDts            func(childComplexity int) int
@@ -1085,6 +1087,9 @@ type ComplexityRoot struct {
 	}
 }
 
+type ActivityResolver interface {
+	ActorUserAccount(ctx context.Context, obj *models.Activity) (*authentication.UserAccount, error)
+}
 type AuditChangeResolver interface {
 	Fields(ctx context.Context, obj *models.AuditChange) (map[string]interface{}, error)
 }
@@ -1378,6 +1383,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Activity.ActorID(childComplexity), true
+
+	case "Activity.actorUserAccount":
+		if e.complexity.Activity.ActorUserAccount == nil {
+			break
+		}
+
+		return e.complexity.Activity.ActorUserAccount(childComplexity), true
 
 	case "Activity.createdBy":
 		if e.complexity.Activity.CreatedBy == nil {
@@ -10092,7 +10104,8 @@ Activity represents an event that happened in the application that could result 
 """
 type Activity {
   id: UUID!
-	actorID: UUID! #TODO: EASI-3925 return the actor? DataLoader?
+	actorID: UUID!
+  actorUserAccount: UserAccount!
 	entityID: UUID! #TODO: EASI-3925 return the entity?
 	activityType: ActivityType!
   metaData: ActivityMetaData!
@@ -12146,6 +12159,72 @@ func (ec *executionContext) fieldContext_Activity_actorID(ctx context.Context, f
 		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return nil, errors.New("field of type UUID does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Activity_actorUserAccount(ctx context.Context, field graphql.CollectedField, obj *models.Activity) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Activity_actorUserAccount(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Activity().ActorUserAccount(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*authentication.UserAccount)
+	fc.Result = res
+	return ec.marshalNUserAccount2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋauthenticationᚐUserAccount(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Activity_actorUserAccount(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Activity",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_UserAccount_id(ctx, field)
+			case "username":
+				return ec.fieldContext_UserAccount_username(ctx, field)
+			case "isEUAID":
+				return ec.fieldContext_UserAccount_isEUAID(ctx, field)
+			case "commonName":
+				return ec.fieldContext_UserAccount_commonName(ctx, field)
+			case "locale":
+				return ec.fieldContext_UserAccount_locale(ctx, field)
+			case "email":
+				return ec.fieldContext_UserAccount_email(ctx, field)
+			case "givenName":
+				return ec.fieldContext_UserAccount_givenName(ctx, field)
+			case "familyName":
+				return ec.fieldContext_UserAccount_familyName(ctx, field)
+			case "zoneInfo":
+				return ec.fieldContext_UserAccount_zoneInfo(ctx, field)
+			case "hasLoggedIn":
+				return ec.fieldContext_UserAccount_hasLoggedIn(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type UserAccount", field.Name)
 		},
 	}
 	return fc, nil
@@ -55815,6 +55894,8 @@ func (ec *executionContext) fieldContext_UserNotification_activity(ctx context.C
 				return ec.fieldContext_Activity_id(ctx, field)
 			case "actorID":
 				return ec.fieldContext_Activity_actorID(ctx, field)
+			case "actorUserAccount":
+				return ec.fieldContext_Activity_actorUserAccount(ctx, field)
 			case "entityID":
 				return ec.fieldContext_Activity_entityID(ctx, field)
 			case "activityType":
@@ -59645,6 +59726,42 @@ func (ec *executionContext) _Activity(ctx context.Context, sel ast.SelectionSet,
 			if out.Values[i] == graphql.Null {
 				atomic.AddUint32(&out.Invalids, 1)
 			}
+		case "actorUserAccount":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Activity_actorUserAccount(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
+				return res
+			}
+
+			if field.Deferrable != nil {
+				dfs, ok := deferred[field.Deferrable.Label]
+				di := 0
+				if ok {
+					dfs.AddField(field)
+					di = len(dfs.Values) - 1
+				} else {
+					dfs = graphql.NewFieldSet([]graphql.CollectedField{field})
+					deferred[field.Deferrable.Label] = dfs
+				}
+				dfs.Concurrently(di, func(ctx context.Context) graphql.Marshaler {
+					return innerFunc(ctx, dfs)
+				})
+
+				// don't run the out.Concurrently() call below
+				out.Values[i] = graphql.Null
+				continue
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
 		case "entityID":
 			out.Values[i] = ec._Activity_entityID(ctx, field, obj)
 			if out.Values[i] == graphql.Null {

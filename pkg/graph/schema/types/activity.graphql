@@ -42,7 +42,8 @@ Activity represents an event that happened in the application that could result 
 """
 type Activity {
   id: UUID!
-	actorID: UUID! #TODO: EASI-3925 return the actor? DataLoader?
+	actorID: UUID!
+  actorUserAccount: UserAccount!
 	entityID: UUID! #TODO: EASI-3925 return the entity?
 	activityType: ActivityType!
   metaData: ActivityMetaData!

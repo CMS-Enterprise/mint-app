@@ -42,6 +42,7 @@ export type Activity = {
   __typename: 'Activity';
   activityType: ActivityType;
   actorID: Scalars['UUID']['output'];
+  actorUserAccount: UserAccount;
   createdBy: Scalars['UUID']['output'];
   createdByUserAccount: UserAccount;
   createdDts: Scalars['Time']['output'];
