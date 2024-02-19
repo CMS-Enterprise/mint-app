@@ -19,6 +19,7 @@ type TaggedInPlanDiscussionActivityMeta {
   version: Int!
   type: ActivityType!
   discussionID: UUID!
+  discussion: PlanDiscussion!
   content: String!
 }
 
@@ -26,7 +27,9 @@ type TaggedInDiscussionReplyActivityMeta {
   version: Int!
   type: ActivityType!
   discussionID: UUID!
+  discussion: PlanDiscussion!
   replyID: UUID!
+  reply: DiscussionReply!
   content: String!
 }
 

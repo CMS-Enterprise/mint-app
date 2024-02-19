@@ -2650,7 +2650,9 @@ export type TaggedEntity = PossibleOperationalSolution | UserAccount;
 export type TaggedInDiscussionReplyActivityMeta = {
   __typename: 'TaggedInDiscussionReplyActivityMeta';
   content: Scalars['String']['output'];
+  discussion: PlanDiscussion;
   discussionID: Scalars['UUID']['output'];
+  reply: DiscussionReply;
   replyID: Scalars['UUID']['output'];
   type: ActivityType;
   version: Scalars['Int']['output'];
@@ -2659,6 +2661,7 @@ export type TaggedInDiscussionReplyActivityMeta = {
 export type TaggedInPlanDiscussionActivityMeta = {
   __typename: 'TaggedInPlanDiscussionActivityMeta';
   content: Scalars['String']['output'];
+  discussion: PlanDiscussion;
   discussionID: Scalars['UUID']['output'];
   type: ActivityType;
   version: Scalars['Int']['output'];

@@ -66,6 +66,8 @@ type ResolverRoot interface {
 	Subscription() SubscriptionResolver
 	Tag() TagResolver
 	TaggedContent() TaggedContentResolver
+	TaggedInDiscussionReplyActivityMeta() TaggedInDiscussionReplyActivityMetaResolver
+	TaggedInPlanDiscussionActivityMeta() TaggedInPlanDiscussionActivityMetaResolver
 	UserNotification() UserNotificationResolver
 }
 
@@ -999,7 +1001,9 @@ type ComplexityRoot struct {
 
 	TaggedInDiscussionReplyActivityMeta struct {
 		Content      func(childComplexity int) int
+		Discussion   func(childComplexity int) int
 		DiscussionID func(childComplexity int) int
+		Reply        func(childComplexity int) int
 		ReplyID      func(childComplexity int) int
 		Type         func(childComplexity int) int
 		Version      func(childComplexity int) int
@@ -1007,6 +1011,7 @@ type ComplexityRoot struct {
 
 	TaggedInPlanDiscussionActivityMeta struct {
 		Content      func(childComplexity int) int
+		Discussion   func(childComplexity int) int
 		DiscussionID func(childComplexity int) int
 		Type         func(childComplexity int) int
 		Version      func(childComplexity int) int
@@ -1348,6 +1353,14 @@ type TagResolver interface {
 }
 type TaggedContentResolver interface {
 	RawContent(ctx context.Context, obj *models.TaggedContent) (string, error)
+}
+type TaggedInDiscussionReplyActivityMetaResolver interface {
+	Discussion(ctx context.Context, obj *models.TaggedInDiscussionReplyActivityMeta) (*models.PlanDiscussion, error)
+
+	Reply(ctx context.Context, obj *models.TaggedInDiscussionReplyActivityMeta) (*models.DiscussionReply, error)
+}
+type TaggedInPlanDiscussionActivityMetaResolver interface {
+	Discussion(ctx context.Context, obj *models.TaggedInPlanDiscussionActivityMeta) (*models.PlanDiscussion, error)
 }
 type UserNotificationResolver interface {
 	Activity(ctx context.Context, obj *models.UserNotification) (*models.Activity, error)
@@ -7362,12 +7375,26 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.TaggedInDiscussionReplyActivityMeta.Content(childComplexity), true
 
+	case "TaggedInDiscussionReplyActivityMeta.discussion":
+		if e.complexity.TaggedInDiscussionReplyActivityMeta.Discussion == nil {
+			break
+		}
+
+		return e.complexity.TaggedInDiscussionReplyActivityMeta.Discussion(childComplexity), true
+
 	case "TaggedInDiscussionReplyActivityMeta.discussionID":
 		if e.complexity.TaggedInDiscussionReplyActivityMeta.DiscussionID == nil {
 			break
 		}
 
 		return e.complexity.TaggedInDiscussionReplyActivityMeta.DiscussionID(childComplexity), true
+
+	case "TaggedInDiscussionReplyActivityMeta.reply":
+		if e.complexity.TaggedInDiscussionReplyActivityMeta.Reply == nil {
+			break
+		}
+
+		return e.complexity.TaggedInDiscussionReplyActivityMeta.Reply(childComplexity), true
 
 	case "TaggedInDiscussionReplyActivityMeta.replyID":
 		if e.complexity.TaggedInDiscussionReplyActivityMeta.ReplyID == nil {
@@ -7396,6 +7423,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.TaggedInPlanDiscussionActivityMeta.Content(childComplexity), true
+
+	case "TaggedInPlanDiscussionActivityMeta.discussion":
+		if e.complexity.TaggedInPlanDiscussionActivityMeta.Discussion == nil {
+			break
+		}
+
+		return e.complexity.TaggedInPlanDiscussionActivityMeta.Discussion(childComplexity), true
 
 	case "TaggedInPlanDiscussionActivityMeta.discussionID":
 		if e.complexity.TaggedInPlanDiscussionActivityMeta.DiscussionID == nil {
@@ -10072,6 +10106,7 @@ type TaggedInPlanDiscussionActivityMeta {
   version: Int!
   type: ActivityType!
   discussionID: UUID!
+  discussion: PlanDiscussion!
   content: String!
 }
 
@@ -10079,7 +10114,9 @@ type TaggedInDiscussionReplyActivityMeta {
   version: Int!
   type: ActivityType!
   discussionID: UUID!
+  discussion: PlanDiscussion!
   replyID: UUID!
+  reply: DiscussionReply!
   content: String!
 }
 
@@ -54313,6 +54350,78 @@ func (ec *executionContext) fieldContext_TaggedInDiscussionReplyActivityMeta_dis
 	return fc, nil
 }
 
+func (ec *executionContext) _TaggedInDiscussionReplyActivityMeta_discussion(ctx context.Context, field graphql.CollectedField, obj *models.TaggedInDiscussionReplyActivityMeta) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_TaggedInDiscussionReplyActivityMeta_discussion(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.TaggedInDiscussionReplyActivityMeta().Discussion(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*models.PlanDiscussion)
+	fc.Result = res
+	return ec.marshalNPlanDiscussion2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanDiscussion(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_TaggedInDiscussionReplyActivityMeta_discussion(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "TaggedInDiscussionReplyActivityMeta",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_PlanDiscussion_id(ctx, field)
+			case "modelPlanID":
+				return ec.fieldContext_PlanDiscussion_modelPlanID(ctx, field)
+			case "content":
+				return ec.fieldContext_PlanDiscussion_content(ctx, field)
+			case "userRole":
+				return ec.fieldContext_PlanDiscussion_userRole(ctx, field)
+			case "userRoleDescription":
+				return ec.fieldContext_PlanDiscussion_userRoleDescription(ctx, field)
+			case "replies":
+				return ec.fieldContext_PlanDiscussion_replies(ctx, field)
+			case "isAssessment":
+				return ec.fieldContext_PlanDiscussion_isAssessment(ctx, field)
+			case "createdBy":
+				return ec.fieldContext_PlanDiscussion_createdBy(ctx, field)
+			case "createdByUserAccount":
+				return ec.fieldContext_PlanDiscussion_createdByUserAccount(ctx, field)
+			case "createdDts":
+				return ec.fieldContext_PlanDiscussion_createdDts(ctx, field)
+			case "modifiedBy":
+				return ec.fieldContext_PlanDiscussion_modifiedBy(ctx, field)
+			case "modifiedByUserAccount":
+				return ec.fieldContext_PlanDiscussion_modifiedByUserAccount(ctx, field)
+			case "modifiedDts":
+				return ec.fieldContext_PlanDiscussion_modifiedDts(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type PlanDiscussion", field.Name)
+		},
+	}
+	return fc, nil
+}
+
 func (ec *executionContext) _TaggedInDiscussionReplyActivityMeta_replyID(ctx context.Context, field graphql.CollectedField, obj *models.TaggedInDiscussionReplyActivityMeta) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_TaggedInDiscussionReplyActivityMeta_replyID(ctx, field)
 	if err != nil {
@@ -54352,6 +54461,76 @@ func (ec *executionContext) fieldContext_TaggedInDiscussionReplyActivityMeta_rep
 		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return nil, errors.New("field of type UUID does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _TaggedInDiscussionReplyActivityMeta_reply(ctx context.Context, field graphql.CollectedField, obj *models.TaggedInDiscussionReplyActivityMeta) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_TaggedInDiscussionReplyActivityMeta_reply(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.TaggedInDiscussionReplyActivityMeta().Reply(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*models.DiscussionReply)
+	fc.Result = res
+	return ec.marshalNDiscussionReply2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐDiscussionReply(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_TaggedInDiscussionReplyActivityMeta_reply(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "TaggedInDiscussionReplyActivityMeta",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_DiscussionReply_id(ctx, field)
+			case "discussionID":
+				return ec.fieldContext_DiscussionReply_discussionID(ctx, field)
+			case "content":
+				return ec.fieldContext_DiscussionReply_content(ctx, field)
+			case "userRole":
+				return ec.fieldContext_DiscussionReply_userRole(ctx, field)
+			case "userRoleDescription":
+				return ec.fieldContext_DiscussionReply_userRoleDescription(ctx, field)
+			case "isAssessment":
+				return ec.fieldContext_DiscussionReply_isAssessment(ctx, field)
+			case "createdBy":
+				return ec.fieldContext_DiscussionReply_createdBy(ctx, field)
+			case "createdByUserAccount":
+				return ec.fieldContext_DiscussionReply_createdByUserAccount(ctx, field)
+			case "createdDts":
+				return ec.fieldContext_DiscussionReply_createdDts(ctx, field)
+			case "modifiedBy":
+				return ec.fieldContext_DiscussionReply_modifiedBy(ctx, field)
+			case "modifiedByUserAccount":
+				return ec.fieldContext_DiscussionReply_modifiedByUserAccount(ctx, field)
+			case "modifiedDts":
+				return ec.fieldContext_DiscussionReply_modifiedDts(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type DiscussionReply", field.Name)
 		},
 	}
 	return fc, nil
@@ -54528,6 +54707,78 @@ func (ec *executionContext) fieldContext_TaggedInPlanDiscussionActivityMeta_disc
 		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return nil, errors.New("field of type UUID does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _TaggedInPlanDiscussionActivityMeta_discussion(ctx context.Context, field graphql.CollectedField, obj *models.TaggedInPlanDiscussionActivityMeta) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_TaggedInPlanDiscussionActivityMeta_discussion(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.TaggedInPlanDiscussionActivityMeta().Discussion(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*models.PlanDiscussion)
+	fc.Result = res
+	return ec.marshalNPlanDiscussion2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanDiscussion(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_TaggedInPlanDiscussionActivityMeta_discussion(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "TaggedInPlanDiscussionActivityMeta",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_PlanDiscussion_id(ctx, field)
+			case "modelPlanID":
+				return ec.fieldContext_PlanDiscussion_modelPlanID(ctx, field)
+			case "content":
+				return ec.fieldContext_PlanDiscussion_content(ctx, field)
+			case "userRole":
+				return ec.fieldContext_PlanDiscussion_userRole(ctx, field)
+			case "userRoleDescription":
+				return ec.fieldContext_PlanDiscussion_userRoleDescription(ctx, field)
+			case "replies":
+				return ec.fieldContext_PlanDiscussion_replies(ctx, field)
+			case "isAssessment":
+				return ec.fieldContext_PlanDiscussion_isAssessment(ctx, field)
+			case "createdBy":
+				return ec.fieldContext_PlanDiscussion_createdBy(ctx, field)
+			case "createdByUserAccount":
+				return ec.fieldContext_PlanDiscussion_createdByUserAccount(ctx, field)
+			case "createdDts":
+				return ec.fieldContext_PlanDiscussion_createdDts(ctx, field)
+			case "modifiedBy":
+				return ec.fieldContext_PlanDiscussion_modifiedBy(ctx, field)
+			case "modifiedByUserAccount":
+				return ec.fieldContext_PlanDiscussion_modifiedByUserAccount(ctx, field)
+			case "modifiedDts":
+				return ec.fieldContext_PlanDiscussion_modifiedDts(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type PlanDiscussion", field.Name)
 		},
 	}
 	return fc, nil
@@ -68986,27 +69237,99 @@ func (ec *executionContext) _TaggedInDiscussionReplyActivityMeta(ctx context.Con
 		case "version":
 			out.Values[i] = ec._TaggedInDiscussionReplyActivityMeta_version(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
-				out.Invalids++
+				atomic.AddUint32(&out.Invalids, 1)
 			}
 		case "type":
 			out.Values[i] = ec._TaggedInDiscussionReplyActivityMeta_type(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
-				out.Invalids++
+				atomic.AddUint32(&out.Invalids, 1)
 			}
 		case "discussionID":
 			out.Values[i] = ec._TaggedInDiscussionReplyActivityMeta_discussionID(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
-				out.Invalids++
+				atomic.AddUint32(&out.Invalids, 1)
 			}
+		case "discussion":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._TaggedInDiscussionReplyActivityMeta_discussion(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
+				return res
+			}
+
+			if field.Deferrable != nil {
+				dfs, ok := deferred[field.Deferrable.Label]
+				di := 0
+				if ok {
+					dfs.AddField(field)
+					di = len(dfs.Values) - 1
+				} else {
+					dfs = graphql.NewFieldSet([]graphql.CollectedField{field})
+					deferred[field.Deferrable.Label] = dfs
+				}
+				dfs.Concurrently(di, func(ctx context.Context) graphql.Marshaler {
+					return innerFunc(ctx, dfs)
+				})
+
+				// don't run the out.Concurrently() call below
+				out.Values[i] = graphql.Null
+				continue
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
 		case "replyID":
 			out.Values[i] = ec._TaggedInDiscussionReplyActivityMeta_replyID(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
-				out.Invalids++
+				atomic.AddUint32(&out.Invalids, 1)
 			}
+		case "reply":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._TaggedInDiscussionReplyActivityMeta_reply(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
+				return res
+			}
+
+			if field.Deferrable != nil {
+				dfs, ok := deferred[field.Deferrable.Label]
+				di := 0
+				if ok {
+					dfs.AddField(field)
+					di = len(dfs.Values) - 1
+				} else {
+					dfs = graphql.NewFieldSet([]graphql.CollectedField{field})
+					deferred[field.Deferrable.Label] = dfs
+				}
+				dfs.Concurrently(di, func(ctx context.Context) graphql.Marshaler {
+					return innerFunc(ctx, dfs)
+				})
+
+				// don't run the out.Concurrently() call below
+				out.Values[i] = graphql.Null
+				continue
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
 		case "content":
 			out.Values[i] = ec._TaggedInDiscussionReplyActivityMeta_content(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
-				out.Invalids++
+				atomic.AddUint32(&out.Invalids, 1)
 			}
 		default:
 			panic("unknown field " + strconv.Quote(field.Name))
@@ -69045,22 +69368,58 @@ func (ec *executionContext) _TaggedInPlanDiscussionActivityMeta(ctx context.Cont
 		case "version":
 			out.Values[i] = ec._TaggedInPlanDiscussionActivityMeta_version(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
-				out.Invalids++
+				atomic.AddUint32(&out.Invalids, 1)
 			}
 		case "type":
 			out.Values[i] = ec._TaggedInPlanDiscussionActivityMeta_type(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
-				out.Invalids++
+				atomic.AddUint32(&out.Invalids, 1)
 			}
 		case "discussionID":
 			out.Values[i] = ec._TaggedInPlanDiscussionActivityMeta_discussionID(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
-				out.Invalids++
+				atomic.AddUint32(&out.Invalids, 1)
 			}
+		case "discussion":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._TaggedInPlanDiscussionActivityMeta_discussion(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
+				return res
+			}
+
+			if field.Deferrable != nil {
+				dfs, ok := deferred[field.Deferrable.Label]
+				di := 0
+				if ok {
+					dfs.AddField(field)
+					di = len(dfs.Values) - 1
+				} else {
+					dfs = graphql.NewFieldSet([]graphql.CollectedField{field})
+					deferred[field.Deferrable.Label] = dfs
+				}
+				dfs.Concurrently(di, func(ctx context.Context) graphql.Marshaler {
+					return innerFunc(ctx, dfs)
+				})
+
+				// don't run the out.Concurrently() call below
+				out.Values[i] = graphql.Null
+				continue
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
 		case "content":
 			out.Values[i] = ec._TaggedInPlanDiscussionActivityMeta_content(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
-				out.Invalids++
+				atomic.AddUint32(&out.Invalids, 1)
 			}
 		default:
 			panic("unknown field " + strconv.Quote(field.Name))

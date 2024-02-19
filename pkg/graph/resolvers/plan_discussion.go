@@ -592,6 +592,20 @@ func PlanDiscussionGetByModelPlanIDLOADER(ctx context.Context, modelPlanID uuid.
 	return result.([]*models.PlanDiscussion), nil
 }
 
+// PlanDiscussionGetByID returns a single discussion from the database for a given discussionID
+func PlanDiscussionGetByID(_ context.Context, store *storage.Store, logger *zap.Logger, discussionID uuid.UUID) (*models.PlanDiscussion, error) {
+	// Future Enhancement: make this a data loader
+	return store.PlanDiscussionByID(logger, discussionID)
+
+}
+
+// DiscussionReplyGetByID returns a single discussion reply from the database for a given discussionReplyID
+func DiscussionReplyGetByID(_ context.Context, store *storage.Store, logger *zap.Logger, discussionReplyID uuid.UUID) (*models.DiscussionReply, error) {
+	// Future Enhancement: make this a data loader
+	return store.DiscussionReplyByID(logger, discussionReplyID)
+
+}
+
 // GetMostRecentDiscussionRoleSelection implements resolver logic to get the most recent user role selection
 func GetMostRecentDiscussionRoleSelection(
 	logger *zap.Logger,
