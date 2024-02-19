@@ -460,6 +460,9 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     options: {
       true: 'Yes',
       false: 'No'
+    },
+    optionsRelatedInfo: {
+      true: 'careCoordinationInvolvedDescription'
     }
   },
   careCoordinationInvolvedDescription: {
@@ -490,6 +493,9 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     options: {
       true: 'Yes',
       false: 'No'
+    },
+    optionsRelatedInfo: {
+      true: 'additionalServicesInvolvedDescription'
     }
   },
   additionalServicesInvolvedDescription: {
@@ -520,6 +526,9 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     options: {
       true: 'Yes',
       false: 'No'
+    },
+    optionsRelatedInfo: {
+      true: 'communityPartnersInvolvedDescription'
     }
   },
   communityPartnersInvolvedDescription: {
