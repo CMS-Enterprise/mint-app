@@ -67,7 +67,7 @@ func CreatePlanDiscussion(
 			return discussion, err
 		}
 		discussion.Content.Tags = tags
-		discussion.Content.Mentions = planDiscussion.Content.Mentions // TODO, do this or send the other metions
+		discussion.Content.Mentions = planDiscussion.Content.Mentions // TODO, do this or send the other mentions
 
 		// // TODO: EASI-3295 Make this work for the tagged in activity type, instead of just the generic testing new
 		// discussionActivity := notifications.NewActivity(principal.Account().ID, discussion.ID, notifications.ActivityNewPlanDiscussion)
@@ -108,7 +108,9 @@ func CreatePlanDiscussion(
 
 		// send an email for each tag, which is unique compared to the mention
 		//TODO: EASI-3925, should we distinguish Replies vs discussions?
-		_, notificationErr := notifications.ActivityTaggedInDiscussionCreate(ctx, store, principal.Account().ID, discussion.ID, discussion.Content) //TODO: EASI-3925 Consider passing the whole object?
+		//TODO: EASI-3925 Get notification preferences here and pass it, We need to connect the idea of an email and the user notification preference. Should we the activity create the email?
+
+		_, notificationErr := notifications.ActivityTaggedInDiscussionCreate(ctx, tx, principal.Account().ID, discussion.ID, discussion.Content) //TODO: EASI-3925 Consider passing the whole object?
 		if notificationErr != nil {
 			return nil, fmt.Errorf("unable to generate notifications, %w", notificationErr)
 		}
@@ -143,7 +145,7 @@ func CreatePlanDiscussion(
 
 func sendPlanDiscussionTagEmails(
 	ctx context.Context,
-	store *storage.Store,
+	store *storage.Store, //TODO: EASI-3925 named preparer ? so this always takes a transaction?
 	logger *zap.Logger,
 	emailService oddmail.EmailService,
 	emailTemplateService email.TemplateService,

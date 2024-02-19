@@ -17,9 +17,9 @@ import (
 // TaggedInDiscussionReplyActivityMeta represents the notification data that is relevant to being tagged in a new Plan Discussion
 type TaggedInDiscussionReplyActivityMeta struct {
 	ActivityMetaBaseStruct
-	DiscussionID uuid.UUID `json:"discussionID" db:"discussion_id"` //TODO: EASI-2395 Note this is somewhat like a discussion relation, but in a different package
-	ReplyID      uuid.UUID `json:"replyID" db:"reply_id"`           //TODO: EASI-2395 Note this is somewhat like a discussion relation, but in a different package
-	Content      string
+	DiscussionID uuid.UUID `json:"discussionID"` //TODO: EASI-2395 Note this is somewhat like a discussion relation, but in a different package
+	ReplyID      uuid.UUID `json:"replyID"`      //TODO: EASI-2395 Note this is somewhat like a discussion relation, but in a different package
+	Content      string    `json:"content"`
 }
 
 // newNewPlanDiscussionActivityMeta creates a New NewPlanDiscussionActivityMeta

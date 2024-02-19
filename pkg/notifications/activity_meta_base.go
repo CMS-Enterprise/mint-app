@@ -16,7 +16,7 @@ type ActivityMetaData interface {
 // ActivityMetaBaseStruct represents the shared data in common betwen all models
 type ActivityMetaBaseStruct struct {
 	Type    ActivityType
-	Version int `json:"id" db:"id"`
+	Version int `json:"id"`
 }
 
 // NewActivityMetaBaseStruct creates a New ActivityMetaBaseStruct

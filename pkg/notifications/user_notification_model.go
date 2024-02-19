@@ -13,7 +13,7 @@ type UserNotification struct {
 	// The if of the entity this notification is about
 	ActivityID uuid.UUID `json:"activityID" db:"activity_id"`
 	IsRead     bool      `json:"isRead" db:"is_read"`
-	IsArchived bool      `json:"isArchived" db:"is_archived"`
+	IsArchived bool      `json:"isArchived" db:"is_archived"` //TODO: EASI-3925 Switch to in_App_sent
 	EmailSent  bool      `json:"emailSent" db:"email_sent"`
 }
 
