@@ -20,7 +20,6 @@ export const payments: TranslationPayments = {
       OTHER: 'Other'
     },
     optionsLabels: {
-      PATIENT_PROTECTION_AFFORDABLE_CARE_ACT: '',
       MEDICARE_PART_A_HI_TRUST_FUND:
         'Also known as the Hospital Insurance (HI) Trust Fund, this covers inpatient hospital care, skilled nursing facility care, home healthcare, and hospice care.',
       MEDICARE_PART_B_SMI_TRUST_FUND:
@@ -28,7 +27,6 @@ export const payments: TranslationPayments = {
       OTHER: ''
     },
     optionsRelatedInfo: {
-      PATIENT_PROTECTION_AFFORDABLE_CARE_ACT: '',
       MEDICARE_PART_A_HI_TRUST_FUND: 'fundingSourceMedicareAInfo',
       MEDICARE_PART_B_SMI_TRUST_FUND: 'fundingSourceMedicareBInfo',
       OTHER: 'fundingSourceOther'
@@ -42,7 +40,16 @@ export const payments: TranslationPayments = {
     label: 'Additional details',
     dataType: 'string',
     formType: 'text',
+<<<<<<< Updated upstream
     filterGroups: ['dfsdm', 'ipc', 'oact']
+=======
+    isOtherType: true,
+    filterGroups: [
+      ModelViewFilter.DFSDM,
+      ModelViewFilter.IPC,
+      ModelViewFilter.OACT
+    ]
+>>>>>>> Stashed changes
   },
   fundingSourceMedicareBInfo: {
     gqlField: 'fundingSourceMedicareBInfo',
@@ -51,7 +58,16 @@ export const payments: TranslationPayments = {
     label: 'Additional details',
     dataType: 'string',
     formType: 'text',
+<<<<<<< Updated upstream
     filterGroups: ['dfsdm', 'ipc', 'oact']
+=======
+    isOtherType: true,
+    filterGroups: [
+      ModelViewFilter.DFSDM,
+      ModelViewFilter.IPC,
+      ModelViewFilter.OACT
+    ]
+>>>>>>> Stashed changes
   },
   fundingSourceOther: {
     gqlField: 'fundingSourceOther',
@@ -60,7 +76,16 @@ export const payments: TranslationPayments = {
     label: 'Please describe the funding source.',
     dataType: 'string',
     formType: 'textarea',
+<<<<<<< Updated upstream
     filterGroups: ['dfsdm', 'ipc', 'oact']
+=======
+    isOtherType: true,
+    filterGroups: [
+      ModelViewFilter.DFSDM,
+      ModelViewFilter.IPC,
+      ModelViewFilter.OACT
+    ]
+>>>>>>> Stashed changes
   },
   fundingSourceNote: {
     gqlField: 'fundingSourceNote',
@@ -89,7 +114,6 @@ export const payments: TranslationPayments = {
       OTHER: 'Other'
     },
     optionsLabels: {
-      PATIENT_PROTECTION_AFFORDABLE_CARE_ACT: '',
       MEDICARE_PART_A_HI_TRUST_FUND:
         'Also known as the Hospital Insurance (HI) Trust Fund, this covers inpatient hospital care, skilled nursing facility care, home healthcare, and hospice care.',
       MEDICARE_PART_B_SMI_TRUST_FUND:
@@ -97,7 +121,6 @@ export const payments: TranslationPayments = {
       OTHER: ''
     },
     optionsRelatedInfo: {
-      PATIENT_PROTECTION_AFFORDABLE_CARE_ACT: '',
       MEDICARE_PART_A_HI_TRUST_FUND: 'fundingSourceRMedicareAInfo',
       MEDICARE_PART_B_SMI_TRUST_FUND: 'fundingSourceRMedicareBInfo',
       OTHER: 'fundingSourceROther'
@@ -111,7 +134,16 @@ export const payments: TranslationPayments = {
     label: 'Additional details',
     dataType: 'string',
     formType: 'text',
+<<<<<<< Updated upstream
     filterGroups: ['dfsdm', 'ipc', 'oact']
+=======
+    isOtherType: true,
+    filterGroups: [
+      ModelViewFilter.DFSDM,
+      ModelViewFilter.IPC,
+      ModelViewFilter.OACT
+    ]
+>>>>>>> Stashed changes
   },
   fundingSourceRMedicareBInfo: {
     gqlField: 'fundingSourceRMedicareBInfo',
@@ -120,7 +152,16 @@ export const payments: TranslationPayments = {
     label: 'Additional details',
     dataType: 'string',
     formType: 'text',
+<<<<<<< Updated upstream
     filterGroups: ['dfsdm', 'ipc', 'oact']
+=======
+    isOtherType: true,
+    filterGroups: [
+      ModelViewFilter.DFSDM,
+      ModelViewFilter.IPC,
+      ModelViewFilter.OACT
+    ]
+>>>>>>> Stashed changes
   },
   fundingSourceROther: {
     gqlField: 'fundingSourceROther',
@@ -129,7 +170,16 @@ export const payments: TranslationPayments = {
     label: 'Please describe the funding source.',
     dataType: 'string',
     formType: 'textarea',
+<<<<<<< Updated upstream
     filterGroups: ['dfsdm', 'ipc', 'oact']
+=======
+    isOtherType: true,
+    filterGroups: [
+      ModelViewFilter.DFSDM,
+      ModelViewFilter.IPC,
+      ModelViewFilter.OACT
+    ]
+>>>>>>> Stashed changes
   },
   fundingSourceRNote: {
     gqlField: 'fundingSourceRNote',
@@ -154,6 +204,9 @@ export const payments: TranslationPayments = {
       PARTICIPANTS: 'Participants',
       STATES: 'States',
       OTHER: 'Other'
+    },
+    optionsRelatedInfo: {
+      OTHER: 'payRecipientsOtherSpecification'
     }
   },
   payRecipientsOtherSpecification: {
@@ -162,7 +215,8 @@ export const payments: TranslationPayments = {
     dbField: 'pay_recipients_other_specification',
     label: 'Please specify who you will pay.',
     dataType: 'string',
-    formType: 'textarea'
+    formType: 'textarea',
+    isOtherType: true
   },
   payRecipientsNote: {
     gqlField: 'payRecipientsNote',
