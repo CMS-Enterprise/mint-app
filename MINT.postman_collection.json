@@ -667,6 +667,50 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "PlanDiscussionCreate TAG CURRENT USER ONLY",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let responseData = pm.response.json().data.createPlanDiscussion",
+									"",
+									"discussionID = responseData.id",
+									"",
+									"",
+									"pm.collectionVariables.set(\"discussionID\", discussionID);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation createPlanDiscussion{\n  createPlanDiscussion(input:{\n      modelPlanID: \"{{modelPlanID}}\"\n      content: \" <span data-type=\\\"mention\\\" tag-type=\\\"USER_ACCOUNT\\\" class=\\\"mention\\\" data-id=\\\"{{EUAID}}\\\" data-label=\\\"{{EUAID}}\\\">@{{EUAID}}</span>\"\n      userRole:SHARED_SYSTEM_MAINTAINER\n } ){\n    \n    id\n    modelPlanID\n    \n    content{\n        rawContent\n        tags{\n            id\n            taggedField\n            taggedContentTable\n            taggedContentID\n            entityUUID\n            entityIntID\n            entity{\n                __typename\n                ... on UserAccount{\n                    id\n                    commonName\n                    email\n                }\n                ... on PossibleOperationalSolution {\n                    name\n                    key\n                }\n            }\n        }\n    }\n    \n    createdBy\n    createdByUserAccount{\n        commonName\n        email\n        username\n        }\n\n    }\n  \n  \n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8085/api/graph/query",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8085",
+							"path": [
+								"api",
+								"graph",
+								"query"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
