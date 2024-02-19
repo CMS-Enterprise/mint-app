@@ -88,6 +88,9 @@ export const beneficiaries: TranslationBeneficiaries = {
       NO: 'No',
       TBD: 'Not applicable'
     },
+    optionsRelatedInfo: {
+      YES: 'treatDualElligibleDifferentHow'
+    },
     filterGroups: [ModelViewFilter.IDDOC, ModelViewFilter.PBG]
   },
   treatDualElligibleDifferentHow: {
@@ -123,6 +126,9 @@ export const beneficiaries: TranslationBeneficiaries = {
       YES: 'Yes',
       NO: 'No',
       TBD: 'Not applicable'
+    },
+    optionsRelatedInfo: {
+      YES: 'excludeCertainCharacteristicsCriteria'
     },
     filterGroups: [ModelViewFilter.IDDOC, ModelViewFilter.PBG]
   },
