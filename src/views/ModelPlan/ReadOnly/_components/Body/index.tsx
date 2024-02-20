@@ -32,6 +32,7 @@ const ReadOnlyBody = ({
                 !isHiddenByParentCondition(config[field], data) // Add border if translation config contains property 'isPageStart'
             })}
           >
+            {/* Only render the header if it's not a filtered view or hidden by parent */}
             {!filteredView &&
               config[field]?.readonlyHeader &&
               !isHiddenByParentCondition(config[field], data) && (

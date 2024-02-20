@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Grid, Icon } from '@trussworks/react-uswds';
 
@@ -145,7 +145,9 @@ const RenderReadonlyValue = <
     isTranslationFieldPropertiesWithOptions(config) &&
     config.formType === 'radio'
   ) {
-    <RadioValue field={field} values={values} translations={translations} />;
+    return (
+      <RadioValue field={field} values={values} translations={translations} />
+    );
   }
 
   // If no values for checkbox/multiselect type questions
@@ -164,11 +166,13 @@ const RenderReadonlyValue = <
   );
 };
 
-export const NoAddtionalInfo = () => {
+export const NoAddtionalInfo = ({ other }: { other?: boolean }) => {
   const { t: miscellaneousT } = useTranslation('miscellaneous');
 
   return (
-    <em className="text-base">{miscellaneousT('noAdditionalInformation')}</em>
+    <em className="text-base">
+      {other ? miscellaneousT('noAdditionalInformation') : miscellaneousT('na')}
+    </em>
   );
 };
 
@@ -207,7 +211,10 @@ export const RadioValue = <
   // Checks if configuration exists to optionally render a child's value with the radio value
   const childField = config.optionsRelatedInfo?.[value as T];
 
-  const childFieldValue = childField ? values[childField] : null;
+  const childFieldValue:
+    | Partial<Record<T, string>>[T]
+    | undefined
+    | null = childField ? values[childField] : null;
 
   // Checks if the child field is an array to render as a bulleted list beneath the radio selection
   const isChildMultiple: boolean = Array.isArray(childFieldValue);
@@ -219,6 +226,7 @@ export const RadioValue = <
 
   // Checks if a single radio value has a mapped tooltip/optionsLabel
   let radioTooltip: string | undefined;
+
   if (config.optionsLabels) {
     radioTooltip = config.optionsLabels[value as T];
   }
@@ -279,7 +287,7 @@ const ListItems = <T extends string | keyof T, C extends string | keyof C>({
   return (
     <ul className="margin-y-0 padding-left-3">
       {listValues.map((item: any, index: number) => (
-        <React.Fragment key={`${id}--${item}`}>
+        <Fragment key={`${id}--${item}`}>
           <li className="font-sans-md line-height-sans-4">
             {item}
 
@@ -301,14 +309,15 @@ const ListItems = <T extends string | keyof T, C extends string | keyof C>({
               <ListOtherItem index={index} listOtherItems={listOtherValues} />
             </ul>
           )}
-        </React.Fragment>
+        </Fragment>
       ))}
     </ul>
   );
 };
 
-// Can render a single "Other" option or multiple additional information options
-// As well as default text for both if not specified
+/*
+  Renders a nested list item.  If no value exists, render <NoAddtionalInfo />
+*/
 const ListOtherItem = ({
   index,
   listOtherItems
@@ -316,6 +325,7 @@ const ListOtherItem = ({
   index: number;
   listOtherItems: any;
 }) => {
+  // If there is no optionalRelatedInfo mapped to the index return undefined
   if (listOtherItems[index] === undefined) {
     return null;
   }
@@ -326,9 +336,10 @@ const ListOtherItem = ({
       </li>
     );
   }
+  // If there is optionalRelatedInfo mapped, but no value
   return (
     <li className="font-sans-md line-height-sans-4 ">
-      <NoAddtionalInfo />
+      <NoAddtionalInfo other />
     </li>
   );
 };
@@ -346,7 +357,7 @@ export const RelatedUnneededQuestions = <
   id: string;
   config: TranslationConfigType<T, C>;
   value: any;
-  singleChildCheck?: any;
+  singleChildCheck?: any; // If only want to check unneeded children for a specific value of the parent
   hideAlert?: boolean;
 }) => {
   const { t: readOnlyT } = useTranslation('generalReadOnly');

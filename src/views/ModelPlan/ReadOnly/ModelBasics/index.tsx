@@ -9,6 +9,7 @@ import {
 } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import { GetAllBasicsQuery, useGetAllBasicsQuery } from 'gql/gen/graphql';
+import i18next from 'i18next';
 
 import PageLoading from 'components/PageLoading';
 import SectionWrapper from 'components/shared/SectionWrapper';
@@ -37,6 +38,7 @@ const ReadOnlyModelBasics = ({
 }: ReadOnlyProps) => {
   const { t: basicsT } = useTranslation('basics');
   const { t: basicsMiscT } = useTranslation('basicsMisc');
+  const { t: miscellaneousT } = useTranslation('miscellaneous');
   const { t: prepareForClearanceT } = useTranslation('prepareForClearance');
 
   const modelPlanConfig = usePlanTranslation('modelPlan');
@@ -113,14 +115,6 @@ const ReadOnlyModelBasics = ({
     performancePeriodEnds: basicsConfig.performancePeriodEnds,
     wrapUpEnds: basicsConfig.wrapUpEnds,
     highLevelNote: basicsConfig.highLevelNote
-  };
-
-  const dateOrNoAnswer = (value: string | null | undefined) => {
-    if (value) {
-      return formatDateUtc(value, 'MM/dd/yyyy');
-    }
-
-    return <em className="text-base">{basicsMiscT('na')}</em>;
   };
 
   if (!data && loading) {
@@ -204,7 +198,7 @@ const ReadOnlyModelBasics = ({
 
               {amsModelID || (
                 <div className="text-italic text-base">
-                  {basicsMiscT('noneEntered')}
+                  {miscellaneousT('noneEntered')}
                 </div>
               )}
             </Grid>
@@ -215,7 +209,7 @@ const ReadOnlyModelBasics = ({
 
               {demoCode || (
                 <div className="text-italic text-base">
-                  {basicsMiscT('noneEntered')}
+                  {miscellaneousT('noneEntered')}
                 </div>
               )}
             </Grid>
@@ -248,16 +242,10 @@ const ReadOnlyModelBasics = ({
 
           <ProcessList className="read-only-model-plan__timeline">
             <ProcessListItem className="read-only-model-plan__timeline__list-item">
-              <ProcessListHeading
-                type="p"
-                className="font-body-sm line-height-sans-4"
-              >
-                {basicsT('completeICIP.label')}
-              </ProcessListHeading>
-
-              <p className="margin-y-0 font-body-md line-height-sans-4">
-                {dateOrNoAnswer(completeICIP)}
-              </p>
+              <BasicsTimelineItem
+                label={basicsT('completeICIP.label')}
+                value={completeICIP}
+              />
             </ProcessListItem>
 
             <ProcessListItem className="read-only-model-plan__timeline__list-item">
@@ -270,42 +258,26 @@ const ReadOnlyModelBasics = ({
 
               <div className="mobile-lg:display-flex">
                 <div className="width-card-lg margin-bottom-2 mobile-lg:margin-bottom-0">
-                  <ProcessListHeading
-                    type="p"
-                    className="font-body-sm line-height-sans-4"
-                  >
-                    {basicsT('clearanceStarts.label')}
-                  </ProcessListHeading>
-
-                  <p className="margin-y-0 font-body-md line-height-sans-4">
-                    {dateOrNoAnswer(clearanceStarts)}
-                  </p>
+                  <BasicsTimelineItem
+                    label={basicsT('clearanceStarts.label')}
+                    value={clearanceStarts}
+                  />
                 </div>
-                <div className="width-card-lg margin-bottom-2 mobile-lg:margin-bottom-0">
-                  <ProcessListHeading
-                    type="p"
-                    className="font-body-sm line-height-sans-4"
-                  >
-                    {basicsT('clearanceEnds.label')}
-                  </ProcessListHeading>
 
-                  <p className="margin-y-0 font-body-md line-height-sans-4">
-                    {dateOrNoAnswer(clearanceEnds)}
-                  </p>
+                <div className="width-card-lg margin-bottom-2 mobile-lg:margin-bottom-0">
+                  <BasicsTimelineItem
+                    label={basicsT('clearanceEnds.label')}
+                    value={clearanceEnds}
+                  />
                 </div>
               </div>
             </ProcessListItem>
-            <ProcessListItem className="read-only-model-plan__timeline__list-item">
-              <ProcessListHeading
-                type="p"
-                className="font-body-sm line-height-sans-4"
-              >
-                {basicsT('announced.label')}
-              </ProcessListHeading>
 
-              <p className="margin-y-0 font-body-md line-height-sans-4">
-                {dateOrNoAnswer(announced)}
-              </p>
+            <ProcessListItem className="read-only-model-plan__timeline__list-item">
+              <BasicsTimelineItem
+                label={basicsT('announced.label')}
+                value={announced}
+              />
             </ProcessListItem>
 
             <ProcessListItem className="read-only-model-plan__timeline__list-item">
@@ -318,28 +290,17 @@ const ReadOnlyModelBasics = ({
 
               <div className="mobile-lg:display-flex">
                 <div className="width-card-lg margin-bottom-2 mobile-lg:margin-bottom-0">
-                  <ProcessListHeading
-                    type="p"
-                    className="font-body-sm line-height-sans-4"
-                  >
-                    {basicsT('applicationsStart.label')}
-                  </ProcessListHeading>
-
-                  <p className="margin-y-0 font-body-md line-height-sans-4">
-                    {dateOrNoAnswer(applicationsStart)}
-                  </p>
+                  <BasicsTimelineItem
+                    label={basicsT('applicationsStart.label')}
+                    value={applicationsStart}
+                  />
                 </div>
-                <div className="width-card-lg margin-bottom-2 mobile-lg:margin-bottom-0">
-                  <ProcessListHeading
-                    type="p"
-                    className="font-body-sm line-height-sans-4"
-                  >
-                    {basicsT('applicationsEnd.label')}
-                  </ProcessListHeading>
 
-                  <p className="margin-y-0 font-body-md line-height-sans-4">
-                    {dateOrNoAnswer(applicationsEnd)}
-                  </p>
+                <div className="width-card-lg margin-bottom-2 mobile-lg:margin-bottom-0">
+                  <BasicsTimelineItem
+                    label={basicsT('applicationsEnd.label')}
+                    value={applicationsEnd}
+                  />
                 </div>
               </div>
             </ProcessListItem>
@@ -351,45 +312,29 @@ const ReadOnlyModelBasics = ({
               >
                 {basicsMiscT('demonstrationPerformance')}
               </ProcessListHeading>
+
               <div className="mobile-lg:display-flex">
                 <div className="width-card-lg margin-bottom-2 mobile-lg:margin-bottom-0">
-                  <ProcessListHeading
-                    type="p"
-                    className="font-body-sm line-height-sans-4"
-                  >
-                    {basicsT('performancePeriodStarts.label')}
-                  </ProcessListHeading>
-
-                  <p className="margin-y-0 font-body-md line-height-sans-4">
-                    {dateOrNoAnswer(performancePeriodStarts)}
-                  </p>
+                  <BasicsTimelineItem
+                    label={basicsT('performancePeriodStarts.label')}
+                    value={performancePeriodStarts}
+                  />
                 </div>
-                <div className="width-card-lg margin-bottom-2 mobile-lg:margin-bottom-0">
-                  <ProcessListHeading
-                    type="p"
-                    className="font-body-sm line-height-sans-4"
-                  >
-                    {basicsT('performancePeriodEnds.label')}
-                  </ProcessListHeading>
 
-                  <p className="margin-y-0 font-body-md line-height-sans-4">
-                    {dateOrNoAnswer(performancePeriodEnds)}
-                  </p>
+                <div className="width-card-lg margin-bottom-2 mobile-lg:margin-bottom-0">
+                  <BasicsTimelineItem
+                    label={basicsT('performancePeriodEnds.label')}
+                    value={performancePeriodEnds}
+                  />
                 </div>
               </div>
             </ProcessListItem>
 
             <ProcessListItem className="read-only-model-plan__timeline__list-item">
-              <ProcessListHeading
-                type="p"
-                className="font-body-sm line-height-sans-4"
-              >
-                {basicsT('wrapUpEnds.label')}
-              </ProcessListHeading>
-
-              <p className="margin-y-0 font-body-md line-height-sans-4">
-                {dateOrNoAnswer(wrapUpEnds)}
-              </p>
+              <BasicsTimelineItem
+                label={basicsT('wrapUpEnds.label')}
+                value={wrapUpEnds}
+              />
             </ProcessListItem>
           </ProcessList>
 
@@ -418,5 +363,35 @@ const ReadOnlyModelBasics = ({
     </div>
   );
 };
+
+const dateOrNoAnswer = (value: string | null | undefined) => {
+  if (value) {
+    return formatDateUtc(value, 'MM/dd/yyyy');
+  }
+
+  return (
+    <em className="text-base">
+      {i18next.t<string>('miscellaneous:dateFormat')}
+    </em>
+  );
+};
+
+const BasicsTimelineItem = ({
+  label,
+  value
+}: {
+  label: string;
+  value: string | null | undefined;
+}) => (
+  <>
+    <ProcessListHeading type="p" className="font-body-sm line-height-sans-4">
+      {label}
+    </ProcessListHeading>
+
+    <p className="margin-y-0 font-body-md line-height-sans-4">
+      {dateOrNoAnswer(value)}
+    </p>
+  </>
+);
 
 export default ReadOnlyModelBasics;
