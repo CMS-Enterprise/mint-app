@@ -4,9 +4,9 @@ import classNames from 'classnames';
 import { getKeys, TranslationPlanSection } from 'types/translation';
 
 import { filterGroupKey } from '../FilterView/BodyContent/_filterGroupMapping';
-import ReadOnlySectionNew from '../ReadOnlySection/new';
+import ReadOnlySection from '../ReadOnlySection';
 import { isHiddenByParentCondition } from '../ReadOnlySection/util';
-import SideBySideReadOnlySectionNew from '../SideBySideReadOnlySection/new';
+import SideBySideReadOnlySection from '../SideBySideReadOnlySection';
 
 const ReadOnlyBody = ({
   data,
@@ -43,11 +43,11 @@ const ReadOnlyBody = ({
             {/* Checks if questions have config to be displayed side by side */}
             {config[field]?.adjacentPositioning ? (
               <>
-                {/* Presence of adjacentPositioning will render in a SideBySideReadOnlySectionNew component 
+                {/* Presence of adjacentPositioning will render in a SideBySideReadOnlySection component 
                     Config position of 'left' will render and condtionally render the following component where adjacentPositioning.adjacentField is the reference */}
                 {config[field]?.adjacentPositioning?.position === 'left' && (
-                  <SideBySideReadOnlySectionNew>
-                    <ReadOnlySectionNew
+                  <SideBySideReadOnlySection>
+                    <ReadOnlySection
                       field={field}
                       translations={config}
                       values={data}
@@ -64,7 +64,7 @@ const ReadOnlyBody = ({
                       ],
                       data
                     ) && (
-                      <ReadOnlySectionNew
+                      <ReadOnlySection
                         field={
                           config[field]?.adjacentPositioning
                             ?.adjacentField as keyof TranslationPlanSection
@@ -74,11 +74,11 @@ const ReadOnlyBody = ({
                         filteredView={filteredView}
                       />
                     )}
-                  </SideBySideReadOnlySectionNew>
+                  </SideBySideReadOnlySection>
                 )}
               </>
             ) : (
-              <ReadOnlySectionNew
+              <ReadOnlySection
                 field={field}
                 translations={config}
                 values={data}

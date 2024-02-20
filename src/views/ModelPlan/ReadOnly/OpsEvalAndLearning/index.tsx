@@ -10,9 +10,9 @@ import { ModelInfoContext } from 'views/ModelInfoWrapper';
 import { NotFoundPartial } from 'views/NotFound';
 
 import ReadOnlyBody from '../_components/Body';
-import ReadOnlySectionNew, {
+import ReadOnlySection, {
   RelatedUnneededQuestions
-} from '../_components/ReadOnlySection/new';
+} from '../_components/ReadOnlySection';
 import { getRelatedUneededQuestions } from '../_components/ReadOnlySection/util';
 import TitleAndStatus from '../_components/TitleAndStatus';
 import { ReadOnlyProps } from '../ModelBasics';
@@ -209,7 +209,7 @@ const ReadOnlyOpsEvalAndLearning = ({
           hideAlert={false}
         />
 
-        <ReadOnlySectionNew
+        <ReadOnlySection
           field="sendFilesBetweenCcw"
           translations={{
             sendFilesBetweenCcw: opsEvalAndLearningConfig.sendFilesBetweenCcw
@@ -218,7 +218,7 @@ const ReadOnlyOpsEvalAndLearning = ({
           filteredView={filteredView}
         />
 
-        <ReadOnlySectionNew
+        <ReadOnlySection
           field="sendFilesBetweenCcwNote"
           translations={{
             sendFilesBetweenCcwNote:
@@ -228,7 +228,7 @@ const ReadOnlyOpsEvalAndLearning = ({
           filteredView={filteredView}
         />
 
-        <ReadOnlySectionNew
+        <ReadOnlySection
           field="appToSendFilesToKnown"
           translations={{
             appToSendFilesToKnown:
@@ -238,7 +238,7 @@ const ReadOnlyOpsEvalAndLearning = ({
           filteredView={filteredView}
         />
 
-        <ReadOnlySectionNew
+        <ReadOnlySection
           field="appToSendFilesToNote"
           translations={{
             appToSendFilesToNote: opsEvalAndLearningConfig.appToSendFilesToNote
@@ -247,7 +247,7 @@ const ReadOnlyOpsEvalAndLearning = ({
           filteredView={filteredView}
         />
 
-        <ReadOnlySectionNew
+        <ReadOnlySection
           field="useCcwForFileDistribiutionToParticipants"
           translations={{
             useCcwForFileDistribiutionToParticipants:
@@ -257,7 +257,7 @@ const ReadOnlyOpsEvalAndLearning = ({
           filteredView={filteredView}
         />
 
-        <ReadOnlySectionNew
+        <ReadOnlySection
           field="useCcwForFileDistribiutionToParticipantsNote"
           translations={{
             useCcwForFileDistribiutionToParticipantsNote:
@@ -291,7 +291,7 @@ const ReadOnlyOpsEvalAndLearning = ({
           hideAlert={false}
         />
 
-        <ReadOnlySectionNew
+        <ReadOnlySection
           field="developNewQualityMeasures"
           translations={{
             developNewQualityMeasures:
@@ -301,7 +301,7 @@ const ReadOnlyOpsEvalAndLearning = ({
           filteredView={filteredView}
         />
 
-        <ReadOnlySectionNew
+        <ReadOnlySection
           field="developNewQualityMeasuresNote"
           translations={{
             developNewQualityMeasuresNote:
@@ -311,7 +311,7 @@ const ReadOnlyOpsEvalAndLearning = ({
           filteredView={filteredView}
         />
 
-        <ReadOnlySectionNew
+        <ReadOnlySection
           field="qualityPerformanceImpactsPayment"
           translations={{
             qualityPerformanceImpactsPayment:
@@ -321,7 +321,7 @@ const ReadOnlyOpsEvalAndLearning = ({
           filteredView={filteredView}
         />
 
-        <ReadOnlySectionNew
+        <ReadOnlySection
           field="qualityPerformanceImpactsPaymentNote"
           translations={{
             qualityPerformanceImpactsPaymentNote:

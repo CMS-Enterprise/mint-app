@@ -20,7 +20,6 @@ import { NotFoundPartial } from 'views/NotFound';
 
 import ReadOnlyBody from '../_components/Body';
 import ReadOnlySection from '../_components/ReadOnlySection';
-import ReadOnlySectionNew from '../_components/ReadOnlySection/new';
 import TitleAndStatus from '../_components/TitleAndStatus';
 
 import './index.scss';
@@ -82,11 +81,10 @@ const ReadOnlyModelBasics = ({
     performancePeriodStarts,
     performancePeriodEnds,
     wrapUpEnds,
-    highLevelNote,
     phasedIn,
     phasedInNote,
     status
-  } = data?.modelPlan?.basics || {};
+  } = allBasicsData;
 
   // Removing unneeded configurations from basicsConfig
   // Removed configurations will be manually rendered
@@ -154,7 +152,7 @@ const ReadOnlyModelBasics = ({
         </p>
       )}
 
-      <ReadOnlySectionNew
+      <ReadOnlySection
         field="nameHistory"
         translations={modelPlanConfig}
         values={{ nameHistory: filteredNameHistory }}
@@ -400,20 +398,22 @@ const ReadOnlyModelBasics = ({
           </ProcessList>
 
           <ReadOnlySection
-            heading={basicsT('highLevelNote.label')}
-            copy={highLevelNote}
+            field="highLevelNote"
+            translations={basicsConfig}
+            values={{ phasedIn }}
+            filteredView={filteredView}
           />
         </SectionWrapper>
       )}
 
-      <ReadOnlySectionNew
+      <ReadOnlySection
         field="phasedIn"
         translations={basicsConfig}
         values={{ phasedIn }}
         filteredView={filteredView}
       />
 
-      <ReadOnlySectionNew
+      <ReadOnlySection
         field="phasedInNote"
         translations={basicsConfig}
         values={{ phasedInNote }}
