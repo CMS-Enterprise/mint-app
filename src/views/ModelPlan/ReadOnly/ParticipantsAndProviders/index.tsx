@@ -5,6 +5,7 @@ import {
   useGetAllParticipantsAndProvidersQuery
 } from 'gql/gen/graphql';
 
+import PageLoading from 'components/PageLoading';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import { ModelInfoContext } from 'views/ModelInfoWrapper';
 import { NotFoundPartial } from 'views/NotFound';
@@ -64,11 +65,15 @@ const ReadOnlyParticipantsAndProviders = ({
         </p>
       )}
 
-      <ReadOnlyBody
-        data={allparticipantsAndProvidersData}
-        config={participantsAndProvidersConfig}
-        filteredView={filteredView}
-      />
+      {loading && !data ? (
+        <PageLoading />
+      ) : (
+        <ReadOnlyBody
+          data={allparticipantsAndProvidersData}
+          config={participantsAndProvidersConfig}
+          filteredView={filteredView}
+        />
+      )}
     </div>
   );
 };

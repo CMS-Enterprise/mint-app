@@ -5,6 +5,7 @@ import {
   useGetAllBeneficiariesQuery
 } from 'gql/gen/graphql';
 
+import PageLoading from 'components/PageLoading';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import { ModelInfoContext } from 'views/ModelInfoWrapper';
 import { NotFoundPartial } from 'views/NotFound';
@@ -60,11 +61,15 @@ const ReadOnlyBeneficiaries = ({
         </p>
       )}
 
-      <ReadOnlyBody
-        data={allbeneficiariesData}
-        config={beneficiariesConfig}
-        filteredView={filteredView}
-      />
+      {loading && !data ? (
+        <PageLoading />
+      ) : (
+        <ReadOnlyBody
+          data={allbeneficiariesData}
+          config={beneficiariesConfig}
+          filteredView={filteredView}
+        />
+      )}
     </div>
   );
 };
