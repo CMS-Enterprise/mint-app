@@ -12,6 +12,7 @@ import (
 	"github.com/cmsgov/mint-app/pkg/graph/generated"
 	"github.com/cmsgov/mint-app/pkg/graph/model"
 	"github.com/cmsgov/mint-app/pkg/models"
+	"github.com/cmsgov/mint-app/pkg/storage/loaders"
 )
 
 // LaunchDarkly is the resolver for the launchDarkly field.
@@ -32,7 +33,9 @@ func (r *currentUserResolver) Notifications(ctx context.Context, obj *models.Cur
 // NotificationPreferences is the resolver for the notificationPreferences field.
 func (r *currentUserResolver) NotificationPreferences(ctx context.Context, obj *models.CurrentUser) (*models.UserNotificationPreferences, error) {
 	princ := appcontext.Principal(ctx)
-	return UserNotificationPreferencesGetByUserID(ctx, r.store, princ.Account().ID)
+	return loaders.UserNotificationPreferencesGetByUserID(ctx, princ.Account().ID)
+
+	// return UserNotificationPreferencesGetByUserID(ctx, r.store, princ.Account().ID)
 }
 
 // CurrentUser is the resolver for the currentUser field.

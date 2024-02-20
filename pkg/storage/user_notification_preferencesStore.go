@@ -38,6 +38,20 @@ func UserNotificationPreferencesGetByUserID(np sqlutils.NamedPreparer, userID uu
 	return retUserNotificationPref, nil
 }
 
+// UserNotificationPreferencesGetByUserIDLoader returns a  collection of UserNotificationPreferences  object for a given collection of user_ids, serialized in json
+func UserNotificationPreferencesGetByUserIDLoader(np sqlutils.NamedPreparer, paramTableJSON string) ([]*models.UserNotificationPreferences, error) {
+	arg := map[string]interface{}{
+		"paramTableJSON": paramTableJSON,
+	}
+
+	retNotificationPreferences, err := sqlutils.SelectProcedure[models.UserNotificationPreferences](np, sqlqueries.UserNotificationPreferences.GetByUserIDLoader, arg)
+	if err != nil {
+		return nil, fmt.Errorf("issue selecting notification preferences by user_id with the data loader, %w", err)
+	}
+
+	return retNotificationPreferences, nil
+}
+
 // UserNotificationPreferencesUpdate updates a new UserNotificationPreferences in the database
 func UserNotificationPreferencesUpdate(np sqlutils.NamedPreparer, userNotificationPreferences *models.UserNotificationPreferences) (*models.UserNotificationPreferences, error) {
 

@@ -72,7 +72,6 @@ func ActivityGetByIDLoaderThunk(_ context.Context, np sqlutils.NamedPreparer, pa
 		activity, ok := activitiesByID[key]
 		if ok {
 			// PARSE the meta data
-
 			meta, err := parseRawActivityMetaData(activity.ActivityType, activity.MetaDataRaw)
 			if err != nil {
 				err = fmt.Errorf("issue converting activity meta data to discrete type: %w", err)

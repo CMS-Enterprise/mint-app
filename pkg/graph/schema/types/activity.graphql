@@ -47,7 +47,7 @@ type Activity {
   id: UUID!
 	actorID: UUID!
   actorUserAccount: UserAccount!
-	entityID: UUID! #TODO: EASI-3925 return the entity?
+	entityID: UUID!
 	activityType: ActivityType!
   metaData: ActivityMetaData!
 

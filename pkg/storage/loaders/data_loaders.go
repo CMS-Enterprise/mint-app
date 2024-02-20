@@ -28,7 +28,8 @@ type DataLoaders struct {
 
 	PossibleOperationSolutionContactLoader *WrappedDataLoader
 
-	ActivityLoader *WrappedDataLoader
+	ActivityLoader                    *WrappedDataLoader
+	UserNotificationPreferencesLoader *WrappedDataLoader
 }
 
 // NewDataLoaders instantiates data loaders for the middleware
@@ -62,6 +63,7 @@ func NewDataLoaders(store *storage.Store) *DataLoaders {
 	loaders.PossibleOperationSolutionContactLoader = newWrappedDataLoader(loaders.PossibleOperationalSolutionContactsGetByPossibleSolutionID)
 
 	loaders.ActivityLoader = newWrappedDataLoader(loaders.activityGetByIDLoaderBatch)
+	loaders.UserNotificationPreferencesLoader = newWrappedDataLoader(loaders.userNotificationPreferencesGetByUserIDBatch)
 
 	return loaders
 }
