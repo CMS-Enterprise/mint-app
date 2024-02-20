@@ -69,22 +69,24 @@ exports[`Adding a collaborator page > matches snapshot 1`] = `
                   aria-live="polite"
                   aria-relevant="additions text"
                   class="css-1f43avz-a11yText-A11yText"
+                  role="log"
                 />
                 <div
-                  class="cedar-contact-select__control css-1b5q38d-control"
+                  class="cedar-contact-select__control css-79rxjr-control"
                 >
                   <div
-                    class="cedar-contact-select__value-container css-319lph-ValueContainer"
+                    class="cedar-contact-select__value-container css-1fdsijx-ValueContainer"
                   >
                     <div
-                      class="cedar-contact-select__placeholder css-14el2xx-placeholder"
+                      class="cedar-contact-select__placeholder css-1jqq78o-placeholder"
                       id="react-select-model-team-cedar-contact-placeholder"
                     />
                     <div
-                      class="cedar-contact-select__input-container css-6j8wv5-Input"
+                      class="cedar-contact-select__input-container css-qbdosj-Input"
                       data-value=""
                     >
                       <input
+                        aria-activedescendant=""
                         aria-autocomplete="list"
                         aria-describedby="react-select-model-team-cedar-contact-placeholder"
                         aria-expanded="false"
@@ -109,11 +111,11 @@ exports[`Adding a collaborator page > matches snapshot 1`] = `
                     class="cedar-contact-select__indicators css-1hb7zxy-IndicatorsContainer"
                   >
                     <span
-                      class="cedar-contact-select__indicator-separator css-1okebmr-indicatorSeparator"
+                      class="cedar-contact-select__indicator-separator css-1u9des2-indicatorSeparator"
                     />
                     <div
                       aria-hidden="true"
-                      class="cedar-contact-select__indicator cedar-contact-select__dropdown-indicator css-1e245h0-indicatorContainer"
+                      class="cedar-contact-select__indicator cedar-contact-select__dropdown-indicator css-1h8bgg-indicatorContainer"
                     >
                       <svg
                         aria-hidden="true"
@@ -162,24 +164,26 @@ exports[`Adding a collaborator page > matches snapshot 1`] = `
                     aria-live="polite"
                     aria-relevant="additions text"
                     class="css-1f43avz-a11yText-A11yText"
+                    role="log"
                   />
                   <div
-                    class=" css-jvusj8-control"
+                    class=" css-1vl89cy-control"
                   >
                     <div
-                      class=" css-319lph-ValueContainer"
+                      class=" css-1fdsijx-ValueContainer"
                     >
                       <div
-                        class=" css-14el2xx-placeholder"
+                        class=" css-1jqq78o-placeholder"
                         id="react-select-2-placeholder"
                       >
                         0 selected
                       </div>
                       <div
-                        class=" css-6j8wv5-Input"
+                        class=" css-qbdosj-Input"
                         data-value=""
                       >
                         <input
+                          aria-activedescendant=""
                           aria-autocomplete="list"
                           aria-describedby="react-select-2-placeholder"
                           aria-expanded="false"
@@ -202,11 +206,11 @@ exports[`Adding a collaborator page > matches snapshot 1`] = `
                       class=" css-1hb7zxy-IndicatorsContainer"
                     >
                       <span
-                        class=" css-1vtyy7d-indicatorSeparator"
+                        class=" css-16b81-indicatorSeparator"
                       />
                       <div
                         aria-hidden="true"
-                        class=" css-1232v1p-indicatorContainer"
+                        class=" css-gjng1h-indicatorContainer"
                       >
                         <svg
                           aria-hidden="true"
@@ -227,6 +231,7 @@ exports[`Adding a collaborator page > matches snapshot 1`] = `
                     <input
                       name="role"
                       type="hidden"
+                      value=""
                     />
                   </div>
                 </div>
