@@ -162,10 +162,12 @@ func sendPlanDiscussionTagEmails(
 			taggedUserAccount, ok := entity.(*authentication.UserAccount)
 			if !ok {
 				errs = append(errs, fmt.Errorf("tagged entity was expected to be a user account, but was not able to be cast to UserAccount. entity: %v", entity))
+				continue
 			}
 			pref, err := UserNotificationPreferencesGetByUserID(ctx, *mention.EntityUUID)
 			if err != nil {
 				errs = append(errs, fmt.Errorf("unable to get user notification preference, Notification not created %w", err))
+				continue
 			}
 
 			// Early return if
@@ -420,51 +422,50 @@ func CreateDiscussionReply(
 		input.UserRole,
 		input.UserRoleDescription,
 	)
+	newReply, err := sqlutils.WithTransaction[models.DiscussionReply](store, func(tx *sqlx.Tx) (*models.DiscussionReply, error) {
+		err := BaseStructPreCreate(logger, discussionReply, principal, store, false)
+		if err != nil {
+			return nil, err
+		}
+		err = UpdateTaggedHTMLMentionsAndRawContent(ctx, store, &discussionReply.Content, getAccountInformation)
 
-	err := BaseStructPreCreate(logger, discussionReply, principal, store, false)
-	if err != nil {
-		return nil, err
-	}
-	err = UpdateTaggedHTMLMentionsAndRawContent(ctx, store, &discussionReply.Content, getAccountInformation)
+		if err != nil {
+			return nil, fmt.Errorf("unable to update tagged html. error : %w", err)
+		}
 
-	if err != nil {
-		return nil, fmt.Errorf("unable to update tagged html. error : %w", err)
-	}
+		reply, err := storage.DiscussionReplyCreate(logger, discussionReply, tx)
 
-	reply, tx, err := store.DiscussionReplyCreate(logger, discussionReply, nil)
-	if tx != nil {
-		defer tx.Rollback()
-	}
-	if err != nil {
+		if err != nil {
+			return reply, err
+		}
+		tags, err := TagCollectionCreate(logger, store, principal, "content", "discussion_reply", reply.ID, discussionReply.Content.Mentions, tx)
+		if err != nil {
+			return reply, err
+		}
+		reply.Content.Tags = tags
+		reply.Content.Mentions = discussionReply.Content.Mentions
+
+		// Create Activity and notifications in the DB
+		_, notificationErr := notifications.ActivityTaggedInDiscussionReplyCreate(ctx, tx, principal.Account().ID, reply.DiscussionID, reply.ID, reply.Content)
+		if notificationErr != nil {
+			return nil, fmt.Errorf("unable to generate notifications, %w", notificationErr)
+		}
 		return reply, err
-	}
-	tags, err := TagCollectionCreate(logger, store, principal, "content", "discussion_reply", reply.ID, discussionReply.Content.Mentions, tx)
-	if err != nil {
-		return reply, err
-	}
-	reply.Content.Tags = tags
-	reply.Content.Mentions = discussionReply.Content.Mentions
-	err = tx.Commit()
+	})
 	if err != nil {
 		return nil, err
 	}
 
 	// Note these aren't async in order to prevent race condition. If possible, this can be made async.
-	discussion, err := store.PlanDiscussionByID(logger, reply.DiscussionID)
+	discussion, err := store.PlanDiscussionByID(logger, newReply.DiscussionID)
 	if err != nil {
-		return reply, err
+		return newReply, err
 	}
 	modelPlan, err := ModelPlanGetByIDLOADER(ctx, discussion.ModelPlanID)
 	if err != nil {
-		return reply, err
+		return newReply, err
 	}
-	// Create Activity and notifications in the DB
-	// TODO EASI-3925 should we cause the discussion or reply to not be saved if there is an error creating a notification
-	// TODO EASI-3925 use a transaction
-	_, notificationErr := notifications.ActivityTaggedInDiscussionReplyCreate(ctx, store, principal.Account().ID, discussion.ID, reply.ID, reply.Content)
-	if notificationErr != nil {
-		return nil, fmt.Errorf("unable to generate notifications, %w", notificationErr)
-	}
+
 	go func() {
 
 		replyUser := principal.Account()
@@ -472,7 +473,7 @@ func CreateDiscussionReply(
 
 		if err != nil {
 			logger.Error("error sending discussion reply emails. Unable to retrieve modelPlan",
-				zap.String("replyID", reply.ID.String()),
+				zap.String("replyID", newReply.ID.String()),
 				zap.Error(err))
 		}
 
@@ -484,7 +485,7 @@ func CreateDiscussionReply(
 			emailTemplateService,
 			addressBook,
 			discussion,
-			reply,
+			newReply,
 			modelPlan,
 			replyUser,
 		)
@@ -502,11 +503,11 @@ func CreateDiscussionReply(
 			emailService,
 			emailTemplateService,
 			addressBook,
-			reply.Content,
-			reply.DiscussionID,
+			newReply.Content,
+			newReply.DiscussionID,
 			modelPlan,
 			commonName,
-			reply.UserRole.Humanize(models.ValueOrEmpty(reply.UserRoleDescription)),
+			newReply.UserRole.Humanize(models.ValueOrEmpty(newReply.UserRoleDescription)),
 		)
 
 		if err != nil {
@@ -518,7 +519,7 @@ func CreateDiscussionReply(
 		}
 	}()
 
-	return reply, err
+	return newReply, err
 }
 
 // UpdateDiscussionReply implements resolver logic to update a Discussion reply object
