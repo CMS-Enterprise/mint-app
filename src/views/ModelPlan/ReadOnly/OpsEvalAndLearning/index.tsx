@@ -13,14 +13,12 @@ import ReadOnlyBody from '../_components/Body';
 import ReadOnlySection, {
   RelatedUnneededQuestions
 } from '../_components/ReadOnlySection';
-import { getRelatedUneededQuestions } from '../_components/ReadOnlySection/util';
 import TitleAndStatus from '../_components/TitleAndStatus';
 import { ReadOnlyProps } from '../ModelBasics';
 
 const ReadOnlyOpsEvalAndLearning = ({
   modelID,
   clearance,
-  isViewingFilteredView,
   filteredView
 }: ReadOnlyProps) => {
   const { t: opsEvalAndLearningMiscT } = useTranslation(
@@ -167,7 +165,7 @@ const ReadOnlyOpsEvalAndLearning = ({
           'operationsEvaluationAndLearningHeading'
         )}
         heading={opsEvalAndLearningMiscT('heading')}
-        isViewingFilteredView={isViewingFilteredView}
+        isViewingFilteredView={!!filteredView}
         status={allOpsEvalAndLearningData.status}
       />
 
@@ -189,12 +187,12 @@ const ReadOnlyOpsEvalAndLearning = ({
       {/* CCWAndQuality */}
       <div
         className={`${
-          isViewingFilteredView
+          filteredView
             ? ''
             : 'margin-top-4 padding-top-4 border-top-1px border-base-light'
         }`}
       >
-        {!isViewingFilteredView && (
+        {!filteredView && (
           <h3 className="margin-top-0">
             {opsEvalAndLearningMiscT('ccwSpecificReadonly')}
           </h3>
@@ -202,10 +200,8 @@ const ReadOnlyOpsEvalAndLearning = ({
 
         <RelatedUnneededQuestions
           id="quality-questions"
-          relatedConditions={getRelatedUneededQuestions(
-            opsEvalAndLearningConfig.ccmInvolvment,
-            allOpsEvalAndLearningData.ccmInvolvment
-          )}
+          config={opsEvalAndLearningConfig.ccmInvolvment}
+          value={allOpsEvalAndLearningData.ccmInvolvment}
           hideAlert={false}
         />
 
@@ -271,12 +267,12 @@ const ReadOnlyOpsEvalAndLearning = ({
       {/* Quality */}
       <div
         className={`${
-          isViewingFilteredView
+          filteredView
             ? ''
             : 'margin-top-4 padding-top-4 border-top-1px border-base-light'
         }`}
       >
-        {!isViewingFilteredView && (
+        {!filteredView && (
           <h3 className="margin-top-0">
             {opsEvalAndLearningMiscT('qualityReadonly')}
           </h3>
@@ -284,10 +280,8 @@ const ReadOnlyOpsEvalAndLearning = ({
 
         <RelatedUnneededQuestions
           id="data-needed-for-monitoring-questions"
-          relatedConditions={getRelatedUneededQuestions(
-            opsEvalAndLearningConfig.dataNeededForMonitoring,
-            allOpsEvalAndLearningData.dataNeededForMonitoring
-          )}
+          config={opsEvalAndLearningConfig.dataNeededForMonitoring}
+          value={allOpsEvalAndLearningData.dataNeededForMonitoring}
           hideAlert={false}
         />
 

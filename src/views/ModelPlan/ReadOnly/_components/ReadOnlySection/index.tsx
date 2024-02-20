@@ -78,10 +78,6 @@ const ReadOnlySection = <
     return null;
   }
 
-  const relatedConditions = isTranslationFieldPropertiesWithOptions(config)
-    ? getRelatedUneededQuestions(config, value)
-    : [];
-
   return (
     <Grid desktop={{ col: 12 }}>
       <div
@@ -100,7 +96,8 @@ const ReadOnlySection = <
 
       <RelatedUnneededQuestions
         id={`related-${sectionName}`}
-        relatedConditions={relatedConditions}
+        config={config}
+        value={value}
         hideAlert={config.hideRelatedQuestionAlert}
       />
     </Grid>
@@ -338,16 +335,27 @@ const ListOtherItem = ({
   );
 };
 
-export const RelatedUnneededQuestions = ({
+export const RelatedUnneededQuestions = <
+  T extends string | keyof T,
+  C extends string | keyof C
+>({
   id,
-  relatedConditions,
+  config,
+  value,
+  singleChildCheck,
   hideAlert
 }: {
   id: string;
-  relatedConditions: (string | null | undefined)[] | null;
+  config: TranslationConfigType<T, C>;
+  value: any;
+  singleChildCheck?: any;
   hideAlert?: boolean;
 }) => {
   const { t: readOnlyT } = useTranslation('generalReadOnly');
+
+  const relatedConditions = isTranslationFieldPropertiesWithOptions(config)
+    ? getRelatedUneededQuestions(config, value, singleChildCheck)
+    : [];
 
   if (!relatedConditions?.length || hideAlert) {
     return null;

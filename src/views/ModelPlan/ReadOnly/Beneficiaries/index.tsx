@@ -16,7 +16,6 @@ import { ReadOnlyProps } from '../ModelBasics';
 const ReadOnlyBeneficiaries = ({
   modelID,
   clearance,
-  isViewingFilteredView,
   filteredView
 }: ReadOnlyProps) => {
   const { t: beneficiariesMiscT } = useTranslation('beneficiariesMisc');
@@ -49,7 +48,7 @@ const ReadOnlyBeneficiaries = ({
         clearance={clearance}
         clearanceTitle={beneficiariesMiscT('clearanceHeading')}
         heading={beneficiariesMiscT('heading')}
-        isViewingFilteredView={isViewingFilteredView}
+        isViewingFilteredView={!!filteredView}
         status={allbeneficiariesData.status}
       />
 

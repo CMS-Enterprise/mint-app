@@ -16,8 +16,7 @@ import { ReadOnlyProps } from '../ModelBasics';
 const ReadOnlyGeneralCharacteristics = ({
   modelID,
   clearance,
-  filteredView,
-  isViewingFilteredView
+  filteredView
 }: ReadOnlyProps) => {
   const { t: generalCharacteristicsMiscT } = useTranslation(
     'generalCharacteristicsMisc'
@@ -95,7 +94,7 @@ const ReadOnlyGeneralCharacteristics = ({
         clearance={clearance}
         clearanceTitle={generalCharacteristicsMiscT('clearanceHeading')}
         heading={generalCharacteristicsMiscT('heading')}
-        isViewingFilteredView={isViewingFilteredView}
+        isViewingFilteredView={!!filteredView}
         status={status}
       />
 

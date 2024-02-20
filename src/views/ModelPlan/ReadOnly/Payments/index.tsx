@@ -12,16 +12,13 @@ import { NotFoundPartial } from 'views/NotFound';
 
 import ReadOnlyBody from '../_components/Body';
 import { RelatedUnneededQuestions } from '../_components/ReadOnlySection';
-import { getRelatedUneededQuestions } from '../_components/ReadOnlySection/util';
 import TitleAndStatus from '../_components/TitleAndStatus';
 import { ReadOnlyProps } from '../ModelBasics';
 
 const ReadOnlyPayments = ({
   modelID,
   clearance,
-  isViewingFilteredView,
-  filteredView,
-  filteredQuestions
+  filteredView
 }: ReadOnlyProps) => {
   const { t: paymentsMiscT } = useTranslation('paymentsMisc');
   const { t: prepareForClearanceT } = useTranslation('prepareForClearance');
@@ -162,7 +159,7 @@ const ReadOnlyPayments = ({
         clearance={clearance}
         clearanceTitle={paymentsMiscT('clearanceHeading')}
         heading={paymentsMiscT('heading')}
-        isViewingFilteredView={isViewingFilteredView}
+        isViewingFilteredView={!!filteredView}
         status={allPaymentData.status}
       />
 
@@ -184,22 +181,20 @@ const ReadOnlyPayments = ({
       {/* Claims-based payments */}
       <div
         className={`${
-          isViewingFilteredView
+          filteredView
             ? ''
             : 'margin-top-4 padding-top-4 border-top-1px border-base-light'
         }`}
       >
-        {!isViewingFilteredView && (
+        {!filteredView && (
           <h3 className="margin-top-0">{paymentsMiscT('claims')}</h3>
         )}
 
         <RelatedUnneededQuestions
           id="claims-questions"
-          relatedConditions={getRelatedUneededQuestions(
-            paymentsConfig.payType,
-            allPaymentData.payType,
-            PayType.CLAIMS_BASED_PAYMENTS
-          )}
+          config={paymentsConfig.payType}
+          value={allPaymentData.payType}
+          singleChildCheck={PayType.CLAIMS_BASED_PAYMENTS}
           hideAlert={false}
         />
 
@@ -213,12 +208,12 @@ const ReadOnlyPayments = ({
       {/* Beneficiary cost-sharing */}
       <div
         className={`${
-          isViewingFilteredView
+          filteredView
             ? ''
             : 'margin-top-4 padding-top-4 border-top-1px border-base-light'
         }`}
       >
-        {!isViewingFilteredView && (
+        {!filteredView && (
           <h3 className="margin-top-0">
             {paymentsMiscT('beneficiaryCostSharing')}
           </h3>
@@ -226,10 +221,8 @@ const ReadOnlyPayments = ({
 
         <RelatedUnneededQuestions
           id="cost-sharing-questions"
-          relatedConditions={getRelatedUneededQuestions(
-            paymentsConfig.payClaims,
-            allPaymentData.payClaims
-          )}
+          config={paymentsConfig.payClaims}
+          value={allPaymentData.payClaims}
           hideAlert={false}
         />
 
@@ -243,22 +236,20 @@ const ReadOnlyPayments = ({
       {/* Non claims-based payments */}
       <div
         className={`${
-          isViewingFilteredView
+          filteredView
             ? ''
             : 'margin-top-4 padding-top-4 border-top-1px border-base-light'
         }`}
       >
-        {!isViewingFilteredView && (
+        {!filteredView && (
           <h3 className="margin-top-0">{paymentsMiscT('nonClaims')}</h3>
         )}
 
         <RelatedUnneededQuestions
           id="cost-sharing-questions"
-          relatedConditions={getRelatedUneededQuestions(
-            paymentsConfig.payType,
-            allPaymentData.payType,
-            PayType.NON_CLAIMS_BASED_PAYMENTS
-          )}
+          config={paymentsConfig.payType}
+          value={allPaymentData.payType}
+          singleChildCheck={PayType.NON_CLAIMS_BASED_PAYMENTS}
           hideAlert={false}
         />
 

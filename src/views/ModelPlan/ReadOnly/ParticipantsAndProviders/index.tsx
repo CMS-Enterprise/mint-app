@@ -16,8 +16,7 @@ import { ReadOnlyProps } from '../ModelBasics';
 const ReadOnlyParticipantsAndProviders = ({
   modelID,
   clearance,
-  filteredView,
-  isViewingFilteredView
+  filteredView
 }: ReadOnlyProps) => {
   const { t: participantsAndProvidersMiscT } = useTranslation(
     'participantsAndProvidersMisc'
@@ -53,7 +52,7 @@ const ReadOnlyParticipantsAndProviders = ({
         clearance={clearance}
         clearanceTitle={participantsAndProvidersMiscT('clearanceHeading')}
         heading={participantsAndProvidersMiscT('heading')}
-        isViewingFilteredView={isViewingFilteredView}
+        isViewingFilteredView={!!filteredView}
         status={allparticipantsAndProvidersData.status}
       />
 

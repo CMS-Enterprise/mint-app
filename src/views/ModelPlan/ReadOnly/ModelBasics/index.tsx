@@ -27,17 +27,13 @@ import './index.scss';
 export type ReadOnlyProps = {
   modelID: string;
   clearance?: boolean;
-  isViewingFilteredView?: boolean;
-  filteredQuestions?: string[];
   filteredView?: string;
 };
 
 const ReadOnlyModelBasics = ({
   modelID,
   clearance,
-  filteredView,
-  isViewingFilteredView,
-  filteredQuestions
+  filteredView
 }: ReadOnlyProps) => {
   const { t: basicsT } = useTranslation('basics');
   const { t: basicsMiscT } = useTranslation('basicsMisc');
@@ -140,7 +136,7 @@ const ReadOnlyModelBasics = ({
         clearance={clearance}
         clearanceTitle={basicsMiscT('clearanceHeading')}
         heading={basicsMiscT('heading')}
-        isViewingFilteredView={isViewingFilteredView}
+        isViewingFilteredView={!!filteredView}
         status={status}
       />
 
@@ -160,7 +156,7 @@ const ReadOnlyModelBasics = ({
       />
 
       {/* Other Identifiers section */}
-      {!isViewingFilteredView && (
+      {!filteredView && (
         <div
           className={classNames(
             'bg-base-lightest padding-2 margin-top-4 margin-bottom-4',
@@ -233,7 +229,7 @@ const ReadOnlyModelBasics = ({
         filteredView={filteredView}
       />
 
-      {isViewingFilteredView && filteredView !== 'ipc' ? (
+      {!!filteredView && filteredView !== 'ipc' ? (
         <ReadOnlyBody
           data={allBasicsData}
           config={timelineConfig}
@@ -244,7 +240,7 @@ const ReadOnlyModelBasics = ({
           className={classNames(
             'read-only-model-plan__timeline--wrapper border-base-light padding-top-4 ',
             {
-              'border-y-1px padding-bottom-2 margin-bottom-4 margin-top-6': !isViewingFilteredView
+              'border-y-1px padding-bottom-2 margin-bottom-4 margin-top-6': !filteredView
             }
           )}
         >
