@@ -24,9 +24,8 @@ func UserNotificationPreferencesCreate(np sqlutils.NamedPreparer, userNotificati
 }
 
 // UserNotificationPreferencesGetByUserID returns a  UserNotificationPreferences  object for a given user_id in the database
+// Note this should only be used for cases when a data loader is not possible to use directly.
 func UserNotificationPreferencesGetByUserID(np sqlutils.NamedPreparer, userID uuid.UUID) (*models.UserNotificationPreferences, error) {
-
-	//TODO: EASI-3925 this should be a dataloader
 	arg := map[string]interface{}{
 		"user_id": userID,
 	}

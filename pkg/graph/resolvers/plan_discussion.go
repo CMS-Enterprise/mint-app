@@ -100,8 +100,7 @@ func CreatePlanDiscussion(
 		}()
 
 		// send an email for each tag, which is unique compared to the mention
-		//TODO: EASI-3925, should we distinguish Replies vs discussions?
-		//TODO: EASI-3925 Get notification preferences here and pass it, We need to connect the idea of an email and the user notification preference. Should we the activity create the email?
+		//TODO: EASI-3925 make the whole transaction fail if a part fails
 
 		_, notificationErr := notifications.ActivityTaggedInDiscussionCreate(ctx, tx, principal.Account().ID, discussion.ID, discussion.Content)
 		if notificationErr != nil {
@@ -167,7 +166,7 @@ func sendPlanDiscussionTagEmails(
 			if !ok {
 				errs = append(errs, fmt.Errorf("tagged entity was expected to be a user account, but was not able to be cast to UserAccount. entity: %v", entity))
 			}
-			pref, err := storage.UserNotificationPreferencesGetByUserID(np, *mention.EntityUUID)
+			pref, err := UserNotificationPreferencesGetByUserID(ctx, *mention.EntityUUID)
 			if err != nil {
 				errs = append(errs, fmt.Errorf("unable to get user notification preference, Notification not created %w", err))
 			}

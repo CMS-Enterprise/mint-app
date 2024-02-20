@@ -31,18 +31,17 @@ func ActivityTaggedInDiscussionReplyCreate(ctx context.Context, np sqlutils.Name
 
 			continue // non blocking
 		}
-		// entity := *mention.Entity
 
 		switch mention.Type {
 		case models.TagTypeUserAccount:
 
 			if mention.EntityUUID == nil {
 				err := fmt.Errorf("this html mention entity UUID is nil. Unable to create a notification")
-				//TODO: EASI-3925 should we use a logger?
 				errs = append(errs, err)
 				continue
 
 			}
+			//TODO: EASI-3925 update dependencies so we can use the dataloader
 			pref, err := storage.UserNotificationPreferencesGetByUserID(np, *mention.EntityUUID)
 			if err != nil {
 				errs = append(errs, fmt.Errorf("unable to get user notification preference, Notification not created %w", err))

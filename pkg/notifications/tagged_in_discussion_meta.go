@@ -31,25 +31,17 @@ func ActivityTaggedInDiscussionCreate(ctx context.Context, np sqlutils.NamedPrep
 
 			continue // non blocking
 		}
-		// entity := *mention.Entity
 
 		switch mention.Type {
 		case models.TagTypeUserAccount:
 
-			//TODO: EASI-3925 make this respect user preferences? Or we do we want the SQL to do that?
-			// taggedUserAccount, ok := entity.(*authentication.UserAccount)
-			// if !ok {
-			// 	err = fmt.Errorf("tagged entity was expected to be a user account, but was not able to be cast to UserAccount. entity: %v", entity)
-			// 	continue // non blocking
-			// }
-
 			if mention.EntityUUID == nil {
 				err := fmt.Errorf("this html mention entity UUID is nil. Unable to create a notification")
-				//TODO: EASI-3925 should we use a logger?
 				errs = append(errs, err)
 				continue
 
 			}
+			//TODO: EASI-3925 update dependencies so we can use the dataloader
 			pref, err := storage.UserNotificationPreferencesGetByUserID(np, *mention.EntityUUID)
 			if err != nil {
 				errs = append(errs, fmt.Errorf("unable to get user notification preference, Notification not created %w", err))
