@@ -10,8 +10,8 @@ import (
 	"github.com/cmsgov/mint-app/pkg/sqlutils"
 )
 
-// UserNotificationCollectionGetByUserID returns all Notifications for a user for a given User Account
-func (s *dataBaseCalls) UserNotificationCollectionGetByUserID(np sqlutils.NamedPreparer, userAccountID uuid.UUID) ([]*models.UserNotification, error) {
+// CollectionGetByUserID returns all Notifications for a user for a given User Account
+func (s *notificationStore) CollectionGetByUserID(np sqlutils.NamedPreparer, userAccountID uuid.UUID) ([]*models.UserNotification, error) {
 
 	arg := map[string]interface{}{"user_id": userAccountID}
 
@@ -22,8 +22,8 @@ func (s *dataBaseCalls) UserNotificationCollectionGetByUserID(np sqlutils.NamedP
 	return notifCollection, nil
 }
 
-// UserNotificationCreate a notification record in the database
-func (s *dataBaseCalls) UserNotificationCreate(
+// Create a notification record in the database
+func (s *notificationStore) Create(
 	np sqlutils.NamedPreparer,
 	notification *models.UserNotification,
 ) (*models.UserNotification, error) {
@@ -38,9 +38,9 @@ func (s *dataBaseCalls) UserNotificationCreate(
 	return retNotif, nil
 }
 
-// UserNotificationMarkRead marks a notification record in the database as read. It will only allow the user who owns the notification to mark it as read,
+// MarkRead marks a notification record in the database as read. It will only allow the user who owns the notification to mark it as read,
 // otherwise it won't update it (as the WHERE condition won't match)
-func (s *dataBaseCalls) UserNotificationMarkRead(
+func (s *notificationStore) MarkRead(
 	np sqlutils.NamedPreparer,
 	// the id of the notification
 	notificationID uuid.UUID,
@@ -59,8 +59,8 @@ func (s *dataBaseCalls) UserNotificationMarkRead(
 	return retNotif, nil
 }
 
-// UserNotificationMarkAllAsRead marks all UNREAD notification records for a specific user in the database as read.
-func (s *dataBaseCalls) UserNotificationMarkAllAsRead(
+// MarkAllAsRead marks all UNREAD notification records for a specific user in the database as read.
+func (s *notificationStore) MarkAllAsRead(
 	np sqlutils.NamedPreparer,
 
 	// the uuid of the user account that owns the notification

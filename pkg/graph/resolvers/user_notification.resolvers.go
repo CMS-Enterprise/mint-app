@@ -19,19 +19,18 @@ import (
 // MarkNotificationAsRead is the resolver for the markNotificationAsRead field.
 func (r *mutationResolver) MarkNotificationAsRead(ctx context.Context, notificationID uuid.UUID) (*models.UserNotification, error) {
 	principal := appcontext.Principal(ctx)
-	return notifications.UserNotificationMarkAsRead(ctx, r.store, r.store, principal, notificationID)
+	return notifications.UserNotificationMarkAsRead(ctx, r.store, principal, notificationID)
 }
 
 // MarkAllNotificationsAsRead is the resolver for the markAllNotificationsAsRead field.
 func (r *mutationResolver) MarkAllNotificationsAsRead(ctx context.Context) ([]*models.UserNotification, error) {
 	principal := appcontext.Principal(ctx)
-	return notifications.UserNotificationMarkAllAsRead(ctx, r.store, r.store, principal)
+	return notifications.UserNotificationMarkAllAsRead(ctx, r.store, principal)
 }
 
 // Activity is the resolver for the activity field.
 func (r *userNotificationResolver) Activity(ctx context.Context, obj *models.UserNotification) (*models.Activity, error) {
 	return loaders.ActivityGetByID(ctx, obj.ActivityID)
-	// return notifications.ActivityGetByID(ctx, r.store, obj.ActivityID)
 }
 
 // UserNotification returns generated.UserNotificationResolver implementation.

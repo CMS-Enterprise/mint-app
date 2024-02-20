@@ -10,8 +10,8 @@ import (
 	"github.com/cmsgov/mint-app/pkg/sqlutils"
 )
 
-// ActivityCreate creates a new activity in the database
-func (s *dataBaseCalls) ActivityCreate(np sqlutils.NamedPreparer, activity *models.Activity) (*models.Activity, error) {
+// Create creates a new activity in the database
+func (s *activityStore) Create(np sqlutils.NamedPreparer, activity *models.Activity) (*models.Activity, error) {
 	if activity.ID == uuid.Nil {
 		activity.ID = uuid.New()
 	}
@@ -24,8 +24,8 @@ func (s *dataBaseCalls) ActivityCreate(np sqlutils.NamedPreparer, activity *mode
 	return retActivity, nil
 }
 
-// ActivityGetByID returns an existing activity from the database
-func (s *dataBaseCalls) ActivityGetByID(np sqlutils.NamedPreparer, activityID uuid.UUID) (*models.Activity, error) {
+// GetByID returns an existing activity from the database
+func (s *activityStore) GetByID(np sqlutils.NamedPreparer, activityID uuid.UUID) (*models.Activity, error) {
 
 	arg := map[string]interface{}{"id": activityID}
 
@@ -43,8 +43,8 @@ func (s *dataBaseCalls) ActivityGetByID(np sqlutils.NamedPreparer, activityID uu
 	return retActivity, nil
 }
 
-// ActivityGetByIDLoader returns a collection of existing activity from the database
-func (s *dataBaseCalls) ActivityGetByIDLoader(np sqlutils.NamedPreparer, paramTableJSON string) ([]*models.Activity, error) {
+// GetByIDLoader returns a collection of existing activity from the database
+func (s *activityStore) GetByIDLoader(np sqlutils.NamedPreparer, paramTableJSON string) ([]*models.Activity, error) {
 	arg := map[string]interface{}{
 		"paramTableJSON": paramTableJSON,
 	}
@@ -53,6 +53,6 @@ func (s *dataBaseCalls) ActivityGetByIDLoader(np sqlutils.NamedPreparer, paramTa
 	if err != nil {
 		return nil, fmt.Errorf("issue selecting activities by ID with the data loader, %w", err)
 	}
-	//Note: This doesn't parse metaData here, that is the repsonsibility of the parent function
+	//Note: This doesn't parse metaData here, that is the responsibility of the parent function
 	return retActivities, nil
 }
