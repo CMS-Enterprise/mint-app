@@ -1,6 +1,7 @@
 import React from 'react';
 import { act, render, waitFor } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+
+import setup from 'utils/testing/setup';
 
 import TabPanel from './TabPanel';
 import Tabs from './Tabs';
@@ -78,8 +79,8 @@ describe('The Tabs component', () => {
     });
   });
 
-  it('renders new tab panel on click', () => {
-    const { getByTestId } = render(
+  it('renders new tab panel on click', async () => {
+    const { user, getByTestId } = setup(
       <Tabs defaultActiveTab="Tab 2">
         <TabPanel id="Tab1" tabName="Tab 1">
           Tab 1
@@ -93,14 +94,14 @@ describe('The Tabs component', () => {
       </Tabs>
     );
 
-    userEvent.click(getByTestId('Tab3-tab-btn'));
+    await user.click(getByTestId('Tab3-tab-btn'));
     expect(getByTestId('Tab3-tab')).toHaveClass('mint-tabs__tab--selected');
     expect(getByTestId('Tab3-panel')).not.toHaveClass('mint-print-only');
   });
 
   describe('keyboard actions', () => {
     it('switches tabs on arrow right', async () => {
-      const { getByTestId } = render(
+      const { user, getByTestId } = setup(
         <Tabs>
           <TabPanel id="Tab1" tabName="Tab 1">
             Tab 1
@@ -115,16 +116,16 @@ describe('The Tabs component', () => {
       );
       const startingTab = getByTestId('Tab1-tab-btn');
 
-      await waitFor(() => {
-        userEvent.click(startingTab);
-        userEvent.type(startingTab, '{arrowright}');
+      await waitFor(async () => {
+        await user.click(startingTab);
+        await user.type(startingTab, '{arrowright}');
         expect(getByTestId('Tab2-tab-btn')).toHaveFocus();
         expect(getByTestId('Tab2-tab')).toHaveClass('mint-tabs__tab--selected');
         expect(getByTestId('Tab2-panel')).not.toHaveClass('mint-print-only');
       });
     });
     it('switches tabs on left right', async () => {
-      const { getByTestId } = render(
+      const { user, getByTestId } = setup(
         <Tabs>
           <TabPanel id="Tab1" tabName="Tab 1">
             Tab 1
@@ -139,9 +140,9 @@ describe('The Tabs component', () => {
       );
       const startingTab = getByTestId('Tab3-tab-btn');
 
-      await waitFor(() => {
-        userEvent.click(startingTab);
-        userEvent.type(startingTab, '{arrowleft}');
+      await waitFor(async () => {
+        await user.click(startingTab);
+        await user.type(startingTab, '{arrowleft}');
 
         expect(getByTestId('Tab2-tab-btn')).toHaveFocus();
         expect(getByTestId('Tab2-tab')).toHaveClass('mint-tabs__tab--selected');
@@ -149,7 +150,7 @@ describe('The Tabs component', () => {
       });
     });
     it('loops to last tab on left arrow click', async () => {
-      const { getByTestId } = render(
+      const { user, getByTestId } = setup(
         <Tabs>
           <TabPanel id="Tab1" tabName="Tab 1">
             Tab 1
@@ -164,16 +165,16 @@ describe('The Tabs component', () => {
       );
       const startingTab = getByTestId('Tab1-tab-btn');
 
-      await waitFor(() => {
-        userEvent.click(startingTab);
-        userEvent.type(startingTab, '{arrowleft}');
+      await waitFor(async () => {
+        await user.click(startingTab);
+        await user.type(startingTab, '{arrowleft}');
         expect(getByTestId('Tab3-tab-btn')).toHaveFocus();
         expect(getByTestId('Tab3-tab')).toHaveClass('mint-tabs__tab--selected');
         expect(getByTestId('Tab3-panel')).not.toHaveClass('mint-print-only');
       });
     });
     it('loops to first tab on right arrow click', async () => {
-      const { getByTestId } = render(
+      const { user, getByTestId } = setup(
         <Tabs>
           <TabPanel id="Tab1" tabName="Tab 1">
             Tab 1
@@ -188,16 +189,17 @@ describe('The Tabs component', () => {
       );
       const startingTab = getByTestId('Tab3-tab-btn');
 
-      await waitFor(() => {
-        userEvent.click(startingTab);
-        userEvent.type(startingTab, '{arrowright}');
+      await waitFor(async () => {
+        await user.click(startingTab);
+        await user.type(startingTab, '{arrowright}');
         expect(getByTestId('Tab1-tab-btn')).toHaveFocus();
         expect(getByTestId('Tab1-tab')).toHaveClass('mint-tabs__tab--selected');
         expect(getByTestId('Tab1-panel')).not.toHaveClass('mint-print-only');
       });
     });
+
     it('focuses tab panel on tab', async () => {
-      const { getByTestId } = render(
+      const { user, getByTestId } = setup(
         <Tabs>
           <TabPanel id="Tab1" tabName="Tab 1">
             Tab 1
@@ -212,15 +214,15 @@ describe('The Tabs component', () => {
       );
       const startingTab = getByTestId('Tab1-tab-btn');
 
-      await waitFor(() => {
-        userEvent.click(startingTab);
-        userEvent.tab();
+      await waitFor(async () => {
+        await user.click(startingTab);
+        await user.tab();
         expect(getByTestId('Tab1-panel')).toHaveFocus();
         expect(getByTestId('Tab1-panel')).not.toHaveClass('mint-print-only');
       });
     });
     it('focuses first tab on home key press', async () => {
-      const { getByTestId } = render(
+      const { user, getByTestId } = setup(
         <Tabs>
           <TabPanel id="Tab1" tabName="Tab 1">
             Tab 1
@@ -235,16 +237,16 @@ describe('The Tabs component', () => {
       );
       const startingTab = getByTestId('Tab3-tab-btn');
 
-      await waitFor(() => {
-        userEvent.click(startingTab);
-        userEvent.type(startingTab, '{home}');
+      await waitFor(async () => {
+        await user.click(startingTab);
+        await user.type(startingTab, '{home}');
         expect(getByTestId('Tab1-tab-btn')).toHaveFocus();
         expect(getByTestId('Tab1-tab')).toHaveClass('mint-tabs__tab--selected');
         expect(getByTestId('Tab1-panel')).not.toHaveClass('mint-print-only');
       });
     });
     it('focuses last tab on end key press', async () => {
-      const { getByTestId } = render(
+      const { user, getByTestId } = setup(
         <Tabs>
           <TabPanel id="Tab1" tabName="Tab 1">
             Tab 1
@@ -259,9 +261,9 @@ describe('The Tabs component', () => {
       );
       const startingTab = getByTestId('Tab3-tab-btn');
 
-      await waitFor(() => {
-        userEvent.click(startingTab);
-        userEvent.type(startingTab, '{end}');
+      await waitFor(async () => {
+        await user.click(startingTab);
+        await user.type(startingTab, '{end}');
         expect(getByTestId('Tab3-tab-btn')).toHaveFocus();
         expect(getByTestId('Tab3-tab')).toHaveClass('mint-tabs__tab--selected');
         expect(getByTestId('Tab3-panel')).not.toHaveClass('mint-print-only');
