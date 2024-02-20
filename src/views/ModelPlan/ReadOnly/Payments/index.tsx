@@ -11,9 +11,7 @@ import { ModelInfoContext } from 'views/ModelInfoWrapper';
 import { NotFoundPartial } from 'views/NotFound';
 
 import ReadOnlyBody from '../_components/Body';
-import ReadOnlySection, {
-  RelatedUnneededQuestions
-} from '../_components/ReadOnlySection';
+import { RelatedUnneededQuestions } from '../_components/ReadOnlySection';
 import { getRelatedUneededQuestions } from '../_components/ReadOnlySection/util';
 import TitleAndStatus from '../_components/TitleAndStatus';
 import { ReadOnlyProps } from '../ModelBasics';
