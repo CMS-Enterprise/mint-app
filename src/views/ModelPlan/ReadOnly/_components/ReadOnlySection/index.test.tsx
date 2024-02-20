@@ -59,9 +59,7 @@ describe('The Read Only Section', () => {
         )
       ).toBeInTheDocument();
       expect(
-        screen.getByText(
-          i18next.t<string>('miscellaneous:noAdditionalInformation')
-        )
+        screen.getByText(i18next.t<string>('miscellaneous:na'))
       ).toBeInTheDocument();
     });
   });
@@ -137,10 +135,10 @@ describe('The Read Only Section', () => {
 
       const expectedOrder: string[] = [
         i18next.t<string>(
-          'payments:fundingSource.optionsLabels.MEDICARE_PART_A_HI_TRUST_FUND'
+          'payments:fundingSource.tooltips.MEDICARE_PART_A_HI_TRUST_FUND'
         ),
         i18next.t<string>(
-          'payments:fundingSource.optionsLabels.MEDICARE_PART_B_SMI_TRUST_FUND'
+          'payments:fundingSource.tooltips.MEDICARE_PART_B_SMI_TRUST_FUND'
         ),
         ''
       ];

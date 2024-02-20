@@ -1712,16 +1712,11 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
           >
             Data sharing starts
           </p>
-          <ul
-            class="margin-y-0 padding-left-3"
+          <em
+            class="text-base"
           >
-            <li
-              class="font-sans-md line-height-sans-4"
-            >
-              During application period
-            </li>
-            <ul />
-          </ul>
+            No answer entered
+          </em>
         </div>
       </div>
     </div>
@@ -1800,16 +1795,11 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
           >
             Data collection starts
           </p>
-          <ul
-            class="margin-y-0 padding-left-3"
+          <em
+            class="text-base"
           >
-            <li
-              class="font-sans-md line-height-sans-4"
-            >
-              Early in the first performance year
-            </li>
-            <ul />
-          </ul>
+            No answer entered
+          </em>
         </div>
       </div>
     </div>
@@ -1888,16 +1878,11 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
           >
             Quality reporting starts
           </p>
-          <ul
-            class="margin-y-0 padding-left-3"
+          <em
+            class="text-base"
           >
-            <li
-              class="font-sans-md line-height-sans-4"
-            >
-              Later in the first performance year
-            </li>
-            <ul />
-          </ul>
+            No answer entered
+          </em>
         </div>
       </div>
     </div>

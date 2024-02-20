@@ -21,7 +21,7 @@ export const payments: TranslationPayments = {
       MEDICARE_PART_B_SMI_TRUST_FUND: 'Medicare Part B (SMI) Trust Fund',
       OTHER: 'Other'
     },
-    optionsLabels: {
+    tooltips: {
       MEDICARE_PART_A_HI_TRUST_FUND:
         'Also known as the Hospital Insurance (HI) Trust Fund, this covers inpatient hospital care, skilled nursing facility care, home healthcare, and hospice care.',
       MEDICARE_PART_B_SMI_TRUST_FUND:
@@ -111,7 +111,7 @@ export const payments: TranslationPayments = {
       MEDICARE_PART_B_SMI_TRUST_FUND: 'Medicare Part B (SMI) Trust Fund',
       OTHER: 'Other'
     },
-    optionsLabels: {
+    tooltips: {
       MEDICARE_PART_A_HI_TRUST_FUND:
         'Also known as the Hospital Insurance (HI) Trust Fund, this covers inpatient hospital care, skilled nursing facility care, home healthcare, and hospice care.',
       MEDICARE_PART_B_SMI_TRUST_FUND:

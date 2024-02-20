@@ -104,7 +104,7 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
             <em
               class="text-base"
             >
-              No additional information specified
+              No answer entered
             </em>
           </div>
         </div>
@@ -1221,7 +1221,7 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
           class="margin-bottom-3 mint-collapsable-link"
         >
           <button
-            aria-controls="Will the providers overlap with other models?"
+            aria-controls="related-will-the-providers-overlap-with-other-models"
             aria-expanded="false"
             class="usa-button usa-button--unstyled"
             data-testid="collapsable-link"

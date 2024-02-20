@@ -227,8 +227,8 @@ export const RadioValue = <
   // Checks if a single radio value has a mapped tooltip/optionsLabel
   let radioTooltip: string | undefined;
 
-  if (config.optionsLabels) {
-    radioTooltip = config.optionsLabels[value as T];
+  if (config.tooltips) {
+    radioTooltip = config.tooltips[value as T];
   }
 
   return (
@@ -254,9 +254,9 @@ export const RadioValue = <
       )}
 
       {/* Renders a list beneath a selection of a radio value */}
-      {childHasOptions && childHasOptions.options && (
+      {childHasOptions && childHasOptions.options && childField && (
         <RenderReadonlyValue
-          field={field}
+          field={childField}
           translations={translations}
           values={values}
         />

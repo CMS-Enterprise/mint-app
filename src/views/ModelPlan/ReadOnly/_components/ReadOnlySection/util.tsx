@@ -105,7 +105,7 @@ export const formatListTooltips = <
   return getKeys(config.options)
     .filter(option => Array.isArray(value) && value?.includes(option))
     .map((option): string | null | undefined => {
-      return config.optionsLabels?.[option];
+      return config.tooltips?.[option];
     });
 };
 

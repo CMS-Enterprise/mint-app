@@ -132,7 +132,8 @@ type ChildRelation<
 type TranslationOptions<T extends keyof T | string> = {
   options: Record<T, string>;
   readonlyOptions?: Partial<Record<T, string>>; // An alternative set of translations for options specific to readonly
-  optionsLabels?: Partial<Record<T, string>>;
+  optionsLabels?: Partial<Record<T, string>>; // Sub labels to be rendered directly underneath options
+  tooltips?: Partial<Record<T, string>>; // Information to be rendered inside a tooltip
   optionsRelatedInfo?: Partial<Record<T, string>>; // T values should/could be a subset of the keys of enum values
 };
 

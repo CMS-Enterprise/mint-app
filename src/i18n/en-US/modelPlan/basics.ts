@@ -23,7 +23,7 @@ export const basics: TranslationBasics = {
       STATUTORY: 'Statutory',
       TO_BE_DETERMINED: 'To be determined'
     },
-    optionsLabels: {
+    tooltips: {
       ACCOUNTABLE_CARE:
         'Models in which a doctor, group of health care providers or hospital takes financial responsibility for improving quality of care, including advanced primary care services, care coordination and health outcomes for a defined group of patients, thereby reducing care fragmentation and unnecessary costs for patients and the health system',
       DISEASE_SPECIFIC_AND_EPISODIC:
@@ -60,7 +60,7 @@ export const basics: TranslationBasics = {
       STATUTORY: 'Statutory',
       TO_BE_DETERMINED: 'To be determined'
     },
-    optionsLabels: {
+    tooltips: {
       ACCOUNTABLE_CARE:
         'Models in which a doctor, group of health care providers or hospital takes financial responsibility for improving quality of care, including advanced primary care services, care coordination and health outcomes for a defined group of patients, thereby reducing care fragmentation and unnecessary costs for patients and the health system',
       DISEASE_SPECIFIC_AND_EPISODIC:
