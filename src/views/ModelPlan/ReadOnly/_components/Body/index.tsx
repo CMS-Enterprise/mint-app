@@ -4,9 +4,8 @@ import classNames from 'classnames';
 import { getKeys, TranslationPlanSection } from 'types/translation';
 
 import { filterGroupKey } from '../FilterView/BodyContent/_filterGroupMapping';
-import ReadOnlySectionNew, {
-  isHiddenByParentCondition
-} from '../ReadOnlySection/new';
+import ReadOnlySectionNew from '../ReadOnlySection/new';
+import { isHiddenByParentCondition } from '../ReadOnlySection/util';
 import SideBySideReadOnlySectionNew from '../SideBySideReadOnlySection/new';
 
 const ReadOnlyBody = ({

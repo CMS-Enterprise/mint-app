@@ -7,14 +7,15 @@ import { participantsAndProviders } from 'i18n/en-US/modelPlan/participantsAndPr
 import { payments } from 'i18n/en-US/modelPlan/payments';
 import { Bool } from 'types/translation';
 
-import ReadOnlySectionNew, {
+import ReadOnlySectionNew from './new';
+import {
   compareClosure,
   formatListItems,
   formatListOtherItems,
   formatListTooltips,
   getRelatedUneededQuestions,
   isHiddenByParentCondition
-} from './new';
+} from './util';
 
 const defaultProps = {
   field: 'modelApplicationLevel',

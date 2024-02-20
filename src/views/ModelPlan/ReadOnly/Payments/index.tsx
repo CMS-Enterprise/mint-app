@@ -1,30 +1,20 @@
 import React, { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
-import classNames from 'classnames';
 import {
-  ClaimsBasedPayType,
   GetAllPaymentsQuery,
   PayType,
   useGetAllPaymentsQuery
 } from 'gql/gen/graphql';
 
 import usePlanTranslation from 'hooks/usePlanTranslation';
-import { formatDateUtc } from 'utils/date';
 import { ModelInfoContext } from 'views/ModelInfoWrapper';
 import { NotFoundPartial } from 'views/NotFound';
 
 import ReadOnlyBody from '../_components/Body';
-import { checkGroupMap } from '../_components/FilterView/util';
-import ReadOnlySection, {
-  formatListItems,
-  formatListOtherItems,
-  formatListTooltips
-} from '../_components/ReadOnlySection';
 import ReadOnlySectionNew, {
-  getRelatedUneededQuestions,
   RelatedUnneededQuestions
 } from '../_components/ReadOnlySection/new';
-import SideBySideReadOnlySection from '../_components/SideBySideReadOnlySection';
+import { getRelatedUneededQuestions } from '../_components/ReadOnlySection/util';
 import TitleAndStatus from '../_components/TitleAndStatus';
 import { ReadOnlyProps } from '../ModelBasics';
 

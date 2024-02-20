@@ -26,7 +26,7 @@ import { getKeys } from 'types/translation';
 import { formatDateLocal, formatDateUtc } from 'utils/date';
 import { csvFields, fieldsToUnwind } from 'utils/export/CsvData';
 import { filterGroupKey } from 'views/ModelPlan/ReadOnly/_components/FilterView/BodyContent/_filterGroupMapping';
-import { isHiddenByParentCondition } from 'views/ModelPlan/ReadOnly/_components/ReadOnlySection/new';
+import { isHiddenByParentCondition } from 'views/ModelPlan/ReadOnly/_components/ReadOnlySection/util';
 
 interface CSVModelPlanType extends AllModelDataType, SingleModelPlanType {}
 

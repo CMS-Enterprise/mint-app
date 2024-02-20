@@ -11,9 +11,9 @@ import { NotFoundPartial } from 'views/NotFound';
 
 import ReadOnlyBody from '../_components/Body';
 import ReadOnlySectionNew, {
-  getRelatedUneededQuestions,
   RelatedUnneededQuestions
 } from '../_components/ReadOnlySection/new';
+import { getRelatedUneededQuestions } from '../_components/ReadOnlySection/util';
 import TitleAndStatus from '../_components/TitleAndStatus';
 import { ReadOnlyProps } from '../ModelBasics';
 
