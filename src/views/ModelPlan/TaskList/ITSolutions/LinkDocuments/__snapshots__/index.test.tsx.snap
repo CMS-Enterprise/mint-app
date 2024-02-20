@@ -821,7 +821,6 @@ exports[`Operational Solutions Link Documents > matches snapshot 1`] = `
                   data-testid="checkbox"
                 >
                   <input
-                    checked=""
                     class="usa-checkbox__input"
                     data-testid="link-document-9d828454-9ecd-42a0-ad84-bc8c8ddea634"
                     id="link-document-9d828454-9ecd-42a0-ad84-bc8c8ddea634"
@@ -986,6 +985,7 @@ exports[`Operational Solutions Link Documents > matches snapshot 1`] = `
     <button
       class="usa-button display-inline-flex flex-align-center margin-y-3"
       data-testid="link-documents-button"
+      disabled=""
       type="button"
     >
       Connect documents
