@@ -12,7 +12,6 @@ describe('The AddNote component', () => {
   it('adds input to field', async () => {
     await act(async () => {
       const { user, getByTestId } = setup(
-        // const { } = render(
         <Formik initialValues={{ testNote: '' }} onSubmit={onSubmit}>
           <AddNote id="test-note" field="testNote" />
         </Formik>
