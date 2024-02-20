@@ -10,6 +10,11 @@ import {
   TranslationFieldPropertiesWithOptionsAndParent
 } from 'types/translation';
 
+import {
+  filterGroupKey,
+  ReadonlyFilterParam
+} from '../FilterView/BodyContent/_filterGroupMapping';
+
 /*
   Util for prepping data to listItems prop of ReadOnlySection
   Using translation config instead of raw data allows us to ensure a predetermined order of render
@@ -122,7 +127,8 @@ export const getRelatedUneededQuestions = <
     | TranslationFieldPropertiesWithOptionsAndChildren<T, C>
     | TranslationFieldPropertiesWithOptionsAndParent<T, C>, // Translation config
   value: T[] | undefined, // field value/enum array,
-  singleChildCheck?: T // If only want to check unneeded children for a specific value of the parent
+  valuesToCheck?: T[], // If only want to check unneeded children for a specific value of the parent
+  childrenToCheck?: (string | undefined)[] // Only check a certain subset of child fields for their value
 ): (string | null | undefined)[] | null => {
   if (
     !isTranslationFieldPropertiesWithOptionsAndChildren(config) &&
@@ -139,27 +145,35 @@ export const getRelatedUneededQuestions = <
   let children = config.childRelation;
 
   // Check if only checking for a single value, then reassign obj
-  if (singleChildCheck) {
-    children = {
-      [singleChildCheck]: config.childRelation[singleChildCheck]
-    } as Partial<Record<T, (() => TranslationConfigType<T, C>)[]>>;
+  if (valuesToCheck) {
+    children = {};
+    valuesToCheck.forEach(val => {
+      children[val] = config.childRelation[val];
+    });
   }
 
   getKeys(children).forEach(option => {
+    let childRelations = children[option];
+
+    // Filters childRelations values if childrenToCheck array is present
+    if (childrenToCheck) {
+      childRelations = childRelations?.filter(child =>
+        childrenToCheck.includes(child().gqlField)
+      );
+    }
+
     // If the evaluation of the parent value triggers a child question, sort into appropriate arrays
     if (
       (Array.isArray(value) && !value?.includes(option)) ||
       (!Array.isArray(value) && value !== undefined && String(value) !== option)
     ) {
-      config.childRelation?.[option]?.forEach(childField => {
+      childRelations?.forEach(childField => {
         neededRelations.push(childField().label);
       });
     } else {
       unneededRelations = [
         ...unneededRelations,
-        ...(config.childRelation?.[option]?.map(
-          childField => childField().label
-        ) as [])
+        ...(childRelations?.map(childField => childField().label) as [])
       ];
     }
   });
@@ -235,6 +249,27 @@ export const isHiddenByParentCondition = <
 
   return compareClosure(parentValue, parentConfig, config);
 };
+/*
+  Util to get any configurations that contain the specified filter group value
+*/
+export const getFilterGroupInfo = <
+  T extends string | keyof T,
+  C extends string | keyof C
+>(
+  configs: Record<string, TranslationConfigType<T, C>>,
+  filteredView: ReadonlyFilterParam | undefined
+) => [
+  ...new Set(
+    getKeys(configs)
+      .filter(
+        config =>
+          filteredView &&
+          configs[config]?.filterGroups?.includes(filterGroupKey[filteredView])
+      )
+      .map(config => configs[config]?.gqlField)
+      .flat(1)
+  )
+];
 
 // Used to count 'false' values as a truthy value
 export const isEmpty = (value: any) => {

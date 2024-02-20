@@ -8,6 +8,7 @@ import Tooltip from 'components/shared/Tooltip';
 import {
   isTranslationFieldProperties,
   isTranslationFieldPropertiesWithOptions,
+  isTranslationFieldPropertiesWithOptionsAndChildren,
   TranslationConfigType,
   TranslationFieldPropertiesWithOptions
 } from 'types/translation';
@@ -19,6 +20,7 @@ import {
   formatListOtherValues,
   formatListTooltips,
   formatListValues,
+  getFilterGroupInfo,
   getRelatedUneededQuestions,
   isEmpty,
   isHiddenByParentCondition
@@ -98,7 +100,8 @@ const ReadOnlySection = <
         id={`related-${sectionName}`}
         config={config}
         value={value}
-        hideAlert={config.hideRelatedQuestionAlert}
+        childrenToCheck={getFilterGroupInfo(translations, filteredView)}
+        hideAlert={config.hideRelatedQuestionAlert && !filteredView}
       />
     </Grid>
   );
@@ -353,31 +356,48 @@ export const RelatedUnneededQuestions = <
   id,
   config,
   value,
-  singleChildCheck,
+  valuesToCheck,
+  childrenToCheck,
   hideAlert
 }: {
   id: string;
   config: TranslationConfigType<T, C>;
   value: any;
-  singleChildCheck?: any; // If only want to check unneeded children for a specific value of the parent
+  valuesToCheck?: T[]; // If only want to check unneeded children for a specific value of the parent
+  childrenToCheck?: (string | undefined)[];
   hideAlert?: boolean;
 }) => {
   const { t: readOnlyT } = useTranslation('generalReadOnly');
 
   const relatedConditions = isTranslationFieldPropertiesWithOptions(config)
-    ? getRelatedUneededQuestions(config, value, singleChildCheck)
+    ? getRelatedUneededQuestions(config, value, valuesToCheck, childrenToCheck)
     : [];
 
   if (!relatedConditions?.length || hideAlert) {
     return null;
   }
 
+  // Render an alt label for the alert of configured for it
+  const disconnectedLabel =
+    isTranslationFieldPropertiesWithOptionsAndChildren(config) &&
+    config.disconnectedLabel
+      ? config.disconnectedLabel
+      : 'questionNotApplicableSpecific';
+
   return (
     <>
       <Alert type="info" noIcon className="margin-bottom-3">
-        {readOnlyT('questionNotApplicable', {
-          count: relatedConditions.length
-        })}
+        {isTranslationFieldPropertiesWithOptionsAndChildren(config) &&
+        config.disconnectedChildren
+          ? // Render a disconnected translations text
+            readOnlyT(disconnectedLabel, {
+              count: relatedConditions.length,
+              question: config.label
+            })
+          : // Render default alert text
+            readOnlyT('questionNotApplicable', {
+              count: relatedConditions.length
+            })}
       </Alert>
 
       <CollapsableLink

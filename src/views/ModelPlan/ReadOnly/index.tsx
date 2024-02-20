@@ -36,7 +36,10 @@ import TaskListStatus from '../TaskList/_components/TaskListStatus';
 import ContactInfo from './_components/ContactInfo';
 import FilterViewBanner from './_components/FilterView/Banner';
 import FilteredViewBodyContent from './_components/FilterView/BodyContent';
-import { filterGroups } from './_components/FilterView/BodyContent/_filterGroupMapping';
+import {
+  filterGroups,
+  ReadonlyFilterParam
+} from './_components/FilterView/BodyContent/_filterGroupMapping';
 import FilterViewModal from './_components/FilterView/Modal';
 import { groupOptions } from './_components/FilterView/util';
 import MobileNav from './_components/MobileNav';
@@ -187,7 +190,7 @@ export const filteredViewOutput = (value: string) => {
 // Returns null for any query param that is not a valid filteredView
 export const getValidFilterViewParam = (param: string | null) => {
   if (param && filterGroups.includes(param.toLowerCase())) {
-    return param.toLowerCase() as typeof filterGroups[number];
+    return param.toLowerCase() as ReadonlyFilterParam;
   }
   return null;
 };

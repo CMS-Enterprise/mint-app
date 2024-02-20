@@ -123,6 +123,8 @@ type ChildRelation<
   C extends keyof C | string | void = void
 > = {
   childRelation: Partial<Record<T, (() => TranslationConfigType<T, C>)[]>>;
+  disconnectedChildren?: boolean; // If child relations are not on the same page/sequential.  Readonly will render the parent question label if so
+  disconnectedLabel?: string; // Translation key to readonly alt text to render on alerts if children are hidden
 };
 
 /* 
@@ -249,10 +251,7 @@ export const isTranslationFieldPropertiesWithOptionsAndChildren = <
 >(
   config: TranslationConfigType<T, C>
 ): config is TranslationFieldPropertiesWithOptionsAndChildren<T, C> => {
-  return (
-    Object.hasOwn(config, 'childRelation') &&
-    !Object.hasOwn(config, 'parentRelation')
-  );
+  return Object.hasOwn(config, 'childRelation');
 };
 
 /* 

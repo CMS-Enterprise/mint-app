@@ -36,7 +36,8 @@ export const basics: TranslationBasics = {
       STATUTORY:
         'Models and demonstrations requiring testing as determined by Congress and/or the Secretary of Health and Human Services.',
       TO_BE_DETERMINED: 'To be determined'
-    }
+    },
+    filterGroups: [ModelViewFilter.IPC]
   },
   additionalModelCategories: {
     gqlField: 'additionalModelCategories',
@@ -73,7 +74,8 @@ export const basics: TranslationBasics = {
       STATUTORY:
         'Models and demonstrations requiring testing as determined by Congress and/or the Secretary of Health and Human Services.',
       TO_BE_DETERMINED: 'To be determined'
-    }
+    },
+    filterGroups: [ModelViewFilter.IPC]
   },
   amsModelID: {
     gqlField: 'amsModelID',
@@ -265,6 +267,10 @@ export const basics: TranslationBasics = {
     label: 'Application start date',
     dataType: 'date',
     formType: 'datePicker',
+    adjacentPositioning: {
+      position: 'left',
+      adjacentField: 'applicationsEnd'
+    },
     filterGroups: [ModelViewFilter.CBOSC, ModelViewFilter.IPC]
   },
   applicationsEnd: {
@@ -274,7 +280,11 @@ export const basics: TranslationBasics = {
     label: 'Application end date',
     dataType: 'date',
     formType: 'datePicker',
-    filterGroups: [ModelViewFilter.IPC]
+    adjacentPositioning: {
+      position: 'right',
+      adjacentField: 'applicationsStart'
+    },
+    filterGroups: [ModelViewFilter.CBOSC, ModelViewFilter.IPC]
   },
   performancePeriodStarts: {
     gqlField: 'performancePeriodStarts',
@@ -308,8 +318,11 @@ export const basics: TranslationBasics = {
       adjacentField: 'performancePeriodStarts'
     },
     filterGroups: [
-      ModelViewFilter.IPC,
+      ModelViewFilter.CBOSC,
+      ModelViewFilter.CCW,
+      ModelViewFilter.DFSDM,
       ModelViewFilter.IDDOC,
+      ModelViewFilter.IPC,
       ModelViewFilter.PBG
     ]
   },

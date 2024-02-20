@@ -251,6 +251,7 @@ export const payments: TranslationPayments = {
         () => payments.planningToUseInnovationPaymentContractor
       ]
     },
+    disconnectedChildren: true,
     filterGroups: [ModelViewFilter.CMMI, ModelViewFilter.IPC]
   },
   payTypeNote: {
@@ -269,10 +270,12 @@ export const payments: TranslationPayments = {
     label: 'Select which claims-based payments will you pay.',
     sublabel:
       'If you select reductions to beneficiary cost-sharing or other, there will be additional questions to answer.',
+    disconnectedLabel: `questionNotApplicableBeneficiary`,
     dataType: 'enum',
     formType: 'multiSelect',
     multiSelectLabel: 'Selected claims-based payments',
     hideRelatedQuestionAlert: true,
+    disconnectedChildren: true,
     options: {
       ADJUSTMENTS_TO_FFS_PAYMENTS: 'Adjustments to FFS payments',
       CARE_MANAGEMENT_HOME_VISITS: 'Payments for care management home visits',
@@ -299,7 +302,11 @@ export const payments: TranslationPayments = {
       ]
     },
     parentRelation: () => payments.payType,
-    filterGroups: [ModelViewFilter.CMMI, ModelViewFilter.OACT]
+    filterGroups: [
+      ModelViewFilter.CMMI,
+      ModelViewFilter.IPC,
+      ModelViewFilter.OACT
+    ]
   },
   payClaimsOther: {
     gqlField: 'payClaimsOther',
@@ -496,7 +503,11 @@ export const payments: TranslationPayments = {
       false: 'No'
     },
     parentRelation: () => payments.payType,
-    filterGroups: [ModelViewFilter.IDDOC, ModelViewFilter.PBG]
+    filterGroups: [
+      ModelViewFilter.IDDOC,
+      ModelViewFilter.OACT,
+      ModelViewFilter.PBG
+    ]
   },
   beneficiaryCostSharingLevelAndHandling: {
     gqlField: 'beneficiaryCostSharingLevelAndHandling',

@@ -151,6 +151,10 @@ export const beneficiaries: TranslationBeneficiaries = {
     dataType: 'number',
     formType: 'rangeInput',
     isPageStart: true,
+    adjacentPositioning: {
+      position: 'left',
+      adjacentField: 'estimateConfidence'
+    },
     filterGroups: [ModelViewFilter.MDM]
   },
   estimateConfidence: {
@@ -165,6 +169,10 @@ export const beneficiaries: TranslationBeneficiaries = {
       SLIGHTLY: 'Slightly confident',
       FAIRLY: 'Fairly confident',
       COMPLETELY: 'Completely confident'
+    },
+    adjacentPositioning: {
+      position: 'right',
+      adjacentField: 'numberPeopleImpacted'
     },
     filterGroups: [
       ModelViewFilter.CBOSC,
@@ -293,8 +301,7 @@ export const beneficiaries: TranslationBeneficiaries = {
       MONTHLY: '',
       CONTINUALLY: 'beneficiaryRemovalFrequencyContinually',
       OTHER: 'beneficiaryRemovalFrequencyOther'
-    },
-    filterGroups: [ModelViewFilter.CMMI]
+    }
   },
   beneficiaryRemovalFrequencyContinually: {
     gqlField: 'beneficiaryRemovalFrequencyContinually',
