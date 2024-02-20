@@ -5,12 +5,11 @@ UserNotification represents a notification about a specific Activity
 type UserNotification {
   id: UUID!
 	activityID: UUID!
-  # activityType: ActivityType #TODO EASI-3925 #Maybe add this on this level so the FE doesn't need to query it? //TODO EASI-3925
-	userID: UUID! #probably not needed, it should be only visible for the user
+	userID: UUID!
   isRead: Boolean!
   inAppSent: Boolean!
   emailSent: Boolean!
-  activity: Activity! # should we nest this?
+  activity: Activity!
 
 
   createdBy: UUID!

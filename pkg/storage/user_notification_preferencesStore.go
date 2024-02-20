@@ -15,7 +15,6 @@ func UserNotificationPreferencesCreate(np sqlutils.NamedPreparer, userNotificati
 	if userNotificationPreferences.ID == uuid.Nil {
 		userNotificationPreferences.ID = uuid.New()
 	}
-	//TODO: EASI-3925 this should be created when a user account is inserted into the database.
 
 	retUserNotificationPref, procErr := sqlutils.GetProcedure[models.UserNotificationPreferences](np, sqlqueries.UserNotificationPreferences.Create, userNotificationPreferences)
 	if procErr != nil {

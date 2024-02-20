@@ -63,7 +63,6 @@ func sendSolutionSelectedForUseByModelEmail(
 	modelLeadNames []string,
 	filterView string,
 ) error {
-	// TODO: SW, extract the logic from func sendPlanDiscussionTagEmails to obfuscu
 
 	if emailService == nil || emailTemplateService == nil {
 		return nil

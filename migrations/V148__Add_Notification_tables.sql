@@ -39,7 +39,7 @@ COMMENT ON TABLE activity IS 'Table to store information about various activitie
 COMMENT ON COLUMN activity.actor_id IS 'Identifier of the user who performed the activity (actor).';
 COMMENT ON COLUMN activity.entity_id IS 'Identifier of the entity associated with the activity.';
 COMMENT ON COLUMN activity.activity_type IS 'Type of activity performed (tagged in a discussion, daily digest complete etc)';
-COMMENT ON COLUMN activity.meta_data IS 'Additional metadata associated with the activity, stored in a JSONB. Its type is managed in application code separate from the dtabase';
+COMMENT ON COLUMN activity.meta_data IS 'Additional metadata associated with the activity, stored in a JSONB. Its type is managed in application code separate from the database';
 
 
 CREATE TABLE user_notification (
@@ -115,5 +115,3 @@ SELECT
     '00000001-0001-0001-0001-000000000001' AS created_by --System Account
 FROM
     user_account;
-
--- TODO EASI-3295 add comments to the table
