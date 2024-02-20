@@ -2,7 +2,6 @@ import React from 'react';
 import { act, render, screen, waitFor } from '@testing-library/react';
 import { Formik } from 'formik';
 
-// import userEvent from '@testing-library/user-event';
 import setup from 'utils/testing/setup';
 
 import AddNote from './index';
