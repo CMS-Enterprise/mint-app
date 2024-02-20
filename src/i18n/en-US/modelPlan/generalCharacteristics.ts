@@ -153,7 +153,10 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
       OTHER: 'participationInModelPreconditionOtherSpecify'
     },
     childRelation: {
-      YES: [() => generalCharacteristics.participationInModelPreconditionWhich]
+      YES: [
+        () => generalCharacteristics.participationInModelPreconditionWhich,
+        () => generalCharacteristics.participationInModelPreconditionWhyHow
+      ]
     }
   },
   participationInModelPreconditionOtherSpecify: {
@@ -214,7 +217,9 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     dbField: 'participation_in_model_precondition_why_how',
     label: 'Explain any details including if it is just part of the model.',
     dataType: 'string',
-    formType: 'textarea'
+    formType: 'textarea',
+    parentRelation: () =>
+      generalCharacteristics.participationInModelPrecondition
   },
   participationInModelPreconditionNote: {
     gqlField: 'participationInModelPreconditionNote',

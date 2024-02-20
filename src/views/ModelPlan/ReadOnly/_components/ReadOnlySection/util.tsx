@@ -11,8 +11,8 @@ import {
 } from 'types/translation';
 
 import {
-  filterGroupKey,
-  ReadonlyFilterParam
+  FilterGroup,
+  filterGroupKey
 } from '../FilterView/BodyContent/_filterGroupMapping';
 
 /*
@@ -257,7 +257,7 @@ export const getFilterGroupInfo = <
   C extends string | keyof C
 >(
   configs: Record<string, TranslationConfigType<T, C>>,
-  filteredView: ReadonlyFilterParam | undefined
+  filteredView: FilterGroup | undefined
 ) => [
   ...new Set(
     getKeys(configs)

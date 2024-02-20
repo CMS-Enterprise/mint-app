@@ -354,7 +354,7 @@ export type TranslationGeneralCharacteristics = {
   participationInModelPreconditionOtherSpecify: TranslationFieldProperties;
   participationInModelPreconditionOtherSelected: TranslationFieldPropertiesWithOptions<Bool>;
   participationInModelPreconditionOtherOption: TranslationFieldProperties;
-  participationInModelPreconditionWhyHow: TranslationFieldProperties;
+  participationInModelPreconditionWhyHow: TranslationFieldPropertiesWithParent<YesNoOtherType>;
   participationInModelPreconditionNote: TranslationFieldProperties;
   hasComponentsOrTracks: TranslationFieldPropertiesWithOptions<Bool>;
   hasComponentsOrTracksDiffer: TranslationFieldProperties;

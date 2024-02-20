@@ -25,7 +25,7 @@ import TextAreaField from 'components/shared/TextAreaField';
 import useFetchCSVData from 'hooks/useFetchCSVData';
 import { ReadOnlyComponents } from 'views/ModelPlan/ReadOnly';
 import BodyContent from 'views/ModelPlan/ReadOnly/_components/FilterView/BodyContent';
-import { ReadonlyFilterParam } from 'views/ModelPlan/ReadOnly/_components/FilterView/BodyContent/_filterGroupMapping';
+import { FilterGroup } from 'views/ModelPlan/ReadOnly/_components/FilterView/BodyContent/_filterGroupMapping';
 import { groupOptions } from 'views/ModelPlan/ReadOnly/_components/FilterView/util';
 import { StatusMessageType } from 'views/ModelPlan/TaskList';
 
@@ -35,14 +35,14 @@ import './index.scss';
 
 const navElement = ['share', 'export'] as const;
 
-export type FitlerGroup = ReadonlyFilterParam | 'all';
+export type FitlerGroup = FilterGroup | 'all';
 
 const FileTypes = ['csv', 'pdf'] as const;
 
 type ShareExportModalProps = {
   modelID: string;
   closeModal: () => void;
-  filteredView?: ReadonlyFilterParam | 'all' | null;
+  filteredView?: FilterGroup | 'all' | null;
   setStatusMessage: (message: StatusMessageType) => void;
 } & JSX.IntrinsicElements['button'];
 
@@ -58,7 +58,7 @@ const ShareExportModal = ({
   const { t: generalReadOnlyT } = useTranslation('generalReadOnly');
 
   const [filteredGroup, setFilteredGroup] = useState<FitlerGroup>(
-    (filteredView as ReadonlyFilterParam) || 'all'
+    (filteredView as FilterGroup) || 'all'
   );
 
   const [exportCSV, setExportCSV] = useState<boolean>(false);

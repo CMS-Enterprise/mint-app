@@ -25,8 +25,8 @@ import { getKeys } from 'types/translation';
 import { formatDateLocal, formatDateUtc } from 'utils/date';
 import { csvFields, fieldsToUnwind } from 'utils/export/CsvData';
 import {
-  filterGroupKey,
-  ReadonlyFilterParam
+  FilterGroup,
+  filterGroupKey
 } from 'views/ModelPlan/ReadOnly/_components/FilterView/BodyContent/_filterGroupMapping';
 import { isHiddenByParentCondition } from 'views/ModelPlan/ReadOnly/_components/ReadOnlySection/util';
 
@@ -213,7 +213,7 @@ export const dataFormatter = (
 // Filters out columns for csv based on selected FilterGroup mappings in translation file
 export const selectFilteredFields = (
   allPlanTranslation: any,
-  filteredGroup: ReadonlyFilterParam
+  filteredGroup: FilterGroup
 ) => {
   const selectedFields: string[] = [];
   // Loop through task list sections of translation obj
@@ -282,7 +282,7 @@ const downloadFile = (data: string) => {
 const csvFormatter = (
   csvData: CSVModelPlanType[],
   allPlanTranslation: any,
-  filteredGroup?: ReadonlyFilterParam | undefined
+  filteredGroup?: FilterGroup | undefined
 ) => {
   try {
     const transform = unwind({ paths: fieldsToUnwind, blankOut: true });
@@ -329,13 +329,11 @@ type UseFetchCSVData = {
     input: string
   ) => Promise<FetchResult<GetAllSingleModelData>>;
   fetchAllData: () => Promise<FetchResult<GetAllModelDataType>>;
-  setFilteredGroup: (filteredGroup?: ReadonlyFilterParam) => void;
+  setFilteredGroup: (filteredGroup?: FilterGroup) => void;
 };
 
 const useFetchCSVData = (): UseFetchCSVData => {
-  const [filteredGroup, setFilteredGroup] = useState<
-    ReadonlyFilterParam | undefined
-  >();
+  const [filteredGroup, setFilteredGroup] = useState<FilterGroup | undefined>();
 
   // Get data for a single model plan
   const [fetchSingleData] = useLazyQuery<

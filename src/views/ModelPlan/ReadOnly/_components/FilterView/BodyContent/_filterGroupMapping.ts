@@ -9,19 +9,8 @@ export const filterGroups = getKeys(ModelViewFilter).map(filter =>
 
 export type FilterGroup = typeof filterGroups[number];
 
-export type ReadonlyFilterParam =
-  | 'cbosc'
-  | 'ccw'
-  | 'cmmi'
-  | 'dfsdm'
-  | 'iddoc'
-  | 'ipc'
-  | 'mdm'
-  | 'oact'
-  | 'pbg';
-
 // Map for url route params to ModelViewFilter enum
-export const filterGroupKey: Record<ReadonlyFilterParam, ModelViewFilter> = {
+export const filterGroupKey: Record<FilterGroup, ModelViewFilter> = {
   cbosc: ModelViewFilter.CBOSC,
   ccw: ModelViewFilter.CCW,
   cmmi: ModelViewFilter.CMMI,

@@ -20,7 +20,7 @@ import { ModelInfoContext } from 'views/ModelInfoWrapper';
 import { NotFoundPartial } from 'views/NotFound';
 
 import ReadOnlyBody from '../_components/Body';
-import { ReadonlyFilterParam } from '../_components/FilterView/BodyContent/_filterGroupMapping';
+import { FilterGroup } from '../_components/FilterView/BodyContent/_filterGroupMapping';
 import ReadOnlySection from '../_components/ReadOnlySection';
 import TitleAndStatus from '../_components/TitleAndStatus';
 
@@ -29,7 +29,7 @@ import './index.scss';
 export type ReadOnlyProps = {
   modelID: string;
   clearance?: boolean;
-  filteredView?: ReadonlyFilterParam;
+  filteredView?: FilterGroup;
 };
 
 const ReadOnlyModelBasics = ({

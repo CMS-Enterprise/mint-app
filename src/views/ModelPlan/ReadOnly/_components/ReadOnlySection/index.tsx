@@ -100,7 +100,11 @@ const ReadOnlySection = <
         id={`related-${sectionName}`}
         config={config}
         value={value}
-        childrenToCheck={getFilterGroupInfo(translations, filteredView)}
+        childrenToCheck={
+          filteredView
+            ? getFilterGroupInfo(translations, filteredView)
+            : undefined
+        }
         hideAlert={config.hideRelatedQuestionAlert && !filteredView}
       />
     </Grid>
