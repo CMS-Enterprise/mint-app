@@ -9,8 +9,6 @@ import (
 	"strings"
 	"time"
 
-	"github.com/cmsgov/mint-app/pkg/graph/gqlresolvers"
-
 	"github.com/cmsgov/mint-app/pkg/apperrors"
 	"github.com/cmsgov/mint-app/pkg/oktaapi"
 	"github.com/cmsgov/mint-app/pkg/shared/oddmail"
@@ -39,6 +37,7 @@ import (
 	"github.com/cmsgov/mint-app/pkg/flags"
 	"github.com/cmsgov/mint-app/pkg/graph/generated"
 	"github.com/cmsgov/mint-app/pkg/graph/model"
+	"github.com/cmsgov/mint-app/pkg/graph/resolvers"
 	"github.com/cmsgov/mint-app/pkg/handlers"
 	"github.com/cmsgov/mint-app/pkg/local"
 	"github.com/cmsgov/mint-app/pkg/okta"
@@ -211,9 +210,9 @@ func (s *Server) routes(
 	gql := s.router.PathPrefix("/api/graph").Subrouter()
 
 	// gql.Use(requirePrincipalMiddleware)
-	resolver := gqlresolvers.NewResolver(
+	resolver := resolvers.NewResolver(
 		store,
-		gqlresolvers.ResolverService{
+		resolvers.ResolverService{
 			FetchUserInfo: oktaClient.FetchUserInfo,
 			SearchByName:  oktaClient.SearchByName,
 		},

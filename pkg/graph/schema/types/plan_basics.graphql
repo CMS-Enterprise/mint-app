@@ -1,0 +1,126 @@
+"""
+Represents plan basics
+"""
+type PlanBasics {
+  id: UUID!
+  modelPlanID: UUID!
+
+  demoCode: String
+  amsModelID: String
+
+  modelCategory: ModelCategory
+  additionalModelCategories: [ModelCategory!]!
+  cmsCenters: [CMSCenter!]!
+  cmmiGroups: [CMMIGroup!]!
+  modelType: [ModelType!]!
+  modelTypeOther: String
+  problem: String
+  goal: String
+  testInterventions: String
+  note: String
+
+  # Milestones
+  completeICIP: Time
+  clearanceStarts: Time
+  clearanceEnds: Time
+  announced: Time
+  applicationsStart: Time
+  applicationsEnd: Time
+  performancePeriodStarts: Time
+  performancePeriodEnds: Time
+  wrapUpEnds: Time
+  highLevelNote: String
+  phasedIn: Boolean
+  phasedInNote: String
+
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
+
+  readyForReviewBy: UUID
+  readyForReviewByUserAccount: UserAccount
+  readyForReviewDts: Time
+  readyForClearanceBy: UUID
+  readyForClearanceByUserAccount: UserAccount
+  readyForClearanceDts: Time
+
+  status: TaskStatus!
+}
+
+"""
+PlanBasicsChanges represents the possible changes you can make to a Plan Basics object when updating it.
+Fields explicitly set with NULL will be unset, and omitted fields will be left unchanged.
+https://gqlgen.com/reference/changesets/
+"""
+input PlanBasicsChanges @goModel(model: "map[string]interface{}") {
+  demoCode: String
+  amsModelID: String
+
+  modelCategory: ModelCategory
+  additionalModelCategories: [ModelCategory!]
+  cmsCenters: [CMSCenter!]
+  cmmiGroups: [CMMIGroup!]
+  modelType: [ModelType!]
+  modelTypeOther: String
+  problem: String
+  goal: String
+  testInterventions: String
+  note: String
+
+  # Milestones
+  completeICIP: Time
+  clearanceStarts: Time
+  clearanceEnds: Time
+  announced: Time
+  applicationsStart: Time
+  applicationsEnd: Time
+  performancePeriodStarts: Time
+  performancePeriodEnds: Time
+  wrapUpEnds: Time
+  highLevelNote: String
+  phasedIn: Boolean
+  phasedInNote: String
+  status: TaskStatusInput
+}
+
+enum ModelCategory {
+  ACCOUNTABLE_CARE
+  DISEASE_SPECIFIC_AND_EPISODIC
+  HEALTH_PLAN
+  PRESCRIPTION_DRUG
+  STATE_BASED
+  STATUTORY
+  TO_BE_DETERMINED
+}
+
+enum CMSCenter {
+  CMMI
+  CENTER_FOR_MEDICARE
+  FEDERAL_COORDINATED_HEALTH_CARE_OFFICE
+  CENTER_FOR_MEDICAID_AND_CHIP_SERVICES
+  CENTER_FOR_CLINICAL_STANDARDS_AND_QUALITY
+  CENTER_FOR_PROGRAM_INTEGRITY
+}
+
+enum CMMIGroup {
+  PATIENT_CARE_MODELS_GROUP
+  POLICY_AND_PROGRAMS_GROUP
+  SEAMLESS_CARE_MODELS_GROUP
+  STATE_AND_POPULATION_HEALTH_GROUP
+  TBD
+}
+
+enum ModelType {
+  VOLUNTARY
+  MANDATORY_REGIONAL_OR_STATE
+  MANDATORY_NATIONAL
+  OTHER
+}
+
+extend type Mutation {
+  updatePlanBasics(id: UUID!, changes: PlanBasicsChanges!): PlanBasics!
+  @hasRole(role: MINT_USER)
+}
