@@ -240,3 +240,6 @@ export const isHiddenByParentCondition = <
 export const isEmpty = (value: any) => {
   return value == null || value.length === 0;
 };
+
+export const formatID = (heading: string) =>
+  heading.toLowerCase().replace(/\W*$/g, '').replace(/\W/g, '-');

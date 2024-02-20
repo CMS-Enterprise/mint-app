@@ -9,13 +9,13 @@ import {
   isTranslationFieldProperties,
   isTranslationFieldPropertiesWithOptions,
   TranslationConfigType,
-  TranslationFieldProperties,
   TranslationFieldPropertiesWithOptions
 } from 'types/translation';
 
 import { filterGroupKey } from '../FilterView/BodyContent/_filterGroupMapping';
 
 import {
+  formatID,
   formatListItems,
   formatListOtherItems,
   formatListTooltips,
@@ -71,16 +71,7 @@ const ReadOnlySectionNew = <
   const heading = config.readonlyLabel || config.label;
 
   // Used for id's/classes/metadata
-  const sectionName = heading
-    .toLowerCase()
-    .replace(/\W*$/g, '')
-    .replace(/\W/g, '-');
-
-  const listItems = formatListItems(config, value);
-
-  const tooltips = formatListTooltips(config, value);
-
-  const listOtherItems = formatListOtherItems(config, value, values);
+  const sectionName = formatID(heading);
 
   // If no notes are written, do not render
   if (heading === miscellaneousT('notes') && !value) {
@@ -101,15 +92,9 @@ const ReadOnlySectionNew = <
         </p>
 
         <RenderReadonlyValue
-          // id={`${sectionName}--${item}`}
-          id={`${sectionName}`}
-          listConfig={config}
-          listItemValues={listItems}
-          listOtherItems={listOtherItems}
-          tooltipValues={tooltips}
+          field={field}
           translations={translations}
           values={values}
-          value={value}
         />
       </div>
 
@@ -119,6 +104,63 @@ const ReadOnlySectionNew = <
         hideAlert={config.hideRelatedQuestionAlert}
       />
     </Grid>
+  );
+};
+
+const RenderReadonlyValue = <
+  T extends string | keyof T,
+  C extends string | keyof C
+>({
+  field,
+  translations,
+  values
+}: {
+  field: string;
+  translations: Record<string, TranslationConfigType<T, C>>;
+  values: any;
+}) => {
+  const config = translations[field];
+
+  const value = values[config.gqlField];
+
+  const listItemValues = formatListItems(config, value);
+
+  const tooltipValues = formatListTooltips(config, value);
+
+  const listOtherItems = formatListOtherItems(config, value, values);
+
+  const id = formatID(config.readonlyLabel || config.label);
+
+  // Renders a single value
+  if (
+    isTranslationFieldProperties(config) &&
+    !isTranslationFieldPropertiesWithOptions(config)
+  ) {
+    return <SingleValue value={value} />;
+  }
+
+  // Renders a single value with options (radio)
+  // May also renders a conditinal followup value/s to the selection
+  if (
+    isTranslationFieldPropertiesWithOptions(config) &&
+    config.formType === 'radio'
+  ) {
+    <RadioValue field={field} values={values} translations={translations} />;
+  }
+
+  // If no values for checkbox/multiselect type questions
+  if (listItemValues.length === 0) {
+    return <NoAddtionalInfo />;
+  }
+
+  // Renders a list of selected values - multiselect, checkboxes
+  return (
+    <ListItems
+      id={id}
+      listItemValues={listItemValues}
+      listOtherItems={listOtherItems}
+      tooltipValues={tooltipValues}
+    />
   );
 };
 
@@ -146,24 +188,24 @@ export const RadioValue = <
   T extends string | keyof T,
   C extends string | keyof C
 >({
-  listConfig,
-  value,
-  values,
+  field,
   translations,
-  listOtherItems,
-  tooltipValues
+  values
 }: {
-  listConfig: TranslationFieldPropertiesWithOptions<T>;
-  value: any;
-  values: any;
+  field: string;
   translations: Record<string, TranslationConfigType<T, C>>;
-  listOtherItems: (string | null | undefined)[];
-  tooltipValues: (string | null | undefined)[];
+  values: any;
 }) => {
   const { t: miscellaneousT } = useTranslation('miscellaneous');
 
+  const config = translations[field];
+
+  const value = values[config.gqlField];
+
+  if (!isTranslationFieldPropertiesWithOptions(config)) return null;
+
   // Checks if configuration exists to optionally render a child's value with the radio value
-  const childField = listConfig.optionsRelatedInfo?.[value as T];
+  const childField = config.optionsRelatedInfo?.[value as T];
 
   const childFieldValue = childField ? values[childField] : null;
 
@@ -172,18 +214,18 @@ export const RadioValue = <
 
   // Ensures the the child has configuration to translate the options in array
   const childHasOptions = translations[
-    childField as T
+    childField as string
   ] as TranslationFieldPropertiesWithOptions<T>;
 
   // Checks if a single radio value has a mapped tooltip/optionsLabel
   let radioTooltip: string | undefined;
-  if (listConfig.optionsLabels) {
-    radioTooltip = listConfig.optionsLabels[value as T];
+  if (config.optionsLabels) {
+    radioTooltip = config.optionsLabels[value as T];
   }
 
   return (
     <div className="margin-y-0 font-body-md line-height-sans-4 text-pre-line">
-      {!isEmpty(value) && listConfig.options[value as T]}
+      {!isEmpty(value) && config.options[value as T]}
 
       {/* Renders a tooltip if mapped to the selected radio value */}
       {radioTooltip && (
@@ -206,13 +248,8 @@ export const RadioValue = <
       {/* Renders a list beneath a selection of a radio value */}
       {childHasOptions && childHasOptions.options && (
         <RenderReadonlyValue
-          listConfig={childHasOptions}
-          id={childHasOptions.dbField}
-          listItemValues={formatListItems(childHasOptions, values[childField])}
-          tooltipValues={tooltipValues}
-          listOtherItems={listOtherItems}
+          field={field}
           translations={translations}
-          value={value}
           values={values}
         />
       )}
@@ -225,32 +262,6 @@ export const RadioValue = <
         </i>
       )}
     </div>
-  );
-};
-
-// Can render a single "Other" option or multiple additional information options
-// As well as default text for both if not specified
-const ListOtherItem = ({
-  index,
-  listOtherItems
-}: {
-  index: number;
-  listOtherItems: any;
-}) => {
-  if (listOtherItems[index] === undefined) {
-    return null;
-  }
-  if (listOtherItems[index]) {
-    return (
-      <li className="font-sans-md line-height-sans-4">
-        {listOtherItems[index]}
-      </li>
-    );
-  }
-  return (
-    <li className="font-sans-md line-height-sans-4 ">
-      <NoAddtionalInfo />
-    </li>
   );
 };
 
@@ -268,7 +279,7 @@ const ListItems = <T extends string | keyof T, C extends string | keyof C>({
   return (
     <ul className="margin-y-0 padding-left-3">
       {listItemValues.map((item: any, index: number) => (
-        <React.Fragment key={id}>
+        <React.Fragment key={`${id}--${item}`}>
           <li className="font-sans-md line-height-sans-4">
             {item}
             {tooltipValues && tooltipValues[index] && (
@@ -296,67 +307,29 @@ const ListItems = <T extends string | keyof T, C extends string | keyof C>({
   );
 };
 
-const RenderReadonlyValue = <
-  T extends string | keyof T,
-  C extends string | keyof C
->({
-  id,
-  listConfig,
-  listItemValues,
-  tooltipValues,
-  listOtherItems,
-  translations,
-  value,
-  values
+// Can render a single "Other" option or multiple additional information options
+// As well as default text for both if not specified
+const ListOtherItem = ({
+  index,
+  listOtherItems
 }: {
-  id: string;
-  listConfig:
-    | TranslationFieldProperties
-    | TranslationFieldPropertiesWithOptions<T>;
-  listItemValues: (string | null | undefined)[];
-  tooltipValues: (string | null | undefined)[];
-  listOtherItems: (string | null | undefined)[];
-  translations: Record<string, TranslationConfigType<T, C>>;
-  value: any;
-  values: any;
+  index: number;
+  listOtherItems: any;
 }) => {
-  // Renders a single value
-  if (
-    isTranslationFieldProperties(listConfig) &&
-    !isTranslationFieldPropertiesWithOptions(listConfig)
-  ) {
-    return <SingleValue value={value} />;
+  if (listOtherItems[index] === undefined) {
+    return null;
   }
-
-  // Renders a single value with options (radio)
-  // May also renders a conditinal followup value/s to the selection
-  if (
-    isTranslationFieldPropertiesWithOptions(listConfig) &&
-    listConfig.formType === 'radio'
-  ) {
-    <RadioValue
-      listConfig={listConfig}
-      value={value}
-      values={values}
-      translations={translations}
-      listOtherItems={listOtherItems}
-      tooltipValues={tooltipValues}
-    />;
+  if (listOtherItems[index]) {
+    return (
+      <li className="font-sans-md line-height-sans-4">
+        {listOtherItems[index]}
+      </li>
+    );
   }
-
-  // If no values for checkbox/multiselect type questions
-  if (listItemValues.length === 0) {
-    return <NoAddtionalInfo />;
-  }
-
-  // Renders a list of selected values - multiselect, checkboxes
   return (
-    <ListItems
-      id={id}
-      listItemValues={listItemValues}
-      listOtherItems={listOtherItems}
-      tooltipValues={tooltipValues}
-    />
+    <li className="font-sans-md line-height-sans-4 ">
+      <NoAddtionalInfo />
+    </li>
   );
 };
 
