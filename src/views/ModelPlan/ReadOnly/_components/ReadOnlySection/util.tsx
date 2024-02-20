@@ -28,7 +28,7 @@ export const formatListItems = <
   if (config.isModelLinks) return value as string[];
 
   return getKeys(config.options)
-    .filter(option => value?.includes(option))
+    .filter(option => Array.isArray(value) && value?.includes(option))
     .map((option): string => config.options[option]);
 };
 
@@ -57,7 +57,7 @@ export const formatListOtherItems = <
   }
 
   return getKeys(config.options)
-    .filter(option => value?.includes(option))
+    .filter(option => Array.isArray(value) && value?.includes(option))
     .map((option): string | null | undefined => {
       if (config.optionsRelatedInfo?.[option]) {
         return values[config.optionsRelatedInfo?.[option]] || '';
@@ -103,7 +103,7 @@ export const formatListTooltips = <
   if (!isTranslationFieldPropertiesWithOptions(config)) return [];
 
   return getKeys(config.options)
-    .filter(option => value?.includes(option))
+    .filter(option => Array.isArray(value) && value?.includes(option))
     .map((option): string | null | undefined => {
       return config.optionsLabels?.[option];
     });

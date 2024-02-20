@@ -272,6 +272,7 @@ export const payments: TranslationPayments = {
     dataType: 'enum',
     formType: 'multiSelect',
     multiSelectLabel: 'Selected claims-based payments',
+    hideRelatedQuestionAlert: true,
     options: {
       ADJUSTMENTS_TO_FFS_PAYMENTS: 'Adjustments to FFS payments',
       CARE_MANAGEMENT_HOME_VISITS: 'Payments for care management home visits',
@@ -735,6 +736,7 @@ export const payments: TranslationPayments = {
     label: 'What level of complexity do you expect calculations to be?',
     dataType: 'enum',
     formType: 'radio',
+    isPageStart: true,
     options: {
       LOW: 'Low level',
       MIDDLE: 'Middle level',
@@ -888,6 +890,7 @@ export const payments: TranslationPayments = {
     label: 'Will you recover the payments?',
     dataType: 'boolean',
     formType: 'radio',
+    isPageStart: true,
     options: {
       true: 'Yes',
       false: 'No'

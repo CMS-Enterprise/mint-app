@@ -204,6 +204,12 @@ const ReadOnlyPayments = ({
           )}
           hideAlert={false}
         />
+
+        <ReadOnlyBody
+          data={allPaymentData}
+          config={claimsConfig}
+          filteredView={filteredView}
+        />
       </div>
 
       {/* Beneficiary cost-sharing */}
@@ -228,6 +234,12 @@ const ReadOnlyPayments = ({
           )}
           hideAlert={false}
         />
+
+        <ReadOnlyBody
+          data={allPaymentData}
+          config={beneficiaryConfig}
+          filteredView={filteredView}
+        />
       </div>
 
       {/* Non claims-based payments */}
@@ -251,7 +263,19 @@ const ReadOnlyPayments = ({
           )}
           hideAlert={false}
         />
+
+        <ReadOnlyBody
+          data={allPaymentData}
+          config={nonClaimsConfig}
+          filteredView={filteredView}
+        />
       </div>
+
+      <ReadOnlyBody
+        data={allPaymentData}
+        config={paymentsConfigTwo}
+        filteredView={filteredView}
+      />
     </div>
   );
 };
