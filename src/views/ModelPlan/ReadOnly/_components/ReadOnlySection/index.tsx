@@ -266,7 +266,9 @@ export const RadioValue = <
       {(isEmpty(value) || (childField && !childFieldValue)) && (
         <i className="text-base">
           {!isEmpty(value) && ' - '}
-          {miscellaneousT('noAdditionalInformation')}
+          {childField
+            ? miscellaneousT('noAdditionalInformation')
+            : miscellaneousT('na')}
         </i>
       )}
     </div>
