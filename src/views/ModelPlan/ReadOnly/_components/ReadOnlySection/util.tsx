@@ -14,7 +14,7 @@ import {
   Util for prepping data to listItems prop of ReadOnlySection
   Using translation config instead of raw data allows us to ensure a predetermined order of render
 */
-export const formatListItems = <
+export const formatListValues = <
   T extends string | keyof T,
   C extends string | keyof C
 >(
@@ -36,7 +36,7 @@ export const formatListItems = <
     Util for prepping data to listOtherItems prop of ReadOnlySection
     Using translation config instead of raw data allows us to ensure a predetermined order of render
   */
-export const formatListOtherItems = <
+export const formatListOtherValues = <
   T extends string | keyof T,
   C extends string | keyof C
 >(

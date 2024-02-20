@@ -7,15 +7,15 @@ import { participantsAndProviders } from 'i18n/en-US/modelPlan/participantsAndPr
 import { payments } from 'i18n/en-US/modelPlan/payments';
 import { Bool } from 'types/translation';
 
-import ReadOnlySection from '.';
 import {
   compareClosure,
-  formatListItems,
-  formatListOtherItems,
+  formatListOtherValues,
   formatListTooltips,
+  formatListValues,
   getRelatedUneededQuestions,
   isHiddenByParentCondition
 } from './util';
+import ReadOnlySection from '.';
 
 const defaultProps = {
   field: 'modelApplicationLevel',
@@ -98,7 +98,7 @@ describe('The Read Only Section', () => {
         'Other'
       ];
 
-      expect(formatListItems(payments.fundingSource, values)).toEqual(
+      expect(formatListValues(payments.fundingSource, values)).toEqual(
         expectedOrder
       );
     });
@@ -124,7 +124,7 @@ describe('The Read Only Section', () => {
       ];
 
       expect(
-        formatListOtherItems(payments.fundingSource, values, allValues)
+        formatListOtherValues(payments.fundingSource, values, allValues)
       ).toEqual(expectedOrder);
     });
 

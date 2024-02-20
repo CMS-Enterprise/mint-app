@@ -16,9 +16,9 @@ import { filterGroupKey } from '../FilterView/BodyContent/_filterGroupMapping';
 
 import {
   formatID,
-  formatListItems,
-  formatListOtherItems,
+  formatListOtherValues,
   formatListTooltips,
+  formatListValues,
   getRelatedUneededQuestions,
   isEmpty,
   isHiddenByParentCondition
@@ -123,11 +123,11 @@ const RenderReadonlyValue = <
 
   const value = values[config.gqlField];
 
-  const listItemValues = formatListItems(config, value);
+  const listValues = formatListValues(config, value);
 
-  const tooltipValues = formatListTooltips(config, value);
+  const tooltips = formatListTooltips(config, value);
 
-  const listOtherItems = formatListOtherItems(config, value, values);
+  const listOtherValues = formatListOtherValues(config, value, values);
 
   const id = formatID(config.readonlyLabel || config.label);
 
@@ -149,7 +149,7 @@ const RenderReadonlyValue = <
   }
 
   // If no values for checkbox/multiselect type questions
-  if (listItemValues.length === 0) {
+  if (listValues.length === 0) {
     return <NoAddtionalInfo />;
   }
 
@@ -157,9 +157,9 @@ const RenderReadonlyValue = <
   return (
     <ListItems
       id={id}
-      listItemValues={listItemValues}
-      listOtherItems={listOtherItems}
-      tooltipValues={tooltipValues}
+      listValues={listValues}
+      listOtherValues={listOtherValues}
+      tooltips={tooltips}
     />
   );
 };
@@ -267,26 +267,26 @@ export const RadioValue = <
 
 const ListItems = <T extends string | keyof T, C extends string | keyof C>({
   id,
-  listItemValues,
-  tooltipValues,
-  listOtherItems
+  listValues,
+  listOtherValues,
+  tooltips
 }: {
   id: string;
-  listItemValues: (string | null | undefined)[];
-  tooltipValues: (string | null | undefined)[];
-  listOtherItems: (string | null | undefined)[];
+  listValues: (string | null | undefined)[];
+  listOtherValues: (string | null | undefined)[];
+  tooltips: (string | null | undefined)[];
 }) => {
   return (
     <ul className="margin-y-0 padding-left-3">
-      {listItemValues.map((item: any, index: number) => (
+      {listValues.map((item: any, index: number) => (
         <React.Fragment key={`${id}--${item}`}>
           <li className="font-sans-md line-height-sans-4">
             {item}
 
-            {tooltipValues && tooltipValues[index] && (
+            {tooltips && tooltips[index] && (
               <span className="top-2px position-relative">
                 <Tooltip
-                  label={tooltipValues[index]!}
+                  label={tooltips[index]!}
                   position="right"
                   className="margin-left-05"
                 >
@@ -296,11 +296,9 @@ const ListItems = <T extends string | keyof T, C extends string | keyof C>({
             )}
           </li>
 
-          {listOtherItems && (
+          {listOtherValues && (
             <ul>
-              {listOtherItems && (
-                <ListOtherItem index={index} listOtherItems={listOtherItems} />
-              )}
+              <ListOtherItem index={index} listOtherItems={listOtherValues} />
             </ul>
           )}
         </React.Fragment>
