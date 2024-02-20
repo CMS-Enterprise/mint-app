@@ -99,9 +99,6 @@ func CreatePlanDiscussion(
 			}
 		}()
 
-		// send an email for each tag, which is unique compared to the mention
-		//TODO: EASI-3925 make the whole transaction fail if a part fails
-
 		_, notificationErr := notifications.ActivityTaggedInDiscussionCreate(ctx, tx, principal.Account().ID, discussion.ID, discussion.Content)
 		if notificationErr != nil {
 			return nil, fmt.Errorf("unable to generate notifications, %w", notificationErr)
