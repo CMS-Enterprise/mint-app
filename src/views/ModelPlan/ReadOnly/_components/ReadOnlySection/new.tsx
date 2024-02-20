@@ -99,7 +99,7 @@ const ReadOnlySectionNew = <
       </div>
 
       <RelatedUnneededQuestions
-        id={heading}
+        id={`related-${sectionName}`}
         relatedConditions={relatedConditions}
         hideAlert={config.hideRelatedQuestionAlert}
       />
@@ -107,6 +107,9 @@ const ReadOnlySectionNew = <
   );
 };
 
+/*
+  Renders out either a single value/no value, a radio, or a list value
+*/
 const RenderReadonlyValue = <
   T extends string | keyof T,
   C extends string | keyof C
@@ -282,6 +285,7 @@ const ListItems = <T extends string | keyof T, C extends string | keyof C>({
         <React.Fragment key={`${id}--${item}`}>
           <li className="font-sans-md line-height-sans-4">
             {item}
+
             {tooltipValues && tooltipValues[index] && (
               <span className="top-2px position-relative">
                 <Tooltip
@@ -294,6 +298,7 @@ const ListItems = <T extends string | keyof T, C extends string | keyof C>({
               </span>
             )}
           </li>
+
           {listOtherItems && (
             <ul>
               {listOtherItems && (
