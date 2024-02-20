@@ -445,80 +445,77 @@ func CreateDiscussionReply(
 		reply.Content.Tags = tags
 		reply.Content.Mentions = discussionReply.Content.Mentions
 
+		// Note these aren't async in order to prevent race condition. If possible, this can be made async.
+		discussion, err := store.PlanDiscussionByID(logger, reply.DiscussionID)
+		if err != nil {
+			return reply, err
+		}
+		modelPlan, err := ModelPlanGetByIDLOADER(ctx, discussion.ModelPlanID)
+		if err != nil {
+			return reply, err
+		}
 		// Create Activity and notifications in the DB
-		_, notificationErr := notifications.ActivityTaggedInDiscussionReplyCreate(ctx, tx, principal.Account().ID, reply.DiscussionID, reply.ID, reply.Content)
+		_, notificationErr := notifications.ActivityTaggedInDiscussionReplyCreate(ctx, tx, principal.Account().ID, discussion.ID, reply.ID, reply.Content)
 		if notificationErr != nil {
 			return nil, fmt.Errorf("unable to generate notifications, %w", notificationErr)
 		}
+		go func() {
+
+			replyUser := principal.Account()
+			commonName := replyUser.CommonName
+
+			if err != nil {
+				logger.Error("error sending discussion reply emails. Unable to retrieve modelPlan",
+					zap.String("replyID", reply.ID.String()),
+					zap.Error(err))
+			}
+
+			errReplyEmail := sendDiscussionReplyEmails(
+				ctx,
+				store,
+				logger,
+				emailService,
+				emailTemplateService,
+				addressBook,
+				discussion,
+				reply,
+				modelPlan,
+				replyUser,
+			)
+			if errReplyEmail != nil {
+				logger.Error("error sending tagged in plan discussion reply emails to tagged users and teams",
+					zap.String("discussionID", discussion.ID.String()),
+					zap.Error(errReplyEmail))
+			}
+
+			err = sendPlanDiscussionTagEmails(
+				ctx,
+				store,
+				false,
+				logger,
+				emailService,
+				emailTemplateService,
+				addressBook,
+				reply.Content,
+				reply.DiscussionID,
+				modelPlan,
+				commonName,
+				reply.UserRole.Humanize(models.ValueOrEmpty(reply.UserRoleDescription)),
+			)
+
+			if err != nil {
+				if err != nil {
+					logger.Error("error sending tagged in plan discussion reply emails to tagged users and teams",
+						zap.String("discussionID", discussion.ID.String()),
+						zap.Error(err))
+				}
+			}
+		}()
 		return reply, err
 	})
 	if err != nil {
 		return nil, err
 	}
-
-	// Note these aren't async in order to prevent race condition. If possible, this can be made async.
-	discussion, err := store.PlanDiscussionByID(logger, newReply.DiscussionID)
-	if err != nil {
-		return newReply, err
-	}
-	modelPlan, err := ModelPlanGetByIDLOADER(ctx, discussion.ModelPlanID)
-	if err != nil {
-		return newReply, err
-	}
-
-	go func() {
-
-		replyUser := principal.Account()
-		commonName := replyUser.CommonName
-
-		if err != nil {
-			logger.Error("error sending discussion reply emails. Unable to retrieve modelPlan",
-				zap.String("replyID", newReply.ID.String()),
-				zap.Error(err))
-		}
-
-		errReplyEmail := sendDiscussionReplyEmails(
-			ctx,
-			store,
-			logger,
-			emailService,
-			emailTemplateService,
-			addressBook,
-			discussion,
-			newReply,
-			modelPlan,
-			replyUser,
-		)
-		if errReplyEmail != nil {
-			logger.Error("error sending tagged in plan discussion reply emails to tagged users and teams",
-				zap.String("discussionID", discussion.ID.String()),
-				zap.Error(errReplyEmail))
-		}
-
-		err = sendPlanDiscussionTagEmails(
-			ctx,
-			store,
-			false,
-			logger,
-			emailService,
-			emailTemplateService,
-			addressBook,
-			newReply.Content,
-			newReply.DiscussionID,
-			modelPlan,
-			commonName,
-			newReply.UserRole.Humanize(models.ValueOrEmpty(newReply.UserRoleDescription)),
-		)
-
-		if err != nil {
-			if err != nil {
-				logger.Error("error sending tagged in plan discussion reply emails to tagged users and teams",
-					zap.String("discussionID", discussion.ID.String()),
-					zap.Error(err))
-			}
-		}
-	}()
-
 	return newReply, err
 }
 
