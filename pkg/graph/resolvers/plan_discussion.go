@@ -44,13 +44,13 @@ func CreatePlanDiscussion(
 		input.UserRoleDescription,
 	)
 
-	// TODO: EASI-3294 this should be using all transactions, for POC, I have not updated all related methods, but they should be
 	newDiscussion, err := sqlutils.WithTransaction[models.PlanDiscussion](store, func(tx *sqlx.Tx) (*models.PlanDiscussion, error) {
 		err := BaseStructPreCreate(logger, planDiscussion, principal, store, false)
 		if err != nil {
 			return nil, err
 		}
 
+		// Note: in the future, this could be a transaction as well. It makes sense to create the user accounts for referenced users using a store though.
 		err = UpdateTaggedHTMLMentionsAndRawContent(ctx, store, &planDiscussion.Content, getAccountInformation)
 
 		if err != nil {

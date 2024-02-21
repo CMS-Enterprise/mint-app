@@ -11,8 +11,8 @@ import (
 // TaggedInPlanDiscussionActivityMeta represents the notification data that is relevant to being tagged in a new Plan Discussion
 type TaggedInPlanDiscussionActivityMeta struct {
 	ActivityMetaBaseStruct
-	DiscussionID uuid.UUID `json:"discussionID" ` //TODO: EASI-2395 Note this is somewhat like a discussion relation, but in a different package
-	Content      string    `json:"content"`
+	discussionRelation
+	Content string `json:"content"`
 }
 
 // newNewPlanDiscussionActivityMeta creates a New NewPlanDiscussionActivityMeta
@@ -20,7 +20,7 @@ func newTaggedInPlanDiscussionActivityMeta(discussionID uuid.UUID, content strin
 	version := 0 //iterate this if this type ever updates
 	return &TaggedInPlanDiscussionActivityMeta{
 		ActivityMetaBaseStruct: NewActivityMetaBaseStruct(ActivityTaggedInDiscussion, version),
-		DiscussionID:           discussionID,
+		discussionRelation:     NewDiscussionRelation(discussionID),
 		Content:                content,
 	}
 
@@ -37,7 +37,7 @@ func NewTaggedInPlanDiscussionActivity(actorID uuid.UUID, discussionID uuid.UUID
 	}
 }
 
-// TODO EASI-3925 --> Refactor these all to have a generic scan / value
+// Future Enhancement: --> Refactor these all to have a generic scan / value
 
 // Value allows us to satisfy the valuer interface so we can write to the database
 // We need to do a specific implementation instead of relying on the implementation of the embedded struct, as that will only serialize the common data
