@@ -4,6 +4,14 @@
 //  2. Act on the notification
 package notifications
 
+import (
+	"context"
+
+	"github.com/google/uuid"
+
+	"github.com/cmsgov/mint-app/pkg/models"
+)
+
 // dbStore exists so we can organize database calls. We don't want to export the database calls outside of the package, but it is needlessly complicated to create a separate package
 type dbStoreMethods struct {
 	// holds all activity related store methods
@@ -23,3 +31,6 @@ var dbStore = dbStoreMethods{
 	activity:     activityStore{},
 	notification: notificationStore{},
 }
+
+// GetUserNotificationPreferencesFunc represents a type of function which takes a context and uuid of a user account and returns UserNotificationPreferences
+type GetUserNotificationPreferencesFunc func(ctx context.Context, user_id uuid.UUID) (*models.UserNotificationPreferences, error)

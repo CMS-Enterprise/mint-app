@@ -8,12 +8,11 @@ import (
 
 	"github.com/cmsgov/mint-app/pkg/models"
 	"github.com/cmsgov/mint-app/pkg/sqlutils"
-	"github.com/cmsgov/mint-app/pkg/storage"
 )
 
 // ActivityTaggedInDiscussionReplyCreate creates an activity for when a User is Tagged in a Discussion Reply.
 // It also creates all the relevant notifications for every tag. Currently, only tagged users get a notification
-func ActivityTaggedInDiscussionReplyCreate(ctx context.Context, np sqlutils.NamedPreparer, actorID uuid.UUID, discussionID uuid.UUID, replyID uuid.UUID, replyContent models.TaggedHTML) (*models.Activity, error) {
+func ActivityTaggedInDiscussionReplyCreate(ctx context.Context, np sqlutils.NamedPreparer, actorID uuid.UUID, discussionID uuid.UUID, replyID uuid.UUID, replyContent models.TaggedHTML, getPreferencesFunc GetUserNotificationPreferencesFunc) (*models.Activity, error) {
 
 	activity := models.NewTaggedInDiscussionReplyActivity(actorID, discussionID, replyID, replyContent.RawContent.String())
 
@@ -37,8 +36,7 @@ func ActivityTaggedInDiscussionReplyCreate(ctx context.Context, np sqlutils.Name
 				return nil, err
 
 			}
-			//Future Enhancement: update dependencies so we can use the dataloader
-			pref, err := storage.UserNotificationPreferencesGetByUserID(np, *mention.EntityUUID)
+			pref, err := getPreferencesFunc(ctx, *mention.EntityUUID)
 			if err != nil {
 				return nil, fmt.Errorf("unable to get user notification preference, Notification not created %w", err)
 			}

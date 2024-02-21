@@ -99,7 +99,7 @@ func CreatePlanDiscussion(
 			}
 		}()
 
-		_, notificationErr := notifications.ActivityTaggedInDiscussionCreate(ctx, tx, principal.Account().ID, discussion.ID, discussion.Content)
+		_, notificationErr := notifications.ActivityTaggedInDiscussionCreate(ctx, tx, principal.Account().ID, discussion.ID, discussion.Content, loaders.UserNotificationPreferencesGetByUserID)
 		if notificationErr != nil {
 			return nil, fmt.Errorf("unable to generate notifications, %w", notificationErr)
 		}
@@ -455,7 +455,7 @@ func CreateDiscussionReply(
 			return reply, err
 		}
 		// Create Activity and notifications in the DB
-		_, notificationErr := notifications.ActivityTaggedInDiscussionReplyCreate(ctx, tx, principal.Account().ID, discussion.ID, reply.ID, reply.Content)
+		_, notificationErr := notifications.ActivityTaggedInDiscussionReplyCreate(ctx, tx, principal.Account().ID, discussion.ID, reply.ID, reply.Content, loaders.UserNotificationPreferencesGetByUserID)
 		if notificationErr != nil {
 			return nil, fmt.Errorf("unable to generate notifications, %w", notificationErr)
 		}
