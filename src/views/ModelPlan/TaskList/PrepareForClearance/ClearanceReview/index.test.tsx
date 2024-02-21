@@ -1,7 +1,12 @@
 import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
-import { render, screen, waitFor } from '@testing-library/react';
+import {
+  render,
+  screen,
+  waitFor,
+  waitForElementToBeRemoved
+} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import Sinon from 'sinon';
 
@@ -57,7 +62,7 @@ describe('ClearanceReview component', () => {
   Sinon.stub(Math, 'random').returns(0.5);
 
   it('renders readonly component', async () => {
-    render(
+    const { getByTestId } = render(
       <MemoryRouter
         initialEntries={[
           `/models/${modelID}/task-list/prepare-for-clearance/basics/${basicsID}`
@@ -70,6 +75,8 @@ describe('ClearanceReview component', () => {
         </MockedProvider>
       </MemoryRouter>
     );
+
+    await waitForElementToBeRemoved(() => getByTestId('page-loading'));
 
     await waitFor(() => {
       expect(
@@ -97,6 +104,8 @@ describe('ClearanceReview component', () => {
       </MemoryRouter>
     );
 
+    await waitForElementToBeRemoved(() => getByTestId('page-loading'));
+
     await waitFor(() => {
       expect(getByTestId('modify-task-list-for-clearance')).toBeInTheDocument();
     });
@@ -111,7 +120,7 @@ describe('ClearanceReview component', () => {
   });
 
   it('matches snapshot', async () => {
-    const { asFragment } = render(
+    const { asFragment, getByTestId } = render(
       <MemoryRouter
         initialEntries={[
           `/models/${modelID}/task-list/prepare-for-clearance/basics/${basicsID}`
@@ -124,6 +133,8 @@ describe('ClearanceReview component', () => {
         </MockedProvider>
       </MemoryRouter>
     );
+
+    await waitForElementToBeRemoved(() => getByTestId('page-loading'));
 
     await waitFor(() => {
       expect(
