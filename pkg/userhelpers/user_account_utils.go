@@ -43,7 +43,7 @@ type GetOktaAccountInfoFunc func(ctx context.Context, username string) (*OktaAcc
 type GetUserInfoFunc func(ctx context.Context, username string) (*models.UserInfo, error)
 
 // GetOrCreateUserAccount will return an account if it exists, or create and return a new one if not
-func GetOrCreateUserAccount(ctx context.Context, np sqlutils.NamedPreparer, store *storage.Store, username string, hasLoggedIn bool,
+func GetOrCreateUserAccount(ctx context.Context, np sqlutils.NamedPreparer, txPreparer sqlutils.TransactionPreparer, username string, hasLoggedIn bool,
 	isMacUser bool, getAccountInformation GetAccountInfoFunc) (*authentication.UserAccount, error) {
 	userAccount, accErr := storage.UserAccountGetByUsername(np, username)
 	if accErr != nil {
@@ -71,25 +71,11 @@ func GetOrCreateUserAccount(ctx context.Context, np sqlutils.NamedPreparer, stor
 	userAccount.HasLoggedIn = hasLoggedIn
 
 	if userAccount.ID == uuid.Nil {
-		createdAccount, err := sqlutils.WithTransaction[authentication.UserAccount](store, func(tx *sqlx.Tx) (*authentication.UserAccount, error) {
-			newAccount, newErr := storage.UserAccountInsertByUsername(tx, userAccount)
-			if newErr != nil {
-				return nil, newErr
-			}
-			pref := models.NewUserNotificationPreferences(newAccount.ID)
-
-			_, preferencesErr := storage.UserNotificationPreferencesCreate(tx, pref)
-			if preferencesErr != nil {
-				return nil, preferencesErr
-			}
-			return newAccount, nil
-
-		})
+		createdAccount, err := createUserAccountAndPreferences(txPreparer, np, userAccount)
 		if err != nil {
 			return nil, err
 		}
 		return createdAccount, nil
-
 	}
 
 	updatedAccount, updateErr := storage.UserAccountUpdateByUserName(np, userAccount)
@@ -97,6 +83,35 @@ func GetOrCreateUserAccount(ctx context.Context, np sqlutils.NamedPreparer, stor
 		return nil, updateErr
 	}
 	return updatedAccount, nil
+}
+
+// createUserAccountAndPreferences creates a user account and preferences. If the np is not a SQL utils tx, it will wrap it in a TX
+func createUserAccountAndPreferences(txPrep sqlutils.TransactionPreparer, np sqlutils.NamedPreparer, userAccount *authentication.UserAccount) (*authentication.UserAccount, error) {
+
+	tx, isTX := np.(*sqlx.Tx)
+	if isTX {
+		return createUserAccountAndPreferencesTransaction(tx, userAccount)
+	}
+	createdAccount, err := sqlutils.WithTransaction[authentication.UserAccount](txPrep, func(tx *sqlx.Tx) (*authentication.UserAccount, error) {
+		return createUserAccountAndPreferencesTransaction(tx, userAccount)
+	})
+	return createdAccount, err
+
+}
+
+// createUserAccountAndPreferencesTransaction is the internal transaction code needed to create all the components necessary for a user account
+func createUserAccountAndPreferencesTransaction(tx *sqlx.Tx, userAccount *authentication.UserAccount) (*authentication.UserAccount, error) {
+	newAccount, newErr := storage.UserAccountInsertByUsername(tx, userAccount)
+	if newErr != nil {
+		return nil, newErr
+	}
+	pref := models.NewUserNotificationPreferences(newAccount.ID)
+
+	_, preferencesErr := storage.UserNotificationPreferencesCreate(tx, pref)
+	if preferencesErr != nil {
+		return nil, preferencesErr
+	}
+	return newAccount, nil
 }
 
 // GetUserInfoAccountInfoWrapperFunc returns a function that returns *AccountInfo with the input of a function that returns UserInfo
