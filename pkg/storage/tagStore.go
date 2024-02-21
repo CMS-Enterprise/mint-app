@@ -45,13 +45,9 @@ func (s *Store) TagCreate(
 	return retTag, nil
 }
 
-// TagCollectionCreate creates an array of tags in the database based on the tag contet provided in the string
-// the method is expected to be part of a larger transaction and does not handle  committing or rollingback the transactions
-// if the *sqlx.Tx is nil, this function will create one. The returned tx is the same as the one in the parameters.
-func (s *Store) TagCollectionCreate(_ *zap.Logger, tags []*models.Tag, createdBy uuid.UUID, np sqlutils.NamedPreparer) ([]*models.Tag, error) {
-	if np == nil {
-		np = s.db.MustBegin()
-	}
+// TagCollectionCreate creates an array of tags in the database based on the tag context provided in the string
+// the method is expected to be part of a larger transaction and does not handle  committing or rolling back the transactions
+func TagCollectionCreate(np sqlutils.NamedPreparer, _ *zap.Logger, tags []*models.Tag, createdBy uuid.UUID) ([]*models.Tag, error) {
 
 	retTags := []*models.Tag{}
 	stmt, sErr := np.PrepareNamed(tagCreateCollectionSQL)

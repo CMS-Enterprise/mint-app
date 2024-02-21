@@ -161,8 +161,8 @@ func updateMentionAndRawContent(mention *models.HTMLMention, tHTML *models.Tagge
 }
 
 // TagCollectionCreate converts an array of mentions, and creates an array in the database for unique tags.
-func TagCollectionCreate(logger *zap.Logger, store *storage.Store, principal authentication.Principal,
-	taggedField string, taggedTable string, taggedContentID uuid.UUID, mentions []*models.HTMLMention, np sqlutils.NamedPreparer) ([]*models.Tag, error) {
+func TagCollectionCreate(np sqlutils.NamedPreparer, logger *zap.Logger, principal authentication.Principal,
+	taggedField string, taggedTable string, taggedContentID uuid.UUID, mentions []*models.HTMLMention) ([]*models.Tag, error) {
 
 	tags := models.TagArrayFromHTMLMentions(taggedField, taggedTable, taggedContentID, mentions)
 
@@ -172,7 +172,7 @@ func TagCollectionCreate(logger *zap.Logger, store *storage.Store, principal aut
 		return key
 	})
 
-	retTags, err := store.TagCollectionCreate(logger, uniqTags, principal.Account().ID, np) // Note, this will fail if any tag is invalid.
+	retTags, err := storage.TagCollectionCreate(np, logger, uniqTags, principal.Account().ID) // Note, this will fail if any tag is invalid.
 	if err != nil {
 		return nil, err
 	}

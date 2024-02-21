@@ -62,7 +62,7 @@ func CreatePlanDiscussion(
 			return nil, err
 		}
 
-		tags, err := TagCollectionCreate(logger, store, principal, "content", "plan_discussion", discussion.ID, planDiscussion.Content.Mentions, tx)
+		tags, err := TagCollectionCreate(tx, logger, principal, "content", "plan_discussion", discussion.ID, planDiscussion.Content.Mentions)
 		if err != nil {
 			return discussion, err
 		}
@@ -438,7 +438,7 @@ func CreateDiscussionReply(
 		if err != nil {
 			return reply, err
 		}
-		tags, err := TagCollectionCreate(logger, store, principal, "content", "discussion_reply", reply.ID, discussionReply.Content.Mentions, tx)
+		tags, err := TagCollectionCreate(tx, logger, principal, "content", "discussion_reply", reply.ID, discussionReply.Content.Mentions)
 		if err != nil {
 			return reply, err
 		}

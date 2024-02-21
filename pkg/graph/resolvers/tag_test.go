@@ -152,7 +152,7 @@ func (suite *ResolverSuite) TestTagCollectionCreate() {
 	tableName := "nonsenseTableName"
 	taggedContentID := uuid.New()
 
-	tags, err := TagCollectionCreate(suite.testConfigs.Logger, suite.testConfigs.Store, suite.testConfigs.Principal, fieldName, tableName, taggedContentID, taggedContent.Mentions, suite.testConfigs.Store)
+	tags, err := TagCollectionCreate(suite.testConfigs.Store, suite.testConfigs.Logger, suite.testConfigs.Principal, fieldName, tableName, taggedContentID, taggedContent.Mentions)
 	suite.NoError(err)
 	suite.NotNil(tags)
 	suite.Len(tags, 3) // ASSERT that tags are not duplicated
