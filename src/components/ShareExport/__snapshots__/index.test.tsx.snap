@@ -2311,77 +2311,13 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
             </div>
             <div
               class=""
-            >
-              <div
-                class="desktop:grid-col-12"
-                data-testid="grid"
-              >
-                <div
-                  class="read-only-section read-only-section--which-type-of-medicare-providers-suppliers margin-bottom-3"
-                >
-                  <p
-                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
-                  >
-                    Which type of Medicare providers/suppliers?
-                  </p>
-                  <div
-                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
-                  >
-                    <em
-                      class="text-base"
-                    >
-                      No answer entered
-                    </em>
-                  </div>
-                </div>
-              </div>
-            </div>
+            />
             <div
               class=""
-            >
-              <div
-                class="desktop:grid-col-12"
-                data-testid="grid"
-              >
-                <div
-                  class="read-only-section read-only-section--please-describe-how-states-will-engage-with-your-model margin-bottom-3"
-                >
-                  <p
-                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
-                  >
-                    Please describe how states will engage with your model.
-                  </p>
-                  <div
-                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
-                  >
-                    State
-                  </div>
-                </div>
-              </div>
-            </div>
+            />
             <div
               class=""
-            >
-              <div
-                class="desktop:grid-col-12"
-                data-testid="grid"
-              >
-                <div
-                  class="read-only-section read-only-section--please-describe-the-other-participants-engaging-with-this-model margin-bottom-3"
-                >
-                  <p
-                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
-                  >
-                    Please describe the other participants engaging with this model
-                  </p>
-                  <div
-                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
-                  >
-                    This is the other
-                  </div>
-                </div>
-              </div>
-            </div>
+            />
             <div
               class=""
             >
@@ -3701,48 +3637,62 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
               class="margin-top-4 padding-top-4 border-top-1px border-base-light"
             >
               <div
-                class="desktop:grid-col-12"
+                class="grid-row grid-gap"
                 data-testid="grid"
               >
                 <div
-                  class="read-only-section read-only-section--how-many-people-do-you-think-will-be-impacted-by-this-model margin-bottom-3"
+                  class="desktop:grid-col-6"
+                  data-testid="grid"
                 >
-                  <p
-                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
-                  >
-                    How many people do you think will be impacted by this model?
-                  </p>
                   <div
-                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                    class="desktop:grid-col-12"
+                    data-testid="grid"
                   >
-                    1234
+                    <div
+                      class="read-only-section read-only-section--how-many-people-do-you-think-will-be-impacted-by-this-model margin-bottom-3"
+                    >
+                      <p
+                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                      >
+                        How many people do you think will be impacted by this model?
+                      </p>
+                      <div
+                        class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                      >
+                        1234
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="desktop:grid-col-6"
+                  data-testid="grid"
+                >
+                  <div
+                    class="desktop:grid-col-12"
+                    data-testid="grid"
+                  >
+                    <div
+                      class="read-only-section read-only-section--what-is-your-level-of-confidence-on-this-estimate margin-bottom-3"
+                    >
+                      <p
+                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                      >
+                        What is your level of confidence on this estimate?
+                      </p>
+                      <div
+                        class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                      >
+                        Completely confident
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
             <div
               class=""
-            >
-              <div
-                class="desktop:grid-col-12"
-                data-testid="grid"
-              >
-                <div
-                  class="read-only-section read-only-section--what-is-your-level-of-confidence-on-this-estimate margin-bottom-3"
-                >
-                  <p
-                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
-                  >
-                    What is your level of confidence on this estimate?
-                  </p>
-                  <div
-                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
-                  >
-                    Completely confident
-                  </div>
-                </div>
-              </div>
-            </div>
+            />
             <div
               class=""
             >
@@ -5491,6 +5441,52 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
             </div>
             <div
               class=""
+            >
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--does-the-model-require-that-identifiable-claim-and-claim-line-feed--cclfs--data-need-to-be-shared-with-participants margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    Does the model require that identifiable Claim and Claim Line Feed (CCLFs) data need to be shared with participants?
+                  </p>
+                  <div
+                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  >
+                    Yes
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class=""
+            >
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--notes margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    Notes
+                  </p>
+                  <div
+                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  >
+                    Note for cclf
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class=""
             />
             <div
               class=""
@@ -5516,121 +5512,148 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                 Chronic Conditions Warehouse (CCW)
               </h3>
               <div
-                class="desktop:grid-col-12"
-                data-testid="grid"
+                class=""
               >
                 <div
-                  class="read-only-section read-only-section--will-you-need-to-send-files-between-the-ccw-and-other-applications margin-bottom-3"
+                  class="desktop:grid-col-12"
+                  data-testid="grid"
                 >
-                  <p
-                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
-                  >
-                    Will you need to send files between the CCW and other applications?
-                  </p>
                   <div
-                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                    class="read-only-section read-only-section--will-you-need-to-send-files-between-the-ccw-and-other-applications margin-bottom-3"
                   >
-                    Yes
-                  </div>
-                </div>
-              </div>
-              <div
-                class="desktop:grid-col-12"
-                data-testid="grid"
-              >
-                <div
-                  class="read-only-section read-only-section--notes margin-bottom-3"
-                >
-                  <p
-                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
-                  >
-                    Notes
-                  </p>
-                  <div
-                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
-                  >
-                    Note for ccw
-                  </div>
-                </div>
-              </div>
-              <div
-                class="desktop:grid-col-12"
-                data-testid="grid"
-              >
-                <div
-                  class="read-only-section read-only-section--do-you-know-which-applications-will-be-on-the-other-sides-of-the-file-transfers--if-so--please-specify margin-bottom-3"
-                >
-                  <p
-                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
-                  >
-                    Do you know which applications will be on the other sides of the file transfers? If so, please specify.
-                  </p>
-                  <div
-                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
-                  >
-                    Yes
-                    <span
-                      data-testid="other-entry"
+                    <p
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
                     >
-                       - Which app to send
-                    </span>
+                      Will you need to send files between the CCW and other applications?
+                    </p>
+                    <div
+                      class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                    >
+                      Yes
+                    </div>
                   </div>
                 </div>
               </div>
               <div
-                class="desktop:grid-col-12"
-                data-testid="grid"
+                class=""
               >
                 <div
-                  class="read-only-section read-only-section--notes margin-bottom-3"
+                  class="desktop:grid-col-12"
+                  data-testid="grid"
                 >
-                  <p
-                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
-                  >
-                    Notes
-                  </p>
                   <div
-                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                    class="read-only-section read-only-section--notes margin-bottom-3"
                   >
-                    Note for app to send
+                    <p
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                    >
+                      Notes
+                    </p>
+                    <div
+                      class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                    >
+                      Note for ccw
+                    </div>
                   </div>
                 </div>
               </div>
               <div
-                class="desktop:grid-col-12"
-                data-testid="grid"
+                class=""
               >
                 <div
-                  class="read-only-section read-only-section--will-you-use-the-ccw-to-distribute-files-to-and-from-model-participants margin-bottom-3"
+                  class="desktop:grid-col-12"
+                  data-testid="grid"
                 >
-                  <p
-                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
-                  >
-                    Will you use the CCW to distribute files to and from model participants?
-                  </p>
                   <div
-                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                    class="read-only-section read-only-section--do-you-know-which-applications-will-be-on-the-other-sides-of-the-file-transfers--if-so--please-specify margin-bottom-3"
                   >
-                    Yes
+                    <p
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                    >
+                      Do you know which applications will be on the other sides of the file transfers? If so, please specify.
+                    </p>
+                    <div
+                      class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                    >
+                      Yes
+                      <span
+                        data-testid="other-entry"
+                      >
+                         - Which app to send
+                      </span>
+                    </div>
                   </div>
                 </div>
               </div>
               <div
-                class="desktop:grid-col-12"
-                data-testid="grid"
+                class=""
+              />
+              <div
+                class=""
               >
                 <div
-                  class="read-only-section read-only-section--notes margin-bottom-3"
+                  class="desktop:grid-col-12"
+                  data-testid="grid"
                 >
-                  <p
-                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
-                  >
-                    Notes
-                  </p>
                   <div
-                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                    class="read-only-section read-only-section--notes margin-bottom-3"
                   >
-                    Note for ccw disctro
+                    <p
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                    >
+                      Notes
+                    </p>
+                    <div
+                      class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                    >
+                      Note for app to send
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class=""
+              >
+                <div
+                  class="desktop:grid-col-12"
+                  data-testid="grid"
+                >
+                  <div
+                    class="read-only-section read-only-section--will-you-use-the-ccw-to-distribute-files-to-and-from-model-participants margin-bottom-3"
+                  >
+                    <p
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                    >
+                      Will you use the CCW to distribute files to and from model participants?
+                    </p>
+                    <div
+                      class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                    >
+                      Yes
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class=""
+              >
+                <div
+                  class="desktop:grid-col-12"
+                  data-testid="grid"
+                >
+                  <div
+                    class="read-only-section read-only-section--notes margin-bottom-3"
+                  >
+                    <p
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                    >
+                      Notes
+                    </p>
+                    <div
+                      class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                    >
+                      Note for ccw disctro
+                    </div>
                   </div>
                 </div>
               </div>
@@ -5686,40 +5709,57 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                 </button>
               </div>
               <div
-                class="desktop:grid-col-12"
-                data-testid="grid"
+                class=""
+              />
+              <div
+                class=""
               >
                 <div
-                  class="read-only-section read-only-section--notes margin-bottom-3"
+                  class="desktop:grid-col-12"
+                  data-testid="grid"
                 >
-                  <p
-                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
-                  >
-                    Notes
-                  </p>
                   <div
-                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                    class="read-only-section read-only-section--notes margin-bottom-3"
                   >
-                    Note for develop measures
+                    <p
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                    >
+                      Notes
+                    </p>
+                    <div
+                      class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                    >
+                      Note for develop measures
+                    </div>
                   </div>
                 </div>
               </div>
               <div
-                class="desktop:grid-col-12"
-                data-testid="grid"
+                class=""
+              />
+              <div
+                class=""
+              />
+              <div
+                class=""
               >
                 <div
-                  class="read-only-section read-only-section--notes margin-bottom-3"
+                  class="desktop:grid-col-12"
+                  data-testid="grid"
                 >
-                  <p
-                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
-                  >
-                    Notes
-                  </p>
                   <div
-                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                    class="read-only-section read-only-section--notes margin-bottom-3"
                   >
-                    quality note
+                    <p
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                    >
+                      Notes
+                    </p>
+                    <div
+                      class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                    >
+                      quality note
+                    </div>
                   </div>
                 </div>
               </div>
@@ -6749,7 +6789,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="usa-alert__text"
                   >
                     <span>
-                      There are 3 additional questions that are not applicable for this model based on the answers selected in the question above.
+                      There are 3 additional questions that are not applicable for this model because beneficiary cost-sharing isn't selected as a claims-based payment type the model will pay.
                     </span>
                   </p>
                 </div>
@@ -6835,7 +6875,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="usa-alert__text"
                   >
                     <span>
-                      There are 5 additional questions that are not applicable for this model based on the answers selected in the question above.
+                      There are 5 additional questions that are not applicable for this model based on the answer selected for "What will you pay?".
                     </span>
                   </p>
                 </div>
@@ -10301,77 +10341,13 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
             </div>
             <div
               class=""
-            >
-              <div
-                class="desktop:grid-col-12"
-                data-testid="grid"
-              >
-                <div
-                  class="read-only-section read-only-section--which-type-of-medicare-providers-suppliers margin-bottom-3"
-                >
-                  <p
-                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
-                  >
-                    Which type of Medicare providers/suppliers?
-                  </p>
-                  <div
-                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
-                  >
-                    <em
-                      class="text-base"
-                    >
-                      No answer entered
-                    </em>
-                  </div>
-                </div>
-              </div>
-            </div>
+            />
             <div
               class=""
-            >
-              <div
-                class="desktop:grid-col-12"
-                data-testid="grid"
-              >
-                <div
-                  class="read-only-section read-only-section--please-describe-how-states-will-engage-with-your-model margin-bottom-3"
-                >
-                  <p
-                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
-                  >
-                    Please describe how states will engage with your model.
-                  </p>
-                  <div
-                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
-                  >
-                    State
-                  </div>
-                </div>
-              </div>
-            </div>
+            />
             <div
               class=""
-            >
-              <div
-                class="desktop:grid-col-12"
-                data-testid="grid"
-              >
-                <div
-                  class="read-only-section read-only-section--please-describe-the-other-participants-engaging-with-this-model margin-bottom-3"
-                >
-                  <p
-                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
-                  >
-                    Please describe the other participants engaging with this model
-                  </p>
-                  <div
-                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
-                  >
-                    This is the other
-                  </div>
-                </div>
-              </div>
-            </div>
+            />
             <div
               class=""
             >
@@ -11691,48 +11667,62 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
               class="margin-top-4 padding-top-4 border-top-1px border-base-light"
             >
               <div
-                class="desktop:grid-col-12"
+                class="grid-row grid-gap"
                 data-testid="grid"
               >
                 <div
-                  class="read-only-section read-only-section--how-many-people-do-you-think-will-be-impacted-by-this-model margin-bottom-3"
+                  class="desktop:grid-col-6"
+                  data-testid="grid"
                 >
-                  <p
-                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
-                  >
-                    How many people do you think will be impacted by this model?
-                  </p>
                   <div
-                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                    class="desktop:grid-col-12"
+                    data-testid="grid"
                   >
-                    1234
+                    <div
+                      class="read-only-section read-only-section--how-many-people-do-you-think-will-be-impacted-by-this-model margin-bottom-3"
+                    >
+                      <p
+                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                      >
+                        How many people do you think will be impacted by this model?
+                      </p>
+                      <div
+                        class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                      >
+                        1234
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="desktop:grid-col-6"
+                  data-testid="grid"
+                >
+                  <div
+                    class="desktop:grid-col-12"
+                    data-testid="grid"
+                  >
+                    <div
+                      class="read-only-section read-only-section--what-is-your-level-of-confidence-on-this-estimate margin-bottom-3"
+                    >
+                      <p
+                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                      >
+                        What is your level of confidence on this estimate?
+                      </p>
+                      <div
+                        class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                      >
+                        Completely confident
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
             <div
               class=""
-            >
-              <div
-                class="desktop:grid-col-12"
-                data-testid="grid"
-              >
-                <div
-                  class="read-only-section read-only-section--what-is-your-level-of-confidence-on-this-estimate margin-bottom-3"
-                >
-                  <p
-                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
-                  >
-                    What is your level of confidence on this estimate?
-                  </p>
-                  <div
-                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
-                  >
-                    Completely confident
-                  </div>
-                </div>
-              </div>
-            </div>
+            />
             <div
               class=""
             >
@@ -13481,6 +13471,52 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
             </div>
             <div
               class=""
+            >
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--does-the-model-require-that-identifiable-claim-and-claim-line-feed--cclfs--data-need-to-be-shared-with-participants margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    Does the model require that identifiable Claim and Claim Line Feed (CCLFs) data need to be shared with participants?
+                  </p>
+                  <div
+                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  >
+                    Yes
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class=""
+            >
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--notes margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    Notes
+                  </p>
+                  <div
+                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  >
+                    Note for cclf
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class=""
             />
             <div
               class=""
@@ -13506,121 +13542,148 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                 Chronic Conditions Warehouse (CCW)
               </h3>
               <div
-                class="desktop:grid-col-12"
-                data-testid="grid"
+                class=""
               >
                 <div
-                  class="read-only-section read-only-section--will-you-need-to-send-files-between-the-ccw-and-other-applications margin-bottom-3"
+                  class="desktop:grid-col-12"
+                  data-testid="grid"
                 >
-                  <p
-                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
-                  >
-                    Will you need to send files between the CCW and other applications?
-                  </p>
                   <div
-                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                    class="read-only-section read-only-section--will-you-need-to-send-files-between-the-ccw-and-other-applications margin-bottom-3"
                   >
-                    Yes
-                  </div>
-                </div>
-              </div>
-              <div
-                class="desktop:grid-col-12"
-                data-testid="grid"
-              >
-                <div
-                  class="read-only-section read-only-section--notes margin-bottom-3"
-                >
-                  <p
-                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
-                  >
-                    Notes
-                  </p>
-                  <div
-                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
-                  >
-                    Note for ccw
-                  </div>
-                </div>
-              </div>
-              <div
-                class="desktop:grid-col-12"
-                data-testid="grid"
-              >
-                <div
-                  class="read-only-section read-only-section--do-you-know-which-applications-will-be-on-the-other-sides-of-the-file-transfers--if-so--please-specify margin-bottom-3"
-                >
-                  <p
-                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
-                  >
-                    Do you know which applications will be on the other sides of the file transfers? If so, please specify.
-                  </p>
-                  <div
-                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
-                  >
-                    Yes
-                    <span
-                      data-testid="other-entry"
+                    <p
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
                     >
-                       - Which app to send
-                    </span>
+                      Will you need to send files between the CCW and other applications?
+                    </p>
+                    <div
+                      class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                    >
+                      Yes
+                    </div>
                   </div>
                 </div>
               </div>
               <div
-                class="desktop:grid-col-12"
-                data-testid="grid"
+                class=""
               >
                 <div
-                  class="read-only-section read-only-section--notes margin-bottom-3"
+                  class="desktop:grid-col-12"
+                  data-testid="grid"
                 >
-                  <p
-                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
-                  >
-                    Notes
-                  </p>
                   <div
-                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                    class="read-only-section read-only-section--notes margin-bottom-3"
                   >
-                    Note for app to send
+                    <p
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                    >
+                      Notes
+                    </p>
+                    <div
+                      class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                    >
+                      Note for ccw
+                    </div>
                   </div>
                 </div>
               </div>
               <div
-                class="desktop:grid-col-12"
-                data-testid="grid"
+                class=""
               >
                 <div
-                  class="read-only-section read-only-section--will-you-use-the-ccw-to-distribute-files-to-and-from-model-participants margin-bottom-3"
+                  class="desktop:grid-col-12"
+                  data-testid="grid"
                 >
-                  <p
-                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
-                  >
-                    Will you use the CCW to distribute files to and from model participants?
-                  </p>
                   <div
-                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                    class="read-only-section read-only-section--do-you-know-which-applications-will-be-on-the-other-sides-of-the-file-transfers--if-so--please-specify margin-bottom-3"
                   >
-                    Yes
+                    <p
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                    >
+                      Do you know which applications will be on the other sides of the file transfers? If so, please specify.
+                    </p>
+                    <div
+                      class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                    >
+                      Yes
+                      <span
+                        data-testid="other-entry"
+                      >
+                         - Which app to send
+                      </span>
+                    </div>
                   </div>
                 </div>
               </div>
               <div
-                class="desktop:grid-col-12"
-                data-testid="grid"
+                class=""
+              />
+              <div
+                class=""
               >
                 <div
-                  class="read-only-section read-only-section--notes margin-bottom-3"
+                  class="desktop:grid-col-12"
+                  data-testid="grid"
                 >
-                  <p
-                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
-                  >
-                    Notes
-                  </p>
                   <div
-                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                    class="read-only-section read-only-section--notes margin-bottom-3"
                   >
-                    Note for ccw disctro
+                    <p
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                    >
+                      Notes
+                    </p>
+                    <div
+                      class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                    >
+                      Note for app to send
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class=""
+              >
+                <div
+                  class="desktop:grid-col-12"
+                  data-testid="grid"
+                >
+                  <div
+                    class="read-only-section read-only-section--will-you-use-the-ccw-to-distribute-files-to-and-from-model-participants margin-bottom-3"
+                  >
+                    <p
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                    >
+                      Will you use the CCW to distribute files to and from model participants?
+                    </p>
+                    <div
+                      class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                    >
+                      Yes
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class=""
+              >
+                <div
+                  class="desktop:grid-col-12"
+                  data-testid="grid"
+                >
+                  <div
+                    class="read-only-section read-only-section--notes margin-bottom-3"
+                  >
+                    <p
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                    >
+                      Notes
+                    </p>
+                    <div
+                      class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                    >
+                      Note for ccw disctro
+                    </div>
                   </div>
                 </div>
               </div>
@@ -13676,40 +13739,57 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                 </button>
               </div>
               <div
-                class="desktop:grid-col-12"
-                data-testid="grid"
+                class=""
+              />
+              <div
+                class=""
               >
                 <div
-                  class="read-only-section read-only-section--notes margin-bottom-3"
+                  class="desktop:grid-col-12"
+                  data-testid="grid"
                 >
-                  <p
-                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
-                  >
-                    Notes
-                  </p>
                   <div
-                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                    class="read-only-section read-only-section--notes margin-bottom-3"
                   >
-                    Note for develop measures
+                    <p
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                    >
+                      Notes
+                    </p>
+                    <div
+                      class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                    >
+                      Note for develop measures
+                    </div>
                   </div>
                 </div>
               </div>
               <div
-                class="desktop:grid-col-12"
-                data-testid="grid"
+                class=""
+              />
+              <div
+                class=""
+              />
+              <div
+                class=""
               >
                 <div
-                  class="read-only-section read-only-section--notes margin-bottom-3"
+                  class="desktop:grid-col-12"
+                  data-testid="grid"
                 >
-                  <p
-                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
-                  >
-                    Notes
-                  </p>
                   <div
-                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                    class="read-only-section read-only-section--notes margin-bottom-3"
                   >
-                    quality note
+                    <p
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                    >
+                      Notes
+                    </p>
+                    <div
+                      class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                    >
+                      quality note
+                    </div>
                   </div>
                 </div>
               </div>
@@ -14739,7 +14819,7 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                     class="usa-alert__text"
                   >
                     <span>
-                      There are 3 additional questions that are not applicable for this model based on the answers selected in the question above.
+                      There are 3 additional questions that are not applicable for this model because beneficiary cost-sharing isn't selected as a claims-based payment type the model will pay.
                     </span>
                   </p>
                 </div>
@@ -14825,7 +14905,7 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                     class="usa-alert__text"
                   >
                     <span>
-                      There are 5 additional questions that are not applicable for this model based on the answers selected in the question above.
+                      There are 5 additional questions that are not applicable for this model based on the answer selected for "What will you pay?".
                     </span>
                   </p>
                 </div>

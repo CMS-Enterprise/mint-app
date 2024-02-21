@@ -1433,6 +1433,52 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
     </div>
     <div
       class=""
+    >
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--does-the-model-require-that-identifiable-claim-and-claim-line-feed--cclfs--data-need-to-be-shared-with-participants margin-bottom-3"
+        >
+          <p
+            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+          >
+            Does the model require that identifiable Claim and Claim Line Feed (CCLFs) data need to be shared with participants?
+          </p>
+          <div
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+          >
+            Yes
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class=""
+    >
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--notes margin-bottom-3"
+        >
+          <p
+            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+          >
+            Notes
+          </p>
+          <div
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+          >
+            Note for cclf
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class=""
     />
     <div
       class=""
@@ -1458,121 +1504,148 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
         Chronic Conditions Warehouse (CCW)
       </h3>
       <div
-        class="desktop:grid-col-12"
-        data-testid="grid"
+        class=""
       >
         <div
-          class="read-only-section read-only-section--will-you-need-to-send-files-between-the-ccw-and-other-applications margin-bottom-3"
+          class="desktop:grid-col-12"
+          data-testid="grid"
         >
-          <p
-            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
-          >
-            Will you need to send files between the CCW and other applications?
-          </p>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            class="read-only-section read-only-section--will-you-need-to-send-files-between-the-ccw-and-other-applications margin-bottom-3"
           >
-            Yes
-          </div>
-        </div>
-      </div>
-      <div
-        class="desktop:grid-col-12"
-        data-testid="grid"
-      >
-        <div
-          class="read-only-section read-only-section--notes margin-bottom-3"
-        >
-          <p
-            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
-          >
-            Notes
-          </p>
-          <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
-          >
-            Note for ccw
-          </div>
-        </div>
-      </div>
-      <div
-        class="desktop:grid-col-12"
-        data-testid="grid"
-      >
-        <div
-          class="read-only-section read-only-section--do-you-know-which-applications-will-be-on-the-other-sides-of-the-file-transfers--if-so--please-specify margin-bottom-3"
-        >
-          <p
-            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
-          >
-            Do you know which applications will be on the other sides of the file transfers? If so, please specify.
-          </p>
-          <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
-          >
-            Yes
-            <span
-              data-testid="other-entry"
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
             >
-               - Which app to send
-            </span>
+              Will you need to send files between the CCW and other applications?
+            </p>
+            <div
+              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            >
+              Yes
+            </div>
           </div>
         </div>
       </div>
       <div
-        class="desktop:grid-col-12"
-        data-testid="grid"
+        class=""
       >
         <div
-          class="read-only-section read-only-section--notes margin-bottom-3"
+          class="desktop:grid-col-12"
+          data-testid="grid"
         >
-          <p
-            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
-          >
-            Notes
-          </p>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            class="read-only-section read-only-section--notes margin-bottom-3"
           >
-            Note for app to send
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Notes
+            </p>
+            <div
+              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            >
+              Note for ccw
+            </div>
           </div>
         </div>
       </div>
       <div
-        class="desktop:grid-col-12"
-        data-testid="grid"
+        class=""
       >
         <div
-          class="read-only-section read-only-section--will-you-use-the-ccw-to-distribute-files-to-and-from-model-participants margin-bottom-3"
+          class="desktop:grid-col-12"
+          data-testid="grid"
         >
-          <p
-            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
-          >
-            Will you use the CCW to distribute files to and from model participants?
-          </p>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            class="read-only-section read-only-section--do-you-know-which-applications-will-be-on-the-other-sides-of-the-file-transfers--if-so--please-specify margin-bottom-3"
           >
-            Yes
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Do you know which applications will be on the other sides of the file transfers? If so, please specify.
+            </p>
+            <div
+              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            >
+              Yes
+              <span
+                data-testid="other-entry"
+              >
+                 - Which app to send
+              </span>
+            </div>
           </div>
         </div>
       </div>
       <div
-        class="desktop:grid-col-12"
-        data-testid="grid"
+        class=""
+      />
+      <div
+        class=""
       >
         <div
-          class="read-only-section read-only-section--notes margin-bottom-3"
+          class="desktop:grid-col-12"
+          data-testid="grid"
         >
-          <p
-            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
-          >
-            Notes
-          </p>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            class="read-only-section read-only-section--notes margin-bottom-3"
           >
-            Note for ccw disctro
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Notes
+            </p>
+            <div
+              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            >
+              Note for app to send
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class=""
+      >
+        <div
+          class="desktop:grid-col-12"
+          data-testid="grid"
+        >
+          <div
+            class="read-only-section read-only-section--will-you-use-the-ccw-to-distribute-files-to-and-from-model-participants margin-bottom-3"
+          >
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Will you use the CCW to distribute files to and from model participants?
+            </p>
+            <div
+              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            >
+              Yes
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class=""
+      >
+        <div
+          class="desktop:grid-col-12"
+          data-testid="grid"
+        >
+          <div
+            class="read-only-section read-only-section--notes margin-bottom-3"
+          >
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Notes
+            </p>
+            <div
+              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            >
+              Note for ccw disctro
+            </div>
           </div>
         </div>
       </div>
@@ -1628,40 +1701,57 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
         </button>
       </div>
       <div
-        class="desktop:grid-col-12"
-        data-testid="grid"
+        class=""
+      />
+      <div
+        class=""
       >
         <div
-          class="read-only-section read-only-section--notes margin-bottom-3"
+          class="desktop:grid-col-12"
+          data-testid="grid"
         >
-          <p
-            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
-          >
-            Notes
-          </p>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            class="read-only-section read-only-section--notes margin-bottom-3"
           >
-            Note for develop measures
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Notes
+            </p>
+            <div
+              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            >
+              Note for develop measures
+            </div>
           </div>
         </div>
       </div>
       <div
-        class="desktop:grid-col-12"
-        data-testid="grid"
+        class=""
+      />
+      <div
+        class=""
+      />
+      <div
+        class=""
       >
         <div
-          class="read-only-section read-only-section--notes margin-bottom-3"
+          class="desktop:grid-col-12"
+          data-testid="grid"
         >
-          <p
-            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
-          >
-            Notes
-          </p>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            class="read-only-section read-only-section--notes margin-bottom-3"
           >
-            quality note
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Notes
+            </p>
+            <div
+              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            >
+              quality note
+            </div>
           </div>
         </div>
       </div>
