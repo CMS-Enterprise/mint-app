@@ -75,7 +75,7 @@ func TestStoreTestSuite(t *testing.T) {
 
 // getTestPrincipal either inserts a new user account record into the database, or returns the record already in the database
 func getTestPrincipal(store *Store, userName string) (*authentication.ApplicationPrincipal, error) {
-	userAccount, accErr := store.UserAccountGetByUsername(userName)
+	userAccount, accErr := UserAccountGetByUsername(store, userName)
 	if accErr != nil {
 		return nil, accErr
 	}
@@ -103,7 +103,7 @@ func getTestPrincipal(store *Store, userName string) (*authentication.Applicatio
 	}
 
 	newAccount, newErr := sqlutils.WithTransaction[authentication.UserAccount](store, func(tx *sqlx.Tx) (*authentication.UserAccount, error) {
-		newAccount, newErr := store.UserAccountInsertByUsername(tx, userAccount)
+		newAccount, newErr := UserAccountInsertByUsername(tx, userAccount)
 		if newErr != nil {
 			return nil, newErr
 		}

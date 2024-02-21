@@ -26,10 +26,10 @@ var userAccountInsertByUsername string
 var userAccountUpdateByUsername string
 
 // UserAccountGetByUsername gets a user account by a give username
-func (s *Store) UserAccountGetByUsername(username string) (*authentication.UserAccount, error) {
+func UserAccountGetByUsername(np sqlutils.NamedPreparer, username string) (*authentication.UserAccount, error) {
 	user := &authentication.UserAccount{}
 
-	stmt, err := s.db.PrepareNamed(userAccountGetByUsername)
+	stmt, err := np.PrepareNamed(userAccountGetByUsername)
 	if err != nil {
 		return nil, err
 	}
@@ -99,7 +99,7 @@ func (s *Store) UserAccountGetByIDLOADER(
 }
 
 // UserAccountInsertByUsername creates a new user account for a given username
-func (s *Store) UserAccountInsertByUsername(np sqlutils.NamedPreparer, userAccount *authentication.UserAccount) (*authentication.UserAccount, error) {
+func UserAccountInsertByUsername(np sqlutils.NamedPreparer, userAccount *authentication.UserAccount) (*authentication.UserAccount, error) {
 
 	user := &authentication.UserAccount{}
 	if userAccount.ID == uuid.Nil {

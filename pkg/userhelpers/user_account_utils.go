@@ -45,7 +45,7 @@ type GetUserInfoFunc func(ctx context.Context, username string) (*models.UserInf
 // GetOrCreateUserAccount will return an account if it exists, or create and return a new one if not
 func GetOrCreateUserAccount(ctx context.Context, np sqlutils.NamedPreparer, store *storage.Store, username string, hasLoggedIn bool,
 	isMacUser bool, getAccountInformation GetAccountInfoFunc) (*authentication.UserAccount, error) {
-	userAccount, accErr := store.UserAccountGetByUsername(username)
+	userAccount, accErr := storage.UserAccountGetByUsername(np, username)
 	if accErr != nil {
 		return nil, errors.New("failed to get user information from the database")
 	}
@@ -72,7 +72,7 @@ func GetOrCreateUserAccount(ctx context.Context, np sqlutils.NamedPreparer, stor
 
 	if userAccount.ID == uuid.Nil {
 		createdAccount, err := sqlutils.WithTransaction[authentication.UserAccount](store, func(tx *sqlx.Tx) (*authentication.UserAccount, error) {
-			newAccount, newErr := store.UserAccountInsertByUsername(tx, userAccount)
+			newAccount, newErr := storage.UserAccountInsertByUsername(tx, userAccount)
 			if newErr != nil {
 				return nil, newErr
 			}
