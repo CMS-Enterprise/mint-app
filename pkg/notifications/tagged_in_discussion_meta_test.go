@@ -63,6 +63,14 @@ func (suite *NotificationsSuite) TestActivityTaggedInDiscussionCreate() {
 
 	suite.NoError(err)
 	suite.NotNil(testActivity)
+	suite.EqualValues(models.ActivityTaggedInDiscussion, testActivity.ActivityType)
+	// Assert meta data is not deserialized here
+	suite.Nil(testActivity.MetaData)
+	//Assert meta data can be deserialized
+	suite.NotNil(testActivity.MetaDataRaw)
+	meta, err := parseRawActivityMetaData(testActivity.ActivityType, testActivity.MetaDataRaw)
+	suite.NoError(err)
+	suite.NotNil(meta)
 
 	actorNots, err := UserNotificationCollectionGetByUser(suite.testConfigs.Context, suite.testConfigs.Store, suite.testConfigs.Principal)
 	suite.NoError(err)
