@@ -42,7 +42,7 @@ type UserNotifications struct {
 
 // NumUnreadNotifications returns the number of UnreadNotifications
 func (un *UserNotifications) NumUnreadNotifications() int {
-	return len(un.Notifications)
+	return len(un.UnreadNotifications())
 }
 
 // UnreadNotifications returns the subset of Notifications with a status of IsRead = false
