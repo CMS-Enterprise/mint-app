@@ -214,6 +214,7 @@ const ReadOnlyPayments = ({
                 <h3 className="margin-top-0">{paymentsMiscT('claims')}</h3>
               )}
 
+              {/* In filter view, bundle claims and non-claims alerts together if claims alerts exist */}
               <RelatedUnneededQuestions
                 id="claims-questions"
                 config={paymentsConfig.payType}
@@ -284,6 +285,7 @@ const ReadOnlyPayments = ({
                 <h3 className="margin-top-0">{paymentsMiscT('nonClaims')}</h3>
               )}
 
+              {/* In filtered view, only show non-claims alert if there are no claims alert.  Claims alert will bundle both claims/non-claims if it exists */}
               <RelatedUnneededQuestions
                 id="cost-sharing-questions"
                 config={paymentsConfig.payType}
