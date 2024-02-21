@@ -21,13 +21,13 @@ type NotificationsSuite struct {
 
 // SetupTest clears the database between each test
 func (suite *NotificationsSuite) SetupTest() {
-	err := suite.testConfigs.GenericSetupTests(useraccounthelperstestconfigs.GetTestPrincipal)
+	err := suite.testConfigs.GenericSetupTests()
 	suite.NoError(err)
 }
 
 func TestResolverSuite(t *testing.T) {
 	rs := new(NotificationsSuite)
-	rs.testConfigs = testconfig.GetDefaultTestConfigs()
+	rs.testConfigs = testconfig.GetDefaultTestConfigs(useraccounthelperstestconfigs.GetTestPrincipal)
 
 	suite.Run(t, rs)
 }
