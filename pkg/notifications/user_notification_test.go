@@ -47,7 +47,6 @@ func (suite *NotificationsSuite) TestUserNotificationMarkReadFunctions() {
 	actorID := suite.testConfigs.Principal.Account().ID
 	testContent := "test content"
 
-	// testCollab := models.NewActivity(suite.testConfigs.Principal.Account().ID, entityID, models.ActivityAddedAsCollaborator)
 	testActivity := models.NewTaggedInPlanDiscussionActivity(actorID, discussionID, testContent)
 
 	createdActivity, err := activityCreate(suite.testConfigs.Context, suite.testConfigs.Store, testActivity)
@@ -90,6 +89,21 @@ func (suite *NotificationsSuite) TestUserNotificationMarkReadFunctions() {
 		suite.Len(allNots.UnreadNotifications(), allNots.NumUnreadNotifications())
 
 		suite.EqualValues(readNotification.IsRead, true)
+
+	})
+
+	suite.Run("Can set all notification as read", func() {
+
+		readNots, err := UserNotificationMarkAllAsRead(suite.testConfigs.Context, suite.testConfigs.Store, fakePrinc)
+		suite.NoError(err)
+		suite.NotNil(readNots)
+
+		allNots, err := UserNotificationCollectionGetByUser(suite.testConfigs.Context, suite.testConfigs.Store, fakePrinc)
+		suite.NoError(err)
+		suite.Len(allNots.Notifications, 3)
+
+		suite.Len(allNots.UnreadNotifications(), 0)
+		suite.EqualValues(0, allNots.NumUnreadNotifications())
 
 	})
 
