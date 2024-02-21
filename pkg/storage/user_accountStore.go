@@ -121,7 +121,7 @@ func UserAccountInsertByUsername(np sqlutils.NamedPreparer, userAccount *authent
 }
 
 // UserAccountUpdateByUserName updates an existing user account for a given username
-func (s *Store) UserAccountUpdateByUserName(np sqlutils.NamedPreparer, userAccount *authentication.UserAccount) (
+func UserAccountUpdateByUserName(np sqlutils.NamedPreparer, userAccount *authentication.UserAccount) (
 	*authentication.UserAccount,
 	error,
 ) {

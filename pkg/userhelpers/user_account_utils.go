@@ -92,7 +92,7 @@ func GetOrCreateUserAccount(ctx context.Context, np sqlutils.NamedPreparer, stor
 
 	}
 
-	updatedAccount, updateErr := store.UserAccountUpdateByUserName(np, userAccount)
+	updatedAccount, updateErr := storage.UserAccountUpdateByUserName(np, userAccount)
 	if updateErr != nil {
 		return nil, updateErr
 	}
