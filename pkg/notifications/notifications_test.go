@@ -25,7 +25,7 @@ func (suite *NotificationsSuite) SetupTest() {
 	suite.NoError(err)
 }
 
-func TestSuite(t *testing.T) {
+func TestNotificationsSuite(t *testing.T) {
 	rs := new(NotificationsSuite)
 	rs.testConfigs = testconfig.GetDefaultTestConfigs(useraccounthelperstestconfigs.GetTestPrincipal)
 
