@@ -19,7 +19,6 @@ func UserNotificationPreferencesGetByUserID(ctx context.Context, userID uuid.UUI
 
 // UserNotificationPreferencesUpdate updates a user notification preferences object for a user
 func UserNotificationPreferencesUpdate(ctx context.Context, logger *zap.Logger, principal authentication.Principal, store *storage.Store, changes map[string]interface{}) (*models.UserNotificationPreferences, error) {
-	// TODO: EASI-3925 update to take a named preparer instead of the store, it requires updating base struct
 	existingPreferences, err := UserNotificationPreferencesGetByUserID(ctx, principal.Account().ID)
 	if err != nil {
 		return nil, err

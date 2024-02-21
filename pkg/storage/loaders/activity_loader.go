@@ -7,9 +7,7 @@ import (
 	"github.com/google/uuid"
 	"github.com/graph-gophers/dataloader"
 	"github.com/samber/lo"
-	"go.uber.org/zap"
 
-	"github.com/cmsgov/mint-app/pkg/appcontext"
 	"github.com/cmsgov/mint-app/pkg/models"
 	"github.com/cmsgov/mint-app/pkg/notifications"
 )
@@ -23,22 +21,24 @@ const (
 // it is responsible for translating the data loader keys and returning the ultimate result in a specific order
 func (loaders *DataLoaders) activityGetByIDLoaderBatch(ctx context.Context, keys dataloader.Keys) []*dataloader.Result {
 	dr := loaders.DataReader
-	logger := appcontext.ZLogger(ctx)
 
 	jsonParams, err := CovertToJSONArray(keys)
 	if err != nil {
 		return []*dataloader.Result{{Data: nil, Error: fmt.Errorf("issue converting keys to json for ActivityGetByIDLoader, %w", err)}}
 	}
+	var orderedIDerr error
 	orderedIDs := lo.Map(keys, func(key dataloader.Key, _ int) string {
 		ck, ok := key.Raw().(KeyArgs)
 		if !ok {
-			logger.Info("data loader key is the wrong type", zap.Any("key", key))
-			//TODO: EASI-3925 how to handle if this doesn't parse? Consider moving some of the key serialization logic to a shared package
-			// return []*dataloader.Result{{Data: nil, Error: fmt.Errorf("issue converting keys to uuid[] for ActivityGetByIDLoader, %w")}}
+			err = fmt.Errorf("data loader key is the wrong type, %v", key)
+			orderedIDerr = err
 		}
 		resKey := fmt.Sprint(ck.Args[DLActivityIDKey])
 		return resKey
 	})
+	if orderedIDerr != nil {
+		return []*dataloader.Result{{Data: nil, Error: fmt.Errorf("issue converting keys to ordered list for ActivityGetByIDLoader, %w", orderedIDerr)}}
+	}
 	return notifications.ActivityGetByIDLoaderThunk(ctx, dr.Store, jsonParams, orderedIDs)
 
 }
