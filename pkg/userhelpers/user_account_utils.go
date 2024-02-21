@@ -71,6 +71,7 @@ func GetOrCreateUserAccount(ctx context.Context, np sqlutils.NamedPreparer, txPr
 	userAccount.HasLoggedIn = hasLoggedIn
 
 	if userAccount.ID == uuid.Nil {
+		// Future Enhancement: consider making this take just a tx, or expand the np to return a transaction if not a transaction
 		createdAccount, err := createUserAccountAndPreferences(txPreparer, np, userAccount)
 		if err != nil {
 			return nil, err
