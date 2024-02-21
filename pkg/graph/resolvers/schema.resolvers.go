@@ -76,14 +76,6 @@ func (r *mutationResolver) DeletePlanCollaborator(ctx context.Context, id uuid.U
 	return DeletePlanCollaborator(logger, id, principal, r.store)
 }
 
-// UpdatePlanGeneralCharacteristics is the resolver for the updatePlanGeneralCharacteristics field.
-func (r *mutationResolver) UpdatePlanGeneralCharacteristics(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanGeneralCharacteristics, error) {
-	principal := appcontext.Principal(ctx)
-	logger := appcontext.ZLogger(ctx)
-
-	return UpdatePlanGeneralCharacteristics(logger, id, changes, principal, r.store)
-}
-
 // UpdatePlanBeneficiaries is the resolver for the updatePlanBeneficiaries field.
 func (r *mutationResolver) UpdatePlanBeneficiaries(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanBeneficiaries, error) {
 	principal := appcontext.Principal(ctx)
@@ -444,166 +436,6 @@ func (r *planDocumentResolver) NumLinkedSolutions(ctx context.Context, obj *mode
 	return PlanDocumentNumLinkedSolutions(logger, principal, r.store, obj.ID)
 }
 
-// ExistingModel is the resolver for the existingModel field.
-func (r *planGeneralCharacteristicsResolver) ExistingModel(ctx context.Context, obj *models.PlanGeneralCharacteristics) (*string, error) {
-	return PlanGeneralCharacteristicsGetExistingModelName(ctx, obj)
-}
-
-// CurrentModelPlan is the resolver for the currentModelPlan field.
-func (r *planGeneralCharacteristicsResolver) CurrentModelPlan(ctx context.Context, obj *models.PlanGeneralCharacteristics) (*models.ModelPlan, error) {
-	if obj.CurrentModelPlanID == nil { //Don't do a DB call if nil
-		return nil, nil
-	}
-
-	return ModelPlanGetByIDLOADER(ctx, *obj.CurrentModelPlanID) //TODO, implement loader, or this will be many queries
-}
-
-// ExistingModelPlan is the resolver for the existingModelPlan field.
-func (r *planGeneralCharacteristicsResolver) ExistingModelPlan(ctx context.Context, obj *models.PlanGeneralCharacteristics) (*models.ExistingModel, error) {
-	if obj.ExistingModelID == nil { //Don't do a DB call if nil
-		return nil, nil
-	}
-
-	return ExistingModelGetByIDLOADER(ctx, *obj.ExistingModelID) //TODO, implement loader, or this will be many queries
-}
-
-// ResemblesExistingModelWhich is the resolver for the resemblesExistingModelWhich field.
-func (r *planGeneralCharacteristicsResolver) ResemblesExistingModelWhich(ctx context.Context, obj *models.PlanGeneralCharacteristics) (*models.ExistingModelLinks, error) {
-	return ExistingModelLinksGetByModelPlanIDAndFieldNameLOADER(ctx, obj.ModelPlanID, models.EMLFTGeneralCharacteristicsResemblesExistingModelWhich)
-}
-
-// ParticipationInModelPreconditionWhich is the resolver for the participationInModelPreconditionWhich field.
-func (r *planGeneralCharacteristicsResolver) ParticipationInModelPreconditionWhich(ctx context.Context, obj *models.PlanGeneralCharacteristics) (*models.ExistingModelLinks, error) {
-	return ExistingModelLinksGetByModelPlanIDAndFieldNameLOADER(ctx, obj.ModelPlanID, models.EMLFTGeneralCharacteristicsParticipationExistingModelWhich)
-}
-
-// AgencyOrStateHelp is the resolver for the agencyOrStateHelp field.
-func (r *planGeneralCharacteristicsResolver) AgencyOrStateHelp(ctx context.Context, obj *models.PlanGeneralCharacteristics) ([]model.AgencyOrStateHelpType, error) {
-	agencyOrStateHelpTypes := models.ConvertEnums[model.AgencyOrStateHelpType](obj.AgencyOrStateHelp)
-	return agencyOrStateHelpTypes, nil
-}
-
-// AlternativePaymentModelTypes is the resolver for the alternativePaymentModelTypes field.
-func (r *planGeneralCharacteristicsResolver) AlternativePaymentModelTypes(ctx context.Context, obj *models.PlanGeneralCharacteristics) ([]model.AlternativePaymentModelType, error) {
-	apmTypes := models.ConvertEnums[model.AlternativePaymentModelType](obj.AlternativePaymentModelTypes)
-	return apmTypes, nil
-}
-
-// KeyCharacteristics is the resolver for the keyCharacteristics field.
-func (r *planGeneralCharacteristicsResolver) KeyCharacteristics(ctx context.Context, obj *models.PlanGeneralCharacteristics) ([]model.KeyCharacteristic, error) {
-	keyCharacteristics := models.ConvertEnums[model.KeyCharacteristic](obj.KeyCharacteristics)
-	return keyCharacteristics, nil
-}
-
-// GeographiesTargetedTypes is the resolver for the geographiesTargetedTypes field.
-func (r *planGeneralCharacteristicsResolver) GeographiesTargetedTypes(ctx context.Context, obj *models.PlanGeneralCharacteristics) ([]model.GeographyType, error) {
-	geographyTypes := models.ConvertEnums[model.GeographyType](obj.GeographiesTargetedTypes)
-	return geographyTypes, nil
-}
-
-// GeographiesStatesAndTerritories is the resolver for the geographiesStatesAndTerritories field.
-func (r *planGeneralCharacteristicsResolver) GeographiesStatesAndTerritories(ctx context.Context, obj *models.PlanGeneralCharacteristics) ([]models.StatesAndTerritories, error) {
-	statesAndTerritories := models.ConvertEnums[models.StatesAndTerritories](obj.GeographiesStatesAndTerritories)
-	return statesAndTerritories, nil
-}
-
-// GeographiesRegionTypes is the resolver for the geographiesRegionTypes field.
-func (r *planGeneralCharacteristicsResolver) GeographiesRegionTypes(ctx context.Context, obj *models.PlanGeneralCharacteristics) ([]models.GeographyRegionType, error) {
-	geographyRegionTypes := models.ConvertEnums[models.GeographyRegionType](obj.GeographiesRegionTypes)
-	return geographyRegionTypes, nil
-}
-
-// GeographiesTargetedAppliedTo is the resolver for the geographiesTargetedAppliedTo field.
-func (r *planGeneralCharacteristicsResolver) GeographiesTargetedAppliedTo(ctx context.Context, obj *models.PlanGeneralCharacteristics) ([]model.GeographyApplication, error) {
-	geographyApplications := models.ConvertEnums[model.GeographyApplication](obj.GeographiesTargetedAppliedTo)
-	return geographyApplications, nil
-}
-
-// AgreementTypes is the resolver for the agreementTypes field.
-func (r *planGeneralCharacteristicsResolver) AgreementTypes(ctx context.Context, obj *models.PlanGeneralCharacteristics) ([]model.AgreementType, error) {
-	agreementTypes := models.ConvertEnums[model.AgreementType](obj.AgreementTypes)
-	return agreementTypes, nil
-}
-
-// AuthorityAllowances is the resolver for the authorityAllowances field.
-func (r *planGeneralCharacteristicsResolver) AuthorityAllowances(ctx context.Context, obj *models.PlanGeneralCharacteristics) ([]model.AuthorityAllowance, error) {
-	authorityAllowances := models.ConvertEnums[model.AuthorityAllowance](obj.AuthorityAllowances)
-	return authorityAllowances, nil
-}
-
-// WaiversRequiredTypes is the resolver for the waiversRequiredTypes field.
-func (r *planGeneralCharacteristicsResolver) WaiversRequiredTypes(ctx context.Context, obj *models.PlanGeneralCharacteristics) ([]model.WaiverType, error) {
-	waiverTypes := models.ConvertEnums[model.WaiverType](obj.WaiversRequiredTypes)
-	return waiverTypes, nil
-}
-
-// Participants is the resolver for the participants field.
-func (r *planParticipantsAndProvidersResolver) Participants(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]model.ParticipantsType, error) {
-	participants := models.ConvertEnums[model.ParticipantsType](obj.Participants)
-	return participants, nil
-}
-
-// SelectionMethod is the resolver for the selectionMethod field.
-func (r *planParticipantsAndProvidersResolver) SelectionMethod(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]model.ParticipantSelectionType, error) {
-	selectionTypes := models.ConvertEnums[model.ParticipantSelectionType](obj.SelectionMethod)
-	return selectionTypes, nil
-}
-
-// ParticipantAddedFrequency is the resolver for the participantAddedFrequency field.
-func (r *planParticipantsAndProvidersResolver) ParticipantAddedFrequency(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]models.FrequencyType, error) {
-	return models.ConvertEnums[models.FrequencyType](obj.ParticipantAddedFrequency), nil
-}
-
-// ParticipantRemovedFrequency is the resolver for the participantRemovedFrequency field.
-func (r *planParticipantsAndProvidersResolver) ParticipantRemovedFrequency(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]models.FrequencyType, error) {
-	return models.ConvertEnums[models.FrequencyType](obj.ParticipantRemovedFrequency), nil
-}
-
-// CommunicationMethod is the resolver for the communicationMethod field.
-func (r *planParticipantsAndProvidersResolver) CommunicationMethod(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]model.ParticipantCommunicationType, error) {
-	communicationTypes := models.ConvertEnums[model.ParticipantCommunicationType](obj.CommunicationMethod)
-	return communicationTypes, nil
-}
-
-// RiskType is the resolver for the riskType field.
-func (r *planParticipantsAndProvidersResolver) RiskType(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]models.ParticipantRiskType, error) {
-	return models.ConvertEnums[models.ParticipantRiskType](obj.RiskType), nil
-}
-
-// GainsharePaymentsEligibility is the resolver for the gainsharePaymentsEligibility field.
-func (r *planParticipantsAndProvidersResolver) GainsharePaymentsEligibility(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]model.GainshareArrangementEligibility, error) {
-	gainshareArrangementEligibilities := models.ConvertEnums[model.GainshareArrangementEligibility](obj.GainsharePaymentsEligibility)
-	return gainshareArrangementEligibilities, nil
-}
-
-// ParticipantsIds is the resolver for the participantsIds field.
-func (r *planParticipantsAndProvidersResolver) ParticipantsIds(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]model.ParticipantsIDType, error) {
-	participantsIDTypes := models.ConvertEnums[model.ParticipantsIDType](obj.ParticipantsIds)
-	return participantsIDTypes, nil
-}
-
-// ProviderAdditionFrequency is the resolver for the providerAdditionFrequency field.
-func (r *planParticipantsAndProvidersResolver) ProviderAdditionFrequency(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]models.FrequencyType, error) {
-	return models.ConvertEnums[models.FrequencyType](obj.ProviderAdditionFrequency), nil
-}
-
-// ProviderAddMethod is the resolver for the providerAddMethod field.
-func (r *planParticipantsAndProvidersResolver) ProviderAddMethod(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]model.ProviderAddType, error) {
-	providerAddTypes := models.ConvertEnums[model.ProviderAddType](obj.ProviderAddMethod)
-	return providerAddTypes, nil
-}
-
-// ProviderLeaveMethod is the resolver for the providerLeaveMethod field.
-func (r *planParticipantsAndProvidersResolver) ProviderLeaveMethod(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]model.ProviderLeaveType, error) {
-	providerLeaveTypes := models.ConvertEnums[model.ProviderLeaveType](obj.ProviderLeaveMethod)
-	return providerLeaveTypes, nil
-}
-
-// ProviderRemovalFrequency is the resolver for the providerRemovalFrequency field.
-func (r *planParticipantsAndProvidersResolver) ProviderRemovalFrequency(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]models.FrequencyType, error) {
-	return models.ConvertEnums[models.FrequencyType](obj.ProviderRemovalFrequency), nil
-}
-
 // FundingSource is the resolver for the fundingSource field.
 func (r *planPaymentsResolver) FundingSource(ctx context.Context, obj *models.PlanPayments) ([]models.FundingSource, error) {
 	return models.ConvertEnums[models.FundingSource](obj.FundingSource), nil
@@ -872,16 +704,6 @@ func (r *Resolver) PlanDiscussion() generated.PlanDiscussionResolver {
 // PlanDocument returns generated.PlanDocumentResolver implementation.
 func (r *Resolver) PlanDocument() generated.PlanDocumentResolver { return &planDocumentResolver{r} }
 
-// PlanGeneralCharacteristics returns generated.PlanGeneralCharacteristicsResolver implementation.
-func (r *Resolver) PlanGeneralCharacteristics() generated.PlanGeneralCharacteristicsResolver {
-	return &planGeneralCharacteristicsResolver{r}
-}
-
-// PlanParticipantsAndProviders returns generated.PlanParticipantsAndProvidersResolver implementation.
-func (r *Resolver) PlanParticipantsAndProviders() generated.PlanParticipantsAndProvidersResolver {
-	return &planParticipantsAndProvidersResolver{r}
-}
-
 // PlanPayments returns generated.PlanPaymentsResolver implementation.
 func (r *Resolver) PlanPayments() generated.PlanPaymentsResolver { return &planPaymentsResolver{r} }
 
@@ -918,8 +740,6 @@ type planBeneficiariesResolver struct{ *Resolver }
 type planCollaboratorResolver struct{ *Resolver }
 type planDiscussionResolver struct{ *Resolver }
 type planDocumentResolver struct{ *Resolver }
-type planGeneralCharacteristicsResolver struct{ *Resolver }
-type planParticipantsAndProvidersResolver struct{ *Resolver }
 type planPaymentsResolver struct{ *Resolver }
 type possibleOperationalNeedResolver struct{ *Resolver }
 type possibleOperationalSolutionResolver struct{ *Resolver }
