@@ -47,13 +47,11 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     },
     childRelation: {
       YES: [
+        () => generalCharacteristics.resemblesExistingModelWhyHow,
         () => generalCharacteristics.resemblesExistingModelWhich,
         () => generalCharacteristics.resemblesExistingModelHow
       ],
-      NO: [
-        () => generalCharacteristics.resemblesExistingModelWhich,
-        () => generalCharacteristics.resemblesExistingModelHow
-      ]
+      NO: [() => generalCharacteristics.resemblesExistingModelWhyHow]
     },
     filterGroups: [ModelViewFilter.IPC]
   },
@@ -132,7 +130,7 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     gqlField: 'resemblesExistingModelNote',
     goField: 'ResemblesExistingModelNote',
     dbField: 'resembles_existing_model_note',
-    label: 'Note',
+    label: 'Notes',
     dataType: 'string',
     formType: 'textarea'
   },
@@ -225,7 +223,7 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     gqlField: 'participationInModelPreconditionNote',
     goField: 'ParticipationInModelPreconditionNote',
     dbField: 'participation_in_model_precondition_note',
-    label: 'Note',
+    label: 'Notes',
     dataType: 'string',
     formType: 'textarea'
   },
@@ -261,7 +259,7 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     gqlField: 'hasComponentsOrTracksNote',
     goField: 'HasComponentsOrTracksNote',
     dbField: 'has_components_or_tracks_note',
-    label: 'Note',
+    label: 'Notes',
     dataType: 'string',
     formType: 'textarea'
   },
