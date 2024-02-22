@@ -7,12 +7,12 @@ import {
   waitFor,
   waitForElementToBeRemoved
 } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 
 import { needQuestionAndAnswerMock } from 'data/mock/solutions';
 import { MessageProvider } from 'hooks/useMessage';
 import GetOperationalSolution from 'queries/ITSolutions/GetOperationalSolution';
 import { OpSolutionStatus } from 'types/graphql-global-types';
+import setup from 'utils/testing/setup';
 
 import AddCustomSolution from '.';
 
@@ -59,7 +59,7 @@ const returnMockedData = (results: boolean) => {
 describe('AddCustomSolution', () => {
   it('renders all input text correctly', async () => {
     await act(async () => {
-      const { getByTestId } = render(
+      const { user, getByTestId } = setup(
         <MemoryRouter
           initialEntries={[
             {
@@ -83,13 +83,13 @@ describe('AddCustomSolution', () => {
       await waitForElementToBeRemoved(() => getByTestId('page-loading'));
 
       const customName = getByTestId('it-solution-custom-name-other');
-      userEvent.type(customName, 'My custom solution');
+      await user.type(customName, 'My custom solution');
 
       const customPOC = getByTestId('it-solution-custom-poc-name');
-      userEvent.type(customPOC, 'John Doe');
+      await user.type(customPOC, 'John Doe');
 
       const customEmail = getByTestId('it-solution-custom-poc-email');
-      userEvent.type(customEmail, 'j.doe@oddball.io');
+      await user.type(customEmail, 'j.doe@oddball.io');
 
       await waitFor(() => {
         expect(customName).toHaveValue('My custom solution');
