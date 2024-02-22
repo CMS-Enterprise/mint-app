@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useContext, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
@@ -24,6 +24,7 @@ import { DocumentType } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
 import { translateDocumentType } from 'utils/modelPlan';
 import { DocumentUploadValidationSchema } from 'validations/documentUploadSchema';
+import { ModelInfoContext } from 'views/ModelInfoWrapper';
 
 const DocumentUpload = ({
   solutionDetailsLink,
@@ -40,6 +41,8 @@ const DocumentUpload = ({
   const { showMessageOnNextPage } = useMessage();
   const formikRef = useRef<FormikProps<FileUploadForm>>(null);
 
+  const { modelName } = useContext(ModelInfoContext);
+
   // State management for mutation errors
   const [mutationError, setMutationError] = useState<boolean>(false);
 
@@ -52,7 +55,8 @@ const DocumentUpload = ({
       <Alert type="success" slim className="margin-y-4" aria-live="assertive">
         <span className="mandatory-fields-alert__text">
           {t(message, {
-            documentName: fileName
+            documentName: fileName,
+            modelName
           })}
         </span>
       </Alert>
