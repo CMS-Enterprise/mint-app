@@ -86,7 +86,7 @@ const CollapsableLink = ({
       }}
       aria-expanded={isOpen}
       aria-controls={id}
-      className={toggleClassName}
+      className={classNames('mint-no-print', toggleClassName)}
       unstyled
       data-testid="collapsable-link"
     >
