@@ -52,7 +52,6 @@ import SubmitRequest from 'views/ModelPlan/TaskList/SubmitRequest';
 import NDA from 'views/NDA';
 import NDAWrapper from 'views/NDAWrapper';
 import NotFound from 'views/NotFound';
-import PrintPDFWrapper from 'views/PrintPDFWrapper';
 import PrivacyPolicy from 'views/PrivacyPolicy';
 import RouterProvider from 'views/RouterContext';
 import Sandbox from 'views/Sandbox';
@@ -109,13 +108,11 @@ const AppRoutes = () => {
       {/* Model Routes */}
       <SecureRoute path="/models" exact component={ModelPlan} />
 
-      <PrintPDFWrapper>
-        <SecureRoute
-          path="/models/:modelID/read-only/:subinfo?"
-          exact
-          component={ReadOnly}
-        />
-      </PrintPDFWrapper>
+      <SecureRoute
+        path="/models/:modelID/read-only/:subinfo?"
+        exact
+        component={ReadOnly}
+      />
 
       <SecureRoute
         path="/models/steps-overview"

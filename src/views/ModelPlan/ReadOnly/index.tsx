@@ -28,6 +28,7 @@ import {
 import { ModelStatus, TeamRole } from 'types/graphql-global-types';
 import { isAssessment, isMAC } from 'utils/user';
 import NotFound from 'views/NotFound';
+import PrintPDFWrapper from 'views/PrintPDFWrapper';
 
 import { UpdateFavoriteProps } from '../ModelPlanOverview';
 import { StatusMessageType } from '../TaskList';
@@ -407,129 +408,131 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
   );
 
   return (
-    <MainContent
-      className="model-plan-read-only"
-      data-testid="model-plan-read-only"
-    >
-      <Modal
-        isOpen={isFilterViewModalOpen}
-        closeModal={() => setIsFilterViewModalOpen(false)}
-        shouldCloseOnOverlayClick
-        className="radius-md"
-        modalHeading={filterViewT('filterView')}
+    <PrintPDFWrapper>
+      <MainContent
+        className="model-plan-read-only"
+        data-testid="model-plan-read-only"
       >
-        <FilterViewModal
+        <Modal
+          isOpen={isFilterViewModalOpen}
           closeModal={() => setIsFilterViewModalOpen(false)}
-          filteredView={filteredView}
-        />
-      </Modal>
+          shouldCloseOnOverlayClick
+          className="radius-md"
+          modalHeading={filterViewT('filterView')}
+        >
+          <FilterViewModal
+            closeModal={() => setIsFilterViewModalOpen(false)}
+            filteredView={filteredView}
+          />
+        </Modal>
 
-      <Modal
-        isOpen={isExportModalOpen}
-        closeModal={() => setIsExportModalOpen(false)}
-        className="padding-0 radius-md share-export-modal__container"
-        navigation
-        shouldCloseOnOverlayClick
-      >
-        <ShareExportModal
+        <Modal
+          isOpen={isExportModalOpen}
           closeModal={() => setIsExportModalOpen(false)}
-          modelID={modelID}
-          filteredView={filteredView}
-          setStatusMessage={setStatusMessage}
+          className="padding-0 radius-md share-export-modal__container"
+          navigation
+          shouldCloseOnOverlayClick
+        >
+          <ShareExportModal
+            closeModal={() => setIsExportModalOpen(false)}
+            modelID={modelID}
+            filteredView={filteredView}
+            setStatusMessage={setStatusMessage}
+          />
+        </Modal>
+
+        {Summary}
+
+        {!flags.hideGroupView && (
+          <FilterViewBanner
+            filteredView={
+              filteredView &&
+              (filteredViewOutput(filteredView) as typeof filterGroups[number])
+            }
+            openFilterModal={() => setIsFilterViewModalOpen(true)}
+            openExportModal={() => setIsExportModalOpen(true)}
+          />
+        )}
+
+        <MobileNav
+          subComponents={subComponents}
+          subinfo={subinfo}
+          isHelpArticle={isHelpArticle}
+          isFilteredView={!!filteredView}
         />
-      </Modal>
 
-      {Summary}
-
-      {!flags.hideGroupView && (
-        <FilterViewBanner
-          filteredView={
-            filteredView &&
-            (filteredViewOutput(filteredView) as typeof filterGroups[number])
-          }
-          openFilterModal={() => setIsFilterViewModalOpen(true)}
-          openExportModal={() => setIsExportModalOpen(true)}
-        />
-      )}
-
-      <MobileNav
-        subComponents={subComponents}
-        subinfo={subinfo}
-        isHelpArticle={isHelpArticle}
-        isFilteredView={!!filteredView}
-      />
-
-      <GridContainer className="model-plan-alert-wrapper">
-        {ModelWarning}
-      </GridContainer>
-
-      <SectionWrapper className="model-plan__body-content margin-top-4">
-        <GridContainer>
-          {isViewingFilteredGroup ? (
-            <FilteredViewBodyContent
-              modelID={modelID}
-              filteredView={filteredView}
-            />
-          ) : (
-            <Grid row gap>
-              {!isMobile && (
-                <Grid
-                  desktop={{ col: 3 }}
-                  className={classnames('padding-right-4 sticky-nav', {
-                    'sticky-nav__collaborator': hasEditAccess
-                  })}
-                >
-                  <SideNav
-                    subComponents={subComponents}
-                    isHelpArticle={isHelpArticle}
-                    openFilterModal={() => setIsFilterViewModalOpen(true)}
-                  />
-                </Grid>
-              )}
-
-              <Grid desktop={{ col: 9 }}>
-                <div id={`read-only-model-plan__${subinfo}-component` ?? ''}>
-                  <GridContainer className="padding-left-0 padding-right-0">
-                    <Grid row gap>
-                      {/* Central component */}
-                      <Grid
-                        desktop={{
-                          col:
-                            subinfo === 'documents' ||
-                            subinfo === 'crs-and-tdl' ||
-                            subinfo === 'it-solutions'
-                              ? 12
-                              : 8
-                        }}
-                      >
-                        {subComponent.component}
-                      </Grid>
-                      {/* Contact info sidebar */}
-                      {subinfo !== 'documents' &&
-                        subinfo !== 'crs-and-tdl' &&
-                        subinfo !== 'it-solutions' && (
-                          <Grid
-                            desktop={{ col: 4 }}
-                            className={classnames({
-                              'sticky-nav': !isMobile,
-                              'sticky-nav__collaborator': hasEditAccess
-                            })}
-                          >
-                            <ContactInfo
-                              modelID={modelID}
-                              isViewingTeamPage={subinfo === 'team'}
-                            />
-                          </Grid>
-                        )}
-                    </Grid>
-                  </GridContainer>
-                </div>
-              </Grid>
-            </Grid>
-          )}
+        <GridContainer className="model-plan-alert-wrapper">
+          {ModelWarning}
         </GridContainer>
-      </SectionWrapper>
-    </MainContent>
+
+        <SectionWrapper className="model-plan__body-content margin-top-4">
+          <GridContainer>
+            {isViewingFilteredGroup ? (
+              <FilteredViewBodyContent
+                modelID={modelID}
+                filteredView={filteredView}
+              />
+            ) : (
+              <Grid row gap>
+                {!isMobile && (
+                  <Grid
+                    desktop={{ col: 3 }}
+                    className={classnames('padding-right-4 sticky-nav', {
+                      'sticky-nav__collaborator': hasEditAccess
+                    })}
+                  >
+                    <SideNav
+                      subComponents={subComponents}
+                      isHelpArticle={isHelpArticle}
+                      openFilterModal={() => setIsFilterViewModalOpen(true)}
+                    />
+                  </Grid>
+                )}
+
+                <Grid desktop={{ col: 9 }}>
+                  <div id={`read-only-model-plan__${subinfo}-component` ?? ''}>
+                    <GridContainer className="padding-left-0 padding-right-0">
+                      <Grid row gap>
+                        {/* Central component */}
+                        <Grid
+                          desktop={{
+                            col:
+                              subinfo === 'documents' ||
+                              subinfo === 'crs-and-tdl' ||
+                              subinfo === 'it-solutions'
+                                ? 12
+                                : 8
+                          }}
+                        >
+                          {subComponent.component}
+                        </Grid>
+                        {/* Contact info sidebar */}
+                        {subinfo !== 'documents' &&
+                          subinfo !== 'crs-and-tdl' &&
+                          subinfo !== 'it-solutions' && (
+                            <Grid
+                              desktop={{ col: 4 }}
+                              className={classnames({
+                                'sticky-nav': !isMobile,
+                                'sticky-nav__collaborator': hasEditAccess
+                              })}
+                            >
+                              <ContactInfo
+                                modelID={modelID}
+                                isViewingTeamPage={subinfo === 'team'}
+                              />
+                            </Grid>
+                          )}
+                      </Grid>
+                    </GridContainer>
+                  </div>
+                </Grid>
+              </Grid>
+            )}
+          </GridContainer>
+        </SectionWrapper>
+      </MainContent>
+    </PrintPDFWrapper>
   );
 };
 
