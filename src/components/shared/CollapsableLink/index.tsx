@@ -42,11 +42,20 @@ const CollapsableLink = ({
   // That is, how do we initialize this component and set isOpen to true?
   const [isOpen, setOpen] = useState(startOpen);
 
+  // State used to revert to toggle state before overridden by pdf export/context
+  const [isOpenPrePrint, setOpenPrePrint] = useState(startOpen);
+
   const { isPrintPDF } = useContext(PrintPDFContext);
 
   useEffect(() => {
-    if (expandOnExport) setOpen(isPrintPDF);
-  }, [isPrintPDF, expandOnExport]);
+    if (expandOnExport) {
+      if (isPrintPDF) {
+        setOpen(isPrintPDF);
+      } else {
+        setOpen(isOpenPrePrint);
+      }
+    }
+  }, [isPrintPDF, expandOnExport, isOpenPrePrint]);
 
   const renderEyeIcon = () => {
     return isOpen ? (
@@ -72,6 +81,7 @@ const CollapsableLink = ({
       type="button"
       onClick={() => {
         setOpen(!isOpen);
+        setOpenPrePrint(!isOpenPrePrint);
         if (showDescription) showDescription(!isOpen);
       }}
       aria-expanded={isOpen}
