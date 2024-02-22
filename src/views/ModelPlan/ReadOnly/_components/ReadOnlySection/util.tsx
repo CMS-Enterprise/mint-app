@@ -75,7 +75,10 @@ export const formatListOtherValues = <
           return childOption
             .map(child => {
               const childConfig = child();
-              if (isTranslationFieldPropertiesWithOptions(childConfig)) {
+              if (
+                isTranslationFieldPropertiesWithOptions(childConfig) &&
+                Array.isArray(values[childConfig.gqlField])
+              ) {
                 return values[childConfig.gqlField]
                   .map((childValue: T) =>
                     childConfig.readonlyOptions
@@ -202,7 +205,7 @@ export const compareClosure = <
   const hidden = !parentConfig.childRelation[parentValue];
 
   return (
-    !parentConfig.childRelation[parentValue]?.some(child => {
+    parentConfig.childRelation[parentValue]?.some(child => {
       return child() === childConfig;
     }) || hidden
   );
@@ -230,7 +233,7 @@ export const isHiddenByParentCondition = <
 
   // If parent value is an array, check if evaluation exists
   if (Array.isArray(parentValue)) {
-    // Filter data based on parent mapping
+    // Check is values of parent field are populated
     const containsParentRelationship = values[parentConfig.gqlField]?.filter(
       (fieldValue: T) => {
         return getKeys(parentConfig.childRelation).includes(fieldValue);
@@ -242,7 +245,7 @@ export const isHiddenByParentCondition = <
     }
 
     // Returns true to hide question if parent condition isn't met, false if met
-    return containsParentRelationship?.some((fieldValue: T) => {
+    return !containsParentRelationship?.some((fieldValue: T) => {
       return compareClosure(fieldValue, parentConfig, config);
     });
   }
