@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Button, Icon } from '@trussworks/react-uswds';
 import classNames from 'classnames';
+
+import { PrintPDFContext } from 'views/PrintPDFWrapper';
 
 import './index.scss';
 
@@ -17,6 +19,7 @@ type CollapsableLinkProps = {
   startOpen?: boolean;
   showDescription?: (show: boolean) => void;
   labelPosition?: 'top' | 'bottom';
+  expandOnExport?: boolean;
 };
 
 const CollapsableLink = ({
@@ -31,12 +34,19 @@ const CollapsableLink = ({
   iconPosition,
   startOpen = false,
   showDescription,
-  labelPosition = 'top'
+  labelPosition = 'top',
+  expandOnExport = false
 }: CollapsableLinkProps) => {
   // TODO: should this state instead be held in the parent and passed in as prop?
   // Followup: if the state should remain here, how do we test the component when it's open?
   // That is, how do we initialize this component and set isOpen to true?
   const [isOpen, setOpen] = useState(startOpen);
+
+  const { isPrintPDF } = useContext(PrintPDFContext);
+
+  useEffect(() => {
+    if (expandOnExport) setOpen(isPrintPDF);
+  }, [isPrintPDF, expandOnExport]);
 
   const renderEyeIcon = () => {
     return isOpen ? (

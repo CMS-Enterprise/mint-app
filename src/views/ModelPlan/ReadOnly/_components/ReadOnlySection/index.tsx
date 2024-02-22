@@ -414,6 +414,7 @@ export const RelatedUnneededQuestions = <
         })}
         styleLeftBar={false}
         className="margin-bottom-3"
+        expandOnExport
       >
         <ul className="margin-y-0">
           {relatedConditions.map(question => (
