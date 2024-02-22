@@ -8,7 +8,7 @@ import { payments } from 'i18n/en-US/modelPlan/payments';
 import { Bool } from 'types/translation';
 
 import {
-  compareClosure,
+  checkIfParentContainsChildClosure,
   formatListOtherValues,
   formatListTooltips,
   formatListValues,
@@ -187,10 +187,10 @@ describe('The Read Only Section', () => {
       expect(childQuestion).toEqual(expectedEvaluation);
     });
 
-    it('compares closures of parent/child translation configuration, child should now be hidden', async () => {
-      const expectedEvaluation = false;
+    it('compares closures of parent/child translation configuration, child should now be shown', async () => {
+      const expectedEvaluation = true;
 
-      const childQuestion = compareClosure(
+      const childQuestion = checkIfParentContainsChildClosure(
         Bool.true,
         participantsAndProviders.gainsharePayments,
         participantsAndProviders.gainsharePaymentsTrack

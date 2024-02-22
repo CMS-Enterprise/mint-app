@@ -193,7 +193,7 @@ export const getRelatedUneededQuestions = <
     Util for comparing closures of parent/child
     Allows to map and conditionally hide/render child based on parent value
   */
-export const compareClosure = <
+export const checkIfParentContainsChildClosure = <
   T extends string | keyof T,
   C extends string | keyof C
 >(
@@ -201,14 +201,19 @@ export const compareClosure = <
   parentConfig: TranslationFieldPropertiesWithOptionsAndChildren<T, C>,
   childConfig: TranslationConfigType<T, C>
 ): boolean => {
-  // Default to true if there is no child/parent relationship defined for the value
-  const hidden = !parentConfig.childRelation[parentValue];
+  if (isEmpty(parentValue)) return false;
 
-  return (
-    parentConfig.childRelation[parentValue]?.some(child => {
-      return child() === childConfig;
-    }) || hidden
-  );
+  // Default to false if there is no child/parent relationship defined for the value
+  const hidden = !parentConfig.childRelation[parentValue.toString() as T];
+
+  if (hidden) {
+    return false;
+  }
+
+  // Returns true if parent has configuration for child
+  return !!parentConfig.childRelation[parentValue]?.some(child => {
+    return child() === childConfig;
+  });
 };
 
 /*
@@ -246,11 +251,15 @@ export const isHiddenByParentCondition = <
 
     // Returns true to hide question if parent condition isn't met, false if met
     return !containsParentRelationship?.some((fieldValue: T) => {
-      return compareClosure(fieldValue, parentConfig, config);
+      return checkIfParentContainsChildClosure(
+        fieldValue,
+        parentConfig,
+        config
+      );
     });
   }
 
-  return compareClosure(parentValue, parentConfig, config);
+  return !checkIfParentContainsChildClosure(parentValue, parentConfig, config);
 };
 /*
   Util to get any configurations that contain the specified filter group value
