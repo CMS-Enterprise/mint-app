@@ -1,0 +1,103 @@
+enum ModelPlanFilter {
+  INCLUDE_ALL,
+  COLLAB_ONLY,
+  WITH_CR_TDLS,
+}
+
+enum ModelStatus {
+  PLAN_DRAFT
+  PLAN_COMPLETE
+  ICIP_COMPLETE
+  INTERNAL_CMMI_CLEARANCE
+  CMS_CLEARANCE
+  HHS_CLEARANCE
+  OMB_ASRF_CLEARANCE
+  CLEARED
+  ANNOUNCED
+  PAUSED
+  CANCELED
+  ACTIVE
+  ENDED
+}
+
+enum SortDirection {
+  ASC
+  DESC
+}
+
+enum ModelViewFilter {
+  CCW, # CHRONIC_CONDITIONS_WAREHOUSE
+  CMMI, # CMMI_COST_ESTIMATE
+  CBOSC, # CONSOLIDATED_BUSINESS_OPERATIONS_SUPPORT_CENTER
+  DFSDM, # DIVISION_OF_FINANCIAL_SERVICES_AND_DEBT_MANAGEMENT
+  IPC, # INNOVATION_PAYMENT_CONTRACTOR
+  IDDOC, # INNOVATIVE_DESIGN_DEVELOPMENT_AND_OPERATIONS_CONTRACT
+  MDM, # MASTER_DATA_MANAGEMENT
+  OACT, # OFFICE_OF_THE_ACTUARY
+  PBG, # PROVIDER_BILLING_GROUP
+}
+
+"""
+ModelPlan represent the data point for plans about a model. It is the central data type in the application
+"""
+type ModelPlan {
+  id: UUID!
+  modelName: String!
+  abbreviation: String
+  archived: Boolean!
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
+  basics: PlanBasics!
+  generalCharacteristics: PlanGeneralCharacteristics!
+  participantsAndProviders: PlanParticipantsAndProviders!
+  beneficiaries: PlanBeneficiaries!
+  opsEvalAndLearning: PlanOpsEvalAndLearning!
+  collaborators: [PlanCollaborator!]!
+  documents: [PlanDocument!]!
+  discussions: [PlanDiscussion!]!
+  payments: PlanPayments!
+  status: ModelStatus!
+  isFavorite: Boolean!
+  isCollaborator: Boolean!
+  crs: [PlanCR!]!
+  tdls: [PlanTDL!]!
+  prepareForClearance: PrepareForClearance!
+  nameHistory(sort: SortDirection! = DESC): [String!]!
+  operationalNeeds: [OperationalNeed!]!
+}
+
+"""
+ModelPlanChanges represents the possible changes you can make to a model plan when updating it.
+Fields explicitly set with NULL will be unset, and omitted fields will be left unchanged.
+https://gqlgen.com/reference/changesets/
+"""
+input ModelPlanChanges @goModel(model: "map[string]interface{}") {
+  modelName: String
+  abbreviation: String
+  someNumbers: [Int!]
+  archived: Boolean
+  status: ModelStatus
+}
+
+extend type Query {
+  modelPlan(id: UUID!): ModelPlan!
+  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+
+  modelPlanCollection(filter: ModelPlanFilter! = COLLAB_ONLY): [ModelPlan!]!
+  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+}
+
+extend type Mutation {
+  createModelPlan(modelName: String!): ModelPlan!
+  @hasRole(role: MINT_USER)
+
+  updateModelPlan(id: UUID!, changes: ModelPlanChanges!): ModelPlan!
+  @hasRole(role: MINT_USER)
+
+  shareModelPlan(modelPlanID: UUID!, viewFilter: ModelViewFilter, usernames: [String!]!, optionalMessage: String): Boolean!
+  @hasRole(role: MINT_USER)
+}

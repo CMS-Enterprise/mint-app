@@ -1,0 +1,14 @@
+enum FrequencyType {
+  ANNUALLY
+  SEMIANNUALLY
+  QUARTERLY
+  MONTHLY
+  CONTINUALLY
+  OTHER
+}
+
+enum YesNoOtherType {
+  YES
+  NO
+  OTHER
+}

@@ -7,12 +7,12 @@ import (
 	"fmt"
 
 	"github.com/google/uuid"
-	"github.com/jmoiron/sqlx"
 	"go.uber.org/zap"
 
 	"github.com/cmsgov/mint-app/pkg/models"
 	"github.com/cmsgov/mint-app/pkg/shared/utilitySQL"
 	"github.com/cmsgov/mint-app/pkg/shared/utilityUUID"
+	"github.com/cmsgov/mint-app/pkg/sqlutils"
 	"github.com/cmsgov/mint-app/pkg/storage/genericmodel"
 )
 
@@ -107,17 +107,14 @@ func (s *Store) PlanDiscussionGetByModelPlanIDLOADER(
 func (s *Store) PlanDiscussionCreate(
 	logger *zap.Logger,
 	discussion *models.PlanDiscussion,
-	tx *sqlx.Tx,
-) (*models.PlanDiscussion, *sqlx.Tx, error) {
-	if tx == nil {
-		tx = s.db.MustBegin()
-	}
+	np sqlutils.NamedPreparer,
+) (*models.PlanDiscussion, error) {
 
 	discussion.ID = utilityUUID.ValueOrNewUUID(discussion.ID)
 
-	stmt, err := tx.PrepareNamed(planDiscussionCreateSQL)
+	stmt, err := np.PrepareNamed(planDiscussionCreateSQL)
 	if err != nil {
-		return nil, tx, genericmodel.HandleModelCreationError(logger, err, discussion)
+		return nil, genericmodel.HandleModelCreationError(logger, err, discussion)
 	}
 	defer stmt.Close()
 
@@ -127,39 +124,36 @@ func (s *Store) PlanDiscussionCreate(
 
 	err = stmt.Get(&retDiscussion, discussion)
 	if err != nil {
-		return nil, tx, genericmodel.HandleModelCreationError(logger, err, discussion)
+		return nil, genericmodel.HandleModelCreationError(logger, err, discussion)
 	}
 
-	return &retDiscussion, tx, nil
+	return &retDiscussion, nil
 }
 
 // DiscussionReplyCreate creates a discussion reply
-// the method is expected to be part of a larger transaction and does not handle  committing or rollingback the transactions
+// the method is expected to be part of a larger transaction and does not handle  committing or rolling back the transactions
 // if the *sqlx.Tx is nil, this function will create one. The returned tx is the same as the one in the parameters.
-func (s *Store) DiscussionReplyCreate(
+func DiscussionReplyCreate(
 	logger *zap.Logger,
 	reply *models.DiscussionReply,
-	tx *sqlx.Tx,
-) (*models.DiscussionReply, *sqlx.Tx, error) {
+	np sqlutils.NamedPreparer,
+) (*models.DiscussionReply, error) {
 
-	if tx == nil {
-		tx = s.db.MustBegin()
-	}
 	reply.ID = utilityUUID.ValueOrNewUUID(reply.ID)
 
-	stmt, err := tx.PrepareNamed(discussionReplyCreateSQL)
+	stmt, err := np.PrepareNamed(discussionReplyCreateSQL)
 	if err != nil {
-		return nil, tx, genericmodel.HandleModelCreationError(logger, err, reply)
+		return nil, genericmodel.HandleModelCreationError(logger, err, reply)
 	}
 	defer stmt.Close()
 	retReply := models.DiscussionReply{}
 
 	err = stmt.Get(&retReply, reply)
 	if err != nil {
-		return nil, tx, genericmodel.HandleModelCreationError(logger, err, reply)
+		return nil, genericmodel.HandleModelCreationError(logger, err, reply)
 	}
 
-	return &retReply, tx, nil
+	return &retReply, nil
 }
 
 // PlanDiscussionUpdate updates a plan discussion object

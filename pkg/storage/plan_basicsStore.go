@@ -9,6 +9,7 @@ import (
 	"github.com/cmsgov/mint-app/pkg/models"
 	"github.com/cmsgov/mint-app/pkg/shared/utilitySQL"
 	"github.com/cmsgov/mint-app/pkg/shared/utilityUUID"
+	"github.com/cmsgov/mint-app/pkg/sqlutils"
 	"github.com/cmsgov/mint-app/pkg/storage/genericmodel"
 )
 
@@ -25,7 +26,7 @@ var planBasicsGetByIDSQL string
 var planBasicsGetByModelPlanIDLoaderSQL string
 
 // PlanBasicsCreate creates a new plan basics
-func (s *Store) PlanBasicsCreate(np NamedPreparer, logger *zap.Logger, basics *models.PlanBasics) (*models.PlanBasics, error) {
+func (s *Store) PlanBasicsCreate(np sqlutils.NamedPreparer, logger *zap.Logger, basics *models.PlanBasics) (*models.PlanBasics, error) {
 
 	basics.ID = utilityUUID.ValueOrNewUUID(basics.ID)
 

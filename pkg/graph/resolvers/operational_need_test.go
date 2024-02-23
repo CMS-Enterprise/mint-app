@@ -30,7 +30,7 @@ func (suite *ResolverSuite) TestOperationalNeedCollectionGetByModelPlanID() {
 	suite.Nil(firstNeed.NameOther)
 	suite.EqualValues(firstNeed.CreatedBy, suite.testConfigs.Principal.Account().ID)
 	suite.NotNil(firstNeed.CreatedDts)
-	suite.NotNil(firstNeed.Name) // Enforce returning the name from this query //TODO
+	suite.NotNil(firstNeed.Name) // Enforce returning the name from this query
 	suite.Nil(firstNeed.Needed)  //Needed should not yet be set
 
 }

@@ -1,78 +1,9 @@
-
-
 """
 The current user's Launch Darkly key
 """
 type LaunchDarklySettings {
   userKey: String!
   signedHash: String!
-}
-
-"""
-The current user of the application
-"""
-type CurrentUser {
-  launchDarkly: LaunchDarklySettings!
-}
-"""
-UUIDs are represented using 36 ASCII characters, for example B0511859-ADE6-4A67-8969-16EC280C0E1A
-"""
-scalar UUID
-"""
-Time values are represented as strings using RFC3339 format, for example 2019-10-12T07:20:50G.52Z
-"""
-scalar Time
-"""
-Maps an arbitrary GraphQL value to a map[string]interface{} Go type.
-"""
-scalar Map
-
-"""
-TaggedHTML represents an input type for HTML that could also include tags that reference another entity
-"""
-scalar TaggedHTML
-
-enum SortDirection {
-  ASC
-  DESC
-}
-"""
-https://gqlgen.com/reference/file-upload/
-Represents a multipart file upload
-"""
-scalar Upload
-
-"""
-ModelPlan represent the data point for plans about a model. It is the central data type in the application
-"""
-type ModelPlan {
-  id: UUID!
-  modelName: String!
-  abbreviation: String
-  archived: Boolean!
-  createdBy: UUID!
-  createdByUserAccount: UserAccount!
-  createdDts: Time!
-  modifiedBy: UUID
-  modifiedByUserAccount: UserAccount
-  modifiedDts: Time
-  basics: PlanBasics!
-  generalCharacteristics: PlanGeneralCharacteristics!
-  participantsAndProviders: PlanParticipantsAndProviders!
-  beneficiaries: PlanBeneficiaries!
-  opsEvalAndLearning: PlanOpsEvalAndLearning!
-  collaborators: [PlanCollaborator!]!
-  documents: [PlanDocument!]!
-  discussions: [PlanDiscussion!]!
-  payments: PlanPayments!
-  status: ModelStatus!
-  isFavorite: Boolean!
-  isCollaborator: Boolean!
-  crs: [PlanCR!]!
-  tdls: [PlanTDL!]!
-  prepareForClearance: PrepareForClearance!
-  nameHistory(sort: SortDirection! = DESC): [String!]!
-  operationalNeeds: [OperationalNeed!]!
 }
 
 type OperationalNeed {
@@ -144,19 +75,6 @@ type PossibleOperationalSolutionContact {
   modifiedBy: UUID
   modifiedByUserAccount: UserAccount
   modifiedDts: Time
-}
-
-"""
-ModelPlanChanges represents the possible changes you can make to a model plan when updating it.
-Fields explicitly set with NULL will be unset, and omitted fields will be left unchanged.
-https://gqlgen.com/reference/changesets/
-"""
-input ModelPlanChanges @goModel(model: "map[string]interface{}") {
-  modelName: String
-  abbreviation: String
-  someNumbers: [Int!]
-  archived: Boolean
-  status: ModelStatus
 }
 
 """
@@ -321,94 +239,6 @@ input PlanDocumentLinkInput {
 }
 
 """
-Represents plan basics
-"""
-type PlanBasics {
-  id: UUID!
-  modelPlanID: UUID!
-
-  demoCode: String
-  amsModelID: String
-
-  modelCategory: ModelCategory
-  additionalModelCategories: [ModelCategory!]!
-  cmsCenters: [CMSCenter!]!
-  cmmiGroups: [CMMIGroup!]!
-  modelType: [ModelType!]!
-  modelTypeOther: String
-  problem: String
-  goal: String
-  testInterventions: String
-  note: String
-
-  # Milestones
-  completeICIP: Time
-  clearanceStarts: Time
-  clearanceEnds: Time
-  announced: Time
-  applicationsStart: Time
-  applicationsEnd: Time
-  performancePeriodStarts: Time
-  performancePeriodEnds: Time
-  wrapUpEnds: Time
-  highLevelNote: String
-  phasedIn: Boolean
-  phasedInNote: String
-
-  createdBy: UUID!
-  createdByUserAccount: UserAccount!
-  createdDts: Time!
-  modifiedBy: UUID
-  modifiedByUserAccount: UserAccount
-  modifiedDts: Time
-
-  readyForReviewBy: UUID
-  readyForReviewByUserAccount: UserAccount
-  readyForReviewDts: Time
-  readyForClearanceBy: UUID
-  readyForClearanceByUserAccount: UserAccount
-  readyForClearanceDts: Time
-
-  status: TaskStatus!
-}
-
-"""
-PlanBasicsChanges represents the possible changes you can make to a Plan Basics object when updating it.
-Fields explicitly set with NULL will be unset, and omitted fields will be left unchanged.
-https://gqlgen.com/reference/changesets/
-"""
-input PlanBasicsChanges @goModel(model: "map[string]interface{}") {
-  demoCode: String
-  amsModelID: String
-
-  modelCategory: ModelCategory
-  additionalModelCategories: [ModelCategory!]
-  cmsCenters: [CMSCenter!]
-  cmmiGroups: [CMMIGroup!]
-  modelType: [ModelType!]
-  modelTypeOther: String
-  problem: String
-  goal: String
-  testInterventions: String
-  note: String
-
-  # Milestones
-  completeICIP: Time
-  clearanceStarts: Time
-  clearanceEnds: Time
-  announced: Time
-  applicationsStart: Time
-  applicationsEnd: Time
-  performancePeriodStarts: Time
-  performancePeriodEnds: Time
-  wrapUpEnds: Time
-  highLevelNote: String
-  phasedIn: Boolean
-  phasedInNote: String
-  status: TaskStatusInput
-}
-
-"""
 Represents a person response from the Okta API
 """
 type UserInfo {
@@ -522,258 +352,6 @@ input DiscussionReplyCreateInput {
   content: TaggedHTML!
   userRole: DiscussionUserRole
   userRoleDescription: String
-}
-
-"""
-PlanGeneralCharacteristics represents a plan general characteristics object
-"""
-type PlanGeneralCharacteristics {
-  id: UUID!
-  modelPlanID: UUID!
-
-  # Page 1
-  isNewModel: Boolean
-  existingModel: String
-  currentModelPlanID: UUID
-  currentModelPlan: ModelPlan
-  existingModelID: Int
-  existingModelPlan: ExistingModel
-  resemblesExistingModel: YesNoOtherType
-  """
-  For providing clarifying comments if Yes or No is selected for resemblesExistingModel
-  """
-  resemblesExistingModelWhyHow: String
-  """
-  For providing clarifying comments if Other is selected for resemblesExistingModel
-  """
-  resemblesExistingModelOtherSpecify: String
-  """
-  For denoting if there is an other model that this model resembles if it's true that it resembles existing models.
-  """
-  resemblesExistingModelOtherSelected: Boolean
-  """
-  For denoting the name of the other existing model that this model resembles
-  """
-  resemblesExistingModelOtherOption: String
-  resemblesExistingModelHow: String
-  resemblesExistingModelNote: String
-  resemblesExistingModelWhich: ExistingModelLinks
-  """
-  For answering if participation in other models is a precondition for participating in this model
-  """
-  participationInModelPrecondition: YesNoOtherType
-  """
-  For providing clarifying comments if Yes or No is selected for participationInModelPrecondition
-  """
-  participationInModelPreconditionWhyHow: String
-  """
-  For providing clarifying comments if Other is selected for participationInModelPrecondition
-  """
-  participationInModelPreconditionOtherSpecify: String
-  """
-  For denoting if there is an other model that this model refers to.
-  """
-  participationInModelPreconditionOtherSelected: Boolean
-  """
-  For denoting the name of the other existing model
-  """
-  participationInModelPreconditionOtherOption: String
-  """
-  A note field for participationInModelPrecondition
-  """
-  participationInModelPreconditionNote: String
-  """
-  The collection of existing model links relevant to the participationInModelPrecondition question
-  """
-  participationInModelPreconditionWhich: ExistingModelLinks
-  hasComponentsOrTracks: Boolean
-  hasComponentsOrTracksDiffer: String
-  hasComponentsOrTracksNote: String
-
-  # Page 2
-  agencyOrStateHelp: [AgencyOrStateHelpType!]!
-  agencyOrStateHelpOther: String
-  agencyOrStateHelpNote: String
-  alternativePaymentModelTypes: [AlternativePaymentModelType!]!
-  alternativePaymentModelNote: String
-  keyCharacteristics: [KeyCharacteristic!]!
-  keyCharacteristicsOther: String
-  keyCharacteristicsNote: String
-  collectPlanBids: Boolean
-  collectPlanBidsNote: String
-  managePartCDEnrollment: Boolean
-  managePartCDEnrollmentNote: String
-  planContractUpdated: Boolean
-  planContractUpdatedNote: String
-
-  # Page 3
-  careCoordinationInvolved: Boolean
-  careCoordinationInvolvedDescription: String
-  careCoordinationInvolvedNote: String
-  additionalServicesInvolved: Boolean
-  additionalServicesInvolvedDescription: String
-  additionalServicesInvolvedNote: String
-  communityPartnersInvolved: Boolean
-  communityPartnersInvolvedDescription: String
-  communityPartnersInvolvedNote: String
-
-  # Page 4
-  geographiesTargeted: Boolean
-  geographiesTargetedTypes: [GeographyType!]!
-  geographiesStatesAndTerritories: [StatesAndTerritories!]!
-  geographiesRegionTypes: [GeographyRegionType!]!
-  geographiesTargetedTypesOther: String
-  geographiesTargetedAppliedTo: [GeographyApplication!]!
-  geographiesTargetedAppliedToOther: String
-  geographiesTargetedNote: String
-  participationOptions: Boolean
-  participationOptionsNote: String
-  agreementTypes: [AgreementType!]!
-  agreementTypesOther: String
-  multiplePatricipationAgreementsNeeded: Boolean
-  multiplePatricipationAgreementsNeededNote: String
-
-  # Page 5
-  rulemakingRequired: Boolean
-  rulemakingRequiredDescription: String
-  rulemakingRequiredNote: String
-  authorityAllowances: [AuthorityAllowance!]!
-  authorityAllowancesOther: String
-  authorityAllowancesNote: String
-  waiversRequired: Boolean
-  waiversRequiredTypes: [WaiverType!]!
-  waiversRequiredNote: String
-
-  createdBy: UUID!
-  createdByUserAccount: UserAccount!
-  createdDts: Time!
-  modifiedBy: UUID
-  modifiedByUserAccount: UserAccount
-  modifiedDts: Time
-
-  readyForReviewBy: UUID
-  readyForReviewByUserAccount: UserAccount
-  readyForReviewDts: Time
-  readyForClearanceBy: UUID
-  readyForClearanceByUserAccount: UserAccount
-  readyForClearanceDts: Time
-
-  status: TaskStatus!
-}
-
-"""
-PlanGeneralCharacteristicsChanges represents the possible changes you can make to a
-general characteristics object when updating it.
-Fields explicitly set with NULL will be unset, and omitted fields will be left unchanged.
-https://gqlgen.com/reference/changesets/
-"""
-input PlanGeneralCharacteristicsChanges @goModel(model: "map[string]interface{}") {
-  # Page 1
-  isNewModel: Boolean
-  currentModelPlanID: UUID
-  existingModelID: Int
-  resemblesExistingModel: YesNoOtherType
-  """
-  For providing clarifying comments if Yes or No is selected for resemblesExistingModel
-  """
-  resemblesExistingModelWhyHow: String
-  """
-  For providing clarifying comments if Other is selected for resemblesExistingModel
-  """
-  resemblesExistingModelOtherSpecify: String
-  """
-  For denoting if there is an other model that this model resembles if it's true that it resembles existing models.
-  """
-  resemblesExistingModelOtherSelected: Boolean
-  """
-  For denoting the name of the other existing model that this model resembles
-  """
-  resemblesExistingModelOtherOption: String
-  resemblesExistingModelHow: String
-  resemblesExistingModelNote: String
-  """
-  For answering if participation in other models is a precondition for participating in this model
-  """
-  participationInModelPrecondition: YesNoOtherType
-  """
-  For providing clarifying comments if Yes or No is selected for participationInModelPrecondition
-  """
-  participationInModelPreconditionWhyHow: String
-  """
-  For providing clarifying comments if Other is selected for participationInModelPrecondition
-  """
-  participationInModelPreconditionOtherSpecify: String
-  """
-  For denoting if there is an other model that this model refers to.
-  """
-  participationInModelPreconditionOtherSelected: Boolean
-  """
-  For denoting the name of the other existing model
-  """
-  participationInModelPreconditionOtherOption: String
-  """
-  A note field for participationInModelPrecondition
-  """
-  participationInModelPreconditionNote: String
-  hasComponentsOrTracks: Boolean
-  hasComponentsOrTracksDiffer: String
-  hasComponentsOrTracksNote: String
-
-  # Page 2
-  agencyOrStateHelp: [AgencyOrStateHelpType!]
-  agencyOrStateHelpOther: String
-  agencyOrStateHelpNote: String
-  alternativePaymentModelTypes: [AlternativePaymentModelType!]
-  alternativePaymentModelNote: String
-  keyCharacteristics: [KeyCharacteristic!]
-  keyCharacteristicsOther: String
-  keyCharacteristicsNote: String
-  collectPlanBids: Boolean
-  collectPlanBidsNote: String
-  managePartCDEnrollment: Boolean
-  managePartCDEnrollmentNote: String
-  planContractUpdated: Boolean
-  planContractUpdatedNote: String
-
-  # Page 3
-  careCoordinationInvolved: Boolean
-  careCoordinationInvolvedDescription: String
-  careCoordinationInvolvedNote: String
-  additionalServicesInvolved: Boolean
-  additionalServicesInvolvedDescription: String
-  additionalServicesInvolvedNote: String
-  communityPartnersInvolved: Boolean
-  communityPartnersInvolvedDescription: String
-  communityPartnersInvolvedNote: String
-
-  # Page 4
-  geographiesTargeted: Boolean
-  geographiesTargetedTypes: [GeographyType!]
-  geographiesStatesAndTerritories: [StatesAndTerritories!]
-  geographiesRegionTypes: [GeographyRegionType!]
-  geographiesTargetedTypesOther: String
-  geographiesTargetedAppliedTo: [GeographyApplication!]
-  geographiesTargetedAppliedToOther: String
-  geographiesTargetedNote: String
-  participationOptions: Boolean
-  participationOptionsNote: String
-  agreementTypes: [AgreementType!]
-  agreementTypesOther: String
-  multiplePatricipationAgreementsNeeded: Boolean
-  multiplePatricipationAgreementsNeededNote: String
-
-  # Page 5
-  rulemakingRequired: Boolean
-  rulemakingRequiredDescription: String
-  rulemakingRequiredNote: String
-  authorityAllowances: [AuthorityAllowance!]
-  authorityAllowancesOther: String
-  authorityAllowancesNote: String
-  waiversRequired: Boolean
-  waiversRequiredTypes: [WaiverType!]
-  waiversRequiredNote: String
-
-  status: TaskStatusInput
 }
 
 """
@@ -1255,252 +833,6 @@ input PlanPaymentsChanges @goModel(model: "map[string]interface{}") {
 }
 
 """
-PlanOpsEvalAndLearning represents the task list section that deals with information regarding the Ops Eval and Learning
-"""
-type PlanOpsEvalAndLearning {
-    id: UUID!
-    modelPlanID: UUID!
-
-    #Page 1
-    stakeholders: [StakeholdersType!]!
-    stakeholdersOther: String
-    stakeholdersNote: String
-    helpdeskUse: Boolean
-    helpdeskUseNote: String
-    contractorSupport: [ContractorSupportType!]!
-    contractorSupportOther: String
-    contractorSupportHow: String
-    contractorSupportNote: String
-    iddocSupport: Boolean
-    iddocSupportNote: String
-    #Page 2
-    technicalContactsIdentified: Boolean
-    technicalContactsIdentifiedDetail: String
-    technicalContactsIdentifiedNote: String
-    captureParticipantInfo: Boolean
-    captureParticipantInfoNote: String
-    icdOwner: String
-    draftIcdDueDate: Time
-    icdNote: String
-    #Page 3
-    uatNeeds: String
-    stcNeeds: String
-    testingTimelines: String
-    testingNote: String
-    dataMonitoringFileTypes: [MonitoringFileType!]!
-    dataMonitoringFileOther: String
-    dataResponseType: String
-    dataResponseFileFrequency: String
-    #Page 4
-    dataFullTimeOrIncremental: DataFullTimeOrIncrementalType
-    eftSetUp: Boolean
-    unsolicitedAdjustmentsIncluded: Boolean
-    dataFlowDiagramsNeeded: Boolean
-    produceBenefitEnhancementFiles: Boolean
-    fileNamingConventions: String
-    dataMonitoringNote: String
-    #Page 5
-    benchmarkForPerformance: BenchmarkForPerformanceType
-    benchmarkForPerformanceNote: String
-    computePerformanceScores: Boolean
-    computePerformanceScoresNote: String
-    riskAdjustPerformance: Boolean
-    riskAdjustFeedback: Boolean
-    riskAdjustPayments: Boolean
-    riskAdjustOther: Boolean
-    riskAdjustNote: String
-    appealPerformance: Boolean
-    appealFeedback: Boolean
-    appealPayments: Boolean
-    appealOther: Boolean
-    appealNote: String
-    #Page 6
-    evaluationApproaches: [EvaluationApproachType!]!
-    evaluationApproachOther: String
-    evalutaionApproachNote: String
-    ccmInvolvment: [CcmInvolvmentType!]!
-    ccmInvolvmentOther: String
-    ccmInvolvmentNote: String
-    dataNeededForMonitoring: [DataForMonitoringType!]!
-    dataNeededForMonitoringOther: String
-    dataNeededForMonitoringNote: String
-    dataToSendParticicipants: [DataToSendParticipantsType!]!
-    dataToSendParticicipantsOther: String
-    dataToSendParticicipantsNote: String
-    shareCclfData: Boolean
-    shareCclfDataNote: String
-    #Page 7
-    sendFilesBetweenCcw: Boolean
-    sendFilesBetweenCcwNote: String
-    appToSendFilesToKnown: Boolean
-    appToSendFilesToWhich: String
-    appToSendFilesToNote: String
-    useCcwForFileDistribiutionToParticipants: Boolean
-    useCcwForFileDistribiutionToParticipantsNote: String
-    developNewQualityMeasures: Boolean
-    developNewQualityMeasuresNote: String
-    qualityPerformanceImpactsPayment: YesNoOtherType
-    qualityPerformanceImpactsPaymentOther: String
-    qualityPerformanceImpactsPaymentNote: String
-    #Page 8
-    dataSharingStarts: DataStartsType
-    dataSharingStartsOther: String
-    dataSharingFrequency: [FrequencyType!]!
-    dataSharingFrequencyContinually: String
-    dataSharingFrequencyOther: String
-    dataSharingStartsNote: String
-    dataCollectionStarts: DataStartsType
-    dataCollectionStartsOther: String
-    dataCollectionFrequency: [FrequencyType!]!
-    dataCollectionFrequencyContinually: String
-    dataCollectionFrequencyOther: String
-    dataCollectionFrequencyNote: String
-    qualityReportingStarts: DataStartsType
-    qualityReportingStartsOther: String
-    qualityReportingStartsNote: String
-    qualityReportingFrequency: [FrequencyType!]!
-    qualityReportingFrequencyContinually: String
-    qualityReportingFrequencyOther: String
-    #Page 9
-    modelLearningSystems: [ModelLearningSystemType!]!
-    modelLearningSystemsOther: String
-    modelLearningSystemsNote: String
-    anticipatedChallenges: String
-
-    createdBy: UUID!
-    createdByUserAccount: UserAccount!
-    createdDts: Time!
-    modifiedBy: UUID
-    modifiedByUserAccount: UserAccount
-    modifiedDts: Time
-
-    readyForReviewBy: UUID
-    readyForReviewByUserAccount: UserAccount
-    readyForReviewDts: Time
-    readyForClearanceBy: UUID
-    readyForClearanceByUserAccount: UserAccount
-    readyForClearanceDts: Time
-
-    status: TaskStatus!
-}
-
-"""
-PlanOpsEvalAndLearningChanges represents the possible changes you can make to a
-ops, eval and learning object when updating it.
-Fields explicitly set with NULL will be unset, and omitted fields will be left unchanged.
-https://gqlgen.com/reference/changesets/
-"""
-input PlanOpsEvalAndLearningChanges @goModel(model: "map[string]interface{}") {
-
-    #Page 1
-    stakeholders: [StakeholdersType!]
-    stakeholdersOther: String
-    stakeholdersNote: String
-    helpdeskUse: Boolean
-    helpdeskUseNote: String
-    contractorSupport: [ContractorSupportType!]
-    contractorSupportOther: String
-    contractorSupportHow: String
-    contractorSupportNote: String
-    iddocSupport: Boolean
-    iddocSupportNote: String
-    #Page 2
-    technicalContactsIdentified: Boolean
-    technicalContactsIdentifiedDetail: String
-    technicalContactsIdentifiedNote: String
-    captureParticipantInfo: Boolean
-    captureParticipantInfoNote: String
-    icdOwner: String
-    draftIcdDueDate: Time
-    icdNote: String
-    #Page 3
-    uatNeeds: String
-    stcNeeds: String
-    testingTimelines: String
-    testingNote: String
-    dataMonitoringFileTypes: [MonitoringFileType!]
-    dataMonitoringFileOther: String
-    dataResponseType: String
-    dataResponseFileFrequency: String
-    #Page 4
-    dataFullTimeOrIncremental: DataFullTimeOrIncrementalType
-    eftSetUp: Boolean
-    unsolicitedAdjustmentsIncluded: Boolean
-    dataFlowDiagramsNeeded: Boolean
-    produceBenefitEnhancementFiles: Boolean
-    fileNamingConventions: String
-    dataMonitoringNote: String
-    #Page 5
-    benchmarkForPerformance: BenchmarkForPerformanceType
-    benchmarkForPerformanceNote: String
-    computePerformanceScores: Boolean
-    computePerformanceScoresNote: String
-    riskAdjustPerformance: Boolean
-    riskAdjustFeedback: Boolean
-    riskAdjustPayments: Boolean
-    riskAdjustOther: Boolean
-    riskAdjustNote: String
-    appealPerformance: Boolean
-    appealFeedback: Boolean
-    appealPayments: Boolean
-    appealOther: Boolean
-    appealNote: String
-    #Page 6
-    evaluationApproaches: [EvaluationApproachType!]
-    evaluationApproachOther: String
-    evalutaionApproachNote: String
-    ccmInvolvment: [CcmInvolvmentType!]
-    ccmInvolvmentOther: String
-    ccmInvolvmentNote: String
-    dataNeededForMonitoring: [DataForMonitoringType!]
-    dataNeededForMonitoringOther: String
-    dataNeededForMonitoringNote: String
-    dataToSendParticicipants: [DataToSendParticipantsType!]
-    dataToSendParticicipantsOther: String
-    dataToSendParticicipantsNote: String
-    shareCclfData: Boolean
-    shareCclfDataNote: String
-    #Page 7
-    sendFilesBetweenCcw: Boolean
-    sendFilesBetweenCcwNote: String
-    appToSendFilesToKnown: Boolean
-    appToSendFilesToWhich: String
-    appToSendFilesToNote: String
-    useCcwForFileDistribiutionToParticipants: Boolean
-    useCcwForFileDistribiutionToParticipantsNote: String
-    developNewQualityMeasures: Boolean
-    developNewQualityMeasuresNote: String
-    qualityPerformanceImpactsPayment: YesNoOtherType
-    qualityPerformanceImpactsPaymentOther: String
-    qualityPerformanceImpactsPaymentNote: String
-    #Page 8
-    dataSharingStarts: DataStartsType
-    dataSharingStartsOther: String
-    dataSharingFrequency: [FrequencyType!]
-    dataSharingFrequencyContinually: String
-    dataSharingFrequencyOther: String
-    dataSharingStartsNote: String
-    dataCollectionStarts: DataStartsType
-    dataCollectionStartsOther: String
-    dataCollectionFrequency: [FrequencyType!]
-    dataCollectionFrequencyContinually: String
-    dataCollectionFrequencyOther: String
-    dataCollectionFrequencyNote: String
-    qualityReportingStarts: DataStartsType
-    qualityReportingStartsOther: String
-    qualityReportingStartsNote: String
-    qualityReportingFrequency: [FrequencyType!]
-    qualityReportingFrequencyContinually: String
-    qualityReportingFrequencyOther: String
-    #Page 9
-    modelLearningSystems: [ModelLearningSystemType!]
-    modelLearningSystemsOther: String
-    modelLearningSystemsNote: String
-    anticipatedChallenges: String
-
-    status: TaskStatusInput
-}
-"""
 NDAInfo represents whether a user has agreed to an NDA or not. If agreed to previously, there will be a datestamp visible
 """
 type NDAInfo {
@@ -1767,16 +1099,12 @@ enum SatisfactionLevel {
   VERY_DISSATISFIED
 }
 
+
 """
 Query definition for the schema
 """
 type Query {
-  currentUser: CurrentUser!
-  modelPlan(id: UUID!): ModelPlan!
-  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
   planDocument(id: UUID!): PlanDocument!
-  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
-  modelPlanCollection(filter: ModelPlanFilter! = COLLAB_ONLY): [ModelPlan!]!
   @hasAnyRole(roles: [MINT_USER, MINT_MAC])
   existingModelCollection: [ExistingModel!]!
   @hasAnyRole(roles: [MINT_USER, MINT_MAC])
@@ -1814,22 +1142,10 @@ type Query {
   @hasAnyRole(roles: [MINT_USER, MINT_MAC])
 }
 
-enum ModelPlanFilter {
-  INCLUDE_ALL,
-  COLLAB_ONLY,
-  WITH_CR_TDLS,
-}
-
 """
 Mutations definition for the schema
 """
 type Mutation {
-createModelPlan(modelName: String!): ModelPlan!
-@hasRole(role: MINT_USER)
-
-updateModelPlan(id: UUID!, changes: ModelPlanChanges!): ModelPlan!
-@hasRole(role: MINT_USER)
-
 createPlanCollaborator(input: PlanCollaboratorCreateInput!): PlanCollaborator!
 @hasRole(role: MINT_USER)
 
@@ -1839,19 +1155,10 @@ updatePlanCollaborator(id: UUID!, newRoles: [TeamRole!]!): PlanCollaborator!
 deletePlanCollaborator(id: UUID!): PlanCollaborator!
 @hasRole(role: MINT_USER)
 
-updatePlanBasics(id: UUID!, changes: PlanBasicsChanges!): PlanBasics!
-@hasRole(role: MINT_USER)
-
-updatePlanGeneralCharacteristics(id: UUID!, changes: PlanGeneralCharacteristicsChanges!): PlanGeneralCharacteristics!
-@hasRole(role: MINT_USER)
-
 updatePlanBeneficiaries(id: UUID!, changes: PlanBeneficiariesChanges!): PlanBeneficiaries!
 @hasRole(role: MINT_USER)
 
 updatePlanParticipantsAndProviders(id: UUID!, changes: PlanParticipantsAndProvidersChanges!): PlanParticipantsAndProviders!
-@hasRole(role: MINT_USER)
-
-updatePlanOpsEvalAndLearning(id: UUID!, changes: PlanOpsEvalAndLearningChanges!): PlanOpsEvalAndLearning!
 @hasRole(role: MINT_USER)
 
 uploadNewPlanDocument(input: PlanDocumentInput!): PlanDocument!
@@ -1942,15 +1249,14 @@ The fieldName allows it so you can create links for multiple sections of the mod
 updateExistingModelLinks(modelPlanID: UUID!,fieldName: ExisitingModelLinkFieldType!,  existingModelIDs: [Int!],currentModelPlanIDs: [UUID!]): ExistingModelLinks!
 @hasRole(role: MINT_USER)
 
-shareModelPlan(modelPlanID: UUID!, viewFilter: ModelViewFilter, usernames: [String!]!, optionalMessage: String): Boolean!
-@hasRole(role: MINT_USER)
-
 reportAProblem(input: ReportAProblemInput!): Boolean!
 @hasAnyRole(roles: [MINT_USER, MINT_MAC])
 """
 This mutation sends feedback about the MINT product to the MINT team
 """
 sendFeedbackEmail(input: SendFeedbackEmailInput!): Boolean!
+
+
 }
 
 type Subscription {
@@ -2011,57 +1317,6 @@ enum TeamRole {
   COR
 }
 
-enum ModelType
-{
-  VOLUNTARY
-  MANDATORY_REGIONAL_OR_STATE
-  MANDATORY_NATIONAL
-  OTHER
-}
-
-enum ModelCategory {
-  ACCOUNTABLE_CARE
-  DISEASE_SPECIFIC_AND_EPISODIC
-  HEALTH_PLAN
-  PRESCRIPTION_DRUG
-  STATE_BASED
-  STATUTORY
-  TO_BE_DETERMINED
-}
-
-enum ModelStatus {
-	PLAN_DRAFT
-	PLAN_COMPLETE
-	ICIP_COMPLETE
-	INTERNAL_CMMI_CLEARANCE
-	CMS_CLEARANCE
-	HHS_CLEARANCE
-	OMB_ASRF_CLEARANCE
-	CLEARED
-	ANNOUNCED
-  PAUSED
-  CANCELED
-  ACTIVE
-  ENDED
-}
-
-enum CMSCenter {
-  CMMI
-  CENTER_FOR_MEDICARE
-  FEDERAL_COORDINATED_HEALTH_CARE_OFFICE
-  CENTER_FOR_MEDICAID_AND_CHIP_SERVICES
-  CENTER_FOR_CLINICAL_STANDARDS_AND_QUALITY
-  CENTER_FOR_PROGRAM_INTEGRITY
-  }
-
-enum CMMIGroup {
-  PATIENT_CARE_MODELS_GROUP
-  POLICY_AND_PROGRAMS_GROUP
-  SEAMLESS_CARE_MODELS_GROUP
-  STATE_AND_POPULATION_HEALTH_GROUP
-  TBD
-}
-
 enum DocumentType {
   CONCEPT_PAPER,
   POLICY_PAPER,
@@ -2070,59 +1325,6 @@ enum DocumentType {
   DESIGN_PARAMETERS_MEMO,
   OFFICE_OF_THE_ADMINISTRATOR_PRESENTATION,
   OTHER
-}
-
-enum AlternativePaymentModelType {
-  REGULAR
-  MIPS
-  ADVANCED
-  NOT_APM
-}
-
-enum KeyCharacteristic {
-  EPISODE_BASED
-  PART_C
-  PART_D
-  PAYMENT
-  POPULATION_BASED
-  PREVENTATIVE
-  SERVICE_DELIVERY
-  SHARED_SAVINGS
-  OTHER
-  MEDICAID_MODEL
-  MEDICARE_FFS_MODEL
-}
-
-enum GeographyType {
-  STATE
-  REGION
-  OTHER
-}
-
-enum GeographyApplication {
-  PARTICIPANTS
-  PROVIDERS
-  BENEFICIARIES
-  OTHER
-}
-
-enum AgreementType {
-  PARTICIPATION
-  COOPERATIVE
-  OTHER
-}
-
-enum AuthorityAllowance {
-  ACA
-  CONGRESSIONALLY_MANDATED
-  SSA_PART_B
-  OTHER
-}
-
-enum WaiverType {
-  FRAUD_ABUSE
-  PROGRAM_PAYMENT
-  MEDICAID
 }
 
 enum BeneficiariesType {
@@ -2155,15 +1357,6 @@ enum ConfidenceType {
   SLIGHTLY
   FAIRLY
   COMPLETELY
-}
-
-enum FrequencyType {
-  ANNUALLY
-  SEMIANNUALLY
-  QUARTERLY
-  MONTHLY
-  CONTINUALLY
-  OTHER
 }
 
 enum TriStateAnswer {
@@ -2248,122 +1441,6 @@ NOT_ALLOWED_TO_LEAVE
 OTHER
 NOT_APPLICABLE
 }
-
-
-#Ops Eval and Learning types begin
-
-enum AgencyOrStateHelpType {
-    YES_STATE
-    YES_AGENCY_IDEAS
-    YES_AGENCY_IAA
-    NO
-    OTHER
-}
-
-enum StakeholdersType {
-    BENEFICIARIES
-    COMMUNITY_ORGANIZATIONS
-    PARTICIPANTS
-    PROFESSIONAL_ORGANIZATIONS
-    PROVIDERS
-    STATES
-    OTHER
-}
-
-
-enum ContractorSupportType {
-    ONE
-    MULTIPLE
-    NONE
-    OTHER
-}
-
-enum MonitoringFileType {
-    BENEFICIARY
-    PROVIDER
-    PART_A
-    PART_B
-    OTHER
-}
-
-enum EvaluationApproachType {
-    CONTROL_INTERVENTION
-    COMPARISON_MATCH
-    INTERRUPTED_TIME
-    NON_MEDICARE_DATA
-    OTHER
-}
-
-enum CcmInvolvmentType {
-    YES_EVALUATION
-    YES__IMPLEMENTATION
-    NO
-    OTHER
-}
-
-enum DataForMonitoringType {
-    SITE_VISITS
-    MEDICARE_CLAIMS
-    MEDICAID_CLAIMS
-    ENCOUNTER_DATA
-    NO_PAY_CLAIMS
-    QUALITY_CLAIMS_BASED_MEASURES
-    QUALITY_REPORTED_MEASURES
-    CLINICAL_DATA
-    NON_CLINICAL_DATA
-    NON_MEDICAL_DATA
-    OTHER
-    NOT_PLANNING_TO_COLLECT_DATA
-}
-
-enum DataToSendParticipantsType {
-    BASELINE_HISTORICAL_DATA
-    CLAIMS_LEVEL_DATA
-    BENEFICIARY_LEVEL_DATA
-    PARTICIPANT_LEVEL_DATA
-    PROVIDER_LEVEL_DATA
-    OTHER_MIPS_DATA
-    NOT_PLANNING_TO_SEND_DATA
-}
-
-enum YesNoOtherType {
-    YES
-    NO
-    OTHER
-}
-
-enum ModelLearningSystemType {
-    LEARNING_CONTRACTOR
-    IT_PLATFORM_CONNECT
-    PARTICIPANT_COLLABORATION
-    EDUCATE_BENEFICIARIES
-    OTHER
-    NO_LEARNING_SYSTEM
-}
-
-
-enum DataFullTimeOrIncrementalType {
-    FULL_TIME
-    INCREMENTAL
-}
-
-enum BenchmarkForPerformanceType {
-    YES_RECONCILE
-    YES_NO_RECONCILE
-    NO
-}
-
-enum DataStartsType {
-    DURING_APPLICATION_PERIOD
-    SHORTLY_BEFORE_THE_START_DATE
-    EARLY_IN_THE_FIRST_PERFORMANCE_YEAR
-    LATER_IN_THE_FIRST_PERFORMANCE_YEAR
-    IN_THE_SUBSEQUENT_PERFORMANCE_YEAR
-    AT_SOME_OTHER_POINT_IN_TIME
-    NOT_PLANNING_TO_DO_THIS
-    OTHER
-}
-#Ops Eval and Learning types end
 
 enum FundingSource {
   PATIENT_PROTECTION_AFFORDABLE_CARE_ACT
@@ -2507,16 +1584,6 @@ enum OperationalSolutionSubtaskStatus {
   DONE
 }
 
-directive @hasRole(role: Role!) on FIELD_DEFINITION
-
-directive @hasAnyRole(roles: [Role!]!) on FIELD_DEFINITION
-
-# https://gqlgen.com/config/#inline-config-with-directives
-directive @goModel(
-  model: String
-  models: [String!]
-) on OBJECT | INPUT_OBJECT | SCALAR | ENUM | INTERFACE | UNION
-
 type UserAccount {
 	id: UUID!
 	username: String!
@@ -2575,18 +1642,6 @@ enum DiscussionUserRole {
   NONE_OF_THE_ABOVE,
 }
 
-enum ModelViewFilter {
-  CCW, # CHRONIC_CONDITIONS_WAREHOUSE
-  CMMI, # CMMI_COST_ESTIMATE
-  CBOSC, # CONSOLIDATED_BUSINESS_OPERATIONS_SUPPORT_CENTER
-  DFSDM, # DIVISION_OF_FINANCIAL_SERVICES_AND_DEBT_MANAGEMENT
-  IPC, # INNOVATION_PAYMENT_CONTRACTOR
-  IDDOC, # INNOVATIVE_DESIGN_DEVELOPMENT_AND_OPERATIONS_CONTRACT
-  MDM, # MASTER_DATA_MANAGEMENT
-  OACT, # OFFICE_OF_THE_ACTUARY
-  PBG, # PROVIDER_BILLING_GROUP
-}
-
 enum GainshareArrangementEligibility {
   ALL_PROVIDERS,
   SOME_PROVIDERS,
@@ -2597,70 +1652,4 @@ enum GainshareArrangementEligibility {
 enum YesNoType {
   YES,
   NO
-}
-
-enum StatesAndTerritories {
-  AL,
-  AK,
-  AZ,
-  AR,
-  CA,
-  CO,
-  CT,
-  DE,
-  DC,
-  FL,
-  GA,
-  HI,
-  ID,
-  IL,
-  IN,
-  IA,
-  KS,
-  KY,
-  LA,
-  ME,
-  MD,
-  MA,
-  MI,
-  MN,
-  MS,
-  MO,
-  MT,
-  NE,
-  NV,
-  NH,
-  NJ,
-  NM,
-  NY,
-  NC,
-  ND,
-  OH,
-  OK,
-  OR,
-  PA,
-  RI,
-  SC,
-  SD,
-  TN,
-  TX,
-  UT,
-  VT,
-  VA,
-  WA,
-  WV,
-  WI,
-  WY,
-  AS,
-  GU,
-  MP,
-  PR,
-  UM,
-  VI
-}
-
-enum GeographyRegionType {
-  CBSA,
-  HRR,
-  MSA
 }

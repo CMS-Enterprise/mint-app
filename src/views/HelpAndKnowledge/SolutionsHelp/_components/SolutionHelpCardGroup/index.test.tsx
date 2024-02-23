@@ -1,15 +1,16 @@
 import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { render } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+
+import setup from 'utils/testing/setup';
 
 import { helpSolutions } from '../../solutionsMap';
 
 import SolutionHelpCardGroup from './index';
 
 describe('Operation Solution Help Card Group', () => {
-  it('rendered all correct information even after pagination', () => {
-    const { getByText, getByLabelText, queryByText } = render(
+  it('rendered all correct information even after pagination', async () => {
+    const { user, getByText, getByLabelText, queryByText } = setup(
       <MemoryRouter
         initialEntries={['/help-and-knowledge/operational-solutions']}
       >
@@ -34,7 +35,7 @@ describe('Operation Solution Help Card Group', () => {
 
     // Click to page 2
     const page2Button = getByLabelText('Page 2');
-    userEvent.click(page2Button);
+    await user.click(page2Button);
 
     expect(getByText('Expanded Data Feedback Reporting')).toBeInTheDocument();
   });

@@ -382,7 +382,10 @@ namespace :db do
     operational_need,
     existing_model_link,
     model_plan,
-    audit.change"
+    audit.change,
+    user_notification,
+    user_notification_preferences,
+    activity"
 
     puts "Cleaning database..."
     `echo "TRUNCATE #{tableList}" | psql`
@@ -397,7 +400,7 @@ end
 
 namespace :gql do
   task :lint_schema do
-    sh "yarn run graphql-schema-linter pkg/graph/schema.graphql"
+    sh "yarn run graphql-schema-linter 'pkg/graph/schema/**/*.graphql'"
   end
 
   namespace :generate do
@@ -409,7 +412,7 @@ namespace :gql do
 
     task :go do
       sh "go generate ./..." do |ok|
-        sh "goimports -w -local github.com/cmsgov/mint-app pkg/graph/gqlresolvers" if ok
+        sh "goimports -w -local github.com/cmsgov/mint-app pkg/graph/resolvers" if ok
       end
     end
   end

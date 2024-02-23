@@ -1,4 +1,4 @@
-package gqlresolvers
+package resolvers
 
 import (
 	"context"

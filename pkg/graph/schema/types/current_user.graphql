@@ -1,0 +1,13 @@
+"""
+The current user of the application
+"""
+type CurrentUser {
+  launchDarkly: LaunchDarklySettings!
+  account: UserAccount!
+  notifications: UserNotifications!
+  notificationPreferences: UserNotificationPreferences!
+}
+
+extend type Query {
+      currentUser: CurrentUser!
+}

@@ -6,7 +6,6 @@ import {
   waitFor,
   waitForElementToBeRemoved
 } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 
 import {
   needQuestionAndAnswerMock,
@@ -21,6 +20,7 @@ import {
   OperationalSolutionKey,
   OpSolutionStatus
 } from 'types/graphql-global-types';
+import setup from 'utils/testing/setup';
 
 import SelectSolutions, { findChangedSolution } from '.';
 
@@ -96,7 +96,7 @@ const mocks = [
 
 describe('Operational Solutions NeedQuestionAndAnswer', () => {
   it('renders correctly', async () => {
-    const { getByText, getByRole } = render(
+    const { user, getByText, getByRole } = setup(
       <MemoryRouter
         initialEntries={[
           {
@@ -114,12 +114,12 @@ describe('Operational Solutions NeedQuestionAndAnswer', () => {
       </MemoryRouter>
     );
 
-    await waitFor(() => {
+    await waitFor(async () => {
       const checkbox = getByRole('checkbox', {
         name: /Select this solution/i
       });
       expect(checkbox).not.toBeChecked();
-      userEvent.click(checkbox);
+      await user.click(checkbox);
       expect(checkbox).toBeChecked();
     });
 

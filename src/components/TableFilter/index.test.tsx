@@ -1,7 +1,8 @@
 import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
 import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+
+import setup from 'utils/testing/setup';
 
 import GlobalClientFilter from './index';
 
@@ -21,8 +22,8 @@ describe('Table Filter Componenet', () => {
     expect(getByTestId('table-client-filter')).toBeInTheDocument();
   });
 
-  it('display query text in input', () => {
-    render(
+  it('display query text in input', async () => {
+    const { user } = setup(
       <MemoryRouter>
         <GlobalClientFilter
           setGlobalFilter={() => true}
@@ -33,7 +34,7 @@ describe('Table Filter Componenet', () => {
       </MemoryRouter>
     );
 
-    userEvent.type(screen.getByRole('searchbox'), 'system-1');
+    await user.type(screen.getByRole('searchbox'), 'system-1');
     expect(screen.getByRole('searchbox')).toHaveValue('system-1');
   });
 
