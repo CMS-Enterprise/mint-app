@@ -3,11 +3,9 @@ import { Provider } from 'react-redux';
 import { MemoryRouter, Route } from 'react-router-dom';
 import {
   act,
-  render,
   waitFor,
   waitForElementToBeRemoved
 } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 import configureMockStore from 'redux-mock-store';
 
 import { ASSESSMENT } from 'constants/jobCodes';
@@ -19,6 +17,7 @@ import { MessageProvider } from 'hooks/useMessage';
 import GetOperationalSolution from 'queries/ITSolutions/GetOperationalSolution';
 import { OpSolutionStatus } from 'types/graphql-global-types';
 import VerboseMockedProvider from 'utils/testing/MockedProvider';
+import setup from 'utils/testing/setup';
 import documentMocks from 'views/ModelPlan/Documents/index.test';
 
 import LinkDocuments from '.';
@@ -103,55 +102,53 @@ const store = mockStore({ auth: mockAuthReducer });
 
 describe('Operational Solutions Link Documents', () => {
   it('renders correctly', async () => {
-    await act(async () => {
-      const { getByTestId } = render(
-        <MemoryRouter
-          initialEntries={[
-            {
-              pathname: `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/${operationalSolutionID}/link-documents`
-            }
-          ]}
-        >
-          <VerboseMockedProvider mocks={mocks} addTypename={false}>
-            <Provider store={store}>
-              <Route path="/models/:modelID/task-list/it-solutions/:operationalNeedID/:operationalSolutionID/link-documents">
-                <MessageProvider>
-                  <LinkDocuments />
-                </MessageProvider>
-              </Route>
-            </Provider>
-          </VerboseMockedProvider>
-        </MemoryRouter>
-      );
+    const { user, getByTestId } = setup(
+      <MemoryRouter
+        initialEntries={[
+          {
+            pathname: `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/${operationalSolutionID}/link-documents`
+          }
+        ]}
+      >
+        <VerboseMockedProvider mocks={mocks} addTypename={false}>
+          <Provider store={store}>
+            <Route path="/models/:modelID/task-list/it-solutions/:operationalNeedID/:operationalSolutionID/link-documents">
+              <MessageProvider>
+                <LinkDocuments />
+              </MessageProvider>
+            </Route>
+          </Provider>
+        </VerboseMockedProvider>
+      </MemoryRouter>
+    );
 
-      // Wait for page to load
-      await waitForElementToBeRemoved(() => getByTestId('page-loading'));
+    // Wait for page to load
+    await waitForElementToBeRemoved(() => getByTestId('page-loading'));
 
-      // // Link mutation button disabled if state === original state of selections
-      const linkButton = getByTestId('link-documents-button');
+    // // Link mutation button disabled if state === original state of selections
+    const linkButton = getByTestId('link-documents-button');
 
-      // Click checkbox table cell to toggle document selection
-      const solutionDocument1 = getByTestId(
-        'link-document-9d828454-9ecd-42a0-ad84-bc8c8ddea634'
-      );
+    // Click checkbox table cell to toggle document selection
+    const solutionDocument1 = getByTestId(
+      'link-document-9d828454-9ecd-42a0-ad84-bc8c8ddea634'
+    );
 
-      userEvent.click(solutionDocument1);
+    await user.click(solutionDocument1);
 
-      const solutionDocument2 = getByTestId(
-        'link-document-07d0d06f-9ecd-42a0-ad84-bc8c8ddea084'
-      );
+    const solutionDocument2 = getByTestId(
+      'link-document-07d0d06f-9ecd-42a0-ad84-bc8c8ddea084'
+    );
 
-      await waitFor(() => {
-        expect(solutionDocument1).not.toBeChecked();
-        expect(solutionDocument2).toBeChecked();
-        expect(linkButton).not.toHaveAttribute('disabled');
-      });
+    await waitFor(() => {
+      expect(solutionDocument1).not.toBeChecked();
+      expect(solutionDocument2).toBeChecked();
+      expect(linkButton).not.toHaveAttribute('disabled');
     });
   });
 
   it('matches snapshot', async () => {
     await act(async () => {
-      const { asFragment, getByTestId } = render(
+      const { user, asFragment, getByTestId } = setup(
         <MemoryRouter
           initialEntries={[
             {
@@ -178,7 +175,7 @@ describe('Operational Solutions Link Documents', () => {
       const solutionDocument1 = getByTestId(
         'link-document-9d828454-9ecd-42a0-ad84-bc8c8ddea634'
       );
-      userEvent.click(solutionDocument1);
+      await user.click(solutionDocument1);
 
       expect(asFragment()).toMatchSnapshot();
     });

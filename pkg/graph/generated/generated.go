@@ -1132,12 +1132,9 @@ type ModelPlanResolver interface {
 	OperationalNeeds(ctx context.Context, obj *models.ModelPlan) ([]*models.OperationalNeed, error)
 }
 type MutationResolver interface {
-	CreateModelPlan(ctx context.Context, modelName string) (*models.ModelPlan, error)
-	UpdateModelPlan(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.ModelPlan, error)
 	CreatePlanCollaborator(ctx context.Context, input model.PlanCollaboratorCreateInput) (*models.PlanCollaborator, error)
 	UpdatePlanCollaborator(ctx context.Context, id uuid.UUID, newRoles []models.TeamRole) (*models.PlanCollaborator, error)
 	DeletePlanCollaborator(ctx context.Context, id uuid.UUID) (*models.PlanCollaborator, error)
-	UpdatePlanGeneralCharacteristics(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanGeneralCharacteristics, error)
 	UpdatePlanBeneficiaries(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanBeneficiaries, error)
 	UpdatePlanParticipantsAndProviders(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanParticipantsAndProviders, error)
 	UploadNewPlanDocument(ctx context.Context, input model.PlanDocumentInput) (*models.PlanDocument, error)
@@ -1168,10 +1165,13 @@ type MutationResolver interface {
 	UpdateOperationalSolutionSubtasks(ctx context.Context, inputs []*model.UpdateOperationalSolutionSubtaskInput) ([]*models.OperationalSolutionSubtask, error)
 	DeleteOperationalSolutionSubtask(ctx context.Context, id uuid.UUID) (int, error)
 	UpdateExistingModelLinks(ctx context.Context, modelPlanID uuid.UUID, fieldName models.ExisitingModelLinkFieldType, existingModelIDs []int, currentModelPlanIDs []uuid.UUID) (*models.ExistingModelLinks, error)
-	ShareModelPlan(ctx context.Context, modelPlanID uuid.UUID, viewFilter *models.ModelViewFilter, usernames []string, optionalMessage *string) (bool, error)
 	ReportAProblem(ctx context.Context, input model.ReportAProblemInput) (bool, error)
 	SendFeedbackEmail(ctx context.Context, input model.SendFeedbackEmailInput) (bool, error)
+	CreateModelPlan(ctx context.Context, modelName string) (*models.ModelPlan, error)
+	UpdateModelPlan(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.ModelPlan, error)
+	ShareModelPlan(ctx context.Context, modelPlanID uuid.UUID, viewFilter *models.ModelViewFilter, usernames []string, optionalMessage *string) (bool, error)
 	UpdatePlanBasics(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanBasics, error)
+	UpdatePlanGeneralCharacteristics(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanGeneralCharacteristics, error)
 	UpdatePlanOpsEvalAndLearning(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanOpsEvalAndLearning, error)
 	MarkNotificationAsRead(ctx context.Context, notificationID uuid.UUID) (*models.UserNotification, error)
 	MarkAllNotificationsAsRead(ctx context.Context) ([]*models.UserNotification, error)
@@ -1322,9 +1322,7 @@ type PossibleOperationalSolutionResolver interface {
 	PointsOfContact(ctx context.Context, obj *models.PossibleOperationalSolution) ([]*models.PossibleOperationalSolutionContact, error)
 }
 type QueryResolver interface {
-	ModelPlan(ctx context.Context, id uuid.UUID) (*models.ModelPlan, error)
 	PlanDocument(ctx context.Context, id uuid.UUID) (*models.PlanDocument, error)
-	ModelPlanCollection(ctx context.Context, filter model.ModelPlanFilter) ([]*models.ModelPlan, error)
 	ExistingModelCollection(ctx context.Context) ([]*models.ExistingModel, error)
 	SearchOktaUsers(ctx context.Context, searchTerm string) ([]*models.UserInfo, error)
 	PlanCollaboratorByID(ctx context.Context, id uuid.UUID) (*models.PlanCollaborator, error)
@@ -1343,6 +1341,8 @@ type QueryResolver interface {
 	ExistingModelLink(ctx context.Context, id uuid.UUID) (*models.ExistingModelLink, error)
 	MostRecentDiscussionRoleSelection(ctx context.Context) (*models.DiscussionRoleSelection, error)
 	CurrentUser(ctx context.Context) (*models.CurrentUser, error)
+	ModelPlan(ctx context.Context, id uuid.UUID) (*models.ModelPlan, error)
+	ModelPlanCollection(ctx context.Context, filter model.ModelPlanFilter) ([]*models.ModelPlan, error)
 }
 type SubscriptionResolver interface {
 	OnTaskListSectionLocksChanged(ctx context.Context, modelPlanID uuid.UUID) (<-chan *model.TaskListSectionLockStatusChanged, error)
@@ -7957,44 +7957,6 @@ type LaunchDarklySettings {
   signedHash: String!
 }
 
-enum SortDirection {
-  ASC
-  DESC
-}
-
-"""
-ModelPlan represent the data point for plans about a model. It is the central data type in the application
-"""
-type ModelPlan {
-  id: UUID!
-  modelName: String!
-  abbreviation: String
-  archived: Boolean!
-  createdBy: UUID!
-  createdByUserAccount: UserAccount!
-  createdDts: Time!
-  modifiedBy: UUID
-  modifiedByUserAccount: UserAccount
-  modifiedDts: Time
-  basics: PlanBasics!
-  generalCharacteristics: PlanGeneralCharacteristics!
-  participantsAndProviders: PlanParticipantsAndProviders!
-  beneficiaries: PlanBeneficiaries!
-  opsEvalAndLearning: PlanOpsEvalAndLearning!
-  collaborators: [PlanCollaborator!]!
-  documents: [PlanDocument!]!
-  discussions: [PlanDiscussion!]!
-  payments: PlanPayments!
-  status: ModelStatus!
-  isFavorite: Boolean!
-  isCollaborator: Boolean!
-  crs: [PlanCR!]!
-  tdls: [PlanTDL!]!
-  prepareForClearance: PrepareForClearance!
-  nameHistory(sort: SortDirection! = DESC): [String!]!
-  operationalNeeds: [OperationalNeed!]!
-}
-
 type OperationalNeed {
     id: UUID!
     modelPlanID: UUID!
@@ -8064,19 +8026,6 @@ type PossibleOperationalSolutionContact {
   modifiedBy: UUID
   modifiedByUserAccount: UserAccount
   modifiedDts: Time
-}
-
-"""
-ModelPlanChanges represents the possible changes you can make to a model plan when updating it.
-Fields explicitly set with NULL will be unset, and omitted fields will be left unchanged.
-https://gqlgen.com/reference/changesets/
-"""
-input ModelPlanChanges @goModel(model: "map[string]interface{}") {
-  modelName: String
-  abbreviation: String
-  someNumbers: [Int!]
-  archived: Boolean
-  status: ModelStatus
 }
 
 """
@@ -8354,258 +8303,6 @@ input DiscussionReplyCreateInput {
   content: TaggedHTML!
   userRole: DiscussionUserRole
   userRoleDescription: String
-}
-
-"""
-PlanGeneralCharacteristics represents a plan general characteristics object
-"""
-type PlanGeneralCharacteristics {
-  id: UUID!
-  modelPlanID: UUID!
-
-  # Page 1
-  isNewModel: Boolean
-  existingModel: String
-  currentModelPlanID: UUID
-  currentModelPlan: ModelPlan
-  existingModelID: Int
-  existingModelPlan: ExistingModel
-  resemblesExistingModel: YesNoOtherType
-  """
-  For providing clarifying comments if Yes or No is selected for resemblesExistingModel
-  """
-  resemblesExistingModelWhyHow: String
-  """
-  For providing clarifying comments if Other is selected for resemblesExistingModel
-  """
-  resemblesExistingModelOtherSpecify: String
-  """
-  For denoting if there is an other model that this model resembles if it's true that it resembles existing models.
-  """
-  resemblesExistingModelOtherSelected: Boolean
-  """
-  For denoting the name of the other existing model that this model resembles
-  """
-  resemblesExistingModelOtherOption: String
-  resemblesExistingModelHow: String
-  resemblesExistingModelNote: String
-  resemblesExistingModelWhich: ExistingModelLinks
-  """
-  For answering if participation in other models is a precondition for participating in this model
-  """
-  participationInModelPrecondition: YesNoOtherType
-  """
-  For providing clarifying comments if Yes or No is selected for participationInModelPrecondition
-  """
-  participationInModelPreconditionWhyHow: String
-  """
-  For providing clarifying comments if Other is selected for participationInModelPrecondition
-  """
-  participationInModelPreconditionOtherSpecify: String
-  """
-  For denoting if there is an other model that this model refers to.
-  """
-  participationInModelPreconditionOtherSelected: Boolean
-  """
-  For denoting the name of the other existing model
-  """
-  participationInModelPreconditionOtherOption: String
-  """
-  A note field for participationInModelPrecondition
-  """
-  participationInModelPreconditionNote: String
-  """
-  The collection of existing model links relevant to the participationInModelPrecondition question
-  """
-  participationInModelPreconditionWhich: ExistingModelLinks
-  hasComponentsOrTracks: Boolean
-  hasComponentsOrTracksDiffer: String
-  hasComponentsOrTracksNote: String
-
-  # Page 2
-  agencyOrStateHelp: [AgencyOrStateHelpType!]!
-  agencyOrStateHelpOther: String
-  agencyOrStateHelpNote: String
-  alternativePaymentModelTypes: [AlternativePaymentModelType!]!
-  alternativePaymentModelNote: String
-  keyCharacteristics: [KeyCharacteristic!]!
-  keyCharacteristicsOther: String
-  keyCharacteristicsNote: String
-  collectPlanBids: Boolean
-  collectPlanBidsNote: String
-  managePartCDEnrollment: Boolean
-  managePartCDEnrollmentNote: String
-  planContractUpdated: Boolean
-  planContractUpdatedNote: String
-
-  # Page 3
-  careCoordinationInvolved: Boolean
-  careCoordinationInvolvedDescription: String
-  careCoordinationInvolvedNote: String
-  additionalServicesInvolved: Boolean
-  additionalServicesInvolvedDescription: String
-  additionalServicesInvolvedNote: String
-  communityPartnersInvolved: Boolean
-  communityPartnersInvolvedDescription: String
-  communityPartnersInvolvedNote: String
-
-  # Page 4
-  geographiesTargeted: Boolean
-  geographiesTargetedTypes: [GeographyType!]!
-  geographiesStatesAndTerritories: [StatesAndTerritories!]!
-  geographiesRegionTypes: [GeographyRegionType!]!
-  geographiesTargetedTypesOther: String
-  geographiesTargetedAppliedTo: [GeographyApplication!]!
-  geographiesTargetedAppliedToOther: String
-  geographiesTargetedNote: String
-  participationOptions: Boolean
-  participationOptionsNote: String
-  agreementTypes: [AgreementType!]!
-  agreementTypesOther: String
-  multiplePatricipationAgreementsNeeded: Boolean
-  multiplePatricipationAgreementsNeededNote: String
-
-  # Page 5
-  rulemakingRequired: Boolean
-  rulemakingRequiredDescription: String
-  rulemakingRequiredNote: String
-  authorityAllowances: [AuthorityAllowance!]!
-  authorityAllowancesOther: String
-  authorityAllowancesNote: String
-  waiversRequired: Boolean
-  waiversRequiredTypes: [WaiverType!]!
-  waiversRequiredNote: String
-
-  createdBy: UUID!
-  createdByUserAccount: UserAccount!
-  createdDts: Time!
-  modifiedBy: UUID
-  modifiedByUserAccount: UserAccount
-  modifiedDts: Time
-
-  readyForReviewBy: UUID
-  readyForReviewByUserAccount: UserAccount
-  readyForReviewDts: Time
-  readyForClearanceBy: UUID
-  readyForClearanceByUserAccount: UserAccount
-  readyForClearanceDts: Time
-
-  status: TaskStatus!
-}
-
-"""
-PlanGeneralCharacteristicsChanges represents the possible changes you can make to a
-general characteristics object when updating it.
-Fields explicitly set with NULL will be unset, and omitted fields will be left unchanged.
-https://gqlgen.com/reference/changesets/
-"""
-input PlanGeneralCharacteristicsChanges @goModel(model: "map[string]interface{}") {
-  # Page 1
-  isNewModel: Boolean
-  currentModelPlanID: UUID
-  existingModelID: Int
-  resemblesExistingModel: YesNoOtherType
-  """
-  For providing clarifying comments if Yes or No is selected for resemblesExistingModel
-  """
-  resemblesExistingModelWhyHow: String
-  """
-  For providing clarifying comments if Other is selected for resemblesExistingModel
-  """
-  resemblesExistingModelOtherSpecify: String
-  """
-  For denoting if there is an other model that this model resembles if it's true that it resembles existing models.
-  """
-  resemblesExistingModelOtherSelected: Boolean
-  """
-  For denoting the name of the other existing model that this model resembles
-  """
-  resemblesExistingModelOtherOption: String
-  resemblesExistingModelHow: String
-  resemblesExistingModelNote: String
-  """
-  For answering if participation in other models is a precondition for participating in this model
-  """
-  participationInModelPrecondition: YesNoOtherType
-  """
-  For providing clarifying comments if Yes or No is selected for participationInModelPrecondition
-  """
-  participationInModelPreconditionWhyHow: String
-  """
-  For providing clarifying comments if Other is selected for participationInModelPrecondition
-  """
-  participationInModelPreconditionOtherSpecify: String
-  """
-  For denoting if there is an other model that this model refers to.
-  """
-  participationInModelPreconditionOtherSelected: Boolean
-  """
-  For denoting the name of the other existing model
-  """
-  participationInModelPreconditionOtherOption: String
-  """
-  A note field for participationInModelPrecondition
-  """
-  participationInModelPreconditionNote: String
-  hasComponentsOrTracks: Boolean
-  hasComponentsOrTracksDiffer: String
-  hasComponentsOrTracksNote: String
-
-  # Page 2
-  agencyOrStateHelp: [AgencyOrStateHelpType!]
-  agencyOrStateHelpOther: String
-  agencyOrStateHelpNote: String
-  alternativePaymentModelTypes: [AlternativePaymentModelType!]
-  alternativePaymentModelNote: String
-  keyCharacteristics: [KeyCharacteristic!]
-  keyCharacteristicsOther: String
-  keyCharacteristicsNote: String
-  collectPlanBids: Boolean
-  collectPlanBidsNote: String
-  managePartCDEnrollment: Boolean
-  managePartCDEnrollmentNote: String
-  planContractUpdated: Boolean
-  planContractUpdatedNote: String
-
-  # Page 3
-  careCoordinationInvolved: Boolean
-  careCoordinationInvolvedDescription: String
-  careCoordinationInvolvedNote: String
-  additionalServicesInvolved: Boolean
-  additionalServicesInvolvedDescription: String
-  additionalServicesInvolvedNote: String
-  communityPartnersInvolved: Boolean
-  communityPartnersInvolvedDescription: String
-  communityPartnersInvolvedNote: String
-
-  # Page 4
-  geographiesTargeted: Boolean
-  geographiesTargetedTypes: [GeographyType!]
-  geographiesStatesAndTerritories: [StatesAndTerritories!]
-  geographiesRegionTypes: [GeographyRegionType!]
-  geographiesTargetedTypesOther: String
-  geographiesTargetedAppliedTo: [GeographyApplication!]
-  geographiesTargetedAppliedToOther: String
-  geographiesTargetedNote: String
-  participationOptions: Boolean
-  participationOptionsNote: String
-  agreementTypes: [AgreementType!]
-  agreementTypesOther: String
-  multiplePatricipationAgreementsNeeded: Boolean
-  multiplePatricipationAgreementsNeededNote: String
-
-  # Page 5
-  rulemakingRequired: Boolean
-  rulemakingRequiredDescription: String
-  rulemakingRequiredNote: String
-  authorityAllowances: [AuthorityAllowance!]
-  authorityAllowancesOther: String
-  authorityAllowancesNote: String
-  waiversRequired: Boolean
-  waiversRequiredTypes: [WaiverType!]
-  waiversRequiredNote: String
-
-  status: TaskStatusInput
 }
 
 """
@@ -9358,11 +9055,7 @@ enum SatisfactionLevel {
 Query definition for the schema
 """
 type Query {
-  modelPlan(id: UUID!): ModelPlan!
-  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
   planDocument(id: UUID!): PlanDocument!
-  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
-  modelPlanCollection(filter: ModelPlanFilter! = COLLAB_ONLY): [ModelPlan!]!
   @hasAnyRole(roles: [MINT_USER, MINT_MAC])
   existingModelCollection: [ExistingModel!]!
   @hasAnyRole(roles: [MINT_USER, MINT_MAC])
@@ -9400,22 +9093,10 @@ type Query {
   @hasAnyRole(roles: [MINT_USER, MINT_MAC])
 }
 
-enum ModelPlanFilter {
-  INCLUDE_ALL,
-  COLLAB_ONLY,
-  WITH_CR_TDLS,
-}
-
 """
 Mutations definition for the schema
 """
 type Mutation {
-createModelPlan(modelName: String!): ModelPlan!
-@hasRole(role: MINT_USER)
-
-updateModelPlan(id: UUID!, changes: ModelPlanChanges!): ModelPlan!
-@hasRole(role: MINT_USER)
-
 createPlanCollaborator(input: PlanCollaboratorCreateInput!): PlanCollaborator!
 @hasRole(role: MINT_USER)
 
@@ -9423,9 +9104,6 @@ updatePlanCollaborator(id: UUID!, newRoles: [TeamRole!]!): PlanCollaborator!
 @hasRole(role: MINT_USER)
 
 deletePlanCollaborator(id: UUID!): PlanCollaborator!
-@hasRole(role: MINT_USER)
-
-updatePlanGeneralCharacteristics(id: UUID!, changes: PlanGeneralCharacteristicsChanges!): PlanGeneralCharacteristics!
 @hasRole(role: MINT_USER)
 
 updatePlanBeneficiaries(id: UUID!, changes: PlanBeneficiariesChanges!): PlanBeneficiaries!
@@ -9522,9 +9200,6 @@ The fieldName allows it so you can create links for multiple sections of the mod
 updateExistingModelLinks(modelPlanID: UUID!,fieldName: ExisitingModelLinkFieldType!,  existingModelIDs: [Int!],currentModelPlanIDs: [UUID!]): ExistingModelLinks!
 @hasRole(role: MINT_USER)
 
-shareModelPlan(modelPlanID: UUID!, viewFilter: ModelViewFilter, usernames: [String!]!, optionalMessage: String): Boolean!
-@hasRole(role: MINT_USER)
-
 reportAProblem(input: ReportAProblemInput!): Boolean!
 @hasAnyRole(roles: [MINT_USER, MINT_MAC])
 """
@@ -9593,22 +9268,6 @@ enum TeamRole {
   COR
 }
 
-enum ModelStatus {
-	PLAN_DRAFT
-	PLAN_COMPLETE
-	ICIP_COMPLETE
-	INTERNAL_CMMI_CLEARANCE
-	CMS_CLEARANCE
-	HHS_CLEARANCE
-	OMB_ASRF_CLEARANCE
-	CLEARED
-	ANNOUNCED
-  PAUSED
-  CANCELED
-  ACTIVE
-  ENDED
-}
-
 enum DocumentType {
   CONCEPT_PAPER,
   POLICY_PAPER,
@@ -9617,59 +9276,6 @@ enum DocumentType {
   DESIGN_PARAMETERS_MEMO,
   OFFICE_OF_THE_ADMINISTRATOR_PRESENTATION,
   OTHER
-}
-
-enum AlternativePaymentModelType {
-  REGULAR
-  MIPS
-  ADVANCED
-  NOT_APM
-}
-
-enum KeyCharacteristic {
-  EPISODE_BASED
-  PART_C
-  PART_D
-  PAYMENT
-  POPULATION_BASED
-  PREVENTATIVE
-  SERVICE_DELIVERY
-  SHARED_SAVINGS
-  OTHER
-  MEDICAID_MODEL
-  MEDICARE_FFS_MODEL
-}
-
-enum GeographyType {
-  STATE
-  REGION
-  OTHER
-}
-
-enum GeographyApplication {
-  PARTICIPANTS
-  PROVIDERS
-  BENEFICIARIES
-  OTHER
-}
-
-enum AgreementType {
-  PARTICIPATION
-  COOPERATIVE
-  OTHER
-}
-
-enum AuthorityAllowance {
-  ACA
-  CONGRESSIONALLY_MANDATED
-  SSA_PART_B
-  OTHER
-}
-
-enum WaiverType {
-  FRAUD_ABUSE
-  PROGRAM_PAYMENT
-  MEDICAID
 }
 
 enum BeneficiariesType {
@@ -9785,14 +9391,6 @@ VARIES_BY_TYPE_OF_PROVIDER
 NOT_ALLOWED_TO_LEAVE
 OTHER
 NOT_APPLICABLE
-}
-
-enum AgencyOrStateHelpType {
-  YES_STATE
-  YES_AGENCY_IDEAS
-  YES_AGENCY_IAA
-  NO
-  OTHER
 }
 
 enum FundingSource {
@@ -9995,18 +9593,6 @@ enum DiscussionUserRole {
   NONE_OF_THE_ABOVE,
 }
 
-enum ModelViewFilter {
-  CCW, # CHRONIC_CONDITIONS_WAREHOUSE
-  CMMI, # CMMI_COST_ESTIMATE
-  CBOSC, # CONSOLIDATED_BUSINESS_OPERATIONS_SUPPORT_CENTER
-  DFSDM, # DIVISION_OF_FINANCIAL_SERVICES_AND_DEBT_MANAGEMENT
-  IPC, # INNOVATION_PAYMENT_CONTRACTOR
-  IDDOC, # INNOVATIVE_DESIGN_DEVELOPMENT_AND_OPERATIONS_CONTRACT
-  MDM, # MASTER_DATA_MANAGEMENT
-  OACT, # OFFICE_OF_THE_ACTUARY
-  PBG, # PROVIDER_BILLING_GROUP
-}
-
 enum GainshareArrangementEligibility {
   ALL_PROVIDERS,
   SOME_PROVIDERS,
@@ -10017,74 +9603,7 @@ enum GainshareArrangementEligibility {
 enum YesNoType {
   YES,
   NO
-}
-
-enum StatesAndTerritories {
-  AL,
-  AK,
-  AZ,
-  AR,
-  CA,
-  CO,
-  CT,
-  DE,
-  DC,
-  FL,
-  GA,
-  HI,
-  ID,
-  IL,
-  IN,
-  IA,
-  KS,
-  KY,
-  LA,
-  ME,
-  MD,
-  MA,
-  MI,
-  MN,
-  MS,
-  MO,
-  MT,
-  NE,
-  NV,
-  NH,
-  NJ,
-  NM,
-  NY,
-  NC,
-  ND,
-  OH,
-  OK,
-  OR,
-  PA,
-  RI,
-  SC,
-  SD,
-  TN,
-  TX,
-  UT,
-  VT,
-  VA,
-  WA,
-  WV,
-  WI,
-  WY,
-  AS,
-  GU,
-  MP,
-  PR,
-  UM,
-  VI
-}
-
-enum GeographyRegionType {
-  CBSA,
-  HRR,
-  MSA
-}
-`, BuiltIn: false},
+}`, BuiltIn: false},
 	{Name: "../schema/types/activity.graphql", Input: `"""
 ActivityType represents the possible activities that happen in application that might result in a notification
 """
@@ -10134,7 +9653,7 @@ type Activity {
   id: UUID!
 	actorID: UUID!
   actorUserAccount: UserAccount!
-	entityID: UUID! #TODO: EASI-3925 return the entity?
+	entityID: UUID!
 	activityType: ActivityType!
   metaData: ActivityMetaData!
 
@@ -10169,6 +9688,109 @@ directive @goModel(
   model: String
   models: [String!]
 ) on OBJECT | INPUT_OBJECT | SCALAR | ENUM | INTERFACE | UNION`, BuiltIn: false},
+	{Name: "../schema/types/model_plan.graphql", Input: `enum ModelPlanFilter {
+  INCLUDE_ALL,
+  COLLAB_ONLY,
+  WITH_CR_TDLS,
+}
+
+enum ModelStatus {
+  PLAN_DRAFT
+  PLAN_COMPLETE
+  ICIP_COMPLETE
+  INTERNAL_CMMI_CLEARANCE
+  CMS_CLEARANCE
+  HHS_CLEARANCE
+  OMB_ASRF_CLEARANCE
+  CLEARED
+  ANNOUNCED
+  PAUSED
+  CANCELED
+  ACTIVE
+  ENDED
+}
+
+enum SortDirection {
+  ASC
+  DESC
+}
+
+enum ModelViewFilter {
+  CCW, # CHRONIC_CONDITIONS_WAREHOUSE
+  CMMI, # CMMI_COST_ESTIMATE
+  CBOSC, # CONSOLIDATED_BUSINESS_OPERATIONS_SUPPORT_CENTER
+  DFSDM, # DIVISION_OF_FINANCIAL_SERVICES_AND_DEBT_MANAGEMENT
+  IPC, # INNOVATION_PAYMENT_CONTRACTOR
+  IDDOC, # INNOVATIVE_DESIGN_DEVELOPMENT_AND_OPERATIONS_CONTRACT
+  MDM, # MASTER_DATA_MANAGEMENT
+  OACT, # OFFICE_OF_THE_ACTUARY
+  PBG, # PROVIDER_BILLING_GROUP
+}
+
+"""
+ModelPlan represent the data point for plans about a model. It is the central data type in the application
+"""
+type ModelPlan {
+  id: UUID!
+  modelName: String!
+  abbreviation: String
+  archived: Boolean!
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
+  basics: PlanBasics!
+  generalCharacteristics: PlanGeneralCharacteristics!
+  participantsAndProviders: PlanParticipantsAndProviders!
+  beneficiaries: PlanBeneficiaries!
+  opsEvalAndLearning: PlanOpsEvalAndLearning!
+  collaborators: [PlanCollaborator!]!
+  documents: [PlanDocument!]!
+  discussions: [PlanDiscussion!]!
+  payments: PlanPayments!
+  status: ModelStatus!
+  isFavorite: Boolean!
+  isCollaborator: Boolean!
+  crs: [PlanCR!]!
+  tdls: [PlanTDL!]!
+  prepareForClearance: PrepareForClearance!
+  nameHistory(sort: SortDirection! = DESC): [String!]!
+  operationalNeeds: [OperationalNeed!]!
+}
+
+"""
+ModelPlanChanges represents the possible changes you can make to a model plan when updating it.
+Fields explicitly set with NULL will be unset, and omitted fields will be left unchanged.
+https://gqlgen.com/reference/changesets/
+"""
+input ModelPlanChanges @goModel(model: "map[string]interface{}") {
+  modelName: String
+  abbreviation: String
+  someNumbers: [Int!]
+  archived: Boolean
+  status: ModelStatus
+}
+
+extend type Query {
+  modelPlan(id: UUID!): ModelPlan!
+  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+
+  modelPlanCollection(filter: ModelPlanFilter! = COLLAB_ONLY): [ModelPlan!]!
+  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+}
+
+extend type Mutation {
+  createModelPlan(modelName: String!): ModelPlan!
+  @hasRole(role: MINT_USER)
+
+  updateModelPlan(id: UUID!, changes: ModelPlanChanges!): ModelPlan!
+  @hasRole(role: MINT_USER)
+
+  shareModelPlan(modelPlanID: UUID!, viewFilter: ModelViewFilter, usernames: [String!]!, optionalMessage: String): Boolean!
+  @hasRole(role: MINT_USER)
+}`, BuiltIn: false},
 	{Name: "../schema/types/plan_basics.graphql", Input: `"""
 Represents plan basics
 """
@@ -10296,6 +9918,389 @@ extend type Mutation {
   @hasRole(role: MINT_USER)
 }
 `, BuiltIn: false},
+	{Name: "../schema/types/plan_general_characteristics.graphql", Input: `enum AgencyOrStateHelpType {
+  YES_STATE
+  YES_AGENCY_IDEAS
+  YES_AGENCY_IAA
+  NO
+  OTHER
+}
+
+enum AlternativePaymentModelType {
+  REGULAR
+  MIPS
+  ADVANCED
+  NOT_APM
+}
+
+enum KeyCharacteristic {
+  EPISODE_BASED
+  PART_C
+  PART_D
+  PAYMENT
+  POPULATION_BASED
+  PREVENTATIVE
+  SERVICE_DELIVERY
+  SHARED_SAVINGS
+  OTHER
+  MEDICAID_MODEL
+  MEDICARE_FFS_MODEL
+}
+
+enum GeographyType {
+  STATE
+  REGION
+  OTHER
+}
+
+enum GeographyRegionType {
+  CBSA,
+  HRR,
+  MSA
+}
+
+enum GeographyApplication {
+  PARTICIPANTS
+  PROVIDERS
+  BENEFICIARIES
+  OTHER
+}
+
+enum StatesAndTerritories {
+  AL,
+  AK,
+  AZ,
+  AR,
+  CA,
+  CO,
+  CT,
+  DE,
+  DC,
+  FL,
+  GA,
+  HI,
+  ID,
+  IL,
+  IN,
+  IA,
+  KS,
+  KY,
+  LA,
+  ME,
+  MD,
+  MA,
+  MI,
+  MN,
+  MS,
+  MO,
+  MT,
+  NE,
+  NV,
+  NH,
+  NJ,
+  NM,
+  NY,
+  NC,
+  ND,
+  OH,
+  OK,
+  OR,
+  PA,
+  RI,
+  SC,
+  SD,
+  TN,
+  TX,
+  UT,
+  VT,
+  VA,
+  WA,
+  WV,
+  WI,
+  WY,
+  AS,
+  GU,
+  MP,
+  PR,
+  UM,
+  VI
+}
+
+enum AgreementType {
+  PARTICIPATION
+  COOPERATIVE
+  OTHER
+}
+
+enum AuthorityAllowance {
+  ACA
+  CONGRESSIONALLY_MANDATED
+  SSA_PART_B
+  OTHER
+}
+
+enum WaiverType {
+  FRAUD_ABUSE
+  PROGRAM_PAYMENT
+  MEDICAID
+}
+
+"""
+PlanGeneralCharacteristics represents a plan general characteristics object
+"""
+type PlanGeneralCharacteristics {
+  id: UUID!
+  modelPlanID: UUID!
+
+  # Page 1
+  isNewModel: Boolean
+  existingModel: String
+  currentModelPlanID: UUID
+  currentModelPlan: ModelPlan
+  existingModelID: Int
+  existingModelPlan: ExistingModel
+  resemblesExistingModel: YesNoOtherType
+  """
+  For providing clarifying comments if Yes or No is selected for resemblesExistingModel
+  """
+  resemblesExistingModelWhyHow: String
+  """
+  For providing clarifying comments if Other is selected for resemblesExistingModel
+  """
+  resemblesExistingModelOtherSpecify: String
+  """
+  For denoting if there is an other model that this model resembles if it's true that it resembles existing models.
+  """
+  resemblesExistingModelOtherSelected: Boolean
+  """
+  For denoting the name of the other existing model that this model resembles
+  """
+  resemblesExistingModelOtherOption: String
+  resemblesExistingModelHow: String
+  resemblesExistingModelNote: String
+  resemblesExistingModelWhich: ExistingModelLinks
+  """
+  For answering if participation in other models is a precondition for participating in this model
+  """
+  participationInModelPrecondition: YesNoOtherType
+  """
+  For providing clarifying comments if Yes or No is selected for participationInModelPrecondition
+  """
+  participationInModelPreconditionWhyHow: String
+  """
+  For providing clarifying comments if Other is selected for participationInModelPrecondition
+  """
+  participationInModelPreconditionOtherSpecify: String
+  """
+  For denoting if there is an other model that this model refers to.
+  """
+  participationInModelPreconditionOtherSelected: Boolean
+  """
+  For denoting the name of the other existing model
+  """
+  participationInModelPreconditionOtherOption: String
+  """
+  A note field for participationInModelPrecondition
+  """
+  participationInModelPreconditionNote: String
+  """
+  The collection of existing model links relevant to the participationInModelPrecondition question
+  """
+  participationInModelPreconditionWhich: ExistingModelLinks
+  hasComponentsOrTracks: Boolean
+  hasComponentsOrTracksDiffer: String
+  hasComponentsOrTracksNote: String
+
+  # Page 2
+  agencyOrStateHelp: [AgencyOrStateHelpType!]!
+  agencyOrStateHelpOther: String
+  agencyOrStateHelpNote: String
+  alternativePaymentModelTypes: [AlternativePaymentModelType!]!
+  alternativePaymentModelNote: String
+  keyCharacteristics: [KeyCharacteristic!]!
+  keyCharacteristicsOther: String
+  keyCharacteristicsNote: String
+  collectPlanBids: Boolean
+  collectPlanBidsNote: String
+  managePartCDEnrollment: Boolean
+  managePartCDEnrollmentNote: String
+  planContractUpdated: Boolean
+  planContractUpdatedNote: String
+
+  # Page 3
+  careCoordinationInvolved: Boolean
+  careCoordinationInvolvedDescription: String
+  careCoordinationInvolvedNote: String
+  additionalServicesInvolved: Boolean
+  additionalServicesInvolvedDescription: String
+  additionalServicesInvolvedNote: String
+  communityPartnersInvolved: Boolean
+  communityPartnersInvolvedDescription: String
+  communityPartnersInvolvedNote: String
+
+  # Page 4
+  geographiesTargeted: Boolean
+  geographiesTargetedTypes: [GeographyType!]!
+  geographiesStatesAndTerritories: [StatesAndTerritories!]!
+  geographiesRegionTypes: [GeographyRegionType!]!
+  geographiesTargetedTypesOther: String
+  geographiesTargetedAppliedTo: [GeographyApplication!]!
+  geographiesTargetedAppliedToOther: String
+  geographiesTargetedNote: String
+  participationOptions: Boolean
+  participationOptionsNote: String
+  agreementTypes: [AgreementType!]!
+  agreementTypesOther: String
+  multiplePatricipationAgreementsNeeded: Boolean
+  multiplePatricipationAgreementsNeededNote: String
+
+  # Page 5
+  rulemakingRequired: Boolean
+  rulemakingRequiredDescription: String
+  rulemakingRequiredNote: String
+  authorityAllowances: [AuthorityAllowance!]!
+  authorityAllowancesOther: String
+  authorityAllowancesNote: String
+  waiversRequired: Boolean
+  waiversRequiredTypes: [WaiverType!]!
+  waiversRequiredNote: String
+
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
+
+  readyForReviewBy: UUID
+  readyForReviewByUserAccount: UserAccount
+  readyForReviewDts: Time
+  readyForClearanceBy: UUID
+  readyForClearanceByUserAccount: UserAccount
+  readyForClearanceDts: Time
+
+  status: TaskStatus!
+}
+
+"""
+PlanGeneralCharacteristicsChanges represents the possible changes you can make to a
+general characteristics object when updating it.
+Fields explicitly set with NULL will be unset, and omitted fields will be left unchanged.
+https://gqlgen.com/reference/changesets/
+"""
+input PlanGeneralCharacteristicsChanges @goModel(model: "map[string]interface{}") {
+  # Page 1
+  isNewModel: Boolean
+  currentModelPlanID: UUID
+  existingModelID: Int
+  resemblesExistingModel: YesNoOtherType
+  """
+  For providing clarifying comments if Yes or No is selected for resemblesExistingModel
+  """
+  resemblesExistingModelWhyHow: String
+  """
+  For providing clarifying comments if Other is selected for resemblesExistingModel
+  """
+  resemblesExistingModelOtherSpecify: String
+  """
+  For denoting if there is an other model that this model resembles if it's true that it resembles existing models.
+  """
+  resemblesExistingModelOtherSelected: Boolean
+  """
+  For denoting the name of the other existing model that this model resembles
+  """
+  resemblesExistingModelOtherOption: String
+  resemblesExistingModelHow: String
+  resemblesExistingModelNote: String
+  """
+  For answering if participation in other models is a precondition for participating in this model
+  """
+  participationInModelPrecondition: YesNoOtherType
+  """
+  For providing clarifying comments if Yes or No is selected for participationInModelPrecondition
+  """
+  participationInModelPreconditionWhyHow: String
+  """
+  For providing clarifying comments if Other is selected for participationInModelPrecondition
+  """
+  participationInModelPreconditionOtherSpecify: String
+  """
+  For denoting if there is an other model that this model refers to.
+  """
+  participationInModelPreconditionOtherSelected: Boolean
+  """
+  For denoting the name of the other existing model
+  """
+  participationInModelPreconditionOtherOption: String
+  """
+  A note field for participationInModelPrecondition
+  """
+  participationInModelPreconditionNote: String
+  hasComponentsOrTracks: Boolean
+  hasComponentsOrTracksDiffer: String
+  hasComponentsOrTracksNote: String
+
+  # Page 2
+  agencyOrStateHelp: [AgencyOrStateHelpType!]
+  agencyOrStateHelpOther: String
+  agencyOrStateHelpNote: String
+  alternativePaymentModelTypes: [AlternativePaymentModelType!]
+  alternativePaymentModelNote: String
+  keyCharacteristics: [KeyCharacteristic!]
+  keyCharacteristicsOther: String
+  keyCharacteristicsNote: String
+  collectPlanBids: Boolean
+  collectPlanBidsNote: String
+  managePartCDEnrollment: Boolean
+  managePartCDEnrollmentNote: String
+  planContractUpdated: Boolean
+  planContractUpdatedNote: String
+
+  # Page 3
+  careCoordinationInvolved: Boolean
+  careCoordinationInvolvedDescription: String
+  careCoordinationInvolvedNote: String
+  additionalServicesInvolved: Boolean
+  additionalServicesInvolvedDescription: String
+  additionalServicesInvolvedNote: String
+  communityPartnersInvolved: Boolean
+  communityPartnersInvolvedDescription: String
+  communityPartnersInvolvedNote: String
+
+  # Page 4
+  geographiesTargeted: Boolean
+  geographiesTargetedTypes: [GeographyType!]
+  geographiesStatesAndTerritories: [StatesAndTerritories!]
+  geographiesRegionTypes: [GeographyRegionType!]
+  geographiesTargetedTypesOther: String
+  geographiesTargetedAppliedTo: [GeographyApplication!]
+  geographiesTargetedAppliedToOther: String
+  geographiesTargetedNote: String
+  participationOptions: Boolean
+  participationOptionsNote: String
+  agreementTypes: [AgreementType!]
+  agreementTypesOther: String
+  multiplePatricipationAgreementsNeeded: Boolean
+  multiplePatricipationAgreementsNeededNote: String
+
+  # Page 5
+  rulemakingRequired: Boolean
+  rulemakingRequiredDescription: String
+  rulemakingRequiredNote: String
+  authorityAllowances: [AuthorityAllowance!]
+  authorityAllowancesOther: String
+  authorityAllowancesNote: String
+  waiversRequired: Boolean
+  waiversRequiredTypes: [WaiverType!]
+  waiversRequiredNote: String
+
+  status: TaskStatusInput
+}
+
+extend type Mutation {
+  updatePlanGeneralCharacteristics(id: UUID!, changes: PlanGeneralCharacteristicsChanges!): PlanGeneralCharacteristics!
+  @hasRole(role: MINT_USER)
+}`, BuiltIn: false},
 	{Name: "../schema/types/plan_ops_eval_and_learning.graphql", Input: `enum StakeholdersType {
   BENEFICIARIES
   COMMUNITY_ORGANIZATIONS
@@ -10697,12 +10702,11 @@ UserNotification represents a notification about a specific Activity
 type UserNotification {
   id: UUID!
 	activityID: UUID!
-  # activityType: ActivityType #TODO EASI-3925 #Maybe add this on this level so the FE doesn't need to query it? //TODO EASI-3925
-	userID: UUID! #probably not needed, it should be only visible for the user
+	userID: UUID!
   isRead: Boolean!
   inAppSent: Boolean!
   emailSent: Boolean!
-  activity: Activity! # should we nest this?
+  activity: Activity!
 
 
   createdBy: UUID!
@@ -18152,276 +18156,6 @@ func (ec *executionContext) fieldContext_ModelPlan_operationalNeeds(ctx context.
 	return fc, nil
 }
 
-func (ec *executionContext) _Mutation_createModelPlan(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Mutation_createModelPlan(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		directive0 := func(rctx context.Context) (interface{}, error) {
-			ctx = rctx // use context from middleware stack in children
-			return ec.resolvers.Mutation().CreateModelPlan(rctx, fc.Args["modelName"].(string))
-		}
-		directive1 := func(ctx context.Context) (interface{}, error) {
-			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
-			if err != nil {
-				return nil, err
-			}
-			if ec.directives.HasRole == nil {
-				return nil, errors.New("directive hasRole is not implemented")
-			}
-			return ec.directives.HasRole(ctx, nil, directive0, role)
-		}
-
-		tmp, err := directive1(rctx)
-		if err != nil {
-			return nil, graphql.ErrorOnPath(ctx, err)
-		}
-		if tmp == nil {
-			return nil, nil
-		}
-		if data, ok := tmp.(*models.ModelPlan); ok {
-			return data, nil
-		}
-		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/cmsgov/mint-app/pkg/models.ModelPlan`, tmp)
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(*models.ModelPlan)
-	fc.Result = res
-	return ec.marshalNModelPlan2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐModelPlan(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_Mutation_createModelPlan(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "Mutation",
-		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			switch field.Name {
-			case "id":
-				return ec.fieldContext_ModelPlan_id(ctx, field)
-			case "modelName":
-				return ec.fieldContext_ModelPlan_modelName(ctx, field)
-			case "abbreviation":
-				return ec.fieldContext_ModelPlan_abbreviation(ctx, field)
-			case "archived":
-				return ec.fieldContext_ModelPlan_archived(ctx, field)
-			case "createdBy":
-				return ec.fieldContext_ModelPlan_createdBy(ctx, field)
-			case "createdByUserAccount":
-				return ec.fieldContext_ModelPlan_createdByUserAccount(ctx, field)
-			case "createdDts":
-				return ec.fieldContext_ModelPlan_createdDts(ctx, field)
-			case "modifiedBy":
-				return ec.fieldContext_ModelPlan_modifiedBy(ctx, field)
-			case "modifiedByUserAccount":
-				return ec.fieldContext_ModelPlan_modifiedByUserAccount(ctx, field)
-			case "modifiedDts":
-				return ec.fieldContext_ModelPlan_modifiedDts(ctx, field)
-			case "basics":
-				return ec.fieldContext_ModelPlan_basics(ctx, field)
-			case "generalCharacteristics":
-				return ec.fieldContext_ModelPlan_generalCharacteristics(ctx, field)
-			case "participantsAndProviders":
-				return ec.fieldContext_ModelPlan_participantsAndProviders(ctx, field)
-			case "beneficiaries":
-				return ec.fieldContext_ModelPlan_beneficiaries(ctx, field)
-			case "opsEvalAndLearning":
-				return ec.fieldContext_ModelPlan_opsEvalAndLearning(ctx, field)
-			case "collaborators":
-				return ec.fieldContext_ModelPlan_collaborators(ctx, field)
-			case "documents":
-				return ec.fieldContext_ModelPlan_documents(ctx, field)
-			case "discussions":
-				return ec.fieldContext_ModelPlan_discussions(ctx, field)
-			case "payments":
-				return ec.fieldContext_ModelPlan_payments(ctx, field)
-			case "status":
-				return ec.fieldContext_ModelPlan_status(ctx, field)
-			case "isFavorite":
-				return ec.fieldContext_ModelPlan_isFavorite(ctx, field)
-			case "isCollaborator":
-				return ec.fieldContext_ModelPlan_isCollaborator(ctx, field)
-			case "crs":
-				return ec.fieldContext_ModelPlan_crs(ctx, field)
-			case "tdls":
-				return ec.fieldContext_ModelPlan_tdls(ctx, field)
-			case "prepareForClearance":
-				return ec.fieldContext_ModelPlan_prepareForClearance(ctx, field)
-			case "nameHistory":
-				return ec.fieldContext_ModelPlan_nameHistory(ctx, field)
-			case "operationalNeeds":
-				return ec.fieldContext_ModelPlan_operationalNeeds(ctx, field)
-			}
-			return nil, fmt.Errorf("no field named %q was found under type ModelPlan", field.Name)
-		},
-	}
-	defer func() {
-		if r := recover(); r != nil {
-			err = ec.Recover(ctx, r)
-			ec.Error(ctx, err)
-		}
-	}()
-	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Mutation_createModelPlan_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
-		ec.Error(ctx, err)
-		return fc, err
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _Mutation_updateModelPlan(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Mutation_updateModelPlan(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		directive0 := func(rctx context.Context) (interface{}, error) {
-			ctx = rctx // use context from middleware stack in children
-			return ec.resolvers.Mutation().UpdateModelPlan(rctx, fc.Args["id"].(uuid.UUID), fc.Args["changes"].(map[string]interface{}))
-		}
-		directive1 := func(ctx context.Context) (interface{}, error) {
-			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
-			if err != nil {
-				return nil, err
-			}
-			if ec.directives.HasRole == nil {
-				return nil, errors.New("directive hasRole is not implemented")
-			}
-			return ec.directives.HasRole(ctx, nil, directive0, role)
-		}
-
-		tmp, err := directive1(rctx)
-		if err != nil {
-			return nil, graphql.ErrorOnPath(ctx, err)
-		}
-		if tmp == nil {
-			return nil, nil
-		}
-		if data, ok := tmp.(*models.ModelPlan); ok {
-			return data, nil
-		}
-		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/cmsgov/mint-app/pkg/models.ModelPlan`, tmp)
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(*models.ModelPlan)
-	fc.Result = res
-	return ec.marshalNModelPlan2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐModelPlan(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_Mutation_updateModelPlan(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "Mutation",
-		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			switch field.Name {
-			case "id":
-				return ec.fieldContext_ModelPlan_id(ctx, field)
-			case "modelName":
-				return ec.fieldContext_ModelPlan_modelName(ctx, field)
-			case "abbreviation":
-				return ec.fieldContext_ModelPlan_abbreviation(ctx, field)
-			case "archived":
-				return ec.fieldContext_ModelPlan_archived(ctx, field)
-			case "createdBy":
-				return ec.fieldContext_ModelPlan_createdBy(ctx, field)
-			case "createdByUserAccount":
-				return ec.fieldContext_ModelPlan_createdByUserAccount(ctx, field)
-			case "createdDts":
-				return ec.fieldContext_ModelPlan_createdDts(ctx, field)
-			case "modifiedBy":
-				return ec.fieldContext_ModelPlan_modifiedBy(ctx, field)
-			case "modifiedByUserAccount":
-				return ec.fieldContext_ModelPlan_modifiedByUserAccount(ctx, field)
-			case "modifiedDts":
-				return ec.fieldContext_ModelPlan_modifiedDts(ctx, field)
-			case "basics":
-				return ec.fieldContext_ModelPlan_basics(ctx, field)
-			case "generalCharacteristics":
-				return ec.fieldContext_ModelPlan_generalCharacteristics(ctx, field)
-			case "participantsAndProviders":
-				return ec.fieldContext_ModelPlan_participantsAndProviders(ctx, field)
-			case "beneficiaries":
-				return ec.fieldContext_ModelPlan_beneficiaries(ctx, field)
-			case "opsEvalAndLearning":
-				return ec.fieldContext_ModelPlan_opsEvalAndLearning(ctx, field)
-			case "collaborators":
-				return ec.fieldContext_ModelPlan_collaborators(ctx, field)
-			case "documents":
-				return ec.fieldContext_ModelPlan_documents(ctx, field)
-			case "discussions":
-				return ec.fieldContext_ModelPlan_discussions(ctx, field)
-			case "payments":
-				return ec.fieldContext_ModelPlan_payments(ctx, field)
-			case "status":
-				return ec.fieldContext_ModelPlan_status(ctx, field)
-			case "isFavorite":
-				return ec.fieldContext_ModelPlan_isFavorite(ctx, field)
-			case "isCollaborator":
-				return ec.fieldContext_ModelPlan_isCollaborator(ctx, field)
-			case "crs":
-				return ec.fieldContext_ModelPlan_crs(ctx, field)
-			case "tdls":
-				return ec.fieldContext_ModelPlan_tdls(ctx, field)
-			case "prepareForClearance":
-				return ec.fieldContext_ModelPlan_prepareForClearance(ctx, field)
-			case "nameHistory":
-				return ec.fieldContext_ModelPlan_nameHistory(ctx, field)
-			case "operationalNeeds":
-				return ec.fieldContext_ModelPlan_operationalNeeds(ctx, field)
-			}
-			return nil, fmt.Errorf("no field named %q was found under type ModelPlan", field.Name)
-		},
-	}
-	defer func() {
-		if r := recover(); r != nil {
-			err = ec.Recover(ctx, r)
-			ec.Error(ctx, err)
-		}
-	}()
-	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Mutation_updateModelPlan_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
-		ec.Error(ctx, err)
-		return fc, err
-	}
-	return fc, nil
-}
-
 func (ec *executionContext) _Mutation_createPlanCollaborator(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_Mutation_createPlanCollaborator(ctx, field)
 	if err != nil {
@@ -18725,257 +18459,6 @@ func (ec *executionContext) fieldContext_Mutation_deletePlanCollaborator(ctx con
 	}()
 	ctx = graphql.WithFieldContext(ctx, fc)
 	if fc.Args, err = ec.field_Mutation_deletePlanCollaborator_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
-		ec.Error(ctx, err)
-		return fc, err
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _Mutation_updatePlanGeneralCharacteristics(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Mutation_updatePlanGeneralCharacteristics(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		directive0 := func(rctx context.Context) (interface{}, error) {
-			ctx = rctx // use context from middleware stack in children
-			return ec.resolvers.Mutation().UpdatePlanGeneralCharacteristics(rctx, fc.Args["id"].(uuid.UUID), fc.Args["changes"].(map[string]interface{}))
-		}
-		directive1 := func(ctx context.Context) (interface{}, error) {
-			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
-			if err != nil {
-				return nil, err
-			}
-			if ec.directives.HasRole == nil {
-				return nil, errors.New("directive hasRole is not implemented")
-			}
-			return ec.directives.HasRole(ctx, nil, directive0, role)
-		}
-
-		tmp, err := directive1(rctx)
-		if err != nil {
-			return nil, graphql.ErrorOnPath(ctx, err)
-		}
-		if tmp == nil {
-			return nil, nil
-		}
-		if data, ok := tmp.(*models.PlanGeneralCharacteristics); ok {
-			return data, nil
-		}
-		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/cmsgov/mint-app/pkg/models.PlanGeneralCharacteristics`, tmp)
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(*models.PlanGeneralCharacteristics)
-	fc.Result = res
-	return ec.marshalNPlanGeneralCharacteristics2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanGeneralCharacteristics(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_Mutation_updatePlanGeneralCharacteristics(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "Mutation",
-		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			switch field.Name {
-			case "id":
-				return ec.fieldContext_PlanGeneralCharacteristics_id(ctx, field)
-			case "modelPlanID":
-				return ec.fieldContext_PlanGeneralCharacteristics_modelPlanID(ctx, field)
-			case "isNewModel":
-				return ec.fieldContext_PlanGeneralCharacteristics_isNewModel(ctx, field)
-			case "existingModel":
-				return ec.fieldContext_PlanGeneralCharacteristics_existingModel(ctx, field)
-			case "currentModelPlanID":
-				return ec.fieldContext_PlanGeneralCharacteristics_currentModelPlanID(ctx, field)
-			case "currentModelPlan":
-				return ec.fieldContext_PlanGeneralCharacteristics_currentModelPlan(ctx, field)
-			case "existingModelID":
-				return ec.fieldContext_PlanGeneralCharacteristics_existingModelID(ctx, field)
-			case "existingModelPlan":
-				return ec.fieldContext_PlanGeneralCharacteristics_existingModelPlan(ctx, field)
-			case "resemblesExistingModel":
-				return ec.fieldContext_PlanGeneralCharacteristics_resemblesExistingModel(ctx, field)
-			case "resemblesExistingModelWhyHow":
-				return ec.fieldContext_PlanGeneralCharacteristics_resemblesExistingModelWhyHow(ctx, field)
-			case "resemblesExistingModelOtherSpecify":
-				return ec.fieldContext_PlanGeneralCharacteristics_resemblesExistingModelOtherSpecify(ctx, field)
-			case "resemblesExistingModelOtherSelected":
-				return ec.fieldContext_PlanGeneralCharacteristics_resemblesExistingModelOtherSelected(ctx, field)
-			case "resemblesExistingModelOtherOption":
-				return ec.fieldContext_PlanGeneralCharacteristics_resemblesExistingModelOtherOption(ctx, field)
-			case "resemblesExistingModelHow":
-				return ec.fieldContext_PlanGeneralCharacteristics_resemblesExistingModelHow(ctx, field)
-			case "resemblesExistingModelNote":
-				return ec.fieldContext_PlanGeneralCharacteristics_resemblesExistingModelNote(ctx, field)
-			case "resemblesExistingModelWhich":
-				return ec.fieldContext_PlanGeneralCharacteristics_resemblesExistingModelWhich(ctx, field)
-			case "participationInModelPrecondition":
-				return ec.fieldContext_PlanGeneralCharacteristics_participationInModelPrecondition(ctx, field)
-			case "participationInModelPreconditionWhyHow":
-				return ec.fieldContext_PlanGeneralCharacteristics_participationInModelPreconditionWhyHow(ctx, field)
-			case "participationInModelPreconditionOtherSpecify":
-				return ec.fieldContext_PlanGeneralCharacteristics_participationInModelPreconditionOtherSpecify(ctx, field)
-			case "participationInModelPreconditionOtherSelected":
-				return ec.fieldContext_PlanGeneralCharacteristics_participationInModelPreconditionOtherSelected(ctx, field)
-			case "participationInModelPreconditionOtherOption":
-				return ec.fieldContext_PlanGeneralCharacteristics_participationInModelPreconditionOtherOption(ctx, field)
-			case "participationInModelPreconditionNote":
-				return ec.fieldContext_PlanGeneralCharacteristics_participationInModelPreconditionNote(ctx, field)
-			case "participationInModelPreconditionWhich":
-				return ec.fieldContext_PlanGeneralCharacteristics_participationInModelPreconditionWhich(ctx, field)
-			case "hasComponentsOrTracks":
-				return ec.fieldContext_PlanGeneralCharacteristics_hasComponentsOrTracks(ctx, field)
-			case "hasComponentsOrTracksDiffer":
-				return ec.fieldContext_PlanGeneralCharacteristics_hasComponentsOrTracksDiffer(ctx, field)
-			case "hasComponentsOrTracksNote":
-				return ec.fieldContext_PlanGeneralCharacteristics_hasComponentsOrTracksNote(ctx, field)
-			case "agencyOrStateHelp":
-				return ec.fieldContext_PlanGeneralCharacteristics_agencyOrStateHelp(ctx, field)
-			case "agencyOrStateHelpOther":
-				return ec.fieldContext_PlanGeneralCharacteristics_agencyOrStateHelpOther(ctx, field)
-			case "agencyOrStateHelpNote":
-				return ec.fieldContext_PlanGeneralCharacteristics_agencyOrStateHelpNote(ctx, field)
-			case "alternativePaymentModelTypes":
-				return ec.fieldContext_PlanGeneralCharacteristics_alternativePaymentModelTypes(ctx, field)
-			case "alternativePaymentModelNote":
-				return ec.fieldContext_PlanGeneralCharacteristics_alternativePaymentModelNote(ctx, field)
-			case "keyCharacteristics":
-				return ec.fieldContext_PlanGeneralCharacteristics_keyCharacteristics(ctx, field)
-			case "keyCharacteristicsOther":
-				return ec.fieldContext_PlanGeneralCharacteristics_keyCharacteristicsOther(ctx, field)
-			case "keyCharacteristicsNote":
-				return ec.fieldContext_PlanGeneralCharacteristics_keyCharacteristicsNote(ctx, field)
-			case "collectPlanBids":
-				return ec.fieldContext_PlanGeneralCharacteristics_collectPlanBids(ctx, field)
-			case "collectPlanBidsNote":
-				return ec.fieldContext_PlanGeneralCharacteristics_collectPlanBidsNote(ctx, field)
-			case "managePartCDEnrollment":
-				return ec.fieldContext_PlanGeneralCharacteristics_managePartCDEnrollment(ctx, field)
-			case "managePartCDEnrollmentNote":
-				return ec.fieldContext_PlanGeneralCharacteristics_managePartCDEnrollmentNote(ctx, field)
-			case "planContractUpdated":
-				return ec.fieldContext_PlanGeneralCharacteristics_planContractUpdated(ctx, field)
-			case "planContractUpdatedNote":
-				return ec.fieldContext_PlanGeneralCharacteristics_planContractUpdatedNote(ctx, field)
-			case "careCoordinationInvolved":
-				return ec.fieldContext_PlanGeneralCharacteristics_careCoordinationInvolved(ctx, field)
-			case "careCoordinationInvolvedDescription":
-				return ec.fieldContext_PlanGeneralCharacteristics_careCoordinationInvolvedDescription(ctx, field)
-			case "careCoordinationInvolvedNote":
-				return ec.fieldContext_PlanGeneralCharacteristics_careCoordinationInvolvedNote(ctx, field)
-			case "additionalServicesInvolved":
-				return ec.fieldContext_PlanGeneralCharacteristics_additionalServicesInvolved(ctx, field)
-			case "additionalServicesInvolvedDescription":
-				return ec.fieldContext_PlanGeneralCharacteristics_additionalServicesInvolvedDescription(ctx, field)
-			case "additionalServicesInvolvedNote":
-				return ec.fieldContext_PlanGeneralCharacteristics_additionalServicesInvolvedNote(ctx, field)
-			case "communityPartnersInvolved":
-				return ec.fieldContext_PlanGeneralCharacteristics_communityPartnersInvolved(ctx, field)
-			case "communityPartnersInvolvedDescription":
-				return ec.fieldContext_PlanGeneralCharacteristics_communityPartnersInvolvedDescription(ctx, field)
-			case "communityPartnersInvolvedNote":
-				return ec.fieldContext_PlanGeneralCharacteristics_communityPartnersInvolvedNote(ctx, field)
-			case "geographiesTargeted":
-				return ec.fieldContext_PlanGeneralCharacteristics_geographiesTargeted(ctx, field)
-			case "geographiesTargetedTypes":
-				return ec.fieldContext_PlanGeneralCharacteristics_geographiesTargetedTypes(ctx, field)
-			case "geographiesStatesAndTerritories":
-				return ec.fieldContext_PlanGeneralCharacteristics_geographiesStatesAndTerritories(ctx, field)
-			case "geographiesRegionTypes":
-				return ec.fieldContext_PlanGeneralCharacteristics_geographiesRegionTypes(ctx, field)
-			case "geographiesTargetedTypesOther":
-				return ec.fieldContext_PlanGeneralCharacteristics_geographiesTargetedTypesOther(ctx, field)
-			case "geographiesTargetedAppliedTo":
-				return ec.fieldContext_PlanGeneralCharacteristics_geographiesTargetedAppliedTo(ctx, field)
-			case "geographiesTargetedAppliedToOther":
-				return ec.fieldContext_PlanGeneralCharacteristics_geographiesTargetedAppliedToOther(ctx, field)
-			case "geographiesTargetedNote":
-				return ec.fieldContext_PlanGeneralCharacteristics_geographiesTargetedNote(ctx, field)
-			case "participationOptions":
-				return ec.fieldContext_PlanGeneralCharacteristics_participationOptions(ctx, field)
-			case "participationOptionsNote":
-				return ec.fieldContext_PlanGeneralCharacteristics_participationOptionsNote(ctx, field)
-			case "agreementTypes":
-				return ec.fieldContext_PlanGeneralCharacteristics_agreementTypes(ctx, field)
-			case "agreementTypesOther":
-				return ec.fieldContext_PlanGeneralCharacteristics_agreementTypesOther(ctx, field)
-			case "multiplePatricipationAgreementsNeeded":
-				return ec.fieldContext_PlanGeneralCharacteristics_multiplePatricipationAgreementsNeeded(ctx, field)
-			case "multiplePatricipationAgreementsNeededNote":
-				return ec.fieldContext_PlanGeneralCharacteristics_multiplePatricipationAgreementsNeededNote(ctx, field)
-			case "rulemakingRequired":
-				return ec.fieldContext_PlanGeneralCharacteristics_rulemakingRequired(ctx, field)
-			case "rulemakingRequiredDescription":
-				return ec.fieldContext_PlanGeneralCharacteristics_rulemakingRequiredDescription(ctx, field)
-			case "rulemakingRequiredNote":
-				return ec.fieldContext_PlanGeneralCharacteristics_rulemakingRequiredNote(ctx, field)
-			case "authorityAllowances":
-				return ec.fieldContext_PlanGeneralCharacteristics_authorityAllowances(ctx, field)
-			case "authorityAllowancesOther":
-				return ec.fieldContext_PlanGeneralCharacteristics_authorityAllowancesOther(ctx, field)
-			case "authorityAllowancesNote":
-				return ec.fieldContext_PlanGeneralCharacteristics_authorityAllowancesNote(ctx, field)
-			case "waiversRequired":
-				return ec.fieldContext_PlanGeneralCharacteristics_waiversRequired(ctx, field)
-			case "waiversRequiredTypes":
-				return ec.fieldContext_PlanGeneralCharacteristics_waiversRequiredTypes(ctx, field)
-			case "waiversRequiredNote":
-				return ec.fieldContext_PlanGeneralCharacteristics_waiversRequiredNote(ctx, field)
-			case "createdBy":
-				return ec.fieldContext_PlanGeneralCharacteristics_createdBy(ctx, field)
-			case "createdByUserAccount":
-				return ec.fieldContext_PlanGeneralCharacteristics_createdByUserAccount(ctx, field)
-			case "createdDts":
-				return ec.fieldContext_PlanGeneralCharacteristics_createdDts(ctx, field)
-			case "modifiedBy":
-				return ec.fieldContext_PlanGeneralCharacteristics_modifiedBy(ctx, field)
-			case "modifiedByUserAccount":
-				return ec.fieldContext_PlanGeneralCharacteristics_modifiedByUserAccount(ctx, field)
-			case "modifiedDts":
-				return ec.fieldContext_PlanGeneralCharacteristics_modifiedDts(ctx, field)
-			case "readyForReviewBy":
-				return ec.fieldContext_PlanGeneralCharacteristics_readyForReviewBy(ctx, field)
-			case "readyForReviewByUserAccount":
-				return ec.fieldContext_PlanGeneralCharacteristics_readyForReviewByUserAccount(ctx, field)
-			case "readyForReviewDts":
-				return ec.fieldContext_PlanGeneralCharacteristics_readyForReviewDts(ctx, field)
-			case "readyForClearanceBy":
-				return ec.fieldContext_PlanGeneralCharacteristics_readyForClearanceBy(ctx, field)
-			case "readyForClearanceByUserAccount":
-				return ec.fieldContext_PlanGeneralCharacteristics_readyForClearanceByUserAccount(ctx, field)
-			case "readyForClearanceDts":
-				return ec.fieldContext_PlanGeneralCharacteristics_readyForClearanceDts(ctx, field)
-			case "status":
-				return ec.fieldContext_PlanGeneralCharacteristics_status(ctx, field)
-			}
-			return nil, fmt.Errorf("no field named %q was found under type PlanGeneralCharacteristics", field.Name)
-		},
-	}
-	defer func() {
-		if r := recover(); r != nil {
-			err = ec.Recover(ctx, r)
-			ec.Error(ctx, err)
-		}
-	}()
-	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Mutation_updatePlanGeneralCharacteristics_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
 		ec.Error(ctx, err)
 		return fc, err
 	}
@@ -22371,85 +21854,6 @@ func (ec *executionContext) fieldContext_Mutation_updateExistingModelLinks(ctx c
 	return fc, nil
 }
 
-func (ec *executionContext) _Mutation_shareModelPlan(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Mutation_shareModelPlan(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		directive0 := func(rctx context.Context) (interface{}, error) {
-			ctx = rctx // use context from middleware stack in children
-			return ec.resolvers.Mutation().ShareModelPlan(rctx, fc.Args["modelPlanID"].(uuid.UUID), fc.Args["viewFilter"].(*models.ModelViewFilter), fc.Args["usernames"].([]string), fc.Args["optionalMessage"].(*string))
-		}
-		directive1 := func(ctx context.Context) (interface{}, error) {
-			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
-			if err != nil {
-				return nil, err
-			}
-			if ec.directives.HasRole == nil {
-				return nil, errors.New("directive hasRole is not implemented")
-			}
-			return ec.directives.HasRole(ctx, nil, directive0, role)
-		}
-
-		tmp, err := directive1(rctx)
-		if err != nil {
-			return nil, graphql.ErrorOnPath(ctx, err)
-		}
-		if tmp == nil {
-			return nil, nil
-		}
-		if data, ok := tmp.(bool); ok {
-			return data, nil
-		}
-		return nil, fmt.Errorf(`unexpected type %T from directive, should be bool`, tmp)
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(bool)
-	fc.Result = res
-	return ec.marshalNBoolean2bool(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_Mutation_shareModelPlan(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "Mutation",
-		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type Boolean does not have child fields")
-		},
-	}
-	defer func() {
-		if r := recover(); r != nil {
-			err = ec.Recover(ctx, r)
-			ec.Error(ctx, err)
-		}
-	}()
-	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Mutation_shareModelPlan_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
-		ec.Error(ctx, err)
-		return fc, err
-	}
-	return fc, nil
-}
-
 func (ec *executionContext) _Mutation_reportAProblem(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_Mutation_reportAProblem(ctx, field)
 	if err != nil {
@@ -22578,6 +21982,355 @@ func (ec *executionContext) fieldContext_Mutation_sendFeedbackEmail(ctx context.
 	}()
 	ctx = graphql.WithFieldContext(ctx, fc)
 	if fc.Args, err = ec.field_Mutation_sendFeedbackEmail_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Mutation_createModelPlan(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Mutation_createModelPlan(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		directive0 := func(rctx context.Context) (interface{}, error) {
+			ctx = rctx // use context from middleware stack in children
+			return ec.resolvers.Mutation().CreateModelPlan(rctx, fc.Args["modelName"].(string))
+		}
+		directive1 := func(ctx context.Context) (interface{}, error) {
+			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
+			if err != nil {
+				return nil, err
+			}
+			if ec.directives.HasRole == nil {
+				return nil, errors.New("directive hasRole is not implemented")
+			}
+			return ec.directives.HasRole(ctx, nil, directive0, role)
+		}
+
+		tmp, err := directive1(rctx)
+		if err != nil {
+			return nil, graphql.ErrorOnPath(ctx, err)
+		}
+		if tmp == nil {
+			return nil, nil
+		}
+		if data, ok := tmp.(*models.ModelPlan); ok {
+			return data, nil
+		}
+		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/cmsgov/mint-app/pkg/models.ModelPlan`, tmp)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*models.ModelPlan)
+	fc.Result = res
+	return ec.marshalNModelPlan2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐModelPlan(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Mutation_createModelPlan(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Mutation",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_ModelPlan_id(ctx, field)
+			case "modelName":
+				return ec.fieldContext_ModelPlan_modelName(ctx, field)
+			case "abbreviation":
+				return ec.fieldContext_ModelPlan_abbreviation(ctx, field)
+			case "archived":
+				return ec.fieldContext_ModelPlan_archived(ctx, field)
+			case "createdBy":
+				return ec.fieldContext_ModelPlan_createdBy(ctx, field)
+			case "createdByUserAccount":
+				return ec.fieldContext_ModelPlan_createdByUserAccount(ctx, field)
+			case "createdDts":
+				return ec.fieldContext_ModelPlan_createdDts(ctx, field)
+			case "modifiedBy":
+				return ec.fieldContext_ModelPlan_modifiedBy(ctx, field)
+			case "modifiedByUserAccount":
+				return ec.fieldContext_ModelPlan_modifiedByUserAccount(ctx, field)
+			case "modifiedDts":
+				return ec.fieldContext_ModelPlan_modifiedDts(ctx, field)
+			case "basics":
+				return ec.fieldContext_ModelPlan_basics(ctx, field)
+			case "generalCharacteristics":
+				return ec.fieldContext_ModelPlan_generalCharacteristics(ctx, field)
+			case "participantsAndProviders":
+				return ec.fieldContext_ModelPlan_participantsAndProviders(ctx, field)
+			case "beneficiaries":
+				return ec.fieldContext_ModelPlan_beneficiaries(ctx, field)
+			case "opsEvalAndLearning":
+				return ec.fieldContext_ModelPlan_opsEvalAndLearning(ctx, field)
+			case "collaborators":
+				return ec.fieldContext_ModelPlan_collaborators(ctx, field)
+			case "documents":
+				return ec.fieldContext_ModelPlan_documents(ctx, field)
+			case "discussions":
+				return ec.fieldContext_ModelPlan_discussions(ctx, field)
+			case "payments":
+				return ec.fieldContext_ModelPlan_payments(ctx, field)
+			case "status":
+				return ec.fieldContext_ModelPlan_status(ctx, field)
+			case "isFavorite":
+				return ec.fieldContext_ModelPlan_isFavorite(ctx, field)
+			case "isCollaborator":
+				return ec.fieldContext_ModelPlan_isCollaborator(ctx, field)
+			case "crs":
+				return ec.fieldContext_ModelPlan_crs(ctx, field)
+			case "tdls":
+				return ec.fieldContext_ModelPlan_tdls(ctx, field)
+			case "prepareForClearance":
+				return ec.fieldContext_ModelPlan_prepareForClearance(ctx, field)
+			case "nameHistory":
+				return ec.fieldContext_ModelPlan_nameHistory(ctx, field)
+			case "operationalNeeds":
+				return ec.fieldContext_ModelPlan_operationalNeeds(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type ModelPlan", field.Name)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Mutation_createModelPlan_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Mutation_updateModelPlan(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Mutation_updateModelPlan(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		directive0 := func(rctx context.Context) (interface{}, error) {
+			ctx = rctx // use context from middleware stack in children
+			return ec.resolvers.Mutation().UpdateModelPlan(rctx, fc.Args["id"].(uuid.UUID), fc.Args["changes"].(map[string]interface{}))
+		}
+		directive1 := func(ctx context.Context) (interface{}, error) {
+			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
+			if err != nil {
+				return nil, err
+			}
+			if ec.directives.HasRole == nil {
+				return nil, errors.New("directive hasRole is not implemented")
+			}
+			return ec.directives.HasRole(ctx, nil, directive0, role)
+		}
+
+		tmp, err := directive1(rctx)
+		if err != nil {
+			return nil, graphql.ErrorOnPath(ctx, err)
+		}
+		if tmp == nil {
+			return nil, nil
+		}
+		if data, ok := tmp.(*models.ModelPlan); ok {
+			return data, nil
+		}
+		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/cmsgov/mint-app/pkg/models.ModelPlan`, tmp)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*models.ModelPlan)
+	fc.Result = res
+	return ec.marshalNModelPlan2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐModelPlan(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Mutation_updateModelPlan(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Mutation",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_ModelPlan_id(ctx, field)
+			case "modelName":
+				return ec.fieldContext_ModelPlan_modelName(ctx, field)
+			case "abbreviation":
+				return ec.fieldContext_ModelPlan_abbreviation(ctx, field)
+			case "archived":
+				return ec.fieldContext_ModelPlan_archived(ctx, field)
+			case "createdBy":
+				return ec.fieldContext_ModelPlan_createdBy(ctx, field)
+			case "createdByUserAccount":
+				return ec.fieldContext_ModelPlan_createdByUserAccount(ctx, field)
+			case "createdDts":
+				return ec.fieldContext_ModelPlan_createdDts(ctx, field)
+			case "modifiedBy":
+				return ec.fieldContext_ModelPlan_modifiedBy(ctx, field)
+			case "modifiedByUserAccount":
+				return ec.fieldContext_ModelPlan_modifiedByUserAccount(ctx, field)
+			case "modifiedDts":
+				return ec.fieldContext_ModelPlan_modifiedDts(ctx, field)
+			case "basics":
+				return ec.fieldContext_ModelPlan_basics(ctx, field)
+			case "generalCharacteristics":
+				return ec.fieldContext_ModelPlan_generalCharacteristics(ctx, field)
+			case "participantsAndProviders":
+				return ec.fieldContext_ModelPlan_participantsAndProviders(ctx, field)
+			case "beneficiaries":
+				return ec.fieldContext_ModelPlan_beneficiaries(ctx, field)
+			case "opsEvalAndLearning":
+				return ec.fieldContext_ModelPlan_opsEvalAndLearning(ctx, field)
+			case "collaborators":
+				return ec.fieldContext_ModelPlan_collaborators(ctx, field)
+			case "documents":
+				return ec.fieldContext_ModelPlan_documents(ctx, field)
+			case "discussions":
+				return ec.fieldContext_ModelPlan_discussions(ctx, field)
+			case "payments":
+				return ec.fieldContext_ModelPlan_payments(ctx, field)
+			case "status":
+				return ec.fieldContext_ModelPlan_status(ctx, field)
+			case "isFavorite":
+				return ec.fieldContext_ModelPlan_isFavorite(ctx, field)
+			case "isCollaborator":
+				return ec.fieldContext_ModelPlan_isCollaborator(ctx, field)
+			case "crs":
+				return ec.fieldContext_ModelPlan_crs(ctx, field)
+			case "tdls":
+				return ec.fieldContext_ModelPlan_tdls(ctx, field)
+			case "prepareForClearance":
+				return ec.fieldContext_ModelPlan_prepareForClearance(ctx, field)
+			case "nameHistory":
+				return ec.fieldContext_ModelPlan_nameHistory(ctx, field)
+			case "operationalNeeds":
+				return ec.fieldContext_ModelPlan_operationalNeeds(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type ModelPlan", field.Name)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Mutation_updateModelPlan_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Mutation_shareModelPlan(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Mutation_shareModelPlan(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		directive0 := func(rctx context.Context) (interface{}, error) {
+			ctx = rctx // use context from middleware stack in children
+			return ec.resolvers.Mutation().ShareModelPlan(rctx, fc.Args["modelPlanID"].(uuid.UUID), fc.Args["viewFilter"].(*models.ModelViewFilter), fc.Args["usernames"].([]string), fc.Args["optionalMessage"].(*string))
+		}
+		directive1 := func(ctx context.Context) (interface{}, error) {
+			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
+			if err != nil {
+				return nil, err
+			}
+			if ec.directives.HasRole == nil {
+				return nil, errors.New("directive hasRole is not implemented")
+			}
+			return ec.directives.HasRole(ctx, nil, directive0, role)
+		}
+
+		tmp, err := directive1(rctx)
+		if err != nil {
+			return nil, graphql.ErrorOnPath(ctx, err)
+		}
+		if tmp == nil {
+			return nil, nil
+		}
+		if data, ok := tmp.(bool); ok {
+			return data, nil
+		}
+		return nil, fmt.Errorf(`unexpected type %T from directive, should be bool`, tmp)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(bool)
+	fc.Result = res
+	return ec.marshalNBoolean2bool(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Mutation_shareModelPlan(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Mutation",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Boolean does not have child fields")
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Mutation_shareModelPlan_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
 		ec.Error(ctx, err)
 		return fc, err
 	}
@@ -22737,6 +22490,257 @@ func (ec *executionContext) fieldContext_Mutation_updatePlanBasics(ctx context.C
 	}()
 	ctx = graphql.WithFieldContext(ctx, fc)
 	if fc.Args, err = ec.field_Mutation_updatePlanBasics_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Mutation_updatePlanGeneralCharacteristics(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Mutation_updatePlanGeneralCharacteristics(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		directive0 := func(rctx context.Context) (interface{}, error) {
+			ctx = rctx // use context from middleware stack in children
+			return ec.resolvers.Mutation().UpdatePlanGeneralCharacteristics(rctx, fc.Args["id"].(uuid.UUID), fc.Args["changes"].(map[string]interface{}))
+		}
+		directive1 := func(ctx context.Context) (interface{}, error) {
+			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
+			if err != nil {
+				return nil, err
+			}
+			if ec.directives.HasRole == nil {
+				return nil, errors.New("directive hasRole is not implemented")
+			}
+			return ec.directives.HasRole(ctx, nil, directive0, role)
+		}
+
+		tmp, err := directive1(rctx)
+		if err != nil {
+			return nil, graphql.ErrorOnPath(ctx, err)
+		}
+		if tmp == nil {
+			return nil, nil
+		}
+		if data, ok := tmp.(*models.PlanGeneralCharacteristics); ok {
+			return data, nil
+		}
+		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/cmsgov/mint-app/pkg/models.PlanGeneralCharacteristics`, tmp)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*models.PlanGeneralCharacteristics)
+	fc.Result = res
+	return ec.marshalNPlanGeneralCharacteristics2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanGeneralCharacteristics(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Mutation_updatePlanGeneralCharacteristics(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Mutation",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_PlanGeneralCharacteristics_id(ctx, field)
+			case "modelPlanID":
+				return ec.fieldContext_PlanGeneralCharacteristics_modelPlanID(ctx, field)
+			case "isNewModel":
+				return ec.fieldContext_PlanGeneralCharacteristics_isNewModel(ctx, field)
+			case "existingModel":
+				return ec.fieldContext_PlanGeneralCharacteristics_existingModel(ctx, field)
+			case "currentModelPlanID":
+				return ec.fieldContext_PlanGeneralCharacteristics_currentModelPlanID(ctx, field)
+			case "currentModelPlan":
+				return ec.fieldContext_PlanGeneralCharacteristics_currentModelPlan(ctx, field)
+			case "existingModelID":
+				return ec.fieldContext_PlanGeneralCharacteristics_existingModelID(ctx, field)
+			case "existingModelPlan":
+				return ec.fieldContext_PlanGeneralCharacteristics_existingModelPlan(ctx, field)
+			case "resemblesExistingModel":
+				return ec.fieldContext_PlanGeneralCharacteristics_resemblesExistingModel(ctx, field)
+			case "resemblesExistingModelWhyHow":
+				return ec.fieldContext_PlanGeneralCharacteristics_resemblesExistingModelWhyHow(ctx, field)
+			case "resemblesExistingModelOtherSpecify":
+				return ec.fieldContext_PlanGeneralCharacteristics_resemblesExistingModelOtherSpecify(ctx, field)
+			case "resemblesExistingModelOtherSelected":
+				return ec.fieldContext_PlanGeneralCharacteristics_resemblesExistingModelOtherSelected(ctx, field)
+			case "resemblesExistingModelOtherOption":
+				return ec.fieldContext_PlanGeneralCharacteristics_resemblesExistingModelOtherOption(ctx, field)
+			case "resemblesExistingModelHow":
+				return ec.fieldContext_PlanGeneralCharacteristics_resemblesExistingModelHow(ctx, field)
+			case "resemblesExistingModelNote":
+				return ec.fieldContext_PlanGeneralCharacteristics_resemblesExistingModelNote(ctx, field)
+			case "resemblesExistingModelWhich":
+				return ec.fieldContext_PlanGeneralCharacteristics_resemblesExistingModelWhich(ctx, field)
+			case "participationInModelPrecondition":
+				return ec.fieldContext_PlanGeneralCharacteristics_participationInModelPrecondition(ctx, field)
+			case "participationInModelPreconditionWhyHow":
+				return ec.fieldContext_PlanGeneralCharacteristics_participationInModelPreconditionWhyHow(ctx, field)
+			case "participationInModelPreconditionOtherSpecify":
+				return ec.fieldContext_PlanGeneralCharacteristics_participationInModelPreconditionOtherSpecify(ctx, field)
+			case "participationInModelPreconditionOtherSelected":
+				return ec.fieldContext_PlanGeneralCharacteristics_participationInModelPreconditionOtherSelected(ctx, field)
+			case "participationInModelPreconditionOtherOption":
+				return ec.fieldContext_PlanGeneralCharacteristics_participationInModelPreconditionOtherOption(ctx, field)
+			case "participationInModelPreconditionNote":
+				return ec.fieldContext_PlanGeneralCharacteristics_participationInModelPreconditionNote(ctx, field)
+			case "participationInModelPreconditionWhich":
+				return ec.fieldContext_PlanGeneralCharacteristics_participationInModelPreconditionWhich(ctx, field)
+			case "hasComponentsOrTracks":
+				return ec.fieldContext_PlanGeneralCharacteristics_hasComponentsOrTracks(ctx, field)
+			case "hasComponentsOrTracksDiffer":
+				return ec.fieldContext_PlanGeneralCharacteristics_hasComponentsOrTracksDiffer(ctx, field)
+			case "hasComponentsOrTracksNote":
+				return ec.fieldContext_PlanGeneralCharacteristics_hasComponentsOrTracksNote(ctx, field)
+			case "agencyOrStateHelp":
+				return ec.fieldContext_PlanGeneralCharacteristics_agencyOrStateHelp(ctx, field)
+			case "agencyOrStateHelpOther":
+				return ec.fieldContext_PlanGeneralCharacteristics_agencyOrStateHelpOther(ctx, field)
+			case "agencyOrStateHelpNote":
+				return ec.fieldContext_PlanGeneralCharacteristics_agencyOrStateHelpNote(ctx, field)
+			case "alternativePaymentModelTypes":
+				return ec.fieldContext_PlanGeneralCharacteristics_alternativePaymentModelTypes(ctx, field)
+			case "alternativePaymentModelNote":
+				return ec.fieldContext_PlanGeneralCharacteristics_alternativePaymentModelNote(ctx, field)
+			case "keyCharacteristics":
+				return ec.fieldContext_PlanGeneralCharacteristics_keyCharacteristics(ctx, field)
+			case "keyCharacteristicsOther":
+				return ec.fieldContext_PlanGeneralCharacteristics_keyCharacteristicsOther(ctx, field)
+			case "keyCharacteristicsNote":
+				return ec.fieldContext_PlanGeneralCharacteristics_keyCharacteristicsNote(ctx, field)
+			case "collectPlanBids":
+				return ec.fieldContext_PlanGeneralCharacteristics_collectPlanBids(ctx, field)
+			case "collectPlanBidsNote":
+				return ec.fieldContext_PlanGeneralCharacteristics_collectPlanBidsNote(ctx, field)
+			case "managePartCDEnrollment":
+				return ec.fieldContext_PlanGeneralCharacteristics_managePartCDEnrollment(ctx, field)
+			case "managePartCDEnrollmentNote":
+				return ec.fieldContext_PlanGeneralCharacteristics_managePartCDEnrollmentNote(ctx, field)
+			case "planContractUpdated":
+				return ec.fieldContext_PlanGeneralCharacteristics_planContractUpdated(ctx, field)
+			case "planContractUpdatedNote":
+				return ec.fieldContext_PlanGeneralCharacteristics_planContractUpdatedNote(ctx, field)
+			case "careCoordinationInvolved":
+				return ec.fieldContext_PlanGeneralCharacteristics_careCoordinationInvolved(ctx, field)
+			case "careCoordinationInvolvedDescription":
+				return ec.fieldContext_PlanGeneralCharacteristics_careCoordinationInvolvedDescription(ctx, field)
+			case "careCoordinationInvolvedNote":
+				return ec.fieldContext_PlanGeneralCharacteristics_careCoordinationInvolvedNote(ctx, field)
+			case "additionalServicesInvolved":
+				return ec.fieldContext_PlanGeneralCharacteristics_additionalServicesInvolved(ctx, field)
+			case "additionalServicesInvolvedDescription":
+				return ec.fieldContext_PlanGeneralCharacteristics_additionalServicesInvolvedDescription(ctx, field)
+			case "additionalServicesInvolvedNote":
+				return ec.fieldContext_PlanGeneralCharacteristics_additionalServicesInvolvedNote(ctx, field)
+			case "communityPartnersInvolved":
+				return ec.fieldContext_PlanGeneralCharacteristics_communityPartnersInvolved(ctx, field)
+			case "communityPartnersInvolvedDescription":
+				return ec.fieldContext_PlanGeneralCharacteristics_communityPartnersInvolvedDescription(ctx, field)
+			case "communityPartnersInvolvedNote":
+				return ec.fieldContext_PlanGeneralCharacteristics_communityPartnersInvolvedNote(ctx, field)
+			case "geographiesTargeted":
+				return ec.fieldContext_PlanGeneralCharacteristics_geographiesTargeted(ctx, field)
+			case "geographiesTargetedTypes":
+				return ec.fieldContext_PlanGeneralCharacteristics_geographiesTargetedTypes(ctx, field)
+			case "geographiesStatesAndTerritories":
+				return ec.fieldContext_PlanGeneralCharacteristics_geographiesStatesAndTerritories(ctx, field)
+			case "geographiesRegionTypes":
+				return ec.fieldContext_PlanGeneralCharacteristics_geographiesRegionTypes(ctx, field)
+			case "geographiesTargetedTypesOther":
+				return ec.fieldContext_PlanGeneralCharacteristics_geographiesTargetedTypesOther(ctx, field)
+			case "geographiesTargetedAppliedTo":
+				return ec.fieldContext_PlanGeneralCharacteristics_geographiesTargetedAppliedTo(ctx, field)
+			case "geographiesTargetedAppliedToOther":
+				return ec.fieldContext_PlanGeneralCharacteristics_geographiesTargetedAppliedToOther(ctx, field)
+			case "geographiesTargetedNote":
+				return ec.fieldContext_PlanGeneralCharacteristics_geographiesTargetedNote(ctx, field)
+			case "participationOptions":
+				return ec.fieldContext_PlanGeneralCharacteristics_participationOptions(ctx, field)
+			case "participationOptionsNote":
+				return ec.fieldContext_PlanGeneralCharacteristics_participationOptionsNote(ctx, field)
+			case "agreementTypes":
+				return ec.fieldContext_PlanGeneralCharacteristics_agreementTypes(ctx, field)
+			case "agreementTypesOther":
+				return ec.fieldContext_PlanGeneralCharacteristics_agreementTypesOther(ctx, field)
+			case "multiplePatricipationAgreementsNeeded":
+				return ec.fieldContext_PlanGeneralCharacteristics_multiplePatricipationAgreementsNeeded(ctx, field)
+			case "multiplePatricipationAgreementsNeededNote":
+				return ec.fieldContext_PlanGeneralCharacteristics_multiplePatricipationAgreementsNeededNote(ctx, field)
+			case "rulemakingRequired":
+				return ec.fieldContext_PlanGeneralCharacteristics_rulemakingRequired(ctx, field)
+			case "rulemakingRequiredDescription":
+				return ec.fieldContext_PlanGeneralCharacteristics_rulemakingRequiredDescription(ctx, field)
+			case "rulemakingRequiredNote":
+				return ec.fieldContext_PlanGeneralCharacteristics_rulemakingRequiredNote(ctx, field)
+			case "authorityAllowances":
+				return ec.fieldContext_PlanGeneralCharacteristics_authorityAllowances(ctx, field)
+			case "authorityAllowancesOther":
+				return ec.fieldContext_PlanGeneralCharacteristics_authorityAllowancesOther(ctx, field)
+			case "authorityAllowancesNote":
+				return ec.fieldContext_PlanGeneralCharacteristics_authorityAllowancesNote(ctx, field)
+			case "waiversRequired":
+				return ec.fieldContext_PlanGeneralCharacteristics_waiversRequired(ctx, field)
+			case "waiversRequiredTypes":
+				return ec.fieldContext_PlanGeneralCharacteristics_waiversRequiredTypes(ctx, field)
+			case "waiversRequiredNote":
+				return ec.fieldContext_PlanGeneralCharacteristics_waiversRequiredNote(ctx, field)
+			case "createdBy":
+				return ec.fieldContext_PlanGeneralCharacteristics_createdBy(ctx, field)
+			case "createdByUserAccount":
+				return ec.fieldContext_PlanGeneralCharacteristics_createdByUserAccount(ctx, field)
+			case "createdDts":
+				return ec.fieldContext_PlanGeneralCharacteristics_createdDts(ctx, field)
+			case "modifiedBy":
+				return ec.fieldContext_PlanGeneralCharacteristics_modifiedBy(ctx, field)
+			case "modifiedByUserAccount":
+				return ec.fieldContext_PlanGeneralCharacteristics_modifiedByUserAccount(ctx, field)
+			case "modifiedDts":
+				return ec.fieldContext_PlanGeneralCharacteristics_modifiedDts(ctx, field)
+			case "readyForReviewBy":
+				return ec.fieldContext_PlanGeneralCharacteristics_readyForReviewBy(ctx, field)
+			case "readyForReviewByUserAccount":
+				return ec.fieldContext_PlanGeneralCharacteristics_readyForReviewByUserAccount(ctx, field)
+			case "readyForReviewDts":
+				return ec.fieldContext_PlanGeneralCharacteristics_readyForReviewDts(ctx, field)
+			case "readyForClearanceBy":
+				return ec.fieldContext_PlanGeneralCharacteristics_readyForClearanceBy(ctx, field)
+			case "readyForClearanceByUserAccount":
+				return ec.fieldContext_PlanGeneralCharacteristics_readyForClearanceByUserAccount(ctx, field)
+			case "readyForClearanceDts":
+				return ec.fieldContext_PlanGeneralCharacteristics_readyForClearanceDts(ctx, field)
+			case "status":
+				return ec.fieldContext_PlanGeneralCharacteristics_status(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type PlanGeneralCharacteristics", field.Name)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Mutation_updatePlanGeneralCharacteristics_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
 		ec.Error(ctx, err)
 		return fc, err
 	}
@@ -50811,141 +50815,6 @@ func (ec *executionContext) fieldContext_PrepareForClearance_latestClearanceDts(
 	return fc, nil
 }
 
-func (ec *executionContext) _Query_modelPlan(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Query_modelPlan(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		directive0 := func(rctx context.Context) (interface{}, error) {
-			ctx = rctx // use context from middleware stack in children
-			return ec.resolvers.Query().ModelPlan(rctx, fc.Args["id"].(uuid.UUID))
-		}
-		directive1 := func(ctx context.Context) (interface{}, error) {
-			roles, err := ec.unmarshalNRole2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRoleᚄ(ctx, []interface{}{"MINT_USER", "MINT_MAC"})
-			if err != nil {
-				return nil, err
-			}
-			if ec.directives.HasAnyRole == nil {
-				return nil, errors.New("directive hasAnyRole is not implemented")
-			}
-			return ec.directives.HasAnyRole(ctx, nil, directive0, roles)
-		}
-
-		tmp, err := directive1(rctx)
-		if err != nil {
-			return nil, graphql.ErrorOnPath(ctx, err)
-		}
-		if tmp == nil {
-			return nil, nil
-		}
-		if data, ok := tmp.(*models.ModelPlan); ok {
-			return data, nil
-		}
-		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/cmsgov/mint-app/pkg/models.ModelPlan`, tmp)
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(*models.ModelPlan)
-	fc.Result = res
-	return ec.marshalNModelPlan2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐModelPlan(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_Query_modelPlan(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "Query",
-		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			switch field.Name {
-			case "id":
-				return ec.fieldContext_ModelPlan_id(ctx, field)
-			case "modelName":
-				return ec.fieldContext_ModelPlan_modelName(ctx, field)
-			case "abbreviation":
-				return ec.fieldContext_ModelPlan_abbreviation(ctx, field)
-			case "archived":
-				return ec.fieldContext_ModelPlan_archived(ctx, field)
-			case "createdBy":
-				return ec.fieldContext_ModelPlan_createdBy(ctx, field)
-			case "createdByUserAccount":
-				return ec.fieldContext_ModelPlan_createdByUserAccount(ctx, field)
-			case "createdDts":
-				return ec.fieldContext_ModelPlan_createdDts(ctx, field)
-			case "modifiedBy":
-				return ec.fieldContext_ModelPlan_modifiedBy(ctx, field)
-			case "modifiedByUserAccount":
-				return ec.fieldContext_ModelPlan_modifiedByUserAccount(ctx, field)
-			case "modifiedDts":
-				return ec.fieldContext_ModelPlan_modifiedDts(ctx, field)
-			case "basics":
-				return ec.fieldContext_ModelPlan_basics(ctx, field)
-			case "generalCharacteristics":
-				return ec.fieldContext_ModelPlan_generalCharacteristics(ctx, field)
-			case "participantsAndProviders":
-				return ec.fieldContext_ModelPlan_participantsAndProviders(ctx, field)
-			case "beneficiaries":
-				return ec.fieldContext_ModelPlan_beneficiaries(ctx, field)
-			case "opsEvalAndLearning":
-				return ec.fieldContext_ModelPlan_opsEvalAndLearning(ctx, field)
-			case "collaborators":
-				return ec.fieldContext_ModelPlan_collaborators(ctx, field)
-			case "documents":
-				return ec.fieldContext_ModelPlan_documents(ctx, field)
-			case "discussions":
-				return ec.fieldContext_ModelPlan_discussions(ctx, field)
-			case "payments":
-				return ec.fieldContext_ModelPlan_payments(ctx, field)
-			case "status":
-				return ec.fieldContext_ModelPlan_status(ctx, field)
-			case "isFavorite":
-				return ec.fieldContext_ModelPlan_isFavorite(ctx, field)
-			case "isCollaborator":
-				return ec.fieldContext_ModelPlan_isCollaborator(ctx, field)
-			case "crs":
-				return ec.fieldContext_ModelPlan_crs(ctx, field)
-			case "tdls":
-				return ec.fieldContext_ModelPlan_tdls(ctx, field)
-			case "prepareForClearance":
-				return ec.fieldContext_ModelPlan_prepareForClearance(ctx, field)
-			case "nameHistory":
-				return ec.fieldContext_ModelPlan_nameHistory(ctx, field)
-			case "operationalNeeds":
-				return ec.fieldContext_ModelPlan_operationalNeeds(ctx, field)
-			}
-			return nil, fmt.Errorf("no field named %q was found under type ModelPlan", field.Name)
-		},
-	}
-	defer func() {
-		if r := recover(); r != nil {
-			err = ec.Recover(ctx, r)
-			ec.Error(ctx, err)
-		}
-	}()
-	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Query_modelPlan_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
-		ec.Error(ctx, err)
-		return fc, err
-	}
-	return fc, nil
-}
-
 func (ec *executionContext) _Query_planDocument(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_Query_planDocument(ctx, field)
 	if err != nil {
@@ -51069,141 +50938,6 @@ func (ec *executionContext) fieldContext_Query_planDocument(ctx context.Context,
 	}()
 	ctx = graphql.WithFieldContext(ctx, fc)
 	if fc.Args, err = ec.field_Query_planDocument_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
-		ec.Error(ctx, err)
-		return fc, err
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _Query_modelPlanCollection(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Query_modelPlanCollection(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		directive0 := func(rctx context.Context) (interface{}, error) {
-			ctx = rctx // use context from middleware stack in children
-			return ec.resolvers.Query().ModelPlanCollection(rctx, fc.Args["filter"].(model.ModelPlanFilter))
-		}
-		directive1 := func(ctx context.Context) (interface{}, error) {
-			roles, err := ec.unmarshalNRole2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRoleᚄ(ctx, []interface{}{"MINT_USER", "MINT_MAC"})
-			if err != nil {
-				return nil, err
-			}
-			if ec.directives.HasAnyRole == nil {
-				return nil, errors.New("directive hasAnyRole is not implemented")
-			}
-			return ec.directives.HasAnyRole(ctx, nil, directive0, roles)
-		}
-
-		tmp, err := directive1(rctx)
-		if err != nil {
-			return nil, graphql.ErrorOnPath(ctx, err)
-		}
-		if tmp == nil {
-			return nil, nil
-		}
-		if data, ok := tmp.([]*models.ModelPlan); ok {
-			return data, nil
-		}
-		return nil, fmt.Errorf(`unexpected type %T from directive, should be []*github.com/cmsgov/mint-app/pkg/models.ModelPlan`, tmp)
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.([]*models.ModelPlan)
-	fc.Result = res
-	return ec.marshalNModelPlan2ᚕᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐModelPlanᚄ(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_Query_modelPlanCollection(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "Query",
-		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			switch field.Name {
-			case "id":
-				return ec.fieldContext_ModelPlan_id(ctx, field)
-			case "modelName":
-				return ec.fieldContext_ModelPlan_modelName(ctx, field)
-			case "abbreviation":
-				return ec.fieldContext_ModelPlan_abbreviation(ctx, field)
-			case "archived":
-				return ec.fieldContext_ModelPlan_archived(ctx, field)
-			case "createdBy":
-				return ec.fieldContext_ModelPlan_createdBy(ctx, field)
-			case "createdByUserAccount":
-				return ec.fieldContext_ModelPlan_createdByUserAccount(ctx, field)
-			case "createdDts":
-				return ec.fieldContext_ModelPlan_createdDts(ctx, field)
-			case "modifiedBy":
-				return ec.fieldContext_ModelPlan_modifiedBy(ctx, field)
-			case "modifiedByUserAccount":
-				return ec.fieldContext_ModelPlan_modifiedByUserAccount(ctx, field)
-			case "modifiedDts":
-				return ec.fieldContext_ModelPlan_modifiedDts(ctx, field)
-			case "basics":
-				return ec.fieldContext_ModelPlan_basics(ctx, field)
-			case "generalCharacteristics":
-				return ec.fieldContext_ModelPlan_generalCharacteristics(ctx, field)
-			case "participantsAndProviders":
-				return ec.fieldContext_ModelPlan_participantsAndProviders(ctx, field)
-			case "beneficiaries":
-				return ec.fieldContext_ModelPlan_beneficiaries(ctx, field)
-			case "opsEvalAndLearning":
-				return ec.fieldContext_ModelPlan_opsEvalAndLearning(ctx, field)
-			case "collaborators":
-				return ec.fieldContext_ModelPlan_collaborators(ctx, field)
-			case "documents":
-				return ec.fieldContext_ModelPlan_documents(ctx, field)
-			case "discussions":
-				return ec.fieldContext_ModelPlan_discussions(ctx, field)
-			case "payments":
-				return ec.fieldContext_ModelPlan_payments(ctx, field)
-			case "status":
-				return ec.fieldContext_ModelPlan_status(ctx, field)
-			case "isFavorite":
-				return ec.fieldContext_ModelPlan_isFavorite(ctx, field)
-			case "isCollaborator":
-				return ec.fieldContext_ModelPlan_isCollaborator(ctx, field)
-			case "crs":
-				return ec.fieldContext_ModelPlan_crs(ctx, field)
-			case "tdls":
-				return ec.fieldContext_ModelPlan_tdls(ctx, field)
-			case "prepareForClearance":
-				return ec.fieldContext_ModelPlan_prepareForClearance(ctx, field)
-			case "nameHistory":
-				return ec.fieldContext_ModelPlan_nameHistory(ctx, field)
-			case "operationalNeeds":
-				return ec.fieldContext_ModelPlan_operationalNeeds(ctx, field)
-			}
-			return nil, fmt.Errorf("no field named %q was found under type ModelPlan", field.Name)
-		},
-	}
-	defer func() {
-		if r := recover(); r != nil {
-			err = ec.Recover(ctx, r)
-			ec.Error(ctx, err)
-		}
-	}()
-	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Query_modelPlanCollection_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
 		ec.Error(ctx, err)
 		return fc, err
 	}
@@ -53123,6 +52857,276 @@ func (ec *executionContext) fieldContext_Query_currentUser(ctx context.Context, 
 			}
 			return nil, fmt.Errorf("no field named %q was found under type CurrentUser", field.Name)
 		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Query_modelPlan(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Query_modelPlan(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		directive0 := func(rctx context.Context) (interface{}, error) {
+			ctx = rctx // use context from middleware stack in children
+			return ec.resolvers.Query().ModelPlan(rctx, fc.Args["id"].(uuid.UUID))
+		}
+		directive1 := func(ctx context.Context) (interface{}, error) {
+			roles, err := ec.unmarshalNRole2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRoleᚄ(ctx, []interface{}{"MINT_USER", "MINT_MAC"})
+			if err != nil {
+				return nil, err
+			}
+			if ec.directives.HasAnyRole == nil {
+				return nil, errors.New("directive hasAnyRole is not implemented")
+			}
+			return ec.directives.HasAnyRole(ctx, nil, directive0, roles)
+		}
+
+		tmp, err := directive1(rctx)
+		if err != nil {
+			return nil, graphql.ErrorOnPath(ctx, err)
+		}
+		if tmp == nil {
+			return nil, nil
+		}
+		if data, ok := tmp.(*models.ModelPlan); ok {
+			return data, nil
+		}
+		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/cmsgov/mint-app/pkg/models.ModelPlan`, tmp)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*models.ModelPlan)
+	fc.Result = res
+	return ec.marshalNModelPlan2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐModelPlan(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Query_modelPlan(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Query",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_ModelPlan_id(ctx, field)
+			case "modelName":
+				return ec.fieldContext_ModelPlan_modelName(ctx, field)
+			case "abbreviation":
+				return ec.fieldContext_ModelPlan_abbreviation(ctx, field)
+			case "archived":
+				return ec.fieldContext_ModelPlan_archived(ctx, field)
+			case "createdBy":
+				return ec.fieldContext_ModelPlan_createdBy(ctx, field)
+			case "createdByUserAccount":
+				return ec.fieldContext_ModelPlan_createdByUserAccount(ctx, field)
+			case "createdDts":
+				return ec.fieldContext_ModelPlan_createdDts(ctx, field)
+			case "modifiedBy":
+				return ec.fieldContext_ModelPlan_modifiedBy(ctx, field)
+			case "modifiedByUserAccount":
+				return ec.fieldContext_ModelPlan_modifiedByUserAccount(ctx, field)
+			case "modifiedDts":
+				return ec.fieldContext_ModelPlan_modifiedDts(ctx, field)
+			case "basics":
+				return ec.fieldContext_ModelPlan_basics(ctx, field)
+			case "generalCharacteristics":
+				return ec.fieldContext_ModelPlan_generalCharacteristics(ctx, field)
+			case "participantsAndProviders":
+				return ec.fieldContext_ModelPlan_participantsAndProviders(ctx, field)
+			case "beneficiaries":
+				return ec.fieldContext_ModelPlan_beneficiaries(ctx, field)
+			case "opsEvalAndLearning":
+				return ec.fieldContext_ModelPlan_opsEvalAndLearning(ctx, field)
+			case "collaborators":
+				return ec.fieldContext_ModelPlan_collaborators(ctx, field)
+			case "documents":
+				return ec.fieldContext_ModelPlan_documents(ctx, field)
+			case "discussions":
+				return ec.fieldContext_ModelPlan_discussions(ctx, field)
+			case "payments":
+				return ec.fieldContext_ModelPlan_payments(ctx, field)
+			case "status":
+				return ec.fieldContext_ModelPlan_status(ctx, field)
+			case "isFavorite":
+				return ec.fieldContext_ModelPlan_isFavorite(ctx, field)
+			case "isCollaborator":
+				return ec.fieldContext_ModelPlan_isCollaborator(ctx, field)
+			case "crs":
+				return ec.fieldContext_ModelPlan_crs(ctx, field)
+			case "tdls":
+				return ec.fieldContext_ModelPlan_tdls(ctx, field)
+			case "prepareForClearance":
+				return ec.fieldContext_ModelPlan_prepareForClearance(ctx, field)
+			case "nameHistory":
+				return ec.fieldContext_ModelPlan_nameHistory(ctx, field)
+			case "operationalNeeds":
+				return ec.fieldContext_ModelPlan_operationalNeeds(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type ModelPlan", field.Name)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Query_modelPlan_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Query_modelPlanCollection(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Query_modelPlanCollection(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		directive0 := func(rctx context.Context) (interface{}, error) {
+			ctx = rctx // use context from middleware stack in children
+			return ec.resolvers.Query().ModelPlanCollection(rctx, fc.Args["filter"].(model.ModelPlanFilter))
+		}
+		directive1 := func(ctx context.Context) (interface{}, error) {
+			roles, err := ec.unmarshalNRole2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRoleᚄ(ctx, []interface{}{"MINT_USER", "MINT_MAC"})
+			if err != nil {
+				return nil, err
+			}
+			if ec.directives.HasAnyRole == nil {
+				return nil, errors.New("directive hasAnyRole is not implemented")
+			}
+			return ec.directives.HasAnyRole(ctx, nil, directive0, roles)
+		}
+
+		tmp, err := directive1(rctx)
+		if err != nil {
+			return nil, graphql.ErrorOnPath(ctx, err)
+		}
+		if tmp == nil {
+			return nil, nil
+		}
+		if data, ok := tmp.([]*models.ModelPlan); ok {
+			return data, nil
+		}
+		return nil, fmt.Errorf(`unexpected type %T from directive, should be []*github.com/cmsgov/mint-app/pkg/models.ModelPlan`, tmp)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.([]*models.ModelPlan)
+	fc.Result = res
+	return ec.marshalNModelPlan2ᚕᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐModelPlanᚄ(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Query_modelPlanCollection(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Query",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_ModelPlan_id(ctx, field)
+			case "modelName":
+				return ec.fieldContext_ModelPlan_modelName(ctx, field)
+			case "abbreviation":
+				return ec.fieldContext_ModelPlan_abbreviation(ctx, field)
+			case "archived":
+				return ec.fieldContext_ModelPlan_archived(ctx, field)
+			case "createdBy":
+				return ec.fieldContext_ModelPlan_createdBy(ctx, field)
+			case "createdByUserAccount":
+				return ec.fieldContext_ModelPlan_createdByUserAccount(ctx, field)
+			case "createdDts":
+				return ec.fieldContext_ModelPlan_createdDts(ctx, field)
+			case "modifiedBy":
+				return ec.fieldContext_ModelPlan_modifiedBy(ctx, field)
+			case "modifiedByUserAccount":
+				return ec.fieldContext_ModelPlan_modifiedByUserAccount(ctx, field)
+			case "modifiedDts":
+				return ec.fieldContext_ModelPlan_modifiedDts(ctx, field)
+			case "basics":
+				return ec.fieldContext_ModelPlan_basics(ctx, field)
+			case "generalCharacteristics":
+				return ec.fieldContext_ModelPlan_generalCharacteristics(ctx, field)
+			case "participantsAndProviders":
+				return ec.fieldContext_ModelPlan_participantsAndProviders(ctx, field)
+			case "beneficiaries":
+				return ec.fieldContext_ModelPlan_beneficiaries(ctx, field)
+			case "opsEvalAndLearning":
+				return ec.fieldContext_ModelPlan_opsEvalAndLearning(ctx, field)
+			case "collaborators":
+				return ec.fieldContext_ModelPlan_collaborators(ctx, field)
+			case "documents":
+				return ec.fieldContext_ModelPlan_documents(ctx, field)
+			case "discussions":
+				return ec.fieldContext_ModelPlan_discussions(ctx, field)
+			case "payments":
+				return ec.fieldContext_ModelPlan_payments(ctx, field)
+			case "status":
+				return ec.fieldContext_ModelPlan_status(ctx, field)
+			case "isFavorite":
+				return ec.fieldContext_ModelPlan_isFavorite(ctx, field)
+			case "isCollaborator":
+				return ec.fieldContext_ModelPlan_isCollaborator(ctx, field)
+			case "crs":
+				return ec.fieldContext_ModelPlan_crs(ctx, field)
+			case "tdls":
+				return ec.fieldContext_ModelPlan_tdls(ctx, field)
+			case "prepareForClearance":
+				return ec.fieldContext_ModelPlan_prepareForClearance(ctx, field)
+			case "nameHistory":
+				return ec.fieldContext_ModelPlan_nameHistory(ctx, field)
+			case "operationalNeeds":
+				return ec.fieldContext_ModelPlan_operationalNeeds(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type ModelPlan", field.Name)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Query_modelPlanCollection_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
 	}
 	return fc, nil
 }
@@ -61793,20 +61797,6 @@ func (ec *executionContext) _Mutation(ctx context.Context, sel ast.SelectionSet)
 		switch field.Name {
 		case "__typename":
 			out.Values[i] = graphql.MarshalString("Mutation")
-		case "createModelPlan":
-			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
-				return ec._Mutation_createModelPlan(ctx, field)
-			})
-			if out.Values[i] == graphql.Null {
-				out.Invalids++
-			}
-		case "updateModelPlan":
-			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
-				return ec._Mutation_updateModelPlan(ctx, field)
-			})
-			if out.Values[i] == graphql.Null {
-				out.Invalids++
-			}
 		case "createPlanCollaborator":
 			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
 				return ec._Mutation_createPlanCollaborator(ctx, field)
@@ -61824,13 +61814,6 @@ func (ec *executionContext) _Mutation(ctx context.Context, sel ast.SelectionSet)
 		case "deletePlanCollaborator":
 			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
 				return ec._Mutation_deletePlanCollaborator(ctx, field)
-			})
-			if out.Values[i] == graphql.Null {
-				out.Invalids++
-			}
-		case "updatePlanGeneralCharacteristics":
-			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
-				return ec._Mutation_updatePlanGeneralCharacteristics(ctx, field)
 			})
 			if out.Values[i] == graphql.Null {
 				out.Invalids++
@@ -62036,13 +62019,6 @@ func (ec *executionContext) _Mutation(ctx context.Context, sel ast.SelectionSet)
 			if out.Values[i] == graphql.Null {
 				out.Invalids++
 			}
-		case "shareModelPlan":
-			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
-				return ec._Mutation_shareModelPlan(ctx, field)
-			})
-			if out.Values[i] == graphql.Null {
-				out.Invalids++
-			}
 		case "reportAProblem":
 			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
 				return ec._Mutation_reportAProblem(ctx, field)
@@ -62057,9 +62033,37 @@ func (ec *executionContext) _Mutation(ctx context.Context, sel ast.SelectionSet)
 			if out.Values[i] == graphql.Null {
 				out.Invalids++
 			}
+		case "createModelPlan":
+			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
+				return ec._Mutation_createModelPlan(ctx, field)
+			})
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "updateModelPlan":
+			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
+				return ec._Mutation_updateModelPlan(ctx, field)
+			})
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "shareModelPlan":
+			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
+				return ec._Mutation_shareModelPlan(ctx, field)
+			})
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
 		case "updatePlanBasics":
 			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
 				return ec._Mutation_updatePlanBasics(ctx, field)
+			})
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "updatePlanGeneralCharacteristics":
+			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
+				return ec._Mutation_updatePlanGeneralCharacteristics(ctx, field)
 			})
 			if out.Values[i] == graphql.Null {
 				out.Invalids++
@@ -68457,28 +68461,6 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 		switch field.Name {
 		case "__typename":
 			out.Values[i] = graphql.MarshalString("Query")
-		case "modelPlan":
-			field := field
-
-			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
-				defer func() {
-					if r := recover(); r != nil {
-						ec.Error(ctx, ec.Recover(ctx, r))
-					}
-				}()
-				res = ec._Query_modelPlan(ctx, field)
-				if res == graphql.Null {
-					atomic.AddUint32(&fs.Invalids, 1)
-				}
-				return res
-			}
-
-			rrm := func(ctx context.Context) graphql.Marshaler {
-				return ec.OperationContext.RootResolverMiddleware(ctx,
-					func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
-			}
-
-			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return rrm(innerCtx) })
 		case "planDocument":
 			field := field
 
@@ -68489,28 +68471,6 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 					}
 				}()
 				res = ec._Query_planDocument(ctx, field)
-				if res == graphql.Null {
-					atomic.AddUint32(&fs.Invalids, 1)
-				}
-				return res
-			}
-
-			rrm := func(ctx context.Context) graphql.Marshaler {
-				return ec.OperationContext.RootResolverMiddleware(ctx,
-					func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
-			}
-
-			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return rrm(innerCtx) })
-		case "modelPlanCollection":
-			field := field
-
-			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
-				defer func() {
-					if r := recover(); r != nil {
-						ec.Error(ctx, ec.Recover(ctx, r))
-					}
-				}()
-				res = ec._Query_modelPlanCollection(ctx, field)
 				if res == graphql.Null {
 					atomic.AddUint32(&fs.Invalids, 1)
 				}
@@ -68904,6 +68864,50 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 					}
 				}()
 				res = ec._Query_currentUser(ctx, field)
+				if res == graphql.Null {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
+				return res
+			}
+
+			rrm := func(ctx context.Context) graphql.Marshaler {
+				return ec.OperationContext.RootResolverMiddleware(ctx,
+					func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return rrm(innerCtx) })
+		case "modelPlan":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Query_modelPlan(ctx, field)
+				if res == graphql.Null {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
+				return res
+			}
+
+			rrm := func(ctx context.Context) graphql.Marshaler {
+				return ec.OperationContext.RootResolverMiddleware(ctx,
+					func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return rrm(innerCtx) })
+		case "modelPlanCollection":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Query_modelPlanCollection(ctx, field)
 				if res == graphql.Null {
 					atomic.AddUint32(&fs.Invalids, 1)
 				}

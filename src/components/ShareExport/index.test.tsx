@@ -1,11 +1,11 @@
 import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { render, waitFor } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 import Sinon from 'sinon';
 
 import allMocks, { modelID, summaryMock } from 'data/mock/readonly';
 import VerboseMockedProvider from 'utils/testing/MockedProvider';
+import setup from 'utils/testing/setup';
 
 import ShareExportModal from './index';
 
@@ -14,7 +14,7 @@ describe('ShareExportModal', () => {
   Sinon.stub(Math, 'random').returns(0.5);
 
   it('renders modal with prepopulated filter', async () => {
-    const { getByText, getByTestId } = render(
+    const { user, getByText, getByTestId } = setup(
       <MemoryRouter
         initialEntries={[`/models/${modelID}/read-only/model-basics`]}
       >
@@ -34,10 +34,10 @@ describe('ShareExportModal', () => {
       </MemoryRouter>
     );
 
-    await waitFor(() => {
+    await waitFor(async () => {
       // Select new filter group option
       const exportButton = getByTestId('export-button');
-      userEvent.click(exportButton);
+      await user.click(exportButton);
 
       // Renders default Fitler group option if supplied
       expect(getByText('Testing Model Summary')).toBeInTheDocument();
@@ -45,7 +45,7 @@ describe('ShareExportModal', () => {
       expect(combobox).toHaveValue('ccw');
 
       // Select new filter group option
-      userEvent.selectOptions(combobox, ['cmmi']);
+      await user.selectOptions(combobox, ['cmmi']);
       expect(combobox).toHaveValue('cmmi');
 
       // Check if export is disabled
@@ -54,7 +54,7 @@ describe('ShareExportModal', () => {
 
       // Select new filter group option
       const pdfCheckbox = getByTestId('share-export-modal-file-type-pdf');
-      userEvent.click(pdfCheckbox);
+      await user.click(pdfCheckbox);
 
       expect(exportSubmit).not.toBeDisabled();
     });
