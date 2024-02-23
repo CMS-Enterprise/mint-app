@@ -10,7 +10,7 @@ import {
 import userEvent from '@testing-library/user-event';
 import Sinon from 'sinon';
 
-import { modelBasicsMocks } from 'data/mock/readonly';
+import { benficiaryMocks } from 'data/mock/readonly';
 import GetClearanceStatuses from 'queries/PrepareForClearance/GetClearanceStatuses';
 import {
   PrepareForClearanceStatus,
@@ -22,12 +22,12 @@ import { initialPrepareForClearanceValues } from '../Checklist';
 import ClearanceReview from '.';
 
 const modelID = 'f11eb129-2c80-4080-9440-439cbe1a286f';
-const basicsID = 'a093a178-5ec6-4a62-94df-f9b9179ee84e';
+const beneficiaryID = 'a093a178-5ec6-4a62-94df-f9b9179ee84e';
 
 const clearanceMockData = initialPrepareForClearanceValues;
 
-clearanceMockData.basics.status = TaskStatus.READY_FOR_CLEARANCE;
-clearanceMockData.basics.id = basicsID;
+clearanceMockData.beneficiaries.status = TaskStatus.READY_FOR_CLEARANCE;
+clearanceMockData.beneficiaries.id = beneficiaryID;
 
 const clearanceMock = [
   {
@@ -52,9 +52,9 @@ const clearanceMock = [
 
 const clearanceMocks = [
   ...clearanceMock,
-  ...modelBasicsMocks,
+  ...benficiaryMocks,
   ...clearanceMock,
-  ...modelBasicsMocks
+  ...benficiaryMocks
 ];
 
 describe('ClearanceReview component', () => {
@@ -65,7 +65,7 @@ describe('ClearanceReview component', () => {
     const { getByTestId } = render(
       <MemoryRouter
         initialEntries={[
-          `/models/${modelID}/task-list/prepare-for-clearance/basics/${basicsID}`
+          `/models/${modelID}/task-list/prepare-for-clearance/beneficiaries/${beneficiaryID}`
         ]}
       >
         <MockedProvider mocks={clearanceMocks} addTypename={false}>
@@ -76,12 +76,10 @@ describe('ClearanceReview component', () => {
       </MemoryRouter>
     );
 
-    await waitForElementToBeRemoved(() => getByTestId('page-loading'));
+    await waitForElementToBeRemoved(() => getByTestId('spinner'));
 
     await waitFor(() => {
-      expect(
-        screen.getByTestId('read-only-model-plan--model-basics')
-      ).toBeInTheDocument();
+      expect(screen.getByText('Other disease group')).toBeInTheDocument();
     });
   });
 
@@ -93,7 +91,7 @@ describe('ClearanceReview component', () => {
     const { getByTestId } = render(
       <MemoryRouter
         initialEntries={[
-          `/models/${modelID}/task-list/prepare-for-clearance/basics/${basicsID}`
+          `/models/${modelID}/task-list/prepare-for-clearance/beneficiaries/${beneficiaryID}`
         ]}
       >
         <MockedProvider mocks={clearanceMocks} addTypename={false}>
@@ -104,7 +102,7 @@ describe('ClearanceReview component', () => {
       </MemoryRouter>
     );
 
-    await waitForElementToBeRemoved(() => getByTestId('page-loading'));
+    await waitForElementToBeRemoved(() => getByTestId('spinner'));
 
     await waitFor(() => {
       expect(getByTestId('modify-task-list-for-clearance')).toBeInTheDocument();
@@ -123,7 +121,7 @@ describe('ClearanceReview component', () => {
     const { asFragment, getByTestId } = render(
       <MemoryRouter
         initialEntries={[
-          `/models/${modelID}/task-list/prepare-for-clearance/basics/${basicsID}`
+          `/models/${modelID}/task-list/prepare-for-clearance/beneficiaries/${beneficiaryID}`
         ]}
       >
         <MockedProvider mocks={clearanceMocks} addTypename={false}>
@@ -134,12 +132,10 @@ describe('ClearanceReview component', () => {
       </MemoryRouter>
     );
 
-    await waitForElementToBeRemoved(() => getByTestId('page-loading'));
+    await waitForElementToBeRemoved(() => getByTestId('spinner'));
 
     await waitFor(() => {
-      expect(
-        screen.getByTestId('read-only-model-plan--model-basics')
-      ).toBeInTheDocument();
+      expect(screen.getByText('Other disease group')).toBeInTheDocument();
     });
 
     expect(asFragment()).toMatchSnapshot();
