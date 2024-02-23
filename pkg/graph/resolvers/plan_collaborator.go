@@ -8,6 +8,7 @@ import (
 
 	"github.com/cmsgov/mint-app/pkg/email"
 	"github.com/cmsgov/mint-app/pkg/shared/oddmail"
+	"github.com/cmsgov/mint-app/pkg/sqlutils"
 	"github.com/cmsgov/mint-app/pkg/storage/loaders"
 	"github.com/cmsgov/mint-app/pkg/userhelpers"
 
@@ -26,7 +27,7 @@ import (
 // The transaction object does not commit or rollback in the scope of this function
 func CreatePlanCollaborator(
 	ctx context.Context,
-	np storage.NamedPreparer,
+	np sqlutils.NamedPreparer,
 	store *storage.Store,
 	logger *zap.Logger,
 	emailService oddmail.EmailService,

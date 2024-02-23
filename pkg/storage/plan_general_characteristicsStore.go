@@ -9,6 +9,7 @@ import (
 	"github.com/cmsgov/mint-app/pkg/models"
 	"github.com/cmsgov/mint-app/pkg/shared/utilitySQL"
 	"github.com/cmsgov/mint-app/pkg/shared/utilityUUID"
+	"github.com/cmsgov/mint-app/pkg/sqlutils"
 	"github.com/cmsgov/mint-app/pkg/storage/genericmodel"
 )
 
@@ -26,7 +27,7 @@ var planGeneralCharacteristicsGetByModelPlanIDLoaderSQL string
 
 // PlanGeneralCharacteristicsCreate creates a new plan basics
 func (s *Store) PlanGeneralCharacteristicsCreate(
-	np NamedPreparer,
+	np sqlutils.NamedPreparer,
 	logger *zap.Logger,
 	gc *models.PlanGeneralCharacteristics,
 ) (*models.PlanGeneralCharacteristics, error) {

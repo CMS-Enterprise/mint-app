@@ -11,7 +11,6 @@ import (
 
 	"github.com/cmsgov/mint-app/pkg/appcontext"
 	"github.com/cmsgov/mint-app/pkg/authentication"
-	"github.com/cmsgov/mint-app/pkg/flags"
 	"github.com/cmsgov/mint-app/pkg/graph/generated"
 	"github.com/cmsgov/mint-app/pkg/graph/model"
 	"github.com/cmsgov/mint-app/pkg/models"
@@ -562,21 +561,6 @@ func (r *possibleOperationalNeedResolver) PossibleSolutions(ctx context.Context,
 // PointsOfContact is the resolver for the pointsOfContact field.
 func (r *possibleOperationalSolutionResolver) PointsOfContact(ctx context.Context, obj *models.PossibleOperationalSolution) ([]*models.PossibleOperationalSolutionContact, error) {
 	return PossibleOperationalSolutionContactsGetByPossibleSolutionID(ctx, obj.ID)
-}
-
-// CurrentUser is the resolver for the currentUser field.
-func (r *queryResolver) CurrentUser(ctx context.Context) (*model.CurrentUser, error) {
-	ldContext := flags.Principal(ctx)
-	userKey := ldContext.Key()
-	signedHash := r.ldClient.SecureModeHash(ldContext)
-
-	currentUser := model.CurrentUser{
-		LaunchDarkly: &model.LaunchDarklySettings{
-			UserKey:    userKey,
-			SignedHash: signedHash,
-		},
-	}
-	return &currentUser, nil
 }
 
 // PlanDocument is the resolver for the planDocument field.

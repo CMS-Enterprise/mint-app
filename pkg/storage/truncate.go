@@ -29,7 +29,10 @@ func (s *Store) TruncateAllTablesDANGEROUS(logger *zap.Logger) error {
     analyzed_audit,
 	existing_model_link,
     model_plan,
-    audit.change
+    audit.change,
+	user_notification,
+	user_notification_preferences,
+	activity
 	`
 
 	_, err := s.db.Exec("TRUNCATE " + tables)

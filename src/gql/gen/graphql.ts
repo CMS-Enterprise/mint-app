@@ -37,6 +37,42 @@ export enum ActionType {
   NORMAL = 'NORMAL'
 }
 
+/** Activity represents an event that happened in the application that could result in a notification. */
+export type Activity = {
+  __typename: 'Activity';
+  activityType: ActivityType;
+  actorID: Scalars['UUID']['output'];
+  actorUserAccount: UserAccount;
+  createdBy: Scalars['UUID']['output'];
+  createdByUserAccount: UserAccount;
+  createdDts: Scalars['Time']['output'];
+  entityID: Scalars['UUID']['output'];
+  id: Scalars['UUID']['output'];
+  metaData: ActivityMetaData;
+  modifiedBy?: Maybe<Scalars['UUID']['output']>;
+  modifiedByUserAccount?: Maybe<UserAccount>;
+  modifiedDts?: Maybe<Scalars['Time']['output']>;
+};
+
+export type ActivityMetaBaseStruct = {
+  __typename: 'ActivityMetaBaseStruct';
+  type: ActivityType;
+  version: Scalars['Int']['output'];
+};
+
+/** ActivityMetaData is a type that represents all the data that can be captured in an Activity */
+export type ActivityMetaData = ActivityMetaBaseStruct | TaggedInDiscussionReplyActivityMeta | TaggedInPlanDiscussionActivityMeta;
+
+/** ActivityType represents the possible activities that happen in application that might result in a notification */
+export enum ActivityType {
+  ADDED_AS_COLLABORATOR = 'ADDED_AS_COLLABORATOR',
+  DAILY_DIGEST_COMPLETE = 'DAILY_DIGEST_COMPLETE',
+  MODEL_PLAN_SHARED = 'MODEL_PLAN_SHARED',
+  NEW_DISCUSSION_REPLY = 'NEW_DISCUSSION_REPLY',
+  TAGGED_IN_DISCUSSION = 'TAGGED_IN_DISCUSSION',
+  TAGGED_IN_DISCUSSION_REPLY = 'TAGGED_IN_DISCUSSION_REPLY'
+}
+
 export enum AgencyOrStateHelpType {
   NO = 'NO',
   OTHER = 'OTHER',
@@ -165,7 +201,10 @@ export type CreateOperationalSolutionSubtaskInput = {
 /** The current user of the application */
 export type CurrentUser = {
   __typename: 'CurrentUser';
+  account: UserAccount;
   launchDarkly: LaunchDarklySettings;
+  notificationPreferences: UserNotificationPreferences;
+  notifications: UserNotifications;
 };
 
 export enum DataForMonitoringType {
@@ -549,6 +588,10 @@ export type Mutation = {
   deletePlanTDL: PlanTdl;
   linkNewPlanDocument: PlanDocument;
   lockTaskListSection: Scalars['Boolean']['output'];
+  /** Marks all notifications for the current user as read, and returns the updated notifications */
+  markAllNotificationsAsRead: Array<UserNotification>;
+  /** Marks a single notification as read. It requires that the notification be owned by the context of the user sending this request, or it will fail */
+  markNotificationAsRead: UserNotification;
   removePlanDocumentSolutionLinks: Scalars['Boolean']['output'];
   reportAProblem: Scalars['Boolean']['output'];
   /** This mutation sends feedback about the MINT product to the MINT team */
@@ -574,6 +617,8 @@ export type Mutation = {
   updatePlanParticipantsAndProviders: PlanParticipantsAndProviders;
   updatePlanPayments: PlanPayments;
   updatePlanTDL: PlanTdl;
+  /** Sets the notification preferences of a user. */
+  updateUserNotificationPreferences: UserNotificationPreferences;
   uploadNewPlanDocument: PlanDocument;
 };
 
@@ -702,6 +747,12 @@ export type MutationLinkNewPlanDocumentArgs = {
 export type MutationLockTaskListSectionArgs = {
   modelPlanID: Scalars['UUID']['input'];
   section: TaskListSection;
+};
+
+
+/** Mutations definition for the schema */
+export type MutationMarkNotificationAsReadArgs = {
+  notificationID: Scalars['UUID']['input'];
 };
 
 
@@ -843,6 +894,12 @@ export type MutationUpdatePlanPaymentsArgs = {
 export type MutationUpdatePlanTdlArgs = {
   changes: PlanTdlChanges;
   id: Scalars['UUID']['input'];
+};
+
+
+/** Mutations definition for the schema */
+export type MutationUpdateUserNotificationPreferencesArgs = {
+  changes: UserNotificationPreferencesChanges;
 };
 
 
@@ -2590,6 +2647,26 @@ export type TaggedContent = {
 /** TaggedEntity is the actual object represented by a tag in the data base. */
 export type TaggedEntity = PossibleOperationalSolution | UserAccount;
 
+export type TaggedInDiscussionReplyActivityMeta = {
+  __typename: 'TaggedInDiscussionReplyActivityMeta';
+  content: Scalars['String']['output'];
+  discussion: PlanDiscussion;
+  discussionID: Scalars['UUID']['output'];
+  reply: DiscussionReply;
+  replyID: Scalars['UUID']['output'];
+  type: ActivityType;
+  version: Scalars['Int']['output'];
+};
+
+export type TaggedInPlanDiscussionActivityMeta = {
+  __typename: 'TaggedInPlanDiscussionActivityMeta';
+  content: Scalars['String']['output'];
+  discussion: PlanDiscussion;
+  discussionID: Scalars['UUID']['output'];
+  type: ActivityType;
+  version: Scalars['Int']['output'];
+};
+
 export enum TaskListSection {
   BASICS = 'BASICS',
   BENEFICIARIES = 'BENEFICIARIES',
@@ -2680,6 +2757,71 @@ export type UserInfo = {
   firstName: Scalars['String']['output'];
   lastName: Scalars['String']['output'];
   username: Scalars['String']['output'];
+};
+
+/** UserNotification represents a notification about a specific Activity */
+export type UserNotification = {
+  __typename: 'UserNotification';
+  activity: Activity;
+  activityID: Scalars['UUID']['output'];
+  createdBy: Scalars['UUID']['output'];
+  createdByUserAccount: UserAccount;
+  createdDts: Scalars['Time']['output'];
+  emailSent: Scalars['Boolean']['output'];
+  id: Scalars['UUID']['output'];
+  inAppSent: Scalars['Boolean']['output'];
+  isRead: Scalars['Boolean']['output'];
+  modifiedBy?: Maybe<Scalars['UUID']['output']>;
+  modifiedByUserAccount?: Maybe<UserAccount>;
+  modifiedDts?: Maybe<Scalars['Time']['output']>;
+  userID: Scalars['UUID']['output'];
+};
+
+export enum UserNotificationPreferenceFlag {
+  ALL = 'ALL',
+  EMAIL_ONLY = 'EMAIL_ONLY',
+  IN_APP_ONLY = 'IN_APP_ONLY',
+  NONE = 'NONE'
+}
+
+/** UserNotificationPreferences represents a users preferences about what type and where to receive a notification */
+export type UserNotificationPreferences = {
+  __typename: 'UserNotificationPreferences';
+  addedAsCollaborator: UserNotificationPreferenceFlag;
+  createdBy: Scalars['UUID']['output'];
+  createdByUserAccount: UserAccount;
+  createdDts: Scalars['Time']['output'];
+  dailyDigestComplete: UserNotificationPreferenceFlag;
+  id: Scalars['UUID']['output'];
+  modelPlanShared: UserNotificationPreferenceFlag;
+  modifiedBy?: Maybe<Scalars['UUID']['output']>;
+  modifiedByUserAccount?: Maybe<UserAccount>;
+  modifiedDts?: Maybe<Scalars['Time']['output']>;
+  newDiscussionReply: UserNotificationPreferenceFlag;
+  taggedInDiscussion: UserNotificationPreferenceFlag;
+  taggedInDiscussionReply: UserNotificationPreferenceFlag;
+  userID: Scalars['UUID']['output'];
+};
+
+/** UserNotificationPreferencesChanges represents the ways that a UserNotifications Preferences object can be updated */
+export type UserNotificationPreferencesChanges = {
+  addedAsCollaborator?: InputMaybe<UserNotificationPreferenceFlag>;
+  dailyDigestComplete?: InputMaybe<UserNotificationPreferenceFlag>;
+  modelPlanShared?: InputMaybe<UserNotificationPreferenceFlag>;
+  newDiscussionReply?: InputMaybe<UserNotificationPreferenceFlag>;
+  taggedInDiscussion?: InputMaybe<UserNotificationPreferenceFlag>;
+  taggedInDiscussionReply?: InputMaybe<UserNotificationPreferenceFlag>;
+};
+
+/** This is a wrapper for all information for a user  */
+export type UserNotifications = {
+  __typename: 'UserNotifications';
+  /** This includes all notifications */
+  notifications: Array<UserNotification>;
+  /** This returns the number of unread notifications */
+  numUnreadNotifications: Scalars['Int']['output'];
+  /** This renders only the unread notifications */
+  unreadNotifications: Array<UserNotification>;
 };
 
 export enum WaiverType {

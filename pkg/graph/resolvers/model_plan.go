@@ -11,6 +11,7 @@ import (
 
 	"github.com/cmsgov/mint-app/pkg/email"
 	"github.com/cmsgov/mint-app/pkg/shared/oddmail"
+	"github.com/cmsgov/mint-app/pkg/sqlutils"
 	"github.com/cmsgov/mint-app/pkg/storage/loaders"
 
 	"github.com/cmsgov/mint-app/pkg/graph/model"
@@ -37,7 +38,7 @@ func ModelPlanCreate(
 	getAccountInformation userhelpers.GetAccountInfoFunc,
 ) (*models.ModelPlan, error) {
 
-	newPlan, err := storage.WithTransaction[models.ModelPlan](store, func(tx *sqlx.Tx) (*models.ModelPlan, error) {
+	newPlan, err := sqlutils.WithTransaction[models.ModelPlan](store, func(tx *sqlx.Tx) (*models.ModelPlan, error) {
 		plan := models.NewModelPlan(principal.Account().ID, modelName)
 
 		err := BaseStructPreCreate(logger, plan, principal, store, false) //We don't check access here, because the user can't yet be a collaborator. Collaborators are created after ModelPlan initiation.

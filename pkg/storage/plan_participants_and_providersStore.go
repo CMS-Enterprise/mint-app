@@ -9,6 +9,7 @@ import (
 	"github.com/cmsgov/mint-app/pkg/models"
 	"github.com/cmsgov/mint-app/pkg/shared/utilitySQL"
 	"github.com/cmsgov/mint-app/pkg/shared/utilityUUID"
+	"github.com/cmsgov/mint-app/pkg/sqlutils"
 	"github.com/cmsgov/mint-app/pkg/storage/genericmodel"
 )
 
@@ -53,7 +54,7 @@ func (s *Store) PlanParticipantsAndProvidersGetByModelPlanIDLOADER(
 
 // PlanParticipantsAndProvidersCreate creates a new plan providers_and_participants object
 func (s *Store) PlanParticipantsAndProvidersCreate(
-	np NamedPreparer,
+	np sqlutils.NamedPreparer,
 	logger *zap.Logger,
 	gc *models.PlanParticipantsAndProviders,
 ) (*models.PlanParticipantsAndProviders, error) {
