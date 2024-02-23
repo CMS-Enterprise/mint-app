@@ -15,10 +15,6 @@ type NotificationsSuite struct {
 	testConfigs *testconfig.Base
 }
 
-// type NotificationTestConfig struct {
-// 	*testconfig.TestConfigBase
-// }
-
 // SetupTest clears the database between each test
 func (suite *NotificationsSuite) SetupTest() {
 	err := suite.testConfigs.GenericSetupTests()

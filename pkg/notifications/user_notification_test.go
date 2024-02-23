@@ -15,7 +15,6 @@ func (suite *NotificationsSuite) TestUserNotificationCreate() {
 	actorID := suite.testConfigs.Principal.Account().ID
 	testContent := "test content"
 
-	// testCollab := models.NewActivity(suite.testConfigs.Principal.Account().ID, entityID, models.ActivityAddedAsCollaborator)
 	testActivity := models.NewTaggedInPlanDiscussionActivity(actorID, discussionID, testContent)
 
 	createdActivity, err := activityCreate(suite.testConfigs.Context, suite.testConfigs.Store, testActivity)

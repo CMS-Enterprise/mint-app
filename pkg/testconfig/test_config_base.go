@@ -63,10 +63,6 @@ func (config *Base) GetDefaults(ctxCallbacks ...func(context.Context) context.Co
 		config.Context = cb(config.Context)
 	}
 
-	// dataLoaders := loaders.NewDataLoaders(tc.Store)
-	// tc.Context = loaders.CTXWithLoaders(context.Background(), dataLoaders)
-	// tc.Context = appcontext.WithUserAccountService(tc.Context, userhelpers.UserAccountGetByIDLOADER)
-
 }
 
 func getTestDependencies() (storage.DBConfig, *ld.LDClient, *zap.Logger, *models.UserInfo, *pubsub.ServicePubSub) {

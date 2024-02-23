@@ -25,10 +25,3 @@ func GetTestPrincipal(store *storage.Store, userName string) *authentication.App
 	return princ
 
 }
-
-// func SetupTestPrincipal(store *storage.Store, userName string){
-// 		//GET USER ACCOUNT EACH TIME!
-// 		princ := getTestPrincipal(config.Store, config.UserInfo.Username)
-// 		config.Principal = princ
-// 		return nil
-// }

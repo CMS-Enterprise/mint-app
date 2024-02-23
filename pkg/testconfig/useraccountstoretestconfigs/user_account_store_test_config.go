@@ -56,7 +56,6 @@ func GetTestPrincipal(store *storage.Store, userName string) (*authentication.Ap
 	if newErr != nil {
 		return nil, newErr
 	}
-	// return newAccount, nil
 
 	princ := &authentication.ApplicationPrincipal{
 		Username:          *newAccount.Username,
@@ -69,10 +68,3 @@ func GetTestPrincipal(store *storage.Store, userName string) (*authentication.Ap
 	return princ, nil
 
 }
-
-// func SetupTestPrincipal(store *storage.Store, userName string){
-// 		//GET USER ACCOUNT EACH TIME!
-// 		princ := getTestPrincipal(config.Store, config.UserInfo.Username)
-// 		config.Principal = princ
-// 		return nil
-// }
