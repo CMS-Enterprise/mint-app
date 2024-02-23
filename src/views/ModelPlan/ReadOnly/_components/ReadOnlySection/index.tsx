@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Grid, Icon } from '@trussworks/react-uswds';
 
@@ -6,173 +6,77 @@ import Alert from 'components/shared/Alert';
 import CollapsableLink from 'components/shared/CollapsableLink';
 import Tooltip from 'components/shared/Tooltip';
 import {
-  getKeys,
+  isTranslationFieldProperties,
+  isTranslationFieldPropertiesWithOptions,
   isTranslationFieldPropertiesWithOptionsAndChildren,
-  TranslationFieldPropertiesWithOptions,
-  TranslationFieldPropertiesWithOptionsAndChildren,
-  TranslationFieldPropertiesWithOptionsAndParent
+  TranslationConfigType,
+  TranslationFieldPropertiesWithOptions
 } from 'types/translation';
 
-export type ReadOnlySectionProps = {
-  copy?: string | null | React.ReactNode;
-  heading: string;
-  otherItem?: string | null; // used to designate the translated name of 'Other' option - render a followup question on a specific radio selection inline
-  list?: boolean;
-  listItems?: (string | number | React.ReactElement)[];
-  listOtherItem?: string | null;
-  listOtherItems?:
-    | (string | null | undefined | React.ReactElement[])[]
-    | undefined;
-  tooltips?: (string | null | undefined)[];
-  notes?: string | null;
-  relatedConditions?: (string | null | undefined)[] | null;
+import { filterGroupKey } from '../FilterView/BodyContent/_filterGroupMapping';
+
+import {
+  formatID,
+  formatListOtherValues,
+  formatListTooltips,
+  formatListValues,
+  getFilterGroupInfo,
+  getRelatedUneededQuestions,
+  isEmpty,
+  isHiddenByParentCondition
+} from './util';
+
+export type ReadOnlySectionProps<
+  T extends keyof T | string,
+  C extends keyof C | string
+> = {
+  field: string; // Any gql field name
+  translations: Record<string, TranslationConfigType<T, C>>;
+  values: any;
+  filteredView?: keyof typeof filterGroupKey;
 };
 
-const ReadOnlySection = ({
-  copy,
-  heading,
-  otherItem,
-  list,
-  listItems = [],
-  listOtherItem,
-  listOtherItems,
-  tooltips,
-  notes,
-  relatedConditions
-}: ReadOnlySectionProps) => {
+const ReadOnlySection = <
+  T extends keyof T | string,
+  C extends keyof C | string
+>({
+  field,
+  translations,
+  values,
+  filteredView
+}: ReadOnlySectionProps<T, C>): React.ReactElement | null => {
   const { t: miscellaneousT } = useTranslation('miscellaneous');
-  const { t: readOnlyT } = useTranslation('generalReadOnly');
 
-  const sectionName = heading
-    .toLowerCase()
-    .replace(/\W*$/g, '')
-    .replace(/\W/g, '-');
+  const config = translations[field];
 
-  const isElement = (
-    element: string | number | React.ReactElement | React.ReactNode
-  ) => {
-    return React.isValidElement(element);
-  };
+  const value = values[config.gqlField];
 
-  // Legacy function to render "Other" option or translation for other not specifed
-  const renderListItemOther = (otherSelection: string | null | undefined) => {
-    if (otherSelection) {
-      return (
-        <li className="font-sans-md line-height-sans-4">{otherSelection}</li>
-      );
-    }
-    return (
-      <li className="font-sans-md line-height-sans-4">
-        <em className="text-base">
-          {miscellaneousT('noAdditionalInformation')}
-        </em>
-      </li>
-    );
-  };
-
-  // Can render a single "Other" option or multiple additional information options
-  // as well as default text for both if not specified
-  const renderListItemOthers = (index: number) => {
-    if (listOtherItems) {
-      if (listOtherItems[index] === undefined) {
-        return null;
-      }
-      if (listOtherItems[index]) {
-        return (
-          <li className="font-sans-md line-height-sans-4">
-            {listOtherItems[index]}
-          </li>
-        );
-      }
-      return (
-        <li className="font-sans-md line-height-sans-4 ">
-          <em className="text-base">
-            {miscellaneousT('noAdditionalInformation')}
-          </em>
-        </li>
-      );
-    }
+  // Don't render if isOtherType - will be rendered as a part of parent value
+  if (config.isOtherType) {
     return null;
-  };
+  }
 
-  const renderCopyOrList = () => {
-    if (isElement(copy)) {
-      return (
-        <div className="margin-y-0 font-body-md line-height-sans-4 text-pre-line">
-          {copy || (
-            <em className="text-base">
-              {miscellaneousT('noAdditionalInformation')}
-            </em>
-          )}
-        </div>
-      );
-    }
+  // Checks if current view is filtered, then check if question belongs to filter group
+  // If not, return null
+  if (
+    filteredView &&
+    filterGroupKey[filteredView] &&
+    !config?.filterGroups?.includes(filterGroupKey[filteredView])
+  ) {
+    return null;
+  }
 
-    if (!list || listItems.length === 0) {
-      if (copy && copy === otherItem) {
-        return (
-          <p className="margin-y-0 font-body-md line-height-sans-4 text-pre-line">
-            {copy} {listOtherItem && <span>- {listOtherItem}</span>}{' '}
-            {!listOtherItem && (
-              <i className="text-base">
-                - {miscellaneousT('noAdditionalInformation')}
-              </i>
-            )}
-          </p>
-        );
-      }
+  if (isHiddenByParentCondition(config, values)) {
+    return null;
+  }
 
-      return (
-        <p className="margin-y-0 font-body-md line-height-sans-4 text-pre-line">
-          {copy || (
-            <em className="text-base">
-              {miscellaneousT('noAdditionalInformation')}
-            </em>
-          )}
-        </p>
-      );
-    }
+  const heading = config.readonlyLabel || config.label;
 
-    return (
-      <ul
-        className={`margin-y-0 padding-left-${
-          isElement(listItems[0]) ? '2' : '3'
-        }`}
-      >
-        {listItems.map((item, index) => (
-          <React.Fragment
-            key={
-              isElement(listItems[index]) ? index : `${sectionName}--${item}`
-            }
-          >
-            <li className="font-sans-md line-height-sans-4">
-              {item}
-              {tooltips && tooltips[index] && (
-                <span className="top-2px position-relative">
-                  <Tooltip
-                    label={tooltips[index]!}
-                    position="right"
-                    className="margin-left-05"
-                  >
-                    <Icon.Info className="text-base-light" />
-                  </Tooltip>
-                </span>
-              )}
-            </li>
-            {(item === 'Other' || listOtherItems) && (
-              <ul data-testid="other-entry">
-                {!listOtherItems && renderListItemOther(listOtherItem)}
-                {listOtherItems && renderListItemOthers(index)}
-              </ul>
-            )}
-          </React.Fragment>
-        ))}
-      </ul>
-    );
-  };
+  // Used for id's/classes/metadata
+  const sectionName = formatID(heading);
 
   // If no notes are written, do not render
-  if (heading === miscellaneousT('notes') && !copy) {
+  if (heading === miscellaneousT('notes') && !value) {
     return null;
   }
 
@@ -184,136 +88,343 @@ const ReadOnlySection = ({
         <p className="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line">
           {heading}
         </p>
-        {renderCopyOrList()}
+
+        <RenderReadonlyValue
+          field={field}
+          translations={translations}
+          values={values}
+        />
       </div>
 
-      {notes && (
-        <ReadOnlySection heading={miscellaneousT('notes')} copy={notes} />
-      )}
-
-      {!!relatedConditions?.length && (
-        <>
-          <Alert type="info" slim className="margin-bottom-3">
-            {readOnlyT('questionNotApplicable', {
-              count: relatedConditions.length
-            })}
-          </Alert>
-
-          <CollapsableLink
-            id={heading}
-            label={readOnlyT('showOtherQuestions', {
-              count: relatedConditions.length
-            })}
-            closeLabel={readOnlyT('hideOtherQuestions', {
-              count: relatedConditions.length
-            })}
-            styleLeftBar={false}
-            className="margin-bottom-3"
-          >
-            <ul className="margin-y-0">
-              {relatedConditions.map(question => (
-                <li key={question} className="text-bold margin-bottom-1">
-                  {question}
-                </li>
-              ))}
-            </ul>
-          </CollapsableLink>
-        </>
-      )}
+      <RelatedUnneededQuestions
+        id={`related-${sectionName}`}
+        config={config}
+        value={value}
+        childrenToCheck={
+          filteredView
+            ? getFilterGroupInfo(translations, filteredView)
+            : undefined
+        }
+        hideAlert={config.hideRelatedQuestionAlert && !filteredView}
+      />
     </Grid>
   );
 };
 
 /*
-  Util function for prepping option data to listItems prop of ReadOnlySection
-  Using translation config instead of raw data allows us to ensure a predetermined order of render
+  Renders out either a single value/no value, a radio, or a list value
 */
-export const formatListItems = <T extends string | keyof T>(
-  config: TranslationFieldPropertiesWithOptions<T>, // Translation config
-  value: T[] | undefined // field value/enum array
-): string[] => {
-  return getKeys(config.options)
-    .filter(option => value?.includes(option))
-    .map((option): string => config.options[option]);
-};
-
-/*
-  Util function for prepping data to listOtherItems prop of ReadOnlySection
-  Using translation config instead of raw data allows us to ensure a predetermined order of render
-*/
-export const formatListOtherItems = <T extends string | keyof T>(
-  config: TranslationFieldPropertiesWithOptions<T>, // Translation config
-  value: T[] | undefined, // field value/enum array
-  values: any // All data for the task list section returned from query
-): (string | null | undefined)[] => {
-  return getKeys(config.options)
-    .filter(option => value?.includes(option))
-    .map((option): string | null | undefined => {
-      return values[config.optionsRelatedInfo?.[option]];
-    });
-};
-
-/*
-  Util function for getting related child questions that do not need to be rendered
-  Using to render a toggle alert to show list of questions
-*/
-export const getRelatedUneededQuestions = <
+const RenderReadonlyValue = <
   T extends string | keyof T,
   C extends string | keyof C
->(
-  config:
-    | TranslationFieldPropertiesWithOptions<T>
-    | TranslationFieldPropertiesWithOptionsAndChildren<T, C>
-    | TranslationFieldPropertiesWithOptionsAndParent<T, C>, // Translation config
-  value: T[] | undefined // field value/enum array,
-): (string | null | undefined)[] | null => {
-  if (!isTranslationFieldPropertiesWithOptionsAndChildren(config)) return null;
+>({
+  field,
+  translations,
+  values
+}: {
+  field: string;
+  translations: Record<string, TranslationConfigType<T, C>>;
+  values: any;
+}) => {
+  const config = translations[field];
 
-  // Creating to arrays to hold values of needed and unneeded hidden questions
-  // For instances like `providerOverlap` where the multiple parent evaluations triggers the same rendered question
-  // Allows to remove dupe neededRelations
-  let unneededRelations: string[] = [];
-  const neededRelations: string[] = [];
+  const value = values[config.gqlField];
 
-  getKeys(config.childRelation).forEach(option => {
-    // If the evaluation of the parent value triggers a child question, sort into appropriate arrays
-    if (
-      (Array.isArray(value) && !value?.includes(option as T)) ||
-      (!Array.isArray(value) && value !== undefined && String(value) !== option)
-    ) {
-      config.childRelation?.[option]?.forEach(childField => {
-        neededRelations.push(childField().label);
-      });
-    } else {
-      unneededRelations = [
-        ...unneededRelations,
-        ...(config.childRelation?.[option]?.map(
-          childField => childField().label
-        ) as [])
-      ];
-    }
-  });
+  const listValues = formatListValues(config, value);
 
-  // Removes dupe relations and converts to translated string
-  const uniqueQuestions = neededRelations
-    .filter(relation => !unneededRelations.includes(relation))
-    .map(relation => relation);
+  const tooltips = formatListTooltips(config, value);
 
-  return [...new Set(uniqueQuestions)];
+  const listOtherValues = formatListOtherValues(config, value, values);
+
+  const id = formatID(config.readonlyLabel || config.label);
+
+  // Renders a single value
+  if (
+    isTranslationFieldProperties(config) &&
+    !isTranslationFieldPropertiesWithOptions(config)
+  ) {
+    return <SingleValue value={value} />;
+  }
+
+  // Renders a single value with options (radio)
+  // May also renders a conditinal followup value/s to the selection
+  if (
+    isTranslationFieldPropertiesWithOptions(config) &&
+    config.formType === 'radio'
+  ) {
+    return (
+      <RadioValue field={field} values={values} translations={translations} />
+    );
+  }
+
+  // If no values for checkbox/multiselect type questions
+  if (listValues.length === 0) {
+    return <NoAddtionalInfo />;
+  }
+
+  // Renders a list of selected values - multiselect, checkboxes
+  return (
+    <ListItems
+      id={id}
+      listValues={listValues}
+      listOtherValues={listOtherValues}
+      tooltips={tooltips}
+    />
+  );
 };
 
-/* Util function for prepping optionsLabels translation data to formatListTooltips prop of ReadOnlySection
-Using translation config instead of raw data allows us to ensure a predetermined order of render
+export const NoAddtionalInfo = ({ other }: { other?: boolean }) => {
+  const { t: miscellaneousT } = useTranslation('miscellaneous');
+
+  return (
+    <em className="text-base">
+      {other ? miscellaneousT('noAdditionalInformation') : miscellaneousT('na')}
+    </em>
+  );
+};
+
+export const SingleValue = ({
+  value
+}: {
+  value: string | null | undefined;
+}) => {
+  return (
+    <div className="margin-y-0 font-body-md line-height-sans-4 text-pre-line">
+      {!isEmpty(value) ? value : <NoAddtionalInfo />}
+    </div>
+  );
+};
+
+export const RadioValue = <
+  T extends string | keyof T,
+  C extends string | keyof C
+>({
+  field,
+  translations,
+  values
+}: {
+  field: string;
+  translations: Record<string, TranslationConfigType<T, C>>;
+  values: any;
+}) => {
+  const { t: miscellaneousT } = useTranslation('miscellaneous');
+
+  const config = translations[field];
+
+  const value = values[config.gqlField];
+
+  if (!isTranslationFieldPropertiesWithOptions(config)) return null;
+
+  // Checks if configuration exists to optionally render a child's value with the radio value
+  const childField = config.optionsRelatedInfo?.[value as T];
+
+  const childFieldValue:
+    | Partial<Record<T, string>>[T]
+    | undefined
+    | null = childField ? values[childField] : null;
+
+  // Checks if the child field is an array to render as a bulleted list beneath the radio selection
+  const isChildMultiple: boolean = Array.isArray(childFieldValue);
+
+  // Ensures the the child has configuration to translate the options in array
+  const childHasOptions = translations[
+    childField as string
+  ] as TranslationFieldPropertiesWithOptions<T>;
+
+  // Checks if a single radio value has a mapped tooltip/optionsLabel
+  let radioTooltip: string | undefined;
+
+  if (config.tooltips) {
+    radioTooltip = config.tooltips[value as T];
+  }
+
+  return (
+    <div className="margin-y-0 font-body-md line-height-sans-4 text-pre-line">
+      {!isEmpty(value) && config.options[value as T]}
+
+      {/* Renders a tooltip if mapped to the selected radio value */}
+      {radioTooltip && (
+        <span className="top-2px position-relative">
+          <Tooltip
+            label={radioTooltip}
+            position="right"
+            className="margin-left-05"
+          >
+            <Icon.Info className="text-base-light" />
+          </Tooltip>
+        </span>
+      )}
+
+      {/* Renders a string next to the hyphenated value of the radio option */}
+      {childField && childFieldValue && !isChildMultiple && (
+        <span data-testid="other-entry"> - {childFieldValue}</span>
+      )}
+
+      {/* Renders a list beneath a selection of a radio value */}
+      {childHasOptions && childHasOptions.options && childField && (
+        <RenderReadonlyValue
+          field={childField}
+          translations={translations}
+          values={values}
+        />
+      )}
+
+      {/* Render default empty value */}
+      {(isEmpty(value) || (childField && !childFieldValue)) && (
+        <i className="text-base">
+          {!isEmpty(value) && ' - '}
+          {childField
+            ? miscellaneousT('noAdditionalInformation')
+            : miscellaneousT('na')}
+        </i>
+      )}
+    </div>
+  );
+};
+
+const ListItems = <T extends string | keyof T, C extends string | keyof C>({
+  id,
+  listValues,
+  listOtherValues,
+  tooltips
+}: {
+  id: string;
+  listValues: (string | null | undefined)[];
+  listOtherValues: (string | null | undefined)[];
+  tooltips: (string | null | undefined)[];
+}) => {
+  return (
+    <ul className="margin-y-0 padding-left-3">
+      {listValues.map((item: any, index: number) => (
+        <Fragment key={`${id}--${item}`}>
+          <li className="font-sans-md line-height-sans-4">
+            {item}
+
+            {tooltips && tooltips[index] && (
+              <span className="top-2px position-relative">
+                <Tooltip
+                  label={tooltips[index]!}
+                  position="right"
+                  className="margin-left-05"
+                >
+                  <Icon.Info className="text-base-light" />
+                </Tooltip>
+              </span>
+            )}
+          </li>
+
+          {listOtherValues && (
+            <ul>
+              <ListOtherItem index={index} listOtherItems={listOtherValues} />
+            </ul>
+          )}
+        </Fragment>
+      ))}
+    </ul>
+  );
+};
+
+/*
+  Renders a nested list item.  If no value exists, render <NoAddtionalInfo />
 */
-export const formatListTooltips = <T extends string | keyof T>(
-  config: TranslationFieldPropertiesWithOptions<T>, // Translation config
-  value: T[] | undefined // field value/enum array
-): (string | null | undefined)[] => {
-  return getKeys(config.options)
-    .filter(option => value?.includes(option))
-    .map((option): string | null | undefined => {
-      return config.optionsLabels?.[option];
-    });
+const ListOtherItem = ({
+  index,
+  listOtherItems
+}: {
+  index: number;
+  listOtherItems: any;
+}) => {
+  // If there is no optionalRelatedInfo mapped to the index return undefined
+  if (listOtherItems[index] === undefined) {
+    return null;
+  }
+  if (listOtherItems[index]) {
+    return (
+      <li className="font-sans-md line-height-sans-4">
+        {listOtherItems[index]}
+      </li>
+    );
+  }
+  // If there is optionalRelatedInfo mapped, but no value
+  return (
+    <li className="font-sans-md line-height-sans-4 ">
+      <NoAddtionalInfo other />
+    </li>
+  );
+};
+
+export const RelatedUnneededQuestions = <
+  T extends string | keyof T,
+  C extends string | keyof C
+>({
+  id,
+  config,
+  value,
+  valuesToCheck,
+  childrenToCheck,
+  hideAlert
+}: {
+  id: string;
+  config: TranslationConfigType<T, C>;
+  value: any;
+  valuesToCheck?: T[]; // If only want to check unneeded children for a specific value of the parent
+  childrenToCheck?: (string | undefined)[];
+  hideAlert?: boolean;
+}) => {
+  const { t: readOnlyT } = useTranslation('generalReadOnly');
+
+  const relatedConditions = isTranslationFieldPropertiesWithOptions(config)
+    ? getRelatedUneededQuestions(config, value, valuesToCheck, childrenToCheck)
+    : [];
+
+  if (!relatedConditions?.length || hideAlert) {
+    return null;
+  }
+
+  // Render an alt label for the alert of configured for it
+  const disconnectedLabel =
+    isTranslationFieldPropertiesWithOptionsAndChildren(config) &&
+    config.disconnectedLabel
+      ? config.disconnectedLabel
+      : 'questionNotApplicableSpecific';
+
+  return (
+    <>
+      <Alert type="info" noIcon className="margin-bottom-3">
+        {isTranslationFieldPropertiesWithOptionsAndChildren(config) &&
+        config.disconnectedChildren
+          ? // Render a disconnected translations text
+            readOnlyT(disconnectedLabel, {
+              count: relatedConditions.length,
+              question: config.label
+            })
+          : // Render default alert text
+            readOnlyT('questionNotApplicable', {
+              count: relatedConditions.length
+            })}
+      </Alert>
+
+      <CollapsableLink
+        id={id}
+        label={readOnlyT('showOtherQuestions', {
+          count: relatedConditions.length
+        })}
+        closeLabel={readOnlyT('hideOtherQuestions', {
+          count: relatedConditions.length
+        })}
+        styleLeftBar={false}
+        className="margin-bottom-3"
+      >
+        <ul className="margin-y-0">
+          {relatedConditions.map(question => (
+            <li key={question} className="text-bold margin-bottom-1">
+              {question}
+            </li>
+          ))}
+        </ul>
+      </CollapsableLink>
+    </>
+  );
 };
 
 export default ReadOnlySection;

@@ -9,7 +9,6 @@ import { Parser } from '@json2csv/plainjs';
 import { unwind } from '@json2csv/transforms';
 import i18next from 'i18next';
 
-import { FitlerGroup } from 'components/ShareExport';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import GetAllModelPlans from 'queries/GetAllModelData';
 import GetAllSingleModelPlan from 'queries/GetAllSingleModelPlan';
@@ -25,8 +24,11 @@ import {
 import { getKeys } from 'types/translation';
 import { formatDateLocal, formatDateUtc } from 'utils/date';
 import { csvFields, fieldsToUnwind } from 'utils/export/CsvData';
-import { filterGroupKey } from 'views/ModelPlan/ReadOnly/_components/FilterView/BodyContent/_filterGroupMapping';
-import { isHiddenByParentCondition } from 'views/ModelPlan/ReadOnly/_components/ReadOnlySection/new';
+import {
+  FilterGroup,
+  filterGroupKey
+} from 'views/ModelPlan/ReadOnly/_components/FilterView/BodyContent/_filterGroupMapping';
+import { isHiddenByParentCondition } from 'views/ModelPlan/ReadOnly/_components/ReadOnlySection/util';
 
 interface CSVModelPlanType extends AllModelDataType, SingleModelPlanType {}
 
@@ -211,7 +213,7 @@ export const dataFormatter = (
 // Filters out columns for csv based on selected FilterGroup mappings in translation file
 export const selectFilteredFields = (
   allPlanTranslation: any,
-  filteredGroup: FitlerGroup
+  filteredGroup: FilterGroup
 ) => {
   const selectedFields: string[] = [];
   // Loop through task list sections of translation obj
@@ -280,7 +282,7 @@ const downloadFile = (data: string) => {
 const csvFormatter = (
   csvData: CSVModelPlanType[],
   allPlanTranslation: any,
-  filteredGroup?: FitlerGroup | undefined
+  filteredGroup?: FilterGroup | undefined
 ) => {
   try {
     const transform = unwind({ paths: fieldsToUnwind, blankOut: true });
@@ -327,11 +329,11 @@ type UseFetchCSVData = {
     input: string
   ) => Promise<FetchResult<GetAllSingleModelData>>;
   fetchAllData: () => Promise<FetchResult<GetAllModelDataType>>;
-  setFilteredGroup: (filteredGroup?: FitlerGroup) => void;
+  setFilteredGroup: (filteredGroup?: FilterGroup) => void;
 };
 
 const useFetchCSVData = (): UseFetchCSVData => {
-  const [filteredGroup, setFilteredGroup] = useState<FitlerGroup | undefined>();
+  const [filteredGroup, setFilteredGroup] = useState<FilterGroup | undefined>();
 
   // Get data for a single model plan
   const [fetchSingleData] = useLazyQuery<

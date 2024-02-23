@@ -10,7 +10,7 @@ export const filterGroups = getKeys(ModelViewFilter).map(filter =>
 export type FilterGroup = typeof filterGroups[number];
 
 // Map for url route params to ModelViewFilter enum
-export const filterGroupKey: Record<string, ModelViewFilter> = {
+export const filterGroupKey: Record<FilterGroup, ModelViewFilter> = {
   cbosc: ModelViewFilter.CBOSC,
   ccw: ModelViewFilter.CCW,
   cmmi: ModelViewFilter.CMMI,

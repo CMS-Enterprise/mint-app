@@ -53,6 +53,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     label: 'Which type of Medicare providers/suppliers?',
     dataType: 'string',
     formType: 'textarea',
+    isOtherType: true,
     filterGroups: [
       ModelViewFilter.CBOSC,
       ModelViewFilter.CMMI,
@@ -68,6 +69,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     label: 'Please describe how states will engage with your model.',
     dataType: 'string',
     formType: 'textarea',
+    isOtherType: true,
     filterGroups: [
       ModelViewFilter.CBOSC,
       ModelViewFilter.CMMI,
@@ -83,6 +85,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     label: 'Please describe the other participants engaging with this model',
     dataType: 'string',
     formType: 'textarea',
+    isOtherType: true,
     filterGroups: [
       ModelViewFilter.CBOSC,
       ModelViewFilter.CMMI,

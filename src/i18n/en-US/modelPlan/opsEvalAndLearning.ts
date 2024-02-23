@@ -91,7 +91,11 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
       MULTIPLE: [() => opsEvalAndLearning.contractorSupportHow],
       OTHER: [() => opsEvalAndLearning.contractorSupportHow]
     },
-    filterGroups: [ModelViewFilter.CBOSC, ModelViewFilter.IDDOC]
+    filterGroups: [
+      ModelViewFilter.CBOSC,
+      ModelViewFilter.IDDOC,
+      ModelViewFilter.PBG
+    ]
   },
   contractorSupportOther: {
     gqlField: 'contractorSupportOther',
@@ -101,7 +105,11 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     dataType: 'string',
     formType: 'textarea',
     isOtherType: true,
-    filterGroups: [ModelViewFilter.CBOSC, ModelViewFilter.IDDOC]
+    filterGroups: [
+      ModelViewFilter.CBOSC,
+      ModelViewFilter.IDDOC,
+      ModelViewFilter.PBG
+    ]
   },
   contractorSupportHow: {
     gqlField: 'contractorSupportHow',
@@ -112,7 +120,11 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     dataType: 'string',
     formType: 'textarea',
     parentRelation: () => opsEvalAndLearning.contractorSupport,
-    filterGroups: [ModelViewFilter.CBOSC, ModelViewFilter.IDDOC]
+    filterGroups: [
+      ModelViewFilter.CBOSC,
+      ModelViewFilter.IDDOC,
+      ModelViewFilter.PBG
+    ]
   },
   contractorSupportNote: {
     gqlField: 'contractorSupportNote',
@@ -121,7 +133,11 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     label: 'Notes',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: [ModelViewFilter.CBOSC, ModelViewFilter.IDDOC]
+    filterGroups: [
+      ModelViewFilter.CBOSC,
+      ModelViewFilter.IDDOC,
+      ModelViewFilter.PBG
+    ]
   },
   iddocSupport: {
     gqlField: 'iddocSupport',
@@ -932,7 +948,6 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
       'Will you use the CCW to distribute files to and from model participants?',
     dataType: 'boolean',
     formType: 'radio',
-    isPageStart: true,
     options: {
       true: 'Yes',
       false: 'No'

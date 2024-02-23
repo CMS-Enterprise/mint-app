@@ -23,7 +23,7 @@ export const basics: TranslationBasics = {
       STATUTORY: 'Statutory',
       TO_BE_DETERMINED: 'To be determined'
     },
-    optionsLabels: {
+    tooltips: {
       ACCOUNTABLE_CARE:
         'Models in which a doctor, group of health care providers or hospital takes financial responsibility for improving quality of care, including advanced primary care services, care coordination and health outcomes for a defined group of patients, thereby reducing care fragmentation and unnecessary costs for patients and the health system',
       DISEASE_SPECIFIC_AND_EPISODIC:
@@ -36,7 +36,8 @@ export const basics: TranslationBasics = {
       STATUTORY:
         'Models and demonstrations requiring testing as determined by Congress and/or the Secretary of Health and Human Services.',
       TO_BE_DETERMINED: 'To be determined'
-    }
+    },
+    filterGroups: [ModelViewFilter.IPC]
   },
   additionalModelCategories: {
     gqlField: 'additionalModelCategories',
@@ -60,7 +61,7 @@ export const basics: TranslationBasics = {
       STATUTORY: 'Statutory',
       TO_BE_DETERMINED: 'To be determined'
     },
-    optionsLabels: {
+    tooltips: {
       ACCOUNTABLE_CARE:
         'Models in which a doctor, group of health care providers or hospital takes financial responsibility for improving quality of care, including advanced primary care services, care coordination and health outcomes for a defined group of patients, thereby reducing care fragmentation and unnecessary costs for patients and the health system',
       DISEASE_SPECIFIC_AND_EPISODIC:
@@ -73,7 +74,8 @@ export const basics: TranslationBasics = {
       STATUTORY:
         'Models and demonstrations requiring testing as determined by Congress and/or the Secretary of Health and Human Services.',
       TO_BE_DETERMINED: 'To be determined'
-    }
+    },
+    filterGroups: [ModelViewFilter.IPC]
   },
   amsModelID: {
     gqlField: 'amsModelID',
@@ -265,6 +267,10 @@ export const basics: TranslationBasics = {
     label: 'Application start date',
     dataType: 'date',
     formType: 'datePicker',
+    adjacentPositioning: {
+      position: 'left',
+      adjacentField: 'applicationsEnd'
+    },
     filterGroups: [ModelViewFilter.CBOSC, ModelViewFilter.IPC]
   },
   applicationsEnd: {
@@ -274,7 +280,11 @@ export const basics: TranslationBasics = {
     label: 'Application end date',
     dataType: 'date',
     formType: 'datePicker',
-    filterGroups: [ModelViewFilter.IPC]
+    adjacentPositioning: {
+      position: 'right',
+      adjacentField: 'applicationsStart'
+    },
+    filterGroups: [ModelViewFilter.CBOSC, ModelViewFilter.IPC]
   },
   performancePeriodStarts: {
     gqlField: 'performancePeriodStarts',
@@ -308,8 +318,11 @@ export const basics: TranslationBasics = {
       adjacentField: 'performancePeriodStarts'
     },
     filterGroups: [
-      ModelViewFilter.IPC,
+      ModelViewFilter.CBOSC,
+      ModelViewFilter.CCW,
+      ModelViewFilter.DFSDM,
       ModelViewFilter.IDDOC,
+      ModelViewFilter.IPC,
       ModelViewFilter.PBG
     ]
   },
@@ -389,14 +402,10 @@ export const basicsMisc: Record<string, string> = {
   demonstrationPerformance: 'Performance period',
   demonstrationPerformanceInfo:
     'When the model will be active beginning with the go-live date',
-  na: 'No answer entered',
-  otherNotSpecified: 'Other not specified',
   milestonesInfo:
     'Please be sure that the dates listed here are updated in the clearance calendar, if applicable. Contact the MINT Team at {{-email}} if you have any questions.',
   required1: 'All fields marked with ',
   required2: ' are required.',
-  notes: 'Notes',
-  noneEntered: 'None entered',
   otherIdentifiers: 'Other identifiers',
   otherIdentifiersInfo1: 'These are created in ',
   otherIdentifiersInfo2: 'CMMI Analysis & Management System (AMS).',

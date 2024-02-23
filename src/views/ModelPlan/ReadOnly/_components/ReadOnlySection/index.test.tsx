@@ -1,66 +1,82 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import { FundingSource } from 'gql/gen/graphql';
+import { FundingSource, OverlapType, RecruitmentType } from 'gql/gen/graphql';
 import i18next from 'i18next';
 
+import { participantsAndProviders } from 'i18n/en-US/modelPlan/participantsAndProviders';
 import { payments } from 'i18n/en-US/modelPlan/payments';
+import { Bool } from 'types/translation';
 
-import ReadOnlySection, {
-  formatListItems,
-  formatListOtherItems,
-  formatListTooltips
-} from './index';
+import {
+  checkIfParentContainsChildClosure,
+  formatListOtherValues,
+  formatListTooltips,
+  formatListValues,
+  getRelatedUneededQuestions,
+  isHiddenByParentCondition
+} from './util';
+import ReadOnlySection from '.';
+
+const defaultProps = {
+  field: 'modelApplicationLevel',
+  translations: participantsAndProviders,
+  values: {
+    providerOverlap: OverlapType.NO,
+    providerOverlapHierarchy: 'Overlap heirarchy',
+    modelApplicationLevel: 'Top level',
+    recruitmentMethod: [RecruitmentType.OTHER],
+    recruitmentOther: 'Other recruitment'
+  }
+};
 
 describe('The Read Only Section', () => {
   describe('As a Non-list Component', () => {
-    const defaultCopyProps = {
-      heading: 'React Testing is Great',
-      copy: 'Lorem ipsum dolor sit amet.'
-    };
-
     it('renders without crashing', async () => {
-      render(<ReadOnlySection {...defaultCopyProps} />);
+      render(<ReadOnlySection {...defaultProps} />);
 
-      expect(screen.getByText(defaultCopyProps.heading)).toBeInTheDocument();
-      expect(screen.getByText(defaultCopyProps.copy)).toBeInTheDocument();
+      expect(
+        screen.getByText(
+          i18next.t<string>(
+            'participantsAndProviders:modelApplicationLevel.label'
+          )
+        )
+      ).toBeInTheDocument();
+      expect(screen.getByText('Top level')).toBeInTheDocument();
     });
 
     it('renders "No additional information specified" if copy is empty', async () => {
-      render(<ReadOnlySection {...defaultCopyProps} copy={null} />);
+      const emptyData = { ...defaultProps };
 
-      expect(screen.getByText(defaultCopyProps.heading)).toBeInTheDocument();
+      emptyData.values.modelApplicationLevel = '';
+
+      render(<ReadOnlySection {...emptyData} />);
+
       expect(
-        screen.getByText('No additional information specified')
+        screen.getByText(
+          i18next.t<string>(
+            'participantsAndProviders:modelApplicationLevel.label'
+          )
+        )
+      ).toBeInTheDocument();
+      expect(
+        screen.getByText(i18next.t<string>('miscellaneous:na'))
       ).toBeInTheDocument();
     });
   });
 
   describe('As a List Component', () => {
-    const defaultListProps = {
-      heading: 'Lorem ipsum dolor sit amet',
-      list: true,
-      listItems: ['Center for Medicare (CM)', 'CMMI']
-    };
-
-    it('renders without crashing', async () => {
-      render(<ReadOnlySection {...defaultListProps} />);
-
-      expect(screen.getByText(defaultListProps.heading)).toBeInTheDocument();
-      expect(
-        screen.getByText(defaultListProps.listItems[0])
-      ).toBeInTheDocument();
-    });
-
     it('renders Other entry', async () => {
-      render(
-        <ReadOnlySection
-          {...defaultListProps}
-          listItems={['Other']}
-          copy="Lorem ipsum dolor sit amet."
-        />
-      );
+      const listData = { ...defaultProps };
 
-      expect(screen.getByText(defaultListProps.heading)).toBeInTheDocument();
+      listData.field = 'recruitmentMethod';
+
+      render(<ReadOnlySection {...listData} />);
+
+      expect(
+        screen.getByText(
+          i18next.t<string>('participantsAndProviders:recruitmentMethod.label')
+        )
+      ).toBeInTheDocument();
       expect(screen.getByText('Other')).toBeInTheDocument();
       expect(screen.getByTestId('other-entry')).toBeInTheDocument();
     });
@@ -80,7 +96,7 @@ describe('The Read Only Section', () => {
         'Other'
       ];
 
-      expect(formatListItems(payments.fundingSource, values)).toEqual(
+      expect(formatListValues(payments.fundingSource, values)).toEqual(
         expectedOrder
       );
     });
@@ -106,7 +122,7 @@ describe('The Read Only Section', () => {
       ];
 
       expect(
-        formatListOtherItems(payments.fundingSource, values, allValues)
+        formatListOtherValues(payments.fundingSource, values, allValues)
       ).toEqual(expectedOrder);
     });
 
@@ -119,10 +135,10 @@ describe('The Read Only Section', () => {
 
       const expectedOrder: string[] = [
         i18next.t<string>(
-          'payments:fundingSource.optionsLabels.MEDICARE_PART_A_HI_TRUST_FUND'
+          'payments:fundingSource.tooltips.MEDICARE_PART_A_HI_TRUST_FUND'
         ),
         i18next.t<string>(
-          'payments:fundingSource.optionsLabels.MEDICARE_PART_B_SMI_TRUST_FUND'
+          'payments:fundingSource.tooltips.MEDICARE_PART_B_SMI_TRUST_FUND'
         ),
         ''
       ];
@@ -130,6 +146,57 @@ describe('The Read Only Section', () => {
       expect(formatListTooltips(payments.fundingSource, values)).toEqual(
         expectedOrder
       );
+    });
+
+    it('gets a list of realted, unneeded questions', async () => {
+      const value: OverlapType[] = [OverlapType.NO];
+
+      const expectedQuestions: string[] = [
+        i18next.t<string>(
+          'participantsAndProviders:providerOverlapHierarchy.label'
+        )
+      ];
+
+      const relatedQuestions = getRelatedUneededQuestions(
+        participantsAndProviders.providerOverlap,
+        value
+      );
+
+      expect(relatedQuestions).toEqual(expectedQuestions);
+    });
+
+    it('return true for question that is hidden and conditional on a parent question', async () => {
+      const expectedEvaluation = true;
+
+      const childQuestion = isHiddenByParentCondition(
+        participantsAndProviders.providerOverlapHierarchy,
+        defaultProps.values
+      );
+
+      expect(childQuestion).toEqual(expectedEvaluation);
+    });
+
+    it('return false for question is shown and not conditional', async () => {
+      const expectedEvaluation = false;
+
+      const childQuestion = isHiddenByParentCondition(
+        participantsAndProviders.providerOverlap,
+        defaultProps.values
+      );
+
+      expect(childQuestion).toEqual(expectedEvaluation);
+    });
+
+    it('compares closures of parent/child translation configuration, child should now be shown', async () => {
+      const expectedEvaluation = true;
+
+      const childQuestion = checkIfParentContainsChildClosure(
+        Bool.true,
+        participantsAndProviders.gainsharePayments,
+        participantsAndProviders.gainsharePaymentsTrack
+      );
+
+      expect(childQuestion).toEqual(expectedEvaluation);
     });
   });
 });

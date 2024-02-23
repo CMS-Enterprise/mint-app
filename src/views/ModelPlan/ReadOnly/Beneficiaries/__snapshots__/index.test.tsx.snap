@@ -47,47 +47,6 @@ exports[`Read Only Model Plan Summary -- Beneficiaries > matches snapshot 1`] = 
               class="font-sans-md line-height-sans-4"
             >
               Disease-specific
-              <span
-                class="top-2px position-relative"
-              >
-                <span
-                  class="usa-tooltip"
-                  data-testid="tooltipWrapper"
-                >
-                  <div
-                    aria-describedby="tooltip-571279"
-                    class="usa-tooltip__trigger mint-no-print margin-left-05"
-                    data-testid="triggerElement"
-                    position="right"
-                    tabindex="0"
-                    title=""
-                  >
-                    <svg
-                      class="usa-icon text-base-light"
-                      focusable="false"
-                      height="1em"
-                      role="img"
-                      viewBox="0 0 24 24"
-                      width="1em"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
-                      />
-                    </svg>
-                  </div>
-                  <span
-                    aria-hidden="true"
-                    class="usa-tooltip__body"
-                    data-testid="tooltipBody"
-                    id="tooltip-571279"
-                    role="tooltip"
-                    title="(based on a diagnosis, procedure code, condition, etc.)"
-                  >
-                    (based on a diagnosis, procedure code, condition, etc.)
-                  </span>
-                </span>
-              </span>
             </li>
             <ul>
               <li
@@ -242,48 +201,62 @@ exports[`Read Only Model Plan Summary -- Beneficiaries > matches snapshot 1`] = 
       class="margin-top-4 padding-top-4 border-top-1px border-base-light"
     >
       <div
-        class="desktop:grid-col-12"
+        class="grid-row grid-gap"
         data-testid="grid"
       >
         <div
-          class="read-only-section read-only-section--how-many-people-do-you-think-will-be-impacted-by-this-model margin-bottom-3"
+          class="desktop:grid-col-6"
+          data-testid="grid"
         >
-          <p
-            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
-          >
-            How many people do you think will be impacted by this model?
-          </p>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            class="desktop:grid-col-12"
+            data-testid="grid"
           >
-            1234
+            <div
+              class="read-only-section read-only-section--how-many-people-do-you-think-will-be-impacted-by-this-model margin-bottom-3"
+            >
+              <p
+                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+              >
+                How many people do you think will be impacted by this model?
+              </p>
+              <div
+                class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+              >
+                1234
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="desktop:grid-col-6"
+          data-testid="grid"
+        >
+          <div
+            class="desktop:grid-col-12"
+            data-testid="grid"
+          >
+            <div
+              class="read-only-section read-only-section--what-is-your-level-of-confidence-on-this-estimate margin-bottom-3"
+            >
+              <p
+                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+              >
+                What is your level of confidence on this estimate?
+              </p>
+              <div
+                class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+              >
+                Completely confident
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
     <div
       class=""
-    >
-      <div
-        class="desktop:grid-col-12"
-        data-testid="grid"
-      >
-        <div
-          class="read-only-section read-only-section--what-is-your-level-of-confidence-on-this-estimate margin-bottom-3"
-        >
-          <p
-            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
-          >
-            What is your level of confidence on this estimate?
-          </p>
-          <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
-          >
-            Completely confident
-          </div>
-        </div>
-      </div>
-    </div>
+    />
     <div
       class=""
     >

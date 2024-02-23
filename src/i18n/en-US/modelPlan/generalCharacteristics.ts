@@ -16,7 +16,8 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     },
     childRelation: {
       false: [() => generalCharacteristics.existingModel]
-    }
+    },
+    filterGroups: [ModelViewFilter.IPC]
   },
   existingModel: {
     gqlField: 'existingModel',
@@ -26,7 +27,8 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     sublabel: 'Start typing the name of the model',
     dataType: 'string',
     formType: 'select',
-    parentRelation: () => generalCharacteristics.isNewModel
+    parentRelation: () => generalCharacteristics.isNewModel,
+    filterGroups: [ModelViewFilter.IPC]
   },
   resemblesExistingModel: {
     gqlField: 'resemblesExistingModel',
@@ -45,14 +47,13 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     },
     childRelation: {
       YES: [
+        () => generalCharacteristics.resemblesExistingModelWhyHow,
         () => generalCharacteristics.resemblesExistingModelWhich,
         () => generalCharacteristics.resemblesExistingModelHow
       ],
-      NO: [
-        () => generalCharacteristics.resemblesExistingModelWhich,
-        () => generalCharacteristics.resemblesExistingModelHow
-      ]
-    }
+      NO: [() => generalCharacteristics.resemblesExistingModelWhyHow]
+    },
+    filterGroups: [ModelViewFilter.IPC]
   },
   resemblesExistingModelWhyHow: {
     gqlField: 'resemblesExistingModelWhyHow',
@@ -80,7 +81,8 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     },
     optionsRelatedInfo: {
       Other: 'resemblesExistingModelOtherOption'
-    }
+    },
+    filterGroups: [ModelViewFilter.IPC]
   },
   resemblesExistingModelHow: {
     gqlField: 'resemblesExistingModelHow',
@@ -89,7 +91,8 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     label: 'In what way does the new model resemble the selected model(s)?',
     dataType: 'string',
     formType: 'textarea',
-    parentRelation: () => generalCharacteristics.resemblesExistingModel
+    parentRelation: () => generalCharacteristics.resemblesExistingModel,
+    filterGroups: [ModelViewFilter.IPC]
   },
   resemblesExistingModelOtherSpecify: {
     gqlField: 'resemblesExistingModelOtherSpecify',
@@ -127,7 +130,7 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     gqlField: 'resemblesExistingModelNote',
     goField: 'ResemblesExistingModelNote',
     dbField: 'resembles_existing_model_note',
-    label: 'Note',
+    label: 'Notes',
     dataType: 'string',
     formType: 'textarea'
   },
@@ -148,7 +151,10 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
       OTHER: 'participationInModelPreconditionOtherSpecify'
     },
     childRelation: {
-      YES: [() => generalCharacteristics.participationInModelPreconditionWhich]
+      YES: [
+        () => generalCharacteristics.participationInModelPreconditionWhich,
+        () => generalCharacteristics.participationInModelPreconditionWhyHow
+      ]
     }
   },
   participationInModelPreconditionOtherSpecify: {
@@ -209,13 +215,15 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     dbField: 'participation_in_model_precondition_why_how',
     label: 'Explain any details including if it is just part of the model.',
     dataType: 'string',
-    formType: 'textarea'
+    formType: 'textarea',
+    parentRelation: () =>
+      generalCharacteristics.participationInModelPrecondition
   },
   participationInModelPreconditionNote: {
     gqlField: 'participationInModelPreconditionNote',
     goField: 'ParticipationInModelPreconditionNote',
     dbField: 'participation_in_model_precondition_note',
-    label: 'Note',
+    label: 'Notes',
     dataType: 'string',
     formType: 'textarea'
   },
@@ -234,7 +242,8 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     },
     optionsRelatedInfo: {
       true: 'hasComponentsOrTracksDiffer'
-    }
+    },
+    filterGroups: [ModelViewFilter.IPC]
   },
   hasComponentsOrTracksDiffer: {
     gqlField: 'hasComponentsOrTracksDiffer',
@@ -243,13 +252,14 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     label: 'How do the tracks differ?',
     dataType: 'string',
     formType: 'textarea',
-    isOtherType: true
+    isOtherType: true,
+    filterGroups: [ModelViewFilter.IPC]
   },
   hasComponentsOrTracksNote: {
     gqlField: 'hasComponentsOrTracksNote',
     goField: 'HasComponentsOrTracksNote',
     dbField: 'has_components_or_tracks_note',
-    label: 'Note',
+    label: 'Notes',
     dataType: 'string',
     formType: 'textarea'
   },
@@ -881,11 +891,7 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     optionsRelatedInfo: {
       true: 'rulemakingRequiredDescription'
     },
-    filterGroups: [
-      ModelViewFilter.IDDOC,
-      ModelViewFilter.IPC,
-      ModelViewFilter.PBG
-    ]
+    filterGroups: [ModelViewFilter.IDDOC, ModelViewFilter.PBG]
   },
   rulemakingRequiredDescription: {
     gqlField: 'multiplePatricipationAgreementsNeeded',
@@ -896,11 +902,7 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     dataType: 'string',
     formType: 'textarea',
     isOtherType: true,
-    filterGroups: [
-      ModelViewFilter.IDDOC,
-      ModelViewFilter.IPC,
-      ModelViewFilter.PBG
-    ]
+    filterGroups: [ModelViewFilter.IDDOC, ModelViewFilter.PBG]
   },
   rulemakingRequiredNote: {
     gqlField: 'rulemakingRequiredNote',

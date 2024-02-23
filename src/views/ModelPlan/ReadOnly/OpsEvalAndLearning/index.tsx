@@ -5,22 +5,20 @@ import {
   useGetAllOpsEvalAndLearningQuery
 } from 'gql/gen/graphql';
 
+import PageLoading from 'components/PageLoading';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import { ModelInfoContext } from 'views/ModelInfoWrapper';
 import { NotFoundPartial } from 'views/NotFound';
 
 import ReadOnlyBody from '../_components/Body';
-import ReadOnlySectionNew, {
-  getRelatedUneededQuestions,
-  RelatedUnneededQuestions
-} from '../_components/ReadOnlySection/new';
+import { RelatedUnneededQuestions } from '../_components/ReadOnlySection';
+import { getFilterGroupInfo } from '../_components/ReadOnlySection/util';
 import TitleAndStatus from '../_components/TitleAndStatus';
 import { ReadOnlyProps } from '../ModelBasics';
 
 const ReadOnlyOpsEvalAndLearning = ({
   modelID,
   clearance,
-  isViewingFilteredView,
   filteredView
 }: ReadOnlyProps) => {
   const { t: opsEvalAndLearningMiscT } = useTranslation(
@@ -47,8 +45,6 @@ const ReadOnlyOpsEvalAndLearning = ({
     {}) as GetAllOpsEvalAndLearningQuery['modelPlan']['opsEvalAndLearning'];
 
   const {
-    shareCclfData: shareCclfDataRemoved,
-    shareCclfDataNote: shareCclfDataNoteRemoved,
     sendFilesBetweenCcw: sendFilesBetweenCcwRemoved,
     sendFilesBetweenCcwNote: sendFilesBetweenCcwNoteRemoved,
     appToSendFilesToKnown: appToSendFilesToKnownRemoved,
@@ -79,6 +75,31 @@ const ReadOnlyOpsEvalAndLearning = ({
     anticipatedChallenges,
     ...opsEvalAndLearningConfigOne
   } = opsEvalAndLearningConfig;
+
+  const ccwConfig = {
+    sendFilesBetweenCcw: opsEvalAndLearningConfig.sendFilesBetweenCcw,
+    sendFilesBetweenCcwNote: opsEvalAndLearningConfig.sendFilesBetweenCcwNote,
+    appToSendFilesToKnown: opsEvalAndLearningConfig.appToSendFilesToKnown,
+    appToSendFilesToWhich: opsEvalAndLearningConfig.appToSendFilesToWhich,
+    appToSendFilesToNote: opsEvalAndLearningConfig.appToSendFilesToNote,
+    useCcwForFileDistribiutionToParticipants:
+      opsEvalAndLearningConfig.useCcwForFileDistribiutionToParticipants,
+    useCcwForFileDistribiutionToParticipantsNote:
+      opsEvalAndLearningConfig.useCcwForFileDistribiutionToParticipantsNote
+  };
+
+  const qualityConfig = {
+    developNewQualityMeasures:
+      opsEvalAndLearningConfig.developNewQualityMeasures,
+    developNewQualityMeasuresNote:
+      opsEvalAndLearningConfig.developNewQualityMeasuresNote,
+    qualityPerformanceImpactsPayment:
+      opsEvalAndLearningConfig.qualityPerformanceImpactsPayment,
+    qualityPerformanceImpactsPaymentOther:
+      opsEvalAndLearningConfig.qualityPerformanceImpactsPaymentOther,
+    qualityPerformanceImpactsPaymentNote:
+      opsEvalAndLearningConfig.qualityPerformanceImpactsPaymentNote
+  };
 
   const {
     stakeholders,
@@ -156,6 +177,13 @@ const ReadOnlyOpsEvalAndLearning = ({
     ...opsEvalAndLearningConfigTwo
   } = opsEvalAndLearningConfig;
 
+  const claimsFilterGroupFields = getFilterGroupInfo(ccwConfig, filteredView);
+
+  const qualityFilterGroupFields = getFilterGroupInfo(
+    qualityConfig,
+    filteredView
+  );
+
   return (
     <div
       className="read-only-model-plan--ops-eval-and-learning"
@@ -167,7 +195,7 @@ const ReadOnlyOpsEvalAndLearning = ({
           'operationsEvaluationAndLearningHeading'
         )}
         heading={opsEvalAndLearningMiscT('heading')}
-        isViewingFilteredView={isViewingFilteredView}
+        isViewingFilteredView={!!filteredView}
         status={allOpsEvalAndLearningData.status}
       />
 
@@ -179,165 +207,91 @@ const ReadOnlyOpsEvalAndLearning = ({
         </p>
       )}
 
-      {/* First few sections of Ops data that can be automated */}
-      <ReadOnlyBody
-        data={allOpsEvalAndLearningData}
-        config={opsEvalAndLearningConfigOne}
-        filteredView={filteredView}
-      />
+      {loading && !data ? (
+        <PageLoading />
+      ) : (
+        <>
+          {/* First few sections of Ops data that can be automated */}
+          <ReadOnlyBody
+            data={allOpsEvalAndLearningData}
+            config={opsEvalAndLearningConfigOne}
+            filteredView={filteredView}
+          />
 
-      {/* CCWAndQuality */}
-      <div
-        className={`${
-          isViewingFilteredView
-            ? ''
-            : 'margin-top-4 padding-top-4 border-top-1px border-base-light'
-        }`}
-      >
-        {!isViewingFilteredView && (
-          <h3 className="margin-top-0">
-            {opsEvalAndLearningMiscT('ccwSpecificReadonly')}
-          </h3>
-        )}
+          {/* CCWAndQuality */}
+          {(!filteredView || claimsFilterGroupFields.length > 0) && (
+            <div
+              className={`${
+                filteredView
+                  ? ''
+                  : 'margin-top-4 padding-top-4 border-top-1px border-base-light'
+              }`}
+            >
+              {!filteredView && (
+                <h3 className="margin-top-0">
+                  {opsEvalAndLearningMiscT('ccwSpecificReadonly')}
+                </h3>
+              )}
 
-        <RelatedUnneededQuestions
-          id="quality-questions"
-          relatedConditions={getRelatedUneededQuestions(
-            opsEvalAndLearningConfig.ccmInvolvment,
-            allOpsEvalAndLearningData.ccmInvolvment
+              <RelatedUnneededQuestions
+                id="quality-questions"
+                config={opsEvalAndLearningConfig.ccmInvolvment}
+                value={allOpsEvalAndLearningData.ccmInvolvment}
+                childrenToCheck={
+                  filteredView ? claimsFilterGroupFields : undefined
+                }
+                hideAlert={!!filteredView}
+              />
+
+              <ReadOnlyBody
+                data={allOpsEvalAndLearningData}
+                config={ccwConfig}
+                filteredView={filteredView}
+              />
+            </div>
           )}
-          hideAlert={false}
-        />
 
-        <ReadOnlySectionNew
-          field="sendFilesBetweenCcw"
-          translations={{
-            sendFilesBetweenCcw: opsEvalAndLearningConfig.sendFilesBetweenCcw
-          }}
-          values={allOpsEvalAndLearningData}
-          filteredView={filteredView}
-        />
+          {/* Quality */}
+          {(!filteredView || qualityFilterGroupFields.length > 0) && (
+            <div
+              className={`${
+                filteredView
+                  ? ''
+                  : 'margin-top-4 padding-top-4 border-top-1px border-base-light'
+              }`}
+            >
+              {!filteredView && (
+                <h3 className="margin-top-0">
+                  {opsEvalAndLearningMiscT('qualityReadonly')}
+                </h3>
+              )}
 
-        <ReadOnlySectionNew
-          field="sendFilesBetweenCcwNote"
-          translations={{
-            sendFilesBetweenCcwNote:
-              opsEvalAndLearningConfig.sendFilesBetweenCcwNote
-          }}
-          values={allOpsEvalAndLearningData}
-          filteredView={filteredView}
-        />
+              <RelatedUnneededQuestions
+                id="data-needed-for-monitoring-questions"
+                config={opsEvalAndLearningConfig.dataNeededForMonitoring}
+                value={allOpsEvalAndLearningData.dataNeededForMonitoring}
+                childrenToCheck={
+                  filteredView ? qualityFilterGroupFields : undefined
+                }
+                hideAlert={!!filteredView}
+              />
 
-        <ReadOnlySectionNew
-          field="appToSendFilesToKnown"
-          translations={{
-            appToSendFilesToKnown:
-              opsEvalAndLearningConfig.appToSendFilesToKnown
-          }}
-          values={allOpsEvalAndLearningData}
-          filteredView={filteredView}
-        />
-
-        <ReadOnlySectionNew
-          field="appToSendFilesToNote"
-          translations={{
-            appToSendFilesToNote: opsEvalAndLearningConfig.appToSendFilesToNote
-          }}
-          values={allOpsEvalAndLearningData}
-          filteredView={filteredView}
-        />
-
-        <ReadOnlySectionNew
-          field="useCcwForFileDistribiutionToParticipants"
-          translations={{
-            useCcwForFileDistribiutionToParticipants:
-              opsEvalAndLearningConfig.useCcwForFileDistribiutionToParticipants
-          }}
-          values={allOpsEvalAndLearningData}
-          filteredView={filteredView}
-        />
-
-        <ReadOnlySectionNew
-          field="useCcwForFileDistribiutionToParticipantsNote"
-          translations={{
-            useCcwForFileDistribiutionToParticipantsNote:
-              opsEvalAndLearningConfig.useCcwForFileDistribiutionToParticipantsNote
-          }}
-          values={allOpsEvalAndLearningData}
-          filteredView={filteredView}
-        />
-      </div>
-
-      {/* Quality */}
-      <div
-        className={`${
-          isViewingFilteredView
-            ? ''
-            : 'margin-top-4 padding-top-4 border-top-1px border-base-light'
-        }`}
-      >
-        {!isViewingFilteredView && (
-          <h3 className="margin-top-0">
-            {opsEvalAndLearningMiscT('qualityReadonly')}
-          </h3>
-        )}
-
-        <RelatedUnneededQuestions
-          id="data-needed-for-monitoring-questions"
-          relatedConditions={getRelatedUneededQuestions(
-            opsEvalAndLearningConfig.dataNeededForMonitoring,
-            allOpsEvalAndLearningData.dataNeededForMonitoring
+              <ReadOnlyBody
+                data={allOpsEvalAndLearningData}
+                config={qualityConfig}
+                filteredView={filteredView}
+              />
+            </div>
           )}
-          hideAlert={false}
-        />
 
-        <ReadOnlySectionNew
-          field="developNewQualityMeasures"
-          translations={{
-            developNewQualityMeasures:
-              opsEvalAndLearningConfig.developNewQualityMeasures
-          }}
-          values={allOpsEvalAndLearningData}
-          filteredView={filteredView}
-        />
-
-        <ReadOnlySectionNew
-          field="developNewQualityMeasuresNote"
-          translations={{
-            developNewQualityMeasuresNote:
-              opsEvalAndLearningConfig.developNewQualityMeasuresNote
-          }}
-          values={allOpsEvalAndLearningData}
-          filteredView={filteredView}
-        />
-
-        <ReadOnlySectionNew
-          field="qualityPerformanceImpactsPayment"
-          translations={{
-            qualityPerformanceImpactsPayment:
-              opsEvalAndLearningConfig.qualityPerformanceImpactsPayment
-          }}
-          values={allOpsEvalAndLearningData}
-          filteredView={filteredView}
-        />
-
-        <ReadOnlySectionNew
-          field="qualityPerformanceImpactsPaymentNote"
-          translations={{
-            qualityPerformanceImpactsPaymentNote:
-              opsEvalAndLearningConfig.qualityPerformanceImpactsPaymentNote
-          }}
-          values={allOpsEvalAndLearningData}
-          filteredView={filteredView}
-        />
-      </div>
-
-      {/* Last sections of Ops data that can be automated */}
-      <ReadOnlyBody
-        data={allOpsEvalAndLearningData}
-        config={opsEvalAndLearningConfigTwo}
-        filteredView={filteredView}
-      />
+          {/* Last sections of Ops data that can be automated */}
+          <ReadOnlyBody
+            data={allOpsEvalAndLearningData}
+            config={opsEvalAndLearningConfigTwo}
+            filteredView={filteredView}
+          />
+        </>
+      )}
     </div>
   );
 };

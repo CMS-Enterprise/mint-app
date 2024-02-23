@@ -5,6 +5,7 @@ import {
   useGetAllBeneficiariesQuery
 } from 'gql/gen/graphql';
 
+import PageLoading from 'components/PageLoading';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import { ModelInfoContext } from 'views/ModelInfoWrapper';
 import { NotFoundPartial } from 'views/NotFound';
@@ -16,7 +17,6 @@ import { ReadOnlyProps } from '../ModelBasics';
 const ReadOnlyBeneficiaries = ({
   modelID,
   clearance,
-  isViewingFilteredView,
   filteredView
 }: ReadOnlyProps) => {
   const { t: beneficiariesMiscT } = useTranslation('beneficiariesMisc');
@@ -49,7 +49,7 @@ const ReadOnlyBeneficiaries = ({
         clearance={clearance}
         clearanceTitle={beneficiariesMiscT('clearanceHeading')}
         heading={beneficiariesMiscT('heading')}
-        isViewingFilteredView={isViewingFilteredView}
+        isViewingFilteredView={!!filteredView}
         status={allbeneficiariesData.status}
       />
 
@@ -61,11 +61,15 @@ const ReadOnlyBeneficiaries = ({
         </p>
       )}
 
-      <ReadOnlyBody
-        data={allbeneficiariesData}
-        config={beneficiariesConfig}
-        filteredView={filteredView}
-      />
+      {loading && !data ? (
+        <PageLoading />
+      ) : (
+        <ReadOnlyBody
+          data={allbeneficiariesData}
+          config={beneficiariesConfig}
+          filteredView={filteredView}
+        />
+      )}
     </div>
   );
 };

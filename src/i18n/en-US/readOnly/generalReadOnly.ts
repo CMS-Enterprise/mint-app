@@ -65,6 +65,12 @@ const generalReadOnly = {
     'There is {{count}} additional question that is not applicable for this model based on the answers selected in the question above.',
   questionNotApplicable_other:
     'There are {{count}} additional questions that are not applicable for this model based on the answers selected in the question above.',
+  questionNotApplicableSpecific_one:
+    'There is {{count}} additional question that is not applicable for this model based on the answer selected for "{{question}}".',
+  questionNotApplicableSpecific_other:
+    'There are {{count}} additional questions that are not applicable for this model based on the answer selected for "{{question}}".',
+  questionNotApplicableBeneficiary_one: `There is {{count}}  additional question that is not applicable for this model because beneficiary cost-sharing isn't selected as a claims-based payment type the model will pay.`,
+  questionNotApplicableBeneficiary_other: `There are {{count}} additional questions that are not applicable for this model because beneficiary cost-sharing isn't selected as a claims-based payment type the model will pay.`,
   showOtherQuestions_one: 'Show other question',
   showOtherQuestions_other: 'Show other questions',
   hideOtherQuestions_one: 'Hide other question',

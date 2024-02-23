@@ -5,6 +5,7 @@ import {
   useGetAllParticipantsAndProvidersQuery
 } from 'gql/gen/graphql';
 
+import PageLoading from 'components/PageLoading';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import { ModelInfoContext } from 'views/ModelInfoWrapper';
 import { NotFoundPartial } from 'views/NotFound';
@@ -16,8 +17,7 @@ import { ReadOnlyProps } from '../ModelBasics';
 const ReadOnlyParticipantsAndProviders = ({
   modelID,
   clearance,
-  filteredView,
-  isViewingFilteredView
+  filteredView
 }: ReadOnlyProps) => {
   const { t: participantsAndProvidersMiscT } = useTranslation(
     'participantsAndProvidersMisc'
@@ -53,7 +53,7 @@ const ReadOnlyParticipantsAndProviders = ({
         clearance={clearance}
         clearanceTitle={participantsAndProvidersMiscT('clearanceHeading')}
         heading={participantsAndProvidersMiscT('heading')}
-        isViewingFilteredView={isViewingFilteredView}
+        isViewingFilteredView={!!filteredView}
         status={allparticipantsAndProvidersData.status}
       />
 
@@ -65,11 +65,15 @@ const ReadOnlyParticipantsAndProviders = ({
         </p>
       )}
 
-      <ReadOnlyBody
-        data={allparticipantsAndProvidersData}
-        config={participantsAndProvidersConfig}
-        filteredView={filteredView}
-      />
+      {loading && !data ? (
+        <PageLoading />
+      ) : (
+        <ReadOnlyBody
+          data={allparticipantsAndProvidersData}
+          config={participantsAndProvidersConfig}
+          filteredView={filteredView}
+        />
+      )}
     </div>
   );
 };

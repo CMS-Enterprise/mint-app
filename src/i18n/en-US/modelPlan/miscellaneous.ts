@@ -25,10 +25,9 @@ export const miscellaneous: Record<string, string> = {
   notes: 'Notes',
   noneEntered: 'None entered',
   na: 'No answer entered',
+  dateFormat: 'mm/dd/yyyy',
   noAdditionalInformation: 'No additional information specified',
-  otherNotSpecified: 'Other not specified',
   other: 'Other',
-  noAdditionalInfo: 'No additional information specified',
   dateWarning:
     'You’ve entered one or more dates that are in the past. Please double-check your dates to make sure they’re accurate.',
   helpText:

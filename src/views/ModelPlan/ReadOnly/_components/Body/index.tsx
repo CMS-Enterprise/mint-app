@@ -4,10 +4,9 @@ import classNames from 'classnames';
 import { getKeys, TranslationPlanSection } from 'types/translation';
 
 import { filterGroupKey } from '../FilterView/BodyContent/_filterGroupMapping';
-import ReadOnlySectionNew, {
-  isHiddenByParentCondition
-} from '../ReadOnlySection/new';
-import SideBySideReadOnlySectionNew from '../SideBySideReadOnlySection/new';
+import ReadOnlySection from '../ReadOnlySection';
+import { isHiddenByParentCondition } from '../ReadOnlySection/util';
+import SideBySideReadOnlySection from '../SideBySideReadOnlySection';
 
 const ReadOnlyBody = ({
   data,
@@ -33,6 +32,7 @@ const ReadOnlyBody = ({
                 !isHiddenByParentCondition(config[field], data) // Add border if translation config contains property 'isPageStart'
             })}
           >
+            {/* Only render the header if it's not a filtered view or hidden by parent */}
             {!filteredView &&
               config[field]?.readonlyHeader &&
               !isHiddenByParentCondition(config[field], data) && (
@@ -44,11 +44,11 @@ const ReadOnlyBody = ({
             {/* Checks if questions have config to be displayed side by side */}
             {config[field]?.adjacentPositioning ? (
               <>
-                {/* Presence of adjacentPositioning will render in a SideBySideReadOnlySectionNew component 
+                {/* Presence of adjacentPositioning will render in a SideBySideReadOnlySection component 
                     Config position of 'left' will render and condtionally render the following component where adjacentPositioning.adjacentField is the reference */}
                 {config[field]?.adjacentPositioning?.position === 'left' && (
-                  <SideBySideReadOnlySectionNew>
-                    <ReadOnlySectionNew
+                  <SideBySideReadOnlySection>
+                    <ReadOnlySection
                       field={field}
                       translations={config}
                       values={data}
@@ -65,7 +65,7 @@ const ReadOnlyBody = ({
                       ],
                       data
                     ) && (
-                      <ReadOnlySectionNew
+                      <ReadOnlySection
                         field={
                           config[field]?.adjacentPositioning
                             ?.adjacentField as keyof TranslationPlanSection
@@ -75,11 +75,11 @@ const ReadOnlyBody = ({
                         filteredView={filteredView}
                       />
                     )}
-                  </SideBySideReadOnlySectionNew>
+                  </SideBySideReadOnlySection>
                 )}
               </>
             ) : (
-              <ReadOnlySectionNew
+              <ReadOnlySection
                 field={field}
                 translations={config}
                 values={data}

@@ -334,10 +334,8 @@ exports[`Model Plan Basics page > disables and clears checkbox when user selects
                                 data-testid="tooltipBody"
                                 id="tooltip-550000"
                                 role="tooltip"
-                                title="Models in which a doctor, group of health care providers or hospital takes financial responsibility for improving quality of care, including advanced primary care services, care coordination and health outcomes for a defined group of patients, thereby reducing care fragmentation and unnecessary costs for patients and the health system"
-                              >
-                                Models in which a doctor, group of health care providers or hospital takes financial responsibility for improving quality of care, including advanced primary care services, care coordination and health outcomes for a defined group of patients, thereby reducing care fragmentation and unnecessary costs for patients and the health system
-                              </span>
+                                title=""
+                              />
                             </span>
                           </span>
                         </label>
@@ -395,10 +393,8 @@ exports[`Model Plan Basics page > disables and clears checkbox when user selects
                                 data-testid="tooltipBody"
                                 id="tooltip-550000"
                                 role="tooltip"
-                                title="Models which aim to address deficits in care for a defined population with a specific shared disease or medical condition, procedure, or care episode"
-                              >
-                                Models which aim to address deficits in care for a defined population with a specific shared disease or medical condition, procedure, or care episode
-                              </span>
+                                title=""
+                              />
                             </span>
                           </span>
                         </label>
@@ -456,10 +452,8 @@ exports[`Model Plan Basics page > disables and clears checkbox when user selects
                                 data-testid="tooltipBody"
                                 id="tooltip-550000"
                                 role="tooltip"
-                                title="Models comprising Medicare Advantage plans"
-                              >
-                                Models comprising Medicare Advantage plans
-                              </span>
+                                title=""
+                              />
                             </span>
                           </span>
                         </label>
@@ -517,10 +511,8 @@ exports[`Model Plan Basics page > disables and clears checkbox when user selects
                                 data-testid="tooltipBody"
                                 id="tooltip-550000"
                                 role="tooltip"
-                                title="Models that seek to improve access to and/or the affordability of prescription drugs covered under Medicare (Part B and D) or Medicaid."
-                              >
-                                Models that seek to improve access to and/or the affordability of prescription drugs covered under Medicare (Part B and D) or Medicaid.
-                              </span>
+                                title=""
+                              />
                             </span>
                           </span>
                         </label>
@@ -578,10 +570,8 @@ exports[`Model Plan Basics page > disables and clears checkbox when user selects
                                 data-testid="tooltipBody"
                                 id="tooltip-550000"
                                 role="tooltip"
-                                title="Models in which a state or community-based organization serves as the main contractual participant, including managed care organizations serving Medicaid beneficiaries."
-                              >
-                                Models in which a state or community-based organization serves as the main contractual participant, including managed care organizations serving Medicaid beneficiaries.
-                              </span>
+                                title=""
+                              />
                             </span>
                           </span>
                         </label>
@@ -639,10 +629,8 @@ exports[`Model Plan Basics page > disables and clears checkbox when user selects
                                 data-testid="tooltipBody"
                                 id="tooltip-550000"
                                 role="tooltip"
-                                title="Models and demonstrations requiring testing as determined by Congress and/or the Secretary of Health and Human Services."
-                              >
-                                Models and demonstrations requiring testing as determined by Congress and/or the Secretary of Health and Human Services.
-                              </span>
+                                title=""
+                              />
                             </span>
                           </span>
                         </label>
@@ -742,10 +730,8 @@ exports[`Model Plan Basics page > disables and clears checkbox when user selects
                               data-testid="tooltipBody"
                               id="tooltip-550000"
                               role="tooltip"
-                              title="Models in which a doctor, group of health care providers or hospital takes financial responsibility for improving quality of care, including advanced primary care services, care coordination and health outcomes for a defined group of patients, thereby reducing care fragmentation and unnecessary costs for patients and the health system"
-                            >
-                              Models in which a doctor, group of health care providers or hospital takes financial responsibility for improving quality of care, including advanced primary care services, care coordination and health outcomes for a defined group of patients, thereby reducing care fragmentation and unnecessary costs for patients and the health system
-                            </span>
+                              title=""
+                            />
                           </span>
                         </span>
                       </label>
@@ -805,10 +791,8 @@ exports[`Model Plan Basics page > disables and clears checkbox when user selects
                               data-testid="tooltipBody"
                               id="tooltip-550000"
                               role="tooltip"
-                              title="Models which aim to address deficits in care for a defined population with a specific shared disease or medical condition, procedure, or care episode"
-                            >
-                              Models which aim to address deficits in care for a defined population with a specific shared disease or medical condition, procedure, or care episode
-                            </span>
+                              title=""
+                            />
                           </span>
                         </span>
                       </label>
@@ -868,10 +852,8 @@ exports[`Model Plan Basics page > disables and clears checkbox when user selects
                               data-testid="tooltipBody"
                               id="tooltip-550000"
                               role="tooltip"
-                              title="Models comprising Medicare Advantage plans"
-                            >
-                              Models comprising Medicare Advantage plans
-                            </span>
+                              title=""
+                            />
                           </span>
                         </span>
                       </label>
@@ -931,10 +913,8 @@ exports[`Model Plan Basics page > disables and clears checkbox when user selects
                               data-testid="tooltipBody"
                               id="tooltip-550000"
                               role="tooltip"
-                              title="Models that seek to improve access to and/or the affordability of prescription drugs covered under Medicare (Part B and D) or Medicaid."
-                            >
-                              Models that seek to improve access to and/or the affordability of prescription drugs covered under Medicare (Part B and D) or Medicaid.
-                            </span>
+                              title=""
+                            />
                           </span>
                         </span>
                       </label>
@@ -994,10 +974,8 @@ exports[`Model Plan Basics page > disables and clears checkbox when user selects
                               data-testid="tooltipBody"
                               id="tooltip-550000"
                               role="tooltip"
-                              title="Models in which a state or community-based organization serves as the main contractual participant, including managed care organizations serving Medicaid beneficiaries."
-                            >
-                              Models in which a state or community-based organization serves as the main contractual participant, including managed care organizations serving Medicaid beneficiaries.
-                            </span>
+                              title=""
+                            />
                           </span>
                         </span>
                       </label>
@@ -1057,10 +1035,8 @@ exports[`Model Plan Basics page > disables and clears checkbox when user selects
                               data-testid="tooltipBody"
                               id="tooltip-550000"
                               role="tooltip"
-                              title="Models and demonstrations requiring testing as determined by Congress and/or the Secretary of Health and Human Services."
-                            >
-                              Models and demonstrations requiring testing as determined by Congress and/or the Secretary of Health and Human Services.
-                            </span>
+                              title=""
+                            />
                           </span>
                         </span>
                       </label>
@@ -1747,10 +1723,8 @@ exports[`Model Plan Basics page > matches snapshot 1`] = `
                                 data-testid="tooltipBody"
                                 id="tooltip-550000"
                                 role="tooltip"
-                                title="Models in which a doctor, group of health care providers or hospital takes financial responsibility for improving quality of care, including advanced primary care services, care coordination and health outcomes for a defined group of patients, thereby reducing care fragmentation and unnecessary costs for patients and the health system"
-                              >
-                                Models in which a doctor, group of health care providers or hospital takes financial responsibility for improving quality of care, including advanced primary care services, care coordination and health outcomes for a defined group of patients, thereby reducing care fragmentation and unnecessary costs for patients and the health system
-                              </span>
+                                title=""
+                              />
                             </span>
                           </span>
                         </label>
@@ -1808,10 +1782,8 @@ exports[`Model Plan Basics page > matches snapshot 1`] = `
                                 data-testid="tooltipBody"
                                 id="tooltip-550000"
                                 role="tooltip"
-                                title="Models which aim to address deficits in care for a defined population with a specific shared disease or medical condition, procedure, or care episode"
-                              >
-                                Models which aim to address deficits in care for a defined population with a specific shared disease or medical condition, procedure, or care episode
-                              </span>
+                                title=""
+                              />
                             </span>
                           </span>
                         </label>
@@ -1869,10 +1841,8 @@ exports[`Model Plan Basics page > matches snapshot 1`] = `
                                 data-testid="tooltipBody"
                                 id="tooltip-550000"
                                 role="tooltip"
-                                title="Models comprising Medicare Advantage plans"
-                              >
-                                Models comprising Medicare Advantage plans
-                              </span>
+                                title=""
+                              />
                             </span>
                           </span>
                         </label>
@@ -1930,10 +1900,8 @@ exports[`Model Plan Basics page > matches snapshot 1`] = `
                                 data-testid="tooltipBody"
                                 id="tooltip-550000"
                                 role="tooltip"
-                                title="Models that seek to improve access to and/or the affordability of prescription drugs covered under Medicare (Part B and D) or Medicaid."
-                              >
-                                Models that seek to improve access to and/or the affordability of prescription drugs covered under Medicare (Part B and D) or Medicaid.
-                              </span>
+                                title=""
+                              />
                             </span>
                           </span>
                         </label>
@@ -1991,10 +1959,8 @@ exports[`Model Plan Basics page > matches snapshot 1`] = `
                                 data-testid="tooltipBody"
                                 id="tooltip-550000"
                                 role="tooltip"
-                                title="Models in which a state or community-based organization serves as the main contractual participant, including managed care organizations serving Medicaid beneficiaries."
-                              >
-                                Models in which a state or community-based organization serves as the main contractual participant, including managed care organizations serving Medicaid beneficiaries.
-                              </span>
+                                title=""
+                              />
                             </span>
                           </span>
                         </label>
@@ -2052,10 +2018,8 @@ exports[`Model Plan Basics page > matches snapshot 1`] = `
                                 data-testid="tooltipBody"
                                 id="tooltip-550000"
                                 role="tooltip"
-                                title="Models and demonstrations requiring testing as determined by Congress and/or the Secretary of Health and Human Services."
-                              >
-                                Models and demonstrations requiring testing as determined by Congress and/or the Secretary of Health and Human Services.
-                              </span>
+                                title=""
+                              />
                             </span>
                           </span>
                         </label>
@@ -2154,10 +2118,8 @@ exports[`Model Plan Basics page > matches snapshot 1`] = `
                               data-testid="tooltipBody"
                               id="tooltip-550000"
                               role="tooltip"
-                              title="Models in which a doctor, group of health care providers or hospital takes financial responsibility for improving quality of care, including advanced primary care services, care coordination and health outcomes for a defined group of patients, thereby reducing care fragmentation and unnecessary costs for patients and the health system"
-                            >
-                              Models in which a doctor, group of health care providers or hospital takes financial responsibility for improving quality of care, including advanced primary care services, care coordination and health outcomes for a defined group of patients, thereby reducing care fragmentation and unnecessary costs for patients and the health system
-                            </span>
+                              title=""
+                            />
                           </span>
                         </span>
                       </label>
@@ -2217,10 +2179,8 @@ exports[`Model Plan Basics page > matches snapshot 1`] = `
                               data-testid="tooltipBody"
                               id="tooltip-550000"
                               role="tooltip"
-                              title="Models which aim to address deficits in care for a defined population with a specific shared disease or medical condition, procedure, or care episode"
-                            >
-                              Models which aim to address deficits in care for a defined population with a specific shared disease or medical condition, procedure, or care episode
-                            </span>
+                              title=""
+                            />
                           </span>
                         </span>
                       </label>
@@ -2280,10 +2240,8 @@ exports[`Model Plan Basics page > matches snapshot 1`] = `
                               data-testid="tooltipBody"
                               id="tooltip-550000"
                               role="tooltip"
-                              title="Models comprising Medicare Advantage plans"
-                            >
-                              Models comprising Medicare Advantage plans
-                            </span>
+                              title=""
+                            />
                           </span>
                         </span>
                       </label>
@@ -2343,10 +2301,8 @@ exports[`Model Plan Basics page > matches snapshot 1`] = `
                               data-testid="tooltipBody"
                               id="tooltip-550000"
                               role="tooltip"
-                              title="Models that seek to improve access to and/or the affordability of prescription drugs covered under Medicare (Part B and D) or Medicaid."
-                            >
-                              Models that seek to improve access to and/or the affordability of prescription drugs covered under Medicare (Part B and D) or Medicaid.
-                            </span>
+                              title=""
+                            />
                           </span>
                         </span>
                       </label>
@@ -2407,10 +2363,8 @@ exports[`Model Plan Basics page > matches snapshot 1`] = `
                               data-testid="tooltipBody"
                               id="tooltip-550000"
                               role="tooltip"
-                              title="Models in which a state or community-based organization serves as the main contractual participant, including managed care organizations serving Medicaid beneficiaries."
-                            >
-                              Models in which a state or community-based organization serves as the main contractual participant, including managed care organizations serving Medicaid beneficiaries.
-                            </span>
+                              title=""
+                            />
                           </span>
                         </span>
                       </label>
@@ -2470,10 +2424,8 @@ exports[`Model Plan Basics page > matches snapshot 1`] = `
                               data-testid="tooltipBody"
                               id="tooltip-550000"
                               role="tooltip"
-                              title="Models and demonstrations requiring testing as determined by Congress and/or the Secretary of Health and Human Services."
-                            >
-                              Models and demonstrations requiring testing as determined by Congress and/or the Secretary of Health and Human Services.
-                            </span>
+                              title=""
+                            />
                           </span>
                         </span>
                       </label>

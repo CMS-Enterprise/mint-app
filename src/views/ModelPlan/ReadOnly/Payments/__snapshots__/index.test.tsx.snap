@@ -26,7 +26,7 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
       </div>
     </div>
     <div
-      class="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light"
+      class=""
     >
       <div
         class="desktop:grid-col-12"
@@ -48,12 +48,14 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
             >
               Patient Protection Affordable Care Act (Sec 3021)
             </li>
-            <ul
-              data-testid="other-entry"
-            />
+            <ul />
           </ul>
         </div>
       </div>
+    </div>
+    <div
+      class=""
+    >
       <div
         class="desktop:grid-col-12"
         data-testid="grid"
@@ -66,13 +68,17 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
           >
             Notes
           </p>
-          <p
+          <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
           >
             Funding source note
-          </p>
+          </div>
         </div>
       </div>
+    </div>
+    <div
+      class=""
+    >
       <div
         class="desktop:grid-col-12"
         data-testid="grid"
@@ -93,12 +99,14 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
             >
               Patient Protection Affordable Care Act (Sec 3021)
             </li>
-            <ul
-              data-testid="other-entry"
-            />
+            <ul />
           </ul>
         </div>
       </div>
+    </div>
+    <div
+      class=""
+    >
       <div
         class="desktop:grid-col-12"
         data-testid="grid"
@@ -111,13 +119,17 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
           >
             Notes
           </p>
-          <p
+          <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
           >
             Funding r note
-          </p>
+          </div>
         </div>
       </div>
+    </div>
+    <div
+      class=""
+    >
       <div
         class="desktop:grid-col-12"
         data-testid="grid"
@@ -138,28 +150,60 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
             >
               Beneficiaries
             </li>
+            <ul />
           </ul>
         </div>
+      </div>
+    </div>
+    <div
+      class=""
+    >
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
         <div
-          class="desktop:grid-col-12"
-          data-testid="grid"
+          class="read-only-section read-only-section--please-specify-who-you-will-pay margin-bottom-3"
         >
-          <div
-            class="read-only-section read-only-section--notes margin-bottom-3"
+          <p
+            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
           >
-            <p
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
-            >
-              Notes
-            </p>
-            <p
-              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
-            >
-              Recipient note
-            </p>
+            Please specify who you will pay.
+          </p>
+          <div
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+          >
+            Pay specification
           </div>
         </div>
       </div>
+    </div>
+    <div
+      class=""
+    >
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--notes margin-bottom-3"
+        >
+          <p
+            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+          >
+            Notes
+          </p>
+          <div
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+          >
+            Recipient note
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class=""
+    >
       <div
         class="desktop:grid-col-12"
         data-testid="grid"
@@ -180,206 +224,14 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
             >
               Claims-Based Payments
             </li>
+            <ul />
           </ul>
-        </div>
-        <div
-          class="desktop:grid-col-12"
-          data-testid="grid"
-        >
-          <div
-            class="read-only-section read-only-section--notes margin-bottom-3"
-          >
-            <p
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
-            >
-              Notes
-            </p>
-            <p
-              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
-            >
-              Pay type note
-            </p>
-          </div>
         </div>
       </div>
     </div>
     <div
-      class="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light"
+      class=""
     >
-      <h3>
-        Claims-Based Payments
-      </h3>
-      <div
-        class="desktop:grid-col-12"
-        data-testid="grid"
-      >
-        <div
-          class="read-only-section read-only-section--select-which-claims-based-payments-will-you-pay margin-bottom-3"
-        >
-          <p
-            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
-          >
-            Select which claims-based payments will you pay.
-          </p>
-          <ul
-            class="margin-y-0 padding-left-3"
-          >
-            <li
-              class="font-sans-md line-height-sans-4"
-            >
-              Adjustments to FFS payments
-            </li>
-          </ul>
-        </div>
-        <div
-          class="desktop:grid-col-12"
-          data-testid="grid"
-        >
-          <div
-            class="read-only-section read-only-section--notes margin-bottom-3"
-          >
-            <p
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
-            >
-              Notes
-            </p>
-            <p
-              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
-            >
-              Pay claims note
-            </p>
-          </div>
-        </div>
-      </div>
-      <div
-        class="desktop:grid-col-12"
-        data-testid="grid"
-      >
-        <div
-          class="read-only-section read-only-section--should-any-model-providers-be-excluded-from-existing-fee-for-service-payment-systems margin-bottom-3"
-        >
-          <p
-            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
-          >
-            Should any model providers be excluded from existing Fee-for-Service payment systems?
-          </p>
-          <p
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
-          >
-            Yes
-          </p>
-        </div>
-        <div
-          class="desktop:grid-col-12"
-          data-testid="grid"
-        >
-          <div
-            class="read-only-section read-only-section--notes margin-bottom-3"
-          >
-            <p
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
-            >
-              Notes
-            </p>
-            <p
-              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
-            >
-              FFSS Note
-            </p>
-          </div>
-        </div>
-      </div>
-      <div
-        class="desktop:grid-col-12"
-        data-testid="grid"
-      >
-        <div
-          class="read-only-section read-only-section--will-the-model-change-the-medicare-physician-fee-schedule margin-bottom-3"
-        >
-          <p
-            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
-          >
-            Will the model change the Medicare Physician Fee Schedule?
-          </p>
-          <p
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
-          >
-            Yes
-          </p>
-        </div>
-        <div
-          class="desktop:grid-col-12"
-          data-testid="grid"
-        >
-          <div
-            class="read-only-section read-only-section--notes margin-bottom-3"
-          >
-            <p
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
-            >
-              Notes
-            </p>
-            <p
-              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
-            >
-              Change medicare note
-            </p>
-          </div>
-        </div>
-      </div>
-      <div
-        class="grid-row grid-gap"
-        data-testid="grid"
-      >
-        <div
-          class="desktop:grid-col-6"
-          data-testid="grid"
-        >
-          <div
-            class="desktop:grid-col-12"
-            data-testid="grid"
-          >
-            <div
-              class="read-only-section read-only-section--does-the-model-affect-medicare-secondary-payer-claims margin-bottom-3"
-            >
-              <p
-                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
-              >
-                Does the model affect Medicare Secondary Payer claims?
-              </p>
-              <p
-                class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
-              >
-                Yes
-              </p>
-            </div>
-          </div>
-        </div>
-        <div
-          class="desktop:grid-col-6"
-          data-testid="grid"
-        >
-          <div
-            class="desktop:grid-col-12"
-            data-testid="grid"
-          >
-            <div
-              class="read-only-section read-only-section--how-so margin-bottom-3"
-            >
-              <p
-                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
-              >
-                How so?
-              </p>
-              <p
-                class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
-              >
-                Affect how
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
       <div
         class="desktop:grid-col-12"
         data-testid="grid"
@@ -392,50 +244,56 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
           >
             Notes
           </p>
-          <p
+          <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
           >
-            Affect payer note
-          </p>
+            Pay type note
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="margin-top-4 padding-top-4 border-top-1px border-base-light"
+    >
+      <h3
+        class="margin-top-0"
+      >
+        Claims-Based Payments
+      </h3>
+      <div
+        class=""
+      >
+        <div
+          class="desktop:grid-col-12"
+          data-testid="grid"
+        >
+          <div
+            class="read-only-section read-only-section--select-which-claims-based-payments-will-you-pay margin-bottom-3"
+          >
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Select which claims-based payments will you pay.
+            </p>
+            <ul
+              class="margin-y-0 padding-left-3"
+            >
+              <li
+                class="font-sans-md line-height-sans-4"
+              >
+                Adjustments to FFS payments
+              </li>
+              <ul />
+            </ul>
+          </div>
         </div>
       </div>
       <div
-        class="desktop:grid-col-12"
-        data-testid="grid"
-      >
-        <div
-          class="read-only-section read-only-section--how-does-the-model-differ-from-current-policy--especially-in-terms-of-payment-rates-and-periodicity-of-payment margin-bottom-3"
-        >
-          <p
-            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
-          >
-            How does the model differ from current policy, especially in terms of payment rates and periodicity of payment?
-          </p>
-          <p
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
-          >
-            Differ pay model
-          </p>
-        </div>
-      </div>
+        class=""
+      />
       <div
-        class="desktop:grid-col-12"
-        data-testid="grid"
+        class=""
       >
-        <div
-          class="read-only-section read-only-section--are-you-anticipating-creating-dependencies-between-services margin-bottom-3"
-        >
-          <p
-            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
-          >
-            Are you anticipating creating dependencies between services?
-          </p>
-          <p
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
-          >
-            Yes
-          </p>
-        </div>
         <div
           class="desktop:grid-col-12"
           data-testid="grid"
@@ -448,32 +306,255 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
             >
               Notes
             </p>
+            <div
+              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            >
+              Pay claims note
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class=""
+      >
+        <div
+          class="desktop:grid-col-12"
+          data-testid="grid"
+        >
+          <div
+            class="read-only-section read-only-section--should-any-model-providers-be-excluded-from-existing-fee-for-service-payment-systems margin-bottom-3"
+          >
             <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Should any model providers be excluded from existing Fee-for-Service payment systems?
+            </p>
+            <div
+              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            >
+              Yes
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class=""
+      >
+        <div
+          class="desktop:grid-col-12"
+          data-testid="grid"
+        >
+          <div
+            class="read-only-section read-only-section--notes margin-bottom-3"
+          >
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Notes
+            </p>
+            <div
+              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            >
+              FFSS Note
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class=""
+      >
+        <div
+          class="desktop:grid-col-12"
+          data-testid="grid"
+        >
+          <div
+            class="read-only-section read-only-section--will-the-model-change-the-medicare-physician-fee-schedule margin-bottom-3"
+          >
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Will the model change the Medicare Physician Fee Schedule?
+            </p>
+            <div
+              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            >
+              Yes
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class=""
+      >
+        <div
+          class="desktop:grid-col-12"
+          data-testid="grid"
+        >
+          <div
+            class="read-only-section read-only-section--notes margin-bottom-3"
+          >
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Notes
+            </p>
+            <div
+              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            >
+              Change medicare note
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class=""
+      >
+        <div
+          class="desktop:grid-col-12"
+          data-testid="grid"
+        >
+          <div
+            class="read-only-section read-only-section--does-the-model-affect-medicare-secondary-payer-claims--how-so margin-bottom-3"
+          >
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Does the model affect Medicare Secondary Payer claims? How so?
+            </p>
+            <div
+              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            >
+              Yes
+              <span
+                data-testid="other-entry"
+              >
+                 - Affect how
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class=""
+      />
+      <div
+        class=""
+      >
+        <div
+          class="desktop:grid-col-12"
+          data-testid="grid"
+        >
+          <div
+            class="read-only-section read-only-section--notes margin-bottom-3"
+          >
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Notes
+            </p>
+            <div
+              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            >
+              Affect payer note
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class=""
+      >
+        <div
+          class="desktop:grid-col-12"
+          data-testid="grid"
+        >
+          <div
+            class="read-only-section read-only-section--how-does-the-model-differ-from-current-policy--especially-in-terms-of-payment-rates-and-periodicity-of-payment margin-bottom-3"
+          >
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              How does the model differ from current policy, especially in terms of payment rates and periodicity of payment?
+            </p>
+            <div
+              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            >
+              Differ pay model
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class=""
+      >
+        <div
+          class="desktop:grid-col-12"
+          data-testid="grid"
+        >
+          <div
+            class="read-only-section read-only-section--are-you-anticipating-creating-dependencies-between-services margin-bottom-3"
+          >
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Are you anticipating creating dependencies between services?
+            </p>
+            <div
+              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            >
+              Yes
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class=""
+      >
+        <div
+          class="desktop:grid-col-12"
+          data-testid="grid"
+        >
+          <div
+            class="read-only-section read-only-section--notes margin-bottom-3"
+          >
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Notes
+            </p>
+            <div
               class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
             >
               Creating dependencies note
-            </p>
+            </div>
           </div>
         </div>
       </div>
       <div
-        class="desktop:grid-col-12"
-        data-testid="grid"
+        class=""
       >
         <div
-          class="read-only-section read-only-section--will-any-additional-data-need-to-be-collected-for-claims margin-bottom-3"
+          class="desktop:grid-col-12"
+          data-testid="grid"
         >
-          <p
-            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+          <div
+            class="read-only-section read-only-section--will-any-additional-data-need-to-be-collected-for-claims margin-bottom-3"
           >
-            Will any additional data need to be collected for claims?
-          </p>
-          <p
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
-          >
-            Yes
-          </p>
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Will any additional data need to be collected for claims?
+            </p>
+            <div
+              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            >
+              Yes
+            </div>
+          </div>
         </div>
+      </div>
+      <div
+        class=""
+      >
         <div
           class="desktop:grid-col-12"
           data-testid="grid"
@@ -486,50 +567,374 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
             >
               Notes
             </p>
-            <p
+            <div
               class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
             >
               Need claims note
-            </p>
+            </div>
           </div>
         </div>
       </div>
       <div
-        class="desktop:grid-col-12"
-        data-testid="grid"
+        class=""
       >
         <div
-          class="read-only-section read-only-section--will-your-contractor-be-providing-data--a-third-party-file--that-will-be-used-in-claims-processing margin-bottom-3"
+          class="desktop:grid-col-12"
+          data-testid="grid"
+        >
+          <div
+            class="read-only-section read-only-section--will-your-contractor-be-providing-data--a-third-party-file--that-will-be-used-in-claims-processing margin-bottom-3"
+          >
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Will your contractor be providing data (a Third Party File) that will be used in claims processing?
+            </p>
+            <div
+              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            >
+              Yes
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class=""
+      >
+        <div
+          class="desktop:grid-col-12"
+          data-testid="grid"
+        >
+          <div
+            class="read-only-section read-only-section--is-your-contractor-aware-that-test-data-will-be-needed--and-when-that-test-data-must-be-available margin-bottom-3"
+          >
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Is your contractor aware that test data will be needed, and when that test data must be available?
+            </p>
+            <div
+              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            >
+              Yes
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="margin-top-4 padding-top-4 border-top-1px border-base-light"
+    >
+      <h3
+        class="margin-top-0"
+      >
+        Beneficiary cost-sharing
+      </h3>
+      <div
+        class="usa-alert usa-alert--info usa-alert--no-icon flex margin-bottom-3"
+        data-testid="alert"
+      >
+        <div
+          class="usa-alert__body"
         >
           <p
-            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            class="usa-alert__text"
           >
-            Will your contractor be providing data (a Third Party File) that will be used in claims processing?
-          </p>
-          <p
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
-          >
-            Yes
+            <span>
+              There are 3 additional questions that are not applicable for this model because beneficiary cost-sharing isn't selected as a claims-based payment type the model will pay.
+            </span>
           </p>
         </div>
       </div>
+      <div
+        class="margin-bottom-3 mint-collapsable-link"
+      >
+        <button
+          aria-controls="cost-sharing-questions"
+          aria-expanded="false"
+          class="usa-button usa-button--unstyled"
+          data-testid="collapsable-link"
+          type="button"
+        >
+          <svg
+            class="usa-icon top-05"
+            focusable="false"
+            height="1em"
+            role="img"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M16.59 8.59 12 13.17 7.41 8.59 6 10l6 6 6-6z"
+            />
+          </svg>
+          Show other questions
+        </button>
+      </div>
+      <div
+        class=""
+      />
+      <div
+        class=""
+      />
+      <div
+        class=""
+      />
+      <div
+        class=""
+      />
+      <div
+        class=""
+      >
+        <div
+          class="desktop:grid-col-12"
+          data-testid="grid"
+        >
+          <div
+            class="read-only-section read-only-section--notes margin-bottom-3"
+          >
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Notes
+            </p>
+            <div
+              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            >
+              Cost sharing note
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="margin-top-4 padding-top-4 border-top-1px border-base-light"
+    >
+      <h3
+        class="margin-top-0"
+      >
+        Non-Claims-Based Payments
+      </h3>
+      <div
+        class="usa-alert usa-alert--info usa-alert--no-icon flex margin-bottom-3"
+        data-testid="alert"
+      >
+        <div
+          class="usa-alert__body"
+        >
+          <p
+            class="usa-alert__text"
+          >
+            <span>
+              There are 5 additional questions that are not applicable for this model based on the answer selected for "What will you pay?".
+            </span>
+          </p>
+        </div>
+      </div>
+      <div
+        class="margin-bottom-3 mint-collapsable-link"
+      >
+        <button
+          aria-controls="cost-sharing-questions"
+          aria-expanded="false"
+          class="usa-button usa-button--unstyled"
+          data-testid="collapsable-link"
+          type="button"
+        >
+          <svg
+            class="usa-icon top-05"
+            focusable="false"
+            height="1em"
+            role="img"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M16.59 8.59 12 13.17 7.41 8.59 6 10l6 6 6-6z"
+            />
+          </svg>
+          Show other questions
+        </button>
+      </div>
+      <div
+        class=""
+      />
+      <div
+        class=""
+      >
+        <div
+          class="desktop:grid-col-12"
+          data-testid="grid"
+        >
+          <div
+            class="read-only-section read-only-section--notes margin-bottom-3"
+          >
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Notes
+            </p>
+            <div
+              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            >
+              Non claims note
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class=""
+      />
+      <div
+        class=""
+      />
+      <div
+        class=""
+      />
+      <div
+        class=""
+      >
+        <div
+          class="desktop:grid-col-12"
+          data-testid="grid"
+        >
+          <div
+            class="read-only-section read-only-section--notes margin-bottom-3"
+          >
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Notes
+            </p>
+            <div
+              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            >
+              Payments per cycle note
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class=""
+      />
+      <div
+        class=""
+      >
+        <div
+          class="desktop:grid-col-12"
+          data-testid="grid"
+        >
+          <div
+            class="read-only-section read-only-section--notes margin-bottom-3"
+          >
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Notes
+            </p>
+            <div
+              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            >
+              Shared systems note
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class=""
+      />
+      <div
+        class=""
+      >
+        <div
+          class="desktop:grid-col-12"
+          data-testid="grid"
+        >
+          <div
+            class="read-only-section read-only-section--notes margin-bottom-3"
+          >
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Notes
+            </p>
+            <div
+              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            >
+              Contractor planning note
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="margin-top-4 padding-top-4 border-top-1px border-base-light"
+    >
       <div
         class="desktop:grid-col-12"
         data-testid="grid"
       >
         <div
-          class="read-only-section read-only-section--is-your-contractor-aware-that-test-data-will-be-needed--and-when-that-test-data-must-be-available margin-bottom-3"
+          class="read-only-section read-only-section--what-level-of-complexity-do-you-expect-calculations-to-be margin-bottom-3"
         >
           <p
             class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
           >
-            Is your contractor aware that test data will be needed, and when that test data must be available?
+            What level of complexity do you expect calculations to be?
           </p>
-          <p
+          <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
           >
-            Yes
+            High level
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class=""
+    >
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--notes margin-bottom-3"
+        >
+          <p
+            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+          >
+            Notes
           </p>
+          <div
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+          >
+            Expected complexity note
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class=""
+    >
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--are-there-any-business-requirement-s--that-address-claims-processing-precedence-order-with-the-other-model-s---if-so--please-specify margin-bottom-3"
+        >
+          <p
+            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+          >
+            Are there any business requirement(s) that address claims processing precedence order with the other model(s)? If so, please specify.
+          </p>
+          <em
+            class="text-base"
+          >
+            No answer entered
+          </em>
         </div>
       </div>
     </div>
@@ -544,206 +949,55 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
         data-testid="grid"
       >
         <div
-          class="read-only-section read-only-section--will-the-shared-systems-be-involved-for-additional-payment-of-claims margin-bottom-3"
+          class="read-only-section read-only-section--notes margin-bottom-3"
         >
           <p
             class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
           >
-            Will the Shared Systems be involved for additional payment of claims?
+            Notes
           </p>
-          <p
+          <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
           >
-            Yes
-          </p>
-        </div>
-        <div
-          class="desktop:grid-col-12"
-          data-testid="grid"
-        >
-          <div
-            class="read-only-section read-only-section--notes margin-bottom-3"
-          >
-            <p
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
-            >
-              Notes
-            </p>
-            <p
-              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
-            >
-              Shared systems note
-            </p>
+            claim note
           </div>
         </div>
       </div>
     </div>
     <div
-      class="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light"
+      class=""
     >
       <div
         class="desktop:grid-col-12"
         data-testid="grid"
       >
         <div
-          class="read-only-section read-only-section--what-level-of-complexity-do-you-expect-calculations-to-be margin-bottom-3"
+          class="read-only-section read-only-section--will-participants-be-allowed-to-select-between-multiple-payment-mechanisms--if-so--please-describe margin-bottom-3"
         >
           <p
             class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
           >
-            What level of complexity do you expect calculations to be?
+            Will participants be allowed to select between multiple payment mechanisms? If so, please describe.
           </p>
-          <p
+          <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
           >
-            High level
-          </p>
-        </div>
-        <div
-          class="desktop:grid-col-12"
-          data-testid="grid"
-        >
-          <div
-            class="read-only-section read-only-section--notes margin-bottom-3"
-          >
-            <p
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            Yes
+            <span
+              data-testid="other-entry"
             >
-              Notes
-            </p>
-            <p
-              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
-            >
-              Expected complexity note
-            </p>
+               - Can participants select how
+            </span>
           </div>
         </div>
       </div>
-      <div
-        class="grid-row grid-gap"
-        data-testid="grid"
-      >
-        <div
-          class="desktop:grid-col-6"
-          data-testid="grid"
-        >
-          <div
-            class="desktop:grid-col-12"
-            data-testid="grid"
-          >
-            <div
-              class="read-only-section read-only-section--are-there-any-business-requirement-s--that-address-claims-processing-precedence-order-with-the-other-model-s margin-bottom-3"
-            >
-              <p
-                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
-              >
-                Are there any business requirement(s) that address claims processing precedence order with the other model(s)?
-              </p>
-              <p
-                class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
-              >
-                Yes
-              </p>
-            </div>
-            <div
-              class="desktop:grid-col-12"
-              data-testid="grid"
-            >
-              <div
-                class="read-only-section read-only-section--notes margin-bottom-3"
-              >
-                <p
-                  class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
-                >
-                  Notes
-                </p>
-                <p
-                  class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
-                >
-                  claim note
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div
-          class="desktop:grid-col-6"
-          data-testid="grid"
-        >
-          <div
-            class="desktop:grid-col-12"
-            data-testid="grid"
-          >
-            <div
-              class="read-only-section read-only-section--please-specify margin-bottom-3"
-            >
-              <p
-                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
-              >
-                Please specify
-              </p>
-              <p
-                class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
-              >
-                other claims
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div
-        class="grid-row grid-gap"
-        data-testid="grid"
-      >
-        <div
-          class="desktop:grid-col-6"
-          data-testid="grid"
-        >
-          <div
-            class="desktop:grid-col-12"
-            data-testid="grid"
-          >
-            <div
-              class="read-only-section read-only-section--will-participants-be-allowed-to-select-between-multiple-payment-mechanisms margin-bottom-3"
-            >
-              <p
-                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
-              >
-                Will participants be allowed to select between multiple payment mechanisms?
-              </p>
-              <p
-                class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
-              >
-                Yes
-              </p>
-            </div>
-          </div>
-        </div>
-        <div
-          class="desktop:grid-col-6"
-          data-testid="grid"
-        >
-          <div
-            class="desktop:grid-col-12"
-            data-testid="grid"
-          >
-            <div
-              class="read-only-section read-only-section--please-describe margin-bottom-3"
-            >
-              <p
-                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
-              >
-                Please describe
-              </p>
-              <p
-                class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
-              >
-                Can participants select how
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
+    </div>
+    <div
+      class=""
+    />
+    <div
+      class=""
+    >
       <div
         class="desktop:grid-col-12"
         data-testid="grid"
@@ -756,13 +1010,17 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
           >
             Notes
           </p>
-          <p
+          <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
           >
             Payment mechanisms note
-          </p>
+          </div>
         </div>
       </div>
+    </div>
+    <div
+      class=""
+    >
       <div
         class="desktop:grid-col-12"
         data-testid="grid"
@@ -783,33 +1041,37 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
             >
               Semi-annually
             </li>
-            <ul
-              data-testid="other-entry"
-            />
+            <ul />
           </ul>
         </div>
+      </div>
+    </div>
+    <div
+      class=""
+    >
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
         <div
-          class="desktop:grid-col-12"
-          data-testid="grid"
+          class="read-only-section read-only-section--notes margin-bottom-3"
         >
-          <div
-            class="read-only-section read-only-section--notes margin-bottom-3"
+          <p
+            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
           >
-            <p
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
-            >
-              Notes
-            </p>
-            <p
-              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
-            >
-              Payment frequency note
-            </p>
+            Notes
+          </p>
+          <div
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+          >
+            Payment frequency note
           </div>
         </div>
       </div>
     </div>
-    <div>
+    <div
+      class="margin-top-4 padding-top-4 border-top-1px border-base-light"
+    >
       <div
         class="desktop:grid-col-12"
         data-testid="grid"
@@ -822,32 +1084,40 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
           >
             Will you recover the payments?
           </p>
-          <p
+          <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
           >
             Yes
-          </p>
-        </div>
-        <div
-          class="desktop:grid-col-12"
-          data-testid="grid"
-        >
-          <div
-            class="read-only-section read-only-section--notes margin-bottom-3"
-          >
-            <p
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
-            >
-              Notes
-            </p>
-            <p
-              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
-            >
-              Will recover note
-            </p>
           </div>
         </div>
       </div>
+    </div>
+    <div
+      class=""
+    >
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--notes margin-bottom-3"
+        >
+          <p
+            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+          >
+            Notes
+          </p>
+          <div
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+          >
+            Will recover note
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class=""
+    >
       <div
         class="desktop:grid-col-12"
         data-testid="grid"
@@ -860,32 +1130,40 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
           >
             Do you anticipate reconciling payments retrospectively?
           </p>
-          <p
+          <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
           >
             Yes
-          </p>
-        </div>
-        <div
-          class="desktop:grid-col-12"
-          data-testid="grid"
-        >
-          <div
-            class="read-only-section read-only-section--notes margin-bottom-3"
-          >
-            <p
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
-            >
-              Notes
-            </p>
-            <p
-              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
-            >
-              Anticipate note
-            </p>
           </div>
         </div>
       </div>
+    </div>
+    <div
+      class=""
+    >
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--notes margin-bottom-3"
+        >
+          <p
+            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+          >
+            Notes
+          </p>
+          <div
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+          >
+            Anticipate note
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class=""
+    >
       <div
         class="desktop:grid-col-12"
         data-testid="grid"
@@ -906,9 +1184,7 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
             >
               Continually
             </li>
-            <ul
-              data-testid="other-entry"
-            >
+            <ul>
               <li
                 class="font-sans-md line-height-sans-4"
               >
@@ -917,26 +1193,34 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
             </ul>
           </ul>
         </div>
+      </div>
+    </div>
+    <div
+      class=""
+    >
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
         <div
-          class="desktop:grid-col-12"
-          data-testid="grid"
+          class="read-only-section read-only-section--notes margin-bottom-3"
         >
-          <div
-            class="read-only-section read-only-section--notes margin-bottom-3"
+          <p
+            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
           >
-            <p
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
-            >
-              Notes
-            </p>
-            <p
-              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
-            >
-              Reconciliation note
-            </p>
+            Notes
+          </p>
+          <div
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+          >
+            Reconciliation note
           </div>
         </div>
       </div>
+    </div>
+    <div
+      class=""
+    >
       <div
         class="desktop:grid-col-12"
         data-testid="grid"
@@ -957,9 +1241,7 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
             >
               Continually
             </li>
-            <ul
-              data-testid="other-entry"
-            >
+            <ul>
               <li
                 class="font-sans-md line-height-sans-4"
               >
@@ -968,26 +1250,34 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
             </ul>
           </ul>
         </div>
+      </div>
+    </div>
+    <div
+      class=""
+    >
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
         <div
-          class="desktop:grid-col-12"
-          data-testid="grid"
+          class="read-only-section read-only-section--notes margin-bottom-3"
         >
-          <div
-            class="read-only-section read-only-section--notes margin-bottom-3"
+          <p
+            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
           >
-            <p
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
-            >
-              Notes
-            </p>
-            <p
-              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
-            >
-              Demand and Recoupment note
-            </p>
+            Notes
+          </p>
+          <div
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+          >
+            Demand and Recoupment note
           </div>
         </div>
       </div>
+    </div>
+    <div
+      class=""
+    >
       <div
         class="desktop:grid-col-12"
         data-testid="grid"
@@ -1000,29 +1290,33 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
           >
             When will payments start?
           </p>
-          <p
+          <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
           >
-            06/03/2022
-          </p>
+            2022-06-03T19:32:24.412662Z
+          </div>
         </div>
+      </div>
+    </div>
+    <div
+      class=""
+    >
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
         <div
-          class="desktop:grid-col-12"
-          data-testid="grid"
+          class="read-only-section read-only-section--notes margin-bottom-3"
         >
-          <div
-            class="read-only-section read-only-section--notes margin-bottom-3"
+          <p
+            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
           >
-            <p
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
-            >
-              Notes
-            </p>
-            <p
-              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
-            >
-              Note for payment start date
-            </p>
+            Notes
+          </p>
+          <div
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+          >
+            Note for payment start date
           </div>
         </div>
       </div>

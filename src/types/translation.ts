@@ -123,6 +123,8 @@ type ChildRelation<
   C extends keyof C | string | void = void
 > = {
   childRelation: Partial<Record<T, (() => TranslationConfigType<T, C>)[]>>;
+  disconnectedChildren?: boolean; // If child relations are not on the same page/sequential.  Readonly will render the parent question label if so
+  disconnectedLabel?: string; // Translation key to readonly alt text to render on alerts if children are hidden
 };
 
 /* 
@@ -132,7 +134,8 @@ type ChildRelation<
 type TranslationOptions<T extends keyof T | string> = {
   options: Record<T, string>;
   readonlyOptions?: Partial<Record<T, string>>; // An alternative set of translations for options specific to readonly
-  optionsLabels?: Partial<Record<T, string>>;
+  optionsLabels?: Partial<Record<T, string>>; // Sub labels to be rendered directly underneath options
+  tooltips?: Partial<Record<T, string>>; // Information to be rendered inside a tooltip
   optionsRelatedInfo?: Partial<Record<T, string>>; // T values should/could be a subset of the keys of enum values
 };
 
@@ -248,10 +251,7 @@ export const isTranslationFieldPropertiesWithOptionsAndChildren = <
 >(
   config: TranslationConfigType<T, C>
 ): config is TranslationFieldPropertiesWithOptionsAndChildren<T, C> => {
-  return (
-    Object.hasOwn(config, 'childRelation') &&
-    !Object.hasOwn(config, 'parentRelation')
-  );
+  return Object.hasOwn(config, 'childRelation');
 };
 
 /* 
@@ -354,7 +354,7 @@ export type TranslationGeneralCharacteristics = {
   participationInModelPreconditionOtherSpecify: TranslationFieldProperties;
   participationInModelPreconditionOtherSelected: TranslationFieldPropertiesWithOptions<Bool>;
   participationInModelPreconditionOtherOption: TranslationFieldProperties;
-  participationInModelPreconditionWhyHow: TranslationFieldProperties;
+  participationInModelPreconditionWhyHow: TranslationFieldPropertiesWithParent<YesNoOtherType>;
   participationInModelPreconditionNote: TranslationFieldProperties;
   hasComponentsOrTracks: TranslationFieldPropertiesWithOptions<Bool>;
   hasComponentsOrTracksDiffer: TranslationFieldProperties;
@@ -710,43 +710,82 @@ export type TranslationPayments = {
   payRecipients: TranslationFieldPropertiesWithOptions<PayRecipient>;
   payRecipientsOtherSpecification: TranslationFieldProperties;
   payRecipientsNote: TranslationFieldProperties;
-  payType: TranslationFieldPropertiesWithOptions<PayType>;
+  payType: TranslationFieldPropertiesWithOptionsAndChildren<PayType>;
   payTypeNote: TranslationFieldProperties;
   // Claims Based Payment
-  payClaims: TranslationFieldPropertiesWithOptions<ClaimsBasedPayType>;
+  payClaims: TranslationFieldPropertiesWithParentAndChildren<
+    ClaimsBasedPayType,
+    PayType
+  >;
   payClaimsOther: TranslationFieldProperties;
   payClaimsNote: TranslationFieldProperties;
-  shouldAnyProvidersExcludedFFSSystems: TranslationFieldPropertiesWithOptions<Bool>;
+  shouldAnyProvidersExcludedFFSSystems: TranslationFieldPropertiesWithOptionsAndParent<
+    Bool,
+    PayType
+  >;
   shouldAnyProviderExcludedFFSSystemsNote: TranslationFieldProperties;
-  changesMedicarePhysicianFeeSchedule: TranslationFieldPropertiesWithOptions<Bool>;
+  changesMedicarePhysicianFeeSchedule: TranslationFieldPropertiesWithOptionsAndParent<
+    Bool,
+    PayType
+  >;
   changesMedicarePhysicianFeeScheduleNote: TranslationFieldProperties;
-  affectsMedicareSecondaryPayerClaims: TranslationFieldPropertiesWithOptions<Bool>;
+  affectsMedicareSecondaryPayerClaims: TranslationFieldPropertiesWithOptionsAndParent<
+    Bool,
+    PayType
+  >;
   affectsMedicareSecondaryPayerClaimsHow: TranslationFieldProperties;
   affectsMedicareSecondaryPayerClaimsNote: TranslationFieldProperties;
-  payModelDifferentiation: TranslationFieldProperties;
+  payModelDifferentiation: TranslationFieldPropertiesWithParent<PayType>;
   // Anticipating Dependencies
-  creatingDependenciesBetweenServices: TranslationFieldPropertiesWithOptions<Bool>;
+  creatingDependenciesBetweenServices: TranslationFieldPropertiesWithOptionsAndParent<
+    Bool,
+    PayType
+  >;
   creatingDependenciesBetweenServicesNote: TranslationFieldProperties;
-  needsClaimsDataCollection: TranslationFieldPropertiesWithOptions<Bool>;
+  needsClaimsDataCollection: TranslationFieldPropertiesWithOptionsAndParent<
+    Bool,
+    PayType
+  >;
   needsClaimsDataCollectionNote: TranslationFieldProperties;
-  providingThirdPartyFile: TranslationFieldPropertiesWithOptions<Bool>;
-  isContractorAwareTestDataRequirements: TranslationFieldPropertiesWithOptions<Bool>;
+  providingThirdPartyFile: TranslationFieldPropertiesWithOptionsAndParent<
+    Bool,
+    PayType
+  >;
+  isContractorAwareTestDataRequirements: TranslationFieldPropertiesWithOptionsAndParent<
+    Bool,
+    PayType
+  >;
   // Beneficiary Cost Sharing
-  beneficiaryCostSharingLevelAndHandling: TranslationFieldProperties;
-  waiveBeneficiaryCostSharingForAnyServices: TranslationFieldPropertiesWithOptions<Bool>;
+  beneficiaryCostSharingLevelAndHandling: TranslationFieldPropertiesWithParent<ClaimsBasedPayType>;
+  waiveBeneficiaryCostSharingForAnyServices: TranslationFieldPropertiesWithOptionsAndParent<
+    Bool,
+    ClaimsBasedPayType
+  >;
   waiveBeneficiaryCostSharingServiceSpecification: TranslationFieldProperties;
-  waiverOnlyAppliesPartOfPayment: TranslationFieldPropertiesWithOptions<Bool>;
+  waiverOnlyAppliesPartOfPayment: TranslationFieldPropertiesWithOptionsAndParent<
+    Bool,
+    ClaimsBasedPayType
+  >;
   waiveBeneficiaryCostSharingNote: TranslationFieldProperties;
   // Non-Claims Based Payments
-  nonClaimsPayments: TranslationFieldPropertiesWithOptions<NonClaimsBasedPayType>;
+  nonClaimsPayments: TranslationFieldPropertiesWithOptionsAndParent<
+    NonClaimsBasedPayType,
+    PayType
+  >;
   nonClaimsPaymentsNote: TranslationFieldProperties;
   nonClaimsPaymentOther: TranslationFieldProperties;
-  paymentCalculationOwner: TranslationFieldProperties;
-  numberPaymentsPerPayCycle: TranslationFieldProperties;
+  paymentCalculationOwner: TranslationFieldPropertiesWithParent<PayType>;
+  numberPaymentsPerPayCycle: TranslationFieldPropertiesWithParent<PayType>;
   numberPaymentsPerPayCycleNote: TranslationFieldProperties;
-  sharedSystemsInvolvedAdditionalClaimPayment: TranslationFieldPropertiesWithOptions<Bool>;
+  sharedSystemsInvolvedAdditionalClaimPayment: TranslationFieldPropertiesWithOptionsAndParent<
+    Bool,
+    PayType
+  >;
   sharedSystemsInvolvedAdditionalClaimPaymentNote: TranslationFieldProperties;
-  planningToUseInnovationPaymentContractor: TranslationFieldPropertiesWithOptions<Bool>;
+  planningToUseInnovationPaymentContractor: TranslationFieldPropertiesWithOptionsAndParent<
+    Bool,
+    PayType
+  >;
   planningToUseInnovationPaymentContractorNote: TranslationFieldProperties;
   // Complexity
   expectedCalculationComplexityLevel: TranslationFieldPropertiesWithOptions<ComplexityCalculationLevelType>;

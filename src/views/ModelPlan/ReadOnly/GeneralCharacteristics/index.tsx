@@ -5,6 +5,7 @@ import {
   useGetAllGeneralCharacteristicsQuery
 } from 'gql/gen/graphql';
 
+import PageLoading from 'components/PageLoading';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import { ModelInfoContext } from 'views/ModelInfoWrapper';
 import { NotFoundPartial } from 'views/NotFound';
@@ -16,8 +17,7 @@ import { ReadOnlyProps } from '../ModelBasics';
 const ReadOnlyGeneralCharacteristics = ({
   modelID,
   clearance,
-  filteredView,
-  isViewingFilteredView
+  filteredView
 }: ReadOnlyProps) => {
   const { t: generalCharacteristicsMiscT } = useTranslation(
     'generalCharacteristicsMisc'
@@ -76,15 +76,15 @@ const ReadOnlyGeneralCharacteristics = ({
     participationInModelPreconditionOtherSelected
   ]);
 
-  if ((!loading && error) || (!loading && !data?.modelPlan)) {
-    return <NotFoundPartial />;
-  }
-
   const formattedGeneralCharacteristicsData = {
     ...allgeneralCharacteristicsData,
     resemblesExistingModelWhich: linkedResemblePlans,
     participationInModelPreconditionWhich: participationPreconditionPlans
   };
+
+  if ((!loading && error) || (!loading && !data?.modelPlan)) {
+    return <NotFoundPartial />;
+  }
 
   return (
     <div
@@ -95,7 +95,7 @@ const ReadOnlyGeneralCharacteristics = ({
         clearance={clearance}
         clearanceTitle={generalCharacteristicsMiscT('clearanceHeading')}
         heading={generalCharacteristicsMiscT('heading')}
-        isViewingFilteredView={isViewingFilteredView}
+        isViewingFilteredView={!!filteredView}
         status={status}
       />
 
@@ -107,11 +107,15 @@ const ReadOnlyGeneralCharacteristics = ({
         </p>
       )}
 
-      <ReadOnlyBody
-        data={formattedGeneralCharacteristicsData}
-        config={generalCharacteristicsConfig}
-        filteredView={filteredView}
-      />
+      {loading && !data ? (
+        <PageLoading />
+      ) : (
+        <ReadOnlyBody
+          data={formattedGeneralCharacteristicsData}
+          config={generalCharacteristicsConfig}
+          filteredView={filteredView}
+        />
+      )}
     </div>
   );
 };
