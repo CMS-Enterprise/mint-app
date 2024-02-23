@@ -1680,7 +1680,7 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
         <button
           aria-controls="data-needed-for-monitoring-questions"
           aria-expanded="false"
-          class="usa-button usa-button--unstyled"
+          class="usa-button usa-button--unstyled mint-no-print"
           data-testid="collapsable-link"
           type="button"
         >
