@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Button, Icon } from '@trussworks/react-uswds';
 import classNames from 'classnames';
+
+import { PrintPDFContext } from 'views/PrintPDFWrapper';
 
 import './index.scss';
 
@@ -17,6 +19,7 @@ type CollapsableLinkProps = {
   startOpen?: boolean;
   showDescription?: (show: boolean) => void;
   labelPosition?: 'top' | 'bottom';
+  expandOnExport?: boolean;
 };
 
 const CollapsableLink = ({
@@ -31,12 +34,28 @@ const CollapsableLink = ({
   iconPosition,
   startOpen = false,
   showDescription,
-  labelPosition = 'top'
+  labelPosition = 'top',
+  expandOnExport = false
 }: CollapsableLinkProps) => {
   // TODO: should this state instead be held in the parent and passed in as prop?
   // Followup: if the state should remain here, how do we test the component when it's open?
   // That is, how do we initialize this component and set isOpen to true?
   const [isOpen, setOpen] = useState(startOpen);
+
+  // State used to revert to toggle state before overridden by pdf export/context
+  const [isOpenPrePrint, setOpenPrePrint] = useState(startOpen);
+
+  const { isPrintPDF } = useContext(PrintPDFContext);
+
+  useEffect(() => {
+    if (expandOnExport) {
+      if (isPrintPDF) {
+        setOpen(isPrintPDF);
+      } else {
+        setOpen(isOpenPrePrint);
+      }
+    }
+  }, [isPrintPDF, expandOnExport, isOpenPrePrint]);
 
   const renderEyeIcon = () => {
     return isOpen ? (
@@ -62,11 +81,12 @@ const CollapsableLink = ({
       type="button"
       onClick={() => {
         setOpen(!isOpen);
+        setOpenPrePrint(!isOpenPrePrint);
         if (showDescription) showDescription(!isOpen);
       }}
       aria-expanded={isOpen}
       aria-controls={id}
-      className={toggleClassName}
+      className={classNames('mint-no-print', toggleClassName)}
       unstyled
       data-testid="collapsable-link"
     >

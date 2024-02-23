@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useReactToPrint } from 'react-to-print';
 import { useMutation } from '@apollo/client';
@@ -28,6 +28,7 @@ import BodyContent from 'views/ModelPlan/ReadOnly/_components/FilterView/BodyCon
 import { FilterGroup } from 'views/ModelPlan/ReadOnly/_components/FilterView/BodyContent/_filterGroupMapping';
 import { groupOptions } from 'views/ModelPlan/ReadOnly/_components/FilterView/util';
 import { StatusMessageType } from 'views/ModelPlan/TaskList';
+import { PrintPDFContext } from 'views/PrintPDFWrapper';
 
 import PDFSummary from './pdfSummary';
 
@@ -56,6 +57,8 @@ const ShareExportModal = ({
   setStatusMessage
 }: ShareExportModalProps) => {
   const { t: generalReadOnlyT } = useTranslation('generalReadOnly');
+
+  const { setPrintPDF } = useContext(PrintPDFContext);
 
   const [filteredGroup, setFilteredGroup] = useState<FitlerGroup>(
     (filteredView as FilterGroup) || 'all'
@@ -93,6 +96,7 @@ const ShareExportModal = ({
     content: () => componentRef.current,
     documentTitle: generalReadOnlyT('modal.documentTitle'),
     onAfterPrint: () => {
+      setPrintPDF(false);
       closeModal();
     }
   });
@@ -349,7 +353,11 @@ const ShareExportModal = ({
         onSubmit={e => {
           e.preventDefault();
           if (exportPDF) {
-            handlePrint();
+            setPrintPDF(true);
+            // PDF/Print doesn't pick up the useContext state change without setTimeout
+            setTimeout(() => {
+              handlePrint();
+            }, 0);
           }
           if (exportCSV) {
             const groupToExport =

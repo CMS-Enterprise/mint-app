@@ -1441,7 +1441,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                   <button
                     aria-controls="related-what-are-the-model-key-characteristics"
                     aria-expanded="false"
-                    class="usa-button usa-button--unstyled"
+                    class="usa-button usa-button--unstyled mint-no-print"
                     data-testid="collapsable-link"
                     type="button"
                   >
@@ -1987,7 +1987,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                   <button
                     aria-controls="related-what-is-the-agreement-type"
                     aria-expanded="false"
-                    class="usa-button usa-button--unstyled"
+                    class="usa-button usa-button--unstyled mint-no-print"
                     data-testid="collapsable-link"
                     type="button"
                   >
@@ -3385,7 +3385,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                   <button
                     aria-controls="related-will-the-providers-overlap-with-other-models"
                     aria-expanded="false"
-                    class="usa-button usa-button--unstyled"
+                    class="usa-button usa-button--unstyled mint-no-print"
                     data-testid="collapsable-link"
                     type="button"
                   >
@@ -5688,7 +5688,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                 <button
                   aria-controls="data-needed-for-monitoring-questions"
                   aria-expanded="false"
-                  class="usa-button usa-button--unstyled"
+                  class="usa-button usa-button--unstyled mint-no-print"
                   data-testid="collapsable-link"
                   type="button"
                 >
@@ -6800,7 +6800,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                 <button
                   aria-controls="cost-sharing-questions"
                   aria-expanded="false"
-                  class="usa-button usa-button--unstyled"
+                  class="usa-button usa-button--unstyled mint-no-print"
                   data-testid="collapsable-link"
                   type="button"
                 >
@@ -6886,7 +6886,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                 <button
                   aria-controls="cost-sharing-questions"
                   aria-expanded="false"
-                  class="usa-button usa-button--unstyled"
+                  class="usa-button usa-button--unstyled mint-no-print"
                   data-testid="collapsable-link"
                   type="button"
                 >
@@ -9471,7 +9471,7 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                   <button
                     aria-controls="related-what-are-the-model-key-characteristics"
                     aria-expanded="false"
-                    class="usa-button usa-button--unstyled"
+                    class="usa-button usa-button--unstyled mint-no-print"
                     data-testid="collapsable-link"
                     type="button"
                   >
@@ -10017,7 +10017,7 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                   <button
                     aria-controls="related-what-is-the-agreement-type"
                     aria-expanded="false"
-                    class="usa-button usa-button--unstyled"
+                    class="usa-button usa-button--unstyled mint-no-print"
                     data-testid="collapsable-link"
                     type="button"
                   >
@@ -11415,7 +11415,7 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                   <button
                     aria-controls="related-will-the-providers-overlap-with-other-models"
                     aria-expanded="false"
-                    class="usa-button usa-button--unstyled"
+                    class="usa-button usa-button--unstyled mint-no-print"
                     data-testid="collapsable-link"
                     type="button"
                   >
@@ -13718,7 +13718,7 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                 <button
                   aria-controls="data-needed-for-monitoring-questions"
                   aria-expanded="false"
-                  class="usa-button usa-button--unstyled"
+                  class="usa-button usa-button--unstyled mint-no-print"
                   data-testid="collapsable-link"
                   type="button"
                 >
@@ -14830,7 +14830,7 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                 <button
                   aria-controls="cost-sharing-questions"
                   aria-expanded="false"
-                  class="usa-button usa-button--unstyled"
+                  class="usa-button usa-button--unstyled mint-no-print"
                   data-testid="collapsable-link"
                   type="button"
                 >
@@ -14916,7 +14916,7 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                 <button
                   aria-controls="cost-sharing-questions"
                   aria-expanded="false"
-                  class="usa-button usa-button--unstyled"
+                  class="usa-button usa-button--unstyled mint-no-print"
                   data-testid="collapsable-link"
                   type="button"
                 >
