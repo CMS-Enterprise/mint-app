@@ -28,7 +28,7 @@ describe('Read Only Model Plan Summary -- Model Basics', () => {
     );
 
     await waitFor(() => {
-      expect(screen.getByText('Second Name')).toBeInTheDocument();
+      expect(screen.getByText('43532323')).toBeInTheDocument();
       expect(
         screen.getByText(
           i18next.t<string>(
@@ -60,7 +60,7 @@ describe('Read Only Model Plan Summary -- Model Basics', () => {
     );
 
     await waitFor(() => {
-      expect(screen.getByText('Second Name')).toBeInTheDocument();
+      expect(screen.getByText('43532323')).toBeInTheDocument();
       expect(
         screen.getByText(
           i18next.t<string>(

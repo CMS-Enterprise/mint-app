@@ -1,3 +1,5 @@
+import { ModelViewFilter } from 'gql/gen/graphql';
+
 import { TranslationParticipantsAndProviders } from 'types/translation';
 
 import { frequencyOptions } from './miscellaneous';
@@ -31,7 +33,18 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
       STATE_MEDICAID_AGENCIES: 'State Medicaid agencies',
       OTHER: 'Other'
     },
-    filterGroups: ['cbosc', 'cmmi', 'ipc', 'iddoc', 'pbg']
+    optionsRelatedInfo: {
+      MEDICARE_PROVIDERS: 'medicareProviderType',
+      STATES: 'statesEngagement',
+      OTHER: 'participantsOther'
+    },
+    filterGroups: [
+      ModelViewFilter.CBOSC,
+      ModelViewFilter.CMMI,
+      ModelViewFilter.IPC,
+      ModelViewFilter.IDDOC,
+      ModelViewFilter.PBG
+    ]
   },
   medicareProviderType: {
     gqlField: 'medicareProviderType',
@@ -40,7 +53,14 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     label: 'Which type of Medicare providers/suppliers?',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['cbosc', 'cmmi', 'ipc', 'iddoc', 'pbg']
+    isOtherType: true,
+    filterGroups: [
+      ModelViewFilter.CBOSC,
+      ModelViewFilter.CMMI,
+      ModelViewFilter.IPC,
+      ModelViewFilter.IDDOC,
+      ModelViewFilter.PBG
+    ]
   },
   statesEngagement: {
     gqlField: 'statesEngagement',
@@ -49,7 +69,14 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     label: 'Please describe how states will engage with your model.',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['cbosc', 'cmmi', 'ipc', 'iddoc', 'pbg']
+    isOtherType: true,
+    filterGroups: [
+      ModelViewFilter.CBOSC,
+      ModelViewFilter.CMMI,
+      ModelViewFilter.IPC,
+      ModelViewFilter.IDDOC,
+      ModelViewFilter.PBG
+    ]
   },
   participantsOther: {
     gqlField: 'participantsOther',
@@ -57,7 +84,15 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     dbField: 'participantsOther',
     label: 'Please describe the other participants engaging with this model',
     dataType: 'string',
-    formType: 'textarea'
+    formType: 'textarea',
+    isOtherType: true,
+    filterGroups: [
+      ModelViewFilter.CBOSC,
+      ModelViewFilter.CMMI,
+      ModelViewFilter.IPC,
+      ModelViewFilter.IDDOC,
+      ModelViewFilter.PBG
+    ]
   },
   participantsNote: {
     gqlField: 'participantsNote',
@@ -65,7 +100,14 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     dbField: 'participantsNote',
     label: 'Notes',
     dataType: 'string',
-    formType: 'textarea'
+    formType: 'textarea',
+    filterGroups: [
+      ModelViewFilter.CBOSC,
+      ModelViewFilter.CMMI,
+      ModelViewFilter.IPC,
+      ModelViewFilter.IDDOC,
+      ModelViewFilter.PBG
+    ]
   },
   participantsCurrentlyInModels: {
     gqlField: 'participantsCurrentlyInModels',
@@ -98,7 +140,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
       '(e.g., all services identified at the CPT or ICD-10 code level, epsiode of care for a specific span of time, all hospitals unpaid under the Inpatient Prospective Payment System in a certain state)',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['iddoc', 'pbg']
+    filterGroups: [ModelViewFilter.IDDOC, ModelViewFilter.PBG]
   },
 
   expectedNumberOfParticipants: {
@@ -110,7 +152,17 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
       'Note: Sometimes RRCEG provides a minimum for the power calculation. Other times stakeholder research may inform the team about who are good candidates or might be interested in participating.',
     dataType: 'number',
     formType: 'rangeInput',
-    filterGroups: ['cbosc', 'ccw', 'dfsdm', 'ipc']
+    filterGroups: [
+      ModelViewFilter.CBOSC,
+      ModelViewFilter.CCW,
+      ModelViewFilter.DFSDM,
+      ModelViewFilter.IPC
+    ],
+    isPageStart: true,
+    adjacentPositioning: {
+      position: 'left',
+      adjacentField: 'estimateConfidence'
+    }
   },
   estimateConfidence: {
     gqlField: 'estimateConfidence',
@@ -125,7 +177,16 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
       FAIRLY: 'Fairly confident',
       COMPLETELY: 'Completely confident'
     },
-    filterGroups: ['cbosc', 'ccw', 'dfsdm', 'ipc']
+    filterGroups: [
+      ModelViewFilter.CBOSC,
+      ModelViewFilter.CCW,
+      ModelViewFilter.DFSDM,
+      ModelViewFilter.IPC
+    ],
+    adjacentPositioning: {
+      position: 'right',
+      adjacentField: 'expectedNumberOfParticipants'
+    }
   },
   confidenceNote: {
     gqlField: 'confidenceNote',
@@ -134,7 +195,12 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     label: 'Notes',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['cbosc', 'ccw', 'dfsdm', 'ipc']
+    filterGroups: [
+      ModelViewFilter.CBOSC,
+      ModelViewFilter.CCW,
+      ModelViewFilter.DFSDM,
+      ModelViewFilter.IPC
+    ]
   },
   recruitmentMethod: {
     gqlField: 'recruitmentMethod',
@@ -152,11 +218,10 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
       NA: 'Not applicable'
     },
     optionsLabels: {
-      APPLICATION_COLLECTION_TOOL: '',
-      LOI: '',
-      NOFO: 'CMMI writes, Office of General Council (OGC) reviews and approves',
-      OTHER: '',
-      NA: ''
+      NOFO: 'CMMI writes, Office of General Council (OGC) reviews and approves'
+    },
+    optionsRelatedInfo: {
+      OTHER: 'recruitmentOther'
     }
   },
   recruitmentOther: {
@@ -165,7 +230,8 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     dbField: 'recruitment_other',
     label: 'Please specify',
     dataType: 'string',
-    formType: 'textarea'
+    formType: 'textarea',
+    isOtherType: true
   },
   recruitmentNote: {
     gqlField: 'recruitmentNote',
@@ -197,7 +263,14 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
       OTHER: 'Other',
       NO_SELECTING_PARTICIPANTS: 'We won’t be selecting participants'
     },
-    filterGroups: ['cmmi', 'iddoc', 'pbg']
+    optionsRelatedInfo: {
+      OTHER: 'selectionOther'
+    },
+    filterGroups: [
+      ModelViewFilter.CMMI,
+      ModelViewFilter.IDDOC,
+      ModelViewFilter.PBG
+    ]
   },
   selectionOther: {
     gqlField: 'selectionOther',
@@ -206,7 +279,12 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     label: 'Please describe the other participants engaging with this model',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['cmmi', 'iddoc', 'pbg']
+    isOtherType: true,
+    filterGroups: [
+      ModelViewFilter.CMMI,
+      ModelViewFilter.IDDOC,
+      ModelViewFilter.PBG
+    ]
   },
   selectionNote: {
     gqlField: 'selectionNote',
@@ -215,7 +293,11 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     label: 'Notes',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['cmmi', 'iddoc', 'pbg']
+    filterGroups: [
+      ModelViewFilter.CMMI,
+      ModelViewFilter.IDDOC,
+      ModelViewFilter.PBG
+    ]
   },
   participantAddedFrequency: {
     gqlField: 'participantAddedFrequency',
@@ -226,13 +308,11 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     formType: 'checkbox',
     options: frequencyOptions,
     optionsRelatedInfo: {
-      ANNUALLY: '',
-      SEMIANNUALLY: '',
-      QUARTERLY: '',
-      MONTHLY: '',
       CONTINUALLY: 'participantAddedFrequencyContinually',
       OTHER: 'participantAddedFrequencyOther'
-    }
+    },
+    filterGroups: [ModelViewFilter.IPC],
+    isPageStart: true
   },
   participantAddedFrequencyContinually: {
     gqlField: 'participantAddedFrequencyContinually',
@@ -240,7 +320,9 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     dbField: 'participant_added_frequency_continually',
     label: 'Please specify',
     dataType: 'string',
-    formType: 'text'
+    formType: 'text',
+    isOtherType: true,
+    filterGroups: [ModelViewFilter.IPC]
   },
   participantAddedFrequencyOther: {
     gqlField: 'participantAddedFrequencyOther',
@@ -248,7 +330,9 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     dbField: 'participant_added_frequency_other',
     label: 'Please specify',
     dataType: 'string',
-    formType: 'text'
+    formType: 'text',
+    isOtherType: true,
+    filterGroups: [ModelViewFilter.IPC]
   },
   participantAddedFrequencyNote: {
     gqlField: 'participantAddedFrequencyNote',
@@ -256,7 +340,8 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     dbField: 'participant_added_frequency_note',
     label: 'Notes',
     dataType: 'string',
-    formType: 'text'
+    formType: 'text',
+    filterGroups: [ModelViewFilter.IPC]
   },
   participantRemovedFrequency: {
     gqlField: 'participantRemovedFrequency',
@@ -267,13 +352,10 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     formType: 'checkbox',
     options: frequencyOptions,
     optionsRelatedInfo: {
-      ANNUALLY: '',
-      SEMIANNUALLY: '',
-      QUARTERLY: '',
-      MONTHLY: '',
       CONTINUALLY: 'participantRemovedFrequencyContinually',
       OTHER: 'participantRemovedFrequencyOther'
-    }
+    },
+    filterGroups: [ModelViewFilter.IPC]
   },
   participantRemovedFrequencyContinually: {
     gqlField: 'participantRemovedFrequencyContinually',
@@ -281,7 +363,9 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     dbField: 'participant_removed_frequency_continually',
     label: 'Please specify',
     dataType: 'string',
-    formType: 'text'
+    formType: 'text',
+    isOtherType: true,
+    filterGroups: [ModelViewFilter.IPC]
   },
   participantRemovedFrequencyOther: {
     gqlField: 'participantRemovedFrequencyOther',
@@ -289,7 +373,9 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     dbField: 'participant_removed_frequency_other',
     label: 'Please specify',
     dataType: 'string',
-    formType: 'text'
+    formType: 'text',
+    isOtherType: true,
+    filterGroups: [ModelViewFilter.IPC]
   },
   participantRemovedFrequencyNote: {
     gqlField: 'participantRemovedFrequencyNote',
@@ -297,7 +383,8 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     dbField: 'participant_removed_frequency_note',
     label: 'Notes',
     dataType: 'string',
-    formType: 'text'
+    formType: 'text',
+    filterGroups: [ModelViewFilter.IPC]
   },
   communicationMethod: {
     gqlField: 'communicationMethod',
@@ -313,7 +400,10 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
       OTHER: 'Other',
       NO_COMMUNICATION: 'We are not planning to communicate'
     },
-    filterGroups: ['cbosc']
+    optionsRelatedInfo: {
+      OTHER: 'communicationMethodOther'
+    },
+    filterGroups: [ModelViewFilter.CBOSC, ModelViewFilter.IPC]
   },
   communicationMethodOther: {
     gqlField: 'communicationMethodOther',
@@ -322,7 +412,8 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     label: 'Please specify',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['cbosc']
+    isOtherType: true,
+    filterGroups: [ModelViewFilter.CBOSC, ModelViewFilter.IPC]
   },
   communicationNote: {
     gqlField: 'communicationNote',
@@ -331,7 +422,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     label: 'Notes',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['cbosc']
+    filterGroups: [ModelViewFilter.CBOSC, ModelViewFilter.IPC]
   },
   riskType: {
     gqlField: 'riskType',
@@ -346,6 +437,9 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
       CAPITATION: 'Capitation',
       NOT_RISK_BASED: 'Not risk-based',
       OTHER: 'Other'
+    },
+    optionsRelatedInfo: {
+      OTHER: 'riskOther'
     }
   },
   riskOther: {
@@ -354,7 +448,8 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     dbField: 'risk_other',
     label: 'Please specify',
     dataType: 'string',
-    formType: 'textarea'
+    formType: 'textarea',
+    isOtherType: true
   },
   riskNote: {
     gqlField: 'riskNote',
@@ -395,7 +490,8 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     options: {
       true: 'Yes',
       false: 'No'
-    }
+    },
+    isPageStart: true
   },
   coordinateWorkNote: {
     gqlField: 'coordinateWorkNote',
@@ -415,6 +511,16 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     options: {
       true: 'Yes',
       false: 'No'
+    },
+    childRelation: {
+      true: [
+        () => participantsAndProviders.gainsharePaymentsTrack,
+        () => participantsAndProviders.gainsharePaymentsEligibility
+      ]
+    },
+    adjacentPositioning: {
+      position: 'left',
+      adjacentField: 'gainsharePaymentsTrack'
     }
   },
   gainsharePaymentsTrack: {
@@ -427,6 +533,11 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     options: {
       true: 'Yes',
       false: 'No'
+    },
+    parentRelation: () => participantsAndProviders.gainsharePayments,
+    adjacentPositioning: {
+      position: 'right',
+      adjacentField: 'gainsharePayments'
     }
   },
   gainsharePaymentsEligibility: {
@@ -441,7 +552,11 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
       SOME_PROVIDERS: 'Some providers',
       OTHER: 'Other',
       NO: 'No'
-    }
+    },
+    optionsRelatedInfo: {
+      OTHER: 'gainsharePaymentsEligibilityOther'
+    },
+    parentRelation: () => participantsAndProviders.gainsharePayments
   },
   gainsharePaymentsEligibilityOther: {
     gqlField: 'gainsharePaymentsEligibilityOther',
@@ -449,7 +564,8 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     dbField: 'gainshare_payments_eligibility_other',
     label: 'Please specify',
     dataType: 'string',
-    formType: 'text'
+    formType: 'text',
+    isOtherType: true
   },
   gainsharePaymentsNote: {
     gqlField: 'gainsharePaymentsNote',
@@ -476,7 +592,10 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
       OTHER: 'Other',
       NO_IDENTIFIERS: 'No, we will not collect provider identifiers'
     },
-    filterGroups: ['iddoc']
+    optionsRelatedInfo: {
+      OTHER: 'participantsIdsOther'
+    },
+    filterGroups: [ModelViewFilter.IDDOC]
   },
   participantsIdsOther: {
     gqlField: 'participantsIdsOther',
@@ -485,7 +604,8 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     label: 'Please specify',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['iddoc']
+    isOtherType: true,
+    filterGroups: [ModelViewFilter.IDDOC]
   },
   participantsIDSNote: {
     gqlField: 'participantsIDSNote',
@@ -494,7 +614,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     label: 'Notes',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['iddoc']
+    filterGroups: [ModelViewFilter.IDDOC]
   },
   providerAdditionFrequency: {
     gqlField: 'providerAdditionFrequency',
@@ -505,14 +625,11 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     formType: 'checkbox',
     options: frequencyOptions,
     optionsRelatedInfo: {
-      ANNUALLY: '',
-      SEMIANNUALLY: '',
-      QUARTERLY: '',
-      MONTHLY: '',
       CONTINUALLY: 'providerAdditionFrequencyContinually',
       OTHER: 'providerAdditionFrequencyOther'
     },
-    filterGroups: ['oact', 'ipc']
+    filterGroups: [ModelViewFilter.OACT, ModelViewFilter.IPC],
+    isPageStart: true
   },
   providerAdditionFrequencyContinually: {
     gqlField: 'providerAdditionFrequencyContinually',
@@ -521,7 +638,8 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     label: 'Please specify',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['oact', 'ipc']
+    isOtherType: true,
+    filterGroups: [ModelViewFilter.OACT, ModelViewFilter.IPC]
   },
   providerAdditionFrequencyOther: {
     gqlField: 'providerAdditionFrequencyOther',
@@ -530,7 +648,8 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     label: 'Please specify',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['oact', 'ipc']
+    isOtherType: true,
+    filterGroups: [ModelViewFilter.OACT, ModelViewFilter.IPC]
   },
   providerAdditionFrequencyNote: {
     gqlField: 'providerAdditionFrequencyNote',
@@ -539,7 +658,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     label: 'Notes',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['oact', 'ipc']
+    filterGroups: [ModelViewFilter.OACT, ModelViewFilter.IPC]
   },
   providerAddMethod: {
     gqlField: 'providerAddMethod',
@@ -564,7 +683,10 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
       OTHER: 'Other',
       NA: 'Not applicable'
     },
-    filterGroups: ['ipc', 'oact']
+    optionsRelatedInfo: {
+      OTHER: 'providerAddMethodOther'
+    },
+    filterGroups: [ModelViewFilter.IPC, ModelViewFilter.OACT]
   },
   providerAddMethodOther: {
     gqlField: 'providerAddMethodOther',
@@ -574,7 +696,8 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
       'Please describe the other method for deciding which providers to add.',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['ipc', 'oact']
+    isOtherType: true,
+    filterGroups: [ModelViewFilter.IPC, ModelViewFilter.OACT]
   },
   providerAddMethodNote: {
     gqlField: 'providerAddMethodNote',
@@ -583,7 +706,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     label: 'Notes',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['ipc', 'oact']
+    filterGroups: [ModelViewFilter.IPC, ModelViewFilter.OACT]
   },
   providerLeaveMethod: {
     gqlField: 'providerLeaveMethod',
@@ -605,7 +728,10 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
       OTHER: 'Other',
       NOT_APPLICABLE: 'Not applicable'
     },
-    filterGroups: ['ipc', 'oact']
+    optionsRelatedInfo: {
+      OTHER: 'providerLeaveMethodOther'
+    },
+    filterGroups: [ModelViewFilter.IPC, ModelViewFilter.OACT]
   },
   providerLeaveMethodOther: {
     gqlField: 'providerLeaveMethodOther',
@@ -614,7 +740,8 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     label: 'Please specify',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['ipc', 'oact']
+    filterGroups: [ModelViewFilter.IPC, ModelViewFilter.OACT],
+    isOtherType: true
   },
   providerLeaveMethodNote: {
     gqlField: 'providerLeaveMethodNote',
@@ -623,7 +750,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     label: 'Notes',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['ipc', 'oact']
+    filterGroups: [ModelViewFilter.IPC, ModelViewFilter.OACT]
   },
   providerRemovalFrequency: {
     gqlField: 'providerRemovalFrequency',
@@ -634,10 +761,6 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     formType: 'checkbox',
     options: frequencyOptions,
     optionsRelatedInfo: {
-      ANNUALLY: '',
-      SEMIANNUALLY: '',
-      QUARTERLY: '',
-      MONTHLY: '',
       CONTINUALLY: 'providerRemovalFrequencyContinually',
       OTHER: 'providerRemovalFrequencyOther'
     }
@@ -648,7 +771,8 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     dbField: 'provide_removal_frequency_continually',
     label: 'Please specify',
     dataType: 'string',
-    formType: 'text'
+    formType: 'text',
+    isOtherType: true
   },
   providerRemovalFrequencyOther: {
     gqlField: 'providerRemovalFrequencyOther',
@@ -656,7 +780,8 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     dbField: 'provider_removal_frequency_other',
     label: 'Please specify',
     dataType: 'string',
-    formType: 'text'
+    formType: 'text',
+    isOtherType: true
   },
   providerRemovalFrequencyNote: {
     gqlField: 'providerRemovalFrequencyNote',
@@ -679,7 +804,13 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
       YES_NO_ISSUES: 'Yes, and the overlaps would not be an issue',
       NO: 'No'
     },
-    filterGroups: ['iddoc', 'pbg']
+    childRelation: {
+      YES_NEED_POLICIES: [
+        () => participantsAndProviders.providerOverlapHierarchy
+      ],
+      YES_NO_ISSUES: [() => participantsAndProviders.providerOverlapHierarchy]
+    },
+    filterGroups: [ModelViewFilter.IDDOC, ModelViewFilter.PBG]
   },
   providerOverlapHierarchy: {
     gqlField: 'providerOverlapHierarchy',
@@ -689,7 +820,8 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
       'If model providers can be in multiple models that may interact, please note the desired hierarchy of how any payment changes or edits should be applied.',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['iddoc', 'pbg']
+    parentRelation: () => participantsAndProviders.providerOverlap,
+    filterGroups: [ModelViewFilter.IDDOC, ModelViewFilter.PBG]
   },
   providerOverlapNote: {
     gqlField: 'providerOverlapNote',
@@ -698,7 +830,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     label: 'Notes',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['iddoc', 'pbg']
+    filterGroups: [ModelViewFilter.IDDOC, ModelViewFilter.PBG]
   },
   status: {
     gqlField: 'status',

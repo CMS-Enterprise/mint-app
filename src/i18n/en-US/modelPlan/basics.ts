@@ -1,3 +1,5 @@
+import { ModelViewFilter } from 'gql/gen/graphql';
+
 import { TranslationBasics } from 'types/translation';
 
 export const basics: TranslationBasics = {
@@ -8,6 +10,10 @@ export const basics: TranslationBasics = {
     label: 'Primary model category',
     dataType: 'enum',
     formType: 'radio',
+    adjacentPositioning: {
+      position: 'left',
+      adjacentField: 'additionalModelCategories'
+    },
     options: {
       ACCOUNTABLE_CARE: 'Accountable Care',
       DISEASE_SPECIFIC_AND_EPISODIC: 'Disease-Specific & Episode-Based',
@@ -17,7 +23,7 @@ export const basics: TranslationBasics = {
       STATUTORY: 'Statutory',
       TO_BE_DETERMINED: 'To be determined'
     },
-    optionsLabels: {
+    tooltips: {
       ACCOUNTABLE_CARE:
         'Models in which a doctor, group of health care providers or hospital takes financial responsibility for improving quality of care, including advanced primary care services, care coordination and health outcomes for a defined group of patients, thereby reducing care fragmentation and unnecessary costs for patients and the health system',
       DISEASE_SPECIFIC_AND_EPISODIC:
@@ -30,7 +36,8 @@ export const basics: TranslationBasics = {
       STATUTORY:
         'Models and demonstrations requiring testing as determined by Congress and/or the Secretary of Health and Human Services.',
       TO_BE_DETERMINED: 'To be determined'
-    }
+    },
+    filterGroups: [ModelViewFilter.IPC]
   },
   additionalModelCategories: {
     gqlField: 'additionalModelCategories',
@@ -41,6 +48,10 @@ export const basics: TranslationBasics = {
       'If your model doesn’t fall into any additional categories, you can skip this.',
     dataType: 'string',
     formType: 'checkbox',
+    adjacentPositioning: {
+      position: 'right',
+      adjacentField: 'modelCategory'
+    },
     options: {
       ACCOUNTABLE_CARE: 'Accountable Care',
       DISEASE_SPECIFIC_AND_EPISODIC: 'Disease-Specific & Episode-Based',
@@ -50,7 +61,7 @@ export const basics: TranslationBasics = {
       STATUTORY: 'Statutory',
       TO_BE_DETERMINED: 'To be determined'
     },
-    optionsLabels: {
+    tooltips: {
       ACCOUNTABLE_CARE:
         'Models in which a doctor, group of health care providers or hospital takes financial responsibility for improving quality of care, including advanced primary care services, care coordination and health outcomes for a defined group of patients, thereby reducing care fragmentation and unnecessary costs for patients and the health system',
       DISEASE_SPECIFIC_AND_EPISODIC:
@@ -63,7 +74,8 @@ export const basics: TranslationBasics = {
       STATUTORY:
         'Models and demonstrations requiring testing as determined by Congress and/or the Secretary of Health and Human Services.',
       TO_BE_DETERMINED: 'To be determined'
-    }
+    },
+    filterGroups: [ModelViewFilter.IPC]
   },
   amsModelID: {
     gqlField: 'amsModelID',
@@ -88,6 +100,10 @@ export const basics: TranslationBasics = {
     label: 'CMS component',
     dataType: 'enum',
     formType: 'checkbox',
+    adjacentPositioning: {
+      position: 'left',
+      adjacentField: 'cmmiGroups'
+    },
     options: {
       CMMI: 'Center for Medicare and Medicaid Innovation (CMMI)',
       CENTER_FOR_CLINICAL_STANDARDS_AND_QUALITY:
@@ -100,7 +116,7 @@ export const basics: TranslationBasics = {
 
       CENTER_FOR_PROGRAM_INTEGRITY: 'Center for Program Integrity (CPI)'
     },
-    filterGroups: ['ipc']
+    filterGroups: [ModelViewFilter.IPC]
   },
   cmmiGroups: {
     gqlField: 'cmmiGroups',
@@ -111,6 +127,10 @@ export const basics: TranslationBasics = {
       'You only need to select the CMMI group if CMMI is selected as the main CMS component.',
     dataType: 'enum',
     formType: 'checkbox',
+    adjacentPositioning: {
+      position: 'right',
+      adjacentField: 'cmsCenters'
+    },
     options: {
       PATIENT_CARE_MODELS_GROUP: 'Patient Care Models Group (PCMG)',
       POLICY_AND_PROGRAMS_GROUP: 'Policy and Programs Group (PPG)',
@@ -119,7 +139,7 @@ export const basics: TranslationBasics = {
         'State and Population Health Group (SPHG)',
       TBD: 'To be determined'
     },
-    filterGroups: ['ipc']
+    filterGroups: [ModelViewFilter.IPC]
   },
   modelType: {
     gqlField: 'modelType',
@@ -127,14 +147,22 @@ export const basics: TranslationBasics = {
     dbField: 'model_type',
     label: 'Model Type',
     dataType: 'enum',
-    formType: 'radio',
+    formType: 'checkbox',
     options: {
       VOLUNTARY: 'Voluntary',
       MANDATORY_NATIONAL: 'Mandatory national',
       MANDATORY_REGIONAL_OR_STATE: 'Mandatory regional or state',
       OTHER: 'Other'
     },
-    filterGroups: ['dfsdm', 'ipc', 'iddoc', 'pbg']
+    optionsRelatedInfo: {
+      OTHER: 'modelTypeOther'
+    },
+    filterGroups: [
+      ModelViewFilter.DFSDM,
+      ModelViewFilter.IPC,
+      ModelViewFilter.IDDOC,
+      ModelViewFilter.PBG
+    ]
   },
   modelTypeOther: {
     gqlField: 'modelTypeOther',
@@ -143,7 +171,13 @@ export const basics: TranslationBasics = {
     label: 'Please specify',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['dfsdm', 'ipc', 'iddoc', 'pbg']
+    isOtherType: true,
+    filterGroups: [
+      ModelViewFilter.DFSDM,
+      ModelViewFilter.IPC,
+      ModelViewFilter.IDDOC,
+      ModelViewFilter.PBG
+    ]
   },
   problem: {
     gqlField: 'problem',
@@ -162,7 +196,12 @@ export const basics: TranslationBasics = {
       'Please include the high level goal of the program and a description of the project.',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['dfsdm', 'ipc', 'iddoc', 'pbg']
+    filterGroups: [
+      ModelViewFilter.DFSDM,
+      ModelViewFilter.IPC,
+      ModelViewFilter.IDDOC,
+      ModelViewFilter.PBG
+    ]
   },
   testInterventions: {
     gqlField: 'testInterventions',
@@ -187,7 +226,7 @@ export const basics: TranslationBasics = {
     label: 'Complete ICIP',
     dataType: 'date',
     formType: 'datePicker',
-    filterGroups: ['ipc']
+    filterGroups: [ModelViewFilter.IPC]
   },
   clearanceStarts: {
     gqlField: 'clearanceStarts',
@@ -196,7 +235,7 @@ export const basics: TranslationBasics = {
     label: 'Clearance start date',
     dataType: 'date',
     formType: 'datePicker',
-    filterGroups: ['ipc']
+    filterGroups: [ModelViewFilter.IPC]
   },
   clearanceEnds: {
     gqlField: 'clearanceEnds',
@@ -205,7 +244,7 @@ export const basics: TranslationBasics = {
     label: 'Clearance end date',
     dataType: 'date',
     formType: 'datePicker',
-    filterGroups: ['ipc']
+    filterGroups: [ModelViewFilter.IPC]
   },
   announced: {
     gqlField: 'announced',
@@ -214,7 +253,12 @@ export const basics: TranslationBasics = {
     label: 'Announce model',
     dataType: 'date',
     formType: 'datePicker',
-    filterGroups: ['cbosc', 'iddoc', 'ipc', 'pbg']
+    filterGroups: [
+      ModelViewFilter.CBOSC,
+      ModelViewFilter.IDDOC,
+      ModelViewFilter.IPC,
+      ModelViewFilter.PBG
+    ]
   },
   applicationsStart: {
     gqlField: 'applicationsStart',
@@ -223,7 +267,11 @@ export const basics: TranslationBasics = {
     label: 'Application start date',
     dataType: 'date',
     formType: 'datePicker',
-    filterGroups: ['cbosc', 'ipc']
+    adjacentPositioning: {
+      position: 'left',
+      adjacentField: 'applicationsEnd'
+    },
+    filterGroups: [ModelViewFilter.CBOSC, ModelViewFilter.IPC]
   },
   applicationsEnd: {
     gqlField: 'applicationsEnd',
@@ -232,7 +280,11 @@ export const basics: TranslationBasics = {
     label: 'Application end date',
     dataType: 'date',
     formType: 'datePicker',
-    filterGroups: ['ipc']
+    adjacentPositioning: {
+      position: 'right',
+      adjacentField: 'applicationsStart'
+    },
+    filterGroups: [ModelViewFilter.CBOSC, ModelViewFilter.IPC]
   },
   performancePeriodStarts: {
     gqlField: 'performancePeriodStarts',
@@ -241,7 +293,18 @@ export const basics: TranslationBasics = {
     label: 'Performance start date',
     dataType: 'date',
     formType: 'datePicker',
-    filterGroups: ['cbosc', 'ccw', 'dfsdm', 'iddoc', 'ipc', 'pbg']
+    adjacentPositioning: {
+      position: 'left',
+      adjacentField: 'performancePeriodEnds'
+    },
+    filterGroups: [
+      ModelViewFilter.CBOSC,
+      ModelViewFilter.CCW,
+      ModelViewFilter.DFSDM,
+      ModelViewFilter.IDDOC,
+      ModelViewFilter.IPC,
+      ModelViewFilter.PBG
+    ]
   },
   performancePeriodEnds: {
     gqlField: 'performancePeriodEnds',
@@ -250,7 +313,18 @@ export const basics: TranslationBasics = {
     label: 'Performance end date',
     dataType: 'date',
     formType: 'datePicker',
-    filterGroups: ['ipc']
+    adjacentPositioning: {
+      position: 'right',
+      adjacentField: 'performancePeriodStarts'
+    },
+    filterGroups: [
+      ModelViewFilter.CBOSC,
+      ModelViewFilter.CCW,
+      ModelViewFilter.DFSDM,
+      ModelViewFilter.IDDOC,
+      ModelViewFilter.IPC,
+      ModelViewFilter.PBG
+    ]
   },
   highLevelNote: {
     gqlField: 'highLevelNote',
@@ -267,7 +341,7 @@ export const basics: TranslationBasics = {
     label: 'Model wrap-up end date',
     dataType: 'date',
     formType: 'datePicker',
-    filterGroups: ['ipc']
+    filterGroups: [ModelViewFilter.IPC]
   },
   phasedIn: {
     gqlField: 'phasedIn',
@@ -279,11 +353,12 @@ export const basics: TranslationBasics = {
       'That is, the basic model would start at the earliest possible date but additional facets could be phased in at a later quarter.',
     dataType: 'boolean',
     formType: 'radio',
+    isPageStart: true,
     options: {
       true: 'Yes',
       false: 'No'
     },
-    filterGroups: ['iddoc', 'pbg']
+    filterGroups: [ModelViewFilter.IDDOC, ModelViewFilter.PBG]
   },
   phasedInNote: {
     gqlField: 'phasedInNote',
@@ -292,7 +367,7 @@ export const basics: TranslationBasics = {
     label: 'Notes',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['iddoc', 'pbg']
+    filterGroups: [ModelViewFilter.IDDOC, ModelViewFilter.PBG]
   },
   status: {
     gqlField: 'status',
@@ -327,14 +402,10 @@ export const basicsMisc: Record<string, string> = {
   demonstrationPerformance: 'Performance period',
   demonstrationPerformanceInfo:
     'When the model will be active beginning with the go-live date',
-  na: 'No answer entered',
-  otherNotSpecified: 'Other not specified',
   milestonesInfo:
     'Please be sure that the dates listed here are updated in the clearance calendar, if applicable. Contact the MINT Team at {{-email}} if you have any questions.',
   required1: 'All fields marked with ',
   required2: ' are required.',
-  notes: 'Notes',
-  noneEntered: 'None entered',
   otherIdentifiers: 'Other identifiers',
   otherIdentifiersInfo1: 'These are created in ',
   otherIdentifiersInfo2: 'CMMI Analysis & Management System (AMS).',

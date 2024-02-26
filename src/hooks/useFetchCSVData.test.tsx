@@ -1,3 +1,5 @@
+import { OverlapType } from 'gql/gen/graphql';
+
 import basics from 'i18n/en-US/modelPlan/basics';
 import beneficiaries from 'i18n/en-US/modelPlan/beneficiaries';
 import generalCharacteristics from 'i18n/en-US/modelPlan/generalCharacteristics';
@@ -9,12 +11,14 @@ import payments from 'i18n/en-US/modelPlan/payments';
 import {
   dataFormatter,
   headerFormatter,
+  removedUnneededData,
   selectFilteredFields
 } from './useFetchCSVData';
 
 describe('fetch csv utils', () => {
   const allPlanTranslation = {
-    payments
+    payments,
+    participantsAndProviders
   };
 
   it('translates boolean values', () => {
@@ -114,6 +118,25 @@ describe('fetch csv utils', () => {
     const returnData = 'Who will you pay? Select all that apply.';
 
     expect(headerFormatter(data, allPlanTranslation)).toEqual(returnData);
+  });
+
+  it('removes unneeded data/conditional data', () => {
+    const dataFields = [
+      'participantsAndProviders.providerOverlap',
+      'participantsAndProviders.providerOverlapHierarchy'
+    ];
+
+    const data = {
+      participantsAndProviders: {
+        providerOverlap: [OverlapType.NO]
+      }
+    };
+
+    const returnData = ['participantsAndProviders.providerOverlap'];
+
+    expect(removedUnneededData(data, allPlanTranslation, dataFields)).toEqual(
+      returnData
+    );
   });
 
   it('filtered the header columns on the presence of a filter group', () => {

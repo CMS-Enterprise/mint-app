@@ -1,41 +1,29 @@
 import React, { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
-  BeneficiariesType,
   GetAllBeneficiariesQuery,
-  TriStateAnswer,
   useGetAllBeneficiariesQuery
 } from 'gql/gen/graphql';
 
+import PageLoading from 'components/PageLoading';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import { ModelInfoContext } from 'views/ModelInfoWrapper';
 import { NotFoundPartial } from 'views/NotFound';
 
-import { checkGroupMap } from '../_components/FilterView/util';
-import ReadOnlySection, {
-  formatListItems,
-  formatListOtherItems
-} from '../_components/ReadOnlySection';
-import SideBySideReadOnlySection from '../_components/SideBySideReadOnlySection';
+import ReadOnlyBody from '../_components/Body';
 import TitleAndStatus from '../_components/TitleAndStatus';
 import { ReadOnlyProps } from '../ModelBasics';
 
 const ReadOnlyBeneficiaries = ({
   modelID,
   clearance,
-  isViewingFilteredView,
-  filteredQuestions
+  filteredView
 }: ReadOnlyProps) => {
-  const { t: beneficiariesT } = useTranslation('beneficiaries');
-
   const { t: beneficiariesMiscT } = useTranslation('beneficiariesMisc');
 
   const { t: prepareForClearanceT } = useTranslation('prepareForClearance');
 
-  const {
-    beneficiarySelectionFrequency: beneficiarySelectionFrequencyConfig,
-    beneficiaryRemovalFrequency: beneficiaryRemovalFrequencyConfig
-  } = usePlanTranslation('beneficiaries');
+  const beneficiariesConfig = usePlanTranslation('beneficiaries');
 
   const { modelName } = useContext(ModelInfoContext);
 
@@ -52,41 +40,6 @@ const ReadOnlyBeneficiaries = ({
   const allbeneficiariesData = (data?.modelPlan.beneficiaries ||
     {}) as GetAllBeneficiariesQuery['modelPlan']['beneficiaries'];
 
-  const {
-    beneficiaries,
-    diseaseSpecificGroup,
-    beneficiariesOther,
-    beneficiariesNote,
-    treatDualElligibleDifferent,
-    treatDualElligibleDifferentHow,
-    treatDualElligibleDifferentNote,
-    excludeCertainCharacteristics,
-    excludeCertainCharacteristicsCriteria,
-    excludeCertainCharacteristicsNote,
-    numberPeopleImpacted,
-    estimateConfidence,
-    confidenceNote,
-    beneficiarySelectionMethod,
-    beneficiarySelectionOther,
-    beneficiarySelectionNote,
-    beneficiarySelectionFrequency,
-    beneficiarySelectionFrequencyNote,
-    beneficiaryRemovalFrequency,
-    beneficiaryRemovalFrequencyNote,
-    beneficiaryOverlap,
-    beneficiaryOverlapNote,
-    precedenceRules,
-    precedenceRulesYes,
-    precedenceRulesNo,
-    precedenceRulesNote,
-    status
-  } = allbeneficiariesData;
-
-  const precedenceRulesInfo: Record<string, string | null | undefined> = {
-    precedenceRulesYes,
-    precedenceRulesNo
-  };
-
   return (
     <div
       className="read-only-model-plan--beneficiaries"
@@ -96,8 +49,8 @@ const ReadOnlyBeneficiaries = ({
         clearance={clearance}
         clearanceTitle={beneficiariesMiscT('clearanceHeading')}
         heading={beneficiariesMiscT('heading')}
-        isViewingFilteredView={isViewingFilteredView}
-        status={status}
+        isViewingFilteredView={!!filteredView}
+        status={allbeneficiariesData.status}
       />
 
       {clearance && (
@@ -108,259 +61,15 @@ const ReadOnlyBeneficiaries = ({
         </p>
       )}
 
-      <div
-        className={`${
-          isViewingFilteredView
-            ? ''
-            : 'margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light'
-        }`}
-      >
-        {checkGroupMap(
-          isViewingFilteredView,
-          filteredQuestions,
-          'beneficiaries',
-          <ReadOnlySection
-            heading={beneficiariesT('beneficiaries.readonlyLabel')}
-            list
-            listItems={beneficiaries?.map((type): string =>
-              beneficiariesT(`beneficiaries.options.${type}`)
-            )}
-            listOtherItem={beneficiariesOther}
-            notes={beneficiariesNote}
-          />
-        )}
-
-        {beneficiaries?.includes(BeneficiariesType.DISEASE_SPECIFIC) &&
-          checkGroupMap(
-            isViewingFilteredView,
-            filteredQuestions,
-            'diseaseSpecificGroup',
-            <ReadOnlySection
-              heading={beneficiariesT('diseaseSpecificGroup.label')}
-              copy={diseaseSpecificGroup}
-            />
-          )}
-
-        {checkGroupMap(
-          isViewingFilteredView,
-          filteredQuestions,
-          'treatDualElligibleDifferent',
-          <SideBySideReadOnlySection
-            firstSection={{
-              heading: beneficiariesT('treatDualElligibleDifferent.label'),
-              copy:
-                treatDualElligibleDifferent &&
-                beneficiariesT(
-                  `treatDualElligibleDifferent.options.${treatDualElligibleDifferent}`,
-                  ''
-                )
-            }}
-            secondSection={
-              treatDualElligibleDifferent === TriStateAnswer.YES && {
-                heading: beneficiariesT('treatDualElligibleDifferentHow.label'),
-                copy: treatDualElligibleDifferentHow
-              }
-            }
-          />
-        )}
-        {treatDualElligibleDifferentNote &&
-          checkGroupMap(
-            isViewingFilteredView,
-            filteredQuestions,
-            'treatDualElligibleDifferent',
-            <ReadOnlySection
-              heading={beneficiariesT('treatDualElligibleDifferentNote.label')}
-              copy={treatDualElligibleDifferentNote}
-            />
-          )}
-
-        {checkGroupMap(
-          isViewingFilteredView,
-          filteredQuestions,
-          'excludeCertainCharacteristics',
-          <SideBySideReadOnlySection
-            firstSection={{
-              heading: beneficiariesT('excludeCertainCharacteristics.label'),
-              copy:
-                excludeCertainCharacteristics &&
-                beneficiariesT(
-                  `excludeCertainCharacteristics.options.${excludeCertainCharacteristics}`,
-                  ''
-                )
-            }}
-            secondSection={
-              excludeCertainCharacteristics === TriStateAnswer.YES && {
-                heading: beneficiariesT(
-                  'excludeCertainCharacteristicsCriteria.label'
-                ),
-                copy: excludeCertainCharacteristicsCriteria
-              }
-            }
-          />
-        )}
-
-        {excludeCertainCharacteristicsNote &&
-          checkGroupMap(
-            isViewingFilteredView,
-            filteredQuestions,
-            'excludeCertainCharacteristics',
-            <ReadOnlySection
-              heading={beneficiariesT(
-                'excludeCertainCharacteristicsNote.label'
-              )}
-              copy={excludeCertainCharacteristicsNote}
-            />
-          )}
-      </div>
-
-      <div
-        className={`${
-          isViewingFilteredView
-            ? ''
-            : 'margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light'
-        }`}
-      >
-        {isViewingFilteredView &&
-          checkGroupMap(
-            isViewingFilteredView,
-            filteredQuestions,
-            'numberPeopleImpacted',
-            <SideBySideReadOnlySection
-              firstSection={{
-                heading: beneficiariesT('numberPeopleImpacted.label'),
-                copy: numberPeopleImpacted?.toString(),
-                notes: confidenceNote
-              }}
-              secondSection={{
-                heading: beneficiariesT('estimateConfidence.label'),
-                copy:
-                  estimateConfidence &&
-                  beneficiariesT(
-                    `estimateConfidence.options.${estimateConfidence}`,
-                    ''
-                  )
-              }}
-            />
-          )}
-
-        {!isViewingFilteredView && (
-          <>
-            <ReadOnlySection
-              heading={beneficiariesT('numberPeopleImpacted.label')}
-              copy={numberPeopleImpacted?.toString()}
-            />
-
-            <ReadOnlySection
-              heading={beneficiariesT('estimateConfidence.label')}
-              copy={
-                estimateConfidence &&
-                beneficiariesT(
-                  `estimateConfidence.options.${estimateConfidence}`,
-                  ''
-                )
-              }
-              notes={confidenceNote}
-            />
-          </>
-        )}
-
-        {checkGroupMap(
-          isViewingFilteredView,
-          filteredQuestions,
-          'beneficiarySelectionMethod',
-          <ReadOnlySection
-            heading={beneficiariesT('beneficiarySelectionMethod.readonlyLabel')}
-            list
-            listItems={beneficiarySelectionMethod?.map((type): string =>
-              beneficiariesT(`beneficiarySelectionMethod.options.${type}`)
-            )}
-            listOtherItem={beneficiarySelectionOther}
-            notes={beneficiarySelectionNote}
-          />
-        )}
-      </div>
-
-      <div>
-        {checkGroupMap(
-          isViewingFilteredView,
-          filteredQuestions,
-          'beneficiarySelectionFrequency',
-          <ReadOnlySection
-            heading={beneficiariesT('beneficiarySelectionFrequency.label')}
-            list
-            listItems={formatListItems(
-              beneficiarySelectionFrequencyConfig,
-              beneficiarySelectionFrequency
-            )}
-            listOtherItems={formatListOtherItems(
-              beneficiarySelectionFrequencyConfig,
-              beneficiarySelectionFrequency,
-              allbeneficiariesData
-            )}
-            notes={beneficiarySelectionFrequencyNote}
-          />
-        )}
-
-        {checkGroupMap(
-          isViewingFilteredView,
-          filteredQuestions,
-          'beneficiaryRemovalFrequency',
-          <ReadOnlySection
-            heading={beneficiariesT('beneficiaryRemovalFrequency.label')}
-            list
-            listItems={formatListItems(
-              beneficiaryRemovalFrequencyConfig,
-              beneficiaryRemovalFrequency
-            )}
-            listOtherItems={formatListOtherItems(
-              beneficiaryRemovalFrequencyConfig,
-              beneficiaryRemovalFrequency,
-              allbeneficiariesData
-            )}
-            notes={beneficiaryRemovalFrequencyNote}
-          />
-        )}
-
-        {checkGroupMap(
-          isViewingFilteredView,
-          filteredQuestions,
-          'beneficiaryOverlap',
-          <ReadOnlySection
-            heading={beneficiariesT('beneficiaryOverlap.label')}
-            copy={
-              beneficiaryOverlap &&
-              beneficiariesT(
-                `beneficiaryOverlap.options.${beneficiaryOverlap}`,
-                ''
-              )
-            }
-            notes={beneficiaryOverlapNote}
-          />
-        )}
-        {checkGroupMap(
-          isViewingFilteredView,
-          filteredQuestions,
-          'precedenceRules',
-          <ReadOnlySection
-            heading={beneficiariesT('precedenceRules.label')}
-            list
-            listItems={precedenceRules?.map((type): string =>
-              beneficiariesT(`precedenceRules.options.${type}`)
-            )}
-            listOtherItems={precedenceRules?.map((type): string => {
-              return (
-                precedenceRulesInfo[
-                  beneficiariesT(
-                    `precedenceRules.optionsRelatedInfo.${type}`,
-                    ''
-                  )
-                ] || ''
-              );
-            })}
-            notes={precedenceRulesNote}
-          />
-        )}
-      </div>
+      {loading && !data ? (
+        <PageLoading />
+      ) : (
+        <ReadOnlyBody
+          data={allbeneficiariesData}
+          config={beneficiariesConfig}
+          filteredView={filteredView}
+        />
+      )}
     </div>
   );
 };

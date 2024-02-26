@@ -154,6 +154,10 @@ const generalCharacteristicData: GetAllGeneralCharacteristicsTypes = {
   participationInModelPreconditionOtherSpecify: '',
   participationInModelPreconditionOtherOption: 'Other model',
   participationInModelPreconditionOtherSelected: true,
+  participationInModelPreconditionWhich: {
+    __typename: 'ExistingModelLinks',
+    names: ['name']
+  },
   participationInModelPreconditionNote: 'Precondition note',
   hasComponentsOrTracks: true,
   hasComponentsOrTracksDiffer: 'In every way',
