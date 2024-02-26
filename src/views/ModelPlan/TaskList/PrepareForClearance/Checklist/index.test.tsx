@@ -2,7 +2,6 @@ import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { act, render, screen, waitFor } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 
 import GetClearanceStatuses from 'queries/PrepareForClearance/GetClearanceStatuses';
 import {
@@ -48,7 +47,7 @@ const clearanceMock = [
 describe('Prepare for clearance checklist', () => {
   it('renders without errors and unchecks an item', async () => {
     await act(async () => {
-      setup(
+      const { user } = setup(
         <MemoryRouter
           initialEntries={[
             `/models/${modelID}/task-list/prepare-for-clearance`
@@ -68,7 +67,7 @@ describe('Prepare for clearance checklist', () => {
         ).toBeChecked();
       });
 
-      await userEvent.click(screen.getByTestId('prepare-for-clearance-basics'));
+      await user.click(screen.getByTestId('prepare-for-clearance-basics'));
 
       await waitFor(() => {
         expect(

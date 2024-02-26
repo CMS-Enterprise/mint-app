@@ -8,7 +8,6 @@ import {
   waitFor,
   waitForElementToBeRemoved
 } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 import Sinon from 'sinon';
 
 import { benficiaryMocks } from 'data/mock/readonly';
@@ -91,7 +90,7 @@ describe('ClearanceReview component', () => {
     console.error = vi.fn();
 
     await act(async () => {
-      const { getByTestId } = setup(
+      const { getByTestId, user } = setup(
         <MemoryRouter
           initialEntries={[
             `/models/${modelID}/task-list/prepare-for-clearance/beneficiaries/${beneficiaryID}`
@@ -113,7 +112,7 @@ describe('ClearanceReview component', () => {
         ).toBeInTheDocument();
       });
 
-      await userEvent.click(getByTestId('modify-task-list-for-clearance'));
+      await user.click(getByTestId('modify-task-list-for-clearance'));
 
       await waitFor(() => {
         expect(getByTestId('clearance-modal-header')).toHaveTextContent(

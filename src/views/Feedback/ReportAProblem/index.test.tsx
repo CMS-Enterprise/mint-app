@@ -1,7 +1,6 @@
 import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { act, render } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 import CreateReportAProblem from 'gql/apolloGQL/Feedback/CreateReportAProblem';
 import { ReportAProblemSection, ReportAProblemSeverity } from 'gql/gen/graphql';
 
@@ -40,7 +39,7 @@ window.scrollTo = vi.fn;
 describe('Report a problem form', () => {
   it('submits the "Report a problem" form successfully', async () => {
     await act(async () => {
-      const { findByText, getByRole, getByTestId } = setup(
+      const { findByText, getByRole, getByTestId, user } = setup(
         <MemoryRouter initialEntries={['/report-a-problem']}>
           <Route path="/report-a-problem">
             <VerboseMockedProvider mocks={mocks} addTypename={false}>
@@ -51,36 +50,34 @@ describe('Report a problem form', () => {
       );
 
       // Fill out form
-      await userEvent.click(
+      await user.click(
         getByTestId('report-a-problem-allow-anon-submission-false')
       );
 
-      await userEvent.click(getByTestId('report-a-problem-allow-contact-true'));
+      await user.click(getByTestId('report-a-problem-allow-contact-true'));
 
-      await userEvent.click(getByTestId('report-a-problem-section-OTHER'));
+      await user.click(getByTestId('report-a-problem-section-OTHER'));
 
-      await userEvent.type(
+      await user.type(
         getByTestId('report-a-problem-section-other'),
         'Other section'
       );
 
-      await userEvent.type(
+      await user.type(
         getByTestId('report-a-problem-section-what-doing'),
         'Nothing much'
       );
 
-      await userEvent.type(
+      await user.type(
         getByTestId('report-a-problem-section-what-went-wrong'),
         'Everything'
       );
 
-      await userEvent.click(
-        getByTestId('report-a-problem-severity-DELAYED_TASK')
-      );
+      await user.click(getByTestId('report-a-problem-severity-DELAYED_TASK'));
 
       const submitButton = getByRole('button', { name: 'Send report' });
 
-      await userEvent.click(submitButton);
+      await user.click(submitButton);
 
       // Submit success
       findByText('Thank you for your feedback');

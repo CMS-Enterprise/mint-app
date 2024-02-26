@@ -2,7 +2,6 @@ import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { act, render } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 import CreateSendFeedback from 'gql/apolloGQL/Feedback/CreateSendFeedback';
 import { EaseOfUse, MintUses, SatisfactionLevel } from 'gql/gen/graphql';
 
@@ -40,7 +39,7 @@ const mocks = [
 describe('Send feedback form', () => {
   it('submits the "Send feedback" form successfully', async () => {
     await act(async () => {
-      const { findByText, getByRole, getByTestId, getByText } = setup(
+      const { findByText, getByRole, getByTestId, getByText, user } = setup(
         <MemoryRouter initialEntries={['send-feedback']}>
           <Route path="send-feedback">
             <MockedProvider mocks={mocks} addTypename={false}>
@@ -52,33 +51,30 @@ describe('Send feedback form', () => {
 
       // Fill out form
 
-      await userEvent.click(
+      await user.click(
         getByTestId('send-feedback-allow-anon-submission-false')
       );
 
-      await userEvent.click(getByTestId('send-feedback-allow-contact-true'));
+      await user.click(getByTestId('send-feedback-allow-contact-true'));
 
-      await userEvent.type(getByTestId('send-feedback-cms-role'), 'Architect');
+      await user.type(getByTestId('send-feedback-cms-role'), 'Architect');
 
-      await userEvent.click(getByText('To edit Model Plans'));
+      await user.click(getByText('To edit Model Plans'));
 
-      await userEvent.click(getByTestId('send-feedback-ease-of-use-UNSURE'));
+      await user.click(getByTestId('send-feedback-ease-of-use-UNSURE'));
 
-      await userEvent.type(
+      await user.type(
         getByTestId('send-feedback-ease-of-use-other'),
         'Effortless'
       );
 
-      await userEvent.click(getByTestId('send-feedback-how-satisfied-NEUTRAL'));
+      await user.click(getByTestId('send-feedback-how-satisfied-NEUTRAL'));
 
-      await userEvent.type(
-        getByTestId('send-feedback-how-can-we-improve'),
-        'Alot'
-      );
+      await user.type(getByTestId('send-feedback-how-can-we-improve'), 'Alot');
 
       const submitButton = getByRole('button', { name: 'Send feedback' });
 
-      await userEvent.click(submitButton);
+      await user.click(submitButton);
 
       // Submit success
       findByText('Thank you for your feedback');

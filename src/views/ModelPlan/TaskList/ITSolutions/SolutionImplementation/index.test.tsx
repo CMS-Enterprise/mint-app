@@ -2,7 +2,6 @@ import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { act, render, waitFor } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 
 import {
   needQuestionAndAnswerMock,
@@ -73,7 +72,7 @@ const mocks = [
 describe('Operational Solutions NeedQuestionAndAnswer', () => {
   it('renders correctly', async () => {
     await act(async () => {
-      const { getByText, getAllByTestId, getByRole } = setup(
+      const { getByText, getAllByTestId, getByRole, user } = setup(
         <MemoryRouter
           initialEntries={[
             {
@@ -98,7 +97,7 @@ describe('Operational Solutions NeedQuestionAndAnswer', () => {
       });
 
       const datePicker = getAllByTestId('date-picker-external-input')[0];
-      await userEvent.type(datePicker, '12/10/2030');
+      await user.type(datePicker, '12/10/2030');
 
       await waitFor(() => {
         expect(datePicker).toHaveValue('12/10/2030');
@@ -106,7 +105,7 @@ describe('Operational Solutions NeedQuestionAndAnswer', () => {
 
       const atRisk = getByRole('radio', { name: 'At risk' });
       const backlog = getByRole('radio', { name: 'Backlog' });
-      await userEvent.click(backlog);
+      await user.click(backlog);
 
       await waitFor(() => {
         expect(atRisk).not.toBeChecked();
