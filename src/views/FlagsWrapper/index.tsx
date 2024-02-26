@@ -44,7 +44,8 @@ const UserTargetingWrapper = ({ children }: WrapperProps) => {
             hideGroupView: true,
             helpScoutEnabled: false,
             feedbackEnabled: false,
-            downgradeNonCMS: false
+            downgradeNonCMS: false,
+            notificationsEnabled: false
           }
         });
 
