@@ -8782,8 +8782,7 @@ enum DiscussionUserRole {
 enum YesNoType {
   YES,
   NO
-}
-`, BuiltIn: false},
+}`, BuiltIn: false},
 	{Name: "../schema/types/directives.graphql", Input: `directive @hasRole(role: Role!) on FIELD_DEFINITION
 
 directive @hasAnyRole(roles: [Role!]!) on FIELD_DEFINITION
