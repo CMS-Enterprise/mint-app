@@ -35,7 +35,7 @@ export const basics: TranslationBasics = {
         'Models in which a state or community-based organization serves as the main contractual participant, including managed care organizations serving Medicaid beneficiaries.',
       STATUTORY:
         'Models and demonstrations requiring testing as determined by Congress and/or the Secretary of Health and Human Services.',
-      TO_BE_DETERMINED: 'To be determined'
+      TO_BE_DETERMINED: ''
     },
     filterGroups: [ModelViewFilter.IPC]
   },
@@ -73,7 +73,7 @@ export const basics: TranslationBasics = {
         'Models in which a state or community-based organization serves as the main contractual participant, including managed care organizations serving Medicaid beneficiaries.',
       STATUTORY:
         'Models and demonstrations requiring testing as determined by Congress and/or the Secretary of Health and Human Services.',
-      TO_BE_DETERMINED: 'To be determined'
+      TO_BE_DETERMINED: ''
     },
     filterGroups: [ModelViewFilter.IPC]
   },
