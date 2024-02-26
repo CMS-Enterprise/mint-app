@@ -1,10 +1,11 @@
 import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
-import { render } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import { act, render } from '@testing-library/react';
 import CreateSendFeedback from 'gql/apolloGQL/Feedback/CreateSendFeedback';
 import { EaseOfUse, MintUses, SatisfactionLevel } from 'gql/gen/graphql';
+
+import setup from 'utils/testing/setup';
 
 import SendFeedback from '.';
 
@@ -37,36 +38,47 @@ const mocks = [
 
 describe('Send feedback form', () => {
   it('submits the "Send feedback" form successfully', async () => {
-    const { findByText, getByRole, getByTestId, getByText } = render(
-      <MemoryRouter initialEntries={['send-feedback']}>
-        <Route path="send-feedback">
-          <MockedProvider mocks={mocks} addTypename={false}>
-            <SendFeedback />
-          </MockedProvider>
-        </Route>
-      </MemoryRouter>
-    );
+    await act(async () => {
+      const { findByText, getByRole, getByTestId, getByText, user } = setup(
+        <MemoryRouter initialEntries={['send-feedback']}>
+          <Route path="send-feedback">
+            <MockedProvider mocks={mocks} addTypename={false}>
+              <SendFeedback />
+            </MockedProvider>
+          </Route>
+        </MemoryRouter>
+      );
 
-    // Fill out form
-    userEvent.click(getByTestId('send-feedback-allow-anon-submission-false'));
-    userEvent.click(getByTestId('send-feedback-allow-contact-true'));
-    userEvent.type(getByTestId('send-feedback-cms-role'), 'Architect');
+      // Fill out form
 
-    userEvent.click(getByText('To edit Model Plans'));
-    userEvent.click(getByTestId('send-feedback-ease-of-use-UNSURE'));
-    userEvent.type(
-      getByTestId('send-feedback-ease-of-use-other'),
-      'Effortless'
-    );
-    userEvent.click(getByTestId('send-feedback-how-satisfied-NEUTRAL'));
-    userEvent.type(getByTestId('send-feedback-how-can-we-improve'), 'Alot');
+      await user.click(
+        getByTestId('send-feedback-allow-anon-submission-false')
+      );
 
-    const submitButton = getByRole('button', { name: 'Send feedback' });
+      await user.click(getByTestId('send-feedback-allow-contact-true'));
 
-    userEvent.click(submitButton);
+      await user.type(getByTestId('send-feedback-cms-role'), 'Architect');
 
-    // Submit success
-    findByText('Thank you for your feedback');
+      await user.click(getByText('To edit Model Plans'));
+
+      await user.click(getByTestId('send-feedback-ease-of-use-UNSURE'));
+
+      await user.type(
+        getByTestId('send-feedback-ease-of-use-other'),
+        'Effortless'
+      );
+
+      await user.click(getByTestId('send-feedback-how-satisfied-NEUTRAL'));
+
+      await user.type(getByTestId('send-feedback-how-can-we-improve'), 'Alot');
+
+      const submitButton = getByRole('button', { name: 'Send feedback' });
+
+      await user.click(submitButton);
+
+      // Submit success
+      findByText('Thank you for your feedback');
+    });
   });
 
   it('matches snapshot', async () => {
