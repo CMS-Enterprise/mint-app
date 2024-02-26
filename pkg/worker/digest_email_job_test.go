@@ -72,7 +72,7 @@ func (suite *WorkerSuite) TestDigestEmail() {
 	analyzedAudit := suite.createAnalyzedAudit(mp, time.Now().UTC(), auditChange)
 
 	// Test getDailyDigestAnalyzedAudits
-	analyzedAudits, err = getDigestAnalyzedAudits(collaborator.UserID, time.Now().UTC(), worker.Store, worker.Logger)
+	analyzedAudits, _, err = getDigestAnalyzedAudits(collaborator.UserID, time.Now().UTC(), worker.Store, worker.Logger)
 	suite.Equal(analyzedAudit.ID, analyzedAudits[0].ID)
 	suite.NoError(err)
 

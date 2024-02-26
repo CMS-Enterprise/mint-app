@@ -2,12 +2,16 @@ package worker
 
 import (
 	"context"
+	"fmt"
 	"time"
 
 	"github.com/samber/lo"
 	"go.uber.org/zap"
 
+	"github.com/cmsgov/mint-app/pkg/constants"
+	"github.com/cmsgov/mint-app/pkg/notifications"
 	"github.com/cmsgov/mint-app/pkg/storage"
+	"github.com/cmsgov/mint-app/pkg/storage/loaders"
 
 	faktory "github.com/contribsys/faktory/client"
 	faktory_worker "github.com/contribsys/faktory_worker_go"
@@ -88,7 +92,7 @@ func (w *Worker) DigestEmailJob(ctx context.Context, args ...interface{}) error 
 	recipientEmail := account.Email
 
 	// Get all analyzedAudits based on users favorited models
-	analyzedAudits, err := getDigestAnalyzedAudits(userID, dateAnalyzed, w.Store, w.Logger)
+	analyzedAudits, modelPlanIDs, err := getDigestAnalyzedAudits(userID, dateAnalyzed, w.Store, w.Logger)
 	if err != nil {
 		return err
 	}
@@ -96,6 +100,15 @@ func (w *Worker) DigestEmailJob(ctx context.Context, args ...interface{}) error 
 	if len(analyzedAudits) == 0 {
 		return nil
 	}
+	// TODO EASI-3338 wrap this in a transaction!
+	systemAccountID := constants.GetSystemAccountUUID()
+
+	//TODO: EASI-3338 verify that you can use the dataloader in the worker package, it might not be that context....
+	_, err = notifications.ActivityDailyDigestComplete(ctx, w.Store, systemAccountID, userID, dateAnalyzed, modelPlanIDs, loaders.UserNotificationPreferencesGetByUserID)
+	if err != nil {
+		return fmt.Errorf("couldn't generate an activity record for hte daily digest complete activity for user %s, error: %w", userID, err)
+	}
+	//TODO: EASI-3338 get user preferences, or perhaps get earlier and pass it to the notifications? Only send the email if user has a preference for it.
 
 	// Generate email subject and body from template
 	emailSubject, emailBody, err := generateDigestEmail(analyzedAudits, w.EmailTemplateService, w.EmailService)
@@ -148,34 +161,35 @@ func (w *Worker) AggregatedDigestEmailJob(ctx context.Context, args ...interface
 */
 
 // getDigestAnalyzedAudits gets AnalyzedAudits based on a users favorited plans and date
+// it returns the list of analyzed audits, as well as a separate list of the model plan IDs of the analyzed audits
 func getDigestAnalyzedAudits(
 	userID uuid.UUID,
 	date time.Time,
 	store *storage.Store,
 	logger *zap.Logger,
-) ([]*models.AnalyzedAudit, error) {
+) ([]*models.AnalyzedAudit, []uuid.UUID, error) {
 
 	planFavorites, err := store.PlanFavoriteGetCollectionByUserID(logger, userID)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	if len(planFavorites) == 0 {
-		return nil, nil
+		return nil, nil, nil
 	}
 
 	modelPlanIds := lo.Map(planFavorites, func(p *models.PlanFavorite, index int) uuid.UUID {
 		return p.ModelPlanID
 	})
 	if len(modelPlanIds) == 0 {
-		return nil, nil
+		return nil, nil, nil
 	}
 
 	analyzedAudits, err := store.AnalyzedAuditGetByModelPlanIDsAndDate(logger, modelPlanIds, date)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
-	return analyzedAudits, nil
+	return analyzedAudits, modelPlanIds, nil
 }
 
 // generateDigestEmail will generate the daily digest email from template
