@@ -2,6 +2,7 @@ import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import {
+  act,
   render,
   screen,
   waitFor,
@@ -88,32 +89,36 @@ describe('ClearanceReview component', () => {
     // eslint-disable-next-line
     console.error = vi.fn();
 
-    const { getByTestId } = render(
-      <MemoryRouter
-        initialEntries={[
-          `/models/${modelID}/task-list/prepare-for-clearance/beneficiaries/${beneficiaryID}`
-        ]}
-      >
-        <MockedProvider mocks={clearanceMocks} addTypename={false}>
-          <Route path="/models/:modelID/task-list/prepare-for-clearance/:section/:sectionID">
-            <ClearanceReview modelID={modelID} />
-          </Route>
-        </MockedProvider>
-      </MemoryRouter>
-    );
-
-    await waitForElementToBeRemoved(() => getByTestId('spinner'));
-
-    await waitFor(() => {
-      expect(getByTestId('modify-task-list-for-clearance')).toBeInTheDocument();
-    });
-
-    userEvent.click(getByTestId('modify-task-list-for-clearance'));
-
-    await waitFor(() => {
-      expect(getByTestId('clearance-modal-header')).toHaveTextContent(
-        'Are you sure you want to update this Model Plan section?'
+    await act(async () => {
+      const { getByTestId } = render(
+        <MemoryRouter
+          initialEntries={[
+            `/models/${modelID}/task-list/prepare-for-clearance/beneficiaries/${beneficiaryID}`
+          ]}
+        >
+          <MockedProvider mocks={clearanceMocks} addTypename={false}>
+            <Route path="/models/:modelID/task-list/prepare-for-clearance/:section/:sectionID">
+              <ClearanceReview modelID={modelID} />
+            </Route>
+          </MockedProvider>
+        </MemoryRouter>
       );
+
+      await waitForElementToBeRemoved(() => getByTestId('spinner'));
+
+      await waitFor(() => {
+        expect(
+          getByTestId('modify-task-list-for-clearance')
+        ).toBeInTheDocument();
+      });
+
+      userEvent.click(getByTestId('modify-task-list-for-clearance'));
+
+      await waitFor(() => {
+        expect(getByTestId('clearance-modal-header')).toHaveTextContent(
+          'Are you sure you want to update this Model Plan section?'
+        );
+      });
     });
   });
 

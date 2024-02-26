@@ -1,6 +1,6 @@
 import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
-import { render } from '@testing-library/react';
+import { render, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import CreateReportAProblem from 'gql/apolloGQL/Feedback/CreateReportAProblem';
 import { ReportAProblemSection, ReportAProblemSeverity } from 'gql/gen/graphql';
@@ -38,6 +38,7 @@ window.scrollTo = vi.fn;
 
 describe('Report a problem form', () => {
   it('submits the "Report a problem" form successfully', async () => {
+    // await act(async () => {
     const { findByText, getByRole, getByTestId } = render(
       <MemoryRouter initialEntries={['/report-a-problem']}>
         <Route path="/report-a-problem">
@@ -48,29 +49,51 @@ describe('Report a problem form', () => {
       </MemoryRouter>
     );
 
-    // Fill out form
-    userEvent.click(
-      getByTestId('report-a-problem-allow-anon-submission-false')
-    );
-    userEvent.click(getByTestId('report-a-problem-allow-contact-true'));
-    userEvent.click(getByTestId('report-a-problem-section-OTHER'));
-    userEvent.type(
-      getByTestId('report-a-problem-section-other'),
-      'Other section'
-    );
-    userEvent.type(
-      getByTestId('report-a-problem-section-what-doing'),
-      'Nothing much'
-    );
-    userEvent.type(
-      getByTestId('report-a-problem-section-what-went-wrong'),
-      'Everything'
-    );
-    userEvent.click(getByTestId('report-a-problem-severity-DELAYED_TASK'));
+    await waitFor(() => {
+      // Fill out form
+      userEvent.click(
+        getByTestId('report-a-problem-allow-anon-submission-false')
+      );
+    });
+
+    await waitFor(() => {
+      userEvent.click(getByTestId('report-a-problem-allow-contact-true'));
+    });
+
+    await waitFor(() => {
+      userEvent.click(getByTestId('report-a-problem-section-OTHER'));
+    });
+
+    await waitFor(() => {
+      userEvent.type(
+        getByTestId('report-a-problem-section-other'),
+        'Other section'
+      );
+    });
+
+    await waitFor(() => {
+      userEvent.type(
+        getByTestId('report-a-problem-section-what-doing'),
+        'Nothing much'
+      );
+    });
+
+    await waitFor(() => {
+      userEvent.type(
+        getByTestId('report-a-problem-section-what-went-wrong'),
+        'Everything'
+      );
+    });
+
+    await waitFor(() => {
+      userEvent.click(getByTestId('report-a-problem-severity-DELAYED_TASK'));
+    });
 
     const submitButton = getByRole('button', { name: 'Send report' });
 
-    userEvent.click(submitButton);
+    await waitFor(() => {
+      userEvent.click(submitButton);
+    });
 
     // Submit success
     findByText('Thank you for your feedback');
