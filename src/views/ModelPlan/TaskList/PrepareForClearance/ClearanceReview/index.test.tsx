@@ -17,6 +17,7 @@ import {
   PrepareForClearanceStatus,
   TaskStatus
 } from 'types/graphql-global-types';
+import setup from 'utils/testing/setup';
 
 import { initialPrepareForClearanceValues } from '../Checklist';
 
@@ -90,7 +91,7 @@ describe('ClearanceReview component', () => {
     console.error = vi.fn();
 
     await act(async () => {
-      const { getByTestId } = render(
+      const { getByTestId } = setup(
         <MemoryRouter
           initialEntries={[
             `/models/${modelID}/task-list/prepare-for-clearance/beneficiaries/${beneficiaryID}`
@@ -112,7 +113,7 @@ describe('ClearanceReview component', () => {
         ).toBeInTheDocument();
       });
 
-      userEvent.click(getByTestId('modify-task-list-for-clearance'));
+      await userEvent.click(getByTestId('modify-task-list-for-clearance'));
 
       await waitFor(() => {
         expect(getByTestId('clearance-modal-header')).toHaveTextContent(

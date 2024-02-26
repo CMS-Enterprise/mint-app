@@ -16,6 +16,7 @@ import {
   OperationalSolutionKey,
   OpSolutionStatus
 } from 'types/graphql-global-types';
+import setup from 'utils/testing/setup';
 
 import SolutionImplmentation from '.';
 
@@ -72,7 +73,7 @@ const mocks = [
 describe('Operational Solutions NeedQuestionAndAnswer', () => {
   it('renders correctly', async () => {
     await act(async () => {
-      const { getByText, getAllByTestId, getByRole } = render(
+      const { getByText, getAllByTestId, getByRole } = setup(
         <MemoryRouter
           initialEntries={[
             {
@@ -97,7 +98,7 @@ describe('Operational Solutions NeedQuestionAndAnswer', () => {
       });
 
       const datePicker = getAllByTestId('date-picker-external-input')[0];
-      userEvent.type(datePicker, '12/10/2030');
+      await userEvent.type(datePicker, '12/10/2030');
 
       await waitFor(() => {
         expect(datePicker).toHaveValue('12/10/2030');
@@ -105,7 +106,7 @@ describe('Operational Solutions NeedQuestionAndAnswer', () => {
 
       const atRisk = getByRole('radio', { name: 'At risk' });
       const backlog = getByRole('radio', { name: 'Backlog' });
-      userEvent.click(backlog);
+      await userEvent.click(backlog);
 
       await waitFor(() => {
         expect(atRisk).not.toBeChecked();

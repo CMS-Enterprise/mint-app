@@ -9,6 +9,7 @@ import {
   PrepareForClearanceStatus,
   TaskStatus
 } from 'types/graphql-global-types';
+import setup from 'utils/testing/setup';
 
 import PrepareForClearanceCheckList, {
   initialPrepareForClearanceValues,
@@ -47,7 +48,7 @@ const clearanceMock = [
 describe('Prepare for clearance checklist', () => {
   it('renders without errors and unchecks an item', async () => {
     await act(async () => {
-      render(
+      setup(
         <MemoryRouter
           initialEntries={[
             `/models/${modelID}/task-list/prepare-for-clearance`
@@ -67,7 +68,7 @@ describe('Prepare for clearance checklist', () => {
         ).toBeChecked();
       });
 
-      userEvent.click(screen.getByTestId('prepare-for-clearance-basics'));
+      await userEvent.click(screen.getByTestId('prepare-for-clearance-basics'));
 
       await waitFor(() => {
         expect(
