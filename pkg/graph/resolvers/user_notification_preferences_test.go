@@ -21,23 +21,28 @@ func (s *ResolverSuite) TestUserNotificationPreferencesUpdate() {
 	pref, err := UserNotificationPreferencesGetByUserID(s.testConfigs.Context, s.testConfigs.Principal.Account().ID)
 	s.NoError(err)
 	s.NotNil(pref)
+	inAppOnly := models.UserNotificationPreferenceFlags{models.UserNotificationPreferenceInApp}
 	changes := map[string]interface{}{
-		"dailyDigestComplete":     models.UserNotificationPreferenceFlags{models.UserNotificationPreferenceInApp},
-		"addedAsCollaborator":     models.UserNotificationPreferenceFlags{models.UserNotificationPreferenceInApp},
-		"taggedInDiscussion":      models.UserNotificationPreferenceFlags{models.UserNotificationPreferenceInApp},
-		"taggedInDiscussionReply": models.UserNotificationPreferenceFlags{models.UserNotificationPreferenceInApp},
-		"newDiscussionReply":      models.UserNotificationPreferenceFlags{models.UserNotificationPreferenceInApp},
-		"modelPlanShared":         models.UserNotificationPreferenceFlags{models.UserNotificationPreferenceInApp},
+		"dailyDigestComplete":     inAppOnly,
+		"addedAsCollaborator":     inAppOnly,
+		"taggedInDiscussion":      inAppOnly,
+		"taggedInDiscussionReply": inAppOnly,
+		"newDiscussionReply":      inAppOnly,
+		"modelPlanShared":         nil,
 	}
 	updatedPref, err := UserNotificationPreferencesUpdate(s.testConfigs.Context, s.testConfigs.Logger, s.testConfigs.Principal, s.testConfigs.Store, changes)
 	s.NoError(err)
 	s.NotNil(updatedPref)
 
-	s.EqualValues(models.UserNotificationPreferenceInApp, updatedPref.DailyDigestComplete)
-	s.EqualValues(models.UserNotificationPreferenceInApp, updatedPref.AddedAsCollaborator)
-	s.EqualValues(models.UserNotificationPreferenceInApp, updatedPref.TaggedInDiscussion)
-	s.EqualValues(models.UserNotificationPreferenceInApp, updatedPref.TaggedInDiscussionReply)
-	s.EqualValues(models.UserNotificationPreferenceInApp, updatedPref.NewDiscussionReply)
-	s.EqualValues(models.UserNotificationPreferenceInApp, updatedPref.ModelPlanShared)
+	s.EqualValues(inAppOnly, updatedPref.DailyDigestComplete)
+	s.EqualValues(inAppOnly, updatedPref.AddedAsCollaborator)
+	s.EqualValues(inAppOnly, updatedPref.TaggedInDiscussion)
+	s.EqualValues(inAppOnly, updatedPref.TaggedInDiscussionReply)
+	s.EqualValues(inAppOnly, updatedPref.NewDiscussionReply)
+	s.EqualValues(models.UserNotificationPreferenceFlags(nil), updatedPref.ModelPlanShared)
+
+	// Ensure a nil reference evaluates correctly
+	s.False(updatedPref.ModelPlanShared.InApp())
+	s.False(updatedPref.ModelPlanShared.SendEmail())
 
 }
