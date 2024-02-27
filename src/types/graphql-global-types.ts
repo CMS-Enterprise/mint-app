@@ -1261,6 +1261,18 @@ export interface UpdateOperationalSolutionSubtaskInput {
   changes: UpdateOperationalSolutionSubtaskChangesInput;
 }
 
+/**
+ * UserNotificationPreferencesChanges represents the ways that a UserNotifications Preferences object can be updated
+ */
+export interface UserNotificationPreferencesChanges {
+  dailyDigestComplete?: UserNotificationPreferenceFlag | null;
+  addedAsCollaborator?: UserNotificationPreferenceFlag | null;
+  taggedInDiscussion?: UserNotificationPreferenceFlag | null;
+  taggedInDiscussionReply?: UserNotificationPreferenceFlag | null;
+  newDiscussionReply?: UserNotificationPreferenceFlag | null;
+  modelPlanShared?: UserNotificationPreferenceFlag | null;
+}
+
 //==============================================================
 // END Enums and Input Objects
 //==============================================================

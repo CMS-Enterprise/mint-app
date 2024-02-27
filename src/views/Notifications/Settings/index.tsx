@@ -1,4 +1,4 @@
-import React, { Fragment, useRef } from 'react';
+import React, { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useHistory } from 'react-router-dom';
 import {
@@ -22,9 +22,10 @@ import {
 
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
+import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import { getKeys } from 'types/translation';
+import flattenErrors from 'utils/flattenErrors';
 import { dirtyInput } from 'utils/formDiff';
-import sanitizeStatus from 'utils/status';
 import { NotFoundPartial } from 'views/NotFound';
 
 type GetNotifcationSettingsType = GetNotificationSettingsQuery['currentUser']['notificationPreferences'];
@@ -33,13 +34,6 @@ type NotificationSettingsFormType = Omit<
   GetNotifcationSettingsType,
   'id' | '__typename'
 >;
-
-export const calculateNotificationSetting = (
-  values: GetNotifcationSettingsType,
-  field: keyof NotificationSettingsFormType
-) => {
-  const currentValue = values[field];
-};
 
 const NotificationSettings = () => {
   const { t: miscellaneousT } = useTranslation('miscellaneous');
@@ -74,10 +68,6 @@ const NotificationSettings = () => {
       formikRef?.current?.values
     );
 
-    if (dirtyInputs.status) {
-      dirtyInputs.status = sanitizeStatus(dirtyInputs.status);
-    }
-
     update({
       variables: {
         changes: dirtyInputs
@@ -94,12 +84,12 @@ const NotificationSettings = () => {
   };
 
   const initialValues: NotificationSettingsFormType = {
-    dailyDigestComplete: dailyDigestComplete ?? null,
-    addedAsCollaborator: addedAsCollaborator ?? null,
-    taggedInDiscussion: taggedInDiscussion ?? null,
-    taggedInDiscussionReply: taggedInDiscussionReply ?? null,
-    newDiscussionReply: newDiscussionReply ?? null,
-    modelPlanShared: modelPlanShared ?? null
+    dailyDigestComplete: dailyDigestComplete ?? [],
+    addedAsCollaborator: addedAsCollaborator ?? [],
+    taggedInDiscussion: taggedInDiscussion ?? [],
+    taggedInDiscussionReply: taggedInDiscussionReply ?? [],
+    newDiscussionReply: newDiscussionReply ?? [],
+    modelPlanShared: modelPlanShared ?? []
   };
 
   if ((!loading && error) || (!loading && !data?.currentUser)) {
@@ -109,7 +99,7 @@ const NotificationSettings = () => {
   return (
     <MainContent data-testid="new-plan">
       <GridContainer>
-        <Grid desktop={{ col: 12 }}>
+        <Grid desktop={{ col: 12 }} tablet={{ col: 12 }} mobile={{ col: 12 }}>
           <BreadcrumbBar variant="wrap">
             <Breadcrumb>
               <BreadcrumbLink asCustom={Link} to="/">
@@ -134,20 +124,6 @@ const NotificationSettings = () => {
             {notificationsT('settings.subHeading')}
           </p>
 
-          <Grid row>
-            <Grid desktop={{ col: 6 }}>
-              <h3>{notificationsT('settings.notification')}</h3>
-            </Grid>
-
-            <Grid desktop={{ col: 3 }}>
-              <h3>{notificationsT('settings.email')}</h3>
-            </Grid>
-
-            <Grid desktop={{ col: 3 }}>
-              <h3>{notificationsT('settings.inApp')}</h3>
-            </Grid>
-          </Grid>
-
           <Formik
             initialValues={initialValues}
             onSubmit={() => {
@@ -157,74 +133,125 @@ const NotificationSettings = () => {
             innerRef={formikRef}
           >
             {(formikProps: FormikProps<NotificationSettingsFormType>) => {
-              const { handleSubmit, values } = formikProps;
+              const {
+                errors,
+                values,
+                handleSubmit,
+                setFieldValue
+              } = formikProps;
+
+              const flatErrors = flattenErrors(errors);
 
               return (
-                <Form
-                  onSubmit={e => {
-                    handleSubmit(e);
-                  }}
-                >
-                  <Fieldset disabled={!!error || loading}>
-                    {getKeys(notificationSettings).map(setting => {
-                      return (
-                        <Grid row key={setting}>
-                          <Grid desktop={{ col: 6 }}>
-                            <p>{notificationSettings[setting]}</p>
-                          </Grid>
-
-                          <Grid desktop={{ col: 3 }}>
-                            <Field
-                              as={Checkbox}
-                              id={`notification-setting-email-${setting}`}
-                              className="padding-left-2"
-                              name={setting}
-                              value={values[setting]}
-                              checked={
-                                values?.[setting] ===
-                                  UserNotificationPreferenceFlag.ALL ||
-                                values?.[setting] ===
-                                  UserNotificationPreferenceFlag.EMAIL_ONLY
-                              }
-                            />
-                          </Grid>
-
-                          <Grid desktop={{ col: 3 }}>
-                            <Field
-                              as={Checkbox}
-                              id={`notification-setting-in-app-${setting}`}
-                              className="padding-left-2"
-                              name={setting}
-                              value={values[setting]}
-                              checked={
-                                values?.[setting] ===
-                                  UserNotificationPreferenceFlag.ALL ||
-                                values?.[setting] ===
-                                  UserNotificationPreferenceFlag.IN_APP_ONLY
-                              }
-                            />
-                          </Grid>
-                        </Grid>
-                      );
-                    })}
-
-                    <div className="margin-top-6 margin-bottom-3">
-                      <Button type="submit">
-                        {notificationsT('settings.save')}
-                      </Button>
-                    </div>
-
-                    <Button
-                      type="button"
-                      className="usa-button usa-button--unstyled"
-                      onClick={() => history.push('/notifications')}
+                <>
+                  {Object.keys(errors).length > 0 && (
+                    <ErrorAlert
+                      testId="formik-validation-errors"
+                      classNames="margin-top-3"
+                      heading={miscellaneousT('checkAndFix')}
                     >
-                      <Icon.ArrowBack className="margin-right-1" aria-hidden />
+                      {Object.keys(flatErrors).map(key => {
+                        return (
+                          <ErrorAlertMessage
+                            key={`Error.${key}`}
+                            errorKey={key}
+                            message={flatErrors[key]}
+                          />
+                        );
+                      })}
+                    </ErrorAlert>
+                  )}
 
-                      {notificationsT('settings.dontUpdate')}
-                    </Button>
-                  </Fieldset>
-                </Form>
+                  <Grid row>
+                    <Grid mobile={{ col: 6 }}>
+                      <h3>{notificationsT('settings.notification')}</h3>
+                    </Grid>
+
+                    <Grid mobile={{ col: 3 }}>
+                      <h3>{notificationsT('settings.email')}</h3>
+                    </Grid>
+
+                    <Grid mobile={{ col: 3 }}>
+                      <h3>{notificationsT('settings.inApp')}</h3>
+                    </Grid>
+                  </Grid>
+
+                  <Form
+                    onSubmit={e => {
+                      handleSubmit(e);
+                    }}
+                  >
+                    <Fieldset disabled={!!error || loading}>
+                      {getKeys(notificationSettings).map(setting => {
+                        return (
+                          <Grid row key={setting}>
+                            <Grid mobile={{ col: 6 }}>
+                              <p className="text-wrap">
+                                {notificationSettings[setting]}
+                              </p>
+                            </Grid>
+
+                            <Grid mobile={{ col: 3 }}>
+                              <Field
+                                as={Checkbox}
+                                id={`notification-setting-email-${setting}`}
+                                className="padding-left-2"
+                                name={setting}
+                                value={values[setting]}
+                                checked={values?.[setting].includes(
+                                  UserNotificationPreferenceFlag.EMAIL_ONLY
+                                )}
+                                onChange={(
+                                  value: UserNotificationPreferenceFlag
+                                ) => {
+                                  if (setting === 'taggedInDiscussion') {
+                                    setFieldValue(
+                                      'taggedInDiscussionReply',
+                                      value
+                                    );
+                                  }
+                                }}
+                              />
+                            </Grid>
+
+                            <Grid mobile={{ col: 3 }}>
+                              <Field
+                                as={Checkbox}
+                                id={`notification-setting-in-app-${setting}`}
+                                className="padding-left-2"
+                                name={setting}
+                                value={values[setting]}
+                                disabled
+                                checked={values?.[setting].includes(
+                                  UserNotificationPreferenceFlag.IN_APP_ONLY
+                                )}
+                              />
+                            </Grid>
+                          </Grid>
+                        );
+                      })}
+
+                      <div className="margin-top-6 margin-bottom-3">
+                        <Button type="submit">
+                          {notificationsT('settings.save')}
+                        </Button>
+                      </div>
+
+                      <Button
+                        type="button"
+                        className="usa-button usa-button--unstyled"
+                        onClick={() => history.push('/notifications')}
+                      >
+                        <Icon.ArrowBack
+                          className="margin-right-1"
+                          aria-hidden
+                        />
+
+                        {notificationsT('settings.dontUpdate')}
+                      </Button>
+                    </Fieldset>
+                  </Form>
+                </>
               );
             }}
           </Formik>

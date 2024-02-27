@@ -1,17 +1,10 @@
 import { gql } from '@apollo/client';
 
 export default gql(/* GraphQL */ `
-  mutation UpdateNotificationSettings {
-    updateUserNotificationPreferences(
-      changes: {
-        dailyDigestComplete: ALL
-        addedAsCollaborator: ALL
-        taggedInDiscussion: ALL
-        taggedInDiscussionReply: ALL
-        newDiscussionReply: ALL
-        modelPlanShared: ALL
-      }
-    ) {
+  mutation UpdateNotificationSettings(
+    $changes: UserNotificationPreferencesChanges!
+  ) {
+    updateUserNotificationPreferences(changes: $changes) {
       id
       dailyDigestComplete
       addedAsCollaborator

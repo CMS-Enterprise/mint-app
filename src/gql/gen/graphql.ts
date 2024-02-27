@@ -3112,7 +3112,9 @@ export type GetNotificationSettingsQueryVariables = Exact<{ [key: string]: never
 
 export type GetNotificationSettingsQuery = { __typename: 'Query', currentUser: { __typename: 'CurrentUser', notificationPreferences: { __typename: 'UserNotificationPreferences', id: UUID, dailyDigestComplete: UserNotificationPreferenceFlag, addedAsCollaborator: UserNotificationPreferenceFlag, taggedInDiscussion: UserNotificationPreferenceFlag, taggedInDiscussionReply: UserNotificationPreferenceFlag, newDiscussionReply: UserNotificationPreferenceFlag, modelPlanShared: UserNotificationPreferenceFlag } } };
 
-export type UpdateNotificationSettingsMutationVariables = Exact<{ [key: string]: never; }>;
+export type UpdateNotificationSettingsMutationVariables = Exact<{
+  changes: UserNotificationPreferencesChanges;
+}>;
 
 
 export type UpdateNotificationSettingsMutation = { __typename: 'Mutation', updateUserNotificationPreferences: { __typename: 'UserNotificationPreferences', id: UUID, dailyDigestComplete: UserNotificationPreferenceFlag, addedAsCollaborator: UserNotificationPreferenceFlag, taggedInDiscussion: UserNotificationPreferenceFlag, taggedInDiscussionReply: UserNotificationPreferenceFlag, newDiscussionReply: UserNotificationPreferenceFlag, modelPlanShared: UserNotificationPreferenceFlag } };
@@ -5225,10 +5227,8 @@ export type GetNotificationSettingsLazyQueryHookResult = ReturnType<typeof useGe
 export type GetNotificationSettingsSuspenseQueryHookResult = ReturnType<typeof useGetNotificationSettingsSuspenseQuery>;
 export type GetNotificationSettingsQueryResult = Apollo.QueryResult<GetNotificationSettingsQuery, GetNotificationSettingsQueryVariables>;
 export const UpdateNotificationSettingsDocument = gql`
-    mutation UpdateNotificationSettings {
-  updateUserNotificationPreferences(
-    changes: {dailyDigestComplete: ALL, addedAsCollaborator: ALL, taggedInDiscussion: ALL, taggedInDiscussionReply: ALL, newDiscussionReply: ALL, modelPlanShared: ALL}
-  ) {
+    mutation UpdateNotificationSettings($changes: UserNotificationPreferencesChanges!) {
+  updateUserNotificationPreferences(changes: $changes) {
     id
     dailyDigestComplete
     addedAsCollaborator
@@ -5254,6 +5254,7 @@ export type UpdateNotificationSettingsMutationFn = Apollo.MutationFunction<Updat
  * @example
  * const [updateNotificationSettingsMutation, { data, loading, error }] = useUpdateNotificationSettingsMutation({
  *   variables: {
+ *      changes: // value for 'changes'
  *   },
  * });
  */
