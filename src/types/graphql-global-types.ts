@@ -691,6 +691,13 @@ export enum TriStateAnswer {
   YES = "YES",
 }
 
+export enum UserNotificationPreferenceFlag {
+  ALL = "ALL",
+  EMAIL_ONLY = "EMAIL_ONLY",
+  IN_APP_ONLY = "IN_APP_ONLY",
+  NONE = "NONE",
+}
+
 export enum WaiverType {
   FRAUD_ABUSE = "FRAUD_ABUSE",
   MEDICAID = "MEDICAID",

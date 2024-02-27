@@ -52,6 +52,7 @@ import SubmitRequest from 'views/ModelPlan/TaskList/SubmitRequest';
 import NDA from 'views/NDA';
 import NDAWrapper from 'views/NDAWrapper';
 import NotFound from 'views/NotFound';
+import NotificationSettings from 'views/Notifications/Settings';
 import PrivacyPolicy from 'views/PrivacyPolicy';
 import RouterProvider from 'views/RouterContext';
 import Sandbox from 'views/Sandbox';
@@ -175,6 +176,11 @@ const AppRoutes = () => {
       <SecureRoute
         path="/models/:modelID/task-list/submit-request"
         component={SubmitRequest}
+      />
+
+      <SecureRoute
+        path="/notifications/settings"
+        component={NotificationSettings}
       />
 
       <SecureRoute path="/help-and-knowledge" component={HelpAndKnowledge} />

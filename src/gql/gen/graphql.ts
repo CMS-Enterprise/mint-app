@@ -3107,6 +3107,16 @@ export type GetNdaQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GetNdaQuery = { __typename: 'Query', ndaInfo: { __typename: 'NDAInfo', agreed: boolean, agreedDts?: Time | null } };
 
+export type GetNotificationSettingsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetNotificationSettingsQuery = { __typename: 'Query', currentUser: { __typename: 'CurrentUser', notificationPreferences: { __typename: 'UserNotificationPreferences', id: UUID, dailyDigestComplete: UserNotificationPreferenceFlag, addedAsCollaborator: UserNotificationPreferenceFlag, taggedInDiscussion: UserNotificationPreferenceFlag, taggedInDiscussionReply: UserNotificationPreferenceFlag, newDiscussionReply: UserNotificationPreferenceFlag, modelPlanShared: UserNotificationPreferenceFlag } } };
+
+export type UpdateNotificationSettingsMutationVariables = Exact<{ [key: string]: never; }>;
+
+
+export type UpdateNotificationSettingsMutation = { __typename: 'Mutation', updateUserNotificationPreferences: { __typename: 'UserNotificationPreferences', id: UUID, dailyDigestComplete: UserNotificationPreferenceFlag, addedAsCollaborator: UserNotificationPreferenceFlag, taggedInDiscussion: UserNotificationPreferenceFlag, taggedInDiscussionReply: UserNotificationPreferenceFlag, newDiscussionReply: UserNotificationPreferenceFlag, modelPlanShared: UserNotificationPreferenceFlag } };
+
 export type GetAllOpsEvalAndLearningQueryVariables = Exact<{
   id: Scalars['UUID']['input'];
 }>;
@@ -5167,6 +5177,93 @@ export type GetNdaQueryHookResult = ReturnType<typeof useGetNdaQuery>;
 export type GetNdaLazyQueryHookResult = ReturnType<typeof useGetNdaLazyQuery>;
 export type GetNdaSuspenseQueryHookResult = ReturnType<typeof useGetNdaSuspenseQuery>;
 export type GetNdaQueryResult = Apollo.QueryResult<GetNdaQuery, GetNdaQueryVariables>;
+export const GetNotificationSettingsDocument = gql`
+    query GetNotificationSettings {
+  currentUser {
+    notificationPreferences {
+      id
+      dailyDigestComplete
+      addedAsCollaborator
+      taggedInDiscussion
+      taggedInDiscussionReply
+      newDiscussionReply
+      modelPlanShared
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetNotificationSettingsQuery__
+ *
+ * To run a query within a React component, call `useGetNotificationSettingsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetNotificationSettingsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetNotificationSettingsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetNotificationSettingsQuery(baseOptions?: Apollo.QueryHookOptions<GetNotificationSettingsQuery, GetNotificationSettingsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetNotificationSettingsQuery, GetNotificationSettingsQueryVariables>(GetNotificationSettingsDocument, options);
+      }
+export function useGetNotificationSettingsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetNotificationSettingsQuery, GetNotificationSettingsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetNotificationSettingsQuery, GetNotificationSettingsQueryVariables>(GetNotificationSettingsDocument, options);
+        }
+export function useGetNotificationSettingsSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetNotificationSettingsQuery, GetNotificationSettingsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetNotificationSettingsQuery, GetNotificationSettingsQueryVariables>(GetNotificationSettingsDocument, options);
+        }
+export type GetNotificationSettingsQueryHookResult = ReturnType<typeof useGetNotificationSettingsQuery>;
+export type GetNotificationSettingsLazyQueryHookResult = ReturnType<typeof useGetNotificationSettingsLazyQuery>;
+export type GetNotificationSettingsSuspenseQueryHookResult = ReturnType<typeof useGetNotificationSettingsSuspenseQuery>;
+export type GetNotificationSettingsQueryResult = Apollo.QueryResult<GetNotificationSettingsQuery, GetNotificationSettingsQueryVariables>;
+export const UpdateNotificationSettingsDocument = gql`
+    mutation UpdateNotificationSettings {
+  updateUserNotificationPreferences(
+    changes: {dailyDigestComplete: ALL, addedAsCollaborator: ALL, taggedInDiscussion: ALL, taggedInDiscussionReply: ALL, newDiscussionReply: ALL, modelPlanShared: ALL}
+  ) {
+    id
+    dailyDigestComplete
+    addedAsCollaborator
+    taggedInDiscussion
+    taggedInDiscussionReply
+    newDiscussionReply
+    modelPlanShared
+  }
+}
+    `;
+export type UpdateNotificationSettingsMutationFn = Apollo.MutationFunction<UpdateNotificationSettingsMutation, UpdateNotificationSettingsMutationVariables>;
+
+/**
+ * __useUpdateNotificationSettingsMutation__
+ *
+ * To run a mutation, you first call `useUpdateNotificationSettingsMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateNotificationSettingsMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateNotificationSettingsMutation, { data, loading, error }] = useUpdateNotificationSettingsMutation({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useUpdateNotificationSettingsMutation(baseOptions?: Apollo.MutationHookOptions<UpdateNotificationSettingsMutation, UpdateNotificationSettingsMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateNotificationSettingsMutation, UpdateNotificationSettingsMutationVariables>(UpdateNotificationSettingsDocument, options);
+      }
+export type UpdateNotificationSettingsMutationHookResult = ReturnType<typeof useUpdateNotificationSettingsMutation>;
+export type UpdateNotificationSettingsMutationResult = Apollo.MutationResult<UpdateNotificationSettingsMutation>;
+export type UpdateNotificationSettingsMutationOptions = Apollo.BaseMutationOptions<UpdateNotificationSettingsMutation, UpdateNotificationSettingsMutationVariables>;
 export const GetAllOpsEvalAndLearningDocument = gql`
     query GetAllOpsEvalAndLearning($id: UUID!) {
   modelPlan(id: $id) {
