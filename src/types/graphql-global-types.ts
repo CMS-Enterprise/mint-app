@@ -692,10 +692,8 @@ export enum TriStateAnswer {
 }
 
 export enum UserNotificationPreferenceFlag {
-  ALL = "ALL",
-  EMAIL_ONLY = "EMAIL_ONLY",
-  IN_APP_ONLY = "IN_APP_ONLY",
-  NONE = "NONE",
+  EMAIL = "EMAIL",
+  IN_APP = "IN_APP",
 }
 
 export enum WaiverType {
@@ -1265,12 +1263,12 @@ export interface UpdateOperationalSolutionSubtaskInput {
  * UserNotificationPreferencesChanges represents the ways that a UserNotifications Preferences object can be updated
  */
 export interface UserNotificationPreferencesChanges {
-  dailyDigestComplete?: UserNotificationPreferenceFlag | null;
-  addedAsCollaborator?: UserNotificationPreferenceFlag | null;
-  taggedInDiscussion?: UserNotificationPreferenceFlag | null;
-  taggedInDiscussionReply?: UserNotificationPreferenceFlag | null;
-  newDiscussionReply?: UserNotificationPreferenceFlag | null;
-  modelPlanShared?: UserNotificationPreferenceFlag | null;
+  dailyDigestComplete?: UserNotificationPreferenceFlag[] | null;
+  addedAsCollaborator?: UserNotificationPreferenceFlag[] | null;
+  taggedInDiscussion?: UserNotificationPreferenceFlag[] | null;
+  taggedInDiscussionReply?: UserNotificationPreferenceFlag[] | null;
+  newDiscussionReply?: UserNotificationPreferenceFlag[] | null;
+  modelPlanShared?: UserNotificationPreferenceFlag[] | null;
 }
 
 //==============================================================

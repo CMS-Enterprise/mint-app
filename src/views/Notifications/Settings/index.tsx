@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useHistory } from 'react-router-dom';
 import {
@@ -22,9 +22,8 @@ import {
 
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
-import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
+import Alert from 'components/shared/Alert';
 import { getKeys } from 'types/translation';
-import flattenErrors from 'utils/flattenErrors';
 import { dirtyInput } from 'utils/formDiff';
 import { NotFoundPartial } from 'views/NotFound';
 
@@ -32,7 +31,7 @@ type GetNotifcationSettingsType = GetNotificationSettingsQuery['currentUser']['n
 
 type NotificationSettingsFormType = Omit<
   GetNotifcationSettingsType,
-  'id' | '__typename'
+  'id' | 'taggedInDiscussionReply' | '__typename'
 >;
 
 const NotificationSettings = () => {
@@ -48,13 +47,14 @@ const NotificationSettings = () => {
 
   const history = useHistory();
 
+  const [mutationError, setMutationError] = useState<string>('');
+
   const { data, loading, error } = useGetNotificationSettingsQuery();
 
   const {
     dailyDigestComplete,
     addedAsCollaborator,
     taggedInDiscussion,
-    taggedInDiscussionReply,
     newDiscussionReply,
     modelPlanShared
   } = (data?.currentUser.notificationPreferences ||
@@ -68,9 +68,17 @@ const NotificationSettings = () => {
       formikRef?.current?.values
     );
 
+    const changes = {
+      ...dirtyInputs
+    };
+
+    if (dirtyInputs.taggedInDiscussion) {
+      changes.taggedInDiscussionReply = dirtyInputs.taggedInDiscussion;
+    }
+
     update({
       variables: {
-        changes: dirtyInputs
+        changes
       }
     })
       .then(response => {
@@ -78,8 +86,8 @@ const NotificationSettings = () => {
           history.push('/notifications');
         }
       })
-      .catch(errors => {
-        formikRef?.current?.setErrors(errors);
+      .catch(() => {
+        setMutationError(notificationsT('settings.error'));
       });
   };
 
@@ -87,7 +95,6 @@ const NotificationSettings = () => {
     dailyDigestComplete: dailyDigestComplete ?? [],
     addedAsCollaborator: addedAsCollaborator ?? [],
     taggedInDiscussion: taggedInDiscussion ?? [],
-    taggedInDiscussionReply: taggedInDiscussionReply ?? [],
     newDiscussionReply: newDiscussionReply ?? [],
     modelPlanShared: modelPlanShared ?? []
   };
@@ -116,6 +123,12 @@ const NotificationSettings = () => {
             </Breadcrumb>
           </BreadcrumbBar>
 
+          {mutationError && (
+            <Alert type="error" slim className="margin-y-4" headingLevel="h4">
+              {mutationError}
+            </Alert>
+          )}
+
           <PageHeading className="margin-top-4 margin-bottom-2">
             {notificationsT('settings.heading')}
           </PageHeading>
@@ -133,35 +146,10 @@ const NotificationSettings = () => {
             innerRef={formikRef}
           >
             {(formikProps: FormikProps<NotificationSettingsFormType>) => {
-              const {
-                errors,
-                values,
-                handleSubmit,
-                setFieldValue
-              } = formikProps;
-
-              const flatErrors = flattenErrors(errors);
+              const { values, handleSubmit } = formikProps;
 
               return (
                 <>
-                  {Object.keys(errors).length > 0 && (
-                    <ErrorAlert
-                      testId="formik-validation-errors"
-                      classNames="margin-top-3"
-                      heading={miscellaneousT('checkAndFix')}
-                    >
-                      {Object.keys(flatErrors).map(key => {
-                        return (
-                          <ErrorAlertMessage
-                            key={`Error.${key}`}
-                            errorKey={key}
-                            message={flatErrors[key]}
-                          />
-                        );
-                      })}
-                    </ErrorAlert>
-                  )}
-
                   <Grid row>
                     <Grid mobile={{ col: 6 }}>
                       <h3>{notificationsT('settings.notification')}</h3>
@@ -195,22 +183,13 @@ const NotificationSettings = () => {
                               <Field
                                 as={Checkbox}
                                 id={`notification-setting-email-${setting}`}
+                                data-testid={`notification-setting-email-${setting}`}
                                 className="padding-left-2"
                                 name={setting}
-                                value={values[setting]}
+                                value={UserNotificationPreferenceFlag.EMAIL}
                                 checked={values?.[setting].includes(
-                                  UserNotificationPreferenceFlag.EMAIL_ONLY
+                                  UserNotificationPreferenceFlag.EMAIL
                                 )}
-                                onChange={(
-                                  value: UserNotificationPreferenceFlag
-                                ) => {
-                                  if (setting === 'taggedInDiscussion') {
-                                    setFieldValue(
-                                      'taggedInDiscussionReply',
-                                      value
-                                    );
-                                  }
-                                }}
                               />
                             </Grid>
 
@@ -218,12 +197,13 @@ const NotificationSettings = () => {
                               <Field
                                 as={Checkbox}
                                 id={`notification-setting-in-app-${setting}`}
+                                data-testid={`notification-setting-in-app-${setting}`}
                                 className="padding-left-2"
                                 name={setting}
-                                value={values[setting]}
+                                value={UserNotificationPreferenceFlag.IN_APP}
                                 disabled
                                 checked={values?.[setting].includes(
-                                  UserNotificationPreferenceFlag.IN_APP_ONLY
+                                  UserNotificationPreferenceFlag.IN_APP
                                 )}
                               />
                             </Grid>

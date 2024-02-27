@@ -16,7 +16,9 @@ const notifications = {
       modelPlanShared: 'When someone shares a Model Plan with me'
     },
     save: 'Save',
-    dontUpdate: 'Don’t update and return to previous page'
+    dontUpdate: 'Don’t update and return to previous page',
+    error:
+      'An error occurred while saving your notification settings. Please try again.'
   }
 };
 

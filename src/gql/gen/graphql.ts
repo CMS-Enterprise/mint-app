@@ -3108,14 +3108,14 @@ export type GetNdaQuery = { __typename: 'Query', ndaInfo: { __typename: 'NDAInfo
 export type GetNotificationSettingsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetNotificationSettingsQuery = { __typename: 'Query', currentUser: { __typename: 'CurrentUser', notificationPreferences: { __typename: 'UserNotificationPreferences', id: UUID, dailyDigestComplete: UserNotificationPreferenceFlag, addedAsCollaborator: UserNotificationPreferenceFlag, taggedInDiscussion: UserNotificationPreferenceFlag, taggedInDiscussionReply: UserNotificationPreferenceFlag, newDiscussionReply: UserNotificationPreferenceFlag, modelPlanShared: UserNotificationPreferenceFlag } } };
+export type GetNotificationSettingsQuery = { __typename: 'Query', currentUser: { __typename: 'CurrentUser', notificationPreferences: { __typename: 'UserNotificationPreferences', id: UUID, dailyDigestComplete: Array<UserNotificationPreferenceFlag>, addedAsCollaborator: Array<UserNotificationPreferenceFlag>, taggedInDiscussion: Array<UserNotificationPreferenceFlag>, taggedInDiscussionReply: Array<UserNotificationPreferenceFlag>, newDiscussionReply: Array<UserNotificationPreferenceFlag>, modelPlanShared: Array<UserNotificationPreferenceFlag> } } };
 
 export type UpdateNotificationSettingsMutationVariables = Exact<{
   changes: UserNotificationPreferencesChanges;
 }>;
 
 
-export type UpdateNotificationSettingsMutation = { __typename: 'Mutation', updateUserNotificationPreferences: { __typename: 'UserNotificationPreferences', id: UUID, dailyDigestComplete: UserNotificationPreferenceFlag, addedAsCollaborator: UserNotificationPreferenceFlag, taggedInDiscussion: UserNotificationPreferenceFlag, taggedInDiscussionReply: UserNotificationPreferenceFlag, newDiscussionReply: UserNotificationPreferenceFlag, modelPlanShared: UserNotificationPreferenceFlag } };
+export type UpdateNotificationSettingsMutation = { __typename: 'Mutation', updateUserNotificationPreferences: { __typename: 'UserNotificationPreferences', id: UUID, dailyDigestComplete: Array<UserNotificationPreferenceFlag>, addedAsCollaborator: Array<UserNotificationPreferenceFlag>, taggedInDiscussion: Array<UserNotificationPreferenceFlag>, taggedInDiscussionReply: Array<UserNotificationPreferenceFlag>, newDiscussionReply: Array<UserNotificationPreferenceFlag>, modelPlanShared: Array<UserNotificationPreferenceFlag> } };
 
 export type GetAllOpsEvalAndLearningQueryVariables = Exact<{
   id: Scalars['UUID']['input'];

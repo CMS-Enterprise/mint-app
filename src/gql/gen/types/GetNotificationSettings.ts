@@ -12,12 +12,12 @@ import { UserNotificationPreferenceFlag } from "./../../../types/graphql-global-
 export interface GetNotificationSettings_currentUser_notificationPreferences {
   __typename: "UserNotificationPreferences";
   id: UUID;
-  dailyDigestComplete: UserNotificationPreferenceFlag;
-  addedAsCollaborator: UserNotificationPreferenceFlag;
-  taggedInDiscussion: UserNotificationPreferenceFlag;
-  taggedInDiscussionReply: UserNotificationPreferenceFlag;
-  newDiscussionReply: UserNotificationPreferenceFlag;
-  modelPlanShared: UserNotificationPreferenceFlag;
+  dailyDigestComplete: UserNotificationPreferenceFlag[];
+  addedAsCollaborator: UserNotificationPreferenceFlag[];
+  taggedInDiscussion: UserNotificationPreferenceFlag[];
+  taggedInDiscussionReply: UserNotificationPreferenceFlag[];
+  newDiscussionReply: UserNotificationPreferenceFlag[];
+  modelPlanShared: UserNotificationPreferenceFlag[];
 }
 
 export interface GetNotificationSettings_currentUser {
