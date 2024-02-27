@@ -11,17 +11,17 @@ type UserNotificationPreferences {
   id: UUID!
 	userID: UUID!
 
-  dailyDigestComplete: [UserNotificationPreferenceFlag!]
+  dailyDigestComplete: [UserNotificationPreferenceFlag!]!
 
-  addedAsCollaborator: [UserNotificationPreferenceFlag!]
+  addedAsCollaborator: [UserNotificationPreferenceFlag!]!
 
-  taggedInDiscussion: [UserNotificationPreferenceFlag!]
+  taggedInDiscussion: [UserNotificationPreferenceFlag!]!
 
-  taggedInDiscussionReply: [UserNotificationPreferenceFlag!]
+  taggedInDiscussionReply: [UserNotificationPreferenceFlag!]!
 
-  newDiscussionReply: [UserNotificationPreferenceFlag!]
+  newDiscussionReply: [UserNotificationPreferenceFlag!]!
 
-  modelPlanShared: [UserNotificationPreferenceFlag!]
+  modelPlanShared: [UserNotificationPreferenceFlag!]!
 
 
   createdBy: UUID!

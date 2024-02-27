@@ -2785,19 +2785,19 @@ export enum UserNotificationPreferenceFlag {
 /** UserNotificationPreferences represents a users preferences about what type and where to receive a notification */
 export type UserNotificationPreferences = {
   __typename: 'UserNotificationPreferences';
-  addedAsCollaborator?: Maybe<Array<UserNotificationPreferenceFlag>>;
+  addedAsCollaborator: Array<UserNotificationPreferenceFlag>;
   createdBy: Scalars['UUID']['output'];
   createdByUserAccount: UserAccount;
   createdDts: Scalars['Time']['output'];
-  dailyDigestComplete?: Maybe<Array<UserNotificationPreferenceFlag>>;
+  dailyDigestComplete: Array<UserNotificationPreferenceFlag>;
   id: Scalars['UUID']['output'];
-  modelPlanShared?: Maybe<Array<UserNotificationPreferenceFlag>>;
+  modelPlanShared: Array<UserNotificationPreferenceFlag>;
   modifiedBy?: Maybe<Scalars['UUID']['output']>;
   modifiedByUserAccount?: Maybe<UserAccount>;
   modifiedDts?: Maybe<Scalars['Time']['output']>;
-  newDiscussionReply?: Maybe<Array<UserNotificationPreferenceFlag>>;
-  taggedInDiscussion?: Maybe<Array<UserNotificationPreferenceFlag>>;
-  taggedInDiscussionReply?: Maybe<Array<UserNotificationPreferenceFlag>>;
+  newDiscussionReply: Array<UserNotificationPreferenceFlag>;
+  taggedInDiscussion: Array<UserNotificationPreferenceFlag>;
+  taggedInDiscussionReply: Array<UserNotificationPreferenceFlag>;
   userID: Scalars['UUID']['output'];
 };
 

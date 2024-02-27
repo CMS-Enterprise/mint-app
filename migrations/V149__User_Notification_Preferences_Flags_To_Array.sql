@@ -1,3 +1,4 @@
+-- Drop the current DEFAULT
 ALTER TABLE user_notification_preferences
 ALTER COLUMN daily_digest_complete  DROP DEFAULT,
 ALTER COLUMN added_as_collaborator  DROP DEFAULT,
@@ -6,6 +7,14 @@ ALTER COLUMN tagged_in_discussion_reply  DROP DEFAULT,
 ALTER COLUMN new_discussion_reply  DROP DEFAULT,
 ALTER COLUMN model_plan_shared  DROP DEFAULT;
 
+-- DROP the not null constraint
+ALTER TABLE user_notification_preferences
+ALTER COLUMN daily_digest_complete  DROP NOT NULL,
+ALTER COLUMN added_as_collaborator  DROP NOT NULL,
+ALTER COLUMN tagged_in_discussion  DROP NOT NULL,
+ALTER COLUMN tagged_in_discussion_reply  DROP NOT NULL,
+ALTER COLUMN new_discussion_reply  DROP NOT NULL,
+ALTER COLUMN model_plan_shared  DROP NOT NULL;
 
 -- Cast all values as text array
 ALTER TABLE user_notification_preferences

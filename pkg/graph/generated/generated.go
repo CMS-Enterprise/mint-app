@@ -10772,17 +10772,17 @@ type UserNotificationPreferences {
   id: UUID!
 	userID: UUID!
 
-  dailyDigestComplete: [UserNotificationPreferenceFlag!]
+  dailyDigestComplete: [UserNotificationPreferenceFlag!]!
 
-  addedAsCollaborator: [UserNotificationPreferenceFlag!]
+  addedAsCollaborator: [UserNotificationPreferenceFlag!]!
 
-  taggedInDiscussion: [UserNotificationPreferenceFlag!]
+  taggedInDiscussion: [UserNotificationPreferenceFlag!]!
 
-  taggedInDiscussionReply: [UserNotificationPreferenceFlag!]
+  taggedInDiscussionReply: [UserNotificationPreferenceFlag!]!
 
-  newDiscussionReply: [UserNotificationPreferenceFlag!]
+  newDiscussionReply: [UserNotificationPreferenceFlag!]!
 
-  modelPlanShared: [UserNotificationPreferenceFlag!]
+  modelPlanShared: [UserNotificationPreferenceFlag!]!
 
 
   createdBy: UUID!
@@ -56575,11 +56575,14 @@ func (ec *executionContext) _UserNotificationPreferences_dailyDigestComplete(ctx
 		return graphql.Null
 	}
 	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
 		return graphql.Null
 	}
 	res := resTmp.([]models.UserNotificationPreferenceFlag)
 	fc.Result = res
-	return ec.marshalOUserNotificationPreferenceFlag2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐUserNotificationPreferenceFlagᚄ(ctx, field.Selections, res)
+	return ec.marshalNUserNotificationPreferenceFlag2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐUserNotificationPreferenceFlagᚄ(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_UserNotificationPreferences_dailyDigestComplete(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -56616,11 +56619,14 @@ func (ec *executionContext) _UserNotificationPreferences_addedAsCollaborator(ctx
 		return graphql.Null
 	}
 	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
 		return graphql.Null
 	}
 	res := resTmp.([]models.UserNotificationPreferenceFlag)
 	fc.Result = res
-	return ec.marshalOUserNotificationPreferenceFlag2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐUserNotificationPreferenceFlagᚄ(ctx, field.Selections, res)
+	return ec.marshalNUserNotificationPreferenceFlag2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐUserNotificationPreferenceFlagᚄ(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_UserNotificationPreferences_addedAsCollaborator(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -56657,11 +56663,14 @@ func (ec *executionContext) _UserNotificationPreferences_taggedInDiscussion(ctx 
 		return graphql.Null
 	}
 	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
 		return graphql.Null
 	}
 	res := resTmp.([]models.UserNotificationPreferenceFlag)
 	fc.Result = res
-	return ec.marshalOUserNotificationPreferenceFlag2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐUserNotificationPreferenceFlagᚄ(ctx, field.Selections, res)
+	return ec.marshalNUserNotificationPreferenceFlag2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐUserNotificationPreferenceFlagᚄ(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_UserNotificationPreferences_taggedInDiscussion(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -56698,11 +56707,14 @@ func (ec *executionContext) _UserNotificationPreferences_taggedInDiscussionReply
 		return graphql.Null
 	}
 	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
 		return graphql.Null
 	}
 	res := resTmp.([]models.UserNotificationPreferenceFlag)
 	fc.Result = res
-	return ec.marshalOUserNotificationPreferenceFlag2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐUserNotificationPreferenceFlagᚄ(ctx, field.Selections, res)
+	return ec.marshalNUserNotificationPreferenceFlag2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐUserNotificationPreferenceFlagᚄ(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_UserNotificationPreferences_taggedInDiscussionReply(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -56739,11 +56751,14 @@ func (ec *executionContext) _UserNotificationPreferences_newDiscussionReply(ctx 
 		return graphql.Null
 	}
 	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
 		return graphql.Null
 	}
 	res := resTmp.([]models.UserNotificationPreferenceFlag)
 	fc.Result = res
-	return ec.marshalOUserNotificationPreferenceFlag2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐUserNotificationPreferenceFlagᚄ(ctx, field.Selections, res)
+	return ec.marshalNUserNotificationPreferenceFlag2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐUserNotificationPreferenceFlagᚄ(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_UserNotificationPreferences_newDiscussionReply(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -56780,11 +56795,14 @@ func (ec *executionContext) _UserNotificationPreferences_modelPlanShared(ctx con
 		return graphql.Null
 	}
 	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
 		return graphql.Null
 	}
 	res := resTmp.([]models.UserNotificationPreferenceFlag)
 	fc.Result = res
-	return ec.marshalOUserNotificationPreferenceFlag2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐUserNotificationPreferenceFlagᚄ(ctx, field.Selections, res)
+	return ec.marshalNUserNotificationPreferenceFlag2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐUserNotificationPreferenceFlagᚄ(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_UserNotificationPreferences_modelPlanShared(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -69891,6 +69909,9 @@ func (ec *executionContext) _UserNotificationPreferences(ctx context.Context, se
 					}
 				}()
 				res = ec._UserNotificationPreferences_dailyDigestComplete(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
 				return res
 			}
 
@@ -69924,6 +69945,9 @@ func (ec *executionContext) _UserNotificationPreferences(ctx context.Context, se
 					}
 				}()
 				res = ec._UserNotificationPreferences_addedAsCollaborator(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
 				return res
 			}
 
@@ -69957,6 +69981,9 @@ func (ec *executionContext) _UserNotificationPreferences(ctx context.Context, se
 					}
 				}()
 				res = ec._UserNotificationPreferences_taggedInDiscussion(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
 				return res
 			}
 
@@ -69990,6 +70017,9 @@ func (ec *executionContext) _UserNotificationPreferences(ctx context.Context, se
 					}
 				}()
 				res = ec._UserNotificationPreferences_taggedInDiscussionReply(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
 				return res
 			}
 
@@ -70023,6 +70053,9 @@ func (ec *executionContext) _UserNotificationPreferences(ctx context.Context, se
 					}
 				}()
 				res = ec._UserNotificationPreferences_newDiscussionReply(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
 				return res
 			}
 
@@ -70056,6 +70089,9 @@ func (ec *executionContext) _UserNotificationPreferences(ctx context.Context, se
 					}
 				}()
 				res = ec._UserNotificationPreferences_modelPlanShared(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
 				return res
 			}
 
@@ -75412,6 +75448,67 @@ func (ec *executionContext) marshalNUserNotificationPreferenceFlag2githubᚗcom�
 		}
 	}
 	return res
+}
+
+func (ec *executionContext) unmarshalNUserNotificationPreferenceFlag2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐUserNotificationPreferenceFlagᚄ(ctx context.Context, v interface{}) ([]models.UserNotificationPreferenceFlag, error) {
+	var vSlice []interface{}
+	if v != nil {
+		vSlice = graphql.CoerceList(v)
+	}
+	var err error
+	res := make([]models.UserNotificationPreferenceFlag, len(vSlice))
+	for i := range vSlice {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithIndex(i))
+		res[i], err = ec.unmarshalNUserNotificationPreferenceFlag2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐUserNotificationPreferenceFlag(ctx, vSlice[i])
+		if err != nil {
+			return nil, err
+		}
+	}
+	return res, nil
+}
+
+func (ec *executionContext) marshalNUserNotificationPreferenceFlag2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐUserNotificationPreferenceFlagᚄ(ctx context.Context, sel ast.SelectionSet, v []models.UserNotificationPreferenceFlag) graphql.Marshaler {
+	ret := make(graphql.Array, len(v))
+	var wg sync.WaitGroup
+	isLen1 := len(v) == 1
+	if !isLen1 {
+		wg.Add(len(v))
+	}
+	for i := range v {
+		i := i
+		fc := &graphql.FieldContext{
+			Index:  &i,
+			Result: &v[i],
+		}
+		ctx := graphql.WithFieldContext(ctx, fc)
+		f := func(i int) {
+			defer func() {
+				if r := recover(); r != nil {
+					ec.Error(ctx, ec.Recover(ctx, r))
+					ret = nil
+				}
+			}()
+			if !isLen1 {
+				defer wg.Done()
+			}
+			ret[i] = ec.marshalNUserNotificationPreferenceFlag2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐUserNotificationPreferenceFlag(ctx, sel, v[i])
+		}
+		if isLen1 {
+			f(i)
+		} else {
+			go f(i)
+		}
+
+	}
+	wg.Wait()
+
+	for _, e := range ret {
+		if e == graphql.Null {
+			return graphql.Null
+		}
+	}
+
+	return ret
 }
 
 func (ec *executionContext) marshalNUserNotificationPreferences2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐUserNotificationPreferences(ctx context.Context, sel ast.SelectionSet, v models.UserNotificationPreferences) graphql.Marshaler {
