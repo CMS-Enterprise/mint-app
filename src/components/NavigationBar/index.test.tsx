@@ -1,9 +1,28 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { MemoryRouter } from 'react-router-dom';
-import { render } from '@testing-library/react';
+import { MockedProvider } from '@apollo/client/testing';
+import { render, waitFor } from '@testing-library/react';
+import { GetPollNotificationsDocument } from 'gql/gen/graphql';
 
 import NavigationBar, { navLinks } from './index';
+
+const notificationsMock = [
+  {
+    request: {
+      query: GetPollNotificationsDocument
+    },
+    result: {
+      data: {
+        currentUser: {
+          notifications: {
+            numUnreadNotifications: 1
+          }
+        }
+      }
+    }
+  }
+];
 
 vi.mock('react-i18next', () => ({
   // this mock makes sure any components using the translate hook can use it without a warning being shown
@@ -31,12 +50,14 @@ describe('The NavigationBar component', () => {
   it('renders without errors', async () => {
     const { getByTestId } = render(
       <MemoryRouter initialEntries={['/']}>
-        <NavigationBar
-          mobile
-          toggle={() => !null}
-          signout={() => null}
-          userName="A11Y"
-        />
+        <MockedProvider mocks={notificationsMock} addTypename={false}>
+          <NavigationBar
+            mobile
+            toggle={() => !null}
+            signout={() => null}
+            userName="A11Y"
+          />
+        </MockedProvider>
       </MemoryRouter>
     );
 
@@ -44,14 +65,16 @@ describe('The NavigationBar component', () => {
   });
 
   it('displays every navigation element', async () => {
-    const { getByText } = render(
+    const { getByText, getByTestId } = render(
       <MemoryRouter initialEntries={['/system/making-a-request']}>
-        <NavigationBar
-          mobile
-          toggle={() => !null}
-          signout={() => null}
-          userName="A11Y"
-        />
+        <MockedProvider mocks={notificationsMock} addTypename={false}>
+          <NavigationBar
+            mobile
+            toggle={() => !null}
+            signout={() => null}
+            userName="A11Y"
+          />
+        </MockedProvider>
       </MemoryRouter>
     );
 
@@ -60,6 +83,10 @@ describe('The NavigationBar component', () => {
     navLinks().forEach(route => {
       const linkTitle = t(`header:${route.label}`);
       expect(getByText(linkTitle)).toBeInTheDocument();
+    });
+
+    await waitFor(() => {
+      expect(getByTestId('has-notifications')).toBeInTheDocument();
     });
   });
 });

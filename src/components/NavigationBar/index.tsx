@@ -1,7 +1,9 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { NavLink } from 'react-router-dom';
-import { PrimaryNav } from '@trussworks/react-uswds';
+import { Icon, PrimaryNav } from '@trussworks/react-uswds';
+import classNames from 'classnames';
+import { useGetPollNotificationsQuery } from 'gql/gen/graphql';
 
 import './index.scss';
 
@@ -35,6 +37,13 @@ const NavigationBar = ({
 }: NavigationProps) => {
   const { t } = useTranslation();
 
+  const { data } = useGetPollNotificationsQuery({
+    pollInterval: 5000
+  });
+
+  const hasNotifications = !!data?.currentUser.notifications
+    .numUnreadNotifications;
+
   const primaryLinks = navLinks().map(route => (
     <div className="mint-nav" key={route.label}>
       <NavLink
@@ -53,6 +62,42 @@ const NavigationBar = ({
       </NavLink>
     </div>
   ));
+
+  const notificationLink = (
+    <div className="mint-nav ">
+      <NavLink
+        to="/notifications"
+        activeClassName="usa-current"
+        className={classNames(
+          { 'align-right': !mobile },
+          'mint-nav__link margin-right-neg-4 display-flex flex-align-center'
+        )}
+        onClick={() => toggle(false)}
+      >
+        <div className="display-relative width-4">
+          <div className="position-absolute notification-container">
+            {hasNotifications ? (
+              <div data-testid="has-notifications">
+                <div className="notification-active bg-error position-absolute" />
+                <Icon.Notifications className="margin-right-0" size={3} />
+              </div>
+            ) : (
+              <Icon.NotificationsNone className="margin-right-0" size={3} />
+            )}
+          </div>
+        </div>
+
+        <em
+          className="usa-logo__text mint-nav__label"
+          aria-label={t(`header:notifications`)}
+        >
+          {t(`header:notifications`)}
+        </em>
+      </NavLink>
+    </div>
+  );
+
+  const navItemsWithNotification = primaryLinks.concat(notificationLink);
 
   const userLinks = (
     <div className="mint-nav__signout-container">
@@ -75,7 +120,9 @@ const NavigationBar = ({
     </div>
   );
 
-  const navItems = mobile ? primaryLinks.concat(userLinks) : primaryLinks;
+  const navItems = mobile
+    ? navItemsWithNotification.concat(userLinks)
+    : navItemsWithNotification;
 
   return (
     <nav
@@ -88,6 +135,7 @@ const NavigationBar = ({
           onClick={() => toggle(false)}
           mobileExpanded={mobile}
           aria-label="Primary navigation"
+          className="width-full"
           items={navItems}
         />
       </div>
