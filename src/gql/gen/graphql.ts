@@ -2778,39 +2778,37 @@ export type UserNotification = {
 };
 
 export enum UserNotificationPreferenceFlag {
-  ALL = 'ALL',
-  EMAIL_ONLY = 'EMAIL_ONLY',
-  IN_APP_ONLY = 'IN_APP_ONLY',
-  NONE = 'NONE'
+  EMAIL = 'EMAIL',
+  IN_APP = 'IN_APP'
 }
 
 /** UserNotificationPreferences represents a users preferences about what type and where to receive a notification */
 export type UserNotificationPreferences = {
   __typename: 'UserNotificationPreferences';
-  addedAsCollaborator: UserNotificationPreferenceFlag;
+  addedAsCollaborator?: Maybe<Array<UserNotificationPreferenceFlag>>;
   createdBy: Scalars['UUID']['output'];
   createdByUserAccount: UserAccount;
   createdDts: Scalars['Time']['output'];
-  dailyDigestComplete: UserNotificationPreferenceFlag;
+  dailyDigestComplete?: Maybe<Array<UserNotificationPreferenceFlag>>;
   id: Scalars['UUID']['output'];
-  modelPlanShared: UserNotificationPreferenceFlag;
+  modelPlanShared?: Maybe<Array<UserNotificationPreferenceFlag>>;
   modifiedBy?: Maybe<Scalars['UUID']['output']>;
   modifiedByUserAccount?: Maybe<UserAccount>;
   modifiedDts?: Maybe<Scalars['Time']['output']>;
-  newDiscussionReply: UserNotificationPreferenceFlag;
-  taggedInDiscussion: UserNotificationPreferenceFlag;
-  taggedInDiscussionReply: UserNotificationPreferenceFlag;
+  newDiscussionReply?: Maybe<Array<UserNotificationPreferenceFlag>>;
+  taggedInDiscussion?: Maybe<Array<UserNotificationPreferenceFlag>>;
+  taggedInDiscussionReply?: Maybe<Array<UserNotificationPreferenceFlag>>;
   userID: Scalars['UUID']['output'];
 };
 
 /** UserNotificationPreferencesChanges represents the ways that a UserNotifications Preferences object can be updated */
 export type UserNotificationPreferencesChanges = {
-  addedAsCollaborator?: InputMaybe<UserNotificationPreferenceFlag>;
-  dailyDigestComplete?: InputMaybe<UserNotificationPreferenceFlag>;
-  modelPlanShared?: InputMaybe<UserNotificationPreferenceFlag>;
-  newDiscussionReply?: InputMaybe<UserNotificationPreferenceFlag>;
-  taggedInDiscussion?: InputMaybe<UserNotificationPreferenceFlag>;
-  taggedInDiscussionReply?: InputMaybe<UserNotificationPreferenceFlag>;
+  addedAsCollaborator?: InputMaybe<Array<UserNotificationPreferenceFlag>>;
+  dailyDigestComplete?: InputMaybe<Array<UserNotificationPreferenceFlag>>;
+  modelPlanShared?: InputMaybe<Array<UserNotificationPreferenceFlag>>;
+  newDiscussionReply?: InputMaybe<Array<UserNotificationPreferenceFlag>>;
+  taggedInDiscussion?: InputMaybe<Array<UserNotificationPreferenceFlag>>;
+  taggedInDiscussionReply?: InputMaybe<Array<UserNotificationPreferenceFlag>>;
 };
 
 /** This is a wrapper for all information for a user  */

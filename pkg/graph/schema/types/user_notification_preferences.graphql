@@ -1,8 +1,6 @@
 enum UserNotificationPreferenceFlag {
-  ALL,
-  IN_APP_ONLY,
-  EMAIL_ONLY,
-  NONE
+  IN_APP,
+  EMAIL
 }
 
 
@@ -13,17 +11,17 @@ type UserNotificationPreferences {
   id: UUID!
 	userID: UUID!
 
-  dailyDigestComplete: UserNotificationPreferenceFlag!
+  dailyDigestComplete: [UserNotificationPreferenceFlag!]
 
-  addedAsCollaborator: UserNotificationPreferenceFlag!
+  addedAsCollaborator: [UserNotificationPreferenceFlag!]
 
-  taggedInDiscussion: UserNotificationPreferenceFlag!
+  taggedInDiscussion: [UserNotificationPreferenceFlag!]
 
-  taggedInDiscussionReply: UserNotificationPreferenceFlag!
+  taggedInDiscussionReply: [UserNotificationPreferenceFlag!]
 
-  newDiscussionReply: UserNotificationPreferenceFlag!
+  newDiscussionReply: [UserNotificationPreferenceFlag!]
 
-  modelPlanShared: UserNotificationPreferenceFlag!
+  modelPlanShared: [UserNotificationPreferenceFlag!]
 
 
   createdBy: UUID!
@@ -41,17 +39,17 @@ UserNotificationPreferencesChanges represents the ways that a UserNotifications 
 """
 input UserNotificationPreferencesChanges @goModel(model: "map[string]interface{}")  {
 
-  dailyDigestComplete: UserNotificationPreferenceFlag
+  dailyDigestComplete: [UserNotificationPreferenceFlag!]
 
-  addedAsCollaborator: UserNotificationPreferenceFlag
+  addedAsCollaborator: [UserNotificationPreferenceFlag!]
 
-  taggedInDiscussion: UserNotificationPreferenceFlag
+  taggedInDiscussion: [UserNotificationPreferenceFlag!]
 
-  taggedInDiscussionReply: UserNotificationPreferenceFlag
+  taggedInDiscussionReply: [UserNotificationPreferenceFlag!]
 
-  newDiscussionReply: UserNotificationPreferenceFlag
+  newDiscussionReply: [UserNotificationPreferenceFlag!]
 
-  modelPlanShared: UserNotificationPreferenceFlag
+  modelPlanShared: [UserNotificationPreferenceFlag!]
 
 
 }

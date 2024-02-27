@@ -7,12 +7,12 @@ func (s *ResolverSuite) TestUserNotificationPreferencesGetByUserID() {
 	s.NoError(err)
 	s.NotNil(pref)
 
-	s.EqualValues(models.UserNotificationPreferenceAll, pref.DailyDigestComplete)
-	s.EqualValues(models.UserNotificationPreferenceAll, pref.AddedAsCollaborator)
-	s.EqualValues(models.UserNotificationPreferenceAll, pref.TaggedInDiscussion)
-	s.EqualValues(models.UserNotificationPreferenceAll, pref.TaggedInDiscussionReply)
-	s.EqualValues(models.UserNotificationPreferenceAll, pref.NewDiscussionReply)
-	s.EqualValues(models.UserNotificationPreferenceAll, pref.ModelPlanShared)
+	s.EqualValues(models.DefaultUserNotificationPreferencesFlags(), pref.DailyDigestComplete)
+	s.EqualValues(models.DefaultUserNotificationPreferencesFlags(), pref.AddedAsCollaborator)
+	s.EqualValues(models.DefaultUserNotificationPreferencesFlags(), pref.TaggedInDiscussion)
+	s.EqualValues(models.DefaultUserNotificationPreferencesFlags(), pref.TaggedInDiscussionReply)
+	s.EqualValues(models.DefaultUserNotificationPreferencesFlags(), pref.NewDiscussionReply)
+	s.EqualValues(models.DefaultUserNotificationPreferencesFlags(), pref.ModelPlanShared)
 
 }
 
@@ -22,22 +22,22 @@ func (s *ResolverSuite) TestUserNotificationPreferencesUpdate() {
 	s.NoError(err)
 	s.NotNil(pref)
 	changes := map[string]interface{}{
-		"dailyDigestComplete":     "IN_APP_ONLY",
-		"addedAsCollaborator":     "IN_APP_ONLY",
-		"taggedInDiscussion":      "IN_APP_ONLY",
-		"taggedInDiscussionReply": "IN_APP_ONLY",
-		"newDiscussionReply":      "IN_APP_ONLY",
-		"modelPlanShared":         "IN_APP_ONLY",
+		"dailyDigestComplete":     models.UserNotificationPreferenceFlags{models.UserNotificationPreferenceInApp},
+		"addedAsCollaborator":     models.UserNotificationPreferenceFlags{models.UserNotificationPreferenceInApp},
+		"taggedInDiscussion":      models.UserNotificationPreferenceFlags{models.UserNotificationPreferenceInApp},
+		"taggedInDiscussionReply": models.UserNotificationPreferenceFlags{models.UserNotificationPreferenceInApp},
+		"newDiscussionReply":      models.UserNotificationPreferenceFlags{models.UserNotificationPreferenceInApp},
+		"modelPlanShared":         models.UserNotificationPreferenceFlags{models.UserNotificationPreferenceInApp},
 	}
 	updatedPref, err := UserNotificationPreferencesUpdate(s.testConfigs.Context, s.testConfigs.Logger, s.testConfigs.Principal, s.testConfigs.Store, changes)
 	s.NoError(err)
 	s.NotNil(updatedPref)
 
-	s.EqualValues(models.UserNotificationPreferenceInAppOnly, updatedPref.DailyDigestComplete)
-	s.EqualValues(models.UserNotificationPreferenceInAppOnly, updatedPref.AddedAsCollaborator)
-	s.EqualValues(models.UserNotificationPreferenceInAppOnly, updatedPref.TaggedInDiscussion)
-	s.EqualValues(models.UserNotificationPreferenceInAppOnly, updatedPref.TaggedInDiscussionReply)
-	s.EqualValues(models.UserNotificationPreferenceInAppOnly, updatedPref.NewDiscussionReply)
-	s.EqualValues(models.UserNotificationPreferenceInAppOnly, updatedPref.ModelPlanShared)
+	s.EqualValues(models.UserNotificationPreferenceInApp, updatedPref.DailyDigestComplete)
+	s.EqualValues(models.UserNotificationPreferenceInApp, updatedPref.AddedAsCollaborator)
+	s.EqualValues(models.UserNotificationPreferenceInApp, updatedPref.TaggedInDiscussion)
+	s.EqualValues(models.UserNotificationPreferenceInApp, updatedPref.TaggedInDiscussionReply)
+	s.EqualValues(models.UserNotificationPreferenceInApp, updatedPref.NewDiscussionReply)
+	s.EqualValues(models.UserNotificationPreferenceInApp, updatedPref.ModelPlanShared)
 
 }
