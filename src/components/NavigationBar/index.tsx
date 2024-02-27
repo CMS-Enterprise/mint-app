@@ -79,7 +79,10 @@ const NavigationBar = ({
             {hasNotifications ? (
               <div data-testid="has-notifications">
                 <div className="notification-active bg-error position-absolute" />
-                <Icon.Notifications className="margin-right-0" size={3} />
+                <Icon.Notifications
+                  className="margin-right-0 text-base-darkest"
+                  size={3}
+                />
               </div>
             ) : (
               <Icon.NotificationsNone className="margin-right-0" size={3} />
