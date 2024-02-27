@@ -11,7 +11,6 @@ import (
 	"github.com/cmsgov/mint-app/pkg/constants"
 	"github.com/cmsgov/mint-app/pkg/notifications"
 	"github.com/cmsgov/mint-app/pkg/storage"
-	"github.com/cmsgov/mint-app/pkg/storage/loaders"
 
 	faktory "github.com/contribsys/faktory/client"
 	faktory_worker "github.com/contribsys/faktory_worker_go"
@@ -103,8 +102,15 @@ func (w *Worker) DigestEmailJob(ctx context.Context, args ...interface{}) error 
 	// TODO EASI-3338 wrap this in a transaction!
 	systemAccountID := constants.GetSystemAccountUUID()
 
+	// TODO EASI-3338, see about wrapping the dataloaders in the worker as well.
+	preferenceFunctions := func(ctx context.Context, user_id uuid.UUID) (*models.UserNotificationPreferences, error) {
+		return storage.UserNotificationPreferencesGetByUserID(w.Store, user_id)
+	}
+
 	//TODO: EASI-3338 verify that you can use the dataloader in the worker package, it might not be that context....
-	_, err = notifications.ActivityDailyDigestComplete(ctx, w.Store, systemAccountID, userID, dateAnalyzed, modelPlanIDs, loaders.UserNotificationPreferencesGetByUserID)
+	_, err = notifications.ActivityDailyDigestComplete(ctx, w.Store, systemAccountID, userID, dateAnalyzed, modelPlanIDs, preferenceFunctions)
+	// _, err = notifications.ActivityDailyDigestComplete(ctx, w.Store, systemAccountID, userID, dateAnalyzed, modelPlanIDs, loaders.UserNotificationPreferencesGetByUserID)
+
 	if err != nil {
 		return fmt.Errorf("couldn't generate an activity record for hte daily digest complete activity for user %s, error: %w", userID, err)
 	}
