@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "32329f70-986e-430d-8a0b-4509ca71dab1",
+		"_postman_id": "58f72d3a-ea92-4df4-8d3d-4627cbf7eb3b",
 		"name": "MINT",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "20320964"
@@ -2276,7 +2276,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation NotificationUpdate {\nupdateUserNotificationPreferences( changes:{\n    dailyDigestComplete: IN_APP_ONLY\n    \n    addedAsCollaborator: ALL\n\n    taggedInDiscussion: ALL\n\n    taggedInDiscussionReply: ALL\n\n    newDiscussionReply: ALL\n\n    modelPlanShared: ALL\n\n    \n\n}) {\n\n        dailyDigestComplete\n\n        addedAsCollaborator\n\n        taggedInDiscussion\n\n        taggedInDiscussionReply\n\n        newDiscussionReply\n\n        modelPlanShared\n\n      \n    }\n}\n",
+								"query": "mutation NotificationUpdate {\nupdateUserNotificationPreferences( changes:{\n    dailyDigestComplete: [EMAIL,IN_APP]\n    \n    addedAsCollaborator: [EMAIL,IN_APP]\n\n    taggedInDiscussion:[IN_APP]\n\n    taggedInDiscussionReply:[EMAIL,IN_APP]\n\n    newDiscussionReply: [EMAIL,IN_APP]\n\n    modelPlanShared: [EMAIL,IN_APP]\n\n    \n\n}) {\n\n        dailyDigestComplete\n\n        addedAsCollaborator\n\n        taggedInDiscussion\n\n        taggedInDiscussionReply\n\n        newDiscussionReply\n\n        modelPlanShared\n\n      \n    }\n}\n",
 								"variables": ""
 							}
 						},
