@@ -69,6 +69,7 @@ type ResolverRoot interface {
 	TaggedInDiscussionReplyActivityMeta() TaggedInDiscussionReplyActivityMetaResolver
 	TaggedInPlanDiscussionActivityMeta() TaggedInPlanDiscussionActivityMetaResolver
 	UserNotification() UserNotificationResolver
+	UserNotificationPreferences() UserNotificationPreferencesResolver
 }
 
 type DirectiveRoot struct {
@@ -1364,6 +1365,14 @@ type TaggedInPlanDiscussionActivityMetaResolver interface {
 }
 type UserNotificationResolver interface {
 	Activity(ctx context.Context, obj *models.UserNotification) (*models.Activity, error)
+}
+type UserNotificationPreferencesResolver interface {
+	DailyDigestComplete(ctx context.Context, obj *models.UserNotificationPreferences) ([]models.UserNotificationPreferenceFlag, error)
+	AddedAsCollaborator(ctx context.Context, obj *models.UserNotificationPreferences) ([]models.UserNotificationPreferenceFlag, error)
+	TaggedInDiscussion(ctx context.Context, obj *models.UserNotificationPreferences) ([]models.UserNotificationPreferenceFlag, error)
+	TaggedInDiscussionReply(ctx context.Context, obj *models.UserNotificationPreferences) ([]models.UserNotificationPreferenceFlag, error)
+	NewDiscussionReply(ctx context.Context, obj *models.UserNotificationPreferences) ([]models.UserNotificationPreferenceFlag, error)
+	ModelPlanShared(ctx context.Context, obj *models.UserNotificationPreferences) ([]models.UserNotificationPreferenceFlag, error)
 }
 
 type executableSchema struct {
@@ -10751,10 +10760,8 @@ markAllNotificationsAsRead: [UserNotification!]!
 }
 `, BuiltIn: false},
 	{Name: "../schema/types/user_notification_preferences.graphql", Input: `enum UserNotificationPreferenceFlag {
-  ALL,
-  IN_APP_ONLY,
-  EMAIL_ONLY,
-  NONE
+  IN_APP,
+  EMAIL
 }
 
 
@@ -10765,17 +10772,17 @@ type UserNotificationPreferences {
   id: UUID!
 	userID: UUID!
 
-  dailyDigestComplete: UserNotificationPreferenceFlag!
+  dailyDigestComplete: [UserNotificationPreferenceFlag!]!
 
-  addedAsCollaborator: UserNotificationPreferenceFlag!
+  addedAsCollaborator: [UserNotificationPreferenceFlag!]!
 
-  taggedInDiscussion: UserNotificationPreferenceFlag!
+  taggedInDiscussion: [UserNotificationPreferenceFlag!]!
 
-  taggedInDiscussionReply: UserNotificationPreferenceFlag!
+  taggedInDiscussionReply: [UserNotificationPreferenceFlag!]!
 
-  newDiscussionReply: UserNotificationPreferenceFlag!
+  newDiscussionReply: [UserNotificationPreferenceFlag!]!
 
-  modelPlanShared: UserNotificationPreferenceFlag!
+  modelPlanShared: [UserNotificationPreferenceFlag!]!
 
 
   createdBy: UUID!
@@ -10793,17 +10800,17 @@ UserNotificationPreferencesChanges represents the ways that a UserNotifications 
 """
 input UserNotificationPreferencesChanges @goModel(model: "map[string]interface{}")  {
 
-  dailyDigestComplete: UserNotificationPreferenceFlag
+  dailyDigestComplete: [UserNotificationPreferenceFlag!]
 
-  addedAsCollaborator: UserNotificationPreferenceFlag
+  addedAsCollaborator: [UserNotificationPreferenceFlag!]
 
-  taggedInDiscussion: UserNotificationPreferenceFlag
+  taggedInDiscussion: [UserNotificationPreferenceFlag!]
 
-  taggedInDiscussionReply: UserNotificationPreferenceFlag
+  taggedInDiscussionReply: [UserNotificationPreferenceFlag!]
 
-  newDiscussionReply: UserNotificationPreferenceFlag
+  newDiscussionReply: [UserNotificationPreferenceFlag!]
 
-  modelPlanShared: UserNotificationPreferenceFlag
+  modelPlanShared: [UserNotificationPreferenceFlag!]
 
 
 }
@@ -56561,7 +56568,7 @@ func (ec *executionContext) _UserNotificationPreferences_dailyDigestComplete(ctx
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.DailyDigestComplete, nil
+		return ec.resolvers.UserNotificationPreferences().DailyDigestComplete(rctx, obj)
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -56573,17 +56580,17 @@ func (ec *executionContext) _UserNotificationPreferences_dailyDigestComplete(ctx
 		}
 		return graphql.Null
 	}
-	res := resTmp.(models.UserNotificationPreferenceFlag)
+	res := resTmp.([]models.UserNotificationPreferenceFlag)
 	fc.Result = res
-	return ec.marshalNUserNotificationPreferenceFlag2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐUserNotificationPreferenceFlag(ctx, field.Selections, res)
+	return ec.marshalNUserNotificationPreferenceFlag2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐUserNotificationPreferenceFlagᚄ(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_UserNotificationPreferences_dailyDigestComplete(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "UserNotificationPreferences",
 		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
+		IsMethod:   true,
+		IsResolver: true,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return nil, errors.New("field of type UserNotificationPreferenceFlag does not have child fields")
 		},
@@ -56605,7 +56612,7 @@ func (ec *executionContext) _UserNotificationPreferences_addedAsCollaborator(ctx
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.AddedAsCollaborator, nil
+		return ec.resolvers.UserNotificationPreferences().AddedAsCollaborator(rctx, obj)
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -56617,17 +56624,17 @@ func (ec *executionContext) _UserNotificationPreferences_addedAsCollaborator(ctx
 		}
 		return graphql.Null
 	}
-	res := resTmp.(models.UserNotificationPreferenceFlag)
+	res := resTmp.([]models.UserNotificationPreferenceFlag)
 	fc.Result = res
-	return ec.marshalNUserNotificationPreferenceFlag2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐUserNotificationPreferenceFlag(ctx, field.Selections, res)
+	return ec.marshalNUserNotificationPreferenceFlag2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐUserNotificationPreferenceFlagᚄ(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_UserNotificationPreferences_addedAsCollaborator(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "UserNotificationPreferences",
 		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
+		IsMethod:   true,
+		IsResolver: true,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return nil, errors.New("field of type UserNotificationPreferenceFlag does not have child fields")
 		},
@@ -56649,7 +56656,7 @@ func (ec *executionContext) _UserNotificationPreferences_taggedInDiscussion(ctx 
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.TaggedInDiscussion, nil
+		return ec.resolvers.UserNotificationPreferences().TaggedInDiscussion(rctx, obj)
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -56661,17 +56668,17 @@ func (ec *executionContext) _UserNotificationPreferences_taggedInDiscussion(ctx 
 		}
 		return graphql.Null
 	}
-	res := resTmp.(models.UserNotificationPreferenceFlag)
+	res := resTmp.([]models.UserNotificationPreferenceFlag)
 	fc.Result = res
-	return ec.marshalNUserNotificationPreferenceFlag2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐUserNotificationPreferenceFlag(ctx, field.Selections, res)
+	return ec.marshalNUserNotificationPreferenceFlag2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐUserNotificationPreferenceFlagᚄ(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_UserNotificationPreferences_taggedInDiscussion(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "UserNotificationPreferences",
 		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
+		IsMethod:   true,
+		IsResolver: true,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return nil, errors.New("field of type UserNotificationPreferenceFlag does not have child fields")
 		},
@@ -56693,7 +56700,7 @@ func (ec *executionContext) _UserNotificationPreferences_taggedInDiscussionReply
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.TaggedInDiscussionReply, nil
+		return ec.resolvers.UserNotificationPreferences().TaggedInDiscussionReply(rctx, obj)
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -56705,17 +56712,17 @@ func (ec *executionContext) _UserNotificationPreferences_taggedInDiscussionReply
 		}
 		return graphql.Null
 	}
-	res := resTmp.(models.UserNotificationPreferenceFlag)
+	res := resTmp.([]models.UserNotificationPreferenceFlag)
 	fc.Result = res
-	return ec.marshalNUserNotificationPreferenceFlag2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐUserNotificationPreferenceFlag(ctx, field.Selections, res)
+	return ec.marshalNUserNotificationPreferenceFlag2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐUserNotificationPreferenceFlagᚄ(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_UserNotificationPreferences_taggedInDiscussionReply(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "UserNotificationPreferences",
 		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
+		IsMethod:   true,
+		IsResolver: true,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return nil, errors.New("field of type UserNotificationPreferenceFlag does not have child fields")
 		},
@@ -56737,7 +56744,7 @@ func (ec *executionContext) _UserNotificationPreferences_newDiscussionReply(ctx 
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.NewDiscussionReply, nil
+		return ec.resolvers.UserNotificationPreferences().NewDiscussionReply(rctx, obj)
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -56749,17 +56756,17 @@ func (ec *executionContext) _UserNotificationPreferences_newDiscussionReply(ctx 
 		}
 		return graphql.Null
 	}
-	res := resTmp.(models.UserNotificationPreferenceFlag)
+	res := resTmp.([]models.UserNotificationPreferenceFlag)
 	fc.Result = res
-	return ec.marshalNUserNotificationPreferenceFlag2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐUserNotificationPreferenceFlag(ctx, field.Selections, res)
+	return ec.marshalNUserNotificationPreferenceFlag2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐUserNotificationPreferenceFlagᚄ(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_UserNotificationPreferences_newDiscussionReply(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "UserNotificationPreferences",
 		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
+		IsMethod:   true,
+		IsResolver: true,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return nil, errors.New("field of type UserNotificationPreferenceFlag does not have child fields")
 		},
@@ -56781,7 +56788,7 @@ func (ec *executionContext) _UserNotificationPreferences_modelPlanShared(ctx con
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.ModelPlanShared, nil
+		return ec.resolvers.UserNotificationPreferences().ModelPlanShared(rctx, obj)
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -56793,17 +56800,17 @@ func (ec *executionContext) _UserNotificationPreferences_modelPlanShared(ctx con
 		}
 		return graphql.Null
 	}
-	res := resTmp.(models.UserNotificationPreferenceFlag)
+	res := resTmp.([]models.UserNotificationPreferenceFlag)
 	fc.Result = res
-	return ec.marshalNUserNotificationPreferenceFlag2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐUserNotificationPreferenceFlag(ctx, field.Selections, res)
+	return ec.marshalNUserNotificationPreferenceFlag2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐUserNotificationPreferenceFlagᚄ(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_UserNotificationPreferences_modelPlanShared(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "UserNotificationPreferences",
 		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
+		IsMethod:   true,
+		IsResolver: true,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return nil, errors.New("field of type UserNotificationPreferenceFlag does not have child fields")
 		},
@@ -69893,35 +69900,221 @@ func (ec *executionContext) _UserNotificationPreferences(ctx context.Context, se
 				atomic.AddUint32(&out.Invalids, 1)
 			}
 		case "dailyDigestComplete":
-			out.Values[i] = ec._UserNotificationPreferences_dailyDigestComplete(ctx, field, obj)
-			if out.Values[i] == graphql.Null {
-				atomic.AddUint32(&out.Invalids, 1)
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._UserNotificationPreferences_dailyDigestComplete(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
+				return res
 			}
+
+			if field.Deferrable != nil {
+				dfs, ok := deferred[field.Deferrable.Label]
+				di := 0
+				if ok {
+					dfs.AddField(field)
+					di = len(dfs.Values) - 1
+				} else {
+					dfs = graphql.NewFieldSet([]graphql.CollectedField{field})
+					deferred[field.Deferrable.Label] = dfs
+				}
+				dfs.Concurrently(di, func(ctx context.Context) graphql.Marshaler {
+					return innerFunc(ctx, dfs)
+				})
+
+				// don't run the out.Concurrently() call below
+				out.Values[i] = graphql.Null
+				continue
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
 		case "addedAsCollaborator":
-			out.Values[i] = ec._UserNotificationPreferences_addedAsCollaborator(ctx, field, obj)
-			if out.Values[i] == graphql.Null {
-				atomic.AddUint32(&out.Invalids, 1)
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._UserNotificationPreferences_addedAsCollaborator(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
+				return res
 			}
+
+			if field.Deferrable != nil {
+				dfs, ok := deferred[field.Deferrable.Label]
+				di := 0
+				if ok {
+					dfs.AddField(field)
+					di = len(dfs.Values) - 1
+				} else {
+					dfs = graphql.NewFieldSet([]graphql.CollectedField{field})
+					deferred[field.Deferrable.Label] = dfs
+				}
+				dfs.Concurrently(di, func(ctx context.Context) graphql.Marshaler {
+					return innerFunc(ctx, dfs)
+				})
+
+				// don't run the out.Concurrently() call below
+				out.Values[i] = graphql.Null
+				continue
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
 		case "taggedInDiscussion":
-			out.Values[i] = ec._UserNotificationPreferences_taggedInDiscussion(ctx, field, obj)
-			if out.Values[i] == graphql.Null {
-				atomic.AddUint32(&out.Invalids, 1)
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._UserNotificationPreferences_taggedInDiscussion(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
+				return res
 			}
+
+			if field.Deferrable != nil {
+				dfs, ok := deferred[field.Deferrable.Label]
+				di := 0
+				if ok {
+					dfs.AddField(field)
+					di = len(dfs.Values) - 1
+				} else {
+					dfs = graphql.NewFieldSet([]graphql.CollectedField{field})
+					deferred[field.Deferrable.Label] = dfs
+				}
+				dfs.Concurrently(di, func(ctx context.Context) graphql.Marshaler {
+					return innerFunc(ctx, dfs)
+				})
+
+				// don't run the out.Concurrently() call below
+				out.Values[i] = graphql.Null
+				continue
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
 		case "taggedInDiscussionReply":
-			out.Values[i] = ec._UserNotificationPreferences_taggedInDiscussionReply(ctx, field, obj)
-			if out.Values[i] == graphql.Null {
-				atomic.AddUint32(&out.Invalids, 1)
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._UserNotificationPreferences_taggedInDiscussionReply(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
+				return res
 			}
+
+			if field.Deferrable != nil {
+				dfs, ok := deferred[field.Deferrable.Label]
+				di := 0
+				if ok {
+					dfs.AddField(field)
+					di = len(dfs.Values) - 1
+				} else {
+					dfs = graphql.NewFieldSet([]graphql.CollectedField{field})
+					deferred[field.Deferrable.Label] = dfs
+				}
+				dfs.Concurrently(di, func(ctx context.Context) graphql.Marshaler {
+					return innerFunc(ctx, dfs)
+				})
+
+				// don't run the out.Concurrently() call below
+				out.Values[i] = graphql.Null
+				continue
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
 		case "newDiscussionReply":
-			out.Values[i] = ec._UserNotificationPreferences_newDiscussionReply(ctx, field, obj)
-			if out.Values[i] == graphql.Null {
-				atomic.AddUint32(&out.Invalids, 1)
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._UserNotificationPreferences_newDiscussionReply(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
+				return res
 			}
+
+			if field.Deferrable != nil {
+				dfs, ok := deferred[field.Deferrable.Label]
+				di := 0
+				if ok {
+					dfs.AddField(field)
+					di = len(dfs.Values) - 1
+				} else {
+					dfs = graphql.NewFieldSet([]graphql.CollectedField{field})
+					deferred[field.Deferrable.Label] = dfs
+				}
+				dfs.Concurrently(di, func(ctx context.Context) graphql.Marshaler {
+					return innerFunc(ctx, dfs)
+				})
+
+				// don't run the out.Concurrently() call below
+				out.Values[i] = graphql.Null
+				continue
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
 		case "modelPlanShared":
-			out.Values[i] = ec._UserNotificationPreferences_modelPlanShared(ctx, field, obj)
-			if out.Values[i] == graphql.Null {
-				atomic.AddUint32(&out.Invalids, 1)
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._UserNotificationPreferences_modelPlanShared(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
+				return res
 			}
+
+			if field.Deferrable != nil {
+				dfs, ok := deferred[field.Deferrable.Label]
+				di := 0
+				if ok {
+					dfs.AddField(field)
+					di = len(dfs.Values) - 1
+				} else {
+					dfs = graphql.NewFieldSet([]graphql.CollectedField{field})
+					deferred[field.Deferrable.Label] = dfs
+				}
+				dfs.Concurrently(di, func(ctx context.Context) graphql.Marshaler {
+					return innerFunc(ctx, dfs)
+				})
+
+				// don't run the out.Concurrently() call below
+				out.Values[i] = graphql.Null
+				continue
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
 		case "createdBy":
 			out.Values[i] = ec._UserNotificationPreferences_createdBy(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
@@ -75257,6 +75450,67 @@ func (ec *executionContext) marshalNUserNotificationPreferenceFlag2githubᚗcom�
 	return res
 }
 
+func (ec *executionContext) unmarshalNUserNotificationPreferenceFlag2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐUserNotificationPreferenceFlagᚄ(ctx context.Context, v interface{}) ([]models.UserNotificationPreferenceFlag, error) {
+	var vSlice []interface{}
+	if v != nil {
+		vSlice = graphql.CoerceList(v)
+	}
+	var err error
+	res := make([]models.UserNotificationPreferenceFlag, len(vSlice))
+	for i := range vSlice {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithIndex(i))
+		res[i], err = ec.unmarshalNUserNotificationPreferenceFlag2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐUserNotificationPreferenceFlag(ctx, vSlice[i])
+		if err != nil {
+			return nil, err
+		}
+	}
+	return res, nil
+}
+
+func (ec *executionContext) marshalNUserNotificationPreferenceFlag2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐUserNotificationPreferenceFlagᚄ(ctx context.Context, sel ast.SelectionSet, v []models.UserNotificationPreferenceFlag) graphql.Marshaler {
+	ret := make(graphql.Array, len(v))
+	var wg sync.WaitGroup
+	isLen1 := len(v) == 1
+	if !isLen1 {
+		wg.Add(len(v))
+	}
+	for i := range v {
+		i := i
+		fc := &graphql.FieldContext{
+			Index:  &i,
+			Result: &v[i],
+		}
+		ctx := graphql.WithFieldContext(ctx, fc)
+		f := func(i int) {
+			defer func() {
+				if r := recover(); r != nil {
+					ec.Error(ctx, ec.Recover(ctx, r))
+					ret = nil
+				}
+			}()
+			if !isLen1 {
+				defer wg.Done()
+			}
+			ret[i] = ec.marshalNUserNotificationPreferenceFlag2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐUserNotificationPreferenceFlag(ctx, sel, v[i])
+		}
+		if isLen1 {
+			f(i)
+		} else {
+			go f(i)
+		}
+
+	}
+	wg.Wait()
+
+	for _, e := range ret {
+		if e == graphql.Null {
+			return graphql.Null
+		}
+	}
+
+	return ret
+}
+
 func (ec *executionContext) marshalNUserNotificationPreferences2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐUserNotificationPreferences(ctx context.Context, sel ast.SelectionSet, v models.UserNotificationPreferences) graphql.Marshaler {
 	return ec._UserNotificationPreferences(ctx, sel, &v)
 }
@@ -78966,21 +79220,71 @@ func (ec *executionContext) marshalOUserAccount2ᚖgithubᚗcomᚋcmsgovᚋmint�
 	return ec._UserAccount(ctx, sel, v)
 }
 
-func (ec *executionContext) unmarshalOUserNotificationPreferenceFlag2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐUserNotificationPreferenceFlag(ctx context.Context, v interface{}) (*models.UserNotificationPreferenceFlag, error) {
+func (ec *executionContext) unmarshalOUserNotificationPreferenceFlag2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐUserNotificationPreferenceFlagᚄ(ctx context.Context, v interface{}) ([]models.UserNotificationPreferenceFlag, error) {
 	if v == nil {
 		return nil, nil
 	}
-	tmp, err := graphql.UnmarshalString(v)
-	res := models.UserNotificationPreferenceFlag(tmp)
-	return &res, graphql.ErrorOnPath(ctx, err)
+	var vSlice []interface{}
+	if v != nil {
+		vSlice = graphql.CoerceList(v)
+	}
+	var err error
+	res := make([]models.UserNotificationPreferenceFlag, len(vSlice))
+	for i := range vSlice {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithIndex(i))
+		res[i], err = ec.unmarshalNUserNotificationPreferenceFlag2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐUserNotificationPreferenceFlag(ctx, vSlice[i])
+		if err != nil {
+			return nil, err
+		}
+	}
+	return res, nil
 }
 
-func (ec *executionContext) marshalOUserNotificationPreferenceFlag2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐUserNotificationPreferenceFlag(ctx context.Context, sel ast.SelectionSet, v *models.UserNotificationPreferenceFlag) graphql.Marshaler {
+func (ec *executionContext) marshalOUserNotificationPreferenceFlag2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐUserNotificationPreferenceFlagᚄ(ctx context.Context, sel ast.SelectionSet, v []models.UserNotificationPreferenceFlag) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
-	res := graphql.MarshalString(string(*v))
-	return res
+	ret := make(graphql.Array, len(v))
+	var wg sync.WaitGroup
+	isLen1 := len(v) == 1
+	if !isLen1 {
+		wg.Add(len(v))
+	}
+	for i := range v {
+		i := i
+		fc := &graphql.FieldContext{
+			Index:  &i,
+			Result: &v[i],
+		}
+		ctx := graphql.WithFieldContext(ctx, fc)
+		f := func(i int) {
+			defer func() {
+				if r := recover(); r != nil {
+					ec.Error(ctx, ec.Recover(ctx, r))
+					ret = nil
+				}
+			}()
+			if !isLen1 {
+				defer wg.Done()
+			}
+			ret[i] = ec.marshalNUserNotificationPreferenceFlag2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐUserNotificationPreferenceFlag(ctx, sel, v[i])
+		}
+		if isLen1 {
+			f(i)
+		} else {
+			go f(i)
+		}
+
+	}
+	wg.Wait()
+
+	for _, e := range ret {
+		if e == graphql.Null {
+			return graphql.Null
+		}
+	}
+
+	return ret
 }
 
 func (ec *executionContext) unmarshalOWaiverType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐWaiverTypeᚄ(ctx context.Context, v interface{}) ([]model.WaiverType, error) {

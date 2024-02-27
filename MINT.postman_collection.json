@@ -2276,7 +2276,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation NotificationUpdate {\nupdateUserNotificationPreferences( changes:{\n    dailyDigestComplete: IN_APP_ONLY\n    \n    addedAsCollaborator: ALL\n\n    taggedInDiscussion: ALL\n\n    taggedInDiscussionReply: ALL\n\n    newDiscussionReply: ALL\n\n    modelPlanShared: ALL\n\n    \n\n}) {\n\n        dailyDigestComplete\n\n        addedAsCollaborator\n\n        taggedInDiscussion\n\n        taggedInDiscussionReply\n\n        newDiscussionReply\n\n        modelPlanShared\n\n      \n    }\n}\n",
+								"query": "mutation NotificationUpdate {\nupdateUserNotificationPreferences( changes:{\n    dailyDigestComplete: [EMAIL,IN_APP]\n    \n    addedAsCollaborator: [EMAIL,IN_APP]\n\n    taggedInDiscussion:[IN_APP]\n\n    taggedInDiscussionReply:[EMAIL,IN_APP]\n\n    newDiscussionReply: [EMAIL,IN_APP]\n\n    modelPlanShared: [EMAIL,IN_APP]\n\n    \n\n}) {\n\n        dailyDigestComplete\n\n        addedAsCollaborator\n\n        taggedInDiscussion\n\n        taggedInDiscussionReply\n\n        newDiscussionReply\n\n        modelPlanShared\n\n      \n    }\n}\n",
 								"variables": ""
 							}
 						},
