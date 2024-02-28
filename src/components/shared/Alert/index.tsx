@@ -24,6 +24,7 @@ type AlertProps = {
   isClosable?: boolean;
   headingLevel?: HeadingLevel;
   closeAlert?: (closed: any) => void;
+  validation?: boolean; // converts p tags to div to allow ul nesting
 } & JSX.IntrinsicElements['div'];
 
 export const Alert = ({
@@ -39,6 +40,7 @@ export const Alert = ({
   // Default to closable button if type = success or error
   isClosable = type === 'success' || type === 'error',
   closeAlert,
+  validation,
   ...props
 }: AlertProps & React.HTMLAttributes<HTMLDivElement>): React.ReactElement => {
   const classes = classnames(
@@ -69,6 +71,7 @@ export const Alert = ({
           className={classes}
           {...props}
           headingLevel={headingLevel}
+          validation={validation}
         >
           <span>{children}</span>
           {isClosable && (

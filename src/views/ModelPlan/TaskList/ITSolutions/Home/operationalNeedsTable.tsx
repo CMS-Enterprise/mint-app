@@ -546,13 +546,13 @@ export const FilterViewSolutionsAlert = ({
   if (unusedSolutions.length === 0) return null;
 
   return (
-    <Alert noIcon type="info">
+    <Alert noIcon type="info" validation>
       {t('itSolutionsTable.unusedSolutionsAlert')}
       <ul className="margin-top-1 margin-bottom-0">
         {helpSolutions
           .filter(solution => unusedSolutions.includes(solution.enum))
           .map(solution => (
-            <li>
+            <li key={solution.key}>
               {solution.name}
               {solution.acronym ? ` (${solution.acronym})` : ''}
             </li>

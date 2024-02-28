@@ -102,6 +102,7 @@ const BodyContent = ({
         );
       })}
 
+      {/* Operational Solutions table for filtered views */}
       {filteredGroupSolutions[filteredView] && (
         <div>
           <Divider className="margin-top-8" />
@@ -136,7 +137,7 @@ const BodyContent = ({
   );
 };
 
-const getAllFilterViewQuestions = (
+export const getAllFilterViewQuestions = (
   filterMappings: TranslationPlan,
   filteredView: typeof filterGroups[number]
 ) => {
@@ -173,7 +174,6 @@ const getAllFilterViewQuestions = (
       ...mappedQuestions
     };
   }
-
   return mappedQuestions;
 };
 
