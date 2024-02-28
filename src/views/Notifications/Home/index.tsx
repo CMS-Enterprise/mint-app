@@ -13,13 +13,20 @@ import PageHeading from 'components/PageHeading';
 import Spinner from 'components/Spinner';
 import { NotFoundPartial } from 'views/NotFound';
 
+import IndividualNotification from './_components/IndividualNotification';
+
 const NotificationsHome = () => {
   const { t: notificationsT } = useTranslation('notifications');
   const { t: generalT } = useTranslation('general');
   const { t: miscellaneousT } = useTranslation('miscellaneous');
 
-  const { data, loading, error } = useGetNotificationsQuery();
+  const { data, loading, error, refetch } = useGetNotificationsQuery();
   const [update] = useUpdateAllMessagesAsReadMutation();
+
+  const numUnreadNotifications =
+    data?.currentUser.notifications.numUnreadNotifications;
+
+  const allNotifications = data?.currentUser.notifications.notifications;
 
   const breadcrumbs = [
     { text: miscellaneousT('home'), url: '/' },
@@ -46,14 +53,16 @@ const NotificationsHome = () => {
             </PageHeading>
 
             <div>
-              <Button
-                type="button"
-                unstyled
-                className="margin-y-0 margin-x-2"
-                onClick={() => update()}
-              >
-                {notificationsT('index.markAllAsRead')}
-              </Button>
+              {numUnreadNotifications !== 0 && (
+                <Button
+                  type="button"
+                  unstyled
+                  className="margin-y-0 margin-x-2"
+                  onClick={() => update().then(() => refetch())}
+                >
+                  {notificationsT('index.markAllAsRead')}
+                </Button>
+              )}
 
               <UswdsReactLink
                 className="margin-y-0 margin-x-2"
@@ -73,9 +82,16 @@ const NotificationsHome = () => {
             />
           )}
 
-          <Alert type="info" slim headingLevel="h3">
-            {notificationsT('index.infoBanner.emptyState')}
-          </Alert>
+          {allNotifications?.length === 0 && (
+            <Alert type="info" slim headingLevel="h3">
+              {notificationsT('index.infoBanner.emptyState')}
+            </Alert>
+          )}
+
+          {allNotifications?.length !== 0 &&
+            allNotifications?.map(notification => (
+              <IndividualNotification {...notification} key={notification.id} />
+            ))}
         </Grid>
       </GridContainer>
     </MainContent>

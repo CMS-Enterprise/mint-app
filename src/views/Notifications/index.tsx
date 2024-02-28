@@ -2,7 +2,7 @@ import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 
 // import NotificationsHome from './Home';
-import NotificationsHome from './home';
+import NotificationsHome from './Home';
 import NotificationSettings from './Settings';
 
 const Notifications = () => {
