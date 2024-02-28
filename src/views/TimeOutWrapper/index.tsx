@@ -61,7 +61,7 @@ const TimeOutWrapper = ({ children }: TimeOutWrapperProps) => {
         setTimeRemainingArr(formatSessionTimeRemaining(modalDuration));
       }
     },
-    promptTimeout: modalDuration,
+    promptBeforeIdle: modalDuration,
     crossTab: true,
     syncTimers: 1000,
     debounce: 500,

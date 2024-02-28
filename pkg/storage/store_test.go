@@ -16,6 +16,7 @@ import (
 	"github.com/cmsgov/mint-app/pkg/appconfig"
 	"github.com/cmsgov/mint-app/pkg/authentication"
 	"github.com/cmsgov/mint-app/pkg/models"
+	"github.com/cmsgov/mint-app/pkg/sqlutils"
 	"github.com/cmsgov/mint-app/pkg/testhelpers"
 )
 
@@ -74,7 +75,7 @@ func TestStoreTestSuite(t *testing.T) {
 
 // getTestPrincipal either inserts a new user account record into the database, or returns the record already in the database
 func getTestPrincipal(store *Store, userName string) (*authentication.ApplicationPrincipal, error) {
-	userAccount, accErr := store.UserAccountGetByUsername(userName)
+	userAccount, accErr := UserAccountGetByUsername(store, userName)
 	if accErr != nil {
 		return nil, accErr
 	}
@@ -101,7 +102,20 @@ func getTestPrincipal(store *Store, userName string) (*authentication.Applicatio
 		HasLoggedIn: true,
 	}
 
-	newAccount, newErr := store.UserAccountInsertByUsername(store, userAccount)
+	newAccount, newErr := sqlutils.WithTransaction[authentication.UserAccount](store, func(tx *sqlx.Tx) (*authentication.UserAccount, error) {
+		newAccount, newErr := UserAccountInsertByUsername(tx, userAccount)
+		if newErr != nil {
+			return nil, newErr
+		}
+		pref := models.NewUserNotificationPreferences(newAccount.ID)
+
+		_, preferencesErr := UserNotificationPreferencesCreate(tx, pref)
+		if preferencesErr != nil {
+			return nil, preferencesErr
+		}
+		return newAccount, nil
+
+	})
 	if newErr != nil {
 		return nil, newErr
 	}

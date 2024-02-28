@@ -51,6 +51,20 @@ func ConvertToKeyArgsArray(Keys dataloader.Keys) (KeyArgsArray, *error) {
 
 }
 
+// CovertToJSONArray converts dataloader keys to a json string
+func CovertToJSONArray(Keys dataloader.Keys) (string, error) {
+	arrayCK, err := ConvertToKeyArgsArray(Keys)
+	if err != nil {
+		return "", fmt.Errorf("issue converting keys data to Key Args type, %w", *err)
+	}
+	marshaledParams, err := arrayCK.ToJSONArray()
+	if err != nil {
+		return "", fmt.Errorf("issue converting keys to JSON for data loader in Plan Collaborator, %w", *err)
+	}
+	return marshaledParams, nil
+
+}
+
 // String is an identity method. Used to implement String interface
 func (k KeyArgs) String() string { return fmt.Sprint(k.Args) }
 

@@ -6,8 +6,12 @@ import (
 
 	"go.uber.org/zap"
 
+	"github.com/jmoiron/sqlx"
+
 	"github.com/cmsgov/mint-app/pkg/email"
+	"github.com/cmsgov/mint-app/pkg/notifications"
 	"github.com/cmsgov/mint-app/pkg/shared/oddmail"
+	"github.com/cmsgov/mint-app/pkg/sqlutils"
 	"github.com/cmsgov/mint-app/pkg/storage/loaders"
 	"github.com/cmsgov/mint-app/pkg/userhelpers"
 
@@ -40,95 +44,101 @@ func CreatePlanDiscussion(
 		input.UserRoleDescription,
 	)
 
-	err := BaseStructPreCreate(logger, planDiscussion, principal, store, false)
-	if err != nil {
-		return nil, err
-	}
-
-	err = UpdateTaggedHTMLMentionsAndRawContent(ctx, store, &planDiscussion.Content, getAccountInformation)
-
-	if err != nil {
-		return nil, fmt.Errorf("unable to update tagged html. error : %w", err)
-	}
-
-	discussion, tx, err := store.PlanDiscussionCreate(logger, planDiscussion, nil)
-	if tx != nil {
-		defer tx.Rollback()
-	}
-
-	if err != nil {
-		return nil, err
-	}
-
-	tags, _, err := TagCollectionCreate(logger, store, principal, "content", "plan_discussion", discussion.ID, planDiscussion.Content.Mentions, tx)
-	if err != nil {
-		return discussion, err
-	}
-	discussion.Content.Tags = tags
-	discussion.Content.Mentions = planDiscussion.Content.Mentions // TODO, do this or send the other metions
-	err = tx.Commit()
-	if err != nil {
-		return nil, err
-	}
-	commonName := principal.Account().CommonName
-	modelPlan, err := ModelPlanGetByIDLOADER(ctx, input.ModelPlanID)
-	if err != nil {
-		return discussion, err
-	}
-
-	userRole := discussion.UserRole.Humanize(models.ValueOrEmpty(discussion.UserRoleDescription))
-
-	// Send email to MINT Dev Team
-	go func() {
-		sendEmailErr := sendPlanDiscussionCreatedEmail(
-			ctx,
-			logger,
-			emailService,
-			emailTemplateService,
-			addressBook,
-			addressBook.MINTTeamEmail,
-			discussion,
-			modelPlan,
-			commonName,
-			userRole,
-		)
-
-		if sendEmailErr != nil {
-			logger.Error("error sending plan discussion created email to MINT Team",
-				zap.String("discussionID", discussion.ID.String()),
-				zap.Error(sendEmailErr))
-		}
-	}()
-
-	// send an email for each tag, which is unique compared to the mention
-	go func() {
-		err = sendPlanDiscussionTagEmails(
-			ctx,
-			store,
-			logger,
-			emailService,
-			emailTemplateService,
-			addressBook,
-			discussion.Content,
-			discussion.ID,
-			modelPlan,
-			commonName,
-			userRole,
-		)
+	newDiscussion, err := sqlutils.WithTransaction[models.PlanDiscussion](store, func(tx *sqlx.Tx) (*models.PlanDiscussion, error) {
+		err := BaseStructPreCreate(logger, planDiscussion, principal, store, false)
 		if err != nil {
-			logger.Error("error sending tagged in plan discussion emails to tagged users and teams",
-				zap.String("discussionID", discussion.ID.String()),
-				zap.Error(err))
+			return nil, err
 		}
-	}()
 
-	return discussion, nil
+		// Note: in the future, this could be a transaction as well. It makes sense to create the user accounts for referenced users using a store though.
+		err = UpdateTaggedHTMLMentionsAndRawContent(ctx, store, &planDiscussion.Content, getAccountInformation)
+
+		if err != nil {
+			return nil, fmt.Errorf("unable to update tagged html. error : %w", err)
+		}
+
+		discussion, err := store.PlanDiscussionCreate(logger, planDiscussion, tx)
+		if err != nil {
+			return nil, err
+		}
+
+		tags, err := TagCollectionCreate(tx, logger, principal, "content", "plan_discussion", discussion.ID, planDiscussion.Content.Mentions)
+		if err != nil {
+			return discussion, err
+		}
+		discussion.Content.Tags = tags
+		discussion.Content.Mentions = planDiscussion.Content.Mentions
+
+		commonName := principal.Account().CommonName
+		modelPlan, err := ModelPlanGetByIDLOADER(ctx, input.ModelPlanID)
+		if err != nil {
+			return discussion, err
+		}
+
+		userRole := discussion.UserRole.Humanize(models.ValueOrEmpty(discussion.UserRoleDescription))
+
+		// Send email to MINT Dev Team
+		go func() {
+			sendEmailErr := sendPlanDiscussionCreatedEmail(
+				ctx,
+				logger,
+				emailService,
+				emailTemplateService,
+				addressBook,
+				addressBook.MINTTeamEmail,
+				discussion,
+				modelPlan,
+				commonName,
+				userRole,
+			)
+
+			if sendEmailErr != nil {
+				logger.Error("error sending plan discussion created email to MINT Team",
+					zap.String("discussionID", discussion.ID.String()),
+					zap.Error(sendEmailErr))
+			}
+		}()
+
+		_, notificationErr := notifications.ActivityTaggedInDiscussionCreate(ctx, tx, principal.Account().ID, discussion.ID, discussion.Content, loaders.UserNotificationPreferencesGetByUserID)
+		if notificationErr != nil {
+			return nil, fmt.Errorf("unable to generate notifications, %w", notificationErr)
+		}
+		go func() {
+			err = sendPlanDiscussionTagEmails(
+				ctx,
+				store,
+				true,
+				logger,
+				emailService,
+				emailTemplateService,
+				addressBook,
+				discussion.Content,
+				discussion.ID,
+				modelPlan,
+				commonName,
+				userRole,
+			)
+			if err != nil {
+				logger.Error("error sending tagged in plan discussion emails to tagged users and teams",
+					zap.String("discussionID", discussion.ID.String()),
+					zap.Error(err))
+			}
+		}()
+
+		return discussion, nil
+	})
+	if err != nil {
+		return nil, err
+	}
+	return newDiscussion, err
 }
 
+// Handles send an email for when a tagged entity is tagged in either a plan discussion or discussion reply
 func sendPlanDiscussionTagEmails(
 	ctx context.Context,
-	store *storage.Store,
-	logger *zap.Logger,
+	_ sqlutils.NamedPreparer,
+	isDiscussion bool, // true for discussion, false for
+	_ *zap.Logger,
 	emailService oddmail.EmailService,
 	emailTemplateService email.TemplateService,
 	addressBook email.AddressBook,
@@ -151,9 +161,22 @@ func sendPlanDiscussionTagEmails(
 		case models.TagTypeUserAccount:
 			taggedUserAccount, ok := entity.(*authentication.UserAccount)
 			if !ok {
-				errs = append(errs, fmt.Errorf("tagged entity was expectd to be a user account, but was not able to be cast to UserAccount. entity: %v", entity))
+				errs = append(errs, fmt.Errorf("tagged entity was expected to be a user account, but was not able to be cast to UserAccount. entity: %v", entity))
+				continue
 			}
-			err := sendPlanDiscussionTaggedUserEmail(emailService, emailTemplateService, addressBook, tHTML, discussionID, modelPlan, taggedUserAccount, createdByUserName, createdByUserRole)
+			pref, err := UserNotificationPreferencesGetByUserID(ctx, *mention.EntityUUID)
+			if err != nil {
+				errs = append(errs, fmt.Errorf("unable to get user notification preference, Notification not created %w", err))
+				continue
+			}
+
+			// Early return if
+			if (isDiscussion && !pref.TaggedInDiscussion.SendEmail()) || // is a discussion, and user doesn't want  discussion tag emails
+				(!isDiscussion && !pref.TaggedInDiscussionReply.SendEmail()) { // is a reply, and user doesn't want  discussion reply tag emails
+
+				continue
+			}
+			err = sendPlanDiscussionTaggedUserEmail(emailService, emailTemplateService, addressBook, tHTML, discussionID, modelPlan, taggedUserAccount, createdByUserName, createdByUserRole)
 			if err != nil {
 				errs = append(errs, err) //non blocking
 				continue
@@ -162,7 +185,7 @@ func sendPlanDiscussionTagEmails(
 
 			soln, ok := entity.(*models.PossibleOperationalSolution)
 			if !ok {
-				errs = append(errs, fmt.Errorf("tagged entity was expectd to be a possible solution, but was not able to be cast to PossibleOperationalSolution. entity: %v", entity))
+				errs = append(errs, fmt.Errorf("tagged entity was expected to be a possible solution, but was not able to be cast to PossibleOperationalSolution. entity: %v", entity))
 			}
 
 			config := emailService.GetConfig()
@@ -399,97 +422,101 @@ func CreateDiscussionReply(
 		input.UserRole,
 		input.UserRoleDescription,
 	)
-
-	err := BaseStructPreCreate(logger, discussionReply, principal, store, false)
-	if err != nil {
-		return nil, err
-	}
-	err = UpdateTaggedHTMLMentionsAndRawContent(ctx, store, &discussionReply.Content, getAccountInformation)
-
-	if err != nil {
-		return nil, fmt.Errorf("unable to update tagged html. error : %w", err)
-	}
-
-	reply, tx, err := store.DiscussionReplyCreate(logger, discussionReply, nil)
-	if tx != nil {
-		defer tx.Rollback()
-	}
-	if err != nil {
-		return reply, err
-	}
-	tags, _, err := TagCollectionCreate(logger, store, principal, "content", "discussion_reply", reply.ID, discussionReply.Content.Mentions, tx)
-	if err != nil {
-		return reply, err
-	}
-	reply.Content.Tags = tags
-	reply.Content.Mentions = discussionReply.Content.Mentions
-	err = tx.Commit()
-	if err != nil {
-		return nil, err
-	}
-
-	// Note these aren't async in order to prevent race condition. If possible, this can be made async.
-	discussion, err := store.PlanDiscussionByID(logger, reply.DiscussionID)
-	if err != nil {
-		return reply, err
-	}
-	modelPlan, err := ModelPlanGetByIDLOADER(ctx, discussion.ModelPlanID)
-	if err != nil {
-		return reply, err
-	}
-	go func() {
-
-		replyUser := principal.Account()
-		commonName := replyUser.CommonName
+	newReply, err := sqlutils.WithTransaction[models.DiscussionReply](store, func(tx *sqlx.Tx) (*models.DiscussionReply, error) {
+		err := BaseStructPreCreate(logger, discussionReply, principal, store, false)
+		if err != nil {
+			return nil, err
+		}
+		err = UpdateTaggedHTMLMentionsAndRawContent(ctx, store, &discussionReply.Content, getAccountInformation)
 
 		if err != nil {
-			logger.Error("error sending discussion reply emails. Unable to retrieve modelPlan",
-				zap.String("replyID", reply.ID.String()),
-				zap.Error(err))
+			return nil, fmt.Errorf("unable to update tagged html. error : %w", err)
 		}
 
-		errReplyEmail := sendDiscussionReplyEmails(
-			ctx,
-			store,
-			logger,
-			emailService,
-			emailTemplateService,
-			addressBook,
-			discussion,
-			reply,
-			modelPlan,
-			replyUser,
-		)
-		if errReplyEmail != nil {
-			logger.Error("error sending tagged in plan discussion reply emails to tagged users and teams",
-				zap.String("discussionID", discussion.ID.String()),
-				zap.Error(errReplyEmail))
-		}
-
-		err = sendPlanDiscussionTagEmails(
-			ctx,
-			store,
-			logger,
-			emailService,
-			emailTemplateService,
-			addressBook,
-			reply.Content,
-			reply.DiscussionID,
-			modelPlan,
-			commonName,
-			reply.UserRole.Humanize(models.ValueOrEmpty(reply.UserRoleDescription)),
-		)
+		reply, err := storage.DiscussionReplyCreate(logger, discussionReply, tx)
 
 		if err != nil {
+			return reply, err
+		}
+		tags, err := TagCollectionCreate(tx, logger, principal, "content", "discussion_reply", reply.ID, discussionReply.Content.Mentions)
+		if err != nil {
+			return reply, err
+		}
+		reply.Content.Tags = tags
+		reply.Content.Mentions = discussionReply.Content.Mentions
+
+		// Note these aren't async in order to prevent race condition. If possible, this can be made async.
+		discussion, err := store.PlanDiscussionByID(logger, reply.DiscussionID)
+		if err != nil {
+			return reply, err
+		}
+		modelPlan, err := ModelPlanGetByIDLOADER(ctx, discussion.ModelPlanID)
+		if err != nil {
+			return reply, err
+		}
+		// Create Activity and notifications in the DB
+		_, notificationErr := notifications.ActivityTaggedInDiscussionReplyCreate(ctx, tx, principal.Account().ID, discussion.ID, reply.ID, reply.Content, loaders.UserNotificationPreferencesGetByUserID)
+		if notificationErr != nil {
+			return nil, fmt.Errorf("unable to generate notifications, %w", notificationErr)
+		}
+		go func() {
+
+			replyUser := principal.Account()
+			commonName := replyUser.CommonName
+
 			if err != nil {
-				logger.Error("error sending tagged in plan discussion reply emails to tagged users and teams",
-					zap.String("discussionID", discussion.ID.String()),
+				logger.Error("error sending discussion reply emails. Unable to retrieve modelPlan",
+					zap.String("replyID", reply.ID.String()),
 					zap.Error(err))
 			}
-		}
-	}()
 
-	return reply, err
+			errReplyEmail := sendDiscussionReplyEmails(
+				ctx,
+				store,
+				logger,
+				emailService,
+				emailTemplateService,
+				addressBook,
+				discussion,
+				reply,
+				modelPlan,
+				replyUser,
+			)
+			if errReplyEmail != nil {
+				logger.Error("error sending tagged in plan discussion reply emails to tagged users and teams",
+					zap.String("discussionID", discussion.ID.String()),
+					zap.Error(errReplyEmail))
+			}
+
+			err = sendPlanDiscussionTagEmails(
+				ctx,
+				store,
+				false,
+				logger,
+				emailService,
+				emailTemplateService,
+				addressBook,
+				reply.Content,
+				reply.DiscussionID,
+				modelPlan,
+				commonName,
+				reply.UserRole.Humanize(models.ValueOrEmpty(reply.UserRoleDescription)),
+			)
+
+			if err != nil {
+				if err != nil {
+					logger.Error("error sending tagged in plan discussion reply emails to tagged users and teams",
+						zap.String("discussionID", discussion.ID.String()),
+						zap.Error(err))
+				}
+			}
+		}()
+		return reply, err
+	})
+	if err != nil {
+		return nil, err
+	}
+	return newReply, err
 }
 
 // UpdateDiscussionReply implements resolver logic to update a Discussion reply object
@@ -557,6 +584,20 @@ func PlanDiscussionGetByModelPlanIDLOADER(ctx context.Context, modelPlanID uuid.
 	}
 
 	return result.([]*models.PlanDiscussion), nil
+}
+
+// PlanDiscussionGetByID returns a single discussion from the database for a given discussionID
+func PlanDiscussionGetByID(_ context.Context, store *storage.Store, logger *zap.Logger, discussionID uuid.UUID) (*models.PlanDiscussion, error) {
+	// Future Enhancement: make this a data loader
+	return store.PlanDiscussionByID(logger, discussionID)
+
+}
+
+// DiscussionReplyGetByID returns a single discussion reply from the database for a given discussionReplyID
+func DiscussionReplyGetByID(_ context.Context, store *storage.Store, logger *zap.Logger, discussionReplyID uuid.UUID) (*models.DiscussionReply, error) {
+	// Future Enhancement: make this a data loader
+	return store.DiscussionReplyByID(logger, discussionReplyID)
+
 }
 
 // GetMostRecentDiscussionRoleSelection implements resolver logic to get the most recent user role selection

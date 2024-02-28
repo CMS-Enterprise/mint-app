@@ -38,7 +38,7 @@ func (suite *ResolverSuite) TestPlanFavoriteCreate() {
 
 	suite.NoError(err)
 	suite.EqualValues(favorite.ModelPlanID, plan.ID)
-	// suite.EqualValues(favorite.UserID, plan.CreatedBy) //TODO can renable after all tables are migrated
+	suite.EqualValues(favorite.UserID, plan.CreatedBy)
 	suite.EqualValues(favorite.UserID, suite.testConfigs.Principal.Account().ID)
 
 }

@@ -6,13 +6,6 @@ type LaunchDarklySettings {
   signedHash: String!
 }
 
-"""
-The current user of the application
-"""
-type CurrentUser {
-  launchDarkly: LaunchDarklySettings!
-}
-
 type OperationalNeed {
     id: UUID!
     modelPlanID: UUID!
@@ -930,11 +923,11 @@ enum SatisfactionLevel {
   VERY_DISSATISFIED
 }
 
+
 """
 Query definition for the schema
 """
 type Query {
-  currentUser: CurrentUser!
   planDocument(id: UUID!): PlanDocument!
   @hasAnyRole(roles: [MINT_USER, MINT_MAC])
   existingModelCollection: [ExistingModel!]!
@@ -1086,6 +1079,8 @@ reportAProblem(input: ReportAProblemInput!): Boolean!
 This mutation sends feedback about the MINT product to the MINT team
 """
 sendFeedbackEmail(input: SendFeedbackEmailInput!): Boolean!
+
+
 }
 
 type Subscription {

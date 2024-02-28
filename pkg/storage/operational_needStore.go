@@ -6,6 +6,7 @@ import (
 
 	"github.com/cmsgov/mint-app/pkg/models"
 	"github.com/cmsgov/mint-app/pkg/shared/utilityUUID"
+	"github.com/cmsgov/mint-app/pkg/sqlutils"
 	"github.com/cmsgov/mint-app/pkg/storage/genericmodel"
 
 	_ "embed"
@@ -245,7 +246,7 @@ func (s *Store) OperationalNeedUpdateByID(
 
 // OperationalNeedInsertAllPossible will insert all possible operational need in the DB for a specific model pland
 func (s *Store) OperationalNeedInsertAllPossible(
-	np NamedPreparer,
+	np sqlutils.NamedPreparer,
 	_ *zap.Logger,
 	modelPlanID uuid.UUID,
 	createdBy uuid.UUID,

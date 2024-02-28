@@ -1,9 +1,8 @@
 import React from 'react';
 import { MockedProvider } from '@apollo/client/testing';
-import { render } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 
 import SearchOktaUsers from 'queries/SearchOktaUsers';
+import setup from 'utils/testing/setup';
 
 import OktaUserSelect from './index';
 
@@ -30,7 +29,7 @@ describe('OktaUserSelect', () => {
   };
 
   it('selects contact from dropdown', async () => {
-    const { asFragment, getByTestId, findByText } = render(
+    const { user, asFragment, getByTestId, findByText } = setup(
       <MockedProvider mocks={[oktaUsersQuery]} addTypename={false}>
         <OktaUserSelect
           id="cedarContactSelect"
@@ -42,7 +41,7 @@ describe('OktaUserSelect', () => {
 
     // Type first name into select field input
     const input = getByTestId('cedar-contact-select');
-    userEvent.type(input, 'Adeline');
+    await user.type(input, 'Adeline');
 
     // Get mocked Okta result
     const userOption = await findByText('Adeline Aarons, ABCD');
@@ -52,7 +51,7 @@ describe('OktaUserSelect', () => {
     expect(asFragment()).toMatchSnapshot();
 
     // Select option
-    userEvent.click(userOption);
+    await user.click(userOption);
 
     // Check that select field displays correct value
     expect(input).toHaveValue('Adeline Aarons, ABCD');

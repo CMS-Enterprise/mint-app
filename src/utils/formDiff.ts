@@ -14,7 +14,8 @@ export const dirtyInput = (initialValues: any, values: any) => {
   const onlyDirtyInput: DirtyInputType = {};
 
   Object.keys(initialValues).forEach(field => {
-    if (initialValues[field] !== values[field]) {
+    // Added conditional for 0 value, as number inputs are always initialized with 0, and it needs to be persisted even if not touched
+    if (initialValues[field] !== values[field] || initialValues[field] === 0) {
       onlyDirtyInput[field] = values[field];
     }
   });
