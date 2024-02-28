@@ -101,7 +101,7 @@ func GetDigestAnalyzedAudits( //TODO: EASI-3338 perhaps don't export this method
 	store *storage.Store,
 	logger *zap.Logger,
 ) ([]*models.AnalyzedAudit, []uuid.UUID, error) {
-	//TODO: EASI-3338 Consider making this take a userID and an array of model_plan_ids, so it can be reused elsewhere
+	//TODO: EASI-3338 Consider making this take a date and an array of model_plan_ids, so it can be reused elsewhere
 
 	planFavorites, err := store.PlanFavoriteGetCollectionByUserID(logger, userID)
 	if err != nil {
@@ -111,19 +111,19 @@ func GetDigestAnalyzedAudits( //TODO: EASI-3338 perhaps don't export this method
 		return nil, nil, nil
 	}
 
-	modelPlanIds := lo.Map(planFavorites, func(p *models.PlanFavorite, index int) uuid.UUID {
+	modelPlanIDs := lo.Map(planFavorites, func(p *models.PlanFavorite, index int) uuid.UUID {
 		return p.ModelPlanID
 	})
-	if len(modelPlanIds) == 0 {
+	if len(modelPlanIDs) == 0 {
 		return nil, nil, nil
 	}
 
-	analyzedAudits, err := store.AnalyzedAuditGetByModelPlanIDsAndDate(logger, modelPlanIds, date)
+	analyzedAudits, err := store.AnalyzedAuditGetByModelPlanIDsAndDate(logger, modelPlanIDs, date)
 	if err != nil {
 		return nil, nil, err
 	}
 
-	return analyzedAudits, modelPlanIds, nil
+	return analyzedAudits, modelPlanIDs, nil
 }
 
 // GenerateDigestEmail will generate the daily digest email from template
