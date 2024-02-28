@@ -24,7 +24,7 @@ type AlertProps = {
   isClosable?: boolean;
   headingLevel?: HeadingLevel;
   closeAlert?: (closed: any) => void;
-  validation?: boolean; // converts p tags to div to allow ul nesting
+  validation?: boolean; // Adds usa-alert--validation class, convert p to span to allow list nesting
 } & JSX.IntrinsicElements['div'];
 
 export const Alert = ({

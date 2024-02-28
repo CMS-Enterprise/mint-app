@@ -1,13 +1,73 @@
 import React from 'react';
+import { Provider } from 'react-redux';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { render, waitFor } from '@testing-library/react';
+import configureMockStore from 'redux-mock-store';
 import Sinon from 'sinon';
 
 import allMocks, { modelID, summaryMock } from 'data/mock/readonly';
+import GetOperationalNeeds from 'queries/ITSolutions/GetOperationalNeeds';
+import {
+  OperationalNeedKey,
+  OperationalSolutionKey,
+  OpSolutionStatus
+} from 'types/graphql-global-types';
 import VerboseMockedProvider from 'utils/testing/MockedProvider';
 import setup from 'utils/testing/setup';
 
 import ShareExportModal from './index';
+
+const mockStore = configureMockStore();
+const store = mockStore({ auth: { euaId: 'MINT' } });
+
+const operationalNeedMock = [
+  {
+    request: {
+      query: GetOperationalNeeds,
+      variables: { id: modelID }
+    },
+    result: {
+      data: {
+        modelPlan: {
+          id: modelID,
+          isCollaborator: true,
+          modelName: 'My excellent plan that I just initiated',
+          operationalNeeds: [
+            {
+              __typename: 'OperationalNeed',
+              id: '123',
+              modelPlanID: modelID,
+              name: 'Recruit participants',
+              key: OperationalNeedKey.RECRUIT_PARTICIPANTS,
+              nameOther: null,
+              needed: true,
+              modifiedDts: '2022-05-12T15:01:39.190679Z',
+              solutions: [
+                {
+                  __typename: 'OperationalSolution',
+                  id: 3,
+                  status: OpSolutionStatus.IN_PROGRESS,
+                  name: 'Shared Systems',
+                  key: OperationalSolutionKey.SHARED_SYSTEMS,
+                  otherHeader: '',
+                  mustStartDts: null,
+                  mustFinishDts: null,
+                  operationalSolutionSubtasks: [],
+                  needed: true,
+                  nameOther: null,
+                  pocEmail: null,
+                  pocName: null,
+                  createdBy: '',
+                  createdDts: ''
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  }
+];
 
 describe('ShareExportModal', () => {
   // Stubing Math.random that occurs in Truss Tooltip component for deterministic output
@@ -15,23 +75,27 @@ describe('ShareExportModal', () => {
 
   it('renders modal with prepopulated filter', async () => {
     const { user, getByText, getByTestId } = setup(
-      <MemoryRouter
-        initialEntries={[`/models/${modelID}/read-only/model-basics`]}
-      >
-        <VerboseMockedProvider
-          mocks={[...allMocks, ...summaryMock]}
-          addTypename={false}
+      <Provider store={store}>
+        <MemoryRouter
+          initialEntries={[
+            `/models/${modelID}/read-only/model-basics?filter-view=ccw`
+          ]}
         >
-          <Route path="/models/:modelID/read-only/model-basics">
-            <ShareExportModal
-              modelID={modelID}
-              closeModal={() => null}
-              filteredView="ccw"
-              setStatusMessage={() => null}
-            />
-          </Route>
-        </VerboseMockedProvider>
-      </MemoryRouter>
+          <VerboseMockedProvider
+            mocks={[...allMocks, ...summaryMock, ...operationalNeedMock]}
+            addTypename={false}
+          >
+            <Route path="/models/:modelID/read-only/model-basics">
+              <ShareExportModal
+                modelID={modelID}
+                closeModal={() => null}
+                filteredView="ccw"
+                setStatusMessage={() => null}
+              />
+            </Route>
+          </VerboseMockedProvider>
+        </MemoryRouter>
+      </Provider>
     );
 
     await waitFor(async () => {
