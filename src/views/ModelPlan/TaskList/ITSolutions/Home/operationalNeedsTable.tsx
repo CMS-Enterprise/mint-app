@@ -5,7 +5,6 @@ Table component for rendering both Other Operational Needs and Operational Need 
 Queries operationalNeeds which contains possible needs and needs
 Can render table of type GetOperationalNeeds_modelPlan_operationalNeeds or GetOperationalNeeds_modelPlan_operationalNeeds_solutions_solutions
 */
-
 import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { RootStateOrAny, useSelector } from 'react-redux';
@@ -48,6 +47,7 @@ import {
   sortColumnValues
 } from 'utils/tableSort';
 import { isAssessment } from 'utils/user';
+import { helpSolutions } from 'views/HelpAndKnowledge/SolutionsHelp/solutionsMap';
 
 import OperationalNeedsStatusTag, {
   OperationalNeedsSolutionsStatus
@@ -356,6 +356,15 @@ const OperationalNeedsTable = ({
     );
   }
 
+  if (readOnly && filterSolutions && operationalNeeds.length === 0) {
+    return (
+      <FilterViewSolutionsAlert
+        filterSolutions={filterSolutions}
+        operationalNeeds={operationalNeeds}
+      />
+    );
+  }
+
   if (readOnly && operationalNeeds.length === 0) {
     return (
       <Alert heading={t('itSolutionsTable.noNeedsReadonly')} type="info">
@@ -510,7 +519,46 @@ const OperationalNeedsTable = ({
           {t('itSolutionsTable.noNeedsInfo')}
         </Alert>
       )}
+
+      {filterSolutions && (
+        <FilterViewSolutionsAlert
+          filterSolutions={filterSolutions}
+          operationalNeeds={operationalNeeds}
+        />
+      )}
     </div>
+  );
+};
+
+export const FilterViewSolutionsAlert = ({
+  filterSolutions,
+  operationalNeeds
+}: {
+  filterSolutions: OperationalSolutionKey[];
+  operationalNeeds: any[];
+}) => {
+  const { t } = useTranslation('itSolutions');
+
+  const unusedSolutions = filterSolutions.filter(
+    solution => !operationalNeeds.find((need: any) => need.key === solution)
+  );
+
+  if (unusedSolutions.length === 0) return null;
+
+  return (
+    <Alert noIcon type="info">
+      {t('itSolutionsTable.unusedSolutionsAlert')}
+      <ul className="margin-top-1 margin-bottom-0">
+        {helpSolutions
+          .filter(solution => unusedSolutions.includes(solution.enum))
+          .map(solution => (
+            <li>
+              {solution.name}
+              {solution.acronym ? ` (${solution.acronym})` : ''}
+            </li>
+          ))}
+      </ul>
+    </Alert>
   );
 };
 

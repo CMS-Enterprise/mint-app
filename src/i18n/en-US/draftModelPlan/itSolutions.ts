@@ -77,7 +77,9 @@ const itSolutions = {
       'If you have additional operational needs you want to track, add an operational need or solution below.',
     noNeedsReadonlyInfo: 'Check back again later for updates.',
     noNeedsReadonlyEditInfo:
-      'To determine the operational needs, fill out more of the Model Plan.'
+      'To determine the operational needs, fill out more of the Model Plan.',
+    unusedSolutionsAlert:
+      'This model has not specified they will use the following solution(s):'
   },
   status: {
     notAnswered: 'Not answered',
