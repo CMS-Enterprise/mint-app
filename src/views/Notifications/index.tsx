@@ -2,7 +2,7 @@ import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 
 // import NotificationsHome from './Home';
-import NotificationHome from './home';
+import NotificationsHome from './home';
 import NotificationSettings from './Settings';
 
 const Notifications = () => {
@@ -15,7 +15,7 @@ const Notifications = () => {
         component={NotificationSettings}
         exact
       />
-      <Route path="/notifications" component={NotificationHome} />
+      <Route path="/notifications" component={NotificationsHome} />
     </Switch>
   );
 };
