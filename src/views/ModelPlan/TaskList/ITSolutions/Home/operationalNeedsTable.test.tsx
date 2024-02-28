@@ -144,14 +144,12 @@ describe('Operational Solutions Home', () => {
 
   it('renders filter view solutions alert', async () => {
     const { asFragment } = render(
-      <Provider store={store}>
-        <FilterViewSolutionsAlert
-          filterSolutions={[OperationalSolutionKey.CCW]}
-          operationalNeeds={
-            returnNeeds(true)[0].result.data.modelPlan.operationalNeeds
-          }
-        />
-      </Provider>
+      <FilterViewSolutionsAlert
+        filterSolutions={[OperationalSolutionKey.CCW]}
+        operationalNeeds={
+          returnNeeds(true)[0].result.data.modelPlan.operationalNeeds
+        }
+      />
     );
 
     expect(asFragment()).toMatchSnapshot();
