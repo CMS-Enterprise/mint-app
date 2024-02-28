@@ -104,7 +104,7 @@ repos:
         entry: git-secrets --pre_commit_hook
 
   - repo: https://github.com/sqlfluff/sqlfluff
-    rev: 2.3.5
+    rev: 2.0.7
     hooks:
       - id: sqlfluff-fix
         exclude: ^migrations/
