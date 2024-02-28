@@ -41,7 +41,8 @@ vi.mock('launchdarkly-react-client-sdk', () => ({
   useFlags: () => {
     return {
       systemProfile: true,
-      help: true
+      help: true,
+      notificationsEnabled: true
     };
   }
 }));
