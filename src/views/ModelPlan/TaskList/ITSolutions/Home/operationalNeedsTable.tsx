@@ -107,7 +107,7 @@ const OperationalNeedsTable = ({
         : filterNeedsFormatSolutions(needData);
 
     if (filterSolutions && Array.isArray(formattedData)) {
-      formattedData = (formattedData as any)?.filter((solution: any) => {
+      formattedData = (formattedData as [])?.filter((solution: any) => {
         return filterSolutions.includes(solution.key);
       });
     }
