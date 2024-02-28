@@ -36,7 +36,7 @@ func userNotificationCreate(
 	// The id of the user the notification is for
 	userID uuid.UUID,
 	// the preference of a user about specific notification types
-	notificationPreference models.UserNotificationPreferenceFlag,
+	notificationPreference models.UserNotificationPreferenceFlags,
 
 ) (*models.UserNotification, error) {
 

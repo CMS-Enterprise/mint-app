@@ -24,8 +24,8 @@ func (suite *NotificationsSuite) TestUserNotificationCreate() {
 	fakePrinc, err := useraccountstoretestconfigs.GetTestPrincipal(suite.testConfigs.Store, "FAKE")
 	suite.NoError(err)
 
-	preferenceFlag := models.UserNotificationPreferenceInAppOnly
-	notification, err := userNotificationCreate(suite.testConfigs.Context, suite.testConfigs.Store, createdActivity, fakePrinc.Account().ID, preferenceFlag)
+	preferenceFlags := models.UserNotificationPreferenceFlags{models.UserNotificationPreferenceInApp}
+	notification, err := userNotificationCreate(suite.testConfigs.Context, suite.testConfigs.Store, createdActivity, fakePrinc.Account().ID, preferenceFlags)
 	suite.NoError(err)
 	suite.NotNil(notification)
 
@@ -55,16 +55,16 @@ func (suite *NotificationsSuite) TestUserNotificationMarkReadFunctions() {
 	fakePrinc, err := useraccountstoretestconfigs.GetTestPrincipal(suite.testConfigs.Store, "FAKE")
 	suite.NoError(err)
 
-	preferenceFlag := models.UserNotificationPreferenceInAppOnly
-	notification1, err := userNotificationCreate(suite.testConfigs.Context, suite.testConfigs.Store, createdActivity, fakePrinc.Account().ID, preferenceFlag)
+	preferenceFlags := models.UserNotificationPreferenceFlags{models.UserNotificationPreferenceInApp}
+	notification1, err := userNotificationCreate(suite.testConfigs.Context, suite.testConfigs.Store, createdActivity, fakePrinc.Account().ID, preferenceFlags)
 	suite.NoError(err)
 	suite.NotNil(notification1)
 
-	notification2, err := userNotificationCreate(suite.testConfigs.Context, suite.testConfigs.Store, createdActivity, fakePrinc.Account().ID, preferenceFlag)
+	notification2, err := userNotificationCreate(suite.testConfigs.Context, suite.testConfigs.Store, createdActivity, fakePrinc.Account().ID, preferenceFlags)
 	suite.NoError(err)
 	suite.NotNil(notification2)
 
-	notification3, err := userNotificationCreate(suite.testConfigs.Context, suite.testConfigs.Store, createdActivity, fakePrinc.Account().ID, preferenceFlag)
+	notification3, err := userNotificationCreate(suite.testConfigs.Context, suite.testConfigs.Store, createdActivity, fakePrinc.Account().ID, preferenceFlags)
 	suite.NoError(err)
 	suite.NotNil(notification3)
 
