@@ -1,5 +1,14 @@
 const notifications = {
   breadcrumb: 'Notifications',
+  index: {
+    heading: 'Notifications',
+    markAllAsRead: 'Mark all as read',
+    notificationSettings: 'Notification settings',
+    infoBanner: {
+      emptyState:
+        'You’re all up-to-date on notifications. Check back later for updates.'
+    }
+  },
   settings: {
     heading: 'Notification settings',
     subHeading:
