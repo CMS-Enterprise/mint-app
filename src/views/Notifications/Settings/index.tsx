@@ -146,7 +146,7 @@ const NotificationSettings = () => {
             innerRef={formikRef}
           >
             {(formikProps: FormikProps<NotificationSettingsFormType>) => {
-              const { values, handleSubmit } = formikProps;
+              const { values, handleSubmit, dirty } = formikProps;
 
               return (
                 <>
@@ -212,7 +212,7 @@ const NotificationSettings = () => {
                       })}
 
                       <div className="margin-top-6 margin-bottom-3">
-                        <Button type="submit">
+                        <Button type="submit" disabled={!dirty}>
                           {notificationsT('settings.save')}
                         </Button>
                       </div>
