@@ -4,6 +4,7 @@ export type Flags = {
   hideGroupView: boolean;
   helpScoutEnabled: boolean;
   feedbackEnabled: boolean;
+  notificationsEnabled: boolean;
 };
 
 export type FlagsState = {

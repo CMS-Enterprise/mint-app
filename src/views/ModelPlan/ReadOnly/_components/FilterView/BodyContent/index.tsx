@@ -78,25 +78,23 @@ const BodyContent = ({
             <FitleredViewSectionContent
               modelID={modelID}
               filteredView={filteredView}
-              isViewingFilteredView
-              filteredQuestions={
-                individualFilterView[task as keyof typeof individualFilterView]
-              }
             />
           </FitleredViewSection>
         );
       })}
 
-      <Alert type="info" noIcon headingLevel="h4">
-        <span className="margin-y-0 font-body-sm text-bold display-block">
-          {t('alert.bodyContentHeading')}
-        </span>
-        <Trans i18nKey="filterView:alert.content">
-          indexOne
-          <Link href="mailto:MINTTeam@cms.hhs.gov">helpTextEmail</Link>
-          indexTwo
-        </Trans>
-      </Alert>
+      <div className="margin-top-4 padding-top-4 border-top-1px border-base-light">
+        <Alert type="info" noIcon headingLevel="h4">
+          <span className="margin-y-0 font-body-sm text-bold display-block">
+            {t('alert.bodyContentHeading')}
+          </span>
+          <Trans i18nKey="filterView:alert.content">
+            indexOne
+            <Link href="mailto:MINTTeam@cms.hhs.gov">helpTextEmail</Link>
+            indexTwo
+          </Trans>
+        </Alert>
+      </div>
     </Grid>
   );
 };

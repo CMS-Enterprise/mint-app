@@ -3,6 +3,7 @@
 
 import React, { forwardRef } from 'react';
 import { Tooltip as TrussTooltip } from '@trussworks/react-uswds';
+import classNames from 'classnames';
 
 type TooltipProps = {
   children: React.ReactNode;
@@ -28,7 +29,7 @@ const Tooltip = ({
       label={label}
       asCustom={CustomDiv}
       position={position}
-      className={className}
+      className={classNames('mint-no-print', className)}
     >
       {children}
     </TrussTooltip>
