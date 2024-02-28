@@ -410,6 +410,7 @@ exports[`Prepare for clearance checklist > matches snapshot 1`] = `
               <button
                 class="usa-button"
                 data-testid="button"
+                disabled=""
                 type="submit"
               >
                 Save

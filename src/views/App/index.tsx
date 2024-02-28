@@ -178,10 +178,12 @@ const AppRoutes = () => {
         component={SubmitRequest}
       />
 
-      <SecureRoute
-        path="/notifications/settings"
-        component={NotificationSettings}
-      />
+      {flags.notificationsEnabled && (
+        <SecureRoute
+          path="/notifications/settings"
+          component={NotificationSettings}
+        />
+      )}
 
       <SecureRoute path="/help-and-knowledge" component={HelpAndKnowledge} />
 
