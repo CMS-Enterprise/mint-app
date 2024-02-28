@@ -19,7 +19,7 @@ type DailyDigestCompleteActivityMeta struct {
 func newDailyDigestCompleteActivityMeta(userID uuid.UUID, date time.Time, modelPlanIDs []uuid.UUID) *DailyDigestCompleteActivityMeta {
 	version := 0 //iterate this if this type ever updates
 	return &DailyDigestCompleteActivityMeta{
-		ActivityMetaBaseStruct: NewActivityMetaBaseStruct(ActivityTaggedInDiscussion, version),
+		ActivityMetaBaseStruct: NewActivityMetaBaseStruct(ActivityDigest, version),
 		Date:                   date,
 		ModelPlanIDs:           modelPlanIDs,
 		UserID:                 userID,

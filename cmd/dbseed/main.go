@@ -271,6 +271,8 @@ func (s *Seeder) CreateAnalyzedAuditData() {
 	// Step 2. Iterate through all model plans, and generate analyzed audit data
 	for _, mp := range modelPlans {
 		_, err2 := resolvers.AnalyzeModelPlanForAnalyzedAudit(s.Config.Context, s.Config.Store, s.Config.Logger, dayToAnalyze, mp.ID)
+		//TODO: EASI-3934 Note that this will create an error if you run this a second time, because there is already an analyzed audit record.
+		// Either handle this, or just ignore the error. We could potentially override if we want, but that might not be the best
 		if err2 != nil {
 			fmt.Printf("there was an issue analyzing model plan: %s, ID: %s", mp.ModelName, mp.ID)
 		}
