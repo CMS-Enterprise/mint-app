@@ -64,7 +64,7 @@ exports[`Prepare for clearance checklist > matches snapshot 1`] = `
           Notification settings
         </h1>
         <p
-          class="margin-bottom-6 font-body-md line-height-sans-4"
+          class="margin-bottom-6 font-body-lg line-height-sans-4"
         >
           You will be notified in-app for the following events and can choose to opt-out of receiving emails below.
         </p>

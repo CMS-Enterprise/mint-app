@@ -133,7 +133,7 @@ const NotificationSettings = () => {
             {notificationsT('settings.heading')}
           </PageHeading>
 
-          <p className="margin-bottom-6 font-body-md line-height-sans-4">
+          <p className="margin-bottom-6 font-body-lg line-height-sans-4">
             {notificationsT('settings.subHeading')}
           </p>
 
