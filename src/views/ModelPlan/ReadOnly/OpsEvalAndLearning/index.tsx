@@ -240,7 +240,6 @@ const ReadOnlyOpsEvalAndLearning = ({
                 childrenToCheck={
                   filteredView ? claimsFilterGroupFields : undefined
                 }
-                hideAlert={!!filteredView}
               />
 
               <ReadOnlyBody
@@ -273,7 +272,6 @@ const ReadOnlyOpsEvalAndLearning = ({
                 childrenToCheck={
                   filteredView ? qualityFilterGroupFields : undefined
                 }
-                hideAlert={!!filteredView}
               />
 
               <ReadOnlyBody

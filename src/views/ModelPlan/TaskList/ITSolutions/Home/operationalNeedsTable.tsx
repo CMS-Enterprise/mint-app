@@ -21,6 +21,7 @@ import {
 import { useQuery } from '@apollo/client';
 import { Icon, Table as UswdsTable } from '@trussworks/react-uswds';
 import classNames from 'classnames';
+import { OperationalSolutionKey } from 'gql/gen/graphql';
 import i18next from 'i18next';
 import { useFlags } from 'launchdarkly-react-client-sdk';
 
@@ -69,13 +70,17 @@ type OperationalNeedsTableProps = {
   modelID: string;
   type: 'needs' | 'possibleNeeds';
   readOnly?: boolean;
+  hideGlobalFilter?: boolean;
+  filterSolutions?: OperationalSolutionKey[];
 };
 
 const OperationalNeedsTable = ({
   hiddenColumns,
   modelID,
   type,
-  readOnly
+  readOnly,
+  hideGlobalFilter,
+  filterSolutions
 }: OperationalNeedsTableProps) => {
   const { t } = useTranslation('itSolutions');
 
@@ -96,10 +101,19 @@ const OperationalNeedsTable = ({
       ? data?.modelPlan?.operationalNeeds
       : ([] as GetOperationalNeedsOperationalNeedsType[]);
 
-    return type === 'possibleNeeds'
-      ? filterPossibleNeeds(needData)
-      : filterNeedsFormatSolutions(needData);
-  }, [data?.modelPlan?.operationalNeeds, type]);
+    let formattedData =
+      type === 'possibleNeeds'
+        ? filterPossibleNeeds(needData)
+        : filterNeedsFormatSolutions(needData);
+
+    if (filterSolutions && Array.isArray(formattedData)) {
+      formattedData = (formattedData as any)?.filter((solution: any) => {
+        return filterSolutions.includes(solution.key);
+      });
+    }
+
+    return formattedData;
+  }, [data?.modelPlan?.operationalNeeds, type, filterSolutions]);
 
   const isCollaborator = data?.modelPlan?.isCollaborator;
 
@@ -267,6 +281,11 @@ const OperationalNeedsTable = ({
     ];
   }, [t, modelID]);
 
+  // Swap the solution and need positions if readonly filter view
+  if (filterSolutions) {
+    [needsColumns[0], needsColumns[1]] = [needsColumns[1], needsColumns[0]];
+  }
+
   const {
     getTableProps,
     getTableBodyProps,
@@ -349,23 +368,27 @@ const OperationalNeedsTable = ({
 
   return (
     <div className="model-plan-table" data-testid={`${type}-table`}>
-      <div className="mint-header__basic">
-        <GlobalClientFilter
-          setGlobalFilter={setGlobalFilter}
-          tableID={t('itSolutionsTable.id')}
-          tableName={t('itSolutionsTable.title')}
-          className="margin-bottom-4 width-mobile-lg maxw-full"
-        />
-      </div>
+      {!hideGlobalFilter && (
+        <div className="mint-header__basic">
+          <GlobalClientFilter
+            setGlobalFilter={setGlobalFilter}
+            tableID={t('itSolutionsTable.id')}
+            tableName={t('itSolutionsTable.title')}
+            className="margin-bottom-4 width-mobile-lg maxw-full"
+          />
+        </div>
+      )}
 
-      <TableResults
-        globalFilter={state.globalFilter}
-        pageIndex={state.pageIndex}
-        pageSize={state.pageSize}
-        filteredRowLength={page.length}
-        rowLength={operationalNeeds.length}
-        className="margin-bottom-4"
-      />
+      {!hideGlobalFilter && (
+        <TableResults
+          globalFilter={state.globalFilter}
+          pageIndex={state.pageIndex}
+          pageSize={state.pageSize}
+          filteredRowLength={page.length}
+          rowLength={operationalNeeds.length}
+          className="margin-bottom-4"
+        />
+      )}
 
       <UswdsTable bordered={false} {...getTableProps()} fullWidth scrollable>
         <thead>

@@ -845,3 +845,14 @@ export type TranslationPlanSection =
   | TranslationPlan['beneficiaries']
   | TranslationPlan['opsEvalAndLearning']
   | TranslationPlan['payments'];
+
+export enum PlanSection {
+  MODEL_PLAN = 'modelPlan',
+  BASICS = 'basics',
+  GENERAL_CHARACTERISTICS = 'generalCharacteristics',
+  PARTICPANTS_AND_PROVIDERS = 'participantsAndProviders',
+  BENEFICIARIES = 'beneficiaries',
+  OPS_EVAL_AND_LEARNING = 'opsEvalAndLearning',
+  PAYMENTS = 'payments',
+  COLLABORATORS = 'collaborators'
+}
