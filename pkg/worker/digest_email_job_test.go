@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"github.com/cmsgov/mint-app/pkg/email"
+	"github.com/cmsgov/mint-app/pkg/graph/resolvers"
 
 	faktory "github.com/contribsys/faktory/client"
 	faktory_worker "github.com/contribsys/faktory_worker_go"
@@ -17,7 +18,7 @@ import (
 )
 
 func (suite *WorkerSuite) TestDigestEmail() {
-
+	// TODO: EASI-3338 consider moving this test to resolvers
 	// Setup email
 	mockController := gomock.NewController(suite.T())
 	mockEmailService := oddmail.NewMockEmailService(mockController)
@@ -72,13 +73,14 @@ func (suite *WorkerSuite) TestDigestEmail() {
 	analyzedAudit := suite.createAnalyzedAudit(mp, time.Now().UTC(), auditChange)
 
 	// Test getDailyDigestAnalyzedAudits
-	analyzedAudits, _, err = getDigestAnalyzedAudits(collaborator.UserID, time.Now().UTC(), worker.Store, worker.Logger)
+
+	analyzedAudits, _, err = resolvers.GetDigestAnalyzedAudits(collaborator.UserID, time.Now().UTC(), worker.Store, worker.Logger)
 	suite.Equal(analyzedAudit.ID, analyzedAudits[0].ID)
 	suite.NoError(err)
 
 	// Test generateDailyDigestEmail email to check content
 	humanized := analyzedAudits[0].Changes.HumanizedSubset(5)
-	emailSubject, emailBody, err := generateDigestEmail(analyzedAudits, worker.EmailTemplateService, worker.EmailService)
+	emailSubject, emailBody, err := resolvers.GenerateDigestEmail(analyzedAudits, &worker.EmailTemplateService, worker.EmailService)
 	suite.NoError(err)
 	suite.NotNil(emailSubject)
 	suite.NotNil(emailBody)

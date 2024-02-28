@@ -15,7 +15,7 @@ type Worker struct {
 	Store                *storage.Store
 	Logger               *zap.Logger
 	EmailService         oddmail.EmailService
-	EmailTemplateService email.TemplateServiceImpl
+	EmailTemplateService email.TemplateServiceImpl //TODO: this should probably be the interface
 	AddressBook          email.AddressBook
 	Connections          int
 	ProcessJobs          bool

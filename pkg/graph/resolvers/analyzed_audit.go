@@ -1,0 +1,153 @@
+package resolvers
+
+import (
+	"context"
+	"fmt"
+	"time"
+
+	"github.com/google/uuid"
+	"github.com/samber/lo"
+	"go.uber.org/zap"
+
+	"github.com/cmsgov/mint-app/pkg/constants"
+	"github.com/cmsgov/mint-app/pkg/email"
+	"github.com/cmsgov/mint-app/pkg/models"
+	"github.com/cmsgov/mint-app/pkg/notifications"
+	"github.com/cmsgov/mint-app/pkg/shared/oddmail"
+	"github.com/cmsgov/mint-app/pkg/storage"
+)
+
+// AnalyzedAuditEmailSend sends a single email for a user for a given day based on their favorited models
+// It will also call the notification package for Daily Digest Complete Activity
+func AnalyzedAuditEmailSend(
+	ctx context.Context,
+	store *storage.Store,
+	logger *zap.Logger,
+	// np sqlutils.NamedPreparer,
+	dateAnalyzed time.Time,
+	userID uuid.UUID,
+	emailService oddmail.EmailService,
+	emailTemplateService email.TemplateService,
+	addressBook email.AddressBook,
+
+) error {
+	account, err := store.UserAccountGetByID(store, userID)
+	if err != nil {
+		return err
+	}
+
+	recipientEmail := account.Email
+
+	// Get all analyzedAudits based on users favorited models
+	analyzedAudits, modelPlanIDs, err := GetDigestAnalyzedAudits(userID, dateAnalyzed, store, logger)
+	if err != nil {
+		return err
+	}
+
+	if len(analyzedAudits) == 0 {
+		return nil
+	}
+	// TODO EASI-3338 wrap this in a transaction!
+	systemAccountID := constants.GetSystemAccountUUID()
+
+	// TODO EASI-3338, see about wrapping the dataloaders in the worker as well.
+	preferenceFunctions := func(ctx context.Context, user_id uuid.UUID) (*models.UserNotificationPreferences, error) {
+		return storage.UserNotificationPreferencesGetByUserID(store, user_id)
+	}
+
+	//TODO: EASI-3338 verify that you can use the dataloader in the worker package, it might not be that context....
+	_, err = notifications.ActivityDailyDigestComplete(ctx, store, systemAccountID, userID, dateAnalyzed, modelPlanIDs, preferenceFunctions)
+	// _, err = notifications.ActivityDailyDigestComplete(ctx, w.Store, systemAccountID, userID, dateAnalyzed, modelPlanIDs, loaders.UserNotificationPreferencesGetByUserID)
+
+	if err != nil {
+		return fmt.Errorf("couldn't generate an activity record for the daily digest complete activity for user %s, error: %w", userID, err)
+	}
+	//TODO: EASI-3338 get user preferences, or perhaps get earlier and pass it to the notifications? Only send the email if user has a preference for it.
+
+	// Generate email subject and body from template
+	emailSubject, emailBody, err := GenerateDigestEmail(analyzedAudits, emailTemplateService, emailService)
+	if err != nil {
+		return err
+	}
+
+	// Send generated email
+	err = emailService.Send(
+		addressBook.DefaultSender,
+		[]string{recipientEmail},
+		nil,
+		emailSubject,
+		"text/html",
+		emailBody,
+	)
+	if err != nil {
+		return err
+	}
+
+	return nil
+
+}
+
+/*
+############################
+# DigestEmail Jobs Helpers #
+############################
+*/
+
+// GetDigestAnalyzedAudits gets AnalyzedAudits based on a users favorited plans and date
+// it returns the list of analyzed audits, as well as a separate list of the model plan IDs of the analyzed audits
+func GetDigestAnalyzedAudits( //TODO: EASI-3338 perhaps don't export this method, move testing from the worker package
+	userID uuid.UUID,
+	date time.Time,
+	store *storage.Store,
+	logger *zap.Logger,
+) ([]*models.AnalyzedAudit, []uuid.UUID, error) {
+	//TODO: EASI-3338 Consider making this take a userID and an array of model_plan_ids, so it can be reused elsewhere
+
+	planFavorites, err := store.PlanFavoriteGetCollectionByUserID(logger, userID)
+	if err != nil {
+		return nil, nil, err
+	}
+	if len(planFavorites) == 0 {
+		return nil, nil, nil
+	}
+
+	modelPlanIds := lo.Map(planFavorites, func(p *models.PlanFavorite, index int) uuid.UUID {
+		return p.ModelPlanID
+	})
+	if len(modelPlanIds) == 0 {
+		return nil, nil, nil
+	}
+
+	analyzedAudits, err := store.AnalyzedAuditGetByModelPlanIDsAndDate(logger, modelPlanIds, date)
+	if err != nil {
+		return nil, nil, err
+	}
+
+	return analyzedAudits, modelPlanIds, nil
+}
+
+// GenerateDigestEmail will generate the daily digest email from template
+func GenerateDigestEmail( //TODO: EASI-3338 perhaps don't export this method, move testing from the worker package
+	analyzedAudits []*models.AnalyzedAudit,
+	emailTemplateService email.TemplateService,
+	emailService oddmail.EmailService) (string, string, error) {
+	emailTemplate, err := emailTemplateService.GetEmailTemplate(email.DailyDigetsTemplateName)
+	if err != nil {
+		return "", "", err
+	}
+
+	emailSubject, err := emailTemplate.GetExecutedSubject(email.DailyDigestSubjectContent{})
+	if err != nil {
+		return "", "", err
+	}
+
+	emailBody, err := emailTemplate.GetExecutedBody(email.DailyDigestBodyContent{
+		AnalyzedAudits: analyzedAudits,
+		ClientAddress:  emailService.GetConfig().GetClientAddress(),
+	})
+	if err != nil {
+		return "", "", err
+	}
+
+	return emailSubject, emailBody, nil
+}
