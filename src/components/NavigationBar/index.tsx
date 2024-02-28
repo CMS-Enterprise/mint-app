@@ -4,6 +4,7 @@ import { NavLink } from 'react-router-dom';
 import { Icon, PrimaryNav } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import { useGetPollNotificationsQuery } from 'gql/gen/graphql';
+import { useFlags } from 'launchdarkly-react-client-sdk';
 
 import './index.scss';
 
@@ -37,6 +38,8 @@ const NavigationBar = ({
 }: NavigationProps) => {
   const { t } = useTranslation();
 
+  const flags = useFlags();
+
   const { data } = useGetPollNotificationsQuery({
     pollInterval: 5000
   });
@@ -64,7 +67,7 @@ const NavigationBar = ({
   ));
 
   const notificationLink = (
-    <div className="mint-nav ">
+    <div className="mint-nav">
       <NavLink
         to="/notifications"
         activeClassName="usa-current"
@@ -100,7 +103,9 @@ const NavigationBar = ({
     </div>
   );
 
-  const navItemsWithNotification = primaryLinks.concat(notificationLink);
+  const navItemsWithNotification = flags.notificationsEnabled
+    ? primaryLinks.concat(notificationLink)
+    : primaryLinks;
 
   const userLinks = (
     <div className="mint-nav__signout-container">
@@ -138,7 +143,12 @@ const NavigationBar = ({
           onClick={() => toggle(false)}
           mobileExpanded={mobile}
           aria-label="Primary navigation"
-          className="width-full"
+          className={classNames(
+            {
+              'navigation-link': flags.notificationsEnabled
+            },
+            'width-full'
+          )}
           items={navItems}
         />
       </div>

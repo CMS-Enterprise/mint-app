@@ -6,10 +6,7 @@
 
 .usa-nav__primary-item {
 
-    &:last-child {
-        margin-left: auto;
-    }
-
+   
     .mint-nav {
         display: flex;
 
@@ -56,6 +53,15 @@
             }
         }
 
+    }
+}
+
+.navigation-link {
+    .usa-nav__primary-item {
+        &:last-child {
+            margin-left: auto;
+        }
+    
     }
 }
 
