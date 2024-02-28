@@ -2,7 +2,8 @@ package resolvers
 
 import (
 	"context"
-	"fmt"
+	"log"
+	"strings"
 	"time"
 
 	"github.com/google/uuid"
@@ -10,144 +11,300 @@ import (
 	"go.uber.org/zap"
 
 	"github.com/cmsgov/mint-app/pkg/constants"
-	"github.com/cmsgov/mint-app/pkg/email"
 	"github.com/cmsgov/mint-app/pkg/models"
-	"github.com/cmsgov/mint-app/pkg/notifications"
-	"github.com/cmsgov/mint-app/pkg/shared/oddmail"
 	"github.com/cmsgov/mint-app/pkg/storage"
 )
 
-// AnalyzedAuditEmailSend sends a single email for a user for a given day based on their favorited models
-// It will also call the notification package for Daily Digest Complete Activity
-func AnalyzedAuditEmailSend(
+// AnalyzeModelPlanForAnalyzedAudit analyzes a model plan based on a specific day.
+// it analyzes all desired sections and stores the result to the database
+func AnalyzeModelPlanForAnalyzedAudit(
 	ctx context.Context,
 	store *storage.Store,
 	logger *zap.Logger,
-	// np sqlutils.NamedPreparer,
-	dateAnalyzed time.Time,
-	userID uuid.UUID,
-	emailService oddmail.EmailService,
-	emailTemplateService email.TemplateService,
-	addressBook email.AddressBook,
+	dayToAnalyze time.Time,
+	modelPlanID uuid.UUID,
+) (*models.AnalyzedAudit, error) {
 
-) error {
-	account, err := store.UserAccountGetByID(store, userID)
+	mp, err := store.ModelPlanGetByID(store, logger, modelPlanID) //TODO EASI-3949, this initially fetched the model plan, but it seems unnecessary here..
 	if err != nil {
-		return err
+		return nil, err
 	}
 
-	recipientEmail := account.Email
-
-	// Get all analyzedAudits based on users favorited models
-	analyzedAudits, modelPlanIDs, err := GetDigestAnalyzedAudits(userID, dateAnalyzed, store, logger)
+	audits, err := store.AuditChangeCollectionByPrimaryKeyOrForeignKeyAndDate(logger, mp.ID, mp.ID, dayToAnalyze, models.SortDesc)
 	if err != nil {
-		return err
+		return nil, err
 	}
 
-	if len(analyzedAudits) == 0 {
-		return nil
-	}
-	// TODO EASI-3338 wrap this in a transaction!
-	systemAccountID := constants.GetSystemAccountUUID()
-
-	// TODO EASI-3338, see about wrapping the dataloaders in the worker as well.
-	preferenceFunctions := func(ctx context.Context, user_id uuid.UUID) (*models.UserNotificationPreferences, error) {
-		return storage.UserNotificationPreferencesGetByUserID(store, user_id)
+	analyzedAuditChange, err := generateChanges(audits, store)
+	if err != nil {
+		return nil, err
 	}
 
-	//TODO: EASI-3338 verify that you can use the dataloader in the worker package, it might not be that context....
-	_, err = notifications.ActivityDailyDigestComplete(ctx, store, systemAccountID, userID, dateAnalyzed, modelPlanIDs, preferenceFunctions)
-	// _, err = notifications.ActivityDailyDigestComplete(ctx, w.Store, systemAccountID, userID, dateAnalyzed, modelPlanIDs, loaders.UserNotificationPreferencesGetByUserID)
+	// Don't create if there are no changes
+	if analyzedAuditChange.IsEmpty() {
+		return nil, nil
+	}
+
+	analyzedAudit, err := models.NewAnalyzedAudit(constants.GetSystemAccountUUID(), mp.ID, mp.ModelName, dayToAnalyze, *analyzedAuditChange)
+	if err != nil {
+		return nil, err
+	}
+
+	retAnalyzedAudit, err := store.AnalyzedAuditCreate(logger, analyzedAudit)
 
 	if err != nil {
-		return fmt.Errorf("couldn't generate an activity record for the daily digest complete activity for user %s, error: %w", userID, err)
+		return nil, err
 	}
-	//TODO: EASI-3338 get user preferences, or perhaps get earlier and pass it to the notifications? Only send the email if user has a preference for it.
-
-	// Generate email subject and body from template
-	emailSubject, emailBody, err := GenerateDigestEmail(analyzedAudits, emailTemplateService, emailService)
-	if err != nil {
-		return err
-	}
-
-	// Send generated email
-	err = emailService.Send(
-		addressBook.DefaultSender,
-		[]string{recipientEmail},
-		nil,
-		emailSubject,
-		"text/html",
-		emailBody,
-	)
-	if err != nil {
-		return err
-	}
-
-	return nil
+	return retAnalyzedAudit, nil
 
 }
 
 /*
-############################
-# DigestEmail Jobs Helpers #
-############################
+##############################
+# AnalyzedAudit Jobs Helpers #
+##############################
 */
 
-// GetDigestAnalyzedAudits gets AnalyzedAudits based on a users favorited plans and date
-// it returns the list of analyzed audits, as well as a separate list of the model plan IDs of the analyzed audits
-func GetDigestAnalyzedAudits( //TODO: EASI-3338 perhaps don't export this method, move testing from the worker package
-	userID uuid.UUID,
-	date time.Time,
-	store *storage.Store,
-	logger *zap.Logger,
-) ([]*models.AnalyzedAudit, []uuid.UUID, error) {
-	//TODO: EASI-3338 Consider making this take a date and an array of model_plan_ids, so it can be reused elsewhere
+// generateChanges gets all the audit changes for the specified tables
+func generateChanges(audits []*models.AuditChange, store *storage.Store) (*models.AnalyzedAuditChange, error) {
 
-	planFavorites, err := store.PlanFavoriteGetCollectionByUserID(logger, userID)
+	modelPlanAudits, err := analyzeModelPlanAudits(audits)
 	if err != nil {
-		return nil, nil, err
-	}
-	if len(planFavorites) == 0 {
-		return nil, nil, nil
+		return nil, err
 	}
 
-	modelPlanIDs := lo.Map(planFavorites, func(p *models.PlanFavorite, index int) uuid.UUID {
-		return p.ModelPlanID
-	})
-	if len(modelPlanIDs) == 0 {
-		return nil, nil, nil
-	}
-
-	analyzedAudits, err := store.AnalyzedAuditGetByModelPlanIDsAndDate(logger, modelPlanIDs, date)
+	documentsAudits, err := analyzeDocumentsAudits(audits)
 	if err != nil {
-		return nil, nil, err
+		return nil, err
 	}
 
-	return analyzedAudits, modelPlanIDs, nil
+	crTdlAudits, err := analyzeCrTdlAudits(audits)
+	if err != nil {
+		return nil, err
+	}
+
+	modelLeadAudits, err := analyzeModelLeads(audits, store)
+	if err != nil {
+		return nil, err
+	}
+
+	discussionAudits, err := analyzeDiscussionAudits(audits)
+	if err != nil {
+		return nil, err
+	}
+
+	sectionsAudits, err := analyzeSectionsAudits(audits)
+	if err != nil {
+		return nil, err
+	}
+
+	analyzedModelPlan := models.AnalyzedAuditChange{
+		ModelPlan:       modelPlanAudits,
+		Documents:       documentsAudits,
+		CrTdls:          crTdlAudits,
+		PlanSections:    sectionsAudits,
+		ModelLeads:      modelLeadAudits,
+		PlanDiscussions: discussionAudits,
+	}
+
+	return &analyzedModelPlan, nil
 }
 
-// GenerateDigestEmail will generate the daily digest email from template
-func GenerateDigestEmail( //TODO: EASI-3338 perhaps don't export this method, move testing from the worker package
-	analyzedAudits []*models.AnalyzedAudit,
-	emailTemplateService email.TemplateService,
-	emailService oddmail.EmailService) (string, string, error) {
-	emailTemplate, err := emailTemplateService.GetEmailTemplate(email.DailyDigetsTemplateName)
-	if err != nil {
-		return "", "", err
-	}
+// analyzeModelPlanAudits analyzes all the model plan name changes and status changes
+func analyzeModelPlanAudits(audits []*models.AuditChange) (*models.AnalyzedModelPlan, error) {
 
-	emailSubject, err := emailTemplate.GetExecutedSubject(email.DailyDigestSubjectContent{})
-	if err != nil {
-		return "", "", err
-	}
-
-	emailBody, err := emailTemplate.GetExecutedBody(email.DailyDigestBodyContent{
-		AnalyzedAudits: analyzedAudits,
-		ClientAddress:  emailService.GetConfig().GetClientAddress(),
+	filteredAudits := lo.Filter(audits, func(m *models.AuditChange, index int) bool {
+		return m.TableName == "model_plan"
 	})
-	if err != nil {
-		return "", "", err
+
+	nameChangeAudits := lo.Filter(filteredAudits, func(m *models.AuditChange, index int) bool {
+		keys := lo.Keys(m.Fields)
+		return lo.Contains(keys, "model_name")
+	})
+
+	var oldNameAuditField string
+
+	if len(nameChangeAudits) > 0 && nameChangeAudits[0].Fields["model_name"].Old != nil {
+		oldNameAuditField = nameChangeAudits[0].Fields["model_name"].Old.(string)
 	}
 
-	return emailSubject, emailBody, nil
+	statuses := []string{
+		string(models.ModelStatusPlanComplete),
+		string(models.ModelStatusIcipComplete),
+		string(models.ModelStatusInternalCmmiClearance),
+		string(models.ModelStatusCmsClearance),
+		string(models.ModelStatusHhsClearance),
+		string(models.ModelStatusOmbAsrfClearance),
+		string(models.ModelStatusCleared),
+		string(models.ModelStatusAnnounced),
+	}
+
+	statusChangeAudits := lo.FilterMap(filteredAudits, func(m *models.AuditChange, index int) (string, bool) {
+		keys := lo.Keys(m.Fields)
+		if lo.Contains(keys, "status") {
+			status := m.Fields["status"].New.(string)
+			if lo.Contains(statuses, status) {
+				return status, true
+			}
+		}
+		return "", false
+	})
+
+	analyzedModelPlan := models.AnalyzedModelPlan{
+		OldName:       oldNameAuditField,
+		StatusChanges: statusChangeAudits,
+	}
+
+	if analyzedModelPlan.IsEmpty() {
+		return nil, nil
+	}
+
+	return &analyzedModelPlan, nil
+}
+
+// analyzeCrTdlAudits analyzes if there were any CrTdl changes
+func analyzeCrTdlAudits(audits []*models.AuditChange) (*models.AnalyzedCrTdls, error) {
+	filteredAudits := lo.Filter(audits, func(m *models.AuditChange, index int) bool {
+		return m.TableName == "plan_tdl" || m.TableName == "plan_cr"
+	})
+
+	if len(filteredAudits) > 0 {
+		return &models.AnalyzedCrTdls{
+			Activity: true,
+		}, nil
+	}
+	return nil, nil
+}
+
+// analyzeModelLeads analyzes new collaborators to a model plan
+func analyzeModelLeads(audits []*models.AuditChange, store *storage.Store) (*models.AnalyzedModelLeads, error) {
+	filteredAudits := lo.Filter(audits, func(m *models.AuditChange, index int) bool {
+		return m.TableName == "plan_collaborator"
+	})
+	var parseError error
+
+	addedCollaborators := lo.FilterMap(filteredAudits, func(m *models.AuditChange, index int) (models.AnalyzedModelLeadInfo, bool) {
+		keys := lo.Keys(m.Fields)
+
+		teamRolesRaw, ok := m.Fields["team_roles"].New.(string)
+		teamRolesRaw = strings.TrimPrefix(teamRolesRaw, "{")
+		teamRolesRaw = strings.TrimSuffix(teamRolesRaw, "}")
+
+		teamRoles := strings.Split(teamRolesRaw, ",")
+
+		if !ok {
+			log.Printf("Warning: team_roles is not of type string in audit entry number %d. It is of type %T", index, m.Fields["team_roles"].New)
+			return models.AnalyzedModelLeadInfo{}, false
+		}
+
+		if lo.Contains(keys, "user_id") && lo.Contains(keys, "team_roles") && lo.Contains(teamRoles, "MODEL_LEAD") {
+			idString := m.Fields["user_id"].New.(string)
+			var id uuid.UUID
+			id, parseError = uuid.Parse(idString)
+			if parseError != nil {
+				log.Printf("Error: Failed to parse UUID in audit entry number %d with error: %v", index, parseError)
+				return models.AnalyzedModelLeadInfo{}, false
+			}
+
+			account, _ := store.UserAccountGetByID(store, id) //TODO should we handle the error? I think null is ok if can't get the account
+
+			return models.AnalyzedModelLeadInfo{
+				ID:         id,
+				CommonName: account.CommonName,
+			}, true
+		}
+		return models.AnalyzedModelLeadInfo{}, false
+	})
+	if parseError != nil {
+		return nil, parseError
+	}
+
+	if len(addedCollaborators) > 0 {
+		return &models.AnalyzedModelLeads{
+			Added: addedCollaborators,
+		}, nil
+	}
+
+	return nil, nil
+}
+
+// analyzeDiscussionAudits analyzes if there was discussion activity on a model plan
+func analyzeDiscussionAudits(audits []*models.AuditChange) (*models.AnalyzedPlanDiscussions, error) {
+	filteredAudits := lo.Filter(audits, func(m *models.AuditChange, index int) bool {
+		return m.TableName == "plan_discussion"
+	})
+
+	if len(filteredAudits) > 0 {
+		return &models.AnalyzedPlanDiscussions{
+			Activity: true,
+		}, nil
+	}
+	return nil, nil
+
+}
+
+// analyzeDocumentsAudits analyzes how many documents had activity
+func analyzeDocumentsAudits(audits []*models.AuditChange) (*models.AnalyzedDocuments, error) {
+	filteredAudits := lo.Filter(audits, func(m *models.AuditChange, index int) bool {
+		return m.TableName == "plan_document"
+	})
+
+	if len(filteredAudits) > 0 {
+		return &models.AnalyzedDocuments{
+			Count: len(filteredAudits),
+		}, nil
+	}
+
+	return nil, nil
+}
+
+// analyzeSectionsAudits analyzes which sections had updates and status changes to READY_FOR_REVIEW or READY_FOR_CLEARANCE
+func analyzeSectionsAudits(audits []*models.AuditChange) (*models.AnalyzedPlanSections, error) {
+	sections := []string{
+		"plan_basics",
+		"plan_general_characteristics",
+		"plan_participants_and_providers",
+		"plan_beneficiaries",
+		"plan_ops_eval_and_learning",
+		"plan_payments",
+	}
+	filteredAudits := lo.Filter(audits, func(m *models.AuditChange, index int) bool {
+		return lo.Contains(sections, m.TableName)
+	})
+
+	updatedSections := lo.Uniq(lo.Map(filteredAudits, func(m *models.AuditChange, index int) string {
+		return m.TableName
+	}))
+
+	readyForReview := lo.Uniq(lo.FilterMap(filteredAudits, func(m *models.AuditChange, index int) (string, bool) {
+		keys := lo.Keys(m.Fields)
+		if lo.Contains(keys, "status") {
+			if m.Fields["status"].New.(string) == "READY_FOR_REVIEW" {
+				return m.TableName, true
+			}
+		}
+		return "", false
+	}))
+
+	readyForClearance := lo.Uniq(lo.FilterMap(filteredAudits, func(m *models.AuditChange, index int) (string, bool) {
+		keys := lo.Keys(m.Fields)
+		if lo.Contains(keys, "status") {
+			if m.Fields["status"].New.(string) == "READY_FOR_CLEARANCE" {
+				return m.TableName, true
+			}
+		}
+		return "", false
+	}))
+
+	analyzedPlanSections := models.AnalyzedPlanSections{
+		Updated:           updatedSections,
+		ReadyForReview:    readyForReview,
+		ReadyForClearance: readyForClearance,
+	}
+
+	if analyzedPlanSections.IsEmpty() {
+		return nil, nil
+	}
+
+	return &analyzedPlanSections, nil
 }

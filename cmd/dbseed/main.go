@@ -95,6 +95,7 @@ func getResolverDependencies(config *viper.Viper) (
 func seed(config *viper.Viper) {
 	seeder := newDefaultSeeder(config)
 	seeder.SeedData()
+	seeder.CreateAnalyzedAuditData()
 }
 
 // SeedData gets resolver dependencies and calls wrapped resolver functions to seed data.
@@ -253,4 +254,9 @@ func (s *Seeder) SeedData() {
 			},
 		},
 	)
+}
+
+// CreateAnalyzedAuditData uses the seeder to generate analyzed audits. It will make one record for all changes just seeded
+func (s *Seeder) CreateAnalyzedAuditData() {
+
 }

@@ -74,7 +74,7 @@ func (w *Worker) DigestEmailJob(ctx context.Context, args ...interface{}) error 
 		return err
 	}
 	//TODO: EASI-3338 Be careful with this context as it might not have a data loader etc.
-	sendErr := resolvers.AnalyzedAuditEmailSend(ctx, w.Store, w.Logger, dateAnalyzed, userID, w.EmailService, &w.EmailTemplateService, w.AddressBook)
+	sendErr := resolvers.DailyDigestEmailSend(ctx, w.Store, w.Logger, dateAnalyzed, userID, w.EmailService, &w.EmailTemplateService, w.AddressBook)
 	return sendErr
 
 }
