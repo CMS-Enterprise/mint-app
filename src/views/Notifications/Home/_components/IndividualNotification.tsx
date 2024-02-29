@@ -2,6 +2,8 @@ import React from 'react';
 import { Grid } from '@trussworks/react-uswds';
 import { GetNotifications_currentUser_notifications_notifications_activity as NotificationActivityType } from 'gql/gen/types/GetNotifications';
 
+import IconInitial from 'components/shared/IconInitial';
+
 type IndividualNotificationProps = {
   isRead: boolean;
   inAppSent: boolean;
@@ -23,12 +25,15 @@ const IndividualNotification = ({
             <div className="circle-1 bg-error position-absolute margin-top-3 margin-left-1" />
           )}
 
-          <div className="padding-3">content</div>
+          <div className="padding-3">
+            <IconInitial
+              user={activity.createdByUserAccount.commonName}
+              hasBoldUsername
+            />
+          </div>
         </Grid>
       </Grid>
       <ul>
-        <li>inAppSent: {inAppSent.toString()}</li>
-        <li>emailSent: {emailSent.toString()}</li>
         <li>activityType: {activity.activityType}</li>
         <li>entityID: {activity.entityID}</li>
         <li>actorID: {activity.actorID}</li>
