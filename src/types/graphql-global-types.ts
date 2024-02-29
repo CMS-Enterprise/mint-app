@@ -691,6 +691,11 @@ export enum TriStateAnswer {
   YES = "YES",
 }
 
+export enum UserNotificationPreferenceFlag {
+  EMAIL = "EMAIL",
+  IN_APP = "IN_APP",
+}
+
 export enum WaiverType {
   FRAUD_ABUSE = "FRAUD_ABUSE",
   MEDICAID = "MEDICAID",
@@ -1252,6 +1257,18 @@ export interface UpdateOperationalSolutionSubtaskChangesInput {
 export interface UpdateOperationalSolutionSubtaskInput {
   id: UUID;
   changes: UpdateOperationalSolutionSubtaskChangesInput;
+}
+
+/**
+ * UserNotificationPreferencesChanges represents the ways that a UserNotifications Preferences object can be updated
+ */
+export interface UserNotificationPreferencesChanges {
+  dailyDigestComplete?: UserNotificationPreferenceFlag[] | null;
+  addedAsCollaborator?: UserNotificationPreferenceFlag[] | null;
+  taggedInDiscussion?: UserNotificationPreferenceFlag[] | null;
+  taggedInDiscussionReply?: UserNotificationPreferenceFlag[] | null;
+  newDiscussionReply?: UserNotificationPreferenceFlag[] | null;
+  modelPlanShared?: UserNotificationPreferenceFlag[] | null;
 }
 
 //==============================================================
