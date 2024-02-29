@@ -141,7 +141,8 @@ const RenderReadonlyValue = <
   // Renders a single value
   if (
     isTranslationFieldProperties(config) &&
-    !isTranslationFieldPropertiesWithOptions(config)
+    !isTranslationFieldPropertiesWithOptions(config) &&
+    !config.isArray
   ) {
     return <SingleValue value={value} />;
   }
