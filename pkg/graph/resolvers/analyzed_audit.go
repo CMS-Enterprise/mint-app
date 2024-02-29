@@ -308,3 +308,16 @@ func analyzeSectionsAudits(audits []*models.AuditChange) (*models.AnalyzedPlanSe
 
 	return &analyzedPlanSections, nil
 }
+
+// AnalyzedAuditGetByModelPlanIDsAndDate returns all AnalyzedAudits for
+func AnalyzedAuditGetByModelPlanIDsAndDate(
+	_ context.Context,
+	store *storage.Store,
+	logger *zap.Logger,
+
+	modelPlanIDs []uuid.UUID,
+	date time.Time,
+) ([]*models.AnalyzedAudit, error) {
+	return store.AnalyzedAuditGetByModelPlanIDsAndDate(logger, modelPlanIDs, date)
+
+}

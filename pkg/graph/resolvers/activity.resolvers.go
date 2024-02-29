@@ -18,6 +18,12 @@ func (r *activityResolver) ActorUserAccount(ctx context.Context, obj *models.Act
 	return UserAccountGetByIDLOADER(ctx, obj.ActorID)
 }
 
+// AnalyzedAudits is the resolver for the analyzedAudits field.
+func (r *dailyDigestCompleteActivityMetaResolver) AnalyzedAudits(ctx context.Context, obj *models.DailyDigestCompleteActivityMeta) ([]*models.AnalyzedAudit, error) {
+	logger := appcontext.ZLogger(ctx)
+	return AnalyzedAuditGetByModelPlanIDsAndDate(ctx, r.store, logger, obj.ModelPlanIDs, obj.Date)
+}
+
 // Discussion is the resolver for the discussion field.
 func (r *taggedInDiscussionReplyActivityMetaResolver) Discussion(ctx context.Context, obj *models.TaggedInDiscussionReplyActivityMeta) (*models.PlanDiscussion, error) {
 	logger := appcontext.ZLogger(ctx)
@@ -39,6 +45,11 @@ func (r *taggedInPlanDiscussionActivityMetaResolver) Discussion(ctx context.Cont
 // Activity returns generated.ActivityResolver implementation.
 func (r *Resolver) Activity() generated.ActivityResolver { return &activityResolver{r} }
 
+// DailyDigestCompleteActivityMeta returns generated.DailyDigestCompleteActivityMetaResolver implementation.
+func (r *Resolver) DailyDigestCompleteActivityMeta() generated.DailyDigestCompleteActivityMetaResolver {
+	return &dailyDigestCompleteActivityMetaResolver{r}
+}
+
 // TaggedInDiscussionReplyActivityMeta returns generated.TaggedInDiscussionReplyActivityMetaResolver implementation.
 func (r *Resolver) TaggedInDiscussionReplyActivityMeta() generated.TaggedInDiscussionReplyActivityMetaResolver {
 	return &taggedInDiscussionReplyActivityMetaResolver{r}
@@ -50,5 +61,6 @@ func (r *Resolver) TaggedInPlanDiscussionActivityMeta() generated.TaggedInPlanDi
 }
 
 type activityResolver struct{ *Resolver }
+type dailyDigestCompleteActivityMetaResolver struct{ *Resolver }
 type taggedInDiscussionReplyActivityMetaResolver struct{ *Resolver }
 type taggedInPlanDiscussionActivityMetaResolver struct{ *Resolver }

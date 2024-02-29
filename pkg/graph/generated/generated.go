@@ -45,6 +45,7 @@ type ResolverRoot interface {
 	AnalyzedModelLeadInfo() AnalyzedModelLeadInfoResolver
 	AuditChange() AuditChangeResolver
 	CurrentUser() CurrentUserResolver
+	DailyDigestCompleteActivityMeta() DailyDigestCompleteActivityMetaResolver
 	DiscussionReply() DiscussionReplyResolver
 	ExistingModelLink() ExistingModelLinkResolver
 	ExistingModelLinks() ExistingModelLinksResolver
@@ -172,6 +173,15 @@ type ComplexityRoot struct {
 		LaunchDarkly            func(childComplexity int) int
 		NotificationPreferences func(childComplexity int) int
 		Notifications           func(childComplexity int) int
+	}
+
+	DailyDigestCompleteActivityMeta struct {
+		AnalyzedAudits func(childComplexity int) int
+		Date           func(childComplexity int) int
+		ModelPlanIDs   func(childComplexity int) int
+		Type           func(childComplexity int) int
+		UserID         func(childComplexity int) int
+		Version        func(childComplexity int) int
 	}
 
 	DiscussionReply struct {
@@ -1165,6 +1175,9 @@ type CurrentUserResolver interface {
 	Notifications(ctx context.Context, obj *models.CurrentUser) (*models.UserNotifications, error)
 	NotificationPreferences(ctx context.Context, obj *models.CurrentUser) (*models.UserNotificationPreferences, error)
 }
+type DailyDigestCompleteActivityMetaResolver interface {
+	AnalyzedAudits(ctx context.Context, obj *models.DailyDigestCompleteActivityMeta) ([]*models.AnalyzedAudit, error)
+}
 type DiscussionReplyResolver interface {
 	Content(ctx context.Context, obj *models.DiscussionReply) (*models.TaggedContent, error)
 }
@@ -1843,6 +1856,48 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.CurrentUser.Notifications(childComplexity), true
+
+	case "DailyDigestCompleteActivityMeta.analyzedAudits":
+		if e.complexity.DailyDigestCompleteActivityMeta.AnalyzedAudits == nil {
+			break
+		}
+
+		return e.complexity.DailyDigestCompleteActivityMeta.AnalyzedAudits(childComplexity), true
+
+	case "DailyDigestCompleteActivityMeta.date":
+		if e.complexity.DailyDigestCompleteActivityMeta.Date == nil {
+			break
+		}
+
+		return e.complexity.DailyDigestCompleteActivityMeta.Date(childComplexity), true
+
+	case "DailyDigestCompleteActivityMeta.modelPlanIDs":
+		if e.complexity.DailyDigestCompleteActivityMeta.ModelPlanIDs == nil {
+			break
+		}
+
+		return e.complexity.DailyDigestCompleteActivityMeta.ModelPlanIDs(childComplexity), true
+
+	case "DailyDigestCompleteActivityMeta.type":
+		if e.complexity.DailyDigestCompleteActivityMeta.Type == nil {
+			break
+		}
+
+		return e.complexity.DailyDigestCompleteActivityMeta.Type(childComplexity), true
+
+	case "DailyDigestCompleteActivityMeta.userID":
+		if e.complexity.DailyDigestCompleteActivityMeta.UserID == nil {
+			break
+		}
+
+		return e.complexity.DailyDigestCompleteActivityMeta.UserID(childComplexity), true
+
+	case "DailyDigestCompleteActivityMeta.version":
+		if e.complexity.DailyDigestCompleteActivityMeta.Version == nil {
+			break
+		}
+
+		return e.complexity.DailyDigestCompleteActivityMeta.Version(childComplexity), true
 
 	case "DiscussionReply.content":
 		if e.complexity.DiscussionReply.Content == nil {
@@ -9905,7 +9960,7 @@ enum ActivityType {
 """
 ActivityMetaData is a type that represents all the data that can be captured in an Activity
 """
-union ActivityMetaData = ActivityMetaBaseStruct | TaggedInPlanDiscussionActivityMeta  | TaggedInDiscussionReplyActivityMeta
+union ActivityMetaData = ActivityMetaBaseStruct | TaggedInPlanDiscussionActivityMeta  | TaggedInDiscussionReplyActivityMeta | DailyDigestCompleteActivityMeta
 
 type TaggedInPlanDiscussionActivityMeta {
   version: Int!
@@ -9923,6 +9978,15 @@ type TaggedInDiscussionReplyActivityMeta {
   replyID: UUID!
   reply: DiscussionReply!
   content: String!
+}
+#  TODO: EASI-3949 --> Continue building this out with a resolver to get analyzed audits with a loader. 
+type DailyDigestCompleteActivityMeta {
+  version: Int!
+  type: ActivityType!
+  modelPlanIDs: [UUID!]!
+  analyzedAudits: [AnalyzedAudit!]!
+  userID: UUID!
+  date:  Time!
 }
 
 
@@ -15148,6 +15212,294 @@ func (ec *executionContext) fieldContext_CurrentUser_notificationPreferences(ctx
 				return ec.fieldContext_UserNotificationPreferences_modifiedDts(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type UserNotificationPreferences", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _DailyDigestCompleteActivityMeta_version(ctx context.Context, field graphql.CollectedField, obj *models.DailyDigestCompleteActivityMeta) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_DailyDigestCompleteActivityMeta_version(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Version, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(int)
+	fc.Result = res
+	return ec.marshalNInt2int(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_DailyDigestCompleteActivityMeta_version(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "DailyDigestCompleteActivityMeta",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Int does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _DailyDigestCompleteActivityMeta_type(ctx context.Context, field graphql.CollectedField, obj *models.DailyDigestCompleteActivityMeta) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_DailyDigestCompleteActivityMeta_type(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Type, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(models.ActivityType)
+	fc.Result = res
+	return ec.marshalNActivityType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐActivityType(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_DailyDigestCompleteActivityMeta_type(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "DailyDigestCompleteActivityMeta",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type ActivityType does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _DailyDigestCompleteActivityMeta_modelPlanIDs(ctx context.Context, field graphql.CollectedField, obj *models.DailyDigestCompleteActivityMeta) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_DailyDigestCompleteActivityMeta_modelPlanIDs(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ModelPlanIDs, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.([]uuid.UUID)
+	fc.Result = res
+	return ec.marshalNUUID2ᚕgithubᚗcomᚋgoogleᚋuuidᚐUUIDᚄ(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_DailyDigestCompleteActivityMeta_modelPlanIDs(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "DailyDigestCompleteActivityMeta",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type UUID does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _DailyDigestCompleteActivityMeta_analyzedAudits(ctx context.Context, field graphql.CollectedField, obj *models.DailyDigestCompleteActivityMeta) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_DailyDigestCompleteActivityMeta_analyzedAudits(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.DailyDigestCompleteActivityMeta().AnalyzedAudits(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.([]*models.AnalyzedAudit)
+	fc.Result = res
+	return ec.marshalNAnalyzedAudit2ᚕᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐAnalyzedAuditᚄ(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_DailyDigestCompleteActivityMeta_analyzedAudits(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "DailyDigestCompleteActivityMeta",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_AnalyzedAudit_id(ctx, field)
+			case "modelPlanID":
+				return ec.fieldContext_AnalyzedAudit_modelPlanID(ctx, field)
+			case "modelName":
+				return ec.fieldContext_AnalyzedAudit_modelName(ctx, field)
+			case "date":
+				return ec.fieldContext_AnalyzedAudit_date(ctx, field)
+			case "changes":
+				return ec.fieldContext_AnalyzedAudit_changes(ctx, field)
+			case "createdBy":
+				return ec.fieldContext_AnalyzedAudit_createdBy(ctx, field)
+			case "createdByUserAccount":
+				return ec.fieldContext_AnalyzedAudit_createdByUserAccount(ctx, field)
+			case "createdDts":
+				return ec.fieldContext_AnalyzedAudit_createdDts(ctx, field)
+			case "modifiedBy":
+				return ec.fieldContext_AnalyzedAudit_modifiedBy(ctx, field)
+			case "modifiedByUserAccount":
+				return ec.fieldContext_AnalyzedAudit_modifiedByUserAccount(ctx, field)
+			case "modifiedDts":
+				return ec.fieldContext_AnalyzedAudit_modifiedDts(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type AnalyzedAudit", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _DailyDigestCompleteActivityMeta_userID(ctx context.Context, field graphql.CollectedField, obj *models.DailyDigestCompleteActivityMeta) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_DailyDigestCompleteActivityMeta_userID(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.UserID, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(uuid.UUID)
+	fc.Result = res
+	return ec.marshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_DailyDigestCompleteActivityMeta_userID(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "DailyDigestCompleteActivityMeta",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type UUID does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _DailyDigestCompleteActivityMeta_date(ctx context.Context, field graphql.CollectedField, obj *models.DailyDigestCompleteActivityMeta) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_DailyDigestCompleteActivityMeta_date(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Date, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(time.Time)
+	fc.Result = res
+	return ec.marshalNTime2timeᚐTime(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_DailyDigestCompleteActivityMeta_date(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "DailyDigestCompleteActivityMeta",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Time does not have child fields")
 		},
 	}
 	return fc, nil
@@ -61648,6 +62000,11 @@ func (ec *executionContext) _ActivityMetaData(ctx context.Context, sel ast.Selec
 			return graphql.Null
 		}
 		return ec._TaggedInDiscussionReplyActivityMeta(ctx, sel, obj)
+	case *models.DailyDigestCompleteActivityMeta:
+		if obj == nil {
+			return graphql.Null
+		}
+		return ec._DailyDigestCompleteActivityMeta(ctx, sel, obj)
 	default:
 		panic(fmt.Errorf("unexpected type %T", obj))
 	}
@@ -62711,6 +63068,101 @@ func (ec *executionContext) _CurrentUser(ctx context.Context, sel ast.SelectionS
 			}
 
 			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch(ctx)
+	if out.Invalids > 0 {
+		return graphql.Null
+	}
+
+	atomic.AddInt32(&ec.deferred, int32(len(deferred)))
+
+	for label, dfs := range deferred {
+		ec.processDeferredGroup(graphql.DeferredGroup{
+			Label:    label,
+			Path:     graphql.GetPath(ctx),
+			FieldSet: dfs,
+			Context:  ctx,
+		})
+	}
+
+	return out
+}
+
+var dailyDigestCompleteActivityMetaImplementors = []string{"DailyDigestCompleteActivityMeta", "ActivityMetaData"}
+
+func (ec *executionContext) _DailyDigestCompleteActivityMeta(ctx context.Context, sel ast.SelectionSet, obj *models.DailyDigestCompleteActivityMeta) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, dailyDigestCompleteActivityMetaImplementors)
+
+	out := graphql.NewFieldSet(fields)
+	deferred := make(map[string]*graphql.FieldSet)
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("DailyDigestCompleteActivityMeta")
+		case "version":
+			out.Values[i] = ec._DailyDigestCompleteActivityMeta_version(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "type":
+			out.Values[i] = ec._DailyDigestCompleteActivityMeta_type(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "modelPlanIDs":
+			out.Values[i] = ec._DailyDigestCompleteActivityMeta_modelPlanIDs(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "analyzedAudits":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._DailyDigestCompleteActivityMeta_analyzedAudits(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
+				return res
+			}
+
+			if field.Deferrable != nil {
+				dfs, ok := deferred[field.Deferrable.Label]
+				di := 0
+				if ok {
+					dfs.AddField(field)
+					di = len(dfs.Values) - 1
+				} else {
+					dfs = graphql.NewFieldSet([]graphql.CollectedField{field})
+					deferred[field.Deferrable.Label] = dfs
+				}
+				dfs.Concurrently(di, func(ctx context.Context) graphql.Marshaler {
+					return innerFunc(ctx, dfs)
+				})
+
+				// don't run the out.Concurrently() call below
+				out.Values[i] = graphql.Null
+				continue
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+		case "userID":
+			out.Values[i] = ec._DailyDigestCompleteActivityMeta_userID(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "date":
+			out.Values[i] = ec._DailyDigestCompleteActivityMeta_date(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
 		default:
 			panic("unknown field " + strconv.Quote(field.Name))
 		}

@@ -61,7 +61,7 @@ export type ActivityMetaBaseStruct = {
 };
 
 /** ActivityMetaData is a type that represents all the data that can be captured in an Activity */
-export type ActivityMetaData = ActivityMetaBaseStruct | TaggedInDiscussionReplyActivityMeta | TaggedInPlanDiscussionActivityMeta;
+export type ActivityMetaData = ActivityMetaBaseStruct | DailyDigestCompleteActivityMeta | TaggedInDiscussionReplyActivityMeta | TaggedInPlanDiscussionActivityMeta;
 
 /** ActivityType represents the possible activities that happen in application that might result in a notification */
 export enum ActivityType {
@@ -272,6 +272,16 @@ export type CurrentUser = {
   launchDarkly: LaunchDarklySettings;
   notificationPreferences: UserNotificationPreferences;
   notifications: UserNotifications;
+};
+
+export type DailyDigestCompleteActivityMeta = {
+  __typename: 'DailyDigestCompleteActivityMeta';
+  analyzedAudits: Array<AnalyzedAudit>;
+  date: Scalars['Time']['output'];
+  modelPlanIDs: Array<Scalars['UUID']['output']>;
+  type: ActivityType;
+  userID: Scalars['UUID']['output'];
+  version: Scalars['Int']['output'];
 };
 
 export enum DataForMonitoringType {
