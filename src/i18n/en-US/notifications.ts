@@ -7,6 +7,14 @@ const notifications = {
     infoBanner: {
       emptyState:
         'You’re all up-to-date on notifications. Check back later for updates.'
+    },
+    activityType: {
+      addedAsCollaborator: ' added you to the team for {{-modelName}}.',
+      dailyDigestComplete: ' sent your daily digest.',
+      modelPlanShared: ' shared {{-modelName}} with you.',
+      newDiscussionReply: ' replied to your discussion for {{-modelName}}.',
+      taggedInDiscussion: ' tagged you in a discussion for {{-modelName',
+      taggedInDiscussionReply: ''
     }
   },
   settings: {
