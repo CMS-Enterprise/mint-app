@@ -10,6 +10,7 @@ type IconInitialType = {
   index?: number;
   className?: string;
   teamRoles?: TeamRole[];
+  hasBoldUsername?: boolean;
 };
 
 export const arrayOfColors: string[] = [
@@ -23,7 +24,8 @@ const IconInitial = ({
   user,
   index = 0,
   className,
-  teamRoles
+  teamRoles,
+  hasBoldUsername
 }: IconInitialType) => {
   const { t: collaboratorsT } = useTranslation('collaborators');
 
@@ -50,7 +52,9 @@ const IconInitial = ({
         {getUserInitials(user)}
       </div>
       <div className="margin-y-0">
-        <p className="margin-y-0">{user}</p>
+        <p className={`margin-y-0 ${hasBoldUsername ? 'text-bold' : ''}`}>
+          {user}
+        </p>
         <p className="font-body-2xs margin-y-0">
           {teamRoles &&
             modelLeadFirst!
