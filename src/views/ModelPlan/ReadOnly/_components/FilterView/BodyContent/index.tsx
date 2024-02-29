@@ -137,12 +137,16 @@ const BodyContent = ({
   );
 };
 
+/*
+  Traversed all translation mappings to return an refined mapping pertaining to the relative filter view
+*/
 export const getAllFilterViewQuestions = (
   filterMappings: TranslationPlan,
   filteredView: typeof filterGroups[number]
 ) => {
   let mappedQuestions: Record<string, string[]> = {};
 
+  // Diving into each model plan section, as well as each question to identify if it contains the appropriate filter view mapping
   getKeys(filterMappings).forEach(section => {
     getKeys(filterMappings[section]).forEach(question => {
       const filterGroupConfig = (filterMappings[section][
@@ -168,6 +172,7 @@ export const getAllFilterViewQuestions = (
     });
   });
 
+  // Transferring mapped questions from modelPlan to basics. Readonly treats modelPlan as if were in basics schema
   if (mappedQuestions.modelPlan) {
     mappedQuestions = {
       basics: (mappedQuestions.basics || []).concat(mappedQuestions.modelPlan),
