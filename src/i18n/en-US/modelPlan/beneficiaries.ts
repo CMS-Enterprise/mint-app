@@ -174,13 +174,7 @@ export const beneficiaries: TranslationBeneficiaries = {
       position: 'right',
       adjacentField: 'numberPeopleImpacted'
     },
-    filterGroups: [
-      ModelViewFilter.CBOSC,
-      ModelViewFilter.CCW,
-      ModelViewFilter.DFSDM,
-      ModelViewFilter.IPC,
-      ModelViewFilter.MDM
-    ]
+    filterGroups: [ModelViewFilter.MDM]
   },
   confidenceNote: {
     gqlField: 'confidenceNote',
@@ -189,12 +183,7 @@ export const beneficiaries: TranslationBeneficiaries = {
     label: 'Notes',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: [
-      ModelViewFilter.CBOSC,
-      ModelViewFilter.CCW,
-      ModelViewFilter.DFSDM,
-      ModelViewFilter.IPC
-    ]
+    filterGroups: [ModelViewFilter.MDM]
   },
   beneficiarySelectionMethod: {
     gqlField: 'beneficiarySelectionMethod',

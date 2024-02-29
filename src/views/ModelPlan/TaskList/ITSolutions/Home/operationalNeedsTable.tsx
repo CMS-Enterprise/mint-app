@@ -5,7 +5,6 @@ Table component for rendering both Other Operational Needs and Operational Need 
 Queries operationalNeeds which contains possible needs and needs
 Can render table of type GetOperationalNeeds_modelPlan_operationalNeeds or GetOperationalNeeds_modelPlan_operationalNeeds_solutions_solutions
 */
-
 import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { RootStateOrAny, useSelector } from 'react-redux';
@@ -21,6 +20,7 @@ import {
 import { useQuery } from '@apollo/client';
 import { Icon, Table as UswdsTable } from '@trussworks/react-uswds';
 import classNames from 'classnames';
+import { OperationalSolutionKey } from 'gql/gen/graphql';
 import i18next from 'i18next';
 import { useFlags } from 'launchdarkly-react-client-sdk';
 
@@ -47,6 +47,7 @@ import {
   sortColumnValues
 } from 'utils/tableSort';
 import { isAssessment } from 'utils/user';
+import { helpSolutions } from 'views/HelpAndKnowledge/SolutionsHelp/solutionsMap';
 
 import OperationalNeedsStatusTag, {
   OperationalNeedsSolutionsStatus
@@ -69,13 +70,17 @@ type OperationalNeedsTableProps = {
   modelID: string;
   type: 'needs' | 'possibleNeeds';
   readOnly?: boolean;
+  hideGlobalFilter?: boolean;
+  filterSolutions?: OperationalSolutionKey[];
 };
 
 const OperationalNeedsTable = ({
   hiddenColumns,
   modelID,
   type,
-  readOnly
+  readOnly,
+  hideGlobalFilter,
+  filterSolutions
 }: OperationalNeedsTableProps) => {
   const { t } = useTranslation('itSolutions');
 
@@ -96,10 +101,19 @@ const OperationalNeedsTable = ({
       ? data?.modelPlan?.operationalNeeds
       : ([] as GetOperationalNeedsOperationalNeedsType[]);
 
-    return type === 'possibleNeeds'
-      ? filterPossibleNeeds(needData)
-      : filterNeedsFormatSolutions(needData);
-  }, [data?.modelPlan?.operationalNeeds, type]);
+    let formattedData =
+      type === 'possibleNeeds'
+        ? filterPossibleNeeds(needData)
+        : filterNeedsFormatSolutions(needData);
+
+    if (filterSolutions && Array.isArray(formattedData)) {
+      formattedData = (formattedData as [])?.filter((solution: any) => {
+        return filterSolutions.includes(solution.key);
+      });
+    }
+
+    return formattedData;
+  }, [data?.modelPlan?.operationalNeeds, type, filterSolutions]);
 
   const isCollaborator = data?.modelPlan?.isCollaborator;
 
@@ -267,6 +281,11 @@ const OperationalNeedsTable = ({
     ];
   }, [t, modelID]);
 
+  // Swap the solution and need positions if readonly filter view
+  if (filterSolutions) {
+    [needsColumns[0], needsColumns[1]] = [needsColumns[1], needsColumns[0]];
+  }
+
   const {
     getTableProps,
     getTableBodyProps,
@@ -337,6 +356,15 @@ const OperationalNeedsTable = ({
     );
   }
 
+  if (readOnly && filterSolutions && operationalNeeds.length === 0) {
+    return (
+      <FilterViewSolutionsAlert
+        filterSolutions={filterSolutions}
+        operationalNeeds={operationalNeeds}
+      />
+    );
+  }
+
   if (readOnly && operationalNeeds.length === 0) {
     return (
       <Alert heading={t('itSolutionsTable.noNeedsReadonly')} type="info">
@@ -349,23 +377,27 @@ const OperationalNeedsTable = ({
 
   return (
     <div className="model-plan-table" data-testid={`${type}-table`}>
-      <div className="mint-header__basic">
-        <GlobalClientFilter
-          setGlobalFilter={setGlobalFilter}
-          tableID={t('itSolutionsTable.id')}
-          tableName={t('itSolutionsTable.title')}
-          className="margin-bottom-4 width-mobile-lg maxw-full"
-        />
-      </div>
+      {!hideGlobalFilter && (
+        <div className="mint-header__basic">
+          <GlobalClientFilter
+            setGlobalFilter={setGlobalFilter}
+            tableID={t('itSolutionsTable.id')}
+            tableName={t('itSolutionsTable.title')}
+            className="margin-bottom-4 width-mobile-lg maxw-full"
+          />
+        </div>
+      )}
 
-      <TableResults
-        globalFilter={state.globalFilter}
-        pageIndex={state.pageIndex}
-        pageSize={state.pageSize}
-        filteredRowLength={page.length}
-        rowLength={operationalNeeds.length}
-        className="margin-bottom-4"
-      />
+      {!hideGlobalFilter && (
+        <TableResults
+          globalFilter={state.globalFilter}
+          pageIndex={state.pageIndex}
+          pageSize={state.pageSize}
+          filteredRowLength={page.length}
+          rowLength={operationalNeeds.length}
+          className="margin-bottom-4"
+        />
+      )}
 
       <UswdsTable bordered={false} {...getTableProps()} fullWidth scrollable>
         <thead>
@@ -487,7 +519,46 @@ const OperationalNeedsTable = ({
           {t('itSolutionsTable.noNeedsInfo')}
         </Alert>
       )}
+
+      {filterSolutions && (
+        <FilterViewSolutionsAlert
+          filterSolutions={filterSolutions}
+          operationalNeeds={operationalNeeds}
+        />
+      )}
     </div>
+  );
+};
+
+export const FilterViewSolutionsAlert = ({
+  filterSolutions,
+  operationalNeeds
+}: {
+  filterSolutions: OperationalSolutionKey[];
+  operationalNeeds: any[];
+}) => {
+  const { t } = useTranslation('itSolutions');
+
+  const unusedSolutions = filterSolutions.filter(
+    solution => !operationalNeeds.find((need: any) => need.key === solution)
+  );
+
+  if (unusedSolutions.length === 0) return null;
+
+  return (
+    <Alert noIcon type="info" validation>
+      {t('itSolutionsTable.unusedSolutionsAlert')}
+      <ul className="margin-top-1 margin-bottom-0">
+        {helpSolutions
+          .filter(solution => unusedSolutions.includes(solution.enum))
+          .map(solution => (
+            <li key={solution.key}>
+              {solution.name}
+              {solution.acronym ? ` (${solution.acronym})` : ''}
+            </li>
+          ))}
+      </ul>
+    </Alert>
   );
 };
 

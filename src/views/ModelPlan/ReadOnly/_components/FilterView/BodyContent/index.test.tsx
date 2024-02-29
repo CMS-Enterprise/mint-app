@@ -11,6 +11,14 @@ import configureMockStore from 'redux-mock-store';
 
 import { ASSESSMENT } from 'constants/jobCodes';
 import allMocks from 'data/mock/readonly';
+import basics from 'i18n/en-US/modelPlan/basics';
+import beneficiaries from 'i18n/en-US/modelPlan/beneficiaries';
+import collaborators from 'i18n/en-US/modelPlan/collaborators';
+import generalCharacteristics from 'i18n/en-US/modelPlan/generalCharacteristics';
+import modelPlan from 'i18n/en-US/modelPlan/modelPlan';
+import opsEvalAndLearning from 'i18n/en-US/modelPlan/opsEvalAndLearning';
+import participantsAndProviders from 'i18n/en-US/modelPlan/participantsAndProviders';
+import payments from 'i18n/en-US/modelPlan/payments';
 import GetModelSummary from 'queries/ReadOnly/GetModelSummary';
 import { GetModelSummary_modelPlan as GetModelSummaryTypes } from 'queries/ReadOnly/types/GetModelSummary';
 import {
@@ -18,7 +26,10 @@ import {
   ModelStatus,
   TeamRole
 } from 'types/graphql-global-types';
+import { TranslationPlan } from 'types/translation';
 import ReadOnly from 'views/ModelPlan/ReadOnly';
+
+import { getAllFilterViewQuestions } from '.';
 
 const mockData: GetModelSummaryTypes = {
   __typename: 'ModelPlan',
@@ -96,6 +107,42 @@ const mockStore = configureMockStore();
 const store = mockStore({ auth: mockAuthReducer });
 
 describe('Read Only Filtered View Body Content', () => {
+  it('formats filter view translation mappings', async () => {
+    expect(
+      getAllFilterViewQuestions(
+        {
+          basics,
+          collaborators,
+          generalCharacteristics,
+          participantsAndProviders,
+          beneficiaries,
+          modelPlan,
+          opsEvalAndLearning,
+          payments
+        } as TranslationPlan,
+        'mdm'
+      )
+    ).toEqual({
+      basics: ['nameHistory'],
+      modelPlan: ['nameHistory'],
+      beneficiaries: [
+        'beneficiaries',
+        'diseaseSpecificGroup',
+        'beneficiariesOther',
+        'beneficiariesNote',
+        'numberPeopleImpacted',
+        'estimateConfidence',
+        'confidenceNote',
+        'beneficiaryOverlap',
+        'beneficiaryOverlapNote',
+        'precedenceRules',
+        'precedenceRulesYes',
+        'precedenceRulesNo',
+        'precedenceRulesNote'
+      ]
+    });
+  });
+
   it('renders without crashing', async () => {
     const { getByTestId } = render(
       <MemoryRouter

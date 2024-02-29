@@ -171,12 +171,14 @@ export const getRelatedUneededQuestions = <
       (!Array.isArray(value) && value !== undefined && String(value) !== option)
     ) {
       childRelations?.forEach(childField => {
-        neededRelations.push(childField().label);
+        neededRelations.push(childField().readonlyLabel || childField().label);
       });
     } else {
       unneededRelations = [
         ...unneededRelations,
-        ...(childRelations?.map(childField => childField().label) as [])
+        ...(childRelations?.map(
+          childField => childField().readonlyLabel || childField().label
+        ) as [])
       ];
     }
   });

@@ -397,7 +397,8 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
       true: 'Yes',
       false: 'No'
     },
-    parentRelation: () => opsEvalAndLearning.iddocSupport
+    parentRelation: () => opsEvalAndLearning.iddocSupport,
+    filterGroups: [ModelViewFilter.IDDOC]
   },
   unsolicitedAdjustmentsIncluded: {
     gqlField: 'unsolicitedAdjustmentsIncluded',
@@ -424,7 +425,8 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
       true: 'Yes',
       false: 'No'
     },
-    parentRelation: () => opsEvalAndLearning.iddocSupport
+    parentRelation: () => opsEvalAndLearning.iddocSupport,
+    filterGroups: [ModelViewFilter.IDDOC]
   },
   produceBenefitEnhancementFiles: {
     gqlField: 'produceBenefitEnhancementFiles',

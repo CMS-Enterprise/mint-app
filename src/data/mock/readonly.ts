@@ -42,6 +42,9 @@ import {
   ModelType,
   MonitoringFileType,
   NonClaimsBasedPayType,
+  OperationalNeedKey,
+  OperationalSolutionKey,
+  OpSolutionStatus,
   OverlapType,
   ParticipantCommunicationType,
   ParticipantRiskType,
@@ -66,6 +69,8 @@ import {
 
 import GetModelPlanCollaborators from 'queries/Collaborators/GetModelCollaborators';
 import { GetModelCollaborators_modelPlan_collaborators as GetModelCollaboratorsType } from 'queries/Collaborators/types/GetModelCollaborators';
+import GetOperationalNeeds from 'queries/ITSolutions/GetOperationalNeeds';
+import { GetOperationalNeeds as GetOperationalNeedsType } from 'queries/ITSolutions/types/GetOperationalNeeds';
 import GetModelSummary from 'queries/ReadOnly/GetModelSummary';
 import { GetModelSummary_modelPlan as GetModelSummaryTypes } from 'queries/ReadOnly/types/GetModelSummary';
 
@@ -760,6 +765,58 @@ export const collaboratorsMocks = [
           collaborators: collaboratorsData
         }
       }
+    }
+  }
+];
+
+const opNeedsData: GetOperationalNeedsType = {
+  modelPlan: {
+    __typename: 'ModelPlan',
+    id: modelID,
+    isCollaborator: true,
+    modelName: 'My excellent plan that I just initiated',
+    operationalNeeds: [
+      {
+        __typename: 'OperationalNeed',
+        id: '123',
+        modelPlanID: modelID,
+        name: 'Recruit participants',
+        key: OperationalNeedKey.RECRUIT_PARTICIPANTS,
+        nameOther: null,
+        needed: true,
+        modifiedDts: '2022-05-12T15:01:39.190679Z',
+        solutions: [
+          {
+            __typename: 'OperationalSolution',
+            id: '123',
+            status: OpSolutionStatus.IN_PROGRESS,
+            name: 'Shared Systems',
+            key: OperationalSolutionKey.SHARED_SYSTEMS,
+            otherHeader: '',
+            mustStartDts: null,
+            mustFinishDts: null,
+            operationalSolutionSubtasks: [],
+            needed: true,
+            nameOther: null,
+            pocEmail: null,
+            pocName: null,
+            createdBy: '',
+            createdDts: ''
+          }
+        ]
+      }
+    ]
+  }
+};
+
+export const operationalNeedsMock = [
+  {
+    request: {
+      query: GetOperationalNeeds,
+      variables: { id: modelID }
+    },
+    result: {
+      data: opNeedsData
     }
   }
 ];

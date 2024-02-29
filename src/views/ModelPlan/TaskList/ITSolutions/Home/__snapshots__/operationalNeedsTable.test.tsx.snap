@@ -259,3 +259,27 @@ exports[`Operational Solutions Home > matches snapshot 1`] = `
   </div>
 </DocumentFragment>
 `;
+
+exports[`Operational Solutions Home > renders filter view solutions alert 1`] = `
+<DocumentFragment>
+  <div
+    class="usa-alert usa-alert--info usa-alert--no-icon usa-alert--validation flex"
+    data-testid="alert"
+  >
+    <div
+      class="usa-alert__body"
+    >
+      <span>
+        This model has not specified they will use the following solution(s):
+        <ul
+          class="margin-top-1 margin-bottom-0"
+        >
+          <li>
+            Chronic Conditions Warehouse (CCW)
+          </li>
+        </ul>
+      </span>
+    </div>
+  </div>
+</DocumentFragment>
+`;
