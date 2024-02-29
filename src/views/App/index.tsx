@@ -52,7 +52,7 @@ import SubmitRequest from 'views/ModelPlan/TaskList/SubmitRequest';
 import NDA from 'views/NDA';
 import NDAWrapper from 'views/NDAWrapper';
 import NotFound from 'views/NotFound';
-import NotificationSettings from 'views/Notifications/Settings';
+import Notifications from 'views/Notifications';
 import PrivacyPolicy from 'views/PrivacyPolicy';
 import RouterProvider from 'views/RouterContext';
 import Sandbox from 'views/Sandbox';
@@ -179,10 +179,7 @@ const AppRoutes = () => {
       />
 
       {flags.notificationsEnabled && (
-        <SecureRoute
-          path="/notifications/settings"
-          component={NotificationSettings}
-        />
+        <SecureRoute path="/notifications" component={Notifications} />
       )}
 
       <SecureRoute path="/help-and-knowledge" component={HelpAndKnowledge} />
