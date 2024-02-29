@@ -82,13 +82,6 @@ func (r *mutationResolver) UpdatePlanBeneficiaries(ctx context.Context, id uuid.
 	return PlanBeneficiariesUpdate(logger, id, changes, principal, r.store)
 }
 
-// UpdatePlanParticipantsAndProviders is the resolver for the updatePlanParticipantsAndProviders field.
-func (r *mutationResolver) UpdatePlanParticipantsAndProviders(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanParticipantsAndProviders, error) {
-	principal := appcontext.Principal(ctx)
-	logger := appcontext.ZLogger(ctx)
-	return PlanParticipantsAndProvidersUpdate(logger, id, changes, principal, r.store)
-}
-
 // UploadNewPlanDocument is the resolver for the uploadNewPlanDocument field.
 func (r *mutationResolver) UploadNewPlanDocument(ctx context.Context, input model.PlanDocumentInput) (*models.PlanDocument, error) {
 	principal := appcontext.Principal(ctx)
@@ -435,73 +428,6 @@ func (r *planDocumentResolver) NumLinkedSolutions(ctx context.Context, obj *mode
 	return PlanDocumentNumLinkedSolutions(logger, principal, r.store, obj.ID)
 }
 
-// Participants is the resolver for the participants field.
-func (r *planParticipantsAndProvidersResolver) Participants(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]model.ParticipantsType, error) {
-	participants := models.ConvertEnums[model.ParticipantsType](obj.Participants)
-	return participants, nil
-}
-
-// SelectionMethod is the resolver for the selectionMethod field.
-func (r *planParticipantsAndProvidersResolver) SelectionMethod(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]model.ParticipantSelectionType, error) {
-	selectionTypes := models.ConvertEnums[model.ParticipantSelectionType](obj.SelectionMethod)
-	return selectionTypes, nil
-}
-
-// ParticipantAddedFrequency is the resolver for the participantAddedFrequency field.
-func (r *planParticipantsAndProvidersResolver) ParticipantAddedFrequency(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]models.FrequencyType, error) {
-	return models.ConvertEnums[models.FrequencyType](obj.ParticipantAddedFrequency), nil
-}
-
-// ParticipantRemovedFrequency is the resolver for the participantRemovedFrequency field.
-func (r *planParticipantsAndProvidersResolver) ParticipantRemovedFrequency(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]models.FrequencyType, error) {
-	return models.ConvertEnums[models.FrequencyType](obj.ParticipantRemovedFrequency), nil
-}
-
-// CommunicationMethod is the resolver for the communicationMethod field.
-func (r *planParticipantsAndProvidersResolver) CommunicationMethod(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]model.ParticipantCommunicationType, error) {
-	communicationTypes := models.ConvertEnums[model.ParticipantCommunicationType](obj.CommunicationMethod)
-	return communicationTypes, nil
-}
-
-// RiskType is the resolver for the riskType field.
-func (r *planParticipantsAndProvidersResolver) RiskType(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]models.ParticipantRiskType, error) {
-	return models.ConvertEnums[models.ParticipantRiskType](obj.RiskType), nil
-}
-
-// GainsharePaymentsEligibility is the resolver for the gainsharePaymentsEligibility field.
-func (r *planParticipantsAndProvidersResolver) GainsharePaymentsEligibility(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]model.GainshareArrangementEligibility, error) {
-	gainshareArrangementEligibilities := models.ConvertEnums[model.GainshareArrangementEligibility](obj.GainsharePaymentsEligibility)
-	return gainshareArrangementEligibilities, nil
-}
-
-// ParticipantsIds is the resolver for the participantsIds field.
-func (r *planParticipantsAndProvidersResolver) ParticipantsIds(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]model.ParticipantsIDType, error) {
-	participantsIDTypes := models.ConvertEnums[model.ParticipantsIDType](obj.ParticipantsIds)
-	return participantsIDTypes, nil
-}
-
-// ProviderAdditionFrequency is the resolver for the providerAdditionFrequency field.
-func (r *planParticipantsAndProvidersResolver) ProviderAdditionFrequency(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]models.FrequencyType, error) {
-	return models.ConvertEnums[models.FrequencyType](obj.ProviderAdditionFrequency), nil
-}
-
-// ProviderAddMethod is the resolver for the providerAddMethod field.
-func (r *planParticipantsAndProvidersResolver) ProviderAddMethod(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]model.ProviderAddType, error) {
-	providerAddTypes := models.ConvertEnums[model.ProviderAddType](obj.ProviderAddMethod)
-	return providerAddTypes, nil
-}
-
-// ProviderLeaveMethod is the resolver for the providerLeaveMethod field.
-func (r *planParticipantsAndProvidersResolver) ProviderLeaveMethod(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]model.ProviderLeaveType, error) {
-	providerLeaveTypes := models.ConvertEnums[model.ProviderLeaveType](obj.ProviderLeaveMethod)
-	return providerLeaveTypes, nil
-}
-
-// ProviderRemovalFrequency is the resolver for the providerRemovalFrequency field.
-func (r *planParticipantsAndProvidersResolver) ProviderRemovalFrequency(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]models.FrequencyType, error) {
-	return models.ConvertEnums[models.FrequencyType](obj.ProviderRemovalFrequency), nil
-}
-
 // FundingSource is the resolver for the fundingSource field.
 func (r *planPaymentsResolver) FundingSource(ctx context.Context, obj *models.PlanPayments) ([]models.FundingSource, error) {
 	return models.ConvertEnums[models.FundingSource](obj.FundingSource), nil
@@ -755,11 +681,6 @@ func (r *Resolver) PlanDiscussion() generated.PlanDiscussionResolver {
 // PlanDocument returns generated.PlanDocumentResolver implementation.
 func (r *Resolver) PlanDocument() generated.PlanDocumentResolver { return &planDocumentResolver{r} }
 
-// PlanParticipantsAndProviders returns generated.PlanParticipantsAndProvidersResolver implementation.
-func (r *Resolver) PlanParticipantsAndProviders() generated.PlanParticipantsAndProvidersResolver {
-	return &planParticipantsAndProvidersResolver{r}
-}
-
 // PlanPayments returns generated.PlanPaymentsResolver implementation.
 func (r *Resolver) PlanPayments() generated.PlanPaymentsResolver { return &planPaymentsResolver{r} }
 
@@ -796,7 +717,6 @@ type planBeneficiariesResolver struct{ *Resolver }
 type planCollaboratorResolver struct{ *Resolver }
 type planDiscussionResolver struct{ *Resolver }
 type planDocumentResolver struct{ *Resolver }
-type planParticipantsAndProvidersResolver struct{ *Resolver }
 type planPaymentsResolver struct{ *Resolver }
 type possibleOperationalNeedResolver struct{ *Resolver }
 type possibleOperationalSolutionResolver struct{ *Resolver }

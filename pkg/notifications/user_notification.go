@@ -12,7 +12,7 @@ import (
 
 // UserNotificationCollectionGetByUser gets all userNotifications for a given user account id from the database
 func UserNotificationCollectionGetByUser(
-	ctx context.Context,
+	_ context.Context,
 	np sqlutils.NamedPreparer,
 	principal authentication.Principal,
 ) (*models.UserNotifications, error) {
@@ -29,7 +29,7 @@ func UserNotificationCollectionGetByUser(
 
 // userNotificationCreate creates a UserNotificationRecord in the database
 func userNotificationCreate(
-	ctx context.Context,
+	_ context.Context,
 	np sqlutils.NamedPreparer,
 	// the activity this notification is in regards to
 	activity *models.Activity,

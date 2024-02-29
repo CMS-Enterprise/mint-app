@@ -136,9 +136,9 @@ func CreatePlanDiscussion(
 // Handles send an email for when a tagged entity is tagged in either a plan discussion or discussion reply
 func sendPlanDiscussionTagEmails(
 	ctx context.Context,
-	np sqlutils.NamedPreparer,
+	_ sqlutils.NamedPreparer,
 	isDiscussion bool, // true for discussion, false for
-	logger *zap.Logger,
+	_ *zap.Logger,
 	emailService oddmail.EmailService,
 	emailTemplateService email.TemplateService,
 	addressBook email.AddressBook,
