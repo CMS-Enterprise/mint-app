@@ -99,7 +99,7 @@ func CreatePlanDiscussion(
 			}
 		}()
 
-		_, notificationErr := notifications.ActivityTaggedInDiscussionCreate(ctx, tx, principal.Account().ID, discussion.ID, discussion.Content, loaders.UserNotificationPreferencesGetByUserID)
+		_, notificationErr := notifications.ActivityTaggedInDiscussionCreate(ctx, tx, principal.Account().ID, discussion.ModelPlanID, discussion.ID, discussion.Content, loaders.UserNotificationPreferencesGetByUserID)
 		if notificationErr != nil {
 			return nil, fmt.Errorf("unable to generate notifications, %w", notificationErr)
 		}
