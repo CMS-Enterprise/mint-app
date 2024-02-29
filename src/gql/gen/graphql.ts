@@ -3110,6 +3110,11 @@ export type GetNotificationSettingsQueryVariables = Exact<{ [key: string]: never
 
 export type GetNotificationSettingsQuery = { __typename: 'Query', currentUser: { __typename: 'CurrentUser', notificationPreferences: { __typename: 'UserNotificationPreferences', id: UUID, dailyDigestComplete: Array<UserNotificationPreferenceFlag>, addedAsCollaborator: Array<UserNotificationPreferenceFlag>, taggedInDiscussion: Array<UserNotificationPreferenceFlag>, taggedInDiscussionReply: Array<UserNotificationPreferenceFlag>, newDiscussionReply: Array<UserNotificationPreferenceFlag>, modelPlanShared: Array<UserNotificationPreferenceFlag> } } };
 
+export type GetPollNotificationsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetPollNotificationsQuery = { __typename: 'Query', currentUser: { __typename: 'CurrentUser', notifications: { __typename: 'UserNotifications', numUnreadNotifications: number } } };
+
 export type UpdateNotificationSettingsMutationVariables = Exact<{
   changes: UserNotificationPreferencesChanges;
 }>;
@@ -5224,6 +5229,47 @@ export type GetNotificationSettingsQueryHookResult = ReturnType<typeof useGetNot
 export type GetNotificationSettingsLazyQueryHookResult = ReturnType<typeof useGetNotificationSettingsLazyQuery>;
 export type GetNotificationSettingsSuspenseQueryHookResult = ReturnType<typeof useGetNotificationSettingsSuspenseQuery>;
 export type GetNotificationSettingsQueryResult = Apollo.QueryResult<GetNotificationSettingsQuery, GetNotificationSettingsQueryVariables>;
+export const GetPollNotificationsDocument = gql`
+    query GetPollNotifications {
+  currentUser {
+    notifications {
+      numUnreadNotifications
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetPollNotificationsQuery__
+ *
+ * To run a query within a React component, call `useGetPollNotificationsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetPollNotificationsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetPollNotificationsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetPollNotificationsQuery(baseOptions?: Apollo.QueryHookOptions<GetPollNotificationsQuery, GetPollNotificationsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetPollNotificationsQuery, GetPollNotificationsQueryVariables>(GetPollNotificationsDocument, options);
+      }
+export function useGetPollNotificationsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetPollNotificationsQuery, GetPollNotificationsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetPollNotificationsQuery, GetPollNotificationsQueryVariables>(GetPollNotificationsDocument, options);
+        }
+export function useGetPollNotificationsSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetPollNotificationsQuery, GetPollNotificationsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetPollNotificationsQuery, GetPollNotificationsQueryVariables>(GetPollNotificationsDocument, options);
+        }
+export type GetPollNotificationsQueryHookResult = ReturnType<typeof useGetPollNotificationsQuery>;
+export type GetPollNotificationsLazyQueryHookResult = ReturnType<typeof useGetPollNotificationsLazyQuery>;
+export type GetPollNotificationsSuspenseQueryHookResult = ReturnType<typeof useGetPollNotificationsSuspenseQuery>;
+export type GetPollNotificationsQueryResult = Apollo.QueryResult<GetPollNotificationsQuery, GetPollNotificationsQueryVariables>;
 export const UpdateNotificationSettingsDocument = gql`
     mutation UpdateNotificationSettings($changes: UserNotificationPreferencesChanges!) {
   updateUserNotificationPreferences(changes: $changes) {

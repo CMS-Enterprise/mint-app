@@ -1,10 +1,29 @@
 import React from 'react';
 import { act } from 'react-dom/test-utils';
 import { MemoryRouter } from 'react-router-dom';
+import { MockedProvider } from '@apollo/client/testing';
 import { render, waitFor } from '@testing-library/react';
 import { mount, shallow } from 'enzyme';
+import { GetPollNotificationsDocument } from 'gql/gen/graphql';
 
 import { Header } from './index';
+
+const notificationsMock = [
+  {
+    request: {
+      query: GetPollNotificationsDocument
+    },
+    result: {
+      data: {
+        currentUser: {
+          notifications: {
+            numUnreadNotifications: 1
+          }
+        }
+      }
+    }
+  }
+];
 
 vi.mock('@okta/okta-react', () => ({
   useOktaAuth: () => {
@@ -26,7 +45,9 @@ describe('The Header component', () => {
   it('renders without crashing', () => {
     shallow(
       <MemoryRouter initialEntries={['/']}>
-        <Header />
+        <MockedProvider mocks={notificationsMock} addTypename={false}>
+          <Header />
+        </MockedProvider>
       </MemoryRouter>
     );
   });
@@ -35,7 +56,9 @@ describe('The Header component', () => {
     it('displays a login button', async () => {
       const { getByTestId } = render(
         <MemoryRouter initialEntries={['/pre-decisional-notice']}>
-          <Header />
+          <MockedProvider mocks={notificationsMock} addTypename={false}>
+            <Header />
+          </MockedProvider>
         </MemoryRouter>
       );
 
@@ -49,7 +72,9 @@ describe('The Header component', () => {
       await act(async () => {
         component = mount(
           <MemoryRouter>
-            <Header />
+            <MockedProvider mocks={notificationsMock} addTypename={false}>
+              <Header />
+            </MockedProvider>
           </MemoryRouter>
         );
       });
@@ -63,9 +88,11 @@ describe('The Header component', () => {
 
   test.skip('displays children', () => {
     const component = shallow(
-      <Header>
-        <div className="test-class-name" />
-      </Header>
+      <MockedProvider mocks={notificationsMock} addTypename={false}>
+        <Header>
+          <div className="test-class-name" />
+        </Header>
+      </MockedProvider>
     );
     expect(component.find('.test-class-name').exists()).toBe(true);
   });
