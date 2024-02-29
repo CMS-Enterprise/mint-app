@@ -13,7 +13,7 @@ const notifications = {
       dailyDigestComplete: ' sent your daily digest.',
       modelPlanShared: ' shared {{-modelName}} with you.',
       newDiscussionReply: ' replied to your discussion for {{-modelName}}.',
-      taggedInDiscussion: ' tagged you in a discussion for {{-modelName',
+      taggedInDiscussion: ' tagged you in a discussion for {{-modelName}}.',
       taggedInDiscussionReply: ''
     }
   },

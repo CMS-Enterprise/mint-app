@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Grid } from '@trussworks/react-uswds';
 import { GetNotifications_currentUser_notifications_notifications_activity as NotificationActivityType } from 'gql/gen/types/GetNotifications';
 
@@ -17,6 +18,8 @@ const IndividualNotification = ({
   emailSent,
   activity
 }: IndividualNotificationProps) => {
+  const { t: notificationsT } = useTranslation('notifications');
+
   return (
     <>
       <Grid row>
@@ -26,10 +29,16 @@ const IndividualNotification = ({
           )}
 
           <div className="padding-3">
-            <IconInitial
-              user={activity.createdByUserAccount.commonName}
-              hasBoldUsername
-            />
+            <span>
+              <IconInitial
+                user={activity.createdByUserAccount.commonName}
+                hasBoldUsername
+              />
+              {notificationsT('index.activityType.taggedInDiscussion')}
+              {/* {t('withdraw_modal.header', {
+                requestName: modelPlan.modelName
+              })} */}
+            </span>
           </div>
         </Grid>
       </Grid>
