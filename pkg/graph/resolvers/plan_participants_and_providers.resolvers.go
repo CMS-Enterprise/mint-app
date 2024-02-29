@@ -7,10 +7,20 @@ package resolvers
 import (
 	"context"
 
+	"github.com/google/uuid"
+
+	"github.com/cmsgov/mint-app/pkg/appcontext"
 	"github.com/cmsgov/mint-app/pkg/graph/generated"
 	"github.com/cmsgov/mint-app/pkg/graph/model"
 	"github.com/cmsgov/mint-app/pkg/models"
 )
+
+// UpdatePlanParticipantsAndProviders is the resolver for the updatePlanParticipantsAndProviders field.
+func (r *mutationResolver) UpdatePlanParticipantsAndProviders(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanParticipantsAndProviders, error) {
+	principal := appcontext.Principal(ctx)
+	logger := appcontext.ZLogger(ctx)
+	return PlanParticipantsAndProvidersUpdate(logger, id, changes, principal, r.store)
+}
 
 // Participants is the resolver for the participants field.
 func (r *planParticipantsAndProvidersResolver) Participants(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]model.ParticipantsType, error) {

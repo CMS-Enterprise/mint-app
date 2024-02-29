@@ -271,3 +271,8 @@ input PlanParticipantsAndProvidersChanges @goModel(model: "map[string]interface{
 
   status: TaskStatusInput
 }
+
+extend type Mutation {
+  updatePlanParticipantsAndProviders(id: UUID!, changes: PlanParticipantsAndProvidersChanges!): PlanParticipantsAndProviders!
+  @hasRole(role: MINT_USER)
+}

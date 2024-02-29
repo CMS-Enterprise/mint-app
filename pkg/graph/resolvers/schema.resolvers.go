@@ -82,13 +82,6 @@ func (r *mutationResolver) UpdatePlanBeneficiaries(ctx context.Context, id uuid.
 	return PlanBeneficiariesUpdate(logger, id, changes, principal, r.store)
 }
 
-// UpdatePlanParticipantsAndProviders is the resolver for the updatePlanParticipantsAndProviders field.
-func (r *mutationResolver) UpdatePlanParticipantsAndProviders(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanParticipantsAndProviders, error) {
-	principal := appcontext.Principal(ctx)
-	logger := appcontext.ZLogger(ctx)
-	return PlanParticipantsAndProvidersUpdate(logger, id, changes, principal, r.store)
-}
-
 // UploadNewPlanDocument is the resolver for the uploadNewPlanDocument field.
 func (r *mutationResolver) UploadNewPlanDocument(ctx context.Context, input model.PlanDocumentInput) (*models.PlanDocument, error) {
 	principal := appcontext.Principal(ctx)
