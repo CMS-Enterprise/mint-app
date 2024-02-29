@@ -263,9 +263,7 @@ func (s *Seeder) CreateAnalyzedAuditData() {
 	// Step 1. Get all model plans
 	modelPlans, err := s.Config.Store.ModelPlanCollection(s.Config.Logger, false)
 	if err != nil {
-		if err != nil {
-			panic(fmt.Errorf("couldn't retrieve model plan collection"))
-		}
+		panic(fmt.Errorf("couldn't retrieve model plan collection"))
 	}
 
 	// Step 2. Iterate through all model plans, and generate analyzed audit data
