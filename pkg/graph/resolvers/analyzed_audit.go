@@ -318,6 +318,9 @@ func AnalyzedAuditGetByModelPlanIDsAndDate(
 	modelPlanIDs []uuid.UUID,
 	date time.Time,
 ) ([]*models.AnalyzedAudit, error) {
+
+	// TODO: EASI-3949 Consider making this a dataloader
+	// TODO: EASI-(EASI-3949) Consider making this a dataloader
 	return store.AnalyzedAuditGetByModelPlanIDsAndDate(logger, modelPlanIDs, date)
 
 }
