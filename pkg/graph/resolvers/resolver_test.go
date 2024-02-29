@@ -283,6 +283,53 @@ func (suite *ResolverSuite) convertOperationalSubtasksToUpdateInputs(
 	return updateInputs
 }
 
+func (suite *ResolverSuite) createAnalyzedAuditChange(modelNameChange string,
+	modelStatusChanges []string,
+	documentCount int,
+	crTdlActivity bool,
+	updatedSections []string,
+	reviewSections []string,
+	clearanceSections []string,
+	addedLeads []models.AnalyzedModelLeadInfo, discussionActivity bool) *models.AnalyzedAuditChange {
+
+	auditChange := models.AnalyzedAuditChange{
+		ModelPlan: &models.AnalyzedModelPlan{
+			OldName:       modelNameChange,
+			StatusChanges: modelStatusChanges,
+		},
+		Documents: &models.AnalyzedDocuments{
+			Count: documentCount,
+		},
+		CrTdls: &models.AnalyzedCrTdls{
+			Activity: crTdlActivity,
+		},
+		PlanSections: &models.AnalyzedPlanSections{
+			Updated:           updatedSections,
+			ReadyForReview:    reviewSections,
+			ReadyForClearance: clearanceSections,
+		},
+		ModelLeads: &models.AnalyzedModelLeads{
+			Added: addedLeads,
+		},
+		PlanDiscussions: &models.AnalyzedPlanDiscussions{
+			Activity: discussionActivity,
+		},
+	}
+
+	return &auditChange
+}
+
+func (suite *ResolverSuite) createAnalyzedAudit(mp *models.ModelPlan, date time.Time, changes models.AnalyzedAuditChange) *models.AnalyzedAudit {
+	principal := getTestPrincipal(suite.testConfigs.Store, "TEST")
+	newAnalyzedAudit, err := models.NewAnalyzedAudit(principal.UserAccount.ID, mp.ID, mp.ModelName, date, changes)
+	suite.NoError(err)
+
+	analyzedAudit, err := suite.testConfigs.Store.AnalyzedAuditCreate(suite.testConfigs.Logger, newAnalyzedAudit)
+	suite.NoError(err)
+
+	return analyzedAudit
+}
+
 // TestResolverSuite runs the resolver test suite
 func TestResolverSuite(t *testing.T) {
 	rs := new(ResolverSuite)
