@@ -38,6 +38,7 @@ func (suite *NotificationsSuite) TestActivityTaggedInDiscussionReplyCreate() {
 	// we are just choosing a valid UUID to set for the entityID
 	replyID := uuid.New()
 	discussionID := uuid.New()
+	modelPlanID := uuid.New()
 	actorID := suite.testConfigs.Principal.Account().ID
 
 	mockFunc := func(ctx context.Context, user_id uuid.UUID) (*models.UserNotificationPreferences, error) {
@@ -59,7 +60,7 @@ func (suite *NotificationsSuite) TestActivityTaggedInDiscussionReplyCreate() {
 
 	}
 
-	testActivity, err := ActivityTaggedInDiscussionReplyCreate(suite.testConfigs.Context, suite.testConfigs.Store, actorID, discussionID, replyID, input, mockFunc)
+	testActivity, err := ActivityTaggedInDiscussionReplyCreate(suite.testConfigs.Context, suite.testConfigs.Store, actorID, modelPlanID, discussionID, replyID, input, mockFunc)
 
 	suite.NoError(err)
 	suite.NotNil(testActivity)

@@ -6,9 +6,6 @@ package resolvers
 
 import (
 	"context"
-	"fmt"
-
-	"github.com/google/uuid"
 
 	"github.com/cmsgov/mint-app/pkg/appcontext"
 	"github.com/cmsgov/mint-app/pkg/authentication"
@@ -21,14 +18,9 @@ func (r *activityResolver) ActorUserAccount(ctx context.Context, obj *models.Act
 	return UserAccountGetByIDLOADER(ctx, obj.ActorID)
 }
 
-// ModelPlanID is the resolver for the modelPlanID field.
-func (r *taggedInDiscussionReplyActivityMetaResolver) ModelPlanID(ctx context.Context, obj *models.TaggedInDiscussionReplyActivityMeta) (uuid.UUID, error) {
-	panic(fmt.Errorf("not implemented: ModelPlanID - modelPlanID"))
-}
-
 // ModelPlan is the resolver for the modelPlan field.
 func (r *taggedInDiscussionReplyActivityMetaResolver) ModelPlan(ctx context.Context, obj *models.TaggedInDiscussionReplyActivityMeta) (*models.ModelPlan, error) {
-	panic(fmt.Errorf("not implemented: ModelPlan - modelPlan"))
+	return ModelPlanGetByIDLOADER(ctx, obj.ModelPlanID)
 }
 
 // Discussion is the resolver for the discussion field.

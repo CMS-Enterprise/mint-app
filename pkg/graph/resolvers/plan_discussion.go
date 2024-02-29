@@ -455,7 +455,7 @@ func CreateDiscussionReply(
 			return reply, err
 		}
 		// Create Activity and notifications in the DB
-		_, notificationErr := notifications.ActivityTaggedInDiscussionReplyCreate(ctx, tx, principal.Account().ID, discussion.ID, reply.ID, reply.Content, loaders.UserNotificationPreferencesGetByUserID)
+		_, notificationErr := notifications.ActivityTaggedInDiscussionReplyCreate(ctx, tx, principal.Account().ID, discussion.ModelPlanID, discussion.ID, reply.ID, reply.Content, loaders.UserNotificationPreferencesGetByUserID)
 		if notificationErr != nil {
 			return nil, fmt.Errorf("unable to generate notifications, %w", notificationErr)
 		}
