@@ -28,9 +28,9 @@ export const formatListValues = <
     | TranslationFieldPropertiesWithOptions<T>, // Translation config
   value: T[] | undefined // field value/enum array
 ): string[] => {
-  if (!isTranslationFieldPropertiesWithOptions(config)) return [];
+  if (config.isArray || config.isModelLinks) return value as string[];
 
-  if (config.isModelLinks) return value as string[];
+  if (!isTranslationFieldPropertiesWithOptions(config)) return [];
 
   return getKeys(config.options)
     .filter(option => Array.isArray(value) && value?.includes(option))

@@ -37,11 +37,22 @@ exports[`Read Only Model Plan Summary -- Model Basics > matches snapshot 1`] = `
         >
           Previous names
         </p>
-        <div
-          class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+        <ul
+          class="margin-y-0 padding-left-3"
         >
-          First NameSecond Name
-        </div>
+          <li
+            class="font-sans-md line-height-sans-4"
+          >
+            First Name
+          </li>
+          <ul />
+          <li
+            class="font-sans-md line-height-sans-4"
+          >
+            Second Name
+          </li>
+          <ul />
+        </ul>
       </div>
     </div>
     <div
