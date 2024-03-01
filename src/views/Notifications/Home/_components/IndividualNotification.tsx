@@ -60,18 +60,18 @@ const IndividualNotification = ({
           }`}
         >
           {isTaggedInDiscussion(metaData) && (
-            <div className="flex-fill">
+            <div className="flex-9">
               <div className="display-flex flex-align-center margin-bottom-05">
                 <div
-                  className={`display-flex flex-align-center flex-justify-center circle-4 margin-right-1 ${
+                  className={`display-flex flex-align-center flex-justify-center circle-4 ${
                     arrayOfColors[index % arrayOfColors.length]
                   }`}
                 >
                   {getUserInitials(commonName)}
                 </div>
 
-                <span>
-                  <strong className="margin-right-05">{commonName} </strong>
+                <span className="margin-left-1 margin-bottom-1">
+                  <strong>{commonName}</strong>
                   {notificationsT(
                     'index.activityType.taggedInDiscussion.text',
                     {
@@ -103,7 +103,7 @@ const IndividualNotification = ({
               </div>
             </div>
           )}
-          <span className="flex-auto text-base-darker text-right">
+          <span className="flex-3 text-base-darker text-right">
             {getTimeElapsed(createdDts)
               ? getTimeElapsed(createdDts) + discussionT('ago')
               : discussionT('justNow')}
