@@ -376,7 +376,7 @@ const SelectSolutions = () => {
                       <Button
                         type="button"
                         id="add-solution-not-listed"
-                        className="usa-button usa-button--outline margin-top-2"
+                        className="usa-button usa-button--outline margin-top-2 margin-bottom-3"
                         onClick={() => {
                           history.push(
                             `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-solution?isCustomNeed=${!!isCustomNeed}`
@@ -386,7 +386,14 @@ const SelectSolutions = () => {
                         {t('selectAnother')}
                       </Button>
 
-                      <div className="margin-top-6 margin-bottom-3">
+                      {allTheSolutions.filter(solution => solution.needed)
+                        .length > 0 && (
+                        <Alert type="info" slim>
+                          {t('selectAlert')}
+                        </Alert>
+                      )}
+
+                      <div className="margin-y-3">
                         <Button
                           type="submit"
                           className="margin-bottom-1"
