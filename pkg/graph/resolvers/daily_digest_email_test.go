@@ -35,6 +35,7 @@ func (suite *ResolverSuite) TestDigestEmailSend() {
 		Return(emailServiceConfig).
 		AnyTimes()
 
+	// mockTemplateService.EXPECT().GetEmailTemplate(gomock.Any()).MinTimes(1).MaxTimes(1)
 	mp := suite.createModelPlan("Test Plan")
 	collaborator := suite.createPlanCollaborator(
 		mp,
@@ -48,15 +49,15 @@ func (suite *ResolverSuite) TestDigestEmailSend() {
 	modelNameChange := "Old Name"
 	modelStatusChange := []string{"OMB_ASRF_CLEARANCE"}
 	documentCount := 2
-	crTdlAvtivity := true
+	crTdlActivity := true
 	updatedSections := []string{"plan_payments", "plan_ops_eval_and_learning"}
 	reviewSections := []string{"plan_payments", "plan_ops_eval_and_learning"}
 	clearanceSections := []string{"plan_participants_and_providers", "plan_general_characteristics", "plan_basics"}
 	addedLead := []models.AnalyzedModelLeadInfo{{CommonName: "New Lead"}}
-	dicussionActivity := true
+	discussionActivity := true
 
 	auditChange := *suite.createAnalyzedAuditChange(modelNameChange, modelStatusChange, documentCount,
-		crTdlAvtivity, updatedSections, reviewSections, clearanceSections, addedLead, dicussionActivity)
+		crTdlActivity, updatedSections, reviewSections, clearanceSections, addedLead, discussionActivity)
 
 	analyzedAudit := suite.createAnalyzedAudit(mp, time.Now().UTC(), auditChange)
 
