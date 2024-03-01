@@ -27,6 +27,11 @@ const NotificationsHome = () => {
     data?.currentUser.notifications.numUnreadNotifications;
 
   const allNotifications = data?.currentUser.notifications.notifications;
+  // console.log(
+  //   allNotifications?.sort((a, b) => {
+  //     a.createdDts.localeCompare(b.createdDts);
+  //   })
+  // );
 
   const breadcrumbs = [
     { text: miscellaneousT('home'), url: '/' },
@@ -89,8 +94,12 @@ const NotificationsHome = () => {
           )}
 
           {allNotifications?.length !== 0 &&
-            allNotifications?.map(notification => (
-              <IndividualNotification {...notification} key={notification.id} />
+            allNotifications?.map((notification, index) => (
+              <IndividualNotification
+                {...notification}
+                key={notification.id}
+                index={index}
+              />
             ))}
         </Grid>
       </GridContainer>

@@ -8,17 +8,20 @@ import {
   GetNotifications_currentUser_notifications_notifications_activity_metaData_TaggedInPlanDiscussionActivityMeta as TaggedInDiscussionActivityType
 } from 'gql/gen/types/GetNotifications';
 
-import IconInitial from 'components/shared/IconInitial';
+import { arrayOfColors } from 'components/shared/IconInitial';
 import MentionTextArea from 'components/shared/MentionTextArea';
 import { getTimeElapsed } from 'utils/date';
+import { getUserInitials } from 'utils/modelPlan';
 
 type IndividualNotificationProps = {
+  index?: number;
   isRead: boolean;
   createdDts: string;
   activity: NotificationActivityType;
 };
 
 const IndividualNotification = ({
+  index = 0,
   isRead,
   createdDts,
   activity: {
@@ -56,11 +59,19 @@ const IndividualNotification = ({
           {isTaggedInDiscussion(metaData) && (
             <div className="flex-fill">
               <div className="display-flex flex-align-center margin-bottom-05">
-                <IconInitial
+                <div
+                  className={`display-flex flex-align-center flex-justify-center circle-4 margin-right-1 ${
+                    arrayOfColors[index % arrayOfColors.length]
+                  }`}
+                >
+                  {getUserInitials(commonName)}
+                </div>
+
+                {/* <IconInitial
                   className="margin-right-05"
                   user={commonName}
                   hasBoldUsername
-                />
+                /> */}
 
                 {notificationsT('index.activityType.taggedInDiscussion.text', {
                   modelName: metaData.modelPlan.modelName
