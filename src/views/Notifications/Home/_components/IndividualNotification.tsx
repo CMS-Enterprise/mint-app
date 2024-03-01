@@ -99,6 +99,7 @@ const IndividualNotification = ({
                   unstyled
                   className="display-flex flex-align-center"
                   onClick={() => {
+                    // TODO: individual mark as read
                     // markAsRead();
                     history.push(
                       `/models/${metaData.modelPlanID}/task-list?discussionID=${metaData.discussionID}`
