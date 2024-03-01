@@ -39,7 +39,7 @@ func DailyDigestNotificationSend(
 	recipientEmail := account.Email
 
 	// Get all analyzedAudits based on users favorited models
-	analyzedAudits, modelPlanIDs, err := GetDigestAnalyzedAudits(userID, dateAnalyzed, store, logger)
+	analyzedAudits, modelPlanIDs, err := getDigestAnalyzedAudits(userID, dateAnalyzed, store, logger)
 	if err != nil {
 		return err
 	}
@@ -65,7 +65,7 @@ func DailyDigestNotificationSend(
 	//TODO: EASI-(EASI-3338) get user preferences, or perhaps get earlier and pass it to the notifications? Only send the email if user has a preference for it.
 
 	// Generate email subject and body from template
-	emailSubject, emailBody, err := GenerateDigestEmail(analyzedAudits, emailTemplateService, emailService)
+	emailSubject, emailBody, err := generateDigestEmail(analyzedAudits, emailTemplateService, emailService)
 	if err != nil {
 		return err
 	}
@@ -93,9 +93,9 @@ func DailyDigestNotificationSend(
 ############################
 */
 
-// GetDigestAnalyzedAudits gets AnalyzedAudits based on a users favorited plans and date
+// getDigestAnalyzedAudits gets AnalyzedAudits based on a users favorited plans and date
 // it returns the list of analyzed audits, as well as a separate list of the model plan IDs of the analyzed audits
-func GetDigestAnalyzedAudits( //TODO: EASI-(EASI-3338) perhaps don't export this method, move testing from the worker package
+func getDigestAnalyzedAudits(
 	userID uuid.UUID,
 	date time.Time,
 	store *storage.Store,
@@ -126,8 +126,8 @@ func GetDigestAnalyzedAudits( //TODO: EASI-(EASI-3338) perhaps don't export this
 	return analyzedAudits, modelPlanIDs, nil
 }
 
-// GenerateDigestEmail will generate the daily digest email from template
-func GenerateDigestEmail( //TODO: EASI-(EASI-3338) perhaps don't export this method, move testing from the worker package
+// generateDigestEmail will generate the daily digest email from template
+func generateDigestEmail(
 	analyzedAudits []*models.AnalyzedAudit,
 	emailTemplateService email.TemplateService,
 	emailService oddmail.EmailService) (string, string, error) {

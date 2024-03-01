@@ -63,13 +63,13 @@ func (suite *ResolverSuite) TestDailyDigestNotificationSend() {
 
 	// Test getDailyDigestAnalyzedAudits
 
-	analyzedAudits, _, err = GetDigestAnalyzedAudits(collaborator.UserID, time.Now().UTC(), suite.testConfigs.Store, suite.testConfigs.Logger)
+	analyzedAudits, _, err = getDigestAnalyzedAudits(collaborator.UserID, time.Now().UTC(), suite.testConfigs.Store, suite.testConfigs.Logger)
 	suite.Equal(analyzedAudit.ID, analyzedAudits[0].ID)
 	suite.NoError(err)
 
 	// Test generateDailyDigestEmail email to check content
 	humanized := analyzedAudits[0].Changes.HumanizedSubset(5)
-	emailSubject, emailBody, err := GenerateDigestEmail(analyzedAudits, emailTemplateService, mockEmailService)
+	emailSubject, emailBody, err := generateDigestEmail(analyzedAudits, emailTemplateService, mockEmailService)
 	suite.NoError(err)
 	suite.NotNil(emailSubject)
 	suite.NotNil(emailBody)

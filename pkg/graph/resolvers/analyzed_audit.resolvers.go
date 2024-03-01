@@ -23,7 +23,7 @@ func (r *analyzedModelLeadInfoResolver) UserAccount(ctx context.Context, obj *mo
 func (r *queryResolver) AnalyzedAudits(ctx context.Context, dateAnalyzed time.Time) ([]*models.AnalyzedAudit, error) {
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
-	audits, _, err := GetDigestAnalyzedAudits(principal.Account().ID, dateAnalyzed, r.store, logger)
+	audits, _, err := getDigestAnalyzedAudits(principal.Account().ID, dateAnalyzed, r.store, logger)
 	if err != nil {
 		return nil, err
 	}
