@@ -50,7 +50,7 @@ func DailyDigestNotificationSend(
 	// TODO EASI-(EASI-3338) wrap this in a transaction!
 	systemAccountID := constants.GetSystemAccountUUID()
 
-	// TODO EASI-(EASI-3338), see about wrapping the dataloaders in the worker as well.
+	// TODO EASI-(EASI-3338), see about wrapping the dataloaders in the worker as well. This preferences function should be one level up... so we can specify it differently if called by GQL vs the worker package
 	preferenceFunctions := func(ctx context.Context, user_id uuid.UUID) (*models.UserNotificationPreferences, error) {
 		return storage.UserNotificationPreferencesGetByUserID(store, user_id)
 	}

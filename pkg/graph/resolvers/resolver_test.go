@@ -319,6 +319,7 @@ func (suite *ResolverSuite) createAnalyzedAuditChange(modelNameChange string,
 	return &auditChange
 }
 
+// createAnalyzedAudit is a helper function to just store an analyzed audit to the DB, without using a resolver
 func (suite *ResolverSuite) createAnalyzedAudit(mp *models.ModelPlan, date time.Time, changes models.AnalyzedAuditChange) *models.AnalyzedAudit {
 	principal := getTestPrincipal(suite.testConfigs.Store, "TEST")
 	newAnalyzedAudit, err := models.NewAnalyzedAudit(principal.UserAccount.ID, mp.ID, mp.ModelName, date, changes)

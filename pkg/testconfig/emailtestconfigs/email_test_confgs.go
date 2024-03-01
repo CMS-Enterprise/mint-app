@@ -2,21 +2,30 @@
 package emailtestconfigs
 
 import (
+	"github.com/golang/mock/gomock"
+
 	"github.com/cmsgov/mint-app/pkg/email"
 	"github.com/cmsgov/mint-app/pkg/shared/oddmail"
 )
 
+// TestEmailServiceConfig is a shared emailServiceConfig that can be used to test multiple test packages
+var TestEmailServiceConfig = oddmail.GoSimpleMailServiceConfig{
+	Enabled:       true,
+	Host:          "localhost",
+	Port:          1030,
+	ClientAddress: "localhost:3005",
+}
+
 // InitializeOddMailService provides a shared implementation where an email service is desired for testing
 func InitializeOddMailService() (oddmail.EmailService, error) {
-	emailServiceConfig := oddmail.GoSimpleMailServiceConfig{
-		Enabled:       true,
-		Host:          "localhost",
-		Port:          1030,
-		ClientAddress: "localhost:3005",
-	}
 
-	return oddmail.NewGoSimpleMailService(emailServiceConfig)
+	return oddmail.NewGoSimpleMailService(TestEmailServiceConfig)
 
+}
+
+// InitializeMockEmailService provides a shared entry to returning a MockEmailService. It utilized to TestEmailServiceConfig to generate the email service
+func InitializeMockEmailService(mockController *gomock.Controller) *oddmail.MockEmailService {
+	return oddmail.NewMockEmailService(mockController)
 }
 
 // InitializeEmailTemplateService provides a shared implementation for for an email template service to be used for testing

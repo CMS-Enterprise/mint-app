@@ -8,34 +8,29 @@ import (
 	"github.com/samber/lo"
 
 	"github.com/cmsgov/mint-app/pkg/models"
-	"github.com/cmsgov/mint-app/pkg/shared/oddmail"
 	"github.com/cmsgov/mint-app/pkg/testconfig/emailtestconfigs"
 )
 
-func (suite *ResolverSuite) TestDailyDigestNotificationSend() {
+func (suite *ResolverSuite) TestDailyDigestNotificationSendComponents() {
 
-	//TODO: EASI-(EASI-3949) see about a mock email template service?
 	mockController := gomock.NewController(suite.T())
+
+	// If desired we can use a mock template service in the future
 	// mockTemplateService := email.NewMockTemplateService(mockController)
 	emailTemplateService, err := emailtestconfigs.InitializeEmailTemplateService()
 	suite.NoError(err)
 
-	mockEmailService := oddmail.NewMockEmailService(mockController)
-	// addressBook := email.AddressBook{
-	// 	DefaultSender: "unit-test-execution@mint.cms.gov",
-	// }
-
-	emailServiceConfig := &oddmail.GoSimpleMailServiceConfig{
-		ClientAddress: "http://localhost:3005",
-	}
+	mockEmailService := emailtestconfigs.InitializeMockEmailService(mockController)
 
 	mockEmailService.
 		EXPECT().
 		GetConfig().
-		Return(emailServiceConfig).
+		Return(&emailtestconfigs.TestEmailServiceConfig).
 		AnyTimes()
 
-	// mockTemplateService.EXPECT().GetEmailTemplate(gomock.Any()).MinTimes(1).MaxTimes(1)
+	// 	testTemplate  := *emailTemplates.EmailTemplate{}
+	// mockTemplateService.EXPECT().GetEmailTemplate(gomock.Eq(email.DailyDigestTemplateName)).Return(testTemplate,nil).MinTimes(1).MaxTimes(1)
+
 	mp := suite.createModelPlan("Test Plan")
 	collaborator := suite.createPlanCollaborator(
 		mp,
@@ -95,12 +90,56 @@ func (suite *ResolverSuite) TestDailyDigestNotificationSend() {
 			gomock.Eq(emailBody),
 		).MinTimes(1).MaxTimes(1)
 
-	// TODO: EASI-(EASI-3949) //Either get the mock template service working, or make another template service.
-	// mockTemplateService.EXPECT().GetEmailTemplate(gomock.Any()).MinTimes(1).MaxTimes(1)
-
-	//TODO: EASI-(EASI-3949) add this to the digest email job test test, leave out of this test
-	// err = worker.DigestEmailJob(context.Background(), time.Now().UTC().Format("2006-01-02"), collaborator.UserID.String()) // pass user id as string because that is how it is returned from Faktory
-
 	suite.NoError(err)
 	mockController.Finish()
+}
+
+// TestDailyDigestNotificationSend verifies that TestDailyDigestNotificationSend functions as expected, and does not generate an error
+func (suite *ResolverSuite) TestDailyDigestNotificationSend() {
+
+	mockController := gomock.NewController(suite.T())
+	addressBook := emailtestconfigs.InitializeAddressBook()
+	today := time.Now()
+
+	// If desired we can use a mock template service in the future
+	// mockTemplateService := email.NewMockTemplateService(mockController)
+	emailTemplateService, err := emailtestconfigs.InitializeEmailTemplateService()
+	suite.NoError(err)
+
+	mockEmailService := emailtestconfigs.InitializeMockEmailService(mockController)
+
+	mockEmailService.
+		EXPECT().
+		GetConfig().
+		Return(&emailtestconfigs.TestEmailServiceConfig).
+		AnyTimes()
+
+	timeNow := time.Now()
+	userName := "DUDE"
+
+	mp := suite.createModelPlan("Test Plan")
+	_ = suite.createPlanCollaborator(
+		mp,
+		userName,
+		[]models.TeamRole{models.TeamRoleModelLead},
+	)
+	userAccount := getTestPrincipal(suite.testConfigs.Store, userName)
+
+	// Generate Audits for the model so the
+	_, err2 := AnalyzeModelPlanForAnalyzedAudit(suite.testConfigs.Context, suite.testConfigs.Store, suite.testConfigs.Logger, today, mp.ID)
+	suite.NoError(err2)
+
+	mockEmailService.
+		EXPECT().
+		Send(
+			addressBook.DefaultSender,
+			gomock.Eq([]string{userAccount.Account().Email}),
+			gomock.Any(),
+			gomock.Any(),
+			gomock.Any(),
+			gomock.Any(),
+		).MinTimes(1).MaxTimes(1)
+	emailErr := DailyDigestNotificationSend(suite.testConfigs.Context, suite.testConfigs.Store, suite.testConfigs.Logger, timeNow, userAccount.Account().ID, mockEmailService, emailTemplateService, addressBook)
+	suite.NoError(emailErr)
+
 }
