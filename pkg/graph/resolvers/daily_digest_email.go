@@ -17,9 +17,9 @@ import (
 	"github.com/cmsgov/mint-app/pkg/storage"
 )
 
-// DailyDigestEmailSend sends a single email for a user for a given day based on their favorited models
+// DailyDigestNotificationSend sends a single email for a user for a given day based on their favorited models
 // It will also call the notification package for Daily Digest Complete Activity
-func DailyDigestEmailSend(
+func DailyDigestNotificationSend(
 	ctx context.Context,
 	store *storage.Store,
 	logger *zap.Logger,
@@ -47,22 +47,22 @@ func DailyDigestEmailSend(
 	if len(analyzedAudits) == 0 {
 		return nil
 	}
-	// TODO EASI-3338 wrap this in a transaction!
+	// TODO EASI-(EASI-3338) wrap this in a transaction!
 	systemAccountID := constants.GetSystemAccountUUID()
 
-	// TODO EASI-3338, see about wrapping the dataloaders in the worker as well.
+	// TODO EASI-(EASI-3338), see about wrapping the dataloaders in the worker as well.
 	preferenceFunctions := func(ctx context.Context, user_id uuid.UUID) (*models.UserNotificationPreferences, error) {
 		return storage.UserNotificationPreferencesGetByUserID(store, user_id)
 	}
 
-	//TODO: EASI-3338 verify that you can use the dataloader in the worker package, it might not be that context....
+	//TODO: EASI-(EASI-3338) verify that you can use the dataloader in the worker package, it might not be that context....
 	_, err = notifications.ActivityDailyDigestComplete(ctx, store, systemAccountID, userID, dateAnalyzed, modelPlanIDs, preferenceFunctions)
 	// _, err = notifications.ActivityDailyDigestComplete(ctx, w.Store, systemAccountID, userID, dateAnalyzed, modelPlanIDs, loaders.UserNotificationPreferencesGetByUserID)
 
 	if err != nil {
 		return fmt.Errorf("couldn't generate an activity record for the daily digest complete activity for user %s, error: %w", userID, err)
 	}
-	//TODO: EASI-3338 get user preferences, or perhaps get earlier and pass it to the notifications? Only send the email if user has a preference for it.
+	//TODO: EASI-(EASI-3338) get user preferences, or perhaps get earlier and pass it to the notifications? Only send the email if user has a preference for it.
 
 	// Generate email subject and body from template
 	emailSubject, emailBody, err := GenerateDigestEmail(analyzedAudits, emailTemplateService, emailService)
@@ -95,13 +95,13 @@ func DailyDigestEmailSend(
 
 // GetDigestAnalyzedAudits gets AnalyzedAudits based on a users favorited plans and date
 // it returns the list of analyzed audits, as well as a separate list of the model plan IDs of the analyzed audits
-func GetDigestAnalyzedAudits( //TODO: EASI-3338 perhaps don't export this method, move testing from the worker package
+func GetDigestAnalyzedAudits( //TODO: EASI-(EASI-3338) perhaps don't export this method, move testing from the worker package
 	userID uuid.UUID,
 	date time.Time,
 	store *storage.Store,
 	logger *zap.Logger,
 ) ([]*models.AnalyzedAudit, []uuid.UUID, error) {
-	//TODO: EASI-3338 Consider making this take a date and an array of model_plan_ids, so it can be reused elsewhere
+	//TODO: EASI-(EASI-3338) Consider making this take a date and an array of model_plan_ids, so it can be reused elsewhere
 
 	planFavorites, err := store.PlanFavoriteGetCollectionByUserID(logger, userID)
 	if err != nil {
@@ -127,11 +127,11 @@ func GetDigestAnalyzedAudits( //TODO: EASI-3338 perhaps don't export this method
 }
 
 // GenerateDigestEmail will generate the daily digest email from template
-func GenerateDigestEmail( //TODO: EASI-3338 perhaps don't export this method, move testing from the worker package
+func GenerateDigestEmail( //TODO: EASI-(EASI-3338) perhaps don't export this method, move testing from the worker package
 	analyzedAudits []*models.AnalyzedAudit,
 	emailTemplateService email.TemplateService,
 	emailService oddmail.EmailService) (string, string, error) {
-	emailTemplate, err := emailTemplateService.GetEmailTemplate(email.DailyDigetsTemplateName)
+	emailTemplate, err := emailTemplateService.GetEmailTemplate(email.DailyDigestTemplateName)
 	if err != nil {
 		return "", "", err
 	}

@@ -12,7 +12,7 @@ import (
 	"github.com/cmsgov/mint-app/pkg/testconfig/emailtestconfigs"
 )
 
-func (suite *ResolverSuite) TestDigestEmailSend() {
+func (suite *ResolverSuite) TestDailyDigestNotificationSend() {
 
 	//TODO: EASI-(EASI-3949) see about a mock email template service?
 	mockController := gomock.NewController(suite.T())

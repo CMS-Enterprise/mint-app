@@ -284,7 +284,7 @@ func (s *Seeder) CreateAnalyzedAuditData() {
 		panic(fmt.Errorf("couldn't get user ids for users with plan favorites, %w", err))
 	}
 	for _, id := range userIDs {
-		err := resolvers.DailyDigestEmailSend(s.Config.Context, s.Config.Store, s.Config.Logger, dayToAnalyze, id, s.Config.EmailService, s.Config.EmailTemplateService, s.Config.AddressBook)
+		err := resolvers.DailyDigestNotificationSend(s.Config.Context, s.Config.Store, s.Config.Logger, dayToAnalyze, id, s.Config.EmailService, s.Config.EmailTemplateService, s.Config.AddressBook)
 		if err != nil {
 			fmt.Printf("there was an issue sending digest emails for userID: %s", id)
 		}

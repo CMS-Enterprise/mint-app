@@ -16,8 +16,8 @@ var addedAsCollaboratorSubjectTemplate string
 //go:embed templates/added_as_collaborator_body.html
 var addedAsCollaboratorBodyTemplate string
 
-// DailyDigetsTemplateName is the template name definition for the corresponding email template
-const DailyDigetsTemplateName string = "daily_digest"
+// DailyDigestTemplateName is the template name definition for the corresponding email template
+const DailyDigestTemplateName string = "daily_digest"
 
 //go:embed templates/daily_digest_subject.html
 var dailyDigestSubjectTemplate string
@@ -166,7 +166,7 @@ func (t *TemplateServiceImpl) Load() error {
 		return err
 	}
 
-	err = t.loadEmailTemplate(DailyDigetsTemplateName, dailyDigestSubjectTemplate, dailyDigestBodyTemplate)
+	err = t.loadEmailTemplate(DailyDigestTemplateName, dailyDigestSubjectTemplate, dailyDigestBodyTemplate)
 	if err != nil {
 		return err
 	}

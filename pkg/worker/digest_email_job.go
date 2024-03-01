@@ -73,8 +73,8 @@ func (w *Worker) DigestEmailJob(ctx context.Context, args ...interface{}) error 
 	if err != nil {
 		return err
 	}
-	//TODO: EASI-3338 Be careful with this context as it might not have a data loader etc.
-	sendErr := resolvers.DailyDigestEmailSend(ctx, w.Store, w.Logger, dateAnalyzed, userID, w.EmailService, &w.EmailTemplateService, w.AddressBook)
+	//TODO: EASI-(EASI-3338) Be careful with this context as it might not have a data loader etc.
+	sendErr := resolvers.DailyDigestNotificationSend(ctx, w.Store, w.Logger, dateAnalyzed, userID, w.EmailService, &w.EmailTemplateService, w.AddressBook)
 	return sendErr
 
 }
