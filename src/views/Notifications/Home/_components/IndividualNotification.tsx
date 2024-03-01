@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Grid } from '@trussworks/react-uswds';
+import { Button, Grid, Icon } from '@trussworks/react-uswds';
 import {
   GetNotifications_currentUser_notifications_notifications_activity as NotificationActivityType,
   GetNotifications_currentUser_notifications_notifications_activity_metaData_ActivityMetaBaseStruct as BaseStructActivityType,
@@ -9,6 +9,7 @@ import {
 } from 'gql/gen/types/GetNotifications';
 
 import IconInitial from 'components/shared/IconInitial';
+import MentionTextArea from 'components/shared/MentionTextArea';
 
 type IndividualNotificationProps = {
   isRead: boolean;
@@ -51,11 +52,26 @@ const IndividualNotification = ({
                   user={commonName}
                   hasBoldUsername
                 />
-                {notificationsT('index.activityType.taggedInDiscussion', {
+                {notificationsT('index.activityType.taggedInDiscussion.text', {
                   modelName: metaData.modelPlan.modelName
                 })}
               </div>
-              <div className="margin-left-5">{metaData.content}</div>
+              <div className="margin-left-5">
+                <MentionTextArea
+                  id={`mention-${metaData.discussionID}`}
+                  editable={false}
+                  initialContent={metaData.content}
+                />
+                <Button
+                  type="button"
+                  unstyled
+                  className="display-flex flex-align-center"
+                  onClick={() => {}}
+                >
+                  {notificationsT('index.activityType.taggedInDiscussion.cta')}
+                  <Icon.ArrowForward className="margin-left-1" aria-hidden />
+                </Button>
+              </div>
             </>
           )}
         </div>
