@@ -20,12 +20,20 @@ export default gql(/* GraphQL */ `
               ... on TaggedInPlanDiscussionActivityMeta {
                 version
                 type
+                modelPlanID
+                modelPlan {
+                  modelName
+                }
                 discussionID
                 content
               }
               ... on TaggedInDiscussionReplyActivityMeta {
                 version
                 type
+                modelPlanID
+                modelPlan {
+                  modelName
+                }
                 discussionID
                 replyID
                 content

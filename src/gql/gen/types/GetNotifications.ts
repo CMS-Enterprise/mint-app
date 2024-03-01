@@ -13,18 +13,32 @@ export interface GetNotifications_currentUser_notifications_notifications_activi
   __typename: "ActivityMetaBaseStruct";
 }
 
+export interface GetNotifications_currentUser_notifications_notifications_activity_metaData_TaggedInPlanDiscussionActivityMeta_modelPlan {
+  __typename: "ModelPlan";
+  modelName: string;
+}
+
 export interface GetNotifications_currentUser_notifications_notifications_activity_metaData_TaggedInPlanDiscussionActivityMeta {
   __typename: "TaggedInPlanDiscussionActivityMeta";
   version: number;
   type: ActivityType;
+  modelPlanID: UUID;
+  modelPlan: GetNotifications_currentUser_notifications_notifications_activity_metaData_TaggedInPlanDiscussionActivityMeta_modelPlan;
   discussionID: UUID;
   content: string;
+}
+
+export interface GetNotifications_currentUser_notifications_notifications_activity_metaData_TaggedInDiscussionReplyActivityMeta_modelPlan {
+  __typename: "ModelPlan";
+  modelName: string;
 }
 
 export interface GetNotifications_currentUser_notifications_notifications_activity_metaData_TaggedInDiscussionReplyActivityMeta {
   __typename: "TaggedInDiscussionReplyActivityMeta";
   version: number;
   type: ActivityType;
+  modelPlanID: UUID;
+  modelPlan: GetNotifications_currentUser_notifications_notifications_activity_metaData_TaggedInDiscussionReplyActivityMeta_modelPlan;
   discussionID: UUID;
   replyID: UUID;
   content: string;

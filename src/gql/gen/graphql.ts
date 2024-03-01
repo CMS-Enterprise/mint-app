@@ -3117,7 +3117,7 @@ export type GetNotificationSettingsQuery = { __typename: 'Query', currentUser: {
 export type GetNotificationsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetNotificationsQuery = { __typename: 'Query', currentUser: { __typename: 'CurrentUser', notifications: { __typename: 'UserNotifications', numUnreadNotifications: number, notifications: Array<{ __typename: 'UserNotification', id: UUID, isRead: boolean, inAppSent: boolean, emailSent: boolean, activity: { __typename: 'Activity', activityType: ActivityType, entityID: UUID, actorID: UUID, metaData: { __typename: 'ActivityMetaBaseStruct' } | { __typename: 'TaggedInDiscussionReplyActivityMeta', version: number, type: ActivityType, discussionID: UUID, replyID: UUID, content: string } | { __typename: 'TaggedInPlanDiscussionActivityMeta', version: number, type: ActivityType, discussionID: UUID, content: string }, createdByUserAccount: { __typename: 'UserAccount', commonName: string } }, createdByUserAccount: { __typename: 'UserAccount', commonName: string } }> } } };
+export type GetNotificationsQuery = { __typename: 'Query', currentUser: { __typename: 'CurrentUser', notifications: { __typename: 'UserNotifications', numUnreadNotifications: number, notifications: Array<{ __typename: 'UserNotification', id: UUID, isRead: boolean, inAppSent: boolean, emailSent: boolean, activity: { __typename: 'Activity', activityType: ActivityType, entityID: UUID, actorID: UUID, metaData: { __typename: 'ActivityMetaBaseStruct' } | { __typename: 'TaggedInDiscussionReplyActivityMeta', version: number, type: ActivityType, modelPlanID: UUID, discussionID: UUID, replyID: UUID, content: string, modelPlan: { __typename: 'ModelPlan', modelName: string } } | { __typename: 'TaggedInPlanDiscussionActivityMeta', version: number, type: ActivityType, modelPlanID: UUID, discussionID: UUID, content: string, modelPlan: { __typename: 'ModelPlan', modelName: string } }, createdByUserAccount: { __typename: 'UserAccount', commonName: string } }, createdByUserAccount: { __typename: 'UserAccount', commonName: string } }> } } };
 
 export type GetPollNotificationsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -5263,12 +5263,20 @@ export const GetNotificationsDocument = gql`
             ... on TaggedInPlanDiscussionActivityMeta {
               version
               type
+              modelPlanID
+              modelPlan {
+                modelName
+              }
               discussionID
               content
             }
             ... on TaggedInDiscussionReplyActivityMeta {
               version
               type
+              modelPlanID
+              modelPlan {
+                modelName
+              }
               discussionID
               replyID
               content
