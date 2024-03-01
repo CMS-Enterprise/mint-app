@@ -10,6 +10,7 @@ import {
 
 import { arrayOfColors } from 'components/shared/IconInitial';
 import MentionTextArea from 'components/shared/MentionTextArea';
+import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import { getTimeElapsed } from 'utils/date';
 import { getUserInitials } from 'utils/modelPlan';
 
@@ -31,6 +32,8 @@ const IndividualNotification = ({
 }: IndividualNotificationProps) => {
   const { t: notificationsT } = useTranslation('notifications');
   const { t: discussionT } = useTranslation('discussions');
+
+  const isMobile = useCheckResponsiveScreen('mobile');
 
   // Type guard to check union type
   const isTaggedInDiscussion = (
@@ -67,25 +70,27 @@ const IndividualNotification = ({
                   {getUserInitials(commonName)}
                 </div>
 
-                {/* <IconInitial
-                  className="margin-right-05"
-                  user={commonName}
-                  hasBoldUsername
-                /> */}
-
-                {notificationsT('index.activityType.taggedInDiscussion.text', {
-                  modelName: metaData.modelPlan.modelName
-                })}
+                <span>
+                  <strong className="margin-right-05">{commonName} </strong>
+                  {notificationsT(
+                    'index.activityType.taggedInDiscussion.text',
+                    {
+                      modelName: metaData.modelPlan.modelName
+                    }
+                  )}
+                </span>
               </div>
               <div className="margin-left-5">
-                <span>
-                  <MentionTextArea
-                    className="text-base-darker"
-                    id={`mention-${metaData.discussionID}`}
-                    editable={false}
-                    initialContent={`“${metaData.content}”`}
-                  />
-                </span>
+                {!isMobile && (
+                  <span>
+                    <MentionTextArea
+                      className="text-base-darker"
+                      id={`mention-${metaData.discussionID}`}
+                      editable={false}
+                      initialContent={`“${metaData.content}”`}
+                    />
+                  </span>
+                )}
                 <Button
                   type="button"
                   unstyled
