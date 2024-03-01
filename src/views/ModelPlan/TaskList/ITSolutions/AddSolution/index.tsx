@@ -392,16 +392,20 @@ const AddSolution = () => {
                             </div>
                           )}
 
-                          {values.key && (
-                            <Alert
-                              type="info"
-                              slim
-                              lessRightPadding
-                              className="margin-bottom-3"
-                            >
-                              {t('selectCustomAlert')}
-                            </Alert>
-                          )}
+                          {/* Render alert banner if a non-other solution is selected.  Alert notifies use that email will be sent */}
+                          {values.key &&
+                            !treatAsOtherSolutions.includes(
+                              values.key as OperationalSolutionKey
+                            ) && (
+                              <Alert
+                                type="info"
+                                slim
+                                lessRightPadding
+                                className="margin-bottom-3"
+                              >
+                                {t('selectCustomAlert')}
+                              </Alert>
+                            )}
 
                           <div className="margin-bottom-3">
                             <Button

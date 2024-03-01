@@ -386,6 +386,7 @@ const SelectSolutions = () => {
                         {t('selectAnother')}
                       </Button>
 
+                      {/* Render alert banner if a non-other solution is selected.  Alert notifies use that email will be sent */}
                       {allTheSolutions.filter(
                         solution => solution.needed && !solution.isOther
                       ).length > 0 && (
