@@ -1,57 +1,66 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Grid } from '@trussworks/react-uswds';
-import { GetNotifications_currentUser_notifications_notifications_activity as NotificationActivityType } from 'gql/gen/types/GetNotifications';
+import {
+  GetNotifications_currentUser_notifications_notifications_activity as NotificationActivityType,
+  GetNotifications_currentUser_notifications_notifications_activity_metaData_ActivityMetaBaseStruct as BaseStructActivityType,
+  GetNotifications_currentUser_notifications_notifications_activity_metaData_TaggedInDiscussionReplyActivityMeta as TaggedInDiscussionReplyActivityType,
+  GetNotifications_currentUser_notifications_notifications_activity_metaData_TaggedInPlanDiscussionActivityMeta as TaggedInDiscussionActivityType
+} from 'gql/gen/types/GetNotifications';
 
 import IconInitial from 'components/shared/IconInitial';
 
 type IndividualNotificationProps = {
   isRead: boolean;
-  inAppSent: boolean;
-  emailSent: boolean;
   activity: NotificationActivityType;
 };
 
 const IndividualNotification = ({
   isRead,
-  inAppSent,
-  emailSent,
-  activity
+  activity: {
+    metaData,
+    actorUserAccount: { commonName }
+  }
 }: IndividualNotificationProps) => {
   const { t: notificationsT } = useTranslation('notifications');
 
-  return (
-    <>
-      <Grid row>
-        <Grid desktop={{ col: 12 }} className="position-relative">
-          {!isRead && (
-            <div className="circle-1 bg-error position-absolute margin-top-3 margin-left-1" />
-          )}
+  // Type guard to check union type
+  const isTaggedInDiscussion = (
+    data:
+      | TaggedInDiscussionReplyActivityType
+      | TaggedInDiscussionActivityType
+      | BaseStructActivityType
+  ): data is TaggedInDiscussionReplyActivityType => {
+    /* eslint no-underscore-dangle: 0 */
+    return data.__typename === 'TaggedInPlanDiscussionActivityMeta';
+  };
 
-          <div className="padding-3">
-            <span>
-              <IconInitial
-                user={activity.createdByUserAccount.commonName}
-                hasBoldUsername
-              />
-              {notificationsT('index.activityType.taggedInDiscussion')}
-              {/* {t('withdraw_modal.header', {
-                requestName: modelPlan.modelName
-              })} */}
-            </span>
-          </div>
-        </Grid>
+  return (
+    <Grid row>
+      <Grid desktop={{ col: 12 }} className="position-relative">
+        {!isRead && (
+          <div className="circle-1 bg-error position-absolute margin-top-3 margin-left-1" />
+        )}
+
+        <div className="padding-3">
+          {isTaggedInDiscussion(metaData) && (
+            <>
+              <div className="display-flex flex-align-center margin-bottom-05">
+                <IconInitial
+                  className="margin-right-05"
+                  user={commonName}
+                  hasBoldUsername
+                />
+                {notificationsT('index.activityType.taggedInDiscussion', {
+                  modelName: metaData.modelPlan.modelName
+                })}
+              </div>
+              <div className="margin-left-5">{metaData.content}</div>
+            </>
+          )}
+        </div>
       </Grid>
-      <ul>
-        <li>activityType: {activity.activityType}</li>
-        <li>entityID: {activity.entityID}</li>
-        <li>actorID: {activity.actorID}</li>
-        {/* <li>metaData: {activity.metaData.}</li> */}
-        <li>
-          createdByUserAccount: {activity.createdByUserAccount.commonName}
-        </li>
-      </ul>
-    </>
+    </Grid>
   );
 };
 

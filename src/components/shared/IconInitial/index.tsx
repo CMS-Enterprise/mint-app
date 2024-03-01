@@ -34,6 +34,7 @@ const IconInitial = ({
     ...teamRoles.filter((role: TeamRole) => role !== TeamRole.MODEL_LEAD)
   ];
 
+  /* TODO: why is it a <li></li> */
   return (
     <li
       className={classNames(
