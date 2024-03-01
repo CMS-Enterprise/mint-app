@@ -9,12 +9,30 @@ const notifications = {
         'You’re all up-to-date on notifications. Check back later for updates.'
     },
     activityType: {
-      addedAsCollaborator: ' added you to the team for {{-modelName}}.',
-      dailyDigestComplete: ' sent your daily digest.',
-      modelPlanShared: ' shared {{-modelName}} with you.',
-      newDiscussionReply: ' replied to your discussion for {{-modelName}}.',
-      taggedInDiscussion: ' tagged you in a discussion for {{-modelName}}.',
-      taggedInDiscussionReply: ''
+      addedAsCollaborator: {
+        text: ' added you to the team for {{-modelName}}.',
+        cta: 'Start collaborating'
+      },
+      dailyDigestComplete: {
+        text: ' sent your daily digest.',
+        cta: 'View digest'
+      },
+      modelPlanShared: {
+        text: ' shared {{-modelName}} with you.',
+        cta: 'View Model Plan'
+      },
+      newDiscussionReply: {
+        text: ' replied to your discussion for {{-modelName}}.',
+        cta: 'View discussion'
+      },
+      taggedInDiscussion: {
+        text: ' tagged you in a discussion for {{-modelName}}.',
+        cta: 'View discussion'
+      },
+      taggedInDiscussionReply: {
+        text: ' tagged you in a discussion for {{-modelName}}.',
+        cta: 'View discussion'
+      }
     }
   },
   settings: {
