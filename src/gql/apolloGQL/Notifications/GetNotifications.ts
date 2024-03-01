@@ -15,6 +15,9 @@ export default gql(/* GraphQL */ `
             activityType
             entityID
             actorID
+            actorUserAccount {
+              commonName
+            }
             metaData {
               __typename
               ... on TaggedInPlanDiscussionActivityMeta {
@@ -42,9 +45,6 @@ export default gql(/* GraphQL */ `
             createdByUserAccount {
               commonName
             }
-          }
-          createdByUserAccount {
-            commonName
           }
         }
       }

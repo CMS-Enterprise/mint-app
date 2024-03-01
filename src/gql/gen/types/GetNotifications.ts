@@ -9,6 +9,11 @@ import { ActivityType } from "./../../../types/graphql-global-types";
 // GraphQL query operation: GetNotifications
 // ====================================================
 
+export interface GetNotifications_currentUser_notifications_notifications_activity_actorUserAccount {
+  __typename: "UserAccount";
+  commonName: string;
+}
+
 export interface GetNotifications_currentUser_notifications_notifications_activity_metaData_ActivityMetaBaseStruct {
   __typename: "ActivityMetaBaseStruct";
 }
@@ -56,13 +61,9 @@ export interface GetNotifications_currentUser_notifications_notifications_activi
   activityType: ActivityType;
   entityID: UUID;
   actorID: UUID;
+  actorUserAccount: GetNotifications_currentUser_notifications_notifications_activity_actorUserAccount;
   metaData: GetNotifications_currentUser_notifications_notifications_activity_metaData;
   createdByUserAccount: GetNotifications_currentUser_notifications_notifications_activity_createdByUserAccount;
-}
-
-export interface GetNotifications_currentUser_notifications_notifications_createdByUserAccount {
-  __typename: "UserAccount";
-  commonName: string;
 }
 
 export interface GetNotifications_currentUser_notifications_notifications {
@@ -72,7 +73,6 @@ export interface GetNotifications_currentUser_notifications_notifications {
   inAppSent: boolean;
   emailSent: boolean;
   activity: GetNotifications_currentUser_notifications_notifications_activity;
-  createdByUserAccount: GetNotifications_currentUser_notifications_notifications_createdByUserAccount;
 }
 
 export interface GetNotifications_currentUser_notifications {
