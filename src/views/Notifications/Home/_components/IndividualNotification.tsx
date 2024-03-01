@@ -1,5 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { useHistory } from 'react-router-dom';
 import { Button, Grid, Icon } from '@trussworks/react-uswds';
 import {
   GetNotifications_currentUser_notifications_notifications_activity as NotificationActivityType,
@@ -33,6 +34,7 @@ const IndividualNotification = ({
   const { t: notificationsT } = useTranslation('notifications');
   const { t: discussionT } = useTranslation('discussions');
 
+  const history = useHistory();
   const isMobile = useCheckResponsiveScreen('mobile');
 
   // Type guard to check union type
@@ -91,11 +93,17 @@ const IndividualNotification = ({
                     />
                   </span>
                 )}
+
                 <Button
                   type="button"
                   unstyled
                   className="display-flex flex-align-center"
-                  onClick={() => {}}
+                  onClick={() => {
+                    // markAsRead();
+                    history.push(
+                      `/models/${metaData.modelPlanID}/task-list?discussionID=${metaData.discussionID}`
+                    );
+                  }}
                 >
                   {notificationsT('index.activityType.taggedInDiscussion.cta')}
                   <Icon.ArrowForward className="margin-left-1" aria-hidden />

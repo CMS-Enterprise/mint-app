@@ -21,7 +21,7 @@ const NotificationsHome = () => {
   const { t: miscellaneousT } = useTranslation('miscellaneous');
 
   const { data, loading, error, refetch } = useGetNotificationsQuery();
-  const [update] = useUpdateAllMessagesAsReadMutation();
+  const [markAllAsRead] = useUpdateAllMessagesAsReadMutation();
 
   const numUnreadNotifications =
     data?.currentUser.notifications.numUnreadNotifications;
@@ -63,7 +63,7 @@ const NotificationsHome = () => {
                   type="button"
                   unstyled
                   className="margin-y-0 margin-x-2"
-                  onClick={() => update().then(() => refetch())}
+                  onClick={() => markAllAsRead().then(() => refetch())}
                 >
                   {notificationsT('index.markAllAsRead')}
                 </Button>
