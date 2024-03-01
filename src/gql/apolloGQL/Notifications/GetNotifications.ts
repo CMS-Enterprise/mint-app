@@ -11,6 +11,7 @@ export default gql(/* GraphQL */ `
           isRead
           inAppSent
           emailSent
+          createdDts
           activity {
             activityType
             entityID

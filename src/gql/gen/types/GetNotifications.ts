@@ -72,6 +72,7 @@ export interface GetNotifications_currentUser_notifications_notifications {
   isRead: boolean;
   inAppSent: boolean;
   emailSent: boolean;
+  createdDts: Time;
   activity: GetNotifications_currentUser_notifications_notifications_activity;
 }
 
