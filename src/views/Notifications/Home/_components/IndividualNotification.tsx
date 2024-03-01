@@ -48,7 +48,11 @@ const IndividualNotification = ({
           <div className="circle-1 bg-error position-absolute margin-top-3 margin-left-1" />
         )}
 
-        <div className="padding-3 display-flex flex-justify">
+        <div
+          className={`padding-3 display-flex flex-justify ${
+            isRead ? 'bg-gray-2' : ''
+          }`}
+        >
           {isTaggedInDiscussion(metaData) && (
             <div className="flex-fill">
               <div className="display-flex flex-align-center margin-bottom-05">
