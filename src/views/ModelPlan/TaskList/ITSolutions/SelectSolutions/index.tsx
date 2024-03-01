@@ -386,8 +386,9 @@ const SelectSolutions = () => {
                         {t('selectAnother')}
                       </Button>
 
-                      {allTheSolutions.filter(solution => solution.needed)
-                        .length > 0 && (
+                      {allTheSolutions.filter(
+                        solution => solution.needed && !solution.isOther
+                      ).length > 0 && (
                         <Alert type="info" slim>
                           {t('selectAlert')}
                         </Alert>

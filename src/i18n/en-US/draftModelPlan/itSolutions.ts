@@ -120,6 +120,8 @@ const itSolutions = {
   selectAnother: 'Select another solution not listed',
   selectAlert:
     'When you continue to the next step, the points of contact for the selected preset solution(s) will be notified.',
+  selectCustomAlert:
+    'When you add this solution, the points of contact will be notified.',
   continue: 'Continue',
   dontAdd: 'Don’t add solutions and return to tracker',
   dontUpdate: 'Don’t update solutions and return to tracker',
