@@ -72,6 +72,7 @@ type OperationalNeedsTableProps = {
   readOnly?: boolean;
   hideGlobalFilter?: boolean;
   filterSolutions?: OperationalSolutionKey[];
+  className?: string;
 };
 
 const OperationalNeedsTable = ({
@@ -80,7 +81,8 @@ const OperationalNeedsTable = ({
   type,
   readOnly,
   hideGlobalFilter,
-  filterSolutions
+  filterSolutions,
+  className
 }: OperationalNeedsTableProps) => {
   const { t } = useTranslation('itSolutions');
 
@@ -286,6 +288,11 @@ const OperationalNeedsTable = ({
     [needsColumns[0], needsColumns[1]] = [needsColumns[1], needsColumns[0]];
   }
 
+  const sortColumn = type === 'needs' && !filterSolutions ? 'needName' : 'name';
+  const initialSort = useMemo(() => [{ id: sortColumn, asc: true }], [
+    sortColumn
+  ]);
+
   const {
     getTableProps,
     getTableBodyProps,
@@ -318,11 +325,10 @@ const OperationalNeedsTable = ({
       globalFilter: useMemo(() => globalFilterCellText, []),
       autoResetSortBy: false,
       autoResetPage: true,
+      // Remove sort on filterSolutions because its accessor is a function and can't be passed a proper id for initial sort.
+      // https://github.com/TanStack/table/issues/2641
       initialState: {
-        sortBy: useMemo(
-          () => [{ id: type === 'needs' ? 'needName' : 'name', asc: true }],
-          [type]
-        ),
+        sortBy: filterSolutions ? [] : initialSort,
         pageIndex: 0
       }
     },
@@ -376,7 +382,10 @@ const OperationalNeedsTable = ({
   }
 
   return (
-    <div className="model-plan-table" data-testid={`${type}-table`}>
+    <div
+      className={classNames(className, 'model-plan-table')}
+      data-testid={`${type}-table`}
+    >
       {!hideGlobalFilter && (
         <div className="mint-header__basic">
           <GlobalClientFilter
@@ -459,7 +468,9 @@ const OperationalNeedsTable = ({
                           style={{
                             paddingLeft: '0',
                             borderBottom:
-                              index === page.length - 1 ? 'none' : 'auto',
+                              index === page.length - 1
+                                ? '1px solid black'
+                                : 'auto',
                             whiteSpace: 'normal'
                           }}
                         >
@@ -478,7 +489,9 @@ const OperationalNeedsTable = ({
                           whiteSpace: 'normal',
                           maxWidth: i === 1 ? '275px' : 'auto',
                           borderBottom:
-                            index === page.length - 1 ? 'none' : 'auto'
+                            index === page.length - 1
+                              ? '1px solid black'
+                              : 'auto'
                         }}
                       >
                         {cell.render('Cell')}
