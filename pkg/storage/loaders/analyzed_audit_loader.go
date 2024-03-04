@@ -34,19 +34,19 @@ func (loaders *DataLoaders) analyzedAuditGetByModelPlanIDAndDateBatch(_ context.
 		return []*dataloader.Result{{Data: nil, Error: err}}
 	}
 
-	auditsByID := map[string][]*models.AnalyzedAudit{}
+	//First Key is Date, second is modelPlanID
+	auditsByID := map[string]map[uuid.UUID]*models.AnalyzedAudit{}
 	//MAP by date first
+	// then MAP by model_plan_id
 
 	for _, anAudit := range audits {
 		// key = DLDateKey
-		// slice, ok := auditsByID[string(anAudit.Date.UTC().Format("2006-01-02"))]
-		slice, ok := auditsByID[string(anAudit.UTCDate())]
-		if ok {
-			slice = append(slice, anAudit) //Add to existing slice
-			auditsByID[string(anAudit.UTCDate())] = slice
-			continue
+
+		dateKey := string(anAudit.UTCDate())
+		if _, ok := auditsByID[dateKey]; !ok {
+			auditsByID[dateKey] = map[uuid.UUID]*models.AnalyzedAudit{}
 		}
-		auditsByID[string(anAudit.UTCDate())] = []*models.AnalyzedAudit{anAudit}
+		auditsByID[string(anAudit.UTCDate())][anAudit.ModelPlanID] = anAudit
 
 	}
 	//TODO: EASI-(EASI-3949) Make this actually return based on the ids and the date. If needed, just do it for one date and id, and do another layer that combines a selection of model plan IDs
@@ -56,10 +56,34 @@ func (loaders *DataLoaders) analyzedAuditGetByModelPlanIDAndDateBatch(_ context.
 		ck, ok := key.Raw().(KeyArgs)
 		if ok {
 
-			resKey := fmt.Sprint(ck.Args[DLDateKey])
-			sols := auditsByID[resKey] //Any Audits not found will return a zero state result eg empty array
+			dateKey := fmt.Sprint(ck.Args[DLDateKey])
+			mpKeysRaw := ck.Args[DLModelPlanIDsKey]
+			// Cast the ids to the uuid
+			modelPlanIDS, ok := mpKeysRaw.([]uuid.UUID)
+			if !ok {
+				err := fmt.Errorf("could not retrieve key from %s", key.String())
+				output[index] = &dataloader.Result{Data: nil, Error: err}
+				continue
+			}
 
-			output[index] = &dataloader.Result{Data: sols, Error: nil}
+			// Build the result set
+			retAudits := []*models.AnalyzedAudit{}
+			var auditErr error
+			for _, id := range modelPlanIDS {
+				// Get the specific audit
+				audit := auditsByID[dateKey][id]
+				if audit == nil {
+					auditErr = fmt.Errorf("analyzed audit not found for %s, %s", dateKey, id)
+				}
+				retAudits = append(retAudits, audit)
+			}
+			if auditErr != nil {
+				output[index] = &dataloader.Result{Data: retAudits, Error: auditErr}
+			} else {
+				output[index] = &dataloader.Result{Data: retAudits, Error: nil}
+			}
+
+			// output[index] = &dataloader.Result{Data: retAudits, Error: nil}
 
 		} else {
 			err := fmt.Errorf("could not retrieve key from %s", key.String())

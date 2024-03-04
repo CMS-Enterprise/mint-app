@@ -129,8 +129,11 @@ func getDigestAnalyzedAudits(
 	if err != nil {
 		return nil, nil, err
 	}
+	analyzedAuditsModelPlanIDs := lo.Map(analyzedAudits, func(audit *models.AnalyzedAudit, _ int) uuid.UUID {
+		return audit.ModelPlanID
+	})
 
-	return analyzedAudits, modelPlanIDs, nil
+	return analyzedAudits, analyzedAuditsModelPlanIDs, nil
 }
 
 // generateDigestEmail will generate the daily digest email from template
