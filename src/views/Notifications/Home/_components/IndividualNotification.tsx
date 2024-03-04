@@ -16,7 +16,7 @@ import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import { getTimeElapsed } from 'utils/date';
 import { getUserInitials } from 'utils/modelPlan';
 
-type IndividualNotificationProps = {
+export type IndividualNotificationProps = {
   index?: number;
   id: string;
   isRead: boolean;
