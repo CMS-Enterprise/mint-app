@@ -51,11 +51,6 @@ export interface GetNotifications_currentUser_notifications_notifications_activi
 
 export type GetNotifications_currentUser_notifications_notifications_activity_metaData = GetNotifications_currentUser_notifications_notifications_activity_metaData_ActivityMetaBaseStruct | GetNotifications_currentUser_notifications_notifications_activity_metaData_TaggedInPlanDiscussionActivityMeta | GetNotifications_currentUser_notifications_notifications_activity_metaData_TaggedInDiscussionReplyActivityMeta;
 
-export interface GetNotifications_currentUser_notifications_notifications_activity_createdByUserAccount {
-  __typename: "UserAccount";
-  commonName: string;
-}
-
 export interface GetNotifications_currentUser_notifications_notifications_activity {
   __typename: "Activity";
   activityType: ActivityType;
@@ -63,7 +58,6 @@ export interface GetNotifications_currentUser_notifications_notifications_activi
   actorID: UUID;
   actorUserAccount: GetNotifications_currentUser_notifications_notifications_activity_actorUserAccount;
   metaData: GetNotifications_currentUser_notifications_notifications_activity_metaData;
-  createdByUserAccount: GetNotifications_currentUser_notifications_notifications_activity_createdByUserAccount;
 }
 
 export interface GetNotifications_currentUser_notifications_notifications {

@@ -43,9 +43,6 @@ export default gql(/* GraphQL */ `
                 content
               }
             }
-            createdByUserAccount {
-              commonName
-            }
           }
         }
       }

@@ -3117,7 +3117,7 @@ export type GetNotificationSettingsQuery = { __typename: 'Query', currentUser: {
 export type GetNotificationsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetNotificationsQuery = { __typename: 'Query', currentUser: { __typename: 'CurrentUser', notifications: { __typename: 'UserNotifications', numUnreadNotifications: number, notifications: Array<{ __typename: 'UserNotification', id: UUID, isRead: boolean, inAppSent: boolean, emailSent: boolean, createdDts: Time, activity: { __typename: 'Activity', activityType: ActivityType, entityID: UUID, actorID: UUID, actorUserAccount: { __typename: 'UserAccount', commonName: string }, metaData: { __typename: 'ActivityMetaBaseStruct' } | { __typename: 'TaggedInDiscussionReplyActivityMeta', version: number, type: ActivityType, modelPlanID: UUID, discussionID: UUID, replyID: UUID, content: string, modelPlan: { __typename: 'ModelPlan', modelName: string } } | { __typename: 'TaggedInPlanDiscussionActivityMeta', version: number, type: ActivityType, modelPlanID: UUID, discussionID: UUID, content: string, modelPlan: { __typename: 'ModelPlan', modelName: string } }, createdByUserAccount: { __typename: 'UserAccount', commonName: string } } }> } } };
+export type GetNotificationsQuery = { __typename: 'Query', currentUser: { __typename: 'CurrentUser', notifications: { __typename: 'UserNotifications', numUnreadNotifications: number, notifications: Array<{ __typename: 'UserNotification', id: UUID, isRead: boolean, inAppSent: boolean, emailSent: boolean, createdDts: Time, activity: { __typename: 'Activity', activityType: ActivityType, entityID: UUID, actorID: UUID, actorUserAccount: { __typename: 'UserAccount', commonName: string }, metaData: { __typename: 'ActivityMetaBaseStruct' } | { __typename: 'TaggedInDiscussionReplyActivityMeta', version: number, type: ActivityType, modelPlanID: UUID, discussionID: UUID, replyID: UUID, content: string, modelPlan: { __typename: 'ModelPlan', modelName: string } } | { __typename: 'TaggedInPlanDiscussionActivityMeta', version: number, type: ActivityType, modelPlanID: UUID, discussionID: UUID, content: string, modelPlan: { __typename: 'ModelPlan', modelName: string } } } }> } } };
 
 export type GetPollNotificationsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -3127,7 +3127,7 @@ export type GetPollNotificationsQuery = { __typename: 'Query', currentUser: { __
 export type UpdateAllNotificationsAsReadMutationVariables = Exact<{ [key: string]: never; }>;
 
 
-export type UpdateAllNotificationsAsReadMutation = { __typename: 'Mutation', markAllNotificationsAsRead: Array<{ __typename: 'UserNotification', id: UUID, isRead: boolean, activity: { __typename: 'Activity', activityType: ActivityType, entityID: UUID, actorID: UUID, createdByUserAccount: { __typename: 'UserAccount', commonName: string } }, createdByUserAccount: { __typename: 'UserAccount', commonName: string } }> };
+export type UpdateAllNotificationsAsReadMutation = { __typename: 'Mutation', markAllNotificationsAsRead: Array<{ __typename: 'UserNotification', id: UUID }> };
 
 export type UpdateNotificationSettingsMutationVariables = Exact<{
   changes: UserNotificationPreferencesChanges;
@@ -5293,9 +5293,6 @@ export const GetNotificationsDocument = gql`
               content
             }
           }
-          createdByUserAccount {
-            commonName
-          }
         }
       }
     }
@@ -5379,18 +5376,6 @@ export const UpdateAllNotificationsAsReadDocument = gql`
     mutation UpdateAllNotificationsAsRead {
   markAllNotificationsAsRead {
     id
-    isRead
-    activity {
-      activityType
-      entityID
-      actorID
-      createdByUserAccount {
-        commonName
-      }
-    }
-    createdByUserAccount {
-      commonName
-    }
   }
 }
     `;
