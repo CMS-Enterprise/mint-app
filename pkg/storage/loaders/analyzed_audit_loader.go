@@ -40,8 +40,6 @@ func (loaders *DataLoaders) analyzedAuditGetByModelPlanIDAndDateBatch(_ context.
 	// then MAP by model_plan_id
 
 	for _, anAudit := range audits {
-		// key = DLDateKey
-
 		dateKey := string(anAudit.UTCDate())
 		if _, ok := auditsByID[dateKey]; !ok {
 			auditsByID[dateKey] = map[uuid.UUID]*models.AnalyzedAudit{}
@@ -49,7 +47,6 @@ func (loaders *DataLoaders) analyzedAuditGetByModelPlanIDAndDateBatch(_ context.
 		auditsByID[string(anAudit.UTCDate())][anAudit.ModelPlanID] = anAudit
 
 	}
-	//TODO: EASI-(EASI-3949) Make this actually return based on the ids and the date. If needed, just do it for one date and id, and do another layer that combines a selection of model plan IDs
 
 	output := make([]*dataloader.Result, len(keys))
 	for index, key := range keys {
@@ -86,8 +83,6 @@ func (loaders *DataLoaders) analyzedAuditGetByModelPlanIDAndDateBatch(_ context.
 			} else {
 				output[index] = &dataloader.Result{Data: retAudits, Error: nil}
 			}
-
-			// output[index] = &dataloader.Result{Data: retAudits, Error: nil}
 
 		} else {
 			err := fmt.Errorf("could not retrieve key from %s", key.String())

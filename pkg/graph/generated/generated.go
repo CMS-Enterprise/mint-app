@@ -9979,7 +9979,7 @@ type TaggedInDiscussionReplyActivityMeta {
   reply: DiscussionReply!
   content: String!
 }
-#  TODO: EASI-3949 --> Continue building this out with a resolver to get analyzed audits with a loader. 
+
 type DailyDigestCompleteActivityMeta {
   version: Int!
   type: ActivityType!

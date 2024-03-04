@@ -25,7 +25,7 @@ func AnalyzeModelPlanForAnalyzedAudit(
 	modelPlanID uuid.UUID,
 ) (*models.AnalyzedAudit, error) {
 
-	mp, err := store.ModelPlanGetByID(store, logger, modelPlanID) //TODO EASI-3949, this initially fetched the model plan, but it seems unnecessary here..
+	mp, err := store.ModelPlanGetByID(store, logger, modelPlanID) //TODO EASI-3949, this initially fetched the model plan, but it seems unnecessary here.., but we might want to get it to ensure it's a real model plan
 	if err != nil {
 		return nil, err
 	}

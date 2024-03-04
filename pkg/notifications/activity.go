@@ -62,7 +62,7 @@ func ActivityGetByIDLoaderThunk(_ context.Context, np sqlutils.NamedPreparer, pa
 
 // parseRawActivityMetaData conditionally parses meta data from JSON to a specific meta data type
 func parseRawActivityMetaData(activityType models.ActivityType, rawMetaDataJSON interface{}) (models.ActivityMetaData, error) {
-	//TODO: EASI-3949, can this be genericized instead of switching on activity type?
+	//Future Enhancement: can this be genericized instead of switching on activity type?
 
 	var rawData []byte
 
