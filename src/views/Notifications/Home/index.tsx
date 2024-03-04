@@ -1,6 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Alert, Button, Grid, GridContainer } from '@trussworks/react-uswds';
+import ReactPaginate from 'react-paginate';
+import {
+  Alert,
+  Button,
+  Grid,
+  GridContainer
+  // Pagination
+} from '@trussworks/react-uswds';
 import {
   useGetNotificationsQuery,
   useUpdateAllNotificationsAsReadMutation
@@ -16,6 +23,8 @@ import { NotFoundPartial } from 'views/NotFound';
 import IndividualNotification from './_components/IndividualNotification';
 
 const NotificationsHome = () => {
+  const [pageOffset, setPageOffset] = useState(0);
+
   const { t: notificationsT } = useTranslation('notifications');
   const { t: generalT } = useTranslation('general');
   const { t: miscellaneousT } = useTranslation('miscellaneous');
@@ -26,7 +35,7 @@ const NotificationsHome = () => {
   const numUnreadNotifications =
     data?.currentUser.notifications.numUnreadNotifications;
 
-  const allNotifications = data?.currentUser.notifications.notifications;
+  const allNotifications = data?.currentUser.notifications.notifications!;
 
   const breadcrumbs = [
     { text: miscellaneousT('home'), url: '/' },
@@ -36,6 +45,22 @@ const NotificationsHome = () => {
   if ((!loading && error) || (!loading && !data?.currentUser)) {
     return <NotFoundPartial />;
   }
+
+  // Pagination Configuration
+
+  const itemsPerPage = 10;
+  const endOffset = pageOffset + itemsPerPage;
+  const currentNotifications = allNotifications?.slice(pageOffset, endOffset);
+  const pageCount = allNotifications
+    ? Math.ceil(allNotifications.length / itemsPerPage)
+    : 1;
+
+  // Invoke when user click to request another page.
+  const handlePageClick = (event: { selected: number }) => {
+    const newOffset =
+      (event.selected * itemsPerPage) % allNotifications?.length;
+    setPageOffset(newOffset);
+  };
 
   return (
     <MainContent data-testid="notification-index">
@@ -89,13 +114,41 @@ const NotificationsHome = () => {
           )}
 
           {allNotifications?.length !== 0 &&
-            allNotifications?.map((notification, index) => (
+            currentNotifications?.map((notification, index) => (
               <IndividualNotification
                 {...notification}
                 key={notification.id}
                 index={index}
               />
             ))}
+
+          {pageCount > 1 && (
+            <ReactPaginate
+              breakLabel="..."
+              breakClassName="usa-pagination__item usa-pagination__overflow"
+              nextLabel="Next >"
+              containerClassName="mint-pagination usa-pagination usa-pagination__list"
+              previousLinkClassName={
+                pageOffset === 0
+                  ? 'display-none'
+                  : 'usa-pagination__link usa-pagination__previous-page prev-page'
+              }
+              nextLinkClassName={
+                pageOffset / itemsPerPage === pageCount - 1
+                  ? 'display-none'
+                  : 'usa-pagination__link usa-pagination__previous-page next-page'
+              }
+              disabledClassName="pagination__link--disabled"
+              activeClassName="usa-current"
+              activeLinkClassName="usa-current"
+              pageClassName="usa-pagination__item"
+              pageLinkClassName="usa-pagination__button"
+              onPageChange={handlePageClick}
+              pageRangeDisplayed={5}
+              pageCount={pageCount}
+              previousLabel="< Previous"
+            />
+          )}
         </Grid>
       </GridContainer>
     </MainContent>
