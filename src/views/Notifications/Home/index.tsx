@@ -113,14 +113,16 @@ const NotificationsHome = () => {
             </Alert>
           )}
 
-          {allNotifications?.length !== 0 &&
-            currentNotifications?.map((notification, index) => (
-              <IndividualNotification
-                {...notification}
-                key={notification.id}
-                index={index}
-              />
-            ))}
+          <div className="margin-bottom-4">
+            {allNotifications?.length !== 0 &&
+              currentNotifications?.map((notification, index) => (
+                <IndividualNotification
+                  {...notification}
+                  key={notification.id}
+                  index={index}
+                />
+              ))}
+          </div>
 
           {pageCount > 1 && (
             <ReactPaginate
