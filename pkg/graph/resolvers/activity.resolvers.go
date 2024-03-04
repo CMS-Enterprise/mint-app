@@ -11,6 +11,7 @@ import (
 	"github.com/cmsgov/mint-app/pkg/authentication"
 	"github.com/cmsgov/mint-app/pkg/graph/generated"
 	"github.com/cmsgov/mint-app/pkg/models"
+	"github.com/cmsgov/mint-app/pkg/storage/loaders"
 )
 
 // ActorUserAccount is the resolver for the actorUserAccount field.
@@ -20,8 +21,12 @@ func (r *activityResolver) ActorUserAccount(ctx context.Context, obj *models.Act
 
 // AnalyzedAudits is the resolver for the analyzedAudits field.
 func (r *dailyDigestCompleteActivityMetaResolver) AnalyzedAudits(ctx context.Context, obj *models.DailyDigestCompleteActivityMeta) ([]*models.AnalyzedAudit, error) {
-	logger := appcontext.ZLogger(ctx)
-	return AnalyzedAuditGetByModelPlanIDsAndDate(ctx, r.store, logger, obj.ModelPlanIDs, obj.Date)
+
+	//TODO: EASI-(EASI-3949) Verify that this works as expected
+	return loaders.AnalyzedAuditGetByModelPlanIDsAndDate(ctx, obj.ModelPlanIDs, obj.Date)
+	// logger := appcontext.ZLogger(ctx)
+	// return AnalyzedAuditGetByModelPlanIDsAndDate(ctx, r.store, logger, obj.ModelPlanIDs, obj.Date)
+
 }
 
 // Discussion is the resolver for the discussion field.

@@ -10,6 +10,8 @@ import (
 	"go.uber.org/zap"
 
 	"github.com/cmsgov/mint-app/pkg/models"
+	"github.com/cmsgov/mint-app/pkg/sqlqueries"
+	"github.com/cmsgov/mint-app/pkg/sqlutils"
 )
 
 //go:embed SQL/analyzed_audit/create.sql
@@ -135,4 +137,22 @@ func (s *Store) AnalyzedAuditGetByDate(_ *zap.Logger, date time.Time) ([]*models
 		return nil, err
 	}
 	return analyzedAudits, nil
+}
+
+// AnalyzedAuditGetByModelPlanIDsAndDateLoader gets and returns all AnalyzedAudits by modelPlanIDs and date using a dataLoader
+func AnalyzedAuditGetByModelPlanIDsAndDateLoader(
+	np sqlutils.NamedPreparer,
+	paramTableJSON string,
+) ([]*models.AnalyzedAudit, error) {
+
+	arg := map[string]interface{}{
+		"paramTableJSON": paramTableJSON,
+	}
+
+	retAnalyzedAudits, err := sqlutils.SelectProcedure[models.AnalyzedAudit](np, sqlqueries.AnalyzedAudit.CollectionGetByModelPlanIDsAndDateLoader, arg)
+	if err != nil {
+		return nil, fmt.Errorf("issue selecting analyzed audits by date and model plan ids with the data loader, %w", err)
+	}
+
+	return retAnalyzedAudits, nil
 }
