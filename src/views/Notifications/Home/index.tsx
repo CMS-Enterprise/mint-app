@@ -27,11 +27,6 @@ const NotificationsHome = () => {
     data?.currentUser.notifications.numUnreadNotifications;
 
   const allNotifications = data?.currentUser.notifications.notifications;
-  // console.log(
-  //   allNotifications?.sort((a, b) => {
-  //     a.createdDts.localeCompare(b.createdDts);
-  //   })
-  // );
 
   const breadcrumbs = [
     { text: miscellaneousT('home'), url: '/' },

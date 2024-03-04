@@ -2,6 +2,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import { Button, Grid, Icon } from '@trussworks/react-uswds';
+import { useMarkNotificationAsReadMutation } from 'gql/gen/graphql';
 import {
   GetNotifications_currentUser_notifications_notifications_activity as NotificationActivityType,
   GetNotifications_currentUser_notifications_notifications_activity_metaData_ActivityMetaBaseStruct as BaseStructActivityType,
@@ -17,6 +18,7 @@ import { getUserInitials } from 'utils/modelPlan';
 
 type IndividualNotificationProps = {
   index?: number;
+  id: string;
   isRead: boolean;
   createdDts: string;
   activity: NotificationActivityType;
@@ -24,6 +26,7 @@ type IndividualNotificationProps = {
 
 const IndividualNotification = ({
   index = 0,
+  id,
   isRead,
   createdDts,
   activity: {
@@ -36,6 +39,26 @@ const IndividualNotification = ({
 
   const history = useHistory();
   const isMobile = useCheckResponsiveScreen('mobile');
+
+  const [markAsRead] = useMarkNotificationAsReadMutation();
+
+  const handleMarkAsRead = (
+    notificationID: string,
+    modelPlanID: string,
+    discussionID: string
+  ) => {
+    markAsRead({
+      variables: {
+        notificationID
+      }
+    }).then(response => {
+      if (!response?.errors) {
+        history.push(
+          `/models/${modelPlanID}/task-list?discussionID=${discussionID}`
+        );
+      }
+    });
+  };
 
   // Type guard to check union type
   const isTaggedInDiscussion = (
@@ -99,10 +122,10 @@ const IndividualNotification = ({
                   unstyled
                   className="display-flex flex-align-center"
                   onClick={() => {
-                    // TODO: individual mark as read
-                    // markAsRead();
-                    history.push(
-                      `/models/${metaData.modelPlanID}/task-list?discussionID=${metaData.discussionID}`
+                    handleMarkAsRead(
+                      id,
+                      metaData.modelPlanID,
+                      metaData.discussionID
                     );
                   }}
                 >
