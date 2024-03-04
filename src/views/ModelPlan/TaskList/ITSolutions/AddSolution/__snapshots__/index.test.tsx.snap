@@ -108,7 +108,7 @@ exports[`Operational Solutions AddSolution > matches snapshot 1`] = `
               data-testid="fieldset"
             >
               <div
-                class="usa-form-group margin-top-0"
+                class="usa-form-group margin-top-0 margin-bottom-5"
                 data-scroll="key"
               >
                 <label
@@ -293,7 +293,7 @@ exports[`Operational Solutions AddSolution > matches snapshot 1`] = `
                 </div>
               </div>
               <div
-                class="margin-top-6 margin-bottom-3"
+                class="margin-bottom-3"
               >
                 <button
                   class="usa-button margin-bottom-1"

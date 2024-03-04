@@ -311,7 +311,7 @@ const AddSolution = () => {
                           <FieldGroup
                             scrollElement="key"
                             error={!!flatErrors.key}
-                            className="margin-top-0"
+                            className="margin-top-0 margin-bottom-5"
                           >
                             <Label htmlFor="it-solutions-key">
                               {t('howWillYouSolve')}
@@ -392,7 +392,22 @@ const AddSolution = () => {
                             </div>
                           )}
 
-                          <div className="margin-top-6 margin-bottom-3">
+                          {/* Render alert banner if a non-other solution is selected.  Alert notifies use that email will be sent */}
+                          {values.key &&
+                            !treatAsOtherSolutions.includes(
+                              values.key as OperationalSolutionKey
+                            ) && (
+                              <Alert
+                                type="info"
+                                slim
+                                lessRightPadding
+                                className="margin-bottom-3"
+                              >
+                                {t('selectCustomAlert')}
+                              </Alert>
+                            )}
+
+                          <div className="margin-bottom-3">
                             <Button
                               type="submit"
                               className="margin-bottom-1"
