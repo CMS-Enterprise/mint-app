@@ -119,6 +119,7 @@ const NotificationsHome = () => {
 
           {pageCount > 1 && (
             <ReactPaginate
+              data-testid="notification-pagination"
               breakLabel="..."
               breakClassName="usa-pagination__item usa-pagination__overflow"
               nextLabel="Next >"
