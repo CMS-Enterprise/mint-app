@@ -234,7 +234,7 @@ exports[`Collaborator/Team Member page w/table > matches snapshot 1`] = `
                         class="margin-y-0"
                       >
                         <p
-                          class="margin-y-0"
+                          class="margin-y-0 "
                         >
                           John Doe
                         </p>
