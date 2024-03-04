@@ -1,13 +1,7 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import ReactPaginate from 'react-paginate';
-import {
-  Alert,
-  Button,
-  Grid,
-  GridContainer
-  // Pagination
-} from '@trussworks/react-uswds';
+import { Alert, Button, Grid, GridContainer } from '@trussworks/react-uswds';
 import {
   useGetNotificationsQuery,
   useUpdateAllNotificationsAsReadMutation
@@ -47,7 +41,6 @@ const NotificationsHome = () => {
   }
 
   // Pagination Configuration
-
   const itemsPerPage = 10;
   const endOffset = pageOffset + itemsPerPage;
   const currentNotifications = allNotifications?.slice(pageOffset, endOffset);
