@@ -1,7 +1,7 @@
 import { gql } from '@apollo/client';
 
 export default gql(/* GraphQL */ `
-  mutation UpdateAllMessagesAsRead {
+  mutation UpdateAllNotificationsAsRead {
     markAllNotificationsAsRead {
       id
       isRead

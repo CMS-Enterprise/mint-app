@@ -3124,17 +3124,10 @@ export type GetPollNotificationsQueryVariables = Exact<{ [key: string]: never; }
 
 export type GetPollNotificationsQuery = { __typename: 'Query', currentUser: { __typename: 'CurrentUser', notifications: { __typename: 'UserNotifications', numUnreadNotifications: number } } };
 
-export type UpdateAllMessagesAsReadMutationVariables = Exact<{ [key: string]: never; }>;
+export type UpdateAllNotificationsAsReadMutationVariables = Exact<{ [key: string]: never; }>;
 
 
-export type UpdateAllMessagesAsReadMutation = { __typename: 'Mutation', markAllNotificationsAsRead: Array<{ __typename: 'UserNotification', id: UUID, isRead: boolean, activity: { __typename: 'Activity', activityType: ActivityType, entityID: UUID, actorID: UUID, createdByUserAccount: { __typename: 'UserAccount', commonName: string } }, createdByUserAccount: { __typename: 'UserAccount', commonName: string } }> };
-
-export type MarkNotificationAsReadMutationVariables = Exact<{
-  notificationID: Scalars['UUID']['input'];
-}>;
-
-
-export type MarkNotificationAsReadMutation = { __typename: 'Mutation', markNotificationAsRead: { __typename: 'UserNotification', id: UUID, isRead: boolean } };
+export type UpdateAllNotificationsAsReadMutation = { __typename: 'Mutation', markAllNotificationsAsRead: Array<{ __typename: 'UserNotification', id: UUID, isRead: boolean, activity: { __typename: 'Activity', activityType: ActivityType, entityID: UUID, actorID: UUID, createdByUserAccount: { __typename: 'UserAccount', commonName: string } }, createdByUserAccount: { __typename: 'UserAccount', commonName: string } }> };
 
 export type UpdateNotificationSettingsMutationVariables = Exact<{
   changes: UserNotificationPreferencesChanges;
@@ -3142,6 +3135,13 @@ export type UpdateNotificationSettingsMutationVariables = Exact<{
 
 
 export type UpdateNotificationSettingsMutation = { __typename: 'Mutation', updateUserNotificationPreferences: { __typename: 'UserNotificationPreferences', id: UUID, dailyDigestComplete: Array<UserNotificationPreferenceFlag>, addedAsCollaborator: Array<UserNotificationPreferenceFlag>, taggedInDiscussion: Array<UserNotificationPreferenceFlag>, taggedInDiscussionReply: Array<UserNotificationPreferenceFlag>, newDiscussionReply: Array<UserNotificationPreferenceFlag>, modelPlanShared: Array<UserNotificationPreferenceFlag> } };
+
+export type MarkNotificationAsReadMutationVariables = Exact<{
+  notificationID: Scalars['UUID']['input'];
+}>;
+
+
+export type MarkNotificationAsReadMutation = { __typename: 'Mutation', markNotificationAsRead: { __typename: 'UserNotification', id: UUID, isRead: boolean } };
 
 export type GetAllOpsEvalAndLearningQueryVariables = Exact<{
   id: Scalars['UUID']['input'];
@@ -5375,8 +5375,8 @@ export type GetPollNotificationsQueryHookResult = ReturnType<typeof useGetPollNo
 export type GetPollNotificationsLazyQueryHookResult = ReturnType<typeof useGetPollNotificationsLazyQuery>;
 export type GetPollNotificationsSuspenseQueryHookResult = ReturnType<typeof useGetPollNotificationsSuspenseQuery>;
 export type GetPollNotificationsQueryResult = Apollo.QueryResult<GetPollNotificationsQuery, GetPollNotificationsQueryVariables>;
-export const UpdateAllMessagesAsReadDocument = gql`
-    mutation UpdateAllMessagesAsRead {
+export const UpdateAllNotificationsAsReadDocument = gql`
+    mutation UpdateAllNotificationsAsRead {
   markAllNotificationsAsRead {
     id
     isRead
@@ -5394,65 +5394,31 @@ export const UpdateAllMessagesAsReadDocument = gql`
   }
 }
     `;
-export type UpdateAllMessagesAsReadMutationFn = Apollo.MutationFunction<UpdateAllMessagesAsReadMutation, UpdateAllMessagesAsReadMutationVariables>;
+export type UpdateAllNotificationsAsReadMutationFn = Apollo.MutationFunction<UpdateAllNotificationsAsReadMutation, UpdateAllNotificationsAsReadMutationVariables>;
 
 /**
- * __useUpdateAllMessagesAsReadMutation__
+ * __useUpdateAllNotificationsAsReadMutation__
  *
- * To run a mutation, you first call `useUpdateAllMessagesAsReadMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useUpdateAllMessagesAsReadMutation` returns a tuple that includes:
+ * To run a mutation, you first call `useUpdateAllNotificationsAsReadMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateAllNotificationsAsReadMutation` returns a tuple that includes:
  * - A mutate function that you can call at any time to execute the mutation
  * - An object with fields that represent the current status of the mutation's execution
  *
  * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
  *
  * @example
- * const [updateAllMessagesAsReadMutation, { data, loading, error }] = useUpdateAllMessagesAsReadMutation({
+ * const [updateAllNotificationsAsReadMutation, { data, loading, error }] = useUpdateAllNotificationsAsReadMutation({
  *   variables: {
  *   },
  * });
  */
-export function useUpdateAllMessagesAsReadMutation(baseOptions?: Apollo.MutationHookOptions<UpdateAllMessagesAsReadMutation, UpdateAllMessagesAsReadMutationVariables>) {
+export function useUpdateAllNotificationsAsReadMutation(baseOptions?: Apollo.MutationHookOptions<UpdateAllNotificationsAsReadMutation, UpdateAllNotificationsAsReadMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<UpdateAllMessagesAsReadMutation, UpdateAllMessagesAsReadMutationVariables>(UpdateAllMessagesAsReadDocument, options);
+        return Apollo.useMutation<UpdateAllNotificationsAsReadMutation, UpdateAllNotificationsAsReadMutationVariables>(UpdateAllNotificationsAsReadDocument, options);
       }
-export type UpdateAllMessagesAsReadMutationHookResult = ReturnType<typeof useUpdateAllMessagesAsReadMutation>;
-export type UpdateAllMessagesAsReadMutationResult = Apollo.MutationResult<UpdateAllMessagesAsReadMutation>;
-export type UpdateAllMessagesAsReadMutationOptions = Apollo.BaseMutationOptions<UpdateAllMessagesAsReadMutation, UpdateAllMessagesAsReadMutationVariables>;
-export const MarkNotificationAsReadDocument = gql`
-    mutation MarkNotificationAsRead($notificationID: UUID!) {
-  markNotificationAsRead(notificationID: $notificationID) {
-    id
-    isRead
-  }
-}
-    `;
-export type MarkNotificationAsReadMutationFn = Apollo.MutationFunction<MarkNotificationAsReadMutation, MarkNotificationAsReadMutationVariables>;
-
-/**
- * __useMarkNotificationAsReadMutation__
- *
- * To run a mutation, you first call `useMarkNotificationAsReadMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useMarkNotificationAsReadMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [markNotificationAsReadMutation, { data, loading, error }] = useMarkNotificationAsReadMutation({
- *   variables: {
- *      notificationID: // value for 'notificationID'
- *   },
- * });
- */
-export function useMarkNotificationAsReadMutation(baseOptions?: Apollo.MutationHookOptions<MarkNotificationAsReadMutation, MarkNotificationAsReadMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<MarkNotificationAsReadMutation, MarkNotificationAsReadMutationVariables>(MarkNotificationAsReadDocument, options);
-      }
-export type MarkNotificationAsReadMutationHookResult = ReturnType<typeof useMarkNotificationAsReadMutation>;
-export type MarkNotificationAsReadMutationResult = Apollo.MutationResult<MarkNotificationAsReadMutation>;
-export type MarkNotificationAsReadMutationOptions = Apollo.BaseMutationOptions<MarkNotificationAsReadMutation, MarkNotificationAsReadMutationVariables>;
+export type UpdateAllNotificationsAsReadMutationHookResult = ReturnType<typeof useUpdateAllNotificationsAsReadMutation>;
+export type UpdateAllNotificationsAsReadMutationResult = Apollo.MutationResult<UpdateAllNotificationsAsReadMutation>;
+export type UpdateAllNotificationsAsReadMutationOptions = Apollo.BaseMutationOptions<UpdateAllNotificationsAsReadMutation, UpdateAllNotificationsAsReadMutationVariables>;
 export const UpdateNotificationSettingsDocument = gql`
     mutation UpdateNotificationSettings($changes: UserNotificationPreferencesChanges!) {
   updateUserNotificationPreferences(changes: $changes) {
@@ -5492,6 +5458,40 @@ export function useUpdateNotificationSettingsMutation(baseOptions?: Apollo.Mutat
 export type UpdateNotificationSettingsMutationHookResult = ReturnType<typeof useUpdateNotificationSettingsMutation>;
 export type UpdateNotificationSettingsMutationResult = Apollo.MutationResult<UpdateNotificationSettingsMutation>;
 export type UpdateNotificationSettingsMutationOptions = Apollo.BaseMutationOptions<UpdateNotificationSettingsMutation, UpdateNotificationSettingsMutationVariables>;
+export const MarkNotificationAsReadDocument = gql`
+    mutation MarkNotificationAsRead($notificationID: UUID!) {
+  markNotificationAsRead(notificationID: $notificationID) {
+    id
+    isRead
+  }
+}
+    `;
+export type MarkNotificationAsReadMutationFn = Apollo.MutationFunction<MarkNotificationAsReadMutation, MarkNotificationAsReadMutationVariables>;
+
+/**
+ * __useMarkNotificationAsReadMutation__
+ *
+ * To run a mutation, you first call `useMarkNotificationAsReadMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useMarkNotificationAsReadMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [markNotificationAsReadMutation, { data, loading, error }] = useMarkNotificationAsReadMutation({
+ *   variables: {
+ *      notificationID: // value for 'notificationID'
+ *   },
+ * });
+ */
+export function useMarkNotificationAsReadMutation(baseOptions?: Apollo.MutationHookOptions<MarkNotificationAsReadMutation, MarkNotificationAsReadMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<MarkNotificationAsReadMutation, MarkNotificationAsReadMutationVariables>(MarkNotificationAsReadDocument, options);
+      }
+export type MarkNotificationAsReadMutationHookResult = ReturnType<typeof useMarkNotificationAsReadMutation>;
+export type MarkNotificationAsReadMutationResult = Apollo.MutationResult<MarkNotificationAsReadMutation>;
+export type MarkNotificationAsReadMutationOptions = Apollo.BaseMutationOptions<MarkNotificationAsReadMutation, MarkNotificationAsReadMutationVariables>;
 export const GetAllOpsEvalAndLearningDocument = gql`
     query GetAllOpsEvalAndLearning($id: UUID!) {
   modelPlan(id: $id) {

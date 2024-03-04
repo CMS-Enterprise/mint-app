@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Alert, Button, Grid, GridContainer } from '@trussworks/react-uswds';
 import {
   useGetNotificationsQuery,
-  useUpdateAllMessagesAsReadMutation
+  useUpdateAllNotificationsAsReadMutation
 } from 'gql/gen/graphql';
 
 import Breadcrumbs from 'components/Breadcrumbs';
@@ -21,7 +21,7 @@ const NotificationsHome = () => {
   const { t: miscellaneousT } = useTranslation('miscellaneous');
 
   const { data, loading, error, refetch } = useGetNotificationsQuery();
-  const [markAllAsRead] = useUpdateAllMessagesAsReadMutation();
+  const [markAllAsRead] = useUpdateAllNotificationsAsReadMutation();
 
   const numUnreadNotifications =
     data?.currentUser.notifications.numUnreadNotifications;
