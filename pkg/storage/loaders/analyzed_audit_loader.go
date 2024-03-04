@@ -73,7 +73,11 @@ func (loaders *DataLoaders) analyzedAuditGetByModelPlanIDAndDateBatch(_ context.
 				// Get the specific audit
 				audit := auditsByID[dateKey][id]
 				if audit == nil {
-					auditErr = fmt.Errorf("analyzed audit not found for %s, %s", dateKey, id)
+					if auditErr == nil {
+						auditErr = fmt.Errorf("analyzed audit not found for %s, %s", dateKey, id)
+					} else {
+						auditErr = fmt.Errorf("err: %w, analyzed audit not found for %s, %s", auditErr, dateKey, id)
+					}
 				}
 				retAudits = append(retAudits, audit)
 			}

@@ -117,7 +117,6 @@ func (suite *ResolverSuite) TestDailyDigestNotificationSend() {
 		Return(&emailtestconfigs.TestEmailServiceConfig).
 		AnyTimes()
 
-	timeNow := time.Now()
 	userName := "DUDE"
 
 	mp := suite.createModelPlan("Test Plan")
@@ -142,7 +141,7 @@ func (suite *ResolverSuite) TestDailyDigestNotificationSend() {
 			gomock.Any(),
 			gomock.Any(),
 		).MinTimes(1).MaxTimes(1)
-	emailErr := DailyDigestNotificationSend(suite.testConfigs.Context, suite.testConfigs.Store, suite.testConfigs.Logger, timeNow, userAccount.Account().ID, mockEmailService, emailTemplateService, addressBook)
+	emailErr := DailyDigestNotificationSend(suite.testConfigs.Context, suite.testConfigs.Store, suite.testConfigs.Logger, today, userAccount.Account().ID, mockEmailService, emailTemplateService, addressBook)
 	suite.NoError(emailErr)
 
 	notificationCollection, err := notifications.UserNotificationCollectionGetByUser(suite.testConfigs.Context, suite.testConfigs.Store, userAccount)
