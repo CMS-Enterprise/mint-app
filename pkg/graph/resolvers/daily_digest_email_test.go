@@ -5,9 +5,12 @@ import (
 	"time"
 
 	"github.com/golang/mock/gomock"
+	"github.com/google/uuid"
 	"github.com/samber/lo"
 
 	"github.com/cmsgov/mint-app/pkg/models"
+	"github.com/cmsgov/mint-app/pkg/notifications"
+	"github.com/cmsgov/mint-app/pkg/storage/loaders"
 	"github.com/cmsgov/mint-app/pkg/testconfig/emailtestconfigs"
 )
 
@@ -118,12 +121,12 @@ func (suite *ResolverSuite) TestDailyDigestNotificationSend() {
 	userName := "DUDE"
 
 	mp := suite.createModelPlan("Test Plan")
-	_ = suite.createPlanCollaborator(
-		mp,
-		userName,
-		[]models.TeamRole{models.TeamRoleModelLead},
-	)
+
 	userAccount := getTestPrincipal(suite.testConfigs.Store, userName)
+
+	// Create a favorite, as favorites determine what models users get a digest in regards to.
+	_, err = PlanFavoriteCreate(suite.testConfigs.Store, suite.testConfigs.Logger, userAccount, userAccount.Account().ID, suite.testConfigs.Store, mp.ID)
+	suite.NoError(err)
 
 	// Generate Audits for the model so the
 	_, err2 := AnalyzeModelPlanForAnalyzedAudit(suite.testConfigs.Context, suite.testConfigs.Store, suite.testConfigs.Logger, today, mp.ID)
@@ -141,5 +144,30 @@ func (suite *ResolverSuite) TestDailyDigestNotificationSend() {
 		).MinTimes(1).MaxTimes(1)
 	emailErr := DailyDigestNotificationSend(suite.testConfigs.Context, suite.testConfigs.Store, suite.testConfigs.Logger, timeNow, userAccount.Account().ID, mockEmailService, emailTemplateService, addressBook)
 	suite.NoError(emailErr)
+
+	notificationCollection, err := notifications.UserNotificationCollectionGetByUser(suite.testConfigs.Context, suite.testConfigs.Store, userAccount)
+	suite.NoError(err)
+	// There is more than one notification
+	suite.Len(notificationCollection.Notifications, 1)
+
+	retNot := notificationCollection.Notifications[0]
+
+	activity, err := loaders.ActivityGetByID(suite.testConfigs.Context, retNot.ActivityID)
+	suite.NoError(err)
+	suite.NotNil(activity)
+	suite.EqualValues(retNot.ActivityID, activity.ID)
+	suite.EqualValues(models.ActivityDigest, activity.ActivityType)
+
+	// Assert the data of the meta data
+	digestData, isDigest := activity.MetaData.(*models.DailyDigestCompleteActivityMeta)
+	suite.True(isDigest)
+
+	suite.EqualValues([]uuid.UUID{mp.ID}, digestData.ModelPlanIDs)
+	suite.EqualValues(models.ActivityDigest, digestData.Type)
+	suite.EqualValues(userAccount.Account().ID, digestData.UserID)
+	suite.EqualValues(0, digestData.Version)
+	suite.EqualValues(today.Month(), digestData.Date.Month())
+	suite.EqualValues(today.Year(), digestData.Date.Year())
+	suite.EqualValues(today.Day(), digestData.Date.Day())
 
 }

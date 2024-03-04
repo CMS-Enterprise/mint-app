@@ -31,6 +31,7 @@ func DailyDigestNotificationSend(
 	addressBook email.AddressBook,
 
 ) error {
+	//TODO: EASI-(EASI-3949) Should we see if we can use a dataloader? What about for workers? Is that possible?
 	account, err := store.UserAccountGetByID(store, userID)
 	if err != nil {
 		return err
@@ -62,6 +63,12 @@ func DailyDigestNotificationSend(
 	if err != nil {
 		return fmt.Errorf("couldn't generate an activity record for the daily digest complete activity for user %s, error: %w", userID, err)
 	}
+
+	// TODO: EASI-(EASI-3949) Should we return nil if there is no email service? Or should we error
+	if emailService == nil || emailTemplateService == nil {
+		return nil
+	}
+
 	//TODO: EASI-(EASI-3338) get user preferences, or perhaps get earlier and pass it to the notifications? Only send the email if user has a preference for it.
 
 	// Generate email subject and body from template
