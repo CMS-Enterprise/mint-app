@@ -11,7 +11,7 @@
 
   &__readonly {
     margin-bottom: 1rem;
-  
+
     .ProseMirror {
       outline: none;
       border: none;
@@ -22,7 +22,7 @@
   &__editable {
     .ProseMirror {
       min-height: 150px;
-    }  
+    }
   }
 }
 
@@ -34,12 +34,18 @@
 .tippy-box {
   max-width: none !important;
 }
-  
+
 .mention {
   color: #005EA2;
   border: none;
   background-color: transparent;
-  padding: 0;  
+  padding: 0;
+}
+
+.text-base-darker {
+  .mention {
+    color: color($theme-color-base-darker);
+  }
 }
 
 .items {
