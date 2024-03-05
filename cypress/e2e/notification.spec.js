@@ -3,7 +3,7 @@ describe('Notification Center', () => {
     cy.localLogin({ name: 'MINT', role: 'MINT_USER_NONPROD' });
   });
 
-  it('asks a question and answers a question', () => {
+  it('navigates through the Notification page', () => {
     cy.clickPlanTableByName('Empty Plan');
 
     cy.contains('button', 'Start a discussion').click();
@@ -73,9 +73,12 @@ describe('Notification Center', () => {
       .first()
       .find('button', 'View Discussion')
       .click();
-    //   .within(() => {
-    //     cy.log();
-    //     // cy.contains('button', 'View Discussion').click();
-    //   });
+
+    cy.visit('/notifications');
+
+    // cy.get('[data-testid="individual-notification"]')
+    //   .first()
+    //   .find('[data-testid="notification-red-dot"]')
+    //   .should('exist');
   });
 });
