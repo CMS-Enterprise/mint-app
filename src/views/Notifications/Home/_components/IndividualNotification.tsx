@@ -76,7 +76,10 @@ const IndividualNotification = ({
       <Grid desktop={{ col: 12 }} className="position-relative">
         {/* Notification Red Dot */}
         {!isRead && (
-          <div className="circle-1 bg-error position-absolute margin-top-3 margin-left-1" />
+          <div
+            className="circle-1 bg-error position-absolute margin-top-3 margin-left-1"
+            data-testid="notification-red-dot"
+          />
         )}
 
         <div
