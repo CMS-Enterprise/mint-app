@@ -331,6 +331,30 @@ func (suite *ResolverSuite) createAnalyzedAudit(mp *models.ModelPlan, date time.
 	return analyzedAudit
 }
 
+func (suite *ResolverSuite) createDefaultTestAnalyzedAudit(mp *models.ModelPlan, date time.Time, callbacks ...func(*models.AnalyzedAuditChange)) *models.AnalyzedAudit {
+	modelNameChange := "Old Name"
+	modelStatusChange := []string{"OMB_ASRF_CLEARANCE"}
+	documentCount := 2
+	crTdlActivity := true
+	updatedSections := []string{"plan_payments", "plan_ops_eval_and_learning"}
+	reviewSections := []string{"plan_payments", "plan_ops_eval_and_learning"}
+	clearanceSections := []string{"plan_participants_and_providers", "plan_general_characteristics", "plan_basics"}
+	addedLead := []models.AnalyzedModelLeadInfo{{CommonName: "New Lead"}}
+	discussionActivity := true
+
+	auditChange := suite.createAnalyzedAuditChange(modelNameChange, modelStatusChange, documentCount,
+		crTdlActivity, updatedSections, reviewSections, clearanceSections, addedLead, discussionActivity)
+
+	for _, cb := range callbacks {
+		cb(auditChange)
+
+	}
+	suite.NotNil(auditChange)
+
+	return suite.createAnalyzedAudit(mp, date, *auditChange)
+
+}
+
 // TestResolverSuite runs the resolver test suite
 func TestResolverSuite(t *testing.T) {
 	rs := new(ResolverSuite)
