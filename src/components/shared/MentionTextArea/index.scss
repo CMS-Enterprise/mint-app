@@ -17,6 +17,12 @@
       border: none;
       padding: 0;
     }
+
+    &.notification__content {
+      .ProseMirror {
+        display: flex;
+      }
+    }
   }
 
   &__editable {

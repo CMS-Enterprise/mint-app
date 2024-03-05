@@ -114,7 +114,7 @@ const IndividualNotification = ({
                 {!isMobile && (
                   <span>
                     <MentionTextArea
-                      className="text-base-darker"
+                      className="notification__content text-base-darker"
                       id={`mention-${metaData.discussionID}`}
                       editable={false}
                       initialContent={`“${metaData.content}”`}
