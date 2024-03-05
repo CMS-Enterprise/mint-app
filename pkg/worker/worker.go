@@ -58,6 +58,15 @@ func (w *Worker) Work() {
 	mgr.Register("DigestEmailJob", w.DigestEmailJob)
 	mgr.Register("AggregatedDigestEmailJob", w.AggregatedDigestEmailJob)
 
+	/**********************
+	* //Future Enhancement
+	* Consider providing workers with dataloaders, and potentially a shared context. As these run separate go routines for each worker,
+	***********************
+	*dataLoaders := loaders.NewDataLoaders(w.Store)
+	*ctx := loaders.CTXWithLoaders(context.Background(), dataLoaders)
+	*err := mgr.RunWithContext(ctx)
+	******************************/
+
 	err := mgr.Run()
 	if err != nil {
 		panic(err)
