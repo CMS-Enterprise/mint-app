@@ -120,7 +120,6 @@ func getDigestAnalyzedAudits(
 	date time.Time,
 	logger *zap.Logger,
 ) ([]*models.AnalyzedAudit, []uuid.UUID, error) {
-	//TODO: EASI-(EASI-3338) Consider making this take a date and an array of model_plan_ids, so it can be reused elsewhere
 
 	planFavorites, err := storage.PlanFavoriteGetCollectionByUserID(np, logger, userID)
 	if err != nil {
