@@ -44,20 +44,8 @@ func (suite *ResolverSuite) TestDailyDigestNotificationSendComponents() {
 	suite.NoError(err)
 
 	var analyzedAudits []*models.AnalyzedAudit
-	modelNameChange := "Old Name"
-	modelStatusChange := []string{"OMB_ASRF_CLEARANCE"}
-	documentCount := 2
-	crTdlActivity := true
-	updatedSections := []string{"plan_payments", "plan_ops_eval_and_learning"}
-	reviewSections := []string{"plan_payments", "plan_ops_eval_and_learning"}
-	clearanceSections := []string{"plan_participants_and_providers", "plan_general_characteristics", "plan_basics"}
-	addedLead := []models.AnalyzedModelLeadInfo{{CommonName: "New Lead"}}
-	discussionActivity := true
 
-	auditChange := *suite.createAnalyzedAuditChange(modelNameChange, modelStatusChange, documentCount,
-		crTdlActivity, updatedSections, reviewSections, clearanceSections, addedLead, discussionActivity)
-
-	analyzedAudit := suite.createAnalyzedAudit(mp, time.Now().UTC(), auditChange)
+	analyzedAudit := suite.createDefaultTestAnalyzedAudit(mp, time.Now().UTC())
 
 	// Test getDailyDigestAnalyzedAudits
 
