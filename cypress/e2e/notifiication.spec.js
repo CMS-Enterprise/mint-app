@@ -8,7 +8,7 @@ describe('Notification Center', () => {
 
     cy.contains('button', 'Start a discussion').click();
 
-    // Create two notifications
+    // Preliminarily creating two notifications before testing notifications
     // First notification
     cy.contains('h1', 'Start a discussion');
 
@@ -51,10 +51,31 @@ describe('Notification Center', () => {
 
     cy.contains('button', 'Save discussion').click();
 
-    // CLick outside
-    // Sign out
-    // Sign in as JTTC with assessment powers
-    // cy.localLogin({ name: 'JTTC', role: 'MINT_ASSESSMENT_NONPROD' });
-    // Check notificaitons
+    cy.get('[data-testid="close-discussions"]').click();
+    cy.get('[data-testid="signout-link"]').click();
+
+    cy.localLogin({ name: 'JTTC', role: 'MINT_ASSESSMENT_NONPROD' });
+
+    cy.visit('/notifications');
+
+    // Actual Notification Test
+    cy.get('[data-testid="navmenu__notification"]')
+      .should('have.attr', 'href')
+      .and('equal', '/notifications');
+
+    cy.get('[data-testid="navmenu__notifications--yesNotification"').should(
+      'exist'
+    );
+
+    cy.get('[data-testid="individual-notification"]').should('have.length', 2);
+
+    cy.get('[data-testid="individual-notification"]')
+      .first()
+      .find('button', 'View Discussion')
+      .click();
+    //   .within(() => {
+    //     cy.log();
+    //     // cy.contains('button', 'View Discussion').click();
+    //   });
   });
 });
