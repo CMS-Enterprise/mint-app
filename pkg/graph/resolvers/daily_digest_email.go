@@ -26,13 +26,20 @@ func DailyDigestNotificationSend(
 	// np sqlutils.NamedPreparer,
 	dateAnalyzed time.Time,
 	userID uuid.UUID,
-	getPreferencesFunc notifications.GetUserNotificationPreferencesFunc, //TODO: EASI-(EASI-3949) Is this a good way to do it? Or should we pass th function?
+	getPreferencesFunc notifications.GetUserNotificationPreferencesFunc,
 	emailService oddmail.EmailService,
 	emailTemplateService email.TemplateService,
 	addressBook email.AddressBook,
 
 ) error {
-	//TODO: EASI-(EASI-3949) Should we see if we can use a dataloader? What about for workers? Is that possible?
+
+	/***********************
+	* //Future Enhancement *
+	************************
+	* If we are able to provide dataloaders to faktory workers, replace store calls with dataloaders for
+	*   a. Get User account
+	*   b. Get User Preferences
+	 */
 	account, err := store.UserAccountGetByID(store, userID)
 	if err != nil {
 		return err
@@ -52,20 +59,18 @@ func DailyDigestNotificationSend(
 	// TODO EASI-(EASI-3338) wrap this in a transaction!
 	systemAccountID := constants.GetSystemAccountUUID()
 
-	//TODO: EASI-(EASI-3338) verify that you can use the dataloader in the worker package, it might not be that context....
+	//Future Enhancement use the dataloader to get user preferences and remove the getPreferencesFunc
 	_, err = notifications.ActivityDailyDigestComplete(ctx, store, systemAccountID, userID, dateAnalyzed, modelPlanIDs, getPreferencesFunc)
-	// _, err = notifications.ActivityDailyDigestComplete(ctx, w.Store, systemAccountID, userID, dateAnalyzed, modelPlanIDs, loaders.UserNotificationPreferencesGetByUserID)
 
 	if err != nil {
 		return fmt.Errorf("couldn't generate an activity record for the daily digest complete activity for user %s, error: %w", userID, err)
 	}
 
-	// TODO: EASI-(EASI-3949) Should we return nil if there is no email service? Or should we error
+	// Return nil if there is no email service, this follows similar
 	if emailService == nil || emailTemplateService == nil {
 		return nil
 	}
 
-	//TODO: EASI-(EASI-3338) get user preferences, or perhaps get earlier and pass it to the notifications? Only send the email if user has a preference for it.
 	preference, err := getPreferencesFunc(ctx, userID)
 	if err != nil {
 		return fmt.Errorf("unable to get user notification preference, Notification not created %w", err)
