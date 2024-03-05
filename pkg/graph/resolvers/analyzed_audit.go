@@ -309,7 +309,8 @@ func analyzeSectionsAudits(audits []*models.AuditChange) (*models.AnalyzedPlanSe
 	return &analyzedPlanSections, nil
 }
 
-// AnalyzedAuditGetByModelPlanIDsAndDate returns all AnalyzedAudits for
+// AnalyzedAuditGetByModelPlanIDsAndDate returns all AnalyzedAudits for a specific date and collection of model plan ids.
+// When possible, the data loader version of this script should be favored.
 func AnalyzedAuditGetByModelPlanIDsAndDate(
 	_ context.Context,
 	store *storage.Store,
@@ -319,8 +320,6 @@ func AnalyzedAuditGetByModelPlanIDsAndDate(
 	date time.Time,
 ) ([]*models.AnalyzedAudit, error) {
 
-	// TODO: EASI-3949 Consider making this a dataloader
-	// TODO: EASI-(EASI-3949) Consider making this a dataloader
 	return store.AnalyzedAuditGetByModelPlanIDsAndDate(logger, modelPlanIDs, date)
 
 }

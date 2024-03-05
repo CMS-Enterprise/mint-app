@@ -5,6 +5,8 @@ import (
 	"time"
 
 	"github.com/cmsgov/mint-app/pkg/graph/resolvers"
+	"github.com/cmsgov/mint-app/pkg/models"
+	"github.com/cmsgov/mint-app/pkg/storage"
 
 	faktory "github.com/contribsys/faktory/client"
 	faktory_worker "github.com/contribsys/faktory_worker_go"
@@ -73,8 +75,11 @@ func (w *Worker) DigestEmailJob(ctx context.Context, args ...interface{}) error 
 	if err != nil {
 		return err
 	}
+	preferenceFunctions := func(ctx context.Context, user_id uuid.UUID) (*models.UserNotificationPreferences, error) {
+		return storage.UserNotificationPreferencesGetByUserID(w.Store, user_id)
+	}
 	//TODO: EASI-(EASI-3338) Be careful with this context as it might not have a data loader etc.
-	sendErr := resolvers.DailyDigestNotificationSend(ctx, w.Store, w.Logger, dateAnalyzed, userID, w.EmailService, &w.EmailTemplateService, w.AddressBook)
+	sendErr := resolvers.DailyDigestNotificationSend(ctx, w.Store, w.Logger, dateAnalyzed, userID, preferenceFunctions, w.EmailService, &w.EmailTemplateService, w.AddressBook)
 	return sendErr
 
 }

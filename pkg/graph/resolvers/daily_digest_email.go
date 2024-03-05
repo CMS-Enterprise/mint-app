@@ -26,6 +26,7 @@ func DailyDigestNotificationSend(
 	// np sqlutils.NamedPreparer,
 	dateAnalyzed time.Time,
 	userID uuid.UUID,
+	getPreferencesFunc notifications.GetUserNotificationPreferencesFunc, //TODO: EASI-(EASI-3949) Is this a good way to do it? Or should we pass th function?
 	emailService oddmail.EmailService,
 	emailTemplateService email.TemplateService,
 	addressBook email.AddressBook,
@@ -51,13 +52,8 @@ func DailyDigestNotificationSend(
 	// TODO EASI-(EASI-3338) wrap this in a transaction!
 	systemAccountID := constants.GetSystemAccountUUID()
 
-	// TODO EASI-(EASI-3338), see about wrapping the dataloaders in the worker as well. This preferences function should be one level up... so we can specify it differently if called by GQL vs the worker package
-	preferenceFunctions := func(ctx context.Context, user_id uuid.UUID) (*models.UserNotificationPreferences, error) {
-		return storage.UserNotificationPreferencesGetByUserID(store, user_id)
-	}
-
 	//TODO: EASI-(EASI-3338) verify that you can use the dataloader in the worker package, it might not be that context....
-	_, err = notifications.ActivityDailyDigestComplete(ctx, store, systemAccountID, userID, dateAnalyzed, modelPlanIDs, preferenceFunctions)
+	_, err = notifications.ActivityDailyDigestComplete(ctx, store, systemAccountID, userID, dateAnalyzed, modelPlanIDs, getPreferencesFunc)
 	// _, err = notifications.ActivityDailyDigestComplete(ctx, w.Store, systemAccountID, userID, dateAnalyzed, modelPlanIDs, loaders.UserNotificationPreferencesGetByUserID)
 
 	if err != nil {
@@ -70,6 +66,15 @@ func DailyDigestNotificationSend(
 	}
 
 	//TODO: EASI-(EASI-3338) get user preferences, or perhaps get earlier and pass it to the notifications? Only send the email if user has a preference for it.
+	preference, err := getPreferencesFunc(ctx, userID)
+	if err != nil {
+		return fmt.Errorf("unable to get user notification preference, Notification not created %w", err)
+	}
+
+	if !preference.DailyDigestComplete.SendEmail() {
+		// Early return if user doesn't want an email
+		return nil
+	}
 
 	// Generate email subject and body from template
 	emailSubject, emailBody, err := generateDigestEmail(analyzedAudits, emailTemplateService, emailService)

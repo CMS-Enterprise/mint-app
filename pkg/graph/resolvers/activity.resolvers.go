@@ -22,11 +22,7 @@ func (r *activityResolver) ActorUserAccount(ctx context.Context, obj *models.Act
 // AnalyzedAudits is the resolver for the analyzedAudits field.
 func (r *dailyDigestCompleteActivityMetaResolver) AnalyzedAudits(ctx context.Context, obj *models.DailyDigestCompleteActivityMeta) ([]*models.AnalyzedAudit, error) {
 
-	//TODO: EASI-(EASI-3949) Verify that this works as expected
 	return loaders.AnalyzedAuditGetByModelPlanIDsAndDate(ctx, obj.ModelPlanIDs, obj.Date)
-	// logger := appcontext.ZLogger(ctx)
-	// return AnalyzedAuditGetByModelPlanIDsAndDate(ctx, r.store, logger, obj.ModelPlanIDs, obj.Date)
-
 }
 
 // Discussion is the resolver for the discussion field.

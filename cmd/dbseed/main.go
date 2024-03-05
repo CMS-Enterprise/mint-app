@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"fmt"
 	"time"
 
@@ -270,8 +271,8 @@ func (s *Seeder) CreateAnalyzedAuditData() {
 	// Step 2. Iterate through all model plans, and generate analyzed audit data
 	for _, mp := range modelPlans {
 		_, err2 := resolvers.AnalyzeModelPlanForAnalyzedAudit(s.Config.Context, s.Config.Store, s.Config.Logger, dayToAnalyze, mp.ID)
-		//TODO: EASI-3934 Note that this will create an error if you run this a second time, because there is already an analyzed audit record.
-		// Either handle this, or just ignore the error. We could potentially override if we want, but that might not be the best
+		// Notice:  that this will create an error if you run this a second time, because there is already an analyzed audit record.
+		// For simplicity, we check if it is that error, and if so just continue.
 		if err2 != nil {
 			if pqErr, ok := err2.(*pq.Error); ok {
 
@@ -294,8 +295,11 @@ func (s *Seeder) CreateAnalyzedAuditData() {
 	if err != nil {
 		panic(fmt.Errorf("couldn't get user ids for users with plan favorites, %w", err))
 	}
+	preferenceFunctions := func(ctx context.Context, user_id uuid.UUID) (*models.UserNotificationPreferences, error) {
+		return storage.UserNotificationPreferencesGetByUserID(s.Config.Store, user_id)
+	}
 	for _, id := range userIDs {
-		err := resolvers.DailyDigestNotificationSend(s.Config.Context, s.Config.Store, s.Config.Logger, dayToAnalyze, id, s.Config.EmailService, s.Config.EmailTemplateService, s.Config.AddressBook)
+		err := resolvers.DailyDigestNotificationSend(s.Config.Context, s.Config.Store, s.Config.Logger, dayToAnalyze, id, preferenceFunctions, s.Config.EmailService, s.Config.EmailTemplateService, s.Config.AddressBook)
 		if err != nil {
 			fmt.Printf("there was an issue sending digest emails for userID: %s", id)
 		}
