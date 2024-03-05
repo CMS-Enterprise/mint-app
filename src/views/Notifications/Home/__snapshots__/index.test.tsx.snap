@@ -50,16 +50,24 @@ exports[`Notification Page > matches snapshot 1`] = `
           class="grid-row desktop:grid-col-12 flex-justify flex-align-center"
           data-testid="grid"
         >
-          <h1
-            aria-live="polite"
-            class="mint-h1 margin-y-0"
-            tabindex="-1"
+          <div
+            class=""
+            data-testid="grid"
           >
-            Notifications
-          </h1>
-          <div>
+            <h1
+              aria-live="polite"
+              class="mint-h1 margin-y-0 margin-right-2"
+              tabindex="-1"
+            >
+              Notifications
+            </h1>
+          </div>
+          <div
+            class=""
+            data-testid="grid"
+          >
             <button
-              class="usa-button usa-button--unstyled margin-y-0 margin-x-2"
+              class="usa-button usa-button--unstyled width-auto margin-right-2"
               data-testid="button"
               type="button"
             >
@@ -78,7 +86,7 @@ exports[`Notification Page > matches snapshot 1`] = `
         >
           <div
             class="grid-row"
-            data-testid="grid"
+            data-testid="individual-notification"
           >
             <div
               class="desktop:grid-col-12 position-relative"
@@ -86,23 +94,26 @@ exports[`Notification Page > matches snapshot 1`] = `
             >
               <div
                 class="circle-1 bg-error position-absolute margin-top-3 margin-left-1"
+                data-testid="notification-red-dot"
               />
               <div
-                class="padding-3 display-flex flex-justify "
+                class="grid-row grid-gap-6 padding-3 display-flex flex-justify "
+                data-testid="grid"
               >
                 <div
-                  class="flex-9"
+                  class="grid-col-fill"
+                  data-testid="grid"
                 >
                   <div
                     class="display-flex flex-align-center margin-bottom-05"
                   >
                     <div
-                      class="display-flex flex-align-center flex-justify-center circle-4 bg-accent-cool-lighter"
+                      class="display-flex flex-align-center flex-justify-center minw-4 circle-4 bg-accent-cool-lighter"
                     >
                       MD
                     </div>
                     <span
-                      class="margin-left-1 margin-bottom-1"
+                      class="margin-left-1 margin-bottom-1 line-height-sans-4"
                     >
                       <strong>
                         MINT Doe
@@ -115,7 +126,7 @@ exports[`Notification Page > matches snapshot 1`] = `
                   >
                     <span>
                       <div
-                        class="text-base-darker tiptap__readonly"
+                        class="notification__content text-base-darker tiptap__readonly"
                         id="mention-279ba41b-232a-49b2-9607-a3951d301218"
                       >
                         <div
@@ -153,17 +164,22 @@ exports[`Notification Page > matches snapshot 1`] = `
                     </button>
                   </div>
                 </div>
-                <span
-                  class="flex-3 text-base-darker text-right"
+                <div
+                  class="grid-col-auto flex-align-end"
+                  data-testid="grid"
                 >
-                  Just now
-                </span>
+                  <span
+                    class="text-base-darker text-right"
+                  >
+                    Just now
+                  </span>
+                </div>
               </div>
             </div>
           </div>
           <div
             class="grid-row"
-            data-testid="grid"
+            data-testid="individual-notification"
           >
             <div
               class="desktop:grid-col-12 position-relative"
@@ -171,23 +187,26 @@ exports[`Notification Page > matches snapshot 1`] = `
             >
               <div
                 class="circle-1 bg-error position-absolute margin-top-3 margin-left-1"
+                data-testid="notification-red-dot"
               />
               <div
-                class="padding-3 display-flex flex-justify "
+                class="grid-row grid-gap-6 padding-3 display-flex flex-justify "
+                data-testid="grid"
               >
                 <div
-                  class="flex-9"
+                  class="grid-col-fill"
+                  data-testid="grid"
                 >
                   <div
                     class="display-flex flex-align-center margin-bottom-05"
                   >
                     <div
-                      class="display-flex flex-align-center flex-justify-center circle-4 bg-secondary-lighter"
+                      class="display-flex flex-align-center flex-justify-center minw-4 circle-4 bg-secondary-lighter"
                     >
                       MD
                     </div>
                     <span
-                      class="margin-left-1 margin-bottom-1"
+                      class="margin-left-1 margin-bottom-1 line-height-sans-4"
                     >
                       <strong>
                         MINT Doe
@@ -200,7 +219,7 @@ exports[`Notification Page > matches snapshot 1`] = `
                   >
                     <span>
                       <div
-                        class="text-base-darker tiptap__readonly"
+                        class="notification__content text-base-darker tiptap__readonly"
                         id="mention-ccf6830b-5c20-4394-84d6-78e0c9f31ec5"
                       >
                         <div
@@ -238,11 +257,16 @@ exports[`Notification Page > matches snapshot 1`] = `
                     </button>
                   </div>
                 </div>
-                <span
-                  class="flex-3 text-base-darker text-right"
+                <div
+                  class="grid-col-auto flex-align-end"
+                  data-testid="grid"
                 >
-                  Just now
-                </span>
+                  <span
+                    class="text-base-darker text-right"
+                  >
+                    Just now
+                  </span>
+                </div>
               </div>
             </div>
           </div>
