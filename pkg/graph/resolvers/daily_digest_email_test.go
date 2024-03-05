@@ -51,7 +51,7 @@ func (suite *ResolverSuite) TestDailyDigestNotificationSendComponents() {
 
 	// Test getDailyDigestAnalyzedAudits
 
-	analyzedAudits, _, err = getDigestAnalyzedAudits(collaborator.UserID, time.Now().UTC(), suite.testConfigs.Store, suite.testConfigs.Logger)
+	analyzedAudits, _, err = getDigestAnalyzedAudits(suite.testConfigs.Store, collaborator.UserID, time.Now().UTC(), suite.testConfigs.Logger)
 	suite.Equal(analyzedAudit.ID, analyzedAudits[0].ID)
 	suite.NoError(err)
 

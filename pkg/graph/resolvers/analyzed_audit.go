@@ -320,6 +320,6 @@ func AnalyzedAuditGetByModelPlanIDsAndDate(
 	date time.Time,
 ) ([]*models.AnalyzedAudit, error) {
 
-	return store.AnalyzedAuditGetByModelPlanIDsAndDate(logger, modelPlanIDs, date)
+	return storage.AnalyzedAuditGetByModelPlanIDsAndDate(store, logger, modelPlanIDs, date)
 
 }

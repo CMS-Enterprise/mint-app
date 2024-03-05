@@ -89,7 +89,8 @@ func (s *Store) AnalyzedAuditGetByModelPlanIDAndDate(
 }
 
 // AnalyzedAuditGetByModelPlanIDsAndDate gets and returns all AnalyzedAudits by modelPlanIDs and date
-func (s *Store) AnalyzedAuditGetByModelPlanIDsAndDate(
+func AnalyzedAuditGetByModelPlanIDsAndDate(
+	np sqlutils.NamedPreparer,
 	_ *zap.Logger,
 	modelPlanIDs []uuid.UUID,
 	date time.Time,
@@ -97,7 +98,7 @@ func (s *Store) AnalyzedAuditGetByModelPlanIDsAndDate(
 
 	var analyzedAudits []*models.AnalyzedAudit
 
-	stmt, err := s.db.PrepareNamed(analyzedAuditGetByModelPlanIDsAndDate)
+	stmt, err := np.PrepareNamed(analyzedAuditGetByModelPlanIDsAndDate)
 	if err != nil {
 		return nil, err
 	}

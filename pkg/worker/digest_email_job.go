@@ -78,6 +78,8 @@ func (w *Worker) DigestEmailJob(ctx context.Context, args ...interface{}) error 
 	preferenceFunctions := func(ctx context.Context, user_id uuid.UUID) (*models.UserNotificationPreferences, error) {
 		return storage.UserNotificationPreferencesGetByUserID(w.Store, user_id)
 	}
+	// Note, if desired we can wrap this in a transaction so if there is a failure sending an email, the notification in the database also gets rolled back.
+	// This is not needed currently.
 	sendErr := resolvers.DailyDigestNotificationSend(ctx, w.Store, w.Logger, dateAnalyzed, userID, preferenceFunctions, w.EmailService, &w.EmailTemplateService, w.AddressBook)
 	return sendErr
 
