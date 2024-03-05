@@ -12,6 +12,7 @@ import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 import Spinner from 'components/Spinner';
+import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import { NotFoundPartial } from 'views/NotFound';
 
 import IndividualNotification from './_components/IndividualNotification';
@@ -19,6 +20,7 @@ import IndividualNotification from './_components/IndividualNotification';
 const NotificationsHome = () => {
   const [pageOffset, setPageOffset] = useState(0);
 
+  const isMobile = useCheckResponsiveScreen('tablet', 'smaller');
   const { t: notificationsT } = useTranslation('notifications');
   const { t: generalT } = useTranslation('general');
   const { t: miscellaneousT } = useTranslation('miscellaneous');
@@ -66,16 +68,18 @@ const NotificationsHome = () => {
             desktop={{ col: 12 }}
             className="flex-justify flex-align-center"
           >
-            <PageHeading className="margin-y-0">
-              {notificationsT('index.heading')}
-            </PageHeading>
+            <Grid>
+              <PageHeading className="margin-y-0 margin-right-2">
+                {notificationsT('index.heading')}
+              </PageHeading>
+            </Grid>
 
-            <div>
+            <Grid className={`${isMobile ? 'margin-y-2' : ''}`}>
               {numUnreadNotifications !== 0 && (
                 <Button
                   type="button"
                   unstyled
-                  className="margin-y-0 margin-x-2"
+                  className="width-auto margin-right-2"
                   onClick={() => markAllAsRead().then(() => refetch())}
                 >
                   {notificationsT('index.markAllAsRead')}
@@ -88,7 +92,7 @@ const NotificationsHome = () => {
               >
                 {notificationsT('index.notificationSettings')}
               </UswdsReactLink>
-            </div>
+            </Grid>
           </Grid>
 
           {loading && (
