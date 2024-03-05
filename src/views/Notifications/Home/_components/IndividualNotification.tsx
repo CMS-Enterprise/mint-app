@@ -72,7 +72,7 @@ const IndividualNotification = ({
   };
 
   return (
-    <Grid row>
+    <Grid row data-testid="individual-notification">
       <Grid desktop={{ col: 12 }} className="position-relative">
         {/* Notification Red Dot */}
         {!isRead && (
