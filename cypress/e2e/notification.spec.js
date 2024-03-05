@@ -1,6 +1,6 @@
 describe('Notification Center', () => {
   beforeEach(() => {
-    cy.localLogin({ name: 'MINT', role: 'MINT_USER_NONPROD' });
+    cy.localLogin({ name: 'JTTC', role: 'MINT_ASSESSMENT_NONPROD' });
   });
 
   it('navigates through the Notification page', () => {
@@ -50,11 +50,6 @@ describe('Notification Center', () => {
     );
 
     cy.contains('button', 'Save discussion').click();
-
-    cy.get('[data-testid="close-discussions"]').click();
-    cy.get('[data-testid="signout-link"]').click();
-
-    cy.localLogin({ name: 'JTTC', role: 'MINT_ASSESSMENT_NONPROD' });
 
     cy.visit('/notifications');
 
@@ -106,7 +101,9 @@ describe('Notification Center', () => {
       });
       cy.root().submit();
     });
+
     cy.contains('a', 'Notification settings').click();
+
     // Unchecked first box persists
     cy.get('#notification-setting-email-dailyDigestComplete').should(
       'not.be.checked'
