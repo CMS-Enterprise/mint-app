@@ -42,7 +42,7 @@ func (suite *ResolverSuite) TestDailyDigestNotificationSendComponents() {
 		"MINT",
 		[]models.TeamRole{models.TeamRoleModelLead},
 	)
-	collaboratorAccount, err := suite.testConfigs.Store.UserAccountGetByID(suite.testConfigs.Store, collaborator.UserID)
+	collaboratorAccount, err := storage.UserAccountGetByID(suite.testConfigs.Store, collaborator.UserID)
 	suite.NoError(err)
 
 	var analyzedAudits []*models.AnalyzedAudit

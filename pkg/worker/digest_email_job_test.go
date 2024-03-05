@@ -12,6 +12,7 @@ import (
 
 	"github.com/cmsgov/mint-app/pkg/models"
 	"github.com/cmsgov/mint-app/pkg/shared/oddmail"
+	"github.com/cmsgov/mint-app/pkg/storage"
 )
 
 // Faktory integration tests
@@ -157,7 +158,7 @@ func (suite *WorkerSuite) TestDigestEmailJobIntegration() {
 		[]models.TeamRole{models.TeamRoleModelLead},
 		"testuser@email.com",
 	)
-	collaboratorAccount, err := suite.testConfigs.Store.UserAccountGetByID(suite.testConfigs.Store, collaborator.UserID)
+	collaboratorAccount, err := storage.UserAccountGetByID(suite.testConfigs.Store, collaborator.UserID)
 	suite.NoError(err)
 
 	modelNameChange := "Old Name"

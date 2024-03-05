@@ -78,7 +78,6 @@ func (w *Worker) DigestEmailJob(ctx context.Context, args ...interface{}) error 
 	preferenceFunctions := func(ctx context.Context, user_id uuid.UUID) (*models.UserNotificationPreferences, error) {
 		return storage.UserNotificationPreferencesGetByUserID(w.Store, user_id)
 	}
-	//TODO: EASI-(EASI-3338) Be careful with this context as it might not have a data loader etc.
 	sendErr := resolvers.DailyDigestNotificationSend(ctx, w.Store, w.Logger, dateAnalyzed, userID, preferenceFunctions, w.EmailService, &w.EmailTemplateService, w.AddressBook)
 	return sendErr
 

@@ -206,7 +206,7 @@ func analyzeModelLeads(audits []*models.AuditChange, store *storage.Store) (*mod
 				return models.AnalyzedModelLeadInfo{}, false
 			}
 
-			account, _ := store.UserAccountGetByID(store, id) //TODO should we handle the error? I think null is ok if can't get the account
+			account, _ := storage.UserAccountGetByID(store, id) //TODO should we handle the error? I think null is ok if can't get the account
 
 			return models.AnalyzedModelLeadInfo{
 				ID:         id,

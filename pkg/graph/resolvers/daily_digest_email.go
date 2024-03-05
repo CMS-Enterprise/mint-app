@@ -40,7 +40,7 @@ func DailyDigestNotificationSend(
 	*   a. Get User account
 	*   b. Get User Preferences
 	 */
-	account, err := store.UserAccountGetByID(store, userID)
+	account, err := storage.UserAccountGetByID(store, userID)
 	if err != nil {
 		return err
 	}
