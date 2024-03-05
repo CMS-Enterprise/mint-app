@@ -5,6 +5,7 @@ import (
 	"time"
 
 	"github.com/google/uuid"
+	"github.com/lib/pq"
 
 	"github.com/guregu/null/zero"
 
@@ -272,7 +273,17 @@ func (s *Seeder) CreateAnalyzedAuditData() {
 		//TODO: EASI-3934 Note that this will create an error if you run this a second time, because there is already an analyzed audit record.
 		// Either handle this, or just ignore the error. We could potentially override if we want, but that might not be the best
 		if err2 != nil {
-			fmt.Printf("there was an issue analyzing model plan: %s, ID: %s", mp.ModelName, mp.ID)
+			if pqErr, ok := err2.(*pq.Error); ok {
+
+				if pqErr.Code.Name() == "unique_violation" {
+					continue
+				}
+				fmt.Printf("pq error: Severity: %s, Code: %s, Message: %s\n", pqErr.Severity, pqErr.Code, pqErr.Message)
+
+			} else {
+				fmt.Printf("there was an issue analyzing model plan: %s, ID: %s. Err: %v", mp.ModelName, mp.ID, err2)
+			}
+
 		}
 	}
 
