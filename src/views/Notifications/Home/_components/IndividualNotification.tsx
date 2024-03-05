@@ -82,23 +82,25 @@ const IndividualNotification = ({
           />
         )}
 
-        <div
+        <Grid
+          row
+          gap={6}
           className={`padding-3 display-flex flex-justify ${
             isRead ? 'bg-gray-2' : ''
           }`}
         >
           {isTaggedInDiscussion(metaData) && (
-            <div className="flex-9">
+            <Grid col="fill">
               <div className="display-flex flex-align-center margin-bottom-05">
                 <div
-                  className={`display-flex flex-align-center flex-justify-center circle-4 ${
+                  className={`display-flex flex-align-center flex-justify-center minw-4 circle-4 ${
                     arrayOfColors[index % arrayOfColors.length]
                   }`}
                 >
                   {getUserInitials(commonName)}
                 </div>
 
-                <span className="margin-left-1 margin-bottom-1">
+                <span className="margin-left-1 margin-bottom-1 line-height-sans-4">
                   <strong>{commonName}</strong>
                   {notificationsT(
                     'index.activityType.taggedInDiscussion.text',
@@ -136,14 +138,16 @@ const IndividualNotification = ({
                   <Icon.ArrowForward className="margin-left-1" aria-hidden />
                 </Button>
               </div>
-            </div>
+            </Grid>
           )}
-          <span className="flex-3 text-base-darker text-right">
-            {getTimeElapsed(createdDts)
-              ? getTimeElapsed(createdDts) + discussionT('ago')
-              : discussionT('justNow')}
-          </span>
-        </div>
+          <Grid col="auto" className="flex-align-end">
+            <span className="text-base-darker text-right">
+              {getTimeElapsed(createdDts)
+                ? getTimeElapsed(createdDts) + discussionT('ago')
+                : discussionT('justNow')}
+            </span>
+          </Grid>
+        </Grid>
       </Grid>
     </Grid>
   );
