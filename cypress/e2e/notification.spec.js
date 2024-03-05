@@ -63,6 +63,7 @@ describe('Notification Center', () => {
       .should('have.attr', 'href')
       .and('equal', '/notifications');
 
+    // Check to see if Notification Nav Button has the red dot
     cy.get('[data-testid="navmenu__notifications--yesNotification"').should(
       'exist'
     );
@@ -76,9 +77,39 @@ describe('Notification Center', () => {
 
     cy.visit('/notifications');
 
-    // cy.get('[data-testid="individual-notification"]')
-    //   .first()
-    //   .find('[data-testid="notification-red-dot"]')
-    //   .should('exist');
+    // Check to see first entry should no longer have red dot
+    cy.get('[data-testid="individual-notification"]')
+      .first()
+      .find('[data-testid="notification-red-dot"]')
+      .should('not.exist');
+
+    // Mark all as read
+    cy.contains('button', 'Mark all as read').click();
+
+    // No more red dots
+    cy.get('[data-testid="navmenu__notifications--noNotification"').should(
+      'exist'
+    );
+    cy.get('[data-testid="notification-red-dot"]').should('have.length', 0);
+
+    // Notification Settings Test
+    cy.contains('a', 'Notification settings').click();
+
+    cy.location().should(loc => {
+      expect(loc.pathname).to.match(/settings/);
+    });
+
+    // Uncheck first checkbox and save
+    cy.get('form').within(() => {
+      cy.get('#notification-setting-email-dailyDigestComplete').uncheck({
+        force: true
+      });
+      cy.root().submit();
+    });
+    cy.contains('a', 'Notification settings').click();
+    // Unchecked first box persists
+    cy.get('#notification-setting-email-dailyDigestComplete').should(
+      'not.be.checked'
+    );
   });
 });
