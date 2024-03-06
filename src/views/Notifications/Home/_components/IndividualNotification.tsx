@@ -66,11 +66,24 @@ const IndividualNotification = ({
       | TaggedInDiscussionReplyActivityType
       | TaggedInDiscussionActivityType
       | BaseStructActivityType
-  ): data is TaggedInDiscussionReplyActivityType => {
+  ): data is TaggedInDiscussionActivityType => {
     /* eslint no-underscore-dangle: 0 */
     return data.__typename === 'TaggedInPlanDiscussionActivityMeta';
   };
 
+  const isTaggedInDiscussionReply = (
+    data:
+      | TaggedInDiscussionReplyActivityType
+      | TaggedInDiscussionActivityType
+      | BaseStructActivityType
+  ): data is TaggedInDiscussionReplyActivityType => {
+    /* eslint no-underscore-dangle: 0 */
+    return data.__typename === 'TaggedInDiscussionReplyActivityMeta';
+  };
+
+  if (isTaggedInDiscussionReply(metaData)) {
+    return <></>;
+  }
   return (
     <Grid row data-testid="individual-notification">
       <Grid desktop={{ col: 12 }} className="position-relative">
