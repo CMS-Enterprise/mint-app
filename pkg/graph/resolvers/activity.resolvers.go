@@ -21,7 +21,6 @@ func (r *activityResolver) ActorUserAccount(ctx context.Context, obj *models.Act
 
 // AnalyzedAudits is the resolver for the analyzedAudits field.
 func (r *dailyDigestCompleteActivityMetaResolver) AnalyzedAudits(ctx context.Context, obj *models.DailyDigestCompleteActivityMeta) ([]*models.AnalyzedAudit, error) {
-
 	return loaders.AnalyzedAuditGetByModelPlanIDsAndDate(ctx, obj.ModelPlanIDs, obj.Date)
 }
 
