@@ -30,7 +30,7 @@ const notifications = {
         cta: 'View discussion'
       },
       taggedInDiscussionReply: {
-        text: ' tagged you in a discussion for {{-modelName}}.',
+        text: ' tagged you in a discussion reply for {{-modelName}}.',
         cta: 'View discussion'
       }
     }

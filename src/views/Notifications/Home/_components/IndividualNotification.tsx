@@ -81,9 +81,6 @@ const IndividualNotification = ({
     return data.__typename === 'TaggedInDiscussionReplyActivityMeta';
   };
 
-  // if (isTaggedInDiscussionReply(metaData)) {
-  //   return <></>;
-  // }
   return (
     <Grid row data-testid="individual-notification">
       <Grid desktop={{ col: 12 }} className="position-relative">
@@ -101,19 +98,17 @@ const IndividualNotification = ({
             isRead ? 'bg-gray-2' : ''
           }`}
         >
-          {isTaggedInDiscussionReply(metaData) && <>TBD</>}
           <Grid col="fill">
-            {isTaggedInDiscussion(metaData) && (
-              <div className="display-flex">
-                {/* Circle of Name */}
-                <div
-                  className={`display-flex flex-align-center flex-justify-center minw-4 circle-4 ${
-                    arrayOfColors[index % arrayOfColors.length]
-                  }`}
-                >
-                  {getUserInitials(commonName)}
-                </div>
-
+            <div className="display-flex">
+              {/* Circle of Name */}
+              <div
+                className={`display-flex flex-align-center flex-justify-center minw-4 circle-4 ${
+                  arrayOfColors[index % arrayOfColors.length]
+                }`}
+              >
+                {getUserInitials(commonName)}
+              </div>
+              {isTaggedInDiscussion(metaData) && (
                 <div className="margin-top-05">
                   <p className="line-height-sans-4 margin-left-1 margin-bottom-1 margin-top-0 ">
                     <strong>{commonName}</strong>
@@ -151,8 +146,47 @@ const IndividualNotification = ({
                     <Icon.ArrowForward className="margin-left-1" aria-hidden />
                   </Button>
                 </div>
-              </div>
-            )}
+              )}
+              {isTaggedInDiscussionReply(metaData) && (
+                <div className="margin-top-05">
+                  <p className="line-height-sans-4 margin-left-1 margin-bottom-1 margin-top-0 ">
+                    <strong>{commonName}</strong>
+                    {notificationsT(
+                      'index.activityType.taggedInDiscussionReply.text',
+                      {
+                        modelName: metaData.modelPlan.modelName
+                      }
+                    )}
+                  </p>
+                  {!isMobile && (
+                    <MentionTextArea
+                      className="notification__content text-base-darker"
+                      id={`mention-${metaData.discussionID}`}
+                      editable={false}
+                      initialContent={`“${metaData.content}”`}
+                    />
+                  )}
+
+                  <Button
+                    type="button"
+                    unstyled
+                    className="display-flex flex-align-center"
+                    onClick={() => {
+                      handleMarkAsRead(
+                        id,
+                        metaData.modelPlanID,
+                        metaData.discussionID
+                      );
+                    }}
+                  >
+                    {notificationsT(
+                      'index.activityType.taggedInDiscussionReply.cta'
+                    )}
+                    <Icon.ArrowForward className="margin-left-1" aria-hidden />
+                  </Button>
+                </div>
+              )}
+            </div>
           </Grid>
           <Grid col="auto">
             <p className="text-base-darker text-right margin-top-05 margin-bottom-0">
