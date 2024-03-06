@@ -14,18 +14,6 @@ import (
 	"github.com/cmsgov/mint-app/pkg/sqlutils"
 )
 
-//go:embed SQL/analyzed_audit/create.sql
-var analyzedAuditCreate string
-
-//go:embed SQL/analyzed_audit/get_by_model_plan_id_and_date.sql
-var analyzedAuditGetByModelPlanIDAndDate string
-
-//go:embed SQL/analyzed_audit/get_collection_by_model_plan_ids_and_date.sql
-var analyzedAuditGetByModelPlanIDsAndDate string
-
-//go:embed SQL/analyzed_audit/get_by_date.sql
-var analyzedAuditGetByDate string
-
 // AnalyzedAuditCreate creates and returns an AnalyzedAudit object
 func (s *Store) AnalyzedAuditCreate(
 	logger *zap.Logger,
@@ -36,7 +24,7 @@ func (s *Store) AnalyzedAuditCreate(
 		AnalyzedAudit.ID = uuid.New()
 	}
 
-	stmt, err := s.db.PrepareNamed(analyzedAuditCreate)
+	stmt, err := s.db.PrepareNamed(sqlqueries.AnalyzedAudit.Create)
 	if err != nil {
 		logger.Error(
 			fmt.Sprintf("Failed to create analyzed_audit with error %s", err),
@@ -69,7 +57,7 @@ func (s *Store) AnalyzedAuditGetByModelPlanIDAndDate(
 
 	analyzedAudit := models.AnalyzedAudit{}
 
-	stmt, err := s.db.PrepareNamed(analyzedAuditGetByModelPlanIDAndDate)
+	stmt, err := s.db.PrepareNamed(sqlqueries.AnalyzedAudit.GetByModelPlanIDAndDate)
 	if err != nil {
 		return nil, err
 	}
@@ -98,7 +86,7 @@ func AnalyzedAuditGetByModelPlanIDsAndDate(
 
 	var analyzedAudits []*models.AnalyzedAudit
 
-	stmt, err := np.PrepareNamed(analyzedAuditGetByModelPlanIDsAndDate)
+	stmt, err := np.PrepareNamed(sqlqueries.AnalyzedAudit.CollectionGetByModelPlanIDsAndDate)
 	if err != nil {
 		return nil, err
 	}
@@ -122,7 +110,7 @@ func (s *Store) AnalyzedAuditGetByDate(_ *zap.Logger, date time.Time) ([]*models
 
 	var analyzedAudits []*models.AnalyzedAudit
 
-	stmt, err := s.db.PrepareNamed(analyzedAuditGetByDate)
+	stmt, err := s.db.PrepareNamed(sqlqueries.AnalyzedAudit.GetByDate)
 	if err != nil {
 		return nil, err
 	}
