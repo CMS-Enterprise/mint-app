@@ -83,7 +83,6 @@ const IndividualNotification = ({
         )}
 
         <Grid
-          row
           gap={6}
           className={`padding-3 display-flex flex-justify ${
             isRead ? 'bg-gray-2' : ''
