@@ -454,63 +454,73 @@ func CreateDiscussionReply(
 		if err != nil {
 			return reply, err
 		}
+
 		// Create Activity and notifications in the DB
 		_, notificationErr := notifications.ActivityTaggedInDiscussionReplyCreate(ctx, tx, principal.Account().ID, discussion.ID, reply.ID, reply.Content, loaders.UserNotificationPreferencesGetByUserID)
 		if notificationErr != nil {
 			return nil, fmt.Errorf("unable to generate notifications, %w", notificationErr)
 		}
-		go func() {
 
-			replyUser := principal.Account()
-			commonName := replyUser.CommonName
+		pref, err := UserNotificationPreferencesGetByUserID(ctx, principal.Account().ID)
+		if err != nil {
+			return nil, fmt.Errorf("unable to get user notification preference, Notification not created %w", err)
+		}
 
-			if err != nil {
-				logger.Error("error sending discussion reply emails. Unable to retrieve modelPlan",
-					zap.String("replyID", reply.ID.String()),
-					zap.Error(err))
-			}
+		// Early return if
+		if !pref.NewDiscussionReply.SendEmail() {
+			go func() {
+				replyUser := principal.Account()
+				commonName := replyUser.CommonName
 
-			errReplyEmail := sendDiscussionReplyEmails(
-				ctx,
-				store,
-				logger,
-				emailService,
-				emailTemplateService,
-				addressBook,
-				discussion,
-				reply,
-				modelPlan,
-				replyUser,
-			)
-			if errReplyEmail != nil {
-				logger.Error("error sending tagged in plan discussion reply emails to tagged users and teams",
-					zap.String("discussionID", discussion.ID.String()),
-					zap.Error(errReplyEmail))
-			}
-
-			err = sendPlanDiscussionTagEmails(
-				ctx,
-				store,
-				false,
-				logger,
-				emailService,
-				emailTemplateService,
-				addressBook,
-				reply.Content,
-				reply.DiscussionID,
-				modelPlan,
-				commonName,
-				reply.UserRole.Humanize(models.ValueOrEmpty(reply.UserRoleDescription)),
-			)
-
-			if err != nil {
 				if err != nil {
-					logger.Error("error sending tagged in plan discussion reply emails to tagged users and teams",
-						zap.String("discussionID", discussion.ID.String()),
+					logger.Error("error sending discussion reply emails. Unable to retrieve modelPlan",
+						zap.String("replyID", reply.ID.String()),
 						zap.Error(err))
 				}
-			}
-		}()
+
+				errReplyEmail := sendDiscussionReplyEmails(
+					ctx,
+					store,
+					logger,
+					emailService,
+					emailTemplateService,
+					addressBook,
+					discussion,
+					reply,
+					modelPlan,
+					replyUser,
+				)
+				if errReplyEmail != nil {
+					logger.Error("error sending tagged in plan discussion reply emails to tagged users and teams",
+						zap.String("discussionID", discussion.ID.String()),
+						zap.Error(errReplyEmail))
+				}
+
+				err = sendPlanDiscussionTagEmails(
+					ctx,
+					store,
+					false,
+					logger,
+					emailService,
+					emailTemplateService,
+					addressBook,
+					reply.Content,
+					reply.DiscussionID,
+					modelPlan,
+					commonName,
+					reply.UserRole.Humanize(models.ValueOrEmpty(reply.UserRoleDescription)),
+				)
+
+				if err != nil {
+					if err != nil {
+						logger.Error("error sending tagged in plan discussion reply emails to tagged users and teams",
+							zap.String("discussionID", discussion.ID.String()),
+							zap.Error(err))
+					}
+				}
+			}()
+		}
+
 		return reply, err
 	})
 	if err != nil {

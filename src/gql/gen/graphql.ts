@@ -61,7 +61,7 @@ export type ActivityMetaBaseStruct = {
 };
 
 /** ActivityMetaData is a type that represents all the data that can be captured in an Activity */
-export type ActivityMetaData = ActivityMetaBaseStruct | TaggedInDiscussionReplyActivityMeta | TaggedInPlanDiscussionActivityMeta;
+export type ActivityMetaData = ActivityMetaBaseStruct | NewDiscussionRepliedActivityMeta | TaggedInDiscussionReplyActivityMeta | TaggedInPlanDiscussionActivityMeta;
 
 /** ActivityType represents the possible activities that happen in application that might result in a notification */
 export enum ActivityType {
@@ -913,6 +913,17 @@ export type NdaInfo = {
   __typename: 'NDAInfo';
   agreed: Scalars['Boolean']['output'];
   agreedDts?: Maybe<Scalars['Time']['output']>;
+};
+
+export type NewDiscussionRepliedActivityMeta = {
+  __typename: 'NewDiscussionRepliedActivityMeta';
+  content: Scalars['String']['output'];
+  discussion: PlanDiscussion;
+  discussionID: Scalars['UUID']['output'];
+  reply: DiscussionReply;
+  replyID: Scalars['UUID']['output'];
+  type: ActivityType;
+  version: Scalars['Int']['output'];
 };
 
 export enum NonClaimsBasedPayType {
