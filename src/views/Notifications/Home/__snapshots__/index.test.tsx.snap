@@ -56,14 +56,14 @@ exports[`Notification Page > matches snapshot 1`] = `
           >
             <h1
               aria-live="polite"
-              class="mint-h1 margin-y-0 margin-right-2"
+              class="mint-h1 margin-top-0 margin-right-2 margin-bottom-2"
               tabindex="-1"
             >
               Notifications
             </h1>
           </div>
           <div
-            class=""
+            class="margin-bottom-2"
             data-testid="grid"
           >
             <button
@@ -97,7 +97,7 @@ exports[`Notification Page > matches snapshot 1`] = `
                 data-testid="notification-red-dot"
               />
               <div
-                class="grid-row grid-gap-6 padding-3 display-flex flex-justify "
+                class="grid-gap-6 padding-3 display-flex flex-justify "
                 data-testid="grid"
               >
                 <div
@@ -190,7 +190,7 @@ exports[`Notification Page > matches snapshot 1`] = `
                 data-testid="notification-red-dot"
               />
               <div
-                class="grid-row grid-gap-6 padding-3 display-flex flex-justify "
+                class="grid-gap-6 padding-3 display-flex flex-justify "
                 data-testid="grid"
               >
                 <div
