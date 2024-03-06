@@ -12,7 +12,6 @@ import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 import Spinner from 'components/Spinner';
-import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import { NotFoundPartial } from 'views/NotFound';
 
 import IndividualNotification from './_components/IndividualNotification';
@@ -20,7 +19,6 @@ import IndividualNotification from './_components/IndividualNotification';
 const NotificationsHome = () => {
   const [pageOffset, setPageOffset] = useState(0);
 
-  const isMobile = useCheckResponsiveScreen('tablet', 'smaller');
   const { t: notificationsT } = useTranslation('notifications');
   const { t: generalT } = useTranslation('general');
   const { t: miscellaneousT } = useTranslation('miscellaneous');
@@ -69,12 +67,12 @@ const NotificationsHome = () => {
             className="flex-justify flex-align-center"
           >
             <Grid>
-              <PageHeading className="margin-y-0 margin-right-2">
+              <PageHeading className="margin-top-0 margin-right-2 margin-bottom-2">
                 {notificationsT('index.heading')}
               </PageHeading>
             </Grid>
 
-            <Grid className={`${isMobile ? 'margin-y-2' : ''}`}>
+            <Grid className="margin-bottom-2">
               {numUnreadNotifications !== 0 && (
                 <Button
                   type="button"
@@ -87,7 +85,9 @@ const NotificationsHome = () => {
               )}
 
               <UswdsReactLink
-                className="margin-y-0 margin-x-2"
+                className={`margin-y-0 ${
+                  numUnreadNotifications !== 0 ? 'margin-x-2' : ''
+                }`}
                 to="/notifications/settings"
               >
                 {notificationsT('index.notificationSettings')}
