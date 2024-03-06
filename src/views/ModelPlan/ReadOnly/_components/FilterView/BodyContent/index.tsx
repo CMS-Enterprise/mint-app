@@ -108,6 +108,7 @@ const BodyContent = ({
           <Divider className="margin-top-8" />
           <h2 className="margin-top-5">{opSolutionsT('headingReadOnly')}</h2>
           <OperationalNeedsTable
+            className="margin-bottom-5"
             modelID={modelID}
             type="needs"
             readOnly
@@ -121,7 +122,7 @@ const BodyContent = ({
         </div>
       )}
 
-      <div className="margin-top-4 padding-top-4 border-top-1px border-base-light">
+      <div className="margin-top-4 padding-top-5 border-top-1px border-base-light">
         <Alert type="info" noIcon headingLevel="h4">
           <span className="margin-y-0 font-body-sm text-bold display-block">
             {t('alert.bodyContentHeading')}

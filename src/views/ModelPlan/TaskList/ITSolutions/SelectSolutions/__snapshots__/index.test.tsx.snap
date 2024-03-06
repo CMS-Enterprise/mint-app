@@ -268,7 +268,7 @@ exports[`Operational Solutions NeedQuestionAndAnswer > matches snapshot 1`] = `
             </div>
           </ul>
           <button
-            class="usa-button usa-button usa-button--outline margin-top-2"
+            class="usa-button usa-button usa-button--outline margin-top-2 margin-bottom-3"
             data-testid="button"
             id="add-solution-not-listed"
             type="button"
@@ -276,7 +276,7 @@ exports[`Operational Solutions NeedQuestionAndAnswer > matches snapshot 1`] = `
             Select another solution not listed
           </button>
           <div
-            class="margin-top-6 margin-bottom-3"
+            class="margin-y-3"
           >
             <button
               class="usa-button margin-bottom-1"
