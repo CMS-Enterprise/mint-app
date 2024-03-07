@@ -108,57 +108,28 @@ const IndividualNotification = ({
               >
                 {getUserInitials(commonName)}
               </div>
-              {isTaggedInDiscussion(metaData) && (
-                <div className="margin-top-05">
-                  <p className="line-height-sans-4 margin-left-1 margin-bottom-1 margin-top-0 ">
-                    <strong>{commonName}</strong>
-                    {notificationsT(
+
+              <div className="margin-top-05">
+                <p className="line-height-sans-4 margin-left-1 margin-bottom-1 margin-top-0 ">
+                  <strong>{commonName}</strong>
+                  {isTaggedInDiscussion(metaData) &&
+                    notificationsT(
                       'index.activityType.taggedInDiscussion.text',
                       {
                         modelName: metaData.modelPlan.modelName
                       }
                     )}
-                  </p>
-                  {!isMobile && (
-                    <MentionTextArea
-                      className="notification__content text-base-darker"
-                      id={`mention-${metaData.discussionID}`}
-                      editable={false}
-                      initialContent={`“${metaData.content}”`}
-                    />
-                  )}
-
-                  <Button
-                    type="button"
-                    unstyled
-                    className="display-flex flex-align-center"
-                    onClick={() => {
-                      handleMarkAsRead(
-                        id,
-                        metaData.modelPlanID,
-                        metaData.discussionID
-                      );
-                    }}
-                  >
-                    {notificationsT(
-                      'index.activityType.taggedInDiscussion.cta'
-                    )}
-                    <Icon.ArrowForward className="margin-left-1" aria-hidden />
-                  </Button>
-                </div>
-              )}
-              {isTaggedInDiscussionReply(metaData) && (
-                <div className="margin-top-05">
-                  <p className="line-height-sans-4 margin-left-1 margin-bottom-1 margin-top-0 ">
-                    <strong>{commonName}</strong>
-                    {notificationsT(
+                  {isTaggedInDiscussionReply(metaData) &&
+                    notificationsT(
                       'index.activityType.taggedInDiscussionReply.text',
                       {
                         modelName: metaData.modelPlan.modelName
                       }
                     )}
-                  </p>
-                  {!isMobile && (
+                </p>
+                {!isMobile &&
+                  (isTaggedInDiscussion(metaData) ||
+                    isTaggedInDiscussionReply(metaData)) && (
                     <MentionTextArea
                       className="notification__content text-base-darker"
                       id={`mention-${metaData.discussionID}`}
@@ -167,25 +138,32 @@ const IndividualNotification = ({
                     />
                   )}
 
-                  <Button
-                    type="button"
-                    unstyled
-                    className="display-flex flex-align-center"
-                    onClick={() => {
+                <Button
+                  type="button"
+                  unstyled
+                  className="display-flex flex-align-center"
+                  onClick={() => {
+                    if (
+                      isTaggedInDiscussion(metaData) ||
+                      isTaggedInDiscussionReply(metaData)
+                    ) {
                       handleMarkAsRead(
                         id,
                         metaData.modelPlanID,
                         metaData.discussionID
                       );
-                    }}
-                  >
-                    {notificationsT(
+                    }
+                  }}
+                >
+                  {isTaggedInDiscussion(metaData) &&
+                    notificationsT('index.activityType.taggedInDiscussion.cta')}
+                  {isTaggedInDiscussionReply(metaData) &&
+                    notificationsT(
                       'index.activityType.taggedInDiscussionReply.cta'
                     )}
-                    <Icon.ArrowForward className="margin-left-1" aria-hidden />
-                  </Button>
-                </div>
-              )}
+                  <Icon.ArrowForward className="margin-left-1" aria-hidden />
+                </Button>
+              </div>
             </div>
           </Grid>
           <Grid col="auto">
