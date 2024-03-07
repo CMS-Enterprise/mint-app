@@ -5,6 +5,7 @@ import { Button, Grid, Icon } from '@trussworks/react-uswds';
 import { useMarkNotificationAsReadMutation } from 'gql/gen/graphql';
 import {
   GetNotifications_currentUser_notifications_notifications_activity as NotificationActivityType,
+  GetNotifications_currentUser_notifications_notifications_activity_metaData as MetaDataType,
   GetNotifications_currentUser_notifications_notifications_activity_metaData_ActivityMetaBaseStruct as BaseStructActivityType,
   GetNotifications_currentUser_notifications_notifications_activity_metaData_TaggedInDiscussionReplyActivityMeta as TaggedInDiscussionReplyActivityType,
   GetNotifications_currentUser_notifications_notifications_activity_metaData_TaggedInPlanDiscussionActivityMeta as TaggedInDiscussionActivityType
@@ -81,6 +82,30 @@ const IndividualNotification = ({
     return data.__typename === 'TaggedInDiscussionReplyActivityMeta';
   };
 
+  const activityText = (data: MetaDataType) => {
+    if (isTaggedInDiscussion(data)) {
+      return notificationsT('index.activityType.taggedInDiscussion.text', {
+        modelName: data.modelPlan.modelName
+      });
+    }
+    if (isTaggedInDiscussionReply(data)) {
+      return notificationsT('index.activityType.taggedInDiscussionReply.text', {
+        modelName: data.modelPlan.modelName
+      });
+    }
+    return '';
+  };
+
+  const activityCTA = (data: MetaDataType) => {
+    if (isTaggedInDiscussion(data)) {
+      return notificationsT('index.activityType.taggedInDiscussion.cta');
+    }
+    if (isTaggedInDiscussionReply(data)) {
+      return notificationsT('index.activityType.taggedInDiscussionReply.cta');
+    }
+    return '';
+  };
+
   return (
     <Grid row data-testid="individual-notification">
       <Grid desktop={{ col: 12 }} className="position-relative">
@@ -112,20 +137,7 @@ const IndividualNotification = ({
               <div className="margin-top-05">
                 <p className="line-height-sans-4 margin-left-1 margin-bottom-1 margin-top-0 ">
                   <strong>{commonName}</strong>
-                  {isTaggedInDiscussion(metaData) &&
-                    notificationsT(
-                      'index.activityType.taggedInDiscussion.text',
-                      {
-                        modelName: metaData.modelPlan.modelName
-                      }
-                    )}
-                  {isTaggedInDiscussionReply(metaData) &&
-                    notificationsT(
-                      'index.activityType.taggedInDiscussionReply.text',
-                      {
-                        modelName: metaData.modelPlan.modelName
-                      }
-                    )}
+                  {activityText(metaData)}
                 </p>
                 {!isMobile &&
                   (isTaggedInDiscussion(metaData) ||
@@ -155,12 +167,7 @@ const IndividualNotification = ({
                     }
                   }}
                 >
-                  {isTaggedInDiscussion(metaData) &&
-                    notificationsT('index.activityType.taggedInDiscussion.cta')}
-                  {isTaggedInDiscussionReply(metaData) &&
-                    notificationsT(
-                      'index.activityType.taggedInDiscussionReply.cta'
-                    )}
+                  {activityCTA(metaData)}
                   <Icon.ArrowForward className="margin-left-1" aria-hidden />
                 </Button>
               </div>
