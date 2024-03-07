@@ -11,11 +11,12 @@ import (
 func (suite *NotificationsSuite) TestUserNotificationCreate() {
 
 	// we are just choosing a valid UUID to set for the entityID
+	modelPlanID := uuid.New()
 	discussionID := uuid.New()
 	actorID := suite.testConfigs.Principal.Account().ID
 	testContent := "test content"
 
-	testActivity := models.NewTaggedInPlanDiscussionActivity(actorID, discussionID, testContent)
+	testActivity := models.NewTaggedInPlanDiscussionActivity(actorID, modelPlanID, discussionID, testContent)
 
 	createdActivity, err := activityCreate(suite.testConfigs.Context, suite.testConfigs.Store, testActivity)
 	suite.NoError(err)
@@ -42,11 +43,12 @@ func (suite *NotificationsSuite) TestUserNotificationCreate() {
 func (suite *NotificationsSuite) TestUserNotificationMarkReadFunctions() {
 
 	// we are just choosing a valid UUID to set for the entityID
+	modelPlanID := uuid.New()
 	discussionID := uuid.New()
 	actorID := suite.testConfigs.Principal.Account().ID
 	testContent := "test content"
 
-	testActivity := models.NewTaggedInPlanDiscussionActivity(actorID, discussionID, testContent)
+	testActivity := models.NewTaggedInPlanDiscussionActivity(actorID, modelPlanID, discussionID, testContent)
 
 	createdActivity, err := activityCreate(suite.testConfigs.Context, suite.testConfigs.Store, testActivity)
 	suite.NoError(err)

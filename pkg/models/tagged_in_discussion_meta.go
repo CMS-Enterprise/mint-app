@@ -12,28 +12,30 @@ import (
 type TaggedInPlanDiscussionActivityMeta struct {
 	ActivityMetaBaseStruct
 	discussionRelation
+	modelPlanRelation
 	Content string `json:"content"`
 }
 
 // newNewPlanDiscussionActivityMeta creates a New NewPlanDiscussionActivityMeta
-func newTaggedInPlanDiscussionActivityMeta(discussionID uuid.UUID, content string) *TaggedInPlanDiscussionActivityMeta {
+func newTaggedInPlanDiscussionActivityMeta(modelPlanID uuid.UUID, discussionID uuid.UUID, content string) *TaggedInPlanDiscussionActivityMeta {
 	version := 0 //iterate this if this type ever updates
 	return &TaggedInPlanDiscussionActivityMeta{
 		ActivityMetaBaseStruct: NewActivityMetaBaseStruct(ActivityTaggedInDiscussion, version),
 		discussionRelation:     NewDiscussionRelation(discussionID),
+		modelPlanRelation:      NewModelPlanRelation(modelPlanID),
 		Content:                content,
 	}
 
 }
 
 // NewTaggedInPlanDiscussionActivity creates a New Tagged in Plan Discussion type of Activity
-func NewTaggedInPlanDiscussionActivity(actorID uuid.UUID, discussionID uuid.UUID, content string) *Activity {
+func NewTaggedInPlanDiscussionActivity(actorID uuid.UUID, modelPlanID uuid.UUID, discussionID uuid.UUID, content string) *Activity {
 	return &Activity{
 		baseStruct:   NewBaseStruct(actorID),
 		ActorID:      actorID,
 		EntityID:     discussionID,
 		ActivityType: ActivityTaggedInDiscussion,
-		MetaData:     newTaggedInPlanDiscussionActivityMeta(discussionID, content),
+		MetaData:     newTaggedInPlanDiscussionActivityMeta(modelPlanID, discussionID, content),
 	}
 }
 

@@ -12,9 +12,9 @@ import (
 
 // ActivityTaggedInDiscussionReplyCreate creates an activity for when a User is Tagged in a Discussion Reply.
 // It also creates all the relevant notifications for every tag. Currently, only tagged users get a notification
-func ActivityTaggedInDiscussionReplyCreate(ctx context.Context, np sqlutils.NamedPreparer, actorID uuid.UUID, discussionID uuid.UUID, replyID uuid.UUID, replyContent models.TaggedHTML, getPreferencesFunc GetUserNotificationPreferencesFunc) (*models.Activity, error) {
+func ActivityTaggedInDiscussionReplyCreate(ctx context.Context, np sqlutils.NamedPreparer, actorID uuid.UUID, modelPlanID uuid.UUID, discussionID uuid.UUID, replyID uuid.UUID, replyContent models.TaggedHTML, getPreferencesFunc GetUserNotificationPreferencesFunc) (*models.Activity, error) {
 
-	activity := models.NewTaggedInDiscussionReplyActivity(actorID, discussionID, replyID, replyContent.RawContent.String())
+	activity := models.NewTaggedInDiscussionReplyActivity(actorID, modelPlanID, discussionID, replyID, replyContent.RawContent.String())
 
 	retActivity, actErr := activityCreate(ctx, np, activity)
 	if actErr != nil {

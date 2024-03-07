@@ -52,7 +52,7 @@ const notificationsSettingsMock = [
   }
 ];
 
-describe('Prepare for clearance checklist', () => {
+describe('Notification Settings Page', () => {
   it('renders without errors and unchecks an item', async () => {
     await act(async () => {
       const { user } = setup(

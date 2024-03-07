@@ -76,8 +76,16 @@ const NavigationBar = ({
           'mint-nav__link margin-right-neg-4 display-flex flex-align-center'
         )}
         onClick={() => toggle(false)}
+        data-testid="navmenu__notification"
       >
-        <div className="display-relative width-4">
+        <div
+          className="display-relative width-4"
+          data-testid={
+            hasNotifications
+              ? 'navmenu__notifications--yesNotification'
+              : 'navmenu__notifications--noNotification'
+          }
+        >
           <div className="position-absolute notification-container">
             {hasNotifications ? (
               <div data-testid="has-notifications">

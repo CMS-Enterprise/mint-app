@@ -18,6 +18,11 @@ func (r *activityResolver) ActorUserAccount(ctx context.Context, obj *models.Act
 	return UserAccountGetByIDLOADER(ctx, obj.ActorID)
 }
 
+// ModelPlan is the resolver for the modelPlan field.
+func (r *taggedInDiscussionReplyActivityMetaResolver) ModelPlan(ctx context.Context, obj *models.TaggedInDiscussionReplyActivityMeta) (*models.ModelPlan, error) {
+	return ModelPlanGetByIDLOADER(ctx, obj.ModelPlanID)
+}
+
 // Discussion is the resolver for the discussion field.
 func (r *taggedInDiscussionReplyActivityMetaResolver) Discussion(ctx context.Context, obj *models.TaggedInDiscussionReplyActivityMeta) (*models.PlanDiscussion, error) {
 	logger := appcontext.ZLogger(ctx)
@@ -28,6 +33,11 @@ func (r *taggedInDiscussionReplyActivityMetaResolver) Discussion(ctx context.Con
 func (r *taggedInDiscussionReplyActivityMetaResolver) Reply(ctx context.Context, obj *models.TaggedInDiscussionReplyActivityMeta) (*models.DiscussionReply, error) {
 	logger := appcontext.ZLogger(ctx)
 	return DiscussionReplyGetByID(ctx, r.store, logger, obj.ReplyID)
+}
+
+// ModelPlan is the resolver for the modelPlan field.
+func (r *taggedInPlanDiscussionActivityMetaResolver) ModelPlan(ctx context.Context, obj *models.TaggedInPlanDiscussionActivityMeta) (*models.ModelPlan, error) {
+	return ModelPlanGetByIDLOADER(ctx, obj.ModelPlanID)
 }
 
 // Discussion is the resolver for the discussion field.
