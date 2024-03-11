@@ -15,7 +15,7 @@ export interface GetNotifications_currentUser_notifications_notifications_activi
 }
 
 export interface GetNotifications_currentUser_notifications_notifications_activity_metaData_ActivityMetaBaseStruct {
-  __typename: "ActivityMetaBaseStruct";
+  __typename: "ActivityMetaBaseStruct" | "AddedAsCollaboratorMeta";
 }
 
 export interface GetNotifications_currentUser_notifications_notifications_activity_metaData_TaggedInPlanDiscussionActivityMeta_modelPlan {

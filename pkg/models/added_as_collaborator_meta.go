@@ -12,14 +12,16 @@ import (
 type AddedAsCollaboratorMeta struct {
 	ActivityMetaBaseStruct
 	modelPlanRelation
+	CollaboratorID uuid.UUID `json:"collaboratorID"`
 }
 
 // newNewPlanDiscussionActivityMeta creates a New NewPlanDiscussionActivityMeta
-func newAddedAsCollaboratorMeta(modelPlanID uuid.UUID) *AddedAsCollaboratorMeta {
+func newAddedAsCollaboratorMeta(modelPlanID uuid.UUID, collaboratorID uuid.UUID) *AddedAsCollaboratorMeta {
 	version := 0 //iterate this if this type ever updates
 	return &AddedAsCollaboratorMeta{
-		ActivityMetaBaseStruct: NewActivityMetaBaseStruct(ActivityTaggedInDiscussion, version),
+		ActivityMetaBaseStruct: NewActivityMetaBaseStruct(ActivityAddedAsCollaborator, version),
 		modelPlanRelation:      NewModelPlanRelation(modelPlanID),
+		CollaboratorID:         collaboratorID,
 	}
 
 }
@@ -31,7 +33,7 @@ func NewAddedAsCollaboratorActivity(actorID uuid.UUID, modelPlanID uuid.UUID, co
 		ActorID:      actorID,
 		EntityID:     collaboratorID,
 		ActivityType: ActivityAddedAsCollaborator,
-		MetaData:     newAddedAsCollaboratorMeta(modelPlanID),
+		MetaData:     newAddedAsCollaboratorMeta(modelPlanID, collaboratorID),
 	}
 }
 
@@ -39,14 +41,14 @@ func NewAddedAsCollaboratorActivity(actorID uuid.UUID, modelPlanID uuid.UUID, co
 
 // Value allows us to satisfy the valuer interface so we can write to the database
 // We need to do a specific implementation instead of relying on the implementation of the embedded struct, as that will only serialize the common data
-func (d AddedAsCollaboratorMeta) Value() (driver.Value, error) {
+func (cm AddedAsCollaboratorMeta) Value() (driver.Value, error) {
 
-	j, err := json.Marshal(d)
+	j, err := json.Marshal(cm)
 	return j, err
 }
 
 // Scan implements the scanner interface so we can translate the JSONb from the db to an object in GO
-func (d *AddedAsCollaboratorMeta) Scan(src interface{}) error {
+func (cm *AddedAsCollaboratorMeta) Scan(src interface{}) error {
 	if src == nil {
 		return nil
 	}
@@ -54,7 +56,7 @@ func (d *AddedAsCollaboratorMeta) Scan(src interface{}) error {
 	if !ok {
 		return errors.New("type assertion .([]byte) failed")
 	}
-	err := json.Unmarshal(source, d)
+	err := json.Unmarshal(source, cm)
 	if err != nil {
 		return err
 	}
