@@ -2,11 +2,13 @@ package resolvers
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/google/uuid"
 	"go.uber.org/zap"
 
 	"github.com/cmsgov/mint-app/pkg/email"
+	"github.com/cmsgov/mint-app/pkg/notifications"
 	"github.com/cmsgov/mint-app/pkg/shared/oddmail"
 	"github.com/cmsgov/mint-app/pkg/sqlutils"
 	"github.com/cmsgov/mint-app/pkg/storage/loaders"
@@ -66,7 +68,19 @@ func CreatePlanCollaborator(
 		return retCollaborator, nil, err
 	}
 
-	if emailService != nil && emailTemplateService != nil {
+	_, notificationError := notifications.ActivityAddedAsCollaboratorCreate(ctx, np, principal.Account().ID, modelPlan.ID, retCollaborator.ID, collabAccount.ID, loaders.UserNotificationPreferencesGetByUserID)
+	if notificationError != nil {
+		return nil, nil, notificationError
+	}
+	// TODO: EASI-(EASI-3945) Double check, do we need to insure that the user who makes the model plan doesn't get notified about being added a collaborator?
+	// If so, we might need to revisit this logic.
+	pref, err := loaders.UserNotificationPreferencesGetByUserID(ctx, collabAccount.ID)
+	if err != nil {
+		return nil, nil, fmt.Errorf("issue creating collaborator, couldn't get collaborator preferences. Err: %w", err)
+
+	}
+
+	if emailService != nil && emailTemplateService != nil && pref.AddedAsCollaborator.SendEmail() {
 		err = sendCollaboratorAddedEmail(emailService, emailTemplateService, addressBook, collabAccount.Email, modelPlan)
 		if err != nil {
 			return retCollaborator, planFavorite, err
