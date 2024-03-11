@@ -45,7 +45,7 @@ func (suite *ResolverSuite) stubFetchUserInfo(ctx context.Context, username stri
 
 func (suite *ResolverSuite) createModelPlan(planName string) *models.ModelPlan {
 	mp, err := ModelPlanCreate(
-		context.Background(),
+		suite.testConfigs.Context,
 		suite.testConfigs.Logger,
 		nil,
 		nil,
@@ -156,7 +156,7 @@ func (suite *ResolverSuite) createPlanCollaborator(mp *models.ModelPlan, userNam
 		AnyTimes()
 
 	collaborator, _, err := CreatePlanCollaborator(
-		context.Background(),
+		suite.testConfigs.Context,
 		suite.testConfigs.Store,
 		suite.testConfigs.Store,
 		suite.testConfigs.Logger,
@@ -167,6 +167,7 @@ func (suite *ResolverSuite) createPlanCollaborator(mp *models.ModelPlan, userNam
 		suite.testConfigs.Principal,
 		false,
 		userhelpers.GetUserInfoAccountInfoWrapperFunc(suite.stubFetchUserInfo),
+		true,
 	)
 	suite.NoError(err)
 	return collaborator

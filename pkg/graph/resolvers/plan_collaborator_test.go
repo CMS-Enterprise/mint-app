@@ -69,7 +69,7 @@ func (suite *ResolverSuite) TestCreatePlanCollaborator() {
 		AnyTimes()
 
 	collaborator, _, err := CreatePlanCollaborator(
-		context.Background(),
+		suite.testConfigs.Context,
 		suite.testConfigs.Store,
 		suite.testConfigs.Store,
 		suite.testConfigs.Logger,
@@ -80,6 +80,7 @@ func (suite *ResolverSuite) TestCreatePlanCollaborator() {
 		suite.testConfigs.Principal,
 		false,
 		userhelpers.GetUserInfoAccountInfoWrapperFunc(suite.stubFetchUserInfo),
+		true,
 	)
 
 	account, uAccountErr := storage.UserAccountGetByUsername(suite.testConfigs.Store, collaboratorInput.UserName)

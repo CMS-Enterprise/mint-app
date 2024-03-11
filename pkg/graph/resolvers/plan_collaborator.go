@@ -38,7 +38,9 @@ func CreatePlanCollaborator(
 	input *model.PlanCollaboratorCreateInput,
 	principal authentication.Principal,
 	checkAccess bool,
-	getAccountInformation userhelpers.GetAccountInfoFunc) (*models.PlanCollaborator, *models.PlanFavorite, error) {
+	getAccountInformation userhelpers.GetAccountInfoFunc,
+	createNotification bool,
+) (*models.PlanCollaborator, *models.PlanFavorite, error) {
 	//TODO make these clustered with store methods?
 
 	isMacUser := false
@@ -66,6 +68,11 @@ func CreatePlanCollaborator(
 	planFavorite, err := PlanFavoriteCreate(np, logger, principal, collabAccount.ID, store, modelPlan.ID)
 	if err != nil {
 		return retCollaborator, nil, err
+	}
+	// If a this is false, we return without creating a notification or an email.
+	if !createNotification {
+
+		return retCollaborator, planFavorite, nil
 	}
 
 	_, notificationError := notifications.ActivityAddedAsCollaboratorCreate(ctx, np, principal.Account().ID, modelPlan.ID, retCollaborator.ID, collabAccount.ID, loaders.UserNotificationPreferencesGetByUserID)

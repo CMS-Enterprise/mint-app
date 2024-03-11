@@ -122,6 +122,7 @@ func (s *Seeder) addPlanCollaborator(
 		princ,
 		true,
 		userhelpers.GetUserInfoAccountInfoWrapperFunc(stubFetchUserInfo),
+		true,
 	)
 	if err != nil {
 		panic(err)

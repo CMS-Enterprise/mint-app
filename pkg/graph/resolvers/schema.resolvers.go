@@ -55,6 +55,7 @@ func (r *mutationResolver) CreatePlanCollaborator(ctx context.Context, input mod
 		principal,
 		true,
 		userhelpers.GetUserInfoAccountInfoWrapperFunc(r.service.FetchUserInfo),
+		true,
 	)
 	return planCollaborator, err
 }
