@@ -53,6 +53,13 @@ func UserNotificationPreferencesGetByUserIDLoader(np sqlutils.NamedPreparer, par
 
 // UserNotificationPreferencesUpdate updates a new UserNotificationPreferences in the database
 func UserNotificationPreferencesUpdate(np sqlutils.NamedPreparer, userNotificationPreferences *models.UserNotificationPreferences) (*models.UserNotificationPreferences, error) {
+	if userNotificationPreferences.ModifiedBy == nil {
+		return nil, fmt.Errorf(" modified not set for notification preference, unable to update")
+	}
+
+	if userNotificationPreferences.UserID != *userNotificationPreferences.ModifiedBy {
+		return nil, fmt.Errorf("a user may only update their own notification preference, %s attempted to modify  preference for %s", userNotificationPreferences.UserID, userNotificationPreferences.ModifiedBy)
+	}
 
 	retUserNotificationPref, procErr := sqlutils.GetProcedure[models.UserNotificationPreferences](np, sqlqueries.UserNotificationPreferences.Update, userNotificationPreferences)
 	if procErr != nil {
