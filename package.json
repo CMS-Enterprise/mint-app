@@ -44,7 +44,6 @@
     "@types/sinon": "^10.0.16",
     "@types/text-encoding": "^0.0.39",
     "@uswds/uswds": "^3.4.1",
-    "apollo": "^2.34",
     "apollo-upload-client": "^17.0.0",
     "axios": "^1.6.7",
     "classnames": "^2.5.1",
