@@ -110,7 +110,7 @@ func (s *Seeder) addPlanCollaborator(
 ) *models.PlanCollaborator {
 	princ := s.getTestPrincipalByUUID(mp.CreatedBy)
 
-	collaborator, _, err := resolvers.CreatePlanCollaborator(
+	collaborator, _, err := resolvers.PlanCollaboratorCreate(
 		context.Background(),
 		s.Config.Store,
 		s.Config.Store,

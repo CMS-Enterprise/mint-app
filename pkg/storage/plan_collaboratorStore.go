@@ -139,8 +139,9 @@ func (s *Store) PlanCollaboratorDelete(
 	return collaborator, nil
 }
 
-// PlanCollaboratorFetchByID returns a plan collaborator for a given database ID, or nil if none found
-func (s *Store) PlanCollaboratorFetchByID(id uuid.UUID) (*models.PlanCollaborator, error) {
+// PlanCollaboratorGetByID returns a plan collaborator for a given database ID, or nil if none found
+// Note: The dataloader method should be preferred over this method.
+func (s *Store) PlanCollaboratorGetByID(id uuid.UUID) (*models.PlanCollaborator, error) {
 
 	stmt, err := s.db.PrepareNamed(sqlqueries.PlanCollaborator.GetByID)
 	if err != nil {

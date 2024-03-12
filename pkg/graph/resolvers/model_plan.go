@@ -110,7 +110,7 @@ func ModelPlanCreate(
 		}
 
 		// Create an initial collaborator for the plan
-		_, _, err = CreatePlanCollaborator(
+		_, _, err = PlanCollaboratorCreate(
 			ctx,
 			tx,
 			store,

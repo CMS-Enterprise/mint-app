@@ -105,7 +105,7 @@ func (suite *WorkerSuite) createPlanCollaborator(
 		TeamRoles:   teamRoles,
 	}
 
-	collaborator, _, err := resolvers.CreatePlanCollaborator(
+	collaborator, _, err := resolvers.PlanCollaboratorCreate(
 		context.Background(),
 		suite.testConfigs.Store,
 		suite.testConfigs.Store,

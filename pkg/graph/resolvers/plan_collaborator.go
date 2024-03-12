@@ -27,7 +27,7 @@ import (
 //
 // A plan favorite is created for the collaborating user when the user is added as a collaborator
 // The transaction object does not commit or rollback in the scope of this function
-func CreatePlanCollaborator(
+func PlanCollaboratorCreate(
 	ctx context.Context,
 	np sqlutils.NamedPreparer,
 	store *storage.Store,
@@ -134,10 +134,10 @@ func sendCollaboratorAddedEmail(
 	return nil
 }
 
-// UpdatePlanCollaborator implements resolver logic to update a plan collaborator
-func UpdatePlanCollaborator(logger *zap.Logger, id uuid.UUID, newRoles []models.TeamRole, principal authentication.Principal, store *storage.Store) (*models.PlanCollaborator, error) {
+// PlanCollaboratorUpdate implements resolver logic to update a plan collaborator
+func PlanCollaboratorUpdate(logger *zap.Logger, id uuid.UUID, newRoles []models.TeamRole, principal authentication.Principal, store *storage.Store) (*models.PlanCollaborator, error) {
 	// Get existing collaborator
-	existingCollaborator, err := store.PlanCollaboratorFetchByID(id)
+	existingCollaborator, err := store.PlanCollaboratorGetByID(id)
 	if err != nil {
 		return nil, err
 	}
@@ -151,9 +151,9 @@ func UpdatePlanCollaborator(logger *zap.Logger, id uuid.UUID, newRoles []models.
 	return store.PlanCollaboratorUpdate(logger, existingCollaborator)
 }
 
-// DeletePlanCollaborator implements resolver logic to delete a plan collaborator
-func DeletePlanCollaborator(logger *zap.Logger, id uuid.UUID, principal authentication.Principal, store *storage.Store) (*models.PlanCollaborator, error) {
-	existingCollaborator, err := store.PlanCollaboratorFetchByID(id)
+// PlanCollaboratorDelete implements resolver logic to delete a plan collaborator
+func PlanCollaboratorDelete(logger *zap.Logger, id uuid.UUID, principal authentication.Principal, store *storage.Store) (*models.PlanCollaborator, error) {
+	existingCollaborator, err := store.PlanCollaboratorGetByID(id)
 	if err != nil {
 		return nil, err
 	}
@@ -182,14 +182,15 @@ func PlanCollaboratorGetByModelPlanIDLOADER(ctx context.Context, modelPlanID uui
 	return result.([]*models.PlanCollaborator), nil
 }
 
-// FetchCollaboratorByID implements resolver logic to fetch a plan collaborator by ID
-func FetchCollaboratorByID(logger *zap.Logger, id uuid.UUID, store *storage.Store) (*models.PlanCollaborator, error) {
+// PlanCollaboratorGetByID implements resolver logic to fetch a plan collaborator by ID
+func PlanCollaboratorGetByID(logger *zap.Logger, id uuid.UUID, store *storage.Store) (*models.PlanCollaborator, error) {
 	//TODO: EASI-(EASI-3945) Consider making this a data loader. The naming could be unified as well.
-	collaborator, err := store.PlanCollaboratorFetchByID(id)
+	collaborator, err := store.PlanCollaboratorGetByID(id)
 	return collaborator, err
 }
 
 // IsPlanCollaborator checks if a user is a collaborator on model plan is a favorite.
 func IsPlanCollaborator(logger *zap.Logger, principal authentication.Principal, store *storage.Store, modelPlanID uuid.UUID) (bool, error) {
+	// Future Enhancement: Consider making this a dataloader.
 	return store.CheckIfCollaborator(logger, principal.Account().ID, modelPlanID)
 }

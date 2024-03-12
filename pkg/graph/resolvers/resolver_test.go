@@ -155,7 +155,7 @@ func (suite *ResolverSuite) createPlanCollaborator(mp *models.ModelPlan, userNam
 		).
 		AnyTimes()
 
-	collaborator, _, err := CreatePlanCollaborator(
+	collaborator, _, err := PlanCollaboratorCreate(
 		suite.testConfigs.Context,
 		suite.testConfigs.Store,
 		suite.testConfigs.Store,

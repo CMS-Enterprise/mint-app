@@ -58,7 +58,7 @@ func (s *ResolverSuite) TestAddedAsCollaboratorEmail() {
 		Return(emailServiceConfig).
 		AnyTimes()
 
-	_, _, err := CreatePlanCollaborator(
+	_, _, err := PlanCollaboratorCreate(
 		s.testConfigs.Context,
 		s.testConfigs.Store,
 		s.testConfigs.Store,
