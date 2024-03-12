@@ -20,7 +20,92 @@ import (
 	"github.com/cmsgov/mint-app/pkg/models"
 )
 
-func (suite *ResolverSuite) TestCreatePlanCollaborator() {
+func (suite *ResolverSuite) TestCreatePlanCollaboratorWithoutNotification() {
+	mockController := gomock.NewController(suite.T())
+	mockEmailService := oddmail.NewMockEmailService(mockController)
+	mockEmailTemplateService := email.NewMockTemplateService(mockController)
+
+	planName := "Plan For Milestones"
+	plan := suite.createModelPlan(planName)
+
+	collaboratorInput := &model.PlanCollaboratorCreateInput{
+		ModelPlanID: plan.ID,
+		UserName:    "CLAB",
+		TeamRoles:   []models.TeamRole{models.TeamRoleLeadership},
+	}
+	expectedEmail := "CLAB.doe@local.fake" //comes from stubFetchUserInfo
+
+	testTemplate, expectedSubject, expectedBody := createAddedAsCollaboratorTemplateCacheHelper(planName, plan)
+
+	mockEmailTemplateService.
+		EXPECT().
+		GetEmailTemplate(gomock.Eq(email.AddedAsCollaboratorTemplateName)).
+		Return(testTemplate, nil).
+		MaxTimes(0)
+
+	addressBook := email.AddressBook{
+		DefaultSender: "unit-test-execution@mint.cms.gov",
+	}
+
+	emailServiceConfig := &oddmail.GoSimpleMailServiceConfig{
+		ClientAddress: "http://localhost:3005",
+	}
+
+	mockEmailService.
+		EXPECT().
+		GetConfig().
+		Return(emailServiceConfig).
+		AnyTimes()
+
+	mockEmailService.
+		EXPECT().
+		Send(
+			gomock.Eq("unit-test-execution@mint.cms.gov"),
+			gomock.Eq([]string{expectedEmail}),
+			gomock.Any(),
+			gomock.Eq(expectedSubject),
+			gomock.Any(),
+			gomock.Eq(expectedBody),
+		).
+		MaxTimes(0)
+
+	collaborator, _, err := CreatePlanCollaborator(
+		suite.testConfigs.Context,
+		suite.testConfigs.Store,
+		suite.testConfigs.Store,
+		suite.testConfigs.Logger,
+		mockEmailService,
+		mockEmailTemplateService,
+		addressBook,
+		collaboratorInput,
+		suite.testConfigs.Principal,
+		false,
+		userhelpers.GetUserInfoAccountInfoWrapperFunc(suite.stubFetchUserInfo),
+		false,
+	)
+
+	//Asset that making a collaborator also creates an account
+	account, uAccountErr := storage.UserAccountGetByUsername(suite.testConfigs.Store, collaboratorInput.UserName)
+	suite.NoError(uAccountErr)
+	suite.NotNil(account)
+
+	suite.NoError(err)
+	suite.EqualValues(plan.ID, collaborator.ModelPlanID)
+	suite.EqualValues(account.ID, collaborator.UserID)
+	suite.EqualValues(pq.StringArray{string(models.TeamRoleLeadership)}, collaborator.TeamRoles)
+	suite.EqualValues(suite.testConfigs.Principal.Account().ID, collaborator.CreatedBy)
+	suite.Nil(collaborator.ModifiedBy)
+
+	// Assert that a notification was not generated for the collaborator
+	collabPrinc := getTestPrincipal(suite.testConfigs.Store, collaboratorInput.UserName)
+	collabNots, err := notifications.UserNotificationCollectionGetByUser(suite.testConfigs.Context, suite.testConfigs.Store, collabPrinc)
+	suite.NoError(err)
+	suite.EqualValues(0, collabNots.NumUnreadNotifications())
+
+	mockController.Finish()
+}
+
+func (suite *ResolverSuite) TestCreatePlanCollaboratorWithNotification() {
 	mockController := gomock.NewController(suite.T())
 	mockEmailService := oddmail.NewMockEmailService(mockController)
 	mockEmailTemplateService := email.NewMockTemplateService(mockController)
