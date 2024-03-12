@@ -2990,6 +2990,13 @@ export type UpdateTdlMutationVariables = Exact<{
 
 export type UpdateTdlMutation = { __typename: 'Mutation', updatePlanTDL: { __typename: 'PlanTDL', id: UUID, modelPlanID: UUID, idNumber: string, dateInitiated: Time, title: string, note?: string | null } };
 
+export type GetIndividualModelPlanCollaboratorQueryVariables = Exact<{
+  id: Scalars['UUID']['input'];
+}>;
+
+
+export type GetIndividualModelPlanCollaboratorQuery = { __typename: 'Query', planCollaboratorByID: { __typename: 'PlanCollaborator', id: UUID, userID: UUID, teamRoles: Array<TeamRole>, userAccount: { __typename: 'UserAccount', id: UUID, commonName: string, email: string, username: string } } };
+
 export type GetIsCollaboratorQueryVariables = Exact<{
   id: Scalars['UUID']['input'];
 }>;
@@ -4336,6 +4343,54 @@ export function useUpdateTdlMutation(baseOptions?: Apollo.MutationHookOptions<Up
 export type UpdateTdlMutationHookResult = ReturnType<typeof useUpdateTdlMutation>;
 export type UpdateTdlMutationResult = Apollo.MutationResult<UpdateTdlMutation>;
 export type UpdateTdlMutationOptions = Apollo.BaseMutationOptions<UpdateTdlMutation, UpdateTdlMutationVariables>;
+export const GetIndividualModelPlanCollaboratorDocument = gql`
+    query GetIndividualModelPlanCollaborator($id: UUID!) {
+  planCollaboratorByID(id: $id) {
+    id
+    userAccount {
+      id
+      commonName
+      email
+      username
+    }
+    userID
+    teamRoles
+  }
+}
+    `;
+
+/**
+ * __useGetIndividualModelPlanCollaboratorQuery__
+ *
+ * To run a query within a React component, call `useGetIndividualModelPlanCollaboratorQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetIndividualModelPlanCollaboratorQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetIndividualModelPlanCollaboratorQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetIndividualModelPlanCollaboratorQuery(baseOptions: Apollo.QueryHookOptions<GetIndividualModelPlanCollaboratorQuery, GetIndividualModelPlanCollaboratorQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetIndividualModelPlanCollaboratorQuery, GetIndividualModelPlanCollaboratorQueryVariables>(GetIndividualModelPlanCollaboratorDocument, options);
+      }
+export function useGetIndividualModelPlanCollaboratorLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetIndividualModelPlanCollaboratorQuery, GetIndividualModelPlanCollaboratorQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetIndividualModelPlanCollaboratorQuery, GetIndividualModelPlanCollaboratorQueryVariables>(GetIndividualModelPlanCollaboratorDocument, options);
+        }
+export function useGetIndividualModelPlanCollaboratorSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetIndividualModelPlanCollaboratorQuery, GetIndividualModelPlanCollaboratorQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetIndividualModelPlanCollaboratorQuery, GetIndividualModelPlanCollaboratorQueryVariables>(GetIndividualModelPlanCollaboratorDocument, options);
+        }
+export type GetIndividualModelPlanCollaboratorQueryHookResult = ReturnType<typeof useGetIndividualModelPlanCollaboratorQuery>;
+export type GetIndividualModelPlanCollaboratorLazyQueryHookResult = ReturnType<typeof useGetIndividualModelPlanCollaboratorLazyQuery>;
+export type GetIndividualModelPlanCollaboratorSuspenseQueryHookResult = ReturnType<typeof useGetIndividualModelPlanCollaboratorSuspenseQuery>;
+export type GetIndividualModelPlanCollaboratorQueryResult = Apollo.QueryResult<GetIndividualModelPlanCollaboratorQuery, GetIndividualModelPlanCollaboratorQueryVariables>;
 export const GetIsCollaboratorDocument = gql`
     query GetIsCollaborator($id: UUID!) {
   modelPlan(id: $id) {

@@ -5,6 +5,7 @@ import { useMutation } from '@apollo/client';
 import { Button, Fieldset, Label, TextInput } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
 import { TeamRole, useGetModelCollaboratorsQuery } from 'gql/gen/graphql';
+import { GetIndividualModelPlanCollaborator_planCollaboratorByID as CollaboratorFormType } from 'gql/gen/types/GetIndividualModelPlanCollaborator';
 import { GetModelCollaborators_modelPlan_collaborators as GetCollaboratorsType } from 'gql/gen/types/GetModelCollaborators';
 
 import UswdsReactLink from 'components/LinkWrapper';
@@ -24,7 +25,6 @@ import {
   CreateModelPlanCollaborator as CreateCollaboratorsType,
   CreateModelPlanCollaboratorVariables
 } from 'queries/Collaborators/types/CreateModelPlanCollaborator';
-import { GetModelCollaborator_planCollaboratorByID as CollaboratorFormType } from 'queries/Collaborators/types/GetModelCollaborator';
 import {
   UpdateModelPlanCollaborator as UpdateModelPlanCollaboratorType,
   UpdateModelPlanCollaboratorVariables
