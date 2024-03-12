@@ -24,7 +24,7 @@ var planCollaboratorGetByIDSQL string
 
 // planCollaboratorGetByIDLoaderSQL returns a Collection of Plan Collaborator entries from the database. It expects a JSON array of IDs, which represent the id of the entry
 //
-//go:embed SQL/plan_collaborator/get_by_id_loader.sql
+//go:embed SQL/plan_collaborator/get_by_id_LOADER.sql
 var planCollaboratorGetByIDLoaderSQL string
 
 // planCollaboratorGetByModelPlanIDLoaderSQL  returns a Collection of Plan Collaborator entries from the database. It expects a JSON array of model_plan_ids, the result can be processed to return all collaborators for various model plans
