@@ -50,10 +50,6 @@ func (s *Store) TruncateAllTablesDANGEROUS(logger *zap.Logger) error {
 
 func removeNonSystemAccounts(s *Store) error {
 
-	// script := `DELETE FROM user_account
-	// WHERE username NOT IN
-	// `
-
 	scriptPreferences := `DELETE FROM user_notification_preferences
                WHERE user_id IN (
                    SELECT id
