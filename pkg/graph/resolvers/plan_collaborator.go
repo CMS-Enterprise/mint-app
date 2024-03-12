@@ -182,11 +182,9 @@ func PlanCollaboratorGetByModelPlanIDLOADER(ctx context.Context, modelPlanID uui
 	return result.([]*models.PlanCollaborator), nil
 }
 
-// PlanCollaboratorGetByID implements resolver logic to fetch a plan collaborator by ID
-func PlanCollaboratorGetByID(logger *zap.Logger, id uuid.UUID, store *storage.Store) (*models.PlanCollaborator, error) {
-	//TODO: EASI-(EASI-3945) Consider making this a data loader. The naming could be unified as well.
-	collaborator, err := store.PlanCollaboratorGetByID(id)
-	return collaborator, err
+// PlanCollaboratorGetByID implements resolver logic to fetch a plan collaborator by ID. It requires the ctx to have a DataLoader embedded.
+func PlanCollaboratorGetByID(ctx context.Context, id uuid.UUID) (*models.PlanCollaborator, error) {
+	return loaders.PlanCollaboratorByID(ctx, id)
 }
 
 // IsPlanCollaborator checks if a user is a collaborator on model plan is a favorite.

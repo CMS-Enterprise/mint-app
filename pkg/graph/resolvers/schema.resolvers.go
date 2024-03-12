@@ -515,8 +515,7 @@ func (r *queryResolver) SearchOktaUsers(ctx context.Context, searchTerm string) 
 
 // PlanCollaboratorByID is the resolver for the planCollaboratorByID field.
 func (r *queryResolver) PlanCollaboratorByID(ctx context.Context, id uuid.UUID) (*models.PlanCollaborator, error) {
-	logger := appcontext.ZLogger(ctx)
-	return PlanCollaboratorGetByID(logger, id, r.store)
+	return PlanCollaboratorGetByID(ctx, id)
 }
 
 // TaskListSectionLocks is the resolver for the taskListSectionLocks field.

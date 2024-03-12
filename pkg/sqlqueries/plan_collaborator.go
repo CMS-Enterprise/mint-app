@@ -14,6 +14,9 @@ var planCollaboratorDeleteSQL string
 //go:embed SQL/plan_collaborator/get_by_id.sql
 var planCollaboratorGetByIDSQL string
 
+//go:embed SQL/plan_collaborator/get_by_id_loader.sql
+var planCollaboratorGetByIDLoaderSQL string
+
 //go:embed SQL/plan_collaborator/get_by_model_plan_id_LOADER.sql
 var planCollaboratorGetByModelPlanIDLoaderSQL string
 
@@ -38,6 +41,6 @@ var PlanCollaborator = planCollaboratorScripts{
 	Update:                           planCollaboratorUpdateSQL,
 	Delete:                           planCollaboratorDeleteSQL,
 	GetByID:                          planCollaboratorGetByIDSQL,
-	CollectionGetByIDLoader:          planCollaboratorGetByIDSQL,
+	CollectionGetByIDLoader:          planCollaboratorGetByIDLoaderSQL,
 	CollectionGetByModelPlanIDLoader: planCollaboratorGetByModelPlanIDLoaderSQL,
 }

@@ -25,9 +25,7 @@ func (r *addedAsCollaboratorMetaResolver) ModelPlan(ctx context.Context, obj *mo
 
 // Collaborator is the resolver for the collaborator field.
 func (r *addedAsCollaboratorMetaResolver) Collaborator(ctx context.Context, obj *models.AddedAsCollaboratorMeta) (*models.PlanCollaborator, error) {
-	logger := appcontext.ZLogger(ctx)
-	// TODO: EASI-(EASI-3945) Consider making this a data loader. The naming could be unified as well.
-	return PlanCollaboratorGetByID(logger, obj.CollaboratorID, r.store)
+	return PlanCollaboratorGetByID(ctx, obj.CollaboratorID)
 }
 
 // ModelPlan is the resolver for the modelPlan field.

@@ -286,11 +286,11 @@ func (suite *ResolverSuite) TestFetchCollaboratorsByModelPlanID() {
 	// }
 }
 
-func (suite *ResolverSuite) TestFetchCollaboratorByID() {
+func (suite *ResolverSuite) TestPlanCollaboratorGetByID() {
 	plan := suite.createModelPlan("Plan For Milestones")
 	collaborator := suite.createPlanCollaborator(plan, "SCND", []models.TeamRole{models.TeamRoleLeadership})
 
-	collaboratorByID, err := PlanCollaboratorGetByID(suite.testConfigs.Logger, collaborator.ID, suite.testConfigs.Store)
+	collaboratorByID, err := PlanCollaboratorGetByID(suite.testConfigs.Context, collaborator.ID)
 	suite.NoError(err)
 	suite.EqualValues(collaboratorByID, collaborator)
 }
@@ -305,12 +305,12 @@ func (suite *ResolverSuite) TestDeletePlanCollaborator() {
 	suite.EqualValues(deletedCollaborator, collaborator)
 
 	// Ensure we get an error when we try fetch it
-	collaboratorByID, err := PlanCollaboratorGetByID(suite.testConfigs.Logger, collaborator.ID, suite.testConfigs.Store)
+	collaboratorByID, err := PlanCollaboratorGetByID(suite.testConfigs.Context, collaborator.ID)
 	suite.Error(err)
 	suite.Nil(collaboratorByID)
 }
 
-func (suite *ResolverSuite) TestDeletePlanCollaboratorLastModelLead() {
+func (suite *ResolverSuite) TestPlanCollaboratorDeleteLastModelLead() {
 	plan := suite.createModelPlan("Plan For Milestones")
 
 	collaborators, err := PlanCollaboratorGetByModelPlanIDLOADER(suite.testConfigs.Context, plan.ID)
