@@ -59,7 +59,7 @@ func (loaders *DataLoaders) GetPlanCollaboratorByModelPlanID(ctx context.Context
 				output[index] = &dataloader.Result{Data: nil, Error: err}
 			}
 		} else {
-			err := fmt.Errorf("could not retrive key from %s", key.String())
+			err := fmt.Errorf("could not retrieve key from %s", key.String())
 			output[index] = &dataloader.Result{Data: nil, Error: err}
 		}
 	}
@@ -70,14 +70,16 @@ func (loaders *DataLoaders) GetPlanCollaboratorByModelPlanID(ctx context.Context
 // getPlanCollaboratorByIDBatch uses a DataLoader to aggregate a SQL call and return all Plan Collaborators for a collection of IDS in one query
 func (loaders *DataLoaders) getPlanCollaboratorByIDBatch(ctx context.Context, keys dataloader.Keys) []*dataloader.Result {
 	jsonParams, err := CovertToJSONArray(keys)
+	output := make([]*dataloader.Result, len(keys))
 	if err != nil {
-		return []*dataloader.Result{{Data: nil, Error: fmt.Errorf("issue converting keys to json for PlanCollaboratorByIDLoader, %w", err)}}
+		setEachOutputToError(fmt.Errorf("issue converting keys to json for PlanCollaboratorByIDLoader, %w", err), output)
+		return output
 	}
 	collaborators, err := storage.PlanCollaboratorGetIDLOADER(loaders.DataReader.Store, jsonParams)
 	if err != nil { //TODO: EASI-(EASI-3945), this might make a problem, because the count doesn't match. Look at the user account loader for how a result is generated for each record. Maybe make a helper function?
-		return []*dataloader.Result{{Data: nil, Error: err}}
+		setEachOutputToError(err, output)
+		return output
 	}
-	output := make([]*dataloader.Result, len(keys))
 
 	collaboratorByID := lo.Associate(collaborators, func(collab *models.PlanCollaborator) (string, *models.PlanCollaborator) { //TRANSLATE TO MAP
 		return collab.ID.String(), collab
