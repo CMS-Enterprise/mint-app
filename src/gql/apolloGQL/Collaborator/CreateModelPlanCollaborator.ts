@@ -1,6 +1,6 @@
 import { gql } from '@apollo/client';
 
-export default gql`
+export default gql(/* GraphQL */ `
   mutation CreateModelPlanCollaborator($input: PlanCollaboratorCreateInput!) {
     createPlanCollaborator(input: $input) {
       teamRoles
@@ -13,4 +13,4 @@ export default gql`
       modelPlanID
     }
   }
-`;
+`);

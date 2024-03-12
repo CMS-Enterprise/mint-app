@@ -2990,6 +2990,13 @@ export type UpdateTdlMutationVariables = Exact<{
 
 export type UpdateTdlMutation = { __typename: 'Mutation', updatePlanTDL: { __typename: 'PlanTDL', id: UUID, modelPlanID: UUID, idNumber: string, dateInitiated: Time, title: string, note?: string | null } };
 
+export type CreateModelPlanCollaboratorMutationVariables = Exact<{
+  input: PlanCollaboratorCreateInput;
+}>;
+
+
+export type CreateModelPlanCollaboratorMutation = { __typename: 'Mutation', createPlanCollaborator: { __typename: 'PlanCollaborator', teamRoles: Array<TeamRole>, userID: UUID, modelPlanID: UUID, userAccount: { __typename: 'UserAccount', id: UUID, commonName: string, email: string } } };
+
 export type GetIndividualModelPlanCollaboratorQueryVariables = Exact<{
   id: Scalars['UUID']['input'];
 }>;
@@ -4343,6 +4350,46 @@ export function useUpdateTdlMutation(baseOptions?: Apollo.MutationHookOptions<Up
 export type UpdateTdlMutationHookResult = ReturnType<typeof useUpdateTdlMutation>;
 export type UpdateTdlMutationResult = Apollo.MutationResult<UpdateTdlMutation>;
 export type UpdateTdlMutationOptions = Apollo.BaseMutationOptions<UpdateTdlMutation, UpdateTdlMutationVariables>;
+export const CreateModelPlanCollaboratorDocument = gql`
+    mutation CreateModelPlanCollaborator($input: PlanCollaboratorCreateInput!) {
+  createPlanCollaborator(input: $input) {
+    teamRoles
+    userAccount {
+      id
+      commonName
+      email
+    }
+    userID
+    modelPlanID
+  }
+}
+    `;
+export type CreateModelPlanCollaboratorMutationFn = Apollo.MutationFunction<CreateModelPlanCollaboratorMutation, CreateModelPlanCollaboratorMutationVariables>;
+
+/**
+ * __useCreateModelPlanCollaboratorMutation__
+ *
+ * To run a mutation, you first call `useCreateModelPlanCollaboratorMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateModelPlanCollaboratorMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createModelPlanCollaboratorMutation, { data, loading, error }] = useCreateModelPlanCollaboratorMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useCreateModelPlanCollaboratorMutation(baseOptions?: Apollo.MutationHookOptions<CreateModelPlanCollaboratorMutation, CreateModelPlanCollaboratorMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateModelPlanCollaboratorMutation, CreateModelPlanCollaboratorMutationVariables>(CreateModelPlanCollaboratorDocument, options);
+      }
+export type CreateModelPlanCollaboratorMutationHookResult = ReturnType<typeof useCreateModelPlanCollaboratorMutation>;
+export type CreateModelPlanCollaboratorMutationResult = Apollo.MutationResult<CreateModelPlanCollaboratorMutation>;
+export type CreateModelPlanCollaboratorMutationOptions = Apollo.BaseMutationOptions<CreateModelPlanCollaboratorMutation, CreateModelPlanCollaboratorMutationVariables>;
 export const GetIndividualModelPlanCollaboratorDocument = gql`
     query GetIndividualModelPlanCollaborator($id: UUID!) {
   planCollaboratorByID(id: $id) {
