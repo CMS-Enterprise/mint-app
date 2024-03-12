@@ -10,6 +10,7 @@ import (
 	"github.com/google/uuid"
 	"golang.org/x/sync/errgroup"
 
+	"github.com/cmsgov/mint-app/pkg/notifications"
 	"github.com/cmsgov/mint-app/pkg/shared/oddmail"
 	"github.com/cmsgov/mint-app/pkg/storage"
 	"github.com/cmsgov/mint-app/pkg/userhelpers"
@@ -83,6 +84,7 @@ func (suite *ResolverSuite) TestCreatePlanCollaborator() {
 		true,
 	)
 
+	//Asset that making a collaborator also creates an account
 	account, uAccountErr := storage.UserAccountGetByUsername(suite.testConfigs.Store, collaboratorInput.UserName)
 	suite.NoError(uAccountErr)
 	suite.NotNil(account)
@@ -93,6 +95,13 @@ func (suite *ResolverSuite) TestCreatePlanCollaborator() {
 	suite.EqualValues(pq.StringArray{string(models.TeamRoleLeadership)}, collaborator.TeamRoles)
 	suite.EqualValues(suite.testConfigs.Principal.Account().ID, collaborator.CreatedBy)
 	suite.Nil(collaborator.ModifiedBy)
+
+	// Assert that a notification was generated for the collaborator
+	collabPrinc := getTestPrincipal(suite.testConfigs.Store, collaboratorInput.UserName)
+	collabNots, err := notifications.UserNotificationCollectionGetByUser(suite.testConfigs.Context, suite.testConfigs.Store, collabPrinc)
+	suite.NoError(err)
+	suite.EqualValues(1, collabNots.NumUnreadNotifications())
+
 	mockController.Finish()
 }
 

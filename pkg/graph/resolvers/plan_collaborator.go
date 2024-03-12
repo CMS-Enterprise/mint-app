@@ -71,16 +71,14 @@ func CreatePlanCollaborator(
 	}
 	// If a this is false, we return without creating a notification or an email.
 	if !createNotification {
-
 		return retCollaborator, planFavorite, nil
 	}
-
+	// Note, we could pass the get preferences function to CreatePlanCollaborator, but instead we assume that every method that calls this will have data loaders on context
 	_, notificationError := notifications.ActivityAddedAsCollaboratorCreate(ctx, np, principal.Account().ID, modelPlan.ID, retCollaborator.ID, collabAccount.ID, loaders.UserNotificationPreferencesGetByUserID)
 	if notificationError != nil {
 		return nil, nil, notificationError
 	}
-	// TODO: EASI-(EASI-3945) Double check, do we need to insure that the user who makes the model plan doesn't get notified about being added a collaborator?
-	// If so, we might need to revisit this logic.
+
 	pref, err := loaders.UserNotificationPreferencesGetByUserID(ctx, collabAccount.ID)
 	if err != nil {
 		return nil, nil, fmt.Errorf("issue creating collaborator, couldn't get collaborator preferences. Err: %w", err)
