@@ -2990,6 +2990,13 @@ export type UpdateTdlMutationVariables = Exact<{
 
 export type UpdateTdlMutation = { __typename: 'Mutation', updatePlanTDL: { __typename: 'PlanTDL', id: UUID, modelPlanID: UUID, idNumber: string, dateInitiated: Time, title: string, note?: string | null } };
 
+export type GetIsCollaboratorQueryVariables = Exact<{
+  id: Scalars['UUID']['input'];
+}>;
+
+
+export type GetIsCollaboratorQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, isCollaborator: boolean } };
+
 export type CreateModelPlanDiscussionMutationVariables = Exact<{
   input: PlanDiscussionCreateInput;
 }>;
@@ -4322,6 +4329,47 @@ export function useUpdateTdlMutation(baseOptions?: Apollo.MutationHookOptions<Up
 export type UpdateTdlMutationHookResult = ReturnType<typeof useUpdateTdlMutation>;
 export type UpdateTdlMutationResult = Apollo.MutationResult<UpdateTdlMutation>;
 export type UpdateTdlMutationOptions = Apollo.BaseMutationOptions<UpdateTdlMutation, UpdateTdlMutationVariables>;
+export const GetIsCollaboratorDocument = gql`
+    query GetIsCollaborator($id: UUID!) {
+  modelPlan(id: $id) {
+    id
+    isCollaborator
+  }
+}
+    `;
+
+/**
+ * __useGetIsCollaboratorQuery__
+ *
+ * To run a query within a React component, call `useGetIsCollaboratorQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetIsCollaboratorQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetIsCollaboratorQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetIsCollaboratorQuery(baseOptions: Apollo.QueryHookOptions<GetIsCollaboratorQuery, GetIsCollaboratorQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetIsCollaboratorQuery, GetIsCollaboratorQueryVariables>(GetIsCollaboratorDocument, options);
+      }
+export function useGetIsCollaboratorLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetIsCollaboratorQuery, GetIsCollaboratorQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetIsCollaboratorQuery, GetIsCollaboratorQueryVariables>(GetIsCollaboratorDocument, options);
+        }
+export function useGetIsCollaboratorSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetIsCollaboratorQuery, GetIsCollaboratorQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetIsCollaboratorQuery, GetIsCollaboratorQueryVariables>(GetIsCollaboratorDocument, options);
+        }
+export type GetIsCollaboratorQueryHookResult = ReturnType<typeof useGetIsCollaboratorQuery>;
+export type GetIsCollaboratorLazyQueryHookResult = ReturnType<typeof useGetIsCollaboratorLazyQuery>;
+export type GetIsCollaboratorSuspenseQueryHookResult = ReturnType<typeof useGetIsCollaboratorSuspenseQuery>;
+export type GetIsCollaboratorQueryResult = Apollo.QueryResult<GetIsCollaboratorQuery, GetIsCollaboratorQueryVariables>;
 export const CreateModelPlanDiscussionDocument = gql`
     mutation CreateModelPlanDiscussion($input: PlanDiscussionCreateInput!) {
   createPlanDiscussion(input: $input) {
