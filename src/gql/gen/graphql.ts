@@ -2997,6 +2997,13 @@ export type GetIsCollaboratorQueryVariables = Exact<{
 
 export type GetIsCollaboratorQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, isCollaborator: boolean } };
 
+export type GetModelCollaboratorsQueryVariables = Exact<{
+  id: Scalars['UUID']['input'];
+}>;
+
+
+export type GetModelCollaboratorsQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, collaborators: Array<{ __typename: 'PlanCollaborator', id: UUID, userID: UUID, teamRoles: Array<TeamRole>, modelPlanID: UUID, createdDts: Time, userAccount: { __typename: 'UserAccount', id: UUID, commonName: string, email: string, username: string } }> } };
+
 export type CreateModelPlanDiscussionMutationVariables = Exact<{
   input: PlanDiscussionCreateInput;
 }>;
@@ -4370,6 +4377,60 @@ export type GetIsCollaboratorQueryHookResult = ReturnType<typeof useGetIsCollabo
 export type GetIsCollaboratorLazyQueryHookResult = ReturnType<typeof useGetIsCollaboratorLazyQuery>;
 export type GetIsCollaboratorSuspenseQueryHookResult = ReturnType<typeof useGetIsCollaboratorSuspenseQuery>;
 export type GetIsCollaboratorQueryResult = Apollo.QueryResult<GetIsCollaboratorQuery, GetIsCollaboratorQueryVariables>;
+export const GetModelCollaboratorsDocument = gql`
+    query GetModelCollaborators($id: UUID!) {
+  modelPlan(id: $id) {
+    id
+    modelName
+    collaborators {
+      id
+      userAccount {
+        id
+        commonName
+        email
+        username
+      }
+      userID
+      teamRoles
+      modelPlanID
+      createdDts
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetModelCollaboratorsQuery__
+ *
+ * To run a query within a React component, call `useGetModelCollaboratorsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetModelCollaboratorsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetModelCollaboratorsQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetModelCollaboratorsQuery(baseOptions: Apollo.QueryHookOptions<GetModelCollaboratorsQuery, GetModelCollaboratorsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetModelCollaboratorsQuery, GetModelCollaboratorsQueryVariables>(GetModelCollaboratorsDocument, options);
+      }
+export function useGetModelCollaboratorsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetModelCollaboratorsQuery, GetModelCollaboratorsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetModelCollaboratorsQuery, GetModelCollaboratorsQueryVariables>(GetModelCollaboratorsDocument, options);
+        }
+export function useGetModelCollaboratorsSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetModelCollaboratorsQuery, GetModelCollaboratorsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetModelCollaboratorsQuery, GetModelCollaboratorsQueryVariables>(GetModelCollaboratorsDocument, options);
+        }
+export type GetModelCollaboratorsQueryHookResult = ReturnType<typeof useGetModelCollaboratorsQuery>;
+export type GetModelCollaboratorsLazyQueryHookResult = ReturnType<typeof useGetModelCollaboratorsLazyQuery>;
+export type GetModelCollaboratorsSuspenseQueryHookResult = ReturnType<typeof useGetModelCollaboratorsSuspenseQuery>;
+export type GetModelCollaboratorsQueryResult = Apollo.QueryResult<GetModelCollaboratorsQuery, GetModelCollaboratorsQueryVariables>;
 export const CreateModelPlanDiscussionDocument = gql`
     mutation CreateModelPlanDiscussion($input: PlanDiscussionCreateInput!) {
   createPlanDiscussion(input: $input) {

@@ -1,10 +1,11 @@
 import React, { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
-import { useMutation, useQuery } from '@apollo/client';
+import { useMutation } from '@apollo/client';
 import { Button, Fieldset, Label, TextInput } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
-import { TeamRole } from 'gql/gen/graphql';
+import { TeamRole, useGetModelCollaboratorsQuery } from 'gql/gen/graphql';
+import { GetModelCollaborators_modelPlan_collaborators as GetCollaboratorsType } from 'gql/gen/types/GetModelCollaborators';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
@@ -19,16 +20,11 @@ import Spinner from 'components/Spinner';
 import useMessage from 'hooks/useMessage';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import CreateModelPlanCollaborator from 'queries/Collaborators/CreateModelPlanCollaborator';
-import GetModelPlanCollaborators from 'queries/Collaborators/GetModelCollaborators';
 import {
   CreateModelPlanCollaborator as CreateCollaboratorsType,
   CreateModelPlanCollaboratorVariables
 } from 'queries/Collaborators/types/CreateModelPlanCollaborator';
 import { GetModelCollaborator_planCollaboratorByID as CollaboratorFormType } from 'queries/Collaborators/types/GetModelCollaborator';
-import {
-  GetModelCollaborators,
-  GetModelCollaborators_modelPlan_collaborators as GetCollaboratorsType
-} from 'queries/Collaborators/types/GetModelCollaborators';
 import {
   UpdateModelPlanCollaborator as UpdateModelPlanCollaboratorType,
   UpdateModelPlanCollaboratorVariables
@@ -77,7 +73,7 @@ const Collaborators = () => {
   const {
     data: allCollaboratorsData,
     loading: queryLoading
-  } = useQuery<GetModelCollaborators>(GetModelPlanCollaborators, {
+  } = useGetModelCollaboratorsQuery({
     variables: {
       id: modelID
     }
