@@ -339,7 +339,7 @@ func (suite *ResolverSuite) TestIsPlanCollaborator() {
 	suite.EqualValues(false, isCollabFalseCase)
 }
 
-func (suite *ResolverSuite) TestPlanCollaboratorDataLoader() {
+func (suite *ResolverSuite) TestPlanCollaboratorGetByModelPlanIDDataLoader() {
 	plan1 := suite.createModelPlan("Plan For Collab 1")
 	suite.createPlanCollaborator(plan1, "SCND", []models.TeamRole{models.TeamRoleLeadership})
 	suite.createPlanCollaborator(plan1, "BLOB", []models.TeamRole{models.TeamRoleLeadership})
@@ -352,16 +352,16 @@ func (suite *ResolverSuite) TestPlanCollaboratorDataLoader() {
 
 	g, ctx := errgroup.WithContext(suite.testConfigs.Context)
 	g.Go(func() error {
-		return verifyPlanCollaboratorLoader(ctx, plan1.ID)
+		return verifyPlanCollaboratorGetByModelPlanIDLoader(ctx, plan1.ID)
 	})
 	g.Go(func() error {
-		return verifyPlanCollaboratorLoader(ctx, plan2.ID)
+		return verifyPlanCollaboratorGetByModelPlanIDLoader(ctx, plan2.ID)
 	})
 	err := g.Wait()
 	suite.NoError(err)
 
 }
-func verifyPlanCollaboratorLoader(ctx context.Context, modelPlanID uuid.UUID) error {
+func verifyPlanCollaboratorGetByModelPlanIDLoader(ctx context.Context, modelPlanID uuid.UUID) error {
 
 	collab, err := PlanCollaboratorGetByModelPlanIDLOADER(ctx, modelPlanID)
 	if err != nil {
@@ -372,4 +372,58 @@ func verifyPlanCollaboratorLoader(ctx context.Context, modelPlanID uuid.UUID) er
 		return fmt.Errorf("plan Collaborator returned model plan ID %s, expected %s", collab[0].ModelPlanID, modelPlanID)
 	}
 	return nil
+}
+
+func (suite *ResolverSuite) TestPlanCollaboratorGetByIDDataLoader() {
+	plan1 := suite.createModelPlan("Plan For Collab 1")
+	collab1 := suite.createPlanCollaborator(plan1, "SCND", []models.TeamRole{models.TeamRoleLeadership})
+	collab2 := suite.createPlanCollaborator(plan1, "BLOB", []models.TeamRole{models.TeamRoleLeadership})
+	collab3 := suite.createPlanCollaborator(plan1, "MIKE", []models.TeamRole{models.TeamRoleLeadership})
+	plan2 := suite.createModelPlan("Plan For Collab 2")
+
+	collab4 := suite.createPlanCollaborator(plan2, "BIBS", []models.TeamRole{models.TeamRoleLeadership})
+	collab5 := suite.createPlanCollaborator(plan2, "BOBS", []models.TeamRole{models.TeamRoleLeadership})
+	collab6 := suite.createPlanCollaborator(plan2, "LUKE", []models.TeamRole{models.TeamRoleLeadership})
+
+	g, ctx := errgroup.WithContext(suite.testConfigs.Context)
+
+	g.Go(func() error {
+		retCollab, err := PlanCollaboratorGetByID(ctx, collab1.ID)
+		suite.NoError(err)
+		suite.EqualValues(collab1.ID, retCollab.ID)
+		return nil
+	})
+	g.Go(func() error {
+		retCollab, err := PlanCollaboratorGetByID(ctx, collab2.ID)
+		suite.NoError(err)
+		suite.EqualValues(collab2.ID, retCollab.ID)
+		return nil
+	})
+	g.Go(func() error {
+		retCollab, err := PlanCollaboratorGetByID(ctx, collab3.ID)
+		suite.NoError(err)
+		suite.EqualValues(collab3.ID, retCollab.ID)
+		return nil
+	})
+	g.Go(func() error {
+		retCollab, err := PlanCollaboratorGetByID(ctx, collab4.ID)
+		suite.NoError(err)
+		suite.EqualValues(collab4.ID, retCollab.ID)
+		return nil
+	})
+	g.Go(func() error {
+		retCollab, err := PlanCollaboratorGetByID(ctx, collab5.ID)
+		suite.NoError(err)
+		suite.EqualValues(collab5.ID, retCollab.ID)
+		return nil
+	})
+	g.Go(func() error {
+		retCollab, err := PlanCollaboratorGetByID(ctx, collab6.ID)
+		suite.NoError(err)
+		suite.EqualValues(collab6.ID, retCollab.ID)
+		return nil
+	})
+	err := g.Wait()
+	suite.NoError(err)
+
 }
