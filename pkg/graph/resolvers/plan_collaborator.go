@@ -168,7 +168,7 @@ func DeletePlanCollaborator(logger *zap.Logger, id uuid.UUID, principal authenti
 // PlanCollaboratorGetByModelPlanIDLOADER implements resolver logic to get Plan Collaborator by a model plan ID using a data loader
 func PlanCollaboratorGetByModelPlanIDLOADER(ctx context.Context, modelPlanID uuid.UUID) ([]*models.PlanCollaborator, error) {
 	allLoaders := loaders.Loaders(ctx)
-	collabLoader := allLoaders.PlanCollaboratorLoader
+	collabLoader := allLoaders.PlanCollaboratorByModelPlanLoader
 	key := loaders.NewKeyArgs()
 	key.Args["model_plan_id"] = modelPlanID
 
