@@ -76,7 +76,7 @@ func (loaders *DataLoaders) getPlanCollaboratorByIDBatch(ctx context.Context, ke
 		return output
 	}
 	collaborators, err := storage.PlanCollaboratorGetIDLOADER(loaders.DataReader.Store, jsonParams)
-	if err != nil { //TODO: EASI-(EASI-3945), this might make a problem, because the count doesn't match. Look at the user account loader for how a result is generated for each record. Maybe make a helper function?
+	if err != nil {
 		setEachOutputToError(err, output)
 		return output
 	}
