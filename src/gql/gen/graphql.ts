@@ -61,7 +61,7 @@ export type ActivityMetaBaseStruct = {
 };
 
 /** ActivityMetaData is a type that represents all the data that can be captured in an Activity */
-export type ActivityMetaData = ActivityMetaBaseStruct | TaggedInDiscussionReplyActivityMeta | TaggedInPlanDiscussionActivityMeta;
+export type ActivityMetaData = ActivityMetaBaseStruct | DailyDigestCompleteActivityMeta | TaggedInDiscussionReplyActivityMeta | TaggedInPlanDiscussionActivityMeta;
 
 /** ActivityType represents the possible activities that happen in application that might result in a notification */
 export enum ActivityType {
@@ -93,6 +93,73 @@ export enum AlternativePaymentModelType {
   NOT_APM = 'NOT_APM',
   REGULAR = 'REGULAR'
 }
+
+/** Analyzed Audit Represents data about changes that have happened in a model plan, saved in an a */
+export type AnalyzedAudit = {
+  __typename: 'AnalyzedAudit';
+  changes: AnalyzedAuditChange;
+  createdBy: Scalars['UUID']['output'];
+  createdByUserAccount: UserAccount;
+  createdDts: Scalars['Time']['output'];
+  date: Scalars['Time']['output'];
+  id: Scalars['UUID']['output'];
+  modelName: Scalars['String']['output'];
+  modelPlanID: Scalars['UUID']['output'];
+  modifiedBy?: Maybe<Scalars['UUID']['output']>;
+  modifiedByUserAccount?: Maybe<UserAccount>;
+  modifiedDts?: Maybe<Scalars['Time']['output']>;
+};
+
+export type AnalyzedAuditChange = {
+  __typename: 'AnalyzedAuditChange';
+  crTdls?: Maybe<AnalyzedCrTdls>;
+  documents?: Maybe<AnalyzedDocuments>;
+  modelLeads?: Maybe<AnalyzedModelLeads>;
+  modelPlan?: Maybe<AnalyzedModelPlan>;
+  planDiscussions?: Maybe<AnalyzedPlanDiscussions>;
+  planSections?: Maybe<AnalyzedPlanSections>;
+};
+
+export type AnalyzedCrTdls = {
+  __typename: 'AnalyzedCrTdls';
+  activity?: Maybe<Scalars['Boolean']['output']>;
+};
+
+export type AnalyzedDocuments = {
+  __typename: 'AnalyzedDocuments';
+  count?: Maybe<Scalars['Int']['output']>;
+};
+
+export type AnalyzedModelLeadInfo = {
+  __typename: 'AnalyzedModelLeadInfo';
+  commonName: Scalars['String']['output'];
+  id: Scalars['UUID']['output'];
+  userAccount: UserAccount;
+};
+
+export type AnalyzedModelLeads = {
+  __typename: 'AnalyzedModelLeads';
+  added: Array<AnalyzedModelLeadInfo>;
+};
+
+export type AnalyzedModelPlan = {
+  __typename: 'AnalyzedModelPlan';
+  /** This represents the oldName */
+  oldName?: Maybe<Scalars['String']['output']>;
+  statusChanges?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+};
+
+export type AnalyzedPlanDiscussions = {
+  __typename: 'AnalyzedPlanDiscussions';
+  activity?: Maybe<Scalars['Boolean']['output']>;
+};
+
+export type AnalyzedPlanSections = {
+  __typename: 'AnalyzedPlanSections';
+  readyForClearance: Array<Scalars['String']['output']>;
+  readyForReview: Array<Scalars['String']['output']>;
+  updated: Array<Scalars['String']['output']>;
+};
 
 export type AuditChange = {
   __typename: 'AuditChange';
@@ -205,6 +272,16 @@ export type CurrentUser = {
   launchDarkly: LaunchDarklySettings;
   notificationPreferences: UserNotificationPreferences;
   notifications: UserNotifications;
+};
+
+export type DailyDigestCompleteActivityMeta = {
+  __typename: 'DailyDigestCompleteActivityMeta';
+  analyzedAudits: Array<AnalyzedAudit>;
+  date: Scalars['Time']['output'];
+  modelPlanIDs: Array<Scalars['UUID']['output']>;
+  type: ActivityType;
+  userID: Scalars['UUID']['output'];
+  version: Scalars['Int']['output'];
 };
 
 export enum DataForMonitoringType {
@@ -2331,6 +2408,7 @@ export enum ProviderLeaveType {
 /** Query definition for the schema */
 export type Query = {
   __typename: 'Query';
+  analyzedAudits: Array<AnalyzedAudit>;
   auditChanges: Array<AuditChange>;
   currentUser: CurrentUser;
   existingModelCollection: Array<ExistingModel>;
@@ -2352,6 +2430,12 @@ export type Query = {
   searchOktaUsers: Array<UserInfo>;
   taskListSectionLocks: Array<TaskListSectionLockStatus>;
   userAccount: UserAccount;
+};
+
+
+/** Query definition for the schema */
+export type QueryAnalyzedAuditsArgs = {
+  dateAnalyzed: Scalars['Time']['input'];
 };
 
 

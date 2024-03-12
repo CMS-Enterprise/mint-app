@@ -11,11 +11,17 @@ import (
 	"github.com/cmsgov/mint-app/pkg/authentication"
 	"github.com/cmsgov/mint-app/pkg/graph/generated"
 	"github.com/cmsgov/mint-app/pkg/models"
+	"github.com/cmsgov/mint-app/pkg/storage/loaders"
 )
 
 // ActorUserAccount is the resolver for the actorUserAccount field.
 func (r *activityResolver) ActorUserAccount(ctx context.Context, obj *models.Activity) (*authentication.UserAccount, error) {
 	return UserAccountGetByIDLOADER(ctx, obj.ActorID)
+}
+
+// AnalyzedAudits is the resolver for the analyzedAudits field.
+func (r *dailyDigestCompleteActivityMetaResolver) AnalyzedAudits(ctx context.Context, obj *models.DailyDigestCompleteActivityMeta) ([]*models.AnalyzedAudit, error) {
+	return loaders.AnalyzedAuditGetByModelPlanIDsAndDate(ctx, obj.ModelPlanIDs, obj.Date)
 }
 
 // Discussion is the resolver for the discussion field.
@@ -39,6 +45,11 @@ func (r *taggedInPlanDiscussionActivityMetaResolver) Discussion(ctx context.Cont
 // Activity returns generated.ActivityResolver implementation.
 func (r *Resolver) Activity() generated.ActivityResolver { return &activityResolver{r} }
 
+// DailyDigestCompleteActivityMeta returns generated.DailyDigestCompleteActivityMetaResolver implementation.
+func (r *Resolver) DailyDigestCompleteActivityMeta() generated.DailyDigestCompleteActivityMetaResolver {
+	return &dailyDigestCompleteActivityMetaResolver{r}
+}
+
 // TaggedInDiscussionReplyActivityMeta returns generated.TaggedInDiscussionReplyActivityMetaResolver implementation.
 func (r *Resolver) TaggedInDiscussionReplyActivityMeta() generated.TaggedInDiscussionReplyActivityMetaResolver {
 	return &taggedInDiscussionReplyActivityMetaResolver{r}
@@ -50,5 +61,6 @@ func (r *Resolver) TaggedInPlanDiscussionActivityMeta() generated.TaggedInPlanDi
 }
 
 type activityResolver struct{ *Resolver }
+type dailyDigestCompleteActivityMetaResolver struct{ *Resolver }
 type taggedInDiscussionReplyActivityMetaResolver struct{ *Resolver }
 type taggedInPlanDiscussionActivityMetaResolver struct{ *Resolver }
