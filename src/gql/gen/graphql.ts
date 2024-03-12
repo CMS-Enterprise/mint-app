@@ -920,6 +920,8 @@ export type NewDiscussionRepliedActivityMeta = {
   content: Scalars['String']['output'];
   discussion: PlanDiscussion;
   discussionID: Scalars['UUID']['output'];
+  modelPlan: ModelPlan;
+  modelPlanID: Scalars['UUID']['output'];
   reply: DiscussionReply;
   replyID: Scalars['UUID']['output'];
   type: ActivityType;

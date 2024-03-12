@@ -36,6 +36,8 @@ type TaggedInDiscussionReplyActivityMeta {
 type NewDiscussionRepliedActivityMeta {
   version: Int!
   type: ActivityType!
+  modelPlanID: UUID!
+  modelPlan: ModelPlan!
   discussionID: UUID!
   discussion: PlanDiscussion!
   replyID: UUID!

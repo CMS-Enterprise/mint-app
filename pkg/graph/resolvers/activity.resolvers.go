@@ -8,6 +8,8 @@ import (
 	"context"
 	"fmt"
 
+	"github.com/google/uuid"
+
 	"github.com/cmsgov/mint-app/pkg/appcontext"
 	"github.com/cmsgov/mint-app/pkg/authentication"
 	"github.com/cmsgov/mint-app/pkg/graph/generated"
@@ -17,6 +19,16 @@ import (
 // ActorUserAccount is the resolver for the actorUserAccount field.
 func (r *activityResolver) ActorUserAccount(ctx context.Context, obj *models.Activity) (*authentication.UserAccount, error) {
 	return UserAccountGetByIDLOADER(ctx, obj.ActorID)
+}
+
+// ModelPlanID is the resolver for the modelPlanID field.
+func (r *newDiscussionRepliedActivityMetaResolver) ModelPlanID(ctx context.Context, obj *models.NewDiscussionRepliedActivityMeta) (uuid.UUID, error) {
+	panic(fmt.Errorf("not implemented: ModelPlanID - modelPlanID"))
+}
+
+// ModelPlan is the resolver for the modelPlan field.
+func (r *newDiscussionRepliedActivityMetaResolver) ModelPlan(ctx context.Context, obj *models.NewDiscussionRepliedActivityMeta) (*models.ModelPlan, error) {
+	panic(fmt.Errorf("not implemented: ModelPlan - modelPlan"))
 }
 
 // Discussion is the resolver for the discussion field.

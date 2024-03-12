@@ -456,18 +456,22 @@ func CreateDiscussionReply(
 		}
 
 		// Create Activity and notifications in the DB
-		_, notificationErr := notifications.ActivityTaggedInDiscussionReplyCreate(ctx, tx, principal.Account().ID, discussion.ID, reply.ID, reply.Content, loaders.UserNotificationPreferencesGetByUserID)
+		_, notificationErr := notifications.ActivityTaggedInDiscussionReplyCreate(ctx, tx, discussion.CreatedBy, discussion.ID, reply.ID, reply.Content, loaders.UserNotificationPreferencesGetByUserID)
 		if notificationErr != nil {
 			return nil, fmt.Errorf("unable to generate notifications, %w", notificationErr)
 		}
 
-		pref, err := UserNotificationPreferencesGetByUserID(ctx, principal.Account().ID)
+		_, err = notifications.ActivityNewDiscussionRepliedCreate(ctx, tx, discussion.CreatedBy, discussion.ID, reply.ID, reply.Content, loaders.UserNotificationPreferencesGetByUserID)
+		if notificationErr != nil {
+			return nil, fmt.Errorf("unable to generate notifications, %w", notificationErr)
+		}
+
+		pref, err := UserNotificationPreferencesGetByUserID(ctx, discussion.CreatedBy)
 		if err != nil {
 			return nil, fmt.Errorf("unable to get user notification preference, Notification not created %w", err)
 		}
 
-		// Early return if
-		if !pref.NewDiscussionReply.SendEmail() {
+		if pref.NewDiscussionReply.SendEmail() || pref.TaggedInDiscussionReply.SendEmail() {
 			go func() {
 				replyUser := principal.Account()
 				commonName := replyUser.CommonName
@@ -478,44 +482,48 @@ func CreateDiscussionReply(
 						zap.Error(err))
 				}
 
-				errReplyEmail := sendDiscussionReplyEmails(
-					ctx,
-					store,
-					logger,
-					emailService,
-					emailTemplateService,
-					addressBook,
-					discussion,
-					reply,
-					modelPlan,
-					replyUser,
-				)
-				if errReplyEmail != nil {
-					logger.Error("error sending tagged in plan discussion reply emails to tagged users and teams",
-						zap.String("discussionID", discussion.ID.String()),
-						zap.Error(errReplyEmail))
-				}
-
-				err = sendPlanDiscussionTagEmails(
-					ctx,
-					store,
-					false,
-					logger,
-					emailService,
-					emailTemplateService,
-					addressBook,
-					reply.Content,
-					reply.DiscussionID,
-					modelPlan,
-					commonName,
-					reply.UserRole.Humanize(models.ValueOrEmpty(reply.UserRoleDescription)),
-				)
-
-				if err != nil {
-					if err != nil {
+				if pref.NewDiscussionReply.SendEmail() {
+					errReplyEmail := sendDiscussionReplyEmails(
+						ctx,
+						store,
+						logger,
+						emailService,
+						emailTemplateService,
+						addressBook,
+						discussion,
+						reply,
+						modelPlan,
+						replyUser,
+					)
+					if errReplyEmail != nil {
 						logger.Error("error sending tagged in plan discussion reply emails to tagged users and teams",
 							zap.String("discussionID", discussion.ID.String()),
-							zap.Error(err))
+							zap.Error(errReplyEmail))
+					}
+				}
+
+				if pref.TaggedInDiscussion.SendEmail() {
+					err = sendPlanDiscussionTagEmails(
+						ctx,
+						store,
+						false,
+						logger,
+						emailService,
+						emailTemplateService,
+						addressBook,
+						reply.Content,
+						reply.DiscussionID,
+						modelPlan,
+						commonName,
+						reply.UserRole.Humanize(models.ValueOrEmpty(reply.UserRoleDescription)),
+					)
+
+					if err != nil {
+						if err != nil {
+							logger.Error("error sending tagged in plan discussion reply emails to tagged users and teams",
+								zap.String("discussionID", discussion.ID.String()),
+								zap.Error(err))
+						}
 					}
 				}
 			}()
