@@ -3152,6 +3152,11 @@ export type GetNdaQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GetNdaQuery = { __typename: 'Query', ndaInfo: { __typename: 'NDAInfo', agreed: boolean, agreedDts?: Time | null } };
 
+export type UpdateNdaMutationVariables = Exact<{ [key: string]: never; }>;
+
+
+export type UpdateNdaMutation = { __typename: 'Mutation', agreeToNDA: { __typename: 'NDAInfo', agreed: boolean, agreedDts?: Time | null } };
+
 export type GetNotificationSettingsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -5512,6 +5517,39 @@ export type GetNdaQueryHookResult = ReturnType<typeof useGetNdaQuery>;
 export type GetNdaLazyQueryHookResult = ReturnType<typeof useGetNdaLazyQuery>;
 export type GetNdaSuspenseQueryHookResult = ReturnType<typeof useGetNdaSuspenseQuery>;
 export type GetNdaQueryResult = Apollo.QueryResult<GetNdaQuery, GetNdaQueryVariables>;
+export const UpdateNdaDocument = gql`
+    mutation UpdateNDA {
+  agreeToNDA(agree: true) {
+    agreed
+    agreedDts
+  }
+}
+    `;
+export type UpdateNdaMutationFn = Apollo.MutationFunction<UpdateNdaMutation, UpdateNdaMutationVariables>;
+
+/**
+ * __useUpdateNdaMutation__
+ *
+ * To run a mutation, you first call `useUpdateNdaMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateNdaMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateNdaMutation, { data, loading, error }] = useUpdateNdaMutation({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useUpdateNdaMutation(baseOptions?: Apollo.MutationHookOptions<UpdateNdaMutation, UpdateNdaMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateNdaMutation, UpdateNdaMutationVariables>(UpdateNdaDocument, options);
+      }
+export type UpdateNdaMutationHookResult = ReturnType<typeof useUpdateNdaMutation>;
+export type UpdateNdaMutationResult = Apollo.MutationResult<UpdateNdaMutation>;
+export type UpdateNdaMutationOptions = Apollo.BaseMutationOptions<UpdateNdaMutation, UpdateNdaMutationVariables>;
 export const GetNotificationSettingsDocument = gql`
     query GetNotificationSettings {
   currentUser {
