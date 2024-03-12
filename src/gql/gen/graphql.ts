@@ -2997,6 +2997,13 @@ export type CreateModelPlanCollaboratorMutationVariables = Exact<{
 
 export type CreateModelPlanCollaboratorMutation = { __typename: 'Mutation', createPlanCollaborator: { __typename: 'PlanCollaborator', teamRoles: Array<TeamRole>, userID: UUID, modelPlanID: UUID, userAccount: { __typename: 'UserAccount', id: UUID, commonName: string, email: string } } };
 
+export type DeleteModelPlanCollaboratorMutationVariables = Exact<{
+  id: Scalars['UUID']['input'];
+}>;
+
+
+export type DeleteModelPlanCollaboratorMutation = { __typename: 'Mutation', deletePlanCollaborator: { __typename: 'PlanCollaborator', id: UUID, teamRoles: Array<TeamRole>, userID: UUID, modelPlanID: UUID, userAccount: { __typename: 'UserAccount', id: UUID, commonName: string, email: string, username: string } } };
+
 export type GetIndividualModelPlanCollaboratorQueryVariables = Exact<{
   id: Scalars['UUID']['input'];
 }>;
@@ -3017,6 +3024,14 @@ export type GetModelCollaboratorsQueryVariables = Exact<{
 
 
 export type GetModelCollaboratorsQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, collaborators: Array<{ __typename: 'PlanCollaborator', id: UUID, userID: UUID, teamRoles: Array<TeamRole>, modelPlanID: UUID, createdDts: Time, userAccount: { __typename: 'UserAccount', id: UUID, commonName: string, email: string, username: string } }> } };
+
+export type UpdateModelPlanCollaboratorMutationVariables = Exact<{
+  id: Scalars['UUID']['input'];
+  newRole: Array<TeamRole> | TeamRole;
+}>;
+
+
+export type UpdateModelPlanCollaboratorMutation = { __typename: 'Mutation', updatePlanCollaborator: { __typename: 'PlanCollaborator', teamRoles: Array<TeamRole>, userID: UUID, modelPlanID: UUID, userAccount: { __typename: 'UserAccount', commonName: string, email: string, username: string } } };
 
 export type CreateModelPlanDiscussionMutationVariables = Exact<{
   input: PlanDiscussionCreateInput;
@@ -4390,6 +4405,48 @@ export function useCreateModelPlanCollaboratorMutation(baseOptions?: Apollo.Muta
 export type CreateModelPlanCollaboratorMutationHookResult = ReturnType<typeof useCreateModelPlanCollaboratorMutation>;
 export type CreateModelPlanCollaboratorMutationResult = Apollo.MutationResult<CreateModelPlanCollaboratorMutation>;
 export type CreateModelPlanCollaboratorMutationOptions = Apollo.BaseMutationOptions<CreateModelPlanCollaboratorMutation, CreateModelPlanCollaboratorMutationVariables>;
+export const DeleteModelPlanCollaboratorDocument = gql`
+    mutation DeleteModelPlanCollaborator($id: UUID!) {
+  deletePlanCollaborator(id: $id) {
+    id
+    teamRoles
+    userAccount {
+      id
+      commonName
+      email
+      username
+    }
+    userID
+    modelPlanID
+  }
+}
+    `;
+export type DeleteModelPlanCollaboratorMutationFn = Apollo.MutationFunction<DeleteModelPlanCollaboratorMutation, DeleteModelPlanCollaboratorMutationVariables>;
+
+/**
+ * __useDeleteModelPlanCollaboratorMutation__
+ *
+ * To run a mutation, you first call `useDeleteModelPlanCollaboratorMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteModelPlanCollaboratorMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteModelPlanCollaboratorMutation, { data, loading, error }] = useDeleteModelPlanCollaboratorMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useDeleteModelPlanCollaboratorMutation(baseOptions?: Apollo.MutationHookOptions<DeleteModelPlanCollaboratorMutation, DeleteModelPlanCollaboratorMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteModelPlanCollaboratorMutation, DeleteModelPlanCollaboratorMutationVariables>(DeleteModelPlanCollaboratorDocument, options);
+      }
+export type DeleteModelPlanCollaboratorMutationHookResult = ReturnType<typeof useDeleteModelPlanCollaboratorMutation>;
+export type DeleteModelPlanCollaboratorMutationResult = Apollo.MutationResult<DeleteModelPlanCollaboratorMutation>;
+export type DeleteModelPlanCollaboratorMutationOptions = Apollo.BaseMutationOptions<DeleteModelPlanCollaboratorMutation, DeleteModelPlanCollaboratorMutationVariables>;
 export const GetIndividualModelPlanCollaboratorDocument = gql`
     query GetIndividualModelPlanCollaborator($id: UUID!) {
   planCollaboratorByID(id: $id) {
@@ -4533,6 +4590,47 @@ export type GetModelCollaboratorsQueryHookResult = ReturnType<typeof useGetModel
 export type GetModelCollaboratorsLazyQueryHookResult = ReturnType<typeof useGetModelCollaboratorsLazyQuery>;
 export type GetModelCollaboratorsSuspenseQueryHookResult = ReturnType<typeof useGetModelCollaboratorsSuspenseQuery>;
 export type GetModelCollaboratorsQueryResult = Apollo.QueryResult<GetModelCollaboratorsQuery, GetModelCollaboratorsQueryVariables>;
+export const UpdateModelPlanCollaboratorDocument = gql`
+    mutation UpdateModelPlanCollaborator($id: UUID!, $newRole: [TeamRole!]!) {
+  updatePlanCollaborator(id: $id, newRoles: $newRole) {
+    teamRoles
+    userAccount {
+      commonName
+      email
+      username
+    }
+    userID
+    modelPlanID
+  }
+}
+    `;
+export type UpdateModelPlanCollaboratorMutationFn = Apollo.MutationFunction<UpdateModelPlanCollaboratorMutation, UpdateModelPlanCollaboratorMutationVariables>;
+
+/**
+ * __useUpdateModelPlanCollaboratorMutation__
+ *
+ * To run a mutation, you first call `useUpdateModelPlanCollaboratorMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateModelPlanCollaboratorMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateModelPlanCollaboratorMutation, { data, loading, error }] = useUpdateModelPlanCollaboratorMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      newRole: // value for 'newRole'
+ *   },
+ * });
+ */
+export function useUpdateModelPlanCollaboratorMutation(baseOptions?: Apollo.MutationHookOptions<UpdateModelPlanCollaboratorMutation, UpdateModelPlanCollaboratorMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateModelPlanCollaboratorMutation, UpdateModelPlanCollaboratorMutationVariables>(UpdateModelPlanCollaboratorDocument, options);
+      }
+export type UpdateModelPlanCollaboratorMutationHookResult = ReturnType<typeof useUpdateModelPlanCollaboratorMutation>;
+export type UpdateModelPlanCollaboratorMutationResult = Apollo.MutationResult<UpdateModelPlanCollaboratorMutation>;
+export type UpdateModelPlanCollaboratorMutationOptions = Apollo.BaseMutationOptions<UpdateModelPlanCollaboratorMutation, UpdateModelPlanCollaboratorMutationVariables>;
 export const CreateModelPlanDiscussionDocument = gql`
     mutation CreateModelPlanDiscussion($input: PlanDiscussionCreateInput!) {
   createPlanDiscussion(input: $input) {

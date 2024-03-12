@@ -1,12 +1,10 @@
 import { gql } from '@apollo/client';
 
-export default gql`
-  mutation DeleteModelPlanCollaborator($id: UUID!) {
-    deletePlanCollaborator(id: $id) {
-      id
+export default gql(/* GraphQL */ `
+  mutation UpdateModelPlanCollaborator($id: UUID!, $newRole: [TeamRole!]!) {
+    updatePlanCollaborator(id: $id, newRoles: $newRole) {
       teamRoles
       userAccount {
-        id
         commonName
         email
         username
@@ -15,4 +13,4 @@ export default gql`
       modelPlanID
     }
   }
-`;
+`);

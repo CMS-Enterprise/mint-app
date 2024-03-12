@@ -1,13 +1,13 @@
 import React, { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
-import { useMutation } from '@apollo/client';
 import { Button, Fieldset, Label, TextInput } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
 import {
   TeamRole,
   useCreateModelPlanCollaboratorMutation,
-  useGetModelCollaboratorsQuery
+  useGetModelCollaboratorsQuery,
+  useUpdateModelPlanCollaboratorMutation
 } from 'gql/gen/graphql';
 import { GetIndividualModelPlanCollaborator_planCollaboratorByID as CollaboratorFormType } from 'gql/gen/types/GetIndividualModelPlanCollaborator';
 import { GetModelCollaborators_modelPlan_collaborators as GetCollaboratorsType } from 'gql/gen/types/GetModelCollaborators';
@@ -24,11 +24,6 @@ import MultiSelect from 'components/shared/MultiSelect';
 import Spinner from 'components/Spinner';
 import useMessage from 'hooks/useMessage';
 import usePlanTranslation from 'hooks/usePlanTranslation';
-import {
-  UpdateModelPlanCollaborator as UpdateModelPlanCollaboratorType,
-  UpdateModelPlanCollaboratorVariables
-} from 'queries/Collaborators/types/UpdateModelPlanCollaborator';
-import UpdateModelPlanCollaborator from 'queries/Collaborators/UpdateModelPlanCollaborator';
 import { getKeys } from 'types/translation';
 import flattenErrors from 'utils/flattenErrors';
 import { composeMultiSelectOptions } from 'utils/modelPlan';
@@ -61,10 +56,10 @@ const Collaborators = () => {
 
   const [create, { loading }] = useCreateModelPlanCollaboratorMutation();
 
-  const [update, { loading: updateLoading }] = useMutation<
-    UpdateModelPlanCollaboratorType,
-    UpdateModelPlanCollaboratorVariables
-  >(UpdateModelPlanCollaborator);
+  const [
+    update,
+    { loading: updateLoading }
+  ] = useUpdateModelPlanCollaboratorMutation();
 
   const {
     data: allCollaboratorsData,
