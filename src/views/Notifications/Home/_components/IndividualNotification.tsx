@@ -54,7 +54,7 @@ const IndividualNotification = ({
     }).then(response => {
       if (!response?.errors) {
         history.push(
-          `/models/${modelPlanID}/task-list?discussionID=${discussionID}`
+          `/models/${modelPlanID}/read-only/discussions?discussionID=${discussionID}`
         );
       }
     });

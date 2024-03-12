@@ -53,7 +53,6 @@ func UserNotificationPreferencesGetByUserIDLoader(np sqlutils.NamedPreparer, par
 
 // UserNotificationPreferencesUpdate updates a new UserNotificationPreferences in the database
 func UserNotificationPreferencesUpdate(np sqlutils.NamedPreparer, userNotificationPreferences *models.UserNotificationPreferences) (*models.UserNotificationPreferences, error) {
-
 	retUserNotificationPref, procErr := sqlutils.GetProcedure[models.UserNotificationPreferences](np, sqlqueries.UserNotificationPreferences.Update, userNotificationPreferences)
 	if procErr != nil {
 		return nil, fmt.Errorf("issue updating UserNotificationPreferences object: %w", procErr)
