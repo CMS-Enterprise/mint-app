@@ -95,11 +95,6 @@ type ComplexityRoot struct {
 		ModifiedDts           func(childComplexity int) int
 	}
 
-	ActivityMetaBaseStruct struct {
-		Type    func(childComplexity int) int
-		Version func(childComplexity int) int
-	}
-
 	AnalyzedAudit struct {
 		Changes               func(childComplexity int) int
 		CreatedBy             func(childComplexity int) int
@@ -1556,20 +1551,6 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Activity.ModifiedDts(childComplexity), true
-
-	case "ActivityMetaBaseStruct.type":
-		if e.complexity.ActivityMetaBaseStruct.Type == nil {
-			break
-		}
-
-		return e.complexity.ActivityMetaBaseStruct.Type(childComplexity), true
-
-	case "ActivityMetaBaseStruct.version":
-		if e.complexity.ActivityMetaBaseStruct.Version == nil {
-			break
-		}
-
-		return e.complexity.ActivityMetaBaseStruct.Version(childComplexity), true
 
 	case "AnalyzedAudit.changes":
 		if e.complexity.AnalyzedAudit.Changes == nil {
@@ -9722,7 +9703,7 @@ enum ActivityType {
 """
 ActivityMetaData is a type that represents all the data that can be captured in an Activity
 """
-union ActivityMetaData = ActivityMetaBaseStruct | TaggedInPlanDiscussionActivityMeta  | TaggedInDiscussionReplyActivityMeta | DailyDigestCompleteActivityMeta
+union ActivityMetaData = TaggedInPlanDiscussionActivityMeta  | TaggedInDiscussionReplyActivityMeta | DailyDigestCompleteActivityMeta
 
 type TaggedInPlanDiscussionActivityMeta {
   version: Int!
@@ -9753,12 +9734,6 @@ type DailyDigestCompleteActivityMeta {
   analyzedAudits: [AnalyzedAudit!]!
   userID: UUID!
   date:  Time!
-}
-
-
-type ActivityMetaBaseStruct {
-  version: Int!
-  type: ActivityType!
 }
 
 
@@ -13168,94 +13143,6 @@ func (ec *executionContext) fieldContext_Activity_modifiedDts(ctx context.Contex
 		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return nil, errors.New("field of type Time does not have child fields")
-		},
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _ActivityMetaBaseStruct_version(ctx context.Context, field graphql.CollectedField, obj *models.ActivityMetaBaseStruct) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_ActivityMetaBaseStruct_version(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.Version, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(int)
-	fc.Result = res
-	return ec.marshalNInt2int(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_ActivityMetaBaseStruct_version(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "ActivityMetaBaseStruct",
-		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type Int does not have child fields")
-		},
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _ActivityMetaBaseStruct_type(ctx context.Context, field graphql.CollectedField, obj *models.ActivityMetaBaseStruct) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_ActivityMetaBaseStruct_type(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.Type, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(models.ActivityType)
-	fc.Result = res
-	return ec.marshalNActivityType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐActivityType(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_ActivityMetaBaseStruct_type(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "ActivityMetaBaseStruct",
-		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type ActivityType does not have child fields")
 		},
 	}
 	return fc, nil
@@ -62317,11 +62204,6 @@ func (ec *executionContext) _ActivityMetaData(ctx context.Context, sel ast.Selec
 	switch obj := (obj).(type) {
 	case nil:
 		return graphql.Null
-	case *models.ActivityMetaBaseStruct:
-		if obj == nil {
-			return graphql.Null
-		}
-		return ec._ActivityMetaBaseStruct(ctx, sel, obj)
 	case *models.TaggedInPlanDiscussionActivityMeta:
 		if obj == nil {
 			return graphql.Null
@@ -62547,50 +62429,6 @@ func (ec *executionContext) _Activity(ctx context.Context, sel ast.SelectionSet,
 			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
 		case "modifiedDts":
 			out.Values[i] = ec._Activity_modifiedDts(ctx, field, obj)
-		default:
-			panic("unknown field " + strconv.Quote(field.Name))
-		}
-	}
-	out.Dispatch(ctx)
-	if out.Invalids > 0 {
-		return graphql.Null
-	}
-
-	atomic.AddInt32(&ec.deferred, int32(len(deferred)))
-
-	for label, dfs := range deferred {
-		ec.processDeferredGroup(graphql.DeferredGroup{
-			Label:    label,
-			Path:     graphql.GetPath(ctx),
-			FieldSet: dfs,
-			Context:  ctx,
-		})
-	}
-
-	return out
-}
-
-var activityMetaBaseStructImplementors = []string{"ActivityMetaBaseStruct", "ActivityMetaData"}
-
-func (ec *executionContext) _ActivityMetaBaseStruct(ctx context.Context, sel ast.SelectionSet, obj *models.ActivityMetaBaseStruct) graphql.Marshaler {
-	fields := graphql.CollectFields(ec.OperationContext, sel, activityMetaBaseStructImplementors)
-
-	out := graphql.NewFieldSet(fields)
-	deferred := make(map[string]*graphql.FieldSet)
-	for i, field := range fields {
-		switch field.Name {
-		case "__typename":
-			out.Values[i] = graphql.MarshalString("ActivityMetaBaseStruct")
-		case "version":
-			out.Values[i] = ec._ActivityMetaBaseStruct_version(ctx, field, obj)
-			if out.Values[i] == graphql.Null {
-				out.Invalids++
-			}
-		case "type":
-			out.Values[i] = ec._ActivityMetaBaseStruct_type(ctx, field, obj)
-			if out.Values[i] == graphql.Null {
-				out.Invalids++
-			}
 		default:
 			panic("unknown field " + strconv.Quote(field.Name))
 		}
