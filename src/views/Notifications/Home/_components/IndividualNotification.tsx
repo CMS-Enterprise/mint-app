@@ -1,12 +1,9 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
-import { Button, Grid, Icon } from '@trussworks/react-uswds';
+import { Button, Grid } from '@trussworks/react-uswds';
 import { useMarkNotificationAsReadMutation } from 'gql/gen/graphql';
-import {
-  GetNotifications_currentUser_notifications_notifications_activity as NotificationActivityType,
-  GetNotifications_currentUser_notifications_notifications_activity_metaData as MetaDataType
-} from 'gql/gen/types/GetNotifications';
+import { GetNotifications_currentUser_notifications_notifications_activity as NotificationActivityType } from 'gql/gen/types/GetNotifications';
 
 import { arrayOfColors } from 'components/shared/IconInitial';
 import MentionTextArea from 'components/shared/MentionTextArea';
@@ -15,6 +12,8 @@ import { getTimeElapsed } from 'utils/date';
 import { getUserInitials } from 'utils/modelPlan';
 
 import {
+  ActivityCTA,
+  activityText,
   isDailyDigest,
   isTaggedInDiscussion,
   isTaggedInDiscussionReply
@@ -38,7 +37,6 @@ const IndividualNotification = ({
     actorUserAccount: { commonName }
   }
 }: IndividualNotificationProps) => {
-  const { t: notificationsT } = useTranslation('notifications');
   const { t: discussionT } = useTranslation('discussions');
 
   const [isExpanded, setIsExpanded] = useState(false);
@@ -86,54 +84,6 @@ const IndividualNotification = ({
     } else {
       setIsExpanded(!isExpanded);
     }
-  };
-  const activityText = (data: MetaDataType) => {
-    if (isTaggedInDiscussion(data)) {
-      return notificationsT('index.activityType.taggedInDiscussion.text', {
-        modelName: data.modelPlan.modelName
-      });
-    }
-    if (isTaggedInDiscussionReply(data)) {
-      return notificationsT('index.activityType.taggedInDiscussionReply.text', {
-        modelName: data.modelPlan.modelName
-      });
-    }
-    if (isDailyDigest(data)) {
-      return notificationsT('index.activityType.dailyDigestComplete.text');
-    }
-    return '';
-  };
-
-  const activityCTA = (data: MetaDataType) => {
-    if (isTaggedInDiscussion(data)) {
-      return (
-        <>
-          {notificationsT('index.activityType.taggedInDiscussion.cta')}
-          <Icon.ArrowForward className="margin-left-1" aria-hidden />
-        </>
-      );
-    }
-    if (isTaggedInDiscussionReply(data)) {
-      return (
-        <>
-          {notificationsT('index.activityType.taggedInDiscussionReply.cta')}
-          <Icon.ArrowForward className="margin-left-1" aria-hidden />
-        </>
-      );
-    }
-    if (isDailyDigest(data)) {
-      return (
-        <>
-          {notificationsT('index.activityType.dailyDigestComplete.cta')}
-          {isExpanded ? (
-            <Icon.ExpandLess className="margin-left-1" aria-hidden />
-          ) : (
-            <Icon.ExpandMore className="margin-left-1" aria-hidden />
-          )}
-        </>
-      );
-    }
-    return '';
   };
 
   // Mint System Account -> MINT
@@ -203,7 +153,7 @@ const IndividualNotification = ({
                     }
                   }}
                 >
-                  {activityCTA(metaData)}
+                  <ActivityCTA data={metaData} isExpanded={isExpanded} />
                 </Button>
               </div>
             </div>
