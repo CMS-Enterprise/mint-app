@@ -171,6 +171,10 @@ const IndividualNotification = ({
                         metaData.discussionID
                       );
                     }
+                    if (isDailyDigest(metaData)) {
+                      // mark as read
+                      // change states
+                    }
                   }}
                 >
                   {activityCTA(metaData)}
