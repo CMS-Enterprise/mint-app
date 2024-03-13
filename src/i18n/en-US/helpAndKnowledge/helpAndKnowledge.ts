@@ -787,7 +787,7 @@ HDR’s Configuration Management allows model teams to define and modify perform
         {
           header: 'Reach out to Technical Lead',
           description:
-            'If you’re interested in using HDR for your model or would like to learn more about the system, please reach out to Hung Van. '
+            'If you’re interested in using HDR for your model or would like to learn more about the system, please reach out to Curtis Naumann. '
         },
         {
           header: 'Meet to understand requirements',
@@ -1067,7 +1067,7 @@ The Model team will receive an implementation milestone schedule that identifies
         {
           header: 'Contact the ISP Team',
           description:
-            'Contact Hung Van if you’re interested in using ISP or want to learn more.'
+            'Contact Joe Pusateri if you’re interested in using ISP or want to learn more.'
         },
         {
           header: 'Initial discussion',
