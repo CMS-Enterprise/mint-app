@@ -29,7 +29,7 @@ const NotificationsHome = () => {
   const numUnreadNotifications =
     data?.currentUser.notifications.numUnreadNotifications;
 
-  const allNotifications = data?.currentUser.notifications.notifications!;
+  const allNotifications = data?.currentUser.notifications.notifications || [];
 
   const breadcrumbs = [
     { text: miscellaneousT('home'), url: '/' },
