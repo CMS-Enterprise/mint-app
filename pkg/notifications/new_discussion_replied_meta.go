@@ -11,9 +11,9 @@ import (
 )
 
 // ActivityNewDiscussionRepliedCreate creates an activity for when a Discussion is replied to.
-func ActivityNewDiscussionRepliedCreate(ctx context.Context, np sqlutils.NamedPreparer, actorID uuid.UUID, modelPlanID uuid.UUID, discussionID uuid.UUID, replyID uuid.UUID, discussionReplyContent models.TaggedHTML, getPreferencesFunc GetUserNotificationPreferencesFunc) (*models.Activity, error) {
+func ActivityNewDiscussionRepliedCreate(ctx context.Context, np sqlutils.NamedPreparer, actorID uuid.UUID, modelPlanID uuid.UUID, discussionID uuid.UUID, discussionCreatorID uuid.UUID, replyID uuid.UUID, discussionReplyContent models.TaggedHTML, getPreferencesFunc GetUserNotificationPreferencesFunc) (*models.Activity, error) {
 
-	activity := models.NewNewDiscussionRepliedActivity(actorID, modelPlanID, discussionID, replyID, discussionReplyContent.RawContent.String())
+	activity := models.NewNewDiscussionRepliedActivity(actorID, modelPlanID, discussionID, discussionCreatorID, replyID, discussionReplyContent.RawContent.String())
 
 	retActivity, actErr := activityCreate(ctx, np, activity)
 	if actErr != nil {

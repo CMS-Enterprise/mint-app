@@ -272,15 +272,16 @@ type ComplexityRoot struct {
 	}
 
 	NewDiscussionRepliedActivityMeta struct {
-		Content      func(childComplexity int) int
-		Discussion   func(childComplexity int) int
-		DiscussionID func(childComplexity int) int
-		ModelPlan    func(childComplexity int) int
-		ModelPlanID  func(childComplexity int) int
-		Reply        func(childComplexity int) int
-		ReplyID      func(childComplexity int) int
-		Type         func(childComplexity int) int
-		Version      func(childComplexity int) int
+		Content             func(childComplexity int) int
+		Discussion          func(childComplexity int) int
+		DiscussionCreatorID func(childComplexity int) int
+		DiscussionID        func(childComplexity int) int
+		ModelPlan           func(childComplexity int) int
+		ModelPlanID         func(childComplexity int) int
+		Reply               func(childComplexity int) int
+		ReplyID             func(childComplexity int) int
+		Type                func(childComplexity int) int
+		Version             func(childComplexity int) int
 	}
 
 	OperationalNeed struct {
@@ -2714,6 +2715,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.NewDiscussionRepliedActivityMeta.Discussion(childComplexity), true
+
+	case "NewDiscussionRepliedActivityMeta.discussionCreatorID":
+		if e.complexity.NewDiscussionRepliedActivityMeta.DiscussionCreatorID == nil {
+			break
+		}
+
+		return e.complexity.NewDiscussionRepliedActivityMeta.DiscussionCreatorID(childComplexity), true
 
 	case "NewDiscussionRepliedActivityMeta.discussionID":
 		if e.complexity.NewDiscussionRepliedActivityMeta.DiscussionID == nil {
@@ -9463,6 +9471,7 @@ type NewDiscussionRepliedActivityMeta {
   modelPlanID: UUID!
   modelPlan: ModelPlan!
   discussionID: UUID!
+  discussionCreatorID: UUID!
   discussion: PlanDiscussion!
   replyID: UUID!
   reply: DiscussionReply!
@@ -23744,6 +23753,50 @@ func (ec *executionContext) _NewDiscussionRepliedActivityMeta_discussionID(ctx c
 }
 
 func (ec *executionContext) fieldContext_NewDiscussionRepliedActivityMeta_discussionID(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "NewDiscussionRepliedActivityMeta",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type UUID does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _NewDiscussionRepliedActivityMeta_discussionCreatorID(ctx context.Context, field graphql.CollectedField, obj *models.NewDiscussionRepliedActivityMeta) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_NewDiscussionRepliedActivityMeta_discussionCreatorID(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.DiscussionCreatorID, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(uuid.UUID)
+	fc.Result = res
+	return ec.marshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_NewDiscussionRepliedActivityMeta_discussionCreatorID(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "NewDiscussionRepliedActivityMeta",
 		Field:      field,
@@ -62840,6 +62893,11 @@ func (ec *executionContext) _NewDiscussionRepliedActivityMeta(ctx context.Contex
 			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
 		case "discussionID":
 			out.Values[i] = ec._NewDiscussionRepliedActivityMeta_discussionID(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "discussionCreatorID":
+			out.Values[i] = ec._NewDiscussionRepliedActivityMeta_discussionCreatorID(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
 				atomic.AddUint32(&out.Invalids, 1)
 			}

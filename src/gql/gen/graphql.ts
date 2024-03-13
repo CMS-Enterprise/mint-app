@@ -919,6 +919,7 @@ export type NewDiscussionRepliedActivityMeta = {
   __typename: 'NewDiscussionRepliedActivityMeta';
   content: Scalars['String']['output'];
   discussion: PlanDiscussion;
+  discussionCreatorID: Scalars['UUID']['output'];
   discussionID: Scalars['UUID']['output'];
   modelPlan: ModelPlan;
   modelPlanID: Scalars['UUID']['output'];

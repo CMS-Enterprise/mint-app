@@ -13,17 +13,19 @@ type NewDiscussionRepliedActivityMeta struct {
 	ActivityMetaBaseStruct
 	discussionRelation
 	modelPlanRelation
-	ReplyID uuid.UUID `json:"replyID"`
-	Content string    `json:"content"`
+	DiscussionCreatorID uuid.UUID `json:"discussionCreatorID"`
+	ReplyID             uuid.UUID `json:"replyID"`
+	Content             string    `json:"content"`
 }
 
 // newNewDiscussionRepliedActivityMeta creates a New NewDiscussionRepliedActivityMeta
-func newNewDiscussionRepliedActivityMeta(modelPlanID uuid.UUID, discussionID uuid.UUID, replyID uuid.UUID, content string) *NewDiscussionRepliedActivityMeta {
+func newNewDiscussionRepliedActivityMeta(modelPlanID uuid.UUID, discussionID uuid.UUID, discussionCreatorID uuid.UUID, replyID uuid.UUID, content string) *NewDiscussionRepliedActivityMeta {
 	version := 0 //iterate this if this type ever updates
 	return &NewDiscussionRepliedActivityMeta{
 		ActivityMetaBaseStruct: NewActivityMetaBaseStruct(ActivityTaggedInDiscussionReply, version),
 		discussionRelation:     NewDiscussionRelation(discussionID),
 		modelPlanRelation:      NewModelPlanRelation(modelPlanID),
+		DiscussionCreatorID:    discussionCreatorID,
 		ReplyID:                replyID,
 		Content:                content,
 	}
@@ -31,13 +33,13 @@ func newNewDiscussionRepliedActivityMeta(modelPlanID uuid.UUID, discussionID uui
 }
 
 // NewNewDiscussionRepliedActivity creates a New New Discussion Replied type of Activity
-func NewNewDiscussionRepliedActivity(actorID uuid.UUID, modelPlanID uuid.UUID, discussionID uuid.UUID, replyID uuid.UUID, content string) *Activity {
+func NewNewDiscussionRepliedActivity(actorID uuid.UUID, modelPlanID uuid.UUID, discussionID uuid.UUID, discussionCreatorID uuid.UUID, replyID uuid.UUID, content string) *Activity {
 	return &Activity{
 		baseStruct:   NewBaseStruct(actorID),
 		ActorID:      actorID,
 		EntityID:     discussionID,
 		ActivityType: ActivityTaggedInDiscussionReply,
-		MetaData:     newNewDiscussionRepliedActivityMeta(modelPlanID, discussionID, replyID, content),
+		MetaData:     newNewDiscussionRepliedActivityMeta(modelPlanID, discussionID, discussionCreatorID, replyID, content),
 	}
 }
 
