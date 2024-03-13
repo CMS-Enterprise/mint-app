@@ -6,7 +6,6 @@ package resolvers
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/google/uuid"
 
@@ -21,24 +20,21 @@ func (r *activityResolver) ActorUserAccount(ctx context.Context, obj *models.Act
 	return UserAccountGetByIDLOADER(ctx, obj.ActorID)
 }
 
-// ModelPlanID is the resolver for the modelPlanID field.
-func (r *newDiscussionRepliedActivityMetaResolver) ModelPlanID(ctx context.Context, obj *models.NewDiscussionRepliedActivityMeta) (uuid.UUID, error) {
-	panic(fmt.Errorf("not implemented: ModelPlanID - modelPlanID"))
-}
-
 // ModelPlan is the resolver for the modelPlan field.
 func (r *newDiscussionRepliedActivityMetaResolver) ModelPlan(ctx context.Context, obj *models.NewDiscussionRepliedActivityMeta) (*models.ModelPlan, error) {
-	panic(fmt.Errorf("not implemented: ModelPlan - modelPlan"))
+	return ModelPlanGetByIDLOADER(ctx, obj.ModelPlanID)
 }
 
 // Discussion is the resolver for the discussion field.
 func (r *newDiscussionRepliedActivityMetaResolver) Discussion(ctx context.Context, obj *models.NewDiscussionRepliedActivityMeta) (*models.PlanDiscussion, error) {
-	panic(fmt.Errorf("not implemented: Discussion - discussion"))
+	logger := appcontext.ZLogger(ctx)
+	return PlanDiscussionGetByID(ctx, r.store, logger, obj.DiscussionID)
 }
 
 // Reply is the resolver for the reply field.
 func (r *newDiscussionRepliedActivityMetaResolver) Reply(ctx context.Context, obj *models.NewDiscussionRepliedActivityMeta) (*models.DiscussionReply, error) {
-	panic(fmt.Errorf("not implemented: Reply - reply"))
+	logger := appcontext.ZLogger(ctx)
+	return DiscussionReplyGetByID(ctx, r.store, logger, obj.ReplyID)
 }
 
 // Discussion is the resolver for the discussion field.
@@ -81,3 +77,13 @@ type activityResolver struct{ *Resolver }
 type newDiscussionRepliedActivityMetaResolver struct{ *Resolver }
 type taggedInDiscussionReplyActivityMetaResolver struct{ *Resolver }
 type taggedInPlanDiscussionActivityMetaResolver struct{ *Resolver }
+
+// !!! WARNING !!!
+// The code below was going to be deleted when updating resolvers. It has been copied here so you have
+// one last chance to move it out of harms way if you want. There are two reasons this happens:
+//   - When renaming or deleting a resolver the old code will be put in here. You can safely delete
+//     it when you're done.
+//   - You have helper methods in this file. Move them out to keep these resolver files clean.
+func (r *newDiscussionRepliedActivityMetaResolver) ModelPlanID(ctx context.Context, obj *models.NewDiscussionRepliedActivityMeta) (uuid.UUID, error) {
+	return obj.ModelPlanID, nil
+}

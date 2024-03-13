@@ -9,30 +9,9 @@ import (
 )
 
 func (suite *NotificationsSuite) TestActivityNewDiscussionRepliedCreate() {
+	html := `<p>Hey there!  Are you available for a quick sync on thjis issue? Thanks!</p>`
 
-	tag1EUA := "SKZO"
-	tag1Principal, err := suite.testConfigs.GetTestPrincipal(suite.testConfigs.Store, tag1EUA)
-	suite.NoError(err)
-	tag1Label := "Alexander Stark"
-	tag1Type := models.TagTypeUserAccount
-	tag1 := `<span data-type="mention" tag-type="` + string(tag1Type) + `" class="mention" data-id="` + tag1EUA + `" data-label="` + tag1Label + `">@` + tag1Label + `</span>`
-
-	tag2EUA := "FAKE"
-	tag2Principal, err := suite.testConfigs.GetTestPrincipal(suite.testConfigs.Store, tag2EUA)
-	suite.NoError(err)
-	tag2Label := "Terry Thompson"
-	tag2Type := models.TagTypeUserAccount
-	tag2 := `<span data-type="mention" tag-type="` + string(tag2Type) + `" class="mention" data-id="` + tag2EUA + `" data-label="` + tag2Label + `">@` + tag2Label + `</span>`
-
-	tag3ID := "CONNECT"
-	tag3Label := "Salesforce CONNECT"
-	tag3Type := models.TagTypePossibleSolution
-	tag3 := `<span data-type="mention" tag-type="` + string(tag3Type) + `" class="mention" data-id="` + tag3ID + `" data-label="` + tag3Label + `">@` + tag3Label + `</span>`
-
-	htmlMention := `<p>Hey ` + tag1 + `!  Will you be able to join the meeting next week?  If not, can you contact ` + tag2 + ` to let them know?</p> We are planning on using the ` + tag3 + `solution.` + tag1 + tag1
-
-	// We have made a mention with 5 Mentions. This should only create 5 tags in the database
-	taggedContent, err := models.NewTaggedContentFromString(htmlMention)
+	taggedContent, err := models.NewTaggedContentFromString(html)
 	suite.NoError(err)
 
 	//Note: this will fail without properly updating the mentions to point to the DB.
@@ -40,6 +19,7 @@ func (suite *NotificationsSuite) TestActivityNewDiscussionRepliedCreate() {
 	input := models.TaggedHTML(taggedContent)
 
 	// we are just choosing a valid UUID to set for the entityID
+	modelPlanID := uuid.New()
 	discussionID := uuid.New()
 	replyID := uuid.New()
 	actorID := suite.testConfigs.Principal.Account().ID
@@ -49,7 +29,7 @@ func (suite *NotificationsSuite) TestActivityNewDiscussionRepliedCreate() {
 		return models.NewUserNotificationPreferences(user_id), nil
 	}
 
-	testActivity, err := ActivityNewDiscussionRepliedCreate(suite.testConfigs.Context, suite.testConfigs.Store, actorID, discussionID, replyID, input, mockFunc)
+	testActivity, err := ActivityNewDiscussionRepliedCreate(suite.testConfigs.Context, suite.testConfigs.Store, actorID, modelPlanID, discussionID, replyID, input, mockFunc)
 
 	suite.NoError(err)
 	suite.NotNil(testActivity)
@@ -65,13 +45,4 @@ func (suite *NotificationsSuite) TestActivityNewDiscussionRepliedCreate() {
 	actorNots, err := UserNotificationCollectionGetByUser(suite.testConfigs.Context, suite.testConfigs.Store, suite.testConfigs.Principal)
 	suite.NoError(err)
 	suite.EqualValues(0, actorNots.NumUnreadNotifications())
-
-	tag1Nots, err := UserNotificationCollectionGetByUser(suite.testConfigs.Context, suite.testConfigs.Store, tag1Principal)
-	suite.NoError(err)
-	suite.EqualValues(1, tag1Nots.NumUnreadNotifications())
-
-	tag2Nots, err := UserNotificationCollectionGetByUser(suite.testConfigs.Context, suite.testConfigs.Store, tag2Principal)
-	suite.NoError(err)
-	suite.EqualValues(1, tag2Nots.NumUnreadNotifications())
-
 }

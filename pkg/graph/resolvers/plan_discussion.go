@@ -461,7 +461,7 @@ func CreateDiscussionReply(
 			return nil, fmt.Errorf("unable to generate notifications, %w", notificationErr)
 		}
 
-		_, err = notifications.ActivityNewDiscussionRepliedCreate(ctx, tx, discussion.CreatedBy, discussion.ID, reply.ID, reply.Content, loaders.UserNotificationPreferencesGetByUserID)
+		_, err = notifications.ActivityNewDiscussionRepliedCreate(ctx, tx, discussion.CreatedBy, discussion.ModelPlanID, discussion.ID, reply.ID, reply.Content, loaders.UserNotificationPreferencesGetByUserID)
 		if notificationErr != nil {
 			return nil, fmt.Errorf("unable to generate notifications, %w", notificationErr)
 		}

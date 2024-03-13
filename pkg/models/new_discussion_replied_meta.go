@@ -12,16 +12,18 @@ import (
 type NewDiscussionRepliedActivityMeta struct {
 	ActivityMetaBaseStruct
 	discussionRelation
+	modelPlanRelation
 	ReplyID uuid.UUID `json:"replyID"`
 	Content string    `json:"content"`
 }
 
 // newNewDiscussionRepliedActivityMeta creates a New NewDiscussionRepliedActivityMeta
-func newNewDiscussionRepliedActivityMeta(discussionID uuid.UUID, replyID uuid.UUID, content string) *NewDiscussionRepliedActivityMeta {
+func newNewDiscussionRepliedActivityMeta(modelPlanID uuid.UUID, discussionID uuid.UUID, replyID uuid.UUID, content string) *NewDiscussionRepliedActivityMeta {
 	version := 0 //iterate this if this type ever updates
 	return &NewDiscussionRepliedActivityMeta{
 		ActivityMetaBaseStruct: NewActivityMetaBaseStruct(ActivityTaggedInDiscussionReply, version),
 		discussionRelation:     NewDiscussionRelation(discussionID),
+		modelPlanRelation:      NewModelPlanRelation(modelPlanID),
 		ReplyID:                replyID,
 		Content:                content,
 	}
@@ -29,13 +31,13 @@ func newNewDiscussionRepliedActivityMeta(discussionID uuid.UUID, replyID uuid.UU
 }
 
 // NewNewDiscussionRepliedActivity creates a New New Discussion Replied type of Activity
-func NewNewDiscussionRepliedActivity(actorID uuid.UUID, discussionID uuid.UUID, replyID uuid.UUID, content string) *Activity {
+func NewNewDiscussionRepliedActivity(actorID uuid.UUID, modelPlanID uuid.UUID, discussionID uuid.UUID, replyID uuid.UUID, content string) *Activity {
 	return &Activity{
 		baseStruct:   NewBaseStruct(actorID),
 		ActorID:      actorID,
 		EntityID:     discussionID,
 		ActivityType: ActivityTaggedInDiscussionReply,
-		MetaData:     newNewDiscussionRepliedActivityMeta(discussionID, replyID, content),
+		MetaData:     newNewDiscussionRepliedActivityMeta(modelPlanID, discussionID, replyID, content),
 	}
 }
 
