@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import { Button, Grid, Icon } from '@trussworks/react-uswds';
@@ -6,9 +6,6 @@ import { useMarkNotificationAsReadMutation } from 'gql/gen/graphql';
 import {
   GetNotifications_currentUser_notifications_notifications_activity as NotificationActivityType,
   GetNotifications_currentUser_notifications_notifications_activity_metaData as MetaDataType
-  // GetNotifications_currentUser_notifications_notifications_activity_metaData_ActivityMetaBaseStruct as BaseStructActivityType,
-  // GetNotifications_currentUser_notifications_notifications_activity_metaData_TaggedInDiscussionReplyActivityMeta as TaggedInDiscussionReplyActivityType,
-  // GetNotifications_currentUser_notifications_notifications_activity_metaData_TaggedInPlanDiscussionActivityMeta as TaggedInDiscussionActivityType
 } from 'gql/gen/types/GetNotifications';
 
 import { arrayOfColors } from 'components/shared/IconInitial';
@@ -44,12 +41,14 @@ const IndividualNotification = ({
   const { t: notificationsT } = useTranslation('notifications');
   const { t: discussionT } = useTranslation('discussions');
 
+  const [isExpanded, setIsExpanded] = useState(false);
+
   const history = useHistory();
   const isMobile = useCheckResponsiveScreen('mobile');
 
   const [markAsRead] = useMarkNotificationAsReadMutation();
 
-  const handleMarkAsRead = (
+  const handleMarkAsReadAndViewDiscussion = (
     notificationID: string,
     modelPlanID: string,
     discussionID: string
@@ -63,6 +62,18 @@ const IndividualNotification = ({
         history.push(
           `/models/${modelPlanID}/read-only/discussions?discussionID=${discussionID}`
         );
+      }
+    });
+  };
+
+  const handleMarkAsReadAndToggleDailyDigest = (notificationID: string) => {
+    markAsRead({
+      variables: {
+        notificationID
+      }
+    }).then(response => {
+      if (!response?.errors) {
+        setIsExpanded(!isExpanded);
       }
     });
   };
@@ -105,7 +116,11 @@ const IndividualNotification = ({
       return (
         <>
           {notificationsT('index.activityType.dailyDigestComplete.cta')}
-          <Icon.ExpandMore className="margin-left-1" aria-hidden />
+          {isExpanded ? (
+            <Icon.ExpandLess className="margin-left-1" aria-hidden />
+          ) : (
+            <Icon.ExpandMore className="margin-left-1" aria-hidden />
+          )}
         </>
       );
     }
@@ -168,15 +183,14 @@ const IndividualNotification = ({
                       isTaggedInDiscussion(metaData) ||
                       isTaggedInDiscussionReply(metaData)
                     ) {
-                      handleMarkAsRead(
+                      handleMarkAsReadAndViewDiscussion(
                         id,
                         metaData.modelPlanID,
                         metaData.discussionID
                       );
                     }
                     if (isDailyDigest(metaData)) {
-                      // mark as read
-                      // change states
+                      handleMarkAsReadAndToggleDailyDigest(id);
                     }
                   }}
                 >
