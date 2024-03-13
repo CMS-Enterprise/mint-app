@@ -4,10 +4,10 @@ go 1.21
 
 require (
 	github.com/99designs/gqlgen v0.17.38
-	github.com/aws/aws-sdk-go v1.50.30
+	github.com/aws/aws-sdk-go v1.50.35
 	github.com/facebookgo/clock v0.0.0-20150410010913-600d898af40a
-	github.com/go-openapi/errors v0.21.0
-	github.com/go-openapi/swag v0.22.9
+	github.com/go-openapi/errors v0.22.0
+	github.com/go-openapi/swag v0.23.0
 	github.com/golang/mock v1.6.0
 	github.com/google/uuid v1.6.0
 	github.com/gorilla/mux v1.8.1
@@ -34,7 +34,7 @@ require (
 	github.com/contribsys/faktory v1.8.0
 	github.com/launchdarkly/go-sdk-common/v3 v3.1.0
 	github.com/launchdarkly/go-server-sdk/v6 v6.1.1
-	golang.org/x/net v0.21.0
+	golang.org/x/net v0.22.0
 )
 
 require (
@@ -104,9 +104,9 @@ require (
 	github.com/urfave/cli/v2 v2.25.5 // indirect
 	github.com/xrash/smetrics v0.0.0-20201216005158-039620a65673 // indirect
 	go.uber.org/multierr v1.10.0 // indirect
-	golang.org/x/crypto v0.19.0 // indirect
+	golang.org/x/crypto v0.21.0 // indirect
 	golang.org/x/mod v0.12.0 // indirect
-	golang.org/x/sys v0.17.0 // indirect
+	golang.org/x/sys v0.18.0 // indirect
 	golang.org/x/text v0.14.0 // indirect
 	golang.org/x/tools v0.13.0 // indirect
 	gopkg.in/ini.v1 v1.67.0 // indirect
