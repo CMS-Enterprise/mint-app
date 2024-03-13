@@ -66,9 +66,18 @@ const csvFields = [
   'generalCharacteristics.isNewModel',
   'generalCharacteristics.existingModel',
   'generalCharacteristics.resemblesExistingModel',
-  'generalCharacteristics.existingModelLinks', // array
+  'generalCharacteristics.resemblesExistingModelWhyHow',
   'generalCharacteristics.resemblesExistingModelHow',
+  'generalCharacteristics.resemblesExistingModelOtherSpecify',
+  'generalCharacteristics.resemblesExistingModelWhich',
+  'generalCharacteristics.resemblesExistingModelOtherOption',
   'generalCharacteristics.resemblesExistingModelNote',
+  'generalCharacteristics.participationInModelPrecondition',
+  'generalCharacteristics.participationInModelPreconditionOtherSpecify',
+  'generalCharacteristics.participationInModelPreconditionWhich',
+  'generalCharacteristics.participationInModelPreconditionOtherOption',
+  'generalCharacteristics.participationInModelPreconditionWhyHow',
+  'generalCharacteristics.participationInModelPreconditionNote',
   'generalCharacteristics.hasComponentsOrTracks',
   'generalCharacteristics.hasComponentsOrTracksDiffer',
   'generalCharacteristics.hasComponentsOrTracksNote',
@@ -81,6 +90,9 @@ const csvFields = [
   'generalCharacteristics.communityPartnersInvolved',
   'generalCharacteristics.communityPartnersInvolvedDescription',
   'generalCharacteristics.communityPartnersInvolvedNote',
+  'generalCharacteristics.agencyOrStateHelp', // array
+  'generalCharacteristics.agencyOrStateHelpOther',
+  'generalCharacteristics.agencyOrStateHelpNote',
   'generalCharacteristics.alternativePaymentModelTypes', // array
   'generalCharacteristics.alternativePaymentModelNote',
   'generalCharacteristics.keyCharacteristics', // array
@@ -94,6 +106,8 @@ const csvFields = [
   'generalCharacteristics.planContractUpdatedNote',
   'generalCharacteristics.geographiesTargeted',
   'generalCharacteristics.geographiesTargetedTypes', // array
+  'generalCharacteristics.geographiesStatesAndTerritories', // array
+  'generalCharacteristics.geographiesRegionTypes', // array
   'generalCharacteristics.geographiesTargetedTypesOther',
   'generalCharacteristics.geographiesTargetedAppliedTo', // array
   'generalCharacteristics.geographiesTargetedAppliedToOther',
@@ -280,9 +294,6 @@ const csvFields = [
   'opsEvalAndLearning.modelLearningSystemsOther',
   'opsEvalAndLearning.modelLearningSystemsNote',
   'opsEvalAndLearning.anticipatedChallenges',
-  'opsEvalAndLearning.agencyOrStateHelp', // array
-  'opsEvalAndLearning.agencyOrStateHelpOther',
-  'opsEvalAndLearning.agencyOrStateHelpNote',
   'opsEvalAndLearning.stakeholders', // array
   'opsEvalAndLearning.stakeholdersOther',
   'opsEvalAndLearning.stakeholdersNote',
@@ -337,6 +348,9 @@ const csvFields = [
   'payments.payModelDifferentiation',
   'payments.expectedCalculationComplexityLevel',
   'payments.expectedCalculationComplexityLevelNote',
+  'payments.claimsProcessingPrecedence',
+  'payments.claimsProcessingPrecedenceOther',
+  'payments.claimsProcessingPrecedenceNote',
   'payments.canParticipantsSelectBetweenPaymentMechanisms',
   'payments.canParticipantsSelectBetweenPaymentMechanismsHow',
   'payments.canParticipantsSelectBetweenPaymentMechanismsNote',
@@ -374,6 +388,10 @@ const csvFields = [
   'payments.paymentReconciliationFrequencyContinually',
   'payments.paymentReconciliationFrequencyOther',
   'payments.paymentReconciliationFrequencyNote',
+  'payments.paymentDemandRecoupmentFrequency',
+  'payments.paymentDemandRecoupmentFrequencyContinually',
+  'payments.paymentDemandRecoupmentFrequencyOther',
+  'payments.paymentDemandRecoupmentFrequencyNote',
   'payments.paymentStartDate',
   'payments.paymentStartDateNote',
   'payments.readyForReviewByUserAccount.commonName',

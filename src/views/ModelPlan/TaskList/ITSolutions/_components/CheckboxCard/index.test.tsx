@@ -42,7 +42,7 @@ const mocks = [...possibleSolutionsMock];
 
 const handleSubmit = vi.fn();
 
-describe('IT Solutions CheckboxCard', () => {
+describe('Operational Solutions CheckboxCard', () => {
   it('matches snapshot', async () => {
     await act(async () => {
       const { asFragment, getByRole, getByText, getByTestId } = render(

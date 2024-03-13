@@ -442,6 +442,180 @@ exports[`Model Plan -- Recover > matches snapshot 1`] = `
               </div>
             </div>
             <div
+              class="usa-form-group"
+              data-scroll="paymentDemandRecoupmentFrequency"
+            >
+              <label
+                class="usa-label maxw-none"
+                data-testid="label"
+                for="payment-demand-recoupment-frequency"
+              >
+                How frequently do you anticipate making demands/recoupments?
+              </label>
+              <div
+                class="mint-checkbox usa-checkbox"
+              >
+                <input
+                  class="usa-checkbox__input"
+                  id="payment-demand-recoupment-frequency-annually"
+                  name="paymentDemandRecoupmentFrequency"
+                  type="checkbox"
+                  value="ANNUALLY"
+                />
+                <label
+                  class="usa-checkbox__label"
+                  for="payment-demand-recoupment-frequency-annually"
+                >
+                  Annually
+                </label>
+                <p
+                  class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                />
+              </div>
+              <div
+                class="mint-checkbox usa-checkbox"
+              >
+                <input
+                  class="usa-checkbox__input"
+                  id="payment-demand-recoupment-frequency-semiannually"
+                  name="paymentDemandRecoupmentFrequency"
+                  type="checkbox"
+                  value="SEMIANNUALLY"
+                />
+                <label
+                  class="usa-checkbox__label"
+                  for="payment-demand-recoupment-frequency-semiannually"
+                >
+                  Semi-annually
+                </label>
+                <p
+                  class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                />
+              </div>
+              <div
+                class="mint-checkbox usa-checkbox"
+              >
+                <input
+                  class="usa-checkbox__input"
+                  id="payment-demand-recoupment-frequency-quarterly"
+                  name="paymentDemandRecoupmentFrequency"
+                  type="checkbox"
+                  value="QUARTERLY"
+                />
+                <label
+                  class="usa-checkbox__label"
+                  for="payment-demand-recoupment-frequency-quarterly"
+                >
+                  Quarterly
+                </label>
+                <p
+                  class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                />
+              </div>
+              <div
+                class="mint-checkbox usa-checkbox"
+              >
+                <input
+                  class="usa-checkbox__input"
+                  id="payment-demand-recoupment-frequency-monthly"
+                  name="paymentDemandRecoupmentFrequency"
+                  type="checkbox"
+                  value="MONTHLY"
+                />
+                <label
+                  class="usa-checkbox__label"
+                  for="payment-demand-recoupment-frequency-monthly"
+                >
+                  Monthly
+                </label>
+                <p
+                  class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                />
+              </div>
+              <div
+                class="mint-checkbox usa-checkbox"
+              >
+                <input
+                  class="usa-checkbox__input"
+                  id="payment-demand-recoupment-frequency-continually"
+                  name="paymentDemandRecoupmentFrequency"
+                  type="checkbox"
+                  value="CONTINUALLY"
+                />
+                <label
+                  class="usa-checkbox__label"
+                  for="payment-demand-recoupment-frequency-continually"
+                >
+                  Continually
+                </label>
+                <p
+                  class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                />
+              </div>
+              <div
+                class="margin-left-4"
+              >
+                <label
+                  class="usa-label text-normal margin-top-1"
+                  data-testid="label"
+                  for="payment-demand-recoupment-frequency-continually"
+                >
+                  Please specify
+                </label>
+                <input
+                  class="usa-input"
+                  data-testid="payment-demand-recoupment-frequency-continually-text"
+                  id="payment-demand-recoupment-frequency-continually-text"
+                  name="paymentDemandRecoupmentFrequencyContinually"
+                  value="Continual Frequency"
+                />
+              </div>
+              <div
+                class="mint-checkbox usa-checkbox"
+              >
+                <input
+                  class="usa-checkbox__input"
+                  id="payment-demand-recoupment-frequency-other"
+                  name="paymentDemandRecoupmentFrequency"
+                  type="checkbox"
+                  value="OTHER"
+                />
+                <label
+                  class="usa-checkbox__label"
+                  for="payment-demand-recoupment-frequency-other"
+                >
+                  Other
+                </label>
+                <p
+                  class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                />
+              </div>
+              <div
+                class="margin-top-4 margin-bottom-8"
+              >
+                <div
+                  class="usa-form-group"
+                >
+                  <label
+                    class="usa-label"
+                    for="payment-demand-recoupment-frequency-note"
+                    id="label-payment-demand-recoupment-frequency-note"
+                  >
+                    Notes
+                  </label>
+                  <textarea
+                    aria-labelledby="label-payment-demand-recoupment-frequency-note hint-payment-demand-recoupment-frequency-note"
+                    class="usa-textarea"
+                    data-testid="payment-demand-recoupment-frequency-note"
+                    id="payment-demand-recoupment-frequency-note"
+                    name="paymentDemandRecoupmentFrequencyNote"
+                  >
+                    Demand and Recoupment note
+                  </textarea>
+                </div>
+              </div>
+            </div>
+            <div
               class="usa-form-group margin-top-6 margin-right-4"
               data-scroll="paymentStartDate"
             >
@@ -601,7 +775,7 @@ exports[`Model Plan -- Recover > matches snapshot 1`] = `
                 data-testid="button"
                 type="submit"
               >
-                Continue to IT solutions and implementation status
+                Continue to operational solutions tracker
               </button>
             </div>
             <button

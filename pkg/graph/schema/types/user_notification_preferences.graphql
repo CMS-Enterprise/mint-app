@@ -1,0 +1,63 @@
+enum UserNotificationPreferenceFlag {
+  IN_APP,
+  EMAIL
+}
+
+
+"""
+UserNotificationPreferences represents a users preferences about what type and where to receive a notification
+"""
+type UserNotificationPreferences {
+  id: UUID!
+	userID: UUID!
+
+  dailyDigestComplete: [UserNotificationPreferenceFlag!]!
+
+  addedAsCollaborator: [UserNotificationPreferenceFlag!]!
+
+  taggedInDiscussion: [UserNotificationPreferenceFlag!]!
+
+  taggedInDiscussionReply: [UserNotificationPreferenceFlag!]!
+
+  newDiscussionReply: [UserNotificationPreferenceFlag!]!
+
+  modelPlanShared: [UserNotificationPreferenceFlag!]!
+
+
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
+
+}
+
+
+"""
+UserNotificationPreferencesChanges represents the ways that a UserNotifications Preferences object can be updated
+"""
+input UserNotificationPreferencesChanges @goModel(model: "map[string]interface{}")  {
+
+  dailyDigestComplete: [UserNotificationPreferenceFlag!]
+
+  addedAsCollaborator: [UserNotificationPreferenceFlag!]
+
+  taggedInDiscussion: [UserNotificationPreferenceFlag!]
+
+  taggedInDiscussionReply: [UserNotificationPreferenceFlag!]
+
+  newDiscussionReply: [UserNotificationPreferenceFlag!]
+
+  modelPlanShared: [UserNotificationPreferenceFlag!]
+
+
+}
+
+extend type Mutation {
+
+"""
+Sets the notification preferences of a user.
+"""
+updateUserNotificationPreferences(changes: UserNotificationPreferencesChanges!): UserNotificationPreferences!
+}

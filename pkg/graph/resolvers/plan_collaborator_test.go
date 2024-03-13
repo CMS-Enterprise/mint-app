@@ -11,6 +11,7 @@ import (
 	"golang.org/x/sync/errgroup"
 
 	"github.com/cmsgov/mint-app/pkg/shared/oddmail"
+	"github.com/cmsgov/mint-app/pkg/storage"
 	"github.com/cmsgov/mint-app/pkg/userhelpers"
 
 	"github.com/cmsgov/mint-app/pkg/email"
@@ -80,7 +81,8 @@ func (suite *ResolverSuite) TestCreatePlanCollaborator() {
 		false,
 		userhelpers.GetUserInfoAccountInfoWrapperFunc(suite.stubFetchUserInfo),
 	)
-	account, uAccountErr := suite.testConfigs.Store.UserAccountGetByUsername(collaboratorInput.UserName)
+
+	account, uAccountErr := storage.UserAccountGetByUsername(suite.testConfigs.Store, collaboratorInput.UserName)
 	suite.NoError(uAccountErr)
 	suite.NotNil(account)
 
@@ -107,7 +109,7 @@ func (suite *ResolverSuite) TestUpdatePlanCollaborator() {
 		suite.testConfigs.Store,
 	)
 
-	account, uAccountErr := suite.testConfigs.Store.UserAccountGetByUsername("CLAB")
+	account, uAccountErr := storage.UserAccountGetByUsername(suite.testConfigs.Store, "CLAB")
 	suite.NoError(uAccountErr)
 	suite.NotNil(account)
 

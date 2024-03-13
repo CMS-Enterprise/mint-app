@@ -7,10 +7,10 @@ import (
 	"go.uber.org/zap"
 
 	"github.com/google/uuid"
-	"github.com/jmoiron/sqlx"
 
 	"github.com/cmsgov/mint-app/pkg/models"
 	"github.com/cmsgov/mint-app/pkg/shared/utilityUUID"
+	"github.com/cmsgov/mint-app/pkg/sqlutils"
 	"github.com/cmsgov/mint-app/pkg/storage/genericmodel"
 )
 
@@ -45,18 +45,14 @@ func (s *Store) TagCreate(
 	return retTag, nil
 }
 
-// TagCollectionCreate creates an array of tags in the database based on the tag contet provided in the string
-// the method is expected to be part of a larger transaction and does not handle  committing or rollingback the transactions
-// if the *sqlx.Tx is nil, this function will create one. The returned tx is the same as the one in the parameters.
-func (s *Store) TagCollectionCreate(_ *zap.Logger, tags []*models.Tag, createdBy uuid.UUID, tx *sqlx.Tx) ([]*models.Tag, *sqlx.Tx, error) {
-	if tx == nil {
-		tx = s.db.MustBegin()
-	}
+// TagCollectionCreate creates an array of tags in the database based on the tag context provided in the string
+// the method is expected to be part of a larger transaction and does not handle  committing or rolling back the transactions
+func TagCollectionCreate(np sqlutils.NamedPreparer, _ *zap.Logger, tags []*models.Tag, createdBy uuid.UUID) ([]*models.Tag, error) {
 
 	retTags := []*models.Tag{}
-	stmt, sErr := tx.PrepareNamed(tagCreateCollectionSQL)
+	stmt, sErr := np.PrepareNamed(tagCreateCollectionSQL)
 	if sErr != nil {
-		return nil, tx, sErr
+		return nil, sErr
 	}
 	defer stmt.Close()
 
@@ -66,14 +62,14 @@ func (s *Store) TagCollectionCreate(_ *zap.Logger, tags []*models.Tag, createdBy
 		tag.CreatedBy = createdBy
 		tMap, err := models.StructToMap(*tag)
 		if err != nil {
-			return nil, tx, fmt.Errorf(" issue creating tags: error: %w", err)
+			return nil, fmt.Errorf(" issue creating tags: error: %w", err)
 		}
 		mapSlice = append(mapSlice, tMap)
 	}
 
 	jsonTag, err := models.MapArrayToJSONArray(mapSlice)
 	if err != nil {
-		return nil, tx, fmt.Errorf(" error converting tagArray to json: %w", err)
+		return nil, fmt.Errorf(" error converting tagArray to json: %w", err)
 	}
 
 	arg := map[string]interface{}{
@@ -81,9 +77,9 @@ func (s *Store) TagCollectionCreate(_ *zap.Logger, tags []*models.Tag, createdBy
 	}
 	err = stmt.Select(&retTags, arg)
 	if err != nil {
-		return nil, tx, err
+		return nil, err
 	}
-	return retTags, tx, nil
+	return retTags, nil
 
 }
 

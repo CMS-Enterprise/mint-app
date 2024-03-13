@@ -12,7 +12,9 @@ import {
   OpSolutionStatus
 } from 'types/graphql-global-types';
 
-import OperationalNeedsTable from './operationalNeedsTable';
+import OperationalNeedsTable, {
+  FilterViewSolutionsAlert
+} from './operationalNeedsTable';
 
 const modelID: string = 'ec2d1105-b722-4c99-94aa-5b76838d7a54';
 
@@ -70,7 +72,7 @@ const returnNeeds = (needed: boolean | null) => {
 const mockStore = configureMockStore();
 const store = mockStore({ auth: { euaId: 'MINT' } });
 
-describe('IT Solutions Home', () => {
+describe('Operational Solutions Home', () => {
   it('renders possible needs without errors', async () => {
     const needed = null;
 
@@ -136,6 +138,19 @@ describe('IT Solutions Home', () => {
     await waitFor(() => {
       expect(getByText('Recruit participants')).toBeInTheDocument();
     });
+
+    expect(asFragment()).toMatchSnapshot();
+  });
+
+  it('renders filter view solutions alert', async () => {
+    const { asFragment } = render(
+      <FilterViewSolutionsAlert
+        filterSolutions={[OperationalSolutionKey.CCW]}
+        operationalNeeds={
+          returnNeeds(true)[0].result.data.modelPlan.operationalNeeds
+        }
+      />
+    );
 
     expect(asFragment()).toMatchSnapshot();
   });

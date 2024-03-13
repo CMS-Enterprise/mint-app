@@ -28,7 +28,8 @@ const (
 	PlanBasics                   = "plan_basics"
 	OperationalSolutionSubtask   = "operational_solution_subtask"
 	ModelPlan                    = "model_plan"
-	PlanCrTdl                    = "plan_cr_tdl"
+	PlanCr                       = "plan_cr"
+	PlanTdl                      = "plan_tdl"
 )
 
 // Constants for humanized table names
@@ -47,7 +48,8 @@ var humanizedTableNames = map[string]string{
 	PlanBasics:                   "Model Basics",
 	OperationalSolutionSubtask:   "Operational Solution Subtask",
 	ModelPlan:                    "Model",
-	PlanCrTdl:                    "CR/TDL",
+	PlanCr:                       "CR",
+	PlanTdl:                      "TDL",
 }
 
 // GetHumanizedTableName returns the humanized name for the given table name

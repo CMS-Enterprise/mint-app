@@ -60,6 +60,9 @@ export interface GetAllPayments_modelPlan_payments {
   planningToUseInnovationPaymentContractorNote: string | null;
   expectedCalculationComplexityLevel: ComplexityCalculationLevelType | null;
   expectedCalculationComplexityLevelNote: string | null;
+  claimsProcessingPrecedence: boolean | null;
+  claimsProcessingPrecedenceOther: string | null;
+  claimsProcessingPrecedenceNote: string | null;
   canParticipantsSelectBetweenPaymentMechanisms: boolean | null;
   canParticipantsSelectBetweenPaymentMechanismsHow: string | null;
   canParticipantsSelectBetweenPaymentMechanismsNote: string | null;
@@ -75,6 +78,10 @@ export interface GetAllPayments_modelPlan_payments {
   paymentReconciliationFrequencyContinually: string | null;
   paymentReconciliationFrequencyOther: string | null;
   paymentReconciliationFrequencyNote: string | null;
+  paymentDemandRecoupmentFrequency: FrequencyType[];
+  paymentDemandRecoupmentFrequencyContinually: string | null;
+  paymentDemandRecoupmentFrequencyOther: string | null;
+  paymentDemandRecoupmentFrequencyNote: string | null;
   paymentStartDate: Time | null;
   paymentStartDateNote: string | null;
   status: TaskStatus;

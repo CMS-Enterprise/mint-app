@@ -274,7 +274,7 @@ exports[`Model Plan ProviderOptions > matches snapshot 1`] = `
       </div>
       <div
         class="usa-form-group margin-top-4"
-        data-scroll="providerAddMethod"
+        data-scroll="participants-and-providers-provider-add-method"
       >
         <label
           class="usa-label"
@@ -303,24 +303,26 @@ exports[`Model Plan ProviderOptions > matches snapshot 1`] = `
               aria-live="polite"
               aria-relevant="additions text"
               class="css-1f43avz-a11yText-A11yText"
+              role="log"
             />
             <div
-              class=" css-jvusj8-control"
+              class=" css-1vl89cy-control"
             >
               <div
-                class=" css-319lph-ValueContainer"
+                class=" css-1fdsijx-ValueContainer"
               >
                 <div
-                  class=" css-14el2xx-placeholder"
+                  class=" css-1jqq78o-placeholder"
                   id="react-select-3-placeholder"
                 >
                   1 selected
                 </div>
                 <div
-                  class=" css-6j8wv5-Input"
+                  class=" css-qbdosj-Input"
                   data-value=""
                 >
                   <input
+                    aria-activedescendant=""
                     aria-autocomplete="list"
                     aria-expanded="false"
                     aria-haspopup="true"
@@ -351,7 +353,7 @@ exports[`Model Plan ProviderOptions > matches snapshot 1`] = `
                 >
                   <div
                     aria-hidden="true"
-                    class=" css-1e245h0-indicatorContainer"
+                    class=" css-1h8bgg-indicatorContainer"
                   >
                     <svg
                       aria-hidden="true"
@@ -368,11 +370,11 @@ exports[`Model Plan ProviderOptions > matches snapshot 1`] = `
                   </div>
                 </button>
                 <span
-                  class=" css-1vtyy7d-indicatorSeparator"
+                  class=" css-16b81-indicatorSeparator"
                 />
                 <div
                   aria-hidden="true"
-                  class=" css-1232v1p-indicatorContainer"
+                  class=" css-gjng1h-indicatorContainer"
                 >
                   <svg
                     aria-hidden="true"
@@ -440,7 +442,7 @@ exports[`Model Plan ProviderOptions > matches snapshot 1`] = `
         </div>
         <div
           class="usa-form-group"
-          data-scroll="providerAddMethodOther"
+          data-scroll="participants-and-providers-provider-add-method-other"
         >
           <label
             class="usa-label text-normal"
@@ -487,13 +489,15 @@ exports[`Model Plan ProviderOptions > matches snapshot 1`] = `
       </div>
       <div
         class="usa-form-group margin-top-4"
-        data-scroll="providerLeaveMethod"
+        data-scroll="participants-and-providers-leave-method"
       >
-        <legend
+        <label
           class="usa-label"
+          data-testid="label"
+          for="participants-and-providers-leave-method"
         >
           Can providers leave the model? Select all that apply.
-        </legend>
+        </label>
         <p
           class="text-base margin-top-1 margin-bottom-0 line-height-body-3"
         >
@@ -821,7 +825,7 @@ exports[`Model Plan ProviderOptions > matches snapshot 1`] = `
       </div>
       <div
         class="usa-form-group margin-y-4 margin-bottom-8"
-        data-scroll="providerOverlap"
+        data-scroll="participants-and-providers-provider-overlap"
       >
         <label
           class="usa-label"

@@ -25,12 +25,14 @@ import {
   FundingSource,
   GainshareArrangementEligibility,
   GeographyApplication,
+  GeographyRegionType,
   GeographyType,
   KeyCharacteristic,
   ModelCategory,
   ModelLearningSystemType,
   ModelStatus,
   ModelType,
+  ModelViewFilter,
   MonitoringFileType,
   NonClaimsBasedPayType,
   OverlapType,
@@ -46,6 +48,7 @@ import {
   RecruitmentType,
   SelectionMethodType,
   StakeholdersType,
+  StatesAndTerritories,
   TaskStatus,
   TeamRole,
   TriStateAnswer,
@@ -53,8 +56,6 @@ import {
   YesNoOtherType,
   YesNoType
 } from 'gql/gen/graphql';
-
-import { FilterGroup } from 'views/ModelPlan/ReadOnly/_components/FilterView/BodyContent/_filterGroupMapping';
 
 // Util used to preserve type defintions when mapping over keys of object
 // https://stackoverflow.com/questions/52856496/typescript-object-keys-return-string
@@ -88,21 +89,203 @@ export type TranslationFieldProperties = {
     | 'multiSelect'
     | 'datePicker'
     | 'rangeInput';
-  filterGroups?: FilterGroup[]; // Used to render questions within Readonly filter group view (Also CSV/PDF export)
+  filterGroups?: ModelViewFilter[]; // Used to render questions within Readonly filter group view (Also CSV/PDF export)
   tags?: string[];
+  isModelLinks?: boolean; // Used to designate if a field is a ExistingModelLinks type with nested fields - ex: names,
+  isPageStart?: boolean; // Is the question the first question on a page - used for styling in ReadOnly
+  readonlyHeader?: string; // Indicates if a header is required at the start of the question/section.  Normally used in conjunction with pageStart
+  adjacentPositioning?: {
+    // Designates if question should be rendered side by side. 'adjacentField' is the reference to the other field to be rendered adjacent to the current
+    position: 'left' | 'right';
+    adjacentField: string;
+  };
+  isOtherType?: boolean; // Is a question a followup to another that doesn't designate it's own readonly question/line,
+  hideRelatedQuestionAlert?: boolean; // Ex: CCW and Quality questions do not need to render the alert immediately following the question
 };
 
-// Extended type for questions that have options - boolean, radio, checkbox, etc.
-// Takes in a enum parameter for translation key
+/* 
+  Extended type for questions that are conditionally rendered by a parent evaluation
+  Takes in a enum/generic for Parent field to check for condition
+  Closure is needed to access parent scope of object
+*/
+type ParentRelation<T extends keyof T | string> = {
+  parentRelation: () => TranslationConfigType<T>;
+};
+
+/* 
+  References the parent option/enum value as the key and the child field it references as the value
+  Child relations only pertain to specific questions that remain hidden in readonly per Figma
+  This does not include generic "Other" questions or single line followups, unless specifically stated
+  Closure is needed to access parent scope of object
+*/
+type ChildRelation<
+  T extends keyof T | string,
+  C extends keyof C | string | void = void
+> = {
+  childRelation: Partial<Record<T, (() => TranslationConfigType<T, C>)[]>>;
+  disconnectedChildren?: boolean; // If child relations are not on the same page/sequential.  Readonly will render the parent question label if so
+  disconnectedLabel?: string; // Translation key to readonly alt text to render on alerts if children are hidden
+};
+
+/* 
+  Extended type for questions that have options - boolean, radio, checkbox, etc.
+  Takes in a enum/generic for translation key
+*/
+type TranslationOptions<T extends keyof T | string> = {
+  options: Record<T, string>;
+  readonlyOptions?: Partial<Record<T, string>>; // An alternative set of translations for options specific to readonly
+  optionsLabels?: Partial<Record<T, string>>; // Sub labels to be rendered directly underneath options
+  tooltips?: Partial<Record<T, string>>; // Information to be rendered inside a tooltip
+  optionsRelatedInfo?: Partial<Record<T, string>>; // T values should/could be a subset of the keys of enum values
+};
+
+/* 
+  Extended type for questions that have options - boolean, radio, checkbox, etc.
+  Takes in a enum/generic for translation key
+*/
+type OptionsWithChildRelation<
+  T extends keyof T | string,
+  C extends keyof C | string | void = void
+> = TranslationOptions<T> & ChildRelation<T, C>;
+
+/* 
+  Apply/combine ParentRelation and TranslationFieldProperties to TranslationFieldPropertiesWithParent
+*/
+export type TranslationFieldPropertiesWithParent<
+  T extends keyof T | string
+> = TranslationFieldProperties & ParentRelation<T>;
+
+/* 
+  Apply/combine OptionsWithChildRelation and TranslationFieldProperties to TranslationFieldPropertiesWithOptions
+*/
 export type TranslationFieldPropertiesWithOptions<
   T extends keyof T | string
-> = TranslationFieldProperties & {
-  options: Record<T, string>;
-  optionsLabels?: Record<T, string>;
-  optionsRelatedInfo?: Record<T, string>;
+> = TranslationFieldProperties & TranslationOptions<T>;
+
+/* 
+  Extended type for questions that have options - boolean, radio, checkbox, etc. as well as conditional children
+  Takes in a enum/generic for translation key
+*/
+export type TranslationFieldPropertiesWithOptionsAndChildren<
+  T extends keyof T | string,
+  C extends keyof C | string | void = void
+> = TranslationFieldProperties & OptionsWithChildRelation<T, C>;
+
+/* 
+  Extended type for questions that have options - boolean, radio, checkbox, etc.
+  Extended type for questions that are conditionally rendered by a parent evaluation
+  Takes in a enum parameter for translation key as well as enum parameter fof Parent field to check for condition
+*/
+export type TranslationFieldPropertiesWithOptionsAndParent<
+  T extends keyof T | string,
+  C extends keyof C | string | void = void
+> = TranslationFieldProperties & TranslationOptions<T> & ParentRelation<T>;
+
+/* 
+  Extended type for questions that are conditionally rendered by a parent evaluation and have condtionally rendered children as well
+  Takes in a enum parameter for translation key as well as enum parameter fof Parent field to check for condition
+*/
+export type TranslationFieldPropertiesWithParentAndChildren<
+  T extends keyof T | string,
+  C extends keyof C | string | void = void
+> = TranslationFieldProperties &
+  TranslationFieldPropertiesWithOptionsAndChildren<T> &
+  ParentRelation<T>;
+
+/* 
+  Union type for all translation types
+*/
+export type TranslationConfigType<
+  T extends keyof T | string,
+  C extends keyof C | string | void = void
+> =
+  | TranslationFieldProperties
+  | TranslationFieldPropertiesWithParent<T>
+  | TranslationFieldPropertiesWithOptions<T>
+  | TranslationFieldPropertiesWithOptionsAndChildren<T, C>
+  | TranslationFieldPropertiesWithOptionsAndParent<T, C>
+  | TranslationFieldPropertiesWithParentAndChildren<T, C>;
+
+/* 
+  Type guard to check if config is of type TranslationFieldProperties
+*/
+export const isTranslationFieldProperties = <
+  T extends keyof T | string,
+  C extends keyof C | string | void = void
+>(
+  config: TranslationConfigType<T, C>
+): config is TranslationFieldProperties => {
+  return !Object.hasOwn(config, 'options');
 };
 
-// Model Plan
+/* 
+  Type guard to check if config is of type TranslationFieldPropertiesWithParent
+*/
+export const isTranslationFieldPropertiesWithParent = <
+  T extends keyof T | string,
+  C extends keyof C | string | void = void
+>(
+  config: TranslationConfigType<T, C>
+): config is TranslationFieldPropertiesWithParent<T> => {
+  return Object.hasOwn(config, 'parentRelation');
+};
+
+/* 
+  Type guard to check if config is of type TranslationFieldPropertiesWithOptions
+*/
+export const isTranslationFieldPropertiesWithOptions = <
+  T extends keyof T | string,
+  C extends keyof C | string | void = void
+>(
+  config: TranslationConfigType<T, C>
+): config is TranslationFieldPropertiesWithOptions<T> => {
+  return Object.hasOwn(config, 'options');
+};
+
+/* 
+  Type guard to check if config is of type TranslationFieldPropertiesWithOptionsAndChildren
+*/
+export const isTranslationFieldPropertiesWithOptionsAndChildren = <
+  T extends keyof T | string,
+  C extends keyof C | string | void = void
+>(
+  config: TranslationConfigType<T, C>
+): config is TranslationFieldPropertiesWithOptionsAndChildren<T, C> => {
+  return Object.hasOwn(config, 'childRelation');
+};
+
+/* 
+  Type guard to check if config is of type TranslationFieldPropertiesWithOptionsAndParent
+*/
+export const isTranslationFieldPropertiesWithOptionsAndParent = <
+  T extends keyof T | string,
+  C extends keyof C | string | void = void
+>(
+  config: TranslationConfigType<T, C>
+): config is TranslationFieldPropertiesWithOptionsAndParent<T, C> => {
+  return (
+    Object.hasOwn(config, 'parentRelation') && Object.hasOwn(config, 'options')
+  );
+};
+
+/* 
+  Type guard to check if config is of type isTranslationFieldPropertiesWithParentAndChildren
+*/
+export const isTranslationFieldPropertiesWithParentAndChildren = <
+  T extends keyof T | string,
+  C extends keyof C | string | void = void
+>(
+  config: TranslationConfigType<T, C>
+): config is TranslationFieldPropertiesWithParentAndChildren<T, C> => {
+  return (
+    Object.hasOwn(config, 'parentRelation') &&
+    Object.hasOwn(config, 'childRelation')
+  );
+};
+
+/* 
+  Model Plan
+*/
 export type TranslationModelPlan = {
   modelName: TranslationFieldProperties;
   previousName: TranslationFieldProperties;
@@ -112,7 +295,9 @@ export type TranslationModelPlan = {
   status: TranslationFieldPropertiesWithOptions<ModelStatus>;
 };
 
-// Basics
+/* 
+  Basics
+*/
 export type TranslationBasics = {
   // Model Plan
   amsModelID: TranslationFieldProperties;
@@ -144,28 +329,50 @@ export type TranslationBasics = {
   status: TranslationFieldPropertiesWithOptions<TaskStatus>;
 };
 
-// General Characteristics
+/* 
+  General Characteristics
+*/
 export type TranslationGeneralCharacteristics = {
-  isNewModel: TranslationFieldPropertiesWithOptions<Bool>;
-  existingModel: TranslationFieldProperties;
-  existingModelLinks: TranslationFieldProperties;
-  resemblesExistingModel: TranslationFieldPropertiesWithOptions<Bool>;
-  resemblesExistingModelHow: TranslationFieldProperties;
+  isNewModel: TranslationFieldPropertiesWithOptionsAndChildren<Bool>;
+  existingModel: TranslationFieldPropertiesWithParent<Bool>;
+  resemblesExistingModel: TranslationFieldPropertiesWithOptionsAndChildren<YesNoOtherType>;
+  resemblesExistingModelWhyHow: TranslationFieldProperties;
+  resemblesExistingModelHow: TranslationFieldPropertiesWithParent<YesNoOtherType>;
   resemblesExistingModelNote: TranslationFieldProperties;
+  resemblesExistingModelWhich: TranslationFieldPropertiesWithOptionsAndParent<
+    'Other',
+    YesNoOtherType
+  >;
+  resemblesExistingModelOtherSpecify: TranslationFieldProperties;
+  resemblesExistingModelOtherSelected: TranslationFieldPropertiesWithOptions<Bool>;
+  resemblesExistingModelOtherOption: TranslationFieldProperties;
+  participationInModelPrecondition: TranslationFieldPropertiesWithOptionsAndChildren<YesNoOtherType>;
+  participationInModelPreconditionWhich: TranslationFieldPropertiesWithOptionsAndParent<
+    'Other',
+    YesNoOtherType
+  >;
+  participationInModelPreconditionOtherSpecify: TranslationFieldProperties;
+  participationInModelPreconditionOtherSelected: TranslationFieldPropertiesWithOptions<Bool>;
+  participationInModelPreconditionOtherOption: TranslationFieldProperties;
+  participationInModelPreconditionWhyHow: TranslationFieldPropertiesWithParent<YesNoOtherType>;
+  participationInModelPreconditionNote: TranslationFieldProperties;
   hasComponentsOrTracks: TranslationFieldPropertiesWithOptions<Bool>;
   hasComponentsOrTracksDiffer: TranslationFieldProperties;
   hasComponentsOrTracksNote: TranslationFieldProperties;
   // Key Characteristics
+  agencyOrStateHelp: TranslationFieldPropertiesWithOptions<AgencyOrStateHelpType>;
+  agencyOrStateHelpOther: TranslationFieldProperties;
+  agencyOrStateHelpNote: TranslationFieldProperties;
   alternativePaymentModelTypes: TranslationFieldPropertiesWithOptions<AlternativePaymentModelType>;
   alternativePaymentModelNote: TranslationFieldProperties;
-  keyCharacteristics: TranslationFieldPropertiesWithOptions<KeyCharacteristic>;
+  keyCharacteristics: TranslationFieldPropertiesWithOptionsAndChildren<KeyCharacteristic>;
   keyCharacteristicsNote: TranslationFieldProperties;
   keyCharacteristicsOther: TranslationFieldProperties;
-  collectPlanBids: TranslationFieldPropertiesWithOptions<Bool>;
+  collectPlanBids: TranslationFieldPropertiesWithOptionsAndParent<Bool>;
   collectPlanBidsNote: TranslationFieldProperties;
-  managePartCDEnrollment: TranslationFieldPropertiesWithOptions<Bool>;
+  managePartCDEnrollment: TranslationFieldPropertiesWithOptionsAndParent<Bool>;
   managePartCDEnrollmentNote: TranslationFieldProperties;
-  planContractUpdated: TranslationFieldPropertiesWithOptions<Bool>;
+  planContractUpdated: TranslationFieldPropertiesWithOptionsAndParent<Bool>;
   planContractUpdatedNote: TranslationFieldProperties;
   // Involvements
   careCoordinationInvolved: TranslationFieldPropertiesWithOptions<Bool>;
@@ -178,17 +385,31 @@ export type TranslationGeneralCharacteristics = {
   communityPartnersInvolvedDescription: TranslationFieldProperties;
   communityPartnersInvolvedNote: TranslationFieldProperties;
   // Targets and Options
-  geographiesTargeted: TranslationFieldPropertiesWithOptions<Bool>;
-  geographiesTargetedTypes: TranslationFieldPropertiesWithOptions<GeographyType>;
+  geographiesTargeted: TranslationFieldPropertiesWithOptionsAndChildren<Bool>;
+  geographiesTargetedTypes: TranslationFieldPropertiesWithParentAndChildren<
+    GeographyType,
+    Bool
+  >;
   geographiesTargetedTypesOther: TranslationFieldProperties;
-  geographiesTargetedAppliedTo: TranslationFieldPropertiesWithOptions<GeographyApplication>;
+  geographiesStatesAndTerritories: TranslationFieldPropertiesWithOptionsAndParent<
+    StatesAndTerritories,
+    GeographyType
+  >;
+  geographiesRegionTypes: TranslationFieldPropertiesWithOptionsAndParent<
+    GeographyRegionType,
+    GeographyType
+  >;
+  geographiesTargetedAppliedTo: TranslationFieldPropertiesWithOptionsAndParent<GeographyApplication>;
   geographiesTargetedAppliedToOther: TranslationFieldProperties;
   geographiesTargetedNote: TranslationFieldProperties;
   participationOptions: TranslationFieldPropertiesWithOptions<Bool>;
   participationOptionsNote: TranslationFieldProperties;
-  agreementTypes: TranslationFieldPropertiesWithOptions<AgreementType>;
+  agreementTypes: TranslationFieldPropertiesWithOptionsAndChildren<AgreementType>;
   agreementTypesOther: TranslationFieldProperties;
-  multiplePatricipationAgreementsNeeded: TranslationFieldPropertiesWithOptions<Bool>;
+  multiplePatricipationAgreementsNeeded: TranslationFieldPropertiesWithOptionsAndParent<
+    Bool,
+    AgreementType
+  >;
   multiplePatricipationAgreementsNeededNote: TranslationFieldProperties;
   // Authority
   rulemakingRequired: TranslationFieldPropertiesWithOptions<Bool>;
@@ -203,7 +424,9 @@ export type TranslationGeneralCharacteristics = {
   status: TranslationFieldPropertiesWithOptions<TaskStatus>;
 };
 
-// Participants and Providers
+/* 
+  Participants and Providers
+*/
 export type TranslationParticipantsAndProviders = {
   participants: TranslationFieldPropertiesWithOptions<ParticipantsType>;
   medicareProviderType: TranslationFieldProperties;
@@ -243,9 +466,18 @@ export type TranslationParticipantsAndProviders = {
   // Coordination
   coordinateWork: TranslationFieldPropertiesWithOptions<Bool>;
   coordinateWorkNote: TranslationFieldProperties;
-  gainsharePayments: TranslationFieldPropertiesWithOptions<Bool>;
-  gainsharePaymentsTrack: TranslationFieldPropertiesWithOptions<Bool>;
-  gainsharePaymentsEligibility: TranslationFieldPropertiesWithOptions<GainshareArrangementEligibility>;
+  gainsharePayments: TranslationFieldPropertiesWithOptionsAndChildren<
+    Bool,
+    Bool
+  >;
+  gainsharePaymentsTrack: TranslationFieldPropertiesWithOptionsAndParent<
+    Bool,
+    Bool
+  >;
+  gainsharePaymentsEligibility: TranslationFieldPropertiesWithOptionsAndParent<
+    GainshareArrangementEligibility,
+    Bool
+  >;
   gainsharePaymentsEligibilityOther: TranslationFieldProperties;
   gainsharePaymentsNote: TranslationFieldProperties;
   participantsIds: TranslationFieldPropertiesWithOptions<ParticipantsIdType>;
@@ -266,13 +498,18 @@ export type TranslationParticipantsAndProviders = {
   providerRemovalFrequencyContinually: TranslationFieldProperties;
   providerRemovalFrequencyOther: TranslationFieldProperties;
   providerRemovalFrequencyNote: TranslationFieldProperties;
-  providerOverlap: TranslationFieldPropertiesWithOptions<OverlapType>;
-  providerOverlapHierarchy: TranslationFieldProperties;
+  providerOverlap: TranslationFieldPropertiesWithOptionsAndChildren<
+    OverlapType,
+    OverlapType
+  >;
+  providerOverlapHierarchy: TranslationFieldPropertiesWithParent<OverlapType>;
   providerOverlapNote: TranslationFieldProperties;
   status: TranslationFieldPropertiesWithOptions<TaskStatus>;
 };
 
-// Beneficiaries
+/* 
+  Beneficiaries
+*/
 export type TranslationBeneficiaries = {
   beneficiaries: TranslationFieldPropertiesWithOptions<BeneficiariesType>;
   diseaseSpecificGroup: TranslationFieldProperties;
@@ -309,47 +546,67 @@ export type TranslationBeneficiaries = {
   status: TranslationFieldPropertiesWithOptions<TaskStatus>;
 };
 
-// Operations Evaluation and Learning
+/* 
+  Operations Evaluation and Learning
+*/
 export type TranslationOpsEvalAndLearning = {
-  agencyOrStateHelp: TranslationFieldPropertiesWithOptions<AgencyOrStateHelpType>;
-  agencyOrStateHelpOther: TranslationFieldProperties;
-  agencyOrStateHelpNote: TranslationFieldProperties;
   stakeholders: TranslationFieldPropertiesWithOptions<StakeholdersType>;
   stakeholdersOther: TranslationFieldProperties;
   stakeholdersNote: TranslationFieldProperties;
   helpdeskUse: TranslationFieldPropertiesWithOptions<Bool>;
   helpdeskUseNote: TranslationFieldProperties;
-  contractorSupport: TranslationFieldPropertiesWithOptions<ContractorSupportType>;
+  contractorSupport: TranslationFieldPropertiesWithOptionsAndChildren<ContractorSupportType>;
   contractorSupportOther: TranslationFieldProperties;
-  contractorSupportHow: TranslationFieldProperties;
+  contractorSupportHow: TranslationFieldPropertiesWithParent<ContractorSupportType>;
   contractorSupportNote: TranslationFieldProperties;
-  iddocSupport: TranslationFieldPropertiesWithOptions<Bool>;
+  iddocSupport: TranslationFieldPropertiesWithOptionsAndChildren<Bool>;
   iddocSupportNote: TranslationFieldProperties;
   // IDDOC
-  technicalContactsIdentified: TranslationFieldPropertiesWithOptions<Bool>;
+  technicalContactsIdentified: TranslationFieldPropertiesWithOptionsAndParent<
+    Bool,
+    Bool
+  >;
   technicalContactsIdentifiedDetail: TranslationFieldProperties;
   technicalContactsIdentifiedNote: TranslationFieldProperties;
-  captureParticipantInfo: TranslationFieldPropertiesWithOptions<Bool>;
+  captureParticipantInfo: TranslationFieldPropertiesWithOptionsAndParent<
+    Bool,
+    Bool
+  >;
   captureParticipantInfoNote: TranslationFieldProperties;
-  icdOwner: TranslationFieldProperties;
-  draftIcdDueDate: TranslationFieldProperties;
-  icdNote: TranslationFieldProperties;
+  icdOwner: TranslationFieldPropertiesWithParent<Bool>;
+  draftIcdDueDate: TranslationFieldPropertiesWithParent<Bool>;
+  icdNote: TranslationFieldPropertiesWithParent<Bool>;
   // IDDOC Testing
-  uatNeeds: TranslationFieldProperties;
-  stcNeeds: TranslationFieldProperties;
-  testingTimelines: TranslationFieldProperties;
+  uatNeeds: TranslationFieldPropertiesWithParent<Bool>;
+  stcNeeds: TranslationFieldPropertiesWithParent<Bool>;
+  testingTimelines: TranslationFieldPropertiesWithParent<Bool>;
   testingNote: TranslationFieldProperties;
-  dataMonitoringFileTypes: TranslationFieldPropertiesWithOptions<MonitoringFileType>;
+  dataMonitoringFileTypes: TranslationFieldPropertiesWithOptionsAndParent<
+    MonitoringFileType,
+    Bool
+  >;
   dataMonitoringFileOther: TranslationFieldProperties;
-  dataResponseType: TranslationFieldProperties;
-  dataResponseFileFrequency: TranslationFieldProperties;
+  dataResponseType: TranslationFieldPropertiesWithParent<Bool>;
+  dataResponseFileFrequency: TranslationFieldPropertiesWithParent<Bool>;
   // IDDOC Monitoring
-  dataFullTimeOrIncremental: TranslationFieldPropertiesWithOptions<DataFullTimeOrIncrementalType>;
-  eftSetUp: TranslationFieldPropertiesWithOptions<Bool>;
-  unsolicitedAdjustmentsIncluded: TranslationFieldPropertiesWithOptions<Bool>;
-  dataFlowDiagramsNeeded: TranslationFieldPropertiesWithOptions<Bool>;
-  produceBenefitEnhancementFiles: TranslationFieldPropertiesWithOptions<Bool>;
-  fileNamingConventions: TranslationFieldProperties;
+  dataFullTimeOrIncremental: TranslationFieldPropertiesWithOptionsAndParent<
+    DataFullTimeOrIncrementalType,
+    Bool
+  >;
+  eftSetUp: TranslationFieldPropertiesWithOptionsAndParent<Bool, Bool>;
+  unsolicitedAdjustmentsIncluded: TranslationFieldPropertiesWithOptionsAndParent<
+    Bool,
+    Bool
+  >;
+  dataFlowDiagramsNeeded: TranslationFieldPropertiesWithOptionsAndParent<
+    Bool,
+    Bool
+  >;
+  produceBenefitEnhancementFiles: TranslationFieldPropertiesWithOptionsAndParent<
+    Bool,
+    Bool
+  >;
+  fileNamingConventions: TranslationFieldPropertiesWithParent<Bool>;
   dataMonitoringNote: TranslationFieldProperties;
   // Performance
   benchmarkForPerformance: TranslationFieldPropertiesWithOptions<BenchmarkForPerformanceType>;
@@ -370,10 +627,10 @@ export type TranslationOpsEvalAndLearning = {
   evaluationApproaches: TranslationFieldPropertiesWithOptions<EvaluationApproachType>;
   evaluationApproachOther: TranslationFieldProperties;
   evalutaionApproachNote: TranslationFieldProperties;
-  ccmInvolvment: TranslationFieldPropertiesWithOptions<CcmInvolvmentType>;
+  ccmInvolvment: TranslationFieldPropertiesWithOptionsAndChildren<CcmInvolvmentType>;
   ccmInvolvmentOther: TranslationFieldProperties;
   ccmInvolvmentNote: TranslationFieldProperties;
-  dataNeededForMonitoring: TranslationFieldPropertiesWithOptions<DataForMonitoringType>;
+  dataNeededForMonitoring: TranslationFieldPropertiesWithOptionsAndChildren<DataForMonitoringType>;
   dataNeededForMonitoringOther: TranslationFieldProperties;
   dataNeededForMonitoringNote: TranslationFieldProperties;
   dataToSendParticicipants: TranslationFieldPropertiesWithOptions<DataToSendParticipantsType>;
@@ -382,16 +639,31 @@ export type TranslationOpsEvalAndLearning = {
   shareCclfData: TranslationFieldPropertiesWithOptions<Bool>;
   shareCclfDataNote: TranslationFieldProperties;
   // CCW And Quality
-  sendFilesBetweenCcw: TranslationFieldPropertiesWithOptions<Bool>;
+  sendFilesBetweenCcw: TranslationFieldPropertiesWithOptionsAndParent<
+    Bool,
+    Bool
+  >;
   sendFilesBetweenCcwNote: TranslationFieldProperties;
-  appToSendFilesToKnown: TranslationFieldPropertiesWithOptions<Bool>;
+  appToSendFilesToKnown: TranslationFieldPropertiesWithOptionsAndParent<
+    Bool,
+    Bool
+  >;
   appToSendFilesToWhich: TranslationFieldProperties;
   appToSendFilesToNote: TranslationFieldProperties;
-  useCcwForFileDistribiutionToParticipants: TranslationFieldPropertiesWithOptions<Bool>;
+  useCcwForFileDistribiutionToParticipants: TranslationFieldPropertiesWithOptionsAndParent<
+    Bool,
+    Bool
+  >;
   useCcwForFileDistribiutionToParticipantsNote: TranslationFieldProperties;
-  developNewQualityMeasures: TranslationFieldPropertiesWithOptions<Bool>;
+  developNewQualityMeasures: TranslationFieldPropertiesWithOptionsAndParent<
+    Bool,
+    DataForMonitoringType
+  >;
   developNewQualityMeasuresNote: TranslationFieldProperties;
-  qualityPerformanceImpactsPayment: TranslationFieldPropertiesWithOptions<YesNoOtherType>;
+  qualityPerformanceImpactsPayment: TranslationFieldPropertiesWithOptionsAndParent<
+    YesNoOtherType,
+    DataForMonitoringType
+  >;
   qualityPerformanceImpactsPaymentOther: TranslationFieldProperties;
   qualityPerformanceImpactsPaymentNote: TranslationFieldProperties;
   // Data Sharing
@@ -421,7 +693,9 @@ export type TranslationOpsEvalAndLearning = {
   status: TranslationFieldPropertiesWithOptions<TaskStatus>;
 };
 
-// Payments
+/* 
+  Payments
+*/
 export type TranslationPayments = {
   fundingSource: TranslationFieldPropertiesWithOptions<FundingSource>;
   fundingSourceMedicareAInfo: TranslationFieldProperties;
@@ -436,47 +710,89 @@ export type TranslationPayments = {
   payRecipients: TranslationFieldPropertiesWithOptions<PayRecipient>;
   payRecipientsOtherSpecification: TranslationFieldProperties;
   payRecipientsNote: TranslationFieldProperties;
-  payType: TranslationFieldPropertiesWithOptions<PayType>;
+  payType: TranslationFieldPropertiesWithOptionsAndChildren<PayType>;
   payTypeNote: TranslationFieldProperties;
   // Claims Based Payment
-  payClaims: TranslationFieldPropertiesWithOptions<ClaimsBasedPayType>;
+  payClaims: TranslationFieldPropertiesWithParentAndChildren<
+    ClaimsBasedPayType,
+    PayType
+  >;
   payClaimsOther: TranslationFieldProperties;
   payClaimsNote: TranslationFieldProperties;
-  shouldAnyProvidersExcludedFFSSystems: TranslationFieldPropertiesWithOptions<Bool>;
+  shouldAnyProvidersExcludedFFSSystems: TranslationFieldPropertiesWithOptionsAndParent<
+    Bool,
+    PayType
+  >;
   shouldAnyProviderExcludedFFSSystemsNote: TranslationFieldProperties;
-  changesMedicarePhysicianFeeSchedule: TranslationFieldPropertiesWithOptions<Bool>;
+  changesMedicarePhysicianFeeSchedule: TranslationFieldPropertiesWithOptionsAndParent<
+    Bool,
+    PayType
+  >;
   changesMedicarePhysicianFeeScheduleNote: TranslationFieldProperties;
-  affectsMedicareSecondaryPayerClaims: TranslationFieldPropertiesWithOptions<Bool>;
+  affectsMedicareSecondaryPayerClaims: TranslationFieldPropertiesWithOptionsAndParent<
+    Bool,
+    PayType
+  >;
   affectsMedicareSecondaryPayerClaimsHow: TranslationFieldProperties;
   affectsMedicareSecondaryPayerClaimsNote: TranslationFieldProperties;
-  payModelDifferentiation: TranslationFieldProperties;
+  payModelDifferentiation: TranslationFieldPropertiesWithParent<PayType>;
   // Anticipating Dependencies
-  creatingDependenciesBetweenServices: TranslationFieldPropertiesWithOptions<Bool>;
+  creatingDependenciesBetweenServices: TranslationFieldPropertiesWithOptionsAndParent<
+    Bool,
+    PayType
+  >;
   creatingDependenciesBetweenServicesNote: TranslationFieldProperties;
-  needsClaimsDataCollection: TranslationFieldPropertiesWithOptions<Bool>;
+  needsClaimsDataCollection: TranslationFieldPropertiesWithOptionsAndParent<
+    Bool,
+    PayType
+  >;
   needsClaimsDataCollectionNote: TranslationFieldProperties;
-  providingThirdPartyFile: TranslationFieldPropertiesWithOptions<Bool>;
-  isContractorAwareTestDataRequirements: TranslationFieldPropertiesWithOptions<Bool>;
+  providingThirdPartyFile: TranslationFieldPropertiesWithOptionsAndParent<
+    Bool,
+    PayType
+  >;
+  isContractorAwareTestDataRequirements: TranslationFieldPropertiesWithOptionsAndParent<
+    Bool,
+    PayType
+  >;
   // Beneficiary Cost Sharing
-  beneficiaryCostSharingLevelAndHandling: TranslationFieldProperties;
-  waiveBeneficiaryCostSharingForAnyServices: TranslationFieldPropertiesWithOptions<Bool>;
+  beneficiaryCostSharingLevelAndHandling: TranslationFieldPropertiesWithParent<ClaimsBasedPayType>;
+  waiveBeneficiaryCostSharingForAnyServices: TranslationFieldPropertiesWithOptionsAndParent<
+    Bool,
+    ClaimsBasedPayType
+  >;
   waiveBeneficiaryCostSharingServiceSpecification: TranslationFieldProperties;
-  waiverOnlyAppliesPartOfPayment: TranslationFieldPropertiesWithOptions<Bool>;
+  waiverOnlyAppliesPartOfPayment: TranslationFieldPropertiesWithOptionsAndParent<
+    Bool,
+    ClaimsBasedPayType
+  >;
   waiveBeneficiaryCostSharingNote: TranslationFieldProperties;
   // Non-Claims Based Payments
-  nonClaimsPayments: TranslationFieldPropertiesWithOptions<NonClaimsBasedPayType>;
+  nonClaimsPayments: TranslationFieldPropertiesWithOptionsAndParent<
+    NonClaimsBasedPayType,
+    PayType
+  >;
   nonClaimsPaymentsNote: TranslationFieldProperties;
   nonClaimsPaymentOther: TranslationFieldProperties;
-  paymentCalculationOwner: TranslationFieldProperties;
-  numberPaymentsPerPayCycle: TranslationFieldProperties;
+  paymentCalculationOwner: TranslationFieldPropertiesWithParent<PayType>;
+  numberPaymentsPerPayCycle: TranslationFieldPropertiesWithParent<PayType>;
   numberPaymentsPerPayCycleNote: TranslationFieldProperties;
-  sharedSystemsInvolvedAdditionalClaimPayment: TranslationFieldPropertiesWithOptions<Bool>;
+  sharedSystemsInvolvedAdditionalClaimPayment: TranslationFieldPropertiesWithOptionsAndParent<
+    Bool,
+    PayType
+  >;
   sharedSystemsInvolvedAdditionalClaimPaymentNote: TranslationFieldProperties;
-  planningToUseInnovationPaymentContractor: TranslationFieldPropertiesWithOptions<Bool>;
+  planningToUseInnovationPaymentContractor: TranslationFieldPropertiesWithOptionsAndParent<
+    Bool,
+    PayType
+  >;
   planningToUseInnovationPaymentContractorNote: TranslationFieldProperties;
   // Complexity
   expectedCalculationComplexityLevel: TranslationFieldPropertiesWithOptions<ComplexityCalculationLevelType>;
   expectedCalculationComplexityLevelNote: TranslationFieldProperties;
+  claimsProcessingPrecedence: TranslationFieldPropertiesWithOptions<Bool>;
+  claimsProcessingPrecedenceOther: TranslationFieldProperties;
+  claimsProcessingPrecedenceNote: TranslationFieldProperties;
   canParticipantsSelectBetweenPaymentMechanisms: TranslationFieldPropertiesWithOptions<Bool>;
   canParticipantsSelectBetweenPaymentMechanismsHow: TranslationFieldProperties;
   canParticipantsSelectBetweenPaymentMechanismsNote: TranslationFieldProperties;
@@ -493,12 +809,18 @@ export type TranslationPayments = {
   paymentReconciliationFrequencyContinually: TranslationFieldProperties;
   paymentReconciliationFrequencyOther: TranslationFieldProperties;
   paymentReconciliationFrequencyNote: TranslationFieldProperties;
+  paymentDemandRecoupmentFrequency: TranslationFieldPropertiesWithOptions<FrequencyType>;
+  paymentDemandRecoupmentFrequencyContinually: TranslationFieldProperties;
+  paymentDemandRecoupmentFrequencyOther: TranslationFieldProperties;
+  paymentDemandRecoupmentFrequencyNote: TranslationFieldProperties;
   paymentStartDate: TranslationFieldProperties;
   paymentStartDateNote: TranslationFieldProperties;
   status: TranslationFieldPropertiesWithOptions<TaskStatus>;
 };
 
-// Collaborators
+/* 
+  Collaborators
+*/
 export type TranslationCollaborators = {
   teamRoles: TranslationFieldPropertiesWithOptions<TeamRole>;
   username: TranslationFieldProperties;
@@ -514,3 +836,23 @@ export type TranslationPlan = {
   payments: TranslationPayments;
   collaborators: TranslationCollaborators;
 };
+
+export type TranslationPlanSection =
+  | TranslationPlan['basics']
+  | TranslationPlan['beneficiaries']
+  | TranslationPlan['generalCharacteristics']
+  | TranslationPlan['participantsAndProviders']
+  | TranslationPlan['beneficiaries']
+  | TranslationPlan['opsEvalAndLearning']
+  | TranslationPlan['payments'];
+
+export enum PlanSection {
+  MODEL_PLAN = 'modelPlan',
+  BASICS = 'basics',
+  GENERAL_CHARACTERISTICS = 'generalCharacteristics',
+  PARTICPANTS_AND_PROVIDERS = 'participantsAndProviders',
+  BENEFICIARIES = 'beneficiaries',
+  OPS_EVAL_AND_LEARNING = 'opsEvalAndLearning',
+  PAYMENTS = 'payments',
+  COLLABORATORS = 'collaborators'
+}

@@ -8,7 +8,7 @@ on:
         type: string
 
 env:
-  GIT_HASH: ${{ github.event.pull_request.head.sha || github.sha }}
+  GIT_HASH: ${{ github.sha }}
   SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
   ENV: ${{ inputs.env }}
 
@@ -34,20 +34,11 @@ jobs:
     steps:
       - name: Check out code
         uses: actions/checkout@v4
-        with:
-          ref: ${{ env.GIT_HASH }}   
       - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v4.0.1
+        uses: aws-actions/configure-aws-credentials@v4.0.2
         with:
           role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
-          aws-region: us-east-1          
-      - name: Clean Opensearch Domain
-        if: contains(inputs.env, 'dev')
-        env:
-          OPENSEARCH_ENDPOINT: ${{ vars.OPENSEARCH_ENDPOINT  }}
-          OPENSEARCH_PASSWORD: ${{ secrets.OPENSEARCH_PASSWORD  }}
-        run: |
-          ./scripts/opensearch_clean.sh $OPENSEARCH_ENDPOINT $OPENSEARCH_PASSWORD    
+          aws-region: us-east-1
       - name: Backup the database
         if: contains(inputs.env, 'impl') || contains(inputs.env, 'prod')
         run: |
@@ -85,10 +76,8 @@ jobs:
     steps:
       - name: Check out code
         uses: actions/checkout@v4
-        with:
-          ref: ${{ env.GIT_HASH }}
       - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v4.0.1
+        uses: aws-actions/configure-aws-credentials@v4.0.2
         with:
           role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
           aws-region: us-east-1
@@ -134,10 +123,8 @@ jobs:
     steps:
       - name: Check out code
         uses: actions/checkout@v4
-        with:
-          ref: ${{ env.GIT_HASH }}
       - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v4.0.1
+        uses: aws-actions/configure-aws-credentials@v4.0.2
         with:
           role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
           aws-region: us-east-1

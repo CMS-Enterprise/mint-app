@@ -21,6 +21,7 @@ export default gql(/* GraphQL */ `
         planningToUseInnovationPaymentContractorNote
       }
       operationalNeeds {
+        id
         modifiedDts
       }
     }

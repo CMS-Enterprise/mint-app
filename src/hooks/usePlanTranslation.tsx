@@ -8,7 +8,7 @@ Fetches i18n store and returns a model plan translation section or all translati
 import { useTranslation } from 'react-i18next';
 import { ResourceKey } from 'i18next';
 
-import { TranslationPlan } from 'types/translation';
+import { getKeys, PlanSection, TranslationPlan } from 'types/translation';
 
 // Function overload
 // Conditionally return type based parameter
@@ -30,8 +30,19 @@ function usePlanTranslation<T extends keyof TranslationPlan>(
     return planTranslationMap[type] as TranslationPlan[T];
   }
 
+  const allSections: Record<PlanSection, TranslationPlan[T]> = {} as Record<
+    PlanSection,
+    TranslationPlan[T]
+  >;
+
+  getKeys(PlanSection).forEach(section => {
+    allSections[PlanSection[section]] = planTranslationMap[
+      PlanSection[section]
+    ] as TranslationPlan[T];
+  });
+
   // Return all translations for all sections
-  return planTranslationMap as TranslationPlan;
+  return allSections as TranslationPlan;
 }
 
 export default usePlanTranslation;

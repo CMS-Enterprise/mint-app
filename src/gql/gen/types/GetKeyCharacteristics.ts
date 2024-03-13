@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { AlternativePaymentModelType, KeyCharacteristic } from "./../../../types/graphql-global-types";
+import { AgencyOrStateHelpType, AlternativePaymentModelType, KeyCharacteristic } from "./../../../types/graphql-global-types";
 
 // ====================================================
 // GraphQL query operation: GetKeyCharacteristics
@@ -12,6 +12,9 @@ import { AlternativePaymentModelType, KeyCharacteristic } from "./../../../types
 export interface GetKeyCharacteristics_modelPlan_generalCharacteristics {
   __typename: "PlanGeneralCharacteristics";
   id: UUID;
+  agencyOrStateHelp: AgencyOrStateHelpType[];
+  agencyOrStateHelpOther: string | null;
+  agencyOrStateHelpNote: string | null;
   alternativePaymentModelTypes: AlternativePaymentModelType[];
   alternativePaymentModelNote: string | null;
   keyCharacteristics: KeyCharacteristic[];
@@ -27,6 +30,7 @@ export interface GetKeyCharacteristics_modelPlan_generalCharacteristics {
 
 export interface GetKeyCharacteristics_modelPlan_operationalNeeds {
   __typename: "OperationalNeed";
+  id: UUID;
   modifiedDts: Time | null;
 }
 

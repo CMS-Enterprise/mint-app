@@ -1,3 +1,5 @@
+import { ModelViewFilter } from 'gql/gen/graphql';
+
 import { TranslationModelPlan } from 'types/translation';
 
 export const modelPlan: TranslationModelPlan = {
@@ -26,14 +28,14 @@ export const modelPlan: TranslationModelPlan = {
     isArray: true,
     formType: 'text',
     filterGroups: [
-      'oact',
-      'dfsdm',
-      'ccw',
-      'ipc',
-      'iddoc',
-      'pbg',
-      'mdm',
-      'cbosc'
+      ModelViewFilter.OACT,
+      ModelViewFilter.DFSDM,
+      ModelViewFilter.CCW,
+      ModelViewFilter.IPC,
+      ModelViewFilter.IDDOC,
+      ModelViewFilter.PBG,
+      ModelViewFilter.MDM,
+      ModelViewFilter.CBOSC
     ]
   },
   abbreviation: {

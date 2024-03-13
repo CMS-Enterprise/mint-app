@@ -11,7 +11,7 @@ import {
   Label,
   TextInput
 } from '@trussworks/react-uswds';
-import { Field, FieldArray, Form, Formik, FormikProps } from 'formik';
+import { Field, Form, Formik, FormikProps } from 'formik';
 import {
   GetIddocTestingQuery,
   MonitoringFileType,
@@ -224,7 +224,7 @@ const IDDOCTesting = () => {
                   </Alert>
 
                   <FieldGroup
-                    scrollElement="uatNeeds"
+                    scrollElement="ops-eval-and-learning-uat-needs"
                     className="margin-top-6"
                     error={!!flatErrors.uatNeeds}
                   >
@@ -243,7 +243,7 @@ const IDDOCTesting = () => {
                   </FieldGroup>
 
                   <FieldGroup
-                    scrollElement="stcNeeds"
+                    scrollElement="ops-eval-and-learning-stc-needs"
                     className="margin-top-6"
                     error={!!flatErrors.stcNeeds}
                   >
@@ -263,7 +263,7 @@ const IDDOCTesting = () => {
                   </FieldGroup>
 
                   <FieldGroup
-                    scrollElement="testingTimelines"
+                    scrollElement="ops-eval-and-learning-testing-timelines"
                     className="margin-top-6"
                     error={!!flatErrors.testingTimelines}
                   >
@@ -288,84 +288,65 @@ const IDDOCTesting = () => {
 
                   <h3>{opsEvalAndLearningMiscT('dataMonitoring')}</h3>
 
-                  <FieldArray
-                    name="dataMonitoringFileTypes"
-                    render={arrayHelpers => (
-                      <>
-                        <legend className="usa-label maxw-none">
-                          {opsEvalAndLearningT('dataMonitoringFileTypes.label')}
-                        </legend>
+                  <FieldGroup scrollElement="ops-eval-and-learning-data-monitoring-file">
+                    <Label htmlFor="ops-eval-and-learning-data-monitoring-file">
+                      {opsEvalAndLearningT('dataMonitoringFileTypes.label')}
+                    </Label>
 
-                        <FieldErrorMsg>
-                          {flatErrors.dataMonitoringFileTypes}
-                        </FieldErrorMsg>
+                    <FieldErrorMsg>
+                      {flatErrors.dataMonitoringFileTypes}
+                    </FieldErrorMsg>
 
-                        {getKeys(dataMonitoringFileTypesConfig.options).map(
-                          type => {
-                            return (
-                              <Fragment key={type}>
-                                <Field
-                                  as={CheckboxField}
-                                  id={`ops-eval-and-learning-data-monitoring-file-${type}`}
-                                  name="dataMonitoringFileTypes"
-                                  label={
-                                    dataMonitoringFileTypesConfig.options[type]
-                                  }
-                                  value={type}
-                                  checked={values?.dataMonitoringFileTypes.includes(
-                                    type
-                                  )}
-                                  onChange={(
-                                    e: React.ChangeEvent<HTMLInputElement>
-                                  ) => {
-                                    if (e.target.checked) {
-                                      arrayHelpers.push(e.target.value);
-                                    } else {
-                                      const idx = values.dataMonitoringFileTypes.indexOf(
-                                        e.target.value as MonitoringFileType
-                                      );
-                                      arrayHelpers.remove(idx);
-                                    }
-                                  }}
-                                />
+                    {getKeys(dataMonitoringFileTypesConfig.options).map(
+                      type => {
+                        return (
+                          <Fragment key={type}>
+                            <Field
+                              as={CheckboxField}
+                              id={`ops-eval-and-learning-data-monitoring-file-${type}`}
+                              name="dataMonitoringFileTypes"
+                              label={
+                                dataMonitoringFileTypesConfig.options[type]
+                              }
+                              value={type}
+                              checked={values?.dataMonitoringFileTypes.includes(
+                                type
+                              )}
+                            />
 
-                                {type === MonitoringFileType.OTHER &&
-                                  values.dataMonitoringFileTypes.includes(
-                                    MonitoringFileType.OTHER
-                                  ) && (
-                                    <div className="margin-left-4 margin-top-neg-3">
-                                      <Label
-                                        htmlFor="ops-eval-and-learning-data-monitoring-file-other"
-                                        className="text-normal"
-                                      >
-                                        {opsEvalAndLearningT(
-                                          'dataMonitoringFileOther.label'
-                                        )}
-                                      </Label>
+                            {type === MonitoringFileType.OTHER &&
+                              values.dataMonitoringFileTypes.includes(
+                                MonitoringFileType.OTHER
+                              ) && (
+                                <div className="margin-left-4">
+                                  <Label
+                                    htmlFor="ops-eval-and-learning-data-monitoring-file-other"
+                                    className="text-normal"
+                                  >
+                                    {opsEvalAndLearningT(
+                                      'dataMonitoringFileOther.label'
+                                    )}
+                                  </Label>
 
-                                      <FieldErrorMsg>
-                                        {flatErrors.dataMonitoringFileOther}
-                                      </FieldErrorMsg>
+                                  <FieldErrorMsg>
+                                    {flatErrors.dataMonitoringFileOther}
+                                  </FieldErrorMsg>
 
-                                      <Field
-                                        as={TextAreaField}
-                                        className="maxw-none mint-textarea"
-                                        id="ops-eval-and-learning-data-monitoring-file-other"
-                                        maxLength={5000}
-                                        name="dataMonitoringFileOther"
-                                      />
-                                    </div>
-                                  )}
-                              </Fragment>
-                            );
-                          }
-                        )}
-                      </>
+                                  <Field
+                                    as={TextInput}
+                                    id="ops-eval-and-learning-data-monitoring-file-other"
+                                    name="dataMonitoringFileOther"
+                                  />
+                                </div>
+                              )}
+                          </Fragment>
+                        );
+                      }
                     )}
-                  />
+                  </FieldGroup>
 
                   <FieldGroup
-                    scrollElement="dataResponseType"
+                    scrollElement="ops-eval-and-learning-data-response-type"
                     className="margin-top-6"
                     error={!!flatErrors.dataResponseType}
                   >
@@ -384,7 +365,7 @@ const IDDOCTesting = () => {
                   </FieldGroup>
 
                   <FieldGroup
-                    scrollElement="dataResponseFileFrequency"
+                    scrollElement="ops-eval-and-learning-data-file-frequency"
                     className="margin-top-6"
                     error={!!flatErrors.dataResponseFileFrequency}
                   >

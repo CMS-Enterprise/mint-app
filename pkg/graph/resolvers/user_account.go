@@ -16,7 +16,7 @@ import (
 // UserAccountGetByUsername returns a user account by it's userName
 func UserAccountGetByUsername(logger *zap.Logger, store *storage.Store, userName string) (*authentication.UserAccount, error) {
 
-	return store.UserAccountGetByUsername(userName)
+	return storage.UserAccountGetByUsername(store, userName)
 
 }
 

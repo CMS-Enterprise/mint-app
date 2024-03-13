@@ -174,6 +174,9 @@ type PlanPayments struct {
 	// Page 6
 	ExpectedCalculationComplexityLevel                *ComplexityCalculationLevelType `json:"expectedCalculationComplexityLevel" db:"expected_calculation_complexity_level" statusWeight:"1"`
 	ExpectedCalculationComplexityLevelNote            *string                         `json:"expectedCalculationComplexityLevelNote" db:"expected_calculation_complexity_level_note"`
+	ClaimsProcessingPrecedence                        *bool                           `json:"claimsProcessingPrecedence" db:"claims_processing_precedence"`
+	ClaimsProcessingPrecedenceOther                   *string                         `json:"claimsProcessingPrecedenceOther" db:"claims_processing_precedence_other"`
+	ClaimsProcessingPrecedenceNote                    *string                         `json:"claimsProcessingPrecedenceNote" db:"claims_processing_precedence_note"`
 	CanParticipantsSelectBetweenPaymentMechanisms     *bool                           `json:"canParticipantsSelectBetweenPaymentMechanisms" db:"can_participants_select_between_payment_mechanisms" statusWeight:"1"`
 	CanParticipantsSelectBetweenPaymentMechanismsHow  *string                         `json:"canParticipantsSelectBetweenPaymentMechanismsHow" db:"can_participants_select_between_payment_mechanisms_how"`
 	CanParticipantsSelectBetweenPaymentMechanismsNote *string                         `json:"canParticipantsSelectBetweenPaymentMechanismsNote" db:"can_participants_select_between_payment_mechanisms_note"`
@@ -191,6 +194,10 @@ type PlanPayments struct {
 	PaymentReconciliationFrequencyContinually        *string        `json:"paymentReconciliationFrequencyContinually" db:"payment_reconciliation_frequency_continually"`
 	PaymentReconciliationFrequencyOther              *string        `json:"paymentReconciliationFrequencyOther" db:"payment_reconciliation_frequency_other"`
 	PaymentReconciliationFrequencyNote               *string        `json:"paymentReconciliationFrequencyNote" db:"payment_reconciliation_frequency_note"`
+	PaymentDemandRecoupmentFrequency                 pq.StringArray `json:"paymentDemandRecoupmentFrequency" db:"payment_demand_recoupment_frequency" statusWeight:"1"`
+	PaymentDemandRecoupmentFrequencyContinually      *string        `json:"paymentDemandRecoupmentFrequencyContinually" db:"payment_demand_recoupment_frequency_continually"`
+	PaymentDemandRecoupmentFrequencyOther            *string        `json:"paymentDemandRecoupmentFrequencyOther" db:"payment_demand_recoupment_frequency_other"`
+	PaymentDemandRecoupmentFrequencyNote             *string        `json:"paymentDemandRecoupmentFrequencyNote" db:"payment_demand_recoupment_frequency_note"`
 	PaymentStartDate                                 *time.Time     `json:"paymentStartDate" db:"payment_start_date" statusWeight:"1"`
 	PaymentStartDateNote                             *string        `json:"paymentStartDateNote" db:"payment_start_date_note"`
 }

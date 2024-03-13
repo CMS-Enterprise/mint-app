@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`IT Solutions CheckboxCard > matches snapshot 1`] = `
+exports[`Operational Solutions CheckboxCard > matches snapshot 1`] = `
 <DocumentFragment>
   <div
     class="tablet:grid-col-6 desktop:grid-col-4 display-flex"

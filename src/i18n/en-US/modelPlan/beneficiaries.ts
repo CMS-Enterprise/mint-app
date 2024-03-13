@@ -1,11 +1,13 @@
+import { ModelViewFilter } from 'gql/gen/graphql';
+
 import { TranslationBeneficiaries } from 'types/translation';
 
 import { frequencyOptions } from './miscellaneous';
 
 export const beneficiaries: TranslationBeneficiaries = {
   beneficiaries: {
-    gqlField: 'participantsCurrentlyInModels',
-    goField: 'ParticipantsCurrentlyInModels',
+    gqlField: 'beneficiaries',
+    goField: 'Beneficiaries',
     dbField: 'beneficiaries',
     label: 'Who are the beneficiaries of this model? Select all that apply.',
     readonlyLabel: 'Who are the beneficiaries of this model?',
@@ -25,17 +27,13 @@ export const beneficiaries: TranslationBeneficiaries = {
     },
     optionsLabels: {
       DISEASE_SPECIFIC:
-        '(based on a diagnosis, procedure code, condition, etc.)',
-      DUALLY_ELIGIBLE: '',
-      MEDICAID: '',
-      MEDICARE_ADVANTAGE: '',
-      MEDICARE_FFS: '',
-      MEDICARE_PART_D: '',
-      UNDERSERVED: '',
-      NA: '',
-      OTHER: ''
+        '(based on a diagnosis, procedure code, condition, etc.)'
     },
-    filterGroups: ['mdm']
+    optionsRelatedInfo: {
+      DISEASE_SPECIFIC: 'diseaseSpecificGroup',
+      OTHER: 'beneficiariesOther'
+    },
+    filterGroups: [ModelViewFilter.MDM]
   },
   diseaseSpecificGroup: {
     gqlField: 'diseaseSpecificGroup',
@@ -45,7 +43,8 @@ export const beneficiaries: TranslationBeneficiaries = {
       'Please describe the disease-specific groups this model will impact.',
     dataType: 'string',
     formType: 'text',
-    filterGroups: ['mdm']
+    isOtherType: true,
+    filterGroups: [ModelViewFilter.MDM]
   },
   beneficiariesOther: {
     gqlField: 'beneficiariesOther',
@@ -54,7 +53,8 @@ export const beneficiaries: TranslationBeneficiaries = {
     label: 'Please describe the other groups this model will impact.',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['mdm']
+    isOtherType: true,
+    filterGroups: [ModelViewFilter.MDM]
   },
   beneficiariesNote: {
     gqlField: 'beneficiariesNote',
@@ -63,7 +63,7 @@ export const beneficiaries: TranslationBeneficiaries = {
     label: 'Notes',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['mdm']
+    filterGroups: [ModelViewFilter.MDM]
   },
   treatDualElligibleDifferent: {
     gqlField: 'treatDualElligibleDifferent',
@@ -71,6 +71,8 @@ export const beneficiaries: TranslationBeneficiaries = {
     dbField: 'treat_dual_elligible_different',
     label:
       'Should dually-eligible beneficiaries be treated differently than non-dually eligibles?',
+    readonlyLabel:
+      'Should dually-eligible beneficiaries be treated differently than non-dually eligibles? How so?',
     dataType: 'boolean',
     formType: 'radio',
     options: {
@@ -78,7 +80,10 @@ export const beneficiaries: TranslationBeneficiaries = {
       NO: 'No',
       TBD: 'Not applicable'
     },
-    filterGroups: ['iddoc', 'pbg']
+    optionsRelatedInfo: {
+      YES: 'treatDualElligibleDifferentHow'
+    },
+    filterGroups: [ModelViewFilter.IDDOC, ModelViewFilter.PBG]
   },
   treatDualElligibleDifferentHow: {
     gqlField: 'treatDualElligibleDifferentHow',
@@ -87,7 +92,8 @@ export const beneficiaries: TranslationBeneficiaries = {
     label: 'How so?',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['iddoc', 'pbg']
+    isOtherType: true,
+    filterGroups: [ModelViewFilter.IDDOC, ModelViewFilter.PBG]
   },
   treatDualElligibleDifferentNote: {
     gqlField: 'treatDualElligibleDifferentNote',
@@ -96,7 +102,7 @@ export const beneficiaries: TranslationBeneficiaries = {
     label: 'Notes',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['iddoc', 'pbg']
+    filterGroups: [ModelViewFilter.IDDOC, ModelViewFilter.PBG]
   },
   excludeCertainCharacteristics: {
     gqlField: 'excludeCertainCharacteristics',
@@ -104,6 +110,8 @@ export const beneficiaries: TranslationBeneficiaries = {
     dbField: 'exclude_certain_characteristics',
     label:
       'Should beneficiaries with certain characteristics or enrollments be excluded?',
+    readonlyLabel:
+      'Should beneficiaries with certain characteristics or enrollments be excluded? How so, what are the exclusionary criteria?',
     dataType: 'boolean',
     formType: 'radio',
     options: {
@@ -111,7 +119,10 @@ export const beneficiaries: TranslationBeneficiaries = {
       NO: 'No',
       TBD: 'Not applicable'
     },
-    filterGroups: ['iddoc', 'pbg']
+    optionsRelatedInfo: {
+      YES: 'excludeCertainCharacteristicsCriteria'
+    },
+    filterGroups: [ModelViewFilter.IDDOC, ModelViewFilter.PBG]
   },
   excludeCertainCharacteristicsCriteria: {
     gqlField: 'excludeCertainCharacteristicsCriteria',
@@ -120,7 +131,8 @@ export const beneficiaries: TranslationBeneficiaries = {
     label: 'What are the exclusionary criteria?',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['iddoc', 'pbg']
+    isOtherType: true,
+    filterGroups: [ModelViewFilter.IDDOC, ModelViewFilter.PBG]
   },
   excludeCertainCharacteristicsNote: {
     gqlField: 'excludeCertainCharacteristicsNote',
@@ -129,7 +141,7 @@ export const beneficiaries: TranslationBeneficiaries = {
     label: 'Notes',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['iddoc', 'pbg']
+    filterGroups: [ModelViewFilter.IDDOC, ModelViewFilter.PBG]
   },
   numberPeopleImpacted: {
     gqlField: 'numberPeopleImpacted',
@@ -138,7 +150,12 @@ export const beneficiaries: TranslationBeneficiaries = {
     label: 'How many people do you think will be impacted by this model?',
     dataType: 'number',
     formType: 'rangeInput',
-    filterGroups: ['mdm']
+    isPageStart: true,
+    adjacentPositioning: {
+      position: 'left',
+      adjacentField: 'estimateConfidence'
+    },
+    filterGroups: [ModelViewFilter.MDM]
   },
   estimateConfidence: {
     gqlField: 'estimateConfidence',
@@ -153,7 +170,11 @@ export const beneficiaries: TranslationBeneficiaries = {
       FAIRLY: 'Fairly confident',
       COMPLETELY: 'Completely confident'
     },
-    filterGroups: ['cbosc', 'ccw', 'dfsdm', 'ipc', 'mdm']
+    adjacentPositioning: {
+      position: 'right',
+      adjacentField: 'numberPeopleImpacted'
+    },
+    filterGroups: [ModelViewFilter.MDM]
   },
   confidenceNote: {
     gqlField: 'confidenceNote',
@@ -162,7 +183,7 @@ export const beneficiaries: TranslationBeneficiaries = {
     label: 'Notes',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['cbosc', 'ccw', 'dfsdm', 'ipc']
+    filterGroups: [ModelViewFilter.MDM]
   },
   beneficiarySelectionMethod: {
     gqlField: 'beneficiarySelectionMethod',
@@ -182,7 +203,10 @@ export const beneficiaries: TranslationBeneficiaries = {
       OTHER: 'Other',
       NA: 'Not applicable'
     },
-    filterGroups: ['cmmi']
+    optionsRelatedInfo: {
+      OTHER: 'beneficiarySelectionOther'
+    },
+    filterGroups: [ModelViewFilter.CMMI]
   },
   beneficiarySelectionOther: {
     gqlField: 'beneficiarySelectionOther',
@@ -191,7 +215,8 @@ export const beneficiaries: TranslationBeneficiaries = {
     label: 'Please describe the other method for choosing beneficiaries.',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['cmmi']
+    isOtherType: true,
+    filterGroups: [ModelViewFilter.CMMI]
   },
   beneficiarySelectionNote: {
     gqlField: 'beneficiarySelectionNote',
@@ -200,7 +225,7 @@ export const beneficiaries: TranslationBeneficiaries = {
     label: 'Notes',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['cmmi']
+    filterGroups: [ModelViewFilter.CMMI]
   },
   beneficiarySelectionFrequency: {
     gqlField: 'beneficiarySelectionFrequency',
@@ -209,6 +234,7 @@ export const beneficiaries: TranslationBeneficiaries = {
     label: 'How frequently are beneficiaries added?',
     dataType: 'enum',
     formType: 'checkbox',
+    isPageStart: true,
     options: frequencyOptions,
     optionsRelatedInfo: {
       ANNUALLY: '',
@@ -218,7 +244,7 @@ export const beneficiaries: TranslationBeneficiaries = {
       CONTINUALLY: 'beneficiarySelectionFrequencyContinually',
       OTHER: 'beneficiarySelectionFrequencyOther'
     },
-    filterGroups: ['cmmi']
+    filterGroups: [ModelViewFilter.CMMI]
   },
   beneficiarySelectionFrequencyContinually: {
     gqlField: 'beneficiarySelectionFrequencyContinually',
@@ -227,7 +253,8 @@ export const beneficiaries: TranslationBeneficiaries = {
     label: 'Please specify',
     dataType: 'string',
     formType: 'text',
-    filterGroups: ['cmmi']
+    isOtherType: true,
+    filterGroups: [ModelViewFilter.CMMI]
   },
   beneficiarySelectionFrequencyOther: {
     gqlField: 'beneficiarySelectionFrequencyOther',
@@ -236,7 +263,8 @@ export const beneficiaries: TranslationBeneficiaries = {
     label: 'Please specify',
     dataType: 'string',
     formType: 'text',
-    filterGroups: ['cmmi']
+    isOtherType: true,
+    filterGroups: [ModelViewFilter.CMMI]
   },
   beneficiarySelectionFrequencyNote: {
     gqlField: 'beneficiarySelectionFrequencyNote',
@@ -245,7 +273,7 @@ export const beneficiaries: TranslationBeneficiaries = {
     label: 'Notes',
     dataType: 'string',
     formType: 'text',
-    filterGroups: ['cmmi']
+    filterGroups: [ModelViewFilter.CMMI]
   },
   beneficiaryRemovalFrequency: {
     gqlField: 'beneficiaryRemovalFrequency',
@@ -262,8 +290,7 @@ export const beneficiaries: TranslationBeneficiaries = {
       MONTHLY: '',
       CONTINUALLY: 'beneficiaryRemovalFrequencyContinually',
       OTHER: 'beneficiaryRemovalFrequencyOther'
-    },
-    filterGroups: ['cmmi']
+    }
   },
   beneficiaryRemovalFrequencyContinually: {
     gqlField: 'beneficiaryRemovalFrequencyContinually',
@@ -272,7 +299,8 @@ export const beneficiaries: TranslationBeneficiaries = {
     label: 'Please specify',
     dataType: 'string',
     formType: 'text',
-    filterGroups: ['cmmi']
+    isOtherType: true,
+    filterGroups: [ModelViewFilter.CMMI]
   },
   beneficiaryRemovalFrequencyOther: {
     gqlField: 'beneficiaryRemovalFrequencyOther',
@@ -281,7 +309,8 @@ export const beneficiaries: TranslationBeneficiaries = {
     label: 'Please specify',
     dataType: 'string',
     formType: 'text',
-    filterGroups: ['cmmi']
+    isOtherType: true,
+    filterGroups: [ModelViewFilter.CMMI]
   },
   beneficiaryRemovalFrequencyNote: {
     gqlField: 'beneficiaryRemovalFrequencyNote',
@@ -290,7 +319,7 @@ export const beneficiaries: TranslationBeneficiaries = {
     label: 'Notes',
     dataType: 'string',
     formType: 'text',
-    filterGroups: ['cmmi']
+    filterGroups: [ModelViewFilter.CMMI]
   },
   beneficiaryOverlap: {
     gqlField: 'beneficiaryOverlap',
@@ -305,7 +334,7 @@ export const beneficiaries: TranslationBeneficiaries = {
       YES_NO_ISSUES: 'Yes, and the overlaps would not be an issue',
       NO: 'No'
     },
-    filterGroups: ['mdm']
+    filterGroups: [ModelViewFilter.MDM]
   },
   beneficiaryOverlapNote: {
     gqlField: 'beneficiaryOverlapNote',
@@ -314,7 +343,7 @@ export const beneficiaries: TranslationBeneficiaries = {
     label: 'Notes',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['mdm']
+    filterGroups: [ModelViewFilter.MDM]
   },
   precedenceRules: {
     gqlField: 'precedenceRules',
@@ -333,7 +362,7 @@ export const beneficiaries: TranslationBeneficiaries = {
       YES: 'precedenceRulesYes',
       NO: 'precedenceRulesNo'
     },
-    filterGroups: ['mdm', 'oact']
+    filterGroups: [ModelViewFilter.MDM, ModelViewFilter.OACT]
   },
   precedenceRulesYes: {
     gqlField: 'precedenceRulesYes',
@@ -342,7 +371,8 @@ export const beneficiaries: TranslationBeneficiaries = {
     label: 'Please describe',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['mdm', 'oact']
+    isOtherType: true,
+    filterGroups: [ModelViewFilter.MDM, ModelViewFilter.OACT]
   },
   precedenceRulesNo: {
     gqlField: 'precedenceRulesNo',
@@ -351,7 +381,8 @@ export const beneficiaries: TranslationBeneficiaries = {
     label: 'Please describe',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['mdm', 'oact']
+    isOtherType: true,
+    filterGroups: [ModelViewFilter.MDM, ModelViewFilter.OACT]
   },
   precedenceRulesNote: {
     gqlField: 'precedenceRulesNote',
@@ -360,7 +391,7 @@ export const beneficiaries: TranslationBeneficiaries = {
     label: 'Notes',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['mdm', 'oact']
+    filterGroups: [ModelViewFilter.MDM, ModelViewFilter.OACT]
   },
   status: {
     gqlField: 'status',

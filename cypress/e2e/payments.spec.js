@@ -215,6 +215,14 @@ describe('The Model Plan Payment Form', () => {
       .check({ force: true })
       .should('be.checked');
 
+    cy.get('#payment-claims-processing-precendece-true')
+      .check({ force: true })
+      .should('be.checked');
+
+    cy.get('#payment-claims-processing-precendece-other')
+      .type('One business requirement')
+      .should('have.value', 'One business requirement');
+
     cy.get('#payment-multiple-payments-true')
       .check({ force: true })
       .should('be.checked');
@@ -266,14 +274,23 @@ describe('The Model Plan Payment Form', () => {
       .type('Payment Frequency Payments Other')
       .should('have.value', 'Payment Frequency Payments Other');
 
+    cy.get('#payment-demand-recoupment-frequency-quarterly')
+      .check({ force: true })
+      .should('be.checked');
+
+    cy.get('#payment-demand-recoupment-frequency-other')
+      .check({ force: true })
+      .should('be.checked');
+
+    cy.get('#payment-demand-recoupment-frequency-other-text')
+      .type('Payment Demand Recoupment Frequency Other')
+      .should('have.value', 'Payment Demand Recoupment Frequency Other');
+
     cy.get('#payment-payment-start-date')
       .type('10/26/2028')
       .should('have.value', '10/26/2028');
 
-    cy.contains(
-      'button',
-      'Continue to IT solutions and implementation status'
-    ).click();
+    cy.contains('button', 'Continue to operational solutions tracker').click();
     cy.location().should(loc => {
       expect(loc.pathname).to.match(
         /\/models\/.{36}\/task-list\/it-solutions$/

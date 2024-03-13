@@ -22,9 +22,6 @@ const opsEvalAndLearningMockData: GetOpsEvalAndLearningType = {
   id: '123',
   ccmInvolvment: [],
   dataNeededForMonitoring: [],
-  agencyOrStateHelp: [],
-  agencyOrStateHelpOther: '',
-  agencyOrStateHelpNote: '',
   stakeholders: [],
   stakeholdersOther: '',
   stakeholdersNote: '',
@@ -52,7 +49,9 @@ const opsEvalAndLearningMock = [
           opsEvalAndLearning: opsEvalAndLearningMockData,
           operationalNeeds: [
             {
-              modifiedDts: ''
+              __typename: 'OperationalNeed',
+              id: '424213',
+              modifiedDts: null
             }
           ]
         }

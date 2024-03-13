@@ -4,27 +4,35 @@ export default gql(/* GraphQL */ `
   query GetAllGeneralCharacteristics($id: UUID!) {
     modelPlan(id: $id) {
       id
-      existingModelLinks {
-        id
-        existingModel {
-          id
-          modelName
-        }
-        currentModelPlan {
-          id
-          modelName
-        }
-      }
       generalCharacteristics {
         id
         isNewModel
         existingModel
         resemblesExistingModel
+        resemblesExistingModelWhyHow
         resemblesExistingModelHow
         resemblesExistingModelNote
+        resemblesExistingModelWhich {
+          names
+        }
+        resemblesExistingModelOtherSpecify
+        resemblesExistingModelOtherSelected
+        resemblesExistingModelOtherOption
+        participationInModelPrecondition
+        participationInModelPreconditionWhich {
+          names
+        }
+        participationInModelPreconditionOtherSpecify
+        participationInModelPreconditionOtherSelected
+        participationInModelPreconditionOtherOption
+        participationInModelPreconditionWhyHow
+        participationInModelPreconditionNote
         hasComponentsOrTracks
         hasComponentsOrTracksDiffer
         hasComponentsOrTracksNote
+        agencyOrStateHelp
+        agencyOrStateHelpOther
+        agencyOrStateHelpNote
         alternativePaymentModelTypes
         alternativePaymentModelNote
         keyCharacteristics
@@ -47,6 +55,8 @@ export default gql(/* GraphQL */ `
         communityPartnersInvolvedNote
         geographiesTargeted
         geographiesTargetedTypes
+        geographiesStatesAndTerritories
+        geographiesRegionTypes
         geographiesTargetedTypesOther
         geographiesTargetedAppliedTo
         geographiesTargetedAppliedToOther

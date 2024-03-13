@@ -2,7 +2,6 @@ package resolvers
 
 import (
 	"github.com/google/uuid"
-	"github.com/jmoiron/sqlx"
 
 	"github.com/cmsgov/mint-app/pkg/authentication"
 	"github.com/cmsgov/mint-app/pkg/models"
@@ -153,16 +152,9 @@ func (suite *ResolverSuite) TestTagCollectionCreate() {
 	tableName := "nonsenseTableName"
 	taggedContentID := uuid.New()
 
-	var tx *sqlx.Tx
-
-	tags, tx2, err := TagCollectionCreate(suite.testConfigs.Logger, suite.testConfigs.Store, suite.testConfigs.Principal, fieldName, tableName, taggedContentID, taggedContent.Mentions, tx)
-	defer tx2.Rollback()
-	suite.NotNil(tx2)
-	suite.NoError(err) //ASSERT Tags are created
-
-	suite.Len(tags, 3) // ASSERT that tags are not duplicated
-
-	err = tx2.Commit() // Commit the transaction for the sake of testing. Normally, this would be handled by whatever parent resolver creates the tags, so we simulate it here
+	tags, err := TagCollectionCreate(suite.testConfigs.Store, suite.testConfigs.Logger, suite.testConfigs.Principal, fieldName, tableName, taggedContentID, taggedContent.Mentions)
 	suite.NoError(err)
+	suite.NotNil(tags)
+	suite.Len(tags, 3) // ASSERT that tags are not duplicated
 
 }

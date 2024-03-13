@@ -132,3 +132,5 @@ indexing, searching, visualization, and analysis of change history data. This co
 integration, high scalability, and a rich ecosystem of plugins and integrations to support various data sources and
 formats. By choosing these alternatives, we can better align with our existing infrastructure and avoid potential
 licensing issues.
+
+Update: 1/26/2023 - Decision was made to decommission and pause work on Opensearch/Logstash implementation.

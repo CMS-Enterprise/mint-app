@@ -4,6 +4,7 @@ const header = {
   help: 'Help',
   home: 'Home',
   models: 'Models',
+  notifications: 'Notifications',
   navigation: 'Navigation Bar',
   returnHome: 'MINT home',
   signIn: 'Sign In',

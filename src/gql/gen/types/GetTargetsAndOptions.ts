@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { GeographyType, GeographyApplication, AgreementType } from "./../../../types/graphql-global-types";
+import { GeographyType, StatesAndTerritories, GeographyRegionType, GeographyApplication, AgreementType } from "./../../../types/graphql-global-types";
 
 // ====================================================
 // GraphQL query operation: GetTargetsAndOptions
@@ -14,6 +14,8 @@ export interface GetTargetsAndOptions_modelPlan_generalCharacteristics {
   id: UUID;
   geographiesTargeted: boolean | null;
   geographiesTargetedTypes: GeographyType[];
+  geographiesStatesAndTerritories: StatesAndTerritories[];
+  geographiesRegionTypes: GeographyRegionType[];
   geographiesTargetedTypesOther: string | null;
   geographiesTargetedAppliedTo: GeographyApplication[];
   geographiesTargetedAppliedToOther: string | null;

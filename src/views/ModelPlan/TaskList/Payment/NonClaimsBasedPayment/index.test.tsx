@@ -45,8 +45,9 @@ const paymentsMock = [
           payments: mockData,
           operationalNeeds: [
             {
-              modifiedDts: null,
-              __typename: 'OperationalNeed'
+              __typename: 'OperationalNeed',
+              id: '424213',
+              modifiedDts: null
             }
           ]
         }

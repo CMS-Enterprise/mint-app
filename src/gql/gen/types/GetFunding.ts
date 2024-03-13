@@ -32,6 +32,7 @@ export interface GetFunding_modelPlan_payments {
 
 export interface GetFunding_modelPlan_operationalNeeds {
   __typename: "OperationalNeed";
+  id: UUID;
   modifiedDts: Time | null;
 }
 

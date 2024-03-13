@@ -5,19 +5,38 @@ export default gql(/* GraphQL */ `
     modelPlan(id: $id) {
       id
       modelName
-      existingModelLinks {
-        id
-        existingModelID
-        currentModelPlanID
-      }
       generalCharacteristics {
         id
         isNewModel
         currentModelPlanID
         existingModelID
         resemblesExistingModel
+        resemblesExistingModelWhyHow
         resemblesExistingModelHow
         resemblesExistingModelNote
+        resemblesExistingModelWhich {
+          links {
+            id
+            existingModelID
+            currentModelPlanID
+          }
+        }
+        resemblesExistingModelOtherSpecify
+        resemblesExistingModelOtherSelected
+        resemblesExistingModelOtherOption
+        participationInModelPrecondition
+        participationInModelPreconditionWhich {
+          links {
+            id
+            existingModelID
+            currentModelPlanID
+          }
+        }
+        participationInModelPreconditionOtherSpecify
+        participationInModelPreconditionOtherSelected
+        participationInModelPreconditionOtherOption
+        participationInModelPreconditionWhyHow
+        participationInModelPreconditionNote
         hasComponentsOrTracks
         hasComponentsOrTracksDiffer
         hasComponentsOrTracksNote

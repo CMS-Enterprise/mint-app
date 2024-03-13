@@ -9,7 +9,6 @@ import { Parser } from '@json2csv/plainjs';
 import { unwind } from '@json2csv/transforms';
 import i18next from 'i18next';
 
-import { FitlerGroup } from 'components/ShareExport';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import GetAllModelPlans from 'queries/GetAllModelData';
 import GetAllSingleModelPlan from 'queries/GetAllSingleModelPlan';
@@ -25,6 +24,11 @@ import {
 import { getKeys } from 'types/translation';
 import { formatDateLocal, formatDateUtc } from 'utils/date';
 import { csvFields, fieldsToUnwind } from 'utils/export/CsvData';
+import {
+  FilterGroup,
+  filterGroupKey
+} from 'views/ModelPlan/ReadOnly/_components/FilterView/BodyContent/_filterGroupMapping';
+import { isHiddenByParentCondition } from 'views/ModelPlan/ReadOnly/_components/ReadOnlySection/util';
 
 interface CSVModelPlanType extends AllModelDataType, SingleModelPlanType {}
 
@@ -33,20 +37,28 @@ interface CSVModelPlanType extends AllModelDataType, SingleModelPlanType {}
  * @param allPlanTranslation Parent level obj containing all model plan tranlsation objects
  */
 
-// Formats headers for data from translations or hardcoded labels
-export const headerFormatter = (dataField: string, allPlanTranslation: any) => {
+const getSectionAndFieldName = (csvHeader: string) => {
   // Gets the tasklist section from the csv map
-  const sectionIndex = dataField.indexOf('.');
+  const sectionIndex = csvHeader.indexOf('.');
 
   // Default to parent level modelPlan if no task list section
   let section: string = 'modelPlan';
 
-  const fieldName = dataField.slice(sectionIndex + 1);
+  const fieldName = csvHeader.slice(sectionIndex + 1);
 
   // If the first item in datafield is a valid model plan field
   if (sectionIndex !== -1) {
-    section = dataField.substring(0, sectionIndex);
+    section = csvHeader.substring(0, sectionIndex);
   }
+  return {
+    section,
+    fieldName
+  };
+};
+
+// Formats headers for data from translations or hardcoded labels
+export const headerFormatter = (dataField: string, allPlanTranslation: any) => {
+  const { section, fieldName } = getSectionAndFieldName(dataField);
 
   let translation = dataField;
 
@@ -160,9 +172,15 @@ export const dataFormatter = (
     else if (
       transformObj[key] &&
       typeof transformObj[key] === 'object' &&
+      !allPlanTranslation?.[key]?.isModelLinks &&
       !Array.isArray(transformObj[key])
     ) {
       mappedObj[key] = transformObj[key];
+    }
+
+    // Translates the Existing Model Links names
+    else if (allPlanTranslation?.[key]?.isModelLinks && transformObj[key]) {
+      mappedObj[key] = transformObj[key].names.join(', ');
     }
 
     // Strip html tags from TipTap RTE rawContent value
@@ -178,6 +196,7 @@ export const dataFormatter = (
     if (
       transformObj[key] &&
       typeof transformObj[key] === 'object' &&
+      !allPlanTranslation?.[key]?.isModelLinks &&
       !allPlanTranslation?.[key]?.options &&
       !Array.isArray(transformObj[key])
     ) {
@@ -194,7 +213,7 @@ export const dataFormatter = (
 // Filters out columns for csv based on selected FilterGroup mappings in translation file
 export const selectFilteredFields = (
   allPlanTranslation: any,
-  filteredGroup: FitlerGroup
+  filteredGroup: FilterGroup
 ) => {
   const selectedFields: string[] = [];
   // Loop through task list sections of translation obj
@@ -202,7 +221,7 @@ export const selectFilteredFields = (
     if (taskListSection === 'nameHistory') {
       if (
         allPlanTranslation[taskListSection]?.filterGroups?.includes(
-          filteredGroup
+          filterGroupKey[filteredGroup]
         )
       ) {
         // Push to array to become a column in exported csv
@@ -213,7 +232,7 @@ export const selectFilteredFields = (
     getKeys(allPlanTranslation[taskListSection]).forEach((field: any) => {
       if (
         allPlanTranslation[taskListSection][field]?.filterGroups?.includes(
-          filteredGroup
+          filterGroupKey[filteredGroup]
         )
       ) {
         // Push to array to become a column in exported csv
@@ -222,6 +241,30 @@ export const selectFilteredFields = (
     });
   });
   return selectedFields;
+};
+
+// Remove export data that is conditional/not needed
+// Determined by the parent/child relationship configuration in translation files
+export const removedUnneededData = (
+  data: any,
+  allPlanTranslation: any,
+  dataFields: any
+) => {
+  const filteredDataFields = dataFields.filter((dataField: any) => {
+    if (typeof dataField === 'string') {
+      const { section, fieldName } = getSectionAndFieldName(dataField);
+
+      if (
+        allPlanTranslation[section][fieldName] &&
+        isHiddenByParentCondition(allPlanTranslation[section][fieldName], data)
+      ) {
+        return false;
+      }
+      return true;
+    }
+    return true;
+  });
+  return filteredDataFields;
 };
 
 // Initiates the downloading of the formatted csv data
@@ -239,14 +282,20 @@ const downloadFile = (data: string) => {
 const csvFormatter = (
   csvData: CSVModelPlanType[],
   allPlanTranslation: any,
-  filteredGroup?: FitlerGroup | undefined
+  filteredGroup?: FilterGroup | undefined
 ) => {
   try {
     const transform = unwind({ paths: fieldsToUnwind, blankOut: true });
 
+    const filteredData = removedUnneededData(
+      csvData[0],
+      allPlanTranslation,
+      csvFields
+    );
+
     const selectedCSVFields = filteredGroup
       ? selectFilteredFields(allPlanTranslation, filteredGroup)
-      : csvFields;
+      : filteredData;
 
     const parser = new Parser({
       fields: selectedCSVFields,
@@ -280,11 +329,11 @@ type UseFetchCSVData = {
     input: string
   ) => Promise<FetchResult<GetAllSingleModelData>>;
   fetchAllData: () => Promise<FetchResult<GetAllModelDataType>>;
-  setFilteredGroup: (filteredGroup?: FitlerGroup) => void;
+  setFilteredGroup: (filteredGroup?: FilterGroup) => void;
 };
 
 const useFetchCSVData = (): UseFetchCSVData => {
-  const [filteredGroup, setFilteredGroup] = useState<FitlerGroup | undefined>();
+  const [filteredGroup, setFilteredGroup] = useState<FilterGroup | undefined>();
 
   // Get data for a single model plan
   const [fetchSingleData] = useLazyQuery<

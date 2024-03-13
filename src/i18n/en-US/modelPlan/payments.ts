@@ -1,3 +1,5 @@
+import { ModelViewFilter } from 'gql/gen/graphql';
+
 import { TranslationPayments } from 'types/translation';
 
 import { frequencyOptions } from './miscellaneous';
@@ -19,8 +21,7 @@ export const payments: TranslationPayments = {
       MEDICARE_PART_B_SMI_TRUST_FUND: 'Medicare Part B (SMI) Trust Fund',
       OTHER: 'Other'
     },
-    optionsLabels: {
-      PATIENT_PROTECTION_AFFORDABLE_CARE_ACT: '',
+    tooltips: {
       MEDICARE_PART_A_HI_TRUST_FUND:
         'Also known as the Hospital Insurance (HI) Trust Fund, this covers inpatient hospital care, skilled nursing facility care, home healthcare, and hospice care.',
       MEDICARE_PART_B_SMI_TRUST_FUND:
@@ -28,12 +29,15 @@ export const payments: TranslationPayments = {
       OTHER: ''
     },
     optionsRelatedInfo: {
-      PATIENT_PROTECTION_AFFORDABLE_CARE_ACT: '',
       MEDICARE_PART_A_HI_TRUST_FUND: 'fundingSourceMedicareAInfo',
       MEDICARE_PART_B_SMI_TRUST_FUND: 'fundingSourceMedicareBInfo',
       OTHER: 'fundingSourceOther'
     },
-    filterGroups: ['dfsdm', 'ipc', 'oact']
+    filterGroups: [
+      ModelViewFilter.DFSDM,
+      ModelViewFilter.IPC,
+      ModelViewFilter.OACT
+    ]
   },
   fundingSourceMedicareAInfo: {
     gqlField: 'fundingSourceMedicareAInfo',
@@ -42,7 +46,12 @@ export const payments: TranslationPayments = {
     label: 'Additional details',
     dataType: 'string',
     formType: 'text',
-    filterGroups: ['dfsdm', 'ipc', 'oact']
+    isOtherType: true,
+    filterGroups: [
+      ModelViewFilter.DFSDM,
+      ModelViewFilter.IPC,
+      ModelViewFilter.OACT
+    ]
   },
   fundingSourceMedicareBInfo: {
     gqlField: 'fundingSourceMedicareBInfo',
@@ -51,7 +60,12 @@ export const payments: TranslationPayments = {
     label: 'Additional details',
     dataType: 'string',
     formType: 'text',
-    filterGroups: ['dfsdm', 'ipc', 'oact']
+    isOtherType: true,
+    filterGroups: [
+      ModelViewFilter.DFSDM,
+      ModelViewFilter.IPC,
+      ModelViewFilter.OACT
+    ]
   },
   fundingSourceOther: {
     gqlField: 'fundingSourceOther',
@@ -60,7 +74,12 @@ export const payments: TranslationPayments = {
     label: 'Please describe the funding source.',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['dfsdm', 'ipc', 'oact']
+    isOtherType: true,
+    filterGroups: [
+      ModelViewFilter.DFSDM,
+      ModelViewFilter.IPC,
+      ModelViewFilter.OACT
+    ]
   },
   fundingSourceNote: {
     gqlField: 'fundingSourceNote',
@@ -69,7 +88,11 @@ export const payments: TranslationPayments = {
     label: 'Notes',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['dfsdm', 'ipc', 'oact']
+    filterGroups: [
+      ModelViewFilter.DFSDM,
+      ModelViewFilter.IPC,
+      ModelViewFilter.OACT
+    ]
   },
   fundingSourceR: {
     gqlField: 'fundingSourceR',
@@ -88,8 +111,7 @@ export const payments: TranslationPayments = {
       MEDICARE_PART_B_SMI_TRUST_FUND: 'Medicare Part B (SMI) Trust Fund',
       OTHER: 'Other'
     },
-    optionsLabels: {
-      PATIENT_PROTECTION_AFFORDABLE_CARE_ACT: '',
+    tooltips: {
       MEDICARE_PART_A_HI_TRUST_FUND:
         'Also known as the Hospital Insurance (HI) Trust Fund, this covers inpatient hospital care, skilled nursing facility care, home healthcare, and hospice care.',
       MEDICARE_PART_B_SMI_TRUST_FUND:
@@ -97,12 +119,15 @@ export const payments: TranslationPayments = {
       OTHER: ''
     },
     optionsRelatedInfo: {
-      PATIENT_PROTECTION_AFFORDABLE_CARE_ACT: '',
       MEDICARE_PART_A_HI_TRUST_FUND: 'fundingSourceRMedicareAInfo',
       MEDICARE_PART_B_SMI_TRUST_FUND: 'fundingSourceRMedicareBInfo',
       OTHER: 'fundingSourceROther'
     },
-    filterGroups: ['dfsdm', 'ipc', 'oact']
+    filterGroups: [
+      ModelViewFilter.DFSDM,
+      ModelViewFilter.IPC,
+      ModelViewFilter.OACT
+    ]
   },
   fundingSourceRMedicareAInfo: {
     gqlField: 'fundingSourceRMedicareAInfo',
@@ -111,7 +136,12 @@ export const payments: TranslationPayments = {
     label: 'Additional details',
     dataType: 'string',
     formType: 'text',
-    filterGroups: ['dfsdm', 'ipc', 'oact']
+    isOtherType: true,
+    filterGroups: [
+      ModelViewFilter.DFSDM,
+      ModelViewFilter.IPC,
+      ModelViewFilter.OACT
+    ]
   },
   fundingSourceRMedicareBInfo: {
     gqlField: 'fundingSourceRMedicareBInfo',
@@ -120,7 +150,12 @@ export const payments: TranslationPayments = {
     label: 'Additional details',
     dataType: 'string',
     formType: 'text',
-    filterGroups: ['dfsdm', 'ipc', 'oact']
+    isOtherType: true,
+    filterGroups: [
+      ModelViewFilter.DFSDM,
+      ModelViewFilter.IPC,
+      ModelViewFilter.OACT
+    ]
   },
   fundingSourceROther: {
     gqlField: 'fundingSourceROther',
@@ -129,7 +164,12 @@ export const payments: TranslationPayments = {
     label: 'Please describe the funding source.',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['dfsdm', 'ipc', 'oact']
+    isOtherType: true,
+    filterGroups: [
+      ModelViewFilter.DFSDM,
+      ModelViewFilter.IPC,
+      ModelViewFilter.OACT
+    ]
   },
   fundingSourceRNote: {
     gqlField: 'fundingSourceRNote',
@@ -138,7 +178,11 @@ export const payments: TranslationPayments = {
     label: 'Notes',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['dfsdm', 'ipc', 'oact']
+    filterGroups: [
+      ModelViewFilter.DFSDM,
+      ModelViewFilter.IPC,
+      ModelViewFilter.OACT
+    ]
   },
   payRecipients: {
     gqlField: 'payRecipients',
@@ -181,12 +225,34 @@ export const payments: TranslationPayments = {
       'If you select claims-based payments or non-claims-based payments, there will be additional questions to answer.',
     dataType: 'enum',
     formType: 'checkbox',
+    hideRelatedQuestionAlert: true,
     options: {
       CLAIMS_BASED_PAYMENTS: 'Claims-Based Payments',
       NON_CLAIMS_BASED_PAYMENTS: 'Non-Claims-Based Payments',
       GRANTS: 'Grants'
     },
-    filterGroups: ['cmmi', 'ipc']
+    childRelation: {
+      CLAIMS_BASED_PAYMENTS: [
+        () => payments.payClaims,
+        () => payments.shouldAnyProvidersExcludedFFSSystems,
+        () => payments.changesMedicarePhysicianFeeSchedule,
+        () => payments.affectsMedicareSecondaryPayerClaims,
+        () => payments.payModelDifferentiation,
+        () => payments.creatingDependenciesBetweenServices,
+        () => payments.needsClaimsDataCollection,
+        () => payments.providingThirdPartyFile,
+        () => payments.isContractorAwareTestDataRequirements
+      ],
+      NON_CLAIMS_BASED_PAYMENTS: [
+        () => payments.nonClaimsPayments,
+        () => payments.paymentCalculationOwner,
+        () => payments.numberPaymentsPerPayCycle,
+        () => payments.sharedSystemsInvolvedAdditionalClaimPayment,
+        () => payments.planningToUseInnovationPaymentContractor
+      ]
+    },
+    disconnectedChildren: true,
+    filterGroups: [ModelViewFilter.CMMI, ModelViewFilter.IPC]
   },
   payTypeNote: {
     gqlField: 'payTypeNote',
@@ -195,7 +261,7 @@ export const payments: TranslationPayments = {
     label: 'Notes',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['cmmi', 'ipc']
+    filterGroups: [ModelViewFilter.CMMI, ModelViewFilter.IPC]
   },
   payClaims: {
     gqlField: 'payClaims',
@@ -204,9 +270,12 @@ export const payments: TranslationPayments = {
     label: 'Select which claims-based payments will you pay.',
     sublabel:
       'If you select reductions to beneficiary cost-sharing or other, there will be additional questions to answer.',
+    disconnectedLabel: `questionNotApplicableBeneficiary`,
     dataType: 'enum',
     formType: 'multiSelect',
     multiSelectLabel: 'Selected claims-based payments',
+    hideRelatedQuestionAlert: true,
+    disconnectedChildren: true,
     options: {
       ADJUSTMENTS_TO_FFS_PAYMENTS: 'Adjustments to FFS payments',
       CARE_MANAGEMENT_HOME_VISITS: 'Payments for care management home visits',
@@ -222,16 +291,32 @@ export const payments: TranslationPayments = {
         'Reductions to beneficiary cost-sharing',
       OTHER: 'Other'
     },
-    filterGroups: ['cmmi', 'oact']
+    optionsRelatedInfo: {
+      OTHER: 'payClaimsOther'
+    },
+    childRelation: {
+      REDUCTIONS_TO_BENEFICIARY_COST_SHARING: [
+        () => payments.beneficiaryCostSharingLevelAndHandling,
+        () => payments.waiveBeneficiaryCostSharingForAnyServices,
+        () => payments.waiverOnlyAppliesPartOfPayment
+      ]
+    },
+    parentRelation: () => payments.payType,
+    filterGroups: [
+      ModelViewFilter.CMMI,
+      ModelViewFilter.IPC,
+      ModelViewFilter.OACT
+    ]
   },
   payClaimsOther: {
     gqlField: 'payClaimsOther',
     goField: 'PayClaimsOther',
     dbField: 'pay_claims_other',
-    label: 'Please describe the other payment frequency.',
+    label: 'Please describe the other claims-based payments you will pay',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['cmmi', 'oact']
+    isOtherType: true,
+    filterGroups: [ModelViewFilter.CMMI, ModelViewFilter.OACT]
   },
   payClaimsNote: {
     gqlField: 'payClaimsNote',
@@ -240,7 +325,7 @@ export const payments: TranslationPayments = {
     label: 'Notes',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['cmmi', 'oact']
+    filterGroups: [ModelViewFilter.CMMI, ModelViewFilter.OACT]
   },
   shouldAnyProvidersExcludedFFSSystems: {
     gqlField: 'shouldAnyProvidersExcludedFFSSystems',
@@ -254,7 +339,8 @@ export const payments: TranslationPayments = {
       true: 'Yes',
       false: 'No'
     },
-    filterGroups: ['iddoc', 'pbg']
+    parentRelation: () => payments.payType,
+    filterGroups: [ModelViewFilter.IDDOC, ModelViewFilter.PBG]
   },
   shouldAnyProviderExcludedFFSSystemsNote: {
     gqlField: 'shouldAnyProviderExcludedFFSSystemsNote',
@@ -263,7 +349,7 @@ export const payments: TranslationPayments = {
     label: 'Notes',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['iddoc', 'pbg']
+    filterGroups: [ModelViewFilter.IDDOC, ModelViewFilter.PBG]
   },
   changesMedicarePhysicianFeeSchedule: {
     gqlField: 'changesMedicarePhysicianFeeSchedule',
@@ -278,7 +364,8 @@ export const payments: TranslationPayments = {
       true: 'Yes',
       false: 'No'
     },
-    filterGroups: ['iddoc', 'pbg']
+    parentRelation: () => payments.payType,
+    filterGroups: [ModelViewFilter.IDDOC, ModelViewFilter.PBG]
   },
   changesMedicarePhysicianFeeScheduleNote: {
     gqlField: 'changesMedicarePhysicianFeeScheduleNote',
@@ -287,20 +374,26 @@ export const payments: TranslationPayments = {
     label: 'Notes',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['iddoc', 'pbg']
+    filterGroups: [ModelViewFilter.IDDOC, ModelViewFilter.PBG]
   },
   affectsMedicareSecondaryPayerClaims: {
     gqlField: 'affectsMedicareSecondaryPayerClaims',
     goField: 'AffectsMedicareSecondaryPayerClaims',
     dbField: 'affects_medicare_secondary_payer_claims',
     label: 'Does the model affect Medicare Secondary Payer claims?',
+    readonlyLabel:
+      'Does the model affect Medicare Secondary Payer claims? How so?',
     dataType: 'boolean',
     formType: 'radio',
     options: {
       true: 'Yes',
       false: 'No'
     },
-    filterGroups: ['iddoc', 'pbg']
+    optionsRelatedInfo: {
+      true: 'affectsMedicareSecondaryPayerClaimsHow'
+    },
+    parentRelation: () => payments.payType,
+    filterGroups: [ModelViewFilter.IDDOC, ModelViewFilter.PBG]
   },
   affectsMedicareSecondaryPayerClaimsHow: {
     gqlField: 'affectsMedicareSecondaryPayerClaimsHow',
@@ -309,7 +402,8 @@ export const payments: TranslationPayments = {
     label: 'How so?',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['iddoc', 'pbg']
+    isOtherType: true,
+    filterGroups: [ModelViewFilter.IDDOC, ModelViewFilter.PBG]
   },
   affectsMedicareSecondaryPayerClaimsNote: {
     gqlField: 'affectsMedicareSecondaryPayerClaimsNote',
@@ -318,7 +412,7 @@ export const payments: TranslationPayments = {
     label: 'Notes',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['iddoc', 'pbg']
+    filterGroups: [ModelViewFilter.IDDOC, ModelViewFilter.PBG]
   },
   payModelDifferentiation: {
     gqlField: 'payModelDifferentiation',
@@ -328,7 +422,8 @@ export const payments: TranslationPayments = {
       'How does the model differ from current policy, especially in terms of payment rates and periodicity of payment?',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['iddoc', 'pbg']
+    parentRelation: () => payments.payType,
+    filterGroups: [ModelViewFilter.IDDOC, ModelViewFilter.PBG]
   },
   creatingDependenciesBetweenServices: {
     gqlField: 'creatingDependenciesBetweenServices',
@@ -343,7 +438,8 @@ export const payments: TranslationPayments = {
       true: 'Yes',
       false: 'No'
     },
-    filterGroups: ['iddoc', 'pbg']
+    parentRelation: () => payments.payType,
+    filterGroups: [ModelViewFilter.IDDOC, ModelViewFilter.PBG]
   },
   creatingDependenciesBetweenServicesNote: {
     gqlField: 'creatingDependenciesBetweenServicesNote',
@@ -352,7 +448,7 @@ export const payments: TranslationPayments = {
     label: 'Notes',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['iddoc', 'pbg']
+    filterGroups: [ModelViewFilter.IDDOC, ModelViewFilter.PBG]
   },
   needsClaimsDataCollection: {
     gqlField: 'needsClaimsDataCollection',
@@ -367,7 +463,8 @@ export const payments: TranslationPayments = {
       true: 'Yes',
       false: 'No'
     },
-    filterGroups: ['iddoc', 'pbg']
+    parentRelation: () => payments.payType,
+    filterGroups: [ModelViewFilter.IDDOC, ModelViewFilter.PBG]
   },
   needsClaimsDataCollectionNote: {
     gqlField: 'needsClaimsDataCollectionNote',
@@ -376,7 +473,7 @@ export const payments: TranslationPayments = {
     label: 'Notes',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['iddoc', 'pbg']
+    filterGroups: [ModelViewFilter.IDDOC, ModelViewFilter.PBG]
   },
   providingThirdPartyFile: {
     gqlField: 'providingThirdPartyFile',
@@ -390,7 +487,8 @@ export const payments: TranslationPayments = {
       true: 'Yes',
       false: 'No'
     },
-    filterGroups: ['iddoc', 'pbg']
+    parentRelation: () => payments.payType,
+    filterGroups: [ModelViewFilter.IDDOC, ModelViewFilter.PBG]
   },
   isContractorAwareTestDataRequirements: {
     gqlField: 'isContractorAwareTestDataRequirements',
@@ -404,7 +502,12 @@ export const payments: TranslationPayments = {
       true: 'Yes',
       false: 'No'
     },
-    filterGroups: ['iddoc', 'pbg']
+    parentRelation: () => payments.payType,
+    filterGroups: [
+      ModelViewFilter.IDDOC,
+      ModelViewFilter.OACT,
+      ModelViewFilter.PBG
+    ]
   },
   beneficiaryCostSharingLevelAndHandling: {
     gqlField: 'beneficiaryCostSharingLevelAndHandling',
@@ -414,7 +517,12 @@ export const payments: TranslationPayments = {
       'What is the intended level of beneficiary cost-sharing and how will it be handled?',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['iddoc', 'oact', 'pbg']
+    parentRelation: () => payments.payClaims,
+    filterGroups: [
+      ModelViewFilter.IDDOC,
+      ModelViewFilter.OACT,
+      ModelViewFilter.PBG
+    ]
   },
   waiveBeneficiaryCostSharingForAnyServices: {
     gqlField: 'waiveBeneficiaryCostSharingForAnyServices',
@@ -422,13 +530,23 @@ export const payments: TranslationPayments = {
     dbField: 'is_contractor_aware_test_data_requirements',
     label:
       'Will you waive beneficiary cost-sharing (coinsurance and/or deductible) for any services in the model?',
+    readonlyLabel:
+      'Will you waive beneficiary cost-sharing (coinsurance and/or deductible) for any services in the model? If so, please specify which services.',
     dataType: 'boolean',
     formType: 'radio',
     options: {
       true: 'Yes',
       false: 'No'
     },
-    filterGroups: ['iddoc', 'oact', 'pbg']
+    optionsRelatedInfo: {
+      true: 'waiveBeneficiaryCostSharingServiceSpecification'
+    },
+    parentRelation: () => payments.payClaims,
+    filterGroups: [
+      ModelViewFilter.IDDOC,
+      ModelViewFilter.OACT,
+      ModelViewFilter.PBG
+    ]
   },
   waiveBeneficiaryCostSharingServiceSpecification: {
     gqlField: 'waiveBeneficiaryCostSharingServiceSpecification',
@@ -437,7 +555,12 @@ export const payments: TranslationPayments = {
     label: 'Please specify which services.',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['iddoc', 'oact', 'pbg']
+    isOtherType: true,
+    filterGroups: [
+      ModelViewFilter.IDDOC,
+      ModelViewFilter.OACT,
+      ModelViewFilter.PBG
+    ]
   },
   waiverOnlyAppliesPartOfPayment: {
     gqlField: 'waiverOnlyAppliesPartOfPayment',
@@ -452,7 +575,8 @@ export const payments: TranslationPayments = {
       true: 'Yes',
       false: 'No'
     },
-    filterGroups: ['iddoc', 'pbg']
+    parentRelation: () => payments.payClaims,
+    filterGroups: [ModelViewFilter.IDDOC, ModelViewFilter.PBG]
   },
   waiveBeneficiaryCostSharingNote: {
     gqlField: 'waiveBeneficiaryCostSharingNote',
@@ -461,7 +585,11 @@ export const payments: TranslationPayments = {
     label: 'Notes',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['iddoc', 'oact', 'pbg']
+    filterGroups: [
+      ModelViewFilter.IDDOC,
+      ModelViewFilter.OACT,
+      ModelViewFilter.PBG
+    ]
   },
   nonClaimsPayments: {
     gqlField: 'nonClaimsPayments',
@@ -485,7 +613,16 @@ export const payments: TranslationPayments = {
       SHARED_SAVINGS: 'Shared Savings',
       OTHER: 'Other'
     },
-    filterGroups: ['cmmi', 'iddoc', 'ipc', 'pbg']
+    optionsRelatedInfo: {
+      OTHER: 'nonClaimsPaymentOther'
+    },
+    parentRelation: () => payments.payType,
+    filterGroups: [
+      ModelViewFilter.CMMI,
+      ModelViewFilter.IDDOC,
+      ModelViewFilter.IPC,
+      ModelViewFilter.PBG
+    ]
   },
   nonClaimsPaymentOther: {
     gqlField: 'nonClaimsPaymentOther',
@@ -494,7 +631,13 @@ export const payments: TranslationPayments = {
     label: 'Please describe the other non-claims-based payments you will pay.',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['cmmi', 'iddoc', 'ipc', 'pbg']
+    isOtherType: true,
+    filterGroups: [
+      ModelViewFilter.CMMI,
+      ModelViewFilter.IDDOC,
+      ModelViewFilter.IPC,
+      ModelViewFilter.PBG
+    ]
   },
   nonClaimsPaymentsNote: {
     gqlField: 'nonClaimsPaymentsNote',
@@ -503,7 +646,12 @@ export const payments: TranslationPayments = {
     label: 'Notes',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['cmmi', 'iddoc', 'ipc', 'pbg']
+    filterGroups: [
+      ModelViewFilter.CMMI,
+      ModelViewFilter.IDDOC,
+      ModelViewFilter.IPC,
+      ModelViewFilter.PBG
+    ]
   },
   paymentCalculationOwner: {
     gqlField: 'paymentCalculationOwner',
@@ -511,7 +659,8 @@ export const payments: TranslationPayments = {
     dbField: 'payment_calculation_owner',
     label: 'Who will calculate the non-claims based payments?',
     dataType: 'string',
-    formType: 'text'
+    formType: 'text',
+    parentRelation: () => payments.payType
   },
   numberPaymentsPerPayCycle: {
     gqlField: 'numberPaymentsPerPayCycle',
@@ -521,7 +670,8 @@ export const payments: TranslationPayments = {
     sublabel: 'This only applies if you are making non-claims-based payments',
     dataType: 'string',
     formType: 'text',
-    filterGroups: ['dfsdm', 'ipc']
+    parentRelation: () => payments.payType,
+    filterGroups: [ModelViewFilter.DFSDM, ModelViewFilter.IPC]
   },
   numberPaymentsPerPayCycleNote: {
     gqlField: 'numberPaymentsPerPayCycleNote',
@@ -530,7 +680,7 @@ export const payments: TranslationPayments = {
     label: 'Notes',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['dfsdm', 'ipc']
+    filterGroups: [ModelViewFilter.DFSDM, ModelViewFilter.IPC]
   },
   sharedSystemsInvolvedAdditionalClaimPayment: {
     gqlField: 'sharedSystemsInvolvedAdditionalClaimPayment',
@@ -544,7 +694,8 @@ export const payments: TranslationPayments = {
       true: 'Yes',
       false: 'No'
     },
-    filterGroups: ['ccw']
+    parentRelation: () => payments.payType,
+    filterGroups: [ModelViewFilter.CCW]
   },
   sharedSystemsInvolvedAdditionalClaimPaymentNote: {
     gqlField: 'sharedSystemsInvolvedAdditionalClaimPaymentNote',
@@ -553,7 +704,7 @@ export const payments: TranslationPayments = {
     label: 'Notes',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['ccw']
+    filterGroups: [ModelViewFilter.CCW]
   },
   planningToUseInnovationPaymentContractor: {
     gqlField: 'planningToUseInnovationPaymentContractor',
@@ -567,7 +718,13 @@ export const payments: TranslationPayments = {
       true: 'Yes',
       false: 'No'
     },
-    filterGroups: ['dfsdm', 'ipc', 'iddoc', 'pbg']
+    parentRelation: () => payments.payType,
+    filterGroups: [
+      ModelViewFilter.DFSDM,
+      ModelViewFilter.IPC,
+      ModelViewFilter.IDDOC,
+      ModelViewFilter.PBG
+    ]
   },
   planningToUseInnovationPaymentContractorNote: {
     gqlField: 'planningToUseInnovationPaymentContractorNote',
@@ -576,7 +733,12 @@ export const payments: TranslationPayments = {
     label: 'Notes',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['dfsdm', 'ipc', 'iddoc', 'pbg']
+    filterGroups: [
+      ModelViewFilter.DFSDM,
+      ModelViewFilter.IPC,
+      ModelViewFilter.IDDOC,
+      ModelViewFilter.PBG
+    ]
   },
   expectedCalculationComplexityLevel: {
     gqlField: 'expectedCalculationComplexityLevel',
@@ -585,6 +747,7 @@ export const payments: TranslationPayments = {
     label: 'What level of complexity do you expect calculations to be?',
     dataType: 'enum',
     formType: 'radio',
+    isPageStart: true,
     options: {
       LOW: 'Low level',
       MIDDLE: 'Middle level',
@@ -599,19 +762,59 @@ export const payments: TranslationPayments = {
     dataType: 'string',
     formType: 'textarea'
   },
+  claimsProcessingPrecedence: {
+    gqlField: 'claimsProcessingPrecedence',
+    goField: 'ClaimsProcessingPrecedence',
+    dbField: 'claims_processing_precedence',
+    label:
+      'Are there any business requirement(s) that address claims processing precedence order with the other model(s)?',
+    readonlyLabel:
+      'Are there any business requirement(s) that address claims processing precedence order with the other model(s)? If so, please specify.',
+    dataType: 'enum',
+    formType: 'checkbox',
+    options: {
+      true: 'Yes',
+      false: 'No'
+    },
+    optionsRelatedInfo: {
+      true: 'claimsProcessingPrecedenceOther'
+    }
+  },
+  claimsProcessingPrecedenceOther: {
+    gqlField: 'claimsProcessingPrecedenceOther',
+    goField: 'ClaimsProcessingPrecedenceOther',
+    dbField: 'claims_processing_precedence_other',
+    label: 'Please specify',
+    dataType: 'string',
+    formType: 'text',
+    isOtherType: true
+  },
+  claimsProcessingPrecedenceNote: {
+    gqlField: 'claimsProcessingPrecedenceNote',
+    goField: 'ClaimsProcessingPrecedenceNote',
+    dbField: 'claims_processing_precedence_note',
+    label: 'Notes',
+    dataType: 'string',
+    formType: 'text'
+  },
   canParticipantsSelectBetweenPaymentMechanisms: {
     gqlField: 'canParticipantsSelectBetweenPaymentMechanisms',
     goField: 'CanParticipantsSelectBetweenPaymentMechanisms',
     dbField: 'can_participants_select_between_payment_mechanisms',
     label:
       'Will participants be allowed to select between multiple payment mechanisms?',
+    readonlyLabel:
+      'Will participants be allowed to select between multiple payment mechanisms? If so, please describe.',
     dataType: 'boolean',
     formType: 'radio',
     options: {
       true: 'Yes',
       false: 'No'
     },
-    filterGroups: ['cmmi']
+    optionsRelatedInfo: {
+      true: 'canParticipantsSelectBetweenPaymentMechanismsHow'
+    },
+    filterGroups: [ModelViewFilter.CMMI]
   },
   canParticipantsSelectBetweenPaymentMechanismsHow: {
     gqlField: 'canParticipantsSelectBetweenPaymentMechanismsHow',
@@ -620,7 +823,8 @@ export const payments: TranslationPayments = {
     label: 'Please describe',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['cmmi']
+    isOtherType: true,
+    filterGroups: [ModelViewFilter.CMMI]
   },
   canParticipantsSelectBetweenPaymentMechanismsNote: {
     gqlField: 'canParticipantsSelectBetweenPaymentMechanismsNote',
@@ -629,7 +833,7 @@ export const payments: TranslationPayments = {
     label: 'Notes',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['cmmi']
+    filterGroups: [ModelViewFilter.CMMI]
   },
   anticipatedPaymentFrequency: {
     gqlField: 'anticipatedPaymentFrequency',
@@ -640,14 +844,14 @@ export const payments: TranslationPayments = {
     formType: 'checkbox',
     options: frequencyOptions,
     optionsRelatedInfo: {
-      ANNUALLY: '',
-      SEMIANNUALLY: '',
-      QUARTERLY: '',
-      MONTHLY: '',
       CONTINUALLY: 'anticipatedPaymentFrequencyContinually',
       OTHER: 'anticipatedPaymentFrequencyOther'
     },
-    filterGroups: ['cmmi', 'dfsdm', 'ipc']
+    filterGroups: [
+      ModelViewFilter.CMMI,
+      ModelViewFilter.DFSDM,
+      ModelViewFilter.IPC
+    ]
   },
   anticipatedPaymentFrequencyContinually: {
     gqlField: 'anticipatedPaymentFrequencyContinually',
@@ -656,7 +860,12 @@ export const payments: TranslationPayments = {
     label: 'Please specify',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['cmmi', 'dfsdm', 'ipc']
+    isOtherType: true,
+    filterGroups: [
+      ModelViewFilter.CMMI,
+      ModelViewFilter.DFSDM,
+      ModelViewFilter.IPC
+    ]
   },
   anticipatedPaymentFrequencyOther: {
     gqlField: 'anticipatedPaymentFrequencyOther',
@@ -665,7 +874,12 @@ export const payments: TranslationPayments = {
     label: 'Please specify',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['cmmi', 'dfsdm', 'ipc']
+    isOtherType: true,
+    filterGroups: [
+      ModelViewFilter.CMMI,
+      ModelViewFilter.DFSDM,
+      ModelViewFilter.IPC
+    ]
   },
   anticipatedPaymentFrequencyNote: {
     gqlField: 'anticipatedPaymentFrequencyNote',
@@ -674,7 +888,11 @@ export const payments: TranslationPayments = {
     label: 'Notes',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['cmmi', 'dfsdm', 'ipc']
+    filterGroups: [
+      ModelViewFilter.CMMI,
+      ModelViewFilter.DFSDM,
+      ModelViewFilter.IPC
+    ]
   },
   willRecoverPayments: {
     gqlField: 'willRecoverPayments',
@@ -683,11 +901,12 @@ export const payments: TranslationPayments = {
     label: 'Will you recover the payments?',
     dataType: 'boolean',
     formType: 'radio',
+    isPageStart: true,
     options: {
       true: 'Yes',
       false: 'No'
     },
-    filterGroups: ['cmmi', 'ipc']
+    filterGroups: [ModelViewFilter.CMMI, ModelViewFilter.IPC]
   },
   willRecoverPaymentsNote: {
     gqlField: 'willRecoverPaymentsNote',
@@ -696,7 +915,7 @@ export const payments: TranslationPayments = {
     label: 'Notes',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['cmmi', 'ipc']
+    filterGroups: [ModelViewFilter.CMMI, ModelViewFilter.IPC]
   },
   anticipateReconcilingPaymentsRetrospectively: {
     gqlField: 'anticipateReconcilingPaymentsRetrospectively',
@@ -709,7 +928,11 @@ export const payments: TranslationPayments = {
       true: 'Yes',
       false: 'No'
     },
-    filterGroups: ['iddoc', 'ipc', 'pbg']
+    filterGroups: [
+      ModelViewFilter.IDDOC,
+      ModelViewFilter.IPC,
+      ModelViewFilter.PBG
+    ]
   },
   anticipateReconcilingPaymentsRetrospectivelyNote: {
     gqlField: 'anticipateReconcilingPaymentsRetrospectivelyNote',
@@ -718,7 +941,11 @@ export const payments: TranslationPayments = {
     label: 'Notes',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['iddoc', 'ipc', 'pbg']
+    filterGroups: [
+      ModelViewFilter.IDDOC,
+      ModelViewFilter.IPC,
+      ModelViewFilter.PBG
+    ]
   },
   paymentReconciliationFrequency: {
     gqlField: 'paymentReconciliationFrequency',
@@ -729,10 +956,6 @@ export const payments: TranslationPayments = {
     formType: 'checkbox',
     options: frequencyOptions,
     optionsRelatedInfo: {
-      ANNUALLY: '',
-      SEMIANNUALLY: '',
-      QUARTERLY: '',
-      MONTHLY: '',
       CONTINUALLY: 'paymentReconciliationFrequencyContinually',
       OTHER: 'paymentReconciliationFrequencyOther'
     }
@@ -743,7 +966,8 @@ export const payments: TranslationPayments = {
     dbField: 'payment_reconciliation_frequency_continually',
     label: 'Please specify',
     dataType: 'string',
-    formType: 'textarea'
+    formType: 'textarea',
+    isOtherType: true
   },
   paymentReconciliationFrequencyOther: {
     gqlField: 'paymentReconciliationFrequencyOther',
@@ -751,12 +975,52 @@ export const payments: TranslationPayments = {
     dbField: 'payment_reconciliation_frequency_other',
     label: 'Please specify',
     dataType: 'string',
-    formType: 'textarea'
+    formType: 'textarea',
+    isOtherType: true
   },
   paymentReconciliationFrequencyNote: {
     gqlField: 'paymentReconciliationFrequencyNote',
     goField: 'PaymentReconciliationFrequencyNote',
     dbField: 'payment_reconciliation_frequency_note',
+    label: 'Notes',
+    dataType: 'string',
+    formType: 'textarea'
+  },
+  paymentDemandRecoupmentFrequency: {
+    gqlField: 'paymentDemandRecoupmentFrequency',
+    goField: 'PaymentDemandRecoupmentFrequency',
+    dbField: 'payment_demand_recoupment_frequency',
+    label: 'How frequently do you anticipate making demands/recoupments?',
+    dataType: 'enum',
+    formType: 'checkbox',
+    options: frequencyOptions,
+    optionsRelatedInfo: {
+      CONTINUALLY: 'paymentDemandRecoupmentFrequencyContinually',
+      OTHER: 'paymentDemandRecoupmentFrequencyOther'
+    }
+  },
+  paymentDemandRecoupmentFrequencyContinually: {
+    gqlField: 'paymentDemandRecoupmentFrequencyContinually',
+    goField: 'PaymentDemandRecoupmentFrequencyContinually',
+    dbField: 'payment_demand_recoupment_frequency_continually',
+    label: 'Please specify',
+    dataType: 'string',
+    formType: 'textarea',
+    isOtherType: true
+  },
+  paymentDemandRecoupmentFrequencyOther: {
+    gqlField: 'paymentDemandRecoupmentFrequencyOther',
+    goField: 'PaymentReconciliationFrequencyOther',
+    dbField: 'payment_demand_recoupment_frequency_other',
+    label: 'Please specify',
+    dataType: 'string',
+    formType: 'textarea',
+    isOtherType: true
+  },
+  paymentDemandRecoupmentFrequencyNote: {
+    gqlField: 'paymentDemandRecoupmentFrequencyNote',
+    goField: 'PaymentReconciliationFrequencyNote',
+    dbField: 'payment_demand_recoupment_frequency_note',
     label: 'Notes',
     dataType: 'string',
     formType: 'textarea'
@@ -771,7 +1035,7 @@ export const payments: TranslationPayments = {
       'Note: If you are unsure of an approximate date, please select the first day of the approximate month.',
     dataType: 'date',
     formType: 'datePicker',
-    filterGroups: ['dfsdm', 'ipc']
+    filterGroups: [ModelViewFilter.DFSDM, ModelViewFilter.IPC]
   },
   paymentStartDateNote: {
     gqlField: 'paymentStartDateNote',
@@ -811,8 +1075,9 @@ export const paymentsMisc = {
   nonClaimsBasedPaymentQuestion: 'Non-claims-based payment questions',
   claims: 'Claims-Based Payments',
   nonClaims: 'Non-Claims-Based Payments',
+  beneficiaryCostSharing: 'Beneficiary cost-sharing',
   grants: 'Grants',
-  continueToITSolutions: 'Continue to IT solutions and implementation status'
+  continueToITSolutions: 'Continue to operational solutions tracker'
 };
 
 export default payments;

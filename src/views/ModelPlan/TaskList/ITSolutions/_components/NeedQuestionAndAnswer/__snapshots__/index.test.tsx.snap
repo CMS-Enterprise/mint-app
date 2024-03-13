@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`IT Solutions NeedQuestionAndAnswer > matches snapshot 1`] = `
+exports[`Operational Solutions NeedQuestionAndAnswer > matches snapshot 1`] = `
 <DocumentFragment>
   <div
     class="grid-container padding-3 bg-base-lightest maxw-none"

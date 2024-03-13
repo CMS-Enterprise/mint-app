@@ -14,19 +14,9 @@ import (
 	"github.com/google/uuid"
 )
 
-type ChangeHistorySortParams struct {
-	Field ChangeHistorySortKey `json:"field"`
-	Order models.SortDirection `json:"order"`
-}
-
 type CreateOperationalSolutionSubtaskInput struct {
 	Name   string                                  `json:"name"`
 	Status models.OperationalSolutionSubtaskStatus `json:"status"`
-}
-
-// The current user of the application
-type CurrentUser struct {
-	LaunchDarkly *LaunchDarklySettings `json:"launchDarkly"`
 }
 
 // DiscussionReplyCreateInput represents the necessary fields to create a discussion reply
@@ -47,11 +37,6 @@ type LaunchDarklySettings struct {
 type NDAInfo struct {
 	Agreed    bool       `json:"agreed"`
 	AgreedDts *time.Time `json:"agreedDts,omitempty"`
-}
-
-type PageParams struct {
-	Offset int `json:"offset"`
-	Limit  int `json:"limit"`
 }
 
 type PlanCRCreateInput struct {
@@ -121,11 +106,6 @@ type ReportAProblemInput struct {
 	WhatWentWrong         *string                 `json:"whatWentWrong,omitempty"`
 	Severity              *ReportAProblemSeverity `json:"severity,omitempty"`
 	SeverityOther         *string                 `json:"severityOther,omitempty"`
-}
-
-type SearchFilter struct {
-	Type  SearchFilterType `json:"type"`
-	Value interface{}      `json:"value"`
 }
 
 // The inputs to the user feedback form
@@ -575,58 +555,6 @@ func (e *CcmInvolvmentType) UnmarshalGQL(v interface{}) error {
 }
 
 func (e CcmInvolvmentType) MarshalGQL(w io.Writer) {
-	fmt.Fprint(w, strconv.Quote(e.String()))
-}
-
-type ChangeHistorySortKey string
-
-const (
-	// Sort by the date the change was made
-	ChangeHistorySortKeyChangeDate ChangeHistorySortKey = "CHANGE_DATE"
-	// Sort by the user who made the change
-	ChangeHistorySortKeyActor ChangeHistorySortKey = "ACTOR"
-	// Sort by the model plan ID that was changed
-	ChangeHistorySortKeyModelPlanID ChangeHistorySortKey = "MODEL_PLAN_ID"
-	// Sort by the table ID that was changed
-	ChangeHistorySortKeyTableID ChangeHistorySortKey = "TABLE_ID"
-	// Sort by the table name that was changed
-	ChangeHistorySortKeyTableName ChangeHistorySortKey = "TABLE_NAME"
-)
-
-var AllChangeHistorySortKey = []ChangeHistorySortKey{
-	ChangeHistorySortKeyChangeDate,
-	ChangeHistorySortKeyActor,
-	ChangeHistorySortKeyModelPlanID,
-	ChangeHistorySortKeyTableID,
-	ChangeHistorySortKeyTableName,
-}
-
-func (e ChangeHistorySortKey) IsValid() bool {
-	switch e {
-	case ChangeHistorySortKeyChangeDate, ChangeHistorySortKeyActor, ChangeHistorySortKeyModelPlanID, ChangeHistorySortKeyTableID, ChangeHistorySortKeyTableName:
-		return true
-	}
-	return false
-}
-
-func (e ChangeHistorySortKey) String() string {
-	return string(e)
-}
-
-func (e *ChangeHistorySortKey) UnmarshalGQL(v interface{}) error {
-	str, ok := v.(string)
-	if !ok {
-		return fmt.Errorf("enums must be strings")
-	}
-
-	*e = ChangeHistorySortKey(str)
-	if !e.IsValid() {
-		return fmt.Errorf("%s is not a valid ChangeHistorySortKey", str)
-	}
-	return nil
-}
-
-func (e ChangeHistorySortKey) MarshalGQL(w io.Writer) {
 	fmt.Fprint(w, strconv.Quote(e.String()))
 }
 
@@ -1899,137 +1827,6 @@ func (e *SatisfactionLevel) UnmarshalGQL(v interface{}) error {
 }
 
 func (e SatisfactionLevel) MarshalGQL(w io.Writer) {
-	fmt.Fprint(w, strconv.Quote(e.String()))
-}
-
-type SearchFilterType string
-
-const (
-	// Filter search results to include changes on or after the specified date.
-	// Expected value: A string in RFC3339 format representing the date and time.
-	// Example: "2006-01-02T15:04:05Z07:00"
-	SearchFilterTypeChangedAfter SearchFilterType = "CHANGED_AFTER"
-	// Filter search results to include changes on or before the specified date.
-	// Expected value: A string in RFC3339 format representing the date and time.
-	// Example: "2006-01-02T15:04:05Z07:00"
-	SearchFilterTypeChangedBefore SearchFilterType = "CHANGED_BEFORE"
-	// Filter search results to include changes made by the specified actor. This is a fuzzy search on the fields: common_name, username, given_name, and family_name of the actor.
-	// Expected value: A string representing the name or username of the actor.
-	// Example: "MINT"
-	SearchFilterTypeChangedByActor SearchFilterType = "CHANGED_BY_ACTOR"
-	// Filter search results to include changes made to the specified object.
-	// Expected value: A string representing the section of the model plan. Use the SearchableTaskListSection enum for valid values.
-	// Example: "BASICS"
-	SearchFilterTypeModelPlanSection SearchFilterType = "MODEL_PLAN_SECTION"
-	// Filter search results to include changes made to the specified model plan by ID.
-	// Expected value: A string representing the ID of the model plan.
-	// Example: "efda354c-11dd-458e-91cf-4f43ee47440b"
-	SearchFilterTypeModelPlanID SearchFilterType = "MODEL_PLAN_ID"
-	// Filter search results to include model plans with the specified status.
-	// Expected value: A string representing the status of the model plan.
-	// Example: "ACTIVE"
-	SearchFilterTypeModelPlanStatus SearchFilterType = "MODEL_PLAN_STATUS"
-	// Filter results with a free text search. This is a fuzzy search on the entire record.
-	// Expected value: A string representing the free text search query.
-	// Example: "Operational Need"
-	SearchFilterTypeFreeText SearchFilterType = "FREE_TEXT"
-	// Filter results by table id.
-	// Expected value: An integer representing the table ID.
-	// Example: 14
-	SearchFilterTypeTableID SearchFilterType = "TABLE_ID"
-	// Filter results by table name.
-	// Expected value: A string representing the table name.
-	// Example: "plan_basics"
-	SearchFilterTypeTableName SearchFilterType = "TABLE_NAME"
-)
-
-var AllSearchFilterType = []SearchFilterType{
-	SearchFilterTypeChangedAfter,
-	SearchFilterTypeChangedBefore,
-	SearchFilterTypeChangedByActor,
-	SearchFilterTypeModelPlanSection,
-	SearchFilterTypeModelPlanID,
-	SearchFilterTypeModelPlanStatus,
-	SearchFilterTypeFreeText,
-	SearchFilterTypeTableID,
-	SearchFilterTypeTableName,
-}
-
-func (e SearchFilterType) IsValid() bool {
-	switch e {
-	case SearchFilterTypeChangedAfter, SearchFilterTypeChangedBefore, SearchFilterTypeChangedByActor, SearchFilterTypeModelPlanSection, SearchFilterTypeModelPlanID, SearchFilterTypeModelPlanStatus, SearchFilterTypeFreeText, SearchFilterTypeTableID, SearchFilterTypeTableName:
-		return true
-	}
-	return false
-}
-
-func (e SearchFilterType) String() string {
-	return string(e)
-}
-
-func (e *SearchFilterType) UnmarshalGQL(v interface{}) error {
-	str, ok := v.(string)
-	if !ok {
-		return fmt.Errorf("enums must be strings")
-	}
-
-	*e = SearchFilterType(str)
-	if !e.IsValid() {
-		return fmt.Errorf("%s is not a valid SearchFilterType", str)
-	}
-	return nil
-}
-
-func (e SearchFilterType) MarshalGQL(w io.Writer) {
-	fmt.Fprint(w, strconv.Quote(e.String()))
-}
-
-type SearchableTaskListSection string
-
-const (
-	SearchableTaskListSectionBasics                          SearchableTaskListSection = "BASICS"
-	SearchableTaskListSectionGeneralCharacteristics          SearchableTaskListSection = "GENERAL_CHARACTERISTICS"
-	SearchableTaskListSectionParticipantsAndProviders        SearchableTaskListSection = "PARTICIPANTS_AND_PROVIDERS"
-	SearchableTaskListSectionBeneficiaries                   SearchableTaskListSection = "BENEFICIARIES"
-	SearchableTaskListSectionOperationsEvaluationAndLearning SearchableTaskListSection = "OPERATIONS_EVALUATION_AND_LEARNING"
-	SearchableTaskListSectionPayment                         SearchableTaskListSection = "PAYMENT"
-)
-
-var AllSearchableTaskListSection = []SearchableTaskListSection{
-	SearchableTaskListSectionBasics,
-	SearchableTaskListSectionGeneralCharacteristics,
-	SearchableTaskListSectionParticipantsAndProviders,
-	SearchableTaskListSectionBeneficiaries,
-	SearchableTaskListSectionOperationsEvaluationAndLearning,
-	SearchableTaskListSectionPayment,
-}
-
-func (e SearchableTaskListSection) IsValid() bool {
-	switch e {
-	case SearchableTaskListSectionBasics, SearchableTaskListSectionGeneralCharacteristics, SearchableTaskListSectionParticipantsAndProviders, SearchableTaskListSectionBeneficiaries, SearchableTaskListSectionOperationsEvaluationAndLearning, SearchableTaskListSectionPayment:
-		return true
-	}
-	return false
-}
-
-func (e SearchableTaskListSection) String() string {
-	return string(e)
-}
-
-func (e *SearchableTaskListSection) UnmarshalGQL(v interface{}) error {
-	str, ok := v.(string)
-	if !ok {
-		return fmt.Errorf("enums must be strings")
-	}
-
-	*e = SearchableTaskListSection(str)
-	if !e.IsValid() {
-		return fmt.Errorf("%s is not a valid SearchableTaskListSection", str)
-	}
-	return nil
-}
-
-func (e SearchableTaskListSection) MarshalGQL(w io.Writer) {
 	fmt.Fprint(w, strconv.Quote(e.String()))
 }
 

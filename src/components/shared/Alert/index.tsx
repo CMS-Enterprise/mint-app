@@ -19,11 +19,13 @@ type AlertProps = {
   'data-testid'?: string;
   slim?: boolean;
   lessPadding?: boolean;
+  lessRightPadding?: boolean;
   noIcon?: boolean;
   inline?: boolean;
   isClosable?: boolean;
   headingLevel?: HeadingLevel;
   closeAlert?: (closed: any) => void;
+  validation?: boolean; // Adds usa-alert--validation class, convert p to span to allow list nesting
 } & JSX.IntrinsicElements['div'];
 
 export const Alert = ({
@@ -32,6 +34,7 @@ export const Alert = ({
   children,
   slim,
   lessPadding, // reduces x-padding from 2rem to 1rem
+  lessRightPadding,
   noIcon,
   className,
   inline,
@@ -39,13 +42,15 @@ export const Alert = ({
   // Default to closable button if type = success or error
   isClosable = type === 'success' || type === 'error',
   closeAlert,
+  validation,
   ...props
 }: AlertProps & React.HTMLAttributes<HTMLDivElement>): React.ReactElement => {
   const classes = classnames(
     {
       'mint-inline-alert': inline,
       'mint-alert-text': isClosable,
-      'mint-alert-slim': lessPadding
+      'mint-alert-slim': lessPadding,
+      'mint-alert-slim-right': lessRightPadding
     },
     'flex',
     className
@@ -69,6 +74,7 @@ export const Alert = ({
           className={classes}
           {...props}
           headingLevel={headingLevel}
+          validation={validation}
         >
           <span>{children}</span>
           {isClosable && (

@@ -12,6 +12,18 @@ export enum ActionType {
   NORMAL = "NORMAL",
 }
 
+/**
+ * ActivityType represents the possible activities that happen in application that might result in a notification
+ */
+export enum ActivityType {
+  ADDED_AS_COLLABORATOR = "ADDED_AS_COLLABORATOR",
+  DAILY_DIGEST_COMPLETE = "DAILY_DIGEST_COMPLETE",
+  MODEL_PLAN_SHARED = "MODEL_PLAN_SHARED",
+  NEW_DISCUSSION_REPLY = "NEW_DISCUSSION_REPLY",
+  TAGGED_IN_DISCUSSION = "TAGGED_IN_DISCUSSION",
+  TAGGED_IN_DISCUSSION_REPLY = "TAGGED_IN_DISCUSSION_REPLY",
+}
+
 export enum AgencyOrStateHelpType {
   NO = "NO",
   OTHER = "OTHER",
@@ -196,6 +208,11 @@ export enum EvaluationApproachType {
   OTHER = "OTHER",
 }
 
+export enum ExisitingModelLinkFieldType {
+  GEN_CHAR_PARTICIPATION_EXISTING_MODEL_WHICH = "GEN_CHAR_PARTICIPATION_EXISTING_MODEL_WHICH",
+  GEN_CHAR_RESEMBLES_EXISTING_MODEL_WHICH = "GEN_CHAR_RESEMBLES_EXISTING_MODEL_WHICH",
+}
+
 export enum FrequencyType {
   ANNUALLY = "ANNUALLY",
   CONTINUALLY = "CONTINUALLY",
@@ -224,6 +241,12 @@ export enum GeographyApplication {
   OTHER = "OTHER",
   PARTICIPANTS = "PARTICIPANTS",
   PROVIDERS = "PROVIDERS",
+}
+
+export enum GeographyRegionType {
+  CBSA = "CBSA",
+  HRR = "HRR",
+  MSA = "MSA",
 }
 
 export enum GeographyType {
@@ -577,6 +600,66 @@ export enum StakeholdersType {
   STATES = "STATES",
 }
 
+export enum StatesAndTerritories {
+  AK = "AK",
+  AL = "AL",
+  AR = "AR",
+  AS = "AS",
+  AZ = "AZ",
+  CA = "CA",
+  CO = "CO",
+  CT = "CT",
+  DC = "DC",
+  DE = "DE",
+  FL = "FL",
+  GA = "GA",
+  GU = "GU",
+  HI = "HI",
+  IA = "IA",
+  ID = "ID",
+  IL = "IL",
+  IN = "IN",
+  KS = "KS",
+  KY = "KY",
+  LA = "LA",
+  MA = "MA",
+  MD = "MD",
+  ME = "ME",
+  MI = "MI",
+  MN = "MN",
+  MO = "MO",
+  MP = "MP",
+  MS = "MS",
+  MT = "MT",
+  NC = "NC",
+  ND = "ND",
+  NE = "NE",
+  NH = "NH",
+  NJ = "NJ",
+  NM = "NM",
+  NV = "NV",
+  NY = "NY",
+  OH = "OH",
+  OK = "OK",
+  OR = "OR",
+  PA = "PA",
+  PR = "PR",
+  RI = "RI",
+  SC = "SC",
+  SD = "SD",
+  TN = "TN",
+  TX = "TX",
+  UM = "UM",
+  UT = "UT",
+  VA = "VA",
+  VI = "VI",
+  VT = "VT",
+  WA = "WA",
+  WI = "WI",
+  WV = "WV",
+  WY = "WY",
+}
+
 export enum TaskListSection {
   BASICS = "BASICS",
   BENEFICIARIES = "BENEFICIARIES",
@@ -618,6 +701,11 @@ export enum TriStateAnswer {
   NO = "NO",
   TBD = "TBD",
   YES = "YES",
+}
+
+export enum UserNotificationPreferenceFlag {
+  EMAIL = "EMAIL",
+  IN_APP = "IN_APP",
 }
 
 export enum WaiverType {
@@ -814,12 +902,25 @@ export interface PlanGeneralCharacteristicsChanges {
   isNewModel?: boolean | null;
   currentModelPlanID?: UUID | null;
   existingModelID?: number | null;
-  resemblesExistingModel?: boolean | null;
+  resemblesExistingModel?: YesNoOtherType | null;
+  resemblesExistingModelWhyHow?: string | null;
+  resemblesExistingModelOtherSpecify?: string | null;
+  resemblesExistingModelOtherSelected?: boolean | null;
+  resemblesExistingModelOtherOption?: string | null;
   resemblesExistingModelHow?: string | null;
   resemblesExistingModelNote?: string | null;
+  participationInModelPrecondition?: YesNoOtherType | null;
+  participationInModelPreconditionWhyHow?: string | null;
+  participationInModelPreconditionOtherSpecify?: string | null;
+  participationInModelPreconditionOtherSelected?: boolean | null;
+  participationInModelPreconditionOtherOption?: string | null;
+  participationInModelPreconditionNote?: string | null;
   hasComponentsOrTracks?: boolean | null;
   hasComponentsOrTracksDiffer?: string | null;
   hasComponentsOrTracksNote?: string | null;
+  agencyOrStateHelp?: AgencyOrStateHelpType[] | null;
+  agencyOrStateHelpOther?: string | null;
+  agencyOrStateHelpNote?: string | null;
   alternativePaymentModelTypes?: AlternativePaymentModelType[] | null;
   alternativePaymentModelNote?: string | null;
   keyCharacteristics?: KeyCharacteristic[] | null;
@@ -842,6 +943,8 @@ export interface PlanGeneralCharacteristicsChanges {
   communityPartnersInvolvedNote?: string | null;
   geographiesTargeted?: boolean | null;
   geographiesTargetedTypes?: GeographyType[] | null;
+  geographiesStatesAndTerritories?: StatesAndTerritories[] | null;
+  geographiesRegionTypes?: GeographyRegionType[] | null;
   geographiesTargetedTypesOther?: string | null;
   geographiesTargetedAppliedTo?: GeographyApplication[] | null;
   geographiesTargetedAppliedToOther?: string | null;
@@ -871,9 +974,6 @@ export interface PlanGeneralCharacteristicsChanges {
  * https: // gqlgen.com/reference/changesets/
  */
 export interface PlanOpsEvalAndLearningChanges {
-  agencyOrStateHelp?: AgencyOrStateHelpType[] | null;
-  agencyOrStateHelpOther?: string | null;
-  agencyOrStateHelpNote?: string | null;
   stakeholders?: StakeholdersType[] | null;
   stakeholdersOther?: string | null;
   stakeholdersNote?: string | null;
@@ -1093,6 +1193,9 @@ export interface PlanPaymentsChanges {
   planningToUseInnovationPaymentContractorNote?: string | null;
   expectedCalculationComplexityLevel?: ComplexityCalculationLevelType | null;
   expectedCalculationComplexityLevelNote?: string | null;
+  claimsProcessingPrecedence?: boolean | null;
+  claimsProcessingPrecedenceOther?: string | null;
+  claimsProcessingPrecedenceNote?: string | null;
   canParticipantsSelectBetweenPaymentMechanisms?: boolean | null;
   canParticipantsSelectBetweenPaymentMechanismsHow?: string | null;
   canParticipantsSelectBetweenPaymentMechanismsNote?: string | null;
@@ -1108,6 +1211,10 @@ export interface PlanPaymentsChanges {
   paymentReconciliationFrequencyContinually?: string | null;
   paymentReconciliationFrequencyOther?: string | null;
   paymentReconciliationFrequencyNote?: string | null;
+  paymentDemandRecoupmentFrequency?: FrequencyType[] | null;
+  paymentDemandRecoupmentFrequencyContinually?: string | null;
+  paymentDemandRecoupmentFrequencyOther?: string | null;
+  paymentDemandRecoupmentFrequencyNote?: string | null;
   paymentStartDate?: Time | null;
   paymentStartDateNote?: string | null;
   status?: TaskStatusInput | null;
@@ -1162,6 +1269,18 @@ export interface UpdateOperationalSolutionSubtaskChangesInput {
 export interface UpdateOperationalSolutionSubtaskInput {
   id: UUID;
   changes: UpdateOperationalSolutionSubtaskChangesInput;
+}
+
+/**
+ * UserNotificationPreferencesChanges represents the ways that a UserNotifications Preferences object can be updated
+ */
+export interface UserNotificationPreferencesChanges {
+  dailyDigestComplete?: UserNotificationPreferenceFlag[] | null;
+  addedAsCollaborator?: UserNotificationPreferenceFlag[] | null;
+  taggedInDiscussion?: UserNotificationPreferenceFlag[] | null;
+  taggedInDiscussionReply?: UserNotificationPreferenceFlag[] | null;
+  newDiscussionReply?: UserNotificationPreferenceFlag[] | null;
+  modelPlanShared?: UserNotificationPreferenceFlag[] | null;
 }
 
 //==============================================================

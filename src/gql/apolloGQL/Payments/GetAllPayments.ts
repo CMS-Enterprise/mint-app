@@ -54,6 +54,9 @@ export default gql(/* GraphQL */ `
         planningToUseInnovationPaymentContractorNote
         expectedCalculationComplexityLevel
         expectedCalculationComplexityLevelNote
+        claimsProcessingPrecedence
+        claimsProcessingPrecedenceOther
+        claimsProcessingPrecedenceNote
         canParticipantsSelectBetweenPaymentMechanisms
         canParticipantsSelectBetweenPaymentMechanismsHow
         canParticipantsSelectBetweenPaymentMechanismsNote
@@ -69,6 +72,10 @@ export default gql(/* GraphQL */ `
         paymentReconciliationFrequencyContinually
         paymentReconciliationFrequencyOther
         paymentReconciliationFrequencyNote
+        paymentDemandRecoupmentFrequency
+        paymentDemandRecoupmentFrequencyContinually
+        paymentDemandRecoupmentFrequencyOther
+        paymentDemandRecoupmentFrequencyNote
         paymentStartDate
         paymentStartDateNote
         status

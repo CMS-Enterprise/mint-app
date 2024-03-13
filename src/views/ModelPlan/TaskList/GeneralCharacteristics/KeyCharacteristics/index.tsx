@@ -13,6 +13,7 @@ import {
 } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
 import {
+  AgencyOrStateHelpType,
   AlternativePaymentModelType,
   GetKeyCharacteristicsQuery,
   KeyCharacteristic,
@@ -33,6 +34,7 @@ import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import MultiSelect from 'components/shared/MultiSelect';
+import TextAreaField from 'components/shared/TextAreaField';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import useScrollElement from 'hooks/useScrollElement';
 import { getKeys } from 'types/translation';
@@ -53,6 +55,7 @@ const KeyCharacteristics = () => {
   const { t: miscellaneousT } = useTranslation('miscellaneous');
 
   const {
+    agencyOrStateHelp: agencyOrStateHelpConfig,
     alternativePaymentModelTypes: alternativePaymentModelTypesConfig,
     keyCharacteristics: keyCharacteristicsConfig,
     collectPlanBids: collectPlanBidsConfig,
@@ -75,6 +78,9 @@ const KeyCharacteristics = () => {
 
   const {
     id,
+    agencyOrStateHelp,
+    agencyOrStateHelpOther,
+    agencyOrStateHelpNote,
     alternativePaymentModelTypes,
     alternativePaymentModelNote,
     keyCharacteristics,
@@ -93,7 +99,7 @@ const KeyCharacteristics = () => {
     need => need.modifiedDts
   );
 
-  // If redirected from IT Solutions, scrolls to the relevant question
+  // If redirected from Operational Solutions, scrolls to the relevant question
   useScrollElement(!loading);
 
   const [update] = useUpdatePlanGeneralCharacteristicsMutation();
@@ -133,6 +139,9 @@ const KeyCharacteristics = () => {
   const initialValues: KeyCharacteristicsFormType = {
     __typename: 'PlanGeneralCharacteristics',
     id: id ?? '',
+    agencyOrStateHelp: agencyOrStateHelp ?? [],
+    agencyOrStateHelpOther: agencyOrStateHelpOther ?? '',
+    agencyOrStateHelpNote: agencyOrStateHelpNote ?? '',
     alternativePaymentModelTypes: alternativePaymentModelTypes ?? [],
     alternativePaymentModelNote: alternativePaymentModelNote ?? '',
     keyCharacteristics: keyCharacteristics ?? [],
@@ -229,6 +238,64 @@ const KeyCharacteristics = () => {
                 }}
               >
                 <Fieldset disabled={!!error || loading}>
+                  <FieldGroup>
+                    <Label htmlFor="plan-characteristics-agency-or-state-help">
+                      {generalCharacteristicsT('agencyOrStateHelp.label')}
+                    </Label>
+
+                    <FieldErrorMsg>
+                      {flatErrors.agencyOrStateHelp}
+                    </FieldErrorMsg>
+
+                    {getKeys(agencyOrStateHelpConfig.options).map(type => {
+                      return (
+                        <Fragment key={type}>
+                          <Field
+                            as={CheckboxField}
+                            id={`plan-characteristics-agency-or-state-help-${type}`}
+                            name="agencyOrStateHelp"
+                            label={agencyOrStateHelpConfig.options[type]}
+                            value={type}
+                            checked={values?.agencyOrStateHelp.includes(type)}
+                          />
+
+                          {type === AgencyOrStateHelpType.OTHER &&
+                            values.agencyOrStateHelp.includes(
+                              AgencyOrStateHelpType.OTHER
+                            ) && (
+                              <div className="margin-left-4">
+                                <Label
+                                  htmlFor="plan-characteristics-agency-or-state-help-other"
+                                  className="text-normal"
+                                >
+                                  {generalCharacteristicsT(
+                                    'agencyOrStateHelpOther.label'
+                                  )}
+                                </Label>
+
+                                <FieldErrorMsg>
+                                  {flatErrors.agencyOrStateHelpOther}
+                                </FieldErrorMsg>
+
+                                <Field
+                                  as={TextAreaField}
+                                  className="maxw-none mint-textarea"
+                                  id="plan-characteristics-agency-or-state-help-other"
+                                  maxLength={5000}
+                                  name="agencyOrStateHelpOther"
+                                />
+                              </div>
+                            )}
+                        </Fragment>
+                      );
+                    })}
+
+                    <AddNote
+                      id="plan-characteristics-agency-or-state-help-note"
+                      field="agencyOrStateHelpNote"
+                    />
+                  </FieldGroup>
+
                   <FieldGroup
                     scrollElement="alternativePaymentModelTypes"
                     error={!!flatErrors.alternativePaymentModelTypes}

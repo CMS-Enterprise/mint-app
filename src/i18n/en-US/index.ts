@@ -52,6 +52,7 @@ import landing from './landing';
 import plan from './modelPlan';
 import modelPlanTaskList from './modelPlanTaskList';
 import nda from './nda';
+import notifications from './notifications';
 import privacyPolicy from './privacyPolicy';
 import tableAndPagination from './tableAndPagination';
 import termsAndConditions from './termsAndConditions';
@@ -80,6 +81,7 @@ const enUS = {
   modelPlanTaskList,
   modelSummary,
   nda,
+  notifications,
   // New Translation
   modelPlan,
   modelPlanMisc,

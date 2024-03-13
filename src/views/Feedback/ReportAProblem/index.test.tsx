@@ -1,11 +1,11 @@
 import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
-import { render } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import { act, render } from '@testing-library/react';
 import CreateReportAProblem from 'gql/apolloGQL/Feedback/CreateReportAProblem';
 import { ReportAProblemSection, ReportAProblemSeverity } from 'gql/gen/graphql';
 
 import VerboseMockedProvider from 'utils/testing/MockedProvider';
+import setup from 'utils/testing/setup';
 
 import ReportAProblem from '.';
 
@@ -38,42 +38,50 @@ window.scrollTo = vi.fn;
 
 describe('Report a problem form', () => {
   it('submits the "Report a problem" form successfully', async () => {
-    const { findByText, getByRole, getByTestId } = render(
-      <MemoryRouter initialEntries={['/report-a-problem']}>
-        <Route path="/report-a-problem">
-          <VerboseMockedProvider mocks={mocks} addTypename={false}>
-            <ReportAProblem />
-          </VerboseMockedProvider>
-        </Route>
-      </MemoryRouter>
-    );
+    await act(async () => {
+      const { findByText, getByRole, getByTestId, user } = setup(
+        <MemoryRouter initialEntries={['/report-a-problem']}>
+          <Route path="/report-a-problem">
+            <VerboseMockedProvider mocks={mocks} addTypename={false}>
+              <ReportAProblem />
+            </VerboseMockedProvider>
+          </Route>
+        </MemoryRouter>
+      );
 
-    // Fill out form
-    userEvent.click(
-      getByTestId('report-a-problem-allow-anon-submission-false')
-    );
-    userEvent.click(getByTestId('report-a-problem-allow-contact-true'));
-    userEvent.click(getByTestId('report-a-problem-section-OTHER'));
-    userEvent.type(
-      getByTestId('report-a-problem-section-other'),
-      'Other section'
-    );
-    userEvent.type(
-      getByTestId('report-a-problem-section-what-doing'),
-      'Nothing much'
-    );
-    userEvent.type(
-      getByTestId('report-a-problem-section-what-went-wrong'),
-      'Everything'
-    );
-    userEvent.click(getByTestId('report-a-problem-severity-DELAYED_TASK'));
+      // Fill out form
+      await user.click(
+        getByTestId('report-a-problem-allow-anon-submission-false')
+      );
 
-    const submitButton = getByRole('button', { name: 'Send report' });
+      await user.click(getByTestId('report-a-problem-allow-contact-true'));
 
-    userEvent.click(submitButton);
+      await user.click(getByTestId('report-a-problem-section-OTHER'));
 
-    // Submit success
-    findByText('Thank you for your feedback');
+      await user.type(
+        getByTestId('report-a-problem-section-other'),
+        'Other section'
+      );
+
+      await user.type(
+        getByTestId('report-a-problem-section-what-doing'),
+        'Nothing much'
+      );
+
+      await user.type(
+        getByTestId('report-a-problem-section-what-went-wrong'),
+        'Everything'
+      );
+
+      await user.click(getByTestId('report-a-problem-severity-DELAYED_TASK'));
+
+      const submitButton = getByRole('button', { name: 'Send report' });
+
+      await user.click(submitButton);
+
+      // Submit success
+      findByText('Thank you for your feedback');
+    });
   });
 
   it('matches snapshot', async () => {

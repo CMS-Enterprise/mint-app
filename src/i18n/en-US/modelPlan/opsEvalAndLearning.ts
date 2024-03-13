@@ -1,43 +1,10 @@
+import { ModelViewFilter } from 'gql/gen/graphql';
+
 import { TranslationOpsEvalAndLearning } from 'types/translation';
 
 import { frequencyOptions } from './miscellaneous';
 
 export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
-  agencyOrStateHelp: {
-    gqlField: 'agencyOrStateHelp',
-    goField: 'AgencyOrStateHelp',
-    dbField: 'agency_or_state_help',
-    label:
-      'Will another Agency or State help design/operate the model? Select all that apply.',
-    readonlyLabel:
-      'Will another Agency or State help design/operate the model?',
-    dataType: 'enum',
-    formType: 'checkbox',
-    options: {
-      YES_STATE: 'Yes, we will partner with states',
-      YES_AGENCY_IDEAS: 'Yes, we will get ideas from another agency',
-      YES_AGENCY_IAA:
-        'Yes, we will get support from another agency through Inter Agency Agreement (IAA)',
-      NO: 'No',
-      OTHER: 'Other'
-    }
-  },
-  agencyOrStateHelpOther: {
-    gqlField: 'agencyOrStateHelpOther',
-    goField: 'AgencyOrStateHelpOther',
-    dbField: 'agency_or_state_help_other',
-    label: 'Please specify',
-    dataType: 'string',
-    formType: 'textarea'
-  },
-  agencyOrStateHelpNote: {
-    gqlField: 'agencyOrStateHelpNote',
-    goField: 'AgencyOrStateHelpNote',
-    dbField: 'agency_or_state_help_note',
-    label: 'Notes',
-    dataType: 'string',
-    formType: 'textarea'
-  },
   stakeholders: {
     gqlField: 'stakeholders',
     goField: 'Stakeholders',
@@ -55,7 +22,10 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
       STATES: 'States',
       OTHER: 'Other'
     },
-    filterGroups: ['cbosc']
+    optionsRelatedInfo: {
+      OTHER: 'stakeholdersOther'
+    },
+    filterGroups: [ModelViewFilter.CBOSC]
   },
   stakeholdersOther: {
     gqlField: 'stakeholdersOther',
@@ -65,7 +35,8 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
       'Please describe the other stakeholders you plan to communicate with.',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['cbosc']
+    isOtherType: true,
+    filterGroups: [ModelViewFilter.CBOSC]
   },
   stakeholdersNote: {
     gqlField: 'stakeholdersNote',
@@ -74,7 +45,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     label: 'Notes',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['cbosc']
+    filterGroups: [ModelViewFilter.CBOSC]
   },
   helpdeskUse: {
     gqlField: 'helpdeskUse',
@@ -87,7 +58,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
       true: 'Yes',
       false: 'No'
     },
-    filterGroups: ['cbosc']
+    filterGroups: [ModelViewFilter.CBOSC]
   },
   helpdeskUseNote: {
     gqlField: 'helpdeskUseNote',
@@ -96,7 +67,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     label: 'Notes',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['cbosc']
+    filterGroups: [ModelViewFilter.CBOSC]
   },
   contractorSupport: {
     gqlField: 'contractorSupport',
@@ -112,7 +83,19 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
       NONE: 'Do not plan to use an implemenation contractor',
       OTHER: 'Other'
     },
-    filterGroups: ['cbosc', 'iddoc']
+    optionsRelatedInfo: {
+      OTHER: 'contractorSupportOther'
+    },
+    childRelation: {
+      ONE: [() => opsEvalAndLearning.contractorSupportHow],
+      MULTIPLE: [() => opsEvalAndLearning.contractorSupportHow],
+      OTHER: [() => opsEvalAndLearning.contractorSupportHow]
+    },
+    filterGroups: [
+      ModelViewFilter.CBOSC,
+      ModelViewFilter.IDDOC,
+      ModelViewFilter.PBG
+    ]
   },
   contractorSupportOther: {
     gqlField: 'contractorSupportOther',
@@ -121,7 +104,12 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     label: 'Please specify',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['cbosc', 'iddoc']
+    isOtherType: true,
+    filterGroups: [
+      ModelViewFilter.CBOSC,
+      ModelViewFilter.IDDOC,
+      ModelViewFilter.PBG
+    ]
   },
   contractorSupportHow: {
     gqlField: 'contractorSupportHow',
@@ -131,7 +119,12 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     sublabel: '(implementation, data analysis, quality, etc.)',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['cbosc', 'iddoc']
+    parentRelation: () => opsEvalAndLearning.contractorSupport,
+    filterGroups: [
+      ModelViewFilter.CBOSC,
+      ModelViewFilter.IDDOC,
+      ModelViewFilter.PBG
+    ]
   },
   contractorSupportNote: {
     gqlField: 'contractorSupportNote',
@@ -140,7 +133,11 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     label: 'Notes',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['cbosc', 'iddoc']
+    filterGroups: [
+      ModelViewFilter.CBOSC,
+      ModelViewFilter.IDDOC,
+      ModelViewFilter.PBG
+    ]
   },
   iddocSupport: {
     gqlField: 'iddocSupport',
@@ -151,11 +148,33 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
       'IDDOC is commonly known as ACO-OS (Accountable Care Organization Operating System). They can provide support for design, development, operations, and maintenance.',
     dataType: 'boolean',
     formType: 'radio',
+    isPageStart: true,
+    readonlyHeader: 'IDDOC operations',
     options: {
       true: 'Yes',
       false: 'No'
     },
-    filterGroups: ['iddoc']
+    childRelation: {
+      true: [
+        () => opsEvalAndLearning.technicalContactsIdentified,
+        () => opsEvalAndLearning.captureParticipantInfo,
+        () => opsEvalAndLearning.icdOwner,
+        () => opsEvalAndLearning.draftIcdDueDate,
+        () => opsEvalAndLearning.uatNeeds,
+        () => opsEvalAndLearning.stcNeeds,
+        () => opsEvalAndLearning.testingTimelines,
+        () => opsEvalAndLearning.dataMonitoringFileTypes,
+        () => opsEvalAndLearning.dataResponseType,
+        () => opsEvalAndLearning.dataResponseFileFrequency,
+        () => opsEvalAndLearning.dataFullTimeOrIncremental,
+        () => opsEvalAndLearning.eftSetUp,
+        () => opsEvalAndLearning.unsolicitedAdjustmentsIncluded,
+        () => opsEvalAndLearning.dataFlowDiagramsNeeded,
+        () => opsEvalAndLearning.produceBenefitEnhancementFiles,
+        () => opsEvalAndLearning.fileNamingConventions
+      ]
+    },
+    filterGroups: [ModelViewFilter.IDDOC]
   },
   iddocSupportNote: {
     gqlField: 'iddocSupportNote',
@@ -164,7 +183,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     label: 'Notes',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['iddoc']
+    filterGroups: [ModelViewFilter.IDDOC]
   },
   technicalContactsIdentified: {
     gqlField: 'technicalContactsIdentified',
@@ -177,7 +196,11 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
       true: 'Yes',
       false: 'No'
     },
-    filterGroups: ['iddoc']
+    optionsRelatedInfo: {
+      true: 'technicalContactsIdentifiedDetail'
+    },
+    parentRelation: () => opsEvalAndLearning.iddocSupport,
+    filterGroups: [ModelViewFilter.IDDOC]
   },
   technicalContactsIdentifiedDetail: {
     gqlField: 'technicalContactsIdentifiedDetail',
@@ -186,7 +209,8 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     label: 'Please specify',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['iddoc']
+    isOtherType: true,
+    filterGroups: [ModelViewFilter.IDDOC]
   },
   technicalContactsIdentifiedNote: {
     gqlField: 'technicalContactsIdentifiedNote',
@@ -195,7 +219,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     label: 'Notes',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['iddoc']
+    filterGroups: [ModelViewFilter.IDDOC]
   },
   captureParticipantInfo: {
     gqlField: 'captureParticipantInfo',
@@ -210,7 +234,8 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
       true: 'Yes',
       false: 'No'
     },
-    filterGroups: ['iddoc']
+    parentRelation: () => opsEvalAndLearning.iddocSupport,
+    filterGroups: [ModelViewFilter.IDDOC]
   },
   captureParticipantInfoNote: {
     gqlField: 'captureParticipantInfoNote',
@@ -219,7 +244,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     label: 'Notes',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['iddoc']
+    filterGroups: [ModelViewFilter.IDDOC]
   },
   icdOwner: {
     gqlField: 'icdOwner',
@@ -228,7 +253,10 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     label: 'ICD owner',
     dataType: 'string',
     formType: 'text',
-    filterGroups: ['iddoc']
+    isPageStart: true,
+    readonlyHeader: 'Interface Control Document (ICD)',
+    parentRelation: () => opsEvalAndLearning.iddocSupport,
+    filterGroups: [ModelViewFilter.IDDOC]
   },
   draftIcdDueDate: {
     gqlField: 'draftIcdDueDate',
@@ -237,7 +265,8 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     label: 'Draft ICD required by',
     dataType: 'date',
     formType: 'datePicker',
-    filterGroups: ['iddoc']
+    parentRelation: () => opsEvalAndLearning.iddocSupport,
+    filterGroups: [ModelViewFilter.IDDOC]
   },
   icdNote: {
     gqlField: 'icdNote',
@@ -246,7 +275,8 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     label: 'Notes',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['iddoc']
+    parentRelation: () => opsEvalAndLearning.iddocSupport,
+    filterGroups: [ModelViewFilter.IDDOC]
   },
   uatNeeds: {
     gqlField: 'uatNeeds',
@@ -255,7 +285,10 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     label: 'User Acceptance Testing (UAT) – test data needs',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['iddoc']
+    isPageStart: true,
+    readonlyHeader: 'Testing',
+    parentRelation: () => opsEvalAndLearning.iddocSupport,
+    filterGroups: [ModelViewFilter.IDDOC]
   },
   stcNeeds: {
     gqlField: 'stcNeeds',
@@ -264,7 +297,8 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     label: 'STC – test data needs',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['iddoc']
+    parentRelation: () => opsEvalAndLearning.iddocSupport,
+    filterGroups: [ModelViewFilter.IDDOC]
   },
   testingTimelines: {
     gqlField: 'testingTimelines',
@@ -273,7 +307,8 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     label: 'Define the testing timelines',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['iddoc']
+    parentRelation: () => opsEvalAndLearning.iddocSupport,
+    filterGroups: [ModelViewFilter.IDDOC]
   },
   testingNote: {
     gqlField: 'testingNote',
@@ -282,7 +317,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     label: 'Notes',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['iddoc']
+    filterGroups: [ModelViewFilter.IDDOC]
   },
   dataMonitoringFileTypes: {
     gqlField: 'dataMonitoringFileTypes',
@@ -292,6 +327,8 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     readonlyLabel: 'What types of files?',
     dataType: 'enum',
     formType: 'checkbox',
+    isPageStart: true,
+    readonlyHeader: 'Data monitoring',
     options: {
       BENEFICIARY: 'Beneficiary',
       PROVIDER: 'Provider',
@@ -299,7 +336,11 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
       PART_B: 'Part B',
       OTHER: 'Other'
     },
-    filterGroups: ['iddoc']
+    optionsRelatedInfo: {
+      OTHER: 'dataMonitoringFileOther'
+    },
+    parentRelation: () => opsEvalAndLearning.iddocSupport,
+    filterGroups: [ModelViewFilter.IDDOC]
   },
   dataMonitoringFileOther: {
     gqlField: 'dataMonitoringFileOther',
@@ -308,7 +349,8 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     label: 'What types of responses?',
     dataType: 'string',
     formType: 'text',
-    filterGroups: ['iddoc']
+    isOtherType: true,
+    filterGroups: [ModelViewFilter.IDDOC]
   },
   dataResponseType: {
     gqlField: 'dataResponseType',
@@ -317,7 +359,8 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     label: 'What types of responses?',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['iddoc']
+    parentRelation: () => opsEvalAndLearning.iddocSupport,
+    filterGroups: [ModelViewFilter.IDDOC]
   },
   dataResponseFileFrequency: {
     gqlField: 'dataResponseFileFrequency',
@@ -326,7 +369,8 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     label: 'Frequency of files?',
     dataType: 'string',
     formType: 'text',
-    filterGroups: ['iddoc']
+    parentRelation: () => opsEvalAndLearning.iddocSupport,
+    filterGroups: [ModelViewFilter.IDDOC]
   },
   dataFullTimeOrIncremental: {
     gqlField: 'dataFullTimeOrIncremental',
@@ -339,7 +383,8 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
       FULL_TIME: 'Full time',
       INCREMENTAL: 'Incremental'
     },
-    filterGroups: ['iddoc']
+    parentRelation: () => opsEvalAndLearning.iddocSupport,
+    filterGroups: [ModelViewFilter.IDDOC]
   },
   eftSetUp: {
     gqlField: 'eftSetUp',
@@ -351,7 +396,9 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     options: {
       true: 'Yes',
       false: 'No'
-    }
+    },
+    parentRelation: () => opsEvalAndLearning.iddocSupport,
+    filterGroups: [ModelViewFilter.IDDOC]
   },
   unsolicitedAdjustmentsIncluded: {
     gqlField: 'unsolicitedAdjustmentsIncluded',
@@ -364,7 +411,8 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
       true: 'Yes',
       false: 'No'
     },
-    filterGroups: ['iddoc']
+    parentRelation: () => opsEvalAndLearning.iddocSupport,
+    filterGroups: [ModelViewFilter.IDDOC]
   },
   dataFlowDiagramsNeeded: {
     gqlField: 'dataFlowDiagramsNeeded',
@@ -376,7 +424,9 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     options: {
       true: 'Yes',
       false: 'No'
-    }
+    },
+    parentRelation: () => opsEvalAndLearning.iddocSupport,
+    filterGroups: [ModelViewFilter.IDDOC]
   },
   produceBenefitEnhancementFiles: {
     gqlField: 'produceBenefitEnhancementFiles',
@@ -391,7 +441,8 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
       true: 'Yes',
       false: 'No'
     },
-    filterGroups: ['iddoc']
+    parentRelation: () => opsEvalAndLearning.iddocSupport,
+    filterGroups: [ModelViewFilter.IDDOC]
   },
   fileNamingConventions: {
     gqlField: 'fileNamingConventions',
@@ -400,7 +451,8 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     label: 'File naming conventions',
     dataType: 'string',
     formType: 'text',
-    filterGroups: ['iddoc']
+    parentRelation: () => opsEvalAndLearning.iddocSupport,
+    filterGroups: [ModelViewFilter.IDDOC]
   },
   dataMonitoringNote: {
     gqlField: 'dataMonitoringNote',
@@ -409,7 +461,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     label: 'Notes',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['iddoc']
+    filterGroups: [ModelViewFilter.IDDOC]
   },
   benchmarkForPerformance: {
     gqlField: 'benchmarkForPerformance',
@@ -418,13 +470,14 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     label: 'Will you establish a benchmark to capture performance?',
     dataType: 'enum',
     formType: 'radio',
+    isPageStart: true,
     options: {
       YES_RECONCILE: 'Yes, and we will reconcile actual performance against it',
       YES_NO_RECONCILE:
         'Yes, but we will not reconcile actual performance against it',
       NO: 'No'
     },
-    filterGroups: ['cmmi']
+    filterGroups: [ModelViewFilter.CMMI]
   },
   benchmarkForPerformanceNote: {
     gqlField: 'benchmarkForPerformanceNote',
@@ -433,7 +486,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     label: 'Notes',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['cmmi']
+    filterGroups: [ModelViewFilter.CMMI]
   },
   computePerformanceScores: {
     gqlField: 'computePerformanceScores',
@@ -446,7 +499,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
       true: 'Yes',
       false: 'No'
     },
-    filterGroups: ['cmmi']
+    filterGroups: [ModelViewFilter.CMMI]
   },
   computePerformanceScoresNote: {
     gqlField: 'computePerformanceScoresNote',
@@ -455,7 +508,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     label: 'Notes',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['cmmi']
+    filterGroups: [ModelViewFilter.CMMI]
   },
   riskAdjustPerformance: {
     gqlField: 'riskAdjustPerformance',
@@ -469,7 +522,11 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
       true: 'Yes',
       false: 'No'
     },
-    filterGroups: ['cmmi']
+    adjacentPositioning: {
+      position: 'left',
+      adjacentField: 'riskAdjustFeedback'
+    },
+    filterGroups: [ModelViewFilter.CMMI]
   },
   riskAdjustFeedback: {
     gqlField: 'riskAdjustFeedback',
@@ -482,6 +539,10 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     options: {
       true: 'Yes',
       false: 'No'
+    },
+    adjacentPositioning: {
+      position: 'right',
+      adjacentField: 'riskAdjustPerformance'
     }
   },
   riskAdjustPayments: {
@@ -496,7 +557,11 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
       true: 'Yes',
       false: 'No'
     },
-    filterGroups: ['cmmi']
+    adjacentPositioning: {
+      position: 'left',
+      adjacentField: 'riskAdjustOther'
+    },
+    filterGroups: [ModelViewFilter.CMMI]
   },
   riskAdjustOther: {
     gqlField: 'riskAdjustOther',
@@ -509,6 +574,10 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     options: {
       true: 'Yes',
       false: 'No'
+    },
+    adjacentPositioning: {
+      position: 'right',
+      adjacentField: 'riskAdjustPayments'
     }
   },
   riskAdjustNote: {
@@ -530,6 +599,10 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     options: {
       true: 'Yes',
       false: 'No'
+    },
+    adjacentPositioning: {
+      position: 'left',
+      adjacentField: 'appealFeedback'
     }
   },
   appealFeedback: {
@@ -543,6 +616,10 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     options: {
       true: 'Yes',
       false: 'No'
+    },
+    adjacentPositioning: {
+      position: 'right',
+      adjacentField: 'appealPerformance'
     }
   },
   appealPayments: {
@@ -556,6 +633,10 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     options: {
       true: 'Yes',
       false: 'No'
+    },
+    adjacentPositioning: {
+      position: 'left',
+      adjacentField: 'appealOther'
     }
   },
   appealOther: {
@@ -569,6 +650,10 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     options: {
       true: 'Yes',
       false: 'No'
+    },
+    adjacentPositioning: {
+      position: 'right',
+      adjacentField: 'appealPayments'
     }
   },
   appealNote: {
@@ -588,6 +673,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     readonlyLabel: 'What type of evaluation approach are you considering?',
     dataType: 'enum',
     formType: 'checkbox',
+    isPageStart: true,
     options: {
       COMPARISON_MATCH: 'Identify a comparison/match group',
       CONTROL_INTERVENTION: 'Establish control and intervention groups',
@@ -595,6 +681,9 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
       NON_MEDICARE_DATA:
         'Leverage non-Medicare data (such as Medicaid data, external data sets)',
       OTHER: 'Other'
+    },
+    optionsRelatedInfo: {
+      OTHER: 'evaluationApproachOther'
     }
   },
   evaluationApproachOther: {
@@ -603,7 +692,8 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     dbField: 'evaluation_approach_other',
     label: 'Please describe the other evaluation approach you are considering.',
     dataType: 'string',
-    formType: 'textarea'
+    formType: 'textarea',
+    isOtherType: true
   },
   evalutaionApproachNote: {
     gqlField: 'evalutaionApproachNote',
@@ -622,13 +712,29 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
       'If you select either yes option, there will be additional questions to answer.',
     dataType: 'enum',
     formType: 'checkbox',
+    hideRelatedQuestionAlert: true,
     options: {
       YES_EVALUATION: 'Yes, for evaluation',
       YES__IMPLEMENTATION: 'Yes, for implementation',
       NO: 'No',
       OTHER: 'Other'
     },
-    filterGroups: ['ccw']
+    optionsRelatedInfo: {
+      OTHER: 'ccmInvolvmentOther'
+    },
+    childRelation: {
+      YES_EVALUATION: [
+        () => opsEvalAndLearning.sendFilesBetweenCcw,
+        () => opsEvalAndLearning.appToSendFilesToKnown,
+        () => opsEvalAndLearning.useCcwForFileDistribiutionToParticipants
+      ],
+      YES__IMPLEMENTATION: [
+        () => opsEvalAndLearning.sendFilesBetweenCcw,
+        () => opsEvalAndLearning.appToSendFilesToKnown,
+        () => opsEvalAndLearning.useCcwForFileDistribiutionToParticipants
+      ]
+    },
+    filterGroups: [ModelViewFilter.CCW]
   },
   ccmInvolvmentOther: {
     gqlField: 'ccmInvolvmentOther',
@@ -637,7 +743,8 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     label: 'Please specify',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['ccw']
+    isOtherType: true,
+    filterGroups: [ModelViewFilter.CCW]
   },
   ccmInvolvmentNote: {
     gqlField: 'ccmInvolvmentNote',
@@ -646,7 +753,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     label: 'Notes',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['ccw']
+    filterGroups: [ModelViewFilter.CCW]
   },
   dataNeededForMonitoring: {
     gqlField: 'dataNeededForMonitoring',
@@ -673,7 +780,21 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
       OTHER: 'Other',
       NOT_PLANNING_TO_COLLECT_DATA: 'Not planning to collect data'
     },
-    filterGroups: ['cmmi', 'iddoc']
+    hideRelatedQuestionAlert: true,
+    optionsRelatedInfo: {
+      OTHER: 'dataNeededForMonitoringOther'
+    },
+    childRelation: {
+      QUALITY_CLAIMS_BASED_MEASURES: [
+        () => opsEvalAndLearning.developNewQualityMeasures,
+        () => opsEvalAndLearning.qualityPerformanceImpactsPayment
+      ],
+      QUALITY_REPORTED_MEASURES: [
+        () => opsEvalAndLearning.developNewQualityMeasures,
+        () => opsEvalAndLearning.qualityPerformanceImpactsPayment
+      ]
+    },
+    filterGroups: [ModelViewFilter.CMMI, ModelViewFilter.IDDOC]
   },
   dataNeededForMonitoringOther: {
     gqlField: 'dataNeededForMonitoringOther',
@@ -682,7 +803,8 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     label: 'What other data do you need to monitor?',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['cmmi', 'iddoc']
+    isOtherType: true,
+    filterGroups: [ModelViewFilter.CMMI, ModelViewFilter.IDDOC]
   },
   dataNeededForMonitoringNote: {
     gqlField: 'dataNeededForMonitoringNote',
@@ -691,7 +813,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     label: 'Notes',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['cmmi', 'iddoc']
+    filterGroups: [ModelViewFilter.CMMI, ModelViewFilter.IDDOC]
   },
   dataToSendParticicipants: {
     gqlField: 'dataToSendParticicipants',
@@ -710,7 +832,10 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
       OTHER_MIPS_DATA: 'Other',
       NOT_PLANNING_TO_SEND_DATA: 'Not planning to send data'
     },
-    filterGroups: ['cmmi']
+    optionsRelatedInfo: {
+      OTHER_MIPS_DATA: 'dataToSendParticicipantsOther'
+    },
+    filterGroups: [ModelViewFilter.CMMI]
   },
   dataToSendParticicipantsOther: {
     gqlField: 'dataToSendParticicipantsOther',
@@ -719,7 +844,8 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     label: 'What other data do you need to send?',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['cmmi']
+    isOtherType: true,
+    filterGroups: [ModelViewFilter.CMMI]
   },
   dataToSendParticicipantsNote: {
     gqlField: 'dataToSendParticicipantsNote',
@@ -728,7 +854,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     label: 'Notes',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['cmmi']
+    filterGroups: [ModelViewFilter.CMMI]
   },
   shareCclfData: {
     gqlField: 'shareCclfData',
@@ -742,7 +868,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
       true: 'Yes',
       false: 'No'
     },
-    filterGroups: ['cmmi']
+    filterGroups: [ModelViewFilter.CMMI]
   },
   shareCclfDataNote: {
     gqlField: 'shareCclfDataNote',
@@ -751,7 +877,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     label: 'Notes',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['cmmi']
+    filterGroups: [ModelViewFilter.CMMI]
   },
   sendFilesBetweenCcw: {
     gqlField: 'sendFilesBetweenCcw',
@@ -765,7 +891,8 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
       true: 'Yes',
       false: 'No'
     },
-    filterGroups: ['ccw']
+    parentRelation: () => opsEvalAndLearning.ccmInvolvment,
+    filterGroups: [ModelViewFilter.CCW]
   },
   sendFilesBetweenCcwNote: {
     gqlField: 'sendFilesBetweenCcwNote',
@@ -774,7 +901,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     label: 'Notes',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['ccw']
+    filterGroups: [ModelViewFilter.CCW]
   },
   appToSendFilesToKnown: {
     gqlField: 'appToSendFilesToKnown',
@@ -782,13 +909,19 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     dbField: 'app_to_send_files_to_known',
     label:
       'Do you know which applications will be on the other sides of the file transfers?',
+    readonlyLabel:
+      'Do you know which applications will be on the other sides of the file transfers? If so, please specify.',
     dataType: 'boolean',
     formType: 'radio',
     options: {
       true: 'Yes',
       false: 'No'
     },
-    filterGroups: ['ccw']
+    optionsRelatedInfo: {
+      true: 'appToSendFilesToWhich'
+    },
+    parentRelation: () => opsEvalAndLearning.ccmInvolvment,
+    filterGroups: [ModelViewFilter.CCW]
   },
   appToSendFilesToWhich: {
     gqlField: 'appToSendFilesToWhich',
@@ -797,7 +930,8 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     label: 'Please specify',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['ccw']
+    isOtherType: true,
+    filterGroups: [ModelViewFilter.CCW]
   },
   appToSendFilesToNote: {
     gqlField: 'appToSendFilesToNote',
@@ -806,7 +940,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     label: 'Notes',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['ccw']
+    filterGroups: [ModelViewFilter.CCW]
   },
   useCcwForFileDistribiutionToParticipants: {
     gqlField: 'useCcwForFileDistribiutionToParticipants',
@@ -820,7 +954,8 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
       true: 'Yes',
       false: 'No'
     },
-    filterGroups: ['ccw']
+    parentRelation: () => opsEvalAndLearning.ccmInvolvment,
+    filterGroups: [ModelViewFilter.CCW]
   },
   useCcwForFileDistribiutionToParticipantsNote: {
     gqlField: 'useCcwForFileDistribiutionToParticipantsNote',
@@ -829,7 +964,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     label: 'Notes',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['ccw']
+    filterGroups: [ModelViewFilter.CCW]
   },
   developNewQualityMeasures: {
     gqlField: 'developNewQualityMeasures',
@@ -843,7 +978,8 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
       true: 'Yes',
       false: 'No'
     },
-    filterGroups: ['cmmi']
+    parentRelation: () => opsEvalAndLearning.dataNeededForMonitoring,
+    filterGroups: [ModelViewFilter.CMMI]
   },
   developNewQualityMeasuresNote: {
     gqlField: 'developNewQualityMeasuresNote',
@@ -852,7 +988,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     label: 'Notes',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['cmmi']
+    filterGroups: [ModelViewFilter.CMMI]
   },
   qualityPerformanceImpactsPayment: {
     gqlField: 'qualityPerformanceImpactsPayment',
@@ -866,7 +1002,11 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
       NO: 'No',
       OTHER: 'Other'
     },
-    filterGroups: ['cmmi']
+    optionsRelatedInfo: {
+      OTHER: 'qualityPerformanceImpactsPaymentOther'
+    },
+    parentRelation: () => opsEvalAndLearning.dataNeededForMonitoring,
+    filterGroups: [ModelViewFilter.CMMI]
   },
   qualityPerformanceImpactsPaymentOther: {
     gqlField: 'qualityPerformanceImpactsPaymentOther',
@@ -875,7 +1015,8 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     label: 'Please specify',
     dataType: 'string',
     formType: 'text',
-    filterGroups: ['cmmi']
+    isOtherType: true,
+    filterGroups: [ModelViewFilter.CMMI]
   },
   qualityPerformanceImpactsPaymentNote: {
     gqlField: 'qualityPerformanceImpactsPaymentNote',
@@ -884,7 +1025,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     label: 'Notes',
     dataType: 'string',
     formType: 'text',
-    filterGroups: ['cmmi']
+    filterGroups: [ModelViewFilter.CMMI]
   },
   dataSharingStarts: {
     gqlField: 'dataSharingStarts',
@@ -895,6 +1036,9 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
       'If using ACO-OS support, SSM request to begin analysis at least 1 year before implementation',
     dataType: 'enum',
     formType: 'select',
+    isPageStart: true,
+    readonlyHeader:
+      'Data sharing, collection, and reporting timing and frequency',
     options: {
       DURING_APPLICATION_PERIOD: 'During application period',
       SHORTLY_BEFORE_THE_START_DATE: 'Shortly before the start date',
@@ -907,7 +1051,10 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
       NOT_PLANNING_TO_DO_THIS: 'Not planning to do this',
       OTHER: 'Other'
     },
-    filterGroups: ['iddoc']
+    optionsRelatedInfo: {
+      OTHER: 'dataSharingStartsOther'
+    },
+    filterGroups: [ModelViewFilter.IDDOC]
   },
   dataSharingStartsOther: {
     gqlField: 'dataSharingStartsOther',
@@ -916,7 +1063,8 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     label: 'Please specify',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['iddoc']
+    isOtherType: true,
+    filterGroups: [ModelViewFilter.IDDOC]
   },
   dataSharingFrequency: {
     gqlField: 'dataSharingFrequency',
@@ -927,14 +1075,10 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     formType: 'checkbox',
     options: frequencyOptions,
     optionsRelatedInfo: {
-      ANNUALLY: '',
-      SEMIANNUALLY: '',
-      QUARTERLY: '',
-      MONTHLY: '',
       CONTINUALLY: 'dataSharingFrequencyContinually',
       OTHER: 'dataSharingFrequencyOther'
     },
-    filterGroups: ['cmmi', 'iddoc']
+    filterGroups: [ModelViewFilter.CMMI, ModelViewFilter.IDDOC]
   },
   dataSharingFrequencyContinually: {
     gqlField: 'dataSharingFrequencyContinually',
@@ -943,7 +1087,8 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     label: 'Please specify',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['cmmi', 'iddoc']
+    isOtherType: true,
+    filterGroups: [ModelViewFilter.CMMI, ModelViewFilter.IDDOC]
   },
   dataSharingFrequencyOther: {
     gqlField: 'dataSharingFrequencyOther',
@@ -952,7 +1097,8 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     label: 'Please specify',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['cmmi', 'iddoc']
+    isOtherType: true,
+    filterGroups: [ModelViewFilter.CMMI, ModelViewFilter.IDDOC]
   },
   dataSharingStartsNote: {
     gqlField: 'dataSharingStartsNote',
@@ -961,7 +1107,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     label: 'Notes',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['cmmi', 'iddoc']
+    filterGroups: [ModelViewFilter.CMMI, ModelViewFilter.IDDOC]
   },
   dataCollectionStarts: {
     gqlField: 'dataCollectionStarts',
@@ -982,7 +1128,10 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
       NOT_PLANNING_TO_DO_THIS: 'Not planning to do this',
       OTHER: 'Other'
     },
-    filterGroups: ['iddoc']
+    optionsRelatedInfo: {
+      OTHER: 'dataCollectionStartsOther'
+    },
+    filterGroups: [ModelViewFilter.IDDOC]
   },
   dataCollectionStartsOther: {
     gqlField: 'dataCollectionStartsOther',
@@ -991,7 +1140,8 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     label: 'Please specify',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['iddoc']
+    isOtherType: true,
+    filterGroups: [ModelViewFilter.IDDOC]
   },
   dataCollectionFrequency: {
     gqlField: 'dataCollectionFrequency',
@@ -1002,14 +1152,10 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     formType: 'checkbox',
     options: frequencyOptions,
     optionsRelatedInfo: {
-      ANNUALLY: '',
-      SEMIANNUALLY: '',
-      QUARTERLY: '',
-      MONTHLY: '',
       CONTINUALLY: 'dataCollectionFrequencyContinually',
       OTHER: 'dataCollectionFrequencyOther'
     },
-    filterGroups: ['cmmi']
+    filterGroups: [ModelViewFilter.CMMI]
   },
   dataCollectionFrequencyContinually: {
     gqlField: 'dataCollectionFrequencyContinually',
@@ -1018,7 +1164,8 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     label: 'Please specify',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['cmmi']
+    isOtherType: true,
+    filterGroups: [ModelViewFilter.CMMI]
   },
   dataCollectionFrequencyOther: {
     gqlField: 'dataCollectionFrequencyOther',
@@ -1027,7 +1174,8 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     label: 'Please specify',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['cmmi']
+    isOtherType: true,
+    filterGroups: [ModelViewFilter.CMMI]
   },
   dataCollectionFrequencyNote: {
     gqlField: 'dataCollectionFrequencyNote',
@@ -1036,7 +1184,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     label: 'Notes',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['cmmi']
+    filterGroups: [ModelViewFilter.CMMI]
   },
   qualityReportingStarts: {
     gqlField: 'qualityReportingStarts',
@@ -1056,6 +1204,9 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
       AT_SOME_OTHER_POINT_IN_TIME: 'At some other point in time',
       NOT_PLANNING_TO_DO_THIS: 'Not planning to do this',
       OTHER: 'Other'
+    },
+    optionsRelatedInfo: {
+      OTHER: ''
     }
   },
   qualityReportingStartsOther: {
@@ -1064,7 +1215,8 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     dbField: 'quality_reporting_starts_other',
     label: 'Please specify',
     dataType: 'string',
-    formType: 'textarea'
+    formType: 'textarea',
+    isOtherType: true
   },
   qualityReportingStartsNote: {
     gqlField: 'qualityReportingStartsNote',
@@ -1083,10 +1235,6 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     formType: 'checkbox',
     options: frequencyOptions,
     optionsRelatedInfo: {
-      ANNUALLY: '',
-      SEMIANNUALLY: '',
-      QUARTERLY: '',
-      MONTHLY: '',
       CONTINUALLY: 'qualityReportingFrequencyContinually',
       OTHER: 'qualityReportingFrequencyOther'
     }
@@ -1097,7 +1245,8 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     dbField: 'quality_reporting_frequency_continually',
     label: 'Please specify',
     dataType: 'string',
-    formType: 'textarea'
+    formType: 'textarea',
+    isOtherType: true
   },
   qualityReportingFrequencyOther: {
     gqlField: 'qualityReportingFrequencyOther',
@@ -1105,7 +1254,8 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     dbField: 'quality_reporting_frequency_other',
     label: 'Please specify',
     dataType: 'string',
-    formType: 'textarea'
+    formType: 'textarea',
+    isOtherType: true
   },
   modelLearningSystems: {
     gqlField: 'modelLearningSystems',
@@ -1114,6 +1264,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     label: 'Will the model have a learning strategy?',
     dataType: 'enum',
     formType: 'checkbox',
+    isPageStart: true,
     options: {
       LEARNING_CONTRACTOR:
         'We plan to have a learning contractor (cross-model or individual)',
@@ -1123,6 +1274,9 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
       EDUCATE_BENEFICIARIES: 'We plan to educate beneficiaries',
       OTHER: 'Other',
       NO_LEARNING_SYSTEM: 'No, we will not have a learning strategy'
+    },
+    optionsRelatedInfo: {
+      OTHER: 'modelLearningSystemsOther'
     }
   },
   modelLearningSystemsOther: {
@@ -1131,7 +1285,8 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     dbField: 'model_learning_systems_other',
     label: 'Please specify',
     dataType: 'string',
-    formType: 'textarea'
+    formType: 'textarea',
+    isOtherType: true
   },
   modelLearningSystemsNote: {
     gqlField: 'modelLearningSystemsNote',
@@ -1151,7 +1306,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
       'Please list and known ’unknowns,’ that is, are there policy decisions that you are aware of that are still pending or are subject to change? If so, please list to the best of your ability.',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: ['iddoc', 'pbg']
+    filterGroups: [ModelViewFilter.IDDOC, ModelViewFilter.PBG]
   },
   status: {
     gqlField: 'status',

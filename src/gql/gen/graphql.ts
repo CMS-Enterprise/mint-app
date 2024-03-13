@@ -15,8 +15,6 @@ export type Scalars = {
   Boolean: { input: boolean; output: boolean; }
   Int: { input: number; output: number; }
   Float: { input: number; output: number; }
-  /** Any represents any GraphQL value. */
-  Any: { input: any; output: any; }
   /** Maps an arbitrary GraphQL value to a map[string]interface{} Go type. */
   Map: { input: any; output: any; }
   /** TaggedHTML represents an input type for HTML that could also include tags that reference another entity */
@@ -37,6 +35,42 @@ export enum ActionType {
   ADMIN = 'ADMIN',
   /** A normal flow action */
   NORMAL = 'NORMAL'
+}
+
+/** Activity represents an event that happened in the application that could result in a notification. */
+export type Activity = {
+  __typename: 'Activity';
+  activityType: ActivityType;
+  actorID: Scalars['UUID']['output'];
+  actorUserAccount: UserAccount;
+  createdBy: Scalars['UUID']['output'];
+  createdByUserAccount: UserAccount;
+  createdDts: Scalars['Time']['output'];
+  entityID: Scalars['UUID']['output'];
+  id: Scalars['UUID']['output'];
+  metaData: ActivityMetaData;
+  modifiedBy?: Maybe<Scalars['UUID']['output']>;
+  modifiedByUserAccount?: Maybe<UserAccount>;
+  modifiedDts?: Maybe<Scalars['Time']['output']>;
+};
+
+export type ActivityMetaBaseStruct = {
+  __typename: 'ActivityMetaBaseStruct';
+  type: ActivityType;
+  version: Scalars['Int']['output'];
+};
+
+/** ActivityMetaData is a type that represents all the data that can be captured in an Activity */
+export type ActivityMetaData = ActivityMetaBaseStruct | TaggedInDiscussionReplyActivityMeta | TaggedInPlanDiscussionActivityMeta;
+
+/** ActivityType represents the possible activities that happen in application that might result in a notification */
+export enum ActivityType {
+  ADDED_AS_COLLABORATOR = 'ADDED_AS_COLLABORATOR',
+  DAILY_DIGEST_COMPLETE = 'DAILY_DIGEST_COMPLETE',
+  MODEL_PLAN_SHARED = 'MODEL_PLAN_SHARED',
+  NEW_DISCUSSION_REPLY = 'NEW_DISCUSSION_REPLY',
+  TAGGED_IN_DISCUSSION = 'TAGGED_IN_DISCUSSION',
+  TAGGED_IN_DISCUSSION_REPLY = 'TAGGED_IN_DISCUSSION_REPLY'
 }
 
 export enum AgencyOrStateHelpType {
@@ -122,53 +156,11 @@ export enum CcmInvolvmentType {
   YES__IMPLEMENTATION = 'YES__IMPLEMENTATION'
 }
 
-export enum ChangeHistorySortKey {
-  /** Sort by the user who made the change */
-  ACTOR = 'ACTOR',
-  /** Sort by the date the change was made */
-  CHANGE_DATE = 'CHANGE_DATE',
-  /** Sort by the model plan ID that was changed */
-  MODEL_PLAN_ID = 'MODEL_PLAN_ID',
-  /** Sort by the table ID that was changed */
-  TABLE_ID = 'TABLE_ID',
-  /** Sort by the table name that was changed */
-  TABLE_NAME = 'TABLE_NAME'
-}
-
-export type ChangeHistorySortParams = {
-  field: ChangeHistorySortKey;
-  order: SortDirection;
-};
-
-export type ChangeTableRecord = {
-  __typename: 'ChangeTableRecord';
-  action: Scalars['String']['output'];
-  fields: ChangedFields;
-  foreignKey?: Maybe<Scalars['UUID']['output']>;
-  /**
-   * Returns the table name in the format of the type returned in GraphQL
-   * Example:  a table name of model_plan returns as ModelPlan
-   */
-  gqlTableName: GqlTableName;
-  guid: Scalars['ID']['output'];
-  modelPlanID: Scalars['UUID']['output'];
-  modifiedBy?: Maybe<UserAccount>;
-  modifiedDts?: Maybe<Scalars['Time']['output']>;
-  primaryKey: Scalars['UUID']['output'];
-  tableID: Scalars['Int']['output'];
-  tableName: Scalars['String']['output'];
-};
-
 export enum ChangeType {
   ADDED = 'ADDED',
   REMOVED = 'REMOVED',
   UPDATED = 'UPDATED'
 }
-
-export type ChangedFields = {
-  __typename: 'ChangedFields';
-  changes: Array<Field>;
-};
 
 export enum ClaimsBasedPayType {
   ADJUSTMENTS_TO_FFS_PAYMENTS = 'ADJUSTMENTS_TO_FFS_PAYMENTS',
@@ -209,7 +201,10 @@ export type CreateOperationalSolutionSubtaskInput = {
 /** The current user of the application */
 export type CurrentUser = {
   __typename: 'CurrentUser';
+  account: UserAccount;
   launchDarkly: LaunchDarklySettings;
+  notificationPreferences: UserNotificationPreferences;
+  notifications: UserNotifications;
 };
 
 export enum DataForMonitoringType {
@@ -252,14 +247,6 @@ export enum DataToSendParticipantsType {
   PARTICIPANT_LEVEL_DATA = 'PARTICIPANT_LEVEL_DATA',
   PROVIDER_LEVEL_DATA = 'PROVIDER_LEVEL_DATA'
 }
-
-export type DateHistogramAggregationBucket = {
-  __typename: 'DateHistogramAggregationBucket';
-  docCount: Scalars['Int']['output'];
-  key: Scalars['String']['output'];
-  maxModifiedDts: Scalars['Time']['output'];
-  minModifiedDts: Scalars['Time']['output'];
-};
 
 /** DiscussionReply represents a discussion reply */
 export type DiscussionReply = {
@@ -328,6 +315,11 @@ export enum EvaluationApproachType {
   OTHER = 'OTHER'
 }
 
+export enum ExisitingModelLinkFieldType {
+  GEN_CHAR_PARTICIPATION_EXISTING_MODEL_WHICH = 'GEN_CHAR_PARTICIPATION_EXISTING_MODEL_WHICH',
+  GEN_CHAR_RESEMBLES_EXISTING_MODEL_WHICH = 'GEN_CHAR_RESEMBLES_EXISTING_MODEL_WHICH'
+}
+
 /** ExistingModel represents a model that already exists outside of the scope of MINT */
 export type ExistingModel = {
   __typename: 'ExistingModel';
@@ -342,7 +334,7 @@ export type ExistingModel = {
   displayModelSummary?: Maybe<Scalars['Boolean']['output']>;
   id?: Maybe<Scalars['Int']['output']>;
   keywords?: Maybe<Scalars['String']['output']>;
-  modelName?: Maybe<Scalars['String']['output']>;
+  modelName: Scalars['String']['output'];
   modifiedBy?: Maybe<Scalars['UUID']['output']>;
   modifiedByUserAccount?: Maybe<UserAccount>;
   modifiedDts?: Maybe<Scalars['Time']['output']>;
@@ -359,28 +351,23 @@ export type ExistingModelLink = {
   createdBy: Scalars['UUID']['output'];
   createdByUserAccount: UserAccount;
   createdDts: Scalars['Time']['output'];
-  currentModelPlan?: Maybe<ModelPlan>;
   currentModelPlanID?: Maybe<Scalars['UUID']['output']>;
-  existingModel?: Maybe<ExistingModel>;
   existingModelID?: Maybe<Scalars['Int']['output']>;
+  fieldName: ExisitingModelLinkFieldType;
   id?: Maybe<Scalars['UUID']['output']>;
+  model: LinkedExistingModel;
   modelPlanID: Scalars['UUID']['output'];
   modifiedBy?: Maybe<Scalars['UUID']['output']>;
   modifiedByUserAccount?: Maybe<UserAccount>;
   modifiedDts?: Maybe<Scalars['Time']['output']>;
 };
 
-export type Field = {
-  __typename: 'Field';
-  name: Scalars['String']['output'];
-  nameCamelCase: Scalars['String']['output'];
-  value: FieldValue;
-};
-
-export type FieldValue = {
-  __typename: 'FieldValue';
-  new?: Maybe<Scalars['Any']['output']>;
-  old?: Maybe<Scalars['Any']['output']>;
+export type ExistingModelLinks = {
+  __typename: 'ExistingModelLinks';
+  fieldName: ExisitingModelLinkFieldType;
+  links: Array<ExistingModelLink>;
+  modelPlanID: Scalars['UUID']['output'];
+  names: Array<Scalars['String']['output']>;
 };
 
 export enum FrequencyType {
@@ -399,32 +386,6 @@ export enum FundingSource {
   PATIENT_PROTECTION_AFFORDABLE_CARE_ACT = 'PATIENT_PROTECTION_AFFORDABLE_CARE_ACT'
 }
 
-export enum GqlTableName {
-  ANALYZEDAUDIT = 'analyzedAudit',
-  DISCUSSIONREPLY = 'discussionReply',
-  EXISTINGMODEL = 'existingModel',
-  EXISTINGMODELLINK = 'existingModelLink',
-  MODELPLAN = 'modelPlan',
-  NDAAGREEMENT = 'ndaAgreement',
-  OPERATIONALNEED = 'operationalNeed',
-  OPERATIONALSOLUTION = 'operationalSolution',
-  OPERATIONALSOLUTIONSUBTASK = 'operationalSolutionSubtask',
-  PLANBASICS = 'planBasics',
-  PLANBENEFICIARIES = 'planBeneficiaries',
-  PLANCOLLABORATOR = 'planCollaborator',
-  PLANCRTDL = 'planCrTdl',
-  PLANDISCUSSION = 'planDiscussion',
-  PLANDOCUMENT = 'planDocument',
-  PLANDOCUMENTSOLUTIONLINK = 'planDocumentSolutionLink',
-  PLANGENERALCHARACTERISTICS = 'planGeneralCharacteristics',
-  PLANOPSEVALANDLEARNING = 'planOpsEvalAndLearning',
-  PLANPARTICIPANTSANDPROVIDERS = 'planParticipantsAndProviders',
-  PLANPAYMENTS = 'planPayments',
-  POSSIBLEOPERATIONALNEED = 'possibleOperationalNeed',
-  POSSIBLEOPERATIONALSOLUTION = 'possibleOperationalSolution',
-  USERACCOUNT = 'userAccount'
-}
-
 export enum GainshareArrangementEligibility {
   ALL_PROVIDERS = 'ALL_PROVIDERS',
   NO = 'NO',
@@ -437,6 +398,12 @@ export enum GeographyApplication {
   OTHER = 'OTHER',
   PARTICIPANTS = 'PARTICIPANTS',
   PROVIDERS = 'PROVIDERS'
+}
+
+export enum GeographyRegionType {
+  CBSA = 'CBSA',
+  HRR = 'HRR',
+  MSA = 'MSA'
 }
 
 export enum GeographyType {
@@ -465,6 +432,9 @@ export type LaunchDarklySettings = {
   signedHash: Scalars['String']['output'];
   userKey: Scalars['String']['output'];
 };
+
+/** LinkedExistingModel is a union type that returns either an Existing Model, or a Model plan from the database */
+export type LinkedExistingModel = ExistingModel | ModelPlan;
 
 export enum MintUses {
   CONTRIBUTE_DISCUSSIONS = 'CONTRIBUTE_DISCUSSIONS',
@@ -509,7 +479,6 @@ export type ModelPlan = {
   crs: Array<PlanCr>;
   discussions: Array<PlanDiscussion>;
   documents: Array<PlanDocument>;
-  existingModelLinks: Array<ExistingModelLink>;
   generalCharacteristics: PlanGeneralCharacteristics;
   id: Scalars['UUID']['output'];
   isCollaborator: Scalars['Boolean']['output'];
@@ -619,6 +588,10 @@ export type Mutation = {
   deletePlanTDL: PlanTdl;
   linkNewPlanDocument: PlanDocument;
   lockTaskListSection: Scalars['Boolean']['output'];
+  /** Marks all notifications for the current user as read, and returns the updated notifications */
+  markAllNotificationsAsRead: Array<UserNotification>;
+  /** Marks a single notification as read. It requires that the notification be owned by the context of the user sending this request, or it will fail */
+  markNotificationAsRead: UserNotification;
   removePlanDocumentSolutionLinks: Scalars['Boolean']['output'];
   reportAProblem: Scalars['Boolean']['output'];
   /** This mutation sends feedback about the MINT product to the MINT team */
@@ -627,7 +600,11 @@ export type Mutation = {
   unlockAllTaskListSections: Array<TaskListSectionLockStatus>;
   unlockTaskListSection: Scalars['Boolean']['output'];
   updateCustomOperationalNeedByID: OperationalNeed;
-  updateExistingModelLinks: Array<ExistingModelLink>;
+  /**
+   * This will update linked existing models, and relatede model plans for given model plan and fieldName.
+   * The fieldName allows it so you can create links for multiple sections of the model plan
+   */
+  updateExistingModelLinks: ExistingModelLinks;
   updateModelPlan: ModelPlan;
   updateOperationalSolution: OperationalSolution;
   updateOperationalSolutionSubtasks?: Maybe<Array<OperationalSolutionSubtask>>;
@@ -640,6 +617,8 @@ export type Mutation = {
   updatePlanParticipantsAndProviders: PlanParticipantsAndProviders;
   updatePlanPayments: PlanPayments;
   updatePlanTDL: PlanTdl;
+  /** Sets the notification preferences of a user. */
+  updateUserNotificationPreferences: UserNotificationPreferences;
   uploadNewPlanDocument: PlanDocument;
 };
 
@@ -772,6 +751,12 @@ export type MutationLockTaskListSectionArgs = {
 
 
 /** Mutations definition for the schema */
+export type MutationMarkNotificationAsReadArgs = {
+  notificationID: Scalars['UUID']['input'];
+};
+
+
+/** Mutations definition for the schema */
 export type MutationRemovePlanDocumentSolutionLinksArgs = {
   documentIDs: Array<Scalars['UUID']['input']>;
   solutionID: Scalars['UUID']['input'];
@@ -824,6 +809,7 @@ export type MutationUpdateCustomOperationalNeedByIdArgs = {
 export type MutationUpdateExistingModelLinksArgs = {
   currentModelPlanIDs?: InputMaybe<Array<Scalars['UUID']['input']>>;
   existingModelIDs?: InputMaybe<Array<Scalars['Int']['input']>>;
+  fieldName: ExisitingModelLinkFieldType;
   modelPlanID: Scalars['UUID']['input'];
 };
 
@@ -908,6 +894,12 @@ export type MutationUpdatePlanPaymentsArgs = {
 export type MutationUpdatePlanTdlArgs = {
   changes: PlanTdlChanges;
   id: Scalars['UUID']['input'];
+};
+
+
+/** Mutations definition for the schema */
+export type MutationUpdateUserNotificationPreferencesArgs = {
+  changes: UserNotificationPreferencesChanges;
 };
 
 
@@ -1107,11 +1099,6 @@ export enum OverlapType {
   YES_NEED_POLICIES = 'YES_NEED_POLICIES',
   YES_NO_ISSUES = 'YES_NO_ISSUES'
 }
-
-export type PageParams = {
-  limit: Scalars['Int']['input'];
-  offset: Scalars['Int']['input'];
-};
 
 export enum ParticipantCommunicationType {
   IT_TOOL = 'IT_TOOL',
@@ -1508,6 +1495,9 @@ export type PlanGeneralCharacteristics = {
   additionalServicesInvolved?: Maybe<Scalars['Boolean']['output']>;
   additionalServicesInvolvedDescription?: Maybe<Scalars['String']['output']>;
   additionalServicesInvolvedNote?: Maybe<Scalars['String']['output']>;
+  agencyOrStateHelp: Array<AgencyOrStateHelpType>;
+  agencyOrStateHelpNote?: Maybe<Scalars['String']['output']>;
+  agencyOrStateHelpOther?: Maybe<Scalars['String']['output']>;
   agreementTypes: Array<AgreementType>;
   agreementTypesOther?: Maybe<Scalars['String']['output']>;
   alternativePaymentModelNote?: Maybe<Scalars['String']['output']>;
@@ -1531,6 +1521,8 @@ export type PlanGeneralCharacteristics = {
   existingModel?: Maybe<Scalars['String']['output']>;
   existingModelID?: Maybe<Scalars['Int']['output']>;
   existingModelPlan?: Maybe<ExistingModel>;
+  geographiesRegionTypes: Array<GeographyRegionType>;
+  geographiesStatesAndTerritories: Array<StatesAndTerritories>;
   geographiesTargeted?: Maybe<Scalars['Boolean']['output']>;
   geographiesTargetedAppliedTo: Array<GeographyApplication>;
   geographiesTargetedAppliedToOther?: Maybe<Scalars['String']['output']>;
@@ -1553,6 +1545,20 @@ export type PlanGeneralCharacteristics = {
   modifiedDts?: Maybe<Scalars['Time']['output']>;
   multiplePatricipationAgreementsNeeded?: Maybe<Scalars['Boolean']['output']>;
   multiplePatricipationAgreementsNeededNote?: Maybe<Scalars['String']['output']>;
+  /** For answering if participation in other models is a precondition for participating in this model */
+  participationInModelPrecondition?: Maybe<YesNoOtherType>;
+  /** A note field for participationInModelPrecondition */
+  participationInModelPreconditionNote?: Maybe<Scalars['String']['output']>;
+  /** For denoting the name of the other existing model */
+  participationInModelPreconditionOtherOption?: Maybe<Scalars['String']['output']>;
+  /** For denoting if there is an other model that this model refers to. */
+  participationInModelPreconditionOtherSelected?: Maybe<Scalars['Boolean']['output']>;
+  /** For providing clarifying comments if Other is selected for participationInModelPrecondition */
+  participationInModelPreconditionOtherSpecify?: Maybe<Scalars['String']['output']>;
+  /** The collection of existing model links relevant to the participationInModelPrecondition question */
+  participationInModelPreconditionWhich?: Maybe<ExistingModelLinks>;
+  /** For providing clarifying comments if Yes or No is selected for participationInModelPrecondition */
+  participationInModelPreconditionWhyHow?: Maybe<Scalars['String']['output']>;
   participationOptions?: Maybe<Scalars['Boolean']['output']>;
   participationOptionsNote?: Maybe<Scalars['String']['output']>;
   planContractUpdated?: Maybe<Scalars['Boolean']['output']>;
@@ -1563,9 +1569,18 @@ export type PlanGeneralCharacteristics = {
   readyForReviewBy?: Maybe<Scalars['UUID']['output']>;
   readyForReviewByUserAccount?: Maybe<UserAccount>;
   readyForReviewDts?: Maybe<Scalars['Time']['output']>;
-  resemblesExistingModel?: Maybe<Scalars['Boolean']['output']>;
+  resemblesExistingModel?: Maybe<YesNoOtherType>;
   resemblesExistingModelHow?: Maybe<Scalars['String']['output']>;
   resemblesExistingModelNote?: Maybe<Scalars['String']['output']>;
+  /** For denoting the name of the other existing model that this model resembles */
+  resemblesExistingModelOtherOption?: Maybe<Scalars['String']['output']>;
+  /** For denoting if there is an other model that this model resembles if it's true that it resembles existing models. */
+  resemblesExistingModelOtherSelected?: Maybe<Scalars['Boolean']['output']>;
+  /** For providing clarifying comments if Other is selected for resemblesExistingModel */
+  resemblesExistingModelOtherSpecify?: Maybe<Scalars['String']['output']>;
+  resemblesExistingModelWhich?: Maybe<ExistingModelLinks>;
+  /** For providing clarifying comments if Yes or No is selected for resemblesExistingModel */
+  resemblesExistingModelWhyHow?: Maybe<Scalars['String']['output']>;
   rulemakingRequired?: Maybe<Scalars['Boolean']['output']>;
   rulemakingRequiredDescription?: Maybe<Scalars['String']['output']>;
   rulemakingRequiredNote?: Maybe<Scalars['String']['output']>;
@@ -1585,6 +1600,9 @@ export type PlanGeneralCharacteristicsChanges = {
   additionalServicesInvolved?: InputMaybe<Scalars['Boolean']['input']>;
   additionalServicesInvolvedDescription?: InputMaybe<Scalars['String']['input']>;
   additionalServicesInvolvedNote?: InputMaybe<Scalars['String']['input']>;
+  agencyOrStateHelp?: InputMaybe<Array<AgencyOrStateHelpType>>;
+  agencyOrStateHelpNote?: InputMaybe<Scalars['String']['input']>;
+  agencyOrStateHelpOther?: InputMaybe<Scalars['String']['input']>;
   agreementTypes?: InputMaybe<Array<AgreementType>>;
   agreementTypesOther?: InputMaybe<Scalars['String']['input']>;
   alternativePaymentModelNote?: InputMaybe<Scalars['String']['input']>;
@@ -1602,6 +1620,8 @@ export type PlanGeneralCharacteristicsChanges = {
   communityPartnersInvolvedNote?: InputMaybe<Scalars['String']['input']>;
   currentModelPlanID?: InputMaybe<Scalars['UUID']['input']>;
   existingModelID?: InputMaybe<Scalars['Int']['input']>;
+  geographiesRegionTypes?: InputMaybe<Array<GeographyRegionType>>;
+  geographiesStatesAndTerritories?: InputMaybe<Array<StatesAndTerritories>>;
   geographiesTargeted?: InputMaybe<Scalars['Boolean']['input']>;
   geographiesTargetedAppliedTo?: InputMaybe<Array<GeographyApplication>>;
   geographiesTargetedAppliedToOther?: InputMaybe<Scalars['String']['input']>;
@@ -1619,13 +1639,33 @@ export type PlanGeneralCharacteristicsChanges = {
   managePartCDEnrollmentNote?: InputMaybe<Scalars['String']['input']>;
   multiplePatricipationAgreementsNeeded?: InputMaybe<Scalars['Boolean']['input']>;
   multiplePatricipationAgreementsNeededNote?: InputMaybe<Scalars['String']['input']>;
+  /** For answering if participation in other models is a precondition for participating in this model */
+  participationInModelPrecondition?: InputMaybe<YesNoOtherType>;
+  /** A note field for participationInModelPrecondition */
+  participationInModelPreconditionNote?: InputMaybe<Scalars['String']['input']>;
+  /** For denoting the name of the other existing model */
+  participationInModelPreconditionOtherOption?: InputMaybe<Scalars['String']['input']>;
+  /** For denoting if there is an other model that this model refers to. */
+  participationInModelPreconditionOtherSelected?: InputMaybe<Scalars['Boolean']['input']>;
+  /** For providing clarifying comments if Other is selected for participationInModelPrecondition */
+  participationInModelPreconditionOtherSpecify?: InputMaybe<Scalars['String']['input']>;
+  /** For providing clarifying comments if Yes or No is selected for participationInModelPrecondition */
+  participationInModelPreconditionWhyHow?: InputMaybe<Scalars['String']['input']>;
   participationOptions?: InputMaybe<Scalars['Boolean']['input']>;
   participationOptionsNote?: InputMaybe<Scalars['String']['input']>;
   planContractUpdated?: InputMaybe<Scalars['Boolean']['input']>;
   planContractUpdatedNote?: InputMaybe<Scalars['String']['input']>;
-  resemblesExistingModel?: InputMaybe<Scalars['Boolean']['input']>;
+  resemblesExistingModel?: InputMaybe<YesNoOtherType>;
   resemblesExistingModelHow?: InputMaybe<Scalars['String']['input']>;
   resemblesExistingModelNote?: InputMaybe<Scalars['String']['input']>;
+  /** For denoting the name of the other existing model that this model resembles */
+  resemblesExistingModelOtherOption?: InputMaybe<Scalars['String']['input']>;
+  /** For denoting if there is an other model that this model resembles if it's true that it resembles existing models. */
+  resemblesExistingModelOtherSelected?: InputMaybe<Scalars['Boolean']['input']>;
+  /** For providing clarifying comments if Other is selected for resemblesExistingModel */
+  resemblesExistingModelOtherSpecify?: InputMaybe<Scalars['String']['input']>;
+  /** For providing clarifying comments if Yes or No is selected for resemblesExistingModel */
+  resemblesExistingModelWhyHow?: InputMaybe<Scalars['String']['input']>;
   rulemakingRequired?: InputMaybe<Scalars['Boolean']['input']>;
   rulemakingRequiredDescription?: InputMaybe<Scalars['String']['input']>;
   rulemakingRequiredNote?: InputMaybe<Scalars['String']['input']>;
@@ -1638,9 +1678,6 @@ export type PlanGeneralCharacteristicsChanges = {
 /** PlanOpsEvalAndLearning represents the task list section that deals with information regarding the Ops Eval and Learning */
 export type PlanOpsEvalAndLearning = {
   __typename: 'PlanOpsEvalAndLearning';
-  agencyOrStateHelp: Array<AgencyOrStateHelpType>;
-  agencyOrStateHelpNote?: Maybe<Scalars['String']['output']>;
-  agencyOrStateHelpOther?: Maybe<Scalars['String']['output']>;
   anticipatedChallenges?: Maybe<Scalars['String']['output']>;
   appToSendFilesToKnown?: Maybe<Scalars['Boolean']['output']>;
   appToSendFilesToNote?: Maybe<Scalars['String']['output']>;
@@ -1761,9 +1798,6 @@ export type PlanOpsEvalAndLearning = {
  * https://gqlgen.com/reference/changesets/
  */
 export type PlanOpsEvalAndLearningChanges = {
-  agencyOrStateHelp?: InputMaybe<Array<AgencyOrStateHelpType>>;
-  agencyOrStateHelpNote?: InputMaybe<Scalars['String']['input']>;
-  agencyOrStateHelpOther?: InputMaybe<Scalars['String']['input']>;
   anticipatedChallenges?: InputMaybe<Scalars['String']['input']>;
   appToSendFilesToKnown?: InputMaybe<Scalars['Boolean']['input']>;
   appToSendFilesToNote?: InputMaybe<Scalars['String']['input']>;
@@ -2031,6 +2065,9 @@ export type PlanPayments = {
   canParticipantsSelectBetweenPaymentMechanismsNote?: Maybe<Scalars['String']['output']>;
   changesMedicarePhysicianFeeSchedule?: Maybe<Scalars['Boolean']['output']>;
   changesMedicarePhysicianFeeScheduleNote?: Maybe<Scalars['String']['output']>;
+  claimsProcessingPrecedence?: Maybe<Scalars['Boolean']['output']>;
+  claimsProcessingPrecedenceNote?: Maybe<Scalars['String']['output']>;
+  claimsProcessingPrecedenceOther?: Maybe<Scalars['String']['output']>;
   createdBy: Scalars['UUID']['output'];
   createdByUserAccount: UserAccount;
   createdDts: Scalars['Time']['output'];
@@ -2071,6 +2108,10 @@ export type PlanPayments = {
   payType: Array<PayType>;
   payTypeNote?: Maybe<Scalars['String']['output']>;
   paymentCalculationOwner?: Maybe<Scalars['String']['output']>;
+  paymentDemandRecoupmentFrequency: Array<FrequencyType>;
+  paymentDemandRecoupmentFrequencyContinually?: Maybe<Scalars['String']['output']>;
+  paymentDemandRecoupmentFrequencyNote?: Maybe<Scalars['String']['output']>;
+  paymentDemandRecoupmentFrequencyOther?: Maybe<Scalars['String']['output']>;
   paymentReconciliationFrequency: Array<FrequencyType>;
   paymentReconciliationFrequencyContinually?: Maybe<Scalars['String']['output']>;
   paymentReconciliationFrequencyNote?: Maybe<Scalars['String']['output']>;
@@ -2115,6 +2156,9 @@ export type PlanPaymentsChanges = {
   canParticipantsSelectBetweenPaymentMechanismsNote?: InputMaybe<Scalars['String']['input']>;
   changesMedicarePhysicianFeeSchedule?: InputMaybe<Scalars['Boolean']['input']>;
   changesMedicarePhysicianFeeScheduleNote?: InputMaybe<Scalars['String']['input']>;
+  claimsProcessingPrecedence?: InputMaybe<Scalars['Boolean']['input']>;
+  claimsProcessingPrecedenceNote?: InputMaybe<Scalars['String']['input']>;
+  claimsProcessingPrecedenceOther?: InputMaybe<Scalars['String']['input']>;
   creatingDependenciesBetweenServices?: InputMaybe<Scalars['Boolean']['input']>;
   creatingDependenciesBetweenServicesNote?: InputMaybe<Scalars['String']['input']>;
   expectedCalculationComplexityLevel?: InputMaybe<ComplexityCalculationLevelType>;
@@ -2147,6 +2191,10 @@ export type PlanPaymentsChanges = {
   payType?: InputMaybe<Array<PayType>>;
   payTypeNote?: InputMaybe<Scalars['String']['input']>;
   paymentCalculationOwner?: InputMaybe<Scalars['String']['input']>;
+  paymentDemandRecoupmentFrequency?: InputMaybe<Array<FrequencyType>>;
+  paymentDemandRecoupmentFrequencyContinually?: InputMaybe<Scalars['String']['input']>;
+  paymentDemandRecoupmentFrequencyNote?: InputMaybe<Scalars['String']['input']>;
+  paymentDemandRecoupmentFrequencyOther?: InputMaybe<Scalars['String']['input']>;
   paymentReconciliationFrequency?: InputMaybe<Array<FrequencyType>>;
   paymentReconciliationFrequencyContinually?: InputMaybe<Scalars['String']['input']>;
   paymentReconciliationFrequencyNote?: InputMaybe<Scalars['String']['input']>;
@@ -2301,8 +2349,6 @@ export type Query = {
   planTDL: PlanTdl;
   possibleOperationalNeeds: Array<PossibleOperationalNeed>;
   possibleOperationalSolutions: Array<PossibleOperationalSolution>;
-  searchChangeTableDateHistogramConsolidatedAggregations: Array<DateHistogramAggregationBucket>;
-  searchChanges: Array<ChangeTableRecord>;
   searchOktaUsers: Array<UserInfo>;
   taskListSectionLocks: Array<TaskListSectionLockStatus>;
   userAccount: UserAccount;
@@ -2384,22 +2430,6 @@ export type QueryPlanTdlArgs = {
 
 
 /** Query definition for the schema */
-export type QuerySearchChangeTableDateHistogramConsolidatedAggregationsArgs = {
-  interval: Scalars['String']['input'];
-  limit: Scalars['Int']['input'];
-  offset: Scalars['Int']['input'];
-};
-
-
-/** Query definition for the schema */
-export type QuerySearchChangesArgs = {
-  filters?: InputMaybe<Array<SearchFilter>>;
-  page?: InputMaybe<PageParams>;
-  sortBy?: InputMaybe<ChangeHistorySortParams>;
-};
-
-
-/** Query definition for the schema */
 export type QuerySearchOktaUsersArgs = {
   searchTerm: Scalars['String']['input'];
 };
@@ -2468,77 +2498,6 @@ export enum SatisfactionLevel {
   VERY_SATISFIED = 'VERY_SATISFIED'
 }
 
-export type SearchFilter = {
-  type: SearchFilterType;
-  value: Scalars['Any']['input'];
-};
-
-export enum SearchFilterType {
-  /**
-   * Filter search results to include changes on or after the specified date.
-   * Expected value: A string in RFC3339 format representing the date and time.
-   * Example: "2006-01-02T15:04:05Z07:00"
-   */
-  CHANGED_AFTER = 'CHANGED_AFTER',
-  /**
-   * Filter search results to include changes on or before the specified date.
-   * Expected value: A string in RFC3339 format representing the date and time.
-   * Example: "2006-01-02T15:04:05Z07:00"
-   */
-  CHANGED_BEFORE = 'CHANGED_BEFORE',
-  /**
-   * Filter search results to include changes made by the specified actor. This is a fuzzy search on the fields: common_name, username, given_name, and family_name of the actor.
-   * Expected value: A string representing the name or username of the actor.
-   * Example: "MINT"
-   */
-  CHANGED_BY_ACTOR = 'CHANGED_BY_ACTOR',
-  /**
-   * Filter results with a free text search. This is a fuzzy search on the entire record.
-   * Expected value: A string representing the free text search query.
-   * Example: "Operational Need"
-   */
-  FREE_TEXT = 'FREE_TEXT',
-  /**
-   * Filter search results to include changes made to the specified model plan by ID.
-   * Expected value: A string representing the ID of the model plan.
-   * Example: "efda354c-11dd-458e-91cf-4f43ee47440b"
-   */
-  MODEL_PLAN_ID = 'MODEL_PLAN_ID',
-  /**
-   * Filter search results to include changes made to the specified object.
-   * Expected value: A string representing the section of the model plan. Use the SearchableTaskListSection enum for valid values.
-   * Example: "BASICS"
-   */
-  MODEL_PLAN_SECTION = 'MODEL_PLAN_SECTION',
-  /**
-   * Filter search results to include model plans with the specified status.
-   * Expected value: A string representing the status of the model plan.
-   * Example: "ACTIVE"
-   */
-  MODEL_PLAN_STATUS = 'MODEL_PLAN_STATUS',
-  /**
-   * Filter results by table id.
-   * Expected value: An integer representing the table ID.
-   * Example: 14
-   */
-  TABLE_ID = 'TABLE_ID',
-  /**
-   * Filter results by table name.
-   * Expected value: A string representing the table name.
-   * Example: "plan_basics"
-   */
-  TABLE_NAME = 'TABLE_NAME'
-}
-
-export enum SearchableTaskListSection {
-  BASICS = 'BASICS',
-  BENEFICIARIES = 'BENEFICIARIES',
-  GENERAL_CHARACTERISTICS = 'GENERAL_CHARACTERISTICS',
-  OPERATIONS_EVALUATION_AND_LEARNING = 'OPERATIONS_EVALUATION_AND_LEARNING',
-  PARTICIPANTS_AND_PROVIDERS = 'PARTICIPANTS_AND_PROVIDERS',
-  PAYMENT = 'PAYMENT'
-}
-
 export enum SelectionMethodType {
   HISTORICAL = 'HISTORICAL',
   NA = 'NA',
@@ -2575,6 +2534,66 @@ export enum StakeholdersType {
   PROFESSIONAL_ORGANIZATIONS = 'PROFESSIONAL_ORGANIZATIONS',
   PROVIDERS = 'PROVIDERS',
   STATES = 'STATES'
+}
+
+export enum StatesAndTerritories {
+  AK = 'AK',
+  AL = 'AL',
+  AR = 'AR',
+  AS = 'AS',
+  AZ = 'AZ',
+  CA = 'CA',
+  CO = 'CO',
+  CT = 'CT',
+  DC = 'DC',
+  DE = 'DE',
+  FL = 'FL',
+  GA = 'GA',
+  GU = 'GU',
+  HI = 'HI',
+  IA = 'IA',
+  ID = 'ID',
+  IL = 'IL',
+  IN = 'IN',
+  KS = 'KS',
+  KY = 'KY',
+  LA = 'LA',
+  MA = 'MA',
+  MD = 'MD',
+  ME = 'ME',
+  MI = 'MI',
+  MN = 'MN',
+  MO = 'MO',
+  MP = 'MP',
+  MS = 'MS',
+  MT = 'MT',
+  NC = 'NC',
+  ND = 'ND',
+  NE = 'NE',
+  NH = 'NH',
+  NJ = 'NJ',
+  NM = 'NM',
+  NV = 'NV',
+  NY = 'NY',
+  OH = 'OH',
+  OK = 'OK',
+  OR = 'OR',
+  PA = 'PA',
+  PR = 'PR',
+  RI = 'RI',
+  SC = 'SC',
+  SD = 'SD',
+  TN = 'TN',
+  TX = 'TX',
+  UM = 'UM',
+  UT = 'UT',
+  VA = 'VA',
+  VI = 'VI',
+  VT = 'VT',
+  WA = 'WA',
+  WI = 'WI',
+  WV = 'WV',
+  WY = 'WY'
 }
 
 export type Subscription = {
@@ -2627,6 +2646,30 @@ export type TaggedContent = {
 
 /** TaggedEntity is the actual object represented by a tag in the data base. */
 export type TaggedEntity = PossibleOperationalSolution | UserAccount;
+
+export type TaggedInDiscussionReplyActivityMeta = {
+  __typename: 'TaggedInDiscussionReplyActivityMeta';
+  content: Scalars['String']['output'];
+  discussion: PlanDiscussion;
+  discussionID: Scalars['UUID']['output'];
+  modelPlan: ModelPlan;
+  modelPlanID: Scalars['UUID']['output'];
+  reply: DiscussionReply;
+  replyID: Scalars['UUID']['output'];
+  type: ActivityType;
+  version: Scalars['Int']['output'];
+};
+
+export type TaggedInPlanDiscussionActivityMeta = {
+  __typename: 'TaggedInPlanDiscussionActivityMeta';
+  content: Scalars['String']['output'];
+  discussion: PlanDiscussion;
+  discussionID: Scalars['UUID']['output'];
+  modelPlan: ModelPlan;
+  modelPlanID: Scalars['UUID']['output'];
+  type: ActivityType;
+  version: Scalars['Int']['output'];
+};
 
 export enum TaskListSection {
   BASICS = 'BASICS',
@@ -2718,6 +2761,69 @@ export type UserInfo = {
   firstName: Scalars['String']['output'];
   lastName: Scalars['String']['output'];
   username: Scalars['String']['output'];
+};
+
+/** UserNotification represents a notification about a specific Activity */
+export type UserNotification = {
+  __typename: 'UserNotification';
+  activity: Activity;
+  activityID: Scalars['UUID']['output'];
+  createdBy: Scalars['UUID']['output'];
+  createdByUserAccount: UserAccount;
+  createdDts: Scalars['Time']['output'];
+  emailSent: Scalars['Boolean']['output'];
+  id: Scalars['UUID']['output'];
+  inAppSent: Scalars['Boolean']['output'];
+  isRead: Scalars['Boolean']['output'];
+  modifiedBy?: Maybe<Scalars['UUID']['output']>;
+  modifiedByUserAccount?: Maybe<UserAccount>;
+  modifiedDts?: Maybe<Scalars['Time']['output']>;
+  userID: Scalars['UUID']['output'];
+};
+
+export enum UserNotificationPreferenceFlag {
+  EMAIL = 'EMAIL',
+  IN_APP = 'IN_APP'
+}
+
+/** UserNotificationPreferences represents a users preferences about what type and where to receive a notification */
+export type UserNotificationPreferences = {
+  __typename: 'UserNotificationPreferences';
+  addedAsCollaborator: Array<UserNotificationPreferenceFlag>;
+  createdBy: Scalars['UUID']['output'];
+  createdByUserAccount: UserAccount;
+  createdDts: Scalars['Time']['output'];
+  dailyDigestComplete: Array<UserNotificationPreferenceFlag>;
+  id: Scalars['UUID']['output'];
+  modelPlanShared: Array<UserNotificationPreferenceFlag>;
+  modifiedBy?: Maybe<Scalars['UUID']['output']>;
+  modifiedByUserAccount?: Maybe<UserAccount>;
+  modifiedDts?: Maybe<Scalars['Time']['output']>;
+  newDiscussionReply: Array<UserNotificationPreferenceFlag>;
+  taggedInDiscussion: Array<UserNotificationPreferenceFlag>;
+  taggedInDiscussionReply: Array<UserNotificationPreferenceFlag>;
+  userID: Scalars['UUID']['output'];
+};
+
+/** UserNotificationPreferencesChanges represents the ways that a UserNotifications Preferences object can be updated */
+export type UserNotificationPreferencesChanges = {
+  addedAsCollaborator?: InputMaybe<Array<UserNotificationPreferenceFlag>>;
+  dailyDigestComplete?: InputMaybe<Array<UserNotificationPreferenceFlag>>;
+  modelPlanShared?: InputMaybe<Array<UserNotificationPreferenceFlag>>;
+  newDiscussionReply?: InputMaybe<Array<UserNotificationPreferenceFlag>>;
+  taggedInDiscussion?: InputMaybe<Array<UserNotificationPreferenceFlag>>;
+  taggedInDiscussionReply?: InputMaybe<Array<UserNotificationPreferenceFlag>>;
+};
+
+/** This is a wrapper for all information for a user  */
+export type UserNotifications = {
+  __typename: 'UserNotifications';
+  /** This includes all notifications */
+  notifications: Array<UserNotification>;
+  /** This returns the number of unread notifications */
+  numUnreadNotifications: Scalars['Int']['output'];
+  /** This renders only the unread notifications */
+  unreadNotifications: Array<UserNotification>;
 };
 
 export enum WaiverType {
@@ -2931,7 +3037,7 @@ export type GetAllGeneralCharacteristicsQueryVariables = Exact<{
 }>;
 
 
-export type GetAllGeneralCharacteristicsQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, existingModelLinks: Array<{ __typename: 'ExistingModelLink', id?: UUID | null, existingModel?: { __typename: 'ExistingModel', id?: number | null, modelName?: string | null } | null, currentModelPlan?: { __typename: 'ModelPlan', id: UUID, modelName: string } | null }>, generalCharacteristics: { __typename: 'PlanGeneralCharacteristics', id: UUID, isNewModel?: boolean | null, existingModel?: string | null, resemblesExistingModel?: boolean | null, resemblesExistingModelHow?: string | null, resemblesExistingModelNote?: string | null, hasComponentsOrTracks?: boolean | null, hasComponentsOrTracksDiffer?: string | null, hasComponentsOrTracksNote?: string | null, alternativePaymentModelTypes: Array<AlternativePaymentModelType>, alternativePaymentModelNote?: string | null, keyCharacteristics: Array<KeyCharacteristic>, keyCharacteristicsOther?: string | null, keyCharacteristicsNote?: string | null, collectPlanBids?: boolean | null, collectPlanBidsNote?: string | null, managePartCDEnrollment?: boolean | null, managePartCDEnrollmentNote?: string | null, planContractUpdated?: boolean | null, planContractUpdatedNote?: string | null, careCoordinationInvolved?: boolean | null, careCoordinationInvolvedDescription?: string | null, careCoordinationInvolvedNote?: string | null, additionalServicesInvolved?: boolean | null, additionalServicesInvolvedDescription?: string | null, additionalServicesInvolvedNote?: string | null, communityPartnersInvolved?: boolean | null, communityPartnersInvolvedDescription?: string | null, communityPartnersInvolvedNote?: string | null, geographiesTargeted?: boolean | null, geographiesTargetedTypes: Array<GeographyType>, geographiesTargetedTypesOther?: string | null, geographiesTargetedAppliedTo: Array<GeographyApplication>, geographiesTargetedAppliedToOther?: string | null, geographiesTargetedNote?: string | null, participationOptions?: boolean | null, participationOptionsNote?: string | null, agreementTypes: Array<AgreementType>, agreementTypesOther?: string | null, multiplePatricipationAgreementsNeeded?: boolean | null, multiplePatricipationAgreementsNeededNote?: string | null, rulemakingRequired?: boolean | null, rulemakingRequiredDescription?: string | null, rulemakingRequiredNote?: string | null, authorityAllowances: Array<AuthorityAllowance>, authorityAllowancesOther?: string | null, authorityAllowancesNote?: string | null, waiversRequired?: boolean | null, waiversRequiredTypes: Array<WaiverType>, waiversRequiredNote?: string | null, status: TaskStatus } } };
+export type GetAllGeneralCharacteristicsQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, generalCharacteristics: { __typename: 'PlanGeneralCharacteristics', id: UUID, isNewModel?: boolean | null, existingModel?: string | null, resemblesExistingModel?: YesNoOtherType | null, resemblesExistingModelWhyHow?: string | null, resemblesExistingModelHow?: string | null, resemblesExistingModelNote?: string | null, resemblesExistingModelOtherSpecify?: string | null, resemblesExistingModelOtherSelected?: boolean | null, resemblesExistingModelOtherOption?: string | null, participationInModelPrecondition?: YesNoOtherType | null, participationInModelPreconditionOtherSpecify?: string | null, participationInModelPreconditionOtherSelected?: boolean | null, participationInModelPreconditionOtherOption?: string | null, participationInModelPreconditionWhyHow?: string | null, participationInModelPreconditionNote?: string | null, hasComponentsOrTracks?: boolean | null, hasComponentsOrTracksDiffer?: string | null, hasComponentsOrTracksNote?: string | null, agencyOrStateHelp: Array<AgencyOrStateHelpType>, agencyOrStateHelpOther?: string | null, agencyOrStateHelpNote?: string | null, alternativePaymentModelTypes: Array<AlternativePaymentModelType>, alternativePaymentModelNote?: string | null, keyCharacteristics: Array<KeyCharacteristic>, keyCharacteristicsOther?: string | null, keyCharacteristicsNote?: string | null, collectPlanBids?: boolean | null, collectPlanBidsNote?: string | null, managePartCDEnrollment?: boolean | null, managePartCDEnrollmentNote?: string | null, planContractUpdated?: boolean | null, planContractUpdatedNote?: string | null, careCoordinationInvolved?: boolean | null, careCoordinationInvolvedDescription?: string | null, careCoordinationInvolvedNote?: string | null, additionalServicesInvolved?: boolean | null, additionalServicesInvolvedDescription?: string | null, additionalServicesInvolvedNote?: string | null, communityPartnersInvolved?: boolean | null, communityPartnersInvolvedDescription?: string | null, communityPartnersInvolvedNote?: string | null, geographiesTargeted?: boolean | null, geographiesTargetedTypes: Array<GeographyType>, geographiesStatesAndTerritories: Array<StatesAndTerritories>, geographiesRegionTypes: Array<GeographyRegionType>, geographiesTargetedTypesOther?: string | null, geographiesTargetedAppliedTo: Array<GeographyApplication>, geographiesTargetedAppliedToOther?: string | null, geographiesTargetedNote?: string | null, participationOptions?: boolean | null, participationOptionsNote?: string | null, agreementTypes: Array<AgreementType>, agreementTypesOther?: string | null, multiplePatricipationAgreementsNeeded?: boolean | null, multiplePatricipationAgreementsNeededNote?: string | null, rulemakingRequired?: boolean | null, rulemakingRequiredDescription?: string | null, rulemakingRequiredNote?: string | null, authorityAllowances: Array<AuthorityAllowance>, authorityAllowancesOther?: string | null, authorityAllowancesNote?: string | null, waiversRequired?: boolean | null, waiversRequiredTypes: Array<WaiverType>, waiversRequiredNote?: string | null, status: TaskStatus, resemblesExistingModelWhich?: { __typename: 'ExistingModelLinks', names: Array<string> } | null, participationInModelPreconditionWhich?: { __typename: 'ExistingModelLinks', names: Array<string> } | null } } };
 
 export type GetAuthorityQueryVariables = Exact<{
   id: Scalars['UUID']['input'];
@@ -2945,7 +3051,7 @@ export type GetGeneralCharacteristicsQueryVariables = Exact<{
 }>;
 
 
-export type GetGeneralCharacteristicsQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, existingModelLinks: Array<{ __typename: 'ExistingModelLink', id?: UUID | null, existingModelID?: number | null, currentModelPlanID?: UUID | null }>, generalCharacteristics: { __typename: 'PlanGeneralCharacteristics', id: UUID, isNewModel?: boolean | null, currentModelPlanID?: UUID | null, existingModelID?: number | null, resemblesExistingModel?: boolean | null, resemblesExistingModelHow?: string | null, resemblesExistingModelNote?: string | null, hasComponentsOrTracks?: boolean | null, hasComponentsOrTracksDiffer?: string | null, hasComponentsOrTracksNote?: string | null } } };
+export type GetGeneralCharacteristicsQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, generalCharacteristics: { __typename: 'PlanGeneralCharacteristics', id: UUID, isNewModel?: boolean | null, currentModelPlanID?: UUID | null, existingModelID?: number | null, resemblesExistingModel?: YesNoOtherType | null, resemblesExistingModelWhyHow?: string | null, resemblesExistingModelHow?: string | null, resemblesExistingModelNote?: string | null, resemblesExistingModelOtherSpecify?: string | null, resemblesExistingModelOtherSelected?: boolean | null, resemblesExistingModelOtherOption?: string | null, participationInModelPrecondition?: YesNoOtherType | null, participationInModelPreconditionOtherSpecify?: string | null, participationInModelPreconditionOtherSelected?: boolean | null, participationInModelPreconditionOtherOption?: string | null, participationInModelPreconditionWhyHow?: string | null, participationInModelPreconditionNote?: string | null, hasComponentsOrTracks?: boolean | null, hasComponentsOrTracksDiffer?: string | null, hasComponentsOrTracksNote?: string | null, resemblesExistingModelWhich?: { __typename: 'ExistingModelLinks', links: Array<{ __typename: 'ExistingModelLink', id?: UUID | null, existingModelID?: number | null, currentModelPlanID?: UUID | null }> } | null, participationInModelPreconditionWhich?: { __typename: 'ExistingModelLinks', links: Array<{ __typename: 'ExistingModelLink', id?: UUID | null, existingModelID?: number | null, currentModelPlanID?: UUID | null }> } | null } } };
 
 export type GetInvolvementsQueryVariables = Exact<{
   id: Scalars['UUID']['input'];
@@ -2959,23 +3065,24 @@ export type GetKeyCharacteristicsQueryVariables = Exact<{
 }>;
 
 
-export type GetKeyCharacteristicsQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, generalCharacteristics: { __typename: 'PlanGeneralCharacteristics', id: UUID, alternativePaymentModelTypes: Array<AlternativePaymentModelType>, alternativePaymentModelNote?: string | null, keyCharacteristics: Array<KeyCharacteristic>, keyCharacteristicsNote?: string | null, keyCharacteristicsOther?: string | null, collectPlanBids?: boolean | null, collectPlanBidsNote?: string | null, managePartCDEnrollment?: boolean | null, managePartCDEnrollmentNote?: string | null, planContractUpdated?: boolean | null, planContractUpdatedNote?: string | null }, operationalNeeds: Array<{ __typename: 'OperationalNeed', modifiedDts?: Time | null }> } };
+export type GetKeyCharacteristicsQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, generalCharacteristics: { __typename: 'PlanGeneralCharacteristics', id: UUID, agencyOrStateHelp: Array<AgencyOrStateHelpType>, agencyOrStateHelpOther?: string | null, agencyOrStateHelpNote?: string | null, alternativePaymentModelTypes: Array<AlternativePaymentModelType>, alternativePaymentModelNote?: string | null, keyCharacteristics: Array<KeyCharacteristic>, keyCharacteristicsNote?: string | null, keyCharacteristicsOther?: string | null, collectPlanBids?: boolean | null, collectPlanBidsNote?: string | null, managePartCDEnrollment?: boolean | null, managePartCDEnrollmentNote?: string | null, planContractUpdated?: boolean | null, planContractUpdatedNote?: string | null }, operationalNeeds: Array<{ __typename: 'OperationalNeed', id: UUID, modifiedDts?: Time | null }> } };
 
 export type GetTargetsAndOptionsQueryVariables = Exact<{
   id: Scalars['UUID']['input'];
 }>;
 
 
-export type GetTargetsAndOptionsQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, generalCharacteristics: { __typename: 'PlanGeneralCharacteristics', id: UUID, geographiesTargeted?: boolean | null, geographiesTargetedTypes: Array<GeographyType>, geographiesTargetedTypesOther?: string | null, geographiesTargetedAppliedTo: Array<GeographyApplication>, geographiesTargetedAppliedToOther?: string | null, geographiesTargetedNote?: string | null, participationOptions?: boolean | null, participationOptionsNote?: string | null, agreementTypes: Array<AgreementType>, agreementTypesOther?: string | null, multiplePatricipationAgreementsNeeded?: boolean | null, multiplePatricipationAgreementsNeededNote?: string | null }, operationalNeeds: Array<{ __typename: 'OperationalNeed', id: UUID, modifiedDts?: Time | null }> } };
+export type GetTargetsAndOptionsQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, generalCharacteristics: { __typename: 'PlanGeneralCharacteristics', id: UUID, geographiesTargeted?: boolean | null, geographiesTargetedTypes: Array<GeographyType>, geographiesStatesAndTerritories: Array<StatesAndTerritories>, geographiesRegionTypes: Array<GeographyRegionType>, geographiesTargetedTypesOther?: string | null, geographiesTargetedAppliedTo: Array<GeographyApplication>, geographiesTargetedAppliedToOther?: string | null, geographiesTargetedNote?: string | null, participationOptions?: boolean | null, participationOptionsNote?: string | null, agreementTypes: Array<AgreementType>, agreementTypesOther?: string | null, multiplePatricipationAgreementsNeeded?: boolean | null, multiplePatricipationAgreementsNeededNote?: string | null }, operationalNeeds: Array<{ __typename: 'OperationalNeed', id: UUID, modifiedDts?: Time | null }> } };
 
 export type UpdateExistingModelLinksMutationVariables = Exact<{
   modelPlanID: Scalars['UUID']['input'];
+  fieldName: ExisitingModelLinkFieldType;
   existingModelIDs?: InputMaybe<Array<Scalars['Int']['input']> | Scalars['Int']['input']>;
   currentModelPlanIDs?: InputMaybe<Array<Scalars['UUID']['input']> | Scalars['UUID']['input']>;
 }>;
 
 
-export type UpdateExistingModelLinksMutation = { __typename: 'Mutation', updateExistingModelLinks: Array<{ __typename: 'ExistingModelLink', id?: UUID | null, existingModelID?: number | null, existingModel?: { __typename: 'ExistingModel', id?: number | null, modelName?: string | null } | null }> };
+export type UpdateExistingModelLinksMutation = { __typename: 'Mutation', updateExistingModelLinks: { __typename: 'ExistingModelLinks', links: Array<{ __typename: 'ExistingModelLink', id?: UUID | null, existingModelID?: number | null, model: { __typename: 'ExistingModel', modelName: string, stage: string, numberOfParticipants?: string | null, keywords?: string | null } | { __typename: 'ModelPlan', modelName: string, abbreviation?: string | null } }> } };
 
 export type UpdatePlanGeneralCharacteristicsMutationVariables = Exact<{
   id: Scalars['UUID']['input'];
@@ -2988,7 +3095,7 @@ export type UpdatePlanGeneralCharacteristicsMutation = { __typename: 'Mutation',
 export type GetExistingModelPlansQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetExistingModelPlansQuery = { __typename: 'Query', existingModelCollection: Array<{ __typename: 'ExistingModel', id?: number | null, modelName?: string | null }> };
+export type GetExistingModelPlansQuery = { __typename: 'Query', existingModelCollection: Array<{ __typename: 'ExistingModel', id?: number | null, modelName: string }> };
 
 export type GetModelPlansBaseQueryVariables = Exact<{
   filter: ModelPlanFilter;
@@ -3002,12 +3109,46 @@ export type GetNdaQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GetNdaQuery = { __typename: 'Query', ndaInfo: { __typename: 'NDAInfo', agreed: boolean, agreedDts?: Time | null } };
 
+export type GetNotificationSettingsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetNotificationSettingsQuery = { __typename: 'Query', currentUser: { __typename: 'CurrentUser', notificationPreferences: { __typename: 'UserNotificationPreferences', id: UUID, dailyDigestComplete: Array<UserNotificationPreferenceFlag>, addedAsCollaborator: Array<UserNotificationPreferenceFlag>, taggedInDiscussion: Array<UserNotificationPreferenceFlag>, taggedInDiscussionReply: Array<UserNotificationPreferenceFlag>, newDiscussionReply: Array<UserNotificationPreferenceFlag>, modelPlanShared: Array<UserNotificationPreferenceFlag> } } };
+
+export type GetNotificationsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetNotificationsQuery = { __typename: 'Query', currentUser: { __typename: 'CurrentUser', notifications: { __typename: 'UserNotifications', numUnreadNotifications: number, notifications: Array<{ __typename: 'UserNotification', id: UUID, isRead: boolean, inAppSent: boolean, emailSent: boolean, createdDts: Time, activity: { __typename: 'Activity', activityType: ActivityType, entityID: UUID, actorID: UUID, actorUserAccount: { __typename: 'UserAccount', commonName: string }, metaData: { __typename: 'ActivityMetaBaseStruct' } | { __typename: 'TaggedInDiscussionReplyActivityMeta', version: number, type: ActivityType, modelPlanID: UUID, discussionID: UUID, replyID: UUID, content: string, modelPlan: { __typename: 'ModelPlan', modelName: string } } | { __typename: 'TaggedInPlanDiscussionActivityMeta', version: number, type: ActivityType, modelPlanID: UUID, discussionID: UUID, content: string, modelPlan: { __typename: 'ModelPlan', modelName: string } } } }> } } };
+
+export type GetPollNotificationsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetPollNotificationsQuery = { __typename: 'Query', currentUser: { __typename: 'CurrentUser', notifications: { __typename: 'UserNotifications', numUnreadNotifications: number } } };
+
+export type UpdateAllNotificationsAsReadMutationVariables = Exact<{ [key: string]: never; }>;
+
+
+export type UpdateAllNotificationsAsReadMutation = { __typename: 'Mutation', markAllNotificationsAsRead: Array<{ __typename: 'UserNotification', id: UUID }> };
+
+export type UpdateNotificationSettingsMutationVariables = Exact<{
+  changes: UserNotificationPreferencesChanges;
+}>;
+
+
+export type UpdateNotificationSettingsMutation = { __typename: 'Mutation', updateUserNotificationPreferences: { __typename: 'UserNotificationPreferences', id: UUID, dailyDigestComplete: Array<UserNotificationPreferenceFlag>, addedAsCollaborator: Array<UserNotificationPreferenceFlag>, taggedInDiscussion: Array<UserNotificationPreferenceFlag>, taggedInDiscussionReply: Array<UserNotificationPreferenceFlag>, newDiscussionReply: Array<UserNotificationPreferenceFlag>, modelPlanShared: Array<UserNotificationPreferenceFlag> } };
+
+export type MarkNotificationAsReadMutationVariables = Exact<{
+  notificationID: Scalars['UUID']['input'];
+}>;
+
+
+export type MarkNotificationAsReadMutation = { __typename: 'Mutation', markNotificationAsRead: { __typename: 'UserNotification', id: UUID, isRead: boolean } };
+
 export type GetAllOpsEvalAndLearningQueryVariables = Exact<{
   id: Scalars['UUID']['input'];
 }>;
 
 
-export type GetAllOpsEvalAndLearningQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, opsEvalAndLearning: { __typename: 'PlanOpsEvalAndLearning', id: UUID, modelPlanID: UUID, agencyOrStateHelp: Array<AgencyOrStateHelpType>, agencyOrStateHelpOther?: string | null, agencyOrStateHelpNote?: string | null, stakeholders: Array<StakeholdersType>, stakeholdersOther?: string | null, stakeholdersNote?: string | null, helpdeskUse?: boolean | null, helpdeskUseNote?: string | null, contractorSupport: Array<ContractorSupportType>, contractorSupportOther?: string | null, contractorSupportHow?: string | null, contractorSupportNote?: string | null, iddocSupport?: boolean | null, iddocSupportNote?: string | null, technicalContactsIdentified?: boolean | null, technicalContactsIdentifiedDetail?: string | null, technicalContactsIdentifiedNote?: string | null, captureParticipantInfo?: boolean | null, captureParticipantInfoNote?: string | null, icdOwner?: string | null, draftIcdDueDate?: Time | null, icdNote?: string | null, uatNeeds?: string | null, stcNeeds?: string | null, testingTimelines?: string | null, testingNote?: string | null, dataMonitoringFileTypes: Array<MonitoringFileType>, dataMonitoringFileOther?: string | null, dataResponseType?: string | null, dataResponseFileFrequency?: string | null, dataFullTimeOrIncremental?: DataFullTimeOrIncrementalType | null, eftSetUp?: boolean | null, unsolicitedAdjustmentsIncluded?: boolean | null, dataFlowDiagramsNeeded?: boolean | null, produceBenefitEnhancementFiles?: boolean | null, fileNamingConventions?: string | null, dataMonitoringNote?: string | null, benchmarkForPerformance?: BenchmarkForPerformanceType | null, benchmarkForPerformanceNote?: string | null, computePerformanceScores?: boolean | null, computePerformanceScoresNote?: string | null, riskAdjustPerformance?: boolean | null, riskAdjustFeedback?: boolean | null, riskAdjustPayments?: boolean | null, riskAdjustOther?: boolean | null, riskAdjustNote?: string | null, appealPerformance?: boolean | null, appealFeedback?: boolean | null, appealPayments?: boolean | null, appealOther?: boolean | null, appealNote?: string | null, evaluationApproaches: Array<EvaluationApproachType>, evaluationApproachOther?: string | null, evalutaionApproachNote?: string | null, ccmInvolvment: Array<CcmInvolvmentType>, ccmInvolvmentOther?: string | null, ccmInvolvmentNote?: string | null, dataNeededForMonitoring: Array<DataForMonitoringType>, dataNeededForMonitoringOther?: string | null, dataNeededForMonitoringNote?: string | null, dataToSendParticicipants: Array<DataToSendParticipantsType>, dataToSendParticicipantsOther?: string | null, dataToSendParticicipantsNote?: string | null, shareCclfData?: boolean | null, shareCclfDataNote?: string | null, sendFilesBetweenCcw?: boolean | null, sendFilesBetweenCcwNote?: string | null, appToSendFilesToKnown?: boolean | null, appToSendFilesToWhich?: string | null, appToSendFilesToNote?: string | null, useCcwForFileDistribiutionToParticipants?: boolean | null, useCcwForFileDistribiutionToParticipantsNote?: string | null, developNewQualityMeasures?: boolean | null, developNewQualityMeasuresNote?: string | null, qualityPerformanceImpactsPayment?: YesNoOtherType | null, qualityPerformanceImpactsPaymentOther?: string | null, qualityPerformanceImpactsPaymentNote?: string | null, dataSharingStarts?: DataStartsType | null, dataSharingStartsOther?: string | null, dataSharingFrequency: Array<FrequencyType>, dataSharingFrequencyContinually?: string | null, dataSharingFrequencyOther?: string | null, dataSharingStartsNote?: string | null, dataCollectionStarts?: DataStartsType | null, dataCollectionStartsOther?: string | null, dataCollectionFrequency: Array<FrequencyType>, dataCollectionFrequencyContinually?: string | null, dataCollectionFrequencyOther?: string | null, dataCollectionFrequencyNote?: string | null, qualityReportingStarts?: DataStartsType | null, qualityReportingStartsOther?: string | null, qualityReportingStartsNote?: string | null, qualityReportingFrequency: Array<FrequencyType>, qualityReportingFrequencyContinually?: string | null, qualityReportingFrequencyOther?: string | null, modelLearningSystems: Array<ModelLearningSystemType>, modelLearningSystemsOther?: string | null, modelLearningSystemsNote?: string | null, anticipatedChallenges?: string | null, status: TaskStatus } } };
+export type GetAllOpsEvalAndLearningQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, opsEvalAndLearning: { __typename: 'PlanOpsEvalAndLearning', id: UUID, modelPlanID: UUID, stakeholders: Array<StakeholdersType>, stakeholdersOther?: string | null, stakeholdersNote?: string | null, helpdeskUse?: boolean | null, helpdeskUseNote?: string | null, contractorSupport: Array<ContractorSupportType>, contractorSupportOther?: string | null, contractorSupportHow?: string | null, contractorSupportNote?: string | null, iddocSupport?: boolean | null, iddocSupportNote?: string | null, technicalContactsIdentified?: boolean | null, technicalContactsIdentifiedDetail?: string | null, technicalContactsIdentifiedNote?: string | null, captureParticipantInfo?: boolean | null, captureParticipantInfoNote?: string | null, icdOwner?: string | null, draftIcdDueDate?: Time | null, icdNote?: string | null, uatNeeds?: string | null, stcNeeds?: string | null, testingTimelines?: string | null, testingNote?: string | null, dataMonitoringFileTypes: Array<MonitoringFileType>, dataMonitoringFileOther?: string | null, dataResponseType?: string | null, dataResponseFileFrequency?: string | null, dataFullTimeOrIncremental?: DataFullTimeOrIncrementalType | null, eftSetUp?: boolean | null, unsolicitedAdjustmentsIncluded?: boolean | null, dataFlowDiagramsNeeded?: boolean | null, produceBenefitEnhancementFiles?: boolean | null, fileNamingConventions?: string | null, dataMonitoringNote?: string | null, benchmarkForPerformance?: BenchmarkForPerformanceType | null, benchmarkForPerformanceNote?: string | null, computePerformanceScores?: boolean | null, computePerformanceScoresNote?: string | null, riskAdjustPerformance?: boolean | null, riskAdjustFeedback?: boolean | null, riskAdjustPayments?: boolean | null, riskAdjustOther?: boolean | null, riskAdjustNote?: string | null, appealPerformance?: boolean | null, appealFeedback?: boolean | null, appealPayments?: boolean | null, appealOther?: boolean | null, appealNote?: string | null, evaluationApproaches: Array<EvaluationApproachType>, evaluationApproachOther?: string | null, evalutaionApproachNote?: string | null, ccmInvolvment: Array<CcmInvolvmentType>, ccmInvolvmentOther?: string | null, ccmInvolvmentNote?: string | null, dataNeededForMonitoring: Array<DataForMonitoringType>, dataNeededForMonitoringOther?: string | null, dataNeededForMonitoringNote?: string | null, dataToSendParticicipants: Array<DataToSendParticipantsType>, dataToSendParticicipantsOther?: string | null, dataToSendParticicipantsNote?: string | null, shareCclfData?: boolean | null, shareCclfDataNote?: string | null, sendFilesBetweenCcw?: boolean | null, sendFilesBetweenCcwNote?: string | null, appToSendFilesToKnown?: boolean | null, appToSendFilesToWhich?: string | null, appToSendFilesToNote?: string | null, useCcwForFileDistribiutionToParticipants?: boolean | null, useCcwForFileDistribiutionToParticipantsNote?: string | null, developNewQualityMeasures?: boolean | null, developNewQualityMeasuresNote?: string | null, qualityPerformanceImpactsPayment?: YesNoOtherType | null, qualityPerformanceImpactsPaymentOther?: string | null, qualityPerformanceImpactsPaymentNote?: string | null, dataSharingStarts?: DataStartsType | null, dataSharingStartsOther?: string | null, dataSharingFrequency: Array<FrequencyType>, dataSharingFrequencyContinually?: string | null, dataSharingFrequencyOther?: string | null, dataSharingStartsNote?: string | null, dataCollectionStarts?: DataStartsType | null, dataCollectionStartsOther?: string | null, dataCollectionFrequency: Array<FrequencyType>, dataCollectionFrequencyContinually?: string | null, dataCollectionFrequencyOther?: string | null, dataCollectionFrequencyNote?: string | null, qualityReportingStarts?: DataStartsType | null, qualityReportingStartsOther?: string | null, qualityReportingStartsNote?: string | null, qualityReportingFrequency: Array<FrequencyType>, qualityReportingFrequencyContinually?: string | null, qualityReportingFrequencyOther?: string | null, modelLearningSystems: Array<ModelLearningSystemType>, modelLearningSystemsOther?: string | null, modelLearningSystemsNote?: string | null, anticipatedChallenges?: string | null, status: TaskStatus } } };
 
 export type GetCcwAndQualityQueryVariables = Exact<{
   id: Scalars['UUID']['input'];
@@ -3028,7 +3169,7 @@ export type GetEvaluationQueryVariables = Exact<{
 }>;
 
 
-export type GetEvaluationQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, opsEvalAndLearning: { __typename: 'PlanOpsEvalAndLearning', id: UUID, ccmInvolvment: Array<CcmInvolvmentType>, dataNeededForMonitoring: Array<DataForMonitoringType>, iddocSupport?: boolean | null, evaluationApproaches: Array<EvaluationApproachType>, evaluationApproachOther?: string | null, evalutaionApproachNote?: string | null, ccmInvolvmentOther?: string | null, ccmInvolvmentNote?: string | null, dataNeededForMonitoringOther?: string | null, dataNeededForMonitoringNote?: string | null, dataToSendParticicipants: Array<DataToSendParticipantsType>, dataToSendParticicipantsOther?: string | null, dataToSendParticicipantsNote?: string | null, shareCclfData?: boolean | null, shareCclfDataNote?: string | null }, operationalNeeds: Array<{ __typename: 'OperationalNeed', modifiedDts?: Time | null }> } };
+export type GetEvaluationQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, opsEvalAndLearning: { __typename: 'PlanOpsEvalAndLearning', id: UUID, ccmInvolvment: Array<CcmInvolvmentType>, dataNeededForMonitoring: Array<DataForMonitoringType>, iddocSupport?: boolean | null, evaluationApproaches: Array<EvaluationApproachType>, evaluationApproachOther?: string | null, evalutaionApproachNote?: string | null, ccmInvolvmentOther?: string | null, ccmInvolvmentNote?: string | null, dataNeededForMonitoringOther?: string | null, dataNeededForMonitoringNote?: string | null, dataToSendParticicipants: Array<DataToSendParticipantsType>, dataToSendParticicipantsOther?: string | null, dataToSendParticicipantsNote?: string | null, shareCclfData?: boolean | null, shareCclfDataNote?: string | null }, operationalNeeds: Array<{ __typename: 'OperationalNeed', id: UUID, modifiedDts?: Time | null }> } };
 
 export type GetIddocQueryVariables = Exact<{
   id: Scalars['UUID']['input'];
@@ -3063,14 +3204,14 @@ export type GetOpsEvalAndLearningQueryVariables = Exact<{
 }>;
 
 
-export type GetOpsEvalAndLearningQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, opsEvalAndLearning: { __typename: 'PlanOpsEvalAndLearning', id: UUID, ccmInvolvment: Array<CcmInvolvmentType>, dataNeededForMonitoring: Array<DataForMonitoringType>, agencyOrStateHelp: Array<AgencyOrStateHelpType>, agencyOrStateHelpOther?: string | null, agencyOrStateHelpNote?: string | null, stakeholders: Array<StakeholdersType>, stakeholdersOther?: string | null, stakeholdersNote?: string | null, helpdeskUse?: boolean | null, helpdeskUseNote?: string | null, contractorSupport: Array<ContractorSupportType>, contractorSupportOther?: string | null, contractorSupportHow?: string | null, contractorSupportNote?: string | null, iddocSupport?: boolean | null, iddocSupportNote?: string | null }, operationalNeeds: Array<{ __typename: 'OperationalNeed', modifiedDts?: Time | null }> } };
+export type GetOpsEvalAndLearningQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, opsEvalAndLearning: { __typename: 'PlanOpsEvalAndLearning', id: UUID, ccmInvolvment: Array<CcmInvolvmentType>, dataNeededForMonitoring: Array<DataForMonitoringType>, stakeholders: Array<StakeholdersType>, stakeholdersOther?: string | null, stakeholdersNote?: string | null, helpdeskUse?: boolean | null, helpdeskUseNote?: string | null, contractorSupport: Array<ContractorSupportType>, contractorSupportOther?: string | null, contractorSupportHow?: string | null, contractorSupportNote?: string | null, iddocSupport?: boolean | null, iddocSupportNote?: string | null }, operationalNeeds: Array<{ __typename: 'OperationalNeed', id: UUID, modifiedDts?: Time | null }> } };
 
 export type GetPerformanceQueryVariables = Exact<{
   id: Scalars['UUID']['input'];
 }>;
 
 
-export type GetPerformanceQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, opsEvalAndLearning: { __typename: 'PlanOpsEvalAndLearning', id: UUID, ccmInvolvment: Array<CcmInvolvmentType>, dataNeededForMonitoring: Array<DataForMonitoringType>, iddocSupport?: boolean | null, benchmarkForPerformance?: BenchmarkForPerformanceType | null, benchmarkForPerformanceNote?: string | null, computePerformanceScores?: boolean | null, computePerformanceScoresNote?: string | null, riskAdjustPerformance?: boolean | null, riskAdjustFeedback?: boolean | null, riskAdjustPayments?: boolean | null, riskAdjustOther?: boolean | null, riskAdjustNote?: string | null, appealPerformance?: boolean | null, appealFeedback?: boolean | null, appealPayments?: boolean | null, appealOther?: boolean | null, appealNote?: string | null }, operationalNeeds: Array<{ __typename: 'OperationalNeed', modifiedDts?: Time | null }> } };
+export type GetPerformanceQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, opsEvalAndLearning: { __typename: 'PlanOpsEvalAndLearning', id: UUID, ccmInvolvment: Array<CcmInvolvmentType>, dataNeededForMonitoring: Array<DataForMonitoringType>, iddocSupport?: boolean | null, benchmarkForPerformance?: BenchmarkForPerformanceType | null, benchmarkForPerformanceNote?: string | null, computePerformanceScores?: boolean | null, computePerformanceScoresNote?: string | null, riskAdjustPerformance?: boolean | null, riskAdjustFeedback?: boolean | null, riskAdjustPayments?: boolean | null, riskAdjustOther?: boolean | null, riskAdjustNote?: string | null, appealPerformance?: boolean | null, appealFeedback?: boolean | null, appealPayments?: boolean | null, appealOther?: boolean | null, appealNote?: string | null }, operationalNeeds: Array<{ __typename: 'OperationalNeed', id: UUID, modifiedDts?: Time | null }> } };
 
 export type UpdatePlanOpsEvalAndLearningMutationVariables = Exact<{
   id: Scalars['UUID']['input'];
@@ -3092,7 +3233,7 @@ export type GetCommunicationQueryVariables = Exact<{
 }>;
 
 
-export type GetCommunicationQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, participantsAndProviders: { __typename: 'PlanParticipantsAndProviders', id: UUID, participantAddedFrequency: Array<FrequencyType>, participantAddedFrequencyContinually?: string | null, participantAddedFrequencyOther?: string | null, participantAddedFrequencyNote?: string | null, participantRemovedFrequency: Array<FrequencyType>, participantRemovedFrequencyContinually?: string | null, participantRemovedFrequencyOther?: string | null, participantRemovedFrequencyNote?: string | null, communicationMethod: Array<ParticipantCommunicationType>, communicationMethodOther?: string | null, communicationNote?: string | null, riskType: Array<ParticipantRiskType>, riskOther?: string | null, riskNote?: string | null, willRiskChange?: boolean | null, willRiskChangeNote?: string | null }, operationalNeeds: Array<{ __typename: 'OperationalNeed', modifiedDts?: Time | null }> } };
+export type GetCommunicationQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, participantsAndProviders: { __typename: 'PlanParticipantsAndProviders', id: UUID, participantAddedFrequency: Array<FrequencyType>, participantAddedFrequencyContinually?: string | null, participantAddedFrequencyOther?: string | null, participantAddedFrequencyNote?: string | null, participantRemovedFrequency: Array<FrequencyType>, participantRemovedFrequencyContinually?: string | null, participantRemovedFrequencyOther?: string | null, participantRemovedFrequencyNote?: string | null, communicationMethod: Array<ParticipantCommunicationType>, communicationMethodOther?: string | null, communicationNote?: string | null, riskType: Array<ParticipantRiskType>, riskOther?: string | null, riskNote?: string | null, willRiskChange?: boolean | null, willRiskChangeNote?: string | null }, operationalNeeds: Array<{ __typename: 'OperationalNeed', id: UUID, modifiedDts?: Time | null }> } };
 
 export type GetCoordinationQueryVariables = Exact<{
   id: Scalars['UUID']['input'];
@@ -3106,7 +3247,7 @@ export type GetParticipantOptionsQueryVariables = Exact<{
 }>;
 
 
-export type GetParticipantOptionsQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, participantsAndProviders: { __typename: 'PlanParticipantsAndProviders', id: UUID, expectedNumberOfParticipants?: number | null, estimateConfidence?: ConfidenceType | null, confidenceNote?: string | null, recruitmentMethod?: RecruitmentType | null, recruitmentOther?: string | null, recruitmentNote?: string | null, selectionMethod: Array<ParticipantSelectionType>, selectionOther?: string | null, selectionNote?: string | null }, operationalNeeds: Array<{ __typename: 'OperationalNeed', modifiedDts?: Time | null }> } };
+export type GetParticipantOptionsQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, participantsAndProviders: { __typename: 'PlanParticipantsAndProviders', id: UUID, expectedNumberOfParticipants?: number | null, estimateConfidence?: ConfidenceType | null, confidenceNote?: string | null, recruitmentMethod?: RecruitmentType | null, recruitmentOther?: string | null, recruitmentNote?: string | null, selectionMethod: Array<ParticipantSelectionType>, selectionOther?: string | null, selectionNote?: string | null }, operationalNeeds: Array<{ __typename: 'OperationalNeed', id: UUID, modifiedDts?: Time | null }> } };
 
 export type GetParticipantsAndProvidersQueryVariables = Exact<{
   id: Scalars['UUID']['input'];
@@ -3135,7 +3276,7 @@ export type GetAllPaymentsQueryVariables = Exact<{
 }>;
 
 
-export type GetAllPaymentsQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, payments: { __typename: 'PlanPayments', fundingSource: Array<FundingSource>, fundingSourceMedicareAInfo?: string | null, fundingSourceMedicareBInfo?: string | null, fundingSourceOther?: string | null, fundingSourceNote?: string | null, fundingSourceR: Array<FundingSource>, fundingSourceRMedicareAInfo?: string | null, fundingSourceRMedicareBInfo?: string | null, fundingSourceROther?: string | null, fundingSourceRNote?: string | null, payRecipients: Array<PayRecipient>, payRecipientsOtherSpecification?: string | null, payRecipientsNote?: string | null, payType: Array<PayType>, payTypeNote?: string | null, payClaims: Array<ClaimsBasedPayType>, payClaimsOther?: string | null, payClaimsNote?: string | null, shouldAnyProvidersExcludedFFSSystems?: boolean | null, shouldAnyProviderExcludedFFSSystemsNote?: string | null, changesMedicarePhysicianFeeSchedule?: boolean | null, changesMedicarePhysicianFeeScheduleNote?: string | null, affectsMedicareSecondaryPayerClaims?: boolean | null, affectsMedicareSecondaryPayerClaimsHow?: string | null, affectsMedicareSecondaryPayerClaimsNote?: string | null, payModelDifferentiation?: string | null, creatingDependenciesBetweenServices?: boolean | null, creatingDependenciesBetweenServicesNote?: string | null, needsClaimsDataCollection?: boolean | null, needsClaimsDataCollectionNote?: string | null, providingThirdPartyFile?: boolean | null, isContractorAwareTestDataRequirements?: boolean | null, beneficiaryCostSharingLevelAndHandling?: string | null, waiveBeneficiaryCostSharingForAnyServices?: boolean | null, waiveBeneficiaryCostSharingServiceSpecification?: string | null, waiverOnlyAppliesPartOfPayment?: boolean | null, waiveBeneficiaryCostSharingNote?: string | null, nonClaimsPayments: Array<NonClaimsBasedPayType>, nonClaimsPaymentsNote?: string | null, nonClaimsPaymentOther?: string | null, paymentCalculationOwner?: string | null, numberPaymentsPerPayCycle?: string | null, numberPaymentsPerPayCycleNote?: string | null, sharedSystemsInvolvedAdditionalClaimPayment?: boolean | null, sharedSystemsInvolvedAdditionalClaimPaymentNote?: string | null, planningToUseInnovationPaymentContractor?: boolean | null, planningToUseInnovationPaymentContractorNote?: string | null, expectedCalculationComplexityLevel?: ComplexityCalculationLevelType | null, expectedCalculationComplexityLevelNote?: string | null, canParticipantsSelectBetweenPaymentMechanisms?: boolean | null, canParticipantsSelectBetweenPaymentMechanismsHow?: string | null, canParticipantsSelectBetweenPaymentMechanismsNote?: string | null, anticipatedPaymentFrequency: Array<FrequencyType>, anticipatedPaymentFrequencyContinually?: string | null, anticipatedPaymentFrequencyOther?: string | null, anticipatedPaymentFrequencyNote?: string | null, willRecoverPayments?: boolean | null, willRecoverPaymentsNote?: string | null, anticipateReconcilingPaymentsRetrospectively?: boolean | null, anticipateReconcilingPaymentsRetrospectivelyNote?: string | null, paymentReconciliationFrequency: Array<FrequencyType>, paymentReconciliationFrequencyContinually?: string | null, paymentReconciliationFrequencyOther?: string | null, paymentReconciliationFrequencyNote?: string | null, paymentStartDate?: Time | null, paymentStartDateNote?: string | null, status: TaskStatus } } };
+export type GetAllPaymentsQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, payments: { __typename: 'PlanPayments', fundingSource: Array<FundingSource>, fundingSourceMedicareAInfo?: string | null, fundingSourceMedicareBInfo?: string | null, fundingSourceOther?: string | null, fundingSourceNote?: string | null, fundingSourceR: Array<FundingSource>, fundingSourceRMedicareAInfo?: string | null, fundingSourceRMedicareBInfo?: string | null, fundingSourceROther?: string | null, fundingSourceRNote?: string | null, payRecipients: Array<PayRecipient>, payRecipientsOtherSpecification?: string | null, payRecipientsNote?: string | null, payType: Array<PayType>, payTypeNote?: string | null, payClaims: Array<ClaimsBasedPayType>, payClaimsOther?: string | null, payClaimsNote?: string | null, shouldAnyProvidersExcludedFFSSystems?: boolean | null, shouldAnyProviderExcludedFFSSystemsNote?: string | null, changesMedicarePhysicianFeeSchedule?: boolean | null, changesMedicarePhysicianFeeScheduleNote?: string | null, affectsMedicareSecondaryPayerClaims?: boolean | null, affectsMedicareSecondaryPayerClaimsHow?: string | null, affectsMedicareSecondaryPayerClaimsNote?: string | null, payModelDifferentiation?: string | null, creatingDependenciesBetweenServices?: boolean | null, creatingDependenciesBetweenServicesNote?: string | null, needsClaimsDataCollection?: boolean | null, needsClaimsDataCollectionNote?: string | null, providingThirdPartyFile?: boolean | null, isContractorAwareTestDataRequirements?: boolean | null, beneficiaryCostSharingLevelAndHandling?: string | null, waiveBeneficiaryCostSharingForAnyServices?: boolean | null, waiveBeneficiaryCostSharingServiceSpecification?: string | null, waiverOnlyAppliesPartOfPayment?: boolean | null, waiveBeneficiaryCostSharingNote?: string | null, nonClaimsPayments: Array<NonClaimsBasedPayType>, nonClaimsPaymentsNote?: string | null, nonClaimsPaymentOther?: string | null, paymentCalculationOwner?: string | null, numberPaymentsPerPayCycle?: string | null, numberPaymentsPerPayCycleNote?: string | null, sharedSystemsInvolvedAdditionalClaimPayment?: boolean | null, sharedSystemsInvolvedAdditionalClaimPaymentNote?: string | null, planningToUseInnovationPaymentContractor?: boolean | null, planningToUseInnovationPaymentContractorNote?: string | null, expectedCalculationComplexityLevel?: ComplexityCalculationLevelType | null, expectedCalculationComplexityLevelNote?: string | null, claimsProcessingPrecedence?: boolean | null, claimsProcessingPrecedenceOther?: string | null, claimsProcessingPrecedenceNote?: string | null, canParticipantsSelectBetweenPaymentMechanisms?: boolean | null, canParticipantsSelectBetweenPaymentMechanismsHow?: string | null, canParticipantsSelectBetweenPaymentMechanismsNote?: string | null, anticipatedPaymentFrequency: Array<FrequencyType>, anticipatedPaymentFrequencyContinually?: string | null, anticipatedPaymentFrequencyOther?: string | null, anticipatedPaymentFrequencyNote?: string | null, willRecoverPayments?: boolean | null, willRecoverPaymentsNote?: string | null, anticipateReconcilingPaymentsRetrospectively?: boolean | null, anticipateReconcilingPaymentsRetrospectivelyNote?: string | null, paymentReconciliationFrequency: Array<FrequencyType>, paymentReconciliationFrequencyContinually?: string | null, paymentReconciliationFrequencyOther?: string | null, paymentReconciliationFrequencyNote?: string | null, paymentDemandRecoupmentFrequency: Array<FrequencyType>, paymentDemandRecoupmentFrequencyContinually?: string | null, paymentDemandRecoupmentFrequencyOther?: string | null, paymentDemandRecoupmentFrequencyNote?: string | null, paymentStartDate?: Time | null, paymentStartDateNote?: string | null, status: TaskStatus } } };
 
 export type GetAnticipateDependenciesQueryVariables = Exact<{
   id: Scalars['UUID']['input'];
@@ -3156,35 +3297,35 @@ export type GetClaimsBasedPaymentQueryVariables = Exact<{
 }>;
 
 
-export type GetClaimsBasedPaymentQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, payments: { __typename: 'PlanPayments', id: UUID, payType: Array<PayType>, payClaims: Array<ClaimsBasedPayType>, payClaimsNote?: string | null, payClaimsOther?: string | null, shouldAnyProvidersExcludedFFSSystems?: boolean | null, shouldAnyProviderExcludedFFSSystemsNote?: string | null, changesMedicarePhysicianFeeSchedule?: boolean | null, changesMedicarePhysicianFeeScheduleNote?: string | null, affectsMedicareSecondaryPayerClaims?: boolean | null, affectsMedicareSecondaryPayerClaimsHow?: string | null, affectsMedicareSecondaryPayerClaimsNote?: string | null, payModelDifferentiation?: string | null }, operationalNeeds: Array<{ __typename: 'OperationalNeed', modifiedDts?: Time | null }> } };
+export type GetClaimsBasedPaymentQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, payments: { __typename: 'PlanPayments', id: UUID, payType: Array<PayType>, payClaims: Array<ClaimsBasedPayType>, payClaimsNote?: string | null, payClaimsOther?: string | null, shouldAnyProvidersExcludedFFSSystems?: boolean | null, shouldAnyProviderExcludedFFSSystemsNote?: string | null, changesMedicarePhysicianFeeSchedule?: boolean | null, changesMedicarePhysicianFeeScheduleNote?: string | null, affectsMedicareSecondaryPayerClaims?: boolean | null, affectsMedicareSecondaryPayerClaimsHow?: string | null, affectsMedicareSecondaryPayerClaimsNote?: string | null, payModelDifferentiation?: string | null }, operationalNeeds: Array<{ __typename: 'OperationalNeed', id: UUID, modifiedDts?: Time | null }> } };
 
 export type GetComplexityQueryVariables = Exact<{
   id: Scalars['UUID']['input'];
 }>;
 
 
-export type GetComplexityQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, payments: { __typename: 'PlanPayments', id: UUID, payType: Array<PayType>, payClaims: Array<ClaimsBasedPayType>, expectedCalculationComplexityLevel?: ComplexityCalculationLevelType | null, expectedCalculationComplexityLevelNote?: string | null, canParticipantsSelectBetweenPaymentMechanisms?: boolean | null, canParticipantsSelectBetweenPaymentMechanismsHow?: string | null, canParticipantsSelectBetweenPaymentMechanismsNote?: string | null, anticipatedPaymentFrequency: Array<FrequencyType>, anticipatedPaymentFrequencyContinually?: string | null, anticipatedPaymentFrequencyOther?: string | null, anticipatedPaymentFrequencyNote?: string | null } } };
+export type GetComplexityQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, payments: { __typename: 'PlanPayments', id: UUID, payType: Array<PayType>, payClaims: Array<ClaimsBasedPayType>, expectedCalculationComplexityLevel?: ComplexityCalculationLevelType | null, expectedCalculationComplexityLevelNote?: string | null, claimsProcessingPrecedence?: boolean | null, claimsProcessingPrecedenceOther?: string | null, claimsProcessingPrecedenceNote?: string | null, canParticipantsSelectBetweenPaymentMechanisms?: boolean | null, canParticipantsSelectBetweenPaymentMechanismsHow?: string | null, canParticipantsSelectBetweenPaymentMechanismsNote?: string | null, anticipatedPaymentFrequency: Array<FrequencyType>, anticipatedPaymentFrequencyContinually?: string | null, anticipatedPaymentFrequencyOther?: string | null, anticipatedPaymentFrequencyNote?: string | null } } };
 
 export type GetFundingQueryVariables = Exact<{
   id: Scalars['UUID']['input'];
 }>;
 
 
-export type GetFundingQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, payments: { __typename: 'PlanPayments', id: UUID, fundingSource: Array<FundingSource>, fundingSourceMedicareAInfo?: string | null, fundingSourceMedicareBInfo?: string | null, fundingSourceOther?: string | null, fundingSourceNote?: string | null, fundingSourceR: Array<FundingSource>, fundingSourceRMedicareAInfo?: string | null, fundingSourceRMedicareBInfo?: string | null, fundingSourceROther?: string | null, fundingSourceRNote?: string | null, payRecipients: Array<PayRecipient>, payRecipientsOtherSpecification?: string | null, payRecipientsNote?: string | null, payType: Array<PayType>, payTypeNote?: string | null, payClaims: Array<ClaimsBasedPayType> }, operationalNeeds: Array<{ __typename: 'OperationalNeed', modifiedDts?: Time | null }> } };
+export type GetFundingQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, payments: { __typename: 'PlanPayments', id: UUID, fundingSource: Array<FundingSource>, fundingSourceMedicareAInfo?: string | null, fundingSourceMedicareBInfo?: string | null, fundingSourceOther?: string | null, fundingSourceNote?: string | null, fundingSourceR: Array<FundingSource>, fundingSourceRMedicareAInfo?: string | null, fundingSourceRMedicareBInfo?: string | null, fundingSourceROther?: string | null, fundingSourceRNote?: string | null, payRecipients: Array<PayRecipient>, payRecipientsOtherSpecification?: string | null, payRecipientsNote?: string | null, payType: Array<PayType>, payTypeNote?: string | null, payClaims: Array<ClaimsBasedPayType> }, operationalNeeds: Array<{ __typename: 'OperationalNeed', id: UUID, modifiedDts?: Time | null }> } };
 
 export type GetNonClaimsBasedPaymentQueryVariables = Exact<{
   id: Scalars['UUID']['input'];
 }>;
 
 
-export type GetNonClaimsBasedPaymentQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, payments: { __typename: 'PlanPayments', id: UUID, payType: Array<PayType>, payClaims: Array<ClaimsBasedPayType>, nonClaimsPayments: Array<NonClaimsBasedPayType>, nonClaimsPaymentsNote?: string | null, nonClaimsPaymentOther?: string | null, paymentCalculationOwner?: string | null, numberPaymentsPerPayCycle?: string | null, numberPaymentsPerPayCycleNote?: string | null, sharedSystemsInvolvedAdditionalClaimPayment?: boolean | null, sharedSystemsInvolvedAdditionalClaimPaymentNote?: string | null, planningToUseInnovationPaymentContractor?: boolean | null, planningToUseInnovationPaymentContractorNote?: string | null }, operationalNeeds: Array<{ __typename: 'OperationalNeed', modifiedDts?: Time | null }> } };
+export type GetNonClaimsBasedPaymentQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, payments: { __typename: 'PlanPayments', id: UUID, payType: Array<PayType>, payClaims: Array<ClaimsBasedPayType>, nonClaimsPayments: Array<NonClaimsBasedPayType>, nonClaimsPaymentsNote?: string | null, nonClaimsPaymentOther?: string | null, paymentCalculationOwner?: string | null, numberPaymentsPerPayCycle?: string | null, numberPaymentsPerPayCycleNote?: string | null, sharedSystemsInvolvedAdditionalClaimPayment?: boolean | null, sharedSystemsInvolvedAdditionalClaimPaymentNote?: string | null, planningToUseInnovationPaymentContractor?: boolean | null, planningToUseInnovationPaymentContractorNote?: string | null }, operationalNeeds: Array<{ __typename: 'OperationalNeed', id: UUID, modifiedDts?: Time | null }> } };
 
 export type GetRecoverQueryVariables = Exact<{
   id: Scalars['UUID']['input'];
 }>;
 
 
-export type GetRecoverQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, payments: { __typename: 'PlanPayments', id: UUID, payType: Array<PayType>, payClaims: Array<ClaimsBasedPayType>, willRecoverPayments?: boolean | null, willRecoverPaymentsNote?: string | null, anticipateReconcilingPaymentsRetrospectively?: boolean | null, anticipateReconcilingPaymentsRetrospectivelyNote?: string | null, paymentReconciliationFrequency: Array<FrequencyType>, paymentReconciliationFrequencyContinually?: string | null, paymentReconciliationFrequencyOther?: string | null, paymentReconciliationFrequencyNote?: string | null, paymentStartDate?: Time | null, paymentStartDateNote?: string | null, readyForReviewDts?: Time | null, status: TaskStatus, readyForReviewByUserAccount?: { __typename: 'UserAccount', id: UUID, commonName: string } | null }, operationalNeeds: Array<{ __typename: 'OperationalNeed', id: UUID, modifiedDts?: Time | null }> } };
+export type GetRecoverQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, payments: { __typename: 'PlanPayments', id: UUID, payType: Array<PayType>, payClaims: Array<ClaimsBasedPayType>, willRecoverPayments?: boolean | null, willRecoverPaymentsNote?: string | null, anticipateReconcilingPaymentsRetrospectively?: boolean | null, anticipateReconcilingPaymentsRetrospectivelyNote?: string | null, paymentReconciliationFrequency: Array<FrequencyType>, paymentReconciliationFrequencyContinually?: string | null, paymentReconciliationFrequencyOther?: string | null, paymentReconciliationFrequencyNote?: string | null, paymentDemandRecoupmentFrequency: Array<FrequencyType>, paymentDemandRecoupmentFrequencyContinually?: string | null, paymentDemandRecoupmentFrequencyOther?: string | null, paymentDemandRecoupmentFrequencyNote?: string | null, paymentStartDate?: Time | null, paymentStartDateNote?: string | null, readyForReviewDts?: Time | null, status: TaskStatus, readyForReviewByUserAccount?: { __typename: 'UserAccount', id: UUID, commonName: string } | null }, operationalNeeds: Array<{ __typename: 'OperationalNeed', id: UUID, modifiedDts?: Time | null }> } };
 
 export type UpdatePaymentsMutationVariables = Exact<{
   id: Scalars['UUID']['input'];
@@ -4428,27 +4569,35 @@ export const GetAllGeneralCharacteristicsDocument = gql`
     query GetAllGeneralCharacteristics($id: UUID!) {
   modelPlan(id: $id) {
     id
-    existingModelLinks {
-      id
-      existingModel {
-        id
-        modelName
-      }
-      currentModelPlan {
-        id
-        modelName
-      }
-    }
     generalCharacteristics {
       id
       isNewModel
       existingModel
       resemblesExistingModel
+      resemblesExistingModelWhyHow
       resemblesExistingModelHow
       resemblesExistingModelNote
+      resemblesExistingModelWhich {
+        names
+      }
+      resemblesExistingModelOtherSpecify
+      resemblesExistingModelOtherSelected
+      resemblesExistingModelOtherOption
+      participationInModelPrecondition
+      participationInModelPreconditionWhich {
+        names
+      }
+      participationInModelPreconditionOtherSpecify
+      participationInModelPreconditionOtherSelected
+      participationInModelPreconditionOtherOption
+      participationInModelPreconditionWhyHow
+      participationInModelPreconditionNote
       hasComponentsOrTracks
       hasComponentsOrTracksDiffer
       hasComponentsOrTracksNote
+      agencyOrStateHelp
+      agencyOrStateHelpOther
+      agencyOrStateHelpNote
       alternativePaymentModelTypes
       alternativePaymentModelNote
       keyCharacteristics
@@ -4471,6 +4620,8 @@ export const GetAllGeneralCharacteristicsDocument = gql`
       communityPartnersInvolvedNote
       geographiesTargeted
       geographiesTargetedTypes
+      geographiesStatesAndTerritories
+      geographiesRegionTypes
       geographiesTargetedTypesOther
       geographiesTargetedAppliedTo
       geographiesTargetedAppliedToOther
@@ -4592,19 +4743,38 @@ export const GetGeneralCharacteristicsDocument = gql`
   modelPlan(id: $id) {
     id
     modelName
-    existingModelLinks {
-      id
-      existingModelID
-      currentModelPlanID
-    }
     generalCharacteristics {
       id
       isNewModel
       currentModelPlanID
       existingModelID
       resemblesExistingModel
+      resemblesExistingModelWhyHow
       resemblesExistingModelHow
       resemblesExistingModelNote
+      resemblesExistingModelWhich {
+        links {
+          id
+          existingModelID
+          currentModelPlanID
+        }
+      }
+      resemblesExistingModelOtherSpecify
+      resemblesExistingModelOtherSelected
+      resemblesExistingModelOtherOption
+      participationInModelPrecondition
+      participationInModelPreconditionWhich {
+        links {
+          id
+          existingModelID
+          currentModelPlanID
+        }
+      }
+      participationInModelPreconditionOtherSpecify
+      participationInModelPreconditionOtherSelected
+      participationInModelPreconditionOtherOption
+      participationInModelPreconditionWhyHow
+      participationInModelPreconditionNote
       hasComponentsOrTracks
       hasComponentsOrTracksDiffer
       hasComponentsOrTracksNote
@@ -4705,6 +4875,9 @@ export const GetKeyCharacteristicsDocument = gql`
     modelName
     generalCharacteristics {
       id
+      agencyOrStateHelp
+      agencyOrStateHelpOther
+      agencyOrStateHelpNote
       alternativePaymentModelTypes
       alternativePaymentModelNote
       keyCharacteristics
@@ -4718,6 +4891,7 @@ export const GetKeyCharacteristicsDocument = gql`
       planContractUpdatedNote
     }
     operationalNeeds {
+      id
       modifiedDts
     }
   }
@@ -4765,6 +4939,8 @@ export const GetTargetsAndOptionsDocument = gql`
       id
       geographiesTargeted
       geographiesTargetedTypes
+      geographiesStatesAndTerritories
+      geographiesRegionTypes
       geographiesTargetedTypesOther
       geographiesTargetedAppliedTo
       geographiesTargetedAppliedToOther
@@ -4817,17 +4993,28 @@ export type GetTargetsAndOptionsLazyQueryHookResult = ReturnType<typeof useGetTa
 export type GetTargetsAndOptionsSuspenseQueryHookResult = ReturnType<typeof useGetTargetsAndOptionsSuspenseQuery>;
 export type GetTargetsAndOptionsQueryResult = Apollo.QueryResult<GetTargetsAndOptionsQuery, GetTargetsAndOptionsQueryVariables>;
 export const UpdateExistingModelLinksDocument = gql`
-    mutation UpdateExistingModelLinks($modelPlanID: UUID!, $existingModelIDs: [Int!], $currentModelPlanIDs: [UUID!]) {
+    mutation UpdateExistingModelLinks($modelPlanID: UUID!, $fieldName: ExisitingModelLinkFieldType!, $existingModelIDs: [Int!], $currentModelPlanIDs: [UUID!]) {
   updateExistingModelLinks(
     modelPlanID: $modelPlanID
+    fieldName: $fieldName
     existingModelIDs: $existingModelIDs
     currentModelPlanIDs: $currentModelPlanIDs
   ) {
-    id
-    existingModelID
-    existingModel {
+    links {
       id
-      modelName
+      existingModelID
+      model {
+        ... on ExistingModel {
+          modelName
+          stage
+          numberOfParticipants
+          keywords
+        }
+        ... on ModelPlan {
+          modelName
+          abbreviation
+        }
+      }
     }
   }
 }
@@ -4848,6 +5035,7 @@ export type UpdateExistingModelLinksMutationFn = Apollo.MutationFunction<UpdateE
  * const [updateExistingModelLinksMutation, { data, loading, error }] = useUpdateExistingModelLinksMutation({
  *   variables: {
  *      modelPlanID: // value for 'modelPlanID'
+ *      fieldName: // value for 'fieldName'
  *      existingModelIDs: // value for 'existingModelIDs'
  *      currentModelPlanIDs: // value for 'currentModelPlanIDs'
  *   },
@@ -5015,6 +5203,280 @@ export type GetNdaQueryHookResult = ReturnType<typeof useGetNdaQuery>;
 export type GetNdaLazyQueryHookResult = ReturnType<typeof useGetNdaLazyQuery>;
 export type GetNdaSuspenseQueryHookResult = ReturnType<typeof useGetNdaSuspenseQuery>;
 export type GetNdaQueryResult = Apollo.QueryResult<GetNdaQuery, GetNdaQueryVariables>;
+export const GetNotificationSettingsDocument = gql`
+    query GetNotificationSettings {
+  currentUser {
+    notificationPreferences {
+      id
+      dailyDigestComplete
+      addedAsCollaborator
+      taggedInDiscussion
+      taggedInDiscussionReply
+      newDiscussionReply
+      modelPlanShared
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetNotificationSettingsQuery__
+ *
+ * To run a query within a React component, call `useGetNotificationSettingsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetNotificationSettingsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetNotificationSettingsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetNotificationSettingsQuery(baseOptions?: Apollo.QueryHookOptions<GetNotificationSettingsQuery, GetNotificationSettingsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetNotificationSettingsQuery, GetNotificationSettingsQueryVariables>(GetNotificationSettingsDocument, options);
+      }
+export function useGetNotificationSettingsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetNotificationSettingsQuery, GetNotificationSettingsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetNotificationSettingsQuery, GetNotificationSettingsQueryVariables>(GetNotificationSettingsDocument, options);
+        }
+export function useGetNotificationSettingsSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetNotificationSettingsQuery, GetNotificationSettingsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetNotificationSettingsQuery, GetNotificationSettingsQueryVariables>(GetNotificationSettingsDocument, options);
+        }
+export type GetNotificationSettingsQueryHookResult = ReturnType<typeof useGetNotificationSettingsQuery>;
+export type GetNotificationSettingsLazyQueryHookResult = ReturnType<typeof useGetNotificationSettingsLazyQuery>;
+export type GetNotificationSettingsSuspenseQueryHookResult = ReturnType<typeof useGetNotificationSettingsSuspenseQuery>;
+export type GetNotificationSettingsQueryResult = Apollo.QueryResult<GetNotificationSettingsQuery, GetNotificationSettingsQueryVariables>;
+export const GetNotificationsDocument = gql`
+    query GetNotifications {
+  currentUser {
+    notifications {
+      numUnreadNotifications
+      notifications {
+        __typename
+        id
+        isRead
+        inAppSent
+        emailSent
+        createdDts
+        activity {
+          activityType
+          entityID
+          actorID
+          actorUserAccount {
+            commonName
+          }
+          metaData {
+            __typename
+            ... on TaggedInPlanDiscussionActivityMeta {
+              version
+              type
+              modelPlanID
+              modelPlan {
+                modelName
+              }
+              discussionID
+              content
+            }
+            ... on TaggedInDiscussionReplyActivityMeta {
+              version
+              type
+              modelPlanID
+              modelPlan {
+                modelName
+              }
+              discussionID
+              replyID
+              content
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetNotificationsQuery__
+ *
+ * To run a query within a React component, call `useGetNotificationsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetNotificationsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetNotificationsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetNotificationsQuery(baseOptions?: Apollo.QueryHookOptions<GetNotificationsQuery, GetNotificationsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetNotificationsQuery, GetNotificationsQueryVariables>(GetNotificationsDocument, options);
+      }
+export function useGetNotificationsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetNotificationsQuery, GetNotificationsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetNotificationsQuery, GetNotificationsQueryVariables>(GetNotificationsDocument, options);
+        }
+export function useGetNotificationsSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetNotificationsQuery, GetNotificationsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetNotificationsQuery, GetNotificationsQueryVariables>(GetNotificationsDocument, options);
+        }
+export type GetNotificationsQueryHookResult = ReturnType<typeof useGetNotificationsQuery>;
+export type GetNotificationsLazyQueryHookResult = ReturnType<typeof useGetNotificationsLazyQuery>;
+export type GetNotificationsSuspenseQueryHookResult = ReturnType<typeof useGetNotificationsSuspenseQuery>;
+export type GetNotificationsQueryResult = Apollo.QueryResult<GetNotificationsQuery, GetNotificationsQueryVariables>;
+export const GetPollNotificationsDocument = gql`
+    query GetPollNotifications {
+  currentUser {
+    notifications {
+      numUnreadNotifications
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetPollNotificationsQuery__
+ *
+ * To run a query within a React component, call `useGetPollNotificationsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetPollNotificationsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetPollNotificationsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetPollNotificationsQuery(baseOptions?: Apollo.QueryHookOptions<GetPollNotificationsQuery, GetPollNotificationsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetPollNotificationsQuery, GetPollNotificationsQueryVariables>(GetPollNotificationsDocument, options);
+      }
+export function useGetPollNotificationsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetPollNotificationsQuery, GetPollNotificationsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetPollNotificationsQuery, GetPollNotificationsQueryVariables>(GetPollNotificationsDocument, options);
+        }
+export function useGetPollNotificationsSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetPollNotificationsQuery, GetPollNotificationsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetPollNotificationsQuery, GetPollNotificationsQueryVariables>(GetPollNotificationsDocument, options);
+        }
+export type GetPollNotificationsQueryHookResult = ReturnType<typeof useGetPollNotificationsQuery>;
+export type GetPollNotificationsLazyQueryHookResult = ReturnType<typeof useGetPollNotificationsLazyQuery>;
+export type GetPollNotificationsSuspenseQueryHookResult = ReturnType<typeof useGetPollNotificationsSuspenseQuery>;
+export type GetPollNotificationsQueryResult = Apollo.QueryResult<GetPollNotificationsQuery, GetPollNotificationsQueryVariables>;
+export const UpdateAllNotificationsAsReadDocument = gql`
+    mutation UpdateAllNotificationsAsRead {
+  markAllNotificationsAsRead {
+    id
+  }
+}
+    `;
+export type UpdateAllNotificationsAsReadMutationFn = Apollo.MutationFunction<UpdateAllNotificationsAsReadMutation, UpdateAllNotificationsAsReadMutationVariables>;
+
+/**
+ * __useUpdateAllNotificationsAsReadMutation__
+ *
+ * To run a mutation, you first call `useUpdateAllNotificationsAsReadMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateAllNotificationsAsReadMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateAllNotificationsAsReadMutation, { data, loading, error }] = useUpdateAllNotificationsAsReadMutation({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useUpdateAllNotificationsAsReadMutation(baseOptions?: Apollo.MutationHookOptions<UpdateAllNotificationsAsReadMutation, UpdateAllNotificationsAsReadMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateAllNotificationsAsReadMutation, UpdateAllNotificationsAsReadMutationVariables>(UpdateAllNotificationsAsReadDocument, options);
+      }
+export type UpdateAllNotificationsAsReadMutationHookResult = ReturnType<typeof useUpdateAllNotificationsAsReadMutation>;
+export type UpdateAllNotificationsAsReadMutationResult = Apollo.MutationResult<UpdateAllNotificationsAsReadMutation>;
+export type UpdateAllNotificationsAsReadMutationOptions = Apollo.BaseMutationOptions<UpdateAllNotificationsAsReadMutation, UpdateAllNotificationsAsReadMutationVariables>;
+export const UpdateNotificationSettingsDocument = gql`
+    mutation UpdateNotificationSettings($changes: UserNotificationPreferencesChanges!) {
+  updateUserNotificationPreferences(changes: $changes) {
+    id
+    dailyDigestComplete
+    addedAsCollaborator
+    taggedInDiscussion
+    taggedInDiscussionReply
+    newDiscussionReply
+    modelPlanShared
+  }
+}
+    `;
+export type UpdateNotificationSettingsMutationFn = Apollo.MutationFunction<UpdateNotificationSettingsMutation, UpdateNotificationSettingsMutationVariables>;
+
+/**
+ * __useUpdateNotificationSettingsMutation__
+ *
+ * To run a mutation, you first call `useUpdateNotificationSettingsMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateNotificationSettingsMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateNotificationSettingsMutation, { data, loading, error }] = useUpdateNotificationSettingsMutation({
+ *   variables: {
+ *      changes: // value for 'changes'
+ *   },
+ * });
+ */
+export function useUpdateNotificationSettingsMutation(baseOptions?: Apollo.MutationHookOptions<UpdateNotificationSettingsMutation, UpdateNotificationSettingsMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateNotificationSettingsMutation, UpdateNotificationSettingsMutationVariables>(UpdateNotificationSettingsDocument, options);
+      }
+export type UpdateNotificationSettingsMutationHookResult = ReturnType<typeof useUpdateNotificationSettingsMutation>;
+export type UpdateNotificationSettingsMutationResult = Apollo.MutationResult<UpdateNotificationSettingsMutation>;
+export type UpdateNotificationSettingsMutationOptions = Apollo.BaseMutationOptions<UpdateNotificationSettingsMutation, UpdateNotificationSettingsMutationVariables>;
+export const MarkNotificationAsReadDocument = gql`
+    mutation MarkNotificationAsRead($notificationID: UUID!) {
+  markNotificationAsRead(notificationID: $notificationID) {
+    id
+    isRead
+  }
+}
+    `;
+export type MarkNotificationAsReadMutationFn = Apollo.MutationFunction<MarkNotificationAsReadMutation, MarkNotificationAsReadMutationVariables>;
+
+/**
+ * __useMarkNotificationAsReadMutation__
+ *
+ * To run a mutation, you first call `useMarkNotificationAsReadMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useMarkNotificationAsReadMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [markNotificationAsReadMutation, { data, loading, error }] = useMarkNotificationAsReadMutation({
+ *   variables: {
+ *      notificationID: // value for 'notificationID'
+ *   },
+ * });
+ */
+export function useMarkNotificationAsReadMutation(baseOptions?: Apollo.MutationHookOptions<MarkNotificationAsReadMutation, MarkNotificationAsReadMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<MarkNotificationAsReadMutation, MarkNotificationAsReadMutationVariables>(MarkNotificationAsReadDocument, options);
+      }
+export type MarkNotificationAsReadMutationHookResult = ReturnType<typeof useMarkNotificationAsReadMutation>;
+export type MarkNotificationAsReadMutationResult = Apollo.MutationResult<MarkNotificationAsReadMutation>;
+export type MarkNotificationAsReadMutationOptions = Apollo.BaseMutationOptions<MarkNotificationAsReadMutation, MarkNotificationAsReadMutationVariables>;
 export const GetAllOpsEvalAndLearningDocument = gql`
     query GetAllOpsEvalAndLearning($id: UUID!) {
   modelPlan(id: $id) {
@@ -5022,9 +5484,6 @@ export const GetAllOpsEvalAndLearningDocument = gql`
     opsEvalAndLearning {
       id
       modelPlanID
-      agencyOrStateHelp
-      agencyOrStateHelpOther
-      agencyOrStateHelpNote
       stakeholders
       stakeholdersOther
       stakeholdersNote
@@ -5313,6 +5772,7 @@ export const GetEvaluationDocument = gql`
       shareCclfDataNote
     }
     operationalNeeds {
+      id
       modifiedDts
     }
   }
@@ -5585,9 +6045,6 @@ export const GetOpsEvalAndLearningDocument = gql`
       id
       ccmInvolvment
       dataNeededForMonitoring
-      agencyOrStateHelp
-      agencyOrStateHelpOther
-      agencyOrStateHelpNote
       stakeholders
       stakeholdersOther
       stakeholdersNote
@@ -5601,6 +6058,7 @@ export const GetOpsEvalAndLearningDocument = gql`
       iddocSupportNote
     }
     operationalNeeds {
+      id
       modifiedDts
     }
   }
@@ -5665,6 +6123,7 @@ export const GetPerformanceDocument = gql`
       appealNote
     }
     operationalNeeds {
+      id
       modifiedDts
     }
   }
@@ -5866,6 +6325,7 @@ export const GetCommunicationDocument = gql`
       willRiskChangeNote
     }
     operationalNeeds {
+      id
       modifiedDts
     }
   }
@@ -5980,6 +6440,7 @@ export const GetParticipantOptionsDocument = gql`
       selectionNote
     }
     operationalNeeds {
+      id
       modifiedDts
     }
   }
@@ -6229,6 +6690,9 @@ export const GetAllPaymentsDocument = gql`
       planningToUseInnovationPaymentContractorNote
       expectedCalculationComplexityLevel
       expectedCalculationComplexityLevelNote
+      claimsProcessingPrecedence
+      claimsProcessingPrecedenceOther
+      claimsProcessingPrecedenceNote
       canParticipantsSelectBetweenPaymentMechanisms
       canParticipantsSelectBetweenPaymentMechanismsHow
       canParticipantsSelectBetweenPaymentMechanismsNote
@@ -6244,6 +6708,10 @@ export const GetAllPaymentsDocument = gql`
       paymentReconciliationFrequencyContinually
       paymentReconciliationFrequencyOther
       paymentReconciliationFrequencyNote
+      paymentDemandRecoupmentFrequency
+      paymentDemandRecoupmentFrequencyContinually
+      paymentDemandRecoupmentFrequencyOther
+      paymentDemandRecoupmentFrequencyNote
       paymentStartDate
       paymentStartDateNote
       status
@@ -6408,6 +6876,7 @@ export const GetClaimsBasedPaymentDocument = gql`
       payModelDifferentiation
     }
     operationalNeeds {
+      id
       modifiedDts
     }
   }
@@ -6457,6 +6926,9 @@ export const GetComplexityDocument = gql`
       payClaims
       expectedCalculationComplexityLevel
       expectedCalculationComplexityLevelNote
+      claimsProcessingPrecedence
+      claimsProcessingPrecedenceOther
+      claimsProcessingPrecedenceNote
       canParticipantsSelectBetweenPaymentMechanisms
       canParticipantsSelectBetweenPaymentMechanismsHow
       canParticipantsSelectBetweenPaymentMechanismsNote
@@ -6526,6 +6998,7 @@ export const GetFundingDocument = gql`
       payClaims
     }
     operationalNeeds {
+      id
       modifiedDts
     }
   }
@@ -6585,6 +7058,7 @@ export const GetNonClaimsBasedPaymentDocument = gql`
       planningToUseInnovationPaymentContractorNote
     }
     operationalNeeds {
+      id
       modifiedDts
     }
   }
@@ -6640,6 +7114,10 @@ export const GetRecoverDocument = gql`
       paymentReconciliationFrequencyContinually
       paymentReconciliationFrequencyOther
       paymentReconciliationFrequencyNote
+      paymentDemandRecoupmentFrequency
+      paymentDemandRecoupmentFrequencyContinually
+      paymentDemandRecoupmentFrequencyOther
+      paymentDemandRecoupmentFrequencyNote
       paymentStartDate
       paymentStartDateNote
       readyForReviewByUserAccount {

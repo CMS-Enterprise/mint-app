@@ -1,7 +1,8 @@
 import React from 'react';
 import selectEvent from 'react-select-event';
 import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+
+import setup from 'utils/testing/setup';
 
 import MultiSelect from './index';
 
@@ -41,7 +42,7 @@ describe('MultiSelect', () => {
   });
 
   it('updates input values when changing options and their associated tags', async () => {
-    const { getByLabelText, getByTestId, queryByTestId } = render(
+    const { user, getByLabelText, getByTestId, queryByTestId } = setup(
       <form data-testid="form">
         <label htmlFor="colors" id="label-colors">
           Colors
@@ -71,7 +72,7 @@ describe('MultiSelect', () => {
     expect(getByTestId('multiselect-tag--Green')).toBeInTheDocument();
 
     // Remove red via tag
-    userEvent.click(getByLabelText('Remove Red'));
+    await user.click(getByLabelText('Remove Red'));
     expect(getByTestId('form')).toHaveFormValues({ colors: 'green' });
     expect(getByTestId('multiselect-tag--Green')).toBeInTheDocument();
     expect(queryByTestId('multiselect-tag--Red')).not.toBeInTheDocument();

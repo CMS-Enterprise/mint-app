@@ -28,6 +28,7 @@ export interface GetNonClaimsBasedPayment_modelPlan_payments {
 
 export interface GetNonClaimsBasedPayment_modelPlan_operationalNeeds {
   __typename: "OperationalNeed";
+  id: UUID;
   modifiedDts: Time | null;
 }
 

@@ -8,7 +8,7 @@ describe('Model Plan CRsand TDLs', () => {
 
     cy.contains('a', 'Add a CR or TDL').click();
 
-    cy.contains('h1', 'CR and TDLs');
+    cy.contains('h1', 'FFS CRs and TDLs');
 
     cy.get('#cr-tdl-id-number').type('My CR').should('have.value', 'My CR');
 

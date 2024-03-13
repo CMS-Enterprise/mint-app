@@ -99,7 +99,7 @@ exports[`Model Plan ParticipantsOptions > matches snapshot 1`] = `
     >
       <div
         class="usa-form-group"
-        data-scroll="expectedNumberOfParticipants"
+        data-scroll="participants-and-providers-expected-participants"
       >
         <label
           class="usa-label"
@@ -264,7 +264,7 @@ exports[`Model Plan ParticipantsOptions > matches snapshot 1`] = `
       </div>
       <div
         class="usa-form-group"
-        data-scroll="recruitmentMethod"
+        data-scroll="participants-and-providers-recruitment-method"
       >
         <label
           class="usa-label"
@@ -401,7 +401,7 @@ exports[`Model Plan ParticipantsOptions > matches snapshot 1`] = `
       </div>
       <div
         class="usa-form-group margin-top-4"
-        data-scroll="selectionMethod"
+        data-scroll="participants-and-providers-selection-method"
       >
         <label
           class="usa-label"
@@ -425,24 +425,26 @@ exports[`Model Plan ParticipantsOptions > matches snapshot 1`] = `
               aria-live="polite"
               aria-relevant="additions text"
               class="css-1f43avz-a11yText-A11yText"
+              role="log"
             />
             <div
-              class=" css-jvusj8-control"
+              class=" css-1vl89cy-control"
             >
               <div
-                class=" css-319lph-ValueContainer"
+                class=" css-1fdsijx-ValueContainer"
               >
                 <div
-                  class=" css-14el2xx-placeholder"
+                  class=" css-1jqq78o-placeholder"
                   id="react-select-3-placeholder"
                 >
                   0 selected
                 </div>
                 <div
-                  class=" css-6j8wv5-Input"
+                  class=" css-qbdosj-Input"
                   data-value=""
                 >
                   <input
+                    aria-activedescendant=""
                     aria-autocomplete="list"
                     aria-describedby="react-select-3-placeholder"
                     aria-expanded="false"
@@ -465,11 +467,11 @@ exports[`Model Plan ParticipantsOptions > matches snapshot 1`] = `
                 class=" css-1hb7zxy-IndicatorsContainer"
               >
                 <span
-                  class=" css-1vtyy7d-indicatorSeparator"
+                  class=" css-16b81-indicatorSeparator"
                 />
                 <div
                   aria-hidden="true"
-                  class=" css-1232v1p-indicatorContainer"
+                  class=" css-gjng1h-indicatorContainer"
                 >
                   <svg
                     aria-hidden="true"
@@ -490,6 +492,7 @@ exports[`Model Plan ParticipantsOptions > matches snapshot 1`] = `
               <input
                 name="selectionMethod"
                 type="hidden"
+                value=""
               />
             </div>
           </div>

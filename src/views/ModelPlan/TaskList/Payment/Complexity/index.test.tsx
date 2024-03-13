@@ -22,10 +22,14 @@ const mockData: GetComplexityType = {
   payClaims: [ClaimsBasedPayType.OTHER],
   expectedCalculationComplexityLevel: ComplexityCalculationLevelType.HIGH,
   expectedCalculationComplexityLevelNote: null,
+  claimsProcessingPrecedence: true,
+  claimsProcessingPrecedenceOther: 'other claims',
+  claimsProcessingPrecedenceNote: 'claim note',
   canParticipantsSelectBetweenPaymentMechanisms: true,
   canParticipantsSelectBetweenPaymentMechanismsHow: 'lorem ipsum',
   canParticipantsSelectBetweenPaymentMechanismsNote: null,
   anticipatedPaymentFrequency: [FrequencyType.ANNUALLY],
+  anticipatedPaymentFrequencyContinually: null,
   anticipatedPaymentFrequencyOther: null,
   anticipatedPaymentFrequencyNote: null
 };

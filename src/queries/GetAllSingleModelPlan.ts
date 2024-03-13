@@ -58,8 +58,22 @@ export default gql`
         isNewModel
         existingModel
         resemblesExistingModel
+        resemblesExistingModelWhyHow
         resemblesExistingModelHow
         resemblesExistingModelNote
+        resemblesExistingModelWhich {
+          names
+        }
+        resemblesExistingModelOtherSpecify
+        resemblesExistingModelOtherOption
+        participationInModelPrecondition
+        participationInModelPreconditionWhich {
+          names
+        }
+        participationInModelPreconditionOtherSpecify
+        participationInModelPreconditionOtherOption
+        participationInModelPreconditionWhyHow
+        participationInModelPreconditionNote
         hasComponentsOrTracks
         hasComponentsOrTracksDiffer
         hasComponentsOrTracksNote
@@ -72,6 +86,9 @@ export default gql`
         communityPartnersInvolved
         communityPartnersInvolvedDescription
         communityPartnersInvolvedNote
+        agencyOrStateHelp
+        agencyOrStateHelpOther
+        agencyOrStateHelpNote
         alternativePaymentModelTypes
         alternativePaymentModelNote
         keyCharacteristics
@@ -85,6 +102,8 @@ export default gql`
         planContractUpdatedNote
         geographiesTargeted
         geographiesTargetedTypes
+        geographiesStatesAndTerritories
+        geographiesRegionTypes
         geographiesTargetedTypesOther
         geographiesTargetedAppliedTo
         geographiesTargetedAppliedToOther
@@ -281,9 +300,6 @@ export default gql`
         modelLearningSystemsOther
         modelLearningSystemsNote
         anticipatedChallenges
-        agencyOrStateHelp
-        agencyOrStateHelpOther
-        agencyOrStateHelpNote
         stakeholders
         stakeholdersOther
         stakeholdersNote
@@ -340,6 +356,9 @@ export default gql`
         payModelDifferentiation
         expectedCalculationComplexityLevel
         expectedCalculationComplexityLevelNote
+        claimsProcessingPrecedence
+        claimsProcessingPrecedenceOther
+        claimsProcessingPrecedenceNote
         canParticipantsSelectBetweenPaymentMechanisms
         canParticipantsSelectBetweenPaymentMechanismsHow
         canParticipantsSelectBetweenPaymentMechanismsNote
@@ -378,6 +397,10 @@ export default gql`
         paymentReconciliationFrequencyContinually
         paymentReconciliationFrequencyOther
         paymentReconciliationFrequencyNote
+        paymentDemandRecoupmentFrequency
+        paymentDemandRecoupmentFrequencyContinually
+        paymentDemandRecoupmentFrequencyOther
+        paymentDemandRecoupmentFrequencyNote
         paymentStartDate
         paymentStartDateNote
         readyForReviewByUserAccount {

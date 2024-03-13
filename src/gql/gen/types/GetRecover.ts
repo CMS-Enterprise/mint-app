@@ -28,6 +28,10 @@ export interface GetRecover_modelPlan_payments {
   paymentReconciliationFrequencyContinually: string | null;
   paymentReconciliationFrequencyOther: string | null;
   paymentReconciliationFrequencyNote: string | null;
+  paymentDemandRecoupmentFrequency: FrequencyType[];
+  paymentDemandRecoupmentFrequencyContinually: string | null;
+  paymentDemandRecoupmentFrequencyOther: string | null;
+  paymentDemandRecoupmentFrequencyNote: string | null;
   paymentStartDate: Time | null;
   paymentStartDateNote: string | null;
   readyForReviewByUserAccount: GetRecover_modelPlan_payments_readyForReviewByUserAccount | null;

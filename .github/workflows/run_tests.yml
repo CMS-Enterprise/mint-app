@@ -10,8 +10,8 @@ on:
         default: false
 
 env:
-  GIT_HASH: ${{ github.event.pull_request.head.sha || github.sha }}
-  GIT_REF_NAME: ${{ github.event.pull_request.head.ref || github.ref }}
+  GIT_HASH: ${{ github.sha }}
+  GIT_REF_NAME: ${{ github.ref }}
   SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
   POSTGRES_PASSWORD: mysecretpassword
   POSTGRES_USER: postgres
@@ -40,8 +40,6 @@ jobs:
     steps:
       - name: Check out code
         uses: actions/checkout@v4
-        with:
-          ref: ${{ env.GIT_HASH }}
       - name: Login to Docker Hub
         uses: docker/login-action@v3
         with:
@@ -71,8 +69,6 @@ jobs:
     steps:
       - name: Check out code
         uses: actions/checkout@v4
-        with:
-          ref: ${{ env.GIT_HASH }}
       - name: Set up node
         uses: actions/setup-node@v4
         with:
@@ -208,8 +204,6 @@ jobs:
     steps:
       - name: Check out code
         uses: actions/checkout@v4
-        with:
-          ref: ${{ env.GIT_HASH }}
       - name: Set up node
         uses: actions/setup-node@v4
         with:
@@ -301,8 +295,6 @@ jobs:
     steps:
       - name: Check out code
         uses: actions/checkout@v4
-        with:
-          ref: ${{ env.GIT_HASH }}
       - name: Set up node
         uses: actions/setup-node@v4
         with:
@@ -324,7 +316,7 @@ jobs:
           wget -O swagger https://github.com/go-swagger/go-swagger/releases/download/v0.28.0/swagger_linux_amd64
           chmod +x swagger
       - name: Pre-commit checks
-        uses: pre-commit/action@v3.0.0
+        uses: pre-commit/action@v3.0.1
         with:
           extra_args: --all-files
       - name: Announce failure
@@ -338,8 +330,6 @@ jobs:
     steps:
       - name: Check out code
         uses: actions/checkout@v4
-        with:
-          ref: ${{ env.GIT_HASH }}
       - name: Set up node
         uses: actions/setup-node@v4
         with:
@@ -362,8 +352,6 @@ jobs:
     steps:
       - name: Check out code
         uses: actions/checkout@v4
-        with:
-          ref: ${{ env.GIT_HASH }}
       - name: Set up node
         uses: actions/setup-node@v4
         with:

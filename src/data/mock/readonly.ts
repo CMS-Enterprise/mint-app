@@ -21,6 +21,7 @@ import {
   FundingSource,
   GainshareArrangementEligibility,
   GeographyApplication,
+  GeographyRegionType,
   GeographyType,
   GetAllBasicsDocument,
   GetAllBasicsQuery,
@@ -41,6 +42,9 @@ import {
   ModelType,
   MonitoringFileType,
   NonClaimsBasedPayType,
+  OperationalNeedKey,
+  OperationalSolutionKey,
+  OpSolutionStatus,
   OverlapType,
   ParticipantCommunicationType,
   ParticipantRiskType,
@@ -54,6 +58,7 @@ import {
   RecruitmentType,
   SelectionMethodType,
   StakeholdersType,
+  StatesAndTerritories,
   TaskStatus,
   TeamRole,
   TriStateAnswer,
@@ -64,6 +69,8 @@ import {
 
 import GetModelPlanCollaborators from 'queries/Collaborators/GetModelCollaborators';
 import { GetModelCollaborators_modelPlan_collaborators as GetModelCollaboratorsType } from 'queries/Collaborators/types/GetModelCollaborators';
+import GetOperationalNeeds from 'queries/ITSolutions/GetOperationalNeeds';
+import { GetOperationalNeeds as GetOperationalNeedsType } from 'queries/ITSolutions/types/GetOperationalNeeds';
 import GetModelSummary from 'queries/ReadOnly/GetModelSummary';
 import { GetModelSummary_modelPlan as GetModelSummaryTypes } from 'queries/ReadOnly/types/GetModelSummary';
 
@@ -92,6 +99,7 @@ const modelBasicsData: GetAllBasicsTypes = {
     CmmiGroup.POLICY_AND_PROGRAMS_GROUP
   ],
   modelType: [ModelType.MANDATORY_NATIONAL],
+  modelTypeOther: 'Other model',
   problem: 'There is not enough candy',
   goal: 'To get more candy',
   testInterventions: 'The great candy machine',
@@ -135,12 +143,36 @@ const generalCharacteristicData: GetAllGeneralCharacteristicsTypes = {
   id: '123',
   isNewModel: false,
   existingModel: 'Accountable Care Organizations (ACOs): General Information',
-  resemblesExistingModel: true,
+  resemblesExistingModel: YesNoOtherType.YES,
+  resemblesExistingModelWhich: {
+    __typename: 'ExistingModelLinks',
+    names: ['name']
+  },
+  resemblesExistingModelWhyHow: 'We think it is right',
   resemblesExistingModelHow: null,
+  resemblesExistingModelOtherSpecify: '',
+  resemblesExistingModelOtherOption: 'Other model',
+  resemblesExistingModelOtherSelected: true,
   resemblesExistingModelNote: 'THIS IS A NEW NOTE',
+  participationInModelPrecondition: YesNoOtherType.YES,
+  participationInModelPreconditionWhyHow: 'It is a condition',
+  participationInModelPreconditionOtherSpecify: '',
+  participationInModelPreconditionOtherOption: 'Other model',
+  participationInModelPreconditionOtherSelected: true,
+  participationInModelPreconditionWhich: {
+    __typename: 'ExistingModelLinks',
+    names: ['name']
+  },
+  participationInModelPreconditionNote: 'Precondition note',
   hasComponentsOrTracks: true,
   hasComponentsOrTracksDiffer: 'In every way',
   hasComponentsOrTracksNote: 'Tracks note',
+  agencyOrStateHelp: [
+    AgencyOrStateHelpType.YES_STATE,
+    AgencyOrStateHelpType.OTHER
+  ],
+  agencyOrStateHelpOther: 'Agency other',
+  agencyOrStateHelpNote: 'State note',
   alternativePaymentModelTypes: [
     AlternativePaymentModelType.REGULAR,
     AlternativePaymentModelType.MIPS
@@ -170,7 +202,16 @@ const generalCharacteristicData: GetAllGeneralCharacteristicsTypes = {
   communityPartnersInvolvedDescription: 'Are community partners involved?\n\n',
   communityPartnersInvolvedNote: 'frwegqergqgrqwg planContractUpdatedNote',
   geographiesTargeted: true,
-  geographiesTargetedTypes: [GeographyType.OTHER],
+  geographiesTargetedTypes: [
+    GeographyType.OTHER,
+    GeographyType.STATE,
+    GeographyType.REGION
+  ],
+  geographiesStatesAndTerritories: [
+    StatesAndTerritories.CA,
+    StatesAndTerritories.IN
+  ],
+  geographiesRegionTypes: [GeographyRegionType.CBSA],
   geographiesTargetedTypesOther: 'Geography type other',
   geographiesTargetedAppliedTo: [
     GeographyApplication.BENEFICIARIES,
@@ -345,6 +386,8 @@ const beneficiaryData: AllBeneficiariesTypes = {
   beneficiaryOverlapNote: 'Note overlap',
   precedenceRules: [YesNoType.YES],
   precedenceRulesYes: 'Yes precedence rules',
+  precedenceRulesNo: 'No precedence',
+  precedenceRulesNote: 'Precedence note',
   status: TaskStatus.IN_PROGRESS
 };
 
@@ -371,12 +414,6 @@ const opsEvalAndLearningData: AllOpsEvalAndLearningTypes = {
   id: '123',
   modelPlanID: modelID,
   status: TaskStatus.IN_PROGRESS,
-  agencyOrStateHelp: [
-    AgencyOrStateHelpType.YES_STATE,
-    AgencyOrStateHelpType.OTHER
-  ],
-  agencyOrStateHelpOther: 'Agency other',
-  agencyOrStateHelpNote: 'State note',
   stakeholders: [
     StakeholdersType.BENEFICIARIES,
     StakeholdersType.PARTICIPANTS,
@@ -471,14 +508,17 @@ const opsEvalAndLearningData: AllOpsEvalAndLearningTypes = {
   developNewQualityMeasuresNote: 'Note for develop measures',
   qualityPerformanceImpactsPayment: YesNoOtherType.OTHER,
   qualityPerformanceImpactsPaymentOther: 'Other text',
+  qualityPerformanceImpactsPaymentNote: 'quality note',
   dataSharingStarts: DataStartsType.DURING_APPLICATION_PERIOD,
   dataSharingStartsOther: 'Data sharing starts other',
   dataSharingFrequency: [FrequencyType.MONTHLY],
+  dataSharingFrequencyContinually: 'Data sharing cont',
   dataSharingFrequencyOther: 'Data frequency other',
   dataSharingStartsNote: 'Note for data freq',
   dataCollectionStarts: DataStartsType.EARLY_IN_THE_FIRST_PERFORMANCE_YEAR,
   dataCollectionStartsOther: 'Other collection start',
   dataCollectionFrequency: [FrequencyType.ANNUALLY],
+  dataCollectionFrequencyContinually: 'Data coll cont',
   dataCollectionFrequencyOther: 'Data freq other',
   dataCollectionFrequencyNote: 'Note for data freq',
   qualityReportingStarts: DataStartsType.LATER_IN_THE_FIRST_PERFORMANCE_YEAR,
@@ -566,6 +606,9 @@ const paymentsData: PaymentTypes = {
   planningToUseInnovationPaymentContractorNote: 'Contractor planning note',
   expectedCalculationComplexityLevel: ComplexityCalculationLevelType.HIGH,
   expectedCalculationComplexityLevelNote: 'Expected complexity note',
+  claimsProcessingPrecedence: true,
+  claimsProcessingPrecedenceOther: 'other claims',
+  claimsProcessingPrecedenceNote: 'claim note',
   canParticipantsSelectBetweenPaymentMechanisms: true,
   canParticipantsSelectBetweenPaymentMechanismsHow:
     'Can participants select how',
@@ -582,6 +625,10 @@ const paymentsData: PaymentTypes = {
   paymentReconciliationFrequencyContinually: 'Continual Frequency',
   paymentReconciliationFrequencyOther: '',
   paymentReconciliationFrequencyNote: 'Reconciliation note',
+  paymentDemandRecoupmentFrequency: [FrequencyType.CONTINUALLY],
+  paymentDemandRecoupmentFrequencyContinually: 'Continual Frequency',
+  paymentDemandRecoupmentFrequencyOther: '',
+  paymentDemandRecoupmentFrequencyNote: 'Demand and Recoupment note',
   paymentStartDate: '2022-06-03T19:32:24.412662Z',
   paymentStartDateNote: 'Note for payment start date',
   status: TaskStatus.IN_PROGRESS
@@ -718,6 +765,58 @@ export const collaboratorsMocks = [
           collaborators: collaboratorsData
         }
       }
+    }
+  }
+];
+
+const opNeedsData: GetOperationalNeedsType = {
+  modelPlan: {
+    __typename: 'ModelPlan',
+    id: modelID,
+    isCollaborator: true,
+    modelName: 'My excellent plan that I just initiated',
+    operationalNeeds: [
+      {
+        __typename: 'OperationalNeed',
+        id: '123',
+        modelPlanID: modelID,
+        name: 'Recruit participants',
+        key: OperationalNeedKey.RECRUIT_PARTICIPANTS,
+        nameOther: null,
+        needed: true,
+        modifiedDts: '2022-05-12T15:01:39.190679Z',
+        solutions: [
+          {
+            __typename: 'OperationalSolution',
+            id: '123',
+            status: OpSolutionStatus.IN_PROGRESS,
+            name: 'Shared Systems',
+            key: OperationalSolutionKey.SHARED_SYSTEMS,
+            otherHeader: '',
+            mustStartDts: null,
+            mustFinishDts: null,
+            operationalSolutionSubtasks: [],
+            needed: true,
+            nameOther: null,
+            pocEmail: null,
+            pocName: null,
+            createdBy: '',
+            createdDts: ''
+          }
+        ]
+      }
+    ]
+  }
+};
+
+export const operationalNeedsMock = [
+  {
+    request: {
+      query: GetOperationalNeeds,
+      variables: { id: modelID }
+    },
+    result: {
+      data: opNeedsData
     }
   }
 ];

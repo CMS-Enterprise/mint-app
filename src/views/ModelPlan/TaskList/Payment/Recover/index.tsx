@@ -57,7 +57,8 @@ const Recover = () => {
   const {
     willRecoverPayments: willRecoverPaymentsConfig,
     anticipateReconcilingPaymentsRetrospectively: anticipateReconcilingPaymentsRetrospectivelyConfig,
-    paymentReconciliationFrequency: paymentReconciliationFrequencyConfig
+    paymentReconciliationFrequency: paymentReconciliationFrequencyConfig,
+    paymentDemandRecoupmentFrequency: paymentDemandRecoupmentFrequencyConfig
   } = usePlanTranslation('payments');
 
   const { modelID } = useParams<{ modelID: string }>();
@@ -79,7 +80,7 @@ const Recover = () => {
     }
   });
 
-  // If redirected from IT Solutions, scrolls to the relevant question
+  // If redirected from Operational Solutions, scrolls to the relevant question
   useScrollElement(!loading);
 
   const {
@@ -94,6 +95,10 @@ const Recover = () => {
     paymentReconciliationFrequencyContinually,
     paymentReconciliationFrequencyOther,
     paymentReconciliationFrequencyNote,
+    paymentDemandRecoupmentFrequency,
+    paymentDemandRecoupmentFrequencyContinually,
+    paymentDemandRecoupmentFrequencyOther,
+    paymentDemandRecoupmentFrequencyNote,
     paymentStartDate,
     paymentStartDateNote,
     readyForReviewByUserAccount,
@@ -165,6 +170,13 @@ const Recover = () => {
       paymentReconciliationFrequencyOther ?? '',
     paymentReconciliationFrequencyNote:
       paymentReconciliationFrequencyNote ?? '',
+    paymentDemandRecoupmentFrequency: paymentDemandRecoupmentFrequency ?? [],
+    paymentDemandRecoupmentFrequencyContinually:
+      paymentDemandRecoupmentFrequencyContinually ?? '',
+    paymentDemandRecoupmentFrequencyOther:
+      paymentDemandRecoupmentFrequencyOther ?? '',
+    paymentDemandRecoupmentFrequencyNote:
+      paymentDemandRecoupmentFrequencyNote ?? '',
     paymentStartDate: paymentStartDate ?? '',
     paymentStartDateNote: paymentStartDateNote ?? '',
     status
@@ -364,6 +376,18 @@ const Recover = () => {
                           id="payment-reconciliation-frequency"
                           label={paymentsT(
                             'paymentReconciliationFrequency.label'
+                          )}
+                          disabled={loading}
+                        />
+
+                        <FrequencyForm
+                          field="paymentDemandRecoupmentFrequency"
+                          values={values.paymentDemandRecoupmentFrequency}
+                          config={paymentDemandRecoupmentFrequencyConfig}
+                          nameSpace="payments"
+                          id="payment-demand-recoupment-frequency"
+                          label={paymentsT(
+                            'paymentDemandRecoupmentFrequency.label'
                           )}
                           disabled={loading}
                         />

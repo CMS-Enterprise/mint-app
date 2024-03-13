@@ -9,12 +9,12 @@ exports[`Read Only CR and TDLs page > matches snapshot 1`] = `
     <h2
       class="margin-top-0 margin-bottom-4"
     >
-      CR and TDLs
+      FFS CRs and TDLs
     </h2>
     <p
       class="font-body-md line-height-body-4"
     >
-      More information about each Change Request (CR) or Technical Direction Letter (TDL) can be found in Enterprise Electronic Change Information Management Portal (ECHIMP). If you need access to ECHIMP, please contact the MINT Team at 
+      More information about each Fee-for Service (FFS) Change Request (CR) or Technical Direction Letter (TDL) can be found in Enterprise Electronic Change Information Management Portal (ECHIMP). If you need access to ECHIMP, please contact the MINT Team at 
     </p>
     <a
       aria-label="Open EUA in a new tab"
@@ -23,7 +23,7 @@ exports[`Read Only CR and TDLs page > matches snapshot 1`] = `
       rel="noopener noreferrer"
       target="_blank"
     >
-      Visit CR and TDL details in ECHIMP
+      Visit FFS CR and TDL details in ECHIMP
     </a>
     <div
       class="usa-alert usa-alert--info usa-alert--slim flex margin-bottom-1"

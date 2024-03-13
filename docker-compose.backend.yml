@@ -124,7 +124,6 @@ services:
       - FAKTORY_URL
       - FAKTORY_PROCESS_JOBS
       - FAKTORY_CONNECTIONS
-      - OPENSEARCH_HOST
       - LOCAL_AUTH_ENABLED
       - TAG_POC_EMAILS_ENABLED
 
@@ -172,67 +171,6 @@ services:
         source: ./.faktory/conf.d
         target: /root/.faktory/conf.d
     restart: always
-
-  opensearch:
-    # As of 5/2/2023 - Latest available version in AWS Opensearch Service: 2.5.0
-    image: opensearchproject/opensearch:2.5.0
-    container_name: opensearch
-    environment:
-      - cluster.name=opensearch-cluster
-      - node.name=opensearch
-      - discovery.type=single-node
-      - bootstrap.memory_lock=true
-      - plugins.security.disabled=true
-      - "OPENSEARCH_JAVA_OPTS=-Xms512m -Xmx512m"
-    ulimits:
-      memlock:
-        soft: -1
-        hard: -1
-      nofile:
-        soft: 65536
-        hard: 65536
-    ports:
-      - "9200:9200" # REST API
-      - "9400:9600" # Performance Analyzer
-
-  opensearch-dashboards:
-    # As of 5/2/2023 - Latest available version in AWS Opensearch Service: 2.5.0
-    image: opensearchproject/opensearch-dashboards:2.5.0
-    container_name: opensearch-dashboards
-    ports:
-      - "5601:5601"
-    expose:
-      - "5601"
-    environment:
-      OPENSEARCH_HOSTS: '["http://opensearch:9200"]'
-      opensearch.ssl.verificationMode: none
-      DISABLE_SECURITY_DASHBOARDS_PLUGIN: true
-
-  logstash:
-    image: logstash:7.16.1
-    container_name: Logstash
-    environment:
-      discovery.seed_hosts: logstash
-      LS_JAVA_OPTS: "-Xms1024m -Xmx1024m"
-      xpack.monitoring.enabled: false
-    logging:
-      driver: "json-file"
-      options:
-        max-size: "100m"
-        max-file: "3"
-    volumes:
-      - ./logstash/connectors/postgresql-42.6.0.jar:/usr/share/logstash/postgresql-42.6.0.jar
-      - ./logstash/config/logstash.conf:/usr/share/logstash/logstash.config
-      - ./logstash/config/ingest_change_table.sql:/usr/share/logstash/ingest_change_table.sql
-    ports:
-      - "9600:9600"
-    depends_on:
-      - opensearch
-    command: >
-      bash -c "
-        logstash-plugin install logstash-output-opensearch;
-        logstash -f /usr/share/logstash/logstash.config
-      "
 
 volumes:
   faktory:

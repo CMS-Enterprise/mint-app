@@ -25,7 +25,7 @@ const mocks = [
           title: 'My CR',
           idNumber: 'CR123',
           dateInitiated: '2022-07-30T05:00:00Z',
-          dateImplemented: '',
+          dateImplemented: '2022-07-30T05:00:00Z',
           note: 'note'
         }
       }

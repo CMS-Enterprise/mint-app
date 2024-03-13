@@ -11,7 +11,7 @@ import {
   Label,
   TextInput
 } from '@trussworks/react-uswds';
-import { Field, FieldArray, Form, Formik, FormikProps } from 'formik';
+import { Field, Form, Formik, FormikProps } from 'formik';
 import {
   CcmInvolvmentType,
   DataForMonitoringType,
@@ -34,7 +34,6 @@ import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import MultiSelect from 'components/shared/MultiSelect';
-import TextAreaField from 'components/shared/TextAreaField';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import useScrollElement from 'hooks/useScrollElement';
 import { getKeys } from 'types/translation';
@@ -104,7 +103,7 @@ const Evaluation = () => {
     need => need.modifiedDts
   );
 
-  // If redirected from IT Solutions, scrolls to the relevant question
+  // If redirected from Operational Solutions, scrolls to the relevant question
   useScrollElement(!loading);
 
   const [update] = useUpdatePlanOpsEvalAndLearningMutation();
@@ -257,189 +256,144 @@ const Evaluation = () => {
               >
                 <Fieldset disabled={!!error || loading}>
                   <FieldGroup
-                    scrollElement="evaluationApproaches"
+                    scrollElement="ops-eval-and-learning-evaluation-approach"
                     error={!!flatErrors.evaluationApproaches}
                   >
-                    <FieldArray
-                      name="evaluationApproaches"
-                      render={arrayHelpers => (
-                        <>
-                          <Label
-                            htmlFor="ops-eval-and-learning-evaluation-approac"
-                            id="ops-eval-and-learning-evaluation-approac"
-                            className="maxw-none"
-                          >
-                            {opsEvalAndLearningT('evaluationApproaches.label')}
-                          </Label>
+                    <Label
+                      htmlFor="ops-eval-and-learning-evaluation-approach"
+                      id="ops-eval-and-learning-evaluation-approach"
+                      className="maxw-none"
+                    >
+                      {opsEvalAndLearningT('evaluationApproaches.label')}
+                    </Label>
 
-                          {itSolutionsStarted && (
-                            <ITSolutionsWarning
-                              id="ops-eval-and-learning-evaluation-approach-warning"
-                              onClick={() =>
-                                handleFormSubmit(
-                                  `/models/${modelID}/task-list/it-solutions`
-                                )
-                              }
-                            />
-                          )}
+                    {itSolutionsStarted && (
+                      <ITSolutionsWarning
+                        id="ops-eval-and-learning-evaluation-approach-warning"
+                        onClick={() =>
+                          handleFormSubmit(
+                            `/models/${modelID}/task-list/it-solutions`
+                          )
+                        }
+                      />
+                    )}
 
-                          <FieldErrorMsg>
-                            {flatErrors.evaluationApproaches}
-                          </FieldErrorMsg>
+                    <FieldErrorMsg>
+                      {flatErrors.evaluationApproaches}
+                    </FieldErrorMsg>
 
-                          {getKeys(evaluationApproachesConfig.options).map(
-                            type => {
-                              return (
-                                <Fragment key={type}>
-                                  <Field
-                                    as={CheckboxField}
-                                    id={`ops-eval-and-learning-evaluation-approach-${type}`}
-                                    data-testid={`ops-eval-and-learning-evaluation-approach-${type}`}
-                                    name="evaluationApproaches"
-                                    label={
-                                      evaluationApproachesConfig.options[type]
-                                    }
-                                    value={type}
-                                    checked={values?.evaluationApproaches.includes(
-                                      type
-                                    )}
-                                    onChange={(
-                                      e: React.ChangeEvent<HTMLInputElement>
-                                    ) => {
-                                      if (e.target.checked) {
-                                        arrayHelpers.push(e.target.value);
-                                      } else {
-                                        const idx = values.evaluationApproaches.indexOf(
-                                          e.target
-                                            .value as EvaluationApproachType
-                                        );
-                                        arrayHelpers.remove(idx);
-                                      }
-                                    }}
-                                  />
-
-                                  {type === EvaluationApproachType.OTHER &&
-                                    values.evaluationApproaches.includes(
-                                      type
-                                    ) && (
-                                      <div className="margin-left-4">
-                                        <Label
-                                          htmlFor="ops-eval-and-learning-evaluation-approach-other"
-                                          className="text-normal maxw-none"
-                                        >
-                                          {opsEvalAndLearningT(
-                                            'evaluationApproachOther.label'
-                                          )}
-                                        </Label>
-
-                                        <FieldErrorMsg>
-                                          {flatErrors.evaluationApproachOther}
-                                        </FieldErrorMsg>
-
-                                        <Field
-                                          as={TextInput}
-                                          className="maxw-none"
-                                          id="ops-eval-and-learning-evaluation-approach-other"
-                                          maxLength={50}
-                                          name="evaluationApproachOther"
-                                        />
-                                      </div>
-                                    )}
-                                </Fragment>
-                              );
-                            }
-                          )}
-                          <AddNote
-                            id="ops-eval-and-learning-evaluation-approach-note"
-                            field="evalutaionApproachNote"
+                    {getKeys(evaluationApproachesConfig.options).map(type => {
+                      return (
+                        <Fragment key={type}>
+                          <Field
+                            as={CheckboxField}
+                            id={`ops-eval-and-learning-evaluation-approach-${type}`}
+                            data-testid={`ops-eval-and-learning-evaluation-approach-${type}`}
+                            name="evaluationApproaches"
+                            label={evaluationApproachesConfig.options[type]}
+                            value={type}
+                            checked={values?.evaluationApproaches.includes(
+                              type
+                            )}
                           />
-                        </>
-                      )}
+
+                          {type === EvaluationApproachType.OTHER &&
+                            values.evaluationApproaches.includes(
+                              EvaluationApproachType.OTHER
+                            ) && (
+                              <div className="margin-left-4">
+                                <Label
+                                  htmlFor="ops-eval-and-learning-evaluation-approach-other"
+                                  className="text-normal maxw-none"
+                                >
+                                  {opsEvalAndLearningT(
+                                    'evaluationApproachOther.label'
+                                  )}
+                                </Label>
+
+                                <FieldErrorMsg>
+                                  {flatErrors.evaluationApproachOther}
+                                </FieldErrorMsg>
+
+                                <Field
+                                  as={TextInput}
+                                  id="ops-eval-and-learning-evaluation-approach-other"
+                                  name="evaluationApproachOther"
+                                />
+                              </div>
+                            )}
+                        </Fragment>
+                      );
+                    })}
+                    <AddNote
+                      id="ops-eval-and-learning-evaluation-approach-note"
+                      field="evalutaionApproachNote"
                     />
                   </FieldGroup>
 
-                  <FieldArray
-                    name="ccmInvolvment"
-                    render={arrayHelpers => (
-                      <>
-                        <Label
-                          htmlFor="ops-eval-and-learning-cmmi-involvement"
-                          id="ops-eval-and-learning-cmmi-involvement"
-                          className="maxw-none"
-                        >
-                          {opsEvalAndLearningT('ccmInvolvment.label')}
-                        </Label>
+                  <FieldGroup scrollElement="ops-eval-and-learning-cmmi-involvement">
+                    <Label
+                      htmlFor="ops-eval-and-learning-cmmi-involvement"
+                      id="ops-eval-and-learning-cmmi-involvement"
+                      className="maxw-none"
+                    >
+                      {opsEvalAndLearningT('ccmInvolvment.label')}
+                    </Label>
 
-                        <p className="text-base margin-y-1">
-                          {opsEvalAndLearningT('ccmInvolvment.sublabel')}
-                        </p>
+                    <p className="text-base margin-y-1">
+                      {opsEvalAndLearningT('ccmInvolvment.sublabel')}
+                    </p>
 
-                        <FieldErrorMsg>
-                          {flatErrors.ccmInvolvment}
-                        </FieldErrorMsg>
+                    <FieldErrorMsg>{flatErrors.ccmInvolvment}</FieldErrorMsg>
 
-                        {getKeys(ccmInvolvmentConfig.options).map(type => {
-                          return (
-                            <Fragment key={type}>
-                              <Field
-                                as={CheckboxField}
-                                id={`ops-eval-and-learning-cmmi-involvement-${type}`}
-                                name="ccmInvolvment"
-                                label={ccmInvolvmentConfig.options[type]}
-                                value={type}
-                                checked={values?.ccmInvolvment.includes(type)}
-                                onChange={(
-                                  e: React.ChangeEvent<HTMLInputElement>
-                                ) => {
-                                  if (e.target.checked) {
-                                    arrayHelpers.push(e.target.value);
-                                  } else {
-                                    const idx = values.ccmInvolvment.indexOf(
-                                      e.target.value as CcmInvolvmentType
-                                    );
-                                    arrayHelpers.remove(idx);
-                                  }
-                                }}
-                              />
-                              {type === CcmInvolvmentType.OTHER &&
-                                values.ccmInvolvment.includes(type) && (
-                                  <div className="margin-left-4 margin-top-neg-2">
-                                    <Label
-                                      htmlFor="ops-eval-and-learning-cmmi-involvement-other"
-                                      className="text-normal"
-                                    >
-                                      {opsEvalAndLearningT(
-                                        'ccmInvolvmentOther.label'
-                                      )}
-                                    </Label>
+                    {getKeys(ccmInvolvmentConfig.options).map(type => {
+                      return (
+                        <Fragment key={type}>
+                          <Field
+                            as={CheckboxField}
+                            id={`ops-eval-and-learning-cmmi-involvement-${type}`}
+                            name="ccmInvolvment"
+                            label={ccmInvolvmentConfig.options[type]}
+                            value={type}
+                            checked={values?.ccmInvolvment.includes(type)}
+                          />
+                          {type === CcmInvolvmentType.OTHER &&
+                            values.ccmInvolvment.includes(
+                              CcmInvolvmentType.OTHER
+                            ) && (
+                              <div className="margin-left-4 margin-top-neg-2">
+                                <Label
+                                  htmlFor="ops-eval-and-learning-cmmi-involvement-other"
+                                  className="text-normal"
+                                >
+                                  {opsEvalAndLearningT(
+                                    'ccmInvolvmentOther.label'
+                                  )}
+                                </Label>
 
-                                    <FieldErrorMsg>
-                                      {flatErrors.ccmInvolvmentOther}
-                                    </FieldErrorMsg>
+                                <FieldErrorMsg>
+                                  {flatErrors.ccmInvolvmentOther}
+                                </FieldErrorMsg>
 
-                                    <Field
-                                      as={TextAreaField}
-                                      className="maxw-none mint-textarea"
-                                      id="ops-eval-and-learning-cmmi-involvement-other"
-                                      maxLength={5000}
-                                      name="ccmInvolvmentOther"
-                                    />
-                                  </div>
-                                )}
-                            </Fragment>
-                          );
-                        })}
+                                <Field
+                                  as={TextInput}
+                                  id="ops-eval-and-learning-cmmi-involvement-other"
+                                  name="ccmInvolvmentOther"
+                                />
+                              </div>
+                            )}
+                        </Fragment>
+                      );
+                    })}
 
-                        <AddNote
-                          id="ops-eval-and-learning-cmmi-involvement-note"
-                          field="ccmInvolvmentNote"
-                        />
-                      </>
-                    )}
-                  />
+                    <AddNote
+                      id="ops-eval-and-learning-cmmi-involvement-note"
+                      field="ccmInvolvmentNote"
+                    />
+                  </FieldGroup>
 
                   <FieldGroup
-                    scrollElement="dataNeededForMonitoring"
+                    scrollElement="ops-eval-and-learning-data-needed"
                     error={!!flatErrors.dataNeededForMonitoring}
                     className="margin-top-4"
                   >
@@ -521,7 +475,7 @@ const Evaluation = () => {
                   </FieldGroup>
 
                   <FieldGroup
-                    scrollElement="dataToSendParticicipants"
+                    scrollElement="label-ops-eval-and-learning-data-to-send"
                     error={!!flatErrors.dataToSendParticicipants}
                     className="margin-top-4"
                   >
@@ -599,7 +553,7 @@ const Evaluation = () => {
                   </FieldGroup>
 
                   <FieldGroup
-                    scrollElement="shareCclfData"
+                    scrollElement="ops-eval-and-learning-share-cclf-data"
                     error={!!flatErrors.shareCclfData}
                     className="margin-top-6"
                   >

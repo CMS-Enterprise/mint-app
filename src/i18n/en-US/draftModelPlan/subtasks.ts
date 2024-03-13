@@ -1,6 +1,6 @@
 const subtasks = {
   header: 'Subtasks',
-  itSolutionsTrackerBreadcrumb: 'IT solutions tracker',
+  itSolutionsTrackerBreadcrumb: 'Operational solutions tracker',
   solutionDetails: 'Solution details',
   todo: 'To do',
   inProgress: 'In progress',

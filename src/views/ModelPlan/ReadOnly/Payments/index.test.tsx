@@ -23,9 +23,6 @@ describe('Read Only Model Plan Summary -- Payment', () => {
       expect(screen.getByTestId('tasklist-tag')).toHaveTextContent(
         'In progress'
       );
-      expect(screen.getByRole('heading', { level: 3 })).toHaveTextContent(
-        'Claims-Based Payments'
-      );
     });
   });
   it('matches snapshot', async () => {
@@ -41,9 +38,6 @@ describe('Read Only Model Plan Summary -- Payment', () => {
     await waitFor(() => {
       expect(screen.getByTestId('tasklist-tag')).toHaveTextContent(
         'In progress'
-      );
-      expect(screen.getByRole('heading', { level: 3 })).toHaveTextContent(
-        'Claims-Based Payments'
       );
       expect(asFragment()).toMatchSnapshot();
     });

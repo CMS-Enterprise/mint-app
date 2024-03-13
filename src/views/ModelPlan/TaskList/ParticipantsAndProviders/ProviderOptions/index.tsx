@@ -9,9 +9,10 @@ import {
   Fieldset,
   Icon,
   Label,
-  Radio
+  Radio,
+  TextInput
 } from '@trussworks/react-uswds';
-import { Field, FieldArray, Form, Formik, FormikProps } from 'formik';
+import { Field, Form, Formik, FormikProps } from 'formik';
 import {
   GetProviderOptionsQuery,
   OverlapType,
@@ -156,7 +157,7 @@ export const ProviderOptions = () => {
   const initialValues: InitialValueType = {
     __typename: 'PlanParticipantsAndProviders',
     id: id ?? '',
-    providerAdditionFrequency: providerAdditionFrequency ?? null,
+    providerAdditionFrequency: providerAdditionFrequency ?? [],
     providerAdditionFrequencyContinually:
       providerAdditionFrequencyContinually ?? '',
     providerAdditionFrequencyOther: providerAdditionFrequencyOther ?? '',
@@ -167,7 +168,7 @@ export const ProviderOptions = () => {
     providerLeaveMethod: providerLeaveMethod ?? [],
     providerLeaveMethodOther: providerLeaveMethodOther ?? '',
     providerLeaveMethodNote: providerLeaveMethodNote ?? '',
-    providerRemovalFrequency: providerRemovalFrequency ?? null,
+    providerRemovalFrequency: providerRemovalFrequency ?? [],
     providerRemovalFrequencyContinually:
       providerRemovalFrequencyContinually ?? '',
     providerRemovalFrequencyOther: providerRemovalFrequencyOther ?? '',
@@ -274,7 +275,7 @@ export const ProviderOptions = () => {
                   />
 
                   <FieldGroup
-                    scrollElement="providerAddMethod"
+                    scrollElement="participants-and-providers-provider-add-method"
                     error={!!flatErrors.providerAddMethod}
                     className="margin-top-4"
                   >
@@ -314,7 +315,7 @@ export const ProviderOptions = () => {
                       ProviderAddType.OTHER
                     ) && (
                       <FieldGroup
-                        scrollElement="providerAddMethodOther"
+                        scrollElement="participants-and-providers-provider-add-method-other"
                         error={!!flatErrors.providerAddMethodOther}
                       >
                         <Label
@@ -348,96 +349,67 @@ export const ProviderOptions = () => {
                   </FieldGroup>
 
                   <FieldGroup
-                    scrollElement="providerLeaveMethod"
+                    scrollElement="participants-and-providers-leave-method"
                     error={!!flatErrors.providerLeaveMethod}
                     className="margin-top-4"
                   >
-                    <FieldArray
-                      name="providerLeaveMethod"
-                      render={arrayHelpers => (
-                        <>
-                          <legend className="usa-label">
-                            {participantsAndProvidersT(
-                              'providerLeaveMethod.label'
-                            )}
-                          </legend>
+                    <Label htmlFor="participants-and-providers-leave-method">
+                      {participantsAndProvidersT('providerLeaveMethod.label')}
+                    </Label>
 
-                          <p className="text-base margin-top-1 margin-bottom-0 line-height-body-3">
-                            {participantsAndProvidersT(
-                              'providerLeaveMethod.sublabel'
-                            )}
-                          </p>
-
-                          <FieldErrorMsg>
-                            {flatErrors.providerLeaveMethod}
-                          </FieldErrorMsg>
-
-                          {getKeys(providerLeaveMethodConfig.options).map(
-                            type => {
-                              return (
-                                <Fragment key={type}>
-                                  <Field
-                                    as={CheckboxField}
-                                    id={`participants-and-providers-leave-method-${type}`}
-                                    name="providerLeaveMethod"
-                                    label={
-                                      providerLeaveMethodConfig.options[type]
-                                    }
-                                    value={type}
-                                    checked={values?.providerLeaveMethod.includes(
-                                      type
-                                    )}
-                                    onChange={(
-                                      e: React.ChangeEvent<HTMLInputElement>
-                                    ) => {
-                                      if (e.target.checked) {
-                                        arrayHelpers.push(e.target.value);
-                                      } else {
-                                        const idx = values.providerLeaveMethod.indexOf(
-                                          e.target.value as ProviderLeaveType
-                                        );
-                                        arrayHelpers.remove(idx);
-                                      }
-                                    }}
-                                  />
-
-                                  {type === ProviderLeaveType.OTHER &&
-                                    values.providerLeaveMethod.includes(
-                                      type
-                                    ) && (
-                                      <div className="margin-left-4 margin-top-neg-3">
-                                        <Label
-                                          htmlFor="participants-and-providers-leave-method-other"
-                                          className="text-normal"
-                                        >
-                                          {participantsAndProvidersT(
-                                            'providerLeaveMethodOther.label'
-                                          )}
-                                        </Label>
-
-                                        <FieldErrorMsg>
-                                          {flatErrors.providerLeaveMethodOther}
-                                        </FieldErrorMsg>
-
-                                        <Field
-                                          as={TextAreaField}
-                                          className="maxw-none mint-textarea"
-                                          id="participants-and-providers-leave-method-other"
-                                          maxLength={5000}
-                                          name="providerLeaveMethodOther"
-                                        />
-                                      </div>
-                                    )}
-                                </Fragment>
-                              );
-                            }
-                          )}
-                          <AddNote
-                            id="participants-and-providers-leave-method-note"
-                            field="providerLeaveMethodNote"
-                          />
-                        </>
+                    <p className="text-base margin-top-1 margin-bottom-0 line-height-body-3">
+                      {participantsAndProvidersT(
+                        'providerLeaveMethod.sublabel'
                       )}
+                    </p>
+
+                    <FieldErrorMsg>
+                      {flatErrors.providerLeaveMethod}
+                    </FieldErrorMsg>
+
+                    {getKeys(providerLeaveMethodConfig.options).map(type => {
+                      return (
+                        <Fragment key={type}>
+                          <Field
+                            as={CheckboxField}
+                            id={`participants-and-providers-leave-method-${type}`}
+                            name="providerLeaveMethod"
+                            label={providerLeaveMethodConfig.options[type]}
+                            value={type}
+                            checked={values?.providerLeaveMethod.includes(type)}
+                          />
+
+                          {type === ProviderLeaveType.OTHER &&
+                            values.providerLeaveMethod.includes(
+                              ProviderLeaveType.OTHER
+                            ) && (
+                              <div className="margin-left-4">
+                                <Label
+                                  htmlFor="participants-and-providers-leave-method-other"
+                                  className="text-normal"
+                                >
+                                  {participantsAndProvidersT(
+                                    'providerLeaveMethodOther.label'
+                                  )}
+                                </Label>
+
+                                <FieldErrorMsg>
+                                  {flatErrors.providerLeaveMethodOther}
+                                </FieldErrorMsg>
+
+                                <Field
+                                  as={TextInput}
+                                  id="participants-and-providers-leave-method-other"
+                                  name="providerLeaveMethodOther"
+                                />
+                              </div>
+                            )}
+                        </Fragment>
+                      );
+                    })}
+                    <AddNote
+                      id="participants-and-providers-leave-method-note"
+                      field="providerLeaveMethodNote"
                     />
                   </FieldGroup>
 
@@ -454,7 +426,7 @@ export const ProviderOptions = () => {
                   />
 
                   <FieldGroup
-                    scrollElement="providerOverlap"
+                    scrollElement="participants-and-providers-provider-overlap"
                     error={!!flatErrors.providerOverlap}
                     className="margin-y-4 margin-bottom-8"
                   >
@@ -485,9 +457,6 @@ export const ProviderOptions = () => {
                             label={providerOverlapConfig.options[key]}
                             value={key}
                             checked={values.providerOverlap === key}
-                            onChange={() => {
-                              setFieldValue('providerOverlap', key);
-                            }}
                           />
                         </Fragment>
                       ))}
@@ -497,7 +466,7 @@ export const ProviderOptions = () => {
                       OverlapType.YES_NEED_POLICIES ||
                       values.providerOverlap === OverlapType.YES_NO_ISSUES) && (
                       <FieldGroup
-                        scrollElement="providerOverlapHierarchy"
+                        scrollElement="participants-and-providers-provider-overlap-hierarchy"
                         error={!!flatErrors.providerOverlapHierarchy}
                       >
                         <Label

@@ -43,7 +43,8 @@ describe('user', () => {
             hideITLeadExperience: false,
             hideGroupView: true,
             helpScoutEnabled: false,
-            feedbackEnabled: false
+            feedbackEnabled: false,
+            notificationsEnabled: false
           })
         ).toBe(false);
       });

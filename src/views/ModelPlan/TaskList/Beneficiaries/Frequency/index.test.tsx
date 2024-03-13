@@ -34,6 +34,8 @@ const mockData: BeneficiaryFrequencyType = {
   beneficiaryOverlapNote: '',
   precedenceRules: [YesNoType.YES],
   precedenceRulesYes: 'Yes precedence rules',
+  precedenceRulesNo: null,
+  precedenceRulesNote: 'Precedent note',
   readyForReviewByUserAccount: {
     commonName: 'ASDF',
     id: '000',
