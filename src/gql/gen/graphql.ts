@@ -1107,6 +1107,13 @@ export enum ParticipantCommunicationType {
   OTHER = 'OTHER'
 }
 
+export enum ParticipantRequireFinancialGuaranteeType {
+  ESCROW = 'ESCROW',
+  LETTER_OF_CREDIT = 'LETTER_OF_CREDIT',
+  OTHER = 'OTHER',
+  SURETY_BOND = 'SURETY_BOND'
+}
+
 export enum ParticipantRiskType {
   CAPITATION = 'CAPITATION',
   NOT_RISK_BASED = 'NOT_RISK_BASED',
@@ -1931,6 +1938,10 @@ export type PlanParticipantsAndProviders = {
   participantRemovedFrequencyContinually?: Maybe<Scalars['String']['output']>;
   participantRemovedFrequencyNote?: Maybe<Scalars['String']['output']>;
   participantRemovedFrequencyOther?: Maybe<Scalars['String']['output']>;
+  participantRequireFinancialGuarantee?: Maybe<Scalars['Boolean']['output']>;
+  participantRequireFinancialGuaranteeNote?: Maybe<Scalars['String']['output']>;
+  participantRequireFinancialGuaranteeOther?: Maybe<Scalars['String']['output']>;
+  participantRequireFinancialGuaranteeType: Array<ParticipantRequireFinancialGuaranteeType>;
   participants: Array<ParticipantsType>;
   participantsCurrentlyInModels?: Maybe<Scalars['Boolean']['output']>;
   participantsCurrentlyInModelsNote?: Maybe<Scalars['String']['output']>;
@@ -2007,6 +2018,10 @@ export type PlanParticipantsAndProvidersChanges = {
   participantRemovedFrequencyContinually?: InputMaybe<Scalars['String']['input']>;
   participantRemovedFrequencyNote?: InputMaybe<Scalars['String']['input']>;
   participantRemovedFrequencyOther?: InputMaybe<Scalars['String']['input']>;
+  participantRequireFinancialGuarantee?: InputMaybe<Scalars['Boolean']['input']>;
+  participantRequireFinancialGuaranteeNote?: InputMaybe<Scalars['String']['input']>;
+  participantRequireFinancialGuaranteeOther?: InputMaybe<Scalars['String']['input']>;
+  participantRequireFinancialGuaranteeType?: InputMaybe<Array<ParticipantRequireFinancialGuaranteeType>>;
   participants?: InputMaybe<Array<ParticipantsType>>;
   participantsCurrentlyInModels?: InputMaybe<Scalars['Boolean']['input']>;
   participantsCurrentlyInModelsNote?: InputMaybe<Scalars['String']['input']>;
