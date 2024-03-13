@@ -5,6 +5,8 @@
 }
 
 .usa-nav__primary-item {
+
+   
     .mint-nav {
         display: flex;
 
@@ -18,7 +20,13 @@
 
         &__link {
             color: #565C65;
-            padding: 1em;            
+            padding: 1em;  
+            
+        }
+
+        &__notification {
+            color: #565C65;
+            padding: 1em; 
         }
 
         &__current {
@@ -48,6 +56,33 @@
     }
 }
 
+.navigation-link {
+    .usa-nav__primary-item {
+        &:last-child {
+            margin-left: auto;
+        }
+    
+    }
+}
+
+.align-right {
+    margin-left: auto;  
+}
+
 .border-top-light {
     border-top: 1px solid #DFE1E2;
+}
+
+.notification-container {
+    margin-top: -14px !important;
+}
+
+.notification-active {
+    height: .45rem;
+    width: .45rem;
+    margin-left: 1.2rem;
+    margin-bottom: .75rem;
+    border-radius: 50%;
+    display: inline-block;
+    background-color: red;
 }

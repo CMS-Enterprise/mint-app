@@ -77,7 +77,9 @@ const itSolutions = {
       'If you have additional operational needs you want to track, add an operational need or solution below.',
     noNeedsReadonlyInfo: 'Check back again later for updates.',
     noNeedsReadonlyEditInfo:
-      'To determine the operational needs, fill out more of the Model Plan.'
+      'To determine the operational needs, fill out more of the Model Plan.',
+    unusedSolutionsAlert:
+      'This model has not specified they will use the following solution(s):'
   },
   status: {
     notAnswered: 'Not answered',
@@ -116,6 +118,10 @@ const itSolutions = {
   contact: 'Point of contact',
   aboutSolution: 'About this solution',
   selectAnother: 'Select another solution not listed',
+  selectAlert:
+    'When you continue to the next step, the points of contact for the selected preset solution(s) will be notified.',
+  selectCustomAlert:
+    'When you add this solution, the points of contact will be notified.',
   continue: 'Continue',
   dontAdd: 'Don’t add solutions and return to tracker',
   dontUpdate: 'Don’t update solutions and return to tracker',

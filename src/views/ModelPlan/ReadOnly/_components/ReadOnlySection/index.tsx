@@ -141,7 +141,8 @@ const RenderReadonlyValue = <
   // Renders a single value
   if (
     isTranslationFieldProperties(config) &&
-    !isTranslationFieldPropertiesWithOptions(config)
+    !isTranslationFieldPropertiesWithOptions(config) &&
+    !config.isArray
   ) {
     return <SingleValue value={value} />;
   }
@@ -396,7 +397,7 @@ export const RelatedUnneededQuestions = <
           ? // Render a disconnected translations text
             readOnlyT(disconnectedLabel, {
               count: relatedConditions.length,
-              question: config.label
+              question: config.readonlyLabel || config.label
             })
           : // Render default alert text
             readOnlyT('questionNotApplicable', {

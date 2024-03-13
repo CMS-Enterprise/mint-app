@@ -12,6 +12,18 @@ export enum ActionType {
   NORMAL = "NORMAL",
 }
 
+/**
+ * ActivityType represents the possible activities that happen in application that might result in a notification
+ */
+export enum ActivityType {
+  ADDED_AS_COLLABORATOR = "ADDED_AS_COLLABORATOR",
+  DAILY_DIGEST_COMPLETE = "DAILY_DIGEST_COMPLETE",
+  MODEL_PLAN_SHARED = "MODEL_PLAN_SHARED",
+  NEW_DISCUSSION_REPLY = "NEW_DISCUSSION_REPLY",
+  TAGGED_IN_DISCUSSION = "TAGGED_IN_DISCUSSION",
+  TAGGED_IN_DISCUSSION_REPLY = "TAGGED_IN_DISCUSSION_REPLY",
+}
+
 export enum AgencyOrStateHelpType {
   NO = "NO",
   OTHER = "OTHER",
@@ -691,6 +703,11 @@ export enum TriStateAnswer {
   YES = "YES",
 }
 
+export enum UserNotificationPreferenceFlag {
+  EMAIL = "EMAIL",
+  IN_APP = "IN_APP",
+}
+
 export enum WaiverType {
   FRAUD_ABUSE = "FRAUD_ABUSE",
   MEDICAID = "MEDICAID",
@@ -1252,6 +1269,18 @@ export interface UpdateOperationalSolutionSubtaskChangesInput {
 export interface UpdateOperationalSolutionSubtaskInput {
   id: UUID;
   changes: UpdateOperationalSolutionSubtaskChangesInput;
+}
+
+/**
+ * UserNotificationPreferencesChanges represents the ways that a UserNotifications Preferences object can be updated
+ */
+export interface UserNotificationPreferencesChanges {
+  dailyDigestComplete?: UserNotificationPreferenceFlag[] | null;
+  addedAsCollaborator?: UserNotificationPreferenceFlag[] | null;
+  taggedInDiscussion?: UserNotificationPreferenceFlag[] | null;
+  taggedInDiscussionReply?: UserNotificationPreferenceFlag[] | null;
+  newDiscussionReply?: UserNotificationPreferenceFlag[] | null;
+  modelPlanShared?: UserNotificationPreferenceFlag[] | null;
 }
 
 //==============================================================

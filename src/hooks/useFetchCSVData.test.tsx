@@ -148,6 +148,7 @@ describe('fetch csv utils', () => {
       'beneficiaries.beneficiariesNote',
       'beneficiaries.numberPeopleImpacted',
       'beneficiaries.estimateConfidence',
+      'beneficiaries.confidenceNote',
       'beneficiaries.beneficiaryOverlap',
       'beneficiaries.beneficiaryOverlapNote',
       'beneficiaries.precedenceRules',

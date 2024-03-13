@@ -69,7 +69,7 @@
     background: #585c62;
   }
   .usa-alert__body {
-    padding-left: 2.8rem;    
+    padding-left: 2.8rem;
   }
   .usa-alert__text:only-child {
     margin-bottom: 0;
@@ -126,4 +126,13 @@
     flex: 0 1 auto;
       width: 50%;
   }
+
+  .mobile\:grid-col-3 {
+    flex: 0 1 auto;
+      width: 25%;
+  }
+}
+
+.bg-gray-2 {
+  background-color: $gray-2 !important;
 }

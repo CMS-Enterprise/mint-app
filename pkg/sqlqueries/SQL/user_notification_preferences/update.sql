@@ -9,7 +9,7 @@ SET
     modified_by = :modified_by,
     modified_dts = CURRENT_TIMESTAMP
 WHERE 
-    id = :id AND created_by = :modified_by
+    id = :id
 RETURNING
 id,
 user_id,

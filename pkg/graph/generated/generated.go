@@ -1072,6 +1072,8 @@ type ComplexityRoot struct {
 		Content      func(childComplexity int) int
 		Discussion   func(childComplexity int) int
 		DiscussionID func(childComplexity int) int
+		ModelPlan    func(childComplexity int) int
+		ModelPlanID  func(childComplexity int) int
 		Reply        func(childComplexity int) int
 		ReplyID      func(childComplexity int) int
 		Type         func(childComplexity int) int
@@ -1082,6 +1084,8 @@ type ComplexityRoot struct {
 		Content      func(childComplexity int) int
 		Discussion   func(childComplexity int) int
 		DiscussionID func(childComplexity int) int
+		ModelPlan    func(childComplexity int) int
+		ModelPlanID  func(childComplexity int) int
 		Type         func(childComplexity int) int
 		Version      func(childComplexity int) int
 	}
@@ -1211,7 +1215,6 @@ type MutationResolver interface {
 	UpdatePlanCollaborator(ctx context.Context, id uuid.UUID, newRoles []models.TeamRole) (*models.PlanCollaborator, error)
 	DeletePlanCollaborator(ctx context.Context, id uuid.UUID) (*models.PlanCollaborator, error)
 	UpdatePlanBeneficiaries(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanBeneficiaries, error)
-	UpdatePlanParticipantsAndProviders(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanParticipantsAndProviders, error)
 	UploadNewPlanDocument(ctx context.Context, input model.PlanDocumentInput) (*models.PlanDocument, error)
 	LinkNewPlanDocument(ctx context.Context, input model.PlanDocumentLinkInput) (*models.PlanDocument, error)
 	DeletePlanDocument(ctx context.Context, id uuid.UUID) (int, error)
@@ -1248,6 +1251,7 @@ type MutationResolver interface {
 	UpdatePlanBasics(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanBasics, error)
 	UpdatePlanGeneralCharacteristics(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanGeneralCharacteristics, error)
 	UpdatePlanOpsEvalAndLearning(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanOpsEvalAndLearning, error)
+	UpdatePlanParticipantsAndProviders(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanParticipantsAndProviders, error)
 	MarkNotificationAsRead(ctx context.Context, notificationID uuid.UUID) (*models.UserNotification, error)
 	MarkAllNotificationsAsRead(ctx context.Context) ([]*models.UserNotification, error)
 	UpdateUserNotificationPreferences(ctx context.Context, changes map[string]interface{}) (*models.UserNotificationPreferences, error)
@@ -1431,11 +1435,15 @@ type TaggedContentResolver interface {
 	RawContent(ctx context.Context, obj *models.TaggedContent) (string, error)
 }
 type TaggedInDiscussionReplyActivityMetaResolver interface {
+	ModelPlan(ctx context.Context, obj *models.TaggedInDiscussionReplyActivityMeta) (*models.ModelPlan, error)
+
 	Discussion(ctx context.Context, obj *models.TaggedInDiscussionReplyActivityMeta) (*models.PlanDiscussion, error)
 
 	Reply(ctx context.Context, obj *models.TaggedInDiscussionReplyActivityMeta) (*models.DiscussionReply, error)
 }
 type TaggedInPlanDiscussionActivityMetaResolver interface {
+	ModelPlan(ctx context.Context, obj *models.TaggedInPlanDiscussionActivityMeta) (*models.ModelPlan, error)
+
 	Discussion(ctx context.Context, obj *models.TaggedInPlanDiscussionActivityMeta) (*models.PlanDiscussion, error)
 }
 type UserNotificationResolver interface {
@@ -7730,6 +7738,20 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.TaggedInDiscussionReplyActivityMeta.DiscussionID(childComplexity), true
 
+	case "TaggedInDiscussionReplyActivityMeta.modelPlan":
+		if e.complexity.TaggedInDiscussionReplyActivityMeta.ModelPlan == nil {
+			break
+		}
+
+		return e.complexity.TaggedInDiscussionReplyActivityMeta.ModelPlan(childComplexity), true
+
+	case "TaggedInDiscussionReplyActivityMeta.modelPlanID":
+		if e.complexity.TaggedInDiscussionReplyActivityMeta.ModelPlanID == nil {
+			break
+		}
+
+		return e.complexity.TaggedInDiscussionReplyActivityMeta.ModelPlanID(childComplexity), true
+
 	case "TaggedInDiscussionReplyActivityMeta.reply":
 		if e.complexity.TaggedInDiscussionReplyActivityMeta.Reply == nil {
 			break
@@ -7778,6 +7800,20 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.TaggedInPlanDiscussionActivityMeta.DiscussionID(childComplexity), true
+
+	case "TaggedInPlanDiscussionActivityMeta.modelPlan":
+		if e.complexity.TaggedInPlanDiscussionActivityMeta.ModelPlan == nil {
+			break
+		}
+
+		return e.complexity.TaggedInPlanDiscussionActivityMeta.ModelPlan(childComplexity), true
+
+	case "TaggedInPlanDiscussionActivityMeta.modelPlanID":
+		if e.complexity.TaggedInPlanDiscussionActivityMeta.ModelPlanID == nil {
+			break
+		}
+
+		return e.complexity.TaggedInPlanDiscussionActivityMeta.ModelPlanID(childComplexity), true
 
 	case "TaggedInPlanDiscussionActivityMeta.type":
 		if e.complexity.TaggedInPlanDiscussionActivityMeta.Type == nil {
@@ -8743,182 +8779,6 @@ input PlanBeneficiariesChanges @goModel(model: "map[string]interface{}") {
 }
 
 """
-PlanParticipantsAndProviders is the task list section that deals with information regarding all Providers and Participants
-"""
-type PlanParticipantsAndProviders {
-  id: UUID!
-  modelPlanID: UUID!
-
-  #Page 1
-  participants:                      [ParticipantsType!]!
-  medicareProviderType:              String
-  statesEngagement:                  String
-  participantsOther:                 String
-  participantsNote:                  String
-  participantsCurrentlyInModels:     Boolean
-  participantsCurrentlyInModelsNote: String
-  modelApplicationLevel:             String
-
-  #Page 2
-  expectedNumberOfParticipants: Int
-  estimateConfidence:           ConfidenceType
-  confidenceNote:               String
-  recruitmentMethod:            RecruitmentType
-  recruitmentOther:             String
-  recruitmentNote:              String
-  selectionMethod:              [ParticipantSelectionType!]!
-  selectionOther:               String
-  selectionNote:                String
-
-  #Page 3
-  participantAddedFrequency:                 [FrequencyType!]!
-  participantAddedFrequencyContinually:      String
-  participantAddedFrequencyOther:            String
-  participantAddedFrequencyNote:             String
-  participantRemovedFrequency:               [FrequencyType!]!
-  participantRemovedFrequencyContinually:    String
-  participantRemovedFrequencyOther:          String
-  participantRemovedFrequencyNote:           String
-  communicationMethod:   [ParticipantCommunicationType!]!
-  communicationMethodOther:   String
-  communicationNote:     String
-  riskType:              [ParticipantRiskType!]!
-  riskOther:             String
-  riskNote:              String
-  willRiskChange:        Boolean
-  willRiskChangeNote:    String
-
-  #Page 4
-  coordinateWork:          Boolean
-  coordinateWorkNote:      String
-  gainsharePayments:       Boolean
-  gainsharePaymentsTrack: Boolean
-  gainsharePaymentsNote:   String
-  gainsharePaymentsEligibility: [GainshareArrangementEligibility!]!
-  gainsharePaymentsEligibilityOther: String
-  participantsIds:         [ParticipantsIDType!]!
-  participantsIdsOther:    String
-  participantsIDSNote:     String
-
-  #Page 5
-  providerAdditionFrequency:      [FrequencyType!]!
-  providerAdditionFrequencyContinually: String
-  providerAdditionFrequencyOther: String
-  providerAdditionFrequencyNote:  String
-  providerAddMethod:              [ProviderAddType!]!
-  providerAddMethodOther:         String
-  providerAddMethodNote:          String
-  providerLeaveMethod:            [ProviderLeaveType!]!
-  providerLeaveMethodOther:       String
-  providerLeaveMethodNote:        String
-  providerRemovalFrequency:       [FrequencyType!]!
-  providerRemovalFrequencyContinually: String
-  providerRemovalFrequencyOther:  String
-  providerRemovalFrequencyNote:   String
-  providerOverlap:                OverlapType
-  providerOverlapHierarchy:       String
-  providerOverlapNote:            String
-
-
-  createdBy: UUID!
-  createdByUserAccount: UserAccount!
-  createdDts: Time!
-  modifiedBy: UUID
-  modifiedByUserAccount: UserAccount
-  modifiedDts: Time
-
-  readyForReviewBy: UUID
-  readyForReviewByUserAccount: UserAccount
-  readyForReviewDts: Time
-  readyForClearanceBy: UUID
-  readyForClearanceByUserAccount: UserAccount
-  readyForClearanceDts: Time
-
-  status: TaskStatus!
-
-}
-
-"""
-PlanParticipantsAndProvidersChanges represents the possible changes you can make to a
-providers and participants object when updating it.
-Fields explicitly set with NULL will be unset, and omitted fields will be left unchanged.
-https://gqlgen.com/reference/changesets/
-"""
-input PlanParticipantsAndProvidersChanges @goModel(model: "map[string]interface{}") {
-  #Page 1
-  participants:                      [ParticipantsType!]
-  medicareProviderType:              String
-  statesEngagement:                  String
-  participantsOther:                 String
-  participantsNote:                  String
-  participantsCurrentlyInModels:     Boolean
-  participantsCurrentlyInModelsNote: String
-  modelApplicationLevel:             String
-
-  #Page 2
-  expectedNumberOfParticipants: Int
-  estimateConfidence:           ConfidenceType
-  confidenceNote:               String
-  recruitmentMethod:            RecruitmentType
-  recruitmentOther:             String
-  recruitmentNote:              String
-  selectionMethod:              [ParticipantSelectionType!]
-  selectionOther:               String
-  selectionNote:                String
-
-  #Page 3
-  participantAddedFrequency:                 [FrequencyType!]
-  participantAddedFrequencyContinually:      String
-  participantAddedFrequencyOther:            String
-  participantAddedFrequencyNote:             String
-  participantRemovedFrequency:               [FrequencyType!]
-  participantRemovedFrequencyContinually:    String
-  participantRemovedFrequencyOther:          String
-  participantRemovedFrequencyNote:           String
-  communicationMethod:   [ParticipantCommunicationType!]
-  communicationMethodOther:   String
-  communicationNote:     String
-  riskType:              [ParticipantRiskType!]
-  riskOther:             String
-  riskNote:              String
-  willRiskChange:        Boolean
-  willRiskChangeNote:    String
-
-  #Page 4
-  coordinateWork:          Boolean
-  coordinateWorkNote:      String
-  gainsharePayments:       Boolean
-  gainsharePaymentsTrack: Boolean
-  gainsharePaymentsNote:   String
-  gainsharePaymentsEligibility: [GainshareArrangementEligibility!]
-  gainsharePaymentsEligibilityOther: String
-  participantsIds:         [ParticipantsIDType!]
-  participantsIdsOther:    String
-  participantsIDSNote:     String
-
-  #Page 5
-  providerAdditionFrequency:      [FrequencyType!]
-  providerAdditionFrequencyContinually: String
-  providerAdditionFrequencyOther: String
-  providerAdditionFrequencyNote:  String
-  providerAddMethod:              [ProviderAddType!]
-  providerAddMethodOther:         String
-  providerAddMethodNote:          String
-  providerLeaveMethod:            [ProviderLeaveType!]
-  providerLeaveMethodOther:       String
-  providerLeaveMethodNote:        String
-  providerRemovalFrequency:       [FrequencyType!]
-  providerRemovalFrequencyContinually: String
-  providerRemovalFrequencyOther:  String
-  providerRemovalFrequencyNote:   String
-  providerOverlap:                OverlapType
-  providerOverlapHierarchy:       String
-  providerOverlapNote:            String
-
-  status: TaskStatusInput
-}
-
-"""
 PlanPayments is the task list section that deals with information regarding Payments
 """
 type PlanPayments {
@@ -9450,9 +9310,6 @@ deletePlanCollaborator(id: UUID!): PlanCollaborator!
 updatePlanBeneficiaries(id: UUID!, changes: PlanBeneficiariesChanges!): PlanBeneficiaries!
 @hasRole(role: MINT_USER)
 
-updatePlanParticipantsAndProviders(id: UUID!, changes: PlanParticipantsAndProvidersChanges!): PlanParticipantsAndProviders!
-@hasRole(role: MINT_USER)
-
 uploadNewPlanDocument(input: PlanDocumentInput!): PlanDocument!
 @hasRole(role: MINT_USER)
 
@@ -9639,99 +9496,11 @@ enum SelectionMethodType {
   OTHER
   NA
 }
-enum OverlapType {
-  YES_NEED_POLICIES
-  YES_NO_ISSUES
-  NO
-}
-enum ConfidenceType {
-  NOT_AT_ALL
-  SLIGHTLY
-  FAIRLY
-  COMPLETELY
-}
 
 enum TriStateAnswer {
   YES
   NO
   TBD
-}
-enum ParticipantsType {
-  MEDICARE_PROVIDERS
-  ENTITIES
-  CONVENER
-  MEDICARE_ADVANTAGE_PLANS
-  STANDALONE_PART_D_PLANS
-  MEDICARE_ADVANTAGE_PRESCRIPTION_DRUG_PLANS
-  STATE_MEDICAID_AGENCIES
-  MEDICAID_MANAGED_CARE_ORGANIZATIONS
-  MEDICAID_PROVIDERS
-  STATES
-  COMMUNITY_BASED_ORGANIZATIONS
-  NON_PROFIT_ORGANIZATIONS
-  COMMERCIAL_PAYERS
-  ACCOUNTABLE_CARE_ORGANIZATION
-  OTHER
-}
-
-enum RecruitmentType {
-  LOI
-  APPLICATION_COLLECTION_TOOL
-  NOFO
-  OTHER
-  NA
-}
-enum ParticipantSelectionType {
-  MODEL_TEAM_REVIEW_APPLICATIONS
-  SUPPORT_FROM_CMMI
-  CMS_COMPONENT_OR_PROCESS
-  APPLICATION_REVIEW_AND_SCORING_TOOL
-  APPLICATION_SUPPORT_CONTRACTOR
-  BASIC_CRITERIA
-  OTHER
-  NO_SELECTING_PARTICIPANTS
-}
-enum ParticipantCommunicationType {
-  MASS_EMAIL
-  IT_TOOL
-  OTHER
-  NO_COMMUNICATION
-}
-
-enum ParticipantRiskType {
-  TWO_SIDED
-  ONE_SIDED
-  CAPITATION
-  NOT_RISK_BASED
-  OTHER
-}
-
-enum ParticipantsIDType{
-  TINS
-  NPIS
-  CCNS
-  OTHER
-  NO_IDENTIFIERS
-}
-
-enum ProviderAddType {
-  PROSPECTIVELY
-  RETROSPECTIVELY
-  VOLUNTARILY
-  MANDATORILY
-  ONLINE_TOOLS
-  OTHER
-  NA
-}
-
-enum ProviderLeaveType {
-
-VOLUNTARILY_WITHOUT_IMPLICATIONS
-AFTER_A_CERTAIN_WITH_IMPLICATIONS
-VARIES_BY_TYPE_OF_PROVIDER
-NOT_ALLOWED_TO_LEAVE
-OTHER
-NOT_APPLICABLE
 }
 
 enum FundingSource {
@@ -9934,13 +9703,6 @@ enum DiscussionUserRole {
   NONE_OF_THE_ABOVE,
 }
 
-enum GainshareArrangementEligibility {
-  ALL_PROVIDERS,
-  SOME_PROVIDERS,
-  OTHER,
-  NO
-}
-
 enum YesNoType {
   YES,
   NO
@@ -9965,6 +9727,8 @@ union ActivityMetaData = ActivityMetaBaseStruct | TaggedInPlanDiscussionActivity
 type TaggedInPlanDiscussionActivityMeta {
   version: Int!
   type: ActivityType!
+  modelPlanID: UUID!
+  modelPlan: ModelPlan!
   discussionID: UUID!
   discussion: PlanDiscussion!
   content: String!
@@ -9973,6 +9737,8 @@ type TaggedInPlanDiscussionActivityMeta {
 type TaggedInDiscussionReplyActivityMeta {
   version: Int!
   type: ActivityType!
+  modelPlanID: UUID!
+  modelPlan: ModelPlan!
   discussionID: UUID!
   discussion: PlanDiscussion!
   replyID: UUID!
@@ -11080,6 +10846,284 @@ input PlanOpsEvalAndLearningChanges @goModel(model: "map[string]interface{}") {
 
 extend type Mutation {
   updatePlanOpsEvalAndLearning(id: UUID!, changes: PlanOpsEvalAndLearningChanges!): PlanOpsEvalAndLearning!
+  @hasRole(role: MINT_USER)
+}`, BuiltIn: false},
+	{Name: "../schema/types/plan_participants_and_providers.graphql", Input: `enum ParticipantsType {
+  MEDICARE_PROVIDERS
+  ENTITIES
+  CONVENER
+  MEDICARE_ADVANTAGE_PLANS
+  STANDALONE_PART_D_PLANS
+  MEDICARE_ADVANTAGE_PRESCRIPTION_DRUG_PLANS
+  STATE_MEDICAID_AGENCIES
+  MEDICAID_MANAGED_CARE_ORGANIZATIONS
+  MEDICAID_PROVIDERS
+  STATES
+  COMMUNITY_BASED_ORGANIZATIONS
+  NON_PROFIT_ORGANIZATIONS
+  COMMERCIAL_PAYERS
+  ACCOUNTABLE_CARE_ORGANIZATION
+  OTHER
+}
+
+enum ConfidenceType {
+  NOT_AT_ALL
+  SLIGHTLY
+  FAIRLY
+  COMPLETELY
+}
+
+enum RecruitmentType {
+  LOI
+  APPLICATION_COLLECTION_TOOL
+  NOFO
+  OTHER
+  NA
+}
+
+enum ParticipantSelectionType {
+  MODEL_TEAM_REVIEW_APPLICATIONS
+  SUPPORT_FROM_CMMI
+  CMS_COMPONENT_OR_PROCESS
+  APPLICATION_REVIEW_AND_SCORING_TOOL
+  APPLICATION_SUPPORT_CONTRACTOR
+  BASIC_CRITERIA
+  OTHER
+  NO_SELECTING_PARTICIPANTS
+}
+
+enum ParticipantCommunicationType {
+  MASS_EMAIL
+  IT_TOOL
+  OTHER
+  NO_COMMUNICATION
+}
+
+enum ParticipantRiskType {
+  TWO_SIDED
+  ONE_SIDED
+  CAPITATION
+  NOT_RISK_BASED
+  OTHER
+}
+
+enum GainshareArrangementEligibility {
+  ALL_PROVIDERS,
+  SOME_PROVIDERS,
+  OTHER,
+  NO
+}
+
+enum ParticipantsIDType {
+  TINS
+  NPIS
+  CCNS
+  OTHER
+  NO_IDENTIFIERS
+}
+
+enum ProviderAddType {
+  PROSPECTIVELY
+  RETROSPECTIVELY
+  VOLUNTARILY
+  MANDATORILY
+  ONLINE_TOOLS
+  OTHER
+  NA
+}
+
+enum ProviderLeaveType {
+  VOLUNTARILY_WITHOUT_IMPLICATIONS
+  AFTER_A_CERTAIN_WITH_IMPLICATIONS
+  VARIES_BY_TYPE_OF_PROVIDER
+  NOT_ALLOWED_TO_LEAVE
+  OTHER
+  NOT_APPLICABLE
+}
+
+enum OverlapType {
+  YES_NEED_POLICIES
+  YES_NO_ISSUES
+  NO
+}
+
+"""
+PlanParticipantsAndProviders is the task list section that deals with information regarding all Providers and Participants
+"""
+type PlanParticipantsAndProviders {
+  id: UUID!
+  modelPlanID: UUID!
+
+  #Page 1
+  participants:                      [ParticipantsType!]!
+  medicareProviderType:              String
+  statesEngagement:                  String
+  participantsOther:                 String
+  participantsNote:                  String
+  participantsCurrentlyInModels:     Boolean
+  participantsCurrentlyInModelsNote: String
+  modelApplicationLevel:             String
+
+  #Page 2
+  expectedNumberOfParticipants: Int
+  estimateConfidence:           ConfidenceType
+  confidenceNote:               String
+  recruitmentMethod:            RecruitmentType
+  recruitmentOther:             String
+  recruitmentNote:              String
+  selectionMethod:              [ParticipantSelectionType!]!
+  selectionOther:               String
+  selectionNote:                String
+
+  #Page 3
+  participantAddedFrequency:                 [FrequencyType!]!
+  participantAddedFrequencyContinually:      String
+  participantAddedFrequencyOther:            String
+  participantAddedFrequencyNote:             String
+  participantRemovedFrequency:               [FrequencyType!]!
+  participantRemovedFrequencyContinually:    String
+  participantRemovedFrequencyOther:          String
+  participantRemovedFrequencyNote:           String
+  communicationMethod:   [ParticipantCommunicationType!]!
+  communicationMethodOther:   String
+  communicationNote:     String
+  riskType:              [ParticipantRiskType!]!
+  riskOther:             String
+  riskNote:              String
+  willRiskChange:        Boolean
+  willRiskChangeNote:    String
+
+  #Page 4
+  coordinateWork:          Boolean
+  coordinateWorkNote:      String
+  gainsharePayments:       Boolean
+  gainsharePaymentsTrack: Boolean
+  gainsharePaymentsNote:   String
+  gainsharePaymentsEligibility: [GainshareArrangementEligibility!]!
+  gainsharePaymentsEligibilityOther: String
+  participantsIds:         [ParticipantsIDType!]!
+  participantsIdsOther:    String
+  participantsIDSNote:     String
+
+  #Page 5
+  providerAdditionFrequency:      [FrequencyType!]!
+  providerAdditionFrequencyContinually: String
+  providerAdditionFrequencyOther: String
+  providerAdditionFrequencyNote:  String
+  providerAddMethod:              [ProviderAddType!]!
+  providerAddMethodOther:         String
+  providerAddMethodNote:          String
+  providerLeaveMethod:            [ProviderLeaveType!]!
+  providerLeaveMethodOther:       String
+  providerLeaveMethodNote:        String
+  providerRemovalFrequency:       [FrequencyType!]!
+  providerRemovalFrequencyContinually: String
+  providerRemovalFrequencyOther:  String
+  providerRemovalFrequencyNote:   String
+  providerOverlap:                OverlapType
+  providerOverlapHierarchy:       String
+  providerOverlapNote:            String
+
+
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
+
+  readyForReviewBy: UUID
+  readyForReviewByUserAccount: UserAccount
+  readyForReviewDts: Time
+  readyForClearanceBy: UUID
+  readyForClearanceByUserAccount: UserAccount
+  readyForClearanceDts: Time
+
+  status: TaskStatus!
+}
+
+"""
+PlanParticipantsAndProvidersChanges represents the possible changes you can make to a
+providers and participants object when updating it.
+Fields explicitly set with NULL will be unset, and omitted fields will be left unchanged.
+https://gqlgen.com/reference/changesets/
+"""
+input PlanParticipantsAndProvidersChanges @goModel(model: "map[string]interface{}") {
+  #Page 1
+  participants:                      [ParticipantsType!]
+  medicareProviderType:              String
+  statesEngagement:                  String
+  participantsOther:                 String
+  participantsNote:                  String
+  participantsCurrentlyInModels:     Boolean
+  participantsCurrentlyInModelsNote: String
+  modelApplicationLevel:             String
+
+  #Page 2
+  expectedNumberOfParticipants: Int
+  estimateConfidence:           ConfidenceType
+  confidenceNote:               String
+  recruitmentMethod:            RecruitmentType
+  recruitmentOther:             String
+  recruitmentNote:              String
+  selectionMethod:              [ParticipantSelectionType!]
+  selectionOther:               String
+  selectionNote:                String
+
+  #Page 3
+  participantAddedFrequency:                 [FrequencyType!]
+  participantAddedFrequencyContinually:      String
+  participantAddedFrequencyOther:            String
+  participantAddedFrequencyNote:             String
+  participantRemovedFrequency:               [FrequencyType!]
+  participantRemovedFrequencyContinually:    String
+  participantRemovedFrequencyOther:          String
+  participantRemovedFrequencyNote:           String
+  communicationMethod:   [ParticipantCommunicationType!]
+  communicationMethodOther:   String
+  communicationNote:     String
+  riskType:              [ParticipantRiskType!]
+  riskOther:             String
+  riskNote:              String
+  willRiskChange:        Boolean
+  willRiskChangeNote:    String
+
+  #Page 4
+  coordinateWork:          Boolean
+  coordinateWorkNote:      String
+  gainsharePayments:       Boolean
+  gainsharePaymentsTrack: Boolean
+  gainsharePaymentsNote:   String
+  gainsharePaymentsEligibility: [GainshareArrangementEligibility!]
+  gainsharePaymentsEligibilityOther: String
+  participantsIds:         [ParticipantsIDType!]
+  participantsIdsOther:    String
+  participantsIDSNote:     String
+
+  #Page 5
+  providerAdditionFrequency:      [FrequencyType!]
+  providerAdditionFrequencyContinually: String
+  providerAdditionFrequencyOther: String
+  providerAdditionFrequencyNote:  String
+  providerAddMethod:              [ProviderAddType!]
+  providerAddMethodOther:         String
+  providerAddMethodNote:          String
+  providerLeaveMethod:            [ProviderLeaveType!]
+  providerLeaveMethodOther:       String
+  providerLeaveMethodNote:        String
+  providerRemovalFrequency:       [FrequencyType!]
+  providerRemovalFrequencyContinually: String
+  providerRemovalFrequencyOther:  String
+  providerRemovalFrequencyNote:   String
+  providerOverlap:                OverlapType
+  providerOverlapHierarchy:       String
+  providerOverlapNote:            String
+
+  status: TaskStatusInput
+}
+
+extend type Mutation {
+  updatePlanParticipantsAndProviders(id: UUID!, changes: PlanParticipantsAndProvidersChanges!): PlanParticipantsAndProviders!
   @hasRole(role: MINT_USER)
 }`, BuiltIn: false},
 	{Name: "../schema/types/scalars.graphql", Input: `"""
@@ -20715,237 +20759,6 @@ func (ec *executionContext) fieldContext_Mutation_updatePlanBeneficiaries(ctx co
 	return fc, nil
 }
 
-func (ec *executionContext) _Mutation_updatePlanParticipantsAndProviders(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Mutation_updatePlanParticipantsAndProviders(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		directive0 := func(rctx context.Context) (interface{}, error) {
-			ctx = rctx // use context from middleware stack in children
-			return ec.resolvers.Mutation().UpdatePlanParticipantsAndProviders(rctx, fc.Args["id"].(uuid.UUID), fc.Args["changes"].(map[string]interface{}))
-		}
-		directive1 := func(ctx context.Context) (interface{}, error) {
-			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
-			if err != nil {
-				return nil, err
-			}
-			if ec.directives.HasRole == nil {
-				return nil, errors.New("directive hasRole is not implemented")
-			}
-			return ec.directives.HasRole(ctx, nil, directive0, role)
-		}
-
-		tmp, err := directive1(rctx)
-		if err != nil {
-			return nil, graphql.ErrorOnPath(ctx, err)
-		}
-		if tmp == nil {
-			return nil, nil
-		}
-		if data, ok := tmp.(*models.PlanParticipantsAndProviders); ok {
-			return data, nil
-		}
-		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/cmsgov/mint-app/pkg/models.PlanParticipantsAndProviders`, tmp)
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(*models.PlanParticipantsAndProviders)
-	fc.Result = res
-	return ec.marshalNPlanParticipantsAndProviders2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanParticipantsAndProviders(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_Mutation_updatePlanParticipantsAndProviders(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "Mutation",
-		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			switch field.Name {
-			case "id":
-				return ec.fieldContext_PlanParticipantsAndProviders_id(ctx, field)
-			case "modelPlanID":
-				return ec.fieldContext_PlanParticipantsAndProviders_modelPlanID(ctx, field)
-			case "participants":
-				return ec.fieldContext_PlanParticipantsAndProviders_participants(ctx, field)
-			case "medicareProviderType":
-				return ec.fieldContext_PlanParticipantsAndProviders_medicareProviderType(ctx, field)
-			case "statesEngagement":
-				return ec.fieldContext_PlanParticipantsAndProviders_statesEngagement(ctx, field)
-			case "participantsOther":
-				return ec.fieldContext_PlanParticipantsAndProviders_participantsOther(ctx, field)
-			case "participantsNote":
-				return ec.fieldContext_PlanParticipantsAndProviders_participantsNote(ctx, field)
-			case "participantsCurrentlyInModels":
-				return ec.fieldContext_PlanParticipantsAndProviders_participantsCurrentlyInModels(ctx, field)
-			case "participantsCurrentlyInModelsNote":
-				return ec.fieldContext_PlanParticipantsAndProviders_participantsCurrentlyInModelsNote(ctx, field)
-			case "modelApplicationLevel":
-				return ec.fieldContext_PlanParticipantsAndProviders_modelApplicationLevel(ctx, field)
-			case "expectedNumberOfParticipants":
-				return ec.fieldContext_PlanParticipantsAndProviders_expectedNumberOfParticipants(ctx, field)
-			case "estimateConfidence":
-				return ec.fieldContext_PlanParticipantsAndProviders_estimateConfidence(ctx, field)
-			case "confidenceNote":
-				return ec.fieldContext_PlanParticipantsAndProviders_confidenceNote(ctx, field)
-			case "recruitmentMethod":
-				return ec.fieldContext_PlanParticipantsAndProviders_recruitmentMethod(ctx, field)
-			case "recruitmentOther":
-				return ec.fieldContext_PlanParticipantsAndProviders_recruitmentOther(ctx, field)
-			case "recruitmentNote":
-				return ec.fieldContext_PlanParticipantsAndProviders_recruitmentNote(ctx, field)
-			case "selectionMethod":
-				return ec.fieldContext_PlanParticipantsAndProviders_selectionMethod(ctx, field)
-			case "selectionOther":
-				return ec.fieldContext_PlanParticipantsAndProviders_selectionOther(ctx, field)
-			case "selectionNote":
-				return ec.fieldContext_PlanParticipantsAndProviders_selectionNote(ctx, field)
-			case "participantAddedFrequency":
-				return ec.fieldContext_PlanParticipantsAndProviders_participantAddedFrequency(ctx, field)
-			case "participantAddedFrequencyContinually":
-				return ec.fieldContext_PlanParticipantsAndProviders_participantAddedFrequencyContinually(ctx, field)
-			case "participantAddedFrequencyOther":
-				return ec.fieldContext_PlanParticipantsAndProviders_participantAddedFrequencyOther(ctx, field)
-			case "participantAddedFrequencyNote":
-				return ec.fieldContext_PlanParticipantsAndProviders_participantAddedFrequencyNote(ctx, field)
-			case "participantRemovedFrequency":
-				return ec.fieldContext_PlanParticipantsAndProviders_participantRemovedFrequency(ctx, field)
-			case "participantRemovedFrequencyContinually":
-				return ec.fieldContext_PlanParticipantsAndProviders_participantRemovedFrequencyContinually(ctx, field)
-			case "participantRemovedFrequencyOther":
-				return ec.fieldContext_PlanParticipantsAndProviders_participantRemovedFrequencyOther(ctx, field)
-			case "participantRemovedFrequencyNote":
-				return ec.fieldContext_PlanParticipantsAndProviders_participantRemovedFrequencyNote(ctx, field)
-			case "communicationMethod":
-				return ec.fieldContext_PlanParticipantsAndProviders_communicationMethod(ctx, field)
-			case "communicationMethodOther":
-				return ec.fieldContext_PlanParticipantsAndProviders_communicationMethodOther(ctx, field)
-			case "communicationNote":
-				return ec.fieldContext_PlanParticipantsAndProviders_communicationNote(ctx, field)
-			case "riskType":
-				return ec.fieldContext_PlanParticipantsAndProviders_riskType(ctx, field)
-			case "riskOther":
-				return ec.fieldContext_PlanParticipantsAndProviders_riskOther(ctx, field)
-			case "riskNote":
-				return ec.fieldContext_PlanParticipantsAndProviders_riskNote(ctx, field)
-			case "willRiskChange":
-				return ec.fieldContext_PlanParticipantsAndProviders_willRiskChange(ctx, field)
-			case "willRiskChangeNote":
-				return ec.fieldContext_PlanParticipantsAndProviders_willRiskChangeNote(ctx, field)
-			case "coordinateWork":
-				return ec.fieldContext_PlanParticipantsAndProviders_coordinateWork(ctx, field)
-			case "coordinateWorkNote":
-				return ec.fieldContext_PlanParticipantsAndProviders_coordinateWorkNote(ctx, field)
-			case "gainsharePayments":
-				return ec.fieldContext_PlanParticipantsAndProviders_gainsharePayments(ctx, field)
-			case "gainsharePaymentsTrack":
-				return ec.fieldContext_PlanParticipantsAndProviders_gainsharePaymentsTrack(ctx, field)
-			case "gainsharePaymentsNote":
-				return ec.fieldContext_PlanParticipantsAndProviders_gainsharePaymentsNote(ctx, field)
-			case "gainsharePaymentsEligibility":
-				return ec.fieldContext_PlanParticipantsAndProviders_gainsharePaymentsEligibility(ctx, field)
-			case "gainsharePaymentsEligibilityOther":
-				return ec.fieldContext_PlanParticipantsAndProviders_gainsharePaymentsEligibilityOther(ctx, field)
-			case "participantsIds":
-				return ec.fieldContext_PlanParticipantsAndProviders_participantsIds(ctx, field)
-			case "participantsIdsOther":
-				return ec.fieldContext_PlanParticipantsAndProviders_participantsIdsOther(ctx, field)
-			case "participantsIDSNote":
-				return ec.fieldContext_PlanParticipantsAndProviders_participantsIDSNote(ctx, field)
-			case "providerAdditionFrequency":
-				return ec.fieldContext_PlanParticipantsAndProviders_providerAdditionFrequency(ctx, field)
-			case "providerAdditionFrequencyContinually":
-				return ec.fieldContext_PlanParticipantsAndProviders_providerAdditionFrequencyContinually(ctx, field)
-			case "providerAdditionFrequencyOther":
-				return ec.fieldContext_PlanParticipantsAndProviders_providerAdditionFrequencyOther(ctx, field)
-			case "providerAdditionFrequencyNote":
-				return ec.fieldContext_PlanParticipantsAndProviders_providerAdditionFrequencyNote(ctx, field)
-			case "providerAddMethod":
-				return ec.fieldContext_PlanParticipantsAndProviders_providerAddMethod(ctx, field)
-			case "providerAddMethodOther":
-				return ec.fieldContext_PlanParticipantsAndProviders_providerAddMethodOther(ctx, field)
-			case "providerAddMethodNote":
-				return ec.fieldContext_PlanParticipantsAndProviders_providerAddMethodNote(ctx, field)
-			case "providerLeaveMethod":
-				return ec.fieldContext_PlanParticipantsAndProviders_providerLeaveMethod(ctx, field)
-			case "providerLeaveMethodOther":
-				return ec.fieldContext_PlanParticipantsAndProviders_providerLeaveMethodOther(ctx, field)
-			case "providerLeaveMethodNote":
-				return ec.fieldContext_PlanParticipantsAndProviders_providerLeaveMethodNote(ctx, field)
-			case "providerRemovalFrequency":
-				return ec.fieldContext_PlanParticipantsAndProviders_providerRemovalFrequency(ctx, field)
-			case "providerRemovalFrequencyContinually":
-				return ec.fieldContext_PlanParticipantsAndProviders_providerRemovalFrequencyContinually(ctx, field)
-			case "providerRemovalFrequencyOther":
-				return ec.fieldContext_PlanParticipantsAndProviders_providerRemovalFrequencyOther(ctx, field)
-			case "providerRemovalFrequencyNote":
-				return ec.fieldContext_PlanParticipantsAndProviders_providerRemovalFrequencyNote(ctx, field)
-			case "providerOverlap":
-				return ec.fieldContext_PlanParticipantsAndProviders_providerOverlap(ctx, field)
-			case "providerOverlapHierarchy":
-				return ec.fieldContext_PlanParticipantsAndProviders_providerOverlapHierarchy(ctx, field)
-			case "providerOverlapNote":
-				return ec.fieldContext_PlanParticipantsAndProviders_providerOverlapNote(ctx, field)
-			case "createdBy":
-				return ec.fieldContext_PlanParticipantsAndProviders_createdBy(ctx, field)
-			case "createdByUserAccount":
-				return ec.fieldContext_PlanParticipantsAndProviders_createdByUserAccount(ctx, field)
-			case "createdDts":
-				return ec.fieldContext_PlanParticipantsAndProviders_createdDts(ctx, field)
-			case "modifiedBy":
-				return ec.fieldContext_PlanParticipantsAndProviders_modifiedBy(ctx, field)
-			case "modifiedByUserAccount":
-				return ec.fieldContext_PlanParticipantsAndProviders_modifiedByUserAccount(ctx, field)
-			case "modifiedDts":
-				return ec.fieldContext_PlanParticipantsAndProviders_modifiedDts(ctx, field)
-			case "readyForReviewBy":
-				return ec.fieldContext_PlanParticipantsAndProviders_readyForReviewBy(ctx, field)
-			case "readyForReviewByUserAccount":
-				return ec.fieldContext_PlanParticipantsAndProviders_readyForReviewByUserAccount(ctx, field)
-			case "readyForReviewDts":
-				return ec.fieldContext_PlanParticipantsAndProviders_readyForReviewDts(ctx, field)
-			case "readyForClearanceBy":
-				return ec.fieldContext_PlanParticipantsAndProviders_readyForClearanceBy(ctx, field)
-			case "readyForClearanceByUserAccount":
-				return ec.fieldContext_PlanParticipantsAndProviders_readyForClearanceByUserAccount(ctx, field)
-			case "readyForClearanceDts":
-				return ec.fieldContext_PlanParticipantsAndProviders_readyForClearanceDts(ctx, field)
-			case "status":
-				return ec.fieldContext_PlanParticipantsAndProviders_status(ctx, field)
-			}
-			return nil, fmt.Errorf("no field named %q was found under type PlanParticipantsAndProviders", field.Name)
-		},
-	}
-	defer func() {
-		if r := recover(); r != nil {
-			err = ec.Recover(ctx, r)
-			ec.Error(ctx, err)
-		}
-	}()
-	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Mutation_updatePlanParticipantsAndProviders_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
-		ec.Error(ctx, err)
-		return fc, err
-	}
-	return fc, nil
-}
-
 func (ec *executionContext) _Mutation_uploadNewPlanDocument(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_Mutation_uploadNewPlanDocument(ctx, field)
 	if err != nil {
@@ -25123,6 +24936,237 @@ func (ec *executionContext) fieldContext_Mutation_updatePlanOpsEvalAndLearning(c
 	}()
 	ctx = graphql.WithFieldContext(ctx, fc)
 	if fc.Args, err = ec.field_Mutation_updatePlanOpsEvalAndLearning_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Mutation_updatePlanParticipantsAndProviders(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Mutation_updatePlanParticipantsAndProviders(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		directive0 := func(rctx context.Context) (interface{}, error) {
+			ctx = rctx // use context from middleware stack in children
+			return ec.resolvers.Mutation().UpdatePlanParticipantsAndProviders(rctx, fc.Args["id"].(uuid.UUID), fc.Args["changes"].(map[string]interface{}))
+		}
+		directive1 := func(ctx context.Context) (interface{}, error) {
+			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
+			if err != nil {
+				return nil, err
+			}
+			if ec.directives.HasRole == nil {
+				return nil, errors.New("directive hasRole is not implemented")
+			}
+			return ec.directives.HasRole(ctx, nil, directive0, role)
+		}
+
+		tmp, err := directive1(rctx)
+		if err != nil {
+			return nil, graphql.ErrorOnPath(ctx, err)
+		}
+		if tmp == nil {
+			return nil, nil
+		}
+		if data, ok := tmp.(*models.PlanParticipantsAndProviders); ok {
+			return data, nil
+		}
+		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/cmsgov/mint-app/pkg/models.PlanParticipantsAndProviders`, tmp)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*models.PlanParticipantsAndProviders)
+	fc.Result = res
+	return ec.marshalNPlanParticipantsAndProviders2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanParticipantsAndProviders(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Mutation_updatePlanParticipantsAndProviders(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Mutation",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_PlanParticipantsAndProviders_id(ctx, field)
+			case "modelPlanID":
+				return ec.fieldContext_PlanParticipantsAndProviders_modelPlanID(ctx, field)
+			case "participants":
+				return ec.fieldContext_PlanParticipantsAndProviders_participants(ctx, field)
+			case "medicareProviderType":
+				return ec.fieldContext_PlanParticipantsAndProviders_medicareProviderType(ctx, field)
+			case "statesEngagement":
+				return ec.fieldContext_PlanParticipantsAndProviders_statesEngagement(ctx, field)
+			case "participantsOther":
+				return ec.fieldContext_PlanParticipantsAndProviders_participantsOther(ctx, field)
+			case "participantsNote":
+				return ec.fieldContext_PlanParticipantsAndProviders_participantsNote(ctx, field)
+			case "participantsCurrentlyInModels":
+				return ec.fieldContext_PlanParticipantsAndProviders_participantsCurrentlyInModels(ctx, field)
+			case "participantsCurrentlyInModelsNote":
+				return ec.fieldContext_PlanParticipantsAndProviders_participantsCurrentlyInModelsNote(ctx, field)
+			case "modelApplicationLevel":
+				return ec.fieldContext_PlanParticipantsAndProviders_modelApplicationLevel(ctx, field)
+			case "expectedNumberOfParticipants":
+				return ec.fieldContext_PlanParticipantsAndProviders_expectedNumberOfParticipants(ctx, field)
+			case "estimateConfidence":
+				return ec.fieldContext_PlanParticipantsAndProviders_estimateConfidence(ctx, field)
+			case "confidenceNote":
+				return ec.fieldContext_PlanParticipantsAndProviders_confidenceNote(ctx, field)
+			case "recruitmentMethod":
+				return ec.fieldContext_PlanParticipantsAndProviders_recruitmentMethod(ctx, field)
+			case "recruitmentOther":
+				return ec.fieldContext_PlanParticipantsAndProviders_recruitmentOther(ctx, field)
+			case "recruitmentNote":
+				return ec.fieldContext_PlanParticipantsAndProviders_recruitmentNote(ctx, field)
+			case "selectionMethod":
+				return ec.fieldContext_PlanParticipantsAndProviders_selectionMethod(ctx, field)
+			case "selectionOther":
+				return ec.fieldContext_PlanParticipantsAndProviders_selectionOther(ctx, field)
+			case "selectionNote":
+				return ec.fieldContext_PlanParticipantsAndProviders_selectionNote(ctx, field)
+			case "participantAddedFrequency":
+				return ec.fieldContext_PlanParticipantsAndProviders_participantAddedFrequency(ctx, field)
+			case "participantAddedFrequencyContinually":
+				return ec.fieldContext_PlanParticipantsAndProviders_participantAddedFrequencyContinually(ctx, field)
+			case "participantAddedFrequencyOther":
+				return ec.fieldContext_PlanParticipantsAndProviders_participantAddedFrequencyOther(ctx, field)
+			case "participantAddedFrequencyNote":
+				return ec.fieldContext_PlanParticipantsAndProviders_participantAddedFrequencyNote(ctx, field)
+			case "participantRemovedFrequency":
+				return ec.fieldContext_PlanParticipantsAndProviders_participantRemovedFrequency(ctx, field)
+			case "participantRemovedFrequencyContinually":
+				return ec.fieldContext_PlanParticipantsAndProviders_participantRemovedFrequencyContinually(ctx, field)
+			case "participantRemovedFrequencyOther":
+				return ec.fieldContext_PlanParticipantsAndProviders_participantRemovedFrequencyOther(ctx, field)
+			case "participantRemovedFrequencyNote":
+				return ec.fieldContext_PlanParticipantsAndProviders_participantRemovedFrequencyNote(ctx, field)
+			case "communicationMethod":
+				return ec.fieldContext_PlanParticipantsAndProviders_communicationMethod(ctx, field)
+			case "communicationMethodOther":
+				return ec.fieldContext_PlanParticipantsAndProviders_communicationMethodOther(ctx, field)
+			case "communicationNote":
+				return ec.fieldContext_PlanParticipantsAndProviders_communicationNote(ctx, field)
+			case "riskType":
+				return ec.fieldContext_PlanParticipantsAndProviders_riskType(ctx, field)
+			case "riskOther":
+				return ec.fieldContext_PlanParticipantsAndProviders_riskOther(ctx, field)
+			case "riskNote":
+				return ec.fieldContext_PlanParticipantsAndProviders_riskNote(ctx, field)
+			case "willRiskChange":
+				return ec.fieldContext_PlanParticipantsAndProviders_willRiskChange(ctx, field)
+			case "willRiskChangeNote":
+				return ec.fieldContext_PlanParticipantsAndProviders_willRiskChangeNote(ctx, field)
+			case "coordinateWork":
+				return ec.fieldContext_PlanParticipantsAndProviders_coordinateWork(ctx, field)
+			case "coordinateWorkNote":
+				return ec.fieldContext_PlanParticipantsAndProviders_coordinateWorkNote(ctx, field)
+			case "gainsharePayments":
+				return ec.fieldContext_PlanParticipantsAndProviders_gainsharePayments(ctx, field)
+			case "gainsharePaymentsTrack":
+				return ec.fieldContext_PlanParticipantsAndProviders_gainsharePaymentsTrack(ctx, field)
+			case "gainsharePaymentsNote":
+				return ec.fieldContext_PlanParticipantsAndProviders_gainsharePaymentsNote(ctx, field)
+			case "gainsharePaymentsEligibility":
+				return ec.fieldContext_PlanParticipantsAndProviders_gainsharePaymentsEligibility(ctx, field)
+			case "gainsharePaymentsEligibilityOther":
+				return ec.fieldContext_PlanParticipantsAndProviders_gainsharePaymentsEligibilityOther(ctx, field)
+			case "participantsIds":
+				return ec.fieldContext_PlanParticipantsAndProviders_participantsIds(ctx, field)
+			case "participantsIdsOther":
+				return ec.fieldContext_PlanParticipantsAndProviders_participantsIdsOther(ctx, field)
+			case "participantsIDSNote":
+				return ec.fieldContext_PlanParticipantsAndProviders_participantsIDSNote(ctx, field)
+			case "providerAdditionFrequency":
+				return ec.fieldContext_PlanParticipantsAndProviders_providerAdditionFrequency(ctx, field)
+			case "providerAdditionFrequencyContinually":
+				return ec.fieldContext_PlanParticipantsAndProviders_providerAdditionFrequencyContinually(ctx, field)
+			case "providerAdditionFrequencyOther":
+				return ec.fieldContext_PlanParticipantsAndProviders_providerAdditionFrequencyOther(ctx, field)
+			case "providerAdditionFrequencyNote":
+				return ec.fieldContext_PlanParticipantsAndProviders_providerAdditionFrequencyNote(ctx, field)
+			case "providerAddMethod":
+				return ec.fieldContext_PlanParticipantsAndProviders_providerAddMethod(ctx, field)
+			case "providerAddMethodOther":
+				return ec.fieldContext_PlanParticipantsAndProviders_providerAddMethodOther(ctx, field)
+			case "providerAddMethodNote":
+				return ec.fieldContext_PlanParticipantsAndProviders_providerAddMethodNote(ctx, field)
+			case "providerLeaveMethod":
+				return ec.fieldContext_PlanParticipantsAndProviders_providerLeaveMethod(ctx, field)
+			case "providerLeaveMethodOther":
+				return ec.fieldContext_PlanParticipantsAndProviders_providerLeaveMethodOther(ctx, field)
+			case "providerLeaveMethodNote":
+				return ec.fieldContext_PlanParticipantsAndProviders_providerLeaveMethodNote(ctx, field)
+			case "providerRemovalFrequency":
+				return ec.fieldContext_PlanParticipantsAndProviders_providerRemovalFrequency(ctx, field)
+			case "providerRemovalFrequencyContinually":
+				return ec.fieldContext_PlanParticipantsAndProviders_providerRemovalFrequencyContinually(ctx, field)
+			case "providerRemovalFrequencyOther":
+				return ec.fieldContext_PlanParticipantsAndProviders_providerRemovalFrequencyOther(ctx, field)
+			case "providerRemovalFrequencyNote":
+				return ec.fieldContext_PlanParticipantsAndProviders_providerRemovalFrequencyNote(ctx, field)
+			case "providerOverlap":
+				return ec.fieldContext_PlanParticipantsAndProviders_providerOverlap(ctx, field)
+			case "providerOverlapHierarchy":
+				return ec.fieldContext_PlanParticipantsAndProviders_providerOverlapHierarchy(ctx, field)
+			case "providerOverlapNote":
+				return ec.fieldContext_PlanParticipantsAndProviders_providerOverlapNote(ctx, field)
+			case "createdBy":
+				return ec.fieldContext_PlanParticipantsAndProviders_createdBy(ctx, field)
+			case "createdByUserAccount":
+				return ec.fieldContext_PlanParticipantsAndProviders_createdByUserAccount(ctx, field)
+			case "createdDts":
+				return ec.fieldContext_PlanParticipantsAndProviders_createdDts(ctx, field)
+			case "modifiedBy":
+				return ec.fieldContext_PlanParticipantsAndProviders_modifiedBy(ctx, field)
+			case "modifiedByUserAccount":
+				return ec.fieldContext_PlanParticipantsAndProviders_modifiedByUserAccount(ctx, field)
+			case "modifiedDts":
+				return ec.fieldContext_PlanParticipantsAndProviders_modifiedDts(ctx, field)
+			case "readyForReviewBy":
+				return ec.fieldContext_PlanParticipantsAndProviders_readyForReviewBy(ctx, field)
+			case "readyForReviewByUserAccount":
+				return ec.fieldContext_PlanParticipantsAndProviders_readyForReviewByUserAccount(ctx, field)
+			case "readyForReviewDts":
+				return ec.fieldContext_PlanParticipantsAndProviders_readyForReviewDts(ctx, field)
+			case "readyForClearanceBy":
+				return ec.fieldContext_PlanParticipantsAndProviders_readyForClearanceBy(ctx, field)
+			case "readyForClearanceByUserAccount":
+				return ec.fieldContext_PlanParticipantsAndProviders_readyForClearanceByUserAccount(ctx, field)
+			case "readyForClearanceDts":
+				return ec.fieldContext_PlanParticipantsAndProviders_readyForClearanceDts(ctx, field)
+			case "status":
+				return ec.fieldContext_PlanParticipantsAndProviders_status(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type PlanParticipantsAndProviders", field.Name)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Mutation_updatePlanParticipantsAndProviders_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
 		ec.Error(ctx, err)
 		return fc, err
 	}
@@ -56492,6 +56536,150 @@ func (ec *executionContext) fieldContext_TaggedInDiscussionReplyActivityMeta_typ
 	return fc, nil
 }
 
+func (ec *executionContext) _TaggedInDiscussionReplyActivityMeta_modelPlanID(ctx context.Context, field graphql.CollectedField, obj *models.TaggedInDiscussionReplyActivityMeta) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_TaggedInDiscussionReplyActivityMeta_modelPlanID(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ModelPlanID, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(uuid.UUID)
+	fc.Result = res
+	return ec.marshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_TaggedInDiscussionReplyActivityMeta_modelPlanID(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "TaggedInDiscussionReplyActivityMeta",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type UUID does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _TaggedInDiscussionReplyActivityMeta_modelPlan(ctx context.Context, field graphql.CollectedField, obj *models.TaggedInDiscussionReplyActivityMeta) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_TaggedInDiscussionReplyActivityMeta_modelPlan(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.TaggedInDiscussionReplyActivityMeta().ModelPlan(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*models.ModelPlan)
+	fc.Result = res
+	return ec.marshalNModelPlan2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐModelPlan(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_TaggedInDiscussionReplyActivityMeta_modelPlan(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "TaggedInDiscussionReplyActivityMeta",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_ModelPlan_id(ctx, field)
+			case "modelName":
+				return ec.fieldContext_ModelPlan_modelName(ctx, field)
+			case "abbreviation":
+				return ec.fieldContext_ModelPlan_abbreviation(ctx, field)
+			case "archived":
+				return ec.fieldContext_ModelPlan_archived(ctx, field)
+			case "createdBy":
+				return ec.fieldContext_ModelPlan_createdBy(ctx, field)
+			case "createdByUserAccount":
+				return ec.fieldContext_ModelPlan_createdByUserAccount(ctx, field)
+			case "createdDts":
+				return ec.fieldContext_ModelPlan_createdDts(ctx, field)
+			case "modifiedBy":
+				return ec.fieldContext_ModelPlan_modifiedBy(ctx, field)
+			case "modifiedByUserAccount":
+				return ec.fieldContext_ModelPlan_modifiedByUserAccount(ctx, field)
+			case "modifiedDts":
+				return ec.fieldContext_ModelPlan_modifiedDts(ctx, field)
+			case "basics":
+				return ec.fieldContext_ModelPlan_basics(ctx, field)
+			case "generalCharacteristics":
+				return ec.fieldContext_ModelPlan_generalCharacteristics(ctx, field)
+			case "participantsAndProviders":
+				return ec.fieldContext_ModelPlan_participantsAndProviders(ctx, field)
+			case "beneficiaries":
+				return ec.fieldContext_ModelPlan_beneficiaries(ctx, field)
+			case "opsEvalAndLearning":
+				return ec.fieldContext_ModelPlan_opsEvalAndLearning(ctx, field)
+			case "collaborators":
+				return ec.fieldContext_ModelPlan_collaborators(ctx, field)
+			case "documents":
+				return ec.fieldContext_ModelPlan_documents(ctx, field)
+			case "discussions":
+				return ec.fieldContext_ModelPlan_discussions(ctx, field)
+			case "payments":
+				return ec.fieldContext_ModelPlan_payments(ctx, field)
+			case "status":
+				return ec.fieldContext_ModelPlan_status(ctx, field)
+			case "isFavorite":
+				return ec.fieldContext_ModelPlan_isFavorite(ctx, field)
+			case "isCollaborator":
+				return ec.fieldContext_ModelPlan_isCollaborator(ctx, field)
+			case "crs":
+				return ec.fieldContext_ModelPlan_crs(ctx, field)
+			case "tdls":
+				return ec.fieldContext_ModelPlan_tdls(ctx, field)
+			case "prepareForClearance":
+				return ec.fieldContext_ModelPlan_prepareForClearance(ctx, field)
+			case "nameHistory":
+				return ec.fieldContext_ModelPlan_nameHistory(ctx, field)
+			case "operationalNeeds":
+				return ec.fieldContext_ModelPlan_operationalNeeds(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type ModelPlan", field.Name)
+		},
+	}
+	return fc, nil
+}
+
 func (ec *executionContext) _TaggedInDiscussionReplyActivityMeta_discussionID(ctx context.Context, field graphql.CollectedField, obj *models.TaggedInDiscussionReplyActivityMeta) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_TaggedInDiscussionReplyActivityMeta_discussionID(ctx, field)
 	if err != nil {
@@ -56849,6 +57037,150 @@ func (ec *executionContext) fieldContext_TaggedInPlanDiscussionActivityMeta_type
 		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return nil, errors.New("field of type ActivityType does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _TaggedInPlanDiscussionActivityMeta_modelPlanID(ctx context.Context, field graphql.CollectedField, obj *models.TaggedInPlanDiscussionActivityMeta) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_TaggedInPlanDiscussionActivityMeta_modelPlanID(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ModelPlanID, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(uuid.UUID)
+	fc.Result = res
+	return ec.marshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_TaggedInPlanDiscussionActivityMeta_modelPlanID(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "TaggedInPlanDiscussionActivityMeta",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type UUID does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _TaggedInPlanDiscussionActivityMeta_modelPlan(ctx context.Context, field graphql.CollectedField, obj *models.TaggedInPlanDiscussionActivityMeta) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_TaggedInPlanDiscussionActivityMeta_modelPlan(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.TaggedInPlanDiscussionActivityMeta().ModelPlan(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*models.ModelPlan)
+	fc.Result = res
+	return ec.marshalNModelPlan2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐModelPlan(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_TaggedInPlanDiscussionActivityMeta_modelPlan(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "TaggedInPlanDiscussionActivityMeta",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_ModelPlan_id(ctx, field)
+			case "modelName":
+				return ec.fieldContext_ModelPlan_modelName(ctx, field)
+			case "abbreviation":
+				return ec.fieldContext_ModelPlan_abbreviation(ctx, field)
+			case "archived":
+				return ec.fieldContext_ModelPlan_archived(ctx, field)
+			case "createdBy":
+				return ec.fieldContext_ModelPlan_createdBy(ctx, field)
+			case "createdByUserAccount":
+				return ec.fieldContext_ModelPlan_createdByUserAccount(ctx, field)
+			case "createdDts":
+				return ec.fieldContext_ModelPlan_createdDts(ctx, field)
+			case "modifiedBy":
+				return ec.fieldContext_ModelPlan_modifiedBy(ctx, field)
+			case "modifiedByUserAccount":
+				return ec.fieldContext_ModelPlan_modifiedByUserAccount(ctx, field)
+			case "modifiedDts":
+				return ec.fieldContext_ModelPlan_modifiedDts(ctx, field)
+			case "basics":
+				return ec.fieldContext_ModelPlan_basics(ctx, field)
+			case "generalCharacteristics":
+				return ec.fieldContext_ModelPlan_generalCharacteristics(ctx, field)
+			case "participantsAndProviders":
+				return ec.fieldContext_ModelPlan_participantsAndProviders(ctx, field)
+			case "beneficiaries":
+				return ec.fieldContext_ModelPlan_beneficiaries(ctx, field)
+			case "opsEvalAndLearning":
+				return ec.fieldContext_ModelPlan_opsEvalAndLearning(ctx, field)
+			case "collaborators":
+				return ec.fieldContext_ModelPlan_collaborators(ctx, field)
+			case "documents":
+				return ec.fieldContext_ModelPlan_documents(ctx, field)
+			case "discussions":
+				return ec.fieldContext_ModelPlan_discussions(ctx, field)
+			case "payments":
+				return ec.fieldContext_ModelPlan_payments(ctx, field)
+			case "status":
+				return ec.fieldContext_ModelPlan_status(ctx, field)
+			case "isFavorite":
+				return ec.fieldContext_ModelPlan_isFavorite(ctx, field)
+			case "isCollaborator":
+				return ec.fieldContext_ModelPlan_isCollaborator(ctx, field)
+			case "crs":
+				return ec.fieldContext_ModelPlan_crs(ctx, field)
+			case "tdls":
+				return ec.fieldContext_ModelPlan_tdls(ctx, field)
+			case "prepareForClearance":
+				return ec.fieldContext_ModelPlan_prepareForClearance(ctx, field)
+			case "nameHistory":
+				return ec.fieldContext_ModelPlan_nameHistory(ctx, field)
+			case "operationalNeeds":
+				return ec.fieldContext_ModelPlan_operationalNeeds(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type ModelPlan", field.Name)
 		},
 	}
 	return fc, nil
@@ -64609,13 +64941,6 @@ func (ec *executionContext) _Mutation(ctx context.Context, sel ast.SelectionSet)
 			if out.Values[i] == graphql.Null {
 				out.Invalids++
 			}
-		case "updatePlanParticipantsAndProviders":
-			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
-				return ec._Mutation_updatePlanParticipantsAndProviders(ctx, field)
-			})
-			if out.Values[i] == graphql.Null {
-				out.Invalids++
-			}
 		case "uploadNewPlanDocument":
 			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
 				return ec._Mutation_uploadNewPlanDocument(ctx, field)
@@ -64855,6 +65180,13 @@ func (ec *executionContext) _Mutation(ctx context.Context, sel ast.SelectionSet)
 		case "updatePlanOpsEvalAndLearning":
 			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
 				return ec._Mutation_updatePlanOpsEvalAndLearning(ctx, field)
+			})
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "updatePlanParticipantsAndProviders":
+			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
+				return ec._Mutation_updatePlanParticipantsAndProviders(ctx, field)
 			})
 			if out.Values[i] == graphql.Null {
 				out.Invalids++
@@ -72054,6 +72386,47 @@ func (ec *executionContext) _TaggedInDiscussionReplyActivityMeta(ctx context.Con
 			if out.Values[i] == graphql.Null {
 				atomic.AddUint32(&out.Invalids, 1)
 			}
+		case "modelPlanID":
+			out.Values[i] = ec._TaggedInDiscussionReplyActivityMeta_modelPlanID(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "modelPlan":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._TaggedInDiscussionReplyActivityMeta_modelPlan(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
+				return res
+			}
+
+			if field.Deferrable != nil {
+				dfs, ok := deferred[field.Deferrable.Label]
+				di := 0
+				if ok {
+					dfs.AddField(field)
+					di = len(dfs.Values) - 1
+				} else {
+					dfs = graphql.NewFieldSet([]graphql.CollectedField{field})
+					deferred[field.Deferrable.Label] = dfs
+				}
+				dfs.Concurrently(di, func(ctx context.Context) graphql.Marshaler {
+					return innerFunc(ctx, dfs)
+				})
+
+				// don't run the out.Concurrently() call below
+				out.Values[i] = graphql.Null
+				continue
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
 		case "discussionID":
 			out.Values[i] = ec._TaggedInDiscussionReplyActivityMeta_discussionID(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
@@ -72185,6 +72558,47 @@ func (ec *executionContext) _TaggedInPlanDiscussionActivityMeta(ctx context.Cont
 			if out.Values[i] == graphql.Null {
 				atomic.AddUint32(&out.Invalids, 1)
 			}
+		case "modelPlanID":
+			out.Values[i] = ec._TaggedInPlanDiscussionActivityMeta_modelPlanID(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "modelPlan":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._TaggedInPlanDiscussionActivityMeta_modelPlan(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
+				return res
+			}
+
+			if field.Deferrable != nil {
+				dfs, ok := deferred[field.Deferrable.Label]
+				di := 0
+				if ok {
+					dfs.AddField(field)
+					di = len(dfs.Values) - 1
+				} else {
+					dfs = graphql.NewFieldSet([]graphql.CollectedField{field})
+					deferred[field.Deferrable.Label] = dfs
+				}
+				dfs.Concurrently(di, func(ctx context.Context) graphql.Marshaler {
+					return innerFunc(ctx, dfs)
+				})
+
+				// don't run the out.Concurrently() call below
+				out.Values[i] = graphql.Null
+				continue
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
 		case "discussionID":
 			out.Values[i] = ec._TaggedInPlanDiscussionActivityMeta_discussionID(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
