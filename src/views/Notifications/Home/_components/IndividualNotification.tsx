@@ -5,6 +5,7 @@ import { Button, Grid, Icon } from '@trussworks/react-uswds';
 import { useMarkNotificationAsReadMutation } from 'gql/gen/graphql';
 import {
   GetNotifications_currentUser_notifications_notifications_activity as NotificationActivityType,
+  GetNotifications_currentUser_notifications_notifications_activity_metaData as MetaDataType,
   GetNotifications_currentUser_notifications_notifications_activity_metaData_ActivityMetaBaseStruct as BaseStructActivityType,
   GetNotifications_currentUser_notifications_notifications_activity_metaData_TaggedInDiscussionReplyActivityMeta as TaggedInDiscussionReplyActivityType,
   GetNotifications_currentUser_notifications_notifications_activity_metaData_TaggedInPlanDiscussionActivityMeta as TaggedInDiscussionActivityType
@@ -81,6 +82,30 @@ const IndividualNotification = ({
     return data.__typename === 'TaggedInDiscussionReplyActivityMeta';
   };
 
+  const activityText = (data: MetaDataType) => {
+    if (isTaggedInDiscussion(data)) {
+      return notificationsT('index.activityType.taggedInDiscussion.text', {
+        modelName: data.modelPlan.modelName
+      });
+    }
+    if (isTaggedInDiscussionReply(data)) {
+      return notificationsT('index.activityType.taggedInDiscussionReply.text', {
+        modelName: data.modelPlan.modelName
+      });
+    }
+    return '';
+  };
+
+  const activityCTA = (data: MetaDataType) => {
+    if (isTaggedInDiscussion(data)) {
+      return notificationsT('index.activityType.taggedInDiscussion.cta');
+    }
+    if (isTaggedInDiscussionReply(data)) {
+      return notificationsT('index.activityType.taggedInDiscussionReply.cta');
+    }
+    return '';
+  };
+
   return (
     <Grid row data-testid="individual-notification">
       <Grid desktop={{ col: 12 }} className="position-relative">
@@ -108,18 +133,15 @@ const IndividualNotification = ({
               >
                 {getUserInitials(commonName)}
               </div>
-              {isTaggedInDiscussion(metaData) && (
-                <div className="margin-top-05">
-                  <p className="line-height-sans-4 margin-left-1 margin-bottom-1 margin-top-0 ">
-                    <strong>{commonName}</strong>
-                    {notificationsT(
-                      'index.activityType.taggedInDiscussion.text',
-                      {
-                        modelName: metaData.modelPlan.modelName
-                      }
-                    )}
-                  </p>
-                  {!isMobile && (
+
+              <div className="margin-top-05">
+                <p className="line-height-sans-4 margin-left-1 margin-bottom-1 margin-top-0 ">
+                  <strong>{commonName}</strong>
+                  {activityText(metaData)}
+                </p>
+                {!isMobile &&
+                  (isTaggedInDiscussion(metaData) ||
+                    isTaggedInDiscussionReply(metaData)) && (
                     <MentionTextArea
                       className="notification__content text-base-darker"
                       id={`mention-${metaData.discussionID}`}
@@ -128,64 +150,27 @@ const IndividualNotification = ({
                     />
                   )}
 
-                  <Button
-                    type="button"
-                    unstyled
-                    className="display-flex flex-align-center"
-                    onClick={() => {
+                <Button
+                  type="button"
+                  unstyled
+                  className="display-flex flex-align-center"
+                  onClick={() => {
+                    if (
+                      isTaggedInDiscussion(metaData) ||
+                      isTaggedInDiscussionReply(metaData)
+                    ) {
                       handleMarkAsRead(
                         id,
                         metaData.modelPlanID,
                         metaData.discussionID
                       );
-                    }}
-                  >
-                    {notificationsT(
-                      'index.activityType.taggedInDiscussion.cta'
-                    )}
-                    <Icon.ArrowForward className="margin-left-1" aria-hidden />
-                  </Button>
-                </div>
-              )}
-              {isTaggedInDiscussionReply(metaData) && (
-                <div className="margin-top-05">
-                  <p className="line-height-sans-4 margin-left-1 margin-bottom-1 margin-top-0 ">
-                    <strong>{commonName}</strong>
-                    {notificationsT(
-                      'index.activityType.taggedInDiscussionReply.text',
-                      {
-                        modelName: metaData.modelPlan.modelName
-                      }
-                    )}
-                  </p>
-                  {!isMobile && (
-                    <MentionTextArea
-                      className="notification__content text-base-darker"
-                      id={`mention-${metaData.discussionID}`}
-                      editable={false}
-                      initialContent={`“${metaData.content}”`}
-                    />
-                  )}
-
-                  <Button
-                    type="button"
-                    unstyled
-                    className="display-flex flex-align-center"
-                    onClick={() => {
-                      handleMarkAsRead(
-                        id,
-                        metaData.modelPlanID,
-                        metaData.discussionID
-                      );
-                    }}
-                  >
-                    {notificationsT(
-                      'index.activityType.taggedInDiscussionReply.cta'
-                    )}
-                    <Icon.ArrowForward className="margin-left-1" aria-hidden />
-                  </Button>
-                </div>
-              )}
+                    }
+                  }}
+                >
+                  {activityCTA(metaData)}
+                  <Icon.ArrowForward className="margin-left-1" aria-hidden />
+                </Button>
+              </div>
             </div>
           </Grid>
           <Grid col="auto">
