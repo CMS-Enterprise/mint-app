@@ -17,7 +17,11 @@ import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import { getTimeElapsed } from 'utils/date';
 import { getUserInitials } from 'utils/modelPlan';
 
-import { isTaggedInDiscussion, isTaggedInDiscussionReply } from './_utils';
+import {
+  isDailyDigest,
+  isTaggedInDiscussion,
+  isTaggedInDiscussionReply
+} from './_utils';
 
 export type IndividualNotificationProps = {
   index?: number;
@@ -74,15 +78,36 @@ const IndividualNotification = ({
         modelName: data.modelPlan.modelName
       });
     }
+    if (isDailyDigest(data)) {
+      return notificationsT('index.activityType.dailyDigestComplete.text');
+    }
     return '';
   };
 
   const activityCTA = (data: MetaDataType) => {
     if (isTaggedInDiscussion(data)) {
-      return notificationsT('index.activityType.taggedInDiscussion.cta');
+      return (
+        <>
+          {notificationsT('index.activityType.taggedInDiscussion.cta')}
+          <Icon.ArrowForward className="margin-left-1" aria-hidden />
+        </>
+      );
     }
     if (isTaggedInDiscussionReply(data)) {
-      return notificationsT('index.activityType.taggedInDiscussionReply.cta');
+      return (
+        <>
+          {notificationsT('index.activityType.taggedInDiscussionReply.cta')}
+          <Icon.ArrowForward className="margin-left-1" aria-hidden />
+        </>
+      );
+    }
+    if (isDailyDigest(data)) {
+      return (
+        <>
+          {notificationsT('index.activityType.dailyDigestComplete.cta')}
+          <Icon.ExpandMore className="margin-left-1" aria-hidden />
+        </>
+      );
     }
     return '';
   };
@@ -149,7 +174,6 @@ const IndividualNotification = ({
                   }}
                 >
                   {activityCTA(metaData)}
-                  <Icon.ArrowForward className="margin-left-1" aria-hidden />
                 </Button>
               </div>
             </div>
