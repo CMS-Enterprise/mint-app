@@ -112,6 +112,9 @@ const IndividualNotification = ({
     return '';
   };
 
+  // Mint System Account -> MINT
+  const name = commonName === 'Mint System Account' ? 'MINT' : commonName;
+
   return (
     <Grid row data-testid="individual-notification">
       <Grid desktop={{ col: 12 }} className="position-relative">
@@ -137,12 +140,12 @@ const IndividualNotification = ({
                   arrayOfColors[index % arrayOfColors.length]
                 }`}
               >
-                {getUserInitials(commonName)}
+                {getUserInitials(name)}
               </div>
 
               <div className="margin-top-05">
                 <p className="line-height-sans-4 margin-left-1 margin-bottom-1 margin-top-0 ">
-                  <strong>{commonName}</strong>
+                  <strong>{name}</strong>
                   {activityText(metaData)}
                 </p>
                 {!isMobile &&
