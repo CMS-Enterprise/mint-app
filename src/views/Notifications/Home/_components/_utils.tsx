@@ -57,7 +57,9 @@ export const activityText = (data: MetaDataType) => {
     );
   }
   if (isDailyDigest(data)) {
-    return <Trans i18nKey="index.activityType.dailyDigestComplete.text" />;
+    return (
+      <Trans i18nKey="notifications:index.activityType.dailyDigestComplete.text" />
+    );
   }
   return '';
 };
