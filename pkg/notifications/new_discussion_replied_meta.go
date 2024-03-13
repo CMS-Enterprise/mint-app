@@ -25,7 +25,7 @@ func ActivityNewDiscussionRepliedCreate(ctx context.Context, np sqlutils.NamedPr
 		return nil, fmt.Errorf("unable to get user notification preference, Notification not created %w", err)
 	}
 
-	_, err = userNotificationCreate(ctx, np, retActivity, actorID, pref.NewDiscussionReply)
+	_, err = userNotificationCreate(ctx, np, retActivity, discussionCreatorID, pref.NewDiscussionReply)
 	if err != nil {
 		return nil, err
 	}
