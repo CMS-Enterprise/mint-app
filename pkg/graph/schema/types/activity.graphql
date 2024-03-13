@@ -39,7 +39,6 @@ type NewDiscussionRepliedActivityMeta {
   modelPlanID: UUID!
   modelPlan: ModelPlan!
   discussionID: UUID!
-  discussionCreatorID: UUID!
   discussion: PlanDiscussion!
   replyID: UUID!
   reply: DiscussionReply!
