@@ -5,10 +5,10 @@ import { Button, Grid, Icon } from '@trussworks/react-uswds';
 import { useMarkNotificationAsReadMutation } from 'gql/gen/graphql';
 import {
   GetNotifications_currentUser_notifications_notifications_activity as NotificationActivityType,
-  GetNotifications_currentUser_notifications_notifications_activity_metaData as MetaDataType,
-  GetNotifications_currentUser_notifications_notifications_activity_metaData_ActivityMetaBaseStruct as BaseStructActivityType,
-  GetNotifications_currentUser_notifications_notifications_activity_metaData_TaggedInDiscussionReplyActivityMeta as TaggedInDiscussionReplyActivityType,
-  GetNotifications_currentUser_notifications_notifications_activity_metaData_TaggedInPlanDiscussionActivityMeta as TaggedInDiscussionActivityType
+  GetNotifications_currentUser_notifications_notifications_activity_metaData as MetaDataType
+  // GetNotifications_currentUser_notifications_notifications_activity_metaData_ActivityMetaBaseStruct as BaseStructActivityType,
+  // GetNotifications_currentUser_notifications_notifications_activity_metaData_TaggedInDiscussionReplyActivityMeta as TaggedInDiscussionReplyActivityType,
+  // GetNotifications_currentUser_notifications_notifications_activity_metaData_TaggedInPlanDiscussionActivityMeta as TaggedInDiscussionActivityType
 } from 'gql/gen/types/GetNotifications';
 
 import { arrayOfColors } from 'components/shared/IconInitial';
@@ -16,6 +16,8 @@ import MentionTextArea from 'components/shared/MentionTextArea';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import { getTimeElapsed } from 'utils/date';
 import { getUserInitials } from 'utils/modelPlan';
+
+import { isTaggedInDiscussion, isTaggedInDiscussionReply } from './_utils';
 
 export type IndividualNotificationProps = {
   index?: number;
@@ -59,27 +61,6 @@ const IndividualNotification = ({
         );
       }
     });
-  };
-
-  // Type guard to check union type
-  const isTaggedInDiscussion = (
-    data:
-      | TaggedInDiscussionReplyActivityType
-      | TaggedInDiscussionActivityType
-      | BaseStructActivityType
-  ): data is TaggedInDiscussionActivityType => {
-    /* eslint no-underscore-dangle: 0 */
-    return data.__typename === 'TaggedInPlanDiscussionActivityMeta';
-  };
-
-  const isTaggedInDiscussionReply = (
-    data:
-      | TaggedInDiscussionReplyActivityType
-      | TaggedInDiscussionActivityType
-      | BaseStructActivityType
-  ): data is TaggedInDiscussionReplyActivityType => {
-    /* eslint no-underscore-dangle: 0 */
-    return data.__typename === 'TaggedInDiscussionReplyActivityMeta';
   };
 
   const activityText = (data: MetaDataType) => {

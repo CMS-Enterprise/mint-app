@@ -19,14 +19,14 @@ func (r *activityResolver) ActorUserAccount(ctx context.Context, obj *models.Act
 	return UserAccountGetByIDLOADER(ctx, obj.ActorID)
 }
 
-// ModelPlan is the resolver for the modelPlan field.
-func (r *taggedInDiscussionReplyActivityMetaResolver) ModelPlan(ctx context.Context, obj *models.TaggedInDiscussionReplyActivityMeta) (*models.ModelPlan, error) {
-	return ModelPlanGetByIDLOADER(ctx, obj.ModelPlanID)
-}
-
 // AnalyzedAudits is the resolver for the analyzedAudits field.
 func (r *dailyDigestCompleteActivityMetaResolver) AnalyzedAudits(ctx context.Context, obj *models.DailyDigestCompleteActivityMeta) ([]*models.AnalyzedAudit, error) {
 	return loaders.AnalyzedAuditGetByModelPlanIDsAndDate(ctx, obj.ModelPlanIDs, obj.Date)
+}
+
+// ModelPlan is the resolver for the modelPlan field.
+func (r *taggedInDiscussionReplyActivityMetaResolver) ModelPlan(ctx context.Context, obj *models.TaggedInDiscussionReplyActivityMeta) (*models.ModelPlan, error) {
+	return ModelPlanGetByIDLOADER(ctx, obj.ModelPlanID)
 }
 
 // Discussion is the resolver for the discussion field.
