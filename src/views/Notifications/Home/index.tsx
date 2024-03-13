@@ -6,6 +6,7 @@ import {
   useGetNotificationsQuery,
   useUpdateAllNotificationsAsReadMutation
 } from 'gql/gen/graphql';
+import { GetNotifications_currentUser_notifications_notifications_activity as NotificationActivityType } from 'gql/gen/types/GetNotifications';
 
 import Breadcrumbs from 'components/Breadcrumbs';
 import UswdsReactLink from 'components/LinkWrapper';
@@ -115,6 +116,7 @@ const NotificationsHome = () => {
               currentNotifications?.map((notification, index) => (
                 <IndividualNotification
                   {...notification}
+                  activity={notification.activity as NotificationActivityType}
                   key={notification.id}
                   index={index}
                 />
