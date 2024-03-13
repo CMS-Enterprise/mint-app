@@ -53,31 +53,40 @@ const IndividualNotification = ({
     modelPlanID: string,
     discussionID: string
   ) => {
-    markAsRead({
-      variables: {
-        notificationID
-      }
-    }).then(response => {
-      if (!response?.errors) {
-        history.push(
-          `/models/${modelPlanID}/read-only/discussions?discussionID=${discussionID}`
-        );
-      }
-    });
+    if (!isRead) {
+      markAsRead({
+        variables: {
+          notificationID
+        }
+      }).then(response => {
+        if (!response?.errors) {
+          history.push(
+            `/models/${modelPlanID}/read-only/discussions?discussionID=${discussionID}`
+          );
+        }
+      });
+    } else {
+      history.push(
+        `/models/${modelPlanID}/read-only/discussions?discussionID=${discussionID}`
+      );
+    }
   };
 
   const handleMarkAsReadAndToggleDailyDigest = (notificationID: string) => {
-    markAsRead({
-      variables: {
-        notificationID
-      }
-    }).then(response => {
-      if (!response?.errors) {
-        setIsExpanded(!isExpanded);
-      }
-    });
+    if (!isRead) {
+      markAsRead({
+        variables: {
+          notificationID
+        }
+      }).then(response => {
+        if (!response?.errors) {
+          setIsExpanded(!isExpanded);
+        }
+      });
+    } else {
+      setIsExpanded(!isExpanded);
+    }
   };
-
   const activityText = (data: MetaDataType) => {
     if (isTaggedInDiscussion(data)) {
       return notificationsT('index.activityType.taggedInDiscussion.text', {
