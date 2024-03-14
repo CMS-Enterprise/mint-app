@@ -23,24 +23,71 @@ const DailyDigest = ({
         {notificationsT('index.dailyDigest.heading')}
       </PageHeading>
 
-      {analyzedAudits.map(({ modelName, modelPlanID }) => {
-        return (
-          <div key={modelPlanID} className="margin-bottom-4">
-            <PageHeading
-              headingLevel="h3"
-              className="margin-top-0 margin-bottom-1"
-            >
-              {modelName}
-            </PageHeading>
-            <ul>
-              <li />
-            </ul>
-            <UswdsReactLink to={`/models/${modelPlanID}/read-only/`}>
-              {notificationsT('index.dailyDigest.cta')}
-            </UswdsReactLink>
-          </div>
-        );
-      })}
+      {analyzedAudits.map(
+        ({
+          modelName,
+          modelPlanID,
+          changes: {
+            modelPlan,
+            documents,
+            crTdls,
+            planSections,
+            modelLeads,
+            planDiscussions
+          }
+        }) => {
+          return (
+            <div key={modelPlanID} className="margin-bottom-4">
+              <PageHeading
+                headingLevel="h3"
+                className="margin-top-0 margin-bottom-1"
+              >
+                {modelName}
+              </PageHeading>
+              <ul className="padding-left-205">
+                {modelPlan && modelPlan.oldName && (
+                  <li className="line-height-sans-5">
+                    {notificationsT('index.dailyDigest.nameChange', {
+                      nameChange: modelPlan.oldName
+                    })}
+                  </li>
+                )}
+                {modelLeads &&
+                  modelLeads.added.length > 0 &&
+                  modelLeads.added.map(name => {
+                    return (
+                      <li className="line-height-sans-5">
+                        {notificationsT('index.dailyDigest.addModelLead', {
+                          name: name.commonName
+                        })}
+                      </li>
+                    );
+                  })}
+                {documents && documents.count && (
+                  <li className="line-height-sans-5">
+                    {notificationsT('index.dailyDigest.documentsAdded', {
+                      number: documents.count
+                    })}
+                  </li>
+                )}
+                {crTdls && crTdls.activity && (
+                  <li className="line-height-sans-5">
+                    {notificationsT('index.dailyDigest.crTdlsUpdate')}
+                  </li>
+                )}
+                {planDiscussions && planDiscussions.activity && (
+                  <li className="line-height-sans-5">
+                    {notificationsT('index.dailyDigest.discussionActivity')}
+                  </li>
+                )}
+              </ul>
+              <UswdsReactLink to={`/models/${modelPlanID}/read-only/`}>
+                {notificationsT('index.dailyDigest.cta')}
+              </UswdsReactLink>
+            </div>
+          );
+        }
+      )}
 
       <div className="border-top-1px border-base-light padding-top-2">
         <p className="margin-y-0">

@@ -38,7 +38,15 @@ const notifications = {
       heading: 'Your daily updates',
       cta: 'View this Model Plan',
       unsubscribe:
-        'To stop receiving notifications for a specific model, unfollow the model at the top of the Model Plan page.'
+        'To stop receiving notifications for a specific model, unfollow the model at the top of the Model Plan page.',
+      nameChange: 'This model has been renamed (previously {{-oldName}})',
+      addModelLead: '{{-name}} has been added as a model lead',
+      documentsAdded: '{{-number}} new documents have been uploaded',
+      crTdlsUpdate: 'Updates to FFS CRs/TDLs',
+      discussionActivity: 'New activity in Discussions',
+      readyForReview: '{{-taskSection}} is ready for review ',
+      readyForClearance: '{{-taskSection}}  is ready for clearance',
+      updatesTo: 'Updates to {{-taskSection}}'
     }
   },
   settings: {
