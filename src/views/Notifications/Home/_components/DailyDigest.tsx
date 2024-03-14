@@ -80,6 +80,27 @@ const DailyDigest = ({
                     {notificationsT('index.dailyDigest.discussionActivity')}
                   </li>
                 )}
+                {planSections && planSections.readyForReview.length > 0 && (
+                  <li className="line-height-sans-5">
+                    {notificationsT('index.dailyDigest.updatesTo', {
+                      taskSection: planSections.readyForReview.join(', ')
+                    })}
+                  </li>
+                )}
+                {planSections && planSections.readyForClearance.length > 0 && (
+                  <li className="line-height-sans-5">
+                    {notificationsT('index.dailyDigest.updatesTo', {
+                      taskSection: planSections.readyForClearance.join(', ')
+                    })}
+                  </li>
+                )}
+                {planSections && planSections.updated.length > 0 && (
+                  <li className="line-height-sans-5">
+                    {notificationsT('index.dailyDigest.updatesTo', {
+                      taskSection: planSections.updated.join(', ')
+                    })}
+                  </li>
+                )}
               </ul>
               <UswdsReactLink to={`/models/${modelPlanID}/read-only/`}>
                 {notificationsT('index.dailyDigest.cta')}
