@@ -11,9 +11,6 @@ func (suite *NotificationsSuite) TestActivityNewDiscussionRepliedCreate() {
 	html := `<p>Hey there! Are you available for a quick sync on this issue? Thanks!</p>`
 	taggedContent, err := models.NewTaggedContentFromString(html)
 	suite.NoError(err)
-
-	// Note: this will fail without properly updating the mentions to point to the DB.
-	// We can't test that here because it is part of the resolver package, which calls this package
 	input := models.TaggedHTML(taggedContent)
 
 	modelPlanID := uuid.New() // We are just choosing a valid UUID to set for the entityID
