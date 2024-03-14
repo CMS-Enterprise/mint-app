@@ -33,6 +33,12 @@ const notifications = {
         text: ' tagged you in a discussion reply for {{-modelName}}.',
         cta: 'View discussion'
       }
+    },
+    dailyDigest: {
+      heading: 'Your daily updates',
+      cta: 'View this Model Plan',
+      unsubscribe:
+        'To stop receiving notifications for a specific model, unfollow the model at the top of the Model Plan page.'
     }
   },
   settings: {
