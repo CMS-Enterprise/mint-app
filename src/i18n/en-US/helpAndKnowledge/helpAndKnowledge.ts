@@ -785,7 +785,7 @@ HDR’s Configuration Management allows model teams to define and modify perform
         'Generally, it takes about four to six weeks for models to start using HDR.',
       items: [
         {
-          header: 'Reach out to Technical Lead',
+          header: 'Reach out to Product Owner',
           description:
             'If you’re interested in using HDR for your model or would like to learn more about the system, please reach out to Curtis Naumann. '
         },
