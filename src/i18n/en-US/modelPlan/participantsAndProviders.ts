@@ -479,6 +479,57 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     dataType: 'string',
     formType: 'textarea'
   },
+  participantRequireFinancialGuarantee: {
+    // TODO: EASI-(EASI-3965) Don't forget to add a tool tip here
+    gqlField: 'participantRequireFinancialGuarantee',
+    goField: 'ParticipantRequireFinancialGuarantee',
+    dbField: 'participant_require_financial_guarantee',
+    label: 'Are participants required to retain a financial guarantee?',
+    sublabel:
+      'Note: Remember to include financial guarantee requirements when drafting your Participation Agreement.',
+    dataType: 'boolean',
+    formType: 'radio',
+    options: {
+      true: 'Yes',
+      false: 'No'
+    },
+    isPageStart: true
+  },
+  participantRequireFinancialGuaranteeType: {
+    // TODO: EASI-(EASI-3965) Ensure that this is conditional based on the response above
+    gqlField: 'participantRequireFinancialGuaranteeType',
+    goField: 'ParticipantRequireFinancialGuaranteeType',
+    dbField: 'participant_require_financial_guarantee_type',
+    label: 'If so, are there any limitations on the type?',
+    dataType: 'enum',
+    formType: 'checkbox',
+    options: {
+      SURETY_BOND: 'Surety Bond',
+      LETTER_OF_CREDIT: 'Letter of Credit',
+      ESCROW: 'Escrow',
+      OTHER: 'Other'
+    },
+    optionsRelatedInfo: {
+      OTHER: 'participantRequireFinancialGuaranteeOther'
+    }
+  },
+  participantRequireFinancialGuaranteeOther: {
+    gqlField: 'participantRequireFinancialGuaranteeOther',
+    goField: 'ParticipantRequireFinancialGuaranteeOther',
+    dbField: 'participant_require_financial_guarantee_other',
+    label: 'Please specify',
+    dataType: 'string',
+    formType: 'text',
+    isOtherType: true
+  },
+  participantRequireFinancialGuaranteeNote: {
+    gqlField: 'participantRequireFinancialGuaranteeNote',
+    goField: 'ParticipantRequireFinancialGuaranteeNote',
+    dbField: 'participant_require_financial_guarantee_note',
+    label: 'Notes',
+    dataType: 'string',
+    formType: 'textarea'
+  },
   coordinateWork: {
     gqlField: 'coordinateWork',
     goField: 'CoordinateWork',
@@ -490,8 +541,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     options: {
       true: 'Yes',
       false: 'No'
-    },
-    isPageStart: true
+    }
   },
   coordinateWorkNote: {
     gqlField: 'coordinateWorkNote',

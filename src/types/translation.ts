@@ -37,6 +37,7 @@ import {
   NonClaimsBasedPayType,
   OverlapType,
   ParticipantCommunicationType,
+  ParticipantRequireFinancialGuaranteeType,
   ParticipantRiskType,
   ParticipantSelectionType,
   ParticipantsIdType,
@@ -464,6 +465,10 @@ export type TranslationParticipantsAndProviders = {
   willRiskChange: TranslationFieldPropertiesWithOptions<Bool>;
   willRiskChangeNote: TranslationFieldProperties;
   // Coordination
+  participantRequireFinancialGuarantee: TranslationFieldPropertiesWithOptions<Bool>;
+  participantRequireFinancialGuaranteeType: TranslationFieldPropertiesWithOptions<ParticipantRequireFinancialGuaranteeType>;
+  participantRequireFinancialGuaranteeOther: TranslationFieldProperties;
+  participantRequireFinancialGuaranteeNote: TranslationFieldProperties;
   coordinateWork: TranslationFieldPropertiesWithOptions<Bool>;
   coordinateWorkNote: TranslationFieldProperties;
   gainsharePayments: TranslationFieldPropertiesWithOptionsAndChildren<
