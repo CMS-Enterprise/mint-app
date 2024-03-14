@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Grid } from '@trussworks/react-uswds';
 import { GetNotifications_currentUser_notifications_notifications_activity_metaData_DailyDigestCompleteActivityMeta_analyzedAudits as AnalyzedAuditsTypes } from 'gql/gen/types/GetNotifications';
 
+import UswdsReactLink from 'components/LinkWrapper';
 import PageHeading from 'components/PageHeading';
 
 const DailyDigest = ({
@@ -22,16 +23,22 @@ const DailyDigest = ({
         {notificationsT('index.dailyDigest.heading')}
       </PageHeading>
 
-      {analyzedAudits.map(audit => {
+      {analyzedAudits.map(({ modelName, modelPlanID }) => {
         return (
-          <React.Fragment key={audit.modelPlanID}>
+          <div key={modelPlanID} className="margin-bottom-4">
             <PageHeading
               headingLevel="h3"
               className="margin-top-0 margin-bottom-1"
             >
-              {audit.modelName}
+              {modelName}
             </PageHeading>
-          </React.Fragment>
+            <ul>
+              <li />
+            </ul>
+            <UswdsReactLink to={`/models/${modelPlanID}/read-only/`}>
+              {notificationsT('index.dailyDigest.cta')}
+            </UswdsReactLink>
+          </div>
         );
       })}
 
