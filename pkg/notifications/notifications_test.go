@@ -30,6 +30,9 @@ func TestNotificationsSuite(t *testing.T) {
 	suite.Run(t, rs)
 }
 
+// deserializeActivityMetadata is a helper function to deserialize the metadata of an activity
+// It asserts that the metadata is not deserialized, and that the raw metadata is deserialized
+// This method is used to test the deserialization of the metadata of an activity in notification unit tests
 func (suite *NotificationsSuite) deserializeActivityMetadata(testActivity *models.Activity) models.ActivityMetaData {
 	suite.Nil(testActivity.MetaData)       // Assert meta data is not deserialized here
 	suite.NotNil(testActivity.MetaDataRaw) // Assert meta data can be deserialized
