@@ -1324,7 +1324,7 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Heal
             class="usa-process-list__heading margin-top-neg-05"
             data-testid="processListHeading"
           >
-            Reach out to Technical Lead
+            Reach out to Product Owner
           </h3>
           <p
             class="margin-bottom-0"
