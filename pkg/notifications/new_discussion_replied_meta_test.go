@@ -41,4 +41,7 @@ func (suite *NotificationsSuite) TestActivityNewDiscussionRepliedCreate() {
 	// Assert about meta data values
 	meta := suite.deserializeActivityMetadata(testActivity)
 	suite.EqualValues(input.RawContent.String(), meta.(*models.NewDiscussionRepliedActivityMeta).Content)
+	suite.EqualValues(discussionID, meta.(*models.NewDiscussionRepliedActivityMeta).DiscussionID)
+	suite.EqualValues(modelPlanID, meta.(*models.NewDiscussionRepliedActivityMeta).ModelPlanID)
+	suite.EqualValues(replyID, meta.(*models.NewDiscussionRepliedActivityMeta).ReplyID)
 }
