@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Grid } from '@trussworks/react-uswds';
+import { Grid, Icon } from '@trussworks/react-uswds';
 import { GetNotifications_currentUser_notifications_notifications_activity_metaData_DailyDigestCompleteActivityMeta_analyzedAudits as AnalyzedAuditsTypes } from 'gql/gen/types/GetNotifications';
 
 import UswdsReactLink from 'components/LinkWrapper';
@@ -102,8 +102,9 @@ const DailyDigest = ({
                   </li>
                 )}
               </ul>
-              <UswdsReactLink to={`/models/${modelPlanID}/read-only/`}>
+              <UswdsReactLink to={`/models/${modelPlanID}/read-only`}>
                 {notificationsT('index.dailyDigest.cta')}
+                <Icon.ArrowForward className="margin-left-1" aria-hidden />
               </UswdsReactLink>
             </div>
           );
