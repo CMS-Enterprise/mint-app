@@ -18,6 +18,7 @@ import {
   isTaggedInDiscussion,
   isTaggedInDiscussionReply
 } from './_utils';
+import DailyDigest from './DailyDigest';
 
 export type IndividualNotificationProps = {
   index?: number;
@@ -167,6 +168,7 @@ const IndividualNotification = ({
           </Grid>
         </Grid>
       </Grid>
+      {isExpanded && <DailyDigest />}
     </Grid>
   );
 };
