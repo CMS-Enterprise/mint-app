@@ -168,7 +168,7 @@ const IndividualNotification = ({
           </Grid>
         </Grid>
       </Grid>
-      {isExpanded && <DailyDigest />}
+      {isExpanded && isDailyDigest(metaData) && <DailyDigest {...metaData} />}
     </Grid>
   );
 };
