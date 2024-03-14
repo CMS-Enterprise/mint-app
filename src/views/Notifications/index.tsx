@@ -1,13 +1,13 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 
+import NotificationsHome from './Home';
 import NotificationSettings from './Settings';
-// import NotificationsHome from './Home';
 
 const Notifications = () => {
   return (
     <Switch>
-      {/* <Route path="/notifications" component={NotificationsHome} exact /> */}
+      <Route path="/notifications" component={NotificationsHome} exact />
 
       <Route
         path="/notifications/settings"

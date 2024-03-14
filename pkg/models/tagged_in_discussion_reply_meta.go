@@ -11,16 +11,18 @@ import (
 // TaggedInDiscussionReplyActivityMeta represents the notification data that is relevant to being tagged in a new Plan Discussion
 type TaggedInDiscussionReplyActivityMeta struct {
 	ActivityMetaBaseStruct
+	modelPlanRelation
 	discussionRelation
 	ReplyID uuid.UUID `json:"replyID"`
 	Content string    `json:"content"`
 }
 
 // newNewPlanDiscussionActivityMeta creates a New NewPlanDiscussionActivityMeta
-func newTaggedInDiscussionReplyActivityMeta(discussionID uuid.UUID, replyID uuid.UUID, content string) *TaggedInDiscussionReplyActivityMeta {
+func newTaggedInDiscussionReplyActivityMeta(modelPlanID uuid.UUID, discussionID uuid.UUID, replyID uuid.UUID, content string) *TaggedInDiscussionReplyActivityMeta {
 	version := 0 //iterate this if this type ever updates
 	return &TaggedInDiscussionReplyActivityMeta{
 		ActivityMetaBaseStruct: NewActivityMetaBaseStruct(ActivityTaggedInDiscussionReply, version),
+		modelPlanRelation:      NewModelPlanRelation(modelPlanID),
 		discussionRelation:     NewDiscussionRelation(discussionID),
 		ReplyID:                replyID,
 		Content:                content,
@@ -29,13 +31,13 @@ func newTaggedInDiscussionReplyActivityMeta(discussionID uuid.UUID, replyID uuid
 }
 
 // NewTaggedInDiscussionReplyActivity creates a New Tagged in Plan Discussion Reply type of Activity
-func NewTaggedInDiscussionReplyActivity(actorID uuid.UUID, discussionID uuid.UUID, replyID uuid.UUID, content string) *Activity {
+func NewTaggedInDiscussionReplyActivity(actorID uuid.UUID, modelPlanID uuid.UUID, discussionID uuid.UUID, replyID uuid.UUID, content string) *Activity {
 	return &Activity{
 		baseStruct:   NewBaseStruct(actorID),
 		ActorID:      actorID,
 		EntityID:     discussionID,
 		ActivityType: ActivityTaggedInDiscussionReply,
-		MetaData:     newTaggedInDiscussionReplyActivityMeta(discussionID, replyID, content),
+		MetaData:     newTaggedInDiscussionReplyActivityMeta(modelPlanID, discussionID, replyID, content),
 	}
 }
 

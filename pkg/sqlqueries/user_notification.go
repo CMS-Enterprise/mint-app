@@ -25,7 +25,7 @@ var userNotificationMarkAsReadByUserIDSQL string
 type userNotificationScripts struct {
 	// Holds the SQL query to create an UserNotification
 	Create string
-	// Holds the SQL query to return all UserNotifications for a given UserID
+	// Holds the SQL query to return all UserNotifications for a given UserID. It sorts the notifications from newest to oldest.
 	CollectionGetByUserID string
 	// Holds the SQL to update a entry to mark that it has been read.
 	MarksAsReadByID string

@@ -18,6 +18,8 @@ union ActivityMetaData = ActivityMetaBaseStruct | TaggedInPlanDiscussionActivity
 type TaggedInPlanDiscussionActivityMeta {
   version: Int!
   type: ActivityType!
+  modelPlanID: UUID!
+  modelPlan: ModelPlan!
   discussionID: UUID!
   discussion: PlanDiscussion!
   content: String!
@@ -26,6 +28,8 @@ type TaggedInPlanDiscussionActivityMeta {
 type TaggedInDiscussionReplyActivityMeta {
   version: Int!
   type: ActivityType!
+  modelPlanID: UUID!
+  modelPlan: ModelPlan!
   discussionID: UUID!
   discussion: PlanDiscussion!
   replyID: UUID!

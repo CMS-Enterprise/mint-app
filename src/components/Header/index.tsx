@@ -116,7 +116,10 @@ export const Header = ({ children }: HeaderProps) => {
           'margin-top-2': isLanding
         })}
       >
-        <div className="usa-logo site-logo margin-y-4" id="logo">
+        <div
+          className={`usa-logo site-logo ${isMobile ? '' : 'margin-y-4'}`}
+          id="logo"
+        >
           <Link to="/">
             <em
               className={classnames('usa-logo__text heading', {

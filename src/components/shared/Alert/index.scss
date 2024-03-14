@@ -3,6 +3,10 @@
     max-width: 100% !important;
 }
 
+.usa-alert--info .usa-alert__body::before {
+    left: 1rem !important;
+}
+
 .usa-alert__heading {
     line-height: 1.6rem !important;
 }
@@ -19,5 +23,11 @@
     .usa-alert__body {
         padding-right: 1rem !important;
         padding-left: 1rem !important;
+    }
+}
+
+.mint-alert-slim-right {
+    .usa-alert__body {
+        padding-right: 1rem !important;
     }
 }

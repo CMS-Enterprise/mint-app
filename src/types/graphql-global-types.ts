@@ -12,6 +12,18 @@ export enum ActionType {
   NORMAL = "NORMAL",
 }
 
+/**
+ * ActivityType represents the possible activities that happen in application that might result in a notification
+ */
+export enum ActivityType {
+  ADDED_AS_COLLABORATOR = "ADDED_AS_COLLABORATOR",
+  DAILY_DIGEST_COMPLETE = "DAILY_DIGEST_COMPLETE",
+  MODEL_PLAN_SHARED = "MODEL_PLAN_SHARED",
+  NEW_DISCUSSION_REPLY = "NEW_DISCUSSION_REPLY",
+  TAGGED_IN_DISCUSSION = "TAGGED_IN_DISCUSSION",
+  TAGGED_IN_DISCUSSION_REPLY = "TAGGED_IN_DISCUSSION_REPLY",
+}
+
 export enum AgencyOrStateHelpType {
   NO = "NO",
   OTHER = "OTHER",

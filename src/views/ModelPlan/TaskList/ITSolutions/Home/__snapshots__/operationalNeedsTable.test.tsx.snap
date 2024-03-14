@@ -211,21 +211,21 @@ exports[`Operational Solutions Home > matches snapshot 1`] = `
               class="padding-x-1"
               role="cell"
               scope="row"
-              style="padding-left: 0px; white-space: normal;"
+              style="padding-left: 0px; border-bottom: 1px solid black; white-space: normal;"
             >
               Recruit participants
             </th>
             <td
               class=""
               role="cell"
-              style="padding-left: 0px; white-space: normal; max-width: 275px;"
+              style="padding-left: 0px; white-space: normal; max-width: 275px; border-bottom: 1px solid black;"
             >
               Participants and Providers
             </td>
             <td
               class=""
               role="cell"
-              style="padding-left: 0px; white-space: normal; max-width: auto;"
+              style="padding-left: 0px; white-space: normal; max-width: auto; border-bottom: 1px solid black;"
             >
               <span
                 class="mint-tag line-height-body-1 text-bold bg-transparent border-2px text-base"
@@ -237,7 +237,7 @@ exports[`Operational Solutions Home > matches snapshot 1`] = `
             <td
               class=""
               role="cell"
-              style="padding-left: 0px; white-space: normal; max-width: auto;"
+              style="padding-left: 0px; white-space: normal; max-width: auto; border-bottom: 1px solid black;"
             >
               <a
                 class="usa-link"

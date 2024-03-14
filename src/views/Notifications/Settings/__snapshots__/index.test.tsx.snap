@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Prepare for clearance checklist > matches snapshot 1`] = `
+exports[`Notification Settings Page > matches snapshot 1`] = `
 <DocumentFragment>
   <main
     class="mint-main-content"

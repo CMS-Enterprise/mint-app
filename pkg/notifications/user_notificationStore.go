@@ -11,6 +11,7 @@ import (
 )
 
 // CollectionGetByUserID returns all Notifications for a user for a given User Account
+// It will return the notifications in order from  newest to oldest
 func (s *notificationStore) CollectionGetByUserID(np sqlutils.NamedPreparer, userAccountID uuid.UUID) ([]*models.UserNotification, error) {
 
 	arg := map[string]interface{}{"user_id": userAccountID}

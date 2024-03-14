@@ -19,6 +19,7 @@ type AlertProps = {
   'data-testid'?: string;
   slim?: boolean;
   lessPadding?: boolean;
+  lessRightPadding?: boolean;
   noIcon?: boolean;
   inline?: boolean;
   isClosable?: boolean;
@@ -33,6 +34,7 @@ export const Alert = ({
   children,
   slim,
   lessPadding, // reduces x-padding from 2rem to 1rem
+  lessRightPadding,
   noIcon,
   className,
   inline,
@@ -47,7 +49,8 @@ export const Alert = ({
     {
       'mint-inline-alert': inline,
       'mint-alert-text': isClosable,
-      'mint-alert-slim': lessPadding
+      'mint-alert-slim': lessPadding,
+      'mint-alert-slim-right': lessRightPadding
     },
     'flex',
     className

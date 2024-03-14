@@ -10,4 +10,5 @@ SELECT
     modified_by,
     modified_dts
 FROM public.user_notification
-WHERE user_id = :user_id;
+WHERE user_id = :user_id
+ORDER BY created_dts DESC;

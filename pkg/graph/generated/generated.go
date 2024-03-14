@@ -1017,6 +1017,8 @@ type ComplexityRoot struct {
 		Content      func(childComplexity int) int
 		Discussion   func(childComplexity int) int
 		DiscussionID func(childComplexity int) int
+		ModelPlan    func(childComplexity int) int
+		ModelPlanID  func(childComplexity int) int
 		Reply        func(childComplexity int) int
 		ReplyID      func(childComplexity int) int
 		Type         func(childComplexity int) int
@@ -1027,6 +1029,8 @@ type ComplexityRoot struct {
 		Content      func(childComplexity int) int
 		Discussion   func(childComplexity int) int
 		DiscussionID func(childComplexity int) int
+		ModelPlan    func(childComplexity int) int
+		ModelPlanID  func(childComplexity int) int
 		Type         func(childComplexity int) int
 		Version      func(childComplexity int) int
 	}
@@ -1376,11 +1380,15 @@ type TaggedContentResolver interface {
 	RawContent(ctx context.Context, obj *models.TaggedContent) (string, error)
 }
 type TaggedInDiscussionReplyActivityMetaResolver interface {
+	ModelPlan(ctx context.Context, obj *models.TaggedInDiscussionReplyActivityMeta) (*models.ModelPlan, error)
+
 	Discussion(ctx context.Context, obj *models.TaggedInDiscussionReplyActivityMeta) (*models.PlanDiscussion, error)
 
 	Reply(ctx context.Context, obj *models.TaggedInDiscussionReplyActivityMeta) (*models.DiscussionReply, error)
 }
 type TaggedInPlanDiscussionActivityMetaResolver interface {
+	ModelPlan(ctx context.Context, obj *models.TaggedInPlanDiscussionActivityMeta) (*models.ModelPlan, error)
+
 	Discussion(ctx context.Context, obj *models.TaggedInPlanDiscussionActivityMeta) (*models.PlanDiscussion, error)
 }
 type UserNotificationResolver interface {
@@ -7481,6 +7489,20 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.TaggedInDiscussionReplyActivityMeta.DiscussionID(childComplexity), true
 
+	case "TaggedInDiscussionReplyActivityMeta.modelPlan":
+		if e.complexity.TaggedInDiscussionReplyActivityMeta.ModelPlan == nil {
+			break
+		}
+
+		return e.complexity.TaggedInDiscussionReplyActivityMeta.ModelPlan(childComplexity), true
+
+	case "TaggedInDiscussionReplyActivityMeta.modelPlanID":
+		if e.complexity.TaggedInDiscussionReplyActivityMeta.ModelPlanID == nil {
+			break
+		}
+
+		return e.complexity.TaggedInDiscussionReplyActivityMeta.ModelPlanID(childComplexity), true
+
 	case "TaggedInDiscussionReplyActivityMeta.reply":
 		if e.complexity.TaggedInDiscussionReplyActivityMeta.Reply == nil {
 			break
@@ -7529,6 +7551,20 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.TaggedInPlanDiscussionActivityMeta.DiscussionID(childComplexity), true
+
+	case "TaggedInPlanDiscussionActivityMeta.modelPlan":
+		if e.complexity.TaggedInPlanDiscussionActivityMeta.ModelPlan == nil {
+			break
+		}
+
+		return e.complexity.TaggedInPlanDiscussionActivityMeta.ModelPlan(childComplexity), true
+
+	case "TaggedInPlanDiscussionActivityMeta.modelPlanID":
+		if e.complexity.TaggedInPlanDiscussionActivityMeta.ModelPlanID == nil {
+			break
+		}
+
+		return e.complexity.TaggedInPlanDiscussionActivityMeta.ModelPlanID(childComplexity), true
 
 	case "TaggedInPlanDiscussionActivityMeta.type":
 		if e.complexity.TaggedInPlanDiscussionActivityMeta.Type == nil {
@@ -9442,6 +9478,8 @@ union ActivityMetaData = ActivityMetaBaseStruct | TaggedInPlanDiscussionActivity
 type TaggedInPlanDiscussionActivityMeta {
   version: Int!
   type: ActivityType!
+  modelPlanID: UUID!
+  modelPlan: ModelPlan!
   discussionID: UUID!
   discussion: PlanDiscussion!
   content: String!
@@ -9450,6 +9488,8 @@ type TaggedInPlanDiscussionActivityMeta {
 type TaggedInDiscussionReplyActivityMeta {
   version: Int!
   type: ActivityType!
+  modelPlanID: UUID!
+  modelPlan: ModelPlan!
   discussionID: UUID!
   discussion: PlanDiscussion!
   replyID: UUID!
@@ -54921,6 +54961,150 @@ func (ec *executionContext) fieldContext_TaggedInDiscussionReplyActivityMeta_typ
 	return fc, nil
 }
 
+func (ec *executionContext) _TaggedInDiscussionReplyActivityMeta_modelPlanID(ctx context.Context, field graphql.CollectedField, obj *models.TaggedInDiscussionReplyActivityMeta) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_TaggedInDiscussionReplyActivityMeta_modelPlanID(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ModelPlanID, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(uuid.UUID)
+	fc.Result = res
+	return ec.marshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_TaggedInDiscussionReplyActivityMeta_modelPlanID(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "TaggedInDiscussionReplyActivityMeta",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type UUID does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _TaggedInDiscussionReplyActivityMeta_modelPlan(ctx context.Context, field graphql.CollectedField, obj *models.TaggedInDiscussionReplyActivityMeta) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_TaggedInDiscussionReplyActivityMeta_modelPlan(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.TaggedInDiscussionReplyActivityMeta().ModelPlan(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*models.ModelPlan)
+	fc.Result = res
+	return ec.marshalNModelPlan2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐModelPlan(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_TaggedInDiscussionReplyActivityMeta_modelPlan(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "TaggedInDiscussionReplyActivityMeta",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_ModelPlan_id(ctx, field)
+			case "modelName":
+				return ec.fieldContext_ModelPlan_modelName(ctx, field)
+			case "abbreviation":
+				return ec.fieldContext_ModelPlan_abbreviation(ctx, field)
+			case "archived":
+				return ec.fieldContext_ModelPlan_archived(ctx, field)
+			case "createdBy":
+				return ec.fieldContext_ModelPlan_createdBy(ctx, field)
+			case "createdByUserAccount":
+				return ec.fieldContext_ModelPlan_createdByUserAccount(ctx, field)
+			case "createdDts":
+				return ec.fieldContext_ModelPlan_createdDts(ctx, field)
+			case "modifiedBy":
+				return ec.fieldContext_ModelPlan_modifiedBy(ctx, field)
+			case "modifiedByUserAccount":
+				return ec.fieldContext_ModelPlan_modifiedByUserAccount(ctx, field)
+			case "modifiedDts":
+				return ec.fieldContext_ModelPlan_modifiedDts(ctx, field)
+			case "basics":
+				return ec.fieldContext_ModelPlan_basics(ctx, field)
+			case "generalCharacteristics":
+				return ec.fieldContext_ModelPlan_generalCharacteristics(ctx, field)
+			case "participantsAndProviders":
+				return ec.fieldContext_ModelPlan_participantsAndProviders(ctx, field)
+			case "beneficiaries":
+				return ec.fieldContext_ModelPlan_beneficiaries(ctx, field)
+			case "opsEvalAndLearning":
+				return ec.fieldContext_ModelPlan_opsEvalAndLearning(ctx, field)
+			case "collaborators":
+				return ec.fieldContext_ModelPlan_collaborators(ctx, field)
+			case "documents":
+				return ec.fieldContext_ModelPlan_documents(ctx, field)
+			case "discussions":
+				return ec.fieldContext_ModelPlan_discussions(ctx, field)
+			case "payments":
+				return ec.fieldContext_ModelPlan_payments(ctx, field)
+			case "status":
+				return ec.fieldContext_ModelPlan_status(ctx, field)
+			case "isFavorite":
+				return ec.fieldContext_ModelPlan_isFavorite(ctx, field)
+			case "isCollaborator":
+				return ec.fieldContext_ModelPlan_isCollaborator(ctx, field)
+			case "crs":
+				return ec.fieldContext_ModelPlan_crs(ctx, field)
+			case "tdls":
+				return ec.fieldContext_ModelPlan_tdls(ctx, field)
+			case "prepareForClearance":
+				return ec.fieldContext_ModelPlan_prepareForClearance(ctx, field)
+			case "nameHistory":
+				return ec.fieldContext_ModelPlan_nameHistory(ctx, field)
+			case "operationalNeeds":
+				return ec.fieldContext_ModelPlan_operationalNeeds(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type ModelPlan", field.Name)
+		},
+	}
+	return fc, nil
+}
+
 func (ec *executionContext) _TaggedInDiscussionReplyActivityMeta_discussionID(ctx context.Context, field graphql.CollectedField, obj *models.TaggedInDiscussionReplyActivityMeta) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_TaggedInDiscussionReplyActivityMeta_discussionID(ctx, field)
 	if err != nil {
@@ -55278,6 +55462,150 @@ func (ec *executionContext) fieldContext_TaggedInPlanDiscussionActivityMeta_type
 		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return nil, errors.New("field of type ActivityType does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _TaggedInPlanDiscussionActivityMeta_modelPlanID(ctx context.Context, field graphql.CollectedField, obj *models.TaggedInPlanDiscussionActivityMeta) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_TaggedInPlanDiscussionActivityMeta_modelPlanID(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ModelPlanID, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(uuid.UUID)
+	fc.Result = res
+	return ec.marshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_TaggedInPlanDiscussionActivityMeta_modelPlanID(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "TaggedInPlanDiscussionActivityMeta",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type UUID does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _TaggedInPlanDiscussionActivityMeta_modelPlan(ctx context.Context, field graphql.CollectedField, obj *models.TaggedInPlanDiscussionActivityMeta) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_TaggedInPlanDiscussionActivityMeta_modelPlan(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.TaggedInPlanDiscussionActivityMeta().ModelPlan(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*models.ModelPlan)
+	fc.Result = res
+	return ec.marshalNModelPlan2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐModelPlan(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_TaggedInPlanDiscussionActivityMeta_modelPlan(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "TaggedInPlanDiscussionActivityMeta",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_ModelPlan_id(ctx, field)
+			case "modelName":
+				return ec.fieldContext_ModelPlan_modelName(ctx, field)
+			case "abbreviation":
+				return ec.fieldContext_ModelPlan_abbreviation(ctx, field)
+			case "archived":
+				return ec.fieldContext_ModelPlan_archived(ctx, field)
+			case "createdBy":
+				return ec.fieldContext_ModelPlan_createdBy(ctx, field)
+			case "createdByUserAccount":
+				return ec.fieldContext_ModelPlan_createdByUserAccount(ctx, field)
+			case "createdDts":
+				return ec.fieldContext_ModelPlan_createdDts(ctx, field)
+			case "modifiedBy":
+				return ec.fieldContext_ModelPlan_modifiedBy(ctx, field)
+			case "modifiedByUserAccount":
+				return ec.fieldContext_ModelPlan_modifiedByUserAccount(ctx, field)
+			case "modifiedDts":
+				return ec.fieldContext_ModelPlan_modifiedDts(ctx, field)
+			case "basics":
+				return ec.fieldContext_ModelPlan_basics(ctx, field)
+			case "generalCharacteristics":
+				return ec.fieldContext_ModelPlan_generalCharacteristics(ctx, field)
+			case "participantsAndProviders":
+				return ec.fieldContext_ModelPlan_participantsAndProviders(ctx, field)
+			case "beneficiaries":
+				return ec.fieldContext_ModelPlan_beneficiaries(ctx, field)
+			case "opsEvalAndLearning":
+				return ec.fieldContext_ModelPlan_opsEvalAndLearning(ctx, field)
+			case "collaborators":
+				return ec.fieldContext_ModelPlan_collaborators(ctx, field)
+			case "documents":
+				return ec.fieldContext_ModelPlan_documents(ctx, field)
+			case "discussions":
+				return ec.fieldContext_ModelPlan_discussions(ctx, field)
+			case "payments":
+				return ec.fieldContext_ModelPlan_payments(ctx, field)
+			case "status":
+				return ec.fieldContext_ModelPlan_status(ctx, field)
+			case "isFavorite":
+				return ec.fieldContext_ModelPlan_isFavorite(ctx, field)
+			case "isCollaborator":
+				return ec.fieldContext_ModelPlan_isCollaborator(ctx, field)
+			case "crs":
+				return ec.fieldContext_ModelPlan_crs(ctx, field)
+			case "tdls":
+				return ec.fieldContext_ModelPlan_tdls(ctx, field)
+			case "prepareForClearance":
+				return ec.fieldContext_ModelPlan_prepareForClearance(ctx, field)
+			case "nameHistory":
+				return ec.fieldContext_ModelPlan_nameHistory(ctx, field)
+			case "operationalNeeds":
+				return ec.fieldContext_ModelPlan_operationalNeeds(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type ModelPlan", field.Name)
 		},
 	}
 	return fc, nil
@@ -70036,6 +70364,47 @@ func (ec *executionContext) _TaggedInDiscussionReplyActivityMeta(ctx context.Con
 			if out.Values[i] == graphql.Null {
 				atomic.AddUint32(&out.Invalids, 1)
 			}
+		case "modelPlanID":
+			out.Values[i] = ec._TaggedInDiscussionReplyActivityMeta_modelPlanID(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "modelPlan":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._TaggedInDiscussionReplyActivityMeta_modelPlan(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
+				return res
+			}
+
+			if field.Deferrable != nil {
+				dfs, ok := deferred[field.Deferrable.Label]
+				di := 0
+				if ok {
+					dfs.AddField(field)
+					di = len(dfs.Values) - 1
+				} else {
+					dfs = graphql.NewFieldSet([]graphql.CollectedField{field})
+					deferred[field.Deferrable.Label] = dfs
+				}
+				dfs.Concurrently(di, func(ctx context.Context) graphql.Marshaler {
+					return innerFunc(ctx, dfs)
+				})
+
+				// don't run the out.Concurrently() call below
+				out.Values[i] = graphql.Null
+				continue
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
 		case "discussionID":
 			out.Values[i] = ec._TaggedInDiscussionReplyActivityMeta_discussionID(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
@@ -70167,6 +70536,47 @@ func (ec *executionContext) _TaggedInPlanDiscussionActivityMeta(ctx context.Cont
 			if out.Values[i] == graphql.Null {
 				atomic.AddUint32(&out.Invalids, 1)
 			}
+		case "modelPlanID":
+			out.Values[i] = ec._TaggedInPlanDiscussionActivityMeta_modelPlanID(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "modelPlan":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._TaggedInPlanDiscussionActivityMeta_modelPlan(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
+				return res
+			}
+
+			if field.Deferrable != nil {
+				dfs, ok := deferred[field.Deferrable.Label]
+				di := 0
+				if ok {
+					dfs.AddField(field)
+					di = len(dfs.Values) - 1
+				} else {
+					dfs = graphql.NewFieldSet([]graphql.CollectedField{field})
+					deferred[field.Deferrable.Label] = dfs
+				}
+				dfs.Concurrently(di, func(ctx context.Context) graphql.Marshaler {
+					return innerFunc(ctx, dfs)
+				})
+
+				// don't run the out.Concurrently() call below
+				out.Values[i] = graphql.Null
+				continue
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
 		case "discussionID":
 			out.Values[i] = ec._TaggedInPlanDiscussionActivityMeta_discussionID(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
