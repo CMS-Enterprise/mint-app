@@ -19,6 +19,16 @@ func (r *activityResolver) ActorUserAccount(ctx context.Context, obj *models.Act
 }
 
 // ModelPlan is the resolver for the modelPlan field.
+func (r *addedAsCollaboratorMetaResolver) ModelPlan(ctx context.Context, obj *models.AddedAsCollaboratorMeta) (*models.ModelPlan, error) {
+	return ModelPlanGetByIDLOADER(ctx, obj.ModelPlanID)
+}
+
+// Collaborator is the resolver for the collaborator field.
+func (r *addedAsCollaboratorMetaResolver) Collaborator(ctx context.Context, obj *models.AddedAsCollaboratorMeta) (*models.PlanCollaborator, error) {
+	return PlanCollaboratorGetByID(ctx, obj.CollaboratorID)
+}
+
+// ModelPlan is the resolver for the modelPlan field.
 func (r *taggedInDiscussionReplyActivityMetaResolver) ModelPlan(ctx context.Context, obj *models.TaggedInDiscussionReplyActivityMeta) (*models.ModelPlan, error) {
 	return ModelPlanGetByIDLOADER(ctx, obj.ModelPlanID)
 }
@@ -49,6 +59,11 @@ func (r *taggedInPlanDiscussionActivityMetaResolver) Discussion(ctx context.Cont
 // Activity returns generated.ActivityResolver implementation.
 func (r *Resolver) Activity() generated.ActivityResolver { return &activityResolver{r} }
 
+// AddedAsCollaboratorMeta returns generated.AddedAsCollaboratorMetaResolver implementation.
+func (r *Resolver) AddedAsCollaboratorMeta() generated.AddedAsCollaboratorMetaResolver {
+	return &addedAsCollaboratorMetaResolver{r}
+}
+
 // TaggedInDiscussionReplyActivityMeta returns generated.TaggedInDiscussionReplyActivityMetaResolver implementation.
 func (r *Resolver) TaggedInDiscussionReplyActivityMeta() generated.TaggedInDiscussionReplyActivityMetaResolver {
 	return &taggedInDiscussionReplyActivityMetaResolver{r}
@@ -60,5 +75,6 @@ func (r *Resolver) TaggedInPlanDiscussionActivityMeta() generated.TaggedInPlanDi
 }
 
 type activityResolver struct{ *Resolver }
+type addedAsCollaboratorMetaResolver struct{ *Resolver }
 type taggedInDiscussionReplyActivityMetaResolver struct{ *Resolver }
 type taggedInPlanDiscussionActivityMetaResolver struct{ *Resolver }

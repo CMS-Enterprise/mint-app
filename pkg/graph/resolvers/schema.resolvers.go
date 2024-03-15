@@ -43,7 +43,7 @@ func (r *mutationResolver) CreatePlanCollaborator(ctx context.Context, input mod
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
 
-	planCollaborator, _, err := CreatePlanCollaborator(
+	planCollaborator, _, err := PlanCollaboratorCreate(
 		ctx,
 		r.store,
 		r.store,
@@ -55,6 +55,7 @@ func (r *mutationResolver) CreatePlanCollaborator(ctx context.Context, input mod
 		principal,
 		true,
 		userhelpers.GetUserInfoAccountInfoWrapperFunc(r.service.FetchUserInfo),
+		true,
 	)
 	return planCollaborator, err
 }
@@ -64,7 +65,7 @@ func (r *mutationResolver) UpdatePlanCollaborator(ctx context.Context, id uuid.U
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
 
-	return UpdatePlanCollaborator(logger, id, newRoles, principal, r.store)
+	return PlanCollaboratorUpdate(logger, id, newRoles, principal, r.store)
 }
 
 // DeletePlanCollaborator is the resolver for the deletePlanCollaborator field.
@@ -72,7 +73,7 @@ func (r *mutationResolver) DeletePlanCollaborator(ctx context.Context, id uuid.U
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
 
-	return DeletePlanCollaborator(logger, id, principal, r.store)
+	return PlanCollaboratorDelete(logger, id, principal, r.store)
 }
 
 // UpdatePlanBeneficiaries is the resolver for the updatePlanBeneficiaries field.
@@ -514,8 +515,7 @@ func (r *queryResolver) SearchOktaUsers(ctx context.Context, searchTerm string) 
 
 // PlanCollaboratorByID is the resolver for the planCollaboratorByID field.
 func (r *queryResolver) PlanCollaboratorByID(ctx context.Context, id uuid.UUID) (*models.PlanCollaborator, error) {
-	logger := appcontext.ZLogger(ctx)
-	return FetchCollaboratorByID(logger, id, r.store)
+	return PlanCollaboratorGetByID(ctx, id)
 }
 
 // TaskListSectionLocks is the resolver for the taskListSectionLocks field.

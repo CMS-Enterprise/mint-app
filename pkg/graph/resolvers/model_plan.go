@@ -110,7 +110,7 @@ func ModelPlanCreate(
 		}
 
 		// Create an initial collaborator for the plan
-		_, _, err = CreatePlanCollaborator(
+		_, _, err = PlanCollaboratorCreate(
 			ctx,
 			tx,
 			store,
@@ -126,6 +126,7 @@ func ModelPlanCreate(
 			principal,
 			false,
 			getAccountInformation,
+			false,
 		)
 		if err != nil {
 			return nil, err

@@ -13,7 +13,15 @@ enum ActivityType {
 """
 ActivityMetaData is a type that represents all the data that can be captured in an Activity
 """
-union ActivityMetaData = ActivityMetaBaseStruct | TaggedInPlanDiscussionActivityMeta  | TaggedInDiscussionReplyActivityMeta
+union ActivityMetaData = ActivityMetaBaseStruct | TaggedInPlanDiscussionActivityMeta  | TaggedInDiscussionReplyActivityMeta | AddedAsCollaboratorMeta
+type AddedAsCollaboratorMeta {
+  version: Int!
+  type: ActivityType!
+  modelPlanID: UUID!
+  modelPlan: ModelPlan!
+  collaboratorID: UUID!
+  collaborator: PlanCollaborator!
+}
 
 type TaggedInPlanDiscussionActivityMeta {
   version: Int!
