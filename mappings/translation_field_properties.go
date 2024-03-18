@@ -1,4 +1,4 @@
-package main
+package mappings
 
 type TranslationFieldProperties struct {
 	GqlField    string `json:"gqlField"`

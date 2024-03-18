@@ -1,7 +1,16 @@
-package main
+package mappings
 
-// TranslationParticipantsAndProviders shows the translation for every field in the Participants and Providers Data type
-type TranslationParticipantsAndProviders struct {
+import (
+	_ "embed"
+	"encoding/json"
+	"fmt"
+)
+
+//go:embed translation/participantsAndProviders.json
+var partsAndProvidersTranslationJSON []byte
+
+// translationParticipantsAndProviders shows the translation for every field in the Participants and Providers Data type
+type translationParticipantsAndProviders struct {
 	Participants                           TranslationFieldPropertiesWithOptionsAndParent `json:"participants"`
 	MedicareProviderType                   TranslationFieldProperties                     `json:"medicareProviderType"`
 	StatesEngagement                       TranslationFieldProperties                     `json:"statesEngagement"`
@@ -63,4 +72,18 @@ type TranslationParticipantsAndProviders struct {
 	ProviderOverlapHierarchy               TranslationFieldProperties                     `json:"providerOverlapHierarchy"`
 	ProviderOverlapNote                    TranslationFieldProperties                     `json:"providerOverlapNote"`
 	Status                                 TranslationFieldPropertiesWithOptions          `json:"status"`
+}
+
+// var participantsAndProviders = getParticipantsAndProvidersTranslation()
+
+// ParticipantsAndProvidersTranslation Provides the translation for Participants and Providers
+func ParticipantsAndProvidersTranslation() (*translationParticipantsAndProviders, error) {
+	var participantsTranslation translationParticipantsAndProviders
+	err := json.Unmarshal(partsAndProvidersTranslationJSON, &participantsTranslation)
+	if err != nil {
+		fmt.Println("Error unmarshalling JSON:", err)
+		return nil, err
+	}
+	return &participantsTranslation, nil
+
 }
