@@ -50,7 +50,7 @@ const DailyDigest = ({
                 {modelPlan && modelPlan.oldName && (
                   <li className="line-height-sans-5">
                     {notificationsT('index.dailyDigest.nameChange', {
-                      nameChange: modelPlan.oldName
+                      oldName: modelPlan.oldName
                     })}
                   </li>
                 )}
