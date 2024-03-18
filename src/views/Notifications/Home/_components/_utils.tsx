@@ -137,57 +137,39 @@ export const TranslateStatusChange = ({
   switch (status) {
     case 'PLAN_DRAFT':
       return (
-        <li className="line-height-sans-5">
-          <Trans i18nKey="notifications:index.dailyDigest.statusChange.plan_draft" />
-        </li>
+        <Trans i18nKey="notifications:index.dailyDigest.statusChange.plan_draft" />
       );
     case 'PLAN_COMPLETE':
       return (
-        <li className="line-height-sans-5">
-          <Trans i18nKey="notifications:index.dailyDigest.statusChange.plan_complete" />
-        </li>
+        <Trans i18nKey="notifications:index.dailyDigest.statusChange.plan_complete" />
       );
     case 'ICIP_COMPLETE':
       return (
-        <li className="line-height-sans-5">
-          <Trans i18nKey="notifications:index.dailyDigest.statusChange.icip_complete" />
-        </li>
+        <Trans i18nKey="notifications:index.dailyDigest.statusChange.icip_complete" />
       );
     case 'INTERNAL_CMMI_CLEARANCE':
       return (
-        <li className="line-height-sans-5">
-          <Trans i18nKey="notifications:index.dailyDigest.statusChange.internal_cmmi_clearance" />
-        </li>
+        <Trans i18nKey="notifications:index.dailyDigest.statusChange.internal_cmmi_clearance" />
       );
     case 'CMS_CLEARANCE':
       return (
-        <li className="line-height-sans-5">
-          <Trans i18nKey="notifications:index.dailyDigest.statusChange.cms_clearance" />
-        </li>
+        <Trans i18nKey="notifications:index.dailyDigest.statusChange.cms_clearance" />
       );
     case 'HHS_CLEARANCE':
       return (
-        <li className="line-height-sans-5">
-          <Trans i18nKey="notifications:index.dailyDigest.statusChange.hhs_clearance" />
-        </li>
+        <Trans i18nKey="notifications:index.dailyDigest.statusChange.hhs_clearance" />
       );
     case 'OMB_ASRF_CLEARANCE':
       return (
-        <li className="line-height-sans-5">
-          <Trans i18nKey="notifications:index.dailyDigest.statusChange.omb_asrf_clearance" />
-        </li>
+        <Trans i18nKey="notifications:index.dailyDigest.statusChange.omb_asrf_clearance" />
       );
     case 'CLEARED':
       return (
-        <li className="line-height-sans-5">
-          <Trans i18nKey="notifications:index.dailyDigest.statusChange.cleared" />
-        </li>
+        <Trans i18nKey="notifications:index.dailyDigest.statusChange.cleared" />
       );
     case 'ANNOUNCED':
       return (
-        <li className="line-height-sans-5">
-          <Trans i18nKey="notifications:index.dailyDigest.statusChange.announced" />
-        </li>
+        <Trans i18nKey="notifications:index.dailyDigest.statusChange.announced" />
       );
     default:
       return <></>;

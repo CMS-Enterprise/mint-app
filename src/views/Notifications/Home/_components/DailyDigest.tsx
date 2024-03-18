@@ -137,7 +137,11 @@ const DailyDigest = ({
                   </li>
                 )}
                 {modelPlan?.statusChanges?.map(status => {
-                  return <TranslateStatusChange status={status} />;
+                  return (
+                    <li className="line-height-sans-5">
+                      <TranslateStatusChange status={status} />
+                    </li>
+                  );
                 })}
               </ul>
               <UswdsReactLink
