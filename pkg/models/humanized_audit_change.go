@@ -23,8 +23,8 @@ type HumanizedAuditChange struct {
 	modelPlanRelation
 	ModelName   string              `json:"modelName" db:"model_name"`
 	Date        time.Time           `json:"date" db:"date"`
-	Changes     AnalyzedAuditChange `json:"changes" db:"changes"`
-	MetaDataRaw interface{}         `db:"meta_data"`
+	Changes     AnalyzedAuditChange `json:"changes"`
+	MetaDataRaw interface{}         `db:"changes"`
 
 	// this is conditional data that is returned. It deserializes to data specific the activity type
 	MetaData HumanizedAuditMetaData `json:"metaData"`
@@ -32,7 +32,10 @@ type HumanizedAuditChange struct {
 
 // HumanizedAuditMetaData is an interface that all Humanized meta data structs must implement
 type HumanizedAuditMetaData interface {
-	isActivityMetaData()
+	isAuditMetaData()
 	Value() (driver.Value, error)
 	Scan(src interface{}) error
 }
+
+//Ticket: (ChChCh Changes!) Try to see about what data should be in here? should we have each entry have it's separate data?
+// We could have data for Multiple Tables, and for Multiple fields. We need to be able to handle them all....
