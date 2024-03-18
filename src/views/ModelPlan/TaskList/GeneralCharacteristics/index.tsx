@@ -142,6 +142,10 @@ export const CharacteristicsContent = () => {
     );
   }, [modelData, existingModelData, miscellaneousT]);
 
+  const modelPlanOptionsWithoutOther = useMemo(() => {
+    return modelPlanOptions.filter(option => option.value !== 'other');
+  }, [modelPlanOptions]);
+
   const { data, loading, error } = useGetGeneralCharacteristicsQuery({
     variables: {
       id: modelID
@@ -505,7 +509,7 @@ export const CharacteristicsContent = () => {
                               'aria-describedby':
                                 'plan-characteristics-existing-model'
                             }}
-                            options={modelPlanOptions}
+                            options={modelPlanOptionsWithoutOther}
                             defaultValue={
                               modelPlanOptions.find(
                                 modelPlan => modelPlan.value === existingModel
