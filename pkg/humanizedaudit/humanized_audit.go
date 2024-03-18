@@ -1,13 +1,15 @@
+// Package humanizedaudit translates audit delta slices to human readable changes
 package humanizedaudit
 
 import (
 	"context"
 	"time"
 
-	"github.com/cmsgov/mint-app/pkg/models"
-	"github.com/cmsgov/mint-app/pkg/storage"
 	"github.com/google/uuid"
 	"go.uber.org/zap"
+
+	"github.com/cmsgov/mint-app/pkg/models"
+	"github.com/cmsgov/mint-app/pkg/storage"
 )
 
 // HumanizeAuditsForModelPlan gets all changes for a model plan and related sections in a time period,
