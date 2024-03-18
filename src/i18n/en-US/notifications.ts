@@ -46,7 +46,15 @@ const notifications = {
       discussionActivity: 'New activity in Discussions',
       readyForReview: '{{-taskSection}} is ready for review ',
       readyForClearance: '{{-taskSection}}  is ready for clearance',
-      updatesTo: 'Updates to {{-taskSection}}'
+      updatesTo: 'Updates to {{-taskSection}}',
+      planSections: {
+        plan_payments: 'Payments',
+        plan_ops_eval_and_learning: 'Operations, evaluation, and learning',
+        plan_participants_and_providers: 'Participants and providers',
+        plan_beneficiaries: 'Beneficiaries',
+        plan_general_characteristics: 'General characteristics',
+        plan_basics: 'Basics'
+      }
     }
   },
   settings: {
