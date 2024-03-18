@@ -54,7 +54,8 @@ const notifications = {
         plan_beneficiaries: 'Beneficiaries',
         plan_general_characteristics: 'General characteristics',
         plan_basics: 'Basics'
-      }
+      },
+      statusChange: {}
     }
   },
   settings: {
