@@ -84,15 +84,19 @@ const DailyDigest = ({
                 )}
                 {planSections && planSections.readyForReview.length > 0 && (
                   <li className="line-height-sans-5">
-                    {notificationsT('index.dailyDigest.updatesTo', {
-                      taskSection: planSections.readyForReview.join(', ')
+                    {notificationsT('index.dailyDigest.readyForReview', {
+                      taskSection: planSections.readyForReview
+                        .map(translatePlanSections)
+                        .join(', ')
                     })}
                   </li>
                 )}
                 {planSections && planSections.readyForClearance.length > 0 && (
                   <li className="line-height-sans-5">
-                    {notificationsT('index.dailyDigest.updatesTo', {
-                      taskSection: planSections.readyForClearance.join(', ')
+                    {notificationsT('index.dailyDigest.readyForClearance', {
+                      taskSection: planSections.readyForClearance
+                        .map(translatePlanSections)
+                        .join(', ')
                     })}
                   </li>
                 )}
