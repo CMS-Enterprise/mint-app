@@ -6,6 +6,8 @@ import { GetNotifications_currentUser_notifications_notifications_activity_metaD
 import UswdsReactLink from 'components/LinkWrapper';
 import PageHeading from 'components/PageHeading';
 
+import { TranslateStatusChange } from './_utils';
+
 const DailyDigest = ({
   analyzedAudits
 }: {
@@ -134,6 +136,9 @@ const DailyDigest = ({
                     })}
                   </li>
                 )}
+                {modelPlan?.statusChanges?.map(status => {
+                  return <TranslateStatusChange status={status} />;
+                })}
               </ul>
               <UswdsReactLink
                 to={`/models/${modelPlanID}/read-only`}

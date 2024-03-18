@@ -101,3 +101,95 @@ export const ActivityCTA = ({
   }
   return <></>;
 };
+
+// export const translatePlanSections = (section: string) => {
+//   switch (section) {
+//     case 'plan_basics':
+//       return notificationsT('index.dailyDigest.planSections.plan_basics');
+//     case 'plan_payments':
+//       return notificationsT('index.dailyDigest.planSections.plan_payments');
+//     case 'plan_ops_eval_and_learning':
+//       return notificationsT(
+//         'index.dailyDigest.planSections.plan_ops_eval_and_learning'
+//       );
+//     case 'plan_participants_and_providers':
+//       return notificationsT(
+//         'index.dailyDigest.planSections.plan_participants_and_providers'
+//       );
+//     case 'plan_beneficiaries':
+//       return notificationsT(
+//         'index.dailyDigest.planSections.plan_beneficiaries'
+//       );
+//     case 'plan_general_characteristics':
+//       return notificationsT(
+//         'index.dailyDigest.planSections.plan_general_characteristics'
+//       );
+//     default:
+//       return '';
+//   }
+// };
+
+export const TranslateStatusChange = ({
+  status
+}: {
+  status: string | null;
+}) => {
+  switch (status) {
+    case 'PLAN_DRAFT':
+      return (
+        <li className="line-height-sans-5">
+          <Trans i18nKey="notifications:index.dailyDigest.statusChange.plan_draft" />
+        </li>
+      );
+    case 'PLAN_COMPLETE':
+      return (
+        <li className="line-height-sans-5">
+          <Trans i18nKey="notifications:index.dailyDigest.statusChange.plan_complete" />
+        </li>
+      );
+    case 'ICIP_COMPLETE':
+      return (
+        <li className="line-height-sans-5">
+          <Trans i18nKey="notifications:index.dailyDigest.statusChange.icip_complete" />
+        </li>
+      );
+    case 'INTERNAL_CMMI_CLEARANCE':
+      return (
+        <li className="line-height-sans-5">
+          <Trans i18nKey="notifications:index.dailyDigest.statusChange.internal_cmmi_clearance" />
+        </li>
+      );
+    case 'CMS_CLEARANCE':
+      return (
+        <li className="line-height-sans-5">
+          <Trans i18nKey="notifications:index.dailyDigest.statusChange.cms_clearance" />
+        </li>
+      );
+    case 'HHS_CLEARANCE':
+      return (
+        <li className="line-height-sans-5">
+          <Trans i18nKey="notifications:index.dailyDigest.statusChange.hhs_clearance" />
+        </li>
+      );
+    case 'OMB_ASRF_CLEARANCE':
+      return (
+        <li className="line-height-sans-5">
+          <Trans i18nKey="notifications:index.dailyDigest.statusChange.omb_asrf_clearance" />
+        </li>
+      );
+    case 'CLEARED':
+      return (
+        <li className="line-height-sans-5">
+          <Trans i18nKey="notifications:index.dailyDigest.statusChange.cleared" />
+        </li>
+      );
+    case 'ANNOUNCED':
+      return (
+        <li className="line-height-sans-5">
+          <Trans i18nKey="notifications:index.dailyDigest.statusChange.announced" />
+        </li>
+      );
+    default:
+      return <></>;
+  }
+};
