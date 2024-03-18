@@ -1,5 +1,5 @@
 import React from 'react';
-import { Trans, useTranslation } from 'react-i18next';
+import { Trans } from 'react-i18next';
 import { Icon } from '@trussworks/react-uswds';
 import {
   GetNotifications_currentUser_notifications_notifications_activity_metaData as MetaDataType,
@@ -100,33 +100,4 @@ export const ActivityCTA = ({
     );
   }
   return <></>;
-};
-
-export const translatePlanSections = (section: string) => {
-  const { t: notificationsT } = useTranslation('notifications');
-
-  switch (section) {
-    case 'plan_basics':
-      return notificationsT('index.dailyDigest.planSections.plan_basics');
-    case 'plan_payments':
-      return notificationsT('index.dailyDigest.planSections.plan_payments');
-    case 'plan_ops_eval_and_learning':
-      return notificationsT(
-        'index.dailyDigest.planSections.plan_ops_eval_and_learning'
-      );
-    case 'plan_participants_and_providers':
-      return notificationsT(
-        'index.dailyDigest.planSections.plan_participants_and_providers'
-      );
-    case 'plan_beneficiaries':
-      return notificationsT(
-        'index.dailyDigest.planSections.plan_beneficiaries'
-      );
-    case 'plan_general_characteristics':
-      return notificationsT(
-        'index.dailyDigest.planSections.plan_general_characteristics'
-      );
-    default:
-      return '';
-  }
 };
