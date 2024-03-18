@@ -6,9 +6,10 @@ import (
 	"fmt"
 )
 
-//go:embed translation/participantsAndProviders.json
+//go:embed translation/participantsAndProviders2.json
 var partsAndProvidersTranslationJSON []byte
 
+// TODO: EASI-(ChChCh Changes!) Look at the JSON, I'm leaving out sharing mappings, eg for frequency options
 // translationParticipantsAndProviders shows the translation for every field in the Participants and Providers Data type
 type translationParticipantsAndProviders struct {
 	Participants                           TranslationFieldPropertiesWithOptionsAndParent `json:"participants"`
