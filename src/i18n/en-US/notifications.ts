@@ -55,7 +55,17 @@ const notifications = {
         plan_general_characteristics: 'General characteristics',
         plan_basics: 'Basics'
       },
-      statusChange: {}
+      statusChange: {
+        plan_draft: 'This model has been announced',
+        plan_complete: 'This Model Plan is complete',
+        icip_complete: 'The ICIP for this model is complete',
+        internal_cmmi_clearance: 'This model is in internal (CMMI) clearance',
+        cms_clearance: 'This model is in CMS clearance',
+        hhs_clearance: 'This model is in HHS clearance',
+        omb_asrf_clearance: 'This model is in OMB/ASRF clearance',
+        cleared: 'This model has been cleared',
+        announced: 'This model has been announced'
+      }
     }
   },
   settings: {
