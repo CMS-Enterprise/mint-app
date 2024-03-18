@@ -131,9 +131,14 @@ const DailyDigest = ({
                   </li>
                 )}
               </ul>
-              <UswdsReactLink to={`/models/${modelPlanID}/read-only`}>
-                {notificationsT('index.dailyDigest.cta')}
-                <Icon.ArrowForward className="margin-left-1" aria-hidden />
+              <UswdsReactLink
+                to={`/models/${modelPlanID}/read-only`}
+                className="display width-fit-content"
+              >
+                <div className="display-flex flex-align-center">
+                  {notificationsT('index.dailyDigest.cta')}
+                  <Icon.ArrowForward className="margin-left-1" aria-hidden />
+                </div>
               </UswdsReactLink>
             </div>
           );
