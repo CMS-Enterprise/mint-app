@@ -101,34 +101,6 @@ export const ActivityCTA = ({
   }
   return <></>;
 };
-
-// export const translatePlanSections = (section: string) => {
-//   switch (section) {
-//     case 'plan_basics':
-//       return notificationsT('index.dailyDigest.planSections.plan_basics');
-//     case 'plan_payments':
-//       return notificationsT('index.dailyDigest.planSections.plan_payments');
-//     case 'plan_ops_eval_and_learning':
-//       return notificationsT(
-//         'index.dailyDigest.planSections.plan_ops_eval_and_learning'
-//       );
-//     case 'plan_participants_and_providers':
-//       return notificationsT(
-//         'index.dailyDigest.planSections.plan_participants_and_providers'
-//       );
-//     case 'plan_beneficiaries':
-//       return notificationsT(
-//         'index.dailyDigest.planSections.plan_beneficiaries'
-//       );
-//     case 'plan_general_characteristics':
-//       return notificationsT(
-//         'index.dailyDigest.planSections.plan_general_characteristics'
-//       );
-//     default:
-//       return '';
-//   }
-// };
-
 export const TranslateStatusChange = ({
   status
 }: {
