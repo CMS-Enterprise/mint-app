@@ -65,7 +65,8 @@ const notifications = {
         omb_asrf_clearance: 'This model is in OMB/ASRF clearance',
         cleared: 'This model has been cleared',
         announced: 'This model has been announced'
-      }
+      },
+      moreChanges: '+{{-num}} more changes'
     }
   },
   settings: {

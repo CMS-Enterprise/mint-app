@@ -85,7 +85,7 @@ const DailyDigest = ({
                   modelLeads.added.length > 0 &&
                   modelLeads.added.map(name => {
                     return (
-                      <li className="line-height-sans-5">
+                      <li key={name.commonName} className="line-height-sans-5">
                         {notificationsT('index.dailyDigest.addModelLead', {
                           name: name.commonName
                         })}
@@ -138,11 +138,14 @@ const DailyDigest = ({
                 )}
                 {modelPlan?.statusChanges?.map(status => {
                   return (
-                    <li className="line-height-sans-5">
+                    <li key={status} className="line-height-sans-5">
                       <TranslateStatusChange status={status} />
                     </li>
                   );
                 })}
+                <li className="line-height-sans-5">
+                  {notificationsT('index.dailyDigest.moreChanges', { num: 3 })}
+                </li>
               </ul>
               <UswdsReactLink
                 to={`/models/${modelPlanID}/read-only`}
