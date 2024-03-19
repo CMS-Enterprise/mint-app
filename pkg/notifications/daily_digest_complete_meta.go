@@ -20,7 +20,7 @@ func ActivityDailyDigestComplete(ctx context.Context, np sqlutils.NamedPreparer,
 	if actErr != nil {
 		return nil, actErr
 	}
-	pref, err := getPreferencesFunc(ctx, actorID)
+	pref, err := getPreferencesFunc(ctx, userID)
 	if err != nil {
 		return nil, fmt.Errorf("unable to get user notification preference, Notification not created %w", err)
 	}

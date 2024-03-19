@@ -16,7 +16,7 @@ import (
 
 // HumanizedAuditChange is a structure that shows grouped, humanReadable Audit data
 type HumanizedAuditChange struct {
-	// TODO: EASI-(ChChCh Changes!) Think about what should be in the row....
+	// Ticket: (ChChCh Changes!) Think about what should be in the row....
 	//Perhaps we want this to be a time frame, and have an array of specific changes instead of just meta data?
 
 	baseStruct
@@ -39,3 +39,5 @@ type HumanizedAuditMetaData interface {
 
 //Ticket: (ChChCh Changes!) Try to see about what data should be in here? should we have each entry have it's separate data?
 // We could have data for Multiple Tables, and for Multiple fields. We need to be able to handle them all....
+
+//Ticket: (ChChCh Changes!) Should we store these as single entries in the database? Or should we store them grouped in the database?
