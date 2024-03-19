@@ -6,7 +6,6 @@ package resolvers
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/cmsgov/mint-app/pkg/appcontext"
 	"github.com/cmsgov/mint-app/pkg/authentication"
@@ -21,7 +20,7 @@ func (r *activityResolver) ActorUserAccount(ctx context.Context, obj *models.Act
 
 // ModelPlan is the resolver for the modelPlan field.
 func (r *modelPlanSharedActivityMetaResolver) ModelPlan(ctx context.Context, obj *models.ModelPlanSharedActivityMeta) (*models.ModelPlan, error) {
-	panic(fmt.Errorf("not implemented: ModelPlan - modelPlan"))
+	return ModelPlanGetByIDLOADER(ctx, obj.ModelPlanID)
 }
 
 // ModelPlan is the resolver for the modelPlan field.
