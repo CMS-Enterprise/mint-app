@@ -178,13 +178,7 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
               data-testid="combo-box-select"
               name="existingModel"
               tabindex="-1"
-            >
-              <option
-                value="other"
-              >
-                Other
-              </option>
-            </select>
+            />
             <input
               aria-activedescendant=""
               aria-autocomplete="list"
@@ -244,18 +238,9 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
               tabindex="-1"
             >
               <li
-                aria-posinset="1"
-                aria-selected="false"
-                aria-setsize="1"
-                class="usa-combo-box__list-option"
-                data-testid="combo-box-option-other"
-                data-value="other"
-                id="plan-characteristics-existing-model--list--option-0"
-                role="option"
-                tabindex="-1"
-                value="other"
+                class="usa-combo-box__list-option--no-results"
               >
-                Other
+                No results found
               </li>
             </ul>
             <div
