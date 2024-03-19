@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"strings"
 
+	"github.com/cmsgov/mint-app/pkg/notifications"
+
 	"github.com/google/uuid"
 	"github.com/jmoiron/sqlx"
 	"go.uber.org/zap"
@@ -319,7 +321,7 @@ func ModelPlanShare(
 		return false, err
 	}
 
-	receiverEmails := make([]string, len(usernames))
+	receiverEmails := make([]string, 1)
 
 	for i, username := range usernames {
 		collabAccount, err := userhelpers.GetOrCreateUserAccount(
@@ -335,7 +337,19 @@ func ModelPlanShare(
 			return false, fmt.Errorf("failed to get or create user account: %w", err)
 		}
 
-		receiverEmails[i] = collabAccount.Email
+		userPrefs, err := loaders.UserNotificationPreferencesGetByUserID(ctx, collabAccount.ID)
+		if err != nil {
+			return false, fmt.Errorf("failed to get user notification preferences: %w", err)
+		}
+
+		_, err = notifications.ActivityModelPlanSharedCreate(ctx, store, principal.Account().ID, modelPlanID, userPrefs)
+		if err != nil {
+			return false, fmt.Errorf("failed to create activity: %w", err)
+		}
+
+		if userPrefs.ModelPlanShared.SendEmail() {
+			receiverEmails[i] = collabAccount.Email
+		}
 	}
 
 	// Get client address
