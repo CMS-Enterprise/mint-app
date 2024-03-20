@@ -40,7 +40,7 @@ const IndividualNotification = ({
 }: IndividualNotificationProps) => {
   const { t: discussionT } = useTranslation('discussions');
 
-  const [isExpanded, setIsExpanded] = useState(true);
+  const [isExpanded, setIsExpanded] = useState(false);
 
   const history = useHistory();
   const isMobile = useCheckResponsiveScreen('mobile');
