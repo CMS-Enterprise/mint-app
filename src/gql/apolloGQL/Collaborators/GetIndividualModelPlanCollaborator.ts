@@ -1,7 +1,7 @@
 import { gql } from '@apollo/client';
 
-export default gql`
-  query GetModelCollaborator($id: UUID!) {
+export default gql(/* GraphQL */ `
+  query GetIndividualModelPlanCollaborator($id: UUID!) {
     planCollaboratorByID(id: $id) {
       id
       userAccount {
@@ -14,4 +14,4 @@ export default gql`
       teamRoles
     }
   }
-`;
+`);
