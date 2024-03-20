@@ -75,11 +75,13 @@ const DailyDigest = ({
             Object.entries(obj).forEach(([key, value]) => {
               if (key !== '__typename') {
                 if (Array.isArray(value) && value.length > 0) {
-                  changesArray.push(value);
+                  changesArray.push(key);
                 } else if (typeof value === 'string' && value.trim() !== '') {
-                  changesArray.push(value);
+                  changesArray.push(key);
                 } else if (typeof value === 'number') {
-                  changesArray.push(value);
+                  changesArray.push(key);
+                } else if (typeof value === 'boolean' && value) {
+                  changesArray.push(key);
                 } else if (value !== null && typeof value === 'object') {
                   pushValuesToChangesArray(value);
                 }
@@ -88,6 +90,8 @@ const DailyDigest = ({
           };
 
           pushValuesToChangesArray(changes);
+
+          const showFirstFiveChanges = changesArray.slice(0, 5);
 
           return (
             <div key={modelPlanID} className="margin-bottom-4">
@@ -98,15 +102,18 @@ const DailyDigest = ({
                 {modelName}
               </PageHeading>
               <ul className="padding-left-205">
-                {modelPlan && modelPlan.oldName && (
-                  <li className="line-height-sans-5">
-                    {notificationsT('index.dailyDigest.nameChange', {
-                      oldName: modelPlan.oldName
-                    })}
-                  </li>
-                )}
+                {modelPlan &&
+                  modelPlan.oldName &&
+                  showFirstFiveChanges.includes('oldName') && (
+                    <li className="line-height-sans-5">
+                      {notificationsT('index.dailyDigest.nameChange', {
+                        oldName: modelPlan.oldName
+                      })}
+                    </li>
+                  )}
                 {modelLeads &&
                   modelLeads.added.length > 0 &&
+                  showFirstFiveChanges.includes('added') &&
                   modelLeads.added.map(name => {
                     return (
                       <li key={name.commonName} className="line-height-sans-5">
@@ -116,61 +123,72 @@ const DailyDigest = ({
                       </li>
                     );
                   })}
-                {documents && documents.count && (
-                  <li className="line-height-sans-5">
-                    {notificationsT('index.dailyDigest.documentsAdded', {
-                      number: documents.count
-                    })}
-                  </li>
-                )}
-                {crTdls && crTdls.activity && (
-                  <li className="line-height-sans-5">
-                    {notificationsT('index.dailyDigest.crTdlsUpdate')}
-                  </li>
-                )}
+                {documents &&
+                  documents.count &&
+                  showFirstFiveChanges.includes('count') && (
+                    <li className="line-height-sans-5">
+                      {notificationsT('index.dailyDigest.documentsAdded', {
+                        number: documents.count
+                      })}
+                    </li>
+                  )}
+                {crTdls &&
+                  crTdls.activity &&
+                  showFirstFiveChanges.includes('activity') && (
+                    <li className="line-height-sans-5">
+                      {notificationsT('index.dailyDigest.crTdlsUpdate')}
+                    </li>
+                  )}
                 {planDiscussions && planDiscussions.activity && (
                   <li className="line-height-sans-5">
                     {notificationsT('index.dailyDigest.discussionActivity')}
                   </li>
                 )}
-                {planSections && planSections.readyForReview.length > 0 && (
-                  <li className="line-height-sans-5">
-                    {notificationsT('index.dailyDigest.readyForReview', {
-                      taskSection: planSections.readyForReview
-                        .map(translatePlanSections)
-                        .join(', ')
-                    })}
-                  </li>
-                )}
-                {planSections && planSections.readyForClearance.length > 0 && (
-                  <li className="line-height-sans-5">
-                    {notificationsT('index.dailyDigest.readyForClearance', {
-                      taskSection: planSections.readyForClearance
-                        .map(translatePlanSections)
-                        .join(', ')
-                    })}
-                  </li>
-                )}
-                {planSections && planSections.updated.length > 0 && (
-                  <li className="line-height-sans-5">
-                    {notificationsT('index.dailyDigest.updatesTo', {
-                      taskSection: planSections.updated
-                        .map(translatePlanSections)
-                        .join(', ')
-                    })}
-                  </li>
-                )}
-                {modelPlan?.statusChanges?.map(status => {
-                  return (
-                    <li key={status} className="line-height-sans-5">
-                      <TranslateStatusChange status={status} />
+                {planSections &&
+                  planSections.readyForReview.length > 0 &&
+                  showFirstFiveChanges.includes('readyForReview') && (
+                    <li className="line-height-sans-5">
+                      {notificationsT('index.dailyDigest.readyForReview', {
+                        taskSection: planSections.readyForReview
+                          .map(translatePlanSections)
+                          .join(', ')
+                      })}
                     </li>
-                  );
-                })}
+                  )}
+                {planSections &&
+                  planSections.readyForClearance.length > 0 &&
+                  showFirstFiveChanges.includes('readyForClearance') && (
+                    <li className="line-height-sans-5">
+                      {notificationsT('index.dailyDigest.readyForClearance', {
+                        taskSection: planSections.readyForClearance
+                          .map(translatePlanSections)
+                          .join(', ')
+                      })}
+                    </li>
+                  )}
+                {planSections &&
+                  planSections.updated.length > 0 &&
+                  showFirstFiveChanges.includes('updated') && (
+                    <li className="line-height-sans-5">
+                      {notificationsT('index.dailyDigest.updatesTo', {
+                        taskSection: planSections.updated
+                          .map(translatePlanSections)
+                          .join(', ')
+                      })}
+                    </li>
+                  )}
+                {showFirstFiveChanges.includes('statusChanges') &&
+                  modelPlan?.statusChanges?.map(status => {
+                    return (
+                      <li key={status} className="line-height-sans-5">
+                        <TranslateStatusChange status={status} />
+                      </li>
+                    );
+                  })}
                 {changesArray.length > 5 && (
                   <li className="line-height-sans-5">
                     {notificationsT('index.dailyDigest.moreChanges', {
-                      num: 5 - changesArray.length
+                      num: changesArray.length - 5
                     })}
                   </li>
                 )}
