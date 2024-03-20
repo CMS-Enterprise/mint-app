@@ -75,7 +75,11 @@ const DailyDigest = ({
             Object.entries(obj).forEach(([key, value]) => {
               if (key !== '__typename') {
                 if (Array.isArray(value) && value.length > 0) {
-                  changesArray.push(key);
+                  if (key === 'added') {
+                    changesArray.unshift(key);
+                  } else {
+                    changesArray.push(key);
+                  }
                 } else if (typeof value === 'string' && value.trim() !== '') {
                   changesArray.push(key);
                 } else if (typeof value === 'number') {
@@ -83,7 +87,11 @@ const DailyDigest = ({
                 } else if (typeof value === 'boolean' && value) {
                   changesArray.push(key);
                 } else if (value !== null && typeof value === 'object') {
-                  pushValuesToChangesArray(value);
+                  if (key === 'crTdls' || key === 'planDiscussions') {
+                    changesArray.push(key);
+                  } else {
+                    pushValuesToChangesArray(value);
+                  }
                 }
               }
             });
@@ -134,16 +142,18 @@ const DailyDigest = ({
                   )}
                 {crTdls &&
                   crTdls.activity &&
-                  showFirstFiveChanges.includes('activity') && (
+                  showFirstFiveChanges.includes('crTdls') && (
                     <li className="line-height-sans-5">
                       {notificationsT('index.dailyDigest.crTdlsUpdate')}
                     </li>
                   )}
-                {planDiscussions && planDiscussions.activity && (
-                  <li className="line-height-sans-5">
-                    {notificationsT('index.dailyDigest.discussionActivity')}
-                  </li>
-                )}
+                {planDiscussions &&
+                  planDiscussions.activity &&
+                  showFirstFiveChanges.includes('planDiscussions') && (
+                    <li className="line-height-sans-5">
+                      {notificationsT('index.dailyDigest.discussionActivity')}
+                    </li>
+                  )}
                 {planSections &&
                   planSections.readyForReview.length > 0 &&
                   showFirstFiveChanges.includes('readyForReview') && (
