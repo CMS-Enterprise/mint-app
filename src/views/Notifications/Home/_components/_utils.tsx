@@ -4,6 +4,7 @@ import { Icon } from '@trussworks/react-uswds';
 import {
   GetNotifications_currentUser_notifications_notifications_activity_metaData as MetaDataType,
   GetNotifications_currentUser_notifications_notifications_activity_metaData_DailyDigestCompleteActivityMeta as DailyDigestCompleteActivityType,
+  GetNotifications_currentUser_notifications_notifications_activity_metaData_DailyDigestCompleteActivityMeta_analyzedAudits_changes as ChangeTypes,
   GetNotifications_currentUser_notifications_notifications_activity_metaData_TaggedInDiscussionReplyActivityMeta as TaggedInDiscussionReplyActivityType,
   GetNotifications_currentUser_notifications_notifications_activity_metaData_TaggedInPlanDiscussionActivityMeta as TaggedInDiscussionActivityType
 } from 'gql/gen/types/GetNotifications';
@@ -146,4 +147,33 @@ export const TranslateStatusChange = ({
     default:
       return <></>;
   }
+};
+
+export const pushValuesToChangesArray = (
+  obj: ChangeTypes,
+  changesArray: string[]
+) => {
+  Object.entries(obj).forEach(([key, value]) => {
+    if (key !== '__typename') {
+      if (Array.isArray(value) && value.length > 0) {
+        if (key === 'added') {
+          changesArray.unshift(key);
+        } else {
+          changesArray.push(key);
+        }
+      } else if (typeof value === 'string' && value.trim() !== '') {
+        changesArray.push(key);
+      } else if (typeof value === 'number') {
+        changesArray.push(key);
+      } else if (typeof value === 'boolean' && value) {
+        changesArray.push(key);
+      } else if (value !== null && typeof value === 'object') {
+        if (key === 'crTdls' || key === 'planDiscussions') {
+          changesArray.push(key);
+        } else {
+          pushValuesToChangesArray(value, changesArray);
+        }
+      }
+    }
+  });
 };

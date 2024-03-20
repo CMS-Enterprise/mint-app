@@ -1,15 +1,12 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Grid, Icon } from '@trussworks/react-uswds';
-import {
-  GetNotifications_currentUser_notifications_notifications_activity_metaData_DailyDigestCompleteActivityMeta_analyzedAudits as AnalyzedAuditsTypes,
-  GetNotifications_currentUser_notifications_notifications_activity_metaData_DailyDigestCompleteActivityMeta_analyzedAudits_changes as ChangeTypes
-} from 'gql/gen/types/GetNotifications';
+import { GetNotifications_currentUser_notifications_notifications_activity_metaData_DailyDigestCompleteActivityMeta_analyzedAudits as AnalyzedAuditsTypes } from 'gql/gen/types/GetNotifications';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import PageHeading from 'components/PageHeading';
 
-import { TranslateStatusChange } from './_utils';
+import { pushValuesToChangesArray, TranslateStatusChange } from './_utils';
 
 const DailyDigest = ({
   analyzedAudits
@@ -70,34 +67,7 @@ const DailyDigest = ({
           }
         }) => {
           const changesArray: any = [];
-
-          const pushValuesToChangesArray = (obj: ChangeTypes) => {
-            Object.entries(obj).forEach(([key, value]) => {
-              if (key !== '__typename') {
-                if (Array.isArray(value) && value.length > 0) {
-                  if (key === 'added') {
-                    changesArray.unshift(key);
-                  } else {
-                    changesArray.push(key);
-                  }
-                } else if (typeof value === 'string' && value.trim() !== '') {
-                  changesArray.push(key);
-                } else if (typeof value === 'number') {
-                  changesArray.push(key);
-                } else if (typeof value === 'boolean' && value) {
-                  changesArray.push(key);
-                } else if (value !== null && typeof value === 'object') {
-                  if (key === 'crTdls' || key === 'planDiscussions') {
-                    changesArray.push(key);
-                  } else {
-                    pushValuesToChangesArray(value);
-                  }
-                }
-              }
-            });
-          };
-
-          pushValuesToChangesArray(changes);
+          pushValuesToChangesArray(changes, changesArray);
 
           const showFirstFiveChanges = changesArray.slice(0, 5);
 
@@ -187,14 +157,15 @@ const DailyDigest = ({
                       })}
                     </li>
                   )}
-                {showFirstFiveChanges.includes('statusChanges') &&
-                  modelPlan?.statusChanges?.map(status => {
-                    return (
-                      <li key={status} className="line-height-sans-5">
-                        <TranslateStatusChange status={status} />
-                      </li>
-                    );
-                  })}
+                {modelPlan &&
+                  modelPlan.statusChanges &&
+                  showFirstFiveChanges.includes('statusChanges') && (
+                    <li className="line-height-sans-5">
+                      <TranslateStatusChange
+                        status={modelPlan.statusChanges[0]}
+                      />
+                    </li>
+                  )}
                 {changesArray.length > 5 && (
                   <li className="line-height-sans-5">
                     {notificationsT('index.dailyDigest.moreChanges', {
