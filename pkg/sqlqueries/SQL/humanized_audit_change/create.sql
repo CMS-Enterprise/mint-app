@@ -1,3 +1,35 @@
--- INSERT INTO humanized_audit_changes(
--- 	id, model_plan_id, actor_id, timestart, timeend, changes, model_name, created_by, created_dts, modified_by, modified_dts)
--- 	VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+INSERT INTO humanized_audit_changes(
+    id,
+    model_plan_id,
+    actor_id,
+    date,
+    time_start,
+    time_end,
+    changes,
+    model_name,
+    created_by
+)
+VALUES (
+    :id,
+    :model_plan_id,
+    :actor_id,
+    :date,
+    :time_start,
+    :time_end,
+    :changes,
+    :model_name,
+    :created_by
+)
+RETURNING
+id,
+model_plan_id,
+actor_id,
+date,
+time_start,
+time_end,
+changes,
+model_name,
+created_by,
+created_dts,
+modified_by,
+modified_dts;

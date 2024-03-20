@@ -25,6 +25,8 @@ type HumanizedAuditChange struct {
 	modelPlanRelation
 	ModelName   string              `json:"modelName" db:"model_name"`
 	Date        time.Time           `json:"date" db:"date"`
+	TimeStart   time.Time           `json:"timeStart" db:"time_start"`
+	TimeEnd     time.Time           `json:"timeEnd" db:"time_end"`
 	Changes     AnalyzedAuditChange `json:"changes"`
 	MetaDataRaw interface{}         `db:"changes"`
 
