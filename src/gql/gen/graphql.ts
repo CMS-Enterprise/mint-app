@@ -3383,6 +3383,13 @@ export type UpdatePaymentsMutationVariables = Exact<{
 
 export type UpdatePaymentsMutation = { __typename: 'Mutation', updatePlanPayments: { __typename: 'PlanPayments', id: UUID } };
 
+export type GetModelSummaryQueryVariables = Exact<{
+  id: Scalars['UUID']['input'];
+}>;
+
+
+export type GetModelSummaryQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, abbreviation?: string | null, createdDts: Time, modifiedDts?: Time | null, status: ModelStatus, isFavorite: boolean, isCollaborator: boolean, basics: { __typename: 'PlanBasics', goal?: string | null, performancePeriodStarts?: Time | null }, generalCharacteristics: { __typename: 'PlanGeneralCharacteristics', keyCharacteristics: Array<KeyCharacteristic> }, collaborators: Array<{ __typename: 'PlanCollaborator', teamRoles: Array<TeamRole>, userAccount: { __typename: 'UserAccount', id: UUID, commonName: string, email: string, username: string } }>, crs: Array<{ __typename: 'PlanCR', id: UUID, idNumber: string }>, tdls: Array<{ __typename: 'PlanTDL', id: UUID, idNumber: string }> } };
+
 export type CreateShareModelPlanMutationVariables = Exact<{
   modelPlanID: Scalars['UUID']['input'];
   viewFilter?: InputMaybe<ModelViewFilter>;
@@ -7548,6 +7555,77 @@ export function useUpdatePaymentsMutation(baseOptions?: Apollo.MutationHookOptio
 export type UpdatePaymentsMutationHookResult = ReturnType<typeof useUpdatePaymentsMutation>;
 export type UpdatePaymentsMutationResult = Apollo.MutationResult<UpdatePaymentsMutation>;
 export type UpdatePaymentsMutationOptions = Apollo.BaseMutationOptions<UpdatePaymentsMutation, UpdatePaymentsMutationVariables>;
+export const GetModelSummaryDocument = gql`
+    query GetModelSummary($id: UUID!) {
+  modelPlan(id: $id) {
+    id
+    modelName
+    abbreviation
+    createdDts
+    modifiedDts
+    status
+    isFavorite
+    basics {
+      goal
+      performancePeriodStarts
+    }
+    generalCharacteristics {
+      keyCharacteristics
+    }
+    isCollaborator
+    collaborators {
+      userAccount {
+        id
+        commonName
+        email
+        username
+      }
+      teamRoles
+    }
+    crs {
+      id
+      idNumber
+    }
+    tdls {
+      id
+      idNumber
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetModelSummaryQuery__
+ *
+ * To run a query within a React component, call `useGetModelSummaryQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetModelSummaryQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetModelSummaryQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetModelSummaryQuery(baseOptions: Apollo.QueryHookOptions<GetModelSummaryQuery, GetModelSummaryQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetModelSummaryQuery, GetModelSummaryQueryVariables>(GetModelSummaryDocument, options);
+      }
+export function useGetModelSummaryLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetModelSummaryQuery, GetModelSummaryQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetModelSummaryQuery, GetModelSummaryQueryVariables>(GetModelSummaryDocument, options);
+        }
+export function useGetModelSummarySuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetModelSummaryQuery, GetModelSummaryQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetModelSummaryQuery, GetModelSummaryQueryVariables>(GetModelSummaryDocument, options);
+        }
+export type GetModelSummaryQueryHookResult = ReturnType<typeof useGetModelSummaryQuery>;
+export type GetModelSummaryLazyQueryHookResult = ReturnType<typeof useGetModelSummaryLazyQuery>;
+export type GetModelSummarySuspenseQueryHookResult = ReturnType<typeof useGetModelSummarySuspenseQuery>;
+export type GetModelSummaryQueryResult = Apollo.QueryResult<GetModelSummaryQuery, GetModelSummaryQueryVariables>;
 export const CreateShareModelPlanDocument = gql`
     mutation CreateShareModelPlan($modelPlanID: UUID!, $viewFilter: ModelViewFilter, $usernames: [String!]!, $optionalMessage: String) {
   shareModelPlan(

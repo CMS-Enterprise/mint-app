@@ -1,18 +1,14 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
-import { useQuery } from '@apollo/client';
 import { GridContainer, SummaryBox } from '@trussworks/react-uswds';
 import classNames from 'classnames';
+import { useGetModelSummaryQuery } from 'gql/gen/graphql';
+import { GetModelSummary_modelPlan as GetModelSummaryTypes } from 'gql/gen/types/GetModelSummary';
 import { useFlags } from 'launchdarkly-react-client-sdk';
 
 import PageHeading from 'components/PageHeading';
 import Alert from 'components/shared/Alert';
-import GetModelSummary from 'queries/ReadOnly/GetModelSummary';
-import {
-  GetModelSummary as GetModelSummaryType,
-  GetModelSummary_modelPlan as GetModelSummaryTypes
-} from 'queries/ReadOnly/types/GetModelSummary';
 import { ModelStatus } from 'types/graphql-global-types';
 import { filteredViewOutput } from 'views/ModelPlan/ReadOnly';
 import FilterViewBanner from 'views/ModelPlan/ReadOnly/_components/FilterView/Banner';
@@ -35,14 +31,11 @@ const PDFSummary = ({
     modelID: string;
   }>();
 
-  const { data, loading, error } = useQuery<GetModelSummaryType>(
-    GetModelSummary,
-    {
-      variables: {
-        id: modelID
-      }
+  const { data, loading, error } = useGetModelSummaryQuery({
+    variables: {
+      id: modelID
     }
-  );
+  });
 
   const { abbreviation, modelName, createdDts, modifiedDts, status } =
     data?.modelPlan || ({} as GetModelSummaryTypes);
