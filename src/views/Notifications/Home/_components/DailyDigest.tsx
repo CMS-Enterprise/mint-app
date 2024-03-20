@@ -6,7 +6,11 @@ import { GetNotifications_currentUser_notifications_notifications_activity_metaD
 import UswdsReactLink from 'components/LinkWrapper';
 import PageHeading from 'components/PageHeading';
 
-import { pushValuesToChangesArray, TranslateStatusChange } from './_utils';
+import {
+  pushValuesToChangesArray,
+  translatePlanSections,
+  TranslateStatusChange
+} from './_utils';
 
 const DailyDigest = ({
   analyzedAudits
@@ -14,33 +18,6 @@ const DailyDigest = ({
   analyzedAudits: AnalyzedAuditsTypes[];
 }) => {
   const { t: notificationsT } = useTranslation('notifications');
-
-  const translatePlanSections = (section: string) => {
-    switch (section) {
-      case 'plan_basics':
-        return notificationsT('index.dailyDigest.planSections.plan_basics');
-      case 'plan_payments':
-        return notificationsT('index.dailyDigest.planSections.plan_payments');
-      case 'plan_ops_eval_and_learning':
-        return notificationsT(
-          'index.dailyDigest.planSections.plan_ops_eval_and_learning'
-        );
-      case 'plan_participants_and_providers':
-        return notificationsT(
-          'index.dailyDigest.planSections.plan_participants_and_providers'
-        );
-      case 'plan_beneficiaries':
-        return notificationsT(
-          'index.dailyDigest.planSections.plan_beneficiaries'
-        );
-      case 'plan_general_characteristics':
-        return notificationsT(
-          'index.dailyDigest.planSections.plan_general_characteristics'
-        );
-      default:
-        return '';
-    }
-  };
 
   return (
     <Grid
