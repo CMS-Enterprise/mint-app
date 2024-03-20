@@ -3059,6 +3059,20 @@ export type LinkNewPlanDocumentMutationVariables = Exact<{
 
 export type LinkNewPlanDocumentMutation = { __typename: 'Mutation', linkNewPlanDocument: { __typename: 'PlanDocument', id: UUID } };
 
+export type AddPlanFavoriteMutationVariables = Exact<{
+  modelPlanID: Scalars['UUID']['input'];
+}>;
+
+
+export type AddPlanFavoriteMutation = { __typename: 'Mutation', addPlanFavorite: { __typename: 'PlanFavorite', modelPlanID: UUID, userID: UUID } };
+
+export type DeletePlanFavoriteMutationVariables = Exact<{
+  modelPlanID: Scalars['UUID']['input'];
+}>;
+
+
+export type DeletePlanFavoriteMutation = { __typename: 'Mutation', deletePlanFavorite: { __typename: 'PlanFavorite', modelPlanID: UUID, userID: UUID } };
+
 export type CreatReportAProblemMutationVariables = Exact<{
   input: ReportAProblemInput;
 }>;
@@ -4824,6 +4838,74 @@ export function useLinkNewPlanDocumentMutation(baseOptions?: Apollo.MutationHook
 export type LinkNewPlanDocumentMutationHookResult = ReturnType<typeof useLinkNewPlanDocumentMutation>;
 export type LinkNewPlanDocumentMutationResult = Apollo.MutationResult<LinkNewPlanDocumentMutation>;
 export type LinkNewPlanDocumentMutationOptions = Apollo.BaseMutationOptions<LinkNewPlanDocumentMutation, LinkNewPlanDocumentMutationVariables>;
+export const AddPlanFavoriteDocument = gql`
+    mutation AddPlanFavorite($modelPlanID: UUID!) {
+  addPlanFavorite(modelPlanID: $modelPlanID) {
+    modelPlanID
+    userID
+  }
+}
+    `;
+export type AddPlanFavoriteMutationFn = Apollo.MutationFunction<AddPlanFavoriteMutation, AddPlanFavoriteMutationVariables>;
+
+/**
+ * __useAddPlanFavoriteMutation__
+ *
+ * To run a mutation, you first call `useAddPlanFavoriteMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAddPlanFavoriteMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [addPlanFavoriteMutation, { data, loading, error }] = useAddPlanFavoriteMutation({
+ *   variables: {
+ *      modelPlanID: // value for 'modelPlanID'
+ *   },
+ * });
+ */
+export function useAddPlanFavoriteMutation(baseOptions?: Apollo.MutationHookOptions<AddPlanFavoriteMutation, AddPlanFavoriteMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<AddPlanFavoriteMutation, AddPlanFavoriteMutationVariables>(AddPlanFavoriteDocument, options);
+      }
+export type AddPlanFavoriteMutationHookResult = ReturnType<typeof useAddPlanFavoriteMutation>;
+export type AddPlanFavoriteMutationResult = Apollo.MutationResult<AddPlanFavoriteMutation>;
+export type AddPlanFavoriteMutationOptions = Apollo.BaseMutationOptions<AddPlanFavoriteMutation, AddPlanFavoriteMutationVariables>;
+export const DeletePlanFavoriteDocument = gql`
+    mutation DeletePlanFavorite($modelPlanID: UUID!) {
+  deletePlanFavorite(modelPlanID: $modelPlanID) {
+    modelPlanID
+    userID
+  }
+}
+    `;
+export type DeletePlanFavoriteMutationFn = Apollo.MutationFunction<DeletePlanFavoriteMutation, DeletePlanFavoriteMutationVariables>;
+
+/**
+ * __useDeletePlanFavoriteMutation__
+ *
+ * To run a mutation, you first call `useDeletePlanFavoriteMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeletePlanFavoriteMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deletePlanFavoriteMutation, { data, loading, error }] = useDeletePlanFavoriteMutation({
+ *   variables: {
+ *      modelPlanID: // value for 'modelPlanID'
+ *   },
+ * });
+ */
+export function useDeletePlanFavoriteMutation(baseOptions?: Apollo.MutationHookOptions<DeletePlanFavoriteMutation, DeletePlanFavoriteMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeletePlanFavoriteMutation, DeletePlanFavoriteMutationVariables>(DeletePlanFavoriteDocument, options);
+      }
+export type DeletePlanFavoriteMutationHookResult = ReturnType<typeof useDeletePlanFavoriteMutation>;
+export type DeletePlanFavoriteMutationResult = Apollo.MutationResult<DeletePlanFavoriteMutation>;
+export type DeletePlanFavoriteMutationOptions = Apollo.BaseMutationOptions<DeletePlanFavoriteMutation, DeletePlanFavoriteMutationVariables>;
 export const CreatReportAProblemDocument = gql`
     mutation CreatReportAProblem($input: ReportAProblemInput!) {
   reportAProblem(input: $input)
