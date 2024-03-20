@@ -10,13 +10,14 @@ func (suite *NotificationsSuite) TestActivityModelPlanShareCreate() {
 	modelPlanID := uuid.New()
 	actorID := suite.testConfigs.Principal.Account().ID
 	testPreferences := models.NewUserNotificationPreferences(actorID)
+	testMessage := "This is a test message"
 
 	// Create an activity
-	testActivity, err := ActivityModelPlanSharedCreate(suite.testConfigs.Context, suite.testConfigs.Store, actorID, modelPlanID, testPreferences)
+	testActivity, err := ActivityModelPlanSharedCreate(suite.testConfigs.Context, suite.testConfigs.Store, actorID, modelPlanID, &testMessage, testPreferences)
 
 	suite.NoError(err)
 	suite.NotNil(testActivity)
-	suite.EqualValues(models.ModelPlanSharedActivityMeta{}, testActivity.ActivityType)
+	suite.EqualValues(models.ActivityModelPlanShared, testActivity.ActivityType)
 
 	// Assert meta data is not deserialized here
 	suite.Nil(testActivity.MetaData)
@@ -29,8 +30,10 @@ func (suite *NotificationsSuite) TestActivityModelPlanShareCreate() {
 
 	actorNots, err := UserNotificationCollectionGetByUser(suite.testConfigs.Context, suite.testConfigs.Store, suite.testConfigs.Principal)
 	suite.NoError(err)
-	suite.EqualValues(0, actorNots.NumUnreadNotifications())
+	suite.EqualValues(1, actorNots.NumUnreadNotifications())
 
 	// Assert that the deserialized model plan id is the same as the one we created the activity with
 	suite.EqualValues(modelPlanID, meta.(*models.ModelPlanSharedActivityMeta).ModelPlanID)
+	suite.NotNil(meta.(*models.ModelPlanSharedActivityMeta).OptionalMessage)
+	suite.EqualValues(testMessage, *meta.(*models.ModelPlanSharedActivityMeta).OptionalMessage)
 }

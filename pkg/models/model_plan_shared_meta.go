@@ -12,25 +12,27 @@ import (
 type ModelPlanSharedActivityMeta struct {
 	ActivityMetaBaseStruct
 	modelPlanRelation
+	OptionalMessage *string `json:"optionalMessage"`
 }
 
 // newModelPlanSharedActivityMeta creates a New ModelPlanSharedActivityMeta
-func newModelPlanSharedActivityMeta(modelPlanID uuid.UUID) *ModelPlanSharedActivityMeta {
+func newModelPlanSharedActivityMeta(modelPlanID uuid.UUID, optionalMessage *string) *ModelPlanSharedActivityMeta {
 	version := 0 //iterate this if this type ever updates
 	return &ModelPlanSharedActivityMeta{
 		ActivityMetaBaseStruct: NewActivityMetaBaseStruct(ActivityModelPlanShared, version),
 		modelPlanRelation:      NewModelPlanRelation(modelPlanID),
+		OptionalMessage:        optionalMessage,
 	}
 
 }
 
 // NewModelPlanSharedActivityMeta creates a New Model Plan Shared type of Activity
-func NewModelPlanSharedActivityMeta(actorID uuid.UUID, modelPlanID uuid.UUID) *Activity {
+func NewModelPlanSharedActivityMeta(actorID uuid.UUID, modelPlanID uuid.UUID, optionalMessage *string) *Activity {
 	return &Activity{
 		baseStruct:   NewBaseStruct(actorID),
 		ActorID:      actorID,
 		ActivityType: ActivityModelPlanShared,
-		MetaData:     newModelPlanSharedActivityMeta(modelPlanID),
+		MetaData:     newModelPlanSharedActivityMeta(modelPlanID, optionalMessage),
 	}
 }
 

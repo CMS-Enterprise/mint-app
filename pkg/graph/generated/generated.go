@@ -220,10 +220,11 @@ type ComplexityRoot struct {
 	}
 
 	ModelPlanSharedActivityMeta struct {
-		ModelPlan   func(childComplexity int) int
-		ModelPlanID func(childComplexity int) int
-		Type        func(childComplexity int) int
-		Version     func(childComplexity int) int
+		ModelPlan       func(childComplexity int) int
+		ModelPlanID     func(childComplexity int) int
+		OptionalMessage func(childComplexity int) int
+		Type            func(childComplexity int) int
+		Version         func(childComplexity int) int
 	}
 
 	Mutation struct {
@@ -2176,6 +2177,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.ModelPlanSharedActivityMeta.ModelPlanID(childComplexity), true
+
+	case "ModelPlanSharedActivityMeta.optionalMessage":
+		if e.complexity.ModelPlanSharedActivityMeta.OptionalMessage == nil {
+			break
+		}
+
+		return e.complexity.ModelPlanSharedActivityMeta.OptionalMessage(childComplexity), true
 
 	case "ModelPlanSharedActivityMeta.type":
 		if e.complexity.ModelPlanSharedActivityMeta.Type == nil {
@@ -9458,6 +9466,7 @@ type ModelPlanSharedActivityMeta {
   type: ActivityType!
   modelPlanID: UUID!
   modelPlan: ModelPlan!
+  optionalMessage: String
 }
 
 
@@ -18480,6 +18489,47 @@ func (ec *executionContext) fieldContext_ModelPlanSharedActivityMeta_modelPlan(c
 				return ec.fieldContext_ModelPlan_operationalNeeds(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type ModelPlan", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _ModelPlanSharedActivityMeta_optionalMessage(ctx context.Context, field graphql.CollectedField, obj *models.ModelPlanSharedActivityMeta) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_ModelPlanSharedActivityMeta_optionalMessage(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.OptionalMessage, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_ModelPlanSharedActivityMeta_optionalMessage(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "ModelPlanSharedActivityMeta",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
 		},
 	}
 	return fc, nil
@@ -62462,6 +62512,8 @@ func (ec *executionContext) _ModelPlanSharedActivityMeta(ctx context.Context, se
 			}
 
 			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+		case "optionalMessage":
+			out.Values[i] = ec._ModelPlanSharedActivityMeta_optionalMessage(ctx, field, obj)
 		default:
 			panic("unknown field " + strconv.Quote(field.Name))
 		}

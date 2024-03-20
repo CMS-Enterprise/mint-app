@@ -10,8 +10,8 @@ import (
 )
 
 // ActivityModelPlanSharedCreate creates an activity for when a model plan is shared
-func ActivityModelPlanSharedCreate(ctx context.Context, np sqlutils.NamedPreparer, actorID uuid.UUID, modelPlanID uuid.UUID, prefs *models.UserNotificationPreferences) (*models.Activity, error) {
-	activity := models.NewModelPlanSharedActivityMeta(actorID, modelPlanID)
+func ActivityModelPlanSharedCreate(ctx context.Context, np sqlutils.NamedPreparer, actorID uuid.UUID, modelPlanID uuid.UUID, optionalMessage *string, prefs *models.UserNotificationPreferences) (*models.Activity, error) {
+	activity := models.NewModelPlanSharedActivityMeta(actorID, modelPlanID, optionalMessage)
 
 	retActivity, actErr := activityCreate(ctx, np, activity)
 	if actErr != nil {

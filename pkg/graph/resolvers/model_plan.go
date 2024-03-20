@@ -321,9 +321,9 @@ func ModelPlanShare(
 		return false, err
 	}
 
-	receiverEmails := make([]string, 1)
+	receiverEmails := make([]string, 0)
 
-	for i, username := range usernames {
+	for _, username := range usernames {
 		collabAccount, err := userhelpers.GetOrCreateUserAccount(
 			ctx,
 			store,
@@ -342,13 +342,13 @@ func ModelPlanShare(
 			return false, fmt.Errorf("failed to get user notification preferences: %w", err)
 		}
 
-		_, err = notifications.ActivityModelPlanSharedCreate(ctx, store, principal.Account().ID, modelPlanID, userPrefs)
+		_, err = notifications.ActivityModelPlanSharedCreate(ctx, store, collabAccount.ID, modelPlanID, optionalMessage, userPrefs)
 		if err != nil {
 			return false, fmt.Errorf("failed to create activity: %w", err)
 		}
 
 		if userPrefs.ModelPlanShared.SendEmail() {
-			receiverEmails[i] = collabAccount.Email
+			receiverEmails = append(receiverEmails, collabAccount.Email)
 		}
 	}
 
@@ -431,9 +431,11 @@ func ModelPlanShare(
 	}
 
 	// Send email
-	err = emailService.Send(addressBook.DefaultSender, receiverEmails, nil, emailSubject, "text/html", emailBody)
-	if err != nil {
-		return false, fmt.Errorf("failed to send email: %w", err)
+	if len(receiverEmails) > 0 {
+		err = emailService.Send(addressBook.DefaultSender, receiverEmails, nil, emailSubject, "text/html", emailBody)
+		if err != nil {
+			return false, fmt.Errorf("failed to send email: %w", err)
+		}
 	}
 
 	return true, nil

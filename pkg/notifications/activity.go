@@ -93,8 +93,13 @@ func parseRawActivityMetaData(activityType models.ActivityType, rawMetaDataJSON 
 			return nil, err
 		}
 		return &meta, nil
-
-	// Add cases for other ActivityTypes as needed
+	case models.ActivityModelPlanShared:
+		// Deserialize the raw JSON into ModelPlanSharedActivityMeta
+		meta := models.ModelPlanSharedActivityMeta{}
+		if err := json.Unmarshal(rawData, &meta); err != nil {
+			return nil, err
+		}
+		return &meta, nil
 
 	default:
 		// Return a default implementation or handle unsupported types

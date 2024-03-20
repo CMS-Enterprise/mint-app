@@ -526,6 +526,7 @@ export type ModelPlanSharedActivityMeta = {
   __typename: 'ModelPlanSharedActivityMeta';
   modelPlan: ModelPlan;
   modelPlanID: Scalars['UUID']['output'];
+  optionalMessage?: Maybe<Scalars['String']['output']>;
   type: ActivityType;
   version: Scalars['Int']['output'];
 };
