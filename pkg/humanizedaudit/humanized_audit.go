@@ -10,6 +10,7 @@ import (
 	"github.com/samber/lo"
 	"go.uber.org/zap"
 
+	"github.com/cmsgov/mint-app/mappings"
 	"github.com/cmsgov/mint-app/pkg/models"
 	"github.com/cmsgov/mint-app/pkg/storage"
 )
@@ -95,13 +96,38 @@ func humanizeParticipantsAndProviders(audits []*models.AuditChange, store *stora
 	modelPlanAudits := lo.Filter(audits, func(m *models.AuditChange, index int) bool {
 		return m.TableName == "plan_participants_and_providers"
 	})
+	translation, err := mappings.ParticipantsAndProvidersTranslation()
+	if err != nil {
+		return nil, fmt.Errorf("unable to get translation for Participants and Providers, err : %w", err)
+	}
+	translationMap, err := models.StructToMap(translation)
+	if err != nil {
+		return nil, fmt.Errorf("unable to convert translation for Participants and Providers to a map, err : %w", err)
+	}
+	type partsAndProviderTranslatedField struct { // Ticket: (ChChCh Changes!) This should be expanded and moved. We might need a specific type here either...
+		Question string
+		Old      interface{}
+		New      interface{}
+	}
 	for _, modelAudit := range modelPlanAudits {
 
 		for fieldName, field := range modelAudit.Fields {
+			fieldInterface := translationMap[fieldName]
+			fieldTrans, ok := fieldInterface.(mappings.TranslationFieldProperties)
+			if !ok {
+				continue
+				// Ticket: (ChChCh Changes!) Verify this, there are other field types. We should have helper methods
+			}
+			translatedField := partsAndProviderTranslatedField{
+				Question: fieldTrans.Label,
+				Old:      field.Old,
+				New:      field.New,
+			}
 
 			change := models.HumanizedAuditChange{
+
 				Date:        *modelAudit.ModifiedDts, //Potential nil pointer...
-				MetaDataRaw: field,                   //Ticket: (ChChCh Changes!) This should actually translate the data
+				MetaDataRaw: translatedField,         //Ticket: (ChChCh Changes!) This should actually translate the data
 			}
 			fmt.Println(fieldName)
 			changes = append(changes, &change)
