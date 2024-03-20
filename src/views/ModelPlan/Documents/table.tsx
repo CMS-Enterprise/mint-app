@@ -8,7 +8,6 @@ import React, {
 import { useTranslation } from 'react-i18next';
 import { RootStateOrAny, useSelector } from 'react-redux';
 import { useFilters, usePagination, useSortBy, useTable } from 'react-table';
-import { useMutation, useQuery } from '@apollo/client';
 import {
   Alert,
   Button,
@@ -17,6 +16,11 @@ import {
   Table as UswdsTable
 } from '@trussworks/react-uswds';
 import classNames from 'classnames';
+import {
+  useDeleteModelPlanDocumentMutation,
+  useGetModelPlanDocumentsQuery
+} from 'gql/gen/graphql';
+import { GetModelPlanDocuments_modelPlan_documents as DocumentType } from 'gql/gen/types/GetModelPlanDocuments';
 import { useFlags } from 'launchdarkly-react-client-sdk';
 
 import Modal from 'components/Modal';
@@ -24,14 +28,6 @@ import PageHeading from 'components/PageHeading';
 import PageLoading from 'components/PageLoading';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import ExternalLinkModal from 'components/shared/ExternalLinkModal';
-import DeleteModelPlanDocument from 'queries/Documents/DeleteModelPlanDocument';
-import GetModelPlanDocuments from 'queries/Documents/GetModelPlanDocuments';
-import { DeleteModelPlanDocumentVariables } from 'queries/Documents/types/DeleteModelPlanDocument';
-import {
-  GetModelPlanDocuments as GetModelPlanDocumentsType,
-  GetModelPlanDocuments_modelPlan_documents as DocumentType,
-  GetModelPlanDocumentsVariables
-} from 'queries/Documents/types/GetModelPlanDocuments';
 import { GetOperationalSolution_operationalSolution_documents as SolutionDocumentType } from 'queries/ITSolutions/types/GetOperationalSolution';
 import { formatDateLocal } from 'utils/date';
 import downloadFile from 'utils/downloadFile';
@@ -72,10 +68,12 @@ const PlanDocumentsTable = ({
   className
 }: PlanDocumentsTableProps) => {
   const { t } = useTranslation('documents');
-  const { error, loading, data, refetch: refetchDocuments } = useQuery<
-    GetModelPlanDocumentsType,
-    GetModelPlanDocumentsVariables
-  >(GetModelPlanDocuments, {
+  const {
+    error,
+    loading,
+    data,
+    refetch: refetchDocuments
+  } = useGetModelPlanDocumentsQuery({
     variables: {
       id: modelID
     },
@@ -175,9 +173,7 @@ export const Table = ({
 
   const { modelName } = useContext(ModelInfoContext);
 
-  const [mutate] = useMutation<DeleteModelPlanDocumentVariables>(
-    DeleteModelPlanDocument
-  );
+  const [mutate] = useDeleteModelPlanDocumentMutation();
 
   const handleDelete = useMemo(() => {
     return (file: DocumentType) => {
