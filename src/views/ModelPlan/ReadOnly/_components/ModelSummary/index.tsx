@@ -3,6 +3,10 @@ import { useTranslation } from 'react-i18next';
 import { Button, Grid, Icon } from '@trussworks/react-uswds';
 import classnames from 'classnames';
 import { GetCrtdLsQuery } from 'gql/gen/graphql';
+import {
+  GetModelSummary_modelPlan_collaborators as CollaboratorsType,
+  GetModelSummary_modelPlan_generalCharacteristics as CharacteristicsType
+} from 'gql/gen/types/GetModelSummary';
 import i18next from 'i18next';
 
 import CollapsableLink from 'components/shared/CollapsableLink';
@@ -10,10 +14,6 @@ import {
   DescriptionDefinition,
   DescriptionTerm
 } from 'components/shared/DescriptionGroup';
-import {
-  GetModelSummary_modelPlan_collaborators as CollaboratorsType,
-  GetModelSummary_modelPlan_generalCharacteristics as CharacteristicsType
-} from 'queries/ReadOnly/types/GetModelSummary';
 import { formatDateLocal } from 'utils/date';
 
 type CRTDLsTypes =
