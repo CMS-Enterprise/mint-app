@@ -322,6 +322,7 @@ func ModelPlanShare(
 	}
 
 	receiverEmails := make([]string, 0)
+	receiverIDs := make([]uuid.UUID, 0)
 
 	for _, username := range usernames {
 		collabAccount, err := userhelpers.GetOrCreateUserAccount(
@@ -342,14 +343,17 @@ func ModelPlanShare(
 			return false, fmt.Errorf("failed to get user notification preferences: %w", err)
 		}
 
-		_, err = notifications.ActivityModelPlanSharedCreate(ctx, store, collabAccount.ID, modelPlanID, optionalMessage, userPrefs)
-		if err != nil {
-			return false, fmt.Errorf("failed to create activity: %w", err)
-		}
+		receiverIDs = append(receiverIDs, collabAccount.ID)
 
 		if userPrefs.ModelPlanShared.SendEmail() {
 			receiverEmails = append(receiverEmails, collabAccount.Email)
 		}
+	}
+
+	// Send notification to all the users
+	_, err = notifications.ActivityModelPlanSharedCreate(ctx, store, principal.Account().ID, receiverIDs, modelPlanID, optionalMessage, loaders.UserNotificationPreferencesGetByUserID)
+	if err != nil {
+		return false, fmt.Errorf("failed to create activity: %w", err)
 	}
 
 	// Get client address
