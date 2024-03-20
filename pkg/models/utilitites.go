@@ -28,6 +28,8 @@ func StructToMap(source interface{}) (map[string]interface{}, error) {
 
 // StructToMapDBTag converts a struct to a map[string]interface{}, using the db tag on the struct.
 func StructToMapDBTag(source interface{}) (map[string]interface{}, error) {
+	//TODO (ChChCh Changes!) Consider expanding this to translate an underlying struct type, eg a pointer to a struct
+
 	// Get the type & value of the object
 	v := reflect.ValueOf(source)
 	t := v.Type()

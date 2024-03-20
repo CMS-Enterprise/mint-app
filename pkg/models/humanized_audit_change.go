@@ -3,6 +3,8 @@ package models
 import (
 	"database/sql/driver"
 	"time"
+
+	"github.com/google/uuid"
 )
 
 /* TODO: EASI-(ChChCh Changes!) Work on a job to process data and make type safe audit results
@@ -28,6 +30,14 @@ type HumanizedAuditChange struct {
 
 	// this is conditional data that is returned. It deserializes to data specific the activity type
 	MetaData HumanizedAuditMetaData `json:"metaData"`
+}
+
+func NewHumanizedAuditChange(createdBy uuid.UUID, modelPlanID uuid.UUID) HumanizedAuditChange {
+	return HumanizedAuditChange{
+		modelPlanRelation: NewModelPlanRelation(modelPlanID),
+		baseStruct:        NewBaseStruct(createdBy),
+	}
+
 }
 
 // HumanizedAuditMetaData is an interface that all Humanized meta data structs must implement

@@ -26,18 +26,18 @@ func HumanizeAuditsForModelPlan(
 	modelPlanID uuid.UUID) ([]*models.HumanizedAuditChange, error) {
 	dayToAnalyze := time.Now()
 
-	mp, err := store.ModelPlanGetByID(store, logger, modelPlanID)
+	plan, err := store.ModelPlanGetByID(store, logger, modelPlanID)
 	if err != nil {
 		return nil, err
 	}
 
 	//Ticket: (ChChCh Changes!) Perhaps we need to expand this This only works for the child level of a relationship (eg to task list or document)
 	//This doesn't work when you are looking at an operational solution or operational solutions subtask
-	audits, err := store.AuditChangeCollectionByPrimaryKeyOrForeignKeyAndDate(logger, mp.ID, mp.ID, dayToAnalyze, models.SortDesc)
+	audits, err := store.AuditChangeCollectionByPrimaryKeyOrForeignKeyAndDate(logger, plan.ID, plan.ID, dayToAnalyze, models.SortDesc)
 	if err != nil {
 		return nil, err
 	}
-	humanizedChanges, err := humanizeChangeSet(audits, store)
+	humanizedChanges, err := humanizeChangeSet(store, plan, audits)
 
 	//Ticket: (ChChCh Changes!) save to the database by calling a store method here.
 	retHumanizedChanges, err := humanizedChanges, err
@@ -47,13 +47,13 @@ func HumanizeAuditsForModelPlan(
 }
 
 // humanizeChangeSet trans
-func humanizeChangeSet(audits []*models.AuditChange, store *storage.Store) ([]*models.HumanizedAuditChange, error) {
-	planChanges, err := humanizeModelPlanAudits(audits, store)
+func humanizeChangeSet(store *storage.Store, plan *models.ModelPlan, audits []*models.AuditChange) ([]*models.HumanizedAuditChange, error) {
+	planChanges, err := humanizeModelPlanAudits(store, plan, audits)
 	if err != nil {
 		return nil, err
 	}
 
-	partsAndProviderChanges, err := humanizeParticipantsAndProviders(audits, store)
+	partsAndProviderChanges, err := humanizeParticipantsAndProviders(store, plan, audits)
 	if err != nil {
 		return nil, err
 	}
@@ -64,7 +64,7 @@ func humanizeChangeSet(audits []*models.AuditChange, store *storage.Store) ([]*m
 
 }
 
-func humanizeModelPlanAudits(audits []*models.AuditChange, store *storage.Store) ([]*models.HumanizedAuditChange, error) {
+func humanizeModelPlanAudits(store *storage.Store, plan *models.ModelPlan, audits []*models.AuditChange) ([]*models.HumanizedAuditChange, error) {
 	// model PL
 	changes := []*models.HumanizedAuditChange{}
 
@@ -89,7 +89,7 @@ func humanizeModelPlanAudits(audits []*models.AuditChange, store *storage.Store)
 	return changes, nil
 }
 
-func humanizeParticipantsAndProviders(audits []*models.AuditChange, store *storage.Store) ([]*models.HumanizedAuditChange, error) {
+func humanizeParticipantsAndProviders(store *storage.Store, plan *models.ModelPlan, audits []*models.AuditChange) ([]*models.HumanizedAuditChange, error) {
 	// model PL
 	changes := []*models.HumanizedAuditChange{}
 
@@ -100,7 +100,8 @@ func humanizeParticipantsAndProviders(audits []*models.AuditChange, store *stora
 	if err != nil {
 		return nil, fmt.Errorf("unable to get translation for Participants and Providers, err : %w", err)
 	}
-	translationMap, err := models.StructToMap(translation)
+	// translationMap, err := models.StructToMap(translation)
+	translationMap, err := models.StructToMapDBTag(*translation) //TODO (ChChCh Changes!) Maybe make this return the map from the library?
 	if err != nil {
 		return nil, fmt.Errorf("unable to convert translation for Participants and Providers to a map, err : %w", err)
 	}
