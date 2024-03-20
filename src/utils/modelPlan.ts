@@ -1,8 +1,8 @@
 import { TeamRole } from 'gql/gen/graphql';
+import { GetModelCollaborators_modelPlan_collaborators as GetCollaboratorsType } from 'gql/gen/types/GetModelCollaborators';
 import i18next from 'i18next';
 import { orderBy } from 'lodash';
 
-import { GetModelCollaborators_modelPlan_collaborators as GetCollaboratorsType } from 'queries/Collaborators/types/GetModelCollaborators';
 import { GetModelPlan_modelPlan_discussions as DiscussionType } from 'queries/types/GetModelPlan';
 import {
   DocumentType,
