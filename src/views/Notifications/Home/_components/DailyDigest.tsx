@@ -1,7 +1,10 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Grid, Icon } from '@trussworks/react-uswds';
-import { GetNotifications_currentUser_notifications_notifications_activity_metaData_DailyDigestCompleteActivityMeta_analyzedAudits as AnalyzedAuditsTypes } from 'gql/gen/types/GetNotifications';
+import {
+  GetNotifications_currentUser_notifications_notifications_activity_metaData_DailyDigestCompleteActivityMeta_analyzedAudits as AnalyzedAuditsTypes,
+  GetNotifications_currentUser_notifications_notifications_activity_metaData_DailyDigestCompleteActivityMeta_analyzedAudits_changes as ChangeTypes
+} from 'gql/gen/types/GetNotifications';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import PageHeading from 'components/PageHeading';
@@ -56,6 +59,7 @@ const DailyDigest = ({
         ({
           modelName,
           modelPlanID,
+          changes,
           changes: {
             modelPlan,
             documents,
@@ -65,6 +69,26 @@ const DailyDigest = ({
             planDiscussions
           }
         }) => {
+          const changesArray: any = [];
+
+          const pushValuesToChangesArray = (obj: ChangeTypes) => {
+            Object.entries(obj).forEach(([key, value]) => {
+              if (key !== '__typename') {
+                if (Array.isArray(value) && value.length > 0) {
+                  changesArray.push(value);
+                } else if (typeof value === 'string' && value.trim() !== '') {
+                  changesArray.push(value);
+                } else if (typeof value === 'number') {
+                  changesArray.push(value);
+                } else if (value !== null && typeof value === 'object') {
+                  pushValuesToChangesArray(value);
+                }
+              }
+            });
+          };
+
+          pushValuesToChangesArray(changes);
+
           return (
             <div key={modelPlanID} className="margin-bottom-4">
               <PageHeading
@@ -143,9 +167,13 @@ const DailyDigest = ({
                     </li>
                   );
                 })}
-                <li className="line-height-sans-5">
-                  {notificationsT('index.dailyDigest.moreChanges', { num: 3 })}
-                </li>
+                {changesArray.length > 5 && (
+                  <li className="line-height-sans-5">
+                    {notificationsT('index.dailyDigest.moreChanges', {
+                      num: 5 - changesArray.length
+                    })}
+                  </li>
+                )}
               </ul>
               <UswdsReactLink
                 to={`/models/${modelPlanID}/read-only`}
