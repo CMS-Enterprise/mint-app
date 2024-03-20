@@ -32,7 +32,8 @@ type HumanizedAuditChange struct {
 	MetaData HumanizedAuditMetaData `json:"metaData"`
 }
 
-func NewHumanizedAuditChange(createdBy uuid.UUID, modelPlanID uuid.UUID) HumanizedAuditChange {
+// NewHumanizedAuditChange
+func NewHumanizedAuditChange(createdBy uuid.UUID, modelPlanID uuid.UUID, date time.Time) HumanizedAuditChange {
 	return HumanizedAuditChange{
 		modelPlanRelation: NewModelPlanRelation(modelPlanID),
 		baseStruct:        NewBaseStruct(createdBy),

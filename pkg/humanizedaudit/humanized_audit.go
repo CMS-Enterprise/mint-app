@@ -11,6 +11,7 @@ import (
 	"go.uber.org/zap"
 
 	"github.com/cmsgov/mint-app/mappings"
+	"github.com/cmsgov/mint-app/pkg/constants"
 	"github.com/cmsgov/mint-app/pkg/models"
 	"github.com/cmsgov/mint-app/pkg/storage"
 )
@@ -74,11 +75,9 @@ func humanizeModelPlanAudits(store *storage.Store, plan *models.ModelPlan, audit
 	for _, modelAudit := range modelPlanAudits {
 
 		for fieldName, field := range modelAudit.Fields {
+			change := models.NewHumanizedAuditChange(constants.GetSystemAccountUUID(), plan.ID, *modelAudit.ModifiedDts)
+			change.MetaDataRaw = field
 
-			change := models.HumanizedAuditChange{
-				Date:        *modelAudit.ModifiedDts, //Potential nil pointer...
-				MetaDataRaw: field,                   //Ticket: (ChChCh Changes!) This should actually translate the data
-			}
 			fmt.Println(fieldName)
 			changes = append(changes, &change)
 

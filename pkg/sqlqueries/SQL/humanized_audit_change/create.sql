@@ -1,0 +1,3 @@
+-- INSERT INTO humanized_audit_changes(
+-- 	id, model_plan_id, actor_id, timestart, timeend, changes, model_name, created_by, created_dts, modified_by, modified_dts)
+-- 	VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
