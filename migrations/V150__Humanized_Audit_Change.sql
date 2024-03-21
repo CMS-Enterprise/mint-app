@@ -2,6 +2,7 @@ CREATE TABLE humanized_audit_changes (
     id UUID PRIMARY KEY,
     model_plan_id UUID NOT NULL REFERENCES model_plan(id),
     actor_id UUID NOT NULL REFERENCES user_account(id), --foreign key to user table
+    change_id UUID NOT NULL REFERENCES audit.change(id), --foreign key to user table
     date TIMESTAMP NOT NULL, 
     time_start TIMESTAMP NOT NULL,
     time_end TIMESTAMP NOT NULL,
@@ -22,6 +23,7 @@ COMMENT ON TABLE humanized_audit_changes IS 'Table storing human-readable audit 
 COMMENT ON COLUMN humanized_audit_changes.id IS 'Unique identifier for the audit trail change record.';
 COMMENT ON COLUMN humanized_audit_changes.model_plan_id IS 'Identifier referencing the model plan associated with this audit trail change.';
 COMMENT ON COLUMN humanized_audit_changes.actor_id IS 'Identifier of the user who performed the changes (actor).';
+COMMENT ON COLUMN humanized_audit_changes.change_id IS 'Foreign key to the untranslated change source of this translation';
 COMMENT ON COLUMN humanized_audit_changes.date IS 'Timestamp indicating the exact time of the change.';
 COMMENT ON COLUMN humanized_audit_changes.time_start IS 'Timestamp indicating the start time of the change.';
 COMMENT ON COLUMN humanized_audit_changes.time_end IS 'Timestamp indicating the end time of the change.';

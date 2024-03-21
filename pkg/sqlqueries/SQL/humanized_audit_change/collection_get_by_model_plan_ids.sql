@@ -2,6 +2,7 @@ SELECT
     id,
     model_plan_id,
     actor_id,
+    change_id,
     date,
     time_start,
     time_end,

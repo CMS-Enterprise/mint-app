@@ -1,7 +1,6 @@
 package models
 
 import (
-	"database/sql/driver"
 	"time"
 
 	"github.com/google/uuid"
@@ -23,36 +22,45 @@ type HumanizedAuditChange struct {
 
 	baseStruct
 	modelPlanRelation
-	ModelName   string              `json:"modelName" db:"model_name"`
-	Date        time.Time           `json:"date" db:"date"`
-	TimeStart   time.Time           `json:"timeStart" db:"time_start"`
-	TimeEnd     time.Time           `json:"timeEnd" db:"time_end"`
-	ActorID     uuid.UUID           `json:"actorID" db:"actor_id"`
-	Changes     AnalyzedAuditChange `json:"changes"`
-	MetaDataRaw interface{}         `db:"changes"`
+	ModelName string    `json:"modelName" db:"model_name"`
+	TableName string    `json:"tableName" db:"table_name"`
+	Date      time.Time `json:"date" db:"date"`
+	TimeStart time.Time `json:"timeStart" db:"time_start"`
+	TimeEnd   time.Time `json:"timeEnd" db:"time_end"`
+	ActorID   uuid.UUID `json:"actorID" db:"actor_id"`
+	ChangeID  uuid.UUID `json:"changeID" db:"change_id"`
 
+	// Changes     AnalyzedAuditChange `json:"changes"`
+	MetaDataRaw interface{} `db:"changes"`
 	// this is conditional data that is returned. It deserializes to data specific the activity type
 	MetaData HumanizedAuditMetaData `json:"metaData"`
 }
 
 // NewHumanizedAuditChange
-func NewHumanizedAuditChange(createdBy uuid.UUID, actorID uuid.UUID, modelPlanID uuid.UUID, date time.Time) HumanizedAuditChange {
+func NewHumanizedAuditChange(createdBy uuid.UUID, actorID uuid.UUID, modelPlanID uuid.UUID, date time.Time, tableName string) HumanizedAuditChange {
+	version := 0
+	genericMeta := NewHumanizedAuditMetaBaseStruct(tableName, version)
 	return HumanizedAuditChange{
+		Date:              date,
 		modelPlanRelation: NewModelPlanRelation(modelPlanID),
 		baseStruct:        NewBaseStruct(createdBy),
 		ActorID:           actorID,
+		MetaData:          &genericMeta,
 	}
 
 }
 
-// HumanizedAuditMetaData is an interface that all Humanized meta data structs must implement
-type HumanizedAuditMetaData interface {
-	isAuditMetaData()
-	Value() (driver.Value, error)
-	Scan(src interface{}) error
+// ParseMetaData parses raw MetaData into Typed meta data per the provided struct
+func (hmc *HumanizedAuditChange) ParseMetaData() error {
+
+	// Ticket: (ChChCh Changes!) What to do about the error here?
+
+	meta, err := parseRawHumanizedAuditMetaData(hmc.TableName, hmc.MetaDataRaw)
+	if err != nil {
+		return err
+	}
+
+	hmc.MetaData = meta
+	// Ticket: (ChChCh Changes!) Does the receiver need to be a pointer for this to work?
+	return nil
 }
-
-//Ticket: (ChChCh Changes!) Try to see about what data should be in here? should we have each entry have it's separate data?
-// We could have data for Multiple Tables, and for Multiple fields. We need to be able to handle them all....
-
-//Ticket: (ChChCh Changes!) Should we store these as single entries in the database? Or should we store them grouped in the database?

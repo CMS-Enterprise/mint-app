@@ -16,6 +16,9 @@ func HumanizedAuditChangeCreate(np sqlutils.NamedPreparer, humanizedAuditChange 
 		humanizedAuditChange.ID = uuid.New()
 	}
 
+	// Set the raw data as the humanizedAuditChangeData
+	humanizedAuditChange.MetaDataRaw = humanizedAuditChange.MetaData
+
 	retHumanizedChange, procError := sqlutils.GetProcedure[models.HumanizedAuditChange](np, sqlqueries.HumanizedAuditChange.Create, humanizedAuditChange)
 	if procError != nil {
 		return nil, fmt.Errorf("issue creating new HumanizedAuditChange object: %w", procError)
