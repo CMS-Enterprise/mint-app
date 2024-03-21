@@ -59,15 +59,15 @@ const notifications = {
         plan_basics: 'Basics'
       },
       statusChange: {
-        plan_draft: 'This model has been announced',
-        plan_complete: 'This Model Plan is complete',
-        icip_complete: 'The ICIP for this model is complete',
-        internal_cmmi_clearance: 'This model is in internal (CMMI) clearance',
-        cms_clearance: 'This model is in CMS clearance',
-        hhs_clearance: 'This model is in HHS clearance',
-        omb_asrf_clearance: 'This model is in OMB/ASRF clearance',
-        cleared: 'This model has been cleared',
-        announced: 'This model has been announced'
+        PLAN_DRAFT: 'This model has been announced',
+        PLAN_COMPLETE: 'This Model Plan is complete',
+        ICIP_COMPLETE: 'The ICIP for this model is complete',
+        INTERNAL_CMMI_CLEARANCE: 'This model is in internal (CMMI) clearance',
+        CMS_CLEARANCE: 'This model is in CMS clearance',
+        HHS_CLEARANCE: 'This model is in HHS clearance',
+        OMB_ASRF_CLEARANCE: 'This model is in OMB/ASRF clearance',
+        CLEARED: 'This model has been cleared',
+        ANNOUNCED: 'This model has been announced'
       },
       moreChanges: '+{{-num}} more changes'
     }

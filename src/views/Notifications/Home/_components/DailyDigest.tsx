@@ -6,11 +6,7 @@ import { GetNotifications_currentUser_notifications_notifications_activity_metaD
 import UswdsReactLink from 'components/LinkWrapper';
 import PageHeading from 'components/PageHeading';
 
-import {
-  pushValuesToChangesArray,
-  translatePlanSections,
-  TranslateStatusChange
-} from './_utils';
+import { pushValuesToChangesArray, translatePlanSections } from './_utils';
 
 const DailyDigest = ({
   analyzedAudits
@@ -132,9 +128,9 @@ const DailyDigest = ({
                 {modelPlan?.statusChanges &&
                   showFirstFiveChanges.includes('statusChanges') && (
                     <li className="line-height-sans-5">
-                      <TranslateStatusChange
-                        status={modelPlan.statusChanges[0]}
-                      />
+                      {notificationsT(
+                        `index.dailyDigest.statusChange.${modelPlan.statusChanges[0]}`
+                      )}
                     </li>
                   )}
                 {changesArray.length > 5 && (

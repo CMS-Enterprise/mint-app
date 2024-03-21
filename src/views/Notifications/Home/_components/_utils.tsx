@@ -104,52 +104,6 @@ export const ActivityCTA = ({
   }
   return <></>;
 };
-export const TranslateStatusChange = ({
-  status
-}: {
-  status: string | null;
-}) => {
-  switch (status) {
-    case 'PLAN_DRAFT':
-      return (
-        <Trans i18nKey="notifications:index.dailyDigest.statusChange.plan_draft" />
-      );
-    case 'PLAN_COMPLETE':
-      return (
-        <Trans i18nKey="notifications:index.dailyDigest.statusChange.plan_complete" />
-      );
-    case 'ICIP_COMPLETE':
-      return (
-        <Trans i18nKey="notifications:index.dailyDigest.statusChange.icip_complete" />
-      );
-    case 'INTERNAL_CMMI_CLEARANCE':
-      return (
-        <Trans i18nKey="notifications:index.dailyDigest.statusChange.internal_cmmi_clearance" />
-      );
-    case 'CMS_CLEARANCE':
-      return (
-        <Trans i18nKey="notifications:index.dailyDigest.statusChange.cms_clearance" />
-      );
-    case 'HHS_CLEARANCE':
-      return (
-        <Trans i18nKey="notifications:index.dailyDigest.statusChange.hhs_clearance" />
-      );
-    case 'OMB_ASRF_CLEARANCE':
-      return (
-        <Trans i18nKey="notifications:index.dailyDigest.statusChange.omb_asrf_clearance" />
-      );
-    case 'CLEARED':
-      return (
-        <Trans i18nKey="notifications:index.dailyDigest.statusChange.cleared" />
-      );
-    case 'ANNOUNCED':
-      return (
-        <Trans i18nKey="notifications:index.dailyDigest.statusChange.announced" />
-      );
-    default:
-      return <></>;
-  }
-};
 
 export const translatePlanSections = (section: string) => {
   switch (section) {
