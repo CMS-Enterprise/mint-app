@@ -4,6 +4,7 @@ import { useHistory, useParams } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 import { Button, Fieldset, Label, Radio } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
+import { useUploadNewPlanDocumentMutation } from 'gql/gen/graphql';
 
 import FileUpload from 'components/FileUpload';
 import Alert from 'components/shared/Alert';
@@ -15,8 +16,6 @@ import RequiredAsterisk from 'components/shared/RequiredAsterisk';
 import TextAreaField from 'components/shared/TextAreaField';
 import TextField from 'components/shared/TextField';
 import useMessage from 'hooks/useMessage';
-import { UploadNewPlanDocument as UploadNewPlanDocumentType } from 'queries/Documents/types/UploadNewPlanDocument';
-import UploadNewPlanDocument from 'queries/Documents/UploadNewPlanDocument';
 import CreateDocumentSolutionLinks from 'queries/ITSolutions/CreateDocumentSolutionLinks';
 import { CreateDocumentSolutionLinksVariables } from 'queries/ITSolutions/types/CreateDocumentSolutionLinks';
 import { FileUploadForm, LinkingDocumentFormTypes } from 'types/files';
@@ -46,9 +45,7 @@ const DocumentUpload = ({
   // State management for mutation errors
   const [mutationError, setMutationError] = useState<boolean>(false);
 
-  const [uploadFile, uploadFileStatus] = useMutation<UploadNewPlanDocumentType>(
-    UploadNewPlanDocument
-  );
+  const [uploadFile, uploadFileStatus] = useUploadNewPlanDocumentMutation();
 
   const messageOnNextPage = (message: string, fileName: string) =>
     showMessageOnNextPage(
@@ -78,8 +75,8 @@ const DocumentUpload = ({
           input: {
             modelPlanID: modelID,
             fileData: file,
-            restricted: values.restricted,
-            documentType: values.documentType,
+            restricted: values.restricted!,
+            documentType: values.documentType!,
             otherTypeDescription: values.otherTypeDescription,
             optionalNotes: values.optionalNotes
           }

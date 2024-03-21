@@ -3052,12 +3052,54 @@ export type GetMostRecentRoleSelectionQueryVariables = Exact<{ [key: string]: ne
 
 export type GetMostRecentRoleSelectionQuery = { __typename: 'Query', mostRecentDiscussionRoleSelection?: { __typename: 'DiscussionRoleSelection', userRole: DiscussionUserRole, userRoleDescription?: string | null } | null };
 
+export type DeleteModelPlanDocumentMutationVariables = Exact<{
+  id: Scalars['UUID']['input'];
+}>;
+
+
+export type DeleteModelPlanDocumentMutation = { __typename: 'Mutation', deletePlanDocument: number };
+
+export type GetModelPlanDocumentQueryVariables = Exact<{
+  id: Scalars['UUID']['input'];
+}>;
+
+
+export type GetModelPlanDocumentQuery = { __typename: 'Query', planDocument: { __typename: 'PlanDocument', id: UUID, modelPlanID: UUID, fileType: string, bucket: string, fileKey: string, virusScanned: boolean, virusClean: boolean, fileName: string, fileSize: number, restricted: boolean, documentType: DocumentType, otherType?: string | null, createdDts: Time } };
+
+export type GetModelPlanDocumentsQueryVariables = Exact<{
+  id: Scalars['UUID']['input'];
+}>;
+
+
+export type GetModelPlanDocumentsQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, isCollaborator: boolean, documents: Array<{ __typename: 'PlanDocument', id: UUID, virusScanned: boolean, virusClean: boolean, fileName: string, fileType: string, downloadUrl?: string | null, restricted: boolean, documentType: DocumentType, createdDts: Time, optionalNotes?: string | null, otherType?: string | null, numLinkedSolutions: number, isLink: boolean, url?: string | null }> } };
+
 export type LinkNewPlanDocumentMutationVariables = Exact<{
   input: PlanDocumentLinkInput;
 }>;
 
 
 export type LinkNewPlanDocumentMutation = { __typename: 'Mutation', linkNewPlanDocument: { __typename: 'PlanDocument', id: UUID } };
+
+export type UploadNewPlanDocumentMutationVariables = Exact<{
+  input: PlanDocumentInput;
+}>;
+
+
+export type UploadNewPlanDocumentMutation = { __typename: 'Mutation', uploadNewPlanDocument: { __typename: 'PlanDocument', id: UUID } };
+
+export type AddPlanFavoriteMutationVariables = Exact<{
+  modelPlanID: Scalars['UUID']['input'];
+}>;
+
+
+export type AddPlanFavoriteMutation = { __typename: 'Mutation', addPlanFavorite: { __typename: 'PlanFavorite', modelPlanID: UUID, userID: UUID } };
+
+export type DeletePlanFavoriteMutationVariables = Exact<{
+  modelPlanID: Scalars['UUID']['input'];
+}>;
+
+
+export type DeletePlanFavoriteMutation = { __typename: 'Mutation', deletePlanFavorite: { __typename: 'PlanFavorite', modelPlanID: UUID, userID: UUID } };
 
 export type CreatReportAProblemMutationVariables = Exact<{
   input: ReportAProblemInput;
@@ -4791,6 +4833,146 @@ export type GetMostRecentRoleSelectionQueryHookResult = ReturnType<typeof useGet
 export type GetMostRecentRoleSelectionLazyQueryHookResult = ReturnType<typeof useGetMostRecentRoleSelectionLazyQuery>;
 export type GetMostRecentRoleSelectionSuspenseQueryHookResult = ReturnType<typeof useGetMostRecentRoleSelectionSuspenseQuery>;
 export type GetMostRecentRoleSelectionQueryResult = Apollo.QueryResult<GetMostRecentRoleSelectionQuery, GetMostRecentRoleSelectionQueryVariables>;
+export const DeleteModelPlanDocumentDocument = gql`
+    mutation DeleteModelPlanDocument($id: UUID!) {
+  deletePlanDocument(id: $id)
+}
+    `;
+export type DeleteModelPlanDocumentMutationFn = Apollo.MutationFunction<DeleteModelPlanDocumentMutation, DeleteModelPlanDocumentMutationVariables>;
+
+/**
+ * __useDeleteModelPlanDocumentMutation__
+ *
+ * To run a mutation, you first call `useDeleteModelPlanDocumentMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteModelPlanDocumentMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteModelPlanDocumentMutation, { data, loading, error }] = useDeleteModelPlanDocumentMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useDeleteModelPlanDocumentMutation(baseOptions?: Apollo.MutationHookOptions<DeleteModelPlanDocumentMutation, DeleteModelPlanDocumentMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteModelPlanDocumentMutation, DeleteModelPlanDocumentMutationVariables>(DeleteModelPlanDocumentDocument, options);
+      }
+export type DeleteModelPlanDocumentMutationHookResult = ReturnType<typeof useDeleteModelPlanDocumentMutation>;
+export type DeleteModelPlanDocumentMutationResult = Apollo.MutationResult<DeleteModelPlanDocumentMutation>;
+export type DeleteModelPlanDocumentMutationOptions = Apollo.BaseMutationOptions<DeleteModelPlanDocumentMutation, DeleteModelPlanDocumentMutationVariables>;
+export const GetModelPlanDocumentDocument = gql`
+    query GetModelPlanDocument($id: UUID!) {
+  planDocument(id: $id) {
+    id
+    modelPlanID
+    fileType
+    bucket
+    fileKey
+    virusScanned
+    virusClean
+    fileName
+    fileSize
+    restricted
+    documentType
+    otherType
+    createdDts
+  }
+}
+    `;
+
+/**
+ * __useGetModelPlanDocumentQuery__
+ *
+ * To run a query within a React component, call `useGetModelPlanDocumentQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetModelPlanDocumentQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetModelPlanDocumentQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetModelPlanDocumentQuery(baseOptions: Apollo.QueryHookOptions<GetModelPlanDocumentQuery, GetModelPlanDocumentQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetModelPlanDocumentQuery, GetModelPlanDocumentQueryVariables>(GetModelPlanDocumentDocument, options);
+      }
+export function useGetModelPlanDocumentLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetModelPlanDocumentQuery, GetModelPlanDocumentQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetModelPlanDocumentQuery, GetModelPlanDocumentQueryVariables>(GetModelPlanDocumentDocument, options);
+        }
+export function useGetModelPlanDocumentSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetModelPlanDocumentQuery, GetModelPlanDocumentQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetModelPlanDocumentQuery, GetModelPlanDocumentQueryVariables>(GetModelPlanDocumentDocument, options);
+        }
+export type GetModelPlanDocumentQueryHookResult = ReturnType<typeof useGetModelPlanDocumentQuery>;
+export type GetModelPlanDocumentLazyQueryHookResult = ReturnType<typeof useGetModelPlanDocumentLazyQuery>;
+export type GetModelPlanDocumentSuspenseQueryHookResult = ReturnType<typeof useGetModelPlanDocumentSuspenseQuery>;
+export type GetModelPlanDocumentQueryResult = Apollo.QueryResult<GetModelPlanDocumentQuery, GetModelPlanDocumentQueryVariables>;
+export const GetModelPlanDocumentsDocument = gql`
+    query GetModelPlanDocuments($id: UUID!) {
+  modelPlan(id: $id) {
+    id
+    isCollaborator
+    documents {
+      id
+      virusScanned
+      virusClean
+      fileName
+      fileType
+      downloadUrl
+      restricted
+      documentType
+      createdDts
+      optionalNotes
+      otherType
+      numLinkedSolutions
+      isLink
+      url
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetModelPlanDocumentsQuery__
+ *
+ * To run a query within a React component, call `useGetModelPlanDocumentsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetModelPlanDocumentsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetModelPlanDocumentsQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetModelPlanDocumentsQuery(baseOptions: Apollo.QueryHookOptions<GetModelPlanDocumentsQuery, GetModelPlanDocumentsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetModelPlanDocumentsQuery, GetModelPlanDocumentsQueryVariables>(GetModelPlanDocumentsDocument, options);
+      }
+export function useGetModelPlanDocumentsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetModelPlanDocumentsQuery, GetModelPlanDocumentsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetModelPlanDocumentsQuery, GetModelPlanDocumentsQueryVariables>(GetModelPlanDocumentsDocument, options);
+        }
+export function useGetModelPlanDocumentsSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetModelPlanDocumentsQuery, GetModelPlanDocumentsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetModelPlanDocumentsQuery, GetModelPlanDocumentsQueryVariables>(GetModelPlanDocumentsDocument, options);
+        }
+export type GetModelPlanDocumentsQueryHookResult = ReturnType<typeof useGetModelPlanDocumentsQuery>;
+export type GetModelPlanDocumentsLazyQueryHookResult = ReturnType<typeof useGetModelPlanDocumentsLazyQuery>;
+export type GetModelPlanDocumentsSuspenseQueryHookResult = ReturnType<typeof useGetModelPlanDocumentsSuspenseQuery>;
+export type GetModelPlanDocumentsQueryResult = Apollo.QueryResult<GetModelPlanDocumentsQuery, GetModelPlanDocumentsQueryVariables>;
 export const LinkNewPlanDocumentDocument = gql`
     mutation LinkNewPlanDocument($input: PlanDocumentLinkInput!) {
   linkNewPlanDocument(input: $input) {
@@ -4824,6 +5006,107 @@ export function useLinkNewPlanDocumentMutation(baseOptions?: Apollo.MutationHook
 export type LinkNewPlanDocumentMutationHookResult = ReturnType<typeof useLinkNewPlanDocumentMutation>;
 export type LinkNewPlanDocumentMutationResult = Apollo.MutationResult<LinkNewPlanDocumentMutation>;
 export type LinkNewPlanDocumentMutationOptions = Apollo.BaseMutationOptions<LinkNewPlanDocumentMutation, LinkNewPlanDocumentMutationVariables>;
+export const UploadNewPlanDocumentDocument = gql`
+    mutation UploadNewPlanDocument($input: PlanDocumentInput!) {
+  uploadNewPlanDocument(input: $input) {
+    id
+  }
+}
+    `;
+export type UploadNewPlanDocumentMutationFn = Apollo.MutationFunction<UploadNewPlanDocumentMutation, UploadNewPlanDocumentMutationVariables>;
+
+/**
+ * __useUploadNewPlanDocumentMutation__
+ *
+ * To run a mutation, you first call `useUploadNewPlanDocumentMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUploadNewPlanDocumentMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [uploadNewPlanDocumentMutation, { data, loading, error }] = useUploadNewPlanDocumentMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useUploadNewPlanDocumentMutation(baseOptions?: Apollo.MutationHookOptions<UploadNewPlanDocumentMutation, UploadNewPlanDocumentMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UploadNewPlanDocumentMutation, UploadNewPlanDocumentMutationVariables>(UploadNewPlanDocumentDocument, options);
+      }
+export type UploadNewPlanDocumentMutationHookResult = ReturnType<typeof useUploadNewPlanDocumentMutation>;
+export type UploadNewPlanDocumentMutationResult = Apollo.MutationResult<UploadNewPlanDocumentMutation>;
+export type UploadNewPlanDocumentMutationOptions = Apollo.BaseMutationOptions<UploadNewPlanDocumentMutation, UploadNewPlanDocumentMutationVariables>;
+export const AddPlanFavoriteDocument = gql`
+    mutation AddPlanFavorite($modelPlanID: UUID!) {
+  addPlanFavorite(modelPlanID: $modelPlanID) {
+    modelPlanID
+    userID
+  }
+}
+    `;
+export type AddPlanFavoriteMutationFn = Apollo.MutationFunction<AddPlanFavoriteMutation, AddPlanFavoriteMutationVariables>;
+
+/**
+ * __useAddPlanFavoriteMutation__
+ *
+ * To run a mutation, you first call `useAddPlanFavoriteMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAddPlanFavoriteMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [addPlanFavoriteMutation, { data, loading, error }] = useAddPlanFavoriteMutation({
+ *   variables: {
+ *      modelPlanID: // value for 'modelPlanID'
+ *   },
+ * });
+ */
+export function useAddPlanFavoriteMutation(baseOptions?: Apollo.MutationHookOptions<AddPlanFavoriteMutation, AddPlanFavoriteMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<AddPlanFavoriteMutation, AddPlanFavoriteMutationVariables>(AddPlanFavoriteDocument, options);
+      }
+export type AddPlanFavoriteMutationHookResult = ReturnType<typeof useAddPlanFavoriteMutation>;
+export type AddPlanFavoriteMutationResult = Apollo.MutationResult<AddPlanFavoriteMutation>;
+export type AddPlanFavoriteMutationOptions = Apollo.BaseMutationOptions<AddPlanFavoriteMutation, AddPlanFavoriteMutationVariables>;
+export const DeletePlanFavoriteDocument = gql`
+    mutation DeletePlanFavorite($modelPlanID: UUID!) {
+  deletePlanFavorite(modelPlanID: $modelPlanID) {
+    modelPlanID
+    userID
+  }
+}
+    `;
+export type DeletePlanFavoriteMutationFn = Apollo.MutationFunction<DeletePlanFavoriteMutation, DeletePlanFavoriteMutationVariables>;
+
+/**
+ * __useDeletePlanFavoriteMutation__
+ *
+ * To run a mutation, you first call `useDeletePlanFavoriteMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeletePlanFavoriteMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deletePlanFavoriteMutation, { data, loading, error }] = useDeletePlanFavoriteMutation({
+ *   variables: {
+ *      modelPlanID: // value for 'modelPlanID'
+ *   },
+ * });
+ */
+export function useDeletePlanFavoriteMutation(baseOptions?: Apollo.MutationHookOptions<DeletePlanFavoriteMutation, DeletePlanFavoriteMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeletePlanFavoriteMutation, DeletePlanFavoriteMutationVariables>(DeletePlanFavoriteDocument, options);
+      }
+export type DeletePlanFavoriteMutationHookResult = ReturnType<typeof useDeletePlanFavoriteMutation>;
+export type DeletePlanFavoriteMutationResult = Apollo.MutationResult<DeletePlanFavoriteMutation>;
+export type DeletePlanFavoriteMutationOptions = Apollo.BaseMutationOptions<DeletePlanFavoriteMutation, DeletePlanFavoriteMutationVariables>;
 export const CreatReportAProblemDocument = gql`
     mutation CreatReportAProblem($input: ReportAProblemInput!) {
   reportAProblem(input: $input)

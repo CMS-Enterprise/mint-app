@@ -250,7 +250,7 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
       variables: {
         modelPlanID
       }
-    }).then(refetch);
+    }).then(() => refetch());
   };
 
   const {
