@@ -110,22 +110,30 @@ export const pushValuesToChangesArray = (
 ) => {
   Object.entries(obj).forEach(([key, value]) => {
     if (key !== '__typename') {
+      // Ignore key values that where the key is '__typename'
       if (Array.isArray(value) && value.length > 0) {
+        // Ignore empty arrays (i.e. [])
         if (key === 'added') {
+          // Model Lead added is important, so pushed to the front of array to ensure it will always be shown
           changesArray.unshift(key);
         } else {
           changesArray.push(key);
         }
       } else if (typeof value === 'string' && value.trim() !== '') {
+        // Push the key if only the value is not an empty string (i.e. '')
         changesArray.push(key);
       } else if (typeof value === 'number') {
+        // Push the key if the value is a number
         changesArray.push(key);
       } else if (typeof value === 'boolean' && value) {
+        // Push the key if the boolean value is true, ignore if false
         changesArray.push(key);
       } else if (value !== null && typeof value === 'object') {
         if (key === 'crTdls' || key === 'planDiscussions') {
+          // Push the key if it is 'crTdls' & 'planDiscussions'
           changesArray.push(key);
         } else {
+          // push the object into the function
           pushValuesToChangesArray(value, changesArray);
         }
       }
