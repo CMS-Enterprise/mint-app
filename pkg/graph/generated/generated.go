@@ -9573,13 +9573,6 @@ enum TriStateAnswer {
   TBD
 }
 
-enum ConfidenceType {
-  NOT_AT_ALL
-  SLIGHTLY
-  FAIRLY
-  COMPLETELY
-}
-
 enum SelectionMethodType {
   HISTORICAL
   PROSPECTIVE
@@ -10755,6 +10748,13 @@ enum TaskStatus {
   IN_PROGRESS
   READY_FOR_REVIEW
   READY_FOR_CLEARANCE
+}
+
+enum ConfidenceType {
+  NOT_AT_ALL
+  SLIGHTLY
+  FAIRLY
+  COMPLETELY
 }
 `, BuiltIn: false},
 	{Name: "../schema/types/user_notification.graphql", Input: `

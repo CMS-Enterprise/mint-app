@@ -16,13 +16,6 @@ enum TriStateAnswer {
   TBD
 }
 
-enum ConfidenceType {
-  NOT_AT_ALL
-  SLIGHTLY
-  FAIRLY
-  COMPLETELY
-}
-
 enum SelectionMethodType {
   HISTORICAL
   PROSPECTIVE

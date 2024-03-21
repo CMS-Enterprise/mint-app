@@ -25,3 +25,10 @@ enum TaskStatus {
   READY_FOR_REVIEW
   READY_FOR_CLEARANCE
 }
+
+enum ConfidenceType {
+  NOT_AT_ALL
+  SLIGHTLY
+  FAIRLY
+  COMPLETELY
+}
