@@ -39,9 +39,7 @@ const DailyDigest = ({
             planDiscussions
           }
         }) => {
-          const changesArray: string[] = [];
-          pushValuesToChangesArray(changes, changesArray);
-
+          const changesArray: string[] = pushValuesToChangesArray(changes);
           const showFirstFiveChanges = changesArray.slice(0, 5);
 
           return (
