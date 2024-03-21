@@ -14,6 +14,7 @@ export interface GetNotifications_currentUser_notifications_notifications_activi
   commonName: string;
 }
 
+<<<<<<< HEAD
 export interface GetNotifications_currentUser_notifications_notifications_activity_metaData_NewDiscussionRepliedActivityMeta_modelPlan {
   __typename: "ModelPlan";
   modelName: string;
@@ -28,6 +29,10 @@ export interface GetNotifications_currentUser_notifications_notifications_activi
   modelPlanID: UUID;
   modelPlan: GetNotifications_currentUser_notifications_notifications_activity_metaData_NewDiscussionRepliedActivityMeta_modelPlan;
   content: string;
+=======
+export interface GetNotifications_currentUser_notifications_notifications_activity_metaData_ActivityMetaBaseStruct {
+  __typename: "ActivityMetaBaseStruct" | "ModelPlanSharedActivityMeta";
+>>>>>>> dce1a584 ([EASI-3947] 'On Model Plan Shared' notification (#1013))
 }
 
 export interface GetNotifications_currentUser_notifications_notifications_activity_metaData_TaggedInPlanDiscussionActivityMeta_modelPlan {
