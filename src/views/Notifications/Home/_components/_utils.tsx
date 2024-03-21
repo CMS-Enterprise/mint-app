@@ -8,7 +8,6 @@ import {
   GetNotifications_currentUser_notifications_notifications_activity_metaData_TaggedInDiscussionReplyActivityMeta as TaggedInDiscussionReplyActivityType,
   GetNotifications_currentUser_notifications_notifications_activity_metaData_TaggedInPlanDiscussionActivityMeta as TaggedInDiscussionActivityType
 } from 'gql/gen/types/GetNotifications';
-import i18next from 'i18next';
 
 // Type guard to check union type
 export const isTaggedInDiscussion = (
@@ -103,37 +102,6 @@ export const ActivityCTA = ({
     );
   }
   return <></>;
-};
-
-export const translatePlanSections = (section: string) => {
-  switch (section) {
-    case 'plan_basics':
-      return i18next.t(
-        'notifications:index.dailyDigest.planSections.plan_basics'
-      );
-    case 'plan_payments':
-      return i18next.t(
-        'notifications:index.dailyDigest.planSections.plan_payments'
-      );
-    case 'plan_ops_eval_and_learning':
-      return i18next.t(
-        'notifications:index.dailyDigest.planSections.plan_ops_eval_and_learning'
-      );
-    case 'plan_participants_and_providers':
-      return i18next.t(
-        'notifications:index.dailyDigest.planSections.plan_participants_and_providers'
-      );
-    case 'plan_beneficiaries':
-      return i18next.t(
-        'notifications:index.dailyDigest.planSections.plan_beneficiaries'
-      );
-    case 'plan_general_characteristics':
-      return i18next.t(
-        'notifications:index.dailyDigest.planSections.plan_general_characteristics'
-      );
-    default:
-      return '';
-  }
 };
 
 export const pushValuesToChangesArray = (
