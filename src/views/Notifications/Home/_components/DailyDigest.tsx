@@ -43,7 +43,7 @@ const DailyDigest = ({
             planDiscussions
           }
         }) => {
-          const changesArray: any = [];
+          const changesArray: string[] = [];
           pushValuesToChangesArray(changes, changesArray);
 
           const showFirstFiveChanges = changesArray.slice(0, 5);
@@ -57,8 +57,7 @@ const DailyDigest = ({
                 {modelName}
               </PageHeading>
               <ul className="padding-left-205">
-                {modelPlan &&
-                  modelPlan.oldName &&
+                {modelPlan?.oldName &&
                   showFirstFiveChanges.includes('oldName') && (
                     <li className="line-height-sans-5">
                       {notificationsT('index.dailyDigest.nameChange', {
@@ -66,10 +65,10 @@ const DailyDigest = ({
                       })}
                     </li>
                   )}
-                {modelLeads &&
+                {modelLeads?.added &&
                   modelLeads.added.length > 0 &&
                   showFirstFiveChanges.includes('added') &&
-                  modelLeads.added.map(name => {
+                  modelLeads?.added.map(name => {
                     return (
                       <li key={name.commonName} className="line-height-sans-5">
                         {notificationsT('index.dailyDigest.addModelLead', {
@@ -78,30 +77,26 @@ const DailyDigest = ({
                       </li>
                     );
                   })}
-                {documents &&
-                  documents.count &&
-                  showFirstFiveChanges.includes('count') && (
-                    <li className="line-height-sans-5">
-                      {notificationsT('index.dailyDigest.documentsAdded', {
-                        number: documents.count
-                      })}
-                    </li>
-                  )}
-                {crTdls &&
-                  crTdls.activity &&
+                {documents?.count && showFirstFiveChanges.includes('count') && (
+                  <li className="line-height-sans-5">
+                    {notificationsT('index.dailyDigest.documentsAdded', {
+                      number: documents.count
+                    })}
+                  </li>
+                )}
+                {crTdls?.activity &&
                   showFirstFiveChanges.includes('crTdls') && (
                     <li className="line-height-sans-5">
                       {notificationsT('index.dailyDigest.crTdlsUpdate')}
                     </li>
                   )}
-                {planDiscussions &&
-                  planDiscussions.activity &&
+                {planDiscussions?.activity &&
                   showFirstFiveChanges.includes('planDiscussions') && (
                     <li className="line-height-sans-5">
                       {notificationsT('index.dailyDigest.discussionActivity')}
                     </li>
                   )}
-                {planSections &&
+                {planSections?.readyForReview &&
                   planSections.readyForReview.length > 0 &&
                   showFirstFiveChanges.includes('readyForReview') && (
                     <li className="line-height-sans-5">
@@ -112,7 +107,7 @@ const DailyDigest = ({
                       })}
                     </li>
                   )}
-                {planSections &&
+                {planSections?.readyForClearance &&
                   planSections.readyForClearance.length > 0 &&
                   showFirstFiveChanges.includes('readyForClearance') && (
                     <li className="line-height-sans-5">
@@ -123,7 +118,7 @@ const DailyDigest = ({
                       })}
                     </li>
                   )}
-                {planSections &&
+                {planSections?.updated &&
                   planSections.updated.length > 0 &&
                   showFirstFiveChanges.includes('updated') && (
                     <li className="line-height-sans-5">
@@ -134,8 +129,7 @@ const DailyDigest = ({
                       })}
                     </li>
                   )}
-                {modelPlan &&
-                  modelPlan.statusChanges &&
+                {modelPlan?.statusChanges &&
                   showFirstFiveChanges.includes('statusChanges') && (
                     <li className="line-height-sans-5">
                       <TranslateStatusChange

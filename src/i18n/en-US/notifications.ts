@@ -15,7 +15,10 @@ const notifications = {
       },
       dailyDigestComplete: {
         text: ' sent your daily digest.',
-        cta: 'View digest'
+        cta: {
+          show: 'View digest',
+          hide: 'Hide digest'
+        }
       },
       modelPlanShared: {
         text: ' shared {{-modelName}} with you.',

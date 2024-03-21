@@ -90,14 +90,15 @@ export const ActivityCTA = ({
     );
   }
   if (isDailyDigest(data)) {
-    return (
+    return isExpanded ? (
       <>
-        <Trans i18nKey="notifications:index.activityType.dailyDigestComplete.cta" />
-        {isExpanded ? (
-          <Icon.ExpandLess className="margin-left-1" aria-hidden />
-        ) : (
-          <Icon.ExpandMore className="margin-left-1" aria-hidden />
-        )}
+        <Trans i18nKey="notifications:index.activityType.dailyDigestComplete.cta.hide" />
+        <Icon.ExpandLess className="margin-left-1" aria-hidden />
+      </>
+    ) : (
+      <>
+        <Trans i18nKey="notifications:index.activityType.dailyDigestComplete.cta.show" />
+        <Icon.ExpandMore className="margin-left-1" aria-hidden />
       </>
     );
   }
