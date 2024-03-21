@@ -1140,7 +1140,6 @@ type MutationResolver interface {
 	CreatePlanCollaborator(ctx context.Context, input model.PlanCollaboratorCreateInput) (*models.PlanCollaborator, error)
 	UpdatePlanCollaborator(ctx context.Context, id uuid.UUID, newRoles []models.TeamRole) (*models.PlanCollaborator, error)
 	DeletePlanCollaborator(ctx context.Context, id uuid.UUID) (*models.PlanCollaborator, error)
-	UpdatePlanBeneficiaries(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanBeneficiaries, error)
 	UploadNewPlanDocument(ctx context.Context, input model.PlanDocumentInput) (*models.PlanDocument, error)
 	LinkNewPlanDocument(ctx context.Context, input model.PlanDocumentLinkInput) (*models.PlanDocument, error)
 	DeletePlanDocument(ctx context.Context, id uuid.UUID) (int, error)
@@ -1175,6 +1174,7 @@ type MutationResolver interface {
 	UpdateModelPlan(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.ModelPlan, error)
 	ShareModelPlan(ctx context.Context, modelPlanID uuid.UUID, viewFilter *models.ModelViewFilter, usernames []string, optionalMessage *string) (bool, error)
 	UpdatePlanBasics(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanBasics, error)
+	UpdatePlanBeneficiaries(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanBeneficiaries, error)
 	UpdatePlanGeneralCharacteristics(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanGeneralCharacteristics, error)
 	UpdatePlanOpsEvalAndLearning(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanOpsEvalAndLearning, error)
 	UpdatePlanParticipantsAndProviders(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanParticipantsAndProviders, error)
@@ -8351,102 +8351,6 @@ input DiscussionReplyCreateInput {
 }
 
 """
-Plan Beneficiaries represents the the beneficiaries section of the task list
-"""
-
-type PlanBeneficiaries {
-  id: UUID!
-  modelPlanID: UUID!
-  #Page 1
-  beneficiaries: [BeneficiariesType!]!
-  beneficiariesOther: String
-  beneficiariesNote: String
-  diseaseSpecificGroup: String
-  treatDualElligibleDifferent: TriStateAnswer
-  treatDualElligibleDifferentHow: String
-  treatDualElligibleDifferentNote: String
-  excludeCertainCharacteristics: TriStateAnswer
-  excludeCertainCharacteristicsCriteria: String
-  excludeCertainCharacteristicsNote: String
-  #Page 2
-  numberPeopleImpacted: Int
-  estimateConfidence: ConfidenceType
-  confidenceNote: String
-  beneficiarySelectionMethod: [SelectionMethodType!]!
-  beneficiarySelectionOther: String
-  beneficiarySelectionNote: String
-  #Page 3
-  beneficiarySelectionFrequency: [FrequencyType!]!
-  beneficiarySelectionFrequencyContinually: String
-  beneficiarySelectionFrequencyOther: String
-  beneficiarySelectionFrequencyNote: String
-  beneficiaryRemovalFrequency: [FrequencyType!]!
-  beneficiaryRemovalFrequencyContinually: String
-  beneficiaryRemovalFrequencyOther: String
-  beneficiaryRemovalFrequencyNote: String
-  beneficiaryOverlap: OverlapType
-  beneficiaryOverlapNote: String
-  precedenceRules: [YesNoType!]!
-  precedenceRulesYes: String
-  precedenceRulesNo: String
-  precedenceRulesNote: String
-
-  createdBy: UUID!
-  createdByUserAccount: UserAccount!
-  createdDts: Time!
-  modifiedBy: UUID
-  modifiedByUserAccount: UserAccount
-  modifiedDts: Time
-
-  readyForReviewBy: UUID
-  readyForReviewByUserAccount: UserAccount
-  readyForReviewDts: Time
-  readyForClearanceBy: UUID
-  readyForClearanceByUserAccount: UserAccount
-  readyForClearanceDts: Time
-
-  status: TaskStatus!
-}
-
-input PlanBeneficiariesChanges @goModel(model: "map[string]interface{}") {
-  #Page 1
-  beneficiaries: [BeneficiariesType!]
-  beneficiariesOther: String
-  beneficiariesNote: String
-  diseaseSpecificGroup: String
-  treatDualElligibleDifferent: TriStateAnswer
-  treatDualElligibleDifferentHow: String
-  treatDualElligibleDifferentNote: String
-  excludeCertainCharacteristics: TriStateAnswer
-  excludeCertainCharacteristicsCriteria: String
-  excludeCertainCharacteristicsNote: String
-  #Page 2
-  numberPeopleImpacted: Int
-  estimateConfidence: ConfidenceType
-  confidenceNote: String
-  beneficiarySelectionMethod: [SelectionMethodType!]
-  beneficiarySelectionOther: String
-  beneficiarySelectionNote: String
-  #Page 3
-  beneficiarySelectionFrequency: [FrequencyType!]
-  beneficiarySelectionFrequencyContinually: String
-  beneficiarySelectionFrequencyOther: String
-  beneficiarySelectionFrequencyNote: String
-  beneficiaryRemovalFrequency: [FrequencyType!]
-  beneficiaryRemovalFrequencyContinually: String
-  beneficiaryRemovalFrequencyOther: String
-  beneficiaryRemovalFrequencyNote: String
-  beneficiaryOverlap: OverlapType
-  beneficiaryOverlapNote: String
-  precedenceRules: [YesNoType!]
-  precedenceRulesYes: String
-  precedenceRulesNo: String
-  precedenceRulesNote: String
-
-  status: TaskStatusInput
-}
-
-"""
 PlanPayments is the task list section that deals with information regarding Payments
 """
 type PlanPayments {
@@ -8975,9 +8879,6 @@ updatePlanCollaborator(id: UUID!, newRoles: [TeamRole!]!): PlanCollaborator!
 deletePlanCollaborator(id: UUID!): PlanCollaborator!
 @hasRole(role: MINT_USER)
 
-updatePlanBeneficiaries(id: UUID!, changes: PlanBeneficiariesChanges!): PlanBeneficiaries!
-@hasRole(role: MINT_USER)
-
 uploadNewPlanDocument(input: PlanDocumentInput!): PlanDocument!
 @hasRole(role: MINT_USER)
 
@@ -9090,13 +8991,6 @@ enum ChangeType {
   REMOVED
 }
 
-enum TaskStatus {
-  READY
-  IN_PROGRESS
-  READY_FOR_REVIEW
-  READY_FOR_CLEARANCE
-}
-
 enum PrepareForClearanceStatus {
   CANNOT_START
   READY
@@ -9142,33 +9036,6 @@ enum DocumentType {
   DESIGN_PARAMETERS_MEMO,
   OFFICE_OF_THE_ADMINISTRATOR_PRESENTATION,
   OTHER
-}
-
-enum BeneficiariesType {
-  MEDICARE_FFS
-  MEDICARE_ADVANTAGE
-  MEDICARE_PART_D
-  MEDICAID
-  DUALLY_ELIGIBLE
-  DISEASE_SPECIFIC
-  UNDERSERVED
-  OTHER
-  NA
-}
-enum SelectionMethodType {
-  HISTORICAL
-  PROSPECTIVE
-  RETROSPECTIVE
-  VOLUNTARY
-  PROVIDER_SIGN_UP
-  OTHER
-  NA
-}
-
-enum TriStateAnswer {
-  YES
-  NO
-  TBD
 }
 
 enum FundingSource {
@@ -9369,11 +9236,6 @@ enum DiscussionUserRole {
   MODEL_TEAM,
   SHARED_SYSTEM_MAINTAINER,
   NONE_OF_THE_ABOVE,
-}
-
-enum YesNoType {
-  YES,
-  NO
 }`, BuiltIn: false},
 	{Name: "../schema/types/activity.graphql", Input: `"""
 ActivityType represents the possible activities that happen in application that might result in a notification
@@ -9693,6 +9555,145 @@ extend type Mutation {
   @hasRole(role: MINT_USER)
 }
 `, BuiltIn: false},
+	{Name: "../schema/types/plan_beneficiaries.graphql", Input: `enum BeneficiariesType {
+  MEDICARE_FFS
+  MEDICARE_ADVANTAGE
+  MEDICARE_PART_D
+  MEDICAID
+  DUALLY_ELIGIBLE
+  DISEASE_SPECIFIC
+  UNDERSERVED
+  OTHER
+  NA
+}
+
+enum TriStateAnswer {
+  YES
+  NO
+  TBD
+}
+
+enum SelectionMethodType {
+  HISTORICAL
+  PROSPECTIVE
+  RETROSPECTIVE
+  VOLUNTARY
+  PROVIDER_SIGN_UP
+  OTHER
+  NA
+}
+
+enum YesNoType {
+  YES,
+  NO
+}
+
+"""
+Plan Beneficiaries represents the the beneficiaries section of the task list
+"""
+
+type PlanBeneficiaries {
+  id: UUID!
+  modelPlanID: UUID!
+
+  #Page 1
+  beneficiaries: [BeneficiariesType!]!
+  beneficiariesOther: String
+  beneficiariesNote: String
+  diseaseSpecificGroup: String
+  treatDualElligibleDifferent: TriStateAnswer
+  treatDualElligibleDifferentHow: String
+  treatDualElligibleDifferentNote: String
+  excludeCertainCharacteristics: TriStateAnswer
+  excludeCertainCharacteristicsCriteria: String
+  excludeCertainCharacteristicsNote: String
+
+  #Page 2
+  numberPeopleImpacted: Int
+  estimateConfidence: ConfidenceType
+  confidenceNote: String
+  beneficiarySelectionMethod: [SelectionMethodType!]!
+  beneficiarySelectionOther: String
+  beneficiarySelectionNote: String
+
+  #Page 3
+  beneficiarySelectionFrequency: [FrequencyType!]!
+  beneficiarySelectionFrequencyContinually: String
+  beneficiarySelectionFrequencyOther: String
+  beneficiarySelectionFrequencyNote: String
+  beneficiaryRemovalFrequency: [FrequencyType!]!
+  beneficiaryRemovalFrequencyContinually: String
+  beneficiaryRemovalFrequencyOther: String
+  beneficiaryRemovalFrequencyNote: String
+  beneficiaryOverlap: OverlapType
+  beneficiaryOverlapNote: String
+  precedenceRules: [YesNoType!]!
+  precedenceRulesYes: String
+  precedenceRulesNo: String
+  precedenceRulesNote: String
+
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
+
+  readyForReviewBy: UUID
+  readyForReviewByUserAccount: UserAccount
+  readyForReviewDts: Time
+  readyForClearanceBy: UUID
+  readyForClearanceByUserAccount: UserAccount
+  readyForClearanceDts: Time
+
+  status: TaskStatus!
+}
+
+input PlanBeneficiariesChanges @goModel(model: "map[string]interface{}") {
+
+  #Page 1
+  beneficiaries: [BeneficiariesType!]
+  beneficiariesOther: String
+  beneficiariesNote: String
+  diseaseSpecificGroup: String
+  treatDualElligibleDifferent: TriStateAnswer
+  treatDualElligibleDifferentHow: String
+  treatDualElligibleDifferentNote: String
+  excludeCertainCharacteristics: TriStateAnswer
+  excludeCertainCharacteristicsCriteria: String
+  excludeCertainCharacteristicsNote: String
+
+  #Page 2
+  numberPeopleImpacted: Int
+  estimateConfidence: ConfidenceType
+  confidenceNote: String
+  beneficiarySelectionMethod: [SelectionMethodType!]
+  beneficiarySelectionOther: String
+  beneficiarySelectionNote: String
+
+  #Page 3
+  beneficiarySelectionFrequency: [FrequencyType!]
+  beneficiarySelectionFrequencyContinually: String
+  beneficiarySelectionFrequencyOther: String
+  beneficiarySelectionFrequencyNote: String
+  beneficiaryRemovalFrequency: [FrequencyType!]
+  beneficiaryRemovalFrequencyContinually: String
+  beneficiaryRemovalFrequencyOther: String
+  beneficiaryRemovalFrequencyNote: String
+  beneficiaryOverlap: OverlapType
+  beneficiaryOverlapNote: String
+  precedenceRules: [YesNoType!]
+  precedenceRulesYes: String
+  precedenceRulesNo: String
+  precedenceRulesNote: String
+
+  status: TaskStatusInput
+}
+
+extend type Mutation {
+  updatePlanBeneficiaries(id: UUID!, changes: PlanBeneficiariesChanges!): PlanBeneficiaries!
+  @hasRole(role: MINT_USER)
+}`, BuiltIn: false},
 	{Name: "../schema/types/plan_general_characteristics.graphql", Input: `enum AgencyOrStateHelpType {
   YES_STATE
   YES_AGENCY_IDEAS
@@ -10449,13 +10450,6 @@ extend type Mutation {
   OTHER
 }
 
-enum ConfidenceType {
-  NOT_AT_ALL
-  SLIGHTLY
-  FAIRLY
-  COMPLETELY
-}
-
 enum RecruitmentType {
   LOI
   APPLICATION_COLLECTION_TOOL
@@ -10522,12 +10516,6 @@ enum ProviderLeaveType {
   NOT_ALLOWED_TO_LEAVE
   OTHER
   NOT_APPLICABLE
-}
-
-enum OverlapType {
-  YES_NEED_POLICIES
-  YES_NO_ISSUES
-  NO
 }
 
 """
@@ -10747,7 +10735,28 @@ enum YesNoOtherType {
   YES
   NO
   OTHER
-}`, BuiltIn: false},
+}
+
+enum OverlapType {
+  YES_NEED_POLICIES
+  YES_NO_ISSUES
+  NO
+}
+
+enum TaskStatus {
+  READY
+  IN_PROGRESS
+  READY_FOR_REVIEW
+  READY_FOR_CLEARANCE
+}
+
+enum ConfidenceType {
+  NOT_AT_ALL
+  SLIGHTLY
+  FAIRLY
+  COMPLETELY
+}
+`, BuiltIn: false},
 	{Name: "../schema/types/user_notification.graphql", Input: `
 """
 UserNotification represents a notification about a specific Activity
@@ -18516,177 +18525,6 @@ func (ec *executionContext) fieldContext_Mutation_deletePlanCollaborator(ctx con
 	return fc, nil
 }
 
-func (ec *executionContext) _Mutation_updatePlanBeneficiaries(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Mutation_updatePlanBeneficiaries(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		directive0 := func(rctx context.Context) (interface{}, error) {
-			ctx = rctx // use context from middleware stack in children
-			return ec.resolvers.Mutation().UpdatePlanBeneficiaries(rctx, fc.Args["id"].(uuid.UUID), fc.Args["changes"].(map[string]interface{}))
-		}
-		directive1 := func(ctx context.Context) (interface{}, error) {
-			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
-			if err != nil {
-				return nil, err
-			}
-			if ec.directives.HasRole == nil {
-				return nil, errors.New("directive hasRole is not implemented")
-			}
-			return ec.directives.HasRole(ctx, nil, directive0, role)
-		}
-
-		tmp, err := directive1(rctx)
-		if err != nil {
-			return nil, graphql.ErrorOnPath(ctx, err)
-		}
-		if tmp == nil {
-			return nil, nil
-		}
-		if data, ok := tmp.(*models.PlanBeneficiaries); ok {
-			return data, nil
-		}
-		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/cmsgov/mint-app/pkg/models.PlanBeneficiaries`, tmp)
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(*models.PlanBeneficiaries)
-	fc.Result = res
-	return ec.marshalNPlanBeneficiaries2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanBeneficiaries(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_Mutation_updatePlanBeneficiaries(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "Mutation",
-		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			switch field.Name {
-			case "id":
-				return ec.fieldContext_PlanBeneficiaries_id(ctx, field)
-			case "modelPlanID":
-				return ec.fieldContext_PlanBeneficiaries_modelPlanID(ctx, field)
-			case "beneficiaries":
-				return ec.fieldContext_PlanBeneficiaries_beneficiaries(ctx, field)
-			case "beneficiariesOther":
-				return ec.fieldContext_PlanBeneficiaries_beneficiariesOther(ctx, field)
-			case "beneficiariesNote":
-				return ec.fieldContext_PlanBeneficiaries_beneficiariesNote(ctx, field)
-			case "diseaseSpecificGroup":
-				return ec.fieldContext_PlanBeneficiaries_diseaseSpecificGroup(ctx, field)
-			case "treatDualElligibleDifferent":
-				return ec.fieldContext_PlanBeneficiaries_treatDualElligibleDifferent(ctx, field)
-			case "treatDualElligibleDifferentHow":
-				return ec.fieldContext_PlanBeneficiaries_treatDualElligibleDifferentHow(ctx, field)
-			case "treatDualElligibleDifferentNote":
-				return ec.fieldContext_PlanBeneficiaries_treatDualElligibleDifferentNote(ctx, field)
-			case "excludeCertainCharacteristics":
-				return ec.fieldContext_PlanBeneficiaries_excludeCertainCharacteristics(ctx, field)
-			case "excludeCertainCharacteristicsCriteria":
-				return ec.fieldContext_PlanBeneficiaries_excludeCertainCharacteristicsCriteria(ctx, field)
-			case "excludeCertainCharacteristicsNote":
-				return ec.fieldContext_PlanBeneficiaries_excludeCertainCharacteristicsNote(ctx, field)
-			case "numberPeopleImpacted":
-				return ec.fieldContext_PlanBeneficiaries_numberPeopleImpacted(ctx, field)
-			case "estimateConfidence":
-				return ec.fieldContext_PlanBeneficiaries_estimateConfidence(ctx, field)
-			case "confidenceNote":
-				return ec.fieldContext_PlanBeneficiaries_confidenceNote(ctx, field)
-			case "beneficiarySelectionMethod":
-				return ec.fieldContext_PlanBeneficiaries_beneficiarySelectionMethod(ctx, field)
-			case "beneficiarySelectionOther":
-				return ec.fieldContext_PlanBeneficiaries_beneficiarySelectionOther(ctx, field)
-			case "beneficiarySelectionNote":
-				return ec.fieldContext_PlanBeneficiaries_beneficiarySelectionNote(ctx, field)
-			case "beneficiarySelectionFrequency":
-				return ec.fieldContext_PlanBeneficiaries_beneficiarySelectionFrequency(ctx, field)
-			case "beneficiarySelectionFrequencyContinually":
-				return ec.fieldContext_PlanBeneficiaries_beneficiarySelectionFrequencyContinually(ctx, field)
-			case "beneficiarySelectionFrequencyOther":
-				return ec.fieldContext_PlanBeneficiaries_beneficiarySelectionFrequencyOther(ctx, field)
-			case "beneficiarySelectionFrequencyNote":
-				return ec.fieldContext_PlanBeneficiaries_beneficiarySelectionFrequencyNote(ctx, field)
-			case "beneficiaryRemovalFrequency":
-				return ec.fieldContext_PlanBeneficiaries_beneficiaryRemovalFrequency(ctx, field)
-			case "beneficiaryRemovalFrequencyContinually":
-				return ec.fieldContext_PlanBeneficiaries_beneficiaryRemovalFrequencyContinually(ctx, field)
-			case "beneficiaryRemovalFrequencyOther":
-				return ec.fieldContext_PlanBeneficiaries_beneficiaryRemovalFrequencyOther(ctx, field)
-			case "beneficiaryRemovalFrequencyNote":
-				return ec.fieldContext_PlanBeneficiaries_beneficiaryRemovalFrequencyNote(ctx, field)
-			case "beneficiaryOverlap":
-				return ec.fieldContext_PlanBeneficiaries_beneficiaryOverlap(ctx, field)
-			case "beneficiaryOverlapNote":
-				return ec.fieldContext_PlanBeneficiaries_beneficiaryOverlapNote(ctx, field)
-			case "precedenceRules":
-				return ec.fieldContext_PlanBeneficiaries_precedenceRules(ctx, field)
-			case "precedenceRulesYes":
-				return ec.fieldContext_PlanBeneficiaries_precedenceRulesYes(ctx, field)
-			case "precedenceRulesNo":
-				return ec.fieldContext_PlanBeneficiaries_precedenceRulesNo(ctx, field)
-			case "precedenceRulesNote":
-				return ec.fieldContext_PlanBeneficiaries_precedenceRulesNote(ctx, field)
-			case "createdBy":
-				return ec.fieldContext_PlanBeneficiaries_createdBy(ctx, field)
-			case "createdByUserAccount":
-				return ec.fieldContext_PlanBeneficiaries_createdByUserAccount(ctx, field)
-			case "createdDts":
-				return ec.fieldContext_PlanBeneficiaries_createdDts(ctx, field)
-			case "modifiedBy":
-				return ec.fieldContext_PlanBeneficiaries_modifiedBy(ctx, field)
-			case "modifiedByUserAccount":
-				return ec.fieldContext_PlanBeneficiaries_modifiedByUserAccount(ctx, field)
-			case "modifiedDts":
-				return ec.fieldContext_PlanBeneficiaries_modifiedDts(ctx, field)
-			case "readyForReviewBy":
-				return ec.fieldContext_PlanBeneficiaries_readyForReviewBy(ctx, field)
-			case "readyForReviewByUserAccount":
-				return ec.fieldContext_PlanBeneficiaries_readyForReviewByUserAccount(ctx, field)
-			case "readyForReviewDts":
-				return ec.fieldContext_PlanBeneficiaries_readyForReviewDts(ctx, field)
-			case "readyForClearanceBy":
-				return ec.fieldContext_PlanBeneficiaries_readyForClearanceBy(ctx, field)
-			case "readyForClearanceByUserAccount":
-				return ec.fieldContext_PlanBeneficiaries_readyForClearanceByUserAccount(ctx, field)
-			case "readyForClearanceDts":
-				return ec.fieldContext_PlanBeneficiaries_readyForClearanceDts(ctx, field)
-			case "status":
-				return ec.fieldContext_PlanBeneficiaries_status(ctx, field)
-			}
-			return nil, fmt.Errorf("no field named %q was found under type PlanBeneficiaries", field.Name)
-		},
-	}
-	defer func() {
-		if r := recover(); r != nil {
-			err = ec.Recover(ctx, r)
-			ec.Error(ctx, err)
-		}
-	}()
-	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Mutation_updatePlanBeneficiaries_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
-		ec.Error(ctx, err)
-		return fc, err
-	}
-	return fc, nil
-}
-
 func (ec *executionContext) _Mutation_uploadNewPlanDocument(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_Mutation_uploadNewPlanDocument(ctx, field)
 	if err != nil {
@@ -22310,6 +22148,177 @@ func (ec *executionContext) fieldContext_Mutation_updatePlanBasics(ctx context.C
 	}()
 	ctx = graphql.WithFieldContext(ctx, fc)
 	if fc.Args, err = ec.field_Mutation_updatePlanBasics_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Mutation_updatePlanBeneficiaries(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Mutation_updatePlanBeneficiaries(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		directive0 := func(rctx context.Context) (interface{}, error) {
+			ctx = rctx // use context from middleware stack in children
+			return ec.resolvers.Mutation().UpdatePlanBeneficiaries(rctx, fc.Args["id"].(uuid.UUID), fc.Args["changes"].(map[string]interface{}))
+		}
+		directive1 := func(ctx context.Context) (interface{}, error) {
+			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
+			if err != nil {
+				return nil, err
+			}
+			if ec.directives.HasRole == nil {
+				return nil, errors.New("directive hasRole is not implemented")
+			}
+			return ec.directives.HasRole(ctx, nil, directive0, role)
+		}
+
+		tmp, err := directive1(rctx)
+		if err != nil {
+			return nil, graphql.ErrorOnPath(ctx, err)
+		}
+		if tmp == nil {
+			return nil, nil
+		}
+		if data, ok := tmp.(*models.PlanBeneficiaries); ok {
+			return data, nil
+		}
+		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/cmsgov/mint-app/pkg/models.PlanBeneficiaries`, tmp)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*models.PlanBeneficiaries)
+	fc.Result = res
+	return ec.marshalNPlanBeneficiaries2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanBeneficiaries(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Mutation_updatePlanBeneficiaries(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Mutation",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_PlanBeneficiaries_id(ctx, field)
+			case "modelPlanID":
+				return ec.fieldContext_PlanBeneficiaries_modelPlanID(ctx, field)
+			case "beneficiaries":
+				return ec.fieldContext_PlanBeneficiaries_beneficiaries(ctx, field)
+			case "beneficiariesOther":
+				return ec.fieldContext_PlanBeneficiaries_beneficiariesOther(ctx, field)
+			case "beneficiariesNote":
+				return ec.fieldContext_PlanBeneficiaries_beneficiariesNote(ctx, field)
+			case "diseaseSpecificGroup":
+				return ec.fieldContext_PlanBeneficiaries_diseaseSpecificGroup(ctx, field)
+			case "treatDualElligibleDifferent":
+				return ec.fieldContext_PlanBeneficiaries_treatDualElligibleDifferent(ctx, field)
+			case "treatDualElligibleDifferentHow":
+				return ec.fieldContext_PlanBeneficiaries_treatDualElligibleDifferentHow(ctx, field)
+			case "treatDualElligibleDifferentNote":
+				return ec.fieldContext_PlanBeneficiaries_treatDualElligibleDifferentNote(ctx, field)
+			case "excludeCertainCharacteristics":
+				return ec.fieldContext_PlanBeneficiaries_excludeCertainCharacteristics(ctx, field)
+			case "excludeCertainCharacteristicsCriteria":
+				return ec.fieldContext_PlanBeneficiaries_excludeCertainCharacteristicsCriteria(ctx, field)
+			case "excludeCertainCharacteristicsNote":
+				return ec.fieldContext_PlanBeneficiaries_excludeCertainCharacteristicsNote(ctx, field)
+			case "numberPeopleImpacted":
+				return ec.fieldContext_PlanBeneficiaries_numberPeopleImpacted(ctx, field)
+			case "estimateConfidence":
+				return ec.fieldContext_PlanBeneficiaries_estimateConfidence(ctx, field)
+			case "confidenceNote":
+				return ec.fieldContext_PlanBeneficiaries_confidenceNote(ctx, field)
+			case "beneficiarySelectionMethod":
+				return ec.fieldContext_PlanBeneficiaries_beneficiarySelectionMethod(ctx, field)
+			case "beneficiarySelectionOther":
+				return ec.fieldContext_PlanBeneficiaries_beneficiarySelectionOther(ctx, field)
+			case "beneficiarySelectionNote":
+				return ec.fieldContext_PlanBeneficiaries_beneficiarySelectionNote(ctx, field)
+			case "beneficiarySelectionFrequency":
+				return ec.fieldContext_PlanBeneficiaries_beneficiarySelectionFrequency(ctx, field)
+			case "beneficiarySelectionFrequencyContinually":
+				return ec.fieldContext_PlanBeneficiaries_beneficiarySelectionFrequencyContinually(ctx, field)
+			case "beneficiarySelectionFrequencyOther":
+				return ec.fieldContext_PlanBeneficiaries_beneficiarySelectionFrequencyOther(ctx, field)
+			case "beneficiarySelectionFrequencyNote":
+				return ec.fieldContext_PlanBeneficiaries_beneficiarySelectionFrequencyNote(ctx, field)
+			case "beneficiaryRemovalFrequency":
+				return ec.fieldContext_PlanBeneficiaries_beneficiaryRemovalFrequency(ctx, field)
+			case "beneficiaryRemovalFrequencyContinually":
+				return ec.fieldContext_PlanBeneficiaries_beneficiaryRemovalFrequencyContinually(ctx, field)
+			case "beneficiaryRemovalFrequencyOther":
+				return ec.fieldContext_PlanBeneficiaries_beneficiaryRemovalFrequencyOther(ctx, field)
+			case "beneficiaryRemovalFrequencyNote":
+				return ec.fieldContext_PlanBeneficiaries_beneficiaryRemovalFrequencyNote(ctx, field)
+			case "beneficiaryOverlap":
+				return ec.fieldContext_PlanBeneficiaries_beneficiaryOverlap(ctx, field)
+			case "beneficiaryOverlapNote":
+				return ec.fieldContext_PlanBeneficiaries_beneficiaryOverlapNote(ctx, field)
+			case "precedenceRules":
+				return ec.fieldContext_PlanBeneficiaries_precedenceRules(ctx, field)
+			case "precedenceRulesYes":
+				return ec.fieldContext_PlanBeneficiaries_precedenceRulesYes(ctx, field)
+			case "precedenceRulesNo":
+				return ec.fieldContext_PlanBeneficiaries_precedenceRulesNo(ctx, field)
+			case "precedenceRulesNote":
+				return ec.fieldContext_PlanBeneficiaries_precedenceRulesNote(ctx, field)
+			case "createdBy":
+				return ec.fieldContext_PlanBeneficiaries_createdBy(ctx, field)
+			case "createdByUserAccount":
+				return ec.fieldContext_PlanBeneficiaries_createdByUserAccount(ctx, field)
+			case "createdDts":
+				return ec.fieldContext_PlanBeneficiaries_createdDts(ctx, field)
+			case "modifiedBy":
+				return ec.fieldContext_PlanBeneficiaries_modifiedBy(ctx, field)
+			case "modifiedByUserAccount":
+				return ec.fieldContext_PlanBeneficiaries_modifiedByUserAccount(ctx, field)
+			case "modifiedDts":
+				return ec.fieldContext_PlanBeneficiaries_modifiedDts(ctx, field)
+			case "readyForReviewBy":
+				return ec.fieldContext_PlanBeneficiaries_readyForReviewBy(ctx, field)
+			case "readyForReviewByUserAccount":
+				return ec.fieldContext_PlanBeneficiaries_readyForReviewByUserAccount(ctx, field)
+			case "readyForReviewDts":
+				return ec.fieldContext_PlanBeneficiaries_readyForReviewDts(ctx, field)
+			case "readyForClearanceBy":
+				return ec.fieldContext_PlanBeneficiaries_readyForClearanceBy(ctx, field)
+			case "readyForClearanceByUserAccount":
+				return ec.fieldContext_PlanBeneficiaries_readyForClearanceByUserAccount(ctx, field)
+			case "readyForClearanceDts":
+				return ec.fieldContext_PlanBeneficiaries_readyForClearanceDts(ctx, field)
+			case "status":
+				return ec.fieldContext_PlanBeneficiaries_status(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type PlanBeneficiaries", field.Name)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Mutation_updatePlanBeneficiaries_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
 		ec.Error(ctx, err)
 		return fc, err
 	}
@@ -62157,13 +62166,6 @@ func (ec *executionContext) _Mutation(ctx context.Context, sel ast.SelectionSet)
 			if out.Values[i] == graphql.Null {
 				out.Invalids++
 			}
-		case "updatePlanBeneficiaries":
-			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
-				return ec._Mutation_updatePlanBeneficiaries(ctx, field)
-			})
-			if out.Values[i] == graphql.Null {
-				out.Invalids++
-			}
 		case "uploadNewPlanDocument":
 			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
 				return ec._Mutation_uploadNewPlanDocument(ctx, field)
@@ -62389,6 +62391,13 @@ func (ec *executionContext) _Mutation(ctx context.Context, sel ast.SelectionSet)
 		case "updatePlanBasics":
 			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
 				return ec._Mutation_updatePlanBasics(ctx, field)
+			})
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "updatePlanBeneficiaries":
+			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
+				return ec._Mutation_updatePlanBeneficiaries(ctx, field)
 			})
 			if out.Values[i] == graphql.Null {
 				out.Invalids++
