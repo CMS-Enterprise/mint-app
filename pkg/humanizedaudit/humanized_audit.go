@@ -78,7 +78,7 @@ func humanizeModelPlanAudits(store *storage.Store, plan *models.ModelPlan, audit
 	for _, modelAudit := range modelPlanAudits {
 
 		for _, field := range modelAudit.Fields { //fieldName
-			change := models.NewHumanizedAuditChange(constants.GetSystemAccountUUID(), *modelAudit.ModifiedBy, plan.ID, *modelAudit.ModifiedDts, modelAudit.TableName)
+			change := models.NewHumanizedAuditChange(constants.GetSystemAccountUUID(), *modelAudit.ModifiedBy, plan.ID, *modelAudit.ModifiedDts, modelAudit.TableName, modelAudit.ID)
 			change.MetaDataRaw = field
 			change.ModelName = plan.ModelName
 
@@ -126,7 +126,7 @@ func humanizeParticipantsAndProviders(store *storage.Store, plan *models.ModelPl
 				Old:      field.Old,
 				New:      field.New,
 			}
-			change := models.NewHumanizedAuditChange(constants.GetSystemAccountUUID(), *modelAudit.ModifiedBy, plan.ID, *modelAudit.ModifiedDts, modelAudit.TableName)
+			change := models.NewHumanizedAuditChange(constants.GetSystemAccountUUID(), *modelAudit.ModifiedBy, plan.ID, *modelAudit.ModifiedDts, modelAudit.TableName, modelAudit.ID)
 			change.MetaDataRaw = translatedField //Ticket: (ChChCh Changes!) This should actually translate the data
 			change.ModelName = plan.ModelName
 

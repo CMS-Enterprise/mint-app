@@ -28,7 +28,7 @@ type HumanizedAuditChange struct {
 	TimeStart time.Time `json:"timeStart" db:"time_start"`
 	TimeEnd   time.Time `json:"timeEnd" db:"time_end"`
 	ActorID   uuid.UUID `json:"actorID" db:"actor_id"`
-	ChangeID  uuid.UUID `json:"changeID" db:"change_id"`
+	ChangeID  int       `json:"changeID" db:"change_id"`
 
 	// Changes     AnalyzedAuditChange `json:"changes"`
 	MetaDataRaw interface{} `db:"changes"`
@@ -37,7 +37,7 @@ type HumanizedAuditChange struct {
 }
 
 // NewHumanizedAuditChange
-func NewHumanizedAuditChange(createdBy uuid.UUID, actorID uuid.UUID, modelPlanID uuid.UUID, date time.Time, tableName string) HumanizedAuditChange {
+func NewHumanizedAuditChange(createdBy uuid.UUID, actorID uuid.UUID, modelPlanID uuid.UUID, date time.Time, tableName string, changeID int) HumanizedAuditChange {
 	version := 0
 	genericMeta := NewHumanizedAuditMetaBaseStruct(tableName, version)
 	return HumanizedAuditChange{
@@ -46,6 +46,7 @@ func NewHumanizedAuditChange(createdBy uuid.UUID, actorID uuid.UUID, modelPlanID
 		baseStruct:        NewBaseStruct(createdBy),
 		ActorID:           actorID,
 		MetaData:          &genericMeta,
+		ChangeID:          changeID,
 	}
 
 }

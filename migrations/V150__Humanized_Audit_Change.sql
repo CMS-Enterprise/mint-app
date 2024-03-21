@@ -2,7 +2,7 @@ CREATE TABLE humanized_audit_changes (
     id UUID PRIMARY KEY,
     model_plan_id UUID NOT NULL REFERENCES model_plan(id),
     actor_id UUID NOT NULL REFERENCES user_account(id), --foreign key to user table
-    change_id UUID NOT NULL REFERENCES audit.change(id), --foreign key to user table
+    change_id BIGINT NOT NULL REFERENCES audit.change(id), --foreign key to user table
     date TIMESTAMP NOT NULL, 
     time_start TIMESTAMP NOT NULL,
     time_end TIMESTAMP NOT NULL,
