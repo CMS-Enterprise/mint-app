@@ -39,9 +39,12 @@ func HumanizeAuditsForModelPlan(
 		return nil, err
 	}
 	humanizedChanges, err := humanizeChangeSet(store, plan, audits)
+	if err != nil {
+		return nil, fmt.Errorf("issue analyzing model plan change set for time start %s to time end %s. Error : %w", timeStart, timeEnd, err)
+	}
 
 	//Ticket: (ChChCh Changes!) save to the database by calling a store method here.
-	retHumanizedChanges, err := humanizedChanges, err
+	retHumanizedChanges, err := storage.HumanizedAuditChangeCreateCollection(store, humanizedChanges)
 
 	return retHumanizedChanges, err
 
@@ -75,8 +78,9 @@ func humanizeModelPlanAudits(store *storage.Store, plan *models.ModelPlan, audit
 	for _, modelAudit := range modelPlanAudits {
 
 		for fieldName, field := range modelAudit.Fields {
-			change := models.NewHumanizedAuditChange(constants.GetSystemAccountUUID(), plan.ID, *modelAudit.ModifiedDts)
+			change := models.NewHumanizedAuditChange(constants.GetSystemAccountUUID(), *modelAudit.ModifiedBy, plan.ID, *modelAudit.ModifiedDts)
 			change.MetaDataRaw = field
+			change.ModelName = plan.ModelName
 
 			fmt.Println(fieldName)
 			changes = append(changes, &change)
@@ -123,12 +127,10 @@ func humanizeParticipantsAndProviders(store *storage.Store, plan *models.ModelPl
 				Old:      field.Old,
 				New:      field.New,
 			}
+			change := models.NewHumanizedAuditChange(constants.GetSystemAccountUUID(), *modelAudit.ModifiedBy, plan.ID, *modelAudit.ModifiedDts)
+			change.MetaDataRaw = translatedField //Ticket: (ChChCh Changes!) This should actually translate the data
+			change.ModelName = plan.ModelName
 
-			change := models.HumanizedAuditChange{
-
-				Date:        *modelAudit.ModifiedDts, //Potential nil pointer...
-				MetaDataRaw: translatedField,         //Ticket: (ChChCh Changes!) This should actually translate the data
-			}
 			fmt.Println(fieldName)
 			changes = append(changes, &change)
 
