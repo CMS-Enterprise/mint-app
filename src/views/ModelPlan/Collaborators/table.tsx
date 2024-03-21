@@ -4,10 +4,10 @@ import { useLocation, useParams } from 'react-router-dom';
 import { useSortBy, useTable } from 'react-table';
 import { Table as UswdsTable } from '@trussworks/react-uswds';
 import { TeamRole } from 'gql/gen/graphql';
+import { GetModelCollaborators_modelPlan_collaborators as CollaboratorType } from 'gql/gen/types/GetModelCollaborators';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import IconInitial from 'components/shared/IconInitial';
-import { GetModelCollaborators_modelPlan_collaborators as CollaboratorType } from 'queries/Collaborators/types/GetModelCollaborators';
 import { formatDateLocal } from 'utils/date';
 import {
   currentTableSortDescription,

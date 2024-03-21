@@ -8,9 +8,14 @@ import {
   useLocation,
   useParams
 } from 'react-router-dom';
-import { useMutation, useQuery } from '@apollo/client';
 import { Button, Grid, GridContainer } from '@trussworks/react-uswds';
-import { TeamRole } from 'gql/gen/graphql';
+import {
+  TeamRole,
+  useDeleteModelPlanCollaboratorMutation,
+  useGetModelCollaboratorsQuery
+} from 'gql/gen/graphql';
+import { DeleteModelPlanCollaborator_deletePlanCollaborator as ModelPlanCollaboratorType } from 'gql/gen/types/DeleteModelPlanCollaborator';
+import { GetModelCollaborators_modelPlan_collaborators as GetCollaboratorsType } from 'gql/gen/types/GetModelCollaborators';
 
 import Breadcrumbs from 'components/Breadcrumbs';
 import UswdsReactLink from 'components/LinkWrapper';
@@ -21,16 +26,6 @@ import PageLoading from 'components/PageLoading';
 import Alert from 'components/shared/Alert';
 import Expire from 'components/shared/Expire';
 import useMessage from 'hooks/useMessage';
-import DeleteModelPlanCollaborator from 'queries/Collaborators/DeleteModelPlanCollaborator';
-import GetModelPlanCollaborators from 'queries/Collaborators/GetModelCollaborators';
-import {
-  DeleteModelPlanCollaborator as DeleteModelPlanCollaboratorType,
-  DeleteModelPlanCollaborator_deletePlanCollaborator as ModelPlanCollaboratorType
-} from 'queries/Collaborators/types/DeleteModelPlanCollaborator';
-import {
-  GetModelCollaborators,
-  GetModelCollaborators_modelPlan_collaborators as GetCollaboratorsType
-} from 'queries/Collaborators/types/GetModelCollaborators';
 import { collaboratorsOrderedByModelLeads } from 'utils/modelPlan';
 import { ModelInfoContext } from 'views/ModelInfoWrapper';
 import NotFound from 'views/NotFound';
@@ -95,18 +90,13 @@ export const CollaboratorsContent = () => {
   // Current user's EUA id - to warn about removing yourself from model plan
   const { euaId } = useSelector((state: RootStateOrAny) => state.auth);
 
-  const [mutate] = useMutation<DeleteModelPlanCollaboratorType>(
-    DeleteModelPlanCollaborator
-  );
+  const [mutate] = useDeleteModelPlanCollaboratorMutation();
 
-  const { error, data, refetch, loading } = useQuery<GetModelCollaborators>(
-    GetModelPlanCollaborators,
-    {
-      variables: {
-        id: modelID
-      }
+  const { error, data, refetch, loading } = useGetModelCollaboratorsQuery({
+    variables: {
+      id: modelID
     }
-  );
+  });
 
   const collaborators = useMemo(() => {
     return (data?.modelPlan?.collaborators ?? []) as GetCollaboratorsType[];
