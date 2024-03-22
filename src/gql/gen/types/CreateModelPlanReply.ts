@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { DiscussionReplyCreateInput } from "./../../types/graphql-global-types";
+import { DiscussionReplyCreateInput } from "./../../../types/graphql-global-types";
 
 // ====================================================
 // GraphQL mutation operation: CreateModelPlanReply

@@ -3167,6 +3167,13 @@ export type CreateModelPlanMutationVariables = Exact<{
 
 export type CreateModelPlanMutation = { __typename: 'Mutation', createModelPlan: { __typename: 'ModelPlan', id: UUID, createdBy: UUID, modelName: string, basics: { __typename: 'PlanBasics', id: UUID, modelPlanID: UUID, modelCategory?: ModelCategory | null, cmsCenters: Array<CmsCenter>, cmmiGroups: Array<CmmiGroup>, modelType: Array<ModelType>, problem?: string | null, goal?: string | null, testInterventions?: string | null, note?: string | null, completeICIP?: Time | null, clearanceStarts?: Time | null, clearanceEnds?: Time | null, announced?: Time | null, applicationsStart?: Time | null, applicationsEnd?: Time | null, performancePeriodStarts?: Time | null, performancePeriodEnds?: Time | null, wrapUpEnds?: Time | null, highLevelNote?: string | null, phasedIn?: boolean | null, phasedInNote?: string | null, createdBy: UUID, createdDts: Time, modifiedBy?: UUID | null, modifiedDts?: Time | null, status: TaskStatus }, collaborators: Array<{ __typename: 'PlanCollaborator', id: UUID, userID: UUID, teamRoles: Array<TeamRole>, userAccount: { __typename: 'UserAccount', id: UUID, commonName: string, email: string, username: string } }> } };
 
+export type CreateModelPlanReplyMutationVariables = Exact<{
+  input: DiscussionReplyCreateInput;
+}>;
+
+
+export type CreateModelPlanReplyMutation = { __typename: 'Mutation', createDiscussionReply: { __typename: 'DiscussionReply', id: UUID, discussionID: UUID, createdBy: UUID, createdDts: Time, content?: { __typename: 'TaggedContent', rawContent: string } | null } };
+
 export type GetAllModelDataQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -5660,6 +5667,45 @@ export function useCreateModelPlanMutation(baseOptions?: Apollo.MutationHookOpti
 export type CreateModelPlanMutationHookResult = ReturnType<typeof useCreateModelPlanMutation>;
 export type CreateModelPlanMutationResult = Apollo.MutationResult<CreateModelPlanMutation>;
 export type CreateModelPlanMutationOptions = Apollo.BaseMutationOptions<CreateModelPlanMutation, CreateModelPlanMutationVariables>;
+export const CreateModelPlanReplyDocument = gql`
+    mutation CreateModelPlanReply($input: DiscussionReplyCreateInput!) {
+  createDiscussionReply(input: $input) {
+    id
+    discussionID
+    content {
+      rawContent
+    }
+    createdBy
+    createdDts
+  }
+}
+    `;
+export type CreateModelPlanReplyMutationFn = Apollo.MutationFunction<CreateModelPlanReplyMutation, CreateModelPlanReplyMutationVariables>;
+
+/**
+ * __useCreateModelPlanReplyMutation__
+ *
+ * To run a mutation, you first call `useCreateModelPlanReplyMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateModelPlanReplyMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createModelPlanReplyMutation, { data, loading, error }] = useCreateModelPlanReplyMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useCreateModelPlanReplyMutation(baseOptions?: Apollo.MutationHookOptions<CreateModelPlanReplyMutation, CreateModelPlanReplyMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateModelPlanReplyMutation, CreateModelPlanReplyMutationVariables>(CreateModelPlanReplyDocument, options);
+      }
+export type CreateModelPlanReplyMutationHookResult = ReturnType<typeof useCreateModelPlanReplyMutation>;
+export type CreateModelPlanReplyMutationResult = Apollo.MutationResult<CreateModelPlanReplyMutation>;
+export type CreateModelPlanReplyMutationOptions = Apollo.BaseMutationOptions<CreateModelPlanReplyMutation, CreateModelPlanReplyMutationVariables>;
 export const GetAllModelDataDocument = gql`
     query GetAllModelData {
   modelPlanCollection(filter: INCLUDE_ALL) {
