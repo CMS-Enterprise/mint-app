@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { ModelPlanFilter, ModelStatus, ModelCategory, KeyCharacteristic, TeamRole } from "./../../types/graphql-global-types";
+import { ModelPlanFilter, ModelStatus, ModelCategory, KeyCharacteristic, TeamRole } from "./../../../types/graphql-global-types";
 
 // ====================================================
 // GraphQL query operation: GetModelPlans

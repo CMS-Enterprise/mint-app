@@ -1,6 +1,6 @@
 import { gql } from '@apollo/client';
 
-export default gql`
+export default gql(/* GraphQL */ `
   query GetModelPlans($filter: ModelPlanFilter!, $isMAC: Boolean!) {
     modelPlanCollection(filter: $filter) {
       id
@@ -56,4 +56,4 @@ export default gql`
       }
     }
   }
-`;
+`);

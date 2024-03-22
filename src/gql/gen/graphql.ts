@@ -3213,6 +3213,14 @@ export type GetModelPlanBaseQueryVariables = Exact<{
 
 export type GetModelPlanBaseQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, modifiedDts?: Time | null, status: ModelStatus } };
 
+export type GetModelPlansQueryVariables = Exact<{
+  filter: ModelPlanFilter;
+  isMAC: Scalars['Boolean']['input'];
+}>;
+
+
+export type GetModelPlansQuery = { __typename: 'Query', modelPlanCollection: Array<{ __typename: 'ModelPlan', id: UUID, modelName: string, status: ModelStatus, abbreviation?: string | null, nameHistory: Array<string>, createdBy: UUID, createdDts: Time, modifiedDts?: Time | null, isFavorite: boolean, isCollaborator: boolean, basics: { __typename: 'PlanBasics', id: UUID, demoCode?: string | null, amsModelID?: string | null, modelCategory?: ModelCategory | null, clearanceStarts?: Time | null, performancePeriodStarts?: Time | null, additionalModelCategories: Array<ModelCategory>, applicationsStart?: Time | null }, generalCharacteristics?: { __typename: 'PlanGeneralCharacteristics', id: UUID, keyCharacteristics: Array<KeyCharacteristic> }, payments?: { __typename: 'PlanPayments', id: UUID, paymentStartDate?: Time | null }, collaborators: Array<{ __typename: 'PlanCollaborator', id: UUID, userID: UUID, teamRoles: Array<TeamRole>, userAccount: { __typename: 'UserAccount', id: UUID, commonName: string, email: string, username: string } }>, discussions: Array<{ __typename: 'PlanDiscussion', id: UUID, replies: Array<{ __typename: 'DiscussionReply', id: UUID }> }>, crs?: Array<{ __typename: 'PlanCR', idNumber: string }>, tdls?: Array<{ __typename: 'PlanTDL', idNumber: string }> }> };
+
 export type UpdateModelPlanMutationVariables = Exact<{
   id: Scalars['UUID']['input'];
   changes: ModelPlanChanges;
@@ -7002,6 +7010,97 @@ export type GetModelPlanBaseQueryHookResult = ReturnType<typeof useGetModelPlanB
 export type GetModelPlanBaseLazyQueryHookResult = ReturnType<typeof useGetModelPlanBaseLazyQuery>;
 export type GetModelPlanBaseSuspenseQueryHookResult = ReturnType<typeof useGetModelPlanBaseSuspenseQuery>;
 export type GetModelPlanBaseQueryResult = Apollo.QueryResult<GetModelPlanBaseQuery, GetModelPlanBaseQueryVariables>;
+export const GetModelPlansDocument = gql`
+    query GetModelPlans($filter: ModelPlanFilter!, $isMAC: Boolean!) {
+  modelPlanCollection(filter: $filter) {
+    id
+    modelName
+    status
+    abbreviation
+    nameHistory(sort: DESC)
+    createdBy
+    createdDts
+    modifiedDts
+    isFavorite
+    isCollaborator
+    basics {
+      id
+      demoCode
+      amsModelID
+      modelCategory
+      clearanceStarts
+      performancePeriodStarts
+      additionalModelCategories
+      applicationsStart @include(if: $isMAC)
+    }
+    generalCharacteristics @include(if: $isMAC) {
+      id
+      keyCharacteristics
+    }
+    payments @include(if: $isMAC) {
+      id
+      paymentStartDate
+    }
+    collaborators {
+      id
+      userID
+      userAccount {
+        id
+        commonName
+        email
+        username
+      }
+      teamRoles
+    }
+    discussions {
+      id
+      replies {
+        id
+      }
+    }
+    crs @include(if: $isMAC) {
+      idNumber
+    }
+    tdls @include(if: $isMAC) {
+      idNumber
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetModelPlansQuery__
+ *
+ * To run a query within a React component, call `useGetModelPlansQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetModelPlansQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetModelPlansQuery({
+ *   variables: {
+ *      filter: // value for 'filter'
+ *      isMAC: // value for 'isMAC'
+ *   },
+ * });
+ */
+export function useGetModelPlansQuery(baseOptions: Apollo.QueryHookOptions<GetModelPlansQuery, GetModelPlansQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetModelPlansQuery, GetModelPlansQueryVariables>(GetModelPlansDocument, options);
+      }
+export function useGetModelPlansLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetModelPlansQuery, GetModelPlansQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetModelPlansQuery, GetModelPlansQueryVariables>(GetModelPlansDocument, options);
+        }
+export function useGetModelPlansSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetModelPlansQuery, GetModelPlansQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetModelPlansQuery, GetModelPlansQueryVariables>(GetModelPlansDocument, options);
+        }
+export type GetModelPlansQueryHookResult = ReturnType<typeof useGetModelPlansQuery>;
+export type GetModelPlansLazyQueryHookResult = ReturnType<typeof useGetModelPlansLazyQuery>;
+export type GetModelPlansSuspenseQueryHookResult = ReturnType<typeof useGetModelPlansSuspenseQuery>;
+export type GetModelPlansQueryResult = Apollo.QueryResult<GetModelPlansQuery, GetModelPlansQueryVariables>;
 export const UpdateModelPlanDocument = gql`
     mutation UpdateModelPlan($id: UUID!, $changes: ModelPlanChanges!) {
   updateModelPlan(id: $id, changes: $changes) {
