@@ -7,6 +7,8 @@ import {
   screen,
   waitForElementToBeRemoved
 } from '@testing-library/react';
+import { GetModelSummaryDocument } from 'gql/gen/graphql';
+import { GetModelSummary_modelPlan as GetModelSummaryTypes } from 'gql/gen/types/GetModelSummary';
 import configureMockStore from 'redux-mock-store';
 
 import { ASSESSMENT } from 'constants/jobCodes';
@@ -19,8 +21,6 @@ import modelPlan from 'i18n/en-US/modelPlan/modelPlan';
 import opsEvalAndLearning from 'i18n/en-US/modelPlan/opsEvalAndLearning';
 import participantsAndProviders from 'i18n/en-US/modelPlan/participantsAndProviders';
 import payments from 'i18n/en-US/modelPlan/payments';
-import GetModelSummary from 'queries/ReadOnly/GetModelSummary';
-import { GetModelSummary_modelPlan as GetModelSummaryTypes } from 'queries/ReadOnly/types/GetModelSummary';
 import {
   KeyCharacteristic,
   ModelStatus,
@@ -83,7 +83,7 @@ const mockData: GetModelSummaryTypes = {
 const mock = [
   {
     request: {
-      query: GetModelSummary,
+      query: GetModelSummaryDocument,
       variables: { id: 'f11eb129-2c80-4080-9440-439cbe1a286f' }
     },
     result: {
