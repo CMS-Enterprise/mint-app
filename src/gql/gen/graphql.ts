@@ -3152,6 +3152,14 @@ export type GetNdaQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GetNdaQuery = { __typename: 'Query', ndaInfo: { __typename: 'NDAInfo', agreed: boolean, agreedDts?: Time | null } };
 
+export type ArchiveModelPlanMutationVariables = Exact<{
+  id: Scalars['UUID']['input'];
+  archived: Scalars['Boolean']['input'];
+}>;
+
+
+export type ArchiveModelPlanMutation = { __typename: 'Mutation', updateModelPlan: { __typename: 'ModelPlan', id: UUID } };
+
 export type UpdateNdaMutationVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -5524,6 +5532,40 @@ export type GetNdaQueryHookResult = ReturnType<typeof useGetNdaQuery>;
 export type GetNdaLazyQueryHookResult = ReturnType<typeof useGetNdaLazyQuery>;
 export type GetNdaSuspenseQueryHookResult = ReturnType<typeof useGetNdaSuspenseQuery>;
 export type GetNdaQueryResult = Apollo.QueryResult<GetNdaQuery, GetNdaQueryVariables>;
+export const ArchiveModelPlanDocument = gql`
+    mutation ArchiveModelPlan($id: UUID!, $archived: Boolean!) {
+  updateModelPlan(id: $id, changes: {archived: $archived}) {
+    id
+  }
+}
+    `;
+export type ArchiveModelPlanMutationFn = Apollo.MutationFunction<ArchiveModelPlanMutation, ArchiveModelPlanMutationVariables>;
+
+/**
+ * __useArchiveModelPlanMutation__
+ *
+ * To run a mutation, you first call `useArchiveModelPlanMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useArchiveModelPlanMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [archiveModelPlanMutation, { data, loading, error }] = useArchiveModelPlanMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      archived: // value for 'archived'
+ *   },
+ * });
+ */
+export function useArchiveModelPlanMutation(baseOptions?: Apollo.MutationHookOptions<ArchiveModelPlanMutation, ArchiveModelPlanMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<ArchiveModelPlanMutation, ArchiveModelPlanMutationVariables>(ArchiveModelPlanDocument, options);
+      }
+export type ArchiveModelPlanMutationHookResult = ReturnType<typeof useArchiveModelPlanMutation>;
+export type ArchiveModelPlanMutationResult = Apollo.MutationResult<ArchiveModelPlanMutation>;
+export type ArchiveModelPlanMutationOptions = Apollo.BaseMutationOptions<ArchiveModelPlanMutation, ArchiveModelPlanMutationVariables>;
 export const UpdateNdaDocument = gql`
     mutation UpdateNDA {
   agreeToNDA(agree: true) {
