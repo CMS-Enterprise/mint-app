@@ -1,8 +1,5 @@
 import { useMemo, useState } from 'react';
-import { useQuery } from '@apollo/client';
-
-import SearchOktaUsers from 'queries/SearchOktaUsers';
-import { SearchOktaUsers as SearchOktaUsersType } from 'queries/types/SearchOktaUsers';
+import { useSearchOktaUsersQuery } from 'gql/gen/graphql';
 
 /** Cedar contact properties */
 export type OktaUserType = {
@@ -28,12 +25,14 @@ function useOktaUserLookup(
     query
   );
 
-  const { data, previousData, loading } = useQuery<SearchOktaUsersType>(
-    SearchOktaUsers,
-    {
-      variables: { searchTerm },
-      skip: !searchTerm || searchTerm.length < 3 || userSelected
-    }
+  const { data, previousData, loading } = useSearchOktaUsersQuery(
+    searchTerm
+      ? {
+          variables: { searchTerm }
+        }
+      : {
+          skip: !searchTerm || searchTerm.length < 3 || userSelected
+        }
   );
 
   /**

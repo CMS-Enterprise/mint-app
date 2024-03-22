@@ -3221,6 +3221,20 @@ export type GetModelPlansQueryVariables = Exact<{
 
 export type GetModelPlansQuery = { __typename: 'Query', modelPlanCollection: Array<{ __typename: 'ModelPlan', id: UUID, modelName: string, status: ModelStatus, abbreviation?: string | null, nameHistory: Array<string>, createdBy: UUID, createdDts: Time, modifiedDts?: Time | null, isFavorite: boolean, isCollaborator: boolean, basics: { __typename: 'PlanBasics', id: UUID, demoCode?: string | null, amsModelID?: string | null, modelCategory?: ModelCategory | null, clearanceStarts?: Time | null, performancePeriodStarts?: Time | null, additionalModelCategories: Array<ModelCategory>, applicationsStart?: Time | null }, generalCharacteristics?: { __typename: 'PlanGeneralCharacteristics', id: UUID, keyCharacteristics: Array<KeyCharacteristic> }, payments?: { __typename: 'PlanPayments', id: UUID, paymentStartDate?: Time | null }, collaborators: Array<{ __typename: 'PlanCollaborator', id: UUID, userID: UUID, teamRoles: Array<TeamRole>, userAccount: { __typename: 'UserAccount', id: UUID, commonName: string, email: string, username: string } }>, discussions: Array<{ __typename: 'PlanDiscussion', id: UUID, replies: Array<{ __typename: 'DiscussionReply', id: UUID }> }>, crs?: Array<{ __typename: 'PlanCR', idNumber: string }>, tdls?: Array<{ __typename: 'PlanTDL', idNumber: string }> }> };
 
+export type GetUserInfoQueryVariables = Exact<{
+  username: Scalars['String']['input'];
+}>;
+
+
+export type GetUserInfoQuery = { __typename: 'Query', userAccount: { __typename: 'UserAccount', id: UUID, username: string, commonName: string, email: string, givenName: string, familyName: string } };
+
+export type SearchOktaUsersQueryVariables = Exact<{
+  searchTerm: Scalars['String']['input'];
+}>;
+
+
+export type SearchOktaUsersQuery = { __typename: 'Query', searchOktaUsers: Array<{ __typename: 'UserInfo', displayName: string, username: string, email: string }> };
+
 export type UpdateModelPlanMutationVariables = Exact<{
   id: Scalars['UUID']['input'];
   changes: ModelPlanChanges;
@@ -7101,6 +7115,93 @@ export type GetModelPlansQueryHookResult = ReturnType<typeof useGetModelPlansQue
 export type GetModelPlansLazyQueryHookResult = ReturnType<typeof useGetModelPlansLazyQuery>;
 export type GetModelPlansSuspenseQueryHookResult = ReturnType<typeof useGetModelPlansSuspenseQuery>;
 export type GetModelPlansQueryResult = Apollo.QueryResult<GetModelPlansQuery, GetModelPlansQueryVariables>;
+export const GetUserInfoDocument = gql`
+    query GetUserInfo($username: String!) {
+  userAccount(username: $username) {
+    id
+    username
+    commonName
+    email
+    givenName
+    familyName
+  }
+}
+    `;
+
+/**
+ * __useGetUserInfoQuery__
+ *
+ * To run a query within a React component, call `useGetUserInfoQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetUserInfoQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetUserInfoQuery({
+ *   variables: {
+ *      username: // value for 'username'
+ *   },
+ * });
+ */
+export function useGetUserInfoQuery(baseOptions: Apollo.QueryHookOptions<GetUserInfoQuery, GetUserInfoQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetUserInfoQuery, GetUserInfoQueryVariables>(GetUserInfoDocument, options);
+      }
+export function useGetUserInfoLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetUserInfoQuery, GetUserInfoQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetUserInfoQuery, GetUserInfoQueryVariables>(GetUserInfoDocument, options);
+        }
+export function useGetUserInfoSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetUserInfoQuery, GetUserInfoQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetUserInfoQuery, GetUserInfoQueryVariables>(GetUserInfoDocument, options);
+        }
+export type GetUserInfoQueryHookResult = ReturnType<typeof useGetUserInfoQuery>;
+export type GetUserInfoLazyQueryHookResult = ReturnType<typeof useGetUserInfoLazyQuery>;
+export type GetUserInfoSuspenseQueryHookResult = ReturnType<typeof useGetUserInfoSuspenseQuery>;
+export type GetUserInfoQueryResult = Apollo.QueryResult<GetUserInfoQuery, GetUserInfoQueryVariables>;
+export const SearchOktaUsersDocument = gql`
+    query SearchOktaUsers($searchTerm: String!) {
+  searchOktaUsers(searchTerm: $searchTerm) {
+    displayName
+    username
+    email
+  }
+}
+    `;
+
+/**
+ * __useSearchOktaUsersQuery__
+ *
+ * To run a query within a React component, call `useSearchOktaUsersQuery` and pass it any options that fit your needs.
+ * When your component renders, `useSearchOktaUsersQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useSearchOktaUsersQuery({
+ *   variables: {
+ *      searchTerm: // value for 'searchTerm'
+ *   },
+ * });
+ */
+export function useSearchOktaUsersQuery(baseOptions: Apollo.QueryHookOptions<SearchOktaUsersQuery, SearchOktaUsersQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<SearchOktaUsersQuery, SearchOktaUsersQueryVariables>(SearchOktaUsersDocument, options);
+      }
+export function useSearchOktaUsersLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<SearchOktaUsersQuery, SearchOktaUsersQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<SearchOktaUsersQuery, SearchOktaUsersQueryVariables>(SearchOktaUsersDocument, options);
+        }
+export function useSearchOktaUsersSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<SearchOktaUsersQuery, SearchOktaUsersQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<SearchOktaUsersQuery, SearchOktaUsersQueryVariables>(SearchOktaUsersDocument, options);
+        }
+export type SearchOktaUsersQueryHookResult = ReturnType<typeof useSearchOktaUsersQuery>;
+export type SearchOktaUsersLazyQueryHookResult = ReturnType<typeof useSearchOktaUsersLazyQuery>;
+export type SearchOktaUsersSuspenseQueryHookResult = ReturnType<typeof useSearchOktaUsersSuspenseQuery>;
+export type SearchOktaUsersQueryResult = Apollo.QueryResult<SearchOktaUsersQuery, SearchOktaUsersQueryVariables>;
 export const UpdateModelPlanDocument = gql`
     mutation UpdateModelPlan($id: UUID!, $changes: ModelPlanChanges!) {
   updateModelPlan(id: $id, changes: $changes) {
