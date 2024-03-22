@@ -3206,6 +3206,13 @@ export type GetModelPlanQueryVariables = Exact<{
 
 export type GetModelPlanQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, modifiedDts?: Time | null, archived: boolean, status: ModelStatus, basics: { __typename: 'PlanBasics', id: UUID, clearanceStarts?: Time | null, modifiedDts?: Time | null, readyForClearanceDts?: Time | null, status: TaskStatus }, collaborators: Array<{ __typename: 'PlanCollaborator', id: UUID, userID: UUID, teamRoles: Array<TeamRole>, modelPlanID: UUID, createdDts: Time, userAccount: { __typename: 'UserAccount', id: UUID, commonName: string, email: string, username: string } }>, documents: Array<{ __typename: 'PlanDocument', id: UUID, fileName: string }>, crs: Array<{ __typename: 'PlanCR', id: UUID, idNumber: string }>, tdls: Array<{ __typename: 'PlanTDL', id: UUID, idNumber: string }>, discussions: Array<{ __typename: 'PlanDiscussion', id: UUID, createdBy: UUID, createdDts: Time, content?: { __typename: 'TaggedContent', rawContent: string } | null, replies: Array<{ __typename: 'DiscussionReply', id: UUID, discussionID: UUID, createdBy: UUID, createdDts: Time, content?: { __typename: 'TaggedContent', rawContent: string } | null }> }>, generalCharacteristics: { __typename: 'PlanGeneralCharacteristics', id: UUID, createdBy: UUID, createdDts: Time, modifiedBy?: UUID | null, modifiedDts?: Time | null, readyForClearanceDts?: Time | null, status: TaskStatus }, participantsAndProviders: { __typename: 'PlanParticipantsAndProviders', id: UUID, createdBy: UUID, createdDts: Time, modifiedBy?: UUID | null, modifiedDts?: Time | null, readyForClearanceDts?: Time | null, status: TaskStatus }, beneficiaries: { __typename: 'PlanBeneficiaries', id: UUID, createdBy: UUID, createdDts: Time, modifiedBy?: UUID | null, modifiedDts?: Time | null, readyForClearanceDts?: Time | null, status: TaskStatus }, opsEvalAndLearning: { __typename: 'PlanOpsEvalAndLearning', id: UUID, createdBy: UUID, createdDts: Time, modifiedBy?: UUID | null, modifiedDts?: Time | null, readyForClearanceDts?: Time | null, status: TaskStatus }, payments: { __typename: 'PlanPayments', id: UUID, createdBy: UUID, createdDts: Time, modifiedBy?: UUID | null, modifiedDts?: Time | null, readyForClearanceDts?: Time | null, status: TaskStatus }, operationalNeeds: Array<{ __typename: 'OperationalNeed', id: UUID, modifiedDts?: Time | null }>, prepareForClearance: { __typename: 'PrepareForClearance', status: PrepareForClearanceStatus, modifiedDts?: Time | null } } };
 
+export type GetModelPlanBaseQueryVariables = Exact<{
+  id: Scalars['UUID']['input'];
+}>;
+
+
+export type GetModelPlanBaseQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, modifiedDts?: Time | null, status: ModelStatus } };
+
 export type UpdateNdaMutationVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -6944,6 +6951,49 @@ export type GetModelPlanQueryHookResult = ReturnType<typeof useGetModelPlanQuery
 export type GetModelPlanLazyQueryHookResult = ReturnType<typeof useGetModelPlanLazyQuery>;
 export type GetModelPlanSuspenseQueryHookResult = ReturnType<typeof useGetModelPlanSuspenseQuery>;
 export type GetModelPlanQueryResult = Apollo.QueryResult<GetModelPlanQuery, GetModelPlanQueryVariables>;
+export const GetModelPlanBaseDocument = gql`
+    query GetModelPlanBase($id: UUID!) {
+  modelPlan(id: $id) {
+    id
+    modelName
+    modifiedDts
+    status
+  }
+}
+    `;
+
+/**
+ * __useGetModelPlanBaseQuery__
+ *
+ * To run a query within a React component, call `useGetModelPlanBaseQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetModelPlanBaseQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetModelPlanBaseQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetModelPlanBaseQuery(baseOptions: Apollo.QueryHookOptions<GetModelPlanBaseQuery, GetModelPlanBaseQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetModelPlanBaseQuery, GetModelPlanBaseQueryVariables>(GetModelPlanBaseDocument, options);
+      }
+export function useGetModelPlanBaseLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetModelPlanBaseQuery, GetModelPlanBaseQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetModelPlanBaseQuery, GetModelPlanBaseQueryVariables>(GetModelPlanBaseDocument, options);
+        }
+export function useGetModelPlanBaseSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetModelPlanBaseQuery, GetModelPlanBaseQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetModelPlanBaseQuery, GetModelPlanBaseQueryVariables>(GetModelPlanBaseDocument, options);
+        }
+export type GetModelPlanBaseQueryHookResult = ReturnType<typeof useGetModelPlanBaseQuery>;
+export type GetModelPlanBaseLazyQueryHookResult = ReturnType<typeof useGetModelPlanBaseLazyQuery>;
+export type GetModelPlanBaseSuspenseQueryHookResult = ReturnType<typeof useGetModelPlanBaseSuspenseQuery>;
+export type GetModelPlanBaseQueryResult = Apollo.QueryResult<GetModelPlanBaseQuery, GetModelPlanBaseQueryVariables>;
 export const UpdateNdaDocument = gql`
     mutation UpdateNDA {
   agreeToNDA(agree: true) {

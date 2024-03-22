@@ -184,6 +184,7 @@ const TaskList = () => {
     status: getITSolutionsStatus(operationalNeeds)
   };
 
+  // TODO: Gary
   const taskListSections: TaskListSectionsType = {
     basics,
     generalCharacteristics,
