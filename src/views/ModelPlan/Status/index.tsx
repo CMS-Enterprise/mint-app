@@ -1,7 +1,6 @@
 import React, { useContext, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useHistory, useParams } from 'react-router-dom';
-import { useMutation } from '@apollo/client';
 import {
   Breadcrumb,
   BreadcrumbBar,
@@ -14,14 +13,13 @@ import {
   Select
 } from '@trussworks/react-uswds';
 import { ErrorMessage, Field, Form, Formik, FormikProps } from 'formik';
+import { useUpdateModelPlanMutation } from 'gql/gen/graphql';
 import * as Yup from 'yup';
 
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 import FieldGroup from 'components/shared/FieldGroup';
 import usePlanTranslation from 'hooks/usePlanTranslation';
-import { UpdateModelPlan as UpdateModelPlanType } from 'queries/types/UpdateModelPlan';
-import UpdateModelPlan from 'queries/UpdateModelPlan';
 import { ModelStatus } from 'types/graphql-global-types';
 import { getKeys } from 'types/translation';
 import { ModelInfoContext } from 'views/ModelInfoWrapper';
@@ -47,7 +45,7 @@ const Status = () => {
 
   const { status } = useContext(ModelInfoContext);
 
-  const [update] = useMutation<UpdateModelPlanType>(UpdateModelPlan);
+  const [update] = useUpdateModelPlanMutation();
 
   const handleFormSubmit = (formikValues: StatusFormProps) => {
     update({
@@ -66,6 +64,10 @@ const Status = () => {
       .catch(errors => {
         formikRef?.current?.setErrors(errors);
       });
+  };
+
+  const initialValues: StatusFormProps = {
+    status: status ?? undefined
   };
 
   return (
@@ -98,7 +100,7 @@ const Status = () => {
           </p>
 
           <Formik
-            initialValues={{ status }}
+            initialValues={initialValues}
             enableReinitialize
             onSubmit={handleFormSubmit}
             validationSchema={validationSchema}

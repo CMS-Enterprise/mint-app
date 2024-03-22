@@ -3213,6 +3213,14 @@ export type GetModelPlanBaseQueryVariables = Exact<{
 
 export type GetModelPlanBaseQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, modifiedDts?: Time | null, status: ModelStatus } };
 
+export type UpdateModelPlanMutationVariables = Exact<{
+  id: Scalars['UUID']['input'];
+  changes: ModelPlanChanges;
+}>;
+
+
+export type UpdateModelPlanMutation = { __typename: 'Mutation', updateModelPlan: { __typename: 'ModelPlan', id: UUID } };
+
 export type UpdateNdaMutationVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -6994,6 +7002,40 @@ export type GetModelPlanBaseQueryHookResult = ReturnType<typeof useGetModelPlanB
 export type GetModelPlanBaseLazyQueryHookResult = ReturnType<typeof useGetModelPlanBaseLazyQuery>;
 export type GetModelPlanBaseSuspenseQueryHookResult = ReturnType<typeof useGetModelPlanBaseSuspenseQuery>;
 export type GetModelPlanBaseQueryResult = Apollo.QueryResult<GetModelPlanBaseQuery, GetModelPlanBaseQueryVariables>;
+export const UpdateModelPlanDocument = gql`
+    mutation UpdateModelPlan($id: UUID!, $changes: ModelPlanChanges!) {
+  updateModelPlan(id: $id, changes: $changes) {
+    id
+  }
+}
+    `;
+export type UpdateModelPlanMutationFn = Apollo.MutationFunction<UpdateModelPlanMutation, UpdateModelPlanMutationVariables>;
+
+/**
+ * __useUpdateModelPlanMutation__
+ *
+ * To run a mutation, you first call `useUpdateModelPlanMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateModelPlanMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateModelPlanMutation, { data, loading, error }] = useUpdateModelPlanMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      changes: // value for 'changes'
+ *   },
+ * });
+ */
+export function useUpdateModelPlanMutation(baseOptions?: Apollo.MutationHookOptions<UpdateModelPlanMutation, UpdateModelPlanMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateModelPlanMutation, UpdateModelPlanMutationVariables>(UpdateModelPlanDocument, options);
+      }
+export type UpdateModelPlanMutationHookResult = ReturnType<typeof useUpdateModelPlanMutation>;
+export type UpdateModelPlanMutationResult = Apollo.MutationResult<UpdateModelPlanMutation>;
+export type UpdateModelPlanMutationOptions = Apollo.BaseMutationOptions<UpdateModelPlanMutation, UpdateModelPlanMutationVariables>;
 export const UpdateNdaDocument = gql`
     mutation UpdateNDA {
   agreeToNDA(agree: true) {
