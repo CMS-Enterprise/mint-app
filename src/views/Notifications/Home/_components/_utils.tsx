@@ -104,6 +104,17 @@ export const ActivityCTA = ({
   return <></>;
 };
 
+type ChangesArrayType =
+  | 'oldName'
+  | 'added'
+  | 'count'
+  | 'crTdls'
+  | 'planDiscussions'
+  | 'readyForReview'
+  | 'readyForClearance'
+  | 'updated'
+  | 'statusChanges';
+
 /**
  * In the Daily Digest Notification center, we want to show only the first five changes and hide everything else under a `+X more changes`.
  *
@@ -139,11 +150,13 @@ export const ActivityCTA = ({
       ```
  *
  *
- * @param obj `changes` object passed in from analyzedAudits.
- *
+ * @param {object} changes object passed in from `analyzedAudits`.
+ * @returns `ChangesArrayType[]`
  */
-export const pushValuesToChangesArray = (obj: ChangeTypes): string[] => {
-  const changesArray: string[] = [];
+export const pushValuesToChangesArray = (
+  obj: ChangeTypes
+): ChangesArrayType[] => {
+  const changesArray: ChangesArrayType[] = [];
 
   const pushValues = (innerObj: ChangeTypes) => {
     Object.entries(innerObj).forEach(([key, value]) => {
@@ -155,15 +168,15 @@ export const pushValuesToChangesArray = (obj: ChangeTypes): string[] => {
             // Model Lead added is important, so pushed to the front of array to ensure it will always be shown
             changesArray.unshift(key);
           } else {
-            changesArray.push(key);
+            changesArray.push(key as ChangesArrayType);
           }
         } else if (typeof value === 'string' && value.trim() !== '') {
           // Push the key if only the value is not an empty string (i.e. '')
-          changesArray.push(key);
+          changesArray.push(key as ChangesArrayType);
         } else if (typeof value === 'number') {
-          changesArray.push(key);
+          changesArray.push(key as ChangesArrayType);
         } else if (typeof value === 'boolean' && value) {
-          changesArray.push(key);
+          changesArray.push(key as ChangesArrayType);
         } else if (value !== null && typeof value === 'object') {
           if (key === 'crTdls' || key === 'planDiscussions') {
             // Push the key if it is 'crTdls' & 'planDiscussions'
