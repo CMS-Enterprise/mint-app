@@ -3191,6 +3191,14 @@ export type GetCurrentUserQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GetCurrentUserQuery = { __typename: 'Query', currentUser: { __typename: 'CurrentUser', launchDarkly: { __typename: 'LaunchDarklySettings', userKey: string, signedHash: string } } };
 
+export type GetFavoritesQueryVariables = Exact<{
+  filter: ModelPlanFilter;
+  isMAC: Scalars['Boolean']['input'];
+}>;
+
+
+export type GetFavoritesQuery = { __typename: 'Query', modelPlanCollection: Array<{ __typename: 'ModelPlan', id: UUID, modelName: string, isFavorite: boolean, nameHistory: Array<string>, isCollaborator: boolean, status: ModelStatus, basics: { __typename: 'PlanBasics', id: UUID, goal?: string | null, performancePeriodStarts?: Time | null }, collaborators: Array<{ __typename: 'PlanCollaborator', id: UUID, teamRoles: Array<TeamRole>, userAccount: { __typename: 'UserAccount', id: UUID, commonName: string } }>, crs?: Array<{ __typename: 'PlanCR', idNumber: string }>, tdls?: Array<{ __typename: 'PlanTDL', idNumber: string }> }> };
+
 export type UpdateNdaMutationVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -6718,6 +6726,71 @@ export type GetCurrentUserQueryHookResult = ReturnType<typeof useGetCurrentUserQ
 export type GetCurrentUserLazyQueryHookResult = ReturnType<typeof useGetCurrentUserLazyQuery>;
 export type GetCurrentUserSuspenseQueryHookResult = ReturnType<typeof useGetCurrentUserSuspenseQuery>;
 export type GetCurrentUserQueryResult = Apollo.QueryResult<GetCurrentUserQuery, GetCurrentUserQueryVariables>;
+export const GetFavoritesDocument = gql`
+    query GetFavorites($filter: ModelPlanFilter!, $isMAC: Boolean!) {
+  modelPlanCollection(filter: $filter) {
+    id
+    modelName
+    isFavorite
+    nameHistory(sort: DESC)
+    isCollaborator
+    status
+    basics {
+      id
+      goal
+      performancePeriodStarts
+    }
+    collaborators {
+      id
+      userAccount {
+        id
+        commonName
+      }
+      teamRoles
+    }
+    crs @include(if: $isMAC) {
+      idNumber
+    }
+    tdls @include(if: $isMAC) {
+      idNumber
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetFavoritesQuery__
+ *
+ * To run a query within a React component, call `useGetFavoritesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetFavoritesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetFavoritesQuery({
+ *   variables: {
+ *      filter: // value for 'filter'
+ *      isMAC: // value for 'isMAC'
+ *   },
+ * });
+ */
+export function useGetFavoritesQuery(baseOptions: Apollo.QueryHookOptions<GetFavoritesQuery, GetFavoritesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetFavoritesQuery, GetFavoritesQueryVariables>(GetFavoritesDocument, options);
+      }
+export function useGetFavoritesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetFavoritesQuery, GetFavoritesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetFavoritesQuery, GetFavoritesQueryVariables>(GetFavoritesDocument, options);
+        }
+export function useGetFavoritesSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetFavoritesQuery, GetFavoritesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetFavoritesQuery, GetFavoritesQueryVariables>(GetFavoritesDocument, options);
+        }
+export type GetFavoritesQueryHookResult = ReturnType<typeof useGetFavoritesQuery>;
+export type GetFavoritesLazyQueryHookResult = ReturnType<typeof useGetFavoritesLazyQuery>;
+export type GetFavoritesSuspenseQueryHookResult = ReturnType<typeof useGetFavoritesSuspenseQuery>;
+export type GetFavoritesQueryResult = Apollo.QueryResult<GetFavoritesQuery, GetFavoritesQueryVariables>;
 export const UpdateNdaDocument = gql`
     mutation UpdateNDA {
   agreeToNDA(agree: true) {
