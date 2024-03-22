@@ -22,20 +22,11 @@ import {
   SummaryBoxHeading
 } from '@trussworks/react-uswds';
 import classNames from 'classnames';
-import { GetCrtdLsQuery, useGetModelPlanQuery } from 'gql/gen/graphql';
 import {
-  GetModelPlan_modelPlan as GetModelPlanTypes,
-  GetModelPlan_modelPlan_basics as BasicsType,
-  GetModelPlan_modelPlan_beneficiaries as BeneficiariesType,
-  GetModelPlan_modelPlan_discussions as DiscussionType,
-  GetModelPlan_modelPlan_documents as DocumentType,
-  GetModelPlan_modelPlan_generalCharacteristics as GeneralCharacteristicsType,
-  GetModelPlan_modelPlan_operationalNeeds as OperationalNeedsType,
-  GetModelPlan_modelPlan_opsEvalAndLearning as OpsEvalAndLearningType,
-  GetModelPlan_modelPlan_participantsAndProviders as ParticipantsAndProvidersType,
-  GetModelPlan_modelPlan_payments as PaymentsType,
-  GetModelPlan_modelPlan_prepareForClearance as PrepareForClearanceType
-} from 'gql/gen/types/GetModelPlan';
+  GetCrtdLsQuery,
+  GetModelPlanQuery,
+  useGetModelPlanQuery
+} from 'gql/gen/graphql';
 import { useFlags } from 'launchdarkly-react-client-sdk';
 
 import UswdsReactLink from 'components/LinkWrapper';
@@ -62,12 +53,24 @@ import TaskListStatus from './_components/TaskListStatus';
 
 import './index.scss';
 
+type GetModelPlanTypes = GetModelPlanQuery['modelPlan'];
+type BasicsType = GetModelPlanQuery['modelPlan']['basics'];
+type OperationalNeedsType = GetModelPlanQuery['modelPlan']['operationalNeeds'][0];
+type DiscussionType = GetModelPlanQuery['modelPlan']['discussions'][0];
+type BeneficiariesType = GetModelPlanQuery['modelPlan']['beneficiaries'];
+type GeneralCharacteristicsType = GetModelPlanQuery['modelPlan']['generalCharacteristics'];
+type OpsEvalAndLearningType = GetModelPlanQuery['modelPlan']['opsEvalAndLearning'];
+type ParticipantsAndProvidersType = GetModelPlanQuery['modelPlan']['participantsAndProviders'];
+type PaymentsType = GetModelPlanQuery['modelPlan']['payments'];
+type PrepareForClearanceType = GetModelPlanQuery['modelPlan']['prepareForClearance'];
+type DocumentType = GetModelPlanQuery['modelPlan']['documents'][0];
+
 type CRTDLType =
   | GetCrtdLsQuery['modelPlan']['crs'][0]
   | GetCrtdLsQuery['modelPlan']['tdls'][0];
 
 type ITSolutionsType = {
-  modifiedDts: string | null;
+  modifiedDts: string | null | undefined;
   status: TaskStatus;
 };
 
