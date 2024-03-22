@@ -12,8 +12,8 @@ import {
   useLockTaskListSectionMutation,
   useUnlockTaskListSectionMutation
 } from 'gql/gen/graphql';
+import { TaskListSubscription_onLockTaskListSectionContext_lockStatus as LockSectionType } from 'gql/gen/types/TaskListSubscription';
 
-import { TaskListSubscription_onLockTaskListSectionContext_lockStatus as LockSectionType } from 'queries/TaskListSubscription/types/TaskListSubscription';
 import { TaskListSection } from 'types/graphql-global-types';
 import { isUUID } from 'utils/modelPlan';
 import { RouterContext } from 'views/RouterContext';

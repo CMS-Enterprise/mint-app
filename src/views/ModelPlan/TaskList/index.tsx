@@ -27,6 +27,7 @@ import {
   GetModelPlanQuery,
   useGetModelPlanQuery
 } from 'gql/gen/graphql';
+import { TaskListSubscription_onLockTaskListSectionContext_lockStatus as LockSectionType } from 'gql/gen/types/TaskListSubscription';
 import { useFlags } from 'launchdarkly-react-client-sdk';
 
 import UswdsReactLink from 'components/LinkWrapper';
@@ -36,7 +37,6 @@ import PageLoading from 'components/PageLoading';
 import Alert from 'components/shared/Alert';
 import Divider from 'components/shared/Divider';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
-import { TaskListSubscription_onLockTaskListSectionContext_lockStatus as LockSectionType } from 'queries/TaskListSubscription/types/TaskListSubscription';
 import { TaskListSection, TaskStatus } from 'types/graphql-global-types';
 import { formatDateLocal } from 'utils/date';
 import { isAssessment } from 'utils/user';
@@ -187,7 +187,6 @@ const TaskList = () => {
     status: getITSolutionsStatus(operationalNeeds)
   };
 
-  // TODO: Gary
   const taskListSections: TaskListSectionsType = {
     basics,
     generalCharacteristics,

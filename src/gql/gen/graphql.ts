@@ -3510,6 +3510,13 @@ export type GetPossibleSolutionsQueryVariables = Exact<{ [key: string]: never; }
 
 export type GetPossibleSolutionsQuery = { __typename: 'Query', possibleOperationalSolutions: Array<{ __typename: 'PossibleOperationalSolution', id: number, key: OperationalSolutionKey, pointsOfContact: Array<{ __typename: 'PossibleOperationalSolutionContact', id: UUID, name: string, email: string, isTeam: boolean, role?: string | null }> }> };
 
+export type GetTaskListSubscriptionsQueryVariables = Exact<{
+  modelPlanID: Scalars['UUID']['input'];
+}>;
+
+
+export type GetTaskListSubscriptionsQuery = { __typename: 'Query', taskListSectionLocks: Array<{ __typename: 'TaskListSectionLockStatus', modelPlanID: UUID, section: TaskListSection, isAssessment: boolean, lockedByUserAccount: { __typename: 'UserAccount', id: UUID, username: string, commonName: string } }> };
+
 export type LockTaskListSectionMutationVariables = Exact<{
   modelPlanID: Scalars['UUID']['input'];
   section: TaskListSection;
@@ -3517,6 +3524,13 @@ export type LockTaskListSectionMutationVariables = Exact<{
 
 
 export type LockTaskListSectionMutation = { __typename: 'Mutation', lockTaskListSection: boolean };
+
+export type TaskListSubscriptionSubscriptionVariables = Exact<{
+  modelPlanID: Scalars['UUID']['input'];
+}>;
+
+
+export type TaskListSubscriptionSubscription = { __typename: 'Subscription', onLockTaskListSectionContext: { __typename: 'TaskListSectionLockStatusChanged', changeType: ChangeType, actionType: ActionType, lockStatus: { __typename: 'TaskListSectionLockStatus', modelPlanID: UUID, section: TaskListSection, isAssessment: boolean, lockedByUserAccount: { __typename: 'UserAccount', id: UUID, username: string, commonName: string } } } };
 
 export type UnlockTaskListSectionMutationVariables = Exact<{
   modelPlanID: Scalars['UUID']['input'];
@@ -9522,6 +9536,53 @@ export type GetPossibleSolutionsQueryHookResult = ReturnType<typeof useGetPossib
 export type GetPossibleSolutionsLazyQueryHookResult = ReturnType<typeof useGetPossibleSolutionsLazyQuery>;
 export type GetPossibleSolutionsSuspenseQueryHookResult = ReturnType<typeof useGetPossibleSolutionsSuspenseQuery>;
 export type GetPossibleSolutionsQueryResult = Apollo.QueryResult<GetPossibleSolutionsQuery, GetPossibleSolutionsQueryVariables>;
+export const GetTaskListSubscriptionsDocument = gql`
+    query GetTaskListSubscriptions($modelPlanID: UUID!) {
+  taskListSectionLocks(modelPlanID: $modelPlanID) {
+    modelPlanID
+    section
+    lockedByUserAccount {
+      id
+      username
+      commonName
+    }
+    isAssessment
+  }
+}
+    `;
+
+/**
+ * __useGetTaskListSubscriptionsQuery__
+ *
+ * To run a query within a React component, call `useGetTaskListSubscriptionsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetTaskListSubscriptionsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetTaskListSubscriptionsQuery({
+ *   variables: {
+ *      modelPlanID: // value for 'modelPlanID'
+ *   },
+ * });
+ */
+export function useGetTaskListSubscriptionsQuery(baseOptions: Apollo.QueryHookOptions<GetTaskListSubscriptionsQuery, GetTaskListSubscriptionsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetTaskListSubscriptionsQuery, GetTaskListSubscriptionsQueryVariables>(GetTaskListSubscriptionsDocument, options);
+      }
+export function useGetTaskListSubscriptionsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetTaskListSubscriptionsQuery, GetTaskListSubscriptionsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetTaskListSubscriptionsQuery, GetTaskListSubscriptionsQueryVariables>(GetTaskListSubscriptionsDocument, options);
+        }
+export function useGetTaskListSubscriptionsSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetTaskListSubscriptionsQuery, GetTaskListSubscriptionsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetTaskListSubscriptionsQuery, GetTaskListSubscriptionsQueryVariables>(GetTaskListSubscriptionsDocument, options);
+        }
+export type GetTaskListSubscriptionsQueryHookResult = ReturnType<typeof useGetTaskListSubscriptionsQuery>;
+export type GetTaskListSubscriptionsLazyQueryHookResult = ReturnType<typeof useGetTaskListSubscriptionsLazyQuery>;
+export type GetTaskListSubscriptionsSuspenseQueryHookResult = ReturnType<typeof useGetTaskListSubscriptionsSuspenseQuery>;
+export type GetTaskListSubscriptionsQueryResult = Apollo.QueryResult<GetTaskListSubscriptionsQuery, GetTaskListSubscriptionsQueryVariables>;
 export const LockTaskListSectionDocument = gql`
     mutation LockTaskListSection($modelPlanID: UUID!, $section: TaskListSection!) {
   lockTaskListSection(modelPlanID: $modelPlanID, section: $section)
@@ -9554,6 +9615,47 @@ export function useLockTaskListSectionMutation(baseOptions?: Apollo.MutationHook
 export type LockTaskListSectionMutationHookResult = ReturnType<typeof useLockTaskListSectionMutation>;
 export type LockTaskListSectionMutationResult = Apollo.MutationResult<LockTaskListSectionMutation>;
 export type LockTaskListSectionMutationOptions = Apollo.BaseMutationOptions<LockTaskListSectionMutation, LockTaskListSectionMutationVariables>;
+export const TaskListSubscriptionDocument = gql`
+    subscription TaskListSubscription($modelPlanID: UUID!) {
+  onLockTaskListSectionContext(modelPlanID: $modelPlanID) {
+    changeType
+    lockStatus {
+      modelPlanID
+      section
+      lockedByUserAccount {
+        id
+        username
+        commonName
+      }
+      isAssessment
+    }
+    actionType
+  }
+}
+    `;
+
+/**
+ * __useTaskListSubscriptionSubscription__
+ *
+ * To run a query within a React component, call `useTaskListSubscriptionSubscription` and pass it any options that fit your needs.
+ * When your component renders, `useTaskListSubscriptionSubscription` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the subscription, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useTaskListSubscriptionSubscription({
+ *   variables: {
+ *      modelPlanID: // value for 'modelPlanID'
+ *   },
+ * });
+ */
+export function useTaskListSubscriptionSubscription(baseOptions: Apollo.SubscriptionHookOptions<TaskListSubscriptionSubscription, TaskListSubscriptionSubscriptionVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useSubscription<TaskListSubscriptionSubscription, TaskListSubscriptionSubscriptionVariables>(TaskListSubscriptionDocument, options);
+      }
+export type TaskListSubscriptionSubscriptionHookResult = ReturnType<typeof useTaskListSubscriptionSubscription>;
+export type TaskListSubscriptionSubscriptionResult = Apollo.SubscriptionResult<TaskListSubscriptionSubscription>;
 export const UnlockTaskListSectionDocument = gql`
     mutation UnlockTaskListSection($modelPlanID: UUID!, $section: TaskListSection!) {
   unlockTaskListSection(modelPlanID: $modelPlanID, section: $section)

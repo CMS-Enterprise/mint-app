@@ -1,6 +1,6 @@
 import { gql } from '@apollo/client';
 
-export default gql`
+export default gql(/* GraphQL */ `
   subscription TaskListSubscription($modelPlanID: UUID!) {
     onLockTaskListSectionContext(modelPlanID: $modelPlanID) {
       changeType
@@ -17,4 +17,4 @@ export default gql`
       actionType
     }
   }
-`;
+`);

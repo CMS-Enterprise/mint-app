@@ -1,6 +1,6 @@
 import { gql } from '@apollo/client';
 
-export default gql`
+export default gql(/* GraphQL */ `
   query GetTaskListSubscriptions($modelPlanID: UUID!) {
     taskListSectionLocks(modelPlanID: $modelPlanID) {
       modelPlanID
@@ -14,4 +14,4 @@ export default gql`
       isAssessment
     }
   }
-`;
+`);

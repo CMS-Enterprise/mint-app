@@ -8,10 +8,11 @@
 import React, { createContext, useEffect, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useLazyQuery } from '@apollo/client';
+import { useTaskListSubscriptionSubscription } from 'gql/gen/graphql';
+import { TaskListSubscription_onLockTaskListSectionContext_lockStatus as LockSectionType } from 'gql/gen/types/TaskListSubscription';
 
 import GetTaskListSubscriptions from 'queries/TaskListSubscription/GetTaskListSubscriptions';
 import SubscribeToTaskList from 'queries/TaskListSubscription/SubscribeToTaskList';
-import { TaskListSubscription_onLockTaskListSectionContext_lockStatus as LockSectionType } from 'queries/TaskListSubscription/types/TaskListSubscription';
 import { ChangeType } from 'types/graphql-global-types';
 import { isUUID } from 'utils/modelPlan';
 
@@ -106,7 +107,9 @@ const SubscriptionWrapper = ({ children }: SubscriptionWrapperProps) => {
       if (!subscribed.current) {
         // Subscription initiator and message update method
         subscribed.current = subscribeToMore({
-          document: SubscribeToTaskList,
+          // document: useTaskListSubscriptionSubscription,
+          // // TODO: Gary ask about this
+          // // document: SubscribeToTaskList,
           variables: {
             modelPlanID: modelID
           },
