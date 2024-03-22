@@ -1,8 +1,9 @@
 import { gql } from '@apollo/client';
-// This is a query to get ALL data for a single model, used for exporting/reporting features
-export default gql`
-  query GetAllSingleModelData($id: UUID!) {
-    modelPlan(id: $id) {
+
+// This is a query to get ALL data for ALL models, used for exporting/reporting features
+export default gql(/* GraphQL */ `
+  query GetAllModelData {
+    modelPlanCollection(filter: INCLUDE_ALL) {
       id
       modelName
       nameHistory(sort: DESC)
@@ -449,4 +450,4 @@ export default gql`
       }
     }
   }
-`;
+`);

@@ -3,23 +3,23 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { ModelStatus, ModelCategory, CMSCenter, CMMIGroup, ModelType, TaskStatus, AuthorityAllowance, WaiverType, YesNoOtherType, AgencyOrStateHelpType, AlternativePaymentModelType, KeyCharacteristic, GeographyType, StatesAndTerritories, GeographyRegionType, GeographyApplication, AgreementType, FrequencyType, ParticipantCommunicationType, ParticipantRiskType, GainshareArrangementEligibility, ParticipantsIDType, ConfidenceType, RecruitmentType, ParticipantSelectionType, ParticipantsType, ProviderAddType, ProviderLeaveType, OverlapType, BeneficiariesType, SelectionMethodType, TriStateAnswer, YesNoType, CcmInvolvmentType, DataStartsType, EvaluationApproachType, DataForMonitoringType, DataToSendParticipantsType, DataFullTimeOrIncrementalType, MonitoringFileType, ModelLearningSystemType, StakeholdersType, ContractorSupportType, BenchmarkForPerformanceType, PayType, ClaimsBasedPayType, ComplexityCalculationLevelType, FundingSource, PayRecipient, NonClaimsBasedPayType, TeamRole, DiscussionUserRole } from "./../../types/graphql-global-types";
+import { ModelStatus, ModelCategory, CMSCenter, CMMIGroup, ModelType, TaskStatus, AuthorityAllowance, WaiverType, YesNoOtherType, AgencyOrStateHelpType, AlternativePaymentModelType, KeyCharacteristic, GeographyType, StatesAndTerritories, GeographyRegionType, GeographyApplication, AgreementType, FrequencyType, ParticipantCommunicationType, ParticipantRiskType, GainshareArrangementEligibility, ParticipantsIDType, ConfidenceType, RecruitmentType, ParticipantSelectionType, ParticipantsType, ProviderAddType, ProviderLeaveType, OverlapType, BeneficiariesType, SelectionMethodType, TriStateAnswer, YesNoType, CcmInvolvmentType, DataStartsType, EvaluationApproachType, DataForMonitoringType, DataToSendParticipantsType, DataFullTimeOrIncrementalType, MonitoringFileType, ModelLearningSystemType, StakeholdersType, ContractorSupportType, BenchmarkForPerformanceType, PayType, ClaimsBasedPayType, ComplexityCalculationLevelType, FundingSource, PayRecipient, NonClaimsBasedPayType, TeamRole, DiscussionUserRole } from "./../../../types/graphql-global-types";
 
 // ====================================================
-// GraphQL query operation: GetAllModelData
+// GraphQL query operation: GetAllSingleModelData
 // ====================================================
 
-export interface GetAllModelData_modelPlanCollection_createdByUserAccount {
+export interface GetAllSingleModelData_modelPlan_createdByUserAccount {
   __typename: "UserAccount";
   commonName: string;
 }
 
-export interface GetAllModelData_modelPlanCollection_basics_readyForReviewByUserAccount {
+export interface GetAllSingleModelData_modelPlan_basics_readyForReviewByUserAccount {
   __typename: "UserAccount";
   commonName: string;
 }
 
-export interface GetAllModelData_modelPlanCollection_basics {
+export interface GetAllSingleModelData_modelPlan_basics {
   __typename: "PlanBasics";
   id: UUID;
   modelCategory: ModelCategory | null;
@@ -45,27 +45,27 @@ export interface GetAllModelData_modelPlanCollection_basics {
   wrapUpEnds: Time | null;
   phasedIn: boolean | null;
   phasedInNote: string | null;
-  readyForReviewByUserAccount: GetAllModelData_modelPlanCollection_basics_readyForReviewByUserAccount | null;
+  readyForReviewByUserAccount: GetAllSingleModelData_modelPlan_basics_readyForReviewByUserAccount | null;
   readyForReviewDts: Time | null;
   status: TaskStatus;
 }
 
-export interface GetAllModelData_modelPlanCollection_generalCharacteristics_resemblesExistingModelWhich {
+export interface GetAllSingleModelData_modelPlan_generalCharacteristics_resemblesExistingModelWhich {
   __typename: "ExistingModelLinks";
   names: string[];
 }
 
-export interface GetAllModelData_modelPlanCollection_generalCharacteristics_participationInModelPreconditionWhich {
+export interface GetAllSingleModelData_modelPlan_generalCharacteristics_participationInModelPreconditionWhich {
   __typename: "ExistingModelLinks";
   names: string[];
 }
 
-export interface GetAllModelData_modelPlanCollection_generalCharacteristics_readyForReviewByUserAccount {
+export interface GetAllSingleModelData_modelPlan_generalCharacteristics_readyForReviewByUserAccount {
   __typename: "UserAccount";
   commonName: string;
 }
 
-export interface GetAllModelData_modelPlanCollection_generalCharacteristics {
+export interface GetAllSingleModelData_modelPlan_generalCharacteristics {
   __typename: "PlanGeneralCharacteristics";
   id: UUID;
   rulemakingRequired: boolean | null;
@@ -86,7 +86,7 @@ export interface GetAllModelData_modelPlanCollection_generalCharacteristics {
   resemblesExistingModelWhyHow: string | null;
   resemblesExistingModelHow: string | null;
   resemblesExistingModelNote: string | null;
-  resemblesExistingModelWhich: GetAllModelData_modelPlanCollection_generalCharacteristics_resemblesExistingModelWhich | null;
+  resemblesExistingModelWhich: GetAllSingleModelData_modelPlan_generalCharacteristics_resemblesExistingModelWhich | null;
   /**
    * For providing clarifying comments if Other is selected for resemblesExistingModel
    */
@@ -102,7 +102,7 @@ export interface GetAllModelData_modelPlanCollection_generalCharacteristics {
   /**
    * The collection of existing model links relevant to the participationInModelPrecondition question
    */
-  participationInModelPreconditionWhich: GetAllModelData_modelPlanCollection_generalCharacteristics_participationInModelPreconditionWhich | null;
+  participationInModelPreconditionWhich: GetAllSingleModelData_modelPlan_generalCharacteristics_participationInModelPreconditionWhich | null;
   /**
    * For providing clarifying comments if Other is selected for participationInModelPrecondition
    */
@@ -159,17 +159,17 @@ export interface GetAllModelData_modelPlanCollection_generalCharacteristics {
   agreementTypesOther: string | null;
   multiplePatricipationAgreementsNeeded: boolean | null;
   multiplePatricipationAgreementsNeededNote: string | null;
-  readyForReviewByUserAccount: GetAllModelData_modelPlanCollection_generalCharacteristics_readyForReviewByUserAccount | null;
+  readyForReviewByUserAccount: GetAllSingleModelData_modelPlan_generalCharacteristics_readyForReviewByUserAccount | null;
   readyForReviewDts: Time | null;
   status: TaskStatus;
 }
 
-export interface GetAllModelData_modelPlanCollection_participantsAndProviders_readyForReviewByUserAccount {
+export interface GetAllSingleModelData_modelPlan_participantsAndProviders_readyForReviewByUserAccount {
   __typename: "UserAccount";
   commonName: string;
 }
 
-export interface GetAllModelData_modelPlanCollection_participantsAndProviders {
+export interface GetAllSingleModelData_modelPlan_participantsAndProviders {
   __typename: "PlanParticipantsAndProviders";
   id: UUID;
   participantAddedFrequency: FrequencyType[];
@@ -232,17 +232,17 @@ export interface GetAllModelData_modelPlanCollection_participantsAndProviders {
   providerOverlap: OverlapType | null;
   providerOverlapHierarchy: string | null;
   providerOverlapNote: string | null;
-  readyForReviewByUserAccount: GetAllModelData_modelPlanCollection_participantsAndProviders_readyForReviewByUserAccount | null;
+  readyForReviewByUserAccount: GetAllSingleModelData_modelPlan_participantsAndProviders_readyForReviewByUserAccount | null;
   readyForReviewDts: Time | null;
   status: TaskStatus;
 }
 
-export interface GetAllModelData_modelPlanCollection_beneficiaries_readyForReviewByUserAccount {
+export interface GetAllSingleModelData_modelPlan_beneficiaries_readyForReviewByUserAccount {
   __typename: "UserAccount";
   commonName: string;
 }
 
-export interface GetAllModelData_modelPlanCollection_beneficiaries {
+export interface GetAllSingleModelData_modelPlan_beneficiaries {
   __typename: "PlanBeneficiaries";
   id: UUID;
   beneficiaries: BeneficiariesType[];
@@ -274,17 +274,17 @@ export interface GetAllModelData_modelPlanCollection_beneficiaries {
   numberPeopleImpacted: number | null;
   estimateConfidence: ConfidenceType | null;
   confidenceNote: string | null;
-  readyForReviewByUserAccount: GetAllModelData_modelPlanCollection_beneficiaries_readyForReviewByUserAccount | null;
+  readyForReviewByUserAccount: GetAllSingleModelData_modelPlan_beneficiaries_readyForReviewByUserAccount | null;
   readyForReviewDts: Time | null;
   status: TaskStatus;
 }
 
-export interface GetAllModelData_modelPlanCollection_opsEvalAndLearning_readyForReviewByUserAccount {
+export interface GetAllSingleModelData_modelPlan_opsEvalAndLearning_readyForReviewByUserAccount {
   __typename: "UserAccount";
   commonName: string;
 }
 
-export interface GetAllModelData_modelPlanCollection_opsEvalAndLearning {
+export interface GetAllSingleModelData_modelPlan_opsEvalAndLearning {
   __typename: "PlanOpsEvalAndLearning";
   id: UUID;
   ccmInvolvment: CcmInvolvmentType[];
@@ -383,17 +383,17 @@ export interface GetAllModelData_modelPlanCollection_opsEvalAndLearning {
   appealPayments: boolean | null;
   appealOther: boolean | null;
   appealNote: string | null;
-  readyForReviewByUserAccount: GetAllModelData_modelPlanCollection_opsEvalAndLearning_readyForReviewByUserAccount | null;
+  readyForReviewByUserAccount: GetAllSingleModelData_modelPlan_opsEvalAndLearning_readyForReviewByUserAccount | null;
   readyForReviewDts: Time | null;
   status: TaskStatus;
 }
 
-export interface GetAllModelData_modelPlanCollection_payments_readyForReviewByUserAccount {
+export interface GetAllSingleModelData_modelPlan_payments_readyForReviewByUserAccount {
   __typename: "UserAccount";
   commonName: string;
 }
 
-export interface GetAllModelData_modelPlanCollection_payments {
+export interface GetAllSingleModelData_modelPlan_payments {
   __typename: "PlanPayments";
   id: UUID;
   payType: PayType[];
@@ -468,12 +468,12 @@ export interface GetAllModelData_modelPlanCollection_payments {
   paymentDemandRecoupmentFrequencyNote: string | null;
   paymentStartDate: Time | null;
   paymentStartDateNote: string | null;
-  readyForReviewByUserAccount: GetAllModelData_modelPlanCollection_payments_readyForReviewByUserAccount | null;
+  readyForReviewByUserAccount: GetAllSingleModelData_modelPlan_payments_readyForReviewByUserAccount | null;
   readyForReviewDts: Time | null;
   status: TaskStatus;
 }
 
-export interface GetAllModelData_modelPlanCollection_collaborators_userAccount {
+export interface GetAllSingleModelData_modelPlan_collaborators_userAccount {
   __typename: "UserAccount";
   id: UUID;
   commonName: string;
@@ -481,17 +481,17 @@ export interface GetAllModelData_modelPlanCollection_collaborators_userAccount {
   username: string;
 }
 
-export interface GetAllModelData_modelPlanCollection_collaborators {
+export interface GetAllSingleModelData_modelPlan_collaborators {
   __typename: "PlanCollaborator";
   id: UUID;
-  userAccount: GetAllModelData_modelPlanCollection_collaborators_userAccount;
+  userAccount: GetAllSingleModelData_modelPlan_collaborators_userAccount;
   userID: UUID;
   teamRoles: TeamRole[];
   modelPlanID: UUID;
   createdDts: Time;
 }
 
-export interface GetAllModelData_modelPlanCollection_discussions_content {
+export interface GetAllSingleModelData_modelPlan_discussions_content {
   __typename: "TaggedContent";
   /**
    * RawContent is HTML. It is sanitized on the backend
@@ -499,12 +499,12 @@ export interface GetAllModelData_modelPlanCollection_discussions_content {
   rawContent: string;
 }
 
-export interface GetAllModelData_modelPlanCollection_discussions_createdByUserAccount {
+export interface GetAllSingleModelData_modelPlan_discussions_createdByUserAccount {
   __typename: "UserAccount";
   commonName: string;
 }
 
-export interface GetAllModelData_modelPlanCollection_discussions_replies_content {
+export interface GetAllSingleModelData_modelPlan_discussions_replies_content {
   __typename: "TaggedContent";
   /**
    * RawContent is HTML. It is sanitized on the backend
@@ -512,53 +512,57 @@ export interface GetAllModelData_modelPlanCollection_discussions_replies_content
   rawContent: string;
 }
 
-export interface GetAllModelData_modelPlanCollection_discussions_replies_createdByUserAccount {
+export interface GetAllSingleModelData_modelPlan_discussions_replies_createdByUserAccount {
   __typename: "UserAccount";
   commonName: string;
 }
 
-export interface GetAllModelData_modelPlanCollection_discussions_replies {
+export interface GetAllSingleModelData_modelPlan_discussions_replies {
   __typename: "DiscussionReply";
   id: UUID;
   discussionID: UUID;
-  content: GetAllModelData_modelPlanCollection_discussions_replies_content | null;
-  createdByUserAccount: GetAllModelData_modelPlanCollection_discussions_replies_createdByUserAccount;
+  content: GetAllSingleModelData_modelPlan_discussions_replies_content | null;
+  createdByUserAccount: GetAllSingleModelData_modelPlan_discussions_replies_createdByUserAccount;
   userRole: DiscussionUserRole | null;
   userRoleDescription: string | null;
   createdDts: Time;
 }
 
-export interface GetAllModelData_modelPlanCollection_discussions {
+export interface GetAllSingleModelData_modelPlan_discussions {
   __typename: "PlanDiscussion";
   id: UUID;
-  content: GetAllModelData_modelPlanCollection_discussions_content | null;
-  createdByUserAccount: GetAllModelData_modelPlanCollection_discussions_createdByUserAccount;
+  content: GetAllSingleModelData_modelPlan_discussions_content | null;
+  createdByUserAccount: GetAllSingleModelData_modelPlan_discussions_createdByUserAccount;
   userRole: DiscussionUserRole | null;
   userRoleDescription: string | null;
   createdDts: Time;
-  replies: GetAllModelData_modelPlanCollection_discussions_replies[];
+  replies: GetAllSingleModelData_modelPlan_discussions_replies[];
 }
 
-export interface GetAllModelData_modelPlanCollection {
+export interface GetAllSingleModelData_modelPlan {
   __typename: "ModelPlan";
   id: UUID;
   modelName: string;
   nameHistory: string[];
   abbreviation: string | null;
   archived: boolean;
-  createdByUserAccount: GetAllModelData_modelPlanCollection_createdByUserAccount;
+  createdByUserAccount: GetAllSingleModelData_modelPlan_createdByUserAccount;
   createdDts: Time;
   status: ModelStatus;
-  basics: GetAllModelData_modelPlanCollection_basics;
-  generalCharacteristics: GetAllModelData_modelPlanCollection_generalCharacteristics;
-  participantsAndProviders: GetAllModelData_modelPlanCollection_participantsAndProviders;
-  beneficiaries: GetAllModelData_modelPlanCollection_beneficiaries;
-  opsEvalAndLearning: GetAllModelData_modelPlanCollection_opsEvalAndLearning;
-  payments: GetAllModelData_modelPlanCollection_payments;
-  collaborators: GetAllModelData_modelPlanCollection_collaborators[];
-  discussions: GetAllModelData_modelPlanCollection_discussions[];
+  basics: GetAllSingleModelData_modelPlan_basics;
+  generalCharacteristics: GetAllSingleModelData_modelPlan_generalCharacteristics;
+  participantsAndProviders: GetAllSingleModelData_modelPlan_participantsAndProviders;
+  beneficiaries: GetAllSingleModelData_modelPlan_beneficiaries;
+  opsEvalAndLearning: GetAllSingleModelData_modelPlan_opsEvalAndLearning;
+  payments: GetAllSingleModelData_modelPlan_payments;
+  collaborators: GetAllSingleModelData_modelPlan_collaborators[];
+  discussions: GetAllSingleModelData_modelPlan_discussions[];
 }
 
-export interface GetAllModelData {
-  modelPlanCollection: GetAllModelData_modelPlanCollection[];
+export interface GetAllSingleModelData {
+  modelPlan: GetAllSingleModelData_modelPlan;
+}
+
+export interface GetAllSingleModelDataVariables {
+  id: UUID;
 }
