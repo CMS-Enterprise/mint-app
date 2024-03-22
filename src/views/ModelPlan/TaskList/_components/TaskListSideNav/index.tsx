@@ -4,6 +4,7 @@ import { useHistory } from 'react-router-dom';
 import { Button } from '@trussworks/react-uswds';
 import { useArchiveModelPlanMutation } from 'gql/gen/graphql';
 import { GetModelCollaborators_modelPlan_collaborators as GetCollaboratorsType } from 'gql/gen/types/GetModelCollaborators';
+import { GetModelPlan_modelPlan as GetModelPlanType } from 'gql/gen/types/GetModelPlan';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import Modal from 'components/Modal';
@@ -12,7 +13,6 @@ import Alert from 'components/shared/Alert';
 import IconInitial from 'components/shared/IconInitial';
 import ShareExportModal from 'components/ShareExport';
 import useMessage from 'hooks/useMessage';
-import { GetModelPlan_modelPlan as GetModelPlanType } from 'queries/types/GetModelPlan';
 import { collaboratorsOrderedByModelLeads } from 'utils/modelPlan';
 
 import { StatusMessageType } from '../..';

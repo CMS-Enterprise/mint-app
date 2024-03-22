@@ -22,21 +22,8 @@ import {
   SummaryBoxHeading
 } from '@trussworks/react-uswds';
 import classNames from 'classnames';
-import { GetCrtdLsQuery } from 'gql/gen/graphql';
-import { useFlags } from 'launchdarkly-react-client-sdk';
-
-import UswdsReactLink from 'components/LinkWrapper';
-import MainContent from 'components/MainContent';
-import PageHeading from 'components/PageHeading';
-import PageLoading from 'components/PageLoading';
-import Alert from 'components/shared/Alert';
-import Divider from 'components/shared/Divider';
-import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
-import useCacheQuery from 'hooks/useCacheQuery';
-import GetModelPlan from 'queries/GetModelPlan';
-import { TaskListSubscription_onLockTaskListSectionContext_lockStatus as LockSectionType } from 'queries/TaskListSubscription/types/TaskListSubscription';
+import { GetCrtdLsQuery, useGetModelPlanQuery } from 'gql/gen/graphql';
 import {
-  GetModelPlan as GetModelPlanType,
   GetModelPlan_modelPlan as GetModelPlanTypes,
   GetModelPlan_modelPlan_basics as BasicsType,
   GetModelPlan_modelPlan_beneficiaries as BeneficiariesType,
@@ -47,9 +34,18 @@ import {
   GetModelPlan_modelPlan_opsEvalAndLearning as OpsEvalAndLearningType,
   GetModelPlan_modelPlan_participantsAndProviders as ParticipantsAndProvidersType,
   GetModelPlan_modelPlan_payments as PaymentsType,
-  GetModelPlan_modelPlan_prepareForClearance as PrepareForClearanceType,
-  GetModelPlanVariables
-} from 'queries/types/GetModelPlan';
+  GetModelPlan_modelPlan_prepareForClearance as PrepareForClearanceType
+} from 'gql/gen/types/GetModelPlan';
+import { useFlags } from 'launchdarkly-react-client-sdk';
+
+import UswdsReactLink from 'components/LinkWrapper';
+import MainContent from 'components/MainContent';
+import PageHeading from 'components/PageHeading';
+import PageLoading from 'components/PageLoading';
+import Alert from 'components/shared/Alert';
+import Divider from 'components/shared/Divider';
+import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
+import { TaskListSubscription_onLockTaskListSectionContext_lockStatus as LockSectionType } from 'queries/TaskListSubscription/types/TaskListSubscription';
 import { TaskListSection, TaskStatus } from 'types/graphql-global-types';
 import { formatDateLocal } from 'utils/date';
 import { isAssessment } from 'utils/user';
@@ -145,10 +141,7 @@ const TaskList = () => {
 
   const { taskListSectionLocks } = useContext(SubscriptionContext);
 
-  const { data, loading, error } = useCacheQuery<
-    GetModelPlanType,
-    GetModelPlanVariables
-  >(GetModelPlan, {
+  const { data, loading, error } = useGetModelPlanQuery({
     variables: {
       id: modelID
     }
