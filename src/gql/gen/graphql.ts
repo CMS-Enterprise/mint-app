@@ -3510,6 +3510,22 @@ export type GetPossibleSolutionsQueryVariables = Exact<{ [key: string]: never; }
 
 export type GetPossibleSolutionsQuery = { __typename: 'Query', possibleOperationalSolutions: Array<{ __typename: 'PossibleOperationalSolution', id: number, key: OperationalSolutionKey, pointsOfContact: Array<{ __typename: 'PossibleOperationalSolutionContact', id: UUID, name: string, email: string, isTeam: boolean, role?: string | null }> }> };
 
+export type LockTaskListSectionMutationVariables = Exact<{
+  modelPlanID: Scalars['UUID']['input'];
+  section: TaskListSection;
+}>;
+
+
+export type LockTaskListSectionMutation = { __typename: 'Mutation', lockTaskListSection: boolean };
+
+export type UnlockTaskListSectionMutationVariables = Exact<{
+  modelPlanID: Scalars['UUID']['input'];
+  section: TaskListSection;
+}>;
+
+
+export type UnlockTaskListSectionMutation = { __typename: 'Mutation', unlockTaskListSection: boolean };
+
 export const ReadyForReviewUserFragmentFragmentDoc = gql`
     fragment ReadyForReviewUserFragment on UserAccount {
   id
@@ -9506,3 +9522,67 @@ export type GetPossibleSolutionsQueryHookResult = ReturnType<typeof useGetPossib
 export type GetPossibleSolutionsLazyQueryHookResult = ReturnType<typeof useGetPossibleSolutionsLazyQuery>;
 export type GetPossibleSolutionsSuspenseQueryHookResult = ReturnType<typeof useGetPossibleSolutionsSuspenseQuery>;
 export type GetPossibleSolutionsQueryResult = Apollo.QueryResult<GetPossibleSolutionsQuery, GetPossibleSolutionsQueryVariables>;
+export const LockTaskListSectionDocument = gql`
+    mutation LockTaskListSection($modelPlanID: UUID!, $section: TaskListSection!) {
+  lockTaskListSection(modelPlanID: $modelPlanID, section: $section)
+}
+    `;
+export type LockTaskListSectionMutationFn = Apollo.MutationFunction<LockTaskListSectionMutation, LockTaskListSectionMutationVariables>;
+
+/**
+ * __useLockTaskListSectionMutation__
+ *
+ * To run a mutation, you first call `useLockTaskListSectionMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useLockTaskListSectionMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [lockTaskListSectionMutation, { data, loading, error }] = useLockTaskListSectionMutation({
+ *   variables: {
+ *      modelPlanID: // value for 'modelPlanID'
+ *      section: // value for 'section'
+ *   },
+ * });
+ */
+export function useLockTaskListSectionMutation(baseOptions?: Apollo.MutationHookOptions<LockTaskListSectionMutation, LockTaskListSectionMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<LockTaskListSectionMutation, LockTaskListSectionMutationVariables>(LockTaskListSectionDocument, options);
+      }
+export type LockTaskListSectionMutationHookResult = ReturnType<typeof useLockTaskListSectionMutation>;
+export type LockTaskListSectionMutationResult = Apollo.MutationResult<LockTaskListSectionMutation>;
+export type LockTaskListSectionMutationOptions = Apollo.BaseMutationOptions<LockTaskListSectionMutation, LockTaskListSectionMutationVariables>;
+export const UnlockTaskListSectionDocument = gql`
+    mutation UnlockTaskListSection($modelPlanID: UUID!, $section: TaskListSection!) {
+  unlockTaskListSection(modelPlanID: $modelPlanID, section: $section)
+}
+    `;
+export type UnlockTaskListSectionMutationFn = Apollo.MutationFunction<UnlockTaskListSectionMutation, UnlockTaskListSectionMutationVariables>;
+
+/**
+ * __useUnlockTaskListSectionMutation__
+ *
+ * To run a mutation, you first call `useUnlockTaskListSectionMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUnlockTaskListSectionMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [unlockTaskListSectionMutation, { data, loading, error }] = useUnlockTaskListSectionMutation({
+ *   variables: {
+ *      modelPlanID: // value for 'modelPlanID'
+ *      section: // value for 'section'
+ *   },
+ * });
+ */
+export function useUnlockTaskListSectionMutation(baseOptions?: Apollo.MutationHookOptions<UnlockTaskListSectionMutation, UnlockTaskListSectionMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UnlockTaskListSectionMutation, UnlockTaskListSectionMutationVariables>(UnlockTaskListSectionDocument, options);
+      }
+export type UnlockTaskListSectionMutationHookResult = ReturnType<typeof useUnlockTaskListSectionMutation>;
+export type UnlockTaskListSectionMutationResult = Apollo.MutationResult<UnlockTaskListSectionMutation>;
+export type UnlockTaskListSectionMutationOptions = Apollo.BaseMutationOptions<UnlockTaskListSectionMutation, UnlockTaskListSectionMutationVariables>;
