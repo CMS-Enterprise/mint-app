@@ -39,8 +39,8 @@ const DailyDigest = ({
             planDiscussions
           }
         }) => {
-          const changesArray: string[] = pushValuesToChangesArray(changes);
-          const showFirstFiveChanges = changesArray.slice(0, 5);
+          const allTheChanges: string[] = pushValuesToChangesArray(changes);
+          const firstFiveChanges = allTheChanges.slice(0, 5);
 
           return (
             <div key={modelPlanID} className="margin-bottom-4">
@@ -51,17 +51,16 @@ const DailyDigest = ({
                 {modelName}
               </PageHeading>
               <ul className="padding-left-205">
-                {modelPlan?.oldName &&
-                  showFirstFiveChanges.includes('oldName') && (
-                    <li className="line-height-sans-5">
-                      {notificationsT('index.dailyDigest.nameChange', {
-                        oldName: modelPlan.oldName
-                      })}
-                    </li>
-                  )}
+                {modelPlan?.oldName && firstFiveChanges.includes('oldName') && (
+                  <li className="line-height-sans-5">
+                    {notificationsT('index.dailyDigest.nameChange', {
+                      oldName: modelPlan.oldName
+                    })}
+                  </li>
+                )}
                 {modelLeads?.added &&
                   modelLeads.added.length > 0 &&
-                  showFirstFiveChanges.includes('added') &&
+                  firstFiveChanges.includes('added') &&
                   modelLeads?.added.map(name => {
                     return (
                       <li key={name.commonName} className="line-height-sans-5">
@@ -71,28 +70,27 @@ const DailyDigest = ({
                       </li>
                     );
                   })}
-                {documents?.count && showFirstFiveChanges.includes('count') && (
+                {documents?.count && firstFiveChanges.includes('count') && (
                   <li className="line-height-sans-5">
                     {notificationsT('index.dailyDigest.documentsAdded', {
                       number: documents.count
                     })}
                   </li>
                 )}
-                {crTdls?.activity &&
-                  showFirstFiveChanges.includes('crTdls') && (
-                    <li className="line-height-sans-5">
-                      {notificationsT('index.dailyDigest.crTdlsUpdate')}
-                    </li>
-                  )}
+                {crTdls?.activity && firstFiveChanges.includes('crTdls') && (
+                  <li className="line-height-sans-5">
+                    {notificationsT('index.dailyDigest.crTdlsUpdate')}
+                  </li>
+                )}
                 {planDiscussions?.activity &&
-                  showFirstFiveChanges.includes('planDiscussions') && (
+                  firstFiveChanges.includes('planDiscussions') && (
                     <li className="line-height-sans-5">
                       {notificationsT('index.dailyDigest.discussionActivity')}
                     </li>
                   )}
                 {planSections?.readyForReview &&
                   planSections.readyForReview.length > 0 &&
-                  showFirstFiveChanges.includes('readyForReview') && (
+                  firstFiveChanges.includes('readyForReview') && (
                     <li className="line-height-sans-5">
                       {notificationsT('index.dailyDigest.readyForReview', {
                         taskSection: planSections.readyForReview
@@ -107,7 +105,7 @@ const DailyDigest = ({
                   )}
                 {planSections?.readyForClearance &&
                   planSections.readyForClearance.length > 0 &&
-                  showFirstFiveChanges.includes('readyForClearance') && (
+                  firstFiveChanges.includes('readyForClearance') && (
                     <li className="line-height-sans-5">
                       {notificationsT('index.dailyDigest.readyForClearance', {
                         taskSection: planSections.readyForClearance
@@ -122,7 +120,7 @@ const DailyDigest = ({
                   )}
                 {planSections?.updated &&
                   planSections.updated.length > 0 &&
-                  showFirstFiveChanges.includes('updated') && (
+                  firstFiveChanges.includes('updated') && (
                     <li className="line-height-sans-5">
                       {notificationsT('index.dailyDigest.updatesTo', {
                         taskSection: planSections.updated
@@ -136,17 +134,17 @@ const DailyDigest = ({
                     </li>
                   )}
                 {modelPlan?.statusChanges &&
-                  showFirstFiveChanges.includes('statusChanges') && (
+                  firstFiveChanges.includes('statusChanges') && (
                     <li className="line-height-sans-5">
                       {notificationsT(
                         `index.dailyDigest.statusChange.${modelPlan.statusChanges[0]}`
                       )}
                     </li>
                   )}
-                {changesArray.length > 5 && (
+                {allTheChanges.length > 5 && (
                   <li className="line-height-sans-5">
                     {notificationsT('index.dailyDigest.moreChanges', {
-                      num: changesArray.length - 5
+                      num: allTheChanges.length - 5
                     })}
                   </li>
                 )}
