@@ -1,6 +1,6 @@
 import { gql } from '@apollo/client';
 
-export default gql`
+export default gql(/* GraphQL */ `
   mutation CreateModelPlan($modelName: String!) {
     createModelPlan(modelName: $modelName) {
       id
@@ -48,4 +48,4 @@ export default gql`
       }
     }
   }
-`;
+`);

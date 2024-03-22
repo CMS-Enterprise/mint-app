@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { ModelCategory, CMSCenter, CMMIGroup, ModelType, TaskStatus, TeamRole } from "./../../types/graphql-global-types";
+import { ModelCategory, CMSCenter, CMMIGroup, ModelType, TaskStatus, TeamRole } from "./../../../types/graphql-global-types";
 
 // ====================================================
 // GraphQL mutation operation: CreateModelPlan

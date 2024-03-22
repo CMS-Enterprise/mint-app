@@ -3160,6 +3160,13 @@ export type ArchiveModelPlanMutationVariables = Exact<{
 
 export type ArchiveModelPlanMutation = { __typename: 'Mutation', updateModelPlan: { __typename: 'ModelPlan', id: UUID } };
 
+export type CreateModelPlanMutationVariables = Exact<{
+  modelName: Scalars['String']['input'];
+}>;
+
+
+export type CreateModelPlanMutation = { __typename: 'Mutation', createModelPlan: { __typename: 'ModelPlan', id: UUID, createdBy: UUID, modelName: string, basics: { __typename: 'PlanBasics', id: UUID, modelPlanID: UUID, modelCategory?: ModelCategory | null, cmsCenters: Array<CmsCenter>, cmmiGroups: Array<CmmiGroup>, modelType: Array<ModelType>, problem?: string | null, goal?: string | null, testInterventions?: string | null, note?: string | null, completeICIP?: Time | null, clearanceStarts?: Time | null, clearanceEnds?: Time | null, announced?: Time | null, applicationsStart?: Time | null, applicationsEnd?: Time | null, performancePeriodStarts?: Time | null, performancePeriodEnds?: Time | null, wrapUpEnds?: Time | null, highLevelNote?: string | null, phasedIn?: boolean | null, phasedInNote?: string | null, createdBy: UUID, createdDts: Time, modifiedBy?: UUID | null, modifiedDts?: Time | null, status: TaskStatus }, collaborators: Array<{ __typename: 'PlanCollaborator', id: UUID, userID: UUID, teamRoles: Array<TeamRole>, userAccount: { __typename: 'UserAccount', id: UUID, commonName: string, email: string, username: string } }> } };
+
 export type UpdateNdaMutationVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -5566,6 +5573,81 @@ export function useArchiveModelPlanMutation(baseOptions?: Apollo.MutationHookOpt
 export type ArchiveModelPlanMutationHookResult = ReturnType<typeof useArchiveModelPlanMutation>;
 export type ArchiveModelPlanMutationResult = Apollo.MutationResult<ArchiveModelPlanMutation>;
 export type ArchiveModelPlanMutationOptions = Apollo.BaseMutationOptions<ArchiveModelPlanMutation, ArchiveModelPlanMutationVariables>;
+export const CreateModelPlanDocument = gql`
+    mutation CreateModelPlan($modelName: String!) {
+  createModelPlan(modelName: $modelName) {
+    id
+    createdBy
+    modelName
+    basics {
+      id
+      modelPlanID
+      modelCategory
+      cmsCenters
+      cmmiGroups
+      modelType
+      problem
+      goal
+      testInterventions
+      note
+      completeICIP
+      clearanceStarts
+      clearanceEnds
+      announced
+      applicationsStart
+      applicationsEnd
+      performancePeriodStarts
+      performancePeriodEnds
+      wrapUpEnds
+      highLevelNote
+      phasedIn
+      phasedInNote
+      createdBy
+      createdDts
+      modifiedBy
+      modifiedDts
+      status
+    }
+    collaborators {
+      id
+      userAccount {
+        id
+        commonName
+        email
+        username
+      }
+      userID
+      teamRoles
+    }
+  }
+}
+    `;
+export type CreateModelPlanMutationFn = Apollo.MutationFunction<CreateModelPlanMutation, CreateModelPlanMutationVariables>;
+
+/**
+ * __useCreateModelPlanMutation__
+ *
+ * To run a mutation, you first call `useCreateModelPlanMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateModelPlanMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createModelPlanMutation, { data, loading, error }] = useCreateModelPlanMutation({
+ *   variables: {
+ *      modelName: // value for 'modelName'
+ *   },
+ * });
+ */
+export function useCreateModelPlanMutation(baseOptions?: Apollo.MutationHookOptions<CreateModelPlanMutation, CreateModelPlanMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateModelPlanMutation, CreateModelPlanMutationVariables>(CreateModelPlanDocument, options);
+      }
+export type CreateModelPlanMutationHookResult = ReturnType<typeof useCreateModelPlanMutation>;
+export type CreateModelPlanMutationResult = Apollo.MutationResult<CreateModelPlanMutation>;
+export type CreateModelPlanMutationOptions = Apollo.BaseMutationOptions<CreateModelPlanMutation, CreateModelPlanMutationVariables>;
 export const UpdateNdaDocument = gql`
     mutation UpdateNDA {
   agreeToNDA(agree: true) {
