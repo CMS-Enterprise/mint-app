@@ -38,7 +38,7 @@ func HumanizeAuditsForModelPlan(
 	if err != nil {
 		return nil, err
 	}
-	humanizedChanges, err := humanizeChangeSet(store, plan, audits)
+	humanizedChanges, err := humanizeChangeSet(ctx, store, plan, audits)
 	if err != nil {
 		return nil, fmt.Errorf("issue analyzing model plan change set for time start %s to time end %s. Error : %w", timeStart, timeEnd, err)
 	}
@@ -51,13 +51,19 @@ func HumanizeAuditsForModelPlan(
 }
 
 // humanizeChangeSet trans
-func humanizeChangeSet(store *storage.Store, plan *models.ModelPlan, audits []*models.AuditChange) ([]*models.HumanizedAuditChange, error) {
-	planChanges, err := humanizeModelPlanAudits(store, plan, audits)
+func humanizeChangeSet(
+	ctx context.Context,
+	store *storage.Store,
+	plan *models.ModelPlan,
+	audits []*models.AuditChange,
+) ([]*models.HumanizedAuditChange, error) {
+	// Ticket: (ChChCh Changes!) We are
+	planChanges, err := humanizeModelPlanAudits(ctx, store, plan, audits)
 	if err != nil {
 		return nil, err
 	}
 
-	partsAndProviderChanges, err := humanizeParticipantsAndProviders(store, plan, audits)
+	partsAndProviderChanges, err := humanizeParticipantsAndProviders(ctx, store, plan, audits)
 	if err != nil {
 		return nil, err
 	}
@@ -68,7 +74,7 @@ func humanizeChangeSet(store *storage.Store, plan *models.ModelPlan, audits []*m
 
 }
 
-func humanizeModelPlanAudits(store *storage.Store, plan *models.ModelPlan, audits []*models.AuditChange) ([]*models.HumanizedAuditChange, error) {
+func humanizeModelPlanAudits(ctx context.Context, store *storage.Store, plan *models.ModelPlan, audits []*models.AuditChange) ([]*models.HumanizedAuditChange, error) {
 	// model PL
 	changes := []*models.HumanizedAuditChange{}
 
@@ -77,10 +83,25 @@ func humanizeModelPlanAudits(store *storage.Store, plan *models.ModelPlan, audit
 	})
 	for _, modelAudit := range modelPlanAudits {
 
-		for _, field := range modelAudit.Fields { //fieldName
-			change := models.NewHumanizedAuditChange(constants.GetSystemAccountUUID(), *modelAudit.ModifiedBy, plan.ID, *modelAudit.ModifiedDts, modelAudit.TableName, modelAudit.ID)
+		for fieldName, field := range modelAudit.Fields { //fieldName
+			change := models.NewHumanizedAuditChange(
+				constants.GetSystemAccountUUID(),
+				*modelAudit.ModifiedBy,
+				plan.ID,
+				plan.ModelName,
+				*modelAudit.ModifiedDts,
+				modelAudit.TableName,
+				modelAudit.TableID,
+				modelAudit.ID,
+				modelAudit.Action,
+				fieldName,
+				fieldName, //TODO: (ChChCh Changes!) Add Translation
+				field.Old,
+				field.Old, //TODO: (ChChCh Changes!) Add Translation
+				field.New,
+				field.New, //TODO: (ChChCh Changes!) Add Translation
+			)
 			change.MetaDataRaw = field
-			change.ModelName = plan.ModelName
 
 			changes = append(changes, &change)
 
@@ -91,7 +112,7 @@ func humanizeModelPlanAudits(store *storage.Store, plan *models.ModelPlan, audit
 	return changes, nil
 }
 
-func humanizeParticipantsAndProviders(store *storage.Store, plan *models.ModelPlan, audits []*models.AuditChange) ([]*models.HumanizedAuditChange, error) {
+func humanizeParticipantsAndProviders(ctx context.Context, store *storage.Store, plan *models.ModelPlan, audits []*models.AuditChange) ([]*models.HumanizedAuditChange, error) {
 	// model PL
 	changes := []*models.HumanizedAuditChange{}
 
@@ -126,9 +147,24 @@ func humanizeParticipantsAndProviders(store *storage.Store, plan *models.ModelPl
 				Old:      field.Old,
 				New:      field.New,
 			}
-			change := models.NewHumanizedAuditChange(constants.GetSystemAccountUUID(), *modelAudit.ModifiedBy, plan.ID, *modelAudit.ModifiedDts, modelAudit.TableName, modelAudit.ID)
+			change := models.NewHumanizedAuditChange(
+				constants.GetSystemAccountUUID(),
+				*modelAudit.ModifiedBy,
+				plan.ID,
+				plan.ModelName,
+				*modelAudit.ModifiedDts,
+				modelAudit.TableName,
+				modelAudit.TableID,
+				modelAudit.ID,
+				modelAudit.Action,
+				fieldName,
+				fieldTrans.Label, //TODO: (ChChCh Changes!) We should also see about the Read Only Label, it is in context of not answering the question which makes sense here
+				field.Old,
+				field.Old, //TODO: (ChChCh Changes!) Add Translation
+				field.New,
+				field.New, //TODO: (ChChCh Changes!) Add Translation
+			)
 			change.MetaDataRaw = translatedField //Ticket: (ChChCh Changes!) This should actually translate the data
-			change.ModelName = plan.ModelName
 
 			fmt.Println(fieldName)
 			changes = append(changes, &change)

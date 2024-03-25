@@ -34,7 +34,7 @@ func (s *Store) TruncateAllTablesDANGEROUS(logger *zap.Logger) error {
 	user_notification,
 	user_notification_preferences,
 	activity,
-	humanized_audit_changes,
+	humanized_audit_change,
 	audit.change
 	`
 

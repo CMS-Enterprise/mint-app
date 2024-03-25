@@ -22,31 +22,70 @@ type HumanizedAuditChange struct {
 
 	baseStruct
 	modelPlanRelation
-	ModelName string    `json:"modelName" db:"model_name"`
-	TableName string    `json:"tableName" db:"table_name"`
-	Date      time.Time `json:"date" db:"date"`
-	TimeStart time.Time `json:"timeStart" db:"time_start"`
-	TimeEnd   time.Time `json:"timeEnd" db:"time_end"`
+	ModelName           string    `json:"modelName" db:"model_name"`
+	TableID             int       `json:"tableID" db:"table_id"`
+	TableName           string    `json:"tableName" db:"table_name"` // Ticket: (ChChCh Changes!) should we expand this to include the table id? Audit_change has this in the
+	PrimaryKey          uuid.UUID `json:"primaryKey" db:"primary_key"`
+	Date                time.Time `json:"date" db:"date"`
+	Action              string    `json:"action" db:"action"`
+	FieldName           string    `json:"fieldName" db:"field_name"`
+	FieldNameTranslated string    `json:"fieldNameTranslated" db:"field_name_translated"`
+
+	// Ticket: (ChChCh Changes!) We might consider changing the type from interface to string? But it could be an array. This gives us options
+	Old           interface{} `json:"old" db:"old"`
+	OldTranslated interface{} `json:"oldTranslated" db:"old_translated"`
+	New           interface{} `json:"new" db:"new"`
+	NewTranslated interface{} `json:"newTranslated" db:"new_translated"`
+
 	ActorID   uuid.UUID `json:"actorID" db:"actor_id"`
+	ActorName string    `json:"actorName" db:"actor_name"` //Maybe normalize this?
 	ChangeID  int       `json:"changeID" db:"change_id"`
 
 	// Changes     AnalyzedAuditChange `json:"changes"`
-	MetaDataRaw interface{} `db:"changes"`
+	MetaDataRaw interface{} `db:"meta_data"`
 	// this is conditional data that is returned. It deserializes to data specific the activity type
 	MetaData HumanizedAuditMetaData `json:"metaData"`
 }
 
 // NewHumanizedAuditChange
-func NewHumanizedAuditChange(createdBy uuid.UUID, actorID uuid.UUID, modelPlanID uuid.UUID, date time.Time, tableName string, changeID int) HumanizedAuditChange {
+func NewHumanizedAuditChange(
+	createdBy uuid.UUID,
+	actorID uuid.UUID,
+	modelPlanID uuid.UUID,
+	modelName string,
+	date time.Time,
+	tableName string,
+	tableID int,
+	changeID int,
+	action string,
+	fieldName string,
+	fieldNameTranslated string,
+	old interface{},
+	oldTranslated interface{},
+	new interface{},
+	newTranslated interface{},
+) HumanizedAuditChange {
 	version := 0
 	genericMeta := NewHumanizedAuditMetaBaseStruct(tableName, version)
 	return HumanizedAuditChange{
-		Date:              date,
-		modelPlanRelation: NewModelPlanRelation(modelPlanID),
-		baseStruct:        NewBaseStruct(createdBy),
-		ActorID:           actorID,
-		MetaData:          &genericMeta,
-		ChangeID:          changeID,
+		baseStruct:          NewBaseStruct(createdBy),
+		ActorID:             actorID,
+		ActorName:           actorID.String(), //TODO (ChChCh Changes!) Get the name or don't here...
+		modelPlanRelation:   NewModelPlanRelation(modelPlanID),
+		ModelName:           modelName,
+		Date:                date,
+		TableName:           tableName,
+		TableID:             tableID,
+		ChangeID:            changeID,
+		Action:              action,
+		FieldName:           fieldName,
+		FieldNameTranslated: fieldNameTranslated,
+		Old:                 old,
+		OldTranslated:       oldTranslated,
+		New:                 new,
+		NewTranslated:       newTranslated,
+
+		MetaData: &genericMeta,
 	}
 
 }

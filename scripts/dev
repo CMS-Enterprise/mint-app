@@ -385,7 +385,7 @@ namespace :db do
     user_notification,
     user_notification_preferences,
     activity,
-    humanized_audit_changes,
+    humanized_audit_change,
     audit.change"
 
     puts "Cleaning database..."
