@@ -9,6 +9,7 @@ import React, { createContext, useEffect, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 import {
   TaskListSubscriptionDocument,
+  TaskListSubscriptionSubscription,
   useGetTaskListSubscriptionsLazyQuery
 } from 'gql/gen/graphql';
 import { TaskListSubscription_onLockTaskListSectionContext_lockStatus as LockSectionType } from 'gql/gen/types/TaskListSubscription';
@@ -92,7 +93,7 @@ const SubscriptionWrapper = ({ children }: SubscriptionWrapperProps) => {
   // useLazyQuery hook to init query and create subscription in the presence of a new model plan id
   const [
     getTaskListLocks,
-    { data, subscribeToMore }
+    { data: subData, subscribeToMore }
   ] = useGetTaskListSubscriptionsLazyQuery();
 
   useEffect(() => {
@@ -100,9 +101,9 @@ const SubscriptionWrapper = ({ children }: SubscriptionWrapperProps) => {
       // useLazyQuery hook to fetch existing subscription data on new modelID
       getTaskListLocks({ variables: { modelPlanID: modelID } });
 
-      if (data) {
+      if (subData) {
         // Sets the initial lock statuses once useLazyQuery data is fetched
-        subscriptionContextData.current = { ...data, loading: false };
+        subscriptionContextData.current = { ...subData, loading: false };
       }
 
       if (!subscribed.current) {
@@ -112,11 +113,15 @@ const SubscriptionWrapper = ({ children }: SubscriptionWrapperProps) => {
           variables: {
             modelPlanID: modelID
           },
-          updateQuery: (prev, { subscriptionData }) => {
-            if (!subscriptionData.data) return prev;
+          updateQuery: (
+            prev,
+            {
+              subscriptionData: { data }
+            }: { subscriptionData: { data: TaskListSubscriptionSubscription } }
+          ) => {
+            if (!data) return prev;
 
-            const lockChange =
-              subscriptionData.data.onLockTaskListSectionContext;
+            const lockChange = data.onLockTaskListSectionContext;
 
             const updatedSubscriptionContext =
               lockChange.changeType === ChangeType.REMOVED
@@ -154,7 +159,7 @@ const SubscriptionWrapper = ({ children }: SubscriptionWrapperProps) => {
     modelID,
     taskList,
     validModelID,
-    data,
+    subData,
     getTaskListLocks,
     subscribeToMore,
     subscribed
