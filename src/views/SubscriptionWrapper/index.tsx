@@ -107,9 +107,9 @@ const SubscriptionWrapper = ({ children }: SubscriptionWrapperProps) => {
       if (!subscribed.current) {
         // Subscription initiator and message update method
         subscribed.current = subscribeToMore({
-          // document: useTaskListSubscriptionSubscription,
-          // // TODO: Gary ask about this
-          // // document: SubscribeToTaskList,
+          document: useTaskListSubscriptionSubscription,
+          // TODO: Gary ask about this
+          // document: SubscribeToTaskList,
           variables: {
             modelPlanID: modelID
           },
