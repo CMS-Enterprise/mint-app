@@ -7,12 +7,12 @@
 
 import React, { createContext, useEffect, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
-import { useLazyQuery } from '@apollo/client';
-import { useTaskListSubscriptionSubscription } from 'gql/gen/graphql';
+import {
+  TaskListSubscriptionDocument,
+  useGetTaskListSubscriptionsLazyQuery
+} from 'gql/gen/graphql';
 import { TaskListSubscription_onLockTaskListSectionContext_lockStatus as LockSectionType } from 'gql/gen/types/TaskListSubscription';
 
-import GetTaskListSubscriptions from 'queries/TaskListSubscription/GetTaskListSubscriptions';
-import SubscribeToTaskList from 'queries/TaskListSubscription/SubscribeToTaskList';
 import { ChangeType } from 'types/graphql-global-types';
 import { isUUID } from 'utils/modelPlan';
 
@@ -90,9 +90,10 @@ const SubscriptionWrapper = ({ children }: SubscriptionWrapperProps) => {
   });
 
   // useLazyQuery hook to init query and create subscription in the presence of a new model plan id
-  const [getTaskListLocks, { data, subscribeToMore }] = useLazyQuery(
-    GetTaskListSubscriptions
-  );
+  const [
+    getTaskListLocks,
+    { data, subscribeToMore }
+  ] = useGetTaskListSubscriptionsLazyQuery();
 
   useEffect(() => {
     if (validModelID && subscribeToMore && taskList) {
@@ -107,9 +108,7 @@ const SubscriptionWrapper = ({ children }: SubscriptionWrapperProps) => {
       if (!subscribed.current) {
         // Subscription initiator and message update method
         subscribed.current = subscribeToMore({
-          document: useTaskListSubscriptionSubscription,
-          // TODO: Gary ask about this
-          // document: SubscribeToTaskList,
+          document: TaskListSubscriptionDocument,
           variables: {
             modelPlanID: modelID
           },
