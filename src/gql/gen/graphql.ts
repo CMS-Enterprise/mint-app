@@ -54,14 +54,8 @@ export type Activity = {
   modifiedDts?: Maybe<Scalars['Time']['output']>;
 };
 
-export type ActivityMetaBaseStruct = {
-  __typename: 'ActivityMetaBaseStruct';
-  type: ActivityType;
-  version: Scalars['Int']['output'];
-};
-
 /** ActivityMetaData is a type that represents all the data that can be captured in an Activity */
-export type ActivityMetaData = ActivityMetaBaseStruct | TaggedInDiscussionReplyActivityMeta | TaggedInPlanDiscussionActivityMeta;
+export type ActivityMetaData = DailyDigestCompleteActivityMeta | TaggedInDiscussionReplyActivityMeta | TaggedInPlanDiscussionActivityMeta;
 
 /** ActivityType represents the possible activities that happen in application that might result in a notification */
 export enum ActivityType {
@@ -93,6 +87,73 @@ export enum AlternativePaymentModelType {
   NOT_APM = 'NOT_APM',
   REGULAR = 'REGULAR'
 }
+
+/** Analyzed Audit Represents data about changes that have happened in a model plan, saved in an a */
+export type AnalyzedAudit = {
+  __typename: 'AnalyzedAudit';
+  changes: AnalyzedAuditChange;
+  createdBy: Scalars['UUID']['output'];
+  createdByUserAccount: UserAccount;
+  createdDts: Scalars['Time']['output'];
+  date: Scalars['Time']['output'];
+  id: Scalars['UUID']['output'];
+  modelName: Scalars['String']['output'];
+  modelPlanID: Scalars['UUID']['output'];
+  modifiedBy?: Maybe<Scalars['UUID']['output']>;
+  modifiedByUserAccount?: Maybe<UserAccount>;
+  modifiedDts?: Maybe<Scalars['Time']['output']>;
+};
+
+export type AnalyzedAuditChange = {
+  __typename: 'AnalyzedAuditChange';
+  crTdls?: Maybe<AnalyzedCrTdls>;
+  documents?: Maybe<AnalyzedDocuments>;
+  modelLeads?: Maybe<AnalyzedModelLeads>;
+  modelPlan?: Maybe<AnalyzedModelPlan>;
+  planDiscussions?: Maybe<AnalyzedPlanDiscussions>;
+  planSections?: Maybe<AnalyzedPlanSections>;
+};
+
+export type AnalyzedCrTdls = {
+  __typename: 'AnalyzedCrTdls';
+  activity?: Maybe<Scalars['Boolean']['output']>;
+};
+
+export type AnalyzedDocuments = {
+  __typename: 'AnalyzedDocuments';
+  count?: Maybe<Scalars['Int']['output']>;
+};
+
+export type AnalyzedModelLeadInfo = {
+  __typename: 'AnalyzedModelLeadInfo';
+  commonName: Scalars['String']['output'];
+  id: Scalars['UUID']['output'];
+  userAccount: UserAccount;
+};
+
+export type AnalyzedModelLeads = {
+  __typename: 'AnalyzedModelLeads';
+  added: Array<AnalyzedModelLeadInfo>;
+};
+
+export type AnalyzedModelPlan = {
+  __typename: 'AnalyzedModelPlan';
+  /** This represents the oldName */
+  oldName?: Maybe<Scalars['String']['output']>;
+  statusChanges?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+};
+
+export type AnalyzedPlanDiscussions = {
+  __typename: 'AnalyzedPlanDiscussions';
+  activity?: Maybe<Scalars['Boolean']['output']>;
+};
+
+export type AnalyzedPlanSections = {
+  __typename: 'AnalyzedPlanSections';
+  readyForClearance: Array<Scalars['String']['output']>;
+  readyForReview: Array<Scalars['String']['output']>;
+  updated: Array<Scalars['String']['output']>;
+};
 
 export type AuditChange = {
   __typename: 'AuditChange';
@@ -205,6 +266,16 @@ export type CurrentUser = {
   launchDarkly: LaunchDarklySettings;
   notificationPreferences: UserNotificationPreferences;
   notifications: UserNotifications;
+};
+
+export type DailyDigestCompleteActivityMeta = {
+  __typename: 'DailyDigestCompleteActivityMeta';
+  analyzedAudits: Array<AnalyzedAudit>;
+  date: Scalars['Time']['output'];
+  modelPlanIDs: Array<Scalars['UUID']['output']>;
+  type: ActivityType;
+  userID: Scalars['UUID']['output'];
+  version: Scalars['Int']['output'];
 };
 
 export enum DataForMonitoringType {
@@ -2331,6 +2402,7 @@ export enum ProviderLeaveType {
 /** Query definition for the schema */
 export type Query = {
   __typename: 'Query';
+  analyzedAudits: Array<AnalyzedAudit>;
   auditChanges: Array<AuditChange>;
   currentUser: CurrentUser;
   existingModelCollection: Array<ExistingModel>;
@@ -2352,6 +2424,12 @@ export type Query = {
   searchOktaUsers: Array<UserInfo>;
   taskListSectionLocks: Array<TaskListSectionLockStatus>;
   userAccount: UserAccount;
+};
+
+
+/** Query definition for the schema */
+export type QueryAnalyzedAuditsArgs = {
+  dateAnalyzed: Scalars['Time']['input'];
 };
 
 
@@ -3165,7 +3243,7 @@ export type GetNotificationSettingsQuery = { __typename: 'Query', currentUser: {
 export type GetNotificationsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetNotificationsQuery = { __typename: 'Query', currentUser: { __typename: 'CurrentUser', notifications: { __typename: 'UserNotifications', numUnreadNotifications: number, notifications: Array<{ __typename: 'UserNotification', id: UUID, isRead: boolean, inAppSent: boolean, emailSent: boolean, createdDts: Time, activity: { __typename: 'Activity', activityType: ActivityType, entityID: UUID, actorID: UUID, actorUserAccount: { __typename: 'UserAccount', commonName: string }, metaData: { __typename: 'ActivityMetaBaseStruct' } | { __typename: 'TaggedInDiscussionReplyActivityMeta', version: number, type: ActivityType, modelPlanID: UUID, discussionID: UUID, replyID: UUID, content: string, modelPlan: { __typename: 'ModelPlan', modelName: string } } | { __typename: 'TaggedInPlanDiscussionActivityMeta', version: number, type: ActivityType, modelPlanID: UUID, discussionID: UUID, content: string, modelPlan: { __typename: 'ModelPlan', modelName: string } } } }> } } };
+export type GetNotificationsQuery = { __typename: 'Query', currentUser: { __typename: 'CurrentUser', notifications: { __typename: 'UserNotifications', numUnreadNotifications: number, notifications: Array<{ __typename: 'UserNotification', id: UUID, isRead: boolean, inAppSent: boolean, emailSent: boolean, createdDts: Time, activity: { __typename: 'Activity', activityType: ActivityType, entityID: UUID, actorID: UUID, actorUserAccount: { __typename: 'UserAccount', commonName: string }, metaData: { __typename: 'DailyDigestCompleteActivityMeta', version: number, type: ActivityType, modelPlanIDs: Array<UUID>, date: Time, analyzedAudits: Array<{ __typename: 'AnalyzedAudit', id: UUID, modelPlanID: UUID, modelName: string, date: Time, changes: { __typename: 'AnalyzedAuditChange', modelPlan?: { __typename: 'AnalyzedModelPlan', oldName?: string | null, statusChanges?: Array<string | null> | null } | null, documents?: { __typename: 'AnalyzedDocuments', count?: number | null } | null, crTdls?: { __typename: 'AnalyzedCrTdls', activity?: boolean | null } | null, planSections?: { __typename: 'AnalyzedPlanSections', updated: Array<string>, readyForReview: Array<string>, readyForClearance: Array<string> } | null, modelLeads?: { __typename: 'AnalyzedModelLeads', added: Array<{ __typename: 'AnalyzedModelLeadInfo', id: UUID, commonName: string }> } | null, planDiscussions?: { __typename: 'AnalyzedPlanDiscussions', activity?: boolean | null } | null } }> } | { __typename: 'TaggedInDiscussionReplyActivityMeta', version: number, type: ActivityType, modelPlanID: UUID, discussionID: UUID, replyID: UUID, content: string, modelPlan: { __typename: 'ModelPlan', modelName: string } } | { __typename: 'TaggedInPlanDiscussionActivityMeta', version: number, type: ActivityType, modelPlanID: UUID, discussionID: UUID, content: string, modelPlan: { __typename: 'ModelPlan', modelName: string } } } }> } } };
 
 export type GetPollNotificationsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -5638,6 +5716,44 @@ export const GetNotificationsDocument = gql`
               discussionID
               replyID
               content
+            }
+            ... on DailyDigestCompleteActivityMeta {
+              version
+              type
+              modelPlanIDs
+              date
+              analyzedAudits {
+                id
+                modelPlanID
+                modelName
+                date
+                changes {
+                  modelPlan {
+                    oldName
+                    statusChanges
+                  }
+                  documents {
+                    count
+                  }
+                  crTdls {
+                    activity
+                  }
+                  planSections {
+                    updated
+                    readyForReview
+                    readyForClearance
+                  }
+                  modelLeads {
+                    added {
+                      id
+                      commonName
+                    }
+                  }
+                  planDiscussions {
+                    activity
+                  }
+                }
+              }
             }
           }
         }

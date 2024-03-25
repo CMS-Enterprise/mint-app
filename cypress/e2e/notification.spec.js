@@ -1,9 +1,6 @@
 describe('Notification Center', () => {
-  beforeEach(() => {
-    cy.localLogin({ name: 'JTTC', role: 'MINT_ASSESSMENT_NONPROD' });
-  });
-
   it('navigates through the Notification page', () => {
+    cy.localLogin({ name: 'JTTC', role: 'MINT_ASSESSMENT_NONPROD' });
     cy.clickPlanTableByName('Empty Plan');
 
     cy.contains('button', 'Start a discussion').click();
@@ -108,5 +105,24 @@ describe('Notification Center', () => {
     cy.get('#notification-setting-email-dailyDigestComplete').should(
       'not.be.checked'
     );
+  });
+
+  it('navigates to see Daily Digest notification', () => {
+    cy.localLogin({ name: 'MINT', role: 'MINT_ASSESSMENT_NONPROD' });
+    cy.visit('/notifications');
+
+    cy.get('[data-testid="individual-notification"]')
+      .first()
+      .find('[data-testid="notification-red-dot"]')
+      .should('exist');
+    cy.contains('button', 'View digest').click();
+
+    cy.get('[data-testid="notification--daily-digest"').should('exist');
+
+    cy.contains('h3', 'Empty Plan').siblings('a').click();
+
+    cy.location().should(loc => {
+      expect(loc.pathname).to.match(/models\/.{36}\/read-only\/model-basics/);
+    });
   });
 });

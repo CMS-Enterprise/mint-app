@@ -34,7 +34,7 @@ func (r *planGeneralCharacteristicsResolver) CurrentModelPlan(ctx context.Contex
 		return nil, nil
 	}
 
-	return ModelPlanGetByIDLOADER(ctx, *obj.CurrentModelPlanID) //TODO, implement loader, or this will be many queries
+	return ModelPlanGetByIDLOADER(ctx, *obj.CurrentModelPlanID)
 }
 
 // ExistingModelPlan is the resolver for the existingModelPlan field.
@@ -43,7 +43,7 @@ func (r *planGeneralCharacteristicsResolver) ExistingModelPlan(ctx context.Conte
 		return nil, nil
 	}
 
-	return ExistingModelGetByIDLOADER(ctx, *obj.ExistingModelID) //TODO, implement loader, or this will be many queries
+	return ExistingModelGetByIDLOADER(ctx, *obj.ExistingModelID)
 }
 
 // ResemblesExistingModelWhich is the resolver for the resemblesExistingModelWhich field.
