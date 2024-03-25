@@ -8,7 +8,7 @@ import React, {
 import { useTranslation } from 'react-i18next';
 import { RootStateOrAny, useSelector } from 'react-redux';
 import { useFilters, usePagination, useSortBy, useTable } from 'react-table';
-import { useMutation, useQuery } from '@apollo/client';
+import { useQuery } from '@apollo/client';
 import {
   Alert,
   Button,
@@ -17,6 +17,7 @@ import {
   Table as UswdsTable
 } from '@trussworks/react-uswds';
 import classNames from 'classnames';
+import { useDeleteModelPlanDocumentMutation } from 'gql/gen/graphql';
 import { useFlags } from 'launchdarkly-react-client-sdk';
 
 import Modal from 'components/Modal';
@@ -24,9 +25,7 @@ import PageHeading from 'components/PageHeading';
 import PageLoading from 'components/PageLoading';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import ExternalLinkModal from 'components/shared/ExternalLinkModal';
-import DeleteModelPlanDocument from 'queries/Documents/DeleteModelPlanDocument';
 import GetModelPlanDocuments from 'queries/Documents/GetModelPlanDocuments';
-import { DeleteModelPlanDocumentVariables } from 'queries/Documents/types/DeleteModelPlanDocument';
 import {
   GetModelPlanDocuments as GetModelPlanDocumentsType,
   GetModelPlanDocuments_modelPlan_documents as DocumentType,
@@ -175,9 +174,7 @@ export const Table = ({
 
   const { modelName } = useContext(ModelInfoContext);
 
-  const [mutate] = useMutation<DeleteModelPlanDocumentVariables>(
-    DeleteModelPlanDocument
-  );
+  const [mutate] = useDeleteModelPlanDocumentMutation();
 
   const handleDelete = useMemo(() => {
     return (file: DocumentType) => {

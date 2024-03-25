@@ -3052,6 +3052,13 @@ export type GetMostRecentRoleSelectionQueryVariables = Exact<{ [key: string]: ne
 
 export type GetMostRecentRoleSelectionQuery = { __typename: 'Query', mostRecentDiscussionRoleSelection?: { __typename: 'DiscussionRoleSelection', userRole: DiscussionUserRole, userRoleDescription?: string | null } | null };
 
+export type DeleteModelPlanDocumentMutationVariables = Exact<{
+  id: Scalars['UUID']['input'];
+}>;
+
+
+export type DeleteModelPlanDocumentMutation = { __typename: 'Mutation', deletePlanDocument: number };
+
 export type LinkNewPlanDocumentMutationVariables = Exact<{
   input: PlanDocumentLinkInput;
 }>;
@@ -4926,6 +4933,37 @@ export type GetMostRecentRoleSelectionQueryHookResult = ReturnType<typeof useGet
 export type GetMostRecentRoleSelectionLazyQueryHookResult = ReturnType<typeof useGetMostRecentRoleSelectionLazyQuery>;
 export type GetMostRecentRoleSelectionSuspenseQueryHookResult = ReturnType<typeof useGetMostRecentRoleSelectionSuspenseQuery>;
 export type GetMostRecentRoleSelectionQueryResult = Apollo.QueryResult<GetMostRecentRoleSelectionQuery, GetMostRecentRoleSelectionQueryVariables>;
+export const DeleteModelPlanDocumentDocument = gql`
+    mutation DeleteModelPlanDocument($id: UUID!) {
+  deletePlanDocument(id: $id)
+}
+    `;
+export type DeleteModelPlanDocumentMutationFn = Apollo.MutationFunction<DeleteModelPlanDocumentMutation, DeleteModelPlanDocumentMutationVariables>;
+
+/**
+ * __useDeleteModelPlanDocumentMutation__
+ *
+ * To run a mutation, you first call `useDeleteModelPlanDocumentMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteModelPlanDocumentMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteModelPlanDocumentMutation, { data, loading, error }] = useDeleteModelPlanDocumentMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useDeleteModelPlanDocumentMutation(baseOptions?: Apollo.MutationHookOptions<DeleteModelPlanDocumentMutation, DeleteModelPlanDocumentMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteModelPlanDocumentMutation, DeleteModelPlanDocumentMutationVariables>(DeleteModelPlanDocumentDocument, options);
+      }
+export type DeleteModelPlanDocumentMutationHookResult = ReturnType<typeof useDeleteModelPlanDocumentMutation>;
+export type DeleteModelPlanDocumentMutationResult = Apollo.MutationResult<DeleteModelPlanDocumentMutation>;
+export type DeleteModelPlanDocumentMutationOptions = Apollo.BaseMutationOptions<DeleteModelPlanDocumentMutation, DeleteModelPlanDocumentMutationVariables>;
 export const LinkNewPlanDocumentDocument = gql`
     mutation LinkNewPlanDocument($input: PlanDocumentLinkInput!) {
   linkNewPlanDocument(input: $input) {
