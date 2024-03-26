@@ -4,6 +4,8 @@ import (
 	_ "embed"
 	"encoding/json"
 	"fmt"
+
+	"github.com/cmsgov/mint-app/pkg/models"
 )
 
 //go:embed translation/participantsAndProviders2.json
@@ -92,4 +94,14 @@ func ParticipantsAndProvidersTranslation() (*translationParticipantsAndProviders
 	}
 	return &participantsTranslation, nil
 
+}
+
+// TableName returns the table name for this translation, satisfying the Translation interface
+func (tpp *translationParticipantsAndProviders) TableName() string {
+	return "plan_participants_and_providers"
+}
+
+// ToMap translates this translation to a map, satisfying the Translation interface
+func (tpp *translationParticipantsAndProviders) ToMap() (map[string]interface{}, error) {
+	return models.StructToMapDBTag(*tpp)
 }
