@@ -15,6 +15,7 @@ import { Field, Form, Formik, FormikProps } from 'formik';
 import {
   GainshareArrangementEligibility,
   GetCoordinationQuery,
+  ParticipantRequireFinancialGuaranteeType,
   ParticipantsIdType,
   useGetCoordinationQuery,
   useUpdatePlanParticipantsAndProvidersMutation
@@ -50,6 +51,8 @@ export const Coordination = () => {
   const { t: miscellaneousT } = useTranslation('miscellaneous');
 
   const {
+    participantRequireFinancialGuarantee: participantRequireFinancialGuaranteeConfig,
+    participantRequireFinancialGuaranteeType: participantRequireFinancialGuaranteeTypeConfig,
     coordinateWork: coordinateWorkConfig,
     gainsharePayments: gainsharePaymentsConfig,
     gainsharePaymentsTrack: gainsharePaymentsTrackConfig,
@@ -70,6 +73,10 @@ export const Coordination = () => {
 
   const {
     id,
+    participantRequireFinancialGuarantee,
+    participantRequireFinancialGuaranteeType,
+    participantRequireFinancialGuaranteeOther,
+    participantRequireFinancialGuaranteeNote,
     coordinateWork,
     coordinateWorkNote,
     gainsharePayments,
@@ -128,6 +135,14 @@ export const Coordination = () => {
   const initialValues: CoordinationFormType = {
     __typename: 'PlanParticipantsAndProviders',
     id: id ?? '',
+    participantRequireFinancialGuarantee:
+      participantRequireFinancialGuarantee ?? null,
+    participantRequireFinancialGuaranteeType:
+      participantRequireFinancialGuaranteeType ?? [],
+    participantRequireFinancialGuaranteeOther:
+      participantRequireFinancialGuaranteeOther ?? '',
+    participantRequireFinancialGuaranteeNote:
+      participantRequireFinancialGuaranteeNote ?? '',
     coordinateWork: coordinateWork ?? null,
     coordinateWorkNote: coordinateWorkNote ?? '',
     gainsharePayments: gainsharePayments ?? null,
@@ -223,6 +238,95 @@ export const Coordination = () => {
                 }}
               >
                 <Fieldset disabled={!!error || loading}>
+                  <FieldGroup scrollElement="participantRequireFinancialGuarantee">
+                    <Label htmlFor="participants-and-providers-participant-require-financial-guarantee">
+                      {participantsAndProvidersT(
+                        'participantRequireFinancialGuarantee.label'
+                      )}
+                    </Label>
+
+                    <p className="text-base margin-0 line-height-body-3">
+                      {participantsAndProvidersT(
+                        'participantRequireFinancialGuarantee.sublabel'
+                      )}
+                    </p>
+
+                    <BooleanRadio
+                      field="participantRequireFinancialGuarantee"
+                      id="participants-and-providers-participant-require-financial-guarantee"
+                      value={values.participantRequireFinancialGuarantee}
+                      setFieldValue={setFieldValue}
+                      options={
+                        participantRequireFinancialGuaranteeConfig.options
+                      }
+                    />
+
+                    {values.participantRequireFinancialGuarantee && (
+                      <FieldGroup scrollElement="participantRequireFinancialGuaranteeType">
+                        <Label
+                          htmlFor="participants-and-providers-participant-require-financial-guarantee-type"
+                          className="text-normal"
+                        >
+                          {participantsAndProvidersT(
+                            'participantRequireFinancialGuaranteeType.label'
+                          )}
+                        </Label>
+
+                        {getKeys(
+                          participantRequireFinancialGuaranteeTypeConfig.options
+                        ).map(type => {
+                          return (
+                            <Fragment key={type}>
+                              <Field
+                                as={CheckboxField}
+                                id={`participants-and-providers-participant-require-financial-guarantee-type-${type}`}
+                                name="participantRequireFinancialGuaranteeType"
+                                label={
+                                  participantRequireFinancialGuaranteeTypeConfig
+                                    .options[type]
+                                }
+                                value={type}
+                                checked={values?.participantRequireFinancialGuaranteeType.includes(
+                                  type
+                                )}
+                              />
+
+                              {type ===
+                                ParticipantRequireFinancialGuaranteeType.OTHER &&
+                                values.participantRequireFinancialGuaranteeType.includes(
+                                  type
+                                ) && (
+                                  <div className="margin-left-4">
+                                    <Label
+                                      htmlFor="participants-and-providers-participant-require-financial-guarantee-type-other"
+                                      className="text-normal margin-top-1"
+                                    >
+                                      {participantsAndProvidersT(
+                                        'participantRequireFinancialGuaranteeOther.label'
+                                      )}
+                                    </Label>
+
+                                    <Field
+                                      as={TextInput}
+                                      className="maxw-none mint-textarea"
+                                      id="participants-and-providers-participant-eligibility-other"
+                                      data-testid="participants-and-providers-participant-eligibility-other"
+                                      name="participantRequireFinancialGuaranteeTypeOther"
+                                    />
+                                  </div>
+                                )}
+                            </Fragment>
+                          );
+                        })}
+                      </FieldGroup>
+                    )}
+
+                    <AddNote
+                      id="participants-and-providers-participant-require-financial-guarantee-note"
+                      field="participantRequireFinancialGuaranteeNote"
+                    />
+                  </FieldGroup>
+
                   <FieldGroup
                     scrollElement="coordinateWork"
                     error={!!flatErrors.coordinateWork}
