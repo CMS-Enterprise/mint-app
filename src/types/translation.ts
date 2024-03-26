@@ -466,8 +466,8 @@ export type TranslationParticipantsAndProviders = {
   willRiskChange: TranslationFieldPropertiesWithOptions<Bool>;
   willRiskChangeNote: TranslationFieldProperties;
   // Coordination
-  participantRequireFinancialGuarantee: TranslationFieldPropertiesWithOptions<Bool>;
-  participantRequireFinancialGuaranteeType: TranslationFieldPropertiesWithOptions<ParticipantRequireFinancialGuaranteeType>;
+  participantRequireFinancialGuarantee: TranslationFieldPropertiesWithOptionsAndChildren<Bool>;
+  participantRequireFinancialGuaranteeType: TranslationFieldPropertiesWithOptionsAndParent<ParticipantRequireFinancialGuaranteeType>;
   participantRequireFinancialGuaranteeOther: TranslationFieldProperties;
   participantRequireFinancialGuaranteeNote: TranslationFieldProperties;
   coordinateWork: TranslationFieldPropertiesWithOptions<Bool>;

@@ -480,7 +480,6 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     formType: 'textarea'
   },
   participantRequireFinancialGuarantee: {
-    // TODO: EASI-(EASI-3965) Don't forget to add a tool tip here
     gqlField: 'participantRequireFinancialGuarantee',
     goField: 'ParticipantRequireFinancialGuarantee',
     dbField: 'participant_require_financial_guarantee',
@@ -495,10 +494,18 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
       true: 'Yes',
       false: 'No'
     },
-    isPageStart: true
+    isPageStart: true,
+    childRelation: {
+      true: [
+        () => participantsAndProviders.participantRequireFinancialGuaranteeType
+      ]
+    },
+    adjacentPositioning: {
+      position: 'left',
+      adjacentField: 'participantRequireFinancialGuaranteeType'
+    }
   },
   participantRequireFinancialGuaranteeType: {
-    // TODO: EASI-(EASI-3965) Ensure that this is conditional based on the response above
     gqlField: 'participantRequireFinancialGuaranteeType',
     goField: 'ParticipantRequireFinancialGuaranteeType',
     dbField: 'participant_require_financial_guarantee_type',
@@ -513,6 +520,12 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     },
     optionsRelatedInfo: {
       OTHER: 'participantRequireFinancialGuaranteeOther'
+    },
+    parentRelation: () =>
+      participantsAndProviders.participantRequireFinancialGuarantee,
+    adjacentPositioning: {
+      position: 'right',
+      adjacentField: 'participantRequireFinancialGuarantee'
     }
   },
   participantRequireFinancialGuaranteeOther: {
