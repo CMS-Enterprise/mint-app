@@ -102,6 +102,7 @@ export type TranslationFieldProperties = {
   };
   isOtherType?: boolean; // Is a question a followup to another that doesn't designate it's own readonly question/line,
   hideRelatedQuestionAlert?: boolean; // Ex: CCW and Quality questions do not need to render the alert immediately following the question
+  questionTooltip?: string; // Render tooltip next to the question
 };
 
 /*
@@ -137,7 +138,6 @@ type TranslationOptions<T extends keyof T | string> = {
   readonlyOptions?: Partial<Record<T, string>>; // An alternative set of translations for options specific to readonly
   optionsLabels?: Partial<Record<T, string>>; // Sub labels to be rendered directly underneath options
   tooltips?: Partial<Record<T, string>>; // Information to be rendered inside a tooltip
-  questionTooltip?: string; // tooltip render next to the question
   optionsRelatedInfo?: Partial<Record<T, string>>; // T values should/could be a subset of the keys of enum values
 };
 

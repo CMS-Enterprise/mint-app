@@ -500,10 +500,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
         () => participantsAndProviders.participantRequireFinancialGuaranteeType
       ]
     },
-    adjacentPositioning: {
-      position: 'left',
-      adjacentField: 'participantRequireFinancialGuaranteeType'
-    }
+    filterGroups: [ModelViewFilter.IPC]
   },
   participantRequireFinancialGuaranteeType: {
     gqlField: 'participantRequireFinancialGuaranteeType',
@@ -523,10 +520,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     },
     parentRelation: () =>
       participantsAndProviders.participantRequireFinancialGuarantee,
-    adjacentPositioning: {
-      position: 'right',
-      adjacentField: 'participantRequireFinancialGuarantee'
-    }
+    filterGroups: [ModelViewFilter.IPC]
   },
   participantRequireFinancialGuaranteeOther: {
     gqlField: 'participantRequireFinancialGuaranteeOther',
@@ -535,7 +529,8 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     label: 'Please specify',
     dataType: 'string',
     formType: 'text',
-    isOtherType: true
+    isOtherType: true,
+    filterGroups: [ModelViewFilter.IPC]
   },
   participantRequireFinancialGuaranteeNote: {
     gqlField: 'participantRequireFinancialGuaranteeNote',
@@ -543,7 +538,8 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     dbField: 'participant_require_financial_guarantee_note',
     label: 'Notes',
     dataType: 'string',
-    formType: 'textarea'
+    formType: 'textarea',
+    filterGroups: [ModelViewFilter.IPC]
   },
   coordinateWork: {
     gqlField: 'coordinateWork',
