@@ -325,7 +325,7 @@ export const Coordination = () => {
                                       className="maxw-none mint-textarea"
                                       id="participants-and-providers-participant-eligibility-other"
                                       data-testid="participants-and-providers-participant-eligibility-other"
-                                      name="participantRequireFinancialGuaranteeTypeOther"
+                                      name="participantRequireFinancialGuaranteeOther"
                                     />
                                   </div>
                                 )}
