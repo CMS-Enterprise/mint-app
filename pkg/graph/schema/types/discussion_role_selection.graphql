@@ -1,0 +1,9 @@
+type DiscussionRoleSelection {
+  userRole: DiscussionUserRole!
+  userRoleDescription: String
+}
+
+extend type Query {
+  mostRecentDiscussionRoleSelection: DiscussionRoleSelection
+  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+}

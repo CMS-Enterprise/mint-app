@@ -1,0 +1,17 @@
+"""
+NDAInfo represents whether a user has agreed to an NDA or not. If agreed to previously, there will be a datestamp visible
+"""
+type NDAInfo {
+  agreed: Boolean!
+  agreedDts: Time
+}
+
+extend type Query {
+  ndaInfo: NDAInfo!
+  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+}
+
+extend type Mutation {
+  agreeToNDA(agree: Boolean! = true): NDAInfo!
+  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+}

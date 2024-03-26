@@ -1,0 +1,104 @@
+enum OpSolutionStatus {
+  NOT_STARTED
+  ONBOARDING
+  BACKLOG
+  IN_PROGRESS
+  COMPLETED
+  AT_RISK
+}
+
+enum OperationalSolutionSubtaskStatus {
+  TODO,
+  IN_PROGRESS,
+  DONE
+}
+
+input CreateOperationalSolutionSubtaskInput {
+  name: String!
+  status: OperationalSolutionSubtaskStatus!
+}
+
+input UpdateOperationalSolutionSubtaskInput {
+  id: UUID!
+  changes: UpdateOperationalSolutionSubtaskChangesInput!
+}
+
+input UpdateOperationalSolutionSubtaskChangesInput @goModel(model: "map[string]interface{}") {
+  name: String!
+  status: OperationalSolutionSubtaskStatus!
+}
+
+type OperationalSolutionSubtask {
+  id: UUID!
+  solutionID: UUID!
+  name: String!
+  status: OperationalSolutionSubtaskStatus!
+
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
+}
+
+type OperationalSolution {
+  id: UUID!
+  operationalNeedID: UUID!
+
+  solutionType: Int
+  needed: Boolean # if null, it has not been selectd
+  name: String
+  key: OperationalSolutionKey
+  nameOther: String
+
+  pocName: String
+  pocEmail: String
+  mustStartDts: Time
+  mustFinishDts: Time
+  isOther: Boolean!
+  isCommonSolution: Boolean!
+  otherHeader: String
+  status: OpSolutionStatus!
+
+  documents: [PlanDocument!]!
+  operationalSolutionSubtasks: [OperationalSolutionSubtask!]!
+
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
+}
+
+input OperationalSolutionChanges @goModel(model: "map[string]interface{}"){
+  needed: Boolean
+  nameOther: String # Only valid for when solution type is null
+
+  pocName: String
+  pocEmail: String
+  mustStartDts: Time
+  mustFinishDts: Time
+  otherHeader: String
+  status: OpSolutionStatus
+}
+
+extend type Query {
+  operationalSolutions(operationalNeedID: UUID!, includeNotNeeded: Boolean! = false): [OperationalSolution!]!
+  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+
+  operationalSolution(id: UUID!): OperationalSolution!
+  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+}
+
+extend type Mutation {
+  createOperationalSolutionSubtasks(solutionID: UUID!, inputs: [CreateOperationalSolutionSubtaskInput!]!): [OperationalSolutionSubtask!]
+  @hasRole(role: MINT_USER)
+
+  updateOperationalSolutionSubtasks(inputs: [UpdateOperationalSolutionSubtaskInput!]!): [OperationalSolutionSubtask!]
+  @hasRole(role: MINT_USER)
+
+  deleteOperationalSolutionSubtask(id: UUID!): Int!
+  @hasRole(role: MINT_USER)
+}
