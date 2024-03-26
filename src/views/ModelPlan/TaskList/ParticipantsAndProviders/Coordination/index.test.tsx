@@ -6,6 +6,7 @@ import {
   GainshareArrangementEligibility,
   GetCoordinationDocument,
   GetCoordinationQuery,
+  ParticipantRequireFinancialGuaranteeType,
   ParticipantsIdType
 } from 'gql/gen/graphql';
 
@@ -16,6 +17,13 @@ type GetCoordinationType = GetCoordinationQuery['modelPlan']['participantsAndPro
 const coordinationMockData: GetCoordinationType = {
   __typename: 'PlanParticipantsAndProviders',
   id: '123',
+  participantRequireFinancialGuarantee: true,
+  participantRequireFinancialGuaranteeType: [
+    ParticipantRequireFinancialGuaranteeType.ESCROW
+  ],
+  participantRequireFinancialGuaranteeOther:
+    'participantRequireFinancialGuaranteeOther',
+  participantRequireFinancialGuaranteeNote: '',
   coordinateWork: null,
   coordinateWorkNote: '',
   gainsharePayments: null,

@@ -32,6 +32,7 @@ import CheckboxField from 'components/shared/CheckboxField';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
+import Tooltip from 'components/shared/Tooltip';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import useScrollElement from 'hooks/useScrollElement';
 import { getKeys } from 'types/translation';
@@ -239,11 +240,24 @@ export const Coordination = () => {
               >
                 <Fieldset disabled={!!error || loading}>
                   <FieldGroup scrollElement="participantRequireFinancialGuarantee">
-                    <Label htmlFor="participants-and-providers-participant-require-financial-guarantee">
-                      {participantsAndProvidersT(
-                        'participantRequireFinancialGuarantee.label'
+                    <div className="display-flex flex-align-center">
+                      <Label htmlFor="participants-and-providers-participant-require-financial-guarantee">
+                        {participantsAndProvidersT(
+                          'participantRequireFinancialGuarantee.label'
+                        )}
+                      </Label>
+                      {participantRequireFinancialGuaranteeConfig.questionTooltip && (
+                        <Tooltip
+                          className="margin-left-1"
+                          label={
+                            participantRequireFinancialGuaranteeConfig.questionTooltip
+                          }
+                          position="right"
+                        >
+                          <Icon.Info className="text-base-light" />
+                        </Tooltip>
                       )}
-                    </Label>
+                    </div>
 
                     <p className="text-base margin-0 line-height-body-3">
                       {participantsAndProvidersT(
@@ -265,7 +279,7 @@ export const Coordination = () => {
                       <FieldGroup scrollElement="participantRequireFinancialGuaranteeType">
                         <Label
                           htmlFor="participants-and-providers-participant-require-financial-guarantee-type"
-                          className="text-normal"
+                          className="text-normal margin-top-4"
                         >
                           {participantsAndProvidersT(
                             'participantRequireFinancialGuaranteeType.label'
