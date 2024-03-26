@@ -47,6 +47,7 @@ import {
   OpSolutionStatus,
   OverlapType,
   ParticipantCommunicationType,
+  ParticipantRequireFinancialGuaranteeType,
   ParticipantRiskType,
   ParticipantSelectionType,
   ParticipantsIdType,
@@ -303,6 +304,13 @@ const participantsAndProvidersData: GetAllParticipantsTypes = {
   riskNote: 'Note risk',
   willRiskChange: true,
   willRiskChangeNote: 'My risk change ntoe',
+  participantRequireFinancialGuarantee: true,
+  participantRequireFinancialGuaranteeType: [
+    ParticipantRequireFinancialGuaranteeType.ESCROW,
+    ParticipantRequireFinancialGuaranteeType.OTHER
+  ],
+  participantRequireFinancialGuaranteeOther: 'Other Type',
+  participantRequireFinancialGuaranteeNote: 'Notes',
   coordinateWork: true,
   coordinateWorkNote: 'Coornidate work note',
   gainsharePayments: true,
