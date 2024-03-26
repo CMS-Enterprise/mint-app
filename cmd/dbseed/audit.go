@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"fmt"
+	"strconv"
 	"time"
 
 	"github.com/google/uuid"
@@ -10,6 +11,7 @@ import (
 	"github.com/spf13/cobra"
 
 	"github.com/cmsgov/mint-app/pkg/graph/resolvers"
+	"github.com/cmsgov/mint-app/pkg/humanizedaudit"
 	"github.com/cmsgov/mint-app/pkg/models"
 	"github.com/cmsgov/mint-app/pkg/storage"
 )
@@ -32,6 +34,57 @@ func analyzeModelPlanForAnalyzedAudit() {
 	seeder := newDefaultSeeder(viperConfig)
 
 	seeder.CreateAnalyzedAuditData()
+
+}
+
+// humanizeAuditCommand is an entry point for analyzing audits for all model plans
+var humanizeAuditCommand = &cobra.Command{
+	Use:   "humanize",
+	Short: "Converts Audits to humanized audits",
+	Long:  "This uses the humanized audit package to translate and flatten analyzed audits",
+	Run: func(cmd *cobra.Command, args []string) {
+
+		fmt.Printf("Ran the Humanize Command with command : %s", cmd.Use)
+		minutes := 60
+		if len(args) > 0 {
+			minuteString := args[0]
+			if minuteString != "" {
+				if intValue, err := strconv.Atoi(minuteString); err == nil {
+					minutes = intValue
+				}
+
+			}
+		}
+
+		humanizeModelPlanChanges(minutes)
+
+	},
+}
+
+// humanizeModelPlanChanges humanizes all audit changes
+func humanizeModelPlanChanges(minutes int) {
+	seeder := newDefaultSeeder(viperConfig)
+
+	seeder.HumanizeModelPlanChanges(minutes)
+
+}
+
+// HumanizeModelPlanChanges humanizes model plans for a give time range
+func (s *Seeder) HumanizeModelPlanChanges(minutes int) {
+	timeEnd := time.Now()
+	timeStart := timeEnd.Add((time.Minute * -time.Duration(minutes)))
+
+	// Step 1. Get all model plans
+	modelPlans, err := s.Config.Store.ModelPlanCollection(s.Config.Logger, false)
+	if err != nil {
+		panic(fmt.Errorf("couldn't retrieve model plan collection"))
+	}
+	for _, plan := range modelPlans {
+		_, err := humanizedaudit.HumanizeAuditsForModelPlan(s.Config.Context, s.Config.Store, s.Config.Logger, timeStart, timeEnd, plan.ID)
+		if err != nil {
+			fmt.Printf("issue humanizing audits for model plan ' %s '", plan.ModelName)
+		}
+	}
 
 }
 

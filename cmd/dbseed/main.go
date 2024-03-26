@@ -41,6 +41,7 @@ var rootCmd = &cobra.Command{
 func init() {
 	viperConfig.AutomaticEnv()
 	rootCmd.AddCommand(analyzeAuditCommand)
+	rootCmd.AddCommand(humanizeAuditCommand)
 
 }
 
