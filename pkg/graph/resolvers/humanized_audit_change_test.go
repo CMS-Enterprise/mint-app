@@ -8,8 +8,7 @@ import (
 )
 
 func (suite *ResolverSuite) TestHumanizeAuditsForModelPlan() {
-	today := time.Now()
-	yesterday := today.AddDate(0, 0, -1)
+
 	// beforeYesterday := yesterday.AddDate(0, 0, -1)
 
 	//Ticket: (ChChCh Changes!) This should really happen in this package, testing in the resolver package for now just for simplicity for a POC
@@ -54,6 +53,9 @@ func (suite *ResolverSuite) TestHumanizeAuditsForModelPlan() {
 	updatedPP, err := PlanParticipantsAndProvidersUpdate(suite.testConfigs.Logger, pp.ID, ppChanges, suite.testConfigs.Principal, suite.testConfigs.Store)
 	suite.NoError(err)
 	suite.NotNil(updatedPP)
+
+	today := time.Now()
+	yesterday := today.AddDate(0, 0, -1)
 
 	humanizedChange, changeErr := humanizedaudit.HumanizeAuditsForModelPlan(suite.testConfigs.Context, suite.testConfigs.Store, suite.testConfigs.Logger, yesterday, today, plan.ID)
 	suite.NoError(changeErr)
