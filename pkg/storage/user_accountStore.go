@@ -51,7 +51,7 @@ func UserAccountGetByUsername(np sqlutils.NamedPreparer, username string) (*auth
 }
 
 // UserAccountGetByID gets a User account from the database by its internal id.
-func (s *Store) UserAccountGetByID(np sqlutils.NamedPreparer, id uuid.UUID) (*authentication.UserAccount, error) {
+func UserAccountGetByID(np sqlutils.NamedPreparer, id uuid.UUID) (*authentication.UserAccount, error) {
 	user := &authentication.UserAccount{}
 
 	stmt, err := np.PrepareNamed(userAccountGetByID)

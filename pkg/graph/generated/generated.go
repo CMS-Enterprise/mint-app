@@ -42,8 +42,10 @@ type Config struct {
 
 type ResolverRoot interface {
 	Activity() ActivityResolver
+	AnalyzedModelLeadInfo() AnalyzedModelLeadInfoResolver
 	AuditChange() AuditChangeResolver
 	CurrentUser() CurrentUserResolver
+	DailyDigestCompleteActivityMeta() DailyDigestCompleteActivityMetaResolver
 	DiscussionReply() DiscussionReplyResolver
 	ExistingModelLink() ExistingModelLinkResolver
 	ExistingModelLinks() ExistingModelLinksResolver
@@ -93,9 +95,60 @@ type ComplexityRoot struct {
 		ModifiedDts           func(childComplexity int) int
 	}
 
-	ActivityMetaBaseStruct struct {
-		Type    func(childComplexity int) int
-		Version func(childComplexity int) int
+	AnalyzedAudit struct {
+		Changes               func(childComplexity int) int
+		CreatedBy             func(childComplexity int) int
+		CreatedByUserAccount  func(childComplexity int) int
+		CreatedDts            func(childComplexity int) int
+		Date                  func(childComplexity int) int
+		ID                    func(childComplexity int) int
+		ModelName             func(childComplexity int) int
+		ModelPlanID           func(childComplexity int) int
+		ModifiedBy            func(childComplexity int) int
+		ModifiedByUserAccount func(childComplexity int) int
+		ModifiedDts           func(childComplexity int) int
+	}
+
+	AnalyzedAuditChange struct {
+		CrTdls          func(childComplexity int) int
+		Documents       func(childComplexity int) int
+		ModelLeads      func(childComplexity int) int
+		ModelPlan       func(childComplexity int) int
+		PlanDiscussions func(childComplexity int) int
+		PlanSections    func(childComplexity int) int
+	}
+
+	AnalyzedCrTdls struct {
+		Activity func(childComplexity int) int
+	}
+
+	AnalyzedDocuments struct {
+		Count func(childComplexity int) int
+	}
+
+	AnalyzedModelLeadInfo struct {
+		CommonName  func(childComplexity int) int
+		ID          func(childComplexity int) int
+		UserAccount func(childComplexity int) int
+	}
+
+	AnalyzedModelLeads struct {
+		Added func(childComplexity int) int
+	}
+
+	AnalyzedModelPlan struct {
+		OldName       func(childComplexity int) int
+		StatusChanges func(childComplexity int) int
+	}
+
+	AnalyzedPlanDiscussions struct {
+		Activity func(childComplexity int) int
+	}
+
+	AnalyzedPlanSections struct {
+		ReadyForClearance func(childComplexity int) int
+		ReadyForReview    func(childComplexity int) int
+		Updated           func(childComplexity int) int
 	}
 
 	AuditChange struct {
@@ -115,6 +168,15 @@ type ComplexityRoot struct {
 		LaunchDarkly            func(childComplexity int) int
 		NotificationPreferences func(childComplexity int) int
 		Notifications           func(childComplexity int) int
+	}
+
+	DailyDigestCompleteActivityMeta struct {
+		AnalyzedAudits func(childComplexity int) int
+		Date           func(childComplexity int) int
+		ModelPlanIDs   func(childComplexity int) int
+		Type           func(childComplexity int) int
+		UserID         func(childComplexity int) int
+		Version        func(childComplexity int) int
 	}
 
 	DiscussionReply struct {
@@ -951,6 +1013,7 @@ type ComplexityRoot struct {
 	}
 
 	Query struct {
+		AnalyzedAudits                    func(childComplexity int, dateAnalyzed time.Time) int
 		AuditChanges                      func(childComplexity int, tableName string, primaryKey uuid.UUID) int
 		CurrentUser                       func(childComplexity int) int
 		ExistingModelCollection           func(childComplexity int) int
@@ -1100,6 +1163,9 @@ type ComplexityRoot struct {
 type ActivityResolver interface {
 	ActorUserAccount(ctx context.Context, obj *models.Activity) (*authentication.UserAccount, error)
 }
+type AnalyzedModelLeadInfoResolver interface {
+	UserAccount(ctx context.Context, obj *models.AnalyzedModelLeadInfo) (*authentication.UserAccount, error)
+}
 type AuditChangeResolver interface {
 	Fields(ctx context.Context, obj *models.AuditChange) (map[string]interface{}, error)
 }
@@ -1108,6 +1174,9 @@ type CurrentUserResolver interface {
 	Account(ctx context.Context, obj *models.CurrentUser) (*authentication.UserAccount, error)
 	Notifications(ctx context.Context, obj *models.CurrentUser) (*models.UserNotifications, error)
 	NotificationPreferences(ctx context.Context, obj *models.CurrentUser) (*models.UserNotificationPreferences, error)
+}
+type DailyDigestCompleteActivityMetaResolver interface {
+	AnalyzedAudits(ctx context.Context, obj *models.DailyDigestCompleteActivityMeta) ([]*models.AnalyzedAudit, error)
 }
 type DiscussionReplyResolver interface {
 	Content(ctx context.Context, obj *models.DiscussionReply) (*models.TaggedContent, error)
@@ -1330,6 +1399,7 @@ type PossibleOperationalSolutionResolver interface {
 }
 type QueryResolver interface {
 	SearchOktaUsers(ctx context.Context, searchTerm string) ([]*models.UserInfo, error)
+	AnalyzedAudits(ctx context.Context, dateAnalyzed time.Time) ([]*models.AnalyzedAudit, error)
 	AuditChanges(ctx context.Context, tableName string, primaryKey uuid.UUID) ([]*models.AuditChange, error)
 	CurrentUser(ctx context.Context) (*models.CurrentUser, error)
 	MostRecentDiscussionRoleSelection(ctx context.Context) (*models.DiscussionRoleSelection, error)
@@ -1484,19 +1554,208 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Activity.ModifiedDts(childComplexity), true
 
-	case "ActivityMetaBaseStruct.type":
-		if e.complexity.ActivityMetaBaseStruct.Type == nil {
+	case "AnalyzedAudit.changes":
+		if e.complexity.AnalyzedAudit.Changes == nil {
 			break
 		}
 
-		return e.complexity.ActivityMetaBaseStruct.Type(childComplexity), true
+		return e.complexity.AnalyzedAudit.Changes(childComplexity), true
 
-	case "ActivityMetaBaseStruct.version":
-		if e.complexity.ActivityMetaBaseStruct.Version == nil {
+	case "AnalyzedAudit.createdBy":
+		if e.complexity.AnalyzedAudit.CreatedBy == nil {
 			break
 		}
 
-		return e.complexity.ActivityMetaBaseStruct.Version(childComplexity), true
+		return e.complexity.AnalyzedAudit.CreatedBy(childComplexity), true
+
+	case "AnalyzedAudit.createdByUserAccount":
+		if e.complexity.AnalyzedAudit.CreatedByUserAccount == nil {
+			break
+		}
+
+		return e.complexity.AnalyzedAudit.CreatedByUserAccount(childComplexity), true
+
+	case "AnalyzedAudit.createdDts":
+		if e.complexity.AnalyzedAudit.CreatedDts == nil {
+			break
+		}
+
+		return e.complexity.AnalyzedAudit.CreatedDts(childComplexity), true
+
+	case "AnalyzedAudit.date":
+		if e.complexity.AnalyzedAudit.Date == nil {
+			break
+		}
+
+		return e.complexity.AnalyzedAudit.Date(childComplexity), true
+
+	case "AnalyzedAudit.id":
+		if e.complexity.AnalyzedAudit.ID == nil {
+			break
+		}
+
+		return e.complexity.AnalyzedAudit.ID(childComplexity), true
+
+	case "AnalyzedAudit.modelName":
+		if e.complexity.AnalyzedAudit.ModelName == nil {
+			break
+		}
+
+		return e.complexity.AnalyzedAudit.ModelName(childComplexity), true
+
+	case "AnalyzedAudit.modelPlanID":
+		if e.complexity.AnalyzedAudit.ModelPlanID == nil {
+			break
+		}
+
+		return e.complexity.AnalyzedAudit.ModelPlanID(childComplexity), true
+
+	case "AnalyzedAudit.modifiedBy":
+		if e.complexity.AnalyzedAudit.ModifiedBy == nil {
+			break
+		}
+
+		return e.complexity.AnalyzedAudit.ModifiedBy(childComplexity), true
+
+	case "AnalyzedAudit.modifiedByUserAccount":
+		if e.complexity.AnalyzedAudit.ModifiedByUserAccount == nil {
+			break
+		}
+
+		return e.complexity.AnalyzedAudit.ModifiedByUserAccount(childComplexity), true
+
+	case "AnalyzedAudit.modifiedDts":
+		if e.complexity.AnalyzedAudit.ModifiedDts == nil {
+			break
+		}
+
+		return e.complexity.AnalyzedAudit.ModifiedDts(childComplexity), true
+
+	case "AnalyzedAuditChange.crTdls":
+		if e.complexity.AnalyzedAuditChange.CrTdls == nil {
+			break
+		}
+
+		return e.complexity.AnalyzedAuditChange.CrTdls(childComplexity), true
+
+	case "AnalyzedAuditChange.documents":
+		if e.complexity.AnalyzedAuditChange.Documents == nil {
+			break
+		}
+
+		return e.complexity.AnalyzedAuditChange.Documents(childComplexity), true
+
+	case "AnalyzedAuditChange.modelLeads":
+		if e.complexity.AnalyzedAuditChange.ModelLeads == nil {
+			break
+		}
+
+		return e.complexity.AnalyzedAuditChange.ModelLeads(childComplexity), true
+
+	case "AnalyzedAuditChange.modelPlan":
+		if e.complexity.AnalyzedAuditChange.ModelPlan == nil {
+			break
+		}
+
+		return e.complexity.AnalyzedAuditChange.ModelPlan(childComplexity), true
+
+	case "AnalyzedAuditChange.planDiscussions":
+		if e.complexity.AnalyzedAuditChange.PlanDiscussions == nil {
+			break
+		}
+
+		return e.complexity.AnalyzedAuditChange.PlanDiscussions(childComplexity), true
+
+	case "AnalyzedAuditChange.planSections":
+		if e.complexity.AnalyzedAuditChange.PlanSections == nil {
+			break
+		}
+
+		return e.complexity.AnalyzedAuditChange.PlanSections(childComplexity), true
+
+	case "AnalyzedCrTdls.activity":
+		if e.complexity.AnalyzedCrTdls.Activity == nil {
+			break
+		}
+
+		return e.complexity.AnalyzedCrTdls.Activity(childComplexity), true
+
+	case "AnalyzedDocuments.count":
+		if e.complexity.AnalyzedDocuments.Count == nil {
+			break
+		}
+
+		return e.complexity.AnalyzedDocuments.Count(childComplexity), true
+
+	case "AnalyzedModelLeadInfo.commonName":
+		if e.complexity.AnalyzedModelLeadInfo.CommonName == nil {
+			break
+		}
+
+		return e.complexity.AnalyzedModelLeadInfo.CommonName(childComplexity), true
+
+	case "AnalyzedModelLeadInfo.id":
+		if e.complexity.AnalyzedModelLeadInfo.ID == nil {
+			break
+		}
+
+		return e.complexity.AnalyzedModelLeadInfo.ID(childComplexity), true
+
+	case "AnalyzedModelLeadInfo.userAccount":
+		if e.complexity.AnalyzedModelLeadInfo.UserAccount == nil {
+			break
+		}
+
+		return e.complexity.AnalyzedModelLeadInfo.UserAccount(childComplexity), true
+
+	case "AnalyzedModelLeads.added":
+		if e.complexity.AnalyzedModelLeads.Added == nil {
+			break
+		}
+
+		return e.complexity.AnalyzedModelLeads.Added(childComplexity), true
+
+	case "AnalyzedModelPlan.oldName":
+		if e.complexity.AnalyzedModelPlan.OldName == nil {
+			break
+		}
+
+		return e.complexity.AnalyzedModelPlan.OldName(childComplexity), true
+
+	case "AnalyzedModelPlan.statusChanges":
+		if e.complexity.AnalyzedModelPlan.StatusChanges == nil {
+			break
+		}
+
+		return e.complexity.AnalyzedModelPlan.StatusChanges(childComplexity), true
+
+	case "AnalyzedPlanDiscussions.activity":
+		if e.complexity.AnalyzedPlanDiscussions.Activity == nil {
+			break
+		}
+
+		return e.complexity.AnalyzedPlanDiscussions.Activity(childComplexity), true
+
+	case "AnalyzedPlanSections.readyForClearance":
+		if e.complexity.AnalyzedPlanSections.ReadyForClearance == nil {
+			break
+		}
+
+		return e.complexity.AnalyzedPlanSections.ReadyForClearance(childComplexity), true
+
+	case "AnalyzedPlanSections.readyForReview":
+		if e.complexity.AnalyzedPlanSections.ReadyForReview == nil {
+			break
+		}
+
+		return e.complexity.AnalyzedPlanSections.ReadyForReview(childComplexity), true
+
+	case "AnalyzedPlanSections.updated":
+		if e.complexity.AnalyzedPlanSections.Updated == nil {
+			break
+		}
+
+		return e.complexity.AnalyzedPlanSections.Updated(childComplexity), true
 
 	case "AuditChange.action":
 		if e.complexity.AuditChange.Action == nil {
@@ -1588,6 +1847,48 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.CurrentUser.Notifications(childComplexity), true
+
+	case "DailyDigestCompleteActivityMeta.analyzedAudits":
+		if e.complexity.DailyDigestCompleteActivityMeta.AnalyzedAudits == nil {
+			break
+		}
+
+		return e.complexity.DailyDigestCompleteActivityMeta.AnalyzedAudits(childComplexity), true
+
+	case "DailyDigestCompleteActivityMeta.date":
+		if e.complexity.DailyDigestCompleteActivityMeta.Date == nil {
+			break
+		}
+
+		return e.complexity.DailyDigestCompleteActivityMeta.Date(childComplexity), true
+
+	case "DailyDigestCompleteActivityMeta.modelPlanIDs":
+		if e.complexity.DailyDigestCompleteActivityMeta.ModelPlanIDs == nil {
+			break
+		}
+
+		return e.complexity.DailyDigestCompleteActivityMeta.ModelPlanIDs(childComplexity), true
+
+	case "DailyDigestCompleteActivityMeta.type":
+		if e.complexity.DailyDigestCompleteActivityMeta.Type == nil {
+			break
+		}
+
+		return e.complexity.DailyDigestCompleteActivityMeta.Type(childComplexity), true
+
+	case "DailyDigestCompleteActivityMeta.userID":
+		if e.complexity.DailyDigestCompleteActivityMeta.UserID == nil {
+			break
+		}
+
+		return e.complexity.DailyDigestCompleteActivityMeta.UserID(childComplexity), true
+
+	case "DailyDigestCompleteActivityMeta.version":
+		if e.complexity.DailyDigestCompleteActivityMeta.Version == nil {
+			break
+		}
+
+		return e.complexity.DailyDigestCompleteActivityMeta.Version(childComplexity), true
 
 	case "DiscussionReply.content":
 		if e.complexity.DiscussionReply.Content == nil {
@@ -7036,6 +7337,18 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.PrepareForClearance.Status(childComplexity), true
 
+	case "Query.analyzedAudits":
+		if e.complexity.Query.AnalyzedAudits == nil {
+			break
+		}
+
+		args, err := ec.field_Query_analyzedAudits_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Query.AnalyzedAudits(childComplexity, args["dateAnalyzed"].(time.Time)), true
+
 	case "Query.auditChanges":
 		if e.complexity.Query.AuditChanges == nil {
 			break
@@ -8032,7 +8345,7 @@ enum ActivityType {
 """
 ActivityMetaData is a type that represents all the data that can be captured in an Activity
 """
-union ActivityMetaData = ActivityMetaBaseStruct | TaggedInPlanDiscussionActivityMeta  | TaggedInDiscussionReplyActivityMeta
+union ActivityMetaData = TaggedInPlanDiscussionActivityMeta  | TaggedInDiscussionReplyActivityMeta | DailyDigestCompleteActivityMeta
 
 type TaggedInPlanDiscussionActivityMeta {
   version: Int!
@@ -8056,10 +8369,13 @@ type TaggedInDiscussionReplyActivityMeta {
   content: String!
 }
 
-
-type ActivityMetaBaseStruct {
+type DailyDigestCompleteActivityMeta {
   version: Int!
   type: ActivityType!
+  modelPlanIDs: [UUID!]!
+  analyzedAudits: [AnalyzedAudit!]!
+  userID: UUID!
+  date:  Time!
 }
 
 
@@ -8081,6 +8397,82 @@ type Activity {
   modifiedByUserAccount: UserAccount
   modifiedDts: Time
 
+}
+`, BuiltIn: false},
+	{Name: "../schema/types/analyzed_audit.graphql", Input: `"""
+Analyzed Audit Represents data about changes that have happened in a model plan, saved in an a
+"""
+
+type AnalyzedAudit {
+    id: UUID!
+    modelPlanID: UUID!
+
+    modelName: String!
+    date: Time!
+    changes: AnalyzedAuditChange!
+
+
+    createdBy: UUID!
+    createdByUserAccount: UserAccount!
+    createdDts: Time!
+    modifiedBy: UUID
+    modifiedByUserAccount: UserAccount
+    modifiedDts: Time
+}
+
+
+type AnalyzedAuditChange {
+    modelPlan: AnalyzedModelPlan
+    documents: AnalyzedDocuments
+    crTdls: AnalyzedCrTdls
+    planSections: AnalyzedPlanSections
+    modelLeads: AnalyzedModelLeads
+    planDiscussions: AnalyzedPlanDiscussions
+
+}
+type AnalyzedModelPlan {
+    """
+    This represents the oldName
+    """
+    oldName: String
+    statusChanges: [String]
+
+}
+
+type AnalyzedDocuments {
+    count: Int
+
+}
+
+type AnalyzedCrTdls {
+    activity: Boolean
+
+}
+type AnalyzedPlanSections {
+    updated: [String!]!
+    readyForReview: [String!]!
+    readyForClearance: [String!]!
+
+}
+
+type AnalyzedModelLeads {
+    added: [AnalyzedModelLeadInfo!]!
+}
+
+type AnalyzedPlanDiscussions {
+    activity: Boolean
+}
+
+type AnalyzedModelLeadInfo {
+    id: UUID!
+    userAccount: UserAccount!
+    commonName: String!
+
+}
+
+extend type Query {
+    analyzedAudits(dateAnalyzed: Time!): [AnalyzedAudit!]!
+    @hasAnyRole(roles: [MINT_USER, MINT_MAC])
 }
 `, BuiltIn: false},
 	{Name: "../schema/types/audit_change.graphql", Input: `type AuditChange {
@@ -11914,6 +12306,21 @@ func (ec *executionContext) field_Query___type_args(ctx context.Context, rawArgs
 	return args, nil
 }
 
+func (ec *executionContext) field_Query_analyzedAudits_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+	var err error
+	args := map[string]interface{}{}
+	var arg0 time.Time
+	if tmp, ok := rawArgs["dateAnalyzed"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("dateAnalyzed"))
+		arg0, err = ec.unmarshalNTime2timeᚐTime(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["dateAnalyzed"] = arg0
+	return args, nil
+}
+
 func (ec *executionContext) field_Query_auditChanges_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
@@ -12810,8 +13217,8 @@ func (ec *executionContext) fieldContext_Activity_modifiedDts(ctx context.Contex
 	return fc, nil
 }
 
-func (ec *executionContext) _ActivityMetaBaseStruct_version(ctx context.Context, field graphql.CollectedField, obj *models.ActivityMetaBaseStruct) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_ActivityMetaBaseStruct_version(ctx, field)
+func (ec *executionContext) _AnalyzedAudit_id(ctx context.Context, field graphql.CollectedField, obj *models.AnalyzedAudit) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_AnalyzedAudit_id(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -12824,7 +13231,7 @@ func (ec *executionContext) _ActivityMetaBaseStruct_version(ctx context.Context,
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.Version, nil
+		return obj.ID, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -12836,14 +13243,861 @@ func (ec *executionContext) _ActivityMetaBaseStruct_version(ctx context.Context,
 		}
 		return graphql.Null
 	}
-	res := resTmp.(int)
+	res := resTmp.(uuid.UUID)
 	fc.Result = res
-	return ec.marshalNInt2int(ctx, field.Selections, res)
+	return ec.marshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_ActivityMetaBaseStruct_version(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_AnalyzedAudit_id(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
-		Object:     "ActivityMetaBaseStruct",
+		Object:     "AnalyzedAudit",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type UUID does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _AnalyzedAudit_modelPlanID(ctx context.Context, field graphql.CollectedField, obj *models.AnalyzedAudit) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_AnalyzedAudit_modelPlanID(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ModelPlanID, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(uuid.UUID)
+	fc.Result = res
+	return ec.marshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_AnalyzedAudit_modelPlanID(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "AnalyzedAudit",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type UUID does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _AnalyzedAudit_modelName(ctx context.Context, field graphql.CollectedField, obj *models.AnalyzedAudit) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_AnalyzedAudit_modelName(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ModelName, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalNString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_AnalyzedAudit_modelName(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "AnalyzedAudit",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _AnalyzedAudit_date(ctx context.Context, field graphql.CollectedField, obj *models.AnalyzedAudit) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_AnalyzedAudit_date(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Date, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(time.Time)
+	fc.Result = res
+	return ec.marshalNTime2timeᚐTime(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_AnalyzedAudit_date(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "AnalyzedAudit",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Time does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _AnalyzedAudit_changes(ctx context.Context, field graphql.CollectedField, obj *models.AnalyzedAudit) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_AnalyzedAudit_changes(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Changes, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(models.AnalyzedAuditChange)
+	fc.Result = res
+	return ec.marshalNAnalyzedAuditChange2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐAnalyzedAuditChange(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_AnalyzedAudit_changes(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "AnalyzedAudit",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "modelPlan":
+				return ec.fieldContext_AnalyzedAuditChange_modelPlan(ctx, field)
+			case "documents":
+				return ec.fieldContext_AnalyzedAuditChange_documents(ctx, field)
+			case "crTdls":
+				return ec.fieldContext_AnalyzedAuditChange_crTdls(ctx, field)
+			case "planSections":
+				return ec.fieldContext_AnalyzedAuditChange_planSections(ctx, field)
+			case "modelLeads":
+				return ec.fieldContext_AnalyzedAuditChange_modelLeads(ctx, field)
+			case "planDiscussions":
+				return ec.fieldContext_AnalyzedAuditChange_planDiscussions(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type AnalyzedAuditChange", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _AnalyzedAudit_createdBy(ctx context.Context, field graphql.CollectedField, obj *models.AnalyzedAudit) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_AnalyzedAudit_createdBy(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.CreatedBy, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(uuid.UUID)
+	fc.Result = res
+	return ec.marshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_AnalyzedAudit_createdBy(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "AnalyzedAudit",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type UUID does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _AnalyzedAudit_createdByUserAccount(ctx context.Context, field graphql.CollectedField, obj *models.AnalyzedAudit) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_AnalyzedAudit_createdByUserAccount(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.CreatedByUserAccount(ctx), nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*authentication.UserAccount)
+	fc.Result = res
+	return ec.marshalNUserAccount2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋauthenticationᚐUserAccount(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_AnalyzedAudit_createdByUserAccount(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "AnalyzedAudit",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_UserAccount_id(ctx, field)
+			case "username":
+				return ec.fieldContext_UserAccount_username(ctx, field)
+			case "isEUAID":
+				return ec.fieldContext_UserAccount_isEUAID(ctx, field)
+			case "commonName":
+				return ec.fieldContext_UserAccount_commonName(ctx, field)
+			case "locale":
+				return ec.fieldContext_UserAccount_locale(ctx, field)
+			case "email":
+				return ec.fieldContext_UserAccount_email(ctx, field)
+			case "givenName":
+				return ec.fieldContext_UserAccount_givenName(ctx, field)
+			case "familyName":
+				return ec.fieldContext_UserAccount_familyName(ctx, field)
+			case "zoneInfo":
+				return ec.fieldContext_UserAccount_zoneInfo(ctx, field)
+			case "hasLoggedIn":
+				return ec.fieldContext_UserAccount_hasLoggedIn(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type UserAccount", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _AnalyzedAudit_createdDts(ctx context.Context, field graphql.CollectedField, obj *models.AnalyzedAudit) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_AnalyzedAudit_createdDts(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.CreatedDts, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(time.Time)
+	fc.Result = res
+	return ec.marshalNTime2timeᚐTime(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_AnalyzedAudit_createdDts(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "AnalyzedAudit",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Time does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _AnalyzedAudit_modifiedBy(ctx context.Context, field graphql.CollectedField, obj *models.AnalyzedAudit) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_AnalyzedAudit_modifiedBy(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ModifiedBy, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*uuid.UUID)
+	fc.Result = res
+	return ec.marshalOUUID2ᚖgithubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_AnalyzedAudit_modifiedBy(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "AnalyzedAudit",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type UUID does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _AnalyzedAudit_modifiedByUserAccount(ctx context.Context, field graphql.CollectedField, obj *models.AnalyzedAudit) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_AnalyzedAudit_modifiedByUserAccount(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ModifiedByUserAccount(ctx), nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*authentication.UserAccount)
+	fc.Result = res
+	return ec.marshalOUserAccount2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋauthenticationᚐUserAccount(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_AnalyzedAudit_modifiedByUserAccount(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "AnalyzedAudit",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_UserAccount_id(ctx, field)
+			case "username":
+				return ec.fieldContext_UserAccount_username(ctx, field)
+			case "isEUAID":
+				return ec.fieldContext_UserAccount_isEUAID(ctx, field)
+			case "commonName":
+				return ec.fieldContext_UserAccount_commonName(ctx, field)
+			case "locale":
+				return ec.fieldContext_UserAccount_locale(ctx, field)
+			case "email":
+				return ec.fieldContext_UserAccount_email(ctx, field)
+			case "givenName":
+				return ec.fieldContext_UserAccount_givenName(ctx, field)
+			case "familyName":
+				return ec.fieldContext_UserAccount_familyName(ctx, field)
+			case "zoneInfo":
+				return ec.fieldContext_UserAccount_zoneInfo(ctx, field)
+			case "hasLoggedIn":
+				return ec.fieldContext_UserAccount_hasLoggedIn(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type UserAccount", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _AnalyzedAudit_modifiedDts(ctx context.Context, field graphql.CollectedField, obj *models.AnalyzedAudit) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_AnalyzedAudit_modifiedDts(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ModifiedDts, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*time.Time)
+	fc.Result = res
+	return ec.marshalOTime2ᚖtimeᚐTime(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_AnalyzedAudit_modifiedDts(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "AnalyzedAudit",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Time does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _AnalyzedAuditChange_modelPlan(ctx context.Context, field graphql.CollectedField, obj *models.AnalyzedAuditChange) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_AnalyzedAuditChange_modelPlan(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ModelPlan, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*models.AnalyzedModelPlan)
+	fc.Result = res
+	return ec.marshalOAnalyzedModelPlan2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐAnalyzedModelPlan(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_AnalyzedAuditChange_modelPlan(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "AnalyzedAuditChange",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "oldName":
+				return ec.fieldContext_AnalyzedModelPlan_oldName(ctx, field)
+			case "statusChanges":
+				return ec.fieldContext_AnalyzedModelPlan_statusChanges(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type AnalyzedModelPlan", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _AnalyzedAuditChange_documents(ctx context.Context, field graphql.CollectedField, obj *models.AnalyzedAuditChange) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_AnalyzedAuditChange_documents(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Documents, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*models.AnalyzedDocuments)
+	fc.Result = res
+	return ec.marshalOAnalyzedDocuments2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐAnalyzedDocuments(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_AnalyzedAuditChange_documents(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "AnalyzedAuditChange",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "count":
+				return ec.fieldContext_AnalyzedDocuments_count(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type AnalyzedDocuments", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _AnalyzedAuditChange_crTdls(ctx context.Context, field graphql.CollectedField, obj *models.AnalyzedAuditChange) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_AnalyzedAuditChange_crTdls(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.CrTdls, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*models.AnalyzedCrTdls)
+	fc.Result = res
+	return ec.marshalOAnalyzedCrTdls2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐAnalyzedCrTdls(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_AnalyzedAuditChange_crTdls(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "AnalyzedAuditChange",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "activity":
+				return ec.fieldContext_AnalyzedCrTdls_activity(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type AnalyzedCrTdls", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _AnalyzedAuditChange_planSections(ctx context.Context, field graphql.CollectedField, obj *models.AnalyzedAuditChange) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_AnalyzedAuditChange_planSections(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.PlanSections, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*models.AnalyzedPlanSections)
+	fc.Result = res
+	return ec.marshalOAnalyzedPlanSections2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐAnalyzedPlanSections(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_AnalyzedAuditChange_planSections(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "AnalyzedAuditChange",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "updated":
+				return ec.fieldContext_AnalyzedPlanSections_updated(ctx, field)
+			case "readyForReview":
+				return ec.fieldContext_AnalyzedPlanSections_readyForReview(ctx, field)
+			case "readyForClearance":
+				return ec.fieldContext_AnalyzedPlanSections_readyForClearance(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type AnalyzedPlanSections", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _AnalyzedAuditChange_modelLeads(ctx context.Context, field graphql.CollectedField, obj *models.AnalyzedAuditChange) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_AnalyzedAuditChange_modelLeads(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ModelLeads, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*models.AnalyzedModelLeads)
+	fc.Result = res
+	return ec.marshalOAnalyzedModelLeads2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐAnalyzedModelLeads(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_AnalyzedAuditChange_modelLeads(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "AnalyzedAuditChange",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "added":
+				return ec.fieldContext_AnalyzedModelLeads_added(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type AnalyzedModelLeads", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _AnalyzedAuditChange_planDiscussions(ctx context.Context, field graphql.CollectedField, obj *models.AnalyzedAuditChange) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_AnalyzedAuditChange_planDiscussions(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.PlanDiscussions, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*models.AnalyzedPlanDiscussions)
+	fc.Result = res
+	return ec.marshalOAnalyzedPlanDiscussions2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐAnalyzedPlanDiscussions(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_AnalyzedAuditChange_planDiscussions(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "AnalyzedAuditChange",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "activity":
+				return ec.fieldContext_AnalyzedPlanDiscussions_activity(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type AnalyzedPlanDiscussions", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _AnalyzedCrTdls_activity(ctx context.Context, field graphql.CollectedField, obj *models.AnalyzedCrTdls) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_AnalyzedCrTdls_activity(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Activity, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(bool)
+	fc.Result = res
+	return ec.marshalOBoolean2bool(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_AnalyzedCrTdls_activity(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "AnalyzedCrTdls",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Boolean does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _AnalyzedDocuments_count(ctx context.Context, field graphql.CollectedField, obj *models.AnalyzedDocuments) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_AnalyzedDocuments_count(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Count, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(int)
+	fc.Result = res
+	return ec.marshalOInt2int(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_AnalyzedDocuments_count(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "AnalyzedDocuments",
 		Field:      field,
 		IsMethod:   false,
 		IsResolver: false,
@@ -12854,8 +14108,8 @@ func (ec *executionContext) fieldContext_ActivityMetaBaseStruct_version(ctx cont
 	return fc, nil
 }
 
-func (ec *executionContext) _ActivityMetaBaseStruct_type(ctx context.Context, field graphql.CollectedField, obj *models.ActivityMetaBaseStruct) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_ActivityMetaBaseStruct_type(ctx, field)
+func (ec *executionContext) _AnalyzedModelLeadInfo_id(ctx context.Context, field graphql.CollectedField, obj *models.AnalyzedModelLeadInfo) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_AnalyzedModelLeadInfo_id(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -12868,7 +14122,7 @@ func (ec *executionContext) _ActivityMetaBaseStruct_type(ctx context.Context, fi
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.Type, nil
+		return obj.ID, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -12880,19 +14134,436 @@ func (ec *executionContext) _ActivityMetaBaseStruct_type(ctx context.Context, fi
 		}
 		return graphql.Null
 	}
-	res := resTmp.(models.ActivityType)
+	res := resTmp.(uuid.UUID)
 	fc.Result = res
-	return ec.marshalNActivityType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐActivityType(ctx, field.Selections, res)
+	return ec.marshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_ActivityMetaBaseStruct_type(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_AnalyzedModelLeadInfo_id(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
-		Object:     "ActivityMetaBaseStruct",
+		Object:     "AnalyzedModelLeadInfo",
 		Field:      field,
 		IsMethod:   false,
 		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type ActivityType does not have child fields")
+			return nil, errors.New("field of type UUID does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _AnalyzedModelLeadInfo_userAccount(ctx context.Context, field graphql.CollectedField, obj *models.AnalyzedModelLeadInfo) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_AnalyzedModelLeadInfo_userAccount(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.AnalyzedModelLeadInfo().UserAccount(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*authentication.UserAccount)
+	fc.Result = res
+	return ec.marshalNUserAccount2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋauthenticationᚐUserAccount(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_AnalyzedModelLeadInfo_userAccount(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "AnalyzedModelLeadInfo",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_UserAccount_id(ctx, field)
+			case "username":
+				return ec.fieldContext_UserAccount_username(ctx, field)
+			case "isEUAID":
+				return ec.fieldContext_UserAccount_isEUAID(ctx, field)
+			case "commonName":
+				return ec.fieldContext_UserAccount_commonName(ctx, field)
+			case "locale":
+				return ec.fieldContext_UserAccount_locale(ctx, field)
+			case "email":
+				return ec.fieldContext_UserAccount_email(ctx, field)
+			case "givenName":
+				return ec.fieldContext_UserAccount_givenName(ctx, field)
+			case "familyName":
+				return ec.fieldContext_UserAccount_familyName(ctx, field)
+			case "zoneInfo":
+				return ec.fieldContext_UserAccount_zoneInfo(ctx, field)
+			case "hasLoggedIn":
+				return ec.fieldContext_UserAccount_hasLoggedIn(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type UserAccount", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _AnalyzedModelLeadInfo_commonName(ctx context.Context, field graphql.CollectedField, obj *models.AnalyzedModelLeadInfo) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_AnalyzedModelLeadInfo_commonName(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.CommonName, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalNString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_AnalyzedModelLeadInfo_commonName(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "AnalyzedModelLeadInfo",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _AnalyzedModelLeads_added(ctx context.Context, field graphql.CollectedField, obj *models.AnalyzedModelLeads) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_AnalyzedModelLeads_added(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Added, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.([]models.AnalyzedModelLeadInfo)
+	fc.Result = res
+	return ec.marshalNAnalyzedModelLeadInfo2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐAnalyzedModelLeadInfoᚄ(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_AnalyzedModelLeads_added(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "AnalyzedModelLeads",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_AnalyzedModelLeadInfo_id(ctx, field)
+			case "userAccount":
+				return ec.fieldContext_AnalyzedModelLeadInfo_userAccount(ctx, field)
+			case "commonName":
+				return ec.fieldContext_AnalyzedModelLeadInfo_commonName(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type AnalyzedModelLeadInfo", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _AnalyzedModelPlan_oldName(ctx context.Context, field graphql.CollectedField, obj *models.AnalyzedModelPlan) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_AnalyzedModelPlan_oldName(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.OldName, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalOString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_AnalyzedModelPlan_oldName(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "AnalyzedModelPlan",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _AnalyzedModelPlan_statusChanges(ctx context.Context, field graphql.CollectedField, obj *models.AnalyzedModelPlan) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_AnalyzedModelPlan_statusChanges(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.StatusChanges, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.([]string)
+	fc.Result = res
+	return ec.marshalOString2ᚕstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_AnalyzedModelPlan_statusChanges(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "AnalyzedModelPlan",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _AnalyzedPlanDiscussions_activity(ctx context.Context, field graphql.CollectedField, obj *models.AnalyzedPlanDiscussions) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_AnalyzedPlanDiscussions_activity(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Activity, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(bool)
+	fc.Result = res
+	return ec.marshalOBoolean2bool(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_AnalyzedPlanDiscussions_activity(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "AnalyzedPlanDiscussions",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Boolean does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _AnalyzedPlanSections_updated(ctx context.Context, field graphql.CollectedField, obj *models.AnalyzedPlanSections) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_AnalyzedPlanSections_updated(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Updated, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.([]string)
+	fc.Result = res
+	return ec.marshalNString2ᚕstringᚄ(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_AnalyzedPlanSections_updated(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "AnalyzedPlanSections",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _AnalyzedPlanSections_readyForReview(ctx context.Context, field graphql.CollectedField, obj *models.AnalyzedPlanSections) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_AnalyzedPlanSections_readyForReview(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ReadyForReview, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.([]string)
+	fc.Result = res
+	return ec.marshalNString2ᚕstringᚄ(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_AnalyzedPlanSections_readyForReview(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "AnalyzedPlanSections",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _AnalyzedPlanSections_readyForClearance(ctx context.Context, field graphql.CollectedField, obj *models.AnalyzedPlanSections) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_AnalyzedPlanSections_readyForClearance(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ReadyForClearance, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.([]string)
+	fc.Result = res
+	return ec.marshalNString2ᚕstringᚄ(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_AnalyzedPlanSections_readyForClearance(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "AnalyzedPlanSections",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
 		},
 	}
 	return fc, nil
@@ -13541,6 +15212,294 @@ func (ec *executionContext) fieldContext_CurrentUser_notificationPreferences(ctx
 				return ec.fieldContext_UserNotificationPreferences_modifiedDts(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type UserNotificationPreferences", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _DailyDigestCompleteActivityMeta_version(ctx context.Context, field graphql.CollectedField, obj *models.DailyDigestCompleteActivityMeta) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_DailyDigestCompleteActivityMeta_version(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Version, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(int)
+	fc.Result = res
+	return ec.marshalNInt2int(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_DailyDigestCompleteActivityMeta_version(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "DailyDigestCompleteActivityMeta",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Int does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _DailyDigestCompleteActivityMeta_type(ctx context.Context, field graphql.CollectedField, obj *models.DailyDigestCompleteActivityMeta) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_DailyDigestCompleteActivityMeta_type(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Type, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(models.ActivityType)
+	fc.Result = res
+	return ec.marshalNActivityType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐActivityType(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_DailyDigestCompleteActivityMeta_type(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "DailyDigestCompleteActivityMeta",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type ActivityType does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _DailyDigestCompleteActivityMeta_modelPlanIDs(ctx context.Context, field graphql.CollectedField, obj *models.DailyDigestCompleteActivityMeta) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_DailyDigestCompleteActivityMeta_modelPlanIDs(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ModelPlanIDs, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.([]uuid.UUID)
+	fc.Result = res
+	return ec.marshalNUUID2ᚕgithubᚗcomᚋgoogleᚋuuidᚐUUIDᚄ(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_DailyDigestCompleteActivityMeta_modelPlanIDs(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "DailyDigestCompleteActivityMeta",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type UUID does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _DailyDigestCompleteActivityMeta_analyzedAudits(ctx context.Context, field graphql.CollectedField, obj *models.DailyDigestCompleteActivityMeta) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_DailyDigestCompleteActivityMeta_analyzedAudits(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.DailyDigestCompleteActivityMeta().AnalyzedAudits(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.([]*models.AnalyzedAudit)
+	fc.Result = res
+	return ec.marshalNAnalyzedAudit2ᚕᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐAnalyzedAuditᚄ(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_DailyDigestCompleteActivityMeta_analyzedAudits(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "DailyDigestCompleteActivityMeta",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_AnalyzedAudit_id(ctx, field)
+			case "modelPlanID":
+				return ec.fieldContext_AnalyzedAudit_modelPlanID(ctx, field)
+			case "modelName":
+				return ec.fieldContext_AnalyzedAudit_modelName(ctx, field)
+			case "date":
+				return ec.fieldContext_AnalyzedAudit_date(ctx, field)
+			case "changes":
+				return ec.fieldContext_AnalyzedAudit_changes(ctx, field)
+			case "createdBy":
+				return ec.fieldContext_AnalyzedAudit_createdBy(ctx, field)
+			case "createdByUserAccount":
+				return ec.fieldContext_AnalyzedAudit_createdByUserAccount(ctx, field)
+			case "createdDts":
+				return ec.fieldContext_AnalyzedAudit_createdDts(ctx, field)
+			case "modifiedBy":
+				return ec.fieldContext_AnalyzedAudit_modifiedBy(ctx, field)
+			case "modifiedByUserAccount":
+				return ec.fieldContext_AnalyzedAudit_modifiedByUserAccount(ctx, field)
+			case "modifiedDts":
+				return ec.fieldContext_AnalyzedAudit_modifiedDts(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type AnalyzedAudit", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _DailyDigestCompleteActivityMeta_userID(ctx context.Context, field graphql.CollectedField, obj *models.DailyDigestCompleteActivityMeta) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_DailyDigestCompleteActivityMeta_userID(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.UserID, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(uuid.UUID)
+	fc.Result = res
+	return ec.marshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_DailyDigestCompleteActivityMeta_userID(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "DailyDigestCompleteActivityMeta",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type UUID does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _DailyDigestCompleteActivityMeta_date(ctx context.Context, field graphql.CollectedField, obj *models.DailyDigestCompleteActivityMeta) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_DailyDigestCompleteActivityMeta_date(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Date, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(time.Time)
+	fc.Result = res
+	return ec.marshalNTime2timeᚐTime(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_DailyDigestCompleteActivityMeta_date(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "DailyDigestCompleteActivityMeta",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Time does not have child fields")
 		},
 	}
 	return fc, nil
@@ -51070,6 +53029,109 @@ func (ec *executionContext) fieldContext_Query_searchOktaUsers(ctx context.Conte
 	return fc, nil
 }
 
+func (ec *executionContext) _Query_analyzedAudits(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Query_analyzedAudits(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		directive0 := func(rctx context.Context) (interface{}, error) {
+			ctx = rctx // use context from middleware stack in children
+			return ec.resolvers.Query().AnalyzedAudits(rctx, fc.Args["dateAnalyzed"].(time.Time))
+		}
+		directive1 := func(ctx context.Context) (interface{}, error) {
+			roles, err := ec.unmarshalNRole2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRoleᚄ(ctx, []interface{}{"MINT_USER", "MINT_MAC"})
+			if err != nil {
+				return nil, err
+			}
+			if ec.directives.HasAnyRole == nil {
+				return nil, errors.New("directive hasAnyRole is not implemented")
+			}
+			return ec.directives.HasAnyRole(ctx, nil, directive0, roles)
+		}
+
+		tmp, err := directive1(rctx)
+		if err != nil {
+			return nil, graphql.ErrorOnPath(ctx, err)
+		}
+		if tmp == nil {
+			return nil, nil
+		}
+		if data, ok := tmp.([]*models.AnalyzedAudit); ok {
+			return data, nil
+		}
+		return nil, fmt.Errorf(`unexpected type %T from directive, should be []*github.com/cmsgov/mint-app/pkg/models.AnalyzedAudit`, tmp)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.([]*models.AnalyzedAudit)
+	fc.Result = res
+	return ec.marshalNAnalyzedAudit2ᚕᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐAnalyzedAuditᚄ(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Query_analyzedAudits(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Query",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_AnalyzedAudit_id(ctx, field)
+			case "modelPlanID":
+				return ec.fieldContext_AnalyzedAudit_modelPlanID(ctx, field)
+			case "modelName":
+				return ec.fieldContext_AnalyzedAudit_modelName(ctx, field)
+			case "date":
+				return ec.fieldContext_AnalyzedAudit_date(ctx, field)
+			case "changes":
+				return ec.fieldContext_AnalyzedAudit_changes(ctx, field)
+			case "createdBy":
+				return ec.fieldContext_AnalyzedAudit_createdBy(ctx, field)
+			case "createdByUserAccount":
+				return ec.fieldContext_AnalyzedAudit_createdByUserAccount(ctx, field)
+			case "createdDts":
+				return ec.fieldContext_AnalyzedAudit_createdDts(ctx, field)
+			case "modifiedBy":
+				return ec.fieldContext_AnalyzedAudit_modifiedBy(ctx, field)
+			case "modifiedByUserAccount":
+				return ec.fieldContext_AnalyzedAudit_modifiedByUserAccount(ctx, field)
+			case "modifiedDts":
+				return ec.fieldContext_AnalyzedAudit_modifiedDts(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type AnalyzedAudit", field.Name)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Query_analyzedAudits_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
+	}
+	return fc, nil
+}
+
 func (ec *executionContext) _Query_auditChanges(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_Query_auditChanges(ctx, field)
 	if err != nil {
@@ -60255,11 +62317,6 @@ func (ec *executionContext) _ActivityMetaData(ctx context.Context, sel ast.Selec
 	switch obj := (obj).(type) {
 	case nil:
 		return graphql.Null
-	case *models.ActivityMetaBaseStruct:
-		if obj == nil {
-			return graphql.Null
-		}
-		return ec._ActivityMetaBaseStruct(ctx, sel, obj)
 	case *models.TaggedInPlanDiscussionActivityMeta:
 		if obj == nil {
 			return graphql.Null
@@ -60270,6 +62327,11 @@ func (ec *executionContext) _ActivityMetaData(ctx context.Context, sel ast.Selec
 			return graphql.Null
 		}
 		return ec._TaggedInDiscussionReplyActivityMeta(ctx, sel, obj)
+	case *models.DailyDigestCompleteActivityMeta:
+		if obj == nil {
+			return graphql.Null
+		}
+		return ec._DailyDigestCompleteActivityMeta(ctx, sel, obj)
 	default:
 		panic(fmt.Errorf("unexpected type %T", obj))
 	}
@@ -60503,24 +62565,482 @@ func (ec *executionContext) _Activity(ctx context.Context, sel ast.SelectionSet,
 	return out
 }
 
-var activityMetaBaseStructImplementors = []string{"ActivityMetaBaseStruct", "ActivityMetaData"}
+var analyzedAuditImplementors = []string{"AnalyzedAudit"}
 
-func (ec *executionContext) _ActivityMetaBaseStruct(ctx context.Context, sel ast.SelectionSet, obj *models.ActivityMetaBaseStruct) graphql.Marshaler {
-	fields := graphql.CollectFields(ec.OperationContext, sel, activityMetaBaseStructImplementors)
+func (ec *executionContext) _AnalyzedAudit(ctx context.Context, sel ast.SelectionSet, obj *models.AnalyzedAudit) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, analyzedAuditImplementors)
 
 	out := graphql.NewFieldSet(fields)
 	deferred := make(map[string]*graphql.FieldSet)
 	for i, field := range fields {
 		switch field.Name {
 		case "__typename":
-			out.Values[i] = graphql.MarshalString("ActivityMetaBaseStruct")
-		case "version":
-			out.Values[i] = ec._ActivityMetaBaseStruct_version(ctx, field, obj)
+			out.Values[i] = graphql.MarshalString("AnalyzedAudit")
+		case "id":
+			out.Values[i] = ec._AnalyzedAudit_id(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "modelPlanID":
+			out.Values[i] = ec._AnalyzedAudit_modelPlanID(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "modelName":
+			out.Values[i] = ec._AnalyzedAudit_modelName(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "date":
+			out.Values[i] = ec._AnalyzedAudit_date(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "changes":
+			out.Values[i] = ec._AnalyzedAudit_changes(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "createdBy":
+			out.Values[i] = ec._AnalyzedAudit_createdBy(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "createdByUserAccount":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._AnalyzedAudit_createdByUserAccount(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
+				return res
+			}
+
+			if field.Deferrable != nil {
+				dfs, ok := deferred[field.Deferrable.Label]
+				di := 0
+				if ok {
+					dfs.AddField(field)
+					di = len(dfs.Values) - 1
+				} else {
+					dfs = graphql.NewFieldSet([]graphql.CollectedField{field})
+					deferred[field.Deferrable.Label] = dfs
+				}
+				dfs.Concurrently(di, func(ctx context.Context) graphql.Marshaler {
+					return innerFunc(ctx, dfs)
+				})
+
+				// don't run the out.Concurrently() call below
+				out.Values[i] = graphql.Null
+				continue
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+		case "createdDts":
+			out.Values[i] = ec._AnalyzedAudit_createdDts(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "modifiedBy":
+			out.Values[i] = ec._AnalyzedAudit_modifiedBy(ctx, field, obj)
+		case "modifiedByUserAccount":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._AnalyzedAudit_modifiedByUserAccount(ctx, field, obj)
+				return res
+			}
+
+			if field.Deferrable != nil {
+				dfs, ok := deferred[field.Deferrable.Label]
+				di := 0
+				if ok {
+					dfs.AddField(field)
+					di = len(dfs.Values) - 1
+				} else {
+					dfs = graphql.NewFieldSet([]graphql.CollectedField{field})
+					deferred[field.Deferrable.Label] = dfs
+				}
+				dfs.Concurrently(di, func(ctx context.Context) graphql.Marshaler {
+					return innerFunc(ctx, dfs)
+				})
+
+				// don't run the out.Concurrently() call below
+				out.Values[i] = graphql.Null
+				continue
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+		case "modifiedDts":
+			out.Values[i] = ec._AnalyzedAudit_modifiedDts(ctx, field, obj)
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch(ctx)
+	if out.Invalids > 0 {
+		return graphql.Null
+	}
+
+	atomic.AddInt32(&ec.deferred, int32(len(deferred)))
+
+	for label, dfs := range deferred {
+		ec.processDeferredGroup(graphql.DeferredGroup{
+			Label:    label,
+			Path:     graphql.GetPath(ctx),
+			FieldSet: dfs,
+			Context:  ctx,
+		})
+	}
+
+	return out
+}
+
+var analyzedAuditChangeImplementors = []string{"AnalyzedAuditChange"}
+
+func (ec *executionContext) _AnalyzedAuditChange(ctx context.Context, sel ast.SelectionSet, obj *models.AnalyzedAuditChange) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, analyzedAuditChangeImplementors)
+
+	out := graphql.NewFieldSet(fields)
+	deferred := make(map[string]*graphql.FieldSet)
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("AnalyzedAuditChange")
+		case "modelPlan":
+			out.Values[i] = ec._AnalyzedAuditChange_modelPlan(ctx, field, obj)
+		case "documents":
+			out.Values[i] = ec._AnalyzedAuditChange_documents(ctx, field, obj)
+		case "crTdls":
+			out.Values[i] = ec._AnalyzedAuditChange_crTdls(ctx, field, obj)
+		case "planSections":
+			out.Values[i] = ec._AnalyzedAuditChange_planSections(ctx, field, obj)
+		case "modelLeads":
+			out.Values[i] = ec._AnalyzedAuditChange_modelLeads(ctx, field, obj)
+		case "planDiscussions":
+			out.Values[i] = ec._AnalyzedAuditChange_planDiscussions(ctx, field, obj)
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch(ctx)
+	if out.Invalids > 0 {
+		return graphql.Null
+	}
+
+	atomic.AddInt32(&ec.deferred, int32(len(deferred)))
+
+	for label, dfs := range deferred {
+		ec.processDeferredGroup(graphql.DeferredGroup{
+			Label:    label,
+			Path:     graphql.GetPath(ctx),
+			FieldSet: dfs,
+			Context:  ctx,
+		})
+	}
+
+	return out
+}
+
+var analyzedCrTdlsImplementors = []string{"AnalyzedCrTdls"}
+
+func (ec *executionContext) _AnalyzedCrTdls(ctx context.Context, sel ast.SelectionSet, obj *models.AnalyzedCrTdls) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, analyzedCrTdlsImplementors)
+
+	out := graphql.NewFieldSet(fields)
+	deferred := make(map[string]*graphql.FieldSet)
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("AnalyzedCrTdls")
+		case "activity":
+			out.Values[i] = ec._AnalyzedCrTdls_activity(ctx, field, obj)
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch(ctx)
+	if out.Invalids > 0 {
+		return graphql.Null
+	}
+
+	atomic.AddInt32(&ec.deferred, int32(len(deferred)))
+
+	for label, dfs := range deferred {
+		ec.processDeferredGroup(graphql.DeferredGroup{
+			Label:    label,
+			Path:     graphql.GetPath(ctx),
+			FieldSet: dfs,
+			Context:  ctx,
+		})
+	}
+
+	return out
+}
+
+var analyzedDocumentsImplementors = []string{"AnalyzedDocuments"}
+
+func (ec *executionContext) _AnalyzedDocuments(ctx context.Context, sel ast.SelectionSet, obj *models.AnalyzedDocuments) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, analyzedDocumentsImplementors)
+
+	out := graphql.NewFieldSet(fields)
+	deferred := make(map[string]*graphql.FieldSet)
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("AnalyzedDocuments")
+		case "count":
+			out.Values[i] = ec._AnalyzedDocuments_count(ctx, field, obj)
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch(ctx)
+	if out.Invalids > 0 {
+		return graphql.Null
+	}
+
+	atomic.AddInt32(&ec.deferred, int32(len(deferred)))
+
+	for label, dfs := range deferred {
+		ec.processDeferredGroup(graphql.DeferredGroup{
+			Label:    label,
+			Path:     graphql.GetPath(ctx),
+			FieldSet: dfs,
+			Context:  ctx,
+		})
+	}
+
+	return out
+}
+
+var analyzedModelLeadInfoImplementors = []string{"AnalyzedModelLeadInfo"}
+
+func (ec *executionContext) _AnalyzedModelLeadInfo(ctx context.Context, sel ast.SelectionSet, obj *models.AnalyzedModelLeadInfo) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, analyzedModelLeadInfoImplementors)
+
+	out := graphql.NewFieldSet(fields)
+	deferred := make(map[string]*graphql.FieldSet)
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("AnalyzedModelLeadInfo")
+		case "id":
+			out.Values[i] = ec._AnalyzedModelLeadInfo_id(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "userAccount":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._AnalyzedModelLeadInfo_userAccount(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
+				return res
+			}
+
+			if field.Deferrable != nil {
+				dfs, ok := deferred[field.Deferrable.Label]
+				di := 0
+				if ok {
+					dfs.AddField(field)
+					di = len(dfs.Values) - 1
+				} else {
+					dfs = graphql.NewFieldSet([]graphql.CollectedField{field})
+					deferred[field.Deferrable.Label] = dfs
+				}
+				dfs.Concurrently(di, func(ctx context.Context) graphql.Marshaler {
+					return innerFunc(ctx, dfs)
+				})
+
+				// don't run the out.Concurrently() call below
+				out.Values[i] = graphql.Null
+				continue
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+		case "commonName":
+			out.Values[i] = ec._AnalyzedModelLeadInfo_commonName(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch(ctx)
+	if out.Invalids > 0 {
+		return graphql.Null
+	}
+
+	atomic.AddInt32(&ec.deferred, int32(len(deferred)))
+
+	for label, dfs := range deferred {
+		ec.processDeferredGroup(graphql.DeferredGroup{
+			Label:    label,
+			Path:     graphql.GetPath(ctx),
+			FieldSet: dfs,
+			Context:  ctx,
+		})
+	}
+
+	return out
+}
+
+var analyzedModelLeadsImplementors = []string{"AnalyzedModelLeads"}
+
+func (ec *executionContext) _AnalyzedModelLeads(ctx context.Context, sel ast.SelectionSet, obj *models.AnalyzedModelLeads) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, analyzedModelLeadsImplementors)
+
+	out := graphql.NewFieldSet(fields)
+	deferred := make(map[string]*graphql.FieldSet)
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("AnalyzedModelLeads")
+		case "added":
+			out.Values[i] = ec._AnalyzedModelLeads_added(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
 				out.Invalids++
 			}
-		case "type":
-			out.Values[i] = ec._ActivityMetaBaseStruct_type(ctx, field, obj)
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch(ctx)
+	if out.Invalids > 0 {
+		return graphql.Null
+	}
+
+	atomic.AddInt32(&ec.deferred, int32(len(deferred)))
+
+	for label, dfs := range deferred {
+		ec.processDeferredGroup(graphql.DeferredGroup{
+			Label:    label,
+			Path:     graphql.GetPath(ctx),
+			FieldSet: dfs,
+			Context:  ctx,
+		})
+	}
+
+	return out
+}
+
+var analyzedModelPlanImplementors = []string{"AnalyzedModelPlan"}
+
+func (ec *executionContext) _AnalyzedModelPlan(ctx context.Context, sel ast.SelectionSet, obj *models.AnalyzedModelPlan) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, analyzedModelPlanImplementors)
+
+	out := graphql.NewFieldSet(fields)
+	deferred := make(map[string]*graphql.FieldSet)
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("AnalyzedModelPlan")
+		case "oldName":
+			out.Values[i] = ec._AnalyzedModelPlan_oldName(ctx, field, obj)
+		case "statusChanges":
+			out.Values[i] = ec._AnalyzedModelPlan_statusChanges(ctx, field, obj)
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch(ctx)
+	if out.Invalids > 0 {
+		return graphql.Null
+	}
+
+	atomic.AddInt32(&ec.deferred, int32(len(deferred)))
+
+	for label, dfs := range deferred {
+		ec.processDeferredGroup(graphql.DeferredGroup{
+			Label:    label,
+			Path:     graphql.GetPath(ctx),
+			FieldSet: dfs,
+			Context:  ctx,
+		})
+	}
+
+	return out
+}
+
+var analyzedPlanDiscussionsImplementors = []string{"AnalyzedPlanDiscussions"}
+
+func (ec *executionContext) _AnalyzedPlanDiscussions(ctx context.Context, sel ast.SelectionSet, obj *models.AnalyzedPlanDiscussions) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, analyzedPlanDiscussionsImplementors)
+
+	out := graphql.NewFieldSet(fields)
+	deferred := make(map[string]*graphql.FieldSet)
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("AnalyzedPlanDiscussions")
+		case "activity":
+			out.Values[i] = ec._AnalyzedPlanDiscussions_activity(ctx, field, obj)
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch(ctx)
+	if out.Invalids > 0 {
+		return graphql.Null
+	}
+
+	atomic.AddInt32(&ec.deferred, int32(len(deferred)))
+
+	for label, dfs := range deferred {
+		ec.processDeferredGroup(graphql.DeferredGroup{
+			Label:    label,
+			Path:     graphql.GetPath(ctx),
+			FieldSet: dfs,
+			Context:  ctx,
+		})
+	}
+
+	return out
+}
+
+var analyzedPlanSectionsImplementors = []string{"AnalyzedPlanSections"}
+
+func (ec *executionContext) _AnalyzedPlanSections(ctx context.Context, sel ast.SelectionSet, obj *models.AnalyzedPlanSections) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, analyzedPlanSectionsImplementors)
+
+	out := graphql.NewFieldSet(fields)
+	deferred := make(map[string]*graphql.FieldSet)
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("AnalyzedPlanSections")
+		case "updated":
+			out.Values[i] = ec._AnalyzedPlanSections_updated(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "readyForReview":
+			out.Values[i] = ec._AnalyzedPlanSections_readyForReview(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "readyForClearance":
+			out.Values[i] = ec._AnalyzedPlanSections_readyForClearance(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
 				out.Invalids++
 			}
@@ -60831,6 +63351,101 @@ func (ec *executionContext) _CurrentUser(ctx context.Context, sel ast.SelectionS
 			}
 
 			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch(ctx)
+	if out.Invalids > 0 {
+		return graphql.Null
+	}
+
+	atomic.AddInt32(&ec.deferred, int32(len(deferred)))
+
+	for label, dfs := range deferred {
+		ec.processDeferredGroup(graphql.DeferredGroup{
+			Label:    label,
+			Path:     graphql.GetPath(ctx),
+			FieldSet: dfs,
+			Context:  ctx,
+		})
+	}
+
+	return out
+}
+
+var dailyDigestCompleteActivityMetaImplementors = []string{"DailyDigestCompleteActivityMeta", "ActivityMetaData"}
+
+func (ec *executionContext) _DailyDigestCompleteActivityMeta(ctx context.Context, sel ast.SelectionSet, obj *models.DailyDigestCompleteActivityMeta) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, dailyDigestCompleteActivityMetaImplementors)
+
+	out := graphql.NewFieldSet(fields)
+	deferred := make(map[string]*graphql.FieldSet)
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("DailyDigestCompleteActivityMeta")
+		case "version":
+			out.Values[i] = ec._DailyDigestCompleteActivityMeta_version(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "type":
+			out.Values[i] = ec._DailyDigestCompleteActivityMeta_type(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "modelPlanIDs":
+			out.Values[i] = ec._DailyDigestCompleteActivityMeta_modelPlanIDs(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "analyzedAudits":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._DailyDigestCompleteActivityMeta_analyzedAudits(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
+				return res
+			}
+
+			if field.Deferrable != nil {
+				dfs, ok := deferred[field.Deferrable.Label]
+				di := 0
+				if ok {
+					dfs.AddField(field)
+					di = len(dfs.Values) - 1
+				} else {
+					dfs = graphql.NewFieldSet([]graphql.CollectedField{field})
+					deferred[field.Deferrable.Label] = dfs
+				}
+				dfs.Concurrently(di, func(ctx context.Context) graphql.Marshaler {
+					return innerFunc(ctx, dfs)
+				})
+
+				// don't run the out.Concurrently() call below
+				out.Values[i] = graphql.Null
+				continue
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+		case "userID":
+			out.Values[i] = ec._DailyDigestCompleteActivityMeta_userID(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "date":
+			out.Values[i] = ec._DailyDigestCompleteActivityMeta_date(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
 		default:
 			panic("unknown field " + strconv.Quote(field.Name))
 		}
@@ -68942,6 +71557,28 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 			}
 
 			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return rrm(innerCtx) })
+		case "analyzedAudits":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Query_analyzedAudits(ctx, field)
+				if res == graphql.Null {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
+				return res
+			}
+
+			rrm := func(ctx context.Context) graphql.Marshaler {
+				return ec.OperationContext.RootResolverMiddleware(ctx,
+					func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return rrm(innerCtx) })
 		case "auditChanges":
 			field := field
 
@@ -71374,6 +74011,112 @@ func (ec *executionContext) marshalNAlternativePaymentModelType2ᚕgithubᚗcom�
 				defer wg.Done()
 			}
 			ret[i] = ec.marshalNAlternativePaymentModelType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐAlternativePaymentModelType(ctx, sel, v[i])
+		}
+		if isLen1 {
+			f(i)
+		} else {
+			go f(i)
+		}
+
+	}
+	wg.Wait()
+
+	for _, e := range ret {
+		if e == graphql.Null {
+			return graphql.Null
+		}
+	}
+
+	return ret
+}
+
+func (ec *executionContext) marshalNAnalyzedAudit2ᚕᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐAnalyzedAuditᚄ(ctx context.Context, sel ast.SelectionSet, v []*models.AnalyzedAudit) graphql.Marshaler {
+	ret := make(graphql.Array, len(v))
+	var wg sync.WaitGroup
+	isLen1 := len(v) == 1
+	if !isLen1 {
+		wg.Add(len(v))
+	}
+	for i := range v {
+		i := i
+		fc := &graphql.FieldContext{
+			Index:  &i,
+			Result: &v[i],
+		}
+		ctx := graphql.WithFieldContext(ctx, fc)
+		f := func(i int) {
+			defer func() {
+				if r := recover(); r != nil {
+					ec.Error(ctx, ec.Recover(ctx, r))
+					ret = nil
+				}
+			}()
+			if !isLen1 {
+				defer wg.Done()
+			}
+			ret[i] = ec.marshalNAnalyzedAudit2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐAnalyzedAudit(ctx, sel, v[i])
+		}
+		if isLen1 {
+			f(i)
+		} else {
+			go f(i)
+		}
+
+	}
+	wg.Wait()
+
+	for _, e := range ret {
+		if e == graphql.Null {
+			return graphql.Null
+		}
+	}
+
+	return ret
+}
+
+func (ec *executionContext) marshalNAnalyzedAudit2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐAnalyzedAudit(ctx context.Context, sel ast.SelectionSet, v *models.AnalyzedAudit) graphql.Marshaler {
+	if v == nil {
+		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
+			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
+		}
+		return graphql.Null
+	}
+	return ec._AnalyzedAudit(ctx, sel, v)
+}
+
+func (ec *executionContext) marshalNAnalyzedAuditChange2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐAnalyzedAuditChange(ctx context.Context, sel ast.SelectionSet, v models.AnalyzedAuditChange) graphql.Marshaler {
+	return ec._AnalyzedAuditChange(ctx, sel, &v)
+}
+
+func (ec *executionContext) marshalNAnalyzedModelLeadInfo2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐAnalyzedModelLeadInfo(ctx context.Context, sel ast.SelectionSet, v models.AnalyzedModelLeadInfo) graphql.Marshaler {
+	return ec._AnalyzedModelLeadInfo(ctx, sel, &v)
+}
+
+func (ec *executionContext) marshalNAnalyzedModelLeadInfo2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐAnalyzedModelLeadInfoᚄ(ctx context.Context, sel ast.SelectionSet, v []models.AnalyzedModelLeadInfo) graphql.Marshaler {
+	ret := make(graphql.Array, len(v))
+	var wg sync.WaitGroup
+	isLen1 := len(v) == 1
+	if !isLen1 {
+		wg.Add(len(v))
+	}
+	for i := range v {
+		i := i
+		fc := &graphql.FieldContext{
+			Index:  &i,
+			Result: &v[i],
+		}
+		ctx := graphql.WithFieldContext(ctx, fc)
+		f := func(i int) {
+			defer func() {
+				if r := recover(); r != nil {
+					ec.Error(ctx, ec.Recover(ctx, r))
+					ret = nil
+				}
+			}()
+			if !isLen1 {
+				defer wg.Done()
+			}
+			ret[i] = ec.marshalNAnalyzedModelLeadInfo2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐAnalyzedModelLeadInfo(ctx, sel, v[i])
 		}
 		if isLen1 {
 			f(i)
@@ -76679,6 +79422,48 @@ func (ec *executionContext) marshalOAlternativePaymentModelType2ᚕgithubᚗcom�
 	return ret
 }
 
+func (ec *executionContext) marshalOAnalyzedCrTdls2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐAnalyzedCrTdls(ctx context.Context, sel ast.SelectionSet, v *models.AnalyzedCrTdls) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	return ec._AnalyzedCrTdls(ctx, sel, v)
+}
+
+func (ec *executionContext) marshalOAnalyzedDocuments2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐAnalyzedDocuments(ctx context.Context, sel ast.SelectionSet, v *models.AnalyzedDocuments) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	return ec._AnalyzedDocuments(ctx, sel, v)
+}
+
+func (ec *executionContext) marshalOAnalyzedModelLeads2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐAnalyzedModelLeads(ctx context.Context, sel ast.SelectionSet, v *models.AnalyzedModelLeads) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	return ec._AnalyzedModelLeads(ctx, sel, v)
+}
+
+func (ec *executionContext) marshalOAnalyzedModelPlan2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐAnalyzedModelPlan(ctx context.Context, sel ast.SelectionSet, v *models.AnalyzedModelPlan) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	return ec._AnalyzedModelPlan(ctx, sel, v)
+}
+
+func (ec *executionContext) marshalOAnalyzedPlanDiscussions2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐAnalyzedPlanDiscussions(ctx context.Context, sel ast.SelectionSet, v *models.AnalyzedPlanDiscussions) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	return ec._AnalyzedPlanDiscussions(ctx, sel, v)
+}
+
+func (ec *executionContext) marshalOAnalyzedPlanSections2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐAnalyzedPlanSections(ctx context.Context, sel ast.SelectionSet, v *models.AnalyzedPlanSections) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	return ec._AnalyzedPlanSections(ctx, sel, v)
+}
+
 func (ec *executionContext) unmarshalOAuthorityAllowance2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐAuthorityAllowanceᚄ(ctx context.Context, v interface{}) ([]model.AuthorityAllowance, error) {
 	if v == nil {
 		return nil, nil
@@ -79533,6 +82318,48 @@ func (ec *executionContext) marshalOStatesAndTerritories2ᚕgithubᚗcomᚋcmsgo
 		if e == graphql.Null {
 			return graphql.Null
 		}
+	}
+
+	return ret
+}
+
+func (ec *executionContext) unmarshalOString2string(ctx context.Context, v interface{}) (string, error) {
+	res, err := graphql.UnmarshalString(v)
+	return res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalOString2string(ctx context.Context, sel ast.SelectionSet, v string) graphql.Marshaler {
+	res := graphql.MarshalString(v)
+	return res
+}
+
+func (ec *executionContext) unmarshalOString2ᚕstring(ctx context.Context, v interface{}) ([]string, error) {
+	if v == nil {
+		return nil, nil
+	}
+	var vSlice []interface{}
+	if v != nil {
+		vSlice = graphql.CoerceList(v)
+	}
+	var err error
+	res := make([]string, len(vSlice))
+	for i := range vSlice {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithIndex(i))
+		res[i], err = ec.unmarshalOString2string(ctx, vSlice[i])
+		if err != nil {
+			return nil, err
+		}
+	}
+	return res, nil
+}
+
+func (ec *executionContext) marshalOString2ᚕstring(ctx context.Context, sel ast.SelectionSet, v []string) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	ret := make(graphql.Array, len(v))
+	for i := range v {
+		ret[i] = ec.marshalOString2string(ctx, sel, v[i])
 	}
 
 	return ret
