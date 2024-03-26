@@ -31,7 +31,7 @@ SOLUTION AS (
     SELECT
         NEED.model_plan_id AS model_plan_id,
         OpSol.id AS id,
-        'operational_solution_id' AS fk_field
+        'solution_id' AS fk_field
     FROM NEED	
     INNER JOIN operational_solution AS OpSol ON NEED.id = OpSol.operational_need_id 
 ),
