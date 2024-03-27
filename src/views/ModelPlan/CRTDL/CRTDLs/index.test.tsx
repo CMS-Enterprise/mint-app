@@ -3,7 +3,7 @@ import { Provider } from 'react-redux';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, waitFor } from '@testing-library/react';
-import { GetCrtdLsDocument, GetModelPlansBaseDocument } from 'gql/gen/graphql';
+import { GetCrtdLsDocument, GetModelPlanBaseDocument } from 'gql/gen/graphql';
 import configureMockStore from 'redux-mock-store';
 
 import { ASSESSMENT } from 'constants/jobCodes';
@@ -17,7 +17,7 @@ const modelID = 'f11eb129-2c80-4080-9440-439cbe1a286f';
 const mocks = [
   {
     request: {
-      query: GetModelPlansBaseDocument,
+      query: GetModelPlanBaseDocument,
       variables: { id: modelID }
     },
     result: {
