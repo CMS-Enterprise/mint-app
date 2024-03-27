@@ -51,7 +51,12 @@ const clearanceMock = [
   }
 ];
 
-const clearanceMocks = [...clearanceMock, ...benficiaryMocks];
+const clearanceMocks = [
+  ...clearanceMock,
+  ...benficiaryMocks,
+  ...clearanceMock,
+  ...benficiaryMocks
+];
 
 describe('ClearanceReview component', () => {
   // Stubing Math.random that occurs in Truss Tooltip component for deterministic output
