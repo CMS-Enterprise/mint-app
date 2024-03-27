@@ -40,7 +40,6 @@ func HumanizeAuditsForModelPlan(
 		return nil, fmt.Errorf("issue analyzing model plan change set for time start %s to time end %s. Error : %w", timeStart, timeEnd, err)
 	}
 
-	//Ticket: (ChChCh Changes!) save to the database by calling a store method here.
 	retHumanizedChanges, err := storage.HumanizedAuditChangeCreateCollection(store, humanizedChanges)
 
 	return retHumanizedChanges, err
@@ -54,7 +53,7 @@ func humanizeChangeSet(
 	plan *models.ModelPlan,
 	audits []*models.AuditChange,
 ) ([]*models.HumanizedAuditChange, error) {
-	// Ticket: (ChChCh Changes!) We are
+
 	planChanges, err := humanizeModelPlanAudits(ctx, store, plan, audits)
 	if err != nil {
 		return nil, err
