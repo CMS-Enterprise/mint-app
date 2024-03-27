@@ -490,11 +490,14 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
       'Financial guarantees are commitments made by one party, typically a financial institution or a company, to assume responsibility for the payment of a debt or the performance of an obligation if the debtor or obligor fails to fulfill their obligations.',
     dataType: 'boolean',
     formType: 'radio',
+    isPageStart: true,
     options: {
       true: 'Yes',
       false: 'No'
     },
-    isPageStart: true,
+    optionsRelatedInfo: {
+      true: 'participantRequireFinancialGuaranteeType'
+    },
     childRelation: {
       true: [
         () => participantsAndProviders.participantRequireFinancialGuaranteeType
