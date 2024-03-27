@@ -1,6 +1,6 @@
-import { ModelViewFilter } from 'gql/gen/graphql';
-
 import { TranslationModelPlan } from 'types/translation';
+
+import { ModelViewFilter } from '../../../gql/gen/graphql';
 
 export const modelPlan: TranslationModelPlan = {
   modelName: {
