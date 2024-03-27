@@ -45,7 +45,8 @@ const generalCharacteristicsMockData: GetGeneralCharacteristicsQuery['modelPlan'
   participationInModelPreconditionNote: 'Precondition note',
   hasComponentsOrTracks: true,
   hasComponentsOrTracksDiffer: 'Differ text',
-  hasComponentsOrTracksNote: 'Component note'
+  hasComponentsOrTracksNote: 'Component note',
+  participationInModelPreconditionWhich: null
 };
 
 const generalCharacteristicsMock = [
