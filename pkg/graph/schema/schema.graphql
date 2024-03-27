@@ -967,9 +967,9 @@ type AuditChange {
   tableName: String!
   action: String!
   fields: Map!
-  modifiedBy: UUID
+  modifiedBy: UUID!
   modifiedByUserAccount: UserAccount
-  modifiedDts: Time
+  modifiedDts: Time!
 }
 
 

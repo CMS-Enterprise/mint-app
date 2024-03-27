@@ -11,6 +11,7 @@ import (
 	"go.uber.org/zap"
 
 	"github.com/cmsgov/mint-app/mappings"
+	"github.com/cmsgov/mint-app/pkg/authentication"
 	"github.com/cmsgov/mint-app/pkg/constants"
 	"github.com/cmsgov/mint-app/pkg/models"
 	"github.com/cmsgov/mint-app/pkg/storage"
@@ -84,17 +85,25 @@ func humanizeModelPlanAudits(ctx context.Context, store *storage.Store, plan *mo
 		return m.TableName == "model_plan"
 	})
 	for _, modelAudit := range modelPlanAudits {
+		actorAccount, err := modelAudit.ModifiedByUserAccount(ctx)
+		if err != nil {
+			fmt.Printf("issue getting actor for audit  (%d) for plan %s, while attempting humanization ", modelAudit.ID, plan.ModelName)
+			continue
+		}
 
 		for fieldName, field := range modelAudit.Fields { //fieldName
 			change := models.NewHumanizedAuditChange(
 				constants.GetSystemAccountUUID(),
-				*modelAudit.ModifiedBy,
+				modelAudit.ModifiedBy,
+				actorAccount.CommonName,
+
 				plan.ID,
 				plan.ModelName,
-				*modelAudit.ModifiedDts,
+				modelAudit.ModifiedDts,
 				modelAudit.TableName,
 				modelAudit.TableID,
 				modelAudit.ID,
+				modelAudit.PrimaryKey,
 				modelAudit.Action,
 				fieldName,
 				fieldName, //TODO: (ChChCh Changes!) Add Translation
@@ -136,6 +145,11 @@ func humanizeParticipantsAndProviders(ctx context.Context, store *storage.Store,
 		New      interface{}
 	}
 	for _, modelAudit := range modelPlanAudits {
+		actorAccount, err := modelAudit.ModifiedByUserAccount(ctx)
+		if err != nil {
+			fmt.Printf("issue getting actor for audit  (%d) for plan %s, while attempting humanization ", modelAudit.ID, plan.ModelName)
+			continue
+		}
 
 		for fieldName, field := range modelAudit.Fields {
 			fieldInterface := translationMap[fieldName]
@@ -151,13 +165,15 @@ func humanizeParticipantsAndProviders(ctx context.Context, store *storage.Store,
 			}
 			change := models.NewHumanizedAuditChange(
 				constants.GetSystemAccountUUID(),
-				*modelAudit.ModifiedBy,
+				modelAudit.ModifiedBy,
+				actorAccount.CommonName,
 				plan.ID,
 				plan.ModelName,
-				*modelAudit.ModifiedDts,
+				modelAudit.ModifiedDts,
 				modelAudit.TableName,
 				modelAudit.TableID,
 				modelAudit.ID,
+				modelAudit.PrimaryKey,
 				modelAudit.Action,
 				fieldName,
 				fieldTrans.Label, //TODO: (ChChCh Changes!) We should also see about the Read Only Label, it is in context of not answering the question which makes sense here
@@ -198,9 +214,15 @@ func genericAuditTranslation(ctx context.Context, store *storage.Store, plan *mo
 	}
 	for _, audit := range audits {
 
+		actorAccount, err := audit.ModifiedByUserAccount(ctx)
+		if err != nil {
+			fmt.Printf("issue getting actor for audit  (%d) for plan %s, while attempting humanization ", audit.ID, plan.ModelName)
+			continue
+		}
+
 		for fieldName, field := range audit.Fields {
 
-			change, err := translateField(fieldName, field, audit, plan, translationMap)
+			change, err := translateField(fieldName, field, audit, actorAccount, plan, translationMap)
 			if err != nil {
 
 				fmt.Printf("issue translating field (%s) for plan %s ", fieldName, plan.ModelName)
@@ -216,7 +238,7 @@ func genericAuditTranslation(ctx context.Context, store *storage.Store, plan *mo
 	return changes, nil
 }
 
-func translateField(fieldName string, field models.AuditField, audit *models.AuditChange, modelPlan *models.ModelPlan, translationMap map[string]interface{}) (*models.HumanizedAuditChange, error) {
+func translateField(fieldName string, field models.AuditField, audit *models.AuditChange, actorAccount *authentication.UserAccount, modelPlan *models.ModelPlan, translationMap map[string]interface{}) (*models.HumanizedAuditChange, error) {
 	var translatedLabel string
 	var translatedOld interface{}
 	var translatedNew interface{}
@@ -245,13 +267,15 @@ func translateField(fieldName string, field models.AuditField, audit *models.Aud
 
 	change := models.NewHumanizedAuditChange(
 		constants.GetSystemAccountUUID(),
-		*audit.ModifiedBy,
+		audit.ModifiedBy,
+		actorAccount.CommonName,
 		modelPlan.ID,
 		modelPlan.ModelName,
-		*audit.ModifiedDts,
+		audit.ModifiedDts,
 		audit.TableName,
 		audit.TableID,
 		audit.ID,
+		audit.PrimaryKey,
 		audit.Action,
 		fieldName,
 		translatedLabel,
@@ -260,7 +284,7 @@ func translateField(fieldName string, field models.AuditField, audit *models.Aud
 		field.New,
 		translatedNew,
 	)
-	change.MetaDataRaw = nil //Ticket: (ChChCh Changes!) This should be specific to the type of change...
+	// change.MetaDataRaw = nil //Ticket: (ChChCh Changes!) This should be specific to the type of change...
 
 	return &change, nil
 

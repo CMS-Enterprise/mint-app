@@ -172,9 +172,9 @@ export type AuditChange = {
   fields: Scalars['Map']['output'];
   foreignKey?: Maybe<Scalars['UUID']['output']>;
   id: Scalars['Int']['output'];
-  modifiedBy?: Maybe<Scalars['UUID']['output']>;
+  modifiedBy: Scalars['UUID']['output'];
   modifiedByUserAccount?: Maybe<UserAccount>;
-  modifiedDts?: Maybe<Scalars['Time']['output']>;
+  modifiedDts: Scalars['Time']['output'];
   primaryKey: Scalars['UUID']['output'];
   tableName: Scalars['String']['output'];
 };

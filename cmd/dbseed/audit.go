@@ -82,7 +82,7 @@ func (s *Seeder) HumanizeModelPlanChanges(minutes int) {
 	for _, plan := range modelPlans {
 		_, err := humanizedaudit.HumanizeAuditsForModelPlan(s.Config.Context, s.Config.Store, s.Config.Logger, timeStart, timeEnd, plan.ID)
 		if err != nil {
-			fmt.Printf("issue humanizing audits for model plan '%s'. err %w", plan.ModelName, err)
+			fmt.Printf("issue humanizing audits for model plan '%s'. err %v", plan.ModelName, err)
 		}
 	}
 

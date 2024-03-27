@@ -2,10 +2,12 @@ CREATE TABLE humanized_audit_change (
     id UUID PRIMARY KEY,
     model_plan_id UUID NOT NULL REFERENCES model_plan(id),
     actor_id UUID NOT NULL REFERENCES user_account(id), --foreign key to user table
+    actor_name ZERO_STRING NOT NULL, --foreign key to user table
     change_id BIGINT NOT NULL REFERENCES audit.change(id), --foreign key to user table
     date TIMESTAMP NOT NULL, 
     table_id INTEGER REFERENCES audit.table_config(id), --foreign key to the audit table
     table_name ZERO_STRING NOT NULL, --potentially normalize this, wouldn't need to store, but useful?
+    primary_key UUID NOT NULL,
     action TEXT NOT NULL CHECK (action IN ('I', 'D', 'U', 'T')), 
     field_name ZERO_STRING NOT NULL,
     field_name_translated ZERO_STRING NOT NULL,
