@@ -8,7 +8,7 @@ import {
   waitFor,
   waitForElementToBeRemoved
 } from '@testing-library/react';
-import { GetModelPlanDocumentDocument } from 'gql/gen/graphql';
+import { GetModelPlanDocument } from 'gql/gen/graphql';
 import { GetModelPlan_modelPlan as GetModelPlanTypes } from 'gql/gen/types/GetModelPlan';
 import configureMockStore from 'redux-mock-store';
 
@@ -147,7 +147,7 @@ describe('The Model Plan Task List', () => {
   const modelPlanQuery = (modelPlanDraft: GetModelPlanTypes) => {
     return {
       request: {
-        query: GetModelPlanDocumentDocument,
+        query: GetModelPlanDocument,
         variables: {
           id: modelPlan.id
         }
