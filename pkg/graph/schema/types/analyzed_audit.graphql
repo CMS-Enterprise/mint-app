@@ -1,0 +1,75 @@
+"""
+Analyzed Audit Represents data about changes that have happened in a model plan, saved in an a
+"""
+
+type AnalyzedAudit {
+    id: UUID!
+    modelPlanID: UUID!
+
+    modelName: String!
+    date: Time!
+    changes: AnalyzedAuditChange!
+
+
+    createdBy: UUID!
+    createdByUserAccount: UserAccount!
+    createdDts: Time!
+    modifiedBy: UUID
+    modifiedByUserAccount: UserAccount
+    modifiedDts: Time
+}
+
+
+type AnalyzedAuditChange {
+    modelPlan: AnalyzedModelPlan
+    documents: AnalyzedDocuments
+    crTdls: AnalyzedCrTdls
+    planSections: AnalyzedPlanSections
+    modelLeads: AnalyzedModelLeads
+    planDiscussions: AnalyzedPlanDiscussions
+
+}
+type AnalyzedModelPlan {
+    """
+    This represents the oldName
+    """
+    oldName: String
+    statusChanges: [String]
+
+}
+
+type AnalyzedDocuments {
+    count: Int
+
+}
+
+type AnalyzedCrTdls {
+    activity: Boolean
+
+}
+type AnalyzedPlanSections {
+    updated: [String!]!
+    readyForReview: [String!]!
+    readyForClearance: [String!]!
+
+}
+
+type AnalyzedModelLeads {
+    added: [AnalyzedModelLeadInfo!]!
+}
+
+type AnalyzedPlanDiscussions {
+    activity: Boolean
+}
+
+type AnalyzedModelLeadInfo {
+    id: UUID!
+    userAccount: UserAccount!
+    commonName: String!
+
+}
+
+extend type Query {
+    analyzedAudits(dateAnalyzed: Time!): [AnalyzedAudit!]!
+    @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+}

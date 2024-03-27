@@ -42,6 +42,44 @@ export default gql(/* GraphQL */ `
                 replyID
                 content
               }
+              ... on DailyDigestCompleteActivityMeta {
+                version
+                type
+                modelPlanIDs
+                date
+                analyzedAudits {
+                  id
+                  modelPlanID
+                  modelName
+                  date
+                  changes {
+                    modelPlan {
+                      oldName
+                      statusChanges
+                    }
+                    documents {
+                      count
+                    }
+                    crTdls {
+                      activity
+                    }
+                    planSections {
+                      updated
+                      readyForReview
+                      readyForClearance
+                    }
+                    modelLeads {
+                      added {
+                        id
+                        commonName
+                      }
+                    }
+                    planDiscussions {
+                      activity
+                    }
+                  }
+                }
+              }
             }
           }
         }

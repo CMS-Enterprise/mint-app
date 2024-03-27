@@ -16,13 +16,6 @@ enum ParticipantsType {
   OTHER
 }
 
-enum ConfidenceType {
-  NOT_AT_ALL
-  SLIGHTLY
-  FAIRLY
-  COMPLETELY
-}
-
 enum RecruitmentType {
   LOI
   APPLICATION_COLLECTION_TOOL
@@ -89,12 +82,6 @@ enum ProviderLeaveType {
   NOT_ALLOWED_TO_LEAVE
   OTHER
   NOT_APPLICABLE
-}
-
-enum OverlapType {
-  YES_NEED_POLICIES
-  YES_NO_ISSUES
-  NO
 }
 
 enum ParticipantRequireFinancialGuaranteeType {

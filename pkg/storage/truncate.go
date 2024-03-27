@@ -1,6 +1,8 @@
 package storage
 
 import (
+	"fmt"
+
 	"go.uber.org/zap"
 )
 
@@ -31,7 +33,6 @@ func (s *Store) TruncateAllTablesDANGEROUS(logger *zap.Logger) error {
     model_plan,
     audit.change,
 	user_notification,
-	user_notification_preferences,
 	activity
 	`
 
@@ -49,14 +50,27 @@ func (s *Store) TruncateAllTablesDANGEROUS(logger *zap.Logger) error {
 
 func removeNonSystemAccounts(s *Store) error {
 
-	script := `DELETE FROM user_account
-    WHERE username NOT IN
-    `
+	scriptPreferences := `DELETE FROM user_notification_preferences
+               WHERE user_id IN (
+                   SELECT id
+                   FROM user_account
+                   WHERE username NOT IN %s
+               );`
+
+	scriptUser := `DELETE FROM user_account 
+					WHERE username NOT IN %s;`
+
 	systemAccounts := "( 'UNKNOWN_USER','MINT_SYSTEM')"
-	_, err := s.db.Exec(script + systemAccounts)
+
+	_, err := s.db.Exec(fmt.Sprintf(scriptPreferences, systemAccounts))
 	if err != nil {
 		return err
 	}
+	_, err = s.db.Exec(fmt.Sprintf(scriptUser, systemAccounts))
+	if err != nil {
+		return err
+	}
+
 	return nil
 
 }

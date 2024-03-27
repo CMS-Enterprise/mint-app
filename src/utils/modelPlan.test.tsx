@@ -1,6 +1,5 @@
 import { TeamRole } from 'gql/gen/graphql';
-
-import { GetModelCollaborators_modelPlan_collaborators as CollaboratorType } from 'queries/Collaborators/types/GetModelCollaborators';
+import { GetModelCollaborators_modelPlan_collaborators as GetCollaboratorsType } from 'gql/gen/types/GetModelCollaborators';
 
 import {
   collaboratorsOrderedByModelLeads,
@@ -23,7 +22,7 @@ describe('model plan util', () => {
   });
 
   it('returns array ordered by last name', () => {
-    const normalPerson: CollaboratorType = {
+    const normalPerson: GetCollaboratorsType = {
       __typename: 'PlanCollaborator',
       id: '123',
       userID: '123',
@@ -38,7 +37,7 @@ describe('model plan util', () => {
       },
       teamRoles: [TeamRole.IT_LEAD]
     };
-    const steveRogers: CollaboratorType = {
+    const steveRogers: GetCollaboratorsType = {
       __typename: 'PlanCollaborator',
       id: '123',
       userID: '123',
@@ -53,7 +52,7 @@ describe('model plan util', () => {
       },
       teamRoles: [TeamRole.MODEL_LEAD]
     };
-    const peterParker: CollaboratorType = {
+    const peterParker: GetCollaboratorsType = {
       __typename: 'PlanCollaborator',
       id: '123',
       userID: '123',

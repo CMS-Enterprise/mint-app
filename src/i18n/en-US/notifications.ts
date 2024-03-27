@@ -15,7 +15,10 @@ const notifications = {
       },
       dailyDigestComplete: {
         text: ' sent your daily digest.',
-        cta: 'View digest'
+        cta: {
+          show: 'View digest',
+          hide: 'Hide digest'
+        }
       },
       modelPlanShared: {
         text: ' shared {{-modelName}} with you.',
@@ -33,6 +36,40 @@ const notifications = {
         text: ' tagged you in a discussion reply for {{-modelName}}.',
         cta: 'View discussion'
       }
+    },
+    dailyDigest: {
+      heading: 'Your daily updates',
+      cta: 'View this Model Plan',
+      unsubscribe:
+        'To stop receiving notifications for a specific model, unfollow the model at the top of the Model Plan page.',
+      nameChange: 'This model has been renamed (previously {{-oldName}})',
+      addModelLead: '{{-name}} has been added as a model lead',
+      documentsAdded: '{{-number}} new documents have been uploaded',
+      crTdlsUpdate: 'Updates to FFS CRs/TDLs',
+      discussionActivity: 'New activity in Discussions',
+      readyForReview: '{{-taskSection}} is ready for review ',
+      readyForClearance: '{{-taskSection}}  is ready for clearance',
+      updatesTo: 'Updates to {{-taskSection}}',
+      planSections: {
+        plan_payments: 'Payments',
+        plan_ops_eval_and_learning: 'Operations, evaluation, and learning',
+        plan_participants_and_providers: 'Participants and providers',
+        plan_beneficiaries: 'Beneficiaries',
+        plan_general_characteristics: 'General characteristics',
+        plan_basics: 'Basics'
+      },
+      statusChange: {
+        PLAN_DRAFT: 'This model has been announced',
+        PLAN_COMPLETE: 'This Model Plan is complete',
+        ICIP_COMPLETE: 'The ICIP for this model is complete',
+        INTERNAL_CMMI_CLEARANCE: 'This model is in internal (CMMI) clearance',
+        CMS_CLEARANCE: 'This model is in CMS clearance',
+        HHS_CLEARANCE: 'This model is in HHS clearance',
+        OMB_ASRF_CLEARANCE: 'This model is in OMB/ASRF clearance',
+        CLEARED: 'This model has been cleared',
+        ANNOUNCED: 'This model has been announced'
+      },
+      moreChanges: '+{{-num}} more changes'
     }
   },
   settings: {

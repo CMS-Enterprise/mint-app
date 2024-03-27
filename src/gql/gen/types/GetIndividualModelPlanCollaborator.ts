@@ -6,10 +6,10 @@
 import { TeamRole } from "./../../../types/graphql-global-types";
 
 // ====================================================
-// GraphQL query operation: GetModelCollaborator
+// GraphQL query operation: GetIndividualModelPlanCollaborator
 // ====================================================
 
-export interface GetModelCollaborator_planCollaboratorByID_userAccount {
+export interface GetIndividualModelPlanCollaborator_planCollaboratorByID_userAccount {
   __typename: "UserAccount";
   id: UUID;
   commonName: string;
@@ -17,18 +17,18 @@ export interface GetModelCollaborator_planCollaboratorByID_userAccount {
   username: string;
 }
 
-export interface GetModelCollaborator_planCollaboratorByID {
+export interface GetIndividualModelPlanCollaborator_planCollaboratorByID {
   __typename: "PlanCollaborator";
   id: UUID;
-  userAccount: GetModelCollaborator_planCollaboratorByID_userAccount;
+  userAccount: GetIndividualModelPlanCollaborator_planCollaboratorByID_userAccount;
   userID: UUID;
   teamRoles: TeamRole[];
 }
 
-export interface GetModelCollaborator {
-  planCollaboratorByID: GetModelCollaborator_planCollaboratorByID;
+export interface GetIndividualModelPlanCollaborator {
+  planCollaboratorByID: GetIndividualModelPlanCollaborator_planCollaboratorByID;
 }
 
-export interface GetModelCollaboratorVariables {
+export interface GetIndividualModelPlanCollaboratorVariables {
   id: UUID;
 }
