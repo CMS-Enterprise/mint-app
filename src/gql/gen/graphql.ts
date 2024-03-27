@@ -54,14 +54,8 @@ export type Activity = {
   modifiedDts?: Maybe<Scalars['Time']['output']>;
 };
 
-export type ActivityMetaBaseStruct = {
-  __typename: 'ActivityMetaBaseStruct';
-  type: ActivityType;
-  version: Scalars['Int']['output'];
-};
-
 /** ActivityMetaData is a type that represents all the data that can be captured in an Activity */
-export type ActivityMetaData = ActivityMetaBaseStruct | TaggedInDiscussionReplyActivityMeta | TaggedInPlanDiscussionActivityMeta;
+export type ActivityMetaData = DailyDigestCompleteActivityMeta | TaggedInDiscussionReplyActivityMeta | TaggedInPlanDiscussionActivityMeta;
 
 /** ActivityType represents the possible activities that happen in application that might result in a notification */
 export enum ActivityType {
@@ -93,6 +87,73 @@ export enum AlternativePaymentModelType {
   NOT_APM = 'NOT_APM',
   REGULAR = 'REGULAR'
 }
+
+/** Analyzed Audit Represents data about changes that have happened in a model plan, saved in an a */
+export type AnalyzedAudit = {
+  __typename: 'AnalyzedAudit';
+  changes: AnalyzedAuditChange;
+  createdBy: Scalars['UUID']['output'];
+  createdByUserAccount: UserAccount;
+  createdDts: Scalars['Time']['output'];
+  date: Scalars['Time']['output'];
+  id: Scalars['UUID']['output'];
+  modelName: Scalars['String']['output'];
+  modelPlanID: Scalars['UUID']['output'];
+  modifiedBy?: Maybe<Scalars['UUID']['output']>;
+  modifiedByUserAccount?: Maybe<UserAccount>;
+  modifiedDts?: Maybe<Scalars['Time']['output']>;
+};
+
+export type AnalyzedAuditChange = {
+  __typename: 'AnalyzedAuditChange';
+  crTdls?: Maybe<AnalyzedCrTdls>;
+  documents?: Maybe<AnalyzedDocuments>;
+  modelLeads?: Maybe<AnalyzedModelLeads>;
+  modelPlan?: Maybe<AnalyzedModelPlan>;
+  planDiscussions?: Maybe<AnalyzedPlanDiscussions>;
+  planSections?: Maybe<AnalyzedPlanSections>;
+};
+
+export type AnalyzedCrTdls = {
+  __typename: 'AnalyzedCrTdls';
+  activity?: Maybe<Scalars['Boolean']['output']>;
+};
+
+export type AnalyzedDocuments = {
+  __typename: 'AnalyzedDocuments';
+  count?: Maybe<Scalars['Int']['output']>;
+};
+
+export type AnalyzedModelLeadInfo = {
+  __typename: 'AnalyzedModelLeadInfo';
+  commonName: Scalars['String']['output'];
+  id: Scalars['UUID']['output'];
+  userAccount: UserAccount;
+};
+
+export type AnalyzedModelLeads = {
+  __typename: 'AnalyzedModelLeads';
+  added: Array<AnalyzedModelLeadInfo>;
+};
+
+export type AnalyzedModelPlan = {
+  __typename: 'AnalyzedModelPlan';
+  /** This represents the oldName */
+  oldName?: Maybe<Scalars['String']['output']>;
+  statusChanges?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+};
+
+export type AnalyzedPlanDiscussions = {
+  __typename: 'AnalyzedPlanDiscussions';
+  activity?: Maybe<Scalars['Boolean']['output']>;
+};
+
+export type AnalyzedPlanSections = {
+  __typename: 'AnalyzedPlanSections';
+  readyForClearance: Array<Scalars['String']['output']>;
+  readyForReview: Array<Scalars['String']['output']>;
+  updated: Array<Scalars['String']['output']>;
+};
 
 export type AuditChange = {
   __typename: 'AuditChange';
@@ -205,6 +266,16 @@ export type CurrentUser = {
   launchDarkly: LaunchDarklySettings;
   notificationPreferences: UserNotificationPreferences;
   notifications: UserNotifications;
+};
+
+export type DailyDigestCompleteActivityMeta = {
+  __typename: 'DailyDigestCompleteActivityMeta';
+  analyzedAudits: Array<AnalyzedAudit>;
+  date: Scalars['Time']['output'];
+  modelPlanIDs: Array<Scalars['UUID']['output']>;
+  type: ActivityType;
+  userID: Scalars['UUID']['output'];
+  version: Scalars['Int']['output'];
 };
 
 export enum DataForMonitoringType {
@@ -2346,6 +2417,7 @@ export enum ProviderLeaveType {
 /** Query definition for the schema */
 export type Query = {
   __typename: 'Query';
+  analyzedAudits: Array<AnalyzedAudit>;
   auditChanges: Array<AuditChange>;
   currentUser: CurrentUser;
   existingModelCollection: Array<ExistingModel>;
@@ -2367,6 +2439,12 @@ export type Query = {
   searchOktaUsers: Array<UserInfo>;
   taskListSectionLocks: Array<TaskListSectionLockStatus>;
   userAccount: UserAccount;
+};
+
+
+/** Query definition for the schema */
+export type QueryAnalyzedAuditsArgs = {
+  dateAnalyzed: Scalars['Time']['input'];
 };
 
 
@@ -3005,6 +3083,49 @@ export type UpdateTdlMutationVariables = Exact<{
 
 export type UpdateTdlMutation = { __typename: 'Mutation', updatePlanTDL: { __typename: 'PlanTDL', id: UUID, modelPlanID: UUID, idNumber: string, dateInitiated: Time, title: string, note?: string | null } };
 
+export type CreateModelPlanCollaboratorMutationVariables = Exact<{
+  input: PlanCollaboratorCreateInput;
+}>;
+
+
+export type CreateModelPlanCollaboratorMutation = { __typename: 'Mutation', createPlanCollaborator: { __typename: 'PlanCollaborator', teamRoles: Array<TeamRole>, userID: UUID, modelPlanID: UUID, userAccount: { __typename: 'UserAccount', id: UUID, commonName: string, email: string } } };
+
+export type DeleteModelPlanCollaboratorMutationVariables = Exact<{
+  id: Scalars['UUID']['input'];
+}>;
+
+
+export type DeleteModelPlanCollaboratorMutation = { __typename: 'Mutation', deletePlanCollaborator: { __typename: 'PlanCollaborator', id: UUID, teamRoles: Array<TeamRole>, userID: UUID, modelPlanID: UUID, userAccount: { __typename: 'UserAccount', id: UUID, commonName: string, email: string, username: string } } };
+
+export type GetIndividualModelPlanCollaboratorQueryVariables = Exact<{
+  id: Scalars['UUID']['input'];
+}>;
+
+
+export type GetIndividualModelPlanCollaboratorQuery = { __typename: 'Query', planCollaboratorByID: { __typename: 'PlanCollaborator', id: UUID, userID: UUID, teamRoles: Array<TeamRole>, userAccount: { __typename: 'UserAccount', id: UUID, commonName: string, email: string, username: string } } };
+
+export type GetIsCollaboratorQueryVariables = Exact<{
+  id: Scalars['UUID']['input'];
+}>;
+
+
+export type GetIsCollaboratorQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, isCollaborator: boolean } };
+
+export type GetModelCollaboratorsQueryVariables = Exact<{
+  id: Scalars['UUID']['input'];
+}>;
+
+
+export type GetModelCollaboratorsQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, collaborators: Array<{ __typename: 'PlanCollaborator', id: UUID, userID: UUID, teamRoles: Array<TeamRole>, modelPlanID: UUID, createdDts: Time, userAccount: { __typename: 'UserAccount', id: UUID, commonName: string, email: string, username: string } }> } };
+
+export type UpdateModelPlanCollaboratorMutationVariables = Exact<{
+  id: Scalars['UUID']['input'];
+  newRole: Array<TeamRole> | TeamRole;
+}>;
+
+
+export type UpdateModelPlanCollaboratorMutation = { __typename: 'Mutation', updatePlanCollaborator: { __typename: 'PlanCollaborator', teamRoles: Array<TeamRole>, userID: UUID, modelPlanID: UUID, userAccount: { __typename: 'UserAccount', commonName: string, email: string, username: string } } };
+
 export type CreateModelPlanDiscussionMutationVariables = Exact<{
   input: PlanDiscussionCreateInput;
 }>;
@@ -3124,6 +3245,11 @@ export type GetNdaQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GetNdaQuery = { __typename: 'Query', ndaInfo: { __typename: 'NDAInfo', agreed: boolean, agreedDts?: Time | null } };
 
+export type UpdateNdaMutationVariables = Exact<{ [key: string]: never; }>;
+
+
+export type UpdateNdaMutation = { __typename: 'Mutation', agreeToNDA: { __typename: 'NDAInfo', agreed: boolean, agreedDts?: Time | null } };
+
 export type GetNotificationSettingsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -3132,7 +3258,7 @@ export type GetNotificationSettingsQuery = { __typename: 'Query', currentUser: {
 export type GetNotificationsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetNotificationsQuery = { __typename: 'Query', currentUser: { __typename: 'CurrentUser', notifications: { __typename: 'UserNotifications', numUnreadNotifications: number, notifications: Array<{ __typename: 'UserNotification', id: UUID, isRead: boolean, inAppSent: boolean, emailSent: boolean, createdDts: Time, activity: { __typename: 'Activity', activityType: ActivityType, entityID: UUID, actorID: UUID, actorUserAccount: { __typename: 'UserAccount', commonName: string }, metaData: { __typename: 'ActivityMetaBaseStruct' } | { __typename: 'TaggedInDiscussionReplyActivityMeta', version: number, type: ActivityType, modelPlanID: UUID, discussionID: UUID, replyID: UUID, content: string, modelPlan: { __typename: 'ModelPlan', modelName: string } } | { __typename: 'TaggedInPlanDiscussionActivityMeta', version: number, type: ActivityType, modelPlanID: UUID, discussionID: UUID, content: string, modelPlan: { __typename: 'ModelPlan', modelName: string } } } }> } } };
+export type GetNotificationsQuery = { __typename: 'Query', currentUser: { __typename: 'CurrentUser', notifications: { __typename: 'UserNotifications', numUnreadNotifications: number, notifications: Array<{ __typename: 'UserNotification', id: UUID, isRead: boolean, inAppSent: boolean, emailSent: boolean, createdDts: Time, activity: { __typename: 'Activity', activityType: ActivityType, entityID: UUID, actorID: UUID, actorUserAccount: { __typename: 'UserAccount', commonName: string }, metaData: { __typename: 'DailyDigestCompleteActivityMeta', version: number, type: ActivityType, modelPlanIDs: Array<UUID>, date: Time, analyzedAudits: Array<{ __typename: 'AnalyzedAudit', id: UUID, modelPlanID: UUID, modelName: string, date: Time, changes: { __typename: 'AnalyzedAuditChange', modelPlan?: { __typename: 'AnalyzedModelPlan', oldName?: string | null, statusChanges?: Array<string | null> | null } | null, documents?: { __typename: 'AnalyzedDocuments', count?: number | null } | null, crTdls?: { __typename: 'AnalyzedCrTdls', activity?: boolean | null } | null, planSections?: { __typename: 'AnalyzedPlanSections', updated: Array<string>, readyForReview: Array<string>, readyForClearance: Array<string> } | null, modelLeads?: { __typename: 'AnalyzedModelLeads', added: Array<{ __typename: 'AnalyzedModelLeadInfo', id: UUID, commonName: string }> } | null, planDiscussions?: { __typename: 'AnalyzedPlanDiscussions', activity?: boolean | null } | null } }> } | { __typename: 'TaggedInDiscussionReplyActivityMeta', version: number, type: ActivityType, modelPlanID: UUID, discussionID: UUID, replyID: UUID, content: string, modelPlan: { __typename: 'ModelPlan', modelName: string } } | { __typename: 'TaggedInPlanDiscussionActivityMeta', version: number, type: ActivityType, modelPlanID: UUID, discussionID: UUID, content: string, modelPlan: { __typename: 'ModelPlan', modelName: string } } } }> } } };
 
 export type GetPollNotificationsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -4337,6 +4463,272 @@ export function useUpdateTdlMutation(baseOptions?: Apollo.MutationHookOptions<Up
 export type UpdateTdlMutationHookResult = ReturnType<typeof useUpdateTdlMutation>;
 export type UpdateTdlMutationResult = Apollo.MutationResult<UpdateTdlMutation>;
 export type UpdateTdlMutationOptions = Apollo.BaseMutationOptions<UpdateTdlMutation, UpdateTdlMutationVariables>;
+export const CreateModelPlanCollaboratorDocument = gql`
+    mutation CreateModelPlanCollaborator($input: PlanCollaboratorCreateInput!) {
+  createPlanCollaborator(input: $input) {
+    teamRoles
+    userAccount {
+      id
+      commonName
+      email
+    }
+    userID
+    modelPlanID
+  }
+}
+    `;
+export type CreateModelPlanCollaboratorMutationFn = Apollo.MutationFunction<CreateModelPlanCollaboratorMutation, CreateModelPlanCollaboratorMutationVariables>;
+
+/**
+ * __useCreateModelPlanCollaboratorMutation__
+ *
+ * To run a mutation, you first call `useCreateModelPlanCollaboratorMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateModelPlanCollaboratorMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createModelPlanCollaboratorMutation, { data, loading, error }] = useCreateModelPlanCollaboratorMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useCreateModelPlanCollaboratorMutation(baseOptions?: Apollo.MutationHookOptions<CreateModelPlanCollaboratorMutation, CreateModelPlanCollaboratorMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateModelPlanCollaboratorMutation, CreateModelPlanCollaboratorMutationVariables>(CreateModelPlanCollaboratorDocument, options);
+      }
+export type CreateModelPlanCollaboratorMutationHookResult = ReturnType<typeof useCreateModelPlanCollaboratorMutation>;
+export type CreateModelPlanCollaboratorMutationResult = Apollo.MutationResult<CreateModelPlanCollaboratorMutation>;
+export type CreateModelPlanCollaboratorMutationOptions = Apollo.BaseMutationOptions<CreateModelPlanCollaboratorMutation, CreateModelPlanCollaboratorMutationVariables>;
+export const DeleteModelPlanCollaboratorDocument = gql`
+    mutation DeleteModelPlanCollaborator($id: UUID!) {
+  deletePlanCollaborator(id: $id) {
+    id
+    teamRoles
+    userAccount {
+      id
+      commonName
+      email
+      username
+    }
+    userID
+    modelPlanID
+  }
+}
+    `;
+export type DeleteModelPlanCollaboratorMutationFn = Apollo.MutationFunction<DeleteModelPlanCollaboratorMutation, DeleteModelPlanCollaboratorMutationVariables>;
+
+/**
+ * __useDeleteModelPlanCollaboratorMutation__
+ *
+ * To run a mutation, you first call `useDeleteModelPlanCollaboratorMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteModelPlanCollaboratorMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteModelPlanCollaboratorMutation, { data, loading, error }] = useDeleteModelPlanCollaboratorMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useDeleteModelPlanCollaboratorMutation(baseOptions?: Apollo.MutationHookOptions<DeleteModelPlanCollaboratorMutation, DeleteModelPlanCollaboratorMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteModelPlanCollaboratorMutation, DeleteModelPlanCollaboratorMutationVariables>(DeleteModelPlanCollaboratorDocument, options);
+      }
+export type DeleteModelPlanCollaboratorMutationHookResult = ReturnType<typeof useDeleteModelPlanCollaboratorMutation>;
+export type DeleteModelPlanCollaboratorMutationResult = Apollo.MutationResult<DeleteModelPlanCollaboratorMutation>;
+export type DeleteModelPlanCollaboratorMutationOptions = Apollo.BaseMutationOptions<DeleteModelPlanCollaboratorMutation, DeleteModelPlanCollaboratorMutationVariables>;
+export const GetIndividualModelPlanCollaboratorDocument = gql`
+    query GetIndividualModelPlanCollaborator($id: UUID!) {
+  planCollaboratorByID(id: $id) {
+    id
+    userAccount {
+      id
+      commonName
+      email
+      username
+    }
+    userID
+    teamRoles
+  }
+}
+    `;
+
+/**
+ * __useGetIndividualModelPlanCollaboratorQuery__
+ *
+ * To run a query within a React component, call `useGetIndividualModelPlanCollaboratorQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetIndividualModelPlanCollaboratorQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetIndividualModelPlanCollaboratorQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetIndividualModelPlanCollaboratorQuery(baseOptions: Apollo.QueryHookOptions<GetIndividualModelPlanCollaboratorQuery, GetIndividualModelPlanCollaboratorQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetIndividualModelPlanCollaboratorQuery, GetIndividualModelPlanCollaboratorQueryVariables>(GetIndividualModelPlanCollaboratorDocument, options);
+      }
+export function useGetIndividualModelPlanCollaboratorLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetIndividualModelPlanCollaboratorQuery, GetIndividualModelPlanCollaboratorQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetIndividualModelPlanCollaboratorQuery, GetIndividualModelPlanCollaboratorQueryVariables>(GetIndividualModelPlanCollaboratorDocument, options);
+        }
+export function useGetIndividualModelPlanCollaboratorSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetIndividualModelPlanCollaboratorQuery, GetIndividualModelPlanCollaboratorQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetIndividualModelPlanCollaboratorQuery, GetIndividualModelPlanCollaboratorQueryVariables>(GetIndividualModelPlanCollaboratorDocument, options);
+        }
+export type GetIndividualModelPlanCollaboratorQueryHookResult = ReturnType<typeof useGetIndividualModelPlanCollaboratorQuery>;
+export type GetIndividualModelPlanCollaboratorLazyQueryHookResult = ReturnType<typeof useGetIndividualModelPlanCollaboratorLazyQuery>;
+export type GetIndividualModelPlanCollaboratorSuspenseQueryHookResult = ReturnType<typeof useGetIndividualModelPlanCollaboratorSuspenseQuery>;
+export type GetIndividualModelPlanCollaboratorQueryResult = Apollo.QueryResult<GetIndividualModelPlanCollaboratorQuery, GetIndividualModelPlanCollaboratorQueryVariables>;
+export const GetIsCollaboratorDocument = gql`
+    query GetIsCollaborator($id: UUID!) {
+  modelPlan(id: $id) {
+    id
+    isCollaborator
+  }
+}
+    `;
+
+/**
+ * __useGetIsCollaboratorQuery__
+ *
+ * To run a query within a React component, call `useGetIsCollaboratorQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetIsCollaboratorQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetIsCollaboratorQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetIsCollaboratorQuery(baseOptions: Apollo.QueryHookOptions<GetIsCollaboratorQuery, GetIsCollaboratorQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetIsCollaboratorQuery, GetIsCollaboratorQueryVariables>(GetIsCollaboratorDocument, options);
+      }
+export function useGetIsCollaboratorLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetIsCollaboratorQuery, GetIsCollaboratorQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetIsCollaboratorQuery, GetIsCollaboratorQueryVariables>(GetIsCollaboratorDocument, options);
+        }
+export function useGetIsCollaboratorSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetIsCollaboratorQuery, GetIsCollaboratorQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetIsCollaboratorQuery, GetIsCollaboratorQueryVariables>(GetIsCollaboratorDocument, options);
+        }
+export type GetIsCollaboratorQueryHookResult = ReturnType<typeof useGetIsCollaboratorQuery>;
+export type GetIsCollaboratorLazyQueryHookResult = ReturnType<typeof useGetIsCollaboratorLazyQuery>;
+export type GetIsCollaboratorSuspenseQueryHookResult = ReturnType<typeof useGetIsCollaboratorSuspenseQuery>;
+export type GetIsCollaboratorQueryResult = Apollo.QueryResult<GetIsCollaboratorQuery, GetIsCollaboratorQueryVariables>;
+export const GetModelCollaboratorsDocument = gql`
+    query GetModelCollaborators($id: UUID!) {
+  modelPlan(id: $id) {
+    id
+    modelName
+    collaborators {
+      id
+      userAccount {
+        id
+        commonName
+        email
+        username
+      }
+      userID
+      teamRoles
+      modelPlanID
+      createdDts
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetModelCollaboratorsQuery__
+ *
+ * To run a query within a React component, call `useGetModelCollaboratorsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetModelCollaboratorsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetModelCollaboratorsQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetModelCollaboratorsQuery(baseOptions: Apollo.QueryHookOptions<GetModelCollaboratorsQuery, GetModelCollaboratorsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetModelCollaboratorsQuery, GetModelCollaboratorsQueryVariables>(GetModelCollaboratorsDocument, options);
+      }
+export function useGetModelCollaboratorsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetModelCollaboratorsQuery, GetModelCollaboratorsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetModelCollaboratorsQuery, GetModelCollaboratorsQueryVariables>(GetModelCollaboratorsDocument, options);
+        }
+export function useGetModelCollaboratorsSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetModelCollaboratorsQuery, GetModelCollaboratorsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetModelCollaboratorsQuery, GetModelCollaboratorsQueryVariables>(GetModelCollaboratorsDocument, options);
+        }
+export type GetModelCollaboratorsQueryHookResult = ReturnType<typeof useGetModelCollaboratorsQuery>;
+export type GetModelCollaboratorsLazyQueryHookResult = ReturnType<typeof useGetModelCollaboratorsLazyQuery>;
+export type GetModelCollaboratorsSuspenseQueryHookResult = ReturnType<typeof useGetModelCollaboratorsSuspenseQuery>;
+export type GetModelCollaboratorsQueryResult = Apollo.QueryResult<GetModelCollaboratorsQuery, GetModelCollaboratorsQueryVariables>;
+export const UpdateModelPlanCollaboratorDocument = gql`
+    mutation UpdateModelPlanCollaborator($id: UUID!, $newRole: [TeamRole!]!) {
+  updatePlanCollaborator(id: $id, newRoles: $newRole) {
+    teamRoles
+    userAccount {
+      commonName
+      email
+      username
+    }
+    userID
+    modelPlanID
+  }
+}
+    `;
+export type UpdateModelPlanCollaboratorMutationFn = Apollo.MutationFunction<UpdateModelPlanCollaboratorMutation, UpdateModelPlanCollaboratorMutationVariables>;
+
+/**
+ * __useUpdateModelPlanCollaboratorMutation__
+ *
+ * To run a mutation, you first call `useUpdateModelPlanCollaboratorMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateModelPlanCollaboratorMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateModelPlanCollaboratorMutation, { data, loading, error }] = useUpdateModelPlanCollaboratorMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      newRole: // value for 'newRole'
+ *   },
+ * });
+ */
+export function useUpdateModelPlanCollaboratorMutation(baseOptions?: Apollo.MutationHookOptions<UpdateModelPlanCollaboratorMutation, UpdateModelPlanCollaboratorMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateModelPlanCollaboratorMutation, UpdateModelPlanCollaboratorMutationVariables>(UpdateModelPlanCollaboratorDocument, options);
+      }
+export type UpdateModelPlanCollaboratorMutationHookResult = ReturnType<typeof useUpdateModelPlanCollaboratorMutation>;
+export type UpdateModelPlanCollaboratorMutationResult = Apollo.MutationResult<UpdateModelPlanCollaboratorMutation>;
+export type UpdateModelPlanCollaboratorMutationOptions = Apollo.BaseMutationOptions<UpdateModelPlanCollaboratorMutation, UpdateModelPlanCollaboratorMutationVariables>;
 export const CreateModelPlanDiscussionDocument = gql`
     mutation CreateModelPlanDiscussion($input: PlanDiscussionCreateInput!) {
   createPlanDiscussion(input: $input) {
@@ -5218,6 +5610,39 @@ export type GetNdaQueryHookResult = ReturnType<typeof useGetNdaQuery>;
 export type GetNdaLazyQueryHookResult = ReturnType<typeof useGetNdaLazyQuery>;
 export type GetNdaSuspenseQueryHookResult = ReturnType<typeof useGetNdaSuspenseQuery>;
 export type GetNdaQueryResult = Apollo.QueryResult<GetNdaQuery, GetNdaQueryVariables>;
+export const UpdateNdaDocument = gql`
+    mutation UpdateNDA {
+  agreeToNDA(agree: true) {
+    agreed
+    agreedDts
+  }
+}
+    `;
+export type UpdateNdaMutationFn = Apollo.MutationFunction<UpdateNdaMutation, UpdateNdaMutationVariables>;
+
+/**
+ * __useUpdateNdaMutation__
+ *
+ * To run a mutation, you first call `useUpdateNdaMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateNdaMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateNdaMutation, { data, loading, error }] = useUpdateNdaMutation({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useUpdateNdaMutation(baseOptions?: Apollo.MutationHookOptions<UpdateNdaMutation, UpdateNdaMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateNdaMutation, UpdateNdaMutationVariables>(UpdateNdaDocument, options);
+      }
+export type UpdateNdaMutationHookResult = ReturnType<typeof useUpdateNdaMutation>;
+export type UpdateNdaMutationResult = Apollo.MutationResult<UpdateNdaMutation>;
+export type UpdateNdaMutationOptions = Apollo.BaseMutationOptions<UpdateNdaMutation, UpdateNdaMutationVariables>;
 export const GetNotificationSettingsDocument = gql`
     query GetNotificationSettings {
   currentUser {
@@ -5306,6 +5731,44 @@ export const GetNotificationsDocument = gql`
               discussionID
               replyID
               content
+            }
+            ... on DailyDigestCompleteActivityMeta {
+              version
+              type
+              modelPlanIDs
+              date
+              analyzedAudits {
+                id
+                modelPlanID
+                modelName
+                date
+                changes {
+                  modelPlan {
+                    oldName
+                    statusChanges
+                  }
+                  documents {
+                    count
+                  }
+                  crTdls {
+                    activity
+                  }
+                  planSections {
+                    updated
+                    readyForReview
+                    readyForClearance
+                  }
+                  modelLeads {
+                    added {
+                      id
+                      commonName
+                    }
+                  }
+                  planDiscussions {
+                    activity
+                  }
+                }
+              }
             }
           }
         }

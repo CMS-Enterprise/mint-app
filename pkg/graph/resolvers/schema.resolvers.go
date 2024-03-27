@@ -75,13 +75,6 @@ func (r *mutationResolver) DeletePlanCollaborator(ctx context.Context, id uuid.U
 	return DeletePlanCollaborator(logger, id, principal, r.store)
 }
 
-// UpdatePlanBeneficiaries is the resolver for the updatePlanBeneficiaries field.
-func (r *mutationResolver) UpdatePlanBeneficiaries(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanBeneficiaries, error) {
-	principal := appcontext.Principal(ctx)
-	logger := appcontext.ZLogger(ctx)
-	return PlanBeneficiariesUpdate(logger, id, changes, principal, r.store)
-}
-
 // UploadNewPlanDocument is the resolver for the uploadNewPlanDocument field.
 func (r *mutationResolver) UploadNewPlanDocument(ctx context.Context, input model.PlanDocumentInput) (*models.PlanDocument, error) {
 	principal := appcontext.Principal(ctx)
@@ -347,33 +340,6 @@ func (r *operationalSolutionResolver) Documents(ctx context.Context, obj *models
 // OperationalSolutionSubtasks is the resolver for the operationalSolutionSubtasks field.
 func (r *operationalSolutionResolver) OperationalSolutionSubtasks(ctx context.Context, obj *models.OperationalSolution) ([]*models.OperationalSolutionSubtask, error) {
 	return OperationalSolutionSubtaskGetBySolutionIDLOADER(ctx, obj.ID)
-}
-
-// Beneficiaries is the resolver for the beneficiaries field.
-func (r *planBeneficiariesResolver) Beneficiaries(ctx context.Context, obj *models.PlanBeneficiaries) ([]model.BeneficiariesType, error) {
-	bTypes := models.ConvertEnums[model.BeneficiariesType](obj.Beneficiaries)
-	return bTypes, nil
-}
-
-// BeneficiarySelectionMethod is the resolver for the beneficiarySelectionMethod field.
-func (r *planBeneficiariesResolver) BeneficiarySelectionMethod(ctx context.Context, obj *models.PlanBeneficiaries) ([]model.SelectionMethodType, error) {
-	sTypes := models.ConvertEnums[model.SelectionMethodType](obj.BeneficiarySelectionMethod)
-	return sTypes, nil
-}
-
-// BeneficiarySelectionFrequency is the resolver for the beneficiarySelectionFrequency field.
-func (r *planBeneficiariesResolver) BeneficiarySelectionFrequency(ctx context.Context, obj *models.PlanBeneficiaries) ([]models.FrequencyType, error) {
-	return models.ConvertEnums[models.FrequencyType](obj.BeneficiarySelectionFrequency), nil
-}
-
-// BeneficiaryRemovalFrequency is the resolver for the beneficiaryRemovalFrequency field.
-func (r *planBeneficiariesResolver) BeneficiaryRemovalFrequency(ctx context.Context, obj *models.PlanBeneficiaries) ([]models.FrequencyType, error) {
-	return models.ConvertEnums[models.FrequencyType](obj.BeneficiaryRemovalFrequency), nil
-}
-
-// PrecedenceRules is the resolver for the precedenceRules field.
-func (r *planBeneficiariesResolver) PrecedenceRules(ctx context.Context, obj *models.PlanBeneficiaries) ([]models.YesNoType, error) {
-	return models.ConvertEnums[models.YesNoType](obj.PrecedenceRules), nil
 }
 
 // TeamRoles is the resolver for the teamRoles field.
@@ -663,11 +629,6 @@ func (r *Resolver) OperationalSolution() generated.OperationalSolutionResolver {
 	return &operationalSolutionResolver{r}
 }
 
-// PlanBeneficiaries returns generated.PlanBeneficiariesResolver implementation.
-func (r *Resolver) PlanBeneficiaries() generated.PlanBeneficiariesResolver {
-	return &planBeneficiariesResolver{r}
-}
-
 // PlanCollaborator returns generated.PlanCollaboratorResolver implementation.
 func (r *Resolver) PlanCollaborator() generated.PlanCollaboratorResolver {
 	return &planCollaboratorResolver{r}
@@ -713,7 +674,6 @@ type existingModelLinksResolver struct{ *Resolver }
 type mutationResolver struct{ *Resolver }
 type operationalNeedResolver struct{ *Resolver }
 type operationalSolutionResolver struct{ *Resolver }
-type planBeneficiariesResolver struct{ *Resolver }
 type planCollaboratorResolver struct{ *Resolver }
 type planDiscussionResolver struct{ *Resolver }
 type planDocumentResolver struct{ *Resolver }

@@ -12,3 +12,23 @@ enum YesNoOtherType {
   NO
   OTHER
 }
+
+enum OverlapType {
+  YES_NEED_POLICIES
+  YES_NO_ISSUES
+  NO
+}
+
+enum TaskStatus {
+  READY
+  IN_PROGRESS
+  READY_FOR_REVIEW
+  READY_FOR_CLEARANCE
+}
+
+enum ConfidenceType {
+  NOT_AT_ALL
+  SLIGHTLY
+  FAIRLY
+  COMPLETELY
+}

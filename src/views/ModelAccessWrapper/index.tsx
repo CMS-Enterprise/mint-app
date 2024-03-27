@@ -8,14 +8,9 @@
 import React, { useEffect } from 'react';
 import { RootStateOrAny, useSelector } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
-import { useQuery } from '@apollo/client';
+import { useGetIsCollaboratorQuery } from 'gql/gen/graphql';
 import { useFlags } from 'launchdarkly-react-client-sdk';
 
-import GetIsCollaborator from 'queries/Collaborators/GetIsCollaborator';
-import {
-  GetIsCollaborator as GetIsCollaboratorType,
-  GetIsCollaboratorVariables
-} from 'queries/Collaborators/types/GetIsCollaborator';
 import { isUUID } from 'utils/modelPlan';
 import { isAssessment, isMAC } from 'utils/user';
 
@@ -44,10 +39,7 @@ const ModelAccessWrapper = ({ children }: ModelAccessWrapperProps) => {
 
   const helpArticle: boolean = pathname.split('/')[1] === 'help-and-knowledge';
 
-  const { data, loading } = useQuery<
-    GetIsCollaboratorType,
-    GetIsCollaboratorVariables
-  >(GetIsCollaborator, {
+  const { data, loading } = useGetIsCollaboratorQuery({
     variables: {
       id: modelID
     },
