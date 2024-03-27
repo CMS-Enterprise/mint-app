@@ -23,7 +23,7 @@ type translationParticipantsAndProviders struct {
 	ParticipantsCurrentlyInModelsNote      TranslationFieldProperties                     `json:"participantsCurrentlyInModelsNote" db:"participants_currently_in_models_note"`
 	ModelApplicationLevel                  TranslationFieldProperties                     `json:"modelApplicationLevel" db:"model_application_level"`
 	ExpectedNumberOfParticipants           TranslationFieldProperties                     `json:"expectedNumberOfParticipants" db:"expected_number_of_participants" statusWeight:"1"`
-	EstimateConfidence                     TranslationFieldProperties                     `json:"estimateConfidence" db:"estimate_confidence" statusWeight:"1"`
+	EstimateConfidence                     TranslationFieldPropertiesWithOptions          `json:"estimateConfidence" db:"estimate_confidence" statusWeight:"1"`
 	ConfidenceNote                         TranslationFieldProperties                     `json:"confidenceNote" db:"confidence_note"`
 	RecruitmentMethod                      TranslationFieldProperties                     `json:"recruitmentMethod" db:"recruitment_method" statusWeight:"1"`
 	RecruitmentOther                       TranslationFieldProperties                     `json:"recruitmentOther" db:"recruitment_other"`

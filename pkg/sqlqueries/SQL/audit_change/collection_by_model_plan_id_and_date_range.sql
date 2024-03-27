@@ -3,7 +3,6 @@ WITH PLAN AS (
         id AS id,
         id AS model_plan_id,
         'model_plan_id' AS fk_field
-    -- FROM model_plan WHERE model_name = 'Enhancing Oncology Model'
     FROM model_plan WHERE id = :model_plan_id
 ),
 
