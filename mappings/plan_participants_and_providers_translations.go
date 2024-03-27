@@ -51,8 +51,8 @@ type translationParticipantsAndProviders struct {
 	CoordinateWorkNote                     TranslationFieldProperties                     `json:"coordinateWorkNote" db:"coordinate_work_note"`
 	GainsharePayments                      TranslationFieldPropertiesWithOptions          `json:"gainsharePayments" db:"gainshare_payments" statusWeight:"1"`
 	GainsharePaymentsTrack                 TranslationFieldProperties                     `json:"gainsharePaymentsTrack" db:"gainshare_payments_track"`
-	GainsharePaymentsEligibility           TranslationFieldPropertiesWithOptions          `json:"gainsharePaymentsEligibilityOther" db:"gainshare_payments_eligibility_other"`
-	GainsharePaymentsEligibilityOther      TranslationFieldProperties                     `json:"gainsharePaymentsEligibility" db:"gainshare_payments_eligibility"`
+	GainsharePaymentsEligibility           TranslationFieldPropertiesWithOptions          `json:"gainsharePaymentsEligibility" db:"gainshare_payments_eligibility"`
+	GainsharePaymentsEligibilityOther      TranslationFieldProperties                     `json:"gainsharePaymentsEligibilityOther" db:"gainshare_payments_eligibility_other"`
 	GainsharePaymentsNote                  TranslationFieldProperties                     `json:"gainsharePaymentsNote" db:"gainshare_payments_note"`
 	ParticipantsIds                        TranslationFieldPropertiesWithOptions          `json:"participantsIds" db:"participants_ids"`
 	ParticipantsIdsOther                   TranslationFieldProperties                     `json:"participantsIdsOther" db:"participants_ids_other"`
