@@ -25,7 +25,7 @@ const notificationsMock = [
                 isRead: false,
                 inAppSent: true,
                 emailSent: true,
-                createdDts: '2024-03-27T18:09:03.015689Z',
+                createdDts: '2022-03-27T18:09:03.015689Z',
                 activity: {
                   activityType: 'TAGGED_IN_DISCUSSION',
                   entityID: '279ba41b-232a-49b2-9607-a3951d301218',
@@ -52,7 +52,7 @@ const notificationsMock = [
                 isRead: false,
                 inAppSent: true,
                 emailSent: true,
-                createdDts: '2024-03-27T18:09:03.015689Z',
+                createdDts: '2022-03-27T18:09:03.015689Z',
                 activity: {
                   activityType: 'TAGGED_IN_DISCUSSION',
                   entityID: 'ccf6830b-5c20-4394-84d6-78e0c9f31ec5',
