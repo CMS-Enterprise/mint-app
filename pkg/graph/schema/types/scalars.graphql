@@ -23,3 +23,9 @@ https://gqlgen.com/reference/file-upload/
 Represents a multipart file upload
 """
 scalar Upload
+
+"""
+https://gqlgen.com/reference/scalars/#any
+Maps an arbitrary GraphQL value to a interface{} Go type.
+"""
+scalar Any

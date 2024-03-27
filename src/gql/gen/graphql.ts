@@ -15,6 +15,11 @@ export type Scalars = {
   Boolean: { input: boolean; output: boolean; }
   Int: { input: number; output: number; }
   Float: { input: number; output: number; }
+  /**
+   * https://gqlgen.com/reference/scalars/#any
+   * Maps an arbitrary GraphQL value to a interface{} Go type.
+   */
+  Any: { input: any; output: any; }
   /** Maps an arbitrary GraphQL value to a map[string]interface{} Go type. */
   Map: { input: any; output: any; }
   /** TaggedHTML represents an input type for HTML that could also include tags that reference another entity */
@@ -488,6 +493,43 @@ export enum GeographyType {
   REGION = 'REGION',
   STATE = 'STATE'
 }
+
+/** HumanizedAuditChange represent a point in time change made to part of application. */
+export type HumanizedAuditChange = {
+  __typename: 'HumanizedAuditChange';
+  action: Scalars['String']['output'];
+  actorID: Scalars['UUID']['output'];
+  actorName: Scalars['String']['output'];
+  changeID: Scalars['Int']['output'];
+  createdBy: Scalars['UUID']['output'];
+  createdByUserAccount: UserAccount;
+  createdDts: Scalars['Time']['output'];
+  date: Scalars['Time']['output'];
+  fieldName: Scalars['String']['output'];
+  fieldNameTranslated: Scalars['String']['output'];
+  id: Scalars['UUID']['output'];
+  metaData: HumanizedAuditMetaData;
+  modelName: Scalars['String']['output'];
+  modifiedBy?: Maybe<Scalars['UUID']['output']>;
+  modifiedByUserAccount?: Maybe<UserAccount>;
+  modifiedDts?: Maybe<Scalars['Time']['output']>;
+  new?: Maybe<Scalars['Any']['output']>;
+  newTranslated?: Maybe<Scalars['Any']['output']>;
+  old?: Maybe<Scalars['Any']['output']>;
+  oldTranslated?: Maybe<Scalars['Any']['output']>;
+  primaryKey: Scalars['UUID']['output'];
+  tableID: Scalars['Int']['output'];
+  tableName: Scalars['String']['output'];
+};
+
+export type HumanizedAuditMetaBaseStruct = {
+  __typename: 'HumanizedAuditMetaBaseStruct';
+  tableName?: Maybe<Scalars['String']['output']>;
+  version: Scalars['Int']['output'];
+};
+
+/** HumanizedAuditMetaData is a type that represents all the data that can be captured in a humanized audit */
+export type HumanizedAuditMetaData = HumanizedAuditMetaBaseStruct;
 
 export enum KeyCharacteristic {
   EPISODE_BASED = 'EPISODE_BASED',
@@ -2413,6 +2455,7 @@ export type Query = {
   currentUser: CurrentUser;
   existingModelCollection: Array<ExistingModel>;
   existingModelLink: ExistingModelLink;
+  humanizedAuditChangeCollection?: Maybe<Array<HumanizedAuditChange>>;
   modelPlan: ModelPlan;
   modelPlanCollection: Array<ModelPlan>;
   mostRecentDiscussionRoleSelection?: Maybe<DiscussionRoleSelection>;
@@ -2449,6 +2492,12 @@ export type QueryAuditChangesArgs = {
 /** Query definition for the schema */
 export type QueryExistingModelLinkArgs = {
   id: Scalars['UUID']['input'];
+};
+
+
+/** Query definition for the schema */
+export type QueryHumanizedAuditChangeCollectionArgs = {
+  modelPlanID: Scalars['UUID']['input'];
 };
 
 
