@@ -24,6 +24,7 @@ const translationSections = {
   payments,
   collaborators
 };
+
 // Restructures translations to key off db_field rather than gql_field
 const mapDBFieldToKey = translations => {
   const formattedTranslation = {};
@@ -41,17 +42,19 @@ const mapDBFieldToKey = translations => {
   return formattedTranslation;
 };
 
-function parseTranslationFileToJSON() {
-  const formattedTranslations = mapDBFieldToKey(translationSections);
-
+const parseTypscriptToJSON = translations => {
   const outputFile = './mappings/translations/model_plan_translations.json';
 
-  const jsonString = JSON.stringify(
-    JSON.parse(JSON.stringify(formattedTranslations)),
-    null,
-    2
-  );
-  fs.writeFileSync(outputFile, jsonString);
-}
+  const jsonObj = JSON.parse(JSON.stringify(translations));
 
-parseTranslationFileToJSON();
+  // writeFileSync must accept string as 'data' or be an instance of Buffer, TypedArray, or DataView
+  const jsonString = JSON.stringify(jsonObj, null, 2);
+
+  fs.writeFileSync(outputFile, jsonString);
+};
+
+(function main() {
+  const transformedTranslationSections = mapDBFieldToKey(translationSections);
+
+  parseTypscriptToJSON(transformedTranslationSections);
+})();
