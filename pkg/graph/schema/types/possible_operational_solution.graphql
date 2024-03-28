@@ -18,11 +18,3 @@ extend type Query {
   possibleOperationalSolutions: [PossibleOperationalSolution!]!
   @hasAnyRole(roles: [MINT_USER, MINT_MAC])
 }
-
-extend type Mutation {
-  createOperationalSolution(operationalNeedID: UUID!, solutionType: OperationalSolutionKey, changes: OperationalSolutionChanges!): OperationalSolution!
-  @hasRole(role: MINT_USER)
-
-  updateOperationalSolution(id: UUID!, changes: OperationalSolutionChanges!): OperationalSolution!
-  @hasRole(role: MINT_USER)
-}

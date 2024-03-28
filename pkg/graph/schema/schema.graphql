@@ -1,14 +1,9 @@
 """
 Query definition for the schema
 """
-type Query {
-  searchOktaUsers(searchTerm: String!): [UserInfo!]!
-  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
-}
+type Query
 
 """
 Mutations definition for the schema
 """
-type Mutation {
-  dummyMutation: Boolean!
-}
+type Mutation

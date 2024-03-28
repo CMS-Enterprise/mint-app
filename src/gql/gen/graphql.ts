@@ -657,7 +657,6 @@ export type Mutation = {
   deletePlanDocument: Scalars['Int']['output'];
   deletePlanFavorite: PlanFavorite;
   deletePlanTDL: PlanTdl;
-  dummyMutation: Scalars['Boolean']['output'];
   linkNewPlanDocument: PlanDocument;
   lockTaskListSection: Scalars['Boolean']['output'];
   /** Marks all notifications for the current user as read, and returns the updated notifications */

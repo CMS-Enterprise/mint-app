@@ -8,3 +8,8 @@ type UserInfo {
   email: String!
   username: String!
 }
+
+extend type Query {
+  searchOktaUsers(searchTerm: String!): [UserInfo!]!
+  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+}
