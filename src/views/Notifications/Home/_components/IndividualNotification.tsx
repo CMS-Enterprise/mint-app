@@ -15,6 +15,7 @@ import {
   ActivityCTA,
   activityText,
   isDailyDigest,
+  isNewDiscussionReply,
   isTaggedInDiscussion,
   isTaggedInDiscussionReply
 } from './_utils';
@@ -125,7 +126,8 @@ const IndividualNotification = ({
                 </p>
                 {!isMobile &&
                   (isTaggedInDiscussion(metaData) ||
-                    isTaggedInDiscussionReply(metaData)) && (
+                    isTaggedInDiscussionReply(metaData) ||
+                    isNewDiscussionReply(metaData)) && (
                     <MentionTextArea
                       className="notification__content text-base-darker"
                       id={`mention-${metaData.discussionID}`}
