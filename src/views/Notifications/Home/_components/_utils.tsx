@@ -44,7 +44,7 @@ export const isDailyDigest = (
   return data.__typename === 'DailyDigestCompleteActivityMeta';
 };
 
-export const isNewReply = (
+export const isNewDiscussionReply = (
   data:
     | TaggedInDiscussionReplyActivityType
     | TaggedInDiscussionActivityType
@@ -77,6 +77,11 @@ export const activityText = (data: MetaDataType) => {
       <Trans i18nKey="notifications:index.activityType.dailyDigestComplete.text" />
     );
   }
+  if (isNewDiscussionReply(data)) {
+    return (
+      <Trans i18nKey="notifications:index.activityType.newDiscussionReply.text" />
+    );
+  }
   return '';
 };
 
@@ -99,6 +104,14 @@ export const ActivityCTA = ({
     return (
       <>
         <Trans i18nKey="notifications:index.activityType.taggedInDiscussionReply.cta" />
+        <Icon.ArrowForward className="margin-left-1" aria-hidden />
+      </>
+    );
+  }
+  if (isNewDiscussionReply(data)) {
+    return (
+      <>
+        <Trans i18nKey="notifications:index.activityType.newDiscussionReply.cta" />
         <Icon.ArrowForward className="margin-left-1" aria-hidden />
       </>
     );
