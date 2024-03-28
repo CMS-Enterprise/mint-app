@@ -10346,6 +10346,13 @@ type HumanizedAuditMetaBaseStruct {
 
 }
 
+enum DatabaseOperation {
+    INSERT
+    UPDATE
+    DELETE
+    TRUNCATE
+}
+
 """
 HumanizedAuditChange represent a point in time change made to part of application.
 """
@@ -10358,7 +10365,7 @@ type HumanizedAuditChange {
     primaryKey: UUID!
     
     date: Time!
-    action: String! #TODO: (ChChCh Changes!) Consider strongly typing this, we shouldn't rely on single char representation etc
+    action: DatabaseOperation!
     fieldName: String!
     fieldNameTranslated: String!
     old: Any 
@@ -18413,9 +18420,9 @@ func (ec *executionContext) _HumanizedAuditChange_action(ctx context.Context, fi
 		}
 		return graphql.Null
 	}
-	res := resTmp.(string)
+	res := resTmp.(models.DatabaseOperation)
 	fc.Result = res
-	return ec.marshalNString2string(ctx, field.Selections, res)
+	return ec.marshalNDatabaseOperation2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐDatabaseOperation(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_HumanizedAuditChange_action(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -18425,7 +18432,7 @@ func (ec *executionContext) fieldContext_HumanizedAuditChange_action(ctx context
 		IsMethod:   false,
 		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type String does not have child fields")
+			return nil, errors.New("field of type DatabaseOperation does not have child fields")
 		},
 	}
 	return fc, nil
@@ -76354,6 +76361,22 @@ func (ec *executionContext) marshalNDataToSendParticipantsType2ᚕgithubᚗcom�
 	}
 
 	return ret
+}
+
+func (ec *executionContext) unmarshalNDatabaseOperation2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐDatabaseOperation(ctx context.Context, v interface{}) (models.DatabaseOperation, error) {
+	tmp, err := graphql.UnmarshalString(v)
+	res := models.DatabaseOperation(tmp)
+	return res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalNDatabaseOperation2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐDatabaseOperation(ctx context.Context, sel ast.SelectionSet, v models.DatabaseOperation) graphql.Marshaler {
+	res := graphql.MarshalString(string(v))
+	if res == graphql.Null {
+		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
+			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
+		}
+	}
+	return res
 }
 
 func (ec *executionContext) marshalNDiscussionReply2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐDiscussionReply(ctx context.Context, sel ast.SelectionSet, v models.DiscussionReply) graphql.Marshaler {

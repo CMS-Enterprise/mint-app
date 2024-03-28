@@ -330,6 +330,13 @@ export enum DataToSendParticipantsType {
   PROVIDER_LEVEL_DATA = 'PROVIDER_LEVEL_DATA'
 }
 
+export enum DatabaseOperation {
+  DELETE = 'DELETE',
+  INSERT = 'INSERT',
+  TRUNCATE = 'TRUNCATE',
+  UPDATE = 'UPDATE'
+}
+
 /** DiscussionReply represents a discussion reply */
 export type DiscussionReply = {
   __typename: 'DiscussionReply';
@@ -497,7 +504,7 @@ export enum GeographyType {
 /** HumanizedAuditChange represent a point in time change made to part of application. */
 export type HumanizedAuditChange = {
   __typename: 'HumanizedAuditChange';
-  action: Scalars['String']['output'];
+  action: DatabaseOperation;
   actorID: Scalars['UUID']['output'];
   actorName: Scalars['String']['output'];
   changeID: Scalars['Int']['output'];

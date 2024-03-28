@@ -1,3 +1,10 @@
+CREATE TYPE DATABASE_OPERATION AS ENUM (
+    'INSERT', 'UPDATE', 'DELETE', 'TRUNCATE'
+);
+
+COMMENT ON TYPE DATABASE_OPERATION IS 'The possible types of operations that can cause an audit entry.
+Currently they are represented in the audit.change table as the first letter of the action EG I, D, U, T.';
+
 CREATE TABLE humanized_audit_change (
     id UUID PRIMARY KEY,
     model_plan_id UUID NOT NULL REFERENCES model_plan(id),
@@ -8,7 +15,7 @@ CREATE TABLE humanized_audit_change (
     table_id INTEGER REFERENCES audit.table_config(id), --foreign key to the audit table
     table_name ZERO_STRING NOT NULL, --potentially normalize this, wouldn't need to store, but useful?
     primary_key UUID NOT NULL,
-    action TEXT NOT NULL CHECK (action IN ('I', 'D', 'U', 'T')), 
+    action DATABASE_OPERATION NOT NULL, 
     field_name ZERO_STRING NOT NULL,
     field_name_translated ZERO_STRING NOT NULL,
     old ZERO_STRING, -- could be null

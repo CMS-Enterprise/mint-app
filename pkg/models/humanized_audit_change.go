@@ -6,6 +6,18 @@ import (
 	"github.com/google/uuid"
 )
 
+// DatabaseOperation The possible types of operations that can cause an audit entry.
+// Currently they are represented in the audit.change table as the first letter of the action EG I, D, U, T
+type DatabaseOperation string
+
+// these are all the possible values of a Database Operation
+const (
+	DBOpInsert   DatabaseOperation = "INSERT"
+	DBOpUpdate   DatabaseOperation = "UPDATE"
+	DBOpDelete   DatabaseOperation = "DELETE"
+	DBOpTruncate DatabaseOperation = "TRUNCATE"
+)
+
 /* TODO: EASI-(ChChCh Changes!) Work on a job to process data and make type safe audit results
 1. See about making a method that will
    a. get all changes from a time period
@@ -22,14 +34,14 @@ type HumanizedAuditChange struct {
 
 	baseStruct
 	modelPlanRelation
-	ModelName           string    `json:"modelName" db:"model_name"`
-	TableID             int       `json:"tableID" db:"table_id"`
-	TableName           string    `json:"tableName" db:"table_name"`
-	PrimaryKey          uuid.UUID `json:"primaryKey" db:"primary_key"`
-	Date                time.Time `json:"date" db:"date"`
-	Action              string    `json:"action" db:"action"`
-	FieldName           string    `json:"fieldName" db:"field_name"`
-	FieldNameTranslated string    `json:"fieldNameTranslated" db:"field_name_translated"`
+	ModelName           string            `json:"modelName" db:"model_name"`
+	TableID             int               `json:"tableID" db:"table_id"`
+	TableName           string            `json:"tableName" db:"table_name"`
+	PrimaryKey          uuid.UUID         `json:"primaryKey" db:"primary_key"`
+	Date                time.Time         `json:"date" db:"date"`
+	Action              DatabaseOperation `json:"action" db:"action"`
+	FieldName           string            `json:"fieldName" db:"field_name"`
+	FieldNameTranslated string            `json:"fieldNameTranslated" db:"field_name_translated"`
 
 	// Ticket: (ChChCh Changes!) We might consider changing the type from interface to string? But it could be an array. This gives us options
 	Old           interface{} `json:"old" db:"old"`
@@ -57,7 +69,7 @@ func NewHumanizedAuditChange(
 	tableID int,
 	changeID int,
 	primaryKey uuid.UUID,
-	action string,
+	action DatabaseOperation,
 	fieldName string,
 	fieldNameTranslated string,
 	old interface{},

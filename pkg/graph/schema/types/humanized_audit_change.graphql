@@ -10,6 +10,13 @@ type HumanizedAuditMetaBaseStruct {
 
 }
 
+enum DatabaseOperation {
+    INSERT
+    UPDATE
+    DELETE
+    TRUNCATE
+}
+
 """
 HumanizedAuditChange represent a point in time change made to part of application.
 """
@@ -22,7 +29,7 @@ type HumanizedAuditChange {
     primaryKey: UUID!
     
     date: Time!
-    action: String! #TODO: (ChChCh Changes!) Consider strongly typing this, we shouldn't rely on single char representation etc
+    action: DatabaseOperation!
     fieldName: String!
     fieldNameTranslated: String!
     old: Any 
