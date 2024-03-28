@@ -11,32 +11,31 @@ import (
 
 	"github.com/cmsgov/mint-app/pkg/appcontext"
 	"github.com/cmsgov/mint-app/pkg/graph/generated"
-	"github.com/cmsgov/mint-app/pkg/graph/model"
 	"github.com/cmsgov/mint-app/pkg/models"
 )
 
-// CreateOperationalSolutionSubtasks is the resolver for the createOperationalSolutionSubtasks field.
-func (r *mutationResolver) CreateOperationalSolutionSubtasks(ctx context.Context, solutionID uuid.UUID, inputs []*model.CreateOperationalSolutionSubtaskInput) ([]*models.OperationalSolutionSubtask, error) {
-	logger := appcontext.ZLogger(ctx)
+// CreateOperationalSolution is the resolver for the createOperationalSolution field.
+func (r *mutationResolver) CreateOperationalSolution(ctx context.Context, operationalNeedID uuid.UUID, solutionType *models.OperationalSolutionKey, changes map[string]interface{}) (*models.OperationalSolution, error) {
 	principal := appcontext.Principal(ctx)
-
-	return OperationalSolutionSubtasksCreate(logger, r.store, inputs, solutionID, principal)
+	logger := appcontext.ZLogger(ctx)
+	return OperationalSolutionCreate(
+		ctx,
+		r.store,
+		logger,
+		r.emailService,
+		r.emailTemplateService,
+		r.addressBook,
+		operationalNeedID,
+		solutionType,
+		changes,
+		principal)
 }
 
-// UpdateOperationalSolutionSubtasks is the resolver for the updateOperationalSolutionSubtasks field.
-func (r *mutationResolver) UpdateOperationalSolutionSubtasks(ctx context.Context, inputs []*model.UpdateOperationalSolutionSubtaskInput) ([]*models.OperationalSolutionSubtask, error) {
+// UpdateOperationalSolution is the resolver for the updateOperationalSolution field.
+func (r *mutationResolver) UpdateOperationalSolution(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.OperationalSolution, error) {
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
-
-	return OperationalSolutionSubtasksUpdateByID(logger, r.store, principal, inputs)
-}
-
-// DeleteOperationalSolutionSubtask is the resolver for the deleteOperationalSolutionSubtask field.
-func (r *mutationResolver) DeleteOperationalSolutionSubtask(ctx context.Context, id uuid.UUID) (int, error) {
-	logger := appcontext.ZLogger(ctx)
-	principal := appcontext.Principal(ctx)
-
-	return OperationalSolutionSubtaskDelete(logger, r.store, principal, id)
+	return OperationalSolutionUpdate(logger, id, changes, principal, r.store)
 }
 
 // Documents is the resolver for the documents field.

@@ -7,36 +7,10 @@ package resolvers
 import (
 	"context"
 
-	"github.com/google/uuid"
-
 	"github.com/cmsgov/mint-app/pkg/appcontext"
 	"github.com/cmsgov/mint-app/pkg/graph/generated"
 	"github.com/cmsgov/mint-app/pkg/models"
 )
-
-// CreateOperationalSolution is the resolver for the createOperationalSolution field.
-func (r *mutationResolver) CreateOperationalSolution(ctx context.Context, operationalNeedID uuid.UUID, solutionType *models.OperationalSolutionKey, changes map[string]interface{}) (*models.OperationalSolution, error) {
-	principal := appcontext.Principal(ctx)
-	logger := appcontext.ZLogger(ctx)
-	return OperationalSolutionCreate(
-		ctx,
-		r.store,
-		logger,
-		r.emailService,
-		r.emailTemplateService,
-		r.addressBook,
-		operationalNeedID,
-		solutionType,
-		changes,
-		principal)
-}
-
-// UpdateOperationalSolution is the resolver for the updateOperationalSolution field.
-func (r *mutationResolver) UpdateOperationalSolution(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.OperationalSolution, error) {
-	principal := appcontext.Principal(ctx)
-	logger := appcontext.ZLogger(ctx)
-	return OperationalSolutionUpdate(logger, id, changes, principal, r.store)
-}
 
 // PointsOfContact is the resolver for the pointsOfContact field.
 func (r *possibleOperationalSolutionResolver) PointsOfContact(ctx context.Context, obj *models.PossibleOperationalSolution) ([]*models.PossibleOperationalSolutionContact, error) {
