@@ -143,7 +143,8 @@ const IndividualNotification = ({
                   onClick={() => {
                     if (
                       isTaggedInDiscussion(metaData) ||
-                      isTaggedInDiscussionReply(metaData)
+                      isTaggedInDiscussionReply(metaData) ||
+                      isNewDiscussionReply(metaData)
                     ) {
                       handleMarkAsReadAndViewDiscussion(
                         id,

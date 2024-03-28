@@ -26,6 +26,10 @@ export default gql(/* GraphQL */ `
                 type
                 discussionID
                 replyID
+                modelPlanID
+                modelPlan {
+                  modelName
+                }
                 content
               }
               ... on TaggedInPlanDiscussionActivityMeta {

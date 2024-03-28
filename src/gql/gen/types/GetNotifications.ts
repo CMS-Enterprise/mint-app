@@ -14,12 +14,19 @@ export interface GetNotifications_currentUser_notifications_notifications_activi
   commonName: string;
 }
 
+export interface GetNotifications_currentUser_notifications_notifications_activity_metaData_NewDiscussionRepliedActivityMeta_modelPlan {
+  __typename: "ModelPlan";
+  modelName: string;
+}
+
 export interface GetNotifications_currentUser_notifications_notifications_activity_metaData_NewDiscussionRepliedActivityMeta {
   __typename: "NewDiscussionRepliedActivityMeta";
   version: number;
   type: ActivityType;
   discussionID: UUID;
   replyID: UUID;
+  modelPlanID: UUID;
+  modelPlan: GetNotifications_currentUser_notifications_notifications_activity_metaData_NewDiscussionRepliedActivityMeta_modelPlan;
   content: string;
 }
 
