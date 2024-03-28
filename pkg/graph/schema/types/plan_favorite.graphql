@@ -1,0 +1,21 @@
+type PlanFavorite {
+  id: UUID!
+  modelPlanID: UUID!
+  userID: UUID!
+  userAccount: UserAccount!
+
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
+}
+
+extend type Mutation {
+  addPlanFavorite(modelPlanID: UUID!): PlanFavorite!
+  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+
+  deletePlanFavorite(modelPlanID: UUID!): PlanFavorite!
+  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+}

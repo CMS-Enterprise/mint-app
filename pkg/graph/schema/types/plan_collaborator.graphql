@@ -1,0 +1,55 @@
+enum TeamRole {
+  MODEL_LEAD
+  MODEL_TEAM
+  LEADERSHIP
+  LEARNING
+  EVALUATION
+  IT_LEAD
+  QUALITY
+  OACT
+  PAYMENT
+  CM_FFS_COUNTERPART
+  COR
+}
+
+"""
+PlanCollaborator represents a collaborator on a plan
+"""
+type PlanCollaborator {
+  id: UUID!
+  modelPlanID: UUID!
+  userID: UUID!
+  userAccount: UserAccount!
+  teamRoles: [TeamRole!]!
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
+}
+
+"""
+PlanCollaboratorCreateInput represents the data required to create a collaborator on a plan
+"""
+input PlanCollaboratorCreateInput {
+  modelPlanID: UUID!
+  userName: String!
+  teamRoles: [TeamRole!]!
+}
+
+extend type Query {
+  planCollaboratorByID(id: UUID!): PlanCollaborator!
+  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+}
+
+extend type Mutation {
+  createPlanCollaborator(input: PlanCollaboratorCreateInput!): PlanCollaborator!
+  @hasRole(role: MINT_USER)
+
+  updatePlanCollaborator(id: UUID!, newRoles: [TeamRole!]!): PlanCollaborator!
+  @hasRole(role: MINT_USER)
+
+  deletePlanCollaborator(id: UUID!): PlanCollaborator!
+  @hasRole(role: MINT_USER)
+}
