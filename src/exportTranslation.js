@@ -42,13 +42,8 @@ const mapDBFieldToKey = translations => {
   return formattedTranslation;
 };
 
-const parseTypscriptToJSON = translations => {
-  const outputFile = './mappings/translations/model_plan_translations.json';
-
-  const jsonObj = JSON.parse(JSON.stringify(translations));
-
-  // writeFileSync must accept string as 'data' or be an instance of Buffer, TypedArray, or DataView
-  const jsonString = JSON.stringify(jsonObj, null, 2);
+const parseTypscriptToJSON = (translations, outputFile) => {
+  const jsonString = JSON.stringify(translations, null, 2);
 
   fs.writeFileSync(outputFile, jsonString);
 };
@@ -56,5 +51,7 @@ const parseTypscriptToJSON = translations => {
 (function main() {
   const transformedTranslationSections = mapDBFieldToKey(translationSections);
 
-  parseTypscriptToJSON(transformedTranslationSections);
+  const outputFile = './mappings/translations/model_plan_translations.json';
+
+  parseTypscriptToJSON(transformedTranslationSections, outputFile);
 })();
