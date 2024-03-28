@@ -79,7 +79,10 @@ export const activityText = (data: MetaDataType) => {
   }
   if (isNewDiscussionReply(data)) {
     return (
-      <Trans i18nKey="notifications:index.activityType.newDiscussionReply.text" />
+      <Trans
+        i18nKey="notifications:index.activityType.newDiscussionReply.text"
+        values={{ modelName: data.modelPlan.modelName }}
+      />
     );
   }
   return '';
