@@ -16,6 +16,11 @@ export interface GetNotifications_currentUser_notifications_notifications_activi
 
 export interface GetNotifications_currentUser_notifications_notifications_activity_metaData_NewDiscussionRepliedActivityMeta {
   __typename: "NewDiscussionRepliedActivityMeta";
+  version: number;
+  type: ActivityType;
+  discussionID: UUID;
+  replyID: UUID;
+  content: string;
 }
 
 export interface GetNotifications_currentUser_notifications_notifications_activity_metaData_TaggedInPlanDiscussionActivityMeta_modelPlan {
