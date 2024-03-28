@@ -51,7 +51,11 @@ const parseTypscriptToJSON = (translations, outputFile) => {
 (function main() {
   const transformedTranslationSections = mapDBFieldToKey(translationSections);
 
-  const outputFile = './mappings/translations/model_plan_translations.json';
-
-  parseTypscriptToJSON(transformedTranslationSections, outputFile);
+  // Create JSON file for each translation task list section
+  Object.keys(transformedTranslationSections).forEach(section =>
+    parseTypscriptToJSON(
+      transformedTranslationSections[section],
+      `./mappings/translations/${section}.json`
+    )
+  );
 })();

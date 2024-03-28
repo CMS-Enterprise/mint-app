@@ -1,0 +1,81 @@
+{
+  "model_name": {
+    "gqlField": "modelName",
+    "goField": "ModelName",
+    "dbField": "model_name",
+    "label": "Model name",
+    "dataType": "string",
+    "formType": "text"
+  },
+  "previous_name": {
+    "gqlField": "previousName",
+    "goField": "PreviousName",
+    "dbField": "previous_name",
+    "label": "Previous names",
+    "dataType": "string",
+    "formType": "text"
+  },
+  "name_history": {
+    "gqlField": "nameHistory",
+    "goField": "NameHistory",
+    "dbField": "name_history",
+    "label": "Previous names",
+    "dataType": "string",
+    "isArray": true,
+    "formType": "text",
+    "filterGroups": [
+      "OACT",
+      "DFSDM",
+      "CCW",
+      "IPC",
+      "IDDOC",
+      "PBG",
+      "MDM",
+      "CBOSC"
+    ]
+  },
+  "abbreviation": {
+    "gqlField": "abbreviation",
+    "goField": "Abbreviation",
+    "dbField": "abbreviation",
+    "label": "Short name",
+    "sublabel": "The abbreviation, acronym, or other common name used for the model.",
+    "dataType": "string",
+    "formType": "text"
+  },
+  "archived": {
+    "gqlField": "archived",
+    "goField": "Archived",
+    "dbField": "archived",
+    "label": "Archived",
+    "dataType": "boolean",
+    "formType": "radio",
+    "options": {
+      "true": "Yes",
+      "false": "No"
+    }
+  },
+  "status": {
+    "gqlField": "status",
+    "goField": "Status",
+    "dbField": "status",
+    "label": "What is the status of your Model Plan?",
+    "dataType": "enum",
+    "formType": "select",
+    "options": {
+      "PLAN_DRAFT": "Draft Model Plan",
+      "PLAN_COMPLETE": "Model Plan complete",
+      "ICIP_COMPLETE": "ICIP complete",
+      "INTERNAL_CMMI_CLEARANCE": "In internal (CMMI) clearance",
+      "CMS_CLEARANCE": "In CMS clearance",
+      "HHS_CLEARANCE": "In HHS clearance",
+      "OMB_ASRF_CLEARANCE": "In OMB clearance",
+      "CLEARED": "Cleared",
+      "ANNOUNCED": "Announced",
+      "ACTIVE": "Active",
+      "ENDED": "Ended",
+      "PAUSED": "Paused",
+      "CANCELED": "Canceled"
+    }
+  }
+}
