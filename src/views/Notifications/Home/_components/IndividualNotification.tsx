@@ -7,7 +7,6 @@ import { GetNotifications_currentUser_notifications_notifications_activity as No
 
 import { arrayOfColors } from 'components/shared/IconInitial';
 import MentionTextArea from 'components/shared/MentionTextArea';
-import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import { getTimeElapsed } from 'utils/date';
 import { getUserInitials } from 'utils/modelPlan';
 
@@ -44,7 +43,6 @@ const IndividualNotification = ({
   const [isExpanded, setIsExpanded] = useState(false);
 
   const history = useHistory();
-  const isMobile = useCheckResponsiveScreen('mobile');
 
   const [markAsRead] = useMarkNotificationAsReadMutation();
 
@@ -124,17 +122,14 @@ const IndividualNotification = ({
                   <strong>{name}</strong>
                   {activityText(metaData)}
                 </p>
-                {!isMobile &&
-                  (isTaggedInDiscussion(metaData) ||
-                    isTaggedInDiscussionReply(metaData) ||
-                    isNewDiscussionReply(metaData)) && (
-                    <MentionTextArea
-                      className="notification__content text-base-darker"
-                      id={`mention-${metaData.discussionID}`}
-                      editable={false}
-                      initialContent={`“${metaData.content}”`}
-                    />
-                  )}
+                {!isDailyDigest(metaData) && (
+                  <MentionTextArea
+                    className="notification__content text-base-darker"
+                    id={`mention-${metaData.discussionID}`}
+                    editable={false}
+                    initialContent={`“${metaData.content}”`}
+                  />
+                )}
 
                 <Button
                   type="button"
