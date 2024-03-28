@@ -83,6 +83,30 @@ describe('Notification Center', () => {
       'exist'
     );
     cy.get('[data-testid="notification-red-dot"]').should('have.length', 0);
+  });
+
+  it('navigates to see Daily Digest notification', () => {
+    cy.localLogin({ name: 'MINT', role: 'MINT_ASSESSMENT_NONPROD' });
+    cy.visit('/notifications');
+
+    cy.get('[data-testid="individual-notification"]')
+      .first()
+      .find('[data-testid="notification-red-dot"]')
+      .should('exist');
+    cy.contains('button', 'View digest').click();
+
+    cy.get('[data-testid="notification--daily-digest"').should('exist');
+
+    cy.contains('h3', 'Empty Plan').siblings('a').click();
+
+    cy.location().should(loc => {
+      expect(loc.pathname).to.match(/models\/.{36}\/read-only\/model-basics/);
+    });
+  });
+
+  it('navigates to see Notification Settings', () => {
+    cy.localLogin({ name: 'MINT', role: 'MINT_ASSESSMENT_NONPROD' });
+    cy.visit('/notifications');
 
     // Notification Settings Test
     cy.contains('a', 'Notification settings').click();
@@ -105,24 +129,5 @@ describe('Notification Center', () => {
     cy.get('#notification-setting-email-dailyDigestComplete').should(
       'not.be.checked'
     );
-  });
-
-  it('navigates to see Daily Digest notification', () => {
-    cy.localLogin({ name: 'MINT', role: 'MINT_ASSESSMENT_NONPROD' });
-    cy.visit('/notifications');
-
-    cy.get('[data-testid="individual-notification"]')
-      .first()
-      .find('[data-testid="notification-red-dot"]')
-      .should('exist');
-    cy.contains('button', 'View digest').click();
-
-    cy.get('[data-testid="notification--daily-digest"').should('exist');
-
-    cy.contains('h3', 'Empty Plan').siblings('a').click();
-
-    cy.location().should(loc => {
-      expect(loc.pathname).to.match(/models\/.{36}\/read-only\/model-basics/);
-    });
   });
 });
