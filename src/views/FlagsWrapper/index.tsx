@@ -1,11 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import ReactGA from 'react-ga4';
-import { useQuery } from '@apollo/client';
 import { useOktaAuth } from '@okta/okta-react';
+import { useGetCurrentUserQuery } from 'gql/gen/graphql';
 import { asyncWithLDProvider } from 'launchdarkly-react-client-sdk';
-
-import GetCurrentUserQuery from 'queries/GetCurrentUserQuery';
-import { GetCurrentUser } from 'queries/types/GetCurrentUser';
 
 type WrapperProps = {
   children: React.ReactNode;
@@ -16,7 +13,7 @@ const UserTargetingWrapper = ({ children }: WrapperProps) => {
   // the functional component is a function to be evaluated.
   const [LDProvider, setLDProvider] = useState<any>(() => () => <div />);
 
-  const { data } = useQuery<GetCurrentUser>(GetCurrentUserQuery);
+  const { data } = useGetCurrentUserQuery();
 
   useEffect(() => {
     if (data) {

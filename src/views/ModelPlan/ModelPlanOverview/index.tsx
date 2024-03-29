@@ -2,7 +2,6 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { useQuery } from '@apollo/client';
 import {
   Button,
   Grid,
@@ -10,6 +9,8 @@ import {
   Icon,
   SummaryBox
 } from '@trussworks/react-uswds';
+import { useGetFavoritesQuery } from 'gql/gen/graphql';
+import { GetFavorites_modelPlanCollection as GetFavoritesModelPlanCollection } from 'gql/gen/types/GetFavorites';
 
 import FavoritesTable from 'components/FavoriteCard/table';
 import UswdsReactLink from 'components/LinkWrapper';
@@ -20,11 +21,6 @@ import PageLoading from 'components/PageLoading';
 import Alert from 'components/shared/Alert';
 import useFavoritePlan from 'hooks/useFavoritePlan';
 import useMessage from 'hooks/useMessage';
-import GetFavorites from 'queries/GetFavorites';
-import {
-  GetFavorites as GetFavoritesType,
-  GetFavorites_modelPlanCollection as GetFavoritesModelPlanCollection
-} from 'queries/types/GetFavorites';
 import { AppState } from 'reducers/rootReducer';
 import { ModelPlanFilter } from 'types/graphql-global-types';
 import { isMAC } from 'utils/user';
@@ -40,7 +36,7 @@ const ModelPlan = () => {
   const userGroups = useSelector((state: AppState) => state.auth.groups);
   const macUser = isMAC(userGroups);
 
-  const { data, loading, refetch } = useQuery<GetFavoritesType>(GetFavorites, {
+  const { data, loading, refetch } = useGetFavoritesQuery({
     variables: {
       filter: ModelPlanFilter.INCLUDE_ALL,
       isMAC: true
@@ -62,7 +58,7 @@ const ModelPlan = () => {
       variables: {
         modelPlanID
       }
-    }).then(refetch);
+    }).then(() => refetch());
   };
 
   const { message } = useMessage();

@@ -1,8 +1,8 @@
 import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
 import { render } from '@testing-library/react';
+import { GetFavorites_modelPlanCollection as FavoritesType } from 'gql/gen/types/GetFavorites';
 
-import { GetFavorites_modelPlanCollection as FavoritesType } from 'queries/types/GetFavorites';
 import { ModelStatus, TeamRole } from 'types/graphql-global-types';
 
 import FavoriteCard from './index';

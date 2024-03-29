@@ -1,12 +1,12 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useLocation } from 'react-router-dom';
-import { useMutation } from '@apollo/client';
 import { Accordion, Button, Grid, Icon } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import {
   DiscussionUserRole,
   useCreateModelPlanDiscussionMutation,
+  useCreateModelPlanReplyMutation,
   useGetModelPlanDiscussionsQuery
 } from 'gql/gen/graphql';
 import {
@@ -18,8 +18,6 @@ import PageHeading from 'components/PageHeading';
 import PageLoading from 'components/PageLoading';
 import Alert from 'components/shared/Alert';
 import Expire from 'components/shared/Expire';
-import CreateModelPlanReply from 'queries/CreateModelPlanReply';
-import { CreateModelPlanReply as CreateModelPlanReplyType } from 'queries/types/CreateModelPlanReply';
 import { PlanDiscussionCreateInput } from 'types/graphql-global-types';
 
 import DiscussionModalWrapper from './DiscussionModalWrapper';
@@ -68,9 +66,7 @@ const Discussions = ({
 
   const [createQuestion] = useCreateModelPlanDiscussionMutation();
 
-  const [createReply] = useMutation<CreateModelPlanReplyType>(
-    CreateModelPlanReply
-  );
+  const [createReply] = useCreateModelPlanReplyMutation();
 
   const createDiscussionMethods = {
     question: createQuestion,

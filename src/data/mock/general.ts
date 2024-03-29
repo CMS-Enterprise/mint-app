@@ -1,7 +1,7 @@
-import GetFavorites from 'queries/GetFavorites';
-import GetModelPlans from 'queries/GetModelPlans';
-import { GetFavorites_modelPlanCollection as GetFavoritesType } from 'queries/types/GetFavorites';
-import { GetModelPlans_modelPlanCollection as GetModelPlansType } from 'queries/types/GetModelPlans';
+import { GetFavoritesDocument, GetModelPlansDocument } from 'gql/gen/graphql';
+import { GetFavorites_modelPlanCollection as GetFavoritesType } from 'gql/gen/types/GetFavorites';
+import { GetModelPlans_modelPlanCollection as GetModelPlansType } from 'gql/gen/types/GetModelPlans';
+
 import {
   ModelCategory,
   ModelPlanFilter,
@@ -68,7 +68,7 @@ export const modelPlanCollectionMock = (
   return [
     {
       request: {
-        query: GetModelPlans,
+        query: GetModelPlansDocument,
         variables: { filter, isMAC }
       },
       result: {
@@ -119,7 +119,7 @@ export const favoritesPlanCollectionMock = (
   return [
     {
       request: {
-        query: GetFavorites,
+        query: GetFavoritesDocument,
         variables: { filter, isMAC }
       },
       result: {
