@@ -306,6 +306,7 @@ func translateField(fieldName string, field models.AuditField, audit *models.Aud
 // It checks in the value is an array, and if so it translates each value to a human readable form
 func translateValue(value interface{}, options map[string]string) interface{} {
 
+	//Ticket: (ChChCh Changes!) Check if value is nil, don't need to translate that.
 	//Ticket: (ChChCh Changes!) work on bool representation, they should come through here as a string, but show up as t, f. We will want to set they values
 	strSlice, isSlice := value.([]string)
 
