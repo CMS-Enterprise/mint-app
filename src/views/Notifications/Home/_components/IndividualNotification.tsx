@@ -71,6 +71,25 @@ const IndividualNotification = ({
     }
   };
 
+  const handleMarkAsReadAndViewModelPlan = (
+    notificationID: string,
+    modelPlanID: string
+  ) => {
+    if (!isRead) {
+      markAsRead({
+        variables: {
+          notificationID
+        }
+      }).then(response => {
+        if (!response?.errors) {
+          history.push(`/models/${modelPlanID}/task-list`);
+        }
+      });
+    } else {
+      history.push(`/models/${modelPlanID}/task-list`);
+    }
+  };
+
   const handleMarkAsReadAndToggleDailyDigest = (notificationID: string) => {
     if (!isRead) {
       markAsRead({
@@ -155,6 +174,12 @@ const IndividualNotification = ({
                     }
                     if (isDailyDigest(metaData)) {
                       handleMarkAsReadAndToggleDailyDigest(id);
+                    }
+                    if (isSharedActivity(metaData)) {
+                      handleMarkAsReadAndViewModelPlan(
+                        id,
+                        metaData.modelPlanID
+                      );
                     }
                   }}
                 >
