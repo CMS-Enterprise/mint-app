@@ -1,9 +1,9 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { TaskListSubscription_onLockTaskListSectionContext_lockStatus_lockedByUserAccount as LockedByUserAccount } from 'gql/gen/types/TaskListSubscription';
 
 import AssessmentIcon from 'components/shared/AssessmentIcon';
 import { arrayOfColors } from 'components/shared/IconInitial';
-import { TaskListSubscription_onLockTaskListSectionContext_lockStatus_lockedByUserAccount as LockedByUserAccount } from 'queries/TaskListSubscription/types/TaskListSubscription';
 import { getUserInitials } from 'utils/modelPlan';
 
 import './index.scss';
