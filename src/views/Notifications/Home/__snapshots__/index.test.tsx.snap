@@ -113,10 +113,10 @@ exports[`Notification Page > matches snapshot 1`] = `
                       MD
                     </div>
                     <div
-                      class="margin-top-05"
+                      class="margin-top-05 padding-left-1"
                     >
                       <p
-                        class="line-height-sans-4 margin-left-1 margin-bottom-1 margin-top-0 "
+                        class="line-height-sans-4 margin-bottom-1 margin-top-0 "
                       >
                         <strong>
                           MINT Doe
@@ -204,10 +204,10 @@ exports[`Notification Page > matches snapshot 1`] = `
                       MD
                     </div>
                     <div
-                      class="margin-top-05"
+                      class="margin-top-05 padding-left-1"
                     >
                       <p
-                        class="line-height-sans-4 margin-left-1 margin-bottom-1 margin-top-0 "
+                        class="line-height-sans-4 margin-bottom-1 margin-top-0 "
                       >
                         <strong>
                           MINT Doe
