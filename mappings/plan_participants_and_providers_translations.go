@@ -25,7 +25,7 @@ type translationParticipantsAndProviders struct {
 	ExpectedNumberOfParticipants           TranslationFieldProperties                     `json:"expectedNumberOfParticipants" db:"expected_number_of_participants" statusWeight:"1"`
 	EstimateConfidence                     TranslationFieldPropertiesWithOptions          `json:"estimateConfidence" db:"estimate_confidence" statusWeight:"1"`
 	ConfidenceNote                         TranslationFieldProperties                     `json:"confidenceNote" db:"confidence_note"`
-	RecruitmentMethod                      TranslationFieldProperties                     `json:"recruitmentMethod" db:"recruitment_method" statusWeight:"1"`
+	RecruitmentMethod                      TranslationFieldPropertiesWithOptions          `json:"recruitmentMethod" db:"recruitment_method" statusWeight:"1"`
 	RecruitmentOther                       TranslationFieldProperties                     `json:"recruitmentOther" db:"recruitment_other"`
 	RecruitmentNote                        TranslationFieldProperties                     `json:"recruitmentNote" db:"recruitment_note"`
 	SelectionMethod                        TranslationFieldPropertiesWithOptions          `json:"selectionMethod" db:"selection_method"`

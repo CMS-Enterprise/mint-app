@@ -259,11 +259,16 @@ func translateField(fieldName string, field models.AuditField, audit *models.Aud
 	var translatedNew interface{}
 
 	fieldInterface := translationMap[fieldName]
+	fieldTransOptionsAndParent, hasOptionsAndParent := fieldInterface.(mappings.TranslationFieldPropertiesWithOptionsAndParent) //TODO: (ChChCh Changes!) We can reduce this.
 	fieldTransOptions, hasOptions := fieldInterface.(mappings.TranslationFieldPropertiesWithOptions)
 	fieldTrans, hasTranslation := fieldInterface.(mappings.TranslationFieldProperties)
 
 	// Ticket: (ChChCh Changes!) Should we handle this better? There are different implementations we have to cast to
-	if hasOptions {
+	if hasOptionsAndParent {
+		translatedLabel = fieldTransOptionsAndParent.GetLabel()
+		translatedOld = translateValue(field.Old, fieldTransOptionsAndParent.Options)
+		translatedNew = translateValue(field.New, fieldTransOptionsAndParent.Options)
+	} else if hasOptions {
 		translatedLabel = fieldTransOptions.GetLabel()
 		translatedOld = translateValue(field.Old, fieldTransOptions.Options)
 		translatedNew = translateValue(field.New, fieldTransOptions.Options)
