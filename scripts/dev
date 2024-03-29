@@ -350,7 +350,7 @@ namespace :db do
 
   desc "Seed local database with development data"
   task :seed do
-    sh "go run ./cmd/dbseed"
+    sh "go run ./cmd/dbseed/*go dbseed"
   end
 
   task :drop_connections do

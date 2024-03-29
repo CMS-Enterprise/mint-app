@@ -30,6 +30,14 @@ import (
 var viperConfig = viper.New()
 
 var rootCmd = &cobra.Command{
+	Use:   "interactive",
+	Short: "Runs the seed commands as an interactive tui",
+	Long:  "Runs the seed commands as an interactive tui",
+	Run: func(cmd *cobra.Command, args []string) {
+		RunSeedCommandTuiModel()
+	},
+}
+var seedCmd = &cobra.Command{
 	Use:   "dbseed",
 	Short: "Seed the DB",
 	Long:  "Seeds the Database with Model Plans and associated data",
@@ -40,6 +48,7 @@ var rootCmd = &cobra.Command{
 
 func init() {
 	viperConfig.AutomaticEnv()
+	rootCmd.AddCommand(seedCmd)
 	rootCmd.AddCommand(analyzeAuditCommand)
 	rootCmd.AddCommand(humanizeAuditCommand)
 
@@ -54,7 +63,7 @@ func execute() {
 }
 
 // The main entrypoint for the dbseed command.
-// Invoke with "go run cmd/dbseed"
+// Invoke with "go run cmd/dbseed/*go"
 func main() {
 	execute()
 
