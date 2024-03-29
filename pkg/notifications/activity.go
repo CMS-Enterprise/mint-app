@@ -102,6 +102,14 @@ func parseRawActivityMetaData(activityType models.ActivityType, rawMetaDataJSON 
 		}
 		return &meta, nil
 
+	case models.ActivityNewDiscussionReply:
+		// Deserialize the raw JSON into NewDiscussionReplyActivityMeta
+		meta := models.NewDiscussionRepliedActivityMeta{}
+		if err := json.Unmarshal(rawData, &meta); err != nil {
+			return nil, err
+		}
+		return &meta, nil
+
 	// Add cases for other ActivityTypes as needed
 
 	default:

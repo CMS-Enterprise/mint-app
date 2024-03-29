@@ -25,6 +25,23 @@ func (r *dailyDigestCompleteActivityMetaResolver) AnalyzedAudits(ctx context.Con
 }
 
 // ModelPlan is the resolver for the modelPlan field.
+func (r *newDiscussionRepliedActivityMetaResolver) ModelPlan(ctx context.Context, obj *models.NewDiscussionRepliedActivityMeta) (*models.ModelPlan, error) {
+	return ModelPlanGetByIDLOADER(ctx, obj.ModelPlanID)
+}
+
+// Discussion is the resolver for the discussion field.
+func (r *newDiscussionRepliedActivityMetaResolver) Discussion(ctx context.Context, obj *models.NewDiscussionRepliedActivityMeta) (*models.PlanDiscussion, error) {
+	logger := appcontext.ZLogger(ctx)
+	return PlanDiscussionGetByID(ctx, r.store, logger, obj.DiscussionID)
+}
+
+// Reply is the resolver for the reply field.
+func (r *newDiscussionRepliedActivityMetaResolver) Reply(ctx context.Context, obj *models.NewDiscussionRepliedActivityMeta) (*models.DiscussionReply, error) {
+	logger := appcontext.ZLogger(ctx)
+	return DiscussionReplyGetByID(ctx, r.store, logger, obj.ReplyID)
+}
+
+// ModelPlan is the resolver for the modelPlan field.
 func (r *taggedInDiscussionReplyActivityMetaResolver) ModelPlan(ctx context.Context, obj *models.TaggedInDiscussionReplyActivityMeta) (*models.ModelPlan, error) {
 	return ModelPlanGetByIDLOADER(ctx, obj.ModelPlanID)
 }
@@ -60,6 +77,11 @@ func (r *Resolver) DailyDigestCompleteActivityMeta() generated.DailyDigestComple
 	return &dailyDigestCompleteActivityMetaResolver{r}
 }
 
+// NewDiscussionRepliedActivityMeta returns generated.NewDiscussionRepliedActivityMetaResolver implementation.
+func (r *Resolver) NewDiscussionRepliedActivityMeta() generated.NewDiscussionRepliedActivityMetaResolver {
+	return &newDiscussionRepliedActivityMetaResolver{r}
+}
+
 // TaggedInDiscussionReplyActivityMeta returns generated.TaggedInDiscussionReplyActivityMetaResolver implementation.
 func (r *Resolver) TaggedInDiscussionReplyActivityMeta() generated.TaggedInDiscussionReplyActivityMetaResolver {
 	return &taggedInDiscussionReplyActivityMetaResolver{r}
@@ -72,5 +94,6 @@ func (r *Resolver) TaggedInPlanDiscussionActivityMeta() generated.TaggedInPlanDi
 
 type activityResolver struct{ *Resolver }
 type dailyDigestCompleteActivityMetaResolver struct{ *Resolver }
+type newDiscussionRepliedActivityMetaResolver struct{ *Resolver }
 type taggedInDiscussionReplyActivityMetaResolver struct{ *Resolver }
 type taggedInPlanDiscussionActivityMetaResolver struct{ *Resolver }
