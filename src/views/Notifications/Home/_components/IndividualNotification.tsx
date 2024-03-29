@@ -15,6 +15,7 @@ import {
   activityText,
   isDailyDigest,
   isNewDiscussionReply,
+  isSharedActivity,
   isTaggedInDiscussion,
   isTaggedInDiscussionReply
 } from './_utils';
@@ -122,7 +123,7 @@ const IndividualNotification = ({
                   <strong>{name}</strong>
                   {activityText(metaData)}
                 </p>
-                {!isDailyDigest(metaData) && (
+                {!isDailyDigest(metaData) && !isSharedActivity(metaData) && (
                   <MentionTextArea
                     className="notification__content text-base-darker"
                     id={`mention-${metaData.discussionID}`}

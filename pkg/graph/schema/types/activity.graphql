@@ -45,14 +45,6 @@ type ModelPlanSharedActivityMeta {
   optionalMessage: String
 }
 
-type ModelPlanSharedActivityMeta {
-  version: Int!
-  type: ActivityType!
-  modelPlanID: UUID!
-  modelPlan: ModelPlan!
-  optionalMessage: String
-}
-
 type NewDiscussionRepliedActivityMeta {
   version: Int!
   type: ActivityType!
