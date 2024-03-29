@@ -82,6 +82,10 @@ func newSeedCommandTuiModel() seedCommandTuiModel {
 				CommandName: "Humanize Audits",
 				CommandRun:  func() { humanizeAuditCommand.Run(humanizeAuditCommand, []string{}) },
 			},
+			genericCommandOption{
+				CommandName: "Clean DB",
+				CommandRun:  func() { cleanCmd.Run(cleanCmd, []string{}) },
+			},
 		},
 		// A map which indicates which choices are selected. We're using
 		// the  map like a mathematical set. The keys refer to the indexes

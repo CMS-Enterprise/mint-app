@@ -46,11 +46,30 @@ var seedCmd = &cobra.Command{
 	},
 }
 
+var cleanCmd = &cobra.Command{
+	Use:   "dbseed",
+	Short: "Clean the DB",
+	Long:  "Truncates all user entered data in the Database",
+	Run: func(cmd *cobra.Command, args []string) {
+		clean(viperConfig)
+	},
+}
+
+// clean uses seeder to remove all data in the database
+func clean(config *viper.Viper) {
+	seeder := newDefaultSeeder(config)
+	err := seeder.Config.Store.TruncateAllTablesDANGEROUS(seeder.Config.Logger)
+	if err != nil {
+		fmt.Print(err)
+	}
+}
+
 func init() {
 	viperConfig.AutomaticEnv()
 	rootCmd.AddCommand(seedCmd)
 	rootCmd.AddCommand(analyzeAuditCommand)
 	rootCmd.AddCommand(humanizeAuditCommand)
+	rootCmd.AddCommand(cleanCmd)
 
 }
 
@@ -119,7 +138,6 @@ func getResolverDependencies(config *viper.Viper) (
 func seed(config *viper.Viper) {
 	seeder := newDefaultSeeder(config)
 	seeder.SeedData()
-	seeder.CreateAnalyzedAuditData()
 }
 
 // SeedData gets resolver dependencies and calls wrapped resolver functions to seed data.
