@@ -118,8 +118,8 @@ const IndividualNotification = ({
                 {getUserInitials(name)}
               </div>
 
-              <div className="margin-top-05">
-                <p className="line-height-sans-4 margin-left-1 margin-bottom-1 margin-top-0 ">
+              <div className="margin-top-05 padding-left-1">
+                <p className="line-height-sans-4 margin-bottom-1 margin-top-0 ">
                   <strong>{name}</strong>
                   {activityText(metaData)}
                 </p>
@@ -130,6 +130,11 @@ const IndividualNotification = ({
                     editable={false}
                     initialContent={`“${metaData.content}”`}
                   />
+                )}
+                {isSharedActivity(metaData) && metaData.optionalMessage && (
+                  <p className="margin-bottom-1 margin-top-0 text-base-darker">
+                    “{metaData.optionalMessage}”
+                  </p>
                 )}
 
                 <Button
