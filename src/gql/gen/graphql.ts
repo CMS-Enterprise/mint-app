@@ -2233,6 +2233,72 @@ export type PlanParticipantsAndProvidersChanges = {
   willRiskChangeNote?: InputMaybe<Scalars['String']['input']>;
 };
 
+/** PlanParticipantsAndProviders represents a plan participants and providers translation object */
+export type PlanParticipantsAndProvidersTranslation = {
+  __typename: 'PlanParticipantsAndProvidersTranslation';
+  communicationMethod: TranslationFieldWithOptions;
+  communicationMethodOther: TranslationField;
+  communicationNote: TranslationField;
+  confidenceNote: TranslationField;
+  coordinateWork: TranslationFieldWithOptions;
+  coordinateWorkNote: TranslationField;
+  estimateConfidence: TranslationFieldWithOptions;
+  expectedNumberOfParticipants: TranslationField;
+  gainsharePayments: TranslationFieldWithOptions;
+  gainsharePaymentsEligibility: TranslationFieldWithOptions;
+  gainsharePaymentsEligibilityOther: TranslationField;
+  gainsharePaymentsNote: TranslationField;
+  gainsharePaymentsTrack: TranslationFieldWithOptions;
+  medicareProviderType: TranslationField;
+  modelApplicationLevel: TranslationField;
+  participantAddedFrequency: TranslationFieldWithOptions;
+  participantAddedFrequencyContinually: TranslationField;
+  participantAddedFrequencyNote: TranslationField;
+  participantAddedFrequencyOther: TranslationField;
+  participantRemovedFrequency: TranslationFieldWithOptions;
+  participantRemovedFrequencyContinually: TranslationField;
+  participantRemovedFrequencyNote: TranslationField;
+  participantRemovedFrequencyOther: TranslationField;
+  participants: TranslationFieldWithOptions;
+  participantsCurrentlyInModels: TranslationFieldWithOptions;
+  participantsCurrentlyInModelsNote: TranslationField;
+  participantsIDSNote: TranslationField;
+  participantsIds: TranslationFieldWithOptions;
+  participantsIdsOther: TranslationField;
+  participantsNote: TranslationField;
+  participantsOther: TranslationField;
+  providerAddMethod: TranslationFieldWithOptions;
+  providerAddMethodNote: TranslationField;
+  providerAddMethodOther: TranslationField;
+  providerAdditionFrequency: TranslationFieldWithOptions;
+  providerAdditionFrequencyContinually: TranslationField;
+  providerAdditionFrequencyNote: TranslationField;
+  providerAdditionFrequencyOther: TranslationField;
+  providerLeaveMethod: TranslationFieldWithOptions;
+  providerLeaveMethodNote: TranslationField;
+  providerLeaveMethodOther: TranslationField;
+  providerOverlap: TranslationFieldWithOptions;
+  providerOverlapHierarchy: TranslationField;
+  providerOverlapNote: TranslationField;
+  providerRemovalFrequency: TranslationFieldWithOptions;
+  providerRemovalFrequencyContinually: TranslationField;
+  providerRemovalFrequencyNote: TranslationField;
+  providerRemovalFrequencyOther: TranslationField;
+  recruitmentMethod: TranslationFieldWithOptions;
+  recruitmentNote: TranslationField;
+  recruitmentOther: TranslationField;
+  riskNote: TranslationField;
+  riskOther: TranslationField;
+  riskType: TranslationFieldWithOptions;
+  selectionMethod: TranslationFieldWithOptions;
+  selectionNote: TranslationField;
+  selectionOther: TranslationField;
+  statesEngagement: TranslationField;
+  status: TranslationField;
+  willRiskChange: TranslationFieldWithOptions;
+  willRiskChangeNote: TranslationField;
+};
+
 /** PlanPayments is the task list section that deals with information regarding Payments */
 export type PlanPayments = {
   __typename: 'PlanPayments';

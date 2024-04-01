@@ -967,6 +967,70 @@ type ComplexityRoot struct {
 		WillRiskChangeNote                     func(childComplexity int) int
 	}
 
+	PlanParticipantsAndProvidersTranslation struct {
+		CommunicationMethod                    func(childComplexity int) int
+		CommunicationMethodOther               func(childComplexity int) int
+		CommunicationNote                      func(childComplexity int) int
+		ConfidenceNote                         func(childComplexity int) int
+		CoordinateWork                         func(childComplexity int) int
+		CoordinateWorkNote                     func(childComplexity int) int
+		EstimateConfidence                     func(childComplexity int) int
+		ExpectedNumberOfParticipants           func(childComplexity int) int
+		GainsharePayments                      func(childComplexity int) int
+		GainsharePaymentsEligibility           func(childComplexity int) int
+		GainsharePaymentsEligibilityOther      func(childComplexity int) int
+		GainsharePaymentsNote                  func(childComplexity int) int
+		GainsharePaymentsTrack                 func(childComplexity int) int
+		MedicareProviderType                   func(childComplexity int) int
+		ModelApplicationLevel                  func(childComplexity int) int
+		ParticipantAddedFrequency              func(childComplexity int) int
+		ParticipantAddedFrequencyContinually   func(childComplexity int) int
+		ParticipantAddedFrequencyNote          func(childComplexity int) int
+		ParticipantAddedFrequencyOther         func(childComplexity int) int
+		ParticipantRemovedFrequency            func(childComplexity int) int
+		ParticipantRemovedFrequencyContinually func(childComplexity int) int
+		ParticipantRemovedFrequencyNote        func(childComplexity int) int
+		ParticipantRemovedFrequencyOther       func(childComplexity int) int
+		Participants                           func(childComplexity int) int
+		ParticipantsCurrentlyInModels          func(childComplexity int) int
+		ParticipantsCurrentlyInModelsNote      func(childComplexity int) int
+		ParticipantsIDSNote                    func(childComplexity int) int
+		ParticipantsIds                        func(childComplexity int) int
+		ParticipantsIdsOther                   func(childComplexity int) int
+		ParticipantsNote                       func(childComplexity int) int
+		ParticipantsOther                      func(childComplexity int) int
+		ProviderAddMethod                      func(childComplexity int) int
+		ProviderAddMethodNote                  func(childComplexity int) int
+		ProviderAddMethodOther                 func(childComplexity int) int
+		ProviderAdditionFrequency              func(childComplexity int) int
+		ProviderAdditionFrequencyContinually   func(childComplexity int) int
+		ProviderAdditionFrequencyNote          func(childComplexity int) int
+		ProviderAdditionFrequencyOther         func(childComplexity int) int
+		ProviderLeaveMethod                    func(childComplexity int) int
+		ProviderLeaveMethodNote                func(childComplexity int) int
+		ProviderLeaveMethodOther               func(childComplexity int) int
+		ProviderOverlap                        func(childComplexity int) int
+		ProviderOverlapHierarchy               func(childComplexity int) int
+		ProviderOverlapNote                    func(childComplexity int) int
+		ProviderRemovalFrequency               func(childComplexity int) int
+		ProviderRemovalFrequencyContinually    func(childComplexity int) int
+		ProviderRemovalFrequencyNote           func(childComplexity int) int
+		ProviderRemovalFrequencyOther          func(childComplexity int) int
+		RecruitmentMethod                      func(childComplexity int) int
+		RecruitmentNote                        func(childComplexity int) int
+		RecruitmentOther                       func(childComplexity int) int
+		RiskNote                               func(childComplexity int) int
+		RiskOther                              func(childComplexity int) int
+		RiskType                               func(childComplexity int) int
+		SelectionMethod                        func(childComplexity int) int
+		SelectionNote                          func(childComplexity int) int
+		SelectionOther                         func(childComplexity int) int
+		StatesEngagement                       func(childComplexity int) int
+		Status                                 func(childComplexity int) int
+		WillRiskChange                         func(childComplexity int) int
+		WillRiskChangeNote                     func(childComplexity int) int
+	}
+
 	PlanPayments struct {
 		AffectsMedicareSecondaryPayerClaims               func(childComplexity int) int
 		AffectsMedicareSecondaryPayerClaimsHow            func(childComplexity int) int
@@ -7219,6 +7283,433 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.PlanParticipantsAndProviders.WillRiskChangeNote(childComplexity), true
 
+	case "PlanParticipantsAndProvidersTranslation.communicationMethod":
+		if e.complexity.PlanParticipantsAndProvidersTranslation.CommunicationMethod == nil {
+			break
+		}
+
+		return e.complexity.PlanParticipantsAndProvidersTranslation.CommunicationMethod(childComplexity), true
+
+	case "PlanParticipantsAndProvidersTranslation.communicationMethodOther":
+		if e.complexity.PlanParticipantsAndProvidersTranslation.CommunicationMethodOther == nil {
+			break
+		}
+
+		return e.complexity.PlanParticipantsAndProvidersTranslation.CommunicationMethodOther(childComplexity), true
+
+	case "PlanParticipantsAndProvidersTranslation.communicationNote":
+		if e.complexity.PlanParticipantsAndProvidersTranslation.CommunicationNote == nil {
+			break
+		}
+
+		return e.complexity.PlanParticipantsAndProvidersTranslation.CommunicationNote(childComplexity), true
+
+	case "PlanParticipantsAndProvidersTranslation.confidenceNote":
+		if e.complexity.PlanParticipantsAndProvidersTranslation.ConfidenceNote == nil {
+			break
+		}
+
+		return e.complexity.PlanParticipantsAndProvidersTranslation.ConfidenceNote(childComplexity), true
+
+	case "PlanParticipantsAndProvidersTranslation.coordinateWork":
+		if e.complexity.PlanParticipantsAndProvidersTranslation.CoordinateWork == nil {
+			break
+		}
+
+		return e.complexity.PlanParticipantsAndProvidersTranslation.CoordinateWork(childComplexity), true
+
+	case "PlanParticipantsAndProvidersTranslation.coordinateWorkNote":
+		if e.complexity.PlanParticipantsAndProvidersTranslation.CoordinateWorkNote == nil {
+			break
+		}
+
+		return e.complexity.PlanParticipantsAndProvidersTranslation.CoordinateWorkNote(childComplexity), true
+
+	case "PlanParticipantsAndProvidersTranslation.estimateConfidence":
+		if e.complexity.PlanParticipantsAndProvidersTranslation.EstimateConfidence == nil {
+			break
+		}
+
+		return e.complexity.PlanParticipantsAndProvidersTranslation.EstimateConfidence(childComplexity), true
+
+	case "PlanParticipantsAndProvidersTranslation.expectedNumberOfParticipants":
+		if e.complexity.PlanParticipantsAndProvidersTranslation.ExpectedNumberOfParticipants == nil {
+			break
+		}
+
+		return e.complexity.PlanParticipantsAndProvidersTranslation.ExpectedNumberOfParticipants(childComplexity), true
+
+	case "PlanParticipantsAndProvidersTranslation.gainsharePayments":
+		if e.complexity.PlanParticipantsAndProvidersTranslation.GainsharePayments == nil {
+			break
+		}
+
+		return e.complexity.PlanParticipantsAndProvidersTranslation.GainsharePayments(childComplexity), true
+
+	case "PlanParticipantsAndProvidersTranslation.gainsharePaymentsEligibility":
+		if e.complexity.PlanParticipantsAndProvidersTranslation.GainsharePaymentsEligibility == nil {
+			break
+		}
+
+		return e.complexity.PlanParticipantsAndProvidersTranslation.GainsharePaymentsEligibility(childComplexity), true
+
+	case "PlanParticipantsAndProvidersTranslation.gainsharePaymentsEligibilityOther":
+		if e.complexity.PlanParticipantsAndProvidersTranslation.GainsharePaymentsEligibilityOther == nil {
+			break
+		}
+
+		return e.complexity.PlanParticipantsAndProvidersTranslation.GainsharePaymentsEligibilityOther(childComplexity), true
+
+	case "PlanParticipantsAndProvidersTranslation.gainsharePaymentsNote":
+		if e.complexity.PlanParticipantsAndProvidersTranslation.GainsharePaymentsNote == nil {
+			break
+		}
+
+		return e.complexity.PlanParticipantsAndProvidersTranslation.GainsharePaymentsNote(childComplexity), true
+
+	case "PlanParticipantsAndProvidersTranslation.gainsharePaymentsTrack":
+		if e.complexity.PlanParticipantsAndProvidersTranslation.GainsharePaymentsTrack == nil {
+			break
+		}
+
+		return e.complexity.PlanParticipantsAndProvidersTranslation.GainsharePaymentsTrack(childComplexity), true
+
+	case "PlanParticipantsAndProvidersTranslation.medicareProviderType":
+		if e.complexity.PlanParticipantsAndProvidersTranslation.MedicareProviderType == nil {
+			break
+		}
+
+		return e.complexity.PlanParticipantsAndProvidersTranslation.MedicareProviderType(childComplexity), true
+
+	case "PlanParticipantsAndProvidersTranslation.modelApplicationLevel":
+		if e.complexity.PlanParticipantsAndProvidersTranslation.ModelApplicationLevel == nil {
+			break
+		}
+
+		return e.complexity.PlanParticipantsAndProvidersTranslation.ModelApplicationLevel(childComplexity), true
+
+	case "PlanParticipantsAndProvidersTranslation.participantAddedFrequency":
+		if e.complexity.PlanParticipantsAndProvidersTranslation.ParticipantAddedFrequency == nil {
+			break
+		}
+
+		return e.complexity.PlanParticipantsAndProvidersTranslation.ParticipantAddedFrequency(childComplexity), true
+
+	case "PlanParticipantsAndProvidersTranslation.participantAddedFrequencyContinually":
+		if e.complexity.PlanParticipantsAndProvidersTranslation.ParticipantAddedFrequencyContinually == nil {
+			break
+		}
+
+		return e.complexity.PlanParticipantsAndProvidersTranslation.ParticipantAddedFrequencyContinually(childComplexity), true
+
+	case "PlanParticipantsAndProvidersTranslation.participantAddedFrequencyNote":
+		if e.complexity.PlanParticipantsAndProvidersTranslation.ParticipantAddedFrequencyNote == nil {
+			break
+		}
+
+		return e.complexity.PlanParticipantsAndProvidersTranslation.ParticipantAddedFrequencyNote(childComplexity), true
+
+	case "PlanParticipantsAndProvidersTranslation.participantAddedFrequencyOther":
+		if e.complexity.PlanParticipantsAndProvidersTranslation.ParticipantAddedFrequencyOther == nil {
+			break
+		}
+
+		return e.complexity.PlanParticipantsAndProvidersTranslation.ParticipantAddedFrequencyOther(childComplexity), true
+
+	case "PlanParticipantsAndProvidersTranslation.participantRemovedFrequency":
+		if e.complexity.PlanParticipantsAndProvidersTranslation.ParticipantRemovedFrequency == nil {
+			break
+		}
+
+		return e.complexity.PlanParticipantsAndProvidersTranslation.ParticipantRemovedFrequency(childComplexity), true
+
+	case "PlanParticipantsAndProvidersTranslation.participantRemovedFrequencyContinually":
+		if e.complexity.PlanParticipantsAndProvidersTranslation.ParticipantRemovedFrequencyContinually == nil {
+			break
+		}
+
+		return e.complexity.PlanParticipantsAndProvidersTranslation.ParticipantRemovedFrequencyContinually(childComplexity), true
+
+	case "PlanParticipantsAndProvidersTranslation.participantRemovedFrequencyNote":
+		if e.complexity.PlanParticipantsAndProvidersTranslation.ParticipantRemovedFrequencyNote == nil {
+			break
+		}
+
+		return e.complexity.PlanParticipantsAndProvidersTranslation.ParticipantRemovedFrequencyNote(childComplexity), true
+
+	case "PlanParticipantsAndProvidersTranslation.participantRemovedFrequencyOther":
+		if e.complexity.PlanParticipantsAndProvidersTranslation.ParticipantRemovedFrequencyOther == nil {
+			break
+		}
+
+		return e.complexity.PlanParticipantsAndProvidersTranslation.ParticipantRemovedFrequencyOther(childComplexity), true
+
+	case "PlanParticipantsAndProvidersTranslation.participants":
+		if e.complexity.PlanParticipantsAndProvidersTranslation.Participants == nil {
+			break
+		}
+
+		return e.complexity.PlanParticipantsAndProvidersTranslation.Participants(childComplexity), true
+
+	case "PlanParticipantsAndProvidersTranslation.participantsCurrentlyInModels":
+		if e.complexity.PlanParticipantsAndProvidersTranslation.ParticipantsCurrentlyInModels == nil {
+			break
+		}
+
+		return e.complexity.PlanParticipantsAndProvidersTranslation.ParticipantsCurrentlyInModels(childComplexity), true
+
+	case "PlanParticipantsAndProvidersTranslation.participantsCurrentlyInModelsNote":
+		if e.complexity.PlanParticipantsAndProvidersTranslation.ParticipantsCurrentlyInModelsNote == nil {
+			break
+		}
+
+		return e.complexity.PlanParticipantsAndProvidersTranslation.ParticipantsCurrentlyInModelsNote(childComplexity), true
+
+	case "PlanParticipantsAndProvidersTranslation.participantsIDSNote":
+		if e.complexity.PlanParticipantsAndProvidersTranslation.ParticipantsIDSNote == nil {
+			break
+		}
+
+		return e.complexity.PlanParticipantsAndProvidersTranslation.ParticipantsIDSNote(childComplexity), true
+
+	case "PlanParticipantsAndProvidersTranslation.participantsIds":
+		if e.complexity.PlanParticipantsAndProvidersTranslation.ParticipantsIds == nil {
+			break
+		}
+
+		return e.complexity.PlanParticipantsAndProvidersTranslation.ParticipantsIds(childComplexity), true
+
+	case "PlanParticipantsAndProvidersTranslation.participantsIdsOther":
+		if e.complexity.PlanParticipantsAndProvidersTranslation.ParticipantsIdsOther == nil {
+			break
+		}
+
+		return e.complexity.PlanParticipantsAndProvidersTranslation.ParticipantsIdsOther(childComplexity), true
+
+	case "PlanParticipantsAndProvidersTranslation.participantsNote":
+		if e.complexity.PlanParticipantsAndProvidersTranslation.ParticipantsNote == nil {
+			break
+		}
+
+		return e.complexity.PlanParticipantsAndProvidersTranslation.ParticipantsNote(childComplexity), true
+
+	case "PlanParticipantsAndProvidersTranslation.participantsOther":
+		if e.complexity.PlanParticipantsAndProvidersTranslation.ParticipantsOther == nil {
+			break
+		}
+
+		return e.complexity.PlanParticipantsAndProvidersTranslation.ParticipantsOther(childComplexity), true
+
+	case "PlanParticipantsAndProvidersTranslation.providerAddMethod":
+		if e.complexity.PlanParticipantsAndProvidersTranslation.ProviderAddMethod == nil {
+			break
+		}
+
+		return e.complexity.PlanParticipantsAndProvidersTranslation.ProviderAddMethod(childComplexity), true
+
+	case "PlanParticipantsAndProvidersTranslation.providerAddMethodNote":
+		if e.complexity.PlanParticipantsAndProvidersTranslation.ProviderAddMethodNote == nil {
+			break
+		}
+
+		return e.complexity.PlanParticipantsAndProvidersTranslation.ProviderAddMethodNote(childComplexity), true
+
+	case "PlanParticipantsAndProvidersTranslation.providerAddMethodOther":
+		if e.complexity.PlanParticipantsAndProvidersTranslation.ProviderAddMethodOther == nil {
+			break
+		}
+
+		return e.complexity.PlanParticipantsAndProvidersTranslation.ProviderAddMethodOther(childComplexity), true
+
+	case "PlanParticipantsAndProvidersTranslation.providerAdditionFrequency":
+		if e.complexity.PlanParticipantsAndProvidersTranslation.ProviderAdditionFrequency == nil {
+			break
+		}
+
+		return e.complexity.PlanParticipantsAndProvidersTranslation.ProviderAdditionFrequency(childComplexity), true
+
+	case "PlanParticipantsAndProvidersTranslation.providerAdditionFrequencyContinually":
+		if e.complexity.PlanParticipantsAndProvidersTranslation.ProviderAdditionFrequencyContinually == nil {
+			break
+		}
+
+		return e.complexity.PlanParticipantsAndProvidersTranslation.ProviderAdditionFrequencyContinually(childComplexity), true
+
+	case "PlanParticipantsAndProvidersTranslation.providerAdditionFrequencyNote":
+		if e.complexity.PlanParticipantsAndProvidersTranslation.ProviderAdditionFrequencyNote == nil {
+			break
+		}
+
+		return e.complexity.PlanParticipantsAndProvidersTranslation.ProviderAdditionFrequencyNote(childComplexity), true
+
+	case "PlanParticipantsAndProvidersTranslation.providerAdditionFrequencyOther":
+		if e.complexity.PlanParticipantsAndProvidersTranslation.ProviderAdditionFrequencyOther == nil {
+			break
+		}
+
+		return e.complexity.PlanParticipantsAndProvidersTranslation.ProviderAdditionFrequencyOther(childComplexity), true
+
+	case "PlanParticipantsAndProvidersTranslation.providerLeaveMethod":
+		if e.complexity.PlanParticipantsAndProvidersTranslation.ProviderLeaveMethod == nil {
+			break
+		}
+
+		return e.complexity.PlanParticipantsAndProvidersTranslation.ProviderLeaveMethod(childComplexity), true
+
+	case "PlanParticipantsAndProvidersTranslation.providerLeaveMethodNote":
+		if e.complexity.PlanParticipantsAndProvidersTranslation.ProviderLeaveMethodNote == nil {
+			break
+		}
+
+		return e.complexity.PlanParticipantsAndProvidersTranslation.ProviderLeaveMethodNote(childComplexity), true
+
+	case "PlanParticipantsAndProvidersTranslation.providerLeaveMethodOther":
+		if e.complexity.PlanParticipantsAndProvidersTranslation.ProviderLeaveMethodOther == nil {
+			break
+		}
+
+		return e.complexity.PlanParticipantsAndProvidersTranslation.ProviderLeaveMethodOther(childComplexity), true
+
+	case "PlanParticipantsAndProvidersTranslation.providerOverlap":
+		if e.complexity.PlanParticipantsAndProvidersTranslation.ProviderOverlap == nil {
+			break
+		}
+
+		return e.complexity.PlanParticipantsAndProvidersTranslation.ProviderOverlap(childComplexity), true
+
+	case "PlanParticipantsAndProvidersTranslation.providerOverlapHierarchy":
+		if e.complexity.PlanParticipantsAndProvidersTranslation.ProviderOverlapHierarchy == nil {
+			break
+		}
+
+		return e.complexity.PlanParticipantsAndProvidersTranslation.ProviderOverlapHierarchy(childComplexity), true
+
+	case "PlanParticipantsAndProvidersTranslation.providerOverlapNote":
+		if e.complexity.PlanParticipantsAndProvidersTranslation.ProviderOverlapNote == nil {
+			break
+		}
+
+		return e.complexity.PlanParticipantsAndProvidersTranslation.ProviderOverlapNote(childComplexity), true
+
+	case "PlanParticipantsAndProvidersTranslation.providerRemovalFrequency":
+		if e.complexity.PlanParticipantsAndProvidersTranslation.ProviderRemovalFrequency == nil {
+			break
+		}
+
+		return e.complexity.PlanParticipantsAndProvidersTranslation.ProviderRemovalFrequency(childComplexity), true
+
+	case "PlanParticipantsAndProvidersTranslation.providerRemovalFrequencyContinually":
+		if e.complexity.PlanParticipantsAndProvidersTranslation.ProviderRemovalFrequencyContinually == nil {
+			break
+		}
+
+		return e.complexity.PlanParticipantsAndProvidersTranslation.ProviderRemovalFrequencyContinually(childComplexity), true
+
+	case "PlanParticipantsAndProvidersTranslation.providerRemovalFrequencyNote":
+		if e.complexity.PlanParticipantsAndProvidersTranslation.ProviderRemovalFrequencyNote == nil {
+			break
+		}
+
+		return e.complexity.PlanParticipantsAndProvidersTranslation.ProviderRemovalFrequencyNote(childComplexity), true
+
+	case "PlanParticipantsAndProvidersTranslation.providerRemovalFrequencyOther":
+		if e.complexity.PlanParticipantsAndProvidersTranslation.ProviderRemovalFrequencyOther == nil {
+			break
+		}
+
+		return e.complexity.PlanParticipantsAndProvidersTranslation.ProviderRemovalFrequencyOther(childComplexity), true
+
+	case "PlanParticipantsAndProvidersTranslation.recruitmentMethod":
+		if e.complexity.PlanParticipantsAndProvidersTranslation.RecruitmentMethod == nil {
+			break
+		}
+
+		return e.complexity.PlanParticipantsAndProvidersTranslation.RecruitmentMethod(childComplexity), true
+
+	case "PlanParticipantsAndProvidersTranslation.recruitmentNote":
+		if e.complexity.PlanParticipantsAndProvidersTranslation.RecruitmentNote == nil {
+			break
+		}
+
+		return e.complexity.PlanParticipantsAndProvidersTranslation.RecruitmentNote(childComplexity), true
+
+	case "PlanParticipantsAndProvidersTranslation.recruitmentOther":
+		if e.complexity.PlanParticipantsAndProvidersTranslation.RecruitmentOther == nil {
+			break
+		}
+
+		return e.complexity.PlanParticipantsAndProvidersTranslation.RecruitmentOther(childComplexity), true
+
+	case "PlanParticipantsAndProvidersTranslation.riskNote":
+		if e.complexity.PlanParticipantsAndProvidersTranslation.RiskNote == nil {
+			break
+		}
+
+		return e.complexity.PlanParticipantsAndProvidersTranslation.RiskNote(childComplexity), true
+
+	case "PlanParticipantsAndProvidersTranslation.riskOther":
+		if e.complexity.PlanParticipantsAndProvidersTranslation.RiskOther == nil {
+			break
+		}
+
+		return e.complexity.PlanParticipantsAndProvidersTranslation.RiskOther(childComplexity), true
+
+	case "PlanParticipantsAndProvidersTranslation.riskType":
+		if e.complexity.PlanParticipantsAndProvidersTranslation.RiskType == nil {
+			break
+		}
+
+		return e.complexity.PlanParticipantsAndProvidersTranslation.RiskType(childComplexity), true
+
+	case "PlanParticipantsAndProvidersTranslation.selectionMethod":
+		if e.complexity.PlanParticipantsAndProvidersTranslation.SelectionMethod == nil {
+			break
+		}
+
+		return e.complexity.PlanParticipantsAndProvidersTranslation.SelectionMethod(childComplexity), true
+
+	case "PlanParticipantsAndProvidersTranslation.selectionNote":
+		if e.complexity.PlanParticipantsAndProvidersTranslation.SelectionNote == nil {
+			break
+		}
+
+		return e.complexity.PlanParticipantsAndProvidersTranslation.SelectionNote(childComplexity), true
+
+	case "PlanParticipantsAndProvidersTranslation.selectionOther":
+		if e.complexity.PlanParticipantsAndProvidersTranslation.SelectionOther == nil {
+			break
+		}
+
+		return e.complexity.PlanParticipantsAndProvidersTranslation.SelectionOther(childComplexity), true
+
+	case "PlanParticipantsAndProvidersTranslation.statesEngagement":
+		if e.complexity.PlanParticipantsAndProvidersTranslation.StatesEngagement == nil {
+			break
+		}
+
+		return e.complexity.PlanParticipantsAndProvidersTranslation.StatesEngagement(childComplexity), true
+
+	case "PlanParticipantsAndProvidersTranslation.status":
+		if e.complexity.PlanParticipantsAndProvidersTranslation.Status == nil {
+			break
+		}
+
+		return e.complexity.PlanParticipantsAndProvidersTranslation.Status(childComplexity), true
+
+	case "PlanParticipantsAndProvidersTranslation.willRiskChange":
+		if e.complexity.PlanParticipantsAndProvidersTranslation.WillRiskChange == nil {
+			break
+		}
+
+		return e.complexity.PlanParticipantsAndProvidersTranslation.WillRiskChange(childComplexity), true
+
+	case "PlanParticipantsAndProvidersTranslation.willRiskChangeNote":
+		if e.complexity.PlanParticipantsAndProvidersTranslation.WillRiskChangeNote == nil {
+			break
+		}
+
+		return e.complexity.PlanParticipantsAndProvidersTranslation.WillRiskChangeNote(childComplexity), true
+
 	case "PlanPayments.affectsMedicareSecondaryPayerClaims":
 		if e.complexity.PlanPayments.AffectsMedicareSecondaryPayerClaims == nil {
 			break
@@ -9492,7 +9983,12 @@ directive @hasAnyRole(roles: [Role!]!) on FIELD_DEFINITION
 directive @goModel(
   model: String
   models: [String!]
-) on OBJECT | INPUT_OBJECT | SCALAR | ENUM | INTERFACE | UNION`, BuiltIn: false},
+) on OBJECT | INPUT_OBJECT | SCALAR | ENUM | INTERFACE | UNION
+
+directive @goTag(
+  key: String!
+  value: String
+) on INPUT_FIELD_DEFINITION | FIELD_DEFINITION`, BuiltIn: false},
 	{Name: "../schema/types/discussion_reply.graphql", Input: `"""
 DiscussionReply represents a discussion reply
 """
@@ -10014,35 +10510,34 @@ extend type Mutation {
 Represents plan basics translation data
 """
 type PlanBasicsTranslation {
-  demoCode: TranslationField!
-  amsModelID: TranslationField!
-
-  modelCategory: TranslationFieldWithOptions!
-  additionalModelCategories: TranslationFieldWithOptions!
-  cmsCenters: TranslationFieldWithOptions!
-  cmmiGroups: TranslationFieldWithOptions!
-  modelType: TranslationFieldWithOptions!
-  modelTypeOther: TranslationField!
-  problem: TranslationField!
-  goal: TranslationField!
-  testInterventions: TranslationField!
-  note: TranslationField!
+  modelCategory: TranslationFieldWithOptions! @goTag(key: "json", value: "model_category")
+  additionalModelCategories: TranslationFieldWithOptions! @goTag(key: "json", value: "additional_model_categories")
+  demoCode: TranslationField! @goTag(key: "json", value: "“demo_code”")
+  amsModelID: TranslationField! @goTag(key: "json", value: "ams_model_ID")
+  cmsCenters: TranslationFieldWithOptions! @goTag(key: "json", value: "cms_centers")
+  cmmiGroups: TranslationFieldWithOptions! @goTag(key: "json", value: "cmmi_groups")
+  modelType: TranslationFieldWithOptions! @goTag(key: "json", value: "model_type")
+  modelTypeOther: TranslationField! @goTag(key: "json", value: "model_type_other")
+  problem: TranslationField! @goTag(key: "json", value: "problem")
+  goal: TranslationField! @goTag(key: "json", value: "goal")
+  testInterventions: TranslationField! @goTag(key: "json", value: "test_interventions")
+  note: TranslationField! @goTag(key: "json", value: "“demo_code”")
 
   # Milestones
-  completeICIP: TranslationField!
-  clearanceStarts: TranslationField!
-  clearanceEnds: TranslationField!
-  announced: TranslationField!
-  applicationsStart: TranslationField!
-  applicationsEnd: TranslationField!
-  performancePeriodStarts: TranslationField!
-  performancePeriodEnds: TranslationField!
-  wrapUpEnds: TranslationField!
-  highLevelNote: TranslationField!
-  phasedIn: TranslationFieldWithOptions!
-  phasedInNote: TranslationField!
+  completeICIP: TranslationField! @goTag(key: "json", value: "complete_icip")
+  clearanceStarts: TranslationField! @goTag(key: "json", value: "clearance_starts")
+  clearanceEnds: TranslationField! @goTag(key: "json", value: "clearance_ends")
+  announced: TranslationField! @goTag(key: "json", value: "announced")
+  applicationsStart: TranslationField! @goTag(key: "json", value: "applications_starts")
+  applicationsEnd: TranslationField! @goTag(key: "json", value: "applications_ends")
+  performancePeriodStarts: TranslationField! @goTag(key: "json", value: "performance_period_starts")
+  performancePeriodEnds: TranslationField! @goTag(key: "json", value: "performance_period_ends")
+  wrapUpEnds: TranslationField! @goTag(key: "json", value: "wrap_up_ends")
+  highLevelNote: TranslationField! @goTag(key: "json", value: "high_level_note")
+  phasedIn: TranslationFieldWithOptions! @goTag(key: "json", value: "phased_in")
+  phasedInNote: TranslationField! @goTag(key: "json", value: "phased_in_note")
 
-  status: TranslationField!
+  status: TranslationField! @goTag(key: "json", value: "status")
 }`, BuiltIn: false},
 	{Name: "../schema/types/plan_beneficiaries.graphql", Input: `enum BeneficiariesType {
   MEDICARE_FFS
@@ -10842,82 +11337,82 @@ PlanGeneralCharacteristics represents a plan general characteristics translation
 """
 type PlanGeneralCharacteristicsTranslation {
   # Page 1
-  isNewModel: TranslationFieldWithOptions!
-  existingModel: TranslationFieldWithOptions!
-  resemblesExistingModel: TranslationFieldWithOptions!
-  resemblesExistingModelWhyHow: TranslationField!
-  resemblesExistingModelOtherSpecify: TranslationField!
-  resemblesExistingModelOtherSelected: TranslationFieldWithOptions!
-  resemblesExistingModelOtherOption: TranslationField!
-  resemblesExistingModelHow: TranslationFieldWithOptions!
-  resemblesExistingModelNote: TranslationField!
-  resemblesExistingModelWhich: TranslationFieldWithOptions!
-  participationInModelPrecondition: TranslationFieldWithOptions!
-  participationInModelPreconditionWhyHow: TranslationFieldWithOptions!
-  participationInModelPreconditionOtherSpecify: TranslationField!
-  participationInModelPreconditionOtherSelected: TranslationFieldWithOptions!
-  participationInModelPreconditionOtherOption: TranslationField!
-  participationInModelPreconditionNote: TranslationField!
-  participationInModelPreconditionWhich: TranslationFieldWithOptions!
-  hasComponentsOrTracks: TranslationFieldWithOptions!
-  hasComponentsOrTracksDiffer: TranslationField!
-  hasComponentsOrTracksNote: TranslationField!
+  isNewModel: TranslationFieldWithOptions! @goTag(key: "json", value: "is_new_model")
+  existingModel: TranslationFieldWithOptions! @goTag(key: "json", value: "existing_model")
+  resemblesExistingModel: TranslationFieldWithOptions! @goTag(key: "json", value: "resembles_existing_model")
+  resemblesExistingModelWhyHow: TranslationField! @goTag(key: "json", value: "resembles_existing_model_why_how")
+  resemblesExistingModelOtherSpecify: TranslationField! @goTag(key: "json", value: "resembles_existing_model_other_specify")
+  resemblesExistingModelOtherSelected: TranslationFieldWithOptions! @goTag(key: "json", value: "resembles_existing_model_other_selected")
+  resemblesExistingModelOtherOption: TranslationField! @goTag(key: "json", value: "resembles_existing_model_other_option")
+  resemblesExistingModelHow: TranslationFieldWithOptions! @goTag(key: "json", value: "resembles_existing_model_how")
+  resemblesExistingModelNote: TranslationField! @goTag(key: "json", value: "resembles_existing_model_note")
+  resemblesExistingModelWhich: TranslationFieldWithOptions! @goTag(key: "json", value: "resembles_existing_model_which")
+  participationInModelPrecondition: TranslationFieldWithOptions! @goTag(key: "json", value: "participation_in_model_precondition")
+  participationInModelPreconditionWhyHow: TranslationFieldWithOptions! @goTag(key: "json", value: "participation_in_model_precondition_why_how")
+  participationInModelPreconditionOtherSpecify: TranslationField! @goTag(key: "json", value: "participation_in_model_precondition_other_specify")
+  participationInModelPreconditionOtherSelected: TranslationFieldWithOptions! @goTag(key: "json", value: "participation_in_model_precondition_other_selected")
+  participationInModelPreconditionOtherOption: TranslationField! @goTag(key: "json", value: "participation_in_model_precondition_other_option")
+  participationInModelPreconditionNote: TranslationField! @goTag(key: "json", value: "participation_in_model_precondition_note")
+  participationInModelPreconditionWhich: TranslationFieldWithOptions! @goTag(key: "json", value: "participation_in_model_precondition_which")
+  hasComponentsOrTracks: TranslationFieldWithOptions! @goTag(key: "json", value: "has_components_or_tracks")
+  hasComponentsOrTracksDiffer: TranslationField! @goTag(key: "json", value: "has_components_or_tracks_differ")
+  hasComponentsOrTracksNote: TranslationField! @goTag(key: "json", value: "has_components_or_tracks_note")
 
   # Page 2
-  agencyOrStateHelp: TranslationFieldWithOptions!
-  agencyOrStateHelpOther: TranslationField!
-  agencyOrStateHelpNote: TranslationField!
-  alternativePaymentModelTypes: TranslationFieldWithOptions!
-  alternativePaymentModelNote: TranslationField!
-  keyCharacteristics: TranslationFieldWithOptions!
-  keyCharacteristicsOther: TranslationField!
-  keyCharacteristicsNote: TranslationField!
-  collectPlanBids: TranslationFieldWithOptions!
-  collectPlanBidsNote: TranslationField!
-  managePartCDEnrollment: TranslationFieldWithOptions!
-  managePartCDEnrollmentNote: TranslationField!
-  planContractUpdated: TranslationFieldWithOptions!
-  planContractUpdatedNote: TranslationField!
+  agencyOrStateHelp: TranslationFieldWithOptions! @goTag(key: "json", value: "agency_or_state_help")
+  agencyOrStateHelpOther: TranslationField! @goTag(key: "json", value: "agency_or_state_help_other")
+  agencyOrStateHelpNote: TranslationField! @goTag(key: "json", value: "agency_or_state_help_note")
+  alternativePaymentModelTypes: TranslationFieldWithOptions! @goTag(key: "json", value: "alternative_payment_model_types")
+  alternativePaymentModelNote: TranslationField! @goTag(key: "json", value: "alternative_payment_model_note")
+  keyCharacteristics: TranslationFieldWithOptions! @goTag(key: "json", value: "key_characteristics")
+  keyCharacteristicsOther: TranslationField! @goTag(key: "json", value: "key_characteristics_other")
+  keyCharacteristicsNote: TranslationField! @goTag(key: "json", value: "key_characteristics_note")
+  collectPlanBids: TranslationFieldWithOptions! @goTag(key: "json", value: "collect_plan_bids")
+  collectPlanBidsNote: TranslationField! @goTag(key: "json", value: "collect_plan_bids_note")
+  managePartCDEnrollment: TranslationFieldWithOptions! @goTag(key: "json", value: "manage_part_c_d_enrollment")
+  managePartCDEnrollmentNote: TranslationField! @goTag(key: "json", value: "manage_part_c_d_enrollment_note")
+  planContractUpdated: TranslationFieldWithOptions! @goTag(key: "json", value: "plan_contract_updated")
+  planContractUpdatedNote: TranslationField! @goTag(key: "json", value: "plan_contract_updated_note")
 
   # Page 3
-  careCoordinationInvolved: TranslationFieldWithOptions!
-  careCoordinationInvolvedDescription: TranslationField!
-  careCoordinationInvolvedNote: TranslationField!
-  additionalServicesInvolved: TranslationFieldWithOptions!
-  additionalServicesInvolvedDescription: TranslationField!
-  additionalServicesInvolvedNote: TranslationField!
-  communityPartnersInvolved: TranslationFieldWithOptions!
-  communityPartnersInvolvedDescription: TranslationField!
-  communityPartnersInvolvedNote: TranslationField!
+  careCoordinationInvolved: TranslationFieldWithOptions! @goTag(key: "json", value: "care_coordination_involved")
+  careCoordinationInvolvedDescription: TranslationField! @goTag(key: "json", value: "care_coordination_involved_description")
+  careCoordinationInvolvedNote: TranslationField! @goTag(key: "json", value: "care_coordination_involved_note")
+  additionalServicesInvolved: TranslationFieldWithOptions! @goTag(key: "json", value: "additional_services_involved")
+  additionalServicesInvolvedDescription: TranslationField! @goTag(key: "json", value: "additional_services_involved_description")
+  additionalServicesInvolvedNote: TranslationField! @goTag(key: "json", value: "additional_services_involved_note")
+  communityPartnersInvolved: TranslationFieldWithOptions! @goTag(key: "json", value: "community_partners_involved")
+  communityPartnersInvolvedDescription: TranslationField! @goTag(key: "json", value: "community_partners_involved_description")
+  communityPartnersInvolvedNote: TranslationField! @goTag(key: "json", value: "community_partners_involved_note")
 
   # Page 4
-  geographiesTargeted: TranslationFieldWithOptions!
-  geographiesTargetedTypes: TranslationFieldWithOptions!
-  geographiesStatesAndTerritories: TranslationFieldWithOptions!
-  geographiesRegionTypes: TranslationFieldWithOptions!
-  geographiesTargetedTypesOther: TranslationField!
-  geographiesTargetedAppliedTo: TranslationFieldWithOptions!
-  geographiesTargetedAppliedToOther: TranslationField!
-  geographiesTargetedNote: TranslationField!
-  participationOptions: TranslationFieldWithOptions!
-  participationOptionsNote: TranslationField!
-  agreementTypes: TranslationFieldWithOptions!
-  agreementTypesOther: TranslationField!
-  multiplePatricipationAgreementsNeeded: TranslationFieldWithOptions!
-  multiplePatricipationAgreementsNeededNote: TranslationField!
+  geographiesTargeted: TranslationFieldWithOptions! @goTag(key: "json", value: "geographies_targeted")
+  geographiesTargetedTypes: TranslationFieldWithOptions! @goTag(key: "json", value: "geographies_targeted_types")
+  geographiesStatesAndTerritories: TranslationFieldWithOptions! @goTag(key: "json", value: "geographies_states_and_territories")
+  geographiesRegionTypes: TranslationFieldWithOptions! @goTag(key: "json", value: "geographies_region_types")
+  geographiesTargetedTypesOther: TranslationField! @goTag(key: "json", value: "geographies_targeted_types_other")
+  geographiesTargetedAppliedTo: TranslationFieldWithOptions! @goTag(key: "json", value: "geographies_targeted_applied_to")
+  geographiesTargetedAppliedToOther: TranslationField! @goTag(key: "json", value: "geographies_targeted_applied_to_other")
+  geographiesTargetedNote: TranslationField! @goTag(key: "json", value: "geographies_targeted_note")
+  participationOptions: TranslationFieldWithOptions! @goTag(key: "json", value: "participation_options")
+  participationOptionsNote: TranslationField! @goTag(key: "json", value: "participation_options_note")
+  agreementTypes: TranslationFieldWithOptions! @goTag(key: "json", value: "agreement_types")
+  agreementTypesOther: TranslationField! @goTag(key: "json", value: "agreement_types_other")
+  multiplePatricipationAgreementsNeeded: TranslationFieldWithOptions! @goTag(key: "json", value: "multiple_patricipation_agreements_needed")
+  multiplePatricipationAgreementsNeededNote: TranslationField! @goTag(key: "json", value: "multiple_patricipation_agreements_needed_note")
 
   # Page 5
-  rulemakingRequired: TranslationFieldWithOptions!
-  rulemakingRequiredDescription: TranslationField!
-  rulemakingRequiredNote: TranslationField!
-  authorityAllowances: TranslationFieldWithOptions!
-  authorityAllowancesOther: TranslationField!
-  authorityAllowancesNote: TranslationField!
-  waiversRequired: TranslationFieldWithOptions!
-  waiversRequiredTypes: TranslationFieldWithOptions!
-  waiversRequiredNote: TranslationField!
+  rulemakingRequired: TranslationFieldWithOptions! @goTag(key: "json", value: "rulemaking_required")
+  rulemakingRequiredDescription: TranslationField! @goTag(key: "json", value: "rulemaking_required_description")
+  rulemakingRequiredNote: TranslationField! @goTag(key: "json", value: "rulemaking_required_note")
+  authorityAllowances: TranslationFieldWithOptions! @goTag(key: "json", value: "authority_allowances")
+  authorityAllowancesOther: TranslationField! @goTag(key: "json", value: "authority_allowances_other")
+  authorityAllowancesNote: TranslationField! @goTag(key: "json", value: "authority_allowances_note")
+  waiversRequired: TranslationFieldWithOptions! @goTag(key: "json", value: "waivers_required")
+  waiversRequiredTypes: TranslationFieldWithOptions! @goTag(key: "json", value: "waivers_required_types")
+  waiversRequiredNote: TranslationField! @goTag(key: "json", value: "waivers_required_note")
 
-  status: TranslationField!
+  status: TranslationField! @goTag(key: "json", value: "status")
 }`, BuiltIn: false},
 	{Name: "../schema/types/plan_ops_eval_and_learning.graphql", Input: `enum StakeholdersType {
   BENEFICIARIES
@@ -11539,6 +12034,83 @@ extend type Mutation {
   updatePlanParticipantsAndProviders(id: UUID!, changes: PlanParticipantsAndProvidersChanges!): PlanParticipantsAndProviders!
   @hasRole(role: MINT_USER)
 }`, BuiltIn: false},
+	{Name: "../schema/types/plan_participants_and_providers_translation.graphql", Input: `"""
+PlanParticipantsAndProviders represents a plan participants and providers translation object
+"""
+type PlanParticipantsAndProvidersTranslation {
+  #Page 1
+  participants: TranslationFieldWithOptions! @goTag(key: "json", value: "participants")
+  medicareProviderType: TranslationField! @goTag(key: "json", value: "medicare_provider_type")
+  statesEngagement: TranslationField! @goTag(key: "json", value: "states_engagement")
+  participantsOther: TranslationField! @goTag(key: "json", value: "participants_other")
+  participantsNote: TranslationField! @goTag(key: "json", value: "participants_note")
+  participantsCurrentlyInModels: TranslationFieldWithOptions! @goTag(key: "json", value: "participants_currently_in_models")
+  participantsCurrentlyInModelsNote: TranslationField! @goTag(key: "json", value: "participants_currently_in_models_note")
+  modelApplicationLevel: TranslationField! @goTag(key: "json", value: "model_application_level")
+
+  #Page 2
+  expectedNumberOfParticipants: TranslationField! @goTag(key: "json", value: "expected_number_of_participants")
+  estimateConfidence: TranslationFieldWithOptions! @goTag(key: "json", value: "estimate_confidence")
+  confidenceNote: TranslationField! @goTag(key: "json", value: "confidence_note")
+  recruitmentMethod: TranslationFieldWithOptions! @goTag(key: "json", value: "recruitment_method")
+  recruitmentOther: TranslationField! @goTag(key: "json", value: "recruitment_other")
+  recruitmentNote: TranslationField! @goTag(key: "json", value: "recruitment_note")
+  selectionMethod: TranslationFieldWithOptions! @goTag(key: "json", value: "selection_method")
+  selectionOther: TranslationField! @goTag(key: "json", value: "selection_other")
+  selectionNote: TranslationField! @goTag(key: "json", value: "selection_note")
+
+  #Page 3
+  participantAddedFrequency: TranslationFieldWithOptions! @goTag(key: "json", value: "participant_added_frequency")
+  participantAddedFrequencyContinually: TranslationField! @goTag(key: "json", value: "participant_added_frequency_continually")
+  participantAddedFrequencyOther: TranslationField! @goTag(key: "json", value: "participant_added_frequency_other")
+  participantAddedFrequencyNote: TranslationField! @goTag(key: "json", value: "participant_added_frequency_note")
+  participantRemovedFrequency: TranslationFieldWithOptions! @goTag(key: "json", value: "participant_removed_frequency")
+  participantRemovedFrequencyContinually: TranslationField! @goTag(key: "json", value: "participant_removed_frequency_continually")
+  participantRemovedFrequencyOther: TranslationField! @goTag(key: "json", value: "participant_removed_frequency_other")
+  participantRemovedFrequencyNote: TranslationField! @goTag(key: "json", value: "participant_removed_frequency_note")
+  communicationMethod: TranslationFieldWithOptions! @goTag(key: "json", value: "communication_method")
+  communicationMethodOther: TranslationField! @goTag(key: "json", value: "communication_method")
+  communicationNote: TranslationField! @goTag(key: "json", value: "communication_note")
+  riskType: TranslationFieldWithOptions! @goTag(key: "json", value: "risk_type")
+  riskOther: TranslationField! @goTag(key: "json", value: "risk_other")
+  riskNote: TranslationField! @goTag(key: "json", value: "risk_note")
+  willRiskChange: TranslationFieldWithOptions! @goTag(key: "json", value: "will_risk_change")
+  willRiskChangeNote: TranslationField! @goTag(key: "json", value: "will_risk_change_note")
+
+  #Page 4
+  coordinateWork: TranslationFieldWithOptions! @goTag(key: "json", value: "coordinate_work")
+  coordinateWorkNote: TranslationField! @goTag(key: "json", value: "coordinate_work_note")
+  gainsharePayments: TranslationFieldWithOptions! @goTag(key: "json", value: "gainshare_payments")
+  gainsharePaymentsTrack: TranslationFieldWithOptions! @goTag(key: "json", value: "gainshare_payments_track")
+  gainsharePaymentsNote: TranslationField! @goTag(key: "json", value: "gainshare_payments_note")
+  gainsharePaymentsEligibility: TranslationFieldWithOptions! @goTag(key: "json", value: "gainshare_payments_eligibility")
+  gainsharePaymentsEligibilityOther: TranslationField! @goTag(key: "json", value: "gainshare_payments_eligibility_other")
+  participantsIds: TranslationFieldWithOptions! @goTag(key: "json", value: "participants_ids")
+  participantsIdsOther: TranslationField! @goTag(key: "json", value: "participants_ids_other")
+  participantsIDSNote: TranslationField! @goTag(key: "json", value: "participants_ids_note")
+
+  #Page 5
+  providerAdditionFrequency: TranslationFieldWithOptions! @goTag(key: "json", value: "provider_addition_frequency")
+  providerAdditionFrequencyContinually: TranslationField! @goTag(key: "json", value: "provide_addition_frequency_continually")
+  providerAdditionFrequencyOther: TranslationField! @goTag(key: "json", value: "provider_addition_frequency_other")
+  providerAdditionFrequencyNote: TranslationField! @goTag(key: "json", value: "provider_addition_frequency_note")
+  providerAddMethod: TranslationFieldWithOptions! @goTag(key: "json", value: "provider_add_method")
+  providerAddMethodOther: TranslationField! @goTag(key: "json", value: "provider_add_method_other")
+  providerAddMethodNote: TranslationField! @goTag(key: "json", value: "provider_add_method_note")
+  providerLeaveMethod: TranslationFieldWithOptions! @goTag(key: "json", value: "provider_leave_method")
+  providerLeaveMethodOther: TranslationField! @goTag(key: "json", value: "provider_leave_method_other")
+  providerLeaveMethodNote: TranslationField! @goTag(key: "json", value: "provider_leave_method_note")
+  providerRemovalFrequency: TranslationFieldWithOptions! @goTag(key: "json", value: "provider_removal_frequency")
+  providerRemovalFrequencyContinually: TranslationField! @goTag(key: "json", value: "provide_removal_frequency_continually")
+  providerRemovalFrequencyOther: TranslationField! @goTag(key: "json", value: "provider_removal_frequency_other")
+  providerRemovalFrequencyNote: TranslationField! @goTag(key: "json", value: "provider_removal_frequency_note")
+  providerOverlap: TranslationFieldWithOptions! @goTag(key: "json", value: "provider_overlap")
+  providerOverlapHierarchy: TranslationField! @goTag(key: "json", value: "provider_overlap_hierarchy")
+  providerOverlapNote: TranslationField! @goTag(key: "json", value: "provider_overlap_note")
+
+  status: TranslationField! @goTag(key: "json", value: "status")
+}
+`, BuiltIn: false},
 	{Name: "../schema/types/plan_payments.graphql", Input: `enum FundingSource {
   PATIENT_PROTECTION_AFFORDABLE_CARE_ACT
   MEDICARE_PART_A_HI_TRUST_FUND
@@ -31078,134 +31650,6 @@ func (ec *executionContext) fieldContext_PlanBasics_status(ctx context.Context, 
 	return fc, nil
 }
 
-func (ec *executionContext) _PlanBasicsTranslation_demoCode(ctx context.Context, field graphql.CollectedField, obj *model.PlanBasicsTranslation) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_PlanBasicsTranslation_demoCode(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.DemoCode, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(*model.TranslationField)
-	fc.Result = res
-	return ec.marshalNTranslationField2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationField(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_PlanBasicsTranslation_demoCode(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "PlanBasicsTranslation",
-		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			switch field.Name {
-			case "gqlField":
-				return ec.fieldContext_TranslationField_gqlField(ctx, field)
-			case "goField":
-				return ec.fieldContext_TranslationField_goField(ctx, field)
-			case "dbField":
-				return ec.fieldContext_TranslationField_dbField(ctx, field)
-			case "label":
-				return ec.fieldContext_TranslationField_label(ctx, field)
-			case "readonlyLabel":
-				return ec.fieldContext_TranslationField_readonlyLabel(ctx, field)
-			case "sublabel":
-				return ec.fieldContext_TranslationField_sublabel(ctx, field)
-			case "multiSelectLabel":
-				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
-			case "isArray":
-				return ec.fieldContext_TranslationField_isArray(ctx, field)
-			case "isOtherType":
-				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
-			}
-			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
-		},
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _PlanBasicsTranslation_amsModelID(ctx context.Context, field graphql.CollectedField, obj *model.PlanBasicsTranslation) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_PlanBasicsTranslation_amsModelID(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.AmsModelID, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(*model.TranslationField)
-	fc.Result = res
-	return ec.marshalNTranslationField2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationField(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_PlanBasicsTranslation_amsModelID(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "PlanBasicsTranslation",
-		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			switch field.Name {
-			case "gqlField":
-				return ec.fieldContext_TranslationField_gqlField(ctx, field)
-			case "goField":
-				return ec.fieldContext_TranslationField_goField(ctx, field)
-			case "dbField":
-				return ec.fieldContext_TranslationField_dbField(ctx, field)
-			case "label":
-				return ec.fieldContext_TranslationField_label(ctx, field)
-			case "readonlyLabel":
-				return ec.fieldContext_TranslationField_readonlyLabel(ctx, field)
-			case "sublabel":
-				return ec.fieldContext_TranslationField_sublabel(ctx, field)
-			case "multiSelectLabel":
-				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
-			case "isArray":
-				return ec.fieldContext_TranslationField_isArray(ctx, field)
-			case "isOtherType":
-				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
-			}
-			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
-		},
-	}
-	return fc, nil
-}
-
 func (ec *executionContext) _PlanBasicsTranslation_modelCategory(ctx context.Context, field graphql.CollectedField, obj *model.PlanBasicsTranslation) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_PlanBasicsTranslation_modelCategory(ctx, field)
 	if err != nil {
@@ -31333,6 +31777,134 @@ func (ec *executionContext) fieldContext_PlanBasicsTranslation_additionalModelCa
 				return ec.fieldContext_TranslationFieldWithOptions_options(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type TranslationFieldWithOptions", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanBasicsTranslation_demoCode(ctx context.Context, field graphql.CollectedField, obj *model.PlanBasicsTranslation) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanBasicsTranslation_demoCode(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.DemoCode, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*model.TranslationField)
+	fc.Result = res
+	return ec.marshalNTranslationField2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationField(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanBasicsTranslation_demoCode(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanBasicsTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "gqlField":
+				return ec.fieldContext_TranslationField_gqlField(ctx, field)
+			case "goField":
+				return ec.fieldContext_TranslationField_goField(ctx, field)
+			case "dbField":
+				return ec.fieldContext_TranslationField_dbField(ctx, field)
+			case "label":
+				return ec.fieldContext_TranslationField_label(ctx, field)
+			case "readonlyLabel":
+				return ec.fieldContext_TranslationField_readonlyLabel(ctx, field)
+			case "sublabel":
+				return ec.fieldContext_TranslationField_sublabel(ctx, field)
+			case "multiSelectLabel":
+				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
+			case "isArray":
+				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "isOtherType":
+				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanBasicsTranslation_amsModelID(ctx context.Context, field graphql.CollectedField, obj *model.PlanBasicsTranslation) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanBasicsTranslation_amsModelID(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.AmsModelID, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*model.TranslationField)
+	fc.Result = res
+	return ec.marshalNTranslationField2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationField(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanBasicsTranslation_amsModelID(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanBasicsTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "gqlField":
+				return ec.fieldContext_TranslationField_gqlField(ctx, field)
+			case "goField":
+				return ec.fieldContext_TranslationField_goField(ctx, field)
+			case "dbField":
+				return ec.fieldContext_TranslationField_dbField(ctx, field)
+			case "label":
+				return ec.fieldContext_TranslationField_label(ctx, field)
+			case "readonlyLabel":
+				return ec.fieldContext_TranslationField_readonlyLabel(ctx, field)
+			case "sublabel":
+				return ec.fieldContext_TranslationField_sublabel(ctx, field)
+			case "multiSelectLabel":
+				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
+			case "isArray":
+				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "isOtherType":
+				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
 		},
 	}
 	return fc, nil
@@ -54432,6 +55004,3950 @@ func (ec *executionContext) fieldContext_PlanParticipantsAndProviders_status(ctx
 	return fc, nil
 }
 
+func (ec *executionContext) _PlanParticipantsAndProvidersTranslation_participants(ctx context.Context, field graphql.CollectedField, obj *model.PlanParticipantsAndProvidersTranslation) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanParticipantsAndProvidersTranslation_participants(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Participants, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*model.TranslationFieldWithOptions)
+	fc.Result = res
+	return ec.marshalNTranslationFieldWithOptions2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationFieldWithOptions(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation_participants(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanParticipantsAndProvidersTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "gqlField":
+				return ec.fieldContext_TranslationFieldWithOptions_gqlField(ctx, field)
+			case "goField":
+				return ec.fieldContext_TranslationFieldWithOptions_goField(ctx, field)
+			case "dbField":
+				return ec.fieldContext_TranslationFieldWithOptions_dbField(ctx, field)
+			case "label":
+				return ec.fieldContext_TranslationFieldWithOptions_label(ctx, field)
+			case "readonlyLabel":
+				return ec.fieldContext_TranslationFieldWithOptions_readonlyLabel(ctx, field)
+			case "sublabel":
+				return ec.fieldContext_TranslationFieldWithOptions_sublabel(ctx, field)
+			case "multiSelectLabel":
+				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
+			case "isArray":
+				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "isOtherType":
+				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
+			case "options":
+				return ec.fieldContext_TranslationFieldWithOptions_options(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type TranslationFieldWithOptions", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanParticipantsAndProvidersTranslation_medicareProviderType(ctx context.Context, field graphql.CollectedField, obj *model.PlanParticipantsAndProvidersTranslation) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanParticipantsAndProvidersTranslation_medicareProviderType(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.MedicareProviderType, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*model.TranslationField)
+	fc.Result = res
+	return ec.marshalNTranslationField2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationField(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation_medicareProviderType(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanParticipantsAndProvidersTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "gqlField":
+				return ec.fieldContext_TranslationField_gqlField(ctx, field)
+			case "goField":
+				return ec.fieldContext_TranslationField_goField(ctx, field)
+			case "dbField":
+				return ec.fieldContext_TranslationField_dbField(ctx, field)
+			case "label":
+				return ec.fieldContext_TranslationField_label(ctx, field)
+			case "readonlyLabel":
+				return ec.fieldContext_TranslationField_readonlyLabel(ctx, field)
+			case "sublabel":
+				return ec.fieldContext_TranslationField_sublabel(ctx, field)
+			case "multiSelectLabel":
+				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
+			case "isArray":
+				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "isOtherType":
+				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanParticipantsAndProvidersTranslation_statesEngagement(ctx context.Context, field graphql.CollectedField, obj *model.PlanParticipantsAndProvidersTranslation) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanParticipantsAndProvidersTranslation_statesEngagement(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.StatesEngagement, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*model.TranslationField)
+	fc.Result = res
+	return ec.marshalNTranslationField2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationField(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation_statesEngagement(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanParticipantsAndProvidersTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "gqlField":
+				return ec.fieldContext_TranslationField_gqlField(ctx, field)
+			case "goField":
+				return ec.fieldContext_TranslationField_goField(ctx, field)
+			case "dbField":
+				return ec.fieldContext_TranslationField_dbField(ctx, field)
+			case "label":
+				return ec.fieldContext_TranslationField_label(ctx, field)
+			case "readonlyLabel":
+				return ec.fieldContext_TranslationField_readonlyLabel(ctx, field)
+			case "sublabel":
+				return ec.fieldContext_TranslationField_sublabel(ctx, field)
+			case "multiSelectLabel":
+				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
+			case "isArray":
+				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "isOtherType":
+				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanParticipantsAndProvidersTranslation_participantsOther(ctx context.Context, field graphql.CollectedField, obj *model.PlanParticipantsAndProvidersTranslation) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanParticipantsAndProvidersTranslation_participantsOther(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ParticipantsOther, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*model.TranslationField)
+	fc.Result = res
+	return ec.marshalNTranslationField2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationField(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation_participantsOther(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanParticipantsAndProvidersTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "gqlField":
+				return ec.fieldContext_TranslationField_gqlField(ctx, field)
+			case "goField":
+				return ec.fieldContext_TranslationField_goField(ctx, field)
+			case "dbField":
+				return ec.fieldContext_TranslationField_dbField(ctx, field)
+			case "label":
+				return ec.fieldContext_TranslationField_label(ctx, field)
+			case "readonlyLabel":
+				return ec.fieldContext_TranslationField_readonlyLabel(ctx, field)
+			case "sublabel":
+				return ec.fieldContext_TranslationField_sublabel(ctx, field)
+			case "multiSelectLabel":
+				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
+			case "isArray":
+				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "isOtherType":
+				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanParticipantsAndProvidersTranslation_participantsNote(ctx context.Context, field graphql.CollectedField, obj *model.PlanParticipantsAndProvidersTranslation) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanParticipantsAndProvidersTranslation_participantsNote(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ParticipantsNote, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*model.TranslationField)
+	fc.Result = res
+	return ec.marshalNTranslationField2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationField(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation_participantsNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanParticipantsAndProvidersTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "gqlField":
+				return ec.fieldContext_TranslationField_gqlField(ctx, field)
+			case "goField":
+				return ec.fieldContext_TranslationField_goField(ctx, field)
+			case "dbField":
+				return ec.fieldContext_TranslationField_dbField(ctx, field)
+			case "label":
+				return ec.fieldContext_TranslationField_label(ctx, field)
+			case "readonlyLabel":
+				return ec.fieldContext_TranslationField_readonlyLabel(ctx, field)
+			case "sublabel":
+				return ec.fieldContext_TranslationField_sublabel(ctx, field)
+			case "multiSelectLabel":
+				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
+			case "isArray":
+				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "isOtherType":
+				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanParticipantsAndProvidersTranslation_participantsCurrentlyInModels(ctx context.Context, field graphql.CollectedField, obj *model.PlanParticipantsAndProvidersTranslation) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanParticipantsAndProvidersTranslation_participantsCurrentlyInModels(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ParticipantsCurrentlyInModels, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*model.TranslationFieldWithOptions)
+	fc.Result = res
+	return ec.marshalNTranslationFieldWithOptions2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationFieldWithOptions(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation_participantsCurrentlyInModels(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanParticipantsAndProvidersTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "gqlField":
+				return ec.fieldContext_TranslationFieldWithOptions_gqlField(ctx, field)
+			case "goField":
+				return ec.fieldContext_TranslationFieldWithOptions_goField(ctx, field)
+			case "dbField":
+				return ec.fieldContext_TranslationFieldWithOptions_dbField(ctx, field)
+			case "label":
+				return ec.fieldContext_TranslationFieldWithOptions_label(ctx, field)
+			case "readonlyLabel":
+				return ec.fieldContext_TranslationFieldWithOptions_readonlyLabel(ctx, field)
+			case "sublabel":
+				return ec.fieldContext_TranslationFieldWithOptions_sublabel(ctx, field)
+			case "multiSelectLabel":
+				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
+			case "isArray":
+				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "isOtherType":
+				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
+			case "options":
+				return ec.fieldContext_TranslationFieldWithOptions_options(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type TranslationFieldWithOptions", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanParticipantsAndProvidersTranslation_participantsCurrentlyInModelsNote(ctx context.Context, field graphql.CollectedField, obj *model.PlanParticipantsAndProvidersTranslation) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanParticipantsAndProvidersTranslation_participantsCurrentlyInModelsNote(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ParticipantsCurrentlyInModelsNote, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*model.TranslationField)
+	fc.Result = res
+	return ec.marshalNTranslationField2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationField(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation_participantsCurrentlyInModelsNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanParticipantsAndProvidersTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "gqlField":
+				return ec.fieldContext_TranslationField_gqlField(ctx, field)
+			case "goField":
+				return ec.fieldContext_TranslationField_goField(ctx, field)
+			case "dbField":
+				return ec.fieldContext_TranslationField_dbField(ctx, field)
+			case "label":
+				return ec.fieldContext_TranslationField_label(ctx, field)
+			case "readonlyLabel":
+				return ec.fieldContext_TranslationField_readonlyLabel(ctx, field)
+			case "sublabel":
+				return ec.fieldContext_TranslationField_sublabel(ctx, field)
+			case "multiSelectLabel":
+				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
+			case "isArray":
+				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "isOtherType":
+				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanParticipantsAndProvidersTranslation_modelApplicationLevel(ctx context.Context, field graphql.CollectedField, obj *model.PlanParticipantsAndProvidersTranslation) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanParticipantsAndProvidersTranslation_modelApplicationLevel(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ModelApplicationLevel, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*model.TranslationField)
+	fc.Result = res
+	return ec.marshalNTranslationField2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationField(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation_modelApplicationLevel(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanParticipantsAndProvidersTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "gqlField":
+				return ec.fieldContext_TranslationField_gqlField(ctx, field)
+			case "goField":
+				return ec.fieldContext_TranslationField_goField(ctx, field)
+			case "dbField":
+				return ec.fieldContext_TranslationField_dbField(ctx, field)
+			case "label":
+				return ec.fieldContext_TranslationField_label(ctx, field)
+			case "readonlyLabel":
+				return ec.fieldContext_TranslationField_readonlyLabel(ctx, field)
+			case "sublabel":
+				return ec.fieldContext_TranslationField_sublabel(ctx, field)
+			case "multiSelectLabel":
+				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
+			case "isArray":
+				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "isOtherType":
+				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanParticipantsAndProvidersTranslation_expectedNumberOfParticipants(ctx context.Context, field graphql.CollectedField, obj *model.PlanParticipantsAndProvidersTranslation) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanParticipantsAndProvidersTranslation_expectedNumberOfParticipants(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ExpectedNumberOfParticipants, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*model.TranslationField)
+	fc.Result = res
+	return ec.marshalNTranslationField2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationField(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation_expectedNumberOfParticipants(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanParticipantsAndProvidersTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "gqlField":
+				return ec.fieldContext_TranslationField_gqlField(ctx, field)
+			case "goField":
+				return ec.fieldContext_TranslationField_goField(ctx, field)
+			case "dbField":
+				return ec.fieldContext_TranslationField_dbField(ctx, field)
+			case "label":
+				return ec.fieldContext_TranslationField_label(ctx, field)
+			case "readonlyLabel":
+				return ec.fieldContext_TranslationField_readonlyLabel(ctx, field)
+			case "sublabel":
+				return ec.fieldContext_TranslationField_sublabel(ctx, field)
+			case "multiSelectLabel":
+				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
+			case "isArray":
+				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "isOtherType":
+				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanParticipantsAndProvidersTranslation_estimateConfidence(ctx context.Context, field graphql.CollectedField, obj *model.PlanParticipantsAndProvidersTranslation) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanParticipantsAndProvidersTranslation_estimateConfidence(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.EstimateConfidence, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*model.TranslationFieldWithOptions)
+	fc.Result = res
+	return ec.marshalNTranslationFieldWithOptions2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationFieldWithOptions(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation_estimateConfidence(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanParticipantsAndProvidersTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "gqlField":
+				return ec.fieldContext_TranslationFieldWithOptions_gqlField(ctx, field)
+			case "goField":
+				return ec.fieldContext_TranslationFieldWithOptions_goField(ctx, field)
+			case "dbField":
+				return ec.fieldContext_TranslationFieldWithOptions_dbField(ctx, field)
+			case "label":
+				return ec.fieldContext_TranslationFieldWithOptions_label(ctx, field)
+			case "readonlyLabel":
+				return ec.fieldContext_TranslationFieldWithOptions_readonlyLabel(ctx, field)
+			case "sublabel":
+				return ec.fieldContext_TranslationFieldWithOptions_sublabel(ctx, field)
+			case "multiSelectLabel":
+				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
+			case "isArray":
+				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "isOtherType":
+				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
+			case "options":
+				return ec.fieldContext_TranslationFieldWithOptions_options(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type TranslationFieldWithOptions", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanParticipantsAndProvidersTranslation_confidenceNote(ctx context.Context, field graphql.CollectedField, obj *model.PlanParticipantsAndProvidersTranslation) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanParticipantsAndProvidersTranslation_confidenceNote(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ConfidenceNote, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*model.TranslationField)
+	fc.Result = res
+	return ec.marshalNTranslationField2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationField(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation_confidenceNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanParticipantsAndProvidersTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "gqlField":
+				return ec.fieldContext_TranslationField_gqlField(ctx, field)
+			case "goField":
+				return ec.fieldContext_TranslationField_goField(ctx, field)
+			case "dbField":
+				return ec.fieldContext_TranslationField_dbField(ctx, field)
+			case "label":
+				return ec.fieldContext_TranslationField_label(ctx, field)
+			case "readonlyLabel":
+				return ec.fieldContext_TranslationField_readonlyLabel(ctx, field)
+			case "sublabel":
+				return ec.fieldContext_TranslationField_sublabel(ctx, field)
+			case "multiSelectLabel":
+				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
+			case "isArray":
+				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "isOtherType":
+				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanParticipantsAndProvidersTranslation_recruitmentMethod(ctx context.Context, field graphql.CollectedField, obj *model.PlanParticipantsAndProvidersTranslation) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanParticipantsAndProvidersTranslation_recruitmentMethod(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.RecruitmentMethod, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*model.TranslationFieldWithOptions)
+	fc.Result = res
+	return ec.marshalNTranslationFieldWithOptions2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationFieldWithOptions(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation_recruitmentMethod(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanParticipantsAndProvidersTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "gqlField":
+				return ec.fieldContext_TranslationFieldWithOptions_gqlField(ctx, field)
+			case "goField":
+				return ec.fieldContext_TranslationFieldWithOptions_goField(ctx, field)
+			case "dbField":
+				return ec.fieldContext_TranslationFieldWithOptions_dbField(ctx, field)
+			case "label":
+				return ec.fieldContext_TranslationFieldWithOptions_label(ctx, field)
+			case "readonlyLabel":
+				return ec.fieldContext_TranslationFieldWithOptions_readonlyLabel(ctx, field)
+			case "sublabel":
+				return ec.fieldContext_TranslationFieldWithOptions_sublabel(ctx, field)
+			case "multiSelectLabel":
+				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
+			case "isArray":
+				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "isOtherType":
+				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
+			case "options":
+				return ec.fieldContext_TranslationFieldWithOptions_options(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type TranslationFieldWithOptions", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanParticipantsAndProvidersTranslation_recruitmentOther(ctx context.Context, field graphql.CollectedField, obj *model.PlanParticipantsAndProvidersTranslation) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanParticipantsAndProvidersTranslation_recruitmentOther(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.RecruitmentOther, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*model.TranslationField)
+	fc.Result = res
+	return ec.marshalNTranslationField2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationField(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation_recruitmentOther(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanParticipantsAndProvidersTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "gqlField":
+				return ec.fieldContext_TranslationField_gqlField(ctx, field)
+			case "goField":
+				return ec.fieldContext_TranslationField_goField(ctx, field)
+			case "dbField":
+				return ec.fieldContext_TranslationField_dbField(ctx, field)
+			case "label":
+				return ec.fieldContext_TranslationField_label(ctx, field)
+			case "readonlyLabel":
+				return ec.fieldContext_TranslationField_readonlyLabel(ctx, field)
+			case "sublabel":
+				return ec.fieldContext_TranslationField_sublabel(ctx, field)
+			case "multiSelectLabel":
+				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
+			case "isArray":
+				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "isOtherType":
+				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanParticipantsAndProvidersTranslation_recruitmentNote(ctx context.Context, field graphql.CollectedField, obj *model.PlanParticipantsAndProvidersTranslation) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanParticipantsAndProvidersTranslation_recruitmentNote(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.RecruitmentNote, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*model.TranslationField)
+	fc.Result = res
+	return ec.marshalNTranslationField2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationField(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation_recruitmentNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanParticipantsAndProvidersTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "gqlField":
+				return ec.fieldContext_TranslationField_gqlField(ctx, field)
+			case "goField":
+				return ec.fieldContext_TranslationField_goField(ctx, field)
+			case "dbField":
+				return ec.fieldContext_TranslationField_dbField(ctx, field)
+			case "label":
+				return ec.fieldContext_TranslationField_label(ctx, field)
+			case "readonlyLabel":
+				return ec.fieldContext_TranslationField_readonlyLabel(ctx, field)
+			case "sublabel":
+				return ec.fieldContext_TranslationField_sublabel(ctx, field)
+			case "multiSelectLabel":
+				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
+			case "isArray":
+				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "isOtherType":
+				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanParticipantsAndProvidersTranslation_selectionMethod(ctx context.Context, field graphql.CollectedField, obj *model.PlanParticipantsAndProvidersTranslation) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanParticipantsAndProvidersTranslation_selectionMethod(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.SelectionMethod, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*model.TranslationFieldWithOptions)
+	fc.Result = res
+	return ec.marshalNTranslationFieldWithOptions2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationFieldWithOptions(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation_selectionMethod(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanParticipantsAndProvidersTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "gqlField":
+				return ec.fieldContext_TranslationFieldWithOptions_gqlField(ctx, field)
+			case "goField":
+				return ec.fieldContext_TranslationFieldWithOptions_goField(ctx, field)
+			case "dbField":
+				return ec.fieldContext_TranslationFieldWithOptions_dbField(ctx, field)
+			case "label":
+				return ec.fieldContext_TranslationFieldWithOptions_label(ctx, field)
+			case "readonlyLabel":
+				return ec.fieldContext_TranslationFieldWithOptions_readonlyLabel(ctx, field)
+			case "sublabel":
+				return ec.fieldContext_TranslationFieldWithOptions_sublabel(ctx, field)
+			case "multiSelectLabel":
+				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
+			case "isArray":
+				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "isOtherType":
+				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
+			case "options":
+				return ec.fieldContext_TranslationFieldWithOptions_options(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type TranslationFieldWithOptions", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanParticipantsAndProvidersTranslation_selectionOther(ctx context.Context, field graphql.CollectedField, obj *model.PlanParticipantsAndProvidersTranslation) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanParticipantsAndProvidersTranslation_selectionOther(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.SelectionOther, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*model.TranslationField)
+	fc.Result = res
+	return ec.marshalNTranslationField2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationField(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation_selectionOther(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanParticipantsAndProvidersTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "gqlField":
+				return ec.fieldContext_TranslationField_gqlField(ctx, field)
+			case "goField":
+				return ec.fieldContext_TranslationField_goField(ctx, field)
+			case "dbField":
+				return ec.fieldContext_TranslationField_dbField(ctx, field)
+			case "label":
+				return ec.fieldContext_TranslationField_label(ctx, field)
+			case "readonlyLabel":
+				return ec.fieldContext_TranslationField_readonlyLabel(ctx, field)
+			case "sublabel":
+				return ec.fieldContext_TranslationField_sublabel(ctx, field)
+			case "multiSelectLabel":
+				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
+			case "isArray":
+				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "isOtherType":
+				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanParticipantsAndProvidersTranslation_selectionNote(ctx context.Context, field graphql.CollectedField, obj *model.PlanParticipantsAndProvidersTranslation) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanParticipantsAndProvidersTranslation_selectionNote(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.SelectionNote, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*model.TranslationField)
+	fc.Result = res
+	return ec.marshalNTranslationField2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationField(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation_selectionNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanParticipantsAndProvidersTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "gqlField":
+				return ec.fieldContext_TranslationField_gqlField(ctx, field)
+			case "goField":
+				return ec.fieldContext_TranslationField_goField(ctx, field)
+			case "dbField":
+				return ec.fieldContext_TranslationField_dbField(ctx, field)
+			case "label":
+				return ec.fieldContext_TranslationField_label(ctx, field)
+			case "readonlyLabel":
+				return ec.fieldContext_TranslationField_readonlyLabel(ctx, field)
+			case "sublabel":
+				return ec.fieldContext_TranslationField_sublabel(ctx, field)
+			case "multiSelectLabel":
+				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
+			case "isArray":
+				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "isOtherType":
+				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanParticipantsAndProvidersTranslation_participantAddedFrequency(ctx context.Context, field graphql.CollectedField, obj *model.PlanParticipantsAndProvidersTranslation) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanParticipantsAndProvidersTranslation_participantAddedFrequency(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ParticipantAddedFrequency, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*model.TranslationFieldWithOptions)
+	fc.Result = res
+	return ec.marshalNTranslationFieldWithOptions2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationFieldWithOptions(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation_participantAddedFrequency(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanParticipantsAndProvidersTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "gqlField":
+				return ec.fieldContext_TranslationFieldWithOptions_gqlField(ctx, field)
+			case "goField":
+				return ec.fieldContext_TranslationFieldWithOptions_goField(ctx, field)
+			case "dbField":
+				return ec.fieldContext_TranslationFieldWithOptions_dbField(ctx, field)
+			case "label":
+				return ec.fieldContext_TranslationFieldWithOptions_label(ctx, field)
+			case "readonlyLabel":
+				return ec.fieldContext_TranslationFieldWithOptions_readonlyLabel(ctx, field)
+			case "sublabel":
+				return ec.fieldContext_TranslationFieldWithOptions_sublabel(ctx, field)
+			case "multiSelectLabel":
+				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
+			case "isArray":
+				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "isOtherType":
+				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
+			case "options":
+				return ec.fieldContext_TranslationFieldWithOptions_options(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type TranslationFieldWithOptions", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanParticipantsAndProvidersTranslation_participantAddedFrequencyContinually(ctx context.Context, field graphql.CollectedField, obj *model.PlanParticipantsAndProvidersTranslation) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanParticipantsAndProvidersTranslation_participantAddedFrequencyContinually(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ParticipantAddedFrequencyContinually, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*model.TranslationField)
+	fc.Result = res
+	return ec.marshalNTranslationField2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationField(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation_participantAddedFrequencyContinually(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanParticipantsAndProvidersTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "gqlField":
+				return ec.fieldContext_TranslationField_gqlField(ctx, field)
+			case "goField":
+				return ec.fieldContext_TranslationField_goField(ctx, field)
+			case "dbField":
+				return ec.fieldContext_TranslationField_dbField(ctx, field)
+			case "label":
+				return ec.fieldContext_TranslationField_label(ctx, field)
+			case "readonlyLabel":
+				return ec.fieldContext_TranslationField_readonlyLabel(ctx, field)
+			case "sublabel":
+				return ec.fieldContext_TranslationField_sublabel(ctx, field)
+			case "multiSelectLabel":
+				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
+			case "isArray":
+				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "isOtherType":
+				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanParticipantsAndProvidersTranslation_participantAddedFrequencyOther(ctx context.Context, field graphql.CollectedField, obj *model.PlanParticipantsAndProvidersTranslation) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanParticipantsAndProvidersTranslation_participantAddedFrequencyOther(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ParticipantAddedFrequencyOther, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*model.TranslationField)
+	fc.Result = res
+	return ec.marshalNTranslationField2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationField(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation_participantAddedFrequencyOther(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanParticipantsAndProvidersTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "gqlField":
+				return ec.fieldContext_TranslationField_gqlField(ctx, field)
+			case "goField":
+				return ec.fieldContext_TranslationField_goField(ctx, field)
+			case "dbField":
+				return ec.fieldContext_TranslationField_dbField(ctx, field)
+			case "label":
+				return ec.fieldContext_TranslationField_label(ctx, field)
+			case "readonlyLabel":
+				return ec.fieldContext_TranslationField_readonlyLabel(ctx, field)
+			case "sublabel":
+				return ec.fieldContext_TranslationField_sublabel(ctx, field)
+			case "multiSelectLabel":
+				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
+			case "isArray":
+				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "isOtherType":
+				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanParticipantsAndProvidersTranslation_participantAddedFrequencyNote(ctx context.Context, field graphql.CollectedField, obj *model.PlanParticipantsAndProvidersTranslation) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanParticipantsAndProvidersTranslation_participantAddedFrequencyNote(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ParticipantAddedFrequencyNote, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*model.TranslationField)
+	fc.Result = res
+	return ec.marshalNTranslationField2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationField(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation_participantAddedFrequencyNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanParticipantsAndProvidersTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "gqlField":
+				return ec.fieldContext_TranslationField_gqlField(ctx, field)
+			case "goField":
+				return ec.fieldContext_TranslationField_goField(ctx, field)
+			case "dbField":
+				return ec.fieldContext_TranslationField_dbField(ctx, field)
+			case "label":
+				return ec.fieldContext_TranslationField_label(ctx, field)
+			case "readonlyLabel":
+				return ec.fieldContext_TranslationField_readonlyLabel(ctx, field)
+			case "sublabel":
+				return ec.fieldContext_TranslationField_sublabel(ctx, field)
+			case "multiSelectLabel":
+				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
+			case "isArray":
+				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "isOtherType":
+				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanParticipantsAndProvidersTranslation_participantRemovedFrequency(ctx context.Context, field graphql.CollectedField, obj *model.PlanParticipantsAndProvidersTranslation) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanParticipantsAndProvidersTranslation_participantRemovedFrequency(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ParticipantRemovedFrequency, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*model.TranslationFieldWithOptions)
+	fc.Result = res
+	return ec.marshalNTranslationFieldWithOptions2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationFieldWithOptions(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation_participantRemovedFrequency(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanParticipantsAndProvidersTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "gqlField":
+				return ec.fieldContext_TranslationFieldWithOptions_gqlField(ctx, field)
+			case "goField":
+				return ec.fieldContext_TranslationFieldWithOptions_goField(ctx, field)
+			case "dbField":
+				return ec.fieldContext_TranslationFieldWithOptions_dbField(ctx, field)
+			case "label":
+				return ec.fieldContext_TranslationFieldWithOptions_label(ctx, field)
+			case "readonlyLabel":
+				return ec.fieldContext_TranslationFieldWithOptions_readonlyLabel(ctx, field)
+			case "sublabel":
+				return ec.fieldContext_TranslationFieldWithOptions_sublabel(ctx, field)
+			case "multiSelectLabel":
+				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
+			case "isArray":
+				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "isOtherType":
+				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
+			case "options":
+				return ec.fieldContext_TranslationFieldWithOptions_options(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type TranslationFieldWithOptions", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanParticipantsAndProvidersTranslation_participantRemovedFrequencyContinually(ctx context.Context, field graphql.CollectedField, obj *model.PlanParticipantsAndProvidersTranslation) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanParticipantsAndProvidersTranslation_participantRemovedFrequencyContinually(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ParticipantRemovedFrequencyContinually, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*model.TranslationField)
+	fc.Result = res
+	return ec.marshalNTranslationField2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationField(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation_participantRemovedFrequencyContinually(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanParticipantsAndProvidersTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "gqlField":
+				return ec.fieldContext_TranslationField_gqlField(ctx, field)
+			case "goField":
+				return ec.fieldContext_TranslationField_goField(ctx, field)
+			case "dbField":
+				return ec.fieldContext_TranslationField_dbField(ctx, field)
+			case "label":
+				return ec.fieldContext_TranslationField_label(ctx, field)
+			case "readonlyLabel":
+				return ec.fieldContext_TranslationField_readonlyLabel(ctx, field)
+			case "sublabel":
+				return ec.fieldContext_TranslationField_sublabel(ctx, field)
+			case "multiSelectLabel":
+				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
+			case "isArray":
+				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "isOtherType":
+				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanParticipantsAndProvidersTranslation_participantRemovedFrequencyOther(ctx context.Context, field graphql.CollectedField, obj *model.PlanParticipantsAndProvidersTranslation) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanParticipantsAndProvidersTranslation_participantRemovedFrequencyOther(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ParticipantRemovedFrequencyOther, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*model.TranslationField)
+	fc.Result = res
+	return ec.marshalNTranslationField2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationField(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation_participantRemovedFrequencyOther(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanParticipantsAndProvidersTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "gqlField":
+				return ec.fieldContext_TranslationField_gqlField(ctx, field)
+			case "goField":
+				return ec.fieldContext_TranslationField_goField(ctx, field)
+			case "dbField":
+				return ec.fieldContext_TranslationField_dbField(ctx, field)
+			case "label":
+				return ec.fieldContext_TranslationField_label(ctx, field)
+			case "readonlyLabel":
+				return ec.fieldContext_TranslationField_readonlyLabel(ctx, field)
+			case "sublabel":
+				return ec.fieldContext_TranslationField_sublabel(ctx, field)
+			case "multiSelectLabel":
+				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
+			case "isArray":
+				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "isOtherType":
+				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanParticipantsAndProvidersTranslation_participantRemovedFrequencyNote(ctx context.Context, field graphql.CollectedField, obj *model.PlanParticipantsAndProvidersTranslation) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanParticipantsAndProvidersTranslation_participantRemovedFrequencyNote(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ParticipantRemovedFrequencyNote, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*model.TranslationField)
+	fc.Result = res
+	return ec.marshalNTranslationField2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationField(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation_participantRemovedFrequencyNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanParticipantsAndProvidersTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "gqlField":
+				return ec.fieldContext_TranslationField_gqlField(ctx, field)
+			case "goField":
+				return ec.fieldContext_TranslationField_goField(ctx, field)
+			case "dbField":
+				return ec.fieldContext_TranslationField_dbField(ctx, field)
+			case "label":
+				return ec.fieldContext_TranslationField_label(ctx, field)
+			case "readonlyLabel":
+				return ec.fieldContext_TranslationField_readonlyLabel(ctx, field)
+			case "sublabel":
+				return ec.fieldContext_TranslationField_sublabel(ctx, field)
+			case "multiSelectLabel":
+				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
+			case "isArray":
+				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "isOtherType":
+				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanParticipantsAndProvidersTranslation_communicationMethod(ctx context.Context, field graphql.CollectedField, obj *model.PlanParticipantsAndProvidersTranslation) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanParticipantsAndProvidersTranslation_communicationMethod(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.CommunicationMethod, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*model.TranslationFieldWithOptions)
+	fc.Result = res
+	return ec.marshalNTranslationFieldWithOptions2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationFieldWithOptions(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation_communicationMethod(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanParticipantsAndProvidersTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "gqlField":
+				return ec.fieldContext_TranslationFieldWithOptions_gqlField(ctx, field)
+			case "goField":
+				return ec.fieldContext_TranslationFieldWithOptions_goField(ctx, field)
+			case "dbField":
+				return ec.fieldContext_TranslationFieldWithOptions_dbField(ctx, field)
+			case "label":
+				return ec.fieldContext_TranslationFieldWithOptions_label(ctx, field)
+			case "readonlyLabel":
+				return ec.fieldContext_TranslationFieldWithOptions_readonlyLabel(ctx, field)
+			case "sublabel":
+				return ec.fieldContext_TranslationFieldWithOptions_sublabel(ctx, field)
+			case "multiSelectLabel":
+				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
+			case "isArray":
+				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "isOtherType":
+				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
+			case "options":
+				return ec.fieldContext_TranslationFieldWithOptions_options(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type TranslationFieldWithOptions", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanParticipantsAndProvidersTranslation_communicationMethodOther(ctx context.Context, field graphql.CollectedField, obj *model.PlanParticipantsAndProvidersTranslation) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanParticipantsAndProvidersTranslation_communicationMethodOther(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.CommunicationMethodOther, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*model.TranslationField)
+	fc.Result = res
+	return ec.marshalNTranslationField2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationField(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation_communicationMethodOther(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanParticipantsAndProvidersTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "gqlField":
+				return ec.fieldContext_TranslationField_gqlField(ctx, field)
+			case "goField":
+				return ec.fieldContext_TranslationField_goField(ctx, field)
+			case "dbField":
+				return ec.fieldContext_TranslationField_dbField(ctx, field)
+			case "label":
+				return ec.fieldContext_TranslationField_label(ctx, field)
+			case "readonlyLabel":
+				return ec.fieldContext_TranslationField_readonlyLabel(ctx, field)
+			case "sublabel":
+				return ec.fieldContext_TranslationField_sublabel(ctx, field)
+			case "multiSelectLabel":
+				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
+			case "isArray":
+				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "isOtherType":
+				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanParticipantsAndProvidersTranslation_communicationNote(ctx context.Context, field graphql.CollectedField, obj *model.PlanParticipantsAndProvidersTranslation) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanParticipantsAndProvidersTranslation_communicationNote(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.CommunicationNote, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*model.TranslationField)
+	fc.Result = res
+	return ec.marshalNTranslationField2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationField(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation_communicationNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanParticipantsAndProvidersTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "gqlField":
+				return ec.fieldContext_TranslationField_gqlField(ctx, field)
+			case "goField":
+				return ec.fieldContext_TranslationField_goField(ctx, field)
+			case "dbField":
+				return ec.fieldContext_TranslationField_dbField(ctx, field)
+			case "label":
+				return ec.fieldContext_TranslationField_label(ctx, field)
+			case "readonlyLabel":
+				return ec.fieldContext_TranslationField_readonlyLabel(ctx, field)
+			case "sublabel":
+				return ec.fieldContext_TranslationField_sublabel(ctx, field)
+			case "multiSelectLabel":
+				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
+			case "isArray":
+				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "isOtherType":
+				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanParticipantsAndProvidersTranslation_riskType(ctx context.Context, field graphql.CollectedField, obj *model.PlanParticipantsAndProvidersTranslation) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanParticipantsAndProvidersTranslation_riskType(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.RiskType, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*model.TranslationFieldWithOptions)
+	fc.Result = res
+	return ec.marshalNTranslationFieldWithOptions2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationFieldWithOptions(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation_riskType(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanParticipantsAndProvidersTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "gqlField":
+				return ec.fieldContext_TranslationFieldWithOptions_gqlField(ctx, field)
+			case "goField":
+				return ec.fieldContext_TranslationFieldWithOptions_goField(ctx, field)
+			case "dbField":
+				return ec.fieldContext_TranslationFieldWithOptions_dbField(ctx, field)
+			case "label":
+				return ec.fieldContext_TranslationFieldWithOptions_label(ctx, field)
+			case "readonlyLabel":
+				return ec.fieldContext_TranslationFieldWithOptions_readonlyLabel(ctx, field)
+			case "sublabel":
+				return ec.fieldContext_TranslationFieldWithOptions_sublabel(ctx, field)
+			case "multiSelectLabel":
+				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
+			case "isArray":
+				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "isOtherType":
+				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
+			case "options":
+				return ec.fieldContext_TranslationFieldWithOptions_options(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type TranslationFieldWithOptions", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanParticipantsAndProvidersTranslation_riskOther(ctx context.Context, field graphql.CollectedField, obj *model.PlanParticipantsAndProvidersTranslation) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanParticipantsAndProvidersTranslation_riskOther(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.RiskOther, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*model.TranslationField)
+	fc.Result = res
+	return ec.marshalNTranslationField2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationField(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation_riskOther(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanParticipantsAndProvidersTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "gqlField":
+				return ec.fieldContext_TranslationField_gqlField(ctx, field)
+			case "goField":
+				return ec.fieldContext_TranslationField_goField(ctx, field)
+			case "dbField":
+				return ec.fieldContext_TranslationField_dbField(ctx, field)
+			case "label":
+				return ec.fieldContext_TranslationField_label(ctx, field)
+			case "readonlyLabel":
+				return ec.fieldContext_TranslationField_readonlyLabel(ctx, field)
+			case "sublabel":
+				return ec.fieldContext_TranslationField_sublabel(ctx, field)
+			case "multiSelectLabel":
+				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
+			case "isArray":
+				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "isOtherType":
+				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanParticipantsAndProvidersTranslation_riskNote(ctx context.Context, field graphql.CollectedField, obj *model.PlanParticipantsAndProvidersTranslation) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanParticipantsAndProvidersTranslation_riskNote(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.RiskNote, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*model.TranslationField)
+	fc.Result = res
+	return ec.marshalNTranslationField2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationField(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation_riskNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanParticipantsAndProvidersTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "gqlField":
+				return ec.fieldContext_TranslationField_gqlField(ctx, field)
+			case "goField":
+				return ec.fieldContext_TranslationField_goField(ctx, field)
+			case "dbField":
+				return ec.fieldContext_TranslationField_dbField(ctx, field)
+			case "label":
+				return ec.fieldContext_TranslationField_label(ctx, field)
+			case "readonlyLabel":
+				return ec.fieldContext_TranslationField_readonlyLabel(ctx, field)
+			case "sublabel":
+				return ec.fieldContext_TranslationField_sublabel(ctx, field)
+			case "multiSelectLabel":
+				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
+			case "isArray":
+				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "isOtherType":
+				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanParticipantsAndProvidersTranslation_willRiskChange(ctx context.Context, field graphql.CollectedField, obj *model.PlanParticipantsAndProvidersTranslation) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanParticipantsAndProvidersTranslation_willRiskChange(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.WillRiskChange, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*model.TranslationFieldWithOptions)
+	fc.Result = res
+	return ec.marshalNTranslationFieldWithOptions2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationFieldWithOptions(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation_willRiskChange(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanParticipantsAndProvidersTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "gqlField":
+				return ec.fieldContext_TranslationFieldWithOptions_gqlField(ctx, field)
+			case "goField":
+				return ec.fieldContext_TranslationFieldWithOptions_goField(ctx, field)
+			case "dbField":
+				return ec.fieldContext_TranslationFieldWithOptions_dbField(ctx, field)
+			case "label":
+				return ec.fieldContext_TranslationFieldWithOptions_label(ctx, field)
+			case "readonlyLabel":
+				return ec.fieldContext_TranslationFieldWithOptions_readonlyLabel(ctx, field)
+			case "sublabel":
+				return ec.fieldContext_TranslationFieldWithOptions_sublabel(ctx, field)
+			case "multiSelectLabel":
+				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
+			case "isArray":
+				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "isOtherType":
+				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
+			case "options":
+				return ec.fieldContext_TranslationFieldWithOptions_options(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type TranslationFieldWithOptions", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanParticipantsAndProvidersTranslation_willRiskChangeNote(ctx context.Context, field graphql.CollectedField, obj *model.PlanParticipantsAndProvidersTranslation) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanParticipantsAndProvidersTranslation_willRiskChangeNote(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.WillRiskChangeNote, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*model.TranslationField)
+	fc.Result = res
+	return ec.marshalNTranslationField2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationField(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation_willRiskChangeNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanParticipantsAndProvidersTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "gqlField":
+				return ec.fieldContext_TranslationField_gqlField(ctx, field)
+			case "goField":
+				return ec.fieldContext_TranslationField_goField(ctx, field)
+			case "dbField":
+				return ec.fieldContext_TranslationField_dbField(ctx, field)
+			case "label":
+				return ec.fieldContext_TranslationField_label(ctx, field)
+			case "readonlyLabel":
+				return ec.fieldContext_TranslationField_readonlyLabel(ctx, field)
+			case "sublabel":
+				return ec.fieldContext_TranslationField_sublabel(ctx, field)
+			case "multiSelectLabel":
+				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
+			case "isArray":
+				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "isOtherType":
+				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanParticipantsAndProvidersTranslation_coordinateWork(ctx context.Context, field graphql.CollectedField, obj *model.PlanParticipantsAndProvidersTranslation) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanParticipantsAndProvidersTranslation_coordinateWork(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.CoordinateWork, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*model.TranslationFieldWithOptions)
+	fc.Result = res
+	return ec.marshalNTranslationFieldWithOptions2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationFieldWithOptions(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation_coordinateWork(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanParticipantsAndProvidersTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "gqlField":
+				return ec.fieldContext_TranslationFieldWithOptions_gqlField(ctx, field)
+			case "goField":
+				return ec.fieldContext_TranslationFieldWithOptions_goField(ctx, field)
+			case "dbField":
+				return ec.fieldContext_TranslationFieldWithOptions_dbField(ctx, field)
+			case "label":
+				return ec.fieldContext_TranslationFieldWithOptions_label(ctx, field)
+			case "readonlyLabel":
+				return ec.fieldContext_TranslationFieldWithOptions_readonlyLabel(ctx, field)
+			case "sublabel":
+				return ec.fieldContext_TranslationFieldWithOptions_sublabel(ctx, field)
+			case "multiSelectLabel":
+				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
+			case "isArray":
+				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "isOtherType":
+				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
+			case "options":
+				return ec.fieldContext_TranslationFieldWithOptions_options(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type TranslationFieldWithOptions", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanParticipantsAndProvidersTranslation_coordinateWorkNote(ctx context.Context, field graphql.CollectedField, obj *model.PlanParticipantsAndProvidersTranslation) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanParticipantsAndProvidersTranslation_coordinateWorkNote(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.CoordinateWorkNote, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*model.TranslationField)
+	fc.Result = res
+	return ec.marshalNTranslationField2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationField(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation_coordinateWorkNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanParticipantsAndProvidersTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "gqlField":
+				return ec.fieldContext_TranslationField_gqlField(ctx, field)
+			case "goField":
+				return ec.fieldContext_TranslationField_goField(ctx, field)
+			case "dbField":
+				return ec.fieldContext_TranslationField_dbField(ctx, field)
+			case "label":
+				return ec.fieldContext_TranslationField_label(ctx, field)
+			case "readonlyLabel":
+				return ec.fieldContext_TranslationField_readonlyLabel(ctx, field)
+			case "sublabel":
+				return ec.fieldContext_TranslationField_sublabel(ctx, field)
+			case "multiSelectLabel":
+				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
+			case "isArray":
+				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "isOtherType":
+				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanParticipantsAndProvidersTranslation_gainsharePayments(ctx context.Context, field graphql.CollectedField, obj *model.PlanParticipantsAndProvidersTranslation) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanParticipantsAndProvidersTranslation_gainsharePayments(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.GainsharePayments, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*model.TranslationFieldWithOptions)
+	fc.Result = res
+	return ec.marshalNTranslationFieldWithOptions2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationFieldWithOptions(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation_gainsharePayments(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanParticipantsAndProvidersTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "gqlField":
+				return ec.fieldContext_TranslationFieldWithOptions_gqlField(ctx, field)
+			case "goField":
+				return ec.fieldContext_TranslationFieldWithOptions_goField(ctx, field)
+			case "dbField":
+				return ec.fieldContext_TranslationFieldWithOptions_dbField(ctx, field)
+			case "label":
+				return ec.fieldContext_TranslationFieldWithOptions_label(ctx, field)
+			case "readonlyLabel":
+				return ec.fieldContext_TranslationFieldWithOptions_readonlyLabel(ctx, field)
+			case "sublabel":
+				return ec.fieldContext_TranslationFieldWithOptions_sublabel(ctx, field)
+			case "multiSelectLabel":
+				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
+			case "isArray":
+				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "isOtherType":
+				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
+			case "options":
+				return ec.fieldContext_TranslationFieldWithOptions_options(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type TranslationFieldWithOptions", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanParticipantsAndProvidersTranslation_gainsharePaymentsTrack(ctx context.Context, field graphql.CollectedField, obj *model.PlanParticipantsAndProvidersTranslation) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanParticipantsAndProvidersTranslation_gainsharePaymentsTrack(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.GainsharePaymentsTrack, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*model.TranslationFieldWithOptions)
+	fc.Result = res
+	return ec.marshalNTranslationFieldWithOptions2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationFieldWithOptions(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation_gainsharePaymentsTrack(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanParticipantsAndProvidersTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "gqlField":
+				return ec.fieldContext_TranslationFieldWithOptions_gqlField(ctx, field)
+			case "goField":
+				return ec.fieldContext_TranslationFieldWithOptions_goField(ctx, field)
+			case "dbField":
+				return ec.fieldContext_TranslationFieldWithOptions_dbField(ctx, field)
+			case "label":
+				return ec.fieldContext_TranslationFieldWithOptions_label(ctx, field)
+			case "readonlyLabel":
+				return ec.fieldContext_TranslationFieldWithOptions_readonlyLabel(ctx, field)
+			case "sublabel":
+				return ec.fieldContext_TranslationFieldWithOptions_sublabel(ctx, field)
+			case "multiSelectLabel":
+				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
+			case "isArray":
+				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "isOtherType":
+				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
+			case "options":
+				return ec.fieldContext_TranslationFieldWithOptions_options(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type TranslationFieldWithOptions", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanParticipantsAndProvidersTranslation_gainsharePaymentsNote(ctx context.Context, field graphql.CollectedField, obj *model.PlanParticipantsAndProvidersTranslation) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanParticipantsAndProvidersTranslation_gainsharePaymentsNote(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.GainsharePaymentsNote, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*model.TranslationField)
+	fc.Result = res
+	return ec.marshalNTranslationField2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationField(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation_gainsharePaymentsNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanParticipantsAndProvidersTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "gqlField":
+				return ec.fieldContext_TranslationField_gqlField(ctx, field)
+			case "goField":
+				return ec.fieldContext_TranslationField_goField(ctx, field)
+			case "dbField":
+				return ec.fieldContext_TranslationField_dbField(ctx, field)
+			case "label":
+				return ec.fieldContext_TranslationField_label(ctx, field)
+			case "readonlyLabel":
+				return ec.fieldContext_TranslationField_readonlyLabel(ctx, field)
+			case "sublabel":
+				return ec.fieldContext_TranslationField_sublabel(ctx, field)
+			case "multiSelectLabel":
+				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
+			case "isArray":
+				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "isOtherType":
+				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanParticipantsAndProvidersTranslation_gainsharePaymentsEligibility(ctx context.Context, field graphql.CollectedField, obj *model.PlanParticipantsAndProvidersTranslation) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanParticipantsAndProvidersTranslation_gainsharePaymentsEligibility(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.GainsharePaymentsEligibility, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*model.TranslationFieldWithOptions)
+	fc.Result = res
+	return ec.marshalNTranslationFieldWithOptions2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationFieldWithOptions(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation_gainsharePaymentsEligibility(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanParticipantsAndProvidersTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "gqlField":
+				return ec.fieldContext_TranslationFieldWithOptions_gqlField(ctx, field)
+			case "goField":
+				return ec.fieldContext_TranslationFieldWithOptions_goField(ctx, field)
+			case "dbField":
+				return ec.fieldContext_TranslationFieldWithOptions_dbField(ctx, field)
+			case "label":
+				return ec.fieldContext_TranslationFieldWithOptions_label(ctx, field)
+			case "readonlyLabel":
+				return ec.fieldContext_TranslationFieldWithOptions_readonlyLabel(ctx, field)
+			case "sublabel":
+				return ec.fieldContext_TranslationFieldWithOptions_sublabel(ctx, field)
+			case "multiSelectLabel":
+				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
+			case "isArray":
+				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "isOtherType":
+				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
+			case "options":
+				return ec.fieldContext_TranslationFieldWithOptions_options(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type TranslationFieldWithOptions", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanParticipantsAndProvidersTranslation_gainsharePaymentsEligibilityOther(ctx context.Context, field graphql.CollectedField, obj *model.PlanParticipantsAndProvidersTranslation) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanParticipantsAndProvidersTranslation_gainsharePaymentsEligibilityOther(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.GainsharePaymentsEligibilityOther, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*model.TranslationField)
+	fc.Result = res
+	return ec.marshalNTranslationField2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationField(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation_gainsharePaymentsEligibilityOther(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanParticipantsAndProvidersTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "gqlField":
+				return ec.fieldContext_TranslationField_gqlField(ctx, field)
+			case "goField":
+				return ec.fieldContext_TranslationField_goField(ctx, field)
+			case "dbField":
+				return ec.fieldContext_TranslationField_dbField(ctx, field)
+			case "label":
+				return ec.fieldContext_TranslationField_label(ctx, field)
+			case "readonlyLabel":
+				return ec.fieldContext_TranslationField_readonlyLabel(ctx, field)
+			case "sublabel":
+				return ec.fieldContext_TranslationField_sublabel(ctx, field)
+			case "multiSelectLabel":
+				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
+			case "isArray":
+				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "isOtherType":
+				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanParticipantsAndProvidersTranslation_participantsIds(ctx context.Context, field graphql.CollectedField, obj *model.PlanParticipantsAndProvidersTranslation) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanParticipantsAndProvidersTranslation_participantsIds(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ParticipantsIds, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*model.TranslationFieldWithOptions)
+	fc.Result = res
+	return ec.marshalNTranslationFieldWithOptions2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationFieldWithOptions(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation_participantsIds(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanParticipantsAndProvidersTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "gqlField":
+				return ec.fieldContext_TranslationFieldWithOptions_gqlField(ctx, field)
+			case "goField":
+				return ec.fieldContext_TranslationFieldWithOptions_goField(ctx, field)
+			case "dbField":
+				return ec.fieldContext_TranslationFieldWithOptions_dbField(ctx, field)
+			case "label":
+				return ec.fieldContext_TranslationFieldWithOptions_label(ctx, field)
+			case "readonlyLabel":
+				return ec.fieldContext_TranslationFieldWithOptions_readonlyLabel(ctx, field)
+			case "sublabel":
+				return ec.fieldContext_TranslationFieldWithOptions_sublabel(ctx, field)
+			case "multiSelectLabel":
+				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
+			case "isArray":
+				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "isOtherType":
+				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
+			case "options":
+				return ec.fieldContext_TranslationFieldWithOptions_options(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type TranslationFieldWithOptions", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanParticipantsAndProvidersTranslation_participantsIdsOther(ctx context.Context, field graphql.CollectedField, obj *model.PlanParticipantsAndProvidersTranslation) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanParticipantsAndProvidersTranslation_participantsIdsOther(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ParticipantsIdsOther, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*model.TranslationField)
+	fc.Result = res
+	return ec.marshalNTranslationField2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationField(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation_participantsIdsOther(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanParticipantsAndProvidersTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "gqlField":
+				return ec.fieldContext_TranslationField_gqlField(ctx, field)
+			case "goField":
+				return ec.fieldContext_TranslationField_goField(ctx, field)
+			case "dbField":
+				return ec.fieldContext_TranslationField_dbField(ctx, field)
+			case "label":
+				return ec.fieldContext_TranslationField_label(ctx, field)
+			case "readonlyLabel":
+				return ec.fieldContext_TranslationField_readonlyLabel(ctx, field)
+			case "sublabel":
+				return ec.fieldContext_TranslationField_sublabel(ctx, field)
+			case "multiSelectLabel":
+				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
+			case "isArray":
+				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "isOtherType":
+				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanParticipantsAndProvidersTranslation_participantsIDSNote(ctx context.Context, field graphql.CollectedField, obj *model.PlanParticipantsAndProvidersTranslation) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanParticipantsAndProvidersTranslation_participantsIDSNote(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ParticipantsIDSNote, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*model.TranslationField)
+	fc.Result = res
+	return ec.marshalNTranslationField2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationField(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation_participantsIDSNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanParticipantsAndProvidersTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "gqlField":
+				return ec.fieldContext_TranslationField_gqlField(ctx, field)
+			case "goField":
+				return ec.fieldContext_TranslationField_goField(ctx, field)
+			case "dbField":
+				return ec.fieldContext_TranslationField_dbField(ctx, field)
+			case "label":
+				return ec.fieldContext_TranslationField_label(ctx, field)
+			case "readonlyLabel":
+				return ec.fieldContext_TranslationField_readonlyLabel(ctx, field)
+			case "sublabel":
+				return ec.fieldContext_TranslationField_sublabel(ctx, field)
+			case "multiSelectLabel":
+				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
+			case "isArray":
+				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "isOtherType":
+				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanParticipantsAndProvidersTranslation_providerAdditionFrequency(ctx context.Context, field graphql.CollectedField, obj *model.PlanParticipantsAndProvidersTranslation) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanParticipantsAndProvidersTranslation_providerAdditionFrequency(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ProviderAdditionFrequency, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*model.TranslationFieldWithOptions)
+	fc.Result = res
+	return ec.marshalNTranslationFieldWithOptions2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationFieldWithOptions(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation_providerAdditionFrequency(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanParticipantsAndProvidersTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "gqlField":
+				return ec.fieldContext_TranslationFieldWithOptions_gqlField(ctx, field)
+			case "goField":
+				return ec.fieldContext_TranslationFieldWithOptions_goField(ctx, field)
+			case "dbField":
+				return ec.fieldContext_TranslationFieldWithOptions_dbField(ctx, field)
+			case "label":
+				return ec.fieldContext_TranslationFieldWithOptions_label(ctx, field)
+			case "readonlyLabel":
+				return ec.fieldContext_TranslationFieldWithOptions_readonlyLabel(ctx, field)
+			case "sublabel":
+				return ec.fieldContext_TranslationFieldWithOptions_sublabel(ctx, field)
+			case "multiSelectLabel":
+				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
+			case "isArray":
+				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "isOtherType":
+				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
+			case "options":
+				return ec.fieldContext_TranslationFieldWithOptions_options(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type TranslationFieldWithOptions", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanParticipantsAndProvidersTranslation_providerAdditionFrequencyContinually(ctx context.Context, field graphql.CollectedField, obj *model.PlanParticipantsAndProvidersTranslation) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanParticipantsAndProvidersTranslation_providerAdditionFrequencyContinually(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ProviderAdditionFrequencyContinually, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*model.TranslationField)
+	fc.Result = res
+	return ec.marshalNTranslationField2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationField(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation_providerAdditionFrequencyContinually(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanParticipantsAndProvidersTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "gqlField":
+				return ec.fieldContext_TranslationField_gqlField(ctx, field)
+			case "goField":
+				return ec.fieldContext_TranslationField_goField(ctx, field)
+			case "dbField":
+				return ec.fieldContext_TranslationField_dbField(ctx, field)
+			case "label":
+				return ec.fieldContext_TranslationField_label(ctx, field)
+			case "readonlyLabel":
+				return ec.fieldContext_TranslationField_readonlyLabel(ctx, field)
+			case "sublabel":
+				return ec.fieldContext_TranslationField_sublabel(ctx, field)
+			case "multiSelectLabel":
+				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
+			case "isArray":
+				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "isOtherType":
+				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanParticipantsAndProvidersTranslation_providerAdditionFrequencyOther(ctx context.Context, field graphql.CollectedField, obj *model.PlanParticipantsAndProvidersTranslation) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanParticipantsAndProvidersTranslation_providerAdditionFrequencyOther(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ProviderAdditionFrequencyOther, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*model.TranslationField)
+	fc.Result = res
+	return ec.marshalNTranslationField2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationField(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation_providerAdditionFrequencyOther(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanParticipantsAndProvidersTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "gqlField":
+				return ec.fieldContext_TranslationField_gqlField(ctx, field)
+			case "goField":
+				return ec.fieldContext_TranslationField_goField(ctx, field)
+			case "dbField":
+				return ec.fieldContext_TranslationField_dbField(ctx, field)
+			case "label":
+				return ec.fieldContext_TranslationField_label(ctx, field)
+			case "readonlyLabel":
+				return ec.fieldContext_TranslationField_readonlyLabel(ctx, field)
+			case "sublabel":
+				return ec.fieldContext_TranslationField_sublabel(ctx, field)
+			case "multiSelectLabel":
+				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
+			case "isArray":
+				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "isOtherType":
+				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanParticipantsAndProvidersTranslation_providerAdditionFrequencyNote(ctx context.Context, field graphql.CollectedField, obj *model.PlanParticipantsAndProvidersTranslation) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanParticipantsAndProvidersTranslation_providerAdditionFrequencyNote(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ProviderAdditionFrequencyNote, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*model.TranslationField)
+	fc.Result = res
+	return ec.marshalNTranslationField2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationField(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation_providerAdditionFrequencyNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanParticipantsAndProvidersTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "gqlField":
+				return ec.fieldContext_TranslationField_gqlField(ctx, field)
+			case "goField":
+				return ec.fieldContext_TranslationField_goField(ctx, field)
+			case "dbField":
+				return ec.fieldContext_TranslationField_dbField(ctx, field)
+			case "label":
+				return ec.fieldContext_TranslationField_label(ctx, field)
+			case "readonlyLabel":
+				return ec.fieldContext_TranslationField_readonlyLabel(ctx, field)
+			case "sublabel":
+				return ec.fieldContext_TranslationField_sublabel(ctx, field)
+			case "multiSelectLabel":
+				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
+			case "isArray":
+				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "isOtherType":
+				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanParticipantsAndProvidersTranslation_providerAddMethod(ctx context.Context, field graphql.CollectedField, obj *model.PlanParticipantsAndProvidersTranslation) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanParticipantsAndProvidersTranslation_providerAddMethod(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ProviderAddMethod, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*model.TranslationFieldWithOptions)
+	fc.Result = res
+	return ec.marshalNTranslationFieldWithOptions2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationFieldWithOptions(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation_providerAddMethod(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanParticipantsAndProvidersTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "gqlField":
+				return ec.fieldContext_TranslationFieldWithOptions_gqlField(ctx, field)
+			case "goField":
+				return ec.fieldContext_TranslationFieldWithOptions_goField(ctx, field)
+			case "dbField":
+				return ec.fieldContext_TranslationFieldWithOptions_dbField(ctx, field)
+			case "label":
+				return ec.fieldContext_TranslationFieldWithOptions_label(ctx, field)
+			case "readonlyLabel":
+				return ec.fieldContext_TranslationFieldWithOptions_readonlyLabel(ctx, field)
+			case "sublabel":
+				return ec.fieldContext_TranslationFieldWithOptions_sublabel(ctx, field)
+			case "multiSelectLabel":
+				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
+			case "isArray":
+				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "isOtherType":
+				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
+			case "options":
+				return ec.fieldContext_TranslationFieldWithOptions_options(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type TranslationFieldWithOptions", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanParticipantsAndProvidersTranslation_providerAddMethodOther(ctx context.Context, field graphql.CollectedField, obj *model.PlanParticipantsAndProvidersTranslation) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanParticipantsAndProvidersTranslation_providerAddMethodOther(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ProviderAddMethodOther, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*model.TranslationField)
+	fc.Result = res
+	return ec.marshalNTranslationField2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationField(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation_providerAddMethodOther(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanParticipantsAndProvidersTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "gqlField":
+				return ec.fieldContext_TranslationField_gqlField(ctx, field)
+			case "goField":
+				return ec.fieldContext_TranslationField_goField(ctx, field)
+			case "dbField":
+				return ec.fieldContext_TranslationField_dbField(ctx, field)
+			case "label":
+				return ec.fieldContext_TranslationField_label(ctx, field)
+			case "readonlyLabel":
+				return ec.fieldContext_TranslationField_readonlyLabel(ctx, field)
+			case "sublabel":
+				return ec.fieldContext_TranslationField_sublabel(ctx, field)
+			case "multiSelectLabel":
+				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
+			case "isArray":
+				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "isOtherType":
+				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanParticipantsAndProvidersTranslation_providerAddMethodNote(ctx context.Context, field graphql.CollectedField, obj *model.PlanParticipantsAndProvidersTranslation) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanParticipantsAndProvidersTranslation_providerAddMethodNote(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ProviderAddMethodNote, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*model.TranslationField)
+	fc.Result = res
+	return ec.marshalNTranslationField2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationField(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation_providerAddMethodNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanParticipantsAndProvidersTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "gqlField":
+				return ec.fieldContext_TranslationField_gqlField(ctx, field)
+			case "goField":
+				return ec.fieldContext_TranslationField_goField(ctx, field)
+			case "dbField":
+				return ec.fieldContext_TranslationField_dbField(ctx, field)
+			case "label":
+				return ec.fieldContext_TranslationField_label(ctx, field)
+			case "readonlyLabel":
+				return ec.fieldContext_TranslationField_readonlyLabel(ctx, field)
+			case "sublabel":
+				return ec.fieldContext_TranslationField_sublabel(ctx, field)
+			case "multiSelectLabel":
+				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
+			case "isArray":
+				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "isOtherType":
+				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanParticipantsAndProvidersTranslation_providerLeaveMethod(ctx context.Context, field graphql.CollectedField, obj *model.PlanParticipantsAndProvidersTranslation) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanParticipantsAndProvidersTranslation_providerLeaveMethod(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ProviderLeaveMethod, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*model.TranslationFieldWithOptions)
+	fc.Result = res
+	return ec.marshalNTranslationFieldWithOptions2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationFieldWithOptions(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation_providerLeaveMethod(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanParticipantsAndProvidersTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "gqlField":
+				return ec.fieldContext_TranslationFieldWithOptions_gqlField(ctx, field)
+			case "goField":
+				return ec.fieldContext_TranslationFieldWithOptions_goField(ctx, field)
+			case "dbField":
+				return ec.fieldContext_TranslationFieldWithOptions_dbField(ctx, field)
+			case "label":
+				return ec.fieldContext_TranslationFieldWithOptions_label(ctx, field)
+			case "readonlyLabel":
+				return ec.fieldContext_TranslationFieldWithOptions_readonlyLabel(ctx, field)
+			case "sublabel":
+				return ec.fieldContext_TranslationFieldWithOptions_sublabel(ctx, field)
+			case "multiSelectLabel":
+				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
+			case "isArray":
+				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "isOtherType":
+				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
+			case "options":
+				return ec.fieldContext_TranslationFieldWithOptions_options(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type TranslationFieldWithOptions", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanParticipantsAndProvidersTranslation_providerLeaveMethodOther(ctx context.Context, field graphql.CollectedField, obj *model.PlanParticipantsAndProvidersTranslation) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanParticipantsAndProvidersTranslation_providerLeaveMethodOther(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ProviderLeaveMethodOther, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*model.TranslationField)
+	fc.Result = res
+	return ec.marshalNTranslationField2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationField(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation_providerLeaveMethodOther(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanParticipantsAndProvidersTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "gqlField":
+				return ec.fieldContext_TranslationField_gqlField(ctx, field)
+			case "goField":
+				return ec.fieldContext_TranslationField_goField(ctx, field)
+			case "dbField":
+				return ec.fieldContext_TranslationField_dbField(ctx, field)
+			case "label":
+				return ec.fieldContext_TranslationField_label(ctx, field)
+			case "readonlyLabel":
+				return ec.fieldContext_TranslationField_readonlyLabel(ctx, field)
+			case "sublabel":
+				return ec.fieldContext_TranslationField_sublabel(ctx, field)
+			case "multiSelectLabel":
+				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
+			case "isArray":
+				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "isOtherType":
+				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanParticipantsAndProvidersTranslation_providerLeaveMethodNote(ctx context.Context, field graphql.CollectedField, obj *model.PlanParticipantsAndProvidersTranslation) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanParticipantsAndProvidersTranslation_providerLeaveMethodNote(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ProviderLeaveMethodNote, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*model.TranslationField)
+	fc.Result = res
+	return ec.marshalNTranslationField2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationField(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation_providerLeaveMethodNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanParticipantsAndProvidersTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "gqlField":
+				return ec.fieldContext_TranslationField_gqlField(ctx, field)
+			case "goField":
+				return ec.fieldContext_TranslationField_goField(ctx, field)
+			case "dbField":
+				return ec.fieldContext_TranslationField_dbField(ctx, field)
+			case "label":
+				return ec.fieldContext_TranslationField_label(ctx, field)
+			case "readonlyLabel":
+				return ec.fieldContext_TranslationField_readonlyLabel(ctx, field)
+			case "sublabel":
+				return ec.fieldContext_TranslationField_sublabel(ctx, field)
+			case "multiSelectLabel":
+				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
+			case "isArray":
+				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "isOtherType":
+				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanParticipantsAndProvidersTranslation_providerRemovalFrequency(ctx context.Context, field graphql.CollectedField, obj *model.PlanParticipantsAndProvidersTranslation) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanParticipantsAndProvidersTranslation_providerRemovalFrequency(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ProviderRemovalFrequency, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*model.TranslationFieldWithOptions)
+	fc.Result = res
+	return ec.marshalNTranslationFieldWithOptions2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationFieldWithOptions(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation_providerRemovalFrequency(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanParticipantsAndProvidersTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "gqlField":
+				return ec.fieldContext_TranslationFieldWithOptions_gqlField(ctx, field)
+			case "goField":
+				return ec.fieldContext_TranslationFieldWithOptions_goField(ctx, field)
+			case "dbField":
+				return ec.fieldContext_TranslationFieldWithOptions_dbField(ctx, field)
+			case "label":
+				return ec.fieldContext_TranslationFieldWithOptions_label(ctx, field)
+			case "readonlyLabel":
+				return ec.fieldContext_TranslationFieldWithOptions_readonlyLabel(ctx, field)
+			case "sublabel":
+				return ec.fieldContext_TranslationFieldWithOptions_sublabel(ctx, field)
+			case "multiSelectLabel":
+				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
+			case "isArray":
+				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "isOtherType":
+				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
+			case "options":
+				return ec.fieldContext_TranslationFieldWithOptions_options(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type TranslationFieldWithOptions", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanParticipantsAndProvidersTranslation_providerRemovalFrequencyContinually(ctx context.Context, field graphql.CollectedField, obj *model.PlanParticipantsAndProvidersTranslation) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanParticipantsAndProvidersTranslation_providerRemovalFrequencyContinually(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ProviderRemovalFrequencyContinually, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*model.TranslationField)
+	fc.Result = res
+	return ec.marshalNTranslationField2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationField(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation_providerRemovalFrequencyContinually(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanParticipantsAndProvidersTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "gqlField":
+				return ec.fieldContext_TranslationField_gqlField(ctx, field)
+			case "goField":
+				return ec.fieldContext_TranslationField_goField(ctx, field)
+			case "dbField":
+				return ec.fieldContext_TranslationField_dbField(ctx, field)
+			case "label":
+				return ec.fieldContext_TranslationField_label(ctx, field)
+			case "readonlyLabel":
+				return ec.fieldContext_TranslationField_readonlyLabel(ctx, field)
+			case "sublabel":
+				return ec.fieldContext_TranslationField_sublabel(ctx, field)
+			case "multiSelectLabel":
+				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
+			case "isArray":
+				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "isOtherType":
+				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanParticipantsAndProvidersTranslation_providerRemovalFrequencyOther(ctx context.Context, field graphql.CollectedField, obj *model.PlanParticipantsAndProvidersTranslation) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanParticipantsAndProvidersTranslation_providerRemovalFrequencyOther(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ProviderRemovalFrequencyOther, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*model.TranslationField)
+	fc.Result = res
+	return ec.marshalNTranslationField2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationField(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation_providerRemovalFrequencyOther(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanParticipantsAndProvidersTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "gqlField":
+				return ec.fieldContext_TranslationField_gqlField(ctx, field)
+			case "goField":
+				return ec.fieldContext_TranslationField_goField(ctx, field)
+			case "dbField":
+				return ec.fieldContext_TranslationField_dbField(ctx, field)
+			case "label":
+				return ec.fieldContext_TranslationField_label(ctx, field)
+			case "readonlyLabel":
+				return ec.fieldContext_TranslationField_readonlyLabel(ctx, field)
+			case "sublabel":
+				return ec.fieldContext_TranslationField_sublabel(ctx, field)
+			case "multiSelectLabel":
+				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
+			case "isArray":
+				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "isOtherType":
+				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanParticipantsAndProvidersTranslation_providerRemovalFrequencyNote(ctx context.Context, field graphql.CollectedField, obj *model.PlanParticipantsAndProvidersTranslation) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanParticipantsAndProvidersTranslation_providerRemovalFrequencyNote(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ProviderRemovalFrequencyNote, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*model.TranslationField)
+	fc.Result = res
+	return ec.marshalNTranslationField2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationField(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation_providerRemovalFrequencyNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanParticipantsAndProvidersTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "gqlField":
+				return ec.fieldContext_TranslationField_gqlField(ctx, field)
+			case "goField":
+				return ec.fieldContext_TranslationField_goField(ctx, field)
+			case "dbField":
+				return ec.fieldContext_TranslationField_dbField(ctx, field)
+			case "label":
+				return ec.fieldContext_TranslationField_label(ctx, field)
+			case "readonlyLabel":
+				return ec.fieldContext_TranslationField_readonlyLabel(ctx, field)
+			case "sublabel":
+				return ec.fieldContext_TranslationField_sublabel(ctx, field)
+			case "multiSelectLabel":
+				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
+			case "isArray":
+				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "isOtherType":
+				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanParticipantsAndProvidersTranslation_providerOverlap(ctx context.Context, field graphql.CollectedField, obj *model.PlanParticipantsAndProvidersTranslation) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanParticipantsAndProvidersTranslation_providerOverlap(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ProviderOverlap, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*model.TranslationFieldWithOptions)
+	fc.Result = res
+	return ec.marshalNTranslationFieldWithOptions2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationFieldWithOptions(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation_providerOverlap(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanParticipantsAndProvidersTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "gqlField":
+				return ec.fieldContext_TranslationFieldWithOptions_gqlField(ctx, field)
+			case "goField":
+				return ec.fieldContext_TranslationFieldWithOptions_goField(ctx, field)
+			case "dbField":
+				return ec.fieldContext_TranslationFieldWithOptions_dbField(ctx, field)
+			case "label":
+				return ec.fieldContext_TranslationFieldWithOptions_label(ctx, field)
+			case "readonlyLabel":
+				return ec.fieldContext_TranslationFieldWithOptions_readonlyLabel(ctx, field)
+			case "sublabel":
+				return ec.fieldContext_TranslationFieldWithOptions_sublabel(ctx, field)
+			case "multiSelectLabel":
+				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
+			case "isArray":
+				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "isOtherType":
+				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
+			case "options":
+				return ec.fieldContext_TranslationFieldWithOptions_options(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type TranslationFieldWithOptions", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanParticipantsAndProvidersTranslation_providerOverlapHierarchy(ctx context.Context, field graphql.CollectedField, obj *model.PlanParticipantsAndProvidersTranslation) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanParticipantsAndProvidersTranslation_providerOverlapHierarchy(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ProviderOverlapHierarchy, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*model.TranslationField)
+	fc.Result = res
+	return ec.marshalNTranslationField2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationField(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation_providerOverlapHierarchy(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanParticipantsAndProvidersTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "gqlField":
+				return ec.fieldContext_TranslationField_gqlField(ctx, field)
+			case "goField":
+				return ec.fieldContext_TranslationField_goField(ctx, field)
+			case "dbField":
+				return ec.fieldContext_TranslationField_dbField(ctx, field)
+			case "label":
+				return ec.fieldContext_TranslationField_label(ctx, field)
+			case "readonlyLabel":
+				return ec.fieldContext_TranslationField_readonlyLabel(ctx, field)
+			case "sublabel":
+				return ec.fieldContext_TranslationField_sublabel(ctx, field)
+			case "multiSelectLabel":
+				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
+			case "isArray":
+				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "isOtherType":
+				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanParticipantsAndProvidersTranslation_providerOverlapNote(ctx context.Context, field graphql.CollectedField, obj *model.PlanParticipantsAndProvidersTranslation) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanParticipantsAndProvidersTranslation_providerOverlapNote(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ProviderOverlapNote, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*model.TranslationField)
+	fc.Result = res
+	return ec.marshalNTranslationField2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationField(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation_providerOverlapNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanParticipantsAndProvidersTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "gqlField":
+				return ec.fieldContext_TranslationField_gqlField(ctx, field)
+			case "goField":
+				return ec.fieldContext_TranslationField_goField(ctx, field)
+			case "dbField":
+				return ec.fieldContext_TranslationField_dbField(ctx, field)
+			case "label":
+				return ec.fieldContext_TranslationField_label(ctx, field)
+			case "readonlyLabel":
+				return ec.fieldContext_TranslationField_readonlyLabel(ctx, field)
+			case "sublabel":
+				return ec.fieldContext_TranslationField_sublabel(ctx, field)
+			case "multiSelectLabel":
+				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
+			case "isArray":
+				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "isOtherType":
+				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanParticipantsAndProvidersTranslation_status(ctx context.Context, field graphql.CollectedField, obj *model.PlanParticipantsAndProvidersTranslation) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanParticipantsAndProvidersTranslation_status(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Status, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*model.TranslationField)
+	fc.Result = res
+	return ec.marshalNTranslationField2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationField(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation_status(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanParticipantsAndProvidersTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "gqlField":
+				return ec.fieldContext_TranslationField_gqlField(ctx, field)
+			case "goField":
+				return ec.fieldContext_TranslationField_goField(ctx, field)
+			case "dbField":
+				return ec.fieldContext_TranslationField_dbField(ctx, field)
+			case "label":
+				return ec.fieldContext_TranslationField_label(ctx, field)
+			case "readonlyLabel":
+				return ec.fieldContext_TranslationField_readonlyLabel(ctx, field)
+			case "sublabel":
+				return ec.fieldContext_TranslationField_sublabel(ctx, field)
+			case "multiSelectLabel":
+				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
+			case "isArray":
+				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "isOtherType":
+				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
+		},
+	}
+	return fc, nil
+}
+
 func (ec *executionContext) _PlanPayments_id(ctx context.Context, field graphql.CollectedField, obj *models.PlanPayments) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_PlanPayments_id(ctx, field)
 	if err != nil {
@@ -74723,16 +79239,6 @@ func (ec *executionContext) _PlanBasicsTranslation(ctx context.Context, sel ast.
 		switch field.Name {
 		case "__typename":
 			out.Values[i] = graphql.MarshalString("PlanBasicsTranslation")
-		case "demoCode":
-			out.Values[i] = ec._PlanBasicsTranslation_demoCode(ctx, field, obj)
-			if out.Values[i] == graphql.Null {
-				out.Invalids++
-			}
-		case "amsModelID":
-			out.Values[i] = ec._PlanBasicsTranslation_amsModelID(ctx, field, obj)
-			if out.Values[i] == graphql.Null {
-				out.Invalids++
-			}
 		case "modelCategory":
 			out.Values[i] = ec._PlanBasicsTranslation_modelCategory(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
@@ -74740,6 +79246,16 @@ func (ec *executionContext) _PlanBasicsTranslation(ctx context.Context, sel ast.
 			}
 		case "additionalModelCategories":
 			out.Values[i] = ec._PlanBasicsTranslation_additionalModelCategories(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "demoCode":
+			out.Values[i] = ec._PlanBasicsTranslation_demoCode(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "amsModelID":
+			out.Values[i] = ec._PlanBasicsTranslation_amsModelID(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
 				out.Invalids++
 			}
@@ -79201,6 +83717,345 @@ func (ec *executionContext) _PlanParticipantsAndProviders(ctx context.Context, s
 			out.Values[i] = ec._PlanParticipantsAndProviders_status(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
 				atomic.AddUint32(&out.Invalids, 1)
+			}
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch(ctx)
+	if out.Invalids > 0 {
+		return graphql.Null
+	}
+
+	atomic.AddInt32(&ec.deferred, int32(len(deferred)))
+
+	for label, dfs := range deferred {
+		ec.processDeferredGroup(graphql.DeferredGroup{
+			Label:    label,
+			Path:     graphql.GetPath(ctx),
+			FieldSet: dfs,
+			Context:  ctx,
+		})
+	}
+
+	return out
+}
+
+var planParticipantsAndProvidersTranslationImplementors = []string{"PlanParticipantsAndProvidersTranslation"}
+
+func (ec *executionContext) _PlanParticipantsAndProvidersTranslation(ctx context.Context, sel ast.SelectionSet, obj *model.PlanParticipantsAndProvidersTranslation) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, planParticipantsAndProvidersTranslationImplementors)
+
+	out := graphql.NewFieldSet(fields)
+	deferred := make(map[string]*graphql.FieldSet)
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("PlanParticipantsAndProvidersTranslation")
+		case "participants":
+			out.Values[i] = ec._PlanParticipantsAndProvidersTranslation_participants(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "medicareProviderType":
+			out.Values[i] = ec._PlanParticipantsAndProvidersTranslation_medicareProviderType(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "statesEngagement":
+			out.Values[i] = ec._PlanParticipantsAndProvidersTranslation_statesEngagement(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "participantsOther":
+			out.Values[i] = ec._PlanParticipantsAndProvidersTranslation_participantsOther(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "participantsNote":
+			out.Values[i] = ec._PlanParticipantsAndProvidersTranslation_participantsNote(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "participantsCurrentlyInModels":
+			out.Values[i] = ec._PlanParticipantsAndProvidersTranslation_participantsCurrentlyInModels(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "participantsCurrentlyInModelsNote":
+			out.Values[i] = ec._PlanParticipantsAndProvidersTranslation_participantsCurrentlyInModelsNote(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "modelApplicationLevel":
+			out.Values[i] = ec._PlanParticipantsAndProvidersTranslation_modelApplicationLevel(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "expectedNumberOfParticipants":
+			out.Values[i] = ec._PlanParticipantsAndProvidersTranslation_expectedNumberOfParticipants(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "estimateConfidence":
+			out.Values[i] = ec._PlanParticipantsAndProvidersTranslation_estimateConfidence(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "confidenceNote":
+			out.Values[i] = ec._PlanParticipantsAndProvidersTranslation_confidenceNote(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "recruitmentMethod":
+			out.Values[i] = ec._PlanParticipantsAndProvidersTranslation_recruitmentMethod(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "recruitmentOther":
+			out.Values[i] = ec._PlanParticipantsAndProvidersTranslation_recruitmentOther(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "recruitmentNote":
+			out.Values[i] = ec._PlanParticipantsAndProvidersTranslation_recruitmentNote(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "selectionMethod":
+			out.Values[i] = ec._PlanParticipantsAndProvidersTranslation_selectionMethod(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "selectionOther":
+			out.Values[i] = ec._PlanParticipantsAndProvidersTranslation_selectionOther(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "selectionNote":
+			out.Values[i] = ec._PlanParticipantsAndProvidersTranslation_selectionNote(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "participantAddedFrequency":
+			out.Values[i] = ec._PlanParticipantsAndProvidersTranslation_participantAddedFrequency(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "participantAddedFrequencyContinually":
+			out.Values[i] = ec._PlanParticipantsAndProvidersTranslation_participantAddedFrequencyContinually(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "participantAddedFrequencyOther":
+			out.Values[i] = ec._PlanParticipantsAndProvidersTranslation_participantAddedFrequencyOther(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "participantAddedFrequencyNote":
+			out.Values[i] = ec._PlanParticipantsAndProvidersTranslation_participantAddedFrequencyNote(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "participantRemovedFrequency":
+			out.Values[i] = ec._PlanParticipantsAndProvidersTranslation_participantRemovedFrequency(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "participantRemovedFrequencyContinually":
+			out.Values[i] = ec._PlanParticipantsAndProvidersTranslation_participantRemovedFrequencyContinually(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "participantRemovedFrequencyOther":
+			out.Values[i] = ec._PlanParticipantsAndProvidersTranslation_participantRemovedFrequencyOther(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "participantRemovedFrequencyNote":
+			out.Values[i] = ec._PlanParticipantsAndProvidersTranslation_participantRemovedFrequencyNote(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "communicationMethod":
+			out.Values[i] = ec._PlanParticipantsAndProvidersTranslation_communicationMethod(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "communicationMethodOther":
+			out.Values[i] = ec._PlanParticipantsAndProvidersTranslation_communicationMethodOther(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "communicationNote":
+			out.Values[i] = ec._PlanParticipantsAndProvidersTranslation_communicationNote(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "riskType":
+			out.Values[i] = ec._PlanParticipantsAndProvidersTranslation_riskType(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "riskOther":
+			out.Values[i] = ec._PlanParticipantsAndProvidersTranslation_riskOther(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "riskNote":
+			out.Values[i] = ec._PlanParticipantsAndProvidersTranslation_riskNote(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "willRiskChange":
+			out.Values[i] = ec._PlanParticipantsAndProvidersTranslation_willRiskChange(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "willRiskChangeNote":
+			out.Values[i] = ec._PlanParticipantsAndProvidersTranslation_willRiskChangeNote(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "coordinateWork":
+			out.Values[i] = ec._PlanParticipantsAndProvidersTranslation_coordinateWork(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "coordinateWorkNote":
+			out.Values[i] = ec._PlanParticipantsAndProvidersTranslation_coordinateWorkNote(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "gainsharePayments":
+			out.Values[i] = ec._PlanParticipantsAndProvidersTranslation_gainsharePayments(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "gainsharePaymentsTrack":
+			out.Values[i] = ec._PlanParticipantsAndProvidersTranslation_gainsharePaymentsTrack(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "gainsharePaymentsNote":
+			out.Values[i] = ec._PlanParticipantsAndProvidersTranslation_gainsharePaymentsNote(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "gainsharePaymentsEligibility":
+			out.Values[i] = ec._PlanParticipantsAndProvidersTranslation_gainsharePaymentsEligibility(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "gainsharePaymentsEligibilityOther":
+			out.Values[i] = ec._PlanParticipantsAndProvidersTranslation_gainsharePaymentsEligibilityOther(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "participantsIds":
+			out.Values[i] = ec._PlanParticipantsAndProvidersTranslation_participantsIds(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "participantsIdsOther":
+			out.Values[i] = ec._PlanParticipantsAndProvidersTranslation_participantsIdsOther(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "participantsIDSNote":
+			out.Values[i] = ec._PlanParticipantsAndProvidersTranslation_participantsIDSNote(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "providerAdditionFrequency":
+			out.Values[i] = ec._PlanParticipantsAndProvidersTranslation_providerAdditionFrequency(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "providerAdditionFrequencyContinually":
+			out.Values[i] = ec._PlanParticipantsAndProvidersTranslation_providerAdditionFrequencyContinually(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "providerAdditionFrequencyOther":
+			out.Values[i] = ec._PlanParticipantsAndProvidersTranslation_providerAdditionFrequencyOther(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "providerAdditionFrequencyNote":
+			out.Values[i] = ec._PlanParticipantsAndProvidersTranslation_providerAdditionFrequencyNote(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "providerAddMethod":
+			out.Values[i] = ec._PlanParticipantsAndProvidersTranslation_providerAddMethod(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "providerAddMethodOther":
+			out.Values[i] = ec._PlanParticipantsAndProvidersTranslation_providerAddMethodOther(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "providerAddMethodNote":
+			out.Values[i] = ec._PlanParticipantsAndProvidersTranslation_providerAddMethodNote(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "providerLeaveMethod":
+			out.Values[i] = ec._PlanParticipantsAndProvidersTranslation_providerLeaveMethod(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "providerLeaveMethodOther":
+			out.Values[i] = ec._PlanParticipantsAndProvidersTranslation_providerLeaveMethodOther(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "providerLeaveMethodNote":
+			out.Values[i] = ec._PlanParticipantsAndProvidersTranslation_providerLeaveMethodNote(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "providerRemovalFrequency":
+			out.Values[i] = ec._PlanParticipantsAndProvidersTranslation_providerRemovalFrequency(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "providerRemovalFrequencyContinually":
+			out.Values[i] = ec._PlanParticipantsAndProvidersTranslation_providerRemovalFrequencyContinually(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "providerRemovalFrequencyOther":
+			out.Values[i] = ec._PlanParticipantsAndProvidersTranslation_providerRemovalFrequencyOther(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "providerRemovalFrequencyNote":
+			out.Values[i] = ec._PlanParticipantsAndProvidersTranslation_providerRemovalFrequencyNote(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "providerOverlap":
+			out.Values[i] = ec._PlanParticipantsAndProvidersTranslation_providerOverlap(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "providerOverlapHierarchy":
+			out.Values[i] = ec._PlanParticipantsAndProvidersTranslation_providerOverlapHierarchy(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "providerOverlapNote":
+			out.Values[i] = ec._PlanParticipantsAndProvidersTranslation_providerOverlapNote(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "status":
+			out.Values[i] = ec._PlanParticipantsAndProvidersTranslation_status(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
 			}
 		default:
 			panic("unknown field " + strconv.Quote(field.Name))

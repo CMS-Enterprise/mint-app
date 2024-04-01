@@ -544,7 +544,7 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
   communityPartnersInvolvedDescription: {
     gqlField: 'communityPartnersInvolvedDescription',
     goField: 'CommunityPartnersInvolvedDescription',
-    dbField: 'community_partners_involved',
+    dbField: 'community_partners_involved_description',
     label: 'How so?',
     dataType: TranslationDataType.STRING,
     formType: 'textarea',
@@ -894,9 +894,9 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     filterGroups: [ModelViewFilter.IDDOC, ModelViewFilter.PBG]
   },
   rulemakingRequiredDescription: {
-    gqlField: 'multiplePatricipationAgreementsNeeded',
-    goField: 'MultiplePatricipationAgreementsNeeded',
-    dbField: 'multiple_patricipation_agreements_needed',
+    gqlField: 'rulemakingRequiredDescription',
+    goField: 'RulemakingRequiredDescription',
+    dbField: 'rulemaking_required_description',
     label:
       'Which rule do you anticipate using and what is the target date of display for that regulation?',
     dataType: TranslationDataType.STRING,

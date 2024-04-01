@@ -45,6 +45,7 @@ import {
   PayType,
   PlanBasicsTranslation,
   PlanGeneralCharacteristicsTranslation,
+  PlanParticipantsAndProvidersTranslation,
   ProviderAddType,
   ProviderLeaveType,
   RecruitmentType,
@@ -451,7 +452,7 @@ export type TranslationGeneralCharacteristics = {
 /* 
   Participants and Providers
 */
-export type TranslationParticipantsAndProviders = {
+export type TranslationParticipantsAndProvidersForm = {
   participants: TranslationFieldPropertiesWithOptions<ParticipantsType>;
   medicareProviderType: TranslationFieldProperties;
   statesEngagement: TranslationFieldProperties;
@@ -529,6 +530,17 @@ export type TranslationParticipantsAndProviders = {
   providerOverlapHierarchy: TranslationFieldPropertiesWithParent<OverlapType>;
   providerOverlapNote: TranslationFieldProperties;
   status: TranslationFieldPropertiesWithOptions<TaskStatus>;
+};
+
+type TranslationPlanParticipantsAndProvidersGQL = Omit<
+  PlanParticipantsAndProvidersTranslation, // graphql gen type
+  '__typename'
+>;
+
+// Merged keys from graphql gen with FE form types
+// Create a tighter connection between BE/FE translation types
+export type TranslationParticipantsAndProviders = {
+  [K in keyof TranslationPlanParticipantsAndProvidersGQL]: TranslationParticipantsAndProvidersForm[K]; // FE form type
 };
 
 /* 

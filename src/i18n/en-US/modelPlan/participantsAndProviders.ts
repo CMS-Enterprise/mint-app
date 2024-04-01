@@ -81,7 +81,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
   participantsOther: {
     gqlField: 'participantsOther',
     goField: 'ParticipantsOther',
-    dbField: 'participantsOther',
+    dbField: 'participants_other',
     label: 'Please describe the other participants engaging with this model',
     dataType: TranslationDataType.STRING,
     formType: 'textarea',
@@ -97,7 +97,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
   participantsNote: {
     gqlField: 'participantsNote',
     goField: 'ParticipantsNote',
-    dbField: 'participantsNote',
+    dbField: 'participants_note',
     label: 'Notes',
     dataType: TranslationDataType.STRING,
     formType: 'textarea',
@@ -112,7 +112,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
   participantsCurrentlyInModels: {
     gqlField: 'participantsCurrentlyInModels',
     goField: 'ParticipantsCurrentlyInModels',
-    dbField: 'participants_currently_in_models_note',
+    dbField: 'participants_currently_in_models',
     label: 'Are the participants in CMMI models now?',
     sublabel:
       'If you have selected more than one participant in the questions above, specify which participants already participate in CMMI models.',
@@ -134,7 +134,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
   modelApplicationLevel: {
     gqlField: 'modelApplicationLevel',
     goField: 'ModelApplicationLevel',
-    dbField: 'modelApplicationLevel',
+    dbField: 'model_application_level',
     label: 'At what level will the model apply?',
     sublabel:
       '(e.g., all services identified at the CPT or ICD-10 code level, epsiode of care for a specific span of time, all hospitals unpaid under the Inpatient Prospective Payment System in a certain state)',

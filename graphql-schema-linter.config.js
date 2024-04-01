@@ -26,7 +26,8 @@ module.exports = {
       'TranslationFieldWithOptions',
       'TranslationDataType',
       'PlanBasicsTranslation',
-      'PlanGeneralCharacteristicsTranslation'
+      'PlanGeneralCharacteristicsTranslation',
+      'PlanParticipantsAndProvidersTranslation'
     ]
   }
 };

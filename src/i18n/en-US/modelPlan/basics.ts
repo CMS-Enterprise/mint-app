@@ -95,8 +95,8 @@ export const basics: TranslationBasics = {
   },
   cmsCenters: {
     gqlField: 'cmsCenters',
-    goField: 'CMMIGroups',
-    dbField: 'cmmi_groups',
+    goField: 'CMSCenters',
+    dbField: 'cms_centers',
     label: 'CMS component',
     dataType: TranslationDataType.ENUM,
     formType: 'checkbox',
@@ -120,8 +120,8 @@ export const basics: TranslationBasics = {
   },
   cmmiGroups: {
     gqlField: 'cmmiGroups',
-    goField: 'CMSCenters',
-    dbField: 'cms_centers',
+    goField: 'CMMIGroups',
+    dbField: 'cmmi_groups',
     label: 'CMMI Group',
     sublabel:
       'You only need to select the CMMI group if CMMI is selected as the main CMS component.',
