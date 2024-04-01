@@ -4,9 +4,12 @@ package humanizedaudit
 import (
 	"context"
 	"fmt"
+	"regexp"
+	"strings"
 	"time"
 
 	"github.com/google/uuid"
+	"github.com/lib/pq"
 	"github.com/samber/lo"
 	"go.uber.org/zap"
 
@@ -256,11 +259,16 @@ func translateField(fieldName string, field models.AuditField, audit *models.Aud
 	var translatedNew interface{}
 
 	fieldInterface := translationMap[fieldName]
+	fieldTransOptionsAndParent, hasOptionsAndParent := fieldInterface.(mappings.TranslationFieldPropertiesWithOptionsAndParent) //TODO: (ChChCh Changes!) We can reduce this.
 	fieldTransOptions, hasOptions := fieldInterface.(mappings.TranslationFieldPropertiesWithOptions)
 	fieldTrans, hasTranslation := fieldInterface.(mappings.TranslationFieldProperties)
 
 	// Ticket: (ChChCh Changes!) Should we handle this better? There are different implementations we have to cast to
-	if hasOptions {
+	if hasOptionsAndParent {
+		translatedLabel = fieldTransOptionsAndParent.GetLabel()
+		translatedOld = translateValue(field.Old, fieldTransOptionsAndParent.Options)
+		translatedNew = translateValue(field.New, fieldTransOptionsAndParent.Options)
+	} else if hasOptions {
 		translatedLabel = fieldTransOptions.GetLabel()
 		translatedOld = translateValue(field.Old, fieldTransOptions.Options)
 		translatedNew = translateValue(field.New, fieldTransOptions.Options)
@@ -308,17 +316,24 @@ func translateValue(value interface{}, options map[string]string) interface{} {
 
 	//Ticket: (ChChCh Changes!) Check if value is nil, don't need to translate that.
 	//Ticket: (ChChCh Changes!) work on bool representation, they should come through here as a string, but show up as t, f. We will want to set they values
-	strSlice, isSlice := value.([]string)
+	// strSlice, isSlice := value.([]string)
+	str, isString := value.(string)
+	if !isString {
+		return value
+	}
+
+	strSlice, isSlice := isArray(str)
 
 	if isSlice {
-		transArray := []string{}
+		// transArray := []string{}
+		transArray := pq.StringArray{}
 		for _, str := range strSlice {
 			translated := translateValueSingle(str, options)
 			transArray = append(transArray, translated)
 		}
 		return transArray
 	}
-	str, isString := value.(string)
+	// str, isString := value.(string)
 	if isString {
 		return translateValueSingle(str, options)
 	}
@@ -336,4 +351,42 @@ func translateValueSingle(value string, options map[string]string) string {
 	//Ticket (ChChCh Changes!) If the map doesn't have a value, return the raw value instead.
 	return value
 
+}
+
+// isArray checks if a String begins with { and ends with }. If so, it is an array
+func isArray(str string) ([]string, bool) {
+	// Define a regular expression to match the array format
+	arrayRegex := regexp.MustCompile(`^\{.*\}$`)
+
+	// Check if the string matches the array format
+	isArray := arrayRegex.MatchString(str)
+	if !isArray {
+		return nil, false
+	}
+
+	return extractArrayValues(str), true
+
+}
+
+// extractArrayValues extracts array values from a string representation
+// Ticket (ChChCh Changes!) Verify the extraction, perhaps we can combine with earlier function?
+func extractArrayValues(str string) []string {
+	// Define a regular expression to match the array format
+	arrayRegex := regexp.MustCompile(`\{(.+?)\}`)
+
+	// Find submatches (values within curly braces)
+	matches := arrayRegex.FindStringSubmatch(str)
+	if len(matches) < 2 {
+		// No matches found or no values inside curly braces
+		return nil
+	}
+
+	// Split the matched values by comma to get individual values
+	values := strings.Split(matches[1], ",")
+	for i, value := range values {
+		// Trim whitespace from each value
+		values[i] = strings.TrimSpace(value)
+	}
+
+	return values
 }
