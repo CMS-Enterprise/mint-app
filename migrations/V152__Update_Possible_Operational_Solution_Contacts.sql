@@ -1,6 +1,6 @@
 -- Remove old entries from Solution Contacts
 DELETE FROM possible_operational_solution_contact
-WHERE NAME IN ('Felicia Addai', 'Miyani `Treva`');
+WHERE NAME IN ('Felicia Addai', 'Miyani Treva');
 
 -- Add new entries to Solution Contacts
 WITH pocs(SolutionName, SolutionKey, Name, Email, Role, IsTeam) AS (
