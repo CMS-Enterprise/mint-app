@@ -2814,6 +2814,46 @@ export enum TeamRole {
   QUALITY = 'QUALITY'
 }
 
+export enum TranslationDataType {
+  BOOLEAN = 'BOOLEAN',
+  DATE = 'DATE',
+  ENUM = 'ENUM',
+  NUMBER = 'NUMBER',
+  OBJECT = 'OBJECT',
+  STRING = 'STRING'
+}
+
+/**
+ * Base typea that represents FE translation structure
+ * Translations are exported from FE for change history, and mapped to these types on the BE
+ */
+export type TranslationField = {
+  __typename: 'TranslationField';
+  dbField: Scalars['String']['output'];
+  goField: Scalars['String']['output'];
+  gqlField: Scalars['String']['output'];
+  isArray?: Maybe<Scalars['Boolean']['output']>;
+  isOtherType?: Maybe<Scalars['Boolean']['output']>;
+  label: Scalars['String']['output'];
+  multiSelectLabel?: Maybe<Scalars['String']['output']>;
+  readonlyLabel?: Maybe<Scalars['String']['output']>;
+  sublabel?: Maybe<Scalars['String']['output']>;
+};
+
+export type TranslationFieldWithOptions = {
+  __typename: 'TranslationFieldWithOptions';
+  dbField: Scalars['String']['output'];
+  goField: Scalars['String']['output'];
+  gqlField: Scalars['String']['output'];
+  isArray?: Maybe<Scalars['Boolean']['output']>;
+  isOtherType?: Maybe<Scalars['Boolean']['output']>;
+  label: Scalars['String']['output'];
+  multiSelectLabel?: Maybe<Scalars['String']['output']>;
+  options: Scalars['Map']['output'];
+  readonlyLabel?: Maybe<Scalars['String']['output']>;
+  sublabel?: Maybe<Scalars['String']['output']>;
+};
+
 export enum TriStateAnswer {
   NO = 'NO',
   TBD = 'TBD',

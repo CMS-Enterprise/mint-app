@@ -1,0 +1,42 @@
+"""
+Base typea that represents FE translation structure
+Translations are exported from FE for change history, and mapped to these types on the BE
+"""
+
+
+# TranslationField represents a question with no options
+type TranslationField {
+  gqlField: String!
+  goField: String!
+  dbField: String!
+  label: String!
+  readonlyLabel: String
+  sublabel: String
+  multiSelectLabel: String
+  isArray: Boolean
+  isOtherType: Boolean
+}
+
+# TranslationField represents a question with options
+type TranslationFieldWithOptions {
+  gqlField: String!
+  goField: String!
+  dbField: String!
+  label: String!
+  readonlyLabel: String
+  sublabel: String
+  multiSelectLabel: String
+  isArray: Boolean
+  isOtherType: Boolean
+  options: Map!
+}
+
+# Represents the data type of the translation field
+enum TranslationDataType {
+  STRING
+  NUMBER
+  BOOLEAN
+  DATE
+  ENUM
+  OBJECT
+}

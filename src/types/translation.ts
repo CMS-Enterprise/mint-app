@@ -51,12 +51,14 @@ import {
   StatesAndTerritories,
   TaskStatus,
   TeamRole,
+  TranslationDataType,
+  TranslationField,
+  TranslationFieldWithOptions,
   TriStateAnswer,
   WaiverType,
   YesNoOtherType,
   YesNoType
 } from 'gql/gen/graphql';
-
 // Util used to preserve type defintions when mapping over keys of object
 // https://stackoverflow.com/questions/52856496/typescript-object-keys-return-string
 export const getKeys = Object.keys as <T extends object>(
@@ -68,16 +70,11 @@ export enum Bool {
   false = 'false'
 }
 
-export type TranslationFieldProperties = {
-  gqlField: string;
-  goField: string;
-  dbField: string;
-  label: string;
-  readonlyLabel?: string;
-  sublabel?: string;
-  multiSelectLabel?: string;
-  dataType: 'string' | 'number' | 'boolean' | 'date' | 'enum' | 'object';
-  isArray?: boolean;
+export type TranslationFieldProperties = Omit<
+  TranslationField,
+  '__typename'
+> & {
+  dataType: TranslationDataType;
   formType:
     | 'text'
     | 'textarea'
@@ -99,7 +96,6 @@ export type TranslationFieldProperties = {
     position: 'left' | 'right';
     adjacentField: string;
   };
-  isOtherType?: boolean; // Is a question a followup to another that doesn't designate it's own readonly question/line,
   hideRelatedQuestionAlert?: boolean; // Ex: CCW and Quality questions do not need to render the alert immediately following the question
 };
 
@@ -131,7 +127,11 @@ type ChildRelation<
   Extended type for questions that have options - boolean, radio, checkbox, etc.
   Takes in a enum/generic for translation key
 */
-type TranslationOptions<T extends keyof T | string> = {
+
+export type TranslationOptions<T extends keyof T | string> = Omit<
+  TranslationFieldWithOptions,
+  'options' | '__typename'
+> & {
   options: Record<T, string>;
   readonlyOptions?: Partial<Record<T, string>>; // An alternative set of translations for options specific to readonly
   optionsLabels?: Partial<Record<T, string>>; // Sub labels to be rendered directly underneath options

@@ -1111,6 +1111,31 @@ type ComplexityRoot struct {
 		LockStatus func(childComplexity int) int
 	}
 
+	TranslationField struct {
+		DbField          func(childComplexity int) int
+		GoField          func(childComplexity int) int
+		GqlField         func(childComplexity int) int
+		IsArray          func(childComplexity int) int
+		IsOtherType      func(childComplexity int) int
+		Label            func(childComplexity int) int
+		MultiSelectLabel func(childComplexity int) int
+		ReadonlyLabel    func(childComplexity int) int
+		Sublabel         func(childComplexity int) int
+	}
+
+	TranslationFieldWithOptions struct {
+		DbField          func(childComplexity int) int
+		GoField          func(childComplexity int) int
+		GqlField         func(childComplexity int) int
+		IsArray          func(childComplexity int) int
+		IsOtherType      func(childComplexity int) int
+		Label            func(childComplexity int) int
+		MultiSelectLabel func(childComplexity int) int
+		Options          func(childComplexity int) int
+		ReadonlyLabel    func(childComplexity int) int
+		Sublabel         func(childComplexity int) int
+	}
+
 	UserAccount struct {
 		CommonName  func(childComplexity int) int
 		Email       func(childComplexity int) int
@@ -7942,6 +7967,139 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.TaskListSectionLockStatusChanged.LockStatus(childComplexity), true
 
+	case "TranslationField.dbField":
+		if e.complexity.TranslationField.DbField == nil {
+			break
+		}
+
+		return e.complexity.TranslationField.DbField(childComplexity), true
+
+	case "TranslationField.goField":
+		if e.complexity.TranslationField.GoField == nil {
+			break
+		}
+
+		return e.complexity.TranslationField.GoField(childComplexity), true
+
+	case "TranslationField.gqlField":
+		if e.complexity.TranslationField.GqlField == nil {
+			break
+		}
+
+		return e.complexity.TranslationField.GqlField(childComplexity), true
+
+	case "TranslationField.isArray":
+		if e.complexity.TranslationField.IsArray == nil {
+			break
+		}
+
+		return e.complexity.TranslationField.IsArray(childComplexity), true
+
+	case "TranslationField.isOtherType":
+		if e.complexity.TranslationField.IsOtherType == nil {
+			break
+		}
+
+		return e.complexity.TranslationField.IsOtherType(childComplexity), true
+
+	case "TranslationField.label":
+		if e.complexity.TranslationField.Label == nil {
+			break
+		}
+
+		return e.complexity.TranslationField.Label(childComplexity), true
+
+	case "TranslationField.multiSelectLabel":
+		if e.complexity.TranslationField.MultiSelectLabel == nil {
+			break
+		}
+
+		return e.complexity.TranslationField.MultiSelectLabel(childComplexity), true
+
+	case "TranslationField.readonlyLabel":
+		if e.complexity.TranslationField.ReadonlyLabel == nil {
+			break
+		}
+
+		return e.complexity.TranslationField.ReadonlyLabel(childComplexity), true
+
+	case "TranslationField.sublabel":
+		if e.complexity.TranslationField.Sublabel == nil {
+			break
+		}
+
+		return e.complexity.TranslationField.Sublabel(childComplexity), true
+
+	case "TranslationFieldWithOptions.dbField":
+		if e.complexity.TranslationFieldWithOptions.DbField == nil {
+			break
+		}
+
+		return e.complexity.TranslationFieldWithOptions.DbField(childComplexity), true
+
+	case "TranslationFieldWithOptions.goField":
+		if e.complexity.TranslationFieldWithOptions.GoField == nil {
+			break
+		}
+
+		return e.complexity.TranslationFieldWithOptions.GoField(childComplexity), true
+
+	case "TranslationFieldWithOptions.gqlField":
+		if e.complexity.TranslationFieldWithOptions.GqlField == nil {
+			break
+		}
+
+		return e.complexity.TranslationFieldWithOptions.GqlField(childComplexity), true
+
+	case "TranslationFieldWithOptions.isArray":
+		if e.complexity.TranslationFieldWithOptions.IsArray == nil {
+			break
+		}
+
+		return e.complexity.TranslationFieldWithOptions.IsArray(childComplexity), true
+
+	case "TranslationFieldWithOptions.isOtherType":
+		if e.complexity.TranslationFieldWithOptions.IsOtherType == nil {
+			break
+		}
+
+		return e.complexity.TranslationFieldWithOptions.IsOtherType(childComplexity), true
+
+	case "TranslationFieldWithOptions.label":
+		if e.complexity.TranslationFieldWithOptions.Label == nil {
+			break
+		}
+
+		return e.complexity.TranslationFieldWithOptions.Label(childComplexity), true
+
+	case "TranslationFieldWithOptions.multiSelectLabel":
+		if e.complexity.TranslationFieldWithOptions.MultiSelectLabel == nil {
+			break
+		}
+
+		return e.complexity.TranslationFieldWithOptions.MultiSelectLabel(childComplexity), true
+
+	case "TranslationFieldWithOptions.options":
+		if e.complexity.TranslationFieldWithOptions.Options == nil {
+			break
+		}
+
+		return e.complexity.TranslationFieldWithOptions.Options(childComplexity), true
+
+	case "TranslationFieldWithOptions.readonlyLabel":
+		if e.complexity.TranslationFieldWithOptions.ReadonlyLabel == nil {
+			break
+		}
+
+		return e.complexity.TranslationFieldWithOptions.ReadonlyLabel(childComplexity), true
+
+	case "TranslationFieldWithOptions.sublabel":
+		if e.complexity.TranslationFieldWithOptions.Sublabel == nil {
+			break
+		}
+
+		return e.complexity.TranslationFieldWithOptions.Sublabel(childComplexity), true
+
 	case "UserAccount.commonName":
 		if e.complexity.UserAccount.CommonName == nil {
 			break
@@ -11260,6 +11418,48 @@ type Subscription {
 
   onLockTaskListSectionContext(modelPlanID: UUID!): TaskListSectionLockStatusChanged!
   @hasRole(role: MINT_USER)
+}`, BuiltIn: false},
+	{Name: "../schema/types/translation.graphql", Input: `"""
+Base typea that represents FE translation structure
+Translations are exported from FE for change history, and mapped to these types on the BE
+"""
+
+
+# TranslationField represents a question with no options
+type TranslationField {
+  gqlField: String!
+  goField: String!
+  dbField: String!
+  label: String!
+  readonlyLabel: String
+  sublabel: String
+  multiSelectLabel: String
+  isArray: Boolean
+  isOtherType: Boolean
+}
+
+# TranslationField represents a question with options
+type TranslationFieldWithOptions {
+  gqlField: String!
+  goField: String!
+  dbField: String!
+  label: String!
+  readonlyLabel: String
+  sublabel: String
+  multiSelectLabel: String
+  isArray: Boolean
+  isOtherType: Boolean
+  options: Map!
+}
+
+# Represents the data type of the translation field
+enum TranslationDataType {
+  STRING
+  NUMBER
+  BOOLEAN
+  DATE
+  ENUM
+  OBJECT
 }`, BuiltIn: false},
 	{Name: "../schema/types/user_account.graphql", Input: `type UserAccount {
   id: UUID!
@@ -58232,6 +58432,812 @@ func (ec *executionContext) fieldContext_TaskListSectionLockStatusChanged_action
 	return fc, nil
 }
 
+func (ec *executionContext) _TranslationField_gqlField(ctx context.Context, field graphql.CollectedField, obj *model.TranslationField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_TranslationField_gqlField(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.GqlField, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalNString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_TranslationField_gqlField(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "TranslationField",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _TranslationField_goField(ctx context.Context, field graphql.CollectedField, obj *model.TranslationField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_TranslationField_goField(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.GoField, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalNString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_TranslationField_goField(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "TranslationField",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _TranslationField_dbField(ctx context.Context, field graphql.CollectedField, obj *model.TranslationField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_TranslationField_dbField(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.DbField, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalNString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_TranslationField_dbField(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "TranslationField",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _TranslationField_label(ctx context.Context, field graphql.CollectedField, obj *model.TranslationField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_TranslationField_label(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Label, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalNString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_TranslationField_label(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "TranslationField",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _TranslationField_readonlyLabel(ctx context.Context, field graphql.CollectedField, obj *model.TranslationField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_TranslationField_readonlyLabel(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ReadonlyLabel, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_TranslationField_readonlyLabel(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "TranslationField",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _TranslationField_sublabel(ctx context.Context, field graphql.CollectedField, obj *model.TranslationField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_TranslationField_sublabel(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Sublabel, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_TranslationField_sublabel(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "TranslationField",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _TranslationField_multiSelectLabel(ctx context.Context, field graphql.CollectedField, obj *model.TranslationField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.MultiSelectLabel, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_TranslationField_multiSelectLabel(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "TranslationField",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _TranslationField_isArray(ctx context.Context, field graphql.CollectedField, obj *model.TranslationField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_TranslationField_isArray(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.IsArray, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*bool)
+	fc.Result = res
+	return ec.marshalOBoolean2ᚖbool(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_TranslationField_isArray(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "TranslationField",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Boolean does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _TranslationField_isOtherType(ctx context.Context, field graphql.CollectedField, obj *model.TranslationField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_TranslationField_isOtherType(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.IsOtherType, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*bool)
+	fc.Result = res
+	return ec.marshalOBoolean2ᚖbool(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_TranslationField_isOtherType(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "TranslationField",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Boolean does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _TranslationFieldWithOptions_gqlField(ctx context.Context, field graphql.CollectedField, obj *model.TranslationFieldWithOptions) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_TranslationFieldWithOptions_gqlField(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.GqlField, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalNString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_TranslationFieldWithOptions_gqlField(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "TranslationFieldWithOptions",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _TranslationFieldWithOptions_goField(ctx context.Context, field graphql.CollectedField, obj *model.TranslationFieldWithOptions) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_TranslationFieldWithOptions_goField(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.GoField, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalNString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_TranslationFieldWithOptions_goField(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "TranslationFieldWithOptions",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _TranslationFieldWithOptions_dbField(ctx context.Context, field graphql.CollectedField, obj *model.TranslationFieldWithOptions) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_TranslationFieldWithOptions_dbField(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.DbField, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalNString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_TranslationFieldWithOptions_dbField(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "TranslationFieldWithOptions",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _TranslationFieldWithOptions_label(ctx context.Context, field graphql.CollectedField, obj *model.TranslationFieldWithOptions) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_TranslationFieldWithOptions_label(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Label, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalNString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_TranslationFieldWithOptions_label(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "TranslationFieldWithOptions",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _TranslationFieldWithOptions_readonlyLabel(ctx context.Context, field graphql.CollectedField, obj *model.TranslationFieldWithOptions) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_TranslationFieldWithOptions_readonlyLabel(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ReadonlyLabel, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_TranslationFieldWithOptions_readonlyLabel(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "TranslationFieldWithOptions",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _TranslationFieldWithOptions_sublabel(ctx context.Context, field graphql.CollectedField, obj *model.TranslationFieldWithOptions) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_TranslationFieldWithOptions_sublabel(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Sublabel, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_TranslationFieldWithOptions_sublabel(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "TranslationFieldWithOptions",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _TranslationFieldWithOptions_multiSelectLabel(ctx context.Context, field graphql.CollectedField, obj *model.TranslationFieldWithOptions) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.MultiSelectLabel, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "TranslationFieldWithOptions",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _TranslationFieldWithOptions_isArray(ctx context.Context, field graphql.CollectedField, obj *model.TranslationFieldWithOptions) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.IsArray, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*bool)
+	fc.Result = res
+	return ec.marshalOBoolean2ᚖbool(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_TranslationFieldWithOptions_isArray(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "TranslationFieldWithOptions",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Boolean does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _TranslationFieldWithOptions_isOtherType(ctx context.Context, field graphql.CollectedField, obj *model.TranslationFieldWithOptions) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.IsOtherType, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*bool)
+	fc.Result = res
+	return ec.marshalOBoolean2ᚖbool(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_TranslationFieldWithOptions_isOtherType(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "TranslationFieldWithOptions",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Boolean does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _TranslationFieldWithOptions_options(ctx context.Context, field graphql.CollectedField, obj *model.TranslationFieldWithOptions) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_TranslationFieldWithOptions_options(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Options, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(map[string]interface{})
+	fc.Result = res
+	return ec.marshalNMap2map(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_TranslationFieldWithOptions_options(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "TranslationFieldWithOptions",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Map does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
 func (ec *executionContext) _UserAccount_id(ctx context.Context, field graphql.CollectedField, obj *authentication.UserAccount) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_UserAccount_id(ctx, field)
 	if err != nil {
@@ -73419,6 +74425,139 @@ func (ec *executionContext) _TaskListSectionLockStatusChanged(ctx context.Contex
 			}
 		case "actionType":
 			out.Values[i] = ec._TaskListSectionLockStatusChanged_actionType(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch(ctx)
+	if out.Invalids > 0 {
+		return graphql.Null
+	}
+
+	atomic.AddInt32(&ec.deferred, int32(len(deferred)))
+
+	for label, dfs := range deferred {
+		ec.processDeferredGroup(graphql.DeferredGroup{
+			Label:    label,
+			Path:     graphql.GetPath(ctx),
+			FieldSet: dfs,
+			Context:  ctx,
+		})
+	}
+
+	return out
+}
+
+var translationFieldImplementors = []string{"TranslationField"}
+
+func (ec *executionContext) _TranslationField(ctx context.Context, sel ast.SelectionSet, obj *model.TranslationField) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, translationFieldImplementors)
+
+	out := graphql.NewFieldSet(fields)
+	deferred := make(map[string]*graphql.FieldSet)
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("TranslationField")
+		case "gqlField":
+			out.Values[i] = ec._TranslationField_gqlField(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "goField":
+			out.Values[i] = ec._TranslationField_goField(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "dbField":
+			out.Values[i] = ec._TranslationField_dbField(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "label":
+			out.Values[i] = ec._TranslationField_label(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "readonlyLabel":
+			out.Values[i] = ec._TranslationField_readonlyLabel(ctx, field, obj)
+		case "sublabel":
+			out.Values[i] = ec._TranslationField_sublabel(ctx, field, obj)
+		case "multiSelectLabel":
+			out.Values[i] = ec._TranslationField_multiSelectLabel(ctx, field, obj)
+		case "isArray":
+			out.Values[i] = ec._TranslationField_isArray(ctx, field, obj)
+		case "isOtherType":
+			out.Values[i] = ec._TranslationField_isOtherType(ctx, field, obj)
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch(ctx)
+	if out.Invalids > 0 {
+		return graphql.Null
+	}
+
+	atomic.AddInt32(&ec.deferred, int32(len(deferred)))
+
+	for label, dfs := range deferred {
+		ec.processDeferredGroup(graphql.DeferredGroup{
+			Label:    label,
+			Path:     graphql.GetPath(ctx),
+			FieldSet: dfs,
+			Context:  ctx,
+		})
+	}
+
+	return out
+}
+
+var translationFieldWithOptionsImplementors = []string{"TranslationFieldWithOptions"}
+
+func (ec *executionContext) _TranslationFieldWithOptions(ctx context.Context, sel ast.SelectionSet, obj *model.TranslationFieldWithOptions) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, translationFieldWithOptionsImplementors)
+
+	out := graphql.NewFieldSet(fields)
+	deferred := make(map[string]*graphql.FieldSet)
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("TranslationFieldWithOptions")
+		case "gqlField":
+			out.Values[i] = ec._TranslationFieldWithOptions_gqlField(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "goField":
+			out.Values[i] = ec._TranslationFieldWithOptions_goField(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "dbField":
+			out.Values[i] = ec._TranslationFieldWithOptions_dbField(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "label":
+			out.Values[i] = ec._TranslationFieldWithOptions_label(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "readonlyLabel":
+			out.Values[i] = ec._TranslationFieldWithOptions_readonlyLabel(ctx, field, obj)
+		case "sublabel":
+			out.Values[i] = ec._TranslationFieldWithOptions_sublabel(ctx, field, obj)
+		case "multiSelectLabel":
+			out.Values[i] = ec._TranslationFieldWithOptions_multiSelectLabel(ctx, field, obj)
+		case "isArray":
+			out.Values[i] = ec._TranslationFieldWithOptions_isArray(ctx, field, obj)
+		case "isOtherType":
+			out.Values[i] = ec._TranslationFieldWithOptions_isOtherType(ctx, field, obj)
+		case "options":
+			out.Values[i] = ec._TranslationFieldWithOptions_options(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
 				out.Invalids++
 			}

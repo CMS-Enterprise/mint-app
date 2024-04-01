@@ -134,6 +134,33 @@ type TaskListSectionLockStatusChanged struct {
 	ActionType ActionType                 `json:"actionType"`
 }
 
+// Base typea that represents FE translation structure
+// Translations are exported from FE for change history, and mapped to these types on the BE
+type TranslationField struct {
+	GqlField         string  `json:"gqlField"`
+	GoField          string  `json:"goField"`
+	DbField          string  `json:"dbField"`
+	Label            string  `json:"label"`
+	ReadonlyLabel    *string `json:"readonlyLabel,omitempty"`
+	Sublabel         *string `json:"sublabel,omitempty"`
+	MultiSelectLabel *string `json:"multiSelectLabel,omitempty"`
+	IsArray          *bool   `json:"isArray,omitempty"`
+	IsOtherType      *bool   `json:"isOtherType,omitempty"`
+}
+
+type TranslationFieldWithOptions struct {
+	GqlField         string                 `json:"gqlField"`
+	GoField          string                 `json:"goField"`
+	DbField          string                 `json:"dbField"`
+	Label            string                 `json:"label"`
+	ReadonlyLabel    *string                `json:"readonlyLabel,omitempty"`
+	Sublabel         *string                `json:"sublabel,omitempty"`
+	MultiSelectLabel *string                `json:"multiSelectLabel,omitempty"`
+	IsArray          *bool                  `json:"isArray,omitempty"`
+	IsOtherType      *bool                  `json:"isOtherType,omitempty"`
+	Options          map[string]interface{} `json:"options"`
+}
+
 type UpdateOperationalSolutionSubtaskInput struct {
 	ID      uuid.UUID              `json:"id"`
 	Changes map[string]interface{} `json:"changes"`
@@ -1972,6 +1999,55 @@ func (e *TaskStatusInput) UnmarshalGQL(v interface{}) error {
 }
 
 func (e TaskStatusInput) MarshalGQL(w io.Writer) {
+	fmt.Fprint(w, strconv.Quote(e.String()))
+}
+
+type TranslationDataType string
+
+const (
+	TranslationDataTypeString  TranslationDataType = "STRING"
+	TranslationDataTypeNumber  TranslationDataType = "NUMBER"
+	TranslationDataTypeBoolean TranslationDataType = "BOOLEAN"
+	TranslationDataTypeDate    TranslationDataType = "DATE"
+	TranslationDataTypeEnum    TranslationDataType = "ENUM"
+	TranslationDataTypeObject  TranslationDataType = "OBJECT"
+)
+
+var AllTranslationDataType = []TranslationDataType{
+	TranslationDataTypeString,
+	TranslationDataTypeNumber,
+	TranslationDataTypeBoolean,
+	TranslationDataTypeDate,
+	TranslationDataTypeEnum,
+	TranslationDataTypeObject,
+}
+
+func (e TranslationDataType) IsValid() bool {
+	switch e {
+	case TranslationDataTypeString, TranslationDataTypeNumber, TranslationDataTypeBoolean, TranslationDataTypeDate, TranslationDataTypeEnum, TranslationDataTypeObject:
+		return true
+	}
+	return false
+}
+
+func (e TranslationDataType) String() string {
+	return string(e)
+}
+
+func (e *TranslationDataType) UnmarshalGQL(v interface{}) error {
+	str, ok := v.(string)
+	if !ok {
+		return fmt.Errorf("enums must be strings")
+	}
+
+	*e = TranslationDataType(str)
+	if !e.IsValid() {
+		return fmt.Errorf("%s is not a valid TranslationDataType", str)
+	}
+	return nil
+}
+
+func (e TranslationDataType) MarshalGQL(w io.Writer) {
 	fmt.Fprint(w, strconv.Quote(e.String()))
 }
 
