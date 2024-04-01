@@ -3211,7 +3211,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                 data-testid="grid"
               >
                 <div
-                  class="read-only-section read-only-section--are-participants-required-to-retain-a-financial-guarantee margin-bottom-3"
+                  class="read-only-section read-only-section--are-participants-required-to-retain-a-financial-guarantee--if-so--are-there-any-limitations-on-the-type margin-bottom-3"
                 >
                   <div
                     class="display-flex flex-align-center"
@@ -3219,7 +3219,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     <p
                       class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
                     >
-                      Are participants required to retain a financial guarantee?
+                      Are participants required to retain a financial guarantee? If so, are there any limitations on the type?
                     </p>
                     <span
                       class="usa-tooltip"
@@ -3291,48 +3291,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
             </div>
             <div
               class=""
-            >
-              <div
-                class="desktop:grid-col-12"
-                data-testid="grid"
-              >
-                <div
-                  class="read-only-section read-only-section--if-so--are-there-any-limitations-on-the-type margin-bottom-3"
-                >
-                  <div
-                    class="display-flex flex-align-center"
-                  >
-                    <p
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
-                    >
-                      If so, are there any limitations on the type?
-                    </p>
-                  </div>
-                  <ul
-                    class="margin-y-0 padding-left-3"
-                  >
-                    <li
-                      class="font-sans-md line-height-sans-4"
-                    >
-                      Escrow
-                    </li>
-                    <ul />
-                    <li
-                      class="font-sans-md line-height-sans-4"
-                    >
-                      Other
-                    </li>
-                    <ul>
-                      <li
-                        class="font-sans-md line-height-sans-4"
-                      >
-                        Other Type
-                      </li>
-                    </ul>
-                  </ul>
-                </div>
-              </div>
-            </div>
+            />
             <div
               class=""
             />
@@ -12351,7 +12310,7 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                 data-testid="grid"
               >
                 <div
-                  class="read-only-section read-only-section--are-participants-required-to-retain-a-financial-guarantee margin-bottom-3"
+                  class="read-only-section read-only-section--are-participants-required-to-retain-a-financial-guarantee--if-so--are-there-any-limitations-on-the-type margin-bottom-3"
                 >
                   <div
                     class="display-flex flex-align-center"
@@ -12359,7 +12318,7 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                     <p
                       class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
                     >
-                      Are participants required to retain a financial guarantee?
+                      Are participants required to retain a financial guarantee? If so, are there any limitations on the type?
                     </p>
                     <span
                       class="usa-tooltip"
@@ -12431,48 +12390,7 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
             </div>
             <div
               class=""
-            >
-              <div
-                class="desktop:grid-col-12"
-                data-testid="grid"
-              >
-                <div
-                  class="read-only-section read-only-section--if-so--are-there-any-limitations-on-the-type margin-bottom-3"
-                >
-                  <div
-                    class="display-flex flex-align-center"
-                  >
-                    <p
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
-                    >
-                      If so, are there any limitations on the type?
-                    </p>
-                  </div>
-                  <ul
-                    class="margin-y-0 padding-left-3"
-                  >
-                    <li
-                      class="font-sans-md line-height-sans-4"
-                    >
-                      Escrow
-                    </li>
-                    <ul />
-                    <li
-                      class="font-sans-md line-height-sans-4"
-                    >
-                      Other
-                    </li>
-                    <ul>
-                      <li
-                        class="font-sans-md line-height-sans-4"
-                      >
-                        Other Type
-                      </li>
-                    </ul>
-                  </ul>
-                </div>
-              </div>
-            </div>
+            />
             <div
               class=""
             />
