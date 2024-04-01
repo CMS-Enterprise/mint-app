@@ -25,6 +25,35 @@ const translationSections = {
   //   collaborators
 };
 
+const unneededField = [
+  'dataType',
+  'formType',
+  'filterGroups',
+  'tags',
+  'isModelLinks',
+  'isPageStart',
+  'readonlyHeader',
+  'adjacentPositioning',
+  'hideRelatedQuestionAlert',
+  'tooltips',
+  'optionsRelatedInfo',
+  'disconnectedChildren',
+  'disconnectedLabel',
+  'parentRelation',
+  'childRelation'
+];
+
+// Removes fields from export that are not needed by BE
+const filterUnneededField = translationsObj => {
+  const filteredObj = {};
+  Object.keys(translationsObj).forEach(subField => {
+    if (!unneededField.includes(subField)) {
+      filteredObj[subField] = translationsObj[subField];
+    }
+  });
+  return filteredObj;
+};
+
 // Restructures translations to key off db_field rather than gql_field
 const mapDBFieldToKey = translations => {
   const formattedTranslation = {};
@@ -35,7 +64,9 @@ const mapDBFieldToKey = translations => {
     Object.keys(translations[section]).forEach(field => {
       const fieldObj = translations[section][field];
 
-      formattedTranslation[section][fieldObj.dbField] = fieldObj;
+      const filteredObj = filterUnneededField(fieldObj);
+
+      formattedTranslation[section][fieldObj.dbField] = filteredObj;
     });
   });
 

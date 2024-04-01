@@ -52,7 +52,7 @@ type PlanBasicsTranslation {
   performancePeriodEnds: TranslationField! @goTag(key: "json", value: "performance_period_ends")
   wrapUpEnds: TranslationField! @goTag(key: "json", value: "wrap_up_ends")
   highLevelNote: TranslationField! @goTag(key: "json", value: "high_level_note")
-  phasedIn: TranslationField! @goTag(key: "json", value: "phased_in")
+  phasedIn: TranslationFieldWithOptions! @goTag(key: "json", value: "phased_in")
   phasedInNote: TranslationField! @goTag(key: "json", value: "phased_in_note")
   status: TranslationField! @goTag(key: "json", value: "status")
 }
