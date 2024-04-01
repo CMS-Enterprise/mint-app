@@ -82,11 +82,11 @@ const IndividualNotification = ({
         }
       }).then(response => {
         if (!response?.errors) {
-          history.push(`/models/${modelPlanID}/task-list`);
+          history.push(`/models/${modelPlanID}/read-only`);
         }
       });
     } else {
-      history.push(`/models/${modelPlanID}/task-list`);
+      history.push(`/models/${modelPlanID}/read-only`);
     }
   };
 
