@@ -1,26 +1,26 @@
 type TranslationField {
-  gqlField: String!
-  goField: String!
-  dbField: String!
-  label: String!
-  readonlyLabel: String
-  sublabel: String
-  multiSelectLabel: String
-  isArray: Boolean
-  isOtherType: Boolean
+  gqlField: String! @goTag(key: "json", value: "")
+  goField: String! @goTag(key: "json", value: "")
+  dbField: String! @goTag(key: "json", value: "")
+  label: String! @goTag(key: "json", value: "")
+  readonlyLabel: String @goTag(key: "json", value: "")
+  sublabel: String @goTag(key: "json", value: "")
+  multiSelectLabel: String @goTag(key: "json", value: "")
+  isArray: Boolean @goTag(key: "json", value: "")
+  isOtherType: Boolean @goTag(key: "json", value: "")
 }
 
 type TranslationFieldWithOptions {
-  gqlField: String!
-  goField: String!
-  dbField: String!
-  label: String!
-  readonlyLabel: String
-  sublabel: String
-  multiSelectLabel: String
-  isArray: Boolean
-  isOtherType: Boolean
-  options: Map!
+  gqlField: String! @goTag(key: "json", value: "")
+  goField: String! @goTag(key: "json", value: "")
+  dbField: String! @goTag(key: "json", value: "")
+  label: String! @goTag(key: "json", value: "")
+  readonlyLabel: String @goTag(key: "json", value: "")
+  sublabel: String @goTag(key: "json", value: "")
+  multiSelectLabel: String @goTag(key: "json", value: "")
+  isArray: Boolean @goTag(key: "json", value: "")
+  isOtherType: Boolean @goTag(key: "json", value: "")
+  options: Map! @goTag(key: "json", value: "")
 }
 
 """
@@ -28,31 +28,31 @@ Represents plan basics
 """
 
 type PlanBasicsTranslation {
-  demoCode: TranslationField!
-  amsModelID: TranslationField!
-  modelCategory: TranslationField!
-  additionalModelCategories: TranslationFieldWithOptions!
-  cmsCenters: TranslationFieldWithOptions!
-  cmmiGroups: TranslationFieldWithOptions!
-  modelType: TranslationFieldWithOptions!
-  modelTypeOther: TranslationField!
-  problem: TranslationField!
-  goal: TranslationField!
-  testInterventions: TranslationField!
-  note: TranslationField!
+  demoCode: TranslationField! @goTag(key: "json", value: "demo_code")
+  amsModelID: TranslationField! @goTag(key: "json", value: "ams_model_id")
+  modelCategory: TranslationField! @goTag(key: "json", value: "model_category")
+  additionalModelCategories: TranslationFieldWithOptions! @goTag(key: "json", value: "additional_model_categories")
+  cmsCenters: TranslationFieldWithOptions! @goTag(key: "json", value: "cms_centers")
+  cmmiGroups: TranslationFieldWithOptions! @goTag(key: "json", value: "cmmi_groups")
+  modelType: TranslationFieldWithOptions! @goTag(key: "json", value: "model_type")
+  modelTypeOther: TranslationField! @goTag(key: "json", value: "model_type_other")
+  problem: TranslationField! @goTag(key: "json", value: "problem")
+  goal: TranslationField! @goTag(key: "json", value: "goal")
+  testInterventions: TranslationField! @goTag(key: "json", value: "test_interventions")
+  note: TranslationField! @goTag(key: "json", value: "note")
 
   # Milestones
-  completeICIP: TranslationField!
-  clearanceStarts: TranslationField!
-  clearanceEnds: TranslationField!
-  announced: TranslationField!
-  applicationsStart: TranslationField!
-  applicationsEnd: TranslationField!
-  performancePeriodStarts: TranslationField!
-  performancePeriodEnds: TranslationField!
-  wrapUpEnds: TranslationField!
-  highLevelNote: TranslationField!
-  phasedIn: TranslationField!
-  phasedInNote: TranslationField!
-  status: TranslationField!
+  completeICIP: TranslationField! @goTag(key: "json", value: "complete_icip")
+  clearanceStarts: TranslationField! @goTag(key: "json", value: "clearance_starts")
+  clearanceEnds: TranslationField! @goTag(key: "json", value: "clearance_ends")
+  announced: TranslationField! @goTag(key: "json", value: "announced")
+  applicationsStart: TranslationField! @goTag(key: "json", value: "applications_starts")
+  applicationsEnd: TranslationField! @goTag(key: "json", value: "applications_ends")
+  performancePeriodStarts: TranslationField! @goTag(key: "json", value: "performance_period_starts")
+  performancePeriodEnds: TranslationField! @goTag(key: "json", value: "performance_period_ends")
+  wrapUpEnds: TranslationField! @goTag(key: "json", value: "wrap_up_ends")
+  highLevelNote: TranslationField! @goTag(key: "json", value: "high_level_note")
+  phasedIn: TranslationField! @goTag(key: "json", value: "phased_in")
+  phasedInNote: TranslationField! @goTag(key: "json", value: "phased_in_note")
+  status: TranslationField! @goTag(key: "json", value: "status")
 }

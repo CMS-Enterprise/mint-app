@@ -41,31 +41,31 @@ type NDAInfo struct {
 
 // Represents plan basics
 type PlanBasicsTranslation struct {
-	DemoCode                  TranslationField            `json:"demoCode"`
-	AmsModelID                TranslationField            `json:"amsModelID"`
-	ModelCategory             TranslationField            `json:"modelCategory"`
-	AdditionalModelCategories TranslationFieldWithOptions `json:"additionalModelCategories"`
-	CmsCenters                TranslationFieldWithOptions `json:"cmsCenters"`
-	CmmiGroups                TranslationFieldWithOptions `json:"cmmiGroups"`
-	ModelType                 TranslationFieldWithOptions `json:"modelType"`
-	ModelTypeOther            TranslationField            `json:"modelTypeOther"`
-	Problem                   TranslationField            `json:"problem"`
-	Goal                      TranslationField            `json:"goal"`
-	TestInterventions         TranslationField            `json:"testInterventions"`
-	Note                      TranslationField            `json:"note"`
-	CompleteIcip              TranslationField            `json:"completeICIP"`
-	ClearanceStarts           TranslationField            `json:"clearanceStarts"`
-	ClearanceEnds             TranslationField            `json:"clearanceEnds"`
-	Announced                 TranslationField            `json:"announced"`
-	ApplicationsStart         TranslationField            `json:"applicationsStart"`
-	ApplicationsEnd           TranslationField            `json:"applicationsEnd"`
-	PerformancePeriodStarts   TranslationField            `json:"performancePeriodStarts"`
-	PerformancePeriodEnds     TranslationField            `json:"performancePeriodEnds"`
-	WrapUpEnds                TranslationField            `json:"wrapUpEnds"`
-	HighLevelNote             TranslationField            `json:"highLevelNote"`
-	PhasedIn                  TranslationField            `json:"phasedIn"`
-	PhasedInNote              TranslationField            `json:"phasedInNote"`
-	Status                    TranslationField            `json:"status"`
+	DemoCode                  models.TranslationField            `json:"demo_code"`
+	AmsModelID                models.TranslationField            `json:"ams_model_id"`
+	ModelCategory             models.TranslationField            `json:"model_category"`
+	AdditionalModelCategories models.TranslationFieldWithOptions `json:"additional_model_categories"`
+	CmsCenters                models.TranslationFieldWithOptions `json:"cms_centers"`
+	CmmiGroups                models.TranslationFieldWithOptions `json:"cmmi_groups"`
+	ModelType                 models.TranslationFieldWithOptions `json:"model_type"`
+	ModelTypeOther            models.TranslationField            `json:"model_type_other"`
+	Problem                   models.TranslationField            `json:"problem"`
+	Goal                      models.TranslationField            `json:"goal"`
+	TestInterventions         models.TranslationField            `json:"test_interventions"`
+	Note                      models.TranslationField            `json:"note"`
+	CompleteIcip              models.TranslationField            `json:"complete_icip"`
+	ClearanceStarts           models.TranslationField            `json:"clearance_starts"`
+	ClearanceEnds             models.TranslationField            `json:"clearance_ends"`
+	Announced                 models.TranslationField            `json:"announced"`
+	ApplicationsStart         models.TranslationField            `json:"applications_starts"`
+	ApplicationsEnd           models.TranslationField            `json:"applications_ends"`
+	PerformancePeriodStarts   models.TranslationField            `json:"performance_period_starts"`
+	PerformancePeriodEnds     models.TranslationField            `json:"performance_period_ends"`
+	WrapUpEnds                models.TranslationField            `json:"wrap_up_ends"`
+	HighLevelNote             models.TranslationField            `json:"high_level_note"`
+	PhasedIn                  models.TranslationField            `json:"phased_in"`
+	PhasedInNote              models.TranslationField            `json:"phased_in_note"`
+	Status                    models.TranslationField            `json:"status"`
 }
 
 type PlanCRCreateInput struct {
@@ -161,31 +161,6 @@ type TaskListSectionLockStatusChanged struct {
 	ChangeType ChangeType                `json:"changeType"`
 	LockStatus TaskListSectionLockStatus `json:"lockStatus"`
 	ActionType ActionType                `json:"actionType"`
-}
-
-type TranslationField struct {
-	GqlField         string  `json:"gqlField"`
-	GoField          string  `json:"goField"`
-	DbField          string  `json:"dbField"`
-	Label            string  `json:"label"`
-	ReadonlyLabel    *string `json:"readonlyLabel,omitempty"`
-	Sublabel         *string `json:"sublabel,omitempty"`
-	MultiSelectLabel *string `json:"multiSelectLabel,omitempty"`
-	IsArray          *bool   `json:"isArray,omitempty"`
-	IsOtherType      *bool   `json:"isOtherType,omitempty"`
-}
-
-type TranslationFieldWithOptions struct {
-	GqlField         string                 `json:"gqlField"`
-	GoField          string                 `json:"goField"`
-	DbField          string                 `json:"dbField"`
-	Label            string                 `json:"label"`
-	ReadonlyLabel    *string                `json:"readonlyLabel,omitempty"`
-	Sublabel         *string                `json:"sublabel,omitempty"`
-	MultiSelectLabel *string                `json:"multiSelectLabel,omitempty"`
-	IsArray          *bool                  `json:"isArray,omitempty"`
-	IsOtherType      *bool                  `json:"isOtherType,omitempty"`
-	Options          map[string]interface{} `json:"options"`
 }
 
 type UpdateOperationalSolutionSubtaskInput struct {

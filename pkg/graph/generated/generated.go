@@ -1167,8 +1167,8 @@ type ComplexityRoot struct {
 		IsOtherType      func(childComplexity int) int
 		Label            func(childComplexity int) int
 		MultiSelectLabel func(childComplexity int) int
-		ReadonlyLabel    func(childComplexity int) int
-		Sublabel         func(childComplexity int) int
+		ReadOnlyLabel    func(childComplexity int) int
+		SubLabel         func(childComplexity int) int
 	}
 
 	TranslationFieldWithOptions struct {
@@ -1180,8 +1180,8 @@ type ComplexityRoot struct {
 		Label            func(childComplexity int) int
 		MultiSelectLabel func(childComplexity int) int
 		Options          func(childComplexity int) int
-		ReadonlyLabel    func(childComplexity int) int
-		Sublabel         func(childComplexity int) int
+		ReadOnlyLabel    func(childComplexity int) int
+		SubLabel         func(childComplexity int) int
 	}
 
 	UserAccount struct {
@@ -8340,18 +8340,18 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		return e.complexity.TranslationField.MultiSelectLabel(childComplexity), true
 
 	case "TranslationField.readonlyLabel":
-		if e.complexity.TranslationField.ReadonlyLabel == nil {
+		if e.complexity.TranslationField.ReadOnlyLabel == nil {
 			break
 		}
 
-		return e.complexity.TranslationField.ReadonlyLabel(childComplexity), true
+		return e.complexity.TranslationField.ReadOnlyLabel(childComplexity), true
 
 	case "TranslationField.sublabel":
-		if e.complexity.TranslationField.Sublabel == nil {
+		if e.complexity.TranslationField.SubLabel == nil {
 			break
 		}
 
-		return e.complexity.TranslationField.Sublabel(childComplexity), true
+		return e.complexity.TranslationField.SubLabel(childComplexity), true
 
 	case "TranslationFieldWithOptions.dbField":
 		if e.complexity.TranslationFieldWithOptions.DbField == nil {
@@ -8410,18 +8410,18 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		return e.complexity.TranslationFieldWithOptions.Options(childComplexity), true
 
 	case "TranslationFieldWithOptions.readonlyLabel":
-		if e.complexity.TranslationFieldWithOptions.ReadonlyLabel == nil {
+		if e.complexity.TranslationFieldWithOptions.ReadOnlyLabel == nil {
 			break
 		}
 
-		return e.complexity.TranslationFieldWithOptions.ReadonlyLabel(childComplexity), true
+		return e.complexity.TranslationFieldWithOptions.ReadOnlyLabel(childComplexity), true
 
 	case "TranslationFieldWithOptions.sublabel":
-		if e.complexity.TranslationFieldWithOptions.Sublabel == nil {
+		if e.complexity.TranslationFieldWithOptions.SubLabel == nil {
 			break
 		}
 
-		return e.complexity.TranslationFieldWithOptions.Sublabel(childComplexity), true
+		return e.complexity.TranslationFieldWithOptions.SubLabel(childComplexity), true
 
 	case "UserAccount.commonName":
 		if e.complexity.UserAccount.CommonName == nil {
@@ -10694,7 +10694,13 @@ directive @hasAnyRole(roles: [Role!]!) on FIELD_DEFINITION
 directive @goModel(
   model: String
   models: [String!]
-) on OBJECT | INPUT_OBJECT | SCALAR | ENUM | INTERFACE | UNION`, BuiltIn: false},
+) on OBJECT | INPUT_OBJECT | SCALAR | ENUM | INTERFACE | UNION
+
+directive @goTag(
+	key: String!
+	value: String
+) on INPUT_FIELD_DEFINITION | FIELD_DEFINITION
+`, BuiltIn: false},
 	{Name: "../schema/types/humanized_audit_change.graphql", Input: `"""
 HumanizedAuditMetaData is a type that represents all the data that can be captured in a humanized audit
 """
@@ -11766,28 +11772,28 @@ enum YesNoOtherType {
   OTHER
 }`, BuiltIn: false},
 	{Name: "../schema/types/translation.graphql", Input: `type TranslationField {
-  gqlField: String!
-  goField: String!
-  dbField: String!
-  label: String!
-  readonlyLabel: String
-  sublabel: String
-  multiSelectLabel: String
-  isArray: Boolean
-  isOtherType: Boolean
+  gqlField: String! @goTag(key: "json", value: "")
+  goField: String! @goTag(key: "json", value: "")
+  dbField: String! @goTag(key: "json", value: "")
+  label: String! @goTag(key: "json", value: "")
+  readonlyLabel: String @goTag(key: "json", value: "")
+  sublabel: String @goTag(key: "json", value: "")
+  multiSelectLabel: String @goTag(key: "json", value: "")
+  isArray: Boolean @goTag(key: "json", value: "")
+  isOtherType: Boolean @goTag(key: "json", value: "")
 }
 
 type TranslationFieldWithOptions {
-  gqlField: String!
-  goField: String!
-  dbField: String!
-  label: String!
-  readonlyLabel: String
-  sublabel: String
-  multiSelectLabel: String
-  isArray: Boolean
-  isOtherType: Boolean
-  options: Map!
+  gqlField: String! @goTag(key: "json", value: "")
+  goField: String! @goTag(key: "json", value: "")
+  dbField: String! @goTag(key: "json", value: "")
+  label: String! @goTag(key: "json", value: "")
+  readonlyLabel: String @goTag(key: "json", value: "")
+  sublabel: String @goTag(key: "json", value: "")
+  multiSelectLabel: String @goTag(key: "json", value: "")
+  isArray: Boolean @goTag(key: "json", value: "")
+  isOtherType: Boolean @goTag(key: "json", value: "")
+  options: Map! @goTag(key: "json", value: "")
 }
 
 """
@@ -11795,33 +11801,33 @@ Represents plan basics
 """
 
 type PlanBasicsTranslation {
-  demoCode: TranslationField!
-  amsModelID: TranslationField!
-  modelCategory: TranslationField!
-  additionalModelCategories: TranslationFieldWithOptions!
-  cmsCenters: TranslationFieldWithOptions!
-  cmmiGroups: TranslationFieldWithOptions!
-  modelType: TranslationFieldWithOptions!
-  modelTypeOther: TranslationField!
-  problem: TranslationField!
-  goal: TranslationField!
-  testInterventions: TranslationField!
-  note: TranslationField!
+  demoCode: TranslationField! @goTag(key: "json", value: "demo_code")
+  amsModelID: TranslationField! @goTag(key: "json", value: "ams_model_id")
+  modelCategory: TranslationField! @goTag(key: "json", value: "model_category")
+  additionalModelCategories: TranslationFieldWithOptions! @goTag(key: "json", value: "additional_model_categories")
+  cmsCenters: TranslationFieldWithOptions! @goTag(key: "json", value: "cms_centers")
+  cmmiGroups: TranslationFieldWithOptions! @goTag(key: "json", value: "cmmi_groups")
+  modelType: TranslationFieldWithOptions! @goTag(key: "json", value: "model_type")
+  modelTypeOther: TranslationField! @goTag(key: "json", value: "model_type_other")
+  problem: TranslationField! @goTag(key: "json", value: "problem")
+  goal: TranslationField! @goTag(key: "json", value: "goal")
+  testInterventions: TranslationField! @goTag(key: "json", value: "test_interventions")
+  note: TranslationField! @goTag(key: "json", value: "note")
 
   # Milestones
-  completeICIP: TranslationField!
-  clearanceStarts: TranslationField!
-  clearanceEnds: TranslationField!
-  announced: TranslationField!
-  applicationsStart: TranslationField!
-  applicationsEnd: TranslationField!
-  performancePeriodStarts: TranslationField!
-  performancePeriodEnds: TranslationField!
-  wrapUpEnds: TranslationField!
-  highLevelNote: TranslationField!
-  phasedIn: TranslationField!
-  phasedInNote: TranslationField!
-  status: TranslationField!
+  completeICIP: TranslationField! @goTag(key: "json", value: "complete_icip")
+  clearanceStarts: TranslationField! @goTag(key: "json", value: "clearance_starts")
+  clearanceEnds: TranslationField! @goTag(key: "json", value: "clearance_ends")
+  announced: TranslationField! @goTag(key: "json", value: "announced")
+  applicationsStart: TranslationField! @goTag(key: "json", value: "applications_starts")
+  applicationsEnd: TranslationField! @goTag(key: "json", value: "applications_ends")
+  performancePeriodStarts: TranslationField! @goTag(key: "json", value: "performance_period_starts")
+  performancePeriodEnds: TranslationField! @goTag(key: "json", value: "performance_period_ends")
+  wrapUpEnds: TranslationField! @goTag(key: "json", value: "wrap_up_ends")
+  highLevelNote: TranslationField! @goTag(key: "json", value: "high_level_note")
+  phasedIn: TranslationField! @goTag(key: "json", value: "phased_in")
+  phasedInNote: TranslationField! @goTag(key: "json", value: "phased_in_note")
+  status: TranslationField! @goTag(key: "json", value: "status")
 }`, BuiltIn: false},
 	{Name: "../schema/types/user_notification.graphql", Input: `
 """
@@ -31299,9 +31305,9 @@ func (ec *executionContext) _PlanBasicsTranslation_demoCode(ctx context.Context,
 		}
 		return graphql.Null
 	}
-	res := resTmp.(model.TranslationField)
+	res := resTmp.(models.TranslationField)
 	fc.Result = res
-	return ec.marshalNTranslationField2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationField(ctx, field.Selections, res)
+	return ec.marshalNTranslationField2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTranslationField(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanBasicsTranslation_demoCode(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -31363,9 +31369,9 @@ func (ec *executionContext) _PlanBasicsTranslation_amsModelID(ctx context.Contex
 		}
 		return graphql.Null
 	}
-	res := resTmp.(model.TranslationField)
+	res := resTmp.(models.TranslationField)
 	fc.Result = res
-	return ec.marshalNTranslationField2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationField(ctx, field.Selections, res)
+	return ec.marshalNTranslationField2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTranslationField(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanBasicsTranslation_amsModelID(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -31427,9 +31433,9 @@ func (ec *executionContext) _PlanBasicsTranslation_modelCategory(ctx context.Con
 		}
 		return graphql.Null
 	}
-	res := resTmp.(model.TranslationField)
+	res := resTmp.(models.TranslationField)
 	fc.Result = res
-	return ec.marshalNTranslationField2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationField(ctx, field.Selections, res)
+	return ec.marshalNTranslationField2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTranslationField(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanBasicsTranslation_modelCategory(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -31491,9 +31497,9 @@ func (ec *executionContext) _PlanBasicsTranslation_additionalModelCategories(ctx
 		}
 		return graphql.Null
 	}
-	res := resTmp.(model.TranslationFieldWithOptions)
+	res := resTmp.(models.TranslationFieldWithOptions)
 	fc.Result = res
-	return ec.marshalNTranslationFieldWithOptions2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationFieldWithOptions(ctx, field.Selections, res)
+	return ec.marshalNTranslationFieldWithOptions2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTranslationFieldWithOptions(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanBasicsTranslation_additionalModelCategories(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -31557,9 +31563,9 @@ func (ec *executionContext) _PlanBasicsTranslation_cmsCenters(ctx context.Contex
 		}
 		return graphql.Null
 	}
-	res := resTmp.(model.TranslationFieldWithOptions)
+	res := resTmp.(models.TranslationFieldWithOptions)
 	fc.Result = res
-	return ec.marshalNTranslationFieldWithOptions2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationFieldWithOptions(ctx, field.Selections, res)
+	return ec.marshalNTranslationFieldWithOptions2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTranslationFieldWithOptions(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanBasicsTranslation_cmsCenters(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -31623,9 +31629,9 @@ func (ec *executionContext) _PlanBasicsTranslation_cmmiGroups(ctx context.Contex
 		}
 		return graphql.Null
 	}
-	res := resTmp.(model.TranslationFieldWithOptions)
+	res := resTmp.(models.TranslationFieldWithOptions)
 	fc.Result = res
-	return ec.marshalNTranslationFieldWithOptions2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationFieldWithOptions(ctx, field.Selections, res)
+	return ec.marshalNTranslationFieldWithOptions2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTranslationFieldWithOptions(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanBasicsTranslation_cmmiGroups(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -31689,9 +31695,9 @@ func (ec *executionContext) _PlanBasicsTranslation_modelType(ctx context.Context
 		}
 		return graphql.Null
 	}
-	res := resTmp.(model.TranslationFieldWithOptions)
+	res := resTmp.(models.TranslationFieldWithOptions)
 	fc.Result = res
-	return ec.marshalNTranslationFieldWithOptions2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationFieldWithOptions(ctx, field.Selections, res)
+	return ec.marshalNTranslationFieldWithOptions2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTranslationFieldWithOptions(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanBasicsTranslation_modelType(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -31755,9 +31761,9 @@ func (ec *executionContext) _PlanBasicsTranslation_modelTypeOther(ctx context.Co
 		}
 		return graphql.Null
 	}
-	res := resTmp.(model.TranslationField)
+	res := resTmp.(models.TranslationField)
 	fc.Result = res
-	return ec.marshalNTranslationField2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationField(ctx, field.Selections, res)
+	return ec.marshalNTranslationField2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTranslationField(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanBasicsTranslation_modelTypeOther(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -31819,9 +31825,9 @@ func (ec *executionContext) _PlanBasicsTranslation_problem(ctx context.Context, 
 		}
 		return graphql.Null
 	}
-	res := resTmp.(model.TranslationField)
+	res := resTmp.(models.TranslationField)
 	fc.Result = res
-	return ec.marshalNTranslationField2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationField(ctx, field.Selections, res)
+	return ec.marshalNTranslationField2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTranslationField(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanBasicsTranslation_problem(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -31883,9 +31889,9 @@ func (ec *executionContext) _PlanBasicsTranslation_goal(ctx context.Context, fie
 		}
 		return graphql.Null
 	}
-	res := resTmp.(model.TranslationField)
+	res := resTmp.(models.TranslationField)
 	fc.Result = res
-	return ec.marshalNTranslationField2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationField(ctx, field.Selections, res)
+	return ec.marshalNTranslationField2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTranslationField(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanBasicsTranslation_goal(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -31947,9 +31953,9 @@ func (ec *executionContext) _PlanBasicsTranslation_testInterventions(ctx context
 		}
 		return graphql.Null
 	}
-	res := resTmp.(model.TranslationField)
+	res := resTmp.(models.TranslationField)
 	fc.Result = res
-	return ec.marshalNTranslationField2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationField(ctx, field.Selections, res)
+	return ec.marshalNTranslationField2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTranslationField(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanBasicsTranslation_testInterventions(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -32011,9 +32017,9 @@ func (ec *executionContext) _PlanBasicsTranslation_note(ctx context.Context, fie
 		}
 		return graphql.Null
 	}
-	res := resTmp.(model.TranslationField)
+	res := resTmp.(models.TranslationField)
 	fc.Result = res
-	return ec.marshalNTranslationField2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationField(ctx, field.Selections, res)
+	return ec.marshalNTranslationField2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTranslationField(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanBasicsTranslation_note(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -32075,9 +32081,9 @@ func (ec *executionContext) _PlanBasicsTranslation_completeICIP(ctx context.Cont
 		}
 		return graphql.Null
 	}
-	res := resTmp.(model.TranslationField)
+	res := resTmp.(models.TranslationField)
 	fc.Result = res
-	return ec.marshalNTranslationField2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationField(ctx, field.Selections, res)
+	return ec.marshalNTranslationField2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTranslationField(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanBasicsTranslation_completeICIP(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -32139,9 +32145,9 @@ func (ec *executionContext) _PlanBasicsTranslation_clearanceStarts(ctx context.C
 		}
 		return graphql.Null
 	}
-	res := resTmp.(model.TranslationField)
+	res := resTmp.(models.TranslationField)
 	fc.Result = res
-	return ec.marshalNTranslationField2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationField(ctx, field.Selections, res)
+	return ec.marshalNTranslationField2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTranslationField(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanBasicsTranslation_clearanceStarts(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -32203,9 +32209,9 @@ func (ec *executionContext) _PlanBasicsTranslation_clearanceEnds(ctx context.Con
 		}
 		return graphql.Null
 	}
-	res := resTmp.(model.TranslationField)
+	res := resTmp.(models.TranslationField)
 	fc.Result = res
-	return ec.marshalNTranslationField2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationField(ctx, field.Selections, res)
+	return ec.marshalNTranslationField2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTranslationField(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanBasicsTranslation_clearanceEnds(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -32267,9 +32273,9 @@ func (ec *executionContext) _PlanBasicsTranslation_announced(ctx context.Context
 		}
 		return graphql.Null
 	}
-	res := resTmp.(model.TranslationField)
+	res := resTmp.(models.TranslationField)
 	fc.Result = res
-	return ec.marshalNTranslationField2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationField(ctx, field.Selections, res)
+	return ec.marshalNTranslationField2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTranslationField(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanBasicsTranslation_announced(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -32331,9 +32337,9 @@ func (ec *executionContext) _PlanBasicsTranslation_applicationsStart(ctx context
 		}
 		return graphql.Null
 	}
-	res := resTmp.(model.TranslationField)
+	res := resTmp.(models.TranslationField)
 	fc.Result = res
-	return ec.marshalNTranslationField2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationField(ctx, field.Selections, res)
+	return ec.marshalNTranslationField2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTranslationField(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanBasicsTranslation_applicationsStart(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -32395,9 +32401,9 @@ func (ec *executionContext) _PlanBasicsTranslation_applicationsEnd(ctx context.C
 		}
 		return graphql.Null
 	}
-	res := resTmp.(model.TranslationField)
+	res := resTmp.(models.TranslationField)
 	fc.Result = res
-	return ec.marshalNTranslationField2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationField(ctx, field.Selections, res)
+	return ec.marshalNTranslationField2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTranslationField(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanBasicsTranslation_applicationsEnd(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -32459,9 +32465,9 @@ func (ec *executionContext) _PlanBasicsTranslation_performancePeriodStarts(ctx c
 		}
 		return graphql.Null
 	}
-	res := resTmp.(model.TranslationField)
+	res := resTmp.(models.TranslationField)
 	fc.Result = res
-	return ec.marshalNTranslationField2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationField(ctx, field.Selections, res)
+	return ec.marshalNTranslationField2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTranslationField(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanBasicsTranslation_performancePeriodStarts(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -32523,9 +32529,9 @@ func (ec *executionContext) _PlanBasicsTranslation_performancePeriodEnds(ctx con
 		}
 		return graphql.Null
 	}
-	res := resTmp.(model.TranslationField)
+	res := resTmp.(models.TranslationField)
 	fc.Result = res
-	return ec.marshalNTranslationField2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationField(ctx, field.Selections, res)
+	return ec.marshalNTranslationField2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTranslationField(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanBasicsTranslation_performancePeriodEnds(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -32587,9 +32593,9 @@ func (ec *executionContext) _PlanBasicsTranslation_wrapUpEnds(ctx context.Contex
 		}
 		return graphql.Null
 	}
-	res := resTmp.(model.TranslationField)
+	res := resTmp.(models.TranslationField)
 	fc.Result = res
-	return ec.marshalNTranslationField2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationField(ctx, field.Selections, res)
+	return ec.marshalNTranslationField2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTranslationField(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanBasicsTranslation_wrapUpEnds(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -32651,9 +32657,9 @@ func (ec *executionContext) _PlanBasicsTranslation_highLevelNote(ctx context.Con
 		}
 		return graphql.Null
 	}
-	res := resTmp.(model.TranslationField)
+	res := resTmp.(models.TranslationField)
 	fc.Result = res
-	return ec.marshalNTranslationField2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationField(ctx, field.Selections, res)
+	return ec.marshalNTranslationField2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTranslationField(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanBasicsTranslation_highLevelNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -32715,9 +32721,9 @@ func (ec *executionContext) _PlanBasicsTranslation_phasedIn(ctx context.Context,
 		}
 		return graphql.Null
 	}
-	res := resTmp.(model.TranslationField)
+	res := resTmp.(models.TranslationField)
 	fc.Result = res
-	return ec.marshalNTranslationField2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationField(ctx, field.Selections, res)
+	return ec.marshalNTranslationField2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTranslationField(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanBasicsTranslation_phasedIn(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -32779,9 +32785,9 @@ func (ec *executionContext) _PlanBasicsTranslation_phasedInNote(ctx context.Cont
 		}
 		return graphql.Null
 	}
-	res := resTmp.(model.TranslationField)
+	res := resTmp.(models.TranslationField)
 	fc.Result = res
-	return ec.marshalNTranslationField2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationField(ctx, field.Selections, res)
+	return ec.marshalNTranslationField2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTranslationField(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanBasicsTranslation_phasedInNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -32843,9 +32849,9 @@ func (ec *executionContext) _PlanBasicsTranslation_status(ctx context.Context, f
 		}
 		return graphql.Null
 	}
-	res := resTmp.(model.TranslationField)
+	res := resTmp.(models.TranslationField)
 	fc.Result = res
-	return ec.marshalNTranslationField2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationField(ctx, field.Selections, res)
+	return ec.marshalNTranslationField2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTranslationField(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanBasicsTranslation_status(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -60929,7 +60935,7 @@ func (ec *executionContext) fieldContext_TaskListSectionLockStatusChanged_action
 	return fc, nil
 }
 
-func (ec *executionContext) _TranslationField_gqlField(ctx context.Context, field graphql.CollectedField, obj *model.TranslationField) (ret graphql.Marshaler) {
+func (ec *executionContext) _TranslationField_gqlField(ctx context.Context, field graphql.CollectedField, obj *models.TranslationField) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_TranslationField_gqlField(ctx, field)
 	if err != nil {
 		return graphql.Null
@@ -60973,7 +60979,7 @@ func (ec *executionContext) fieldContext_TranslationField_gqlField(ctx context.C
 	return fc, nil
 }
 
-func (ec *executionContext) _TranslationField_goField(ctx context.Context, field graphql.CollectedField, obj *model.TranslationField) (ret graphql.Marshaler) {
+func (ec *executionContext) _TranslationField_goField(ctx context.Context, field graphql.CollectedField, obj *models.TranslationField) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_TranslationField_goField(ctx, field)
 	if err != nil {
 		return graphql.Null
@@ -61017,7 +61023,7 @@ func (ec *executionContext) fieldContext_TranslationField_goField(ctx context.Co
 	return fc, nil
 }
 
-func (ec *executionContext) _TranslationField_dbField(ctx context.Context, field graphql.CollectedField, obj *model.TranslationField) (ret graphql.Marshaler) {
+func (ec *executionContext) _TranslationField_dbField(ctx context.Context, field graphql.CollectedField, obj *models.TranslationField) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_TranslationField_dbField(ctx, field)
 	if err != nil {
 		return graphql.Null
@@ -61061,7 +61067,7 @@ func (ec *executionContext) fieldContext_TranslationField_dbField(ctx context.Co
 	return fc, nil
 }
 
-func (ec *executionContext) _TranslationField_label(ctx context.Context, field graphql.CollectedField, obj *model.TranslationField) (ret graphql.Marshaler) {
+func (ec *executionContext) _TranslationField_label(ctx context.Context, field graphql.CollectedField, obj *models.TranslationField) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_TranslationField_label(ctx, field)
 	if err != nil {
 		return graphql.Null
@@ -61105,7 +61111,7 @@ func (ec *executionContext) fieldContext_TranslationField_label(ctx context.Cont
 	return fc, nil
 }
 
-func (ec *executionContext) _TranslationField_readonlyLabel(ctx context.Context, field graphql.CollectedField, obj *model.TranslationField) (ret graphql.Marshaler) {
+func (ec *executionContext) _TranslationField_readonlyLabel(ctx context.Context, field graphql.CollectedField, obj *models.TranslationField) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_TranslationField_readonlyLabel(ctx, field)
 	if err != nil {
 		return graphql.Null
@@ -61119,7 +61125,7 @@ func (ec *executionContext) _TranslationField_readonlyLabel(ctx context.Context,
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.ReadonlyLabel, nil
+		return obj.ReadOnlyLabel, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -61146,7 +61152,7 @@ func (ec *executionContext) fieldContext_TranslationField_readonlyLabel(ctx cont
 	return fc, nil
 }
 
-func (ec *executionContext) _TranslationField_sublabel(ctx context.Context, field graphql.CollectedField, obj *model.TranslationField) (ret graphql.Marshaler) {
+func (ec *executionContext) _TranslationField_sublabel(ctx context.Context, field graphql.CollectedField, obj *models.TranslationField) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_TranslationField_sublabel(ctx, field)
 	if err != nil {
 		return graphql.Null
@@ -61160,7 +61166,7 @@ func (ec *executionContext) _TranslationField_sublabel(ctx context.Context, fiel
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.Sublabel, nil
+		return obj.SubLabel, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -61187,7 +61193,7 @@ func (ec *executionContext) fieldContext_TranslationField_sublabel(ctx context.C
 	return fc, nil
 }
 
-func (ec *executionContext) _TranslationField_multiSelectLabel(ctx context.Context, field graphql.CollectedField, obj *model.TranslationField) (ret graphql.Marshaler) {
+func (ec *executionContext) _TranslationField_multiSelectLabel(ctx context.Context, field graphql.CollectedField, obj *models.TranslationField) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 	if err != nil {
 		return graphql.Null
@@ -61228,7 +61234,7 @@ func (ec *executionContext) fieldContext_TranslationField_multiSelectLabel(ctx c
 	return fc, nil
 }
 
-func (ec *executionContext) _TranslationField_isArray(ctx context.Context, field graphql.CollectedField, obj *model.TranslationField) (ret graphql.Marshaler) {
+func (ec *executionContext) _TranslationField_isArray(ctx context.Context, field graphql.CollectedField, obj *models.TranslationField) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_TranslationField_isArray(ctx, field)
 	if err != nil {
 		return graphql.Null
@@ -61251,9 +61257,9 @@ func (ec *executionContext) _TranslationField_isArray(ctx context.Context, field
 	if resTmp == nil {
 		return graphql.Null
 	}
-	res := resTmp.(*bool)
+	res := resTmp.(bool)
 	fc.Result = res
-	return ec.marshalOBoolean2ᚖbool(ctx, field.Selections, res)
+	return ec.marshalOBoolean2bool(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_TranslationField_isArray(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -61269,7 +61275,7 @@ func (ec *executionContext) fieldContext_TranslationField_isArray(ctx context.Co
 	return fc, nil
 }
 
-func (ec *executionContext) _TranslationField_isOtherType(ctx context.Context, field graphql.CollectedField, obj *model.TranslationField) (ret graphql.Marshaler) {
+func (ec *executionContext) _TranslationField_isOtherType(ctx context.Context, field graphql.CollectedField, obj *models.TranslationField) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_TranslationField_isOtherType(ctx, field)
 	if err != nil {
 		return graphql.Null
@@ -61292,9 +61298,9 @@ func (ec *executionContext) _TranslationField_isOtherType(ctx context.Context, f
 	if resTmp == nil {
 		return graphql.Null
 	}
-	res := resTmp.(*bool)
+	res := resTmp.(bool)
 	fc.Result = res
-	return ec.marshalOBoolean2ᚖbool(ctx, field.Selections, res)
+	return ec.marshalOBoolean2bool(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_TranslationField_isOtherType(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -61310,7 +61316,7 @@ func (ec *executionContext) fieldContext_TranslationField_isOtherType(ctx contex
 	return fc, nil
 }
 
-func (ec *executionContext) _TranslationFieldWithOptions_gqlField(ctx context.Context, field graphql.CollectedField, obj *model.TranslationFieldWithOptions) (ret graphql.Marshaler) {
+func (ec *executionContext) _TranslationFieldWithOptions_gqlField(ctx context.Context, field graphql.CollectedField, obj *models.TranslationFieldWithOptions) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_TranslationFieldWithOptions_gqlField(ctx, field)
 	if err != nil {
 		return graphql.Null
@@ -61354,7 +61360,7 @@ func (ec *executionContext) fieldContext_TranslationFieldWithOptions_gqlField(ct
 	return fc, nil
 }
 
-func (ec *executionContext) _TranslationFieldWithOptions_goField(ctx context.Context, field graphql.CollectedField, obj *model.TranslationFieldWithOptions) (ret graphql.Marshaler) {
+func (ec *executionContext) _TranslationFieldWithOptions_goField(ctx context.Context, field graphql.CollectedField, obj *models.TranslationFieldWithOptions) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_TranslationFieldWithOptions_goField(ctx, field)
 	if err != nil {
 		return graphql.Null
@@ -61398,7 +61404,7 @@ func (ec *executionContext) fieldContext_TranslationFieldWithOptions_goField(ctx
 	return fc, nil
 }
 
-func (ec *executionContext) _TranslationFieldWithOptions_dbField(ctx context.Context, field graphql.CollectedField, obj *model.TranslationFieldWithOptions) (ret graphql.Marshaler) {
+func (ec *executionContext) _TranslationFieldWithOptions_dbField(ctx context.Context, field graphql.CollectedField, obj *models.TranslationFieldWithOptions) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_TranslationFieldWithOptions_dbField(ctx, field)
 	if err != nil {
 		return graphql.Null
@@ -61442,7 +61448,7 @@ func (ec *executionContext) fieldContext_TranslationFieldWithOptions_dbField(ctx
 	return fc, nil
 }
 
-func (ec *executionContext) _TranslationFieldWithOptions_label(ctx context.Context, field graphql.CollectedField, obj *model.TranslationFieldWithOptions) (ret graphql.Marshaler) {
+func (ec *executionContext) _TranslationFieldWithOptions_label(ctx context.Context, field graphql.CollectedField, obj *models.TranslationFieldWithOptions) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_TranslationFieldWithOptions_label(ctx, field)
 	if err != nil {
 		return graphql.Null
@@ -61486,7 +61492,7 @@ func (ec *executionContext) fieldContext_TranslationFieldWithOptions_label(ctx c
 	return fc, nil
 }
 
-func (ec *executionContext) _TranslationFieldWithOptions_readonlyLabel(ctx context.Context, field graphql.CollectedField, obj *model.TranslationFieldWithOptions) (ret graphql.Marshaler) {
+func (ec *executionContext) _TranslationFieldWithOptions_readonlyLabel(ctx context.Context, field graphql.CollectedField, obj *models.TranslationFieldWithOptions) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_TranslationFieldWithOptions_readonlyLabel(ctx, field)
 	if err != nil {
 		return graphql.Null
@@ -61500,7 +61506,7 @@ func (ec *executionContext) _TranslationFieldWithOptions_readonlyLabel(ctx conte
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.ReadonlyLabel, nil
+		return obj.ReadOnlyLabel, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -61527,7 +61533,7 @@ func (ec *executionContext) fieldContext_TranslationFieldWithOptions_readonlyLab
 	return fc, nil
 }
 
-func (ec *executionContext) _TranslationFieldWithOptions_sublabel(ctx context.Context, field graphql.CollectedField, obj *model.TranslationFieldWithOptions) (ret graphql.Marshaler) {
+func (ec *executionContext) _TranslationFieldWithOptions_sublabel(ctx context.Context, field graphql.CollectedField, obj *models.TranslationFieldWithOptions) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_TranslationFieldWithOptions_sublabel(ctx, field)
 	if err != nil {
 		return graphql.Null
@@ -61541,7 +61547,7 @@ func (ec *executionContext) _TranslationFieldWithOptions_sublabel(ctx context.Co
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.Sublabel, nil
+		return obj.SubLabel, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -61568,7 +61574,7 @@ func (ec *executionContext) fieldContext_TranslationFieldWithOptions_sublabel(ct
 	return fc, nil
 }
 
-func (ec *executionContext) _TranslationFieldWithOptions_multiSelectLabel(ctx context.Context, field graphql.CollectedField, obj *model.TranslationFieldWithOptions) (ret graphql.Marshaler) {
+func (ec *executionContext) _TranslationFieldWithOptions_multiSelectLabel(ctx context.Context, field graphql.CollectedField, obj *models.TranslationFieldWithOptions) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
 	if err != nil {
 		return graphql.Null
@@ -61609,7 +61615,7 @@ func (ec *executionContext) fieldContext_TranslationFieldWithOptions_multiSelect
 	return fc, nil
 }
 
-func (ec *executionContext) _TranslationFieldWithOptions_isArray(ctx context.Context, field graphql.CollectedField, obj *model.TranslationFieldWithOptions) (ret graphql.Marshaler) {
+func (ec *executionContext) _TranslationFieldWithOptions_isArray(ctx context.Context, field graphql.CollectedField, obj *models.TranslationFieldWithOptions) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
 	if err != nil {
 		return graphql.Null
@@ -61632,9 +61638,9 @@ func (ec *executionContext) _TranslationFieldWithOptions_isArray(ctx context.Con
 	if resTmp == nil {
 		return graphql.Null
 	}
-	res := resTmp.(*bool)
+	res := resTmp.(bool)
 	fc.Result = res
-	return ec.marshalOBoolean2ᚖbool(ctx, field.Selections, res)
+	return ec.marshalOBoolean2bool(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_TranslationFieldWithOptions_isArray(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -61650,7 +61656,7 @@ func (ec *executionContext) fieldContext_TranslationFieldWithOptions_isArray(ctx
 	return fc, nil
 }
 
-func (ec *executionContext) _TranslationFieldWithOptions_isOtherType(ctx context.Context, field graphql.CollectedField, obj *model.TranslationFieldWithOptions) (ret graphql.Marshaler) {
+func (ec *executionContext) _TranslationFieldWithOptions_isOtherType(ctx context.Context, field graphql.CollectedField, obj *models.TranslationFieldWithOptions) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
 	if err != nil {
 		return graphql.Null
@@ -61673,9 +61679,9 @@ func (ec *executionContext) _TranslationFieldWithOptions_isOtherType(ctx context
 	if resTmp == nil {
 		return graphql.Null
 	}
-	res := resTmp.(*bool)
+	res := resTmp.(bool)
 	fc.Result = res
-	return ec.marshalOBoolean2ᚖbool(ctx, field.Selections, res)
+	return ec.marshalOBoolean2bool(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_TranslationFieldWithOptions_isOtherType(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -61691,7 +61697,7 @@ func (ec *executionContext) fieldContext_TranslationFieldWithOptions_isOtherType
 	return fc, nil
 }
 
-func (ec *executionContext) _TranslationFieldWithOptions_options(ctx context.Context, field graphql.CollectedField, obj *model.TranslationFieldWithOptions) (ret graphql.Marshaler) {
+func (ec *executionContext) _TranslationFieldWithOptions_options(ctx context.Context, field graphql.CollectedField, obj *models.TranslationFieldWithOptions) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_TranslationFieldWithOptions_options(ctx, field)
 	if err != nil {
 		return graphql.Null
@@ -77169,7 +77175,7 @@ func (ec *executionContext) _TaskListSectionLockStatusChanged(ctx context.Contex
 
 var translationFieldImplementors = []string{"TranslationField"}
 
-func (ec *executionContext) _TranslationField(ctx context.Context, sel ast.SelectionSet, obj *model.TranslationField) graphql.Marshaler {
+func (ec *executionContext) _TranslationField(ctx context.Context, sel ast.SelectionSet, obj *models.TranslationField) graphql.Marshaler {
 	fields := graphql.CollectFields(ec.OperationContext, sel, translationFieldImplementors)
 
 	out := graphql.NewFieldSet(fields)
@@ -77233,7 +77239,7 @@ func (ec *executionContext) _TranslationField(ctx context.Context, sel ast.Selec
 
 var translationFieldWithOptionsImplementors = []string{"TranslationFieldWithOptions"}
 
-func (ec *executionContext) _TranslationFieldWithOptions(ctx context.Context, sel ast.SelectionSet, obj *model.TranslationFieldWithOptions) graphql.Marshaler {
+func (ec *executionContext) _TranslationFieldWithOptions(ctx context.Context, sel ast.SelectionSet, obj *models.TranslationFieldWithOptions) graphql.Marshaler {
 	fields := graphql.CollectFields(ec.OperationContext, sel, translationFieldWithOptionsImplementors)
 
 	out := graphql.NewFieldSet(fields)
@@ -83108,11 +83114,11 @@ func (ec *executionContext) marshalNTime2ᚖtimeᚐTime(ctx context.Context, sel
 	return res
 }
 
-func (ec *executionContext) marshalNTranslationField2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationField(ctx context.Context, sel ast.SelectionSet, v model.TranslationField) graphql.Marshaler {
+func (ec *executionContext) marshalNTranslationField2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTranslationField(ctx context.Context, sel ast.SelectionSet, v models.TranslationField) graphql.Marshaler {
 	return ec._TranslationField(ctx, sel, &v)
 }
 
-func (ec *executionContext) marshalNTranslationFieldWithOptions2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationFieldWithOptions(ctx context.Context, sel ast.SelectionSet, v model.TranslationFieldWithOptions) graphql.Marshaler {
+func (ec *executionContext) marshalNTranslationFieldWithOptions2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTranslationFieldWithOptions(ctx context.Context, sel ast.SelectionSet, v models.TranslationFieldWithOptions) graphql.Marshaler {
 	return ec._TranslationFieldWithOptions(ctx, sel, &v)
 }
 

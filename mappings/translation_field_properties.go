@@ -1,5 +1,8 @@
 package mappings
 
+// TODO: (ChChCh Changes!) Remove the duplicate types!
+
+// TranslationFieldProperties is data about a translation for a field
 type TranslationFieldProperties struct {
 	GqlField      string `json:"gqlField"`
 	GoField       string `json:"goField"`
@@ -22,12 +25,14 @@ func (tfp TranslationFieldProperties) GetLabel() string {
 
 }
 
+// TranslationFieldPropertiesWithOptions is TranslationField, but with options
 type TranslationFieldPropertiesWithOptions struct {
 	TranslationFieldProperties
 	Options                 map[string]string `json:"options"`
 	AllowMultipleSelections bool              `json:"allowMultipleSelections,omitempty"`
 }
 
+// TranslationFieldPropertiesWithOptionsAndParent is a translation field with Options and a Parent
 type TranslationFieldPropertiesWithOptionsAndParent struct {
 	TranslationFieldPropertiesWithOptions
 	ParentFieldName string `json:"parentFieldName"`
