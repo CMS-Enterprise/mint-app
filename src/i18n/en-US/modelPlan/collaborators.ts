@@ -1,4 +1,7 @@
-import { TranslationCollaborators } from 'types/translation';
+import {
+  TranslationCollaborators,
+  TranslationDataType
+} from 'types/translation';
 
 export const collaborators: TranslationCollaborators = {
   username: {
@@ -6,7 +9,7 @@ export const collaborators: TranslationCollaborators = {
     goField: 'Username',
     dbField: 'username',
     label: 'Team member name',
-    dataType: 'string',
+    dataType: TranslationDataType.STRING,
     formType: 'select'
   },
   teamRoles: {
@@ -14,7 +17,7 @@ export const collaborators: TranslationCollaborators = {
     goField: 'TeamRoles',
     dbField: 'team_roles',
     label: 'Team member role(s)',
-    dataType: 'enum',
+    dataType: TranslationDataType.ENUM,
     formType: 'select',
     options: {
       CM_FFS_COUNTERPART: 'CM FFS counterpart',

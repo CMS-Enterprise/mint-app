@@ -1,4 +1,4 @@
-import { ModelViewFilter } from 'gql/gen/graphql';
+import { ModelViewFilter, TranslationDataType } from 'gql/gen/graphql';
 
 import { TranslationModelPlan } from 'types/translation';
 
@@ -8,7 +8,7 @@ export const modelPlan: TranslationModelPlan = {
     goField: 'ModelName',
     dbField: 'model_name',
     label: 'Model name',
-    dataType: 'string',
+    dataType: TranslationDataType.STRING,
     formType: 'text'
   },
   previousName: {
@@ -16,7 +16,7 @@ export const modelPlan: TranslationModelPlan = {
     goField: 'PreviousName',
     dbField: 'previous_name',
     label: 'Previous names',
-    dataType: 'string',
+    dataType: TranslationDataType.STRING,
     formType: 'text'
   },
   nameHistory: {
@@ -24,7 +24,7 @@ export const modelPlan: TranslationModelPlan = {
     goField: 'NameHistory',
     dbField: 'name_history',
     label: 'Previous names',
-    dataType: 'string',
+    dataType: TranslationDataType.STRING,
     isArray: true,
     formType: 'text',
     filterGroups: [
@@ -45,7 +45,7 @@ export const modelPlan: TranslationModelPlan = {
     label: 'Short name',
     sublabel:
       'The abbreviation, acronym, or other common name used for the model.',
-    dataType: 'string',
+    dataType: TranslationDataType.STRING,
     formType: 'text'
   },
   archived: {
@@ -53,7 +53,7 @@ export const modelPlan: TranslationModelPlan = {
     goField: 'Archived',
     dbField: 'archived',
     label: 'Archived',
-    dataType: 'boolean',
+    dataType: TranslationDataType.BOOLEAN,
     formType: 'radio',
     options: {
       true: 'Yes',
@@ -65,7 +65,7 @@ export const modelPlan: TranslationModelPlan = {
     goField: 'Status',
     dbField: 'status',
     label: 'What is the status of your Model Plan?',
-    dataType: 'enum',
+    dataType: TranslationDataType.ENUM,
     formType: 'select',
     options: {
       PLAN_DRAFT: 'Draft Model Plan',
