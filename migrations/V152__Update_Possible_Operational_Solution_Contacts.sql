@@ -1,13 +1,15 @@
--- Remove Hung Van and Yolanda Villanova as Solution Contacts
+-- Remove old entries from Solution Contacts
 DELETE FROM possible_operational_solution_contact
-WHERE NAME IN ('Felicia Addai', 'Miyani Treva');
+WHERE NAME IN ('Felicia Addai', 'Miyani `Treva`');
 
+-- Add new entries to Solution Contacts
 WITH pocs(SolutionName, SolutionKey, Name, Email, Role, IsTeam) AS (
   VALUES
     ('Master Data Management', 'MDM', 'Sarah Okorafor', 'sarah.okorafor@cms.hhs.gov', 'Overlaps Operations Support', FALSE),
     ('Master Data Management', 'MDM', 'Luiz Lee', 'luiz.lee1@cms.hhs.gov', 'Solutions Architect', FALSE)
 )
 
+-- Merge new entries into Solution Contacts
 INSERT INTO possible_operational_solution_contact(
   id,
   possible_operational_solution_id,
