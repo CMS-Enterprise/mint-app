@@ -41,31 +41,31 @@ type NDAInfo struct {
 
 // Represents plan basics
 type PlanBasicsTranslation struct {
-	DemoCode                  *TranslationField            `json:"demoCode"`
-	AmsModelID                *TranslationField            `json:"amsModelID"`
-	ModelCategory             *TranslationField            `json:"modelCategory"`
-	AdditionalModelCategories *TranslationFieldWithOptions `json:"additionalModelCategories"`
-	CmsCenters                *TranslationFieldWithOptions `json:"cmsCenters"`
-	CmmiGroups                *TranslationFieldWithOptions `json:"cmmiGroups"`
-	ModelType                 *TranslationFieldWithOptions `json:"modelType"`
-	ModelTypeOther            *TranslationField            `json:"modelTypeOther"`
-	Problem                   *TranslationField            `json:"problem"`
-	Goal                      *TranslationField            `json:"goal"`
-	TestInterventions         *TranslationField            `json:"testInterventions"`
-	Note                      *TranslationField            `json:"note"`
-	CompleteIcip              *TranslationField            `json:"completeICIP"`
-	ClearanceStarts           *TranslationField            `json:"clearanceStarts"`
-	ClearanceEnds             *TranslationField            `json:"clearanceEnds"`
-	Announced                 *TranslationField            `json:"announced"`
-	ApplicationsStart         *TranslationField            `json:"applicationsStart"`
-	ApplicationsEnd           *TranslationField            `json:"applicationsEnd"`
-	PerformancePeriodStarts   *TranslationField            `json:"performancePeriodStarts"`
-	PerformancePeriodEnds     *TranslationField            `json:"performancePeriodEnds"`
-	WrapUpEnds                *TranslationField            `json:"wrapUpEnds"`
-	HighLevelNote             *TranslationField            `json:"highLevelNote"`
-	PhasedIn                  *TranslationField            `json:"phasedIn"`
-	PhasedInNote              *TranslationField            `json:"phasedInNote"`
-	Status                    *TranslationField            `json:"status"`
+	DemoCode                  TranslationField            `json:"demoCode"`
+	AmsModelID                TranslationField            `json:"amsModelID"`
+	ModelCategory             TranslationField            `json:"modelCategory"`
+	AdditionalModelCategories TranslationFieldWithOptions `json:"additionalModelCategories"`
+	CmsCenters                TranslationFieldWithOptions `json:"cmsCenters"`
+	CmmiGroups                TranslationFieldWithOptions `json:"cmmiGroups"`
+	ModelType                 TranslationFieldWithOptions `json:"modelType"`
+	ModelTypeOther            TranslationField            `json:"modelTypeOther"`
+	Problem                   TranslationField            `json:"problem"`
+	Goal                      TranslationField            `json:"goal"`
+	TestInterventions         TranslationField            `json:"testInterventions"`
+	Note                      TranslationField            `json:"note"`
+	CompleteIcip              TranslationField            `json:"completeICIP"`
+	ClearanceStarts           TranslationField            `json:"clearanceStarts"`
+	ClearanceEnds             TranslationField            `json:"clearanceEnds"`
+	Announced                 TranslationField            `json:"announced"`
+	ApplicationsStart         TranslationField            `json:"applicationsStart"`
+	ApplicationsEnd           TranslationField            `json:"applicationsEnd"`
+	PerformancePeriodStarts   TranslationField            `json:"performancePeriodStarts"`
+	PerformancePeriodEnds     TranslationField            `json:"performancePeriodEnds"`
+	WrapUpEnds                TranslationField            `json:"wrapUpEnds"`
+	HighLevelNote             TranslationField            `json:"highLevelNote"`
+	PhasedIn                  TranslationField            `json:"phasedIn"`
+	PhasedInNote              TranslationField            `json:"phasedInNote"`
+	Status                    TranslationField            `json:"status"`
 }
 
 type PlanCRCreateInput struct {
@@ -151,16 +151,16 @@ type SendFeedbackEmailInput struct {
 }
 
 type TaskListSectionLockStatus struct {
-	ModelPlanID         uuid.UUID                   `json:"modelPlanID"`
-	Section             models.TaskListSection      `json:"section"`
-	LockedByUserAccount *authentication.UserAccount `json:"lockedByUserAccount"`
-	IsAssessment        bool                        `json:"isAssessment"`
+	ModelPlanID         uuid.UUID                  `json:"modelPlanID"`
+	Section             models.TaskListSection     `json:"section"`
+	LockedByUserAccount authentication.UserAccount `json:"lockedByUserAccount"`
+	IsAssessment        bool                       `json:"isAssessment"`
 }
 
 type TaskListSectionLockStatusChanged struct {
-	ChangeType ChangeType                 `json:"changeType"`
-	LockStatus *TaskListSectionLockStatus `json:"lockStatus"`
-	ActionType ActionType                 `json:"actionType"`
+	ChangeType ChangeType                `json:"changeType"`
+	LockStatus TaskListSectionLockStatus `json:"lockStatus"`
+	ActionType ActionType                `json:"actionType"`
 }
 
 type TranslationField struct {

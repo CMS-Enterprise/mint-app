@@ -86,10 +86,15 @@ func (p PlanTaskListSectionLocksResolverImplementation) LockTaskListSection(ps p
 		return false, fmt.Errorf("failed to lock section [%v], already locked by [%v]", lockStatus.Section, lockStatus.LockedByUserAccount.ID)
 	}
 
+	account := principal.Account()
+	if account == nil {
+		return false, fmt.Errorf("failed to lock section [%v], unable to retrieve user account [%v]", lockStatus.Section, lockStatus.LockedByUserAccount.ID)
+	}
+
 	status := model.TaskListSectionLockStatus{
 		ModelPlanID:         modelPlanID,
 		Section:             section,
-		LockedByUserAccount: principal.Account(),
+		LockedByUserAccount: *account,
 		IsAssessment:        principal.AllowASSESSMENT(),
 	}
 
@@ -100,7 +105,7 @@ func (p PlanTaskListSectionLocksResolverImplementation) LockTaskListSection(ps p
 	if !sectionWasLocked {
 		ps.Publish(modelPlanID, pubsubevents.TaskListSectionLocksChanged, model.TaskListSectionLockStatusChanged{
 			ChangeType: model.ChangeTypeAdded,
-			LockStatus: &status,
+			LockStatus: status,
 			ActionType: model.ActionTypeNormal,
 		})
 	}
@@ -132,7 +137,7 @@ func deleteTaskListLockSection(ps pubsub.PubSub, modelPlanID uuid.UUID, section 
 
 	ps.Publish(modelPlanID, pubsubevents.TaskListSectionLocksChanged, model.TaskListSectionLockStatusChanged{
 		ChangeType: model.ChangeTypeRemoved,
-		LockStatus: &status,
+		LockStatus: status,
 		ActionType: actionType,
 	})
 }

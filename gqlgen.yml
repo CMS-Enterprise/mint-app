@@ -26,6 +26,10 @@ resolver:
 # Optional: turn on use `gqlgen:"fieldName"` tags in your models
 struct_tag: gqlgen
 
+# Optional: turn off to make struct-type struct fields not use pointers
+# e.g. type Thing struct { FieldA OtherThing } instead of { FieldA *OtherThing }
+struct_fields_always_pointers: false
+
 # Optional: turn on to use []Thing instead of []*Thing
 # omit_slice_element_pointers: false
 

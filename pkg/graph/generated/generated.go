@@ -31299,9 +31299,9 @@ func (ec *executionContext) _PlanBasicsTranslation_demoCode(ctx context.Context,
 		}
 		return graphql.Null
 	}
-	res := resTmp.(*model.TranslationField)
+	res := resTmp.(model.TranslationField)
 	fc.Result = res
-	return ec.marshalNTranslationField2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationField(ctx, field.Selections, res)
+	return ec.marshalNTranslationField2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationField(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanBasicsTranslation_demoCode(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -31363,9 +31363,9 @@ func (ec *executionContext) _PlanBasicsTranslation_amsModelID(ctx context.Contex
 		}
 		return graphql.Null
 	}
-	res := resTmp.(*model.TranslationField)
+	res := resTmp.(model.TranslationField)
 	fc.Result = res
-	return ec.marshalNTranslationField2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationField(ctx, field.Selections, res)
+	return ec.marshalNTranslationField2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationField(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanBasicsTranslation_amsModelID(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -31427,9 +31427,9 @@ func (ec *executionContext) _PlanBasicsTranslation_modelCategory(ctx context.Con
 		}
 		return graphql.Null
 	}
-	res := resTmp.(*model.TranslationField)
+	res := resTmp.(model.TranslationField)
 	fc.Result = res
-	return ec.marshalNTranslationField2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationField(ctx, field.Selections, res)
+	return ec.marshalNTranslationField2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationField(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanBasicsTranslation_modelCategory(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -31491,9 +31491,9 @@ func (ec *executionContext) _PlanBasicsTranslation_additionalModelCategories(ctx
 		}
 		return graphql.Null
 	}
-	res := resTmp.(*model.TranslationFieldWithOptions)
+	res := resTmp.(model.TranslationFieldWithOptions)
 	fc.Result = res
-	return ec.marshalNTranslationFieldWithOptions2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationFieldWithOptions(ctx, field.Selections, res)
+	return ec.marshalNTranslationFieldWithOptions2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationFieldWithOptions(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanBasicsTranslation_additionalModelCategories(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -31557,9 +31557,9 @@ func (ec *executionContext) _PlanBasicsTranslation_cmsCenters(ctx context.Contex
 		}
 		return graphql.Null
 	}
-	res := resTmp.(*model.TranslationFieldWithOptions)
+	res := resTmp.(model.TranslationFieldWithOptions)
 	fc.Result = res
-	return ec.marshalNTranslationFieldWithOptions2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationFieldWithOptions(ctx, field.Selections, res)
+	return ec.marshalNTranslationFieldWithOptions2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationFieldWithOptions(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanBasicsTranslation_cmsCenters(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -31623,9 +31623,9 @@ func (ec *executionContext) _PlanBasicsTranslation_cmmiGroups(ctx context.Contex
 		}
 		return graphql.Null
 	}
-	res := resTmp.(*model.TranslationFieldWithOptions)
+	res := resTmp.(model.TranslationFieldWithOptions)
 	fc.Result = res
-	return ec.marshalNTranslationFieldWithOptions2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationFieldWithOptions(ctx, field.Selections, res)
+	return ec.marshalNTranslationFieldWithOptions2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationFieldWithOptions(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanBasicsTranslation_cmmiGroups(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -31689,9 +31689,9 @@ func (ec *executionContext) _PlanBasicsTranslation_modelType(ctx context.Context
 		}
 		return graphql.Null
 	}
-	res := resTmp.(*model.TranslationFieldWithOptions)
+	res := resTmp.(model.TranslationFieldWithOptions)
 	fc.Result = res
-	return ec.marshalNTranslationFieldWithOptions2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationFieldWithOptions(ctx, field.Selections, res)
+	return ec.marshalNTranslationFieldWithOptions2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationFieldWithOptions(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanBasicsTranslation_modelType(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -31755,9 +31755,9 @@ func (ec *executionContext) _PlanBasicsTranslation_modelTypeOther(ctx context.Co
 		}
 		return graphql.Null
 	}
-	res := resTmp.(*model.TranslationField)
+	res := resTmp.(model.TranslationField)
 	fc.Result = res
-	return ec.marshalNTranslationField2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationField(ctx, field.Selections, res)
+	return ec.marshalNTranslationField2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationField(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanBasicsTranslation_modelTypeOther(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -31819,9 +31819,9 @@ func (ec *executionContext) _PlanBasicsTranslation_problem(ctx context.Context, 
 		}
 		return graphql.Null
 	}
-	res := resTmp.(*model.TranslationField)
+	res := resTmp.(model.TranslationField)
 	fc.Result = res
-	return ec.marshalNTranslationField2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationField(ctx, field.Selections, res)
+	return ec.marshalNTranslationField2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationField(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanBasicsTranslation_problem(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -31883,9 +31883,9 @@ func (ec *executionContext) _PlanBasicsTranslation_goal(ctx context.Context, fie
 		}
 		return graphql.Null
 	}
-	res := resTmp.(*model.TranslationField)
+	res := resTmp.(model.TranslationField)
 	fc.Result = res
-	return ec.marshalNTranslationField2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationField(ctx, field.Selections, res)
+	return ec.marshalNTranslationField2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationField(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanBasicsTranslation_goal(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -31947,9 +31947,9 @@ func (ec *executionContext) _PlanBasicsTranslation_testInterventions(ctx context
 		}
 		return graphql.Null
 	}
-	res := resTmp.(*model.TranslationField)
+	res := resTmp.(model.TranslationField)
 	fc.Result = res
-	return ec.marshalNTranslationField2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationField(ctx, field.Selections, res)
+	return ec.marshalNTranslationField2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationField(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanBasicsTranslation_testInterventions(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -32011,9 +32011,9 @@ func (ec *executionContext) _PlanBasicsTranslation_note(ctx context.Context, fie
 		}
 		return graphql.Null
 	}
-	res := resTmp.(*model.TranslationField)
+	res := resTmp.(model.TranslationField)
 	fc.Result = res
-	return ec.marshalNTranslationField2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationField(ctx, field.Selections, res)
+	return ec.marshalNTranslationField2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationField(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanBasicsTranslation_note(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -32075,9 +32075,9 @@ func (ec *executionContext) _PlanBasicsTranslation_completeICIP(ctx context.Cont
 		}
 		return graphql.Null
 	}
-	res := resTmp.(*model.TranslationField)
+	res := resTmp.(model.TranslationField)
 	fc.Result = res
-	return ec.marshalNTranslationField2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationField(ctx, field.Selections, res)
+	return ec.marshalNTranslationField2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationField(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanBasicsTranslation_completeICIP(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -32139,9 +32139,9 @@ func (ec *executionContext) _PlanBasicsTranslation_clearanceStarts(ctx context.C
 		}
 		return graphql.Null
 	}
-	res := resTmp.(*model.TranslationField)
+	res := resTmp.(model.TranslationField)
 	fc.Result = res
-	return ec.marshalNTranslationField2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationField(ctx, field.Selections, res)
+	return ec.marshalNTranslationField2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationField(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanBasicsTranslation_clearanceStarts(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -32203,9 +32203,9 @@ func (ec *executionContext) _PlanBasicsTranslation_clearanceEnds(ctx context.Con
 		}
 		return graphql.Null
 	}
-	res := resTmp.(*model.TranslationField)
+	res := resTmp.(model.TranslationField)
 	fc.Result = res
-	return ec.marshalNTranslationField2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationField(ctx, field.Selections, res)
+	return ec.marshalNTranslationField2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationField(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanBasicsTranslation_clearanceEnds(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -32267,9 +32267,9 @@ func (ec *executionContext) _PlanBasicsTranslation_announced(ctx context.Context
 		}
 		return graphql.Null
 	}
-	res := resTmp.(*model.TranslationField)
+	res := resTmp.(model.TranslationField)
 	fc.Result = res
-	return ec.marshalNTranslationField2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationField(ctx, field.Selections, res)
+	return ec.marshalNTranslationField2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationField(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanBasicsTranslation_announced(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -32331,9 +32331,9 @@ func (ec *executionContext) _PlanBasicsTranslation_applicationsStart(ctx context
 		}
 		return graphql.Null
 	}
-	res := resTmp.(*model.TranslationField)
+	res := resTmp.(model.TranslationField)
 	fc.Result = res
-	return ec.marshalNTranslationField2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationField(ctx, field.Selections, res)
+	return ec.marshalNTranslationField2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationField(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanBasicsTranslation_applicationsStart(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -32395,9 +32395,9 @@ func (ec *executionContext) _PlanBasicsTranslation_applicationsEnd(ctx context.C
 		}
 		return graphql.Null
 	}
-	res := resTmp.(*model.TranslationField)
+	res := resTmp.(model.TranslationField)
 	fc.Result = res
-	return ec.marshalNTranslationField2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationField(ctx, field.Selections, res)
+	return ec.marshalNTranslationField2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationField(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanBasicsTranslation_applicationsEnd(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -32459,9 +32459,9 @@ func (ec *executionContext) _PlanBasicsTranslation_performancePeriodStarts(ctx c
 		}
 		return graphql.Null
 	}
-	res := resTmp.(*model.TranslationField)
+	res := resTmp.(model.TranslationField)
 	fc.Result = res
-	return ec.marshalNTranslationField2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationField(ctx, field.Selections, res)
+	return ec.marshalNTranslationField2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationField(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanBasicsTranslation_performancePeriodStarts(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -32523,9 +32523,9 @@ func (ec *executionContext) _PlanBasicsTranslation_performancePeriodEnds(ctx con
 		}
 		return graphql.Null
 	}
-	res := resTmp.(*model.TranslationField)
+	res := resTmp.(model.TranslationField)
 	fc.Result = res
-	return ec.marshalNTranslationField2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationField(ctx, field.Selections, res)
+	return ec.marshalNTranslationField2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationField(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanBasicsTranslation_performancePeriodEnds(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -32587,9 +32587,9 @@ func (ec *executionContext) _PlanBasicsTranslation_wrapUpEnds(ctx context.Contex
 		}
 		return graphql.Null
 	}
-	res := resTmp.(*model.TranslationField)
+	res := resTmp.(model.TranslationField)
 	fc.Result = res
-	return ec.marshalNTranslationField2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationField(ctx, field.Selections, res)
+	return ec.marshalNTranslationField2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationField(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanBasicsTranslation_wrapUpEnds(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -32651,9 +32651,9 @@ func (ec *executionContext) _PlanBasicsTranslation_highLevelNote(ctx context.Con
 		}
 		return graphql.Null
 	}
-	res := resTmp.(*model.TranslationField)
+	res := resTmp.(model.TranslationField)
 	fc.Result = res
-	return ec.marshalNTranslationField2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationField(ctx, field.Selections, res)
+	return ec.marshalNTranslationField2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationField(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanBasicsTranslation_highLevelNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -32715,9 +32715,9 @@ func (ec *executionContext) _PlanBasicsTranslation_phasedIn(ctx context.Context,
 		}
 		return graphql.Null
 	}
-	res := resTmp.(*model.TranslationField)
+	res := resTmp.(model.TranslationField)
 	fc.Result = res
-	return ec.marshalNTranslationField2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationField(ctx, field.Selections, res)
+	return ec.marshalNTranslationField2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationField(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanBasicsTranslation_phasedIn(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -32779,9 +32779,9 @@ func (ec *executionContext) _PlanBasicsTranslation_phasedInNote(ctx context.Cont
 		}
 		return graphql.Null
 	}
-	res := resTmp.(*model.TranslationField)
+	res := resTmp.(model.TranslationField)
 	fc.Result = res
-	return ec.marshalNTranslationField2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationField(ctx, field.Selections, res)
+	return ec.marshalNTranslationField2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationField(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanBasicsTranslation_phasedInNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -32843,9 +32843,9 @@ func (ec *executionContext) _PlanBasicsTranslation_status(ctx context.Context, f
 		}
 		return graphql.Null
 	}
-	res := resTmp.(*model.TranslationField)
+	res := resTmp.(model.TranslationField)
 	fc.Result = res
-	return ec.marshalNTranslationField2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationField(ctx, field.Selections, res)
+	return ec.marshalNTranslationField2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationField(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanBasicsTranslation_status(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -60703,9 +60703,9 @@ func (ec *executionContext) _TaskListSectionLockStatus_lockedByUserAccount(ctx c
 		}
 		return graphql.Null
 	}
-	res := resTmp.(*authentication.UserAccount)
+	res := resTmp.(authentication.UserAccount)
 	fc.Result = res
-	return ec.marshalNUserAccount2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋauthenticationᚐUserAccount(ctx, field.Selections, res)
+	return ec.marshalNUserAccount2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋauthenticationᚐUserAccount(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_TaskListSectionLockStatus_lockedByUserAccount(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -60857,9 +60857,9 @@ func (ec *executionContext) _TaskListSectionLockStatusChanged_lockStatus(ctx con
 		}
 		return graphql.Null
 	}
-	res := resTmp.(*model.TaskListSectionLockStatus)
+	res := resTmp.(model.TaskListSectionLockStatus)
 	fc.Result = res
-	return ec.marshalNTaskListSectionLockStatus2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTaskListSectionLockStatus(ctx, field.Selections, res)
+	return ec.marshalNTaskListSectionLockStatus2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTaskListSectionLockStatus(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_TaskListSectionLockStatusChanged_lockStatus(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -82907,6 +82907,10 @@ func (ec *executionContext) marshalNTaskListSection2githubᚗcomᚋcmsgovᚋmint
 	return res
 }
 
+func (ec *executionContext) marshalNTaskListSectionLockStatus2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTaskListSectionLockStatus(ctx context.Context, sel ast.SelectionSet, v model.TaskListSectionLockStatus) graphql.Marshaler {
+	return ec._TaskListSectionLockStatus(ctx, sel, &v)
+}
+
 func (ec *executionContext) marshalNTaskListSectionLockStatus2ᚕᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTaskListSectionLockStatusᚄ(ctx context.Context, sel ast.SelectionSet, v []*model.TaskListSectionLockStatus) graphql.Marshaler {
 	ret := make(graphql.Array, len(v))
 	var wg sync.WaitGroup
@@ -83104,24 +83108,12 @@ func (ec *executionContext) marshalNTime2ᚖtimeᚐTime(ctx context.Context, sel
 	return res
 }
 
-func (ec *executionContext) marshalNTranslationField2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationField(ctx context.Context, sel ast.SelectionSet, v *model.TranslationField) graphql.Marshaler {
-	if v == nil {
-		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
-			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
-		}
-		return graphql.Null
-	}
-	return ec._TranslationField(ctx, sel, v)
+func (ec *executionContext) marshalNTranslationField2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationField(ctx context.Context, sel ast.SelectionSet, v model.TranslationField) graphql.Marshaler {
+	return ec._TranslationField(ctx, sel, &v)
 }
 
-func (ec *executionContext) marshalNTranslationFieldWithOptions2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationFieldWithOptions(ctx context.Context, sel ast.SelectionSet, v *model.TranslationFieldWithOptions) graphql.Marshaler {
-	if v == nil {
-		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
-			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
-		}
-		return graphql.Null
-	}
-	return ec._TranslationFieldWithOptions(ctx, sel, v)
+func (ec *executionContext) marshalNTranslationFieldWithOptions2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationFieldWithOptions(ctx context.Context, sel ast.SelectionSet, v model.TranslationFieldWithOptions) graphql.Marshaler {
+	return ec._TranslationFieldWithOptions(ctx, sel, &v)
 }
 
 func (ec *executionContext) unmarshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx context.Context, v interface{}) (uuid.UUID, error) {
