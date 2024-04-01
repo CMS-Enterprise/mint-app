@@ -422,7 +422,7 @@ export const beneficiaries: TranslationBeneficiaries = {
 
 export const beneficiariesMisc = {
   heading: 'Beneficiaries',
-  clearanceHeading: 'Review beneficiciaries',
+  clearanceHeading: 'Review beneficiaries',
   breadcrumb: 'Beneficiaries',
   beneficiariesNA:
     'If you will not have beneficiaries, you can skip the rest of the questions in this section. Feel free to add any additional notes or details that would be helpful to others.',

@@ -1,0 +1,58 @@
+type TranslationField {
+  gqlField: String!
+  goField: String!
+  dbField: String!
+  label: String!
+  readonlyLabel: String
+  sublabel: String
+  multiSelectLabel: String
+  isArray: Boolean
+  isOtherType: Boolean
+}
+
+type TranslationFieldWithOptions {
+  gqlField: String!
+  goField: String!
+  dbField: String!
+  label: String!
+  readonlyLabel: String
+  sublabel: String
+  multiSelectLabel: String
+  isArray: Boolean
+  isOtherType: Boolean
+  options: Map!
+}
+
+"""
+Represents plan basics
+"""
+
+type PlanBasicsTranslation {
+  demoCode: TranslationField!
+  amsModelID: TranslationField!
+  modelCategory: TranslationField!
+  additionalModelCategories: TranslationFieldWithOptions!
+  cmsCenters: TranslationFieldWithOptions!
+  cmmiGroups: TranslationFieldWithOptions!
+  modelType: TranslationFieldWithOptions!
+  modelTypeOther: TranslationField!
+  problem: TranslationField!
+  goal: TranslationField!
+  testInterventions: TranslationField!
+  note: TranslationField!
+
+  # Milestones
+  completeICIP: TranslationField!
+  clearanceStarts: TranslationField!
+  clearanceEnds: TranslationField!
+  announced: TranslationField!
+  applicationsStart: TranslationField!
+  applicationsEnd: TranslationField!
+  performancePeriodStarts: TranslationField!
+  performancePeriodEnds: TranslationField!
+  wrapUpEnds: TranslationField!
+  highLevelNote: TranslationField!
+  phasedIn: TranslationField!
+  phasedInNote: TranslationField!
+  status: TranslationField!
+}

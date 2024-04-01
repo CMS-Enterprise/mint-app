@@ -1369,6 +1369,36 @@ export type PlanBasicsChanges = {
   wrapUpEnds?: InputMaybe<Scalars['Time']['input']>;
 };
 
+/** Represents plan basics */
+export type PlanBasicsTranslation = {
+  __typename: 'PlanBasicsTranslation';
+  additionalModelCategories: TranslationFieldWithOptions;
+  amsModelID: TranslationField;
+  announced: TranslationField;
+  applicationsEnd: TranslationField;
+  applicationsStart: TranslationField;
+  clearanceEnds: TranslationField;
+  clearanceStarts: TranslationField;
+  cmmiGroups: TranslationFieldWithOptions;
+  cmsCenters: TranslationFieldWithOptions;
+  completeICIP: TranslationField;
+  demoCode: TranslationField;
+  goal: TranslationField;
+  highLevelNote: TranslationField;
+  modelCategory: TranslationField;
+  modelType: TranslationFieldWithOptions;
+  modelTypeOther: TranslationField;
+  note: TranslationField;
+  performancePeriodEnds: TranslationField;
+  performancePeriodStarts: TranslationField;
+  phasedIn: TranslationField;
+  phasedInNote: TranslationField;
+  problem: TranslationField;
+  status: TranslationField;
+  testInterventions: TranslationField;
+  wrapUpEnds: TranslationField;
+};
+
 /** Plan Beneficiaries represents the the beneficiaries section of the task list */
 export type PlanBeneficiaries = {
   __typename: 'PlanBeneficiaries';
@@ -2858,6 +2888,33 @@ export enum TeamRole {
   PAYMENT = 'PAYMENT',
   QUALITY = 'QUALITY'
 }
+
+export type TranslationField = {
+  __typename: 'TranslationField';
+  dbField: Scalars['String']['output'];
+  goField: Scalars['String']['output'];
+  gqlField: Scalars['String']['output'];
+  isArray?: Maybe<Scalars['Boolean']['output']>;
+  isOtherType?: Maybe<Scalars['Boolean']['output']>;
+  label: Scalars['String']['output'];
+  multiSelectLabel?: Maybe<Scalars['String']['output']>;
+  readonlyLabel?: Maybe<Scalars['String']['output']>;
+  sublabel?: Maybe<Scalars['String']['output']>;
+};
+
+export type TranslationFieldWithOptions = {
+  __typename: 'TranslationFieldWithOptions';
+  dbField: Scalars['String']['output'];
+  goField: Scalars['String']['output'];
+  gqlField: Scalars['String']['output'];
+  isArray?: Maybe<Scalars['Boolean']['output']>;
+  isOtherType?: Maybe<Scalars['Boolean']['output']>;
+  label: Scalars['String']['output'];
+  multiSelectLabel?: Maybe<Scalars['String']['output']>;
+  options: Scalars['Map']['output'];
+  readonlyLabel?: Maybe<Scalars['String']['output']>;
+  sublabel?: Maybe<Scalars['String']['output']>;
+};
 
 export enum TriStateAnswer {
   NO = 'NO',

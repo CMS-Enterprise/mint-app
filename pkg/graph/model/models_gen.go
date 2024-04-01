@@ -39,6 +39,35 @@ type NDAInfo struct {
 	AgreedDts *time.Time `json:"agreedDts,omitempty"`
 }
 
+// Represents plan basics
+type PlanBasicsTranslation struct {
+	DemoCode                  *TranslationField            `json:"demoCode"`
+	AmsModelID                *TranslationField            `json:"amsModelID"`
+	ModelCategory             *TranslationField            `json:"modelCategory"`
+	AdditionalModelCategories *TranslationFieldWithOptions `json:"additionalModelCategories"`
+	CmsCenters                *TranslationFieldWithOptions `json:"cmsCenters"`
+	CmmiGroups                *TranslationFieldWithOptions `json:"cmmiGroups"`
+	ModelType                 *TranslationFieldWithOptions `json:"modelType"`
+	ModelTypeOther            *TranslationField            `json:"modelTypeOther"`
+	Problem                   *TranslationField            `json:"problem"`
+	Goal                      *TranslationField            `json:"goal"`
+	TestInterventions         *TranslationField            `json:"testInterventions"`
+	Note                      *TranslationField            `json:"note"`
+	CompleteIcip              *TranslationField            `json:"completeICIP"`
+	ClearanceStarts           *TranslationField            `json:"clearanceStarts"`
+	ClearanceEnds             *TranslationField            `json:"clearanceEnds"`
+	Announced                 *TranslationField            `json:"announced"`
+	ApplicationsStart         *TranslationField            `json:"applicationsStart"`
+	ApplicationsEnd           *TranslationField            `json:"applicationsEnd"`
+	PerformancePeriodStarts   *TranslationField            `json:"performancePeriodStarts"`
+	PerformancePeriodEnds     *TranslationField            `json:"performancePeriodEnds"`
+	WrapUpEnds                *TranslationField            `json:"wrapUpEnds"`
+	HighLevelNote             *TranslationField            `json:"highLevelNote"`
+	PhasedIn                  *TranslationField            `json:"phasedIn"`
+	PhasedInNote              *TranslationField            `json:"phasedInNote"`
+	Status                    *TranslationField            `json:"status"`
+}
+
 type PlanCRCreateInput struct {
 	ModelPlanID     uuid.UUID `json:"modelPlanID"`
 	IDNumber        string    `json:"idNumber"`
@@ -132,6 +161,31 @@ type TaskListSectionLockStatusChanged struct {
 	ChangeType ChangeType                 `json:"changeType"`
 	LockStatus *TaskListSectionLockStatus `json:"lockStatus"`
 	ActionType ActionType                 `json:"actionType"`
+}
+
+type TranslationField struct {
+	GqlField         string  `json:"gqlField"`
+	GoField          string  `json:"goField"`
+	DbField          string  `json:"dbField"`
+	Label            string  `json:"label"`
+	ReadonlyLabel    *string `json:"readonlyLabel,omitempty"`
+	Sublabel         *string `json:"sublabel,omitempty"`
+	MultiSelectLabel *string `json:"multiSelectLabel,omitempty"`
+	IsArray          *bool   `json:"isArray,omitempty"`
+	IsOtherType      *bool   `json:"isOtherType,omitempty"`
+}
+
+type TranslationFieldWithOptions struct {
+	GqlField         string                 `json:"gqlField"`
+	GoField          string                 `json:"goField"`
+	DbField          string                 `json:"dbField"`
+	Label            string                 `json:"label"`
+	ReadonlyLabel    *string                `json:"readonlyLabel,omitempty"`
+	Sublabel         *string                `json:"sublabel,omitempty"`
+	MultiSelectLabel *string                `json:"multiSelectLabel,omitempty"`
+	IsArray          *bool                  `json:"isArray,omitempty"`
+	IsOtherType      *bool                  `json:"isOtherType,omitempty"`
+	Options          map[string]interface{} `json:"options"`
 }
 
 type UpdateOperationalSolutionSubtaskInput struct {

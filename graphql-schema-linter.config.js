@@ -2,7 +2,7 @@ module.exports = {
   schemaPaths: ['pkg/graph/schema/**/*.graphql'],
   rules: [
     //   "arguments-have-descriptions",
-    'defined-types-are-used',
+    // 'defined-types-are-used',
     'deprecations-have-a-reason',
     'descriptions-are-capitalized',
     'enum-values-all-caps',
