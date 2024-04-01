@@ -488,6 +488,8 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
       'Note: Remember to include financial guarantee requirements when drafting your Participation Agreement.',
     questionTooltip:
       'Financial guarantees are commitments made by one party, typically a financial institution or a company, to assume responsibility for the payment of a debt or the performance of an obligation if the debtor or obligor fails to fulfill their obligations.',
+    readonlyLabel:
+      'Are participants required to retain a financial guarantee? If so, are there any limitations on the type?',
     dataType: 'boolean',
     formType: 'radio',
     isPageStart: true,
