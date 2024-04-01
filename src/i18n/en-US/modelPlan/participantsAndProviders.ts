@@ -498,11 +498,6 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     optionsRelatedInfo: {
       true: 'participantRequireFinancialGuaranteeType'
     },
-    childRelation: {
-      true: [
-        () => participantsAndProviders.participantRequireFinancialGuaranteeType
-      ]
-    },
     filterGroups: [ModelViewFilter.IPC]
   },
   participantRequireFinancialGuaranteeType: {
@@ -521,8 +516,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     optionsRelatedInfo: {
       OTHER: 'participantRequireFinancialGuaranteeOther'
     },
-    parentRelation: () =>
-      participantsAndProviders.participantRequireFinancialGuarantee,
+    isOtherType: true,
     filterGroups: [ModelViewFilter.IPC]
   },
   participantRequireFinancialGuaranteeOther: {
