@@ -43,6 +43,8 @@ import {
   ParticipantsType,
   PayRecipient,
   PayType,
+  PlanBasicsTranslation,
+  PlanGeneralCharacteristicsTranslation,
   ProviderAddType,
   ProviderLeaveType,
   RecruitmentType,
@@ -298,7 +300,7 @@ export type TranslationModelPlan = {
 /* 
   Basics
 */
-export type TranslationBasics = {
+export type TranslationBasicsForm = {
   // Model Plan
   amsModelID: TranslationFieldProperties;
   demoCode: TranslationFieldProperties;
@@ -329,10 +331,21 @@ export type TranslationBasics = {
   status: TranslationFieldPropertiesWithOptions<TaskStatus>;
 };
 
+type TranslationBasicsGQL = Omit<
+  PlanBasicsTranslation, // graphql gen type
+  '__typename'
+>;
+
+// Merged keys from graphql gen with FE form types
+// Create a tighter connection between BE/FE translation types
+export type TranslationBasics = {
+  [K in keyof TranslationBasicsGQL]: TranslationBasicsForm[K]; // FE form type
+};
+
 /* 
   General Characteristics
 */
-export type TranslationGeneralCharacteristics = {
+export type TranslationGeneralCharacteristicsForm = {
   isNewModel: TranslationFieldPropertiesWithOptionsAndChildren<Bool>;
   existingModel: TranslationFieldPropertiesWithParent<Bool>;
   resemblesExistingModel: TranslationFieldPropertiesWithOptionsAndChildren<YesNoOtherType>;
@@ -422,6 +435,17 @@ export type TranslationGeneralCharacteristics = {
   waiversRequiredTypes: TranslationFieldPropertiesWithOptions<WaiverType>;
   waiversRequiredNote: TranslationFieldProperties;
   status: TranslationFieldPropertiesWithOptions<TaskStatus>;
+};
+
+type TranslationGeneralCharacteristicsGQL = Omit<
+  PlanGeneralCharacteristicsTranslation, // graphql gen type
+  '__typename'
+>;
+
+// Merged keys from graphql gen with FE form types
+// Create a tighter connection between BE/FE translation types
+export type TranslationGeneralCharacteristics = {
+  [K in keyof TranslationGeneralCharacteristicsGQL]: TranslationGeneralCharacteristicsForm[K]; // FE form type
 };
 
 /* 

@@ -1,0 +1,34 @@
+"""
+Represents plan basics translation data
+"""
+type PlanBasicsTranslation {
+  demoCode: TranslationField!
+  amsModelID: TranslationField!
+
+  modelCategory: TranslationFieldWithOptions!
+  additionalModelCategories: TranslationFieldWithOptions!
+  cmsCenters: TranslationFieldWithOptions!
+  cmmiGroups: TranslationFieldWithOptions!
+  modelType: TranslationFieldWithOptions!
+  modelTypeOther: TranslationField!
+  problem: TranslationField!
+  goal: TranslationField!
+  testInterventions: TranslationField!
+  note: TranslationField!
+
+  # Milestones
+  completeICIP: TranslationField!
+  clearanceStarts: TranslationField!
+  clearanceEnds: TranslationField!
+  announced: TranslationField!
+  applicationsStart: TranslationField!
+  applicationsEnd: TranslationField!
+  performancePeriodStarts: TranslationField!
+  performancePeriodEnds: TranslationField!
+  wrapUpEnds: TranslationField!
+  highLevelNote: TranslationField!
+  phasedIn: TranslationFieldWithOptions!
+  phasedInNote: TranslationField!
+
+  status: TranslationField!
+}

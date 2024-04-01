@@ -39,6 +39,35 @@ type NDAInfo struct {
 	AgreedDts *time.Time `json:"agreedDts,omitempty"`
 }
 
+// Represents plan basics translation data
+type PlanBasicsTranslation struct {
+	DemoCode                  *TranslationField            `json:"demoCode"`
+	AmsModelID                *TranslationField            `json:"amsModelID"`
+	ModelCategory             *TranslationFieldWithOptions `json:"modelCategory"`
+	AdditionalModelCategories *TranslationFieldWithOptions `json:"additionalModelCategories"`
+	CmsCenters                *TranslationFieldWithOptions `json:"cmsCenters"`
+	CmmiGroups                *TranslationFieldWithOptions `json:"cmmiGroups"`
+	ModelType                 *TranslationFieldWithOptions `json:"modelType"`
+	ModelTypeOther            *TranslationField            `json:"modelTypeOther"`
+	Problem                   *TranslationField            `json:"problem"`
+	Goal                      *TranslationField            `json:"goal"`
+	TestInterventions         *TranslationField            `json:"testInterventions"`
+	Note                      *TranslationField            `json:"note"`
+	CompleteIcip              *TranslationField            `json:"completeICIP"`
+	ClearanceStarts           *TranslationField            `json:"clearanceStarts"`
+	ClearanceEnds             *TranslationField            `json:"clearanceEnds"`
+	Announced                 *TranslationField            `json:"announced"`
+	ApplicationsStart         *TranslationField            `json:"applicationsStart"`
+	ApplicationsEnd           *TranslationField            `json:"applicationsEnd"`
+	PerformancePeriodStarts   *TranslationField            `json:"performancePeriodStarts"`
+	PerformancePeriodEnds     *TranslationField            `json:"performancePeriodEnds"`
+	WrapUpEnds                *TranslationField            `json:"wrapUpEnds"`
+	HighLevelNote             *TranslationField            `json:"highLevelNote"`
+	PhasedIn                  *TranslationFieldWithOptions `json:"phasedIn"`
+	PhasedInNote              *TranslationField            `json:"phasedInNote"`
+	Status                    *TranslationField            `json:"status"`
+}
+
 type PlanCRCreateInput struct {
 	ModelPlanID     uuid.UUID `json:"modelPlanID"`
 	IDNumber        string    `json:"idNumber"`
@@ -82,6 +111,77 @@ type PlanDocumentLinkInput struct {
 	Restricted           bool                `json:"restricted"`
 	OtherTypeDescription *string             `json:"otherTypeDescription,omitempty"`
 	OptionalNotes        *string             `json:"optionalNotes,omitempty"`
+}
+
+// PlanGeneralCharacteristics represents a plan general characteristics translation object
+type PlanGeneralCharacteristicsTranslation struct {
+	IsNewModel                                    *TranslationFieldWithOptions `json:"isNewModel"`
+	ExistingModel                                 *TranslationFieldWithOptions `json:"existingModel"`
+	ResemblesExistingModel                        *TranslationFieldWithOptions `json:"resemblesExistingModel"`
+	ResemblesExistingModelWhyHow                  *TranslationField            `json:"resemblesExistingModelWhyHow"`
+	ResemblesExistingModelOtherSpecify            *TranslationField            `json:"resemblesExistingModelOtherSpecify"`
+	ResemblesExistingModelOtherSelected           *TranslationFieldWithOptions `json:"resemblesExistingModelOtherSelected"`
+	ResemblesExistingModelOtherOption             *TranslationField            `json:"resemblesExistingModelOtherOption"`
+	ResemblesExistingModelHow                     *TranslationFieldWithOptions `json:"resemblesExistingModelHow"`
+	ResemblesExistingModelNote                    *TranslationField            `json:"resemblesExistingModelNote"`
+	ResemblesExistingModelWhich                   *TranslationFieldWithOptions `json:"resemblesExistingModelWhich"`
+	ParticipationInModelPrecondition              *TranslationFieldWithOptions `json:"participationInModelPrecondition"`
+	ParticipationInModelPreconditionWhyHow        *TranslationFieldWithOptions `json:"participationInModelPreconditionWhyHow"`
+	ParticipationInModelPreconditionOtherSpecify  *TranslationField            `json:"participationInModelPreconditionOtherSpecify"`
+	ParticipationInModelPreconditionOtherSelected *TranslationFieldWithOptions `json:"participationInModelPreconditionOtherSelected"`
+	ParticipationInModelPreconditionOtherOption   *TranslationField            `json:"participationInModelPreconditionOtherOption"`
+	ParticipationInModelPreconditionNote          *TranslationField            `json:"participationInModelPreconditionNote"`
+	ParticipationInModelPreconditionWhich         *TranslationFieldWithOptions `json:"participationInModelPreconditionWhich"`
+	HasComponentsOrTracks                         *TranslationFieldWithOptions `json:"hasComponentsOrTracks"`
+	HasComponentsOrTracksDiffer                   *TranslationField            `json:"hasComponentsOrTracksDiffer"`
+	HasComponentsOrTracksNote                     *TranslationField            `json:"hasComponentsOrTracksNote"`
+	AgencyOrStateHelp                             *TranslationFieldWithOptions `json:"agencyOrStateHelp"`
+	AgencyOrStateHelpOther                        *TranslationField            `json:"agencyOrStateHelpOther"`
+	AgencyOrStateHelpNote                         *TranslationField            `json:"agencyOrStateHelpNote"`
+	AlternativePaymentModelTypes                  *TranslationFieldWithOptions `json:"alternativePaymentModelTypes"`
+	AlternativePaymentModelNote                   *TranslationField            `json:"alternativePaymentModelNote"`
+	KeyCharacteristics                            *TranslationFieldWithOptions `json:"keyCharacteristics"`
+	KeyCharacteristicsOther                       *TranslationField            `json:"keyCharacteristicsOther"`
+	KeyCharacteristicsNote                        *TranslationField            `json:"keyCharacteristicsNote"`
+	CollectPlanBids                               *TranslationFieldWithOptions `json:"collectPlanBids"`
+	CollectPlanBidsNote                           *TranslationField            `json:"collectPlanBidsNote"`
+	ManagePartCDEnrollment                        *TranslationFieldWithOptions `json:"managePartCDEnrollment"`
+	ManagePartCDEnrollmentNote                    *TranslationField            `json:"managePartCDEnrollmentNote"`
+	PlanContractUpdated                           *TranslationFieldWithOptions `json:"planContractUpdated"`
+	PlanContractUpdatedNote                       *TranslationField            `json:"planContractUpdatedNote"`
+	CareCoordinationInvolved                      *TranslationFieldWithOptions `json:"careCoordinationInvolved"`
+	CareCoordinationInvolvedDescription           *TranslationField            `json:"careCoordinationInvolvedDescription"`
+	CareCoordinationInvolvedNote                  *TranslationField            `json:"careCoordinationInvolvedNote"`
+	AdditionalServicesInvolved                    *TranslationFieldWithOptions `json:"additionalServicesInvolved"`
+	AdditionalServicesInvolvedDescription         *TranslationField            `json:"additionalServicesInvolvedDescription"`
+	AdditionalServicesInvolvedNote                *TranslationField            `json:"additionalServicesInvolvedNote"`
+	CommunityPartnersInvolved                     *TranslationFieldWithOptions `json:"communityPartnersInvolved"`
+	CommunityPartnersInvolvedDescription          *TranslationField            `json:"communityPartnersInvolvedDescription"`
+	CommunityPartnersInvolvedNote                 *TranslationField            `json:"communityPartnersInvolvedNote"`
+	GeographiesTargeted                           *TranslationFieldWithOptions `json:"geographiesTargeted"`
+	GeographiesTargetedTypes                      *TranslationFieldWithOptions `json:"geographiesTargetedTypes"`
+	GeographiesStatesAndTerritories               *TranslationFieldWithOptions `json:"geographiesStatesAndTerritories"`
+	GeographiesRegionTypes                        *TranslationFieldWithOptions `json:"geographiesRegionTypes"`
+	GeographiesTargetedTypesOther                 *TranslationField            `json:"geographiesTargetedTypesOther"`
+	GeographiesTargetedAppliedTo                  *TranslationFieldWithOptions `json:"geographiesTargetedAppliedTo"`
+	GeographiesTargetedAppliedToOther             *TranslationField            `json:"geographiesTargetedAppliedToOther"`
+	GeographiesTargetedNote                       *TranslationField            `json:"geographiesTargetedNote"`
+	ParticipationOptions                          *TranslationFieldWithOptions `json:"participationOptions"`
+	ParticipationOptionsNote                      *TranslationField            `json:"participationOptionsNote"`
+	AgreementTypes                                *TranslationFieldWithOptions `json:"agreementTypes"`
+	AgreementTypesOther                           *TranslationField            `json:"agreementTypesOther"`
+	MultiplePatricipationAgreementsNeeded         *TranslationFieldWithOptions `json:"multiplePatricipationAgreementsNeeded"`
+	MultiplePatricipationAgreementsNeededNote     *TranslationField            `json:"multiplePatricipationAgreementsNeededNote"`
+	RulemakingRequired                            *TranslationFieldWithOptions `json:"rulemakingRequired"`
+	RulemakingRequiredDescription                 *TranslationField            `json:"rulemakingRequiredDescription"`
+	RulemakingRequiredNote                        *TranslationField            `json:"rulemakingRequiredNote"`
+	AuthorityAllowances                           *TranslationFieldWithOptions `json:"authorityAllowances"`
+	AuthorityAllowancesOther                      *TranslationField            `json:"authorityAllowancesOther"`
+	AuthorityAllowancesNote                       *TranslationField            `json:"authorityAllowancesNote"`
+	WaiversRequired                               *TranslationFieldWithOptions `json:"waiversRequired"`
+	WaiversRequiredTypes                          *TranslationFieldWithOptions `json:"waiversRequiredTypes"`
+	WaiversRequiredNote                           *TranslationField            `json:"waiversRequiredNote"`
+	Status                                        *TranslationField            `json:"status"`
 }
 
 type PlanTDLCreateInput struct {

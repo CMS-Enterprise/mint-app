@@ -1327,6 +1327,36 @@ export type PlanBasicsChanges = {
   wrapUpEnds?: InputMaybe<Scalars['Time']['input']>;
 };
 
+/** Represents plan basics translation data */
+export type PlanBasicsTranslation = {
+  __typename: 'PlanBasicsTranslation';
+  additionalModelCategories: TranslationFieldWithOptions;
+  amsModelID: TranslationField;
+  announced: TranslationField;
+  applicationsEnd: TranslationField;
+  applicationsStart: TranslationField;
+  clearanceEnds: TranslationField;
+  clearanceStarts: TranslationField;
+  cmmiGroups: TranslationFieldWithOptions;
+  cmsCenters: TranslationFieldWithOptions;
+  completeICIP: TranslationField;
+  demoCode: TranslationField;
+  goal: TranslationField;
+  highLevelNote: TranslationField;
+  modelCategory: TranslationFieldWithOptions;
+  modelType: TranslationFieldWithOptions;
+  modelTypeOther: TranslationField;
+  note: TranslationField;
+  performancePeriodEnds: TranslationField;
+  performancePeriodStarts: TranslationField;
+  phasedIn: TranslationFieldWithOptions;
+  phasedInNote: TranslationField;
+  problem: TranslationField;
+  status: TranslationField;
+  testInterventions: TranslationField;
+  wrapUpEnds: TranslationField;
+};
+
 /** Plan Beneficiaries represents the the beneficiaries section of the task list */
 export type PlanBeneficiaries = {
   __typename: 'PlanBeneficiaries';
@@ -1757,6 +1787,78 @@ export type PlanGeneralCharacteristicsChanges = {
   waiversRequired?: InputMaybe<Scalars['Boolean']['input']>;
   waiversRequiredNote?: InputMaybe<Scalars['String']['input']>;
   waiversRequiredTypes?: InputMaybe<Array<WaiverType>>;
+};
+
+/** PlanGeneralCharacteristics represents a plan general characteristics translation object */
+export type PlanGeneralCharacteristicsTranslation = {
+  __typename: 'PlanGeneralCharacteristicsTranslation';
+  additionalServicesInvolved: TranslationFieldWithOptions;
+  additionalServicesInvolvedDescription: TranslationField;
+  additionalServicesInvolvedNote: TranslationField;
+  agencyOrStateHelp: TranslationFieldWithOptions;
+  agencyOrStateHelpNote: TranslationField;
+  agencyOrStateHelpOther: TranslationField;
+  agreementTypes: TranslationFieldWithOptions;
+  agreementTypesOther: TranslationField;
+  alternativePaymentModelNote: TranslationField;
+  alternativePaymentModelTypes: TranslationFieldWithOptions;
+  authorityAllowances: TranslationFieldWithOptions;
+  authorityAllowancesNote: TranslationField;
+  authorityAllowancesOther: TranslationField;
+  careCoordinationInvolved: TranslationFieldWithOptions;
+  careCoordinationInvolvedDescription: TranslationField;
+  careCoordinationInvolvedNote: TranslationField;
+  collectPlanBids: TranslationFieldWithOptions;
+  collectPlanBidsNote: TranslationField;
+  communityPartnersInvolved: TranslationFieldWithOptions;
+  communityPartnersInvolvedDescription: TranslationField;
+  communityPartnersInvolvedNote: TranslationField;
+  existingModel: TranslationFieldWithOptions;
+  geographiesRegionTypes: TranslationFieldWithOptions;
+  geographiesStatesAndTerritories: TranslationFieldWithOptions;
+  geographiesTargeted: TranslationFieldWithOptions;
+  geographiesTargetedAppliedTo: TranslationFieldWithOptions;
+  geographiesTargetedAppliedToOther: TranslationField;
+  geographiesTargetedNote: TranslationField;
+  geographiesTargetedTypes: TranslationFieldWithOptions;
+  geographiesTargetedTypesOther: TranslationField;
+  hasComponentsOrTracks: TranslationFieldWithOptions;
+  hasComponentsOrTracksDiffer: TranslationField;
+  hasComponentsOrTracksNote: TranslationField;
+  isNewModel: TranslationFieldWithOptions;
+  keyCharacteristics: TranslationFieldWithOptions;
+  keyCharacteristicsNote: TranslationField;
+  keyCharacteristicsOther: TranslationField;
+  managePartCDEnrollment: TranslationFieldWithOptions;
+  managePartCDEnrollmentNote: TranslationField;
+  multiplePatricipationAgreementsNeeded: TranslationFieldWithOptions;
+  multiplePatricipationAgreementsNeededNote: TranslationField;
+  participationInModelPrecondition: TranslationFieldWithOptions;
+  participationInModelPreconditionNote: TranslationField;
+  participationInModelPreconditionOtherOption: TranslationField;
+  participationInModelPreconditionOtherSelected: TranslationFieldWithOptions;
+  participationInModelPreconditionOtherSpecify: TranslationField;
+  participationInModelPreconditionWhich: TranslationFieldWithOptions;
+  participationInModelPreconditionWhyHow: TranslationFieldWithOptions;
+  participationOptions: TranslationFieldWithOptions;
+  participationOptionsNote: TranslationField;
+  planContractUpdated: TranslationFieldWithOptions;
+  planContractUpdatedNote: TranslationField;
+  resemblesExistingModel: TranslationFieldWithOptions;
+  resemblesExistingModelHow: TranslationFieldWithOptions;
+  resemblesExistingModelNote: TranslationField;
+  resemblesExistingModelOtherOption: TranslationField;
+  resemblesExistingModelOtherSelected: TranslationFieldWithOptions;
+  resemblesExistingModelOtherSpecify: TranslationField;
+  resemblesExistingModelWhich: TranslationFieldWithOptions;
+  resemblesExistingModelWhyHow: TranslationField;
+  rulemakingRequired: TranslationFieldWithOptions;
+  rulemakingRequiredDescription: TranslationField;
+  rulemakingRequiredNote: TranslationField;
+  status: TranslationField;
+  waiversRequired: TranslationFieldWithOptions;
+  waiversRequiredNote: TranslationField;
+  waiversRequiredTypes: TranslationFieldWithOptions;
 };
 
 /** PlanOpsEvalAndLearning represents the task list section that deals with information regarding the Ops Eval and Learning */

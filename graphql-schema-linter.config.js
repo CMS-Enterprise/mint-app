@@ -24,7 +24,9 @@ module.exports = {
     'defined-types-are-used': [
       'TranslationField',
       'TranslationFieldWithOptions',
-      'TranslationDataType'
+      'TranslationDataType',
+      'PlanBasicsTranslation',
+      'PlanGeneralCharacteristicsTranslation'
     ]
   }
 };

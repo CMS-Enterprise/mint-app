@@ -1,0 +1,82 @@
+"""
+PlanGeneralCharacteristics represents a plan general characteristics translation object
+"""
+type PlanGeneralCharacteristicsTranslation {
+  # Page 1
+  isNewModel: TranslationFieldWithOptions!
+  existingModel: TranslationFieldWithOptions!
+  resemblesExistingModel: TranslationFieldWithOptions!
+  resemblesExistingModelWhyHow: TranslationField!
+  resemblesExistingModelOtherSpecify: TranslationField!
+  resemblesExistingModelOtherSelected: TranslationFieldWithOptions!
+  resemblesExistingModelOtherOption: TranslationField!
+  resemblesExistingModelHow: TranslationFieldWithOptions!
+  resemblesExistingModelNote: TranslationField!
+  resemblesExistingModelWhich: TranslationFieldWithOptions!
+  participationInModelPrecondition: TranslationFieldWithOptions!
+  participationInModelPreconditionWhyHow: TranslationFieldWithOptions!
+  participationInModelPreconditionOtherSpecify: TranslationField!
+  participationInModelPreconditionOtherSelected: TranslationFieldWithOptions!
+  participationInModelPreconditionOtherOption: TranslationField!
+  participationInModelPreconditionNote: TranslationField!
+  participationInModelPreconditionWhich: TranslationFieldWithOptions!
+  hasComponentsOrTracks: TranslationFieldWithOptions!
+  hasComponentsOrTracksDiffer: TranslationField!
+  hasComponentsOrTracksNote: TranslationField!
+
+  # Page 2
+  agencyOrStateHelp: TranslationFieldWithOptions!
+  agencyOrStateHelpOther: TranslationField!
+  agencyOrStateHelpNote: TranslationField!
+  alternativePaymentModelTypes: TranslationFieldWithOptions!
+  alternativePaymentModelNote: TranslationField!
+  keyCharacteristics: TranslationFieldWithOptions!
+  keyCharacteristicsOther: TranslationField!
+  keyCharacteristicsNote: TranslationField!
+  collectPlanBids: TranslationFieldWithOptions!
+  collectPlanBidsNote: TranslationField!
+  managePartCDEnrollment: TranslationFieldWithOptions!
+  managePartCDEnrollmentNote: TranslationField!
+  planContractUpdated: TranslationFieldWithOptions!
+  planContractUpdatedNote: TranslationField!
+
+  # Page 3
+  careCoordinationInvolved: TranslationFieldWithOptions!
+  careCoordinationInvolvedDescription: TranslationField!
+  careCoordinationInvolvedNote: TranslationField!
+  additionalServicesInvolved: TranslationFieldWithOptions!
+  additionalServicesInvolvedDescription: TranslationField!
+  additionalServicesInvolvedNote: TranslationField!
+  communityPartnersInvolved: TranslationFieldWithOptions!
+  communityPartnersInvolvedDescription: TranslationField!
+  communityPartnersInvolvedNote: TranslationField!
+
+  # Page 4
+  geographiesTargeted: TranslationFieldWithOptions!
+  geographiesTargetedTypes: TranslationFieldWithOptions!
+  geographiesStatesAndTerritories: TranslationFieldWithOptions!
+  geographiesRegionTypes: TranslationFieldWithOptions!
+  geographiesTargetedTypesOther: TranslationField!
+  geographiesTargetedAppliedTo: TranslationFieldWithOptions!
+  geographiesTargetedAppliedToOther: TranslationField!
+  geographiesTargetedNote: TranslationField!
+  participationOptions: TranslationFieldWithOptions!
+  participationOptionsNote: TranslationField!
+  agreementTypes: TranslationFieldWithOptions!
+  agreementTypesOther: TranslationField!
+  multiplePatricipationAgreementsNeeded: TranslationFieldWithOptions!
+  multiplePatricipationAgreementsNeededNote: TranslationField!
+
+  # Page 5
+  rulemakingRequired: TranslationFieldWithOptions!
+  rulemakingRequiredDescription: TranslationField!
+  rulemakingRequiredNote: TranslationField!
+  authorityAllowances: TranslationFieldWithOptions!
+  authorityAllowancesOther: TranslationField!
+  authorityAllowancesNote: TranslationField!
+  waiversRequired: TranslationFieldWithOptions!
+  waiversRequiredTypes: TranslationFieldWithOptions!
+  waiversRequiredNote: TranslationField!
+
+  status: TranslationField!
+}
