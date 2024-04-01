@@ -52,7 +52,7 @@ type PlanBasicsTranslation {
   performancePeriodEnds: TranslationField!
   wrapUpEnds: TranslationField!
   highLevelNote: TranslationField!
-  phasedIn: TranslationField!
+  phasedIn: TranslationFieldWithOptions!
   phasedInNote: TranslationField!
   status: TranslationField!
 }
