@@ -119,6 +119,12 @@ type PlanCollaboratorCreateInput struct {
 	TeamRoles   []models.TeamRole `json:"teamRoles"`
 }
 
+// Represents collaborator translation data
+type PlanCollaboratorTranslation struct {
+	Username  *TranslationField            `json:"user_account.username"`
+	TeamRoles *TranslationFieldWithOptions `json:"team_roles"`
+}
+
 // PlanDiscussionCreateInput represents the necessary fields to create a plan discussion
 type PlanDiscussionCreateInput struct {
 	ModelPlanID         uuid.UUID                  `json:"modelPlanID"`

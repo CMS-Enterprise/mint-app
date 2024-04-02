@@ -583,6 +583,11 @@ type ComplexityRoot struct {
 		UserID                func(childComplexity int) int
 	}
 
+	PlanCollaboratorTranslation struct {
+		TeamRoles func(childComplexity int) int
+		Username  func(childComplexity int) int
+	}
+
 	PlanDiscussion struct {
 		Content               func(childComplexity int) int
 		CreatedBy             func(childComplexity int) int
@@ -4954,6 +4959,20 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.PlanCollaborator.UserID(childComplexity), true
+
+	case "PlanCollaboratorTranslation.teamRoles":
+		if e.complexity.PlanCollaboratorTranslation.TeamRoles == nil {
+			break
+		}
+
+		return e.complexity.PlanCollaboratorTranslation.TeamRoles(childComplexity), true
+
+	case "PlanCollaboratorTranslation.username":
+		if e.complexity.PlanCollaboratorTranslation.Username == nil {
+			break
+		}
+
+		return e.complexity.PlanCollaboratorTranslation.Username(childComplexity), true
 
 	case "PlanDiscussion.content":
 		if e.complexity.PlanDiscussion.Content == nil {
@@ -12417,6 +12436,14 @@ extend type Mutation {
 
   deletePlanCollaborator(id: UUID!): PlanCollaborator!
   @hasRole(role: MINT_USER)
+}`, BuiltIn: false},
+	{Name: "../schema/types/plan_collaborator_translations.graphql", Input: `
+"""
+Represents collaborator translation data
+"""
+type PlanCollaboratorTranslation {
+  username: TranslationField! @goTag(key: "json", value: "user_account.username")
+  teamRoles: TranslationFieldWithOptions! @goTag(key: "json", value: "team_roles")
 }`, BuiltIn: false},
 	{Name: "../schema/types/plan_cr.graphql", Input: `type PlanCR {
   id: UUID!
@@ -40379,6 +40406,140 @@ func (ec *executionContext) fieldContext_PlanCollaborator_modifiedDts(ctx contex
 		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return nil, errors.New("field of type Time does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanCollaboratorTranslation_username(ctx context.Context, field graphql.CollectedField, obj *model.PlanCollaboratorTranslation) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanCollaboratorTranslation_username(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Username, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*model.TranslationField)
+	fc.Result = res
+	return ec.marshalNTranslationField2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationField(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanCollaboratorTranslation_username(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanCollaboratorTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "gqlField":
+				return ec.fieldContext_TranslationField_gqlField(ctx, field)
+			case "goField":
+				return ec.fieldContext_TranslationField_goField(ctx, field)
+			case "dbField":
+				return ec.fieldContext_TranslationField_dbField(ctx, field)
+			case "label":
+				return ec.fieldContext_TranslationField_label(ctx, field)
+			case "readonlyLabel":
+				return ec.fieldContext_TranslationField_readonlyLabel(ctx, field)
+			case "sublabel":
+				return ec.fieldContext_TranslationField_sublabel(ctx, field)
+			case "multiSelectLabel":
+				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
+			case "isArray":
+				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "isOtherType":
+				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationField_otherParentField(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanCollaboratorTranslation_teamRoles(ctx context.Context, field graphql.CollectedField, obj *model.PlanCollaboratorTranslation) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanCollaboratorTranslation_teamRoles(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.TeamRoles, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*model.TranslationFieldWithOptions)
+	fc.Result = res
+	return ec.marshalNTranslationFieldWithOptions2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationFieldWithOptions(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanCollaboratorTranslation_teamRoles(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanCollaboratorTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "gqlField":
+				return ec.fieldContext_TranslationFieldWithOptions_gqlField(ctx, field)
+			case "goField":
+				return ec.fieldContext_TranslationFieldWithOptions_goField(ctx, field)
+			case "dbField":
+				return ec.fieldContext_TranslationFieldWithOptions_dbField(ctx, field)
+			case "label":
+				return ec.fieldContext_TranslationFieldWithOptions_label(ctx, field)
+			case "readonlyLabel":
+				return ec.fieldContext_TranslationFieldWithOptions_readonlyLabel(ctx, field)
+			case "sublabel":
+				return ec.fieldContext_TranslationFieldWithOptions_sublabel(ctx, field)
+			case "multiSelectLabel":
+				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
+			case "isArray":
+				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "isOtherType":
+				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationFieldWithOptions_otherParentField(ctx, field)
+			case "options":
+				return ec.fieldContext_TranslationFieldWithOptions_options(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type TranslationFieldWithOptions", field.Name)
 		},
 	}
 	return fc, nil
@@ -96105,6 +96266,50 @@ func (ec *executionContext) _PlanCollaborator(ctx context.Context, sel ast.Selec
 			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
 		case "modifiedDts":
 			out.Values[i] = ec._PlanCollaborator_modifiedDts(ctx, field, obj)
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch(ctx)
+	if out.Invalids > 0 {
+		return graphql.Null
+	}
+
+	atomic.AddInt32(&ec.deferred, int32(len(deferred)))
+
+	for label, dfs := range deferred {
+		ec.processDeferredGroup(graphql.DeferredGroup{
+			Label:    label,
+			Path:     graphql.GetPath(ctx),
+			FieldSet: dfs,
+			Context:  ctx,
+		})
+	}
+
+	return out
+}
+
+var planCollaboratorTranslationImplementors = []string{"PlanCollaboratorTranslation"}
+
+func (ec *executionContext) _PlanCollaboratorTranslation(ctx context.Context, sel ast.SelectionSet, obj *model.PlanCollaboratorTranslation) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, planCollaboratorTranslationImplementors)
+
+	out := graphql.NewFieldSet(fields)
+	deferred := make(map[string]*graphql.FieldSet)
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("PlanCollaboratorTranslation")
+		case "username":
+			out.Values[i] = ec._PlanCollaboratorTranslation_username(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "teamRoles":
+			out.Values[i] = ec._PlanCollaboratorTranslation_teamRoles(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
 		default:
 			panic("unknown field " + strconv.Quote(field.Name))
 		}

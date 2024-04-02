@@ -30,7 +30,8 @@ module.exports = {
       'PlanParticipantsAndProvidersTranslation',
       'PlanBeneficiariesTranslation',
       'PlanOpsEvalAndLearningTranslation',
-      'PlanPaymentsTranslation'
+      'PlanPaymentsTranslation',
+      'PlanCollaboratorTranslation'
     ]
   }
 };

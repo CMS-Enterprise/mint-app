@@ -1534,6 +1534,13 @@ export type PlanCollaboratorCreateInput = {
   userName: Scalars['String']['input'];
 };
 
+/** Represents collaborator translation data */
+export type PlanCollaboratorTranslation = {
+  __typename: 'PlanCollaboratorTranslation';
+  teamRoles: TranslationFieldWithOptions;
+  username: TranslationField;
+};
+
 /** PlanDiscussion represents plan discussion */
 export type PlanDiscussion = {
   __typename: 'PlanDiscussion';

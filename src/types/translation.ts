@@ -45,6 +45,7 @@ import {
   PayType,
   PlanBasicsTranslation,
   PlanBeneficiariesTranslation,
+  PlanCollaboratorTranslation,
   PlanGeneralCharacteristicsTranslation,
   PlanOpsEvalAndLearningTranslation,
   PlanParticipantsAndProvidersTranslation,
@@ -893,9 +894,20 @@ export type TranslationPayments = {
 /* 
   Collaborators
 */
-export type TranslationCollaborators = {
+export type TranslationCollaboratorsForm = {
   teamRoles: TranslationFieldPropertiesWithOptions<TeamRole>;
   username: TranslationFieldProperties;
+};
+
+type TranslationCollaboratorGQL = Omit<
+  PlanCollaboratorTranslation, // graphql gen type
+  '__typename'
+>;
+
+// Merged keys from graphql gen with FE form types
+// Create a tighter connection between BE/FE translation types
+export type TranslationCollaborators = {
+  [K in keyof TranslationCollaboratorGQL]: TranslationCollaboratorsForm[K]; // FE form type
 };
 
 export type TranslationPlan = {
