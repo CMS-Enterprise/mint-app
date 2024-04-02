@@ -1,6 +1,6 @@
 package models
 
-// TranslationField represents a the translation of data to human readble format
+// TranslationField represents a the translation of data to human readable format
 type TranslationField struct {
 	GqlField         string  `json:"gqlField"`
 	GoField          string  `json:"goField"`

@@ -72,9 +72,20 @@ func humanizeChangeSet(
 	if err != nil {
 		return nil, err
 	}
+
+	basicsAudits := lo.Filter(audits, func(m *models.AuditChange, index int) bool {
+		return m.TableName == "plan_basics"
+	})
+
+	basicsChanges, err := genericAuditTranslation(ctx, store, plan, basicsAudits)
+	// partsAndProviderChanges, err := humanizeParticipantsAndProviders(ctx, store, plan, audits)
+	if err != nil {
+		return nil, err
+	}
 	_ = humanizeParticipantsAndProviders
 
 	combinedChanges := append(planChanges, partsAndProviderChanges...)
+	combinedChanges = append(combinedChanges, basicsChanges...)
 
 	return combinedChanges, nil
 
@@ -259,9 +270,13 @@ func translateField(fieldName string, field models.AuditField, audit *models.Aud
 	var translatedNew interface{}
 
 	fieldInterface := translationMap[fieldName]
+	fmt.Printf("translation Type: %T, Value: %+v\n", fieldInterface, fieldInterface)
 	fieldTransOptionsAndParent, hasOptionsAndParent := fieldInterface.(mappings.TranslationFieldPropertiesWithOptionsAndParent) //TODO: (ChChCh Changes!) We can reduce this.
 	fieldTransOptions, hasOptions := fieldInterface.(mappings.TranslationFieldPropertiesWithOptions)
 	fieldTrans, hasTranslation := fieldInterface.(mappings.TranslationFieldProperties)
+
+	fieldTransNewOptions, hasOptionsNew := fieldInterface.(models.TranslationFieldWithOptions) //models.TranslationFieldWithOptions
+	fieldTransNew, hasTranslationNew := fieldInterface.(models.TranslationField)
 
 	// Ticket: (ChChCh Changes!) Should we handle this better? There are different implementations we have to cast to
 	if hasOptionsAndParent {
@@ -278,6 +293,16 @@ func translateField(fieldName string, field models.AuditField, audit *models.Aud
 		translatedLabel = fieldTrans.GetLabel()
 		translatedOld = field.Old
 		translatedNew = field.New
+
+	} else if hasTranslationNew {
+		translatedLabel = fieldTransNew.GetLabel()
+		translatedOld = field.Old
+		translatedNew = field.New
+
+	} else if hasOptionsNew {
+		translatedLabel = fieldTransNewOptions.GetLabel()
+		translatedOld = translateValue(field.Old, fieldTransNewOptions.Options) //TODO, we need to make this take
+		translatedNew = translateValue(field.New, fieldTransNewOptions.Options)
 
 	} else {
 		translatedLabel = fieldName
@@ -312,7 +337,7 @@ func translateField(fieldName string, field models.AuditField, audit *models.Aud
 
 // translateValue takes a given value and maps it to a human readable value.
 // It checks in the value is an array, and if so it translates each value to a human readable form
-func translateValue(value interface{}, options map[string]string) interface{} {
+func translateValue(value interface{}, options map[string]interface{}) interface{} {
 
 	//Ticket: (ChChCh Changes!) Check if value is nil, don't need to translate that.
 	//Ticket: (ChChCh Changes!) work on bool representation, they should come through here as a string, but show up as t, f. We will want to set they values
@@ -343,10 +368,10 @@ func translateValue(value interface{}, options map[string]string) interface{} {
 }
 
 // translateValueSingle translates a single audit value to a human readable string value
-func translateValueSingle(value string, options map[string]string) string {
+func translateValueSingle(value string, options map[string]interface{}) string {
 	translated, ok := options[value]
 	if ok {
-		return translated
+		return fmt.Sprint(translated)
 	}
 	//Ticket (ChChCh Changes!) If the map doesn't have a value, return the raw value instead.
 	return value

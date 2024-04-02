@@ -11,7 +11,7 @@ func GetTranslation(tableName string) (Translation, error) {
 		return ParticipantsAndProvidersTranslation()
 	case "plan_basics":
 		// trans, err := ParticipantsAndProvidersTranslation()
-		return ParticipantsAndProvidersTranslation()
+		return PlanBasicsTranslation()
 	default:
 		return nil, fmt.Errorf("no translation for table: %s ", tableName)
 

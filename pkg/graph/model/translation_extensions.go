@@ -10,5 +10,5 @@ func (pbt *PlanBasicsTranslation) TableName() string {
 
 // ToMap translates this translation to a map, satisfying the Translation interface
 func (pbt *PlanBasicsTranslation) ToMap() (map[string]interface{}, error) {
-	return models.StructToMapDBTag(*pbt)
+	return models.StructToMap(*pbt)
 }

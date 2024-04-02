@@ -28,8 +28,8 @@ func (tfp TranslationFieldProperties) GetLabel() string {
 // TranslationFieldPropertiesWithOptions is TranslationField, but with options
 type TranslationFieldPropertiesWithOptions struct {
 	TranslationFieldProperties
-	Options                 map[string]string `json:"options"`
-	AllowMultipleSelections bool              `json:"allowMultipleSelections,omitempty"`
+	Options                 map[string]interface{} `json:"options"`
+	AllowMultipleSelections bool                   `json:"allowMultipleSelections,omitempty"`
 }
 
 // TranslationFieldPropertiesWithOptionsAndParent is a translation field with Options and a Parent
