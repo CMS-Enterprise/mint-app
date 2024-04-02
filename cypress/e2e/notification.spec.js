@@ -196,4 +196,49 @@ describe('Notification Center', () => {
       .find('[data-testid="notification-red-dot"]')
       .should('not.exist');
   });
+
+  it('testing Adding Collaborator Notification', () => {
+    cy.localLogin({ name: 'MINT', role: 'MINT_ASSESSMENT_NONPROD' });
+    cy.clickPlanTableByName('Empty Plan');
+
+    // Add SF13 as a collaborator
+    cy.get('a[href*="/collaborators?view=manage"]').click();
+
+    cy.contains('a', 'Add team member').click();
+
+    cy.get('#react-select-model-team-cedar-contact-input')
+      .click()
+      .type('Jer', { delay: 100 });
+
+    cy.get('#react-select-model-team-cedar-contact-option-0')
+      .contains('Jerry Seinfeld, SF13')
+      .click();
+
+    cy.get('#collaborator-role').within(() => {
+      cy.get("input[type='text']").click().type('evalu{downArrow}{enter}');
+    });
+
+    cy.clickOutside();
+
+    cy.get('[data-testid="multiselect-tag--Evaluation"]')
+      .first()
+      .contains('Evaluation');
+
+    cy.contains('button', 'Add team member').click();
+
+    cy.logout();
+
+    // Login as SF13
+    cy.localLogin({ name: 'SF13', role: 'MINT_USER_NONPROD' });
+
+    cy.get('[data-testid="navmenu__notification"]').first().click();
+
+    cy.get('[data-testid="individual-notification"]').contains(
+      'MINT Doe added you to the team for Empty Plan.'
+    );
+
+    cy.contains('button', 'Start collaborating').click();
+
+    cy.url().should('include', '/task-list');
+  });
 });
