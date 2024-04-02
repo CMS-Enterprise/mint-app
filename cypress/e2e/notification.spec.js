@@ -134,7 +134,7 @@ describe('Notification Center', () => {
     );
   });
 
-  it.only('testing New Discussion Reply Notification', () => {
+  it('testing New Discussion Reply Notification', () => {
     cy.localLogin({ name: 'JTTC', role: 'MINT_ASSESSMENT_NONPROD' });
     cy.clickPlanTableByName('Empty Plan');
 
