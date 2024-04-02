@@ -100,6 +100,7 @@ export type TranslationFieldProperties = Omit<
     adjacentField: string;
   };
   hideRelatedQuestionAlert?: boolean; // Ex: CCW and Quality questions do not need to render the alert immediately following the question
+  otherParentField?: string; // gql field name for the parent question for fields that represent Other, Please specify, etc.  Used in change history to render parent question for context
 };
 
 /* 

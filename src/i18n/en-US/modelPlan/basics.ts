@@ -172,6 +172,7 @@ export const basics: TranslationBasics = {
     dataType: TranslationDataType.STRING,
     formType: 'textarea',
     isOtherType: true,
+    otherParentField: 'modelType',
     filterGroups: [
       ModelViewFilter.DFSDM,
       ModelViewFilter.IPC,

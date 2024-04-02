@@ -4,7 +4,7 @@ go 1.21
 
 require (
 	github.com/99designs/gqlgen v0.17.38
-	github.com/aws/aws-sdk-go v1.51.6
+	github.com/aws/aws-sdk-go v1.51.11
 	github.com/facebookgo/clock v0.0.0-20150410010913-600d898af40a
 	github.com/go-openapi/errors v0.22.0
 	github.com/go-openapi/swag v0.23.0
@@ -33,7 +33,7 @@ require github.com/xhit/go-simple-mail/v2 v2.16.0
 require (
 	github.com/contribsys/faktory v1.8.0
 	github.com/launchdarkly/go-sdk-common/v3 v3.1.0
-	github.com/launchdarkly/go-server-sdk/v6 v6.1.1
+	github.com/launchdarkly/go-server-sdk/v6 v6.2.0
 	golang.org/x/net v0.22.0
 )
 
