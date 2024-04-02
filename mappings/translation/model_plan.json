@@ -1,0 +1,59 @@
+{
+  "model_name": {
+    "gqlField": "modelName",
+    "goField": "ModelName",
+    "dbField": "model_name",
+    "label": "Model name"
+  },
+  "previous_name": {
+    "gqlField": "previousName",
+    "goField": "PreviousName",
+    "dbField": "previous_name",
+    "label": "Previous names"
+  },
+  "name_history": {
+    "gqlField": "nameHistory",
+    "goField": "NameHistory",
+    "dbField": "name_history",
+    "label": "Previous names",
+    "isArray": true
+  },
+  "abbreviation": {
+    "gqlField": "abbreviation",
+    "goField": "Abbreviation",
+    "dbField": "abbreviation",
+    "label": "Short name",
+    "sublabel": "The abbreviation, acronym, or other common name used for the model."
+  },
+  "archived": {
+    "gqlField": "archived",
+    "goField": "Archived",
+    "dbField": "archived",
+    "label": "Archived",
+    "options": {
+      "true": "Yes",
+      "false": "No"
+    }
+  },
+  "status": {
+    "gqlField": "status",
+    "goField": "Status",
+    "dbField": "status",
+    "label": "What is the status of your Model Plan?",
+    "options": {
+      "PLAN_DRAFT": "Draft Model Plan",
+      "PLAN_COMPLETE": "Model Plan complete",
+      "ICIP_COMPLETE": "ICIP complete",
+      "INTERNAL_CMMI_CLEARANCE": "In internal (CMMI) clearance",
+      "CMS_CLEARANCE": "In CMS clearance",
+      "HHS_CLEARANCE": "In HHS clearance",
+      "OMB_ASRF_CLEARANCE": "In OMB clearance",
+      "CLEARED": "Cleared",
+      "ANNOUNCED": "Announced",
+      "ACTIVE": "Active",
+      "ENDED": "Ended",
+      "PAUSED": "Paused",
+      "CANCELED": "Canceled"
+    }
+  }
+}

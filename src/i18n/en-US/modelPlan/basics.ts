@@ -1,6 +1,6 @@
-import { ModelViewFilter } from 'gql/gen/graphql';
-
 import { TranslationBasics } from 'types/translation';
+
+import { ModelViewFilter } from '../../../gql/gen/graphql';
 
 export const basics: TranslationBasics = {
   modelCategory: {

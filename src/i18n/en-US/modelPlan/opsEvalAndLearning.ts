@@ -1,6 +1,6 @@
-import { ModelViewFilter } from 'gql/gen/graphql';
-
 import { TranslationOpsEvalAndLearning } from 'types/translation';
+
+import { ModelViewFilter } from '../../../gql/gen/graphql';
 
 import { frequencyOptions } from './miscellaneous';
 

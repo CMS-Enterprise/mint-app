@@ -1,0 +1,697 @@
+{
+  "is_new_model": {
+    "gqlField": "isNewModel",
+    "goField": "IsNewModel",
+    "dbField": "is_new_model",
+    "label": "Is this a new track of an existing model or a new model?",
+    "options": {
+      "true": "New model",
+      "false": "New track of an existing model"
+    }
+  },
+  "existing_model": {
+    "gqlField": "existingModel",
+    "goField": "ExistingModel",
+    "dbField": "existing_model",
+    "label": "Which existing model?",
+    "sublabel": "Start typing the name of the model"
+  },
+  "resembles_existing_model": {
+    "gqlField": "resemblesExistingModel",
+    "goField": "ResemblesExistingModel",
+    "dbField": "resembles_existing_model",
+    "label": "Does your proposed track/model resemble any existing models?",
+    "options": {
+      "YES": "Yes",
+      "NO": "No",
+      "OTHER": "Other"
+    }
+  },
+  "resembles_existing_model_why_how": {
+    "gqlField": "resemblesExistingModelWhyHow",
+    "goField": "ResemblesExistingModelWhyHow",
+    "dbField": "resembles_existing_model_why_how",
+    "label": "Explain why and how the model made this decision."
+  },
+  "resembles_existing_model_which": {
+    "gqlField": "resemblesExistingModelWhich",
+    "goField": "ResemblesExistingModelWhich",
+    "dbField": "resembles_existing_model_which",
+    "label": "Which existing models does your proposed track/model most closely resemble?",
+    "sublabel": "Start typing the name of the model",
+    "multiSelectLabel": "Selected models",
+    "isArray": true,
+    "options": {
+      "Other": "Other"
+    }
+  },
+  "resembles_existing_model_how": {
+    "gqlField": "resemblesExistingModelHow",
+    "goField": "ResemblesExistingModelHow",
+    "dbField": "resembles_existing_model_how",
+    "label": "In what way does the new model resemble the selected model(s)?"
+  },
+  "resembles_existing_model_other_specify": {
+    "gqlField": "resemblesExistingModelOtherSpecify",
+    "goField": "ResemblesExistingModelOtherSpecify",
+    "dbField": "resembles_existing_model_other_specify",
+    "label": "Please specify",
+    "isOtherType": true,
+    "otherParentField": "resembles_existing_model"
+  },
+  "resembles_existing_model_other_selected": {
+    "gqlField": "resemblesExistingModelOtherSelected",
+    "goField": "ResemblesExistingModelOtherSelected",
+    "dbField": "resembles_existing_model_other_selected",
+    "label": "",
+    "isOtherType": true,
+    "options": {
+      "true": "",
+      "false": ""
+    }
+  },
+  "resembles_existing_model_other_option": {
+    "gqlField": "resemblesExistingModelOtherOption",
+    "goField": "ResemblesExistingModelOtherOption",
+    "dbField": "resembles_existing_model_other_option",
+    "label": "Please specify other",
+    "isOtherType": true
+  },
+  "resembles_existing_model_note": {
+    "gqlField": "resemblesExistingModelNote",
+    "goField": "ResemblesExistingModelNote",
+    "dbField": "resembles_existing_model_note",
+    "label": "Notes"
+  },
+  "participation_in_model_precondition": {
+    "gqlField": "participationInModelPrecondition",
+    "goField": "ParticipationInModelPrecondition",
+    "dbField": "participation_in_model_precondition",
+    "label": "Is participation in another model a precondition for participation in this model?",
+    "options": {
+      "YES": "Yes",
+      "NO": "No",
+      "OTHER": "Other"
+    }
+  },
+  "participation_in_model_precondition_other_specify": {
+    "gqlField": "participationInModelPreconditionOtherSpecify",
+    "goField": "ParticipationInModelPreconditionOtherSpecify",
+    "dbField": "participation_in_model_precondition_other_specify",
+    "label": "Please specify",
+    "isOtherType": true,
+    "otherParentField": "participation_in_model_precondition"
+  },
+  "participation_in_model_precondition_which": {
+    "gqlField": "participationInModelPreconditionWhich",
+    "goField": "ParticipationInModelPreconditionWhich",
+    "dbField": "participation_in_model_precondition_which",
+    "label": "Which models?",
+    "sublabel": "Start typing the name of the model",
+    "multiSelectLabel": "Selected models",
+    "isArray": true,
+    "options": {
+      "Other": "Other"
+    }
+  },
+  "participation_in_model_precondition_other_selected": {
+    "gqlField": "participationInModelPreconditionOtherSelected",
+    "goField": "ParticipationInModelPreconditionOtherSelected",
+    "dbField": "participation_in_model_precondition_other_selected",
+    "label": "",
+    "isOtherType": true,
+    "options": {
+      "true": "",
+      "false": ""
+    }
+  },
+  "participation_in_model_precondition_other_option": {
+    "gqlField": "participationInModelPreconditionOtherOption",
+    "goField": "ParticipationInModelPreconditionOtherOption",
+    "dbField": "participation_in_model_precondition_other_option",
+    "label": "Please specify other",
+    "isOtherType": true,
+    "otherParentField": "participation_in_model_precondition_which"
+  },
+  "participation_in_model_precondition_why_how": {
+    "gqlField": "participationInModelPreconditionWhyHow",
+    "goField": "ParticipationInModelPreconditionWhyHow",
+    "dbField": "participation_in_model_precondition_why_how",
+    "label": "Explain any details including if it is just part of the model."
+  },
+  "participation_in_model_precondition_note": {
+    "gqlField": "participationInModelPreconditionNote",
+    "goField": "ParticipationInModelPreconditionNote",
+    "dbField": "participation_in_model_precondition_note",
+    "label": "Notes"
+  },
+  "has_components_or_tracks": {
+    "gqlField": "hasComponentsOrTracks",
+    "goField": "HasComponentsOrTracks",
+    "dbField": "has_components_or_tracks",
+    "label": "Are there different components/tracks?",
+    "readonlyLabel": "Are there different components/tracks? If so, how do the tracks differ?",
+    "options": {
+      "true": "Yes",
+      "false": "No"
+    }
+  },
+  "has_components_or_tracks_differ": {
+    "gqlField": "hasComponentsOrTracksDiffer",
+    "goField": "HasComponentsOrTracksDiffer",
+    "dbField": "has_components_or_tracks_differ",
+    "label": "How do the tracks differ?",
+    "isOtherType": true,
+    "otherParentField": "has_components_or_tracks"
+  },
+  "has_components_or_tracks_note": {
+    "gqlField": "hasComponentsOrTracksNote",
+    "goField": "HasComponentsOrTracksNote",
+    "dbField": "has_components_or_tracks_note",
+    "label": "Notes"
+  },
+  "agency_or_state_help": {
+    "gqlField": "agencyOrStateHelp",
+    "goField": "AgencyOrStateHelp",
+    "dbField": "agency_or_state_help",
+    "label": "Will another Agency or State help design/operate the model? Select all that apply.",
+    "readonlyLabel": "Will another Agency or State help design/operate the model?",
+    "options": {
+      "YES_STATE": "Yes, we will partner with states",
+      "YES_AGENCY_IDEAS": "Yes, we will get ideas from another agency",
+      "YES_AGENCY_IAA": "Yes, we will get support from another agency through Inter Agency Agreement (IAA)",
+      "NO": "No",
+      "OTHER": "Other"
+    }
+  },
+  "agency_or_state_help_other": {
+    "gqlField": "agencyOrStateHelpOther",
+    "goField": "AgencyOrStateHelpOther",
+    "dbField": "agency_or_state_help_other",
+    "label": "Please specify",
+    "isOtherType": true,
+    "otherParentField": "agency_or_state_help"
+  },
+  "agency_or_state_help_note": {
+    "gqlField": "agencyOrStateHelpNote",
+    "goField": "AgencyOrStateHelpNote",
+    "dbField": "agency_or_state_help_note",
+    "label": "Notes"
+  },
+  "alternative_payment_model_types": {
+    "gqlField": "alternativePaymentModelTypes",
+    "goField": "AlternativePaymentModelTypes",
+    "dbField": "alternative_payment_model_types",
+    "label": "What type of Alternative Payment Model (APM) do you think the model could be?",
+    "sublabel": "In order to be considered by the Quality Payment Program (QPP), and to be MIPS or Advanced APM, you will need to collect TINs and NPIs for providers.",
+    "options": {
+      "ADVANCED": "Advanced APM",
+      "MIPS": "MIPS APM",
+      "REGULAR": "Regular APM",
+      "NOT_APM": "It is not an APM"
+    }
+  },
+  "alternative_payment_model_note": {
+    "gqlField": "alternativePaymentModelNote",
+    "goField": "AlternativePaymentModelNote",
+    "dbField": "alternative_payment_model_note",
+    "label": "Notes"
+  },
+  "key_characteristics": {
+    "gqlField": "keyCharacteristics",
+    "goField": "KeyCharacteristics",
+    "dbField": "key_characteristics",
+    "label": "What are the model key characteristics? Select all that apply.",
+    "readonlyLabel": "What are the model key characteristics?",
+    "multiSelectLabel": "Selected key characteristics",
+    "options": {
+      "EPISODE_BASED": "Episode-Based Model",
+      "MEDICAID_MODEL": "Medicaid Model",
+      "PART_C": "Medicare-Advantage (Part C) Model",
+      "MEDICARE_FFS_MODEL": "Medicare Fee-for-Service (FFS) Model",
+      "PART_D": "Medicare Prescription Drug (Part D) Model",
+      "PAYMENT": "Payment Model",
+      "POPULATION_BASED": "Population-based Model",
+      "PREVENTATIVE": "Preventative Model",
+      "SERVICE_DELIVERY": "Service Delivery Model",
+      "SHARED_SAVINGS": "Shared Savings Model",
+      "OTHER": "Other"
+    }
+  },
+  "key_characteristics_other": {
+    "gqlField": "keyCharacteristicsOther",
+    "goField": "KeyCharacteristicsOther",
+    "dbField": "key_characteristics_other",
+    "label": "Please describe the other key characteristics",
+    "isOtherType": true
+  },
+  "key_characteristics_note": {
+    "gqlField": "keyCharacteristicsNote",
+    "goField": "KeyCharacteristicsNote",
+    "dbField": "key_characteristics_note",
+    "label": "Notes"
+  },
+  "collect_plan_bids": {
+    "gqlField": "collectPlanBids",
+    "goField": "CollectPlanBids",
+    "dbField": "collect_plan_bids",
+    "label": "Will you review and collect plan bids?",
+    "options": {
+      "true": "Yes",
+      "false": "No"
+    }
+  },
+  "collect_plan_bids_note": {
+    "gqlField": "collectPlanBidsNote",
+    "goField": "CollectPlanBidsNote",
+    "dbField": "collect_plan_bids_note",
+    "label": "Notes"
+  },
+  "manage_part_c_d_enrollment": {
+    "gqlField": "managePartCDEnrollment",
+    "goField": "ManagePartCDEnrollment",
+    "dbField": "manage_part_c_d_enrollment",
+    "label": "Will you manage Part C/D enrollment?",
+    "options": {
+      "true": "Yes",
+      "false": "No"
+    }
+  },
+  "manage_part_c_d_enrollment_note": {
+    "gqlField": "managePartCDEnrollmentNote",
+    "goField": "ManagePartCDEnrollmentNote",
+    "dbField": "manage_part_c_d_enrollment_note",
+    "label": "Notes"
+  },
+  "plan_contract_updated": {
+    "gqlField": "planContractUpdated",
+    "goField": "PlanContractUpdated",
+    "dbField": "plan_contract_updated",
+    "label": "Have you updated the plan’s contract?",
+    "options": {
+      "true": "Yes",
+      "false": "No"
+    }
+  },
+  "plan_contract_updated_note": {
+    "gqlField": "planContractUpdatedNote",
+    "goField": "PlanContractUpdatedNote",
+    "dbField": "plan_contract_updated_note",
+    "label": "Notes"
+  },
+  "care_coordination_involved": {
+    "gqlField": "careCoordinationInvolved",
+    "goField": "CareCoordinationInvolved",
+    "dbField": "care_coordination_involved",
+    "label": "Is care coordination involved?",
+    "readonlyLabel": "Is care coordination involved? How so?",
+    "options": {
+      "true": "Yes",
+      "false": "No"
+    }
+  },
+  "care_coordination_involved_description": {
+    "gqlField": "careCoordinationInvolvedDescription",
+    "goField": "CareCoordinationInvolvedDescription",
+    "dbField": "care_coordination_involved_description",
+    "label": "How so?",
+    "isOtherType": true,
+    "otherParentField": "care_coordination_involved"
+  },
+  "care_coordination_involved_note": {
+    "gqlField": "careCoordinationInvolvedNote",
+    "goField": "CareCoordinationInvolvedNote",
+    "dbField": "care_coordination_involved_note",
+    "label": "Notes"
+  },
+  "additional_services_involved": {
+    "gqlField": "additionalServicesInvolved",
+    "goField": "AdditionalServicesInvolved",
+    "dbField": "additional_services_involved",
+    "label": "Are additional services involved?",
+    "readonlyLabel": "Are additional services involved? How so?",
+    "options": {
+      "true": "Yes",
+      "false": "No"
+    }
+  },
+  "additional_services_involved_description": {
+    "gqlField": "additionalServicesInvolvedDescription",
+    "goField": "AdditionalServicesInvolvedDescription",
+    "dbField": "additional_services_involved_description",
+    "label": "How so?",
+    "isOtherType": true,
+    "otherParentField": "additional_services_involved"
+  },
+  "additional_services_involved_note": {
+    "gqlField": "additionalServicesInvolvedNote",
+    "goField": "AdditionalServicesInvolvedNote",
+    "dbField": "additional_services_involved_note",
+    "label": "Notes"
+  },
+  "community_partners_involved": {
+    "gqlField": "communityPartnersInvolvedDescription",
+    "goField": "CommunityPartnersInvolvedDescription",
+    "dbField": "community_partners_involved",
+    "label": "How so?",
+    "isOtherType": true,
+    "otherParentField": "community_partners_involved"
+  },
+  "community_partners_involved_note": {
+    "gqlField": "communityPartnersInvolvedNote",
+    "goField": "CommunityPartnersInvolvedNote",
+    "dbField": "community_partners_involved_note",
+    "label": "Notes"
+  },
+  "geographies_targeted": {
+    "gqlField": "geographiesTargeted",
+    "goField": "GeographiesTargeted",
+    "dbField": "geographies_targeted",
+    "label": "Is the model targeted at specific geographies?",
+    "options": {
+      "true": "Yes",
+      "false": "No"
+    }
+  },
+  "geographies_targeted_types": {
+    "gqlField": "geographiesTargetedTypes",
+    "goField": "GeographiesTargetedTypes",
+    "dbField": "geographies_targeted_types",
+    "label": "Geography type is",
+    "options": {
+      "STATE": "States and territories",
+      "REGION": "Region",
+      "OTHER": "Other"
+    }
+  },
+  "geographies_states_and_territories": {
+    "gqlField": "geographiesStatesAndTerritories",
+    "goField": "GeographiesStatesAndTerritories",
+    "dbField": "geographies_states_and_territories",
+    "label": "Which states and territories?",
+    "multiSelectLabel": "States and territories",
+    "isOtherType": true,
+    "options": {
+      "AL": "AL - Alabama",
+      "AK": "AK - Alaska",
+      "AZ": "AZ - Arizona",
+      "AR": "AR - Arkansas",
+      "CA": "CA - California",
+      "CO": "CO - Colorado",
+      "CT": "CT - Connecticut",
+      "DE": "DE - Delaware",
+      "DC": "DC - District of Columbia",
+      "FL": "FL - Florida",
+      "GA": "GA - Georgia",
+      "HI": "HI - Hawaii",
+      "ID": "ID - Idaho",
+      "IL": "IL - Illinois",
+      "IN": "IN - Indiana",
+      "IA": "IA - Iowa",
+      "KS": "KS - Kansas",
+      "KY": "KY - Kentucky",
+      "LA": "LA - Louisiana",
+      "ME": "ME - Maine",
+      "MD": "MD - Maryland",
+      "MA": "MA - Massachusetts",
+      "MI": "MI - Michigan",
+      "MN": "MN - Minnesota",
+      "MS": "MS - Mississippi",
+      "MO": "MO - Missouri",
+      "MT": "MT - Montana",
+      "NE": "NE - Nebraska",
+      "NV": "NV - Nevada",
+      "NH": "NH - New Hampshire",
+      "NJ": "NJ - New Jersey",
+      "NM": "NM - New Mexico",
+      "NY": "NY - New York",
+      "NC": "NC - North Carolina",
+      "ND": "ND - North Dakota",
+      "OH": "OH - Ohio",
+      "OK": "OK - Oklahoma",
+      "OR": "OR - Oregon",
+      "PA": "PA - Pennsylvania",
+      "RI": "RI - Rhode Island",
+      "SC": "SC - South Carolina",
+      "SD": "SD - South Dakota",
+      "TN": "TN - Tennessee",
+      "TX": "TX - Texas",
+      "UT": "UT - Utah",
+      "VT": "VT - Vermont",
+      "VA": "VA - Virginia",
+      "WA": "WA - Washington",
+      "WV": "WV - West Virginia",
+      "WI": "WI - Wisconsin",
+      "WY": "WY - Wyoming",
+      "AS": "AS - American Samoa",
+      "GU": "GU - Guam",
+      "MP": "MP - Northern Mariana Islands",
+      "PR": "PR - Puerto Rico",
+      "UM": "UM - U.S. Minor Outlying Islands",
+      "VI": "VI - U.S. Virgin Islands"
+    },
+    "readonlyOptions": {
+      "AL": "Alabama",
+      "AK": "Alaska",
+      "AZ": "Arizona",
+      "AR": "Arkansas",
+      "CA": "California",
+      "CO": "Colorado",
+      "CT": "Connecticut",
+      "DE": "Delaware",
+      "DC": "District of Columbia",
+      "FL": "Florida",
+      "GA": "Georgia",
+      "HI": "Hawaii",
+      "ID": "Idaho",
+      "IL": "Illinois",
+      "IN": "Indiana",
+      "IA": "Iowa",
+      "KS": "Kansas",
+      "KY": "Kentucky",
+      "LA": "Louisiana",
+      "ME": "Maine",
+      "MD": "Maryland",
+      "MA": "Massachusetts",
+      "MI": "Michigan",
+      "MN": "Minnesota",
+      "MS": "Mississippi",
+      "MO": "Missouri",
+      "MT": "Montana",
+      "NE": "Nebraska",
+      "NV": "Nevada",
+      "NH": "New Hampshire",
+      "NJ": "New Jersey",
+      "NM": "New Mexico",
+      "NY": "New York",
+      "NC": "North Carolina",
+      "ND": "North Dakota",
+      "OH": "Ohio",
+      "OK": "Oklahoma",
+      "OR": "Oregon",
+      "PA": "Pennsylvania",
+      "RI": "Rhode Island",
+      "SC": "South Carolina",
+      "SD": "South Dakota",
+      "TN": "Tennessee",
+      "TX": "Texas",
+      "UT": "Utah",
+      "VT": "Vermont",
+      "VA": "Virginia",
+      "WA": "Washington",
+      "WV": "West Virginia",
+      "WI": "Wisconsin",
+      "WY": "Wyoming",
+      "AS": "American Samoa",
+      "GU": "Guam",
+      "MP": "Northern Mariana Islands",
+      "PR": "Puerto Rico",
+      "UM": "U.S. Minor Outlying Islands",
+      "VI": "U.S. Virgin Islands"
+    }
+  },
+  "geographies_region_types": {
+    "gqlField": "geographiesRegionTypes",
+    "goField": "GeographiesRegionTypes",
+    "dbField": "geographies_region_types",
+    "label": "Geography region types",
+    "isOtherType": true,
+    "options": {
+      "CBSA": "Core-based statistical areas (CBSAs)",
+      "HRR": "Hospital Referral Regions (HRR)",
+      "MSA": "Metropolitan Statistical Areas (MSAs)"
+    }
+  },
+  "geographies_targeted_types_other": {
+    "gqlField": "geographiesTargetedTypesOther",
+    "goField": "GeographiesTargetedTypesOther",
+    "dbField": "geographies_targeted_types_other",
+    "label": "Please specify what the other geography type is.",
+    "isOtherType": true,
+    "otherParentField": "geographies_targeted_types"
+  },
+  "geographies_targeted_applied_to": {
+    "gqlField": "geographiesTargetedAppliedTo",
+    "goField": "GeographiesTargetedAppliedTo",
+    "dbField": "geographies_targeted_applied_to",
+    "label": "Geographies are applied to",
+    "options": {
+      "BENEFICIARIES": "Beneficiaries",
+      "PARTICIPANTS": "Participants",
+      "PROVIDERS": "Providers",
+      "OTHER": "Other"
+    }
+  },
+  "geographies_targeted_applied_to_other": {
+    "gqlField": "geographiesTargetedAppliedToOther",
+    "goField": "GeographiesTargetedAppliedToOther",
+    "dbField": "geographies_targeted_applied_to_other",
+    "label": "Please specify what the geographies are applied to.",
+    "isOtherType": true
+  },
+  "geographies_targeted_note": {
+    "gqlField": "geographiesTargetedNote",
+    "goField": "GeographiesTargetedNote",
+    "dbField": "geographies_targeted_note",
+    "label": "Notes"
+  },
+  "participation_options": {
+    "gqlField": "participationOptions",
+    "goField": "ParticipationOptions",
+    "dbField": "participation_options",
+    "label": "Does the model offer different options for participation?",
+    "options": {
+      "true": "Yes",
+      "false": "No"
+    }
+  },
+  "participation_options_note": {
+    "gqlField": "participationOptionsNote",
+    "goField": "ParticipationOptionsNote",
+    "dbField": "participation_options_note",
+    "label": "Notes"
+  },
+  "agreement_types": {
+    "gqlField": "agreementTypes",
+    "goField": "AgreementTypes",
+    "dbField": "agreement_types",
+    "label": "What is the agreement type?",
+    "sublabel": "Note: CMMI writes, Office of General Council (OGC) approves both types of agreements",
+    "options": {
+      "COOPERATIVE": "Co-Operative Agreement/Grant",
+      "PARTICIPATION": "Participation Agreement",
+      "OTHER": "Other"
+    }
+  },
+  "agreement_types_other": {
+    "gqlField": "agreementTypesOther",
+    "goField": "AgreementTypesOther",
+    "dbField": "agreement_types_other",
+    "label": "Please specify",
+    "isOtherType": true,
+    "otherParentField": "agreement_types"
+  },
+  "multiple_patricipation_agreements_needed": {
+    "gqlField": "multiplePatricipationAgreementsNeeded",
+    "goField": "MultiplePatricipationAgreementsNeeded",
+    "dbField": "multiple_patricipation_agreements_needed",
+    "label": "Which rule do you anticipate using and what is the target date of display for that regulation?",
+    "isOtherType": true
+  },
+  "multiple_patricipation_agreements_needed_note": {
+    "gqlField": "multiplePatricipationAgreementsNeededNote",
+    "goField": "MultiplePatricipationAgreementsNeededNote",
+    "dbField": "multiple_patricipation_agreements_needed_note",
+    "label": "Notes"
+  },
+  "rulemaking_required": {
+    "gqlField": "rulemakingRequired",
+    "goField": "RulemakingRequired",
+    "dbField": "rulemaking_required",
+    "label": "Is rulemaking required?",
+    "readonlyLabel": "Is rulemaking required? If so, which rule do you anticipate using and what is the target date of display for that regulation?",
+    "options": {
+      "true": "Yes",
+      "false": "No"
+    }
+  },
+  "rulemaking_required_note": {
+    "gqlField": "rulemakingRequiredNote",
+    "goField": "RulemakingRequiredNote",
+    "dbField": "rulemaking_required_note",
+    "label": "Notes"
+  },
+  "authority_allowances": {
+    "gqlField": "authorityAllowances",
+    "goField": "AuthorityAllowances",
+    "dbField": "authority_allowances",
+    "label": "What authority allows CMMI to test the model?",
+    "options": {
+      "ACA": "3021 Affordable Care Act (ACA)",
+      "CONGRESSIONALLY_MANDATED": "Congressionally Mandated Demonstration",
+      "SSA_PART_B": "Section 1833(e) (Part B services) of the Social Security Act",
+      "OTHER": "Other"
+    }
+  },
+  "authority_allowances_other": {
+    "gqlField": "authorityAllowancesOther",
+    "goField": "AuthorityAllowancesOther",
+    "dbField": "authority_allowances_other",
+    "label": "Please specify",
+    "isOtherType": true,
+    "otherParentField": "authority_allowances"
+  },
+  "authority_allowances_note": {
+    "gqlField": "authorityAllowancesNote",
+    "goField": "AuthorityAllowancesNote",
+    "dbField": "authority_allowances_note",
+    "label": "Notes"
+  },
+  "waivers_required": {
+    "gqlField": "waiversRequired",
+    "goField": "WaiversRequired",
+    "dbField": "waivers_required",
+    "label": "Are waivers required?",
+    "readonlyLabel": "Are waivers required? If so, which types of waivers?",
+    "options": {
+      "true": "Yes",
+      "false": "No"
+    }
+  },
+  "waivers_required_types": {
+    "gqlField": "waiversRequiredTypes",
+    "goField": "WaiversRequiredTypes",
+    "dbField": "waivers_required_types",
+    "label": "Which types of waivers are required? Select all that apply.",
+    "readonlyLabel": "Which types of waivers are required?",
+    "isOtherType": true,
+    "options": {
+      "FRAUD_ABUSE": "Fraud and Abuse",
+      "MEDICAID": "Medicaid",
+      "PROGRAM_PAYMENT": "Program/payment"
+    },
+    "optionsLabels": {
+      "FRAUD_ABUSE": "(Note: Federal Waiver team writes)",
+      "MEDICAID": "(1115, other)",
+      "PROGRAM_PAYMENT": "(Note: CMMI writes, Office of General Council (OGC) adivses, full clearance process is required)"
+    }
+  },
+  "waivers_required_note": {
+    "gqlField": "waiversRequiredNote",
+    "goField": "WaiversRequiredNote",
+    "dbField": "waivers_required_note",
+    "label": "Notes"
+  },
+  "status": {
+    "gqlField": "status",
+    "goField": "Status",
+    "dbField": "status",
+    "label": "Model Plan status",
+    "options": {
+      "READY": "Ready",
+      "IN_PROGRESS": "In progress",
+      "READY_FOR_REVIEW": "Ready for review",
+      "READY_FOR_CLEARANCE": "Ready for clearance"
+    }
+  }
+}

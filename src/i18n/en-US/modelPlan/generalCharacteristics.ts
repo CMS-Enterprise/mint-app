@@ -1,6 +1,6 @@
-import { ModelViewFilter } from 'gql/gen/graphql';
-
 import { TranslationGeneralCharacteristics } from 'types/translation';
+
+import { ModelViewFilter } from '../../../gql/gen/graphql';
 
 export const generalCharacteristics: TranslationGeneralCharacteristics = {
   isNewModel: {
