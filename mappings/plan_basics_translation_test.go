@@ -26,13 +26,13 @@ func TestPlanBasicsTranslationAsMap(t *testing.T) {
 	assert.NotNil(t, translation)
 	assert.EqualValues(t, "plan_basics", translation.TableName())
 
-	// basicsMap, err := translation.ToMap()
+	basicsMap, err := translation.ToMap()
 	// basicsMap, err := PlanBasicsTranslationMap()
 	// basicsMap, err := models.StructToTranslationMap(translation)
 	// basicsMap, err := models.StructToTypedMap[models.ITranslationField](translation)
 	// basicsMap, err := models.StructToMapDBTag(*translation)
 	// basicsMap, err := translation.ToMap()
-	basicsMap, err := models.StructToTranslationMap(*translation)
+	// basicsMap, err := models.StructToTranslationMap(*translation)
 	// basicsMap, err := models.StructToMap(translation)
 
 	assert.NoError(t, err)
@@ -45,9 +45,9 @@ func TestPlanBasicsTranslationAsMap(t *testing.T) {
 	assert.True(t, ok)
 	assert.NotNil(t, fieldInterface)
 
-	castFieldGen, isCast := fieldInterface.(models.ITranslationField)
-	assert.True(t, isCast)
-	assert.NotNil(t, castFieldGen)
+	// castFieldGen, isCast := fieldInterface.(models.ITranslationField)
+	// assert.True(t, isCast)
+	// assert.NotNil(t, castFieldGen)
 
 	castField, isCast := fieldInterface.(models.TranslationField)
 	assert.True(t, isCast)

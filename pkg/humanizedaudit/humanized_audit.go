@@ -63,15 +63,15 @@ func humanizeChangeSet(
 		return nil, err
 	}
 
-	partsProvidersChanges := lo.Filter(audits, func(m *models.AuditChange, index int) bool {
-		return m.TableName == "plan_participants_and_providers"
-	})
+	// partsProvidersChanges := lo.Filter(audits, func(m *models.AuditChange, index int) bool {
+	// 	return m.TableName == "plan_participants_and_providers"
+	// })
 
-	partsAndProviderChanges, err := genericAuditTranslation(ctx, store, plan, partsProvidersChanges)
-	// partsAndProviderChanges, err := humanizeParticipantsAndProviders(ctx, store, plan, audits)
-	if err != nil {
-		return nil, err
-	}
+	// partsAndProviderChanges, err := genericAuditTranslation(ctx, store, plan, partsProvidersChanges)
+	// // partsAndProviderChanges, err := humanizeParticipantsAndProviders(ctx, store, plan, audits)
+	// if err != nil {
+	// 	return nil, err
+	// }
 
 	basicsAudits := lo.Filter(audits, func(m *models.AuditChange, index int) bool {
 		return m.TableName == "plan_basics"
@@ -84,8 +84,9 @@ func humanizeChangeSet(
 	}
 	_ = humanizeParticipantsAndProviders
 
-	combinedChanges := append(planChanges, partsAndProviderChanges...)
-	combinedChanges = append(combinedChanges, basicsChanges...)
+	// combinedChanges := append(planChanges, partsAndProviderChanges...)
+	combinedChanges := append(planChanges, basicsChanges...)
+	// combinedChanges = append(combinedChanges, basicsChanges...)
 
 	return combinedChanges, nil
 
@@ -264,48 +265,18 @@ func genericAuditTranslation(ctx context.Context, store *storage.Store, plan *mo
 	return changes, nil
 }
 
-func translateField(fieldName string, field models.AuditField, audit *models.AuditChange, actorAccount *authentication.UserAccount, operation models.DatabaseOperation, modelPlan *models.ModelPlan, translationMap map[string]interface{}) (*models.HumanizedAuditChange, error) {
-	var translatedLabel string
+func translateField(fieldName string, field models.AuditField, audit *models.AuditChange, actorAccount *authentication.UserAccount, operation models.DatabaseOperation, modelPlan *models.ModelPlan, translationMap map[string]models.ITranslationField) (*models.HumanizedAuditChange, error) {
+	// var translatedLabel string
 	var translatedOld interface{}
 	var translatedNew interface{}
 
-	fieldInterface := translationMap[fieldName]
-	fmt.Printf("translation Type: %T, Value: %+v\n", fieldInterface, fieldInterface)
-	fieldTransOptionsAndParent, hasOptionsAndParent := fieldInterface.(mappings.TranslationFieldPropertiesWithOptionsAndParent) //TODO: (ChChCh Changes!) We can reduce this.
-	fieldTransOptions, hasOptions := fieldInterface.(mappings.TranslationFieldPropertiesWithOptions)
-	fieldTrans, hasTranslation := fieldInterface.(mappings.TranslationFieldProperties)
-
-	fieldTransNewOptions, hasOptionsNew := fieldInterface.(models.TranslationFieldWithOptions) //models.TranslationFieldWithOptions
-	fieldTransNew, hasTranslationNew := fieldInterface.(models.TranslationField)
-
-	// Ticket: (ChChCh Changes!) Should we handle this better? There are different implementations we have to cast to
-	if hasOptionsAndParent {
-		translatedLabel = fieldTransOptionsAndParent.GetLabel()
-		translatedOld = translateValue(field.Old, fieldTransOptionsAndParent.Options)
-		translatedNew = translateValue(field.New, fieldTransOptionsAndParent.Options)
-	} else if hasOptions {
-		translatedLabel = fieldTransOptions.GetLabel()
-		translatedOld = translateValue(field.Old, fieldTransOptions.Options)
-		translatedNew = translateValue(field.New, fieldTransOptions.Options)
-
-		// Ticket: (ChChCh Changes!) Verify this, there are other field types. We should have helper methods. This logic flow can be improved as well
-	} else if hasTranslation {
-		translatedLabel = fieldTrans.GetLabel()
-		translatedOld = field.Old
-		translatedNew = field.New
-
-	} else if hasTranslationNew {
-		translatedLabel = fieldTransNew.GetLabel()
-		translatedOld = field.Old
-		translatedNew = field.New
-
-	} else if hasOptionsNew {
-		translatedLabel = fieldTransNewOptions.GetLabel()
-		translatedOld = translateValue(field.Old, fieldTransNewOptions.Options) //TODO, we need to make this take
-		translatedNew = translateValue(field.New, fieldTransNewOptions.Options)
-
+	translationInterface := translationMap[fieldName]
+	options, hasOptions := translationInterface.GetOptions()
+	translatedLabel := translationInterface.GetLabel()
+	if hasOptions {
+		translatedOld = translateValue(field.Old, options)
+		translatedNew = translateValue(field.New, options)
 	} else {
-		translatedLabel = fieldName
 		translatedOld = field.Old
 		translatedNew = field.New
 	}
