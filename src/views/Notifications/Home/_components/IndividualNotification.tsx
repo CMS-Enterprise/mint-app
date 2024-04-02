@@ -47,44 +47,45 @@ const IndividualNotification = ({
 
   const [markAsRead] = useMarkNotificationAsReadMutation();
 
+  const handleMarkAsRead = (notificationID: string, onSuccess: () => void) => {
+    if (!isRead) {
+      markAsRead({
+        variables: {
+          notificationID
+        }
+      }).then(response => {
+        if (!response?.errors) {
+          onSuccess();
+        }
+      });
+    } else {
+      onSuccess();
+    }
+  };
+
   const handleMarkAsReadAndViewDiscussion = (
     notificationID: string,
     modelPlanID: string,
     discussionID: string
   ) => {
-    if (!isRead) {
-      markAsRead({
-        variables: {
-          notificationID
-        }
-      }).then(response => {
-        if (!response?.errors) {
-          history.push(
-            `/models/${modelPlanID}/read-only/discussions?discussionID=${discussionID}`
-          );
-        }
-      });
-    } else {
+    handleMarkAsRead(notificationID, () => {
       history.push(
         `/models/${modelPlanID}/read-only/discussions?discussionID=${discussionID}`
       );
-    }
+    });
   };
 
   const handleMarkAsReadAndToggleDailyDigest = (notificationID: string) => {
-    if (!isRead) {
-      markAsRead({
-        variables: {
-          notificationID
-        }
-      }).then(response => {
-        if (!response?.errors) {
-          setIsExpanded(!isExpanded);
-        }
-      });
-    } else {
-      setIsExpanded(!isExpanded);
-    }
+    handleMarkAsRead(notificationID, () => setIsExpanded(!isExpanded));
+  };
+
+  const handleMarkAsReadAndStartCollab = (
+    notificationID: string,
+    modelPlanID: string
+  ) => {
+    handleMarkAsRead(notificationID, () => {
+      history.push(`/models/${modelPlanID}/task-list`);
+    });
   };
 
   // Mint System Account -> MINT
@@ -153,7 +154,7 @@ const IndividualNotification = ({
                       handleMarkAsReadAndToggleDailyDigest(id);
                     }
                     if (isAddingCollaborator(metaData)) {
-                      // console.log(first)
+                      handleMarkAsReadAndStartCollab(id, metaData.modelPlanID);
                     }
                   }}
                 >
