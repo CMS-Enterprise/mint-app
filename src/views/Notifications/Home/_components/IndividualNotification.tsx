@@ -13,6 +13,7 @@ import { getUserInitials } from 'utils/modelPlan';
 import {
   ActivityCTA,
   activityText,
+  isAddingCollaborator,
   isDailyDigest,
   isNewDiscussionReply,
   isTaggedInDiscussion,
@@ -122,14 +123,15 @@ const IndividualNotification = ({
                   <strong>{name}</strong>
                   {activityText(metaData)}
                 </p>
-                {!isDailyDigest(metaData) && (
-                  <MentionTextArea
-                    className="notification__content text-base-darker"
-                    id={`mention-${metaData.discussionID}`}
-                    editable={false}
-                    initialContent={`“${metaData.content}”`}
-                  />
-                )}
+                {!isDailyDigest(metaData) &&
+                  !isAddingCollaborator(metaData) && (
+                    <MentionTextArea
+                      className="notification__content text-base-darker"
+                      id={`mention-${metaData.discussionID}`}
+                      editable={false}
+                      initialContent={`“${metaData.content}”`}
+                    />
+                  )}
 
                 <Button
                   type="button"
@@ -149,6 +151,9 @@ const IndividualNotification = ({
                     }
                     if (isDailyDigest(metaData)) {
                       handleMarkAsReadAndToggleDailyDigest(id);
+                    }
+                    if (isAddingCollaborator(metaData)) {
+                      // console.log(first)
                     }
                   }}
                 >

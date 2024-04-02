@@ -42,6 +42,21 @@ export default gql(/* GraphQL */ `
                 discussionID
                 content
               }
+              ... on AddedAsCollaboratorMeta {
+                version
+                type
+                modelPlanID
+                modelPlan {
+                  modelName
+                }
+                collaboratorID
+                collaborator {
+                  teamRoles
+                  userAccount {
+                    commonName
+                  }
+                }
+              }
               ... on TaggedInDiscussionReplyActivityMeta {
                 version
                 type
