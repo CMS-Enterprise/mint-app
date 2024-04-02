@@ -48,6 +48,7 @@ import {
   PlanGeneralCharacteristicsTranslation,
   PlanOpsEvalAndLearningTranslation,
   PlanParticipantsAndProvidersTranslation,
+  PlanPaymentsTranslation,
   ProviderAddType,
   ProviderLeaveType,
   RecruitmentType,
@@ -756,7 +757,7 @@ export type TranslationOpsEvalAndLearning = {
 /* 
   Payments
 */
-export type TranslationPayments = {
+export type TranslationPaymentsForm = {
   fundingSource: TranslationFieldPropertiesWithOptions<FundingSource>;
   fundingSourceMedicareAInfo: TranslationFieldProperties;
   fundingSourceMedicareBInfo: TranslationFieldProperties;
@@ -876,6 +877,17 @@ export type TranslationPayments = {
   paymentStartDate: TranslationFieldProperties;
   paymentStartDateNote: TranslationFieldProperties;
   status: TranslationFieldPropertiesWithOptions<TaskStatus>;
+};
+
+type TranslationPaymentsGQL = Omit<
+  PlanPaymentsTranslation, // graphql gen type
+  '__typename'
+>;
+
+// Merged keys from graphql gen with FE form types
+// Create a tighter connection between BE/FE translation types
+export type TranslationPayments = {
+  [K in keyof TranslationPaymentsGQL]: TranslationPaymentsForm[K]; // FE form type
 };
 
 /* 

@@ -29,7 +29,8 @@ module.exports = {
       'PlanGeneralCharacteristicsTranslation',
       'PlanParticipantsAndProvidersTranslation',
       'PlanBeneficiariesTranslation',
-      'PlanOpsEvalAndLearningTranslation'
+      'PlanOpsEvalAndLearningTranslation',
+      'PlanPaymentsTranslation'
     ]
   }
 };

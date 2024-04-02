@@ -517,7 +517,7 @@ export const payments: TranslationPayments = {
   beneficiaryCostSharingLevelAndHandling: {
     gqlField: 'beneficiaryCostSharingLevelAndHandling',
     goField: 'BeneficiaryCostSharingLevelAndHandling',
-    dbField: 'is_contractor_aware_test_data_requirements',
+    dbField: 'beneficiary_cost_sharing_level_and_handling',
     label:
       'What is the intended level of beneficiary cost-sharing and how will it be handled?',
     dataType: TranslationDataType.STRING,
@@ -532,7 +532,7 @@ export const payments: TranslationPayments = {
   waiveBeneficiaryCostSharingForAnyServices: {
     gqlField: 'waiveBeneficiaryCostSharingForAnyServices',
     goField: 'WaiveBeneficiaryCostSharingForAnyServices',
-    dbField: 'is_contractor_aware_test_data_requirements',
+    dbField: 'waive_beneficiary_cost_sharing_for_any_services',
     label:
       'Will you waive beneficiary cost-sharing (coinsurance and/or deductible) for any services in the model?',
     readonlyLabel:
@@ -556,7 +556,7 @@ export const payments: TranslationPayments = {
   waiveBeneficiaryCostSharingServiceSpecification: {
     gqlField: 'waiveBeneficiaryCostSharingServiceSpecification',
     goField: 'WaiveBeneficiaryCostSharingServiceSpecification',
-    dbField: 'is_contractor_aware_test_data_requirements',
+    dbField: 'waive_beneficiary_cost_sharing_service_specification',
     label: 'Please specify which services.',
     dataType: TranslationDataType.STRING,
     formType: 'textarea',
@@ -571,7 +571,7 @@ export const payments: TranslationPayments = {
   waiverOnlyAppliesPartOfPayment: {
     gqlField: 'waiverOnlyAppliesPartOfPayment',
     goField: 'WaiverOnlyAppliesPartOfPayment',
-    dbField: 'is_contractor_aware_test_data_requirements',
+    dbField: 'waiver_only_applies_part_of_payment',
     label: 'Would the waiver only apply for part of the payment?',
     sublabel:
       'For example, we would assess cost-sharing for the service itself, but not for an add-on payment',
@@ -587,7 +587,7 @@ export const payments: TranslationPayments = {
   waiveBeneficiaryCostSharingNote: {
     gqlField: 'waiveBeneficiaryCostSharingNote',
     goField: 'WaiveBeneficiaryCostSharingNote',
-    dbField: 'is_contractor_aware_test_data_requirements',
+    dbField: 'waive_beneficiary_cost_sharing_note',
     label: 'Notes',
     dataType: TranslationDataType.STRING,
     formType: 'textarea',

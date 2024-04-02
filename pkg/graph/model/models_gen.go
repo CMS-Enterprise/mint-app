@@ -385,6 +385,84 @@ type PlanParticipantsAndProvidersTranslation struct {
 	Status                                 *TranslationField            `json:"status"`
 }
 
+// Represents payments translation data
+type PlanPaymentsTranslation struct {
+	FundingSource                                     *TranslationFieldWithOptions `json:"funding_source"`
+	FundingSourceMedicareAInfo                        *TranslationField            `json:"funding_source_medicare_a_info"`
+	FundingSourceMedicareBInfo                        *TranslationField            `json:"funding_source_medicare_b_info"`
+	FundingSourceOther                                *TranslationField            `json:"funding_source_other"`
+	FundingSourceNote                                 *TranslationField            `json:"funding_source_note"`
+	FundingSourceR                                    *TranslationFieldWithOptions `json:"funding_source_r"`
+	FundingSourceRMedicareAInfo                       *TranslationField            `json:"funding_source_r_medicare_a_info"`
+	FundingSourceRMedicareBInfo                       *TranslationField            `json:"funding_source_r_medicare_b_info"`
+	FundingSourceROther                               *TranslationField            `json:"funding_source_r_other"`
+	FundingSourceRNote                                *TranslationField            `json:"funding_source_r_note"`
+	PayRecipients                                     *TranslationFieldWithOptions `json:"pay_recipients"`
+	PayRecipientsOtherSpecification                   *TranslationField            `json:"pay_recipients_other_specification"`
+	PayRecipientsNote                                 *TranslationField            `json:"pay_recipients_note"`
+	PayType                                           *TranslationFieldWithOptions `json:"pay_type"`
+	PayTypeNote                                       *TranslationField            `json:"pay_type_note"`
+	PayClaims                                         *TranslationFieldWithOptions `json:"pay_claims"`
+	PayClaimsOther                                    *TranslationField            `json:"pay_claims_other"`
+	PayClaimsNote                                     *TranslationField            `json:"pay_claims_note"`
+	ShouldAnyProvidersExcludedFFSSystems              *TranslationFieldWithOptions `json:"should_any_providers_excluded_ffs_systems"`
+	ShouldAnyProviderExcludedFFSSystemsNote           *TranslationField            `json:"should_any_providers_excluded_ffs_systems_note"`
+	ChangesMedicarePhysicianFeeSchedule               *TranslationFieldWithOptions `json:"changes_medicare_physician_fee_schedule"`
+	ChangesMedicarePhysicianFeeScheduleNote           *TranslationField            `json:"changes_medicare_physician_fee_schedule_note"`
+	AffectsMedicareSecondaryPayerClaims               *TranslationFieldWithOptions `json:"affects_medicare_secondary_payer_claims"`
+	AffectsMedicareSecondaryPayerClaimsHow            *TranslationField            `json:"affects_medicare_secondary_payer_claims_how"`
+	AffectsMedicareSecondaryPayerClaimsNote           *TranslationField            `json:"affects_medicare_secondary_payer_claims_note"`
+	PayModelDifferentiation                           *TranslationField            `json:"pay_model_differentiation"`
+	CreatingDependenciesBetweenServices               *TranslationFieldWithOptions `json:"creating_dependencies_between_services"`
+	CreatingDependenciesBetweenServicesNote           *TranslationField            `json:"creating_dependencies_between_services_note"`
+	NeedsClaimsDataCollection                         *TranslationFieldWithOptions `json:"needs_claims_data_collection"`
+	NeedsClaimsDataCollectionNote                     *TranslationField            `json:"needs_claims_data_collection_note"`
+	ProvidingThirdPartyFile                           *TranslationFieldWithOptions `json:"providing_third_party_file"`
+	IsContractorAwareTestDataRequirements             *TranslationFieldWithOptions `json:"is_contractor_aware_test_data_requirements"`
+	BeneficiaryCostSharingLevelAndHandling            *TranslationField            `json:"beneficiary_cost_sharing_level_and_handling"`
+	WaiveBeneficiaryCostSharingForAnyServices         *TranslationFieldWithOptions `json:"waive_beneficiary_cost_sharing_for_any_services"`
+	WaiveBeneficiaryCostSharingServiceSpecification   *TranslationField            `json:"waive_beneficiary_cost_sharing_service_specification"`
+	WaiverOnlyAppliesPartOfPayment                    *TranslationFieldWithOptions `json:"waiver_only_applies_part_of_payment"`
+	WaiveBeneficiaryCostSharingNote                   *TranslationField            `json:"waive_beneficiary_cost_sharing_note"`
+	NonClaimsPayments                                 *TranslationFieldWithOptions `json:"non_claims_payments"`
+	NonClaimsPaymentOther                             *TranslationField            `json:"non_claims_payments_other"`
+	NonClaimsPaymentsNote                             *TranslationField            `json:"non_claims_payments_note"`
+	PaymentCalculationOwner                           *TranslationField            `json:"payment_calculation_owner"`
+	NumberPaymentsPerPayCycle                         *TranslationField            `json:"number_payments_per_pay_cycle"`
+	NumberPaymentsPerPayCycleNote                     *TranslationField            `json:"number_payments_per_pay_cycle_note"`
+	SharedSystemsInvolvedAdditionalClaimPayment       *TranslationFieldWithOptions `json:"shared_systems_involved_additional_claim_payment"`
+	SharedSystemsInvolvedAdditionalClaimPaymentNote   *TranslationField            `json:"shared_systems_involved_additional_claim_payment_note"`
+	PlanningToUseInnovationPaymentContractor          *TranslationFieldWithOptions `json:"planning_to_use_innovation_payment_contractor"`
+	PlanningToUseInnovationPaymentContractorNote      *TranslationField            `json:"planning_to_use_innovation_payment_contractor_note"`
+	ExpectedCalculationComplexityLevel                *TranslationFieldWithOptions `json:"expected_calculation_complexity_level"`
+	ExpectedCalculationComplexityLevelNote            *TranslationField            `json:"expected_calculation_complexity_level_note"`
+	ClaimsProcessingPrecedence                        *TranslationFieldWithOptions `json:"claims_processing_precedence"`
+	ClaimsProcessingPrecedenceOther                   *TranslationField            `json:"claims_processing_precedence_other"`
+	ClaimsProcessingPrecedenceNote                    *TranslationField            `json:"claims_processing_precedence_note"`
+	CanParticipantsSelectBetweenPaymentMechanisms     *TranslationFieldWithOptions `json:"can_participants_select_between_payment_mechanisms"`
+	CanParticipantsSelectBetweenPaymentMechanismsHow  *TranslationField            `json:"can_participants_select_between_payment_mechanisms_how"`
+	CanParticipantsSelectBetweenPaymentMechanismsNote *TranslationField            `json:"can_participants_select_between_payment_mechanisms_note"`
+	AnticipatedPaymentFrequency                       *TranslationFieldWithOptions `json:"anticipated_payment_frequency"`
+	AnticipatedPaymentFrequencyContinually            *TranslationField            `json:"anticipated_payment_frequency_continually"`
+	AnticipatedPaymentFrequencyOther                  *TranslationField            `json:"anticipated_payment_frequency_other"`
+	AnticipatedPaymentFrequencyNote                   *TranslationField            `json:"anticipated_payment_frequency_note"`
+	WillRecoverPayments                               *TranslationFieldWithOptions `json:"will_recover_payments"`
+	WillRecoverPaymentsNote                           *TranslationField            `json:"will_recover_payments_note"`
+	AnticipateReconcilingPaymentsRetrospectively      *TranslationFieldWithOptions `json:"anticipate_reconciling_payments_retrospectively"`
+	AnticipateReconcilingPaymentsRetrospectivelyNote  *TranslationField            `json:"anticipate_reconciling_payments_retrospectively_note"`
+	PaymentReconciliationFrequency                    *TranslationFieldWithOptions `json:"payment_reconciliation_frequency"`
+	PaymentReconciliationFrequencyContinually         *TranslationField            `json:"payment_reconciliation_frequency_continually"`
+	PaymentReconciliationFrequencyOther               *TranslationField            `json:"payment_reconciliation_frequency_other"`
+	PaymentReconciliationFrequencyNote                *TranslationField            `json:"payment_reconciliation_frequency_note"`
+	PaymentDemandRecoupmentFrequency                  *TranslationFieldWithOptions `json:"payment_demand_recoupment_frequency"`
+	PaymentDemandRecoupmentFrequencyContinually       *TranslationField            `json:"payment_demand_recoupment_frequency_continually"`
+	PaymentDemandRecoupmentFrequencyOther             *TranslationField            `json:"payment_demand_recoupment_frequency_other"`
+	PaymentDemandRecoupmentFrequencyNote              *TranslationField            `json:"payment_demand_recoupment_frequency_note"`
+	PaymentStartDate                                  *TranslationField            `json:"payment_start_date"`
+	PaymentStartDateNote                              *TranslationField            `json:"payment_start_date_note"`
+	Status                                            *TranslationField            `json:"status"`
+}
+
 type PlanTDLCreateInput struct {
 	ModelPlanID   uuid.UUID `json:"modelPlanID"`
 	IDNumber      string    `json:"idNumber"`
