@@ -58,7 +58,6 @@ import {
   StatesAndTerritories,
   TaskStatus,
   TeamRole,
-  TranslationDataType,
   TranslationField,
   TranslationFieldWithOptions,
   TriStateAnswer,
@@ -81,18 +80,6 @@ export type TranslationFieldProperties = Omit<
   TranslationField,
   '__typename'
 > & {
-  dataType: TranslationDataType;
-  formType:
-    | 'text'
-    | 'textarea'
-    | 'number'
-    | 'boolean'
-    | 'radio'
-    | 'checkbox'
-    | 'select'
-    | 'multiSelect'
-    | 'datePicker'
-    | 'rangeInput';
   filterGroups?: ModelViewFilter[]; // Used to render questions within Readonly filter group view (Also CSV/PDF export)
   tags?: string[];
   isModelLinks?: boolean; // Used to designate if a field is a ExistingModelLinks type with nested fields - ex: names,

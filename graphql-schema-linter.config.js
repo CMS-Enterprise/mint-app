@@ -25,6 +25,7 @@ module.exports = {
       'TranslationField',
       'TranslationFieldWithOptions',
       'TranslationDataType',
+      'TranslationFormType',
       'PlanBasicsTranslation',
       'PlanGeneralCharacteristicsTranslation',
       'PlanParticipantsAndProvidersTranslation',

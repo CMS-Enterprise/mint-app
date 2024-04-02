@@ -1,4 +1,8 @@
-import { ModelViewFilter, TranslationDataType } from 'gql/gen/graphql';
+import {
+  ModelViewFilter,
+  TranslationDataType,
+  TranslationFormType
+} from 'gql/gen/graphql';
 
 import { TranslationBasics } from 'types/translation';
 
@@ -9,7 +13,7 @@ export const basics: TranslationBasics = {
     dbField: 'model_category',
     label: 'Primary model category',
     dataType: TranslationDataType.ENUM,
-    formType: 'radio',
+    formType: TranslationFormType.RADIO,
     adjacentPositioning: {
       position: 'left',
       adjacentField: 'additionalModelCategories'
@@ -47,7 +51,7 @@ export const basics: TranslationBasics = {
     sublabel:
       'If your model doesn’t fall into any additional categories, you can skip this.',
     dataType: TranslationDataType.STRING,
-    formType: 'checkbox',
+    formType: TranslationFormType.CHECKBOX,
     adjacentPositioning: {
       position: 'right',
       adjacentField: 'modelCategory'
@@ -83,7 +87,7 @@ export const basics: TranslationBasics = {
     dbField: 'ams_model_ID',
     label: 'Model ID',
     dataType: TranslationDataType.STRING,
-    formType: 'textarea'
+    formType: TranslationFormType.TEXTAREA
   },
   demoCode: {
     gqlField: 'demoCode',
@@ -91,7 +95,7 @@ export const basics: TranslationBasics = {
     dbField: 'demo_code',
     label: 'Demo code(s)',
     dataType: TranslationDataType.STRING,
-    formType: 'textarea'
+    formType: TranslationFormType.TEXTAREA
   },
   cmsCenters: {
     gqlField: 'cmsCenters',
@@ -99,7 +103,7 @@ export const basics: TranslationBasics = {
     dbField: 'cms_centers',
     label: 'CMS component',
     dataType: TranslationDataType.ENUM,
-    formType: 'checkbox',
+    formType: TranslationFormType.CHECKBOX,
     adjacentPositioning: {
       position: 'left',
       adjacentField: 'cmmiGroups'
@@ -126,7 +130,7 @@ export const basics: TranslationBasics = {
     sublabel:
       'You only need to select the CMMI group if CMMI is selected as the main CMS component.',
     dataType: TranslationDataType.ENUM,
-    formType: 'checkbox',
+    formType: TranslationFormType.CHECKBOX,
     adjacentPositioning: {
       position: 'right',
       adjacentField: 'cmsCenters'
@@ -147,7 +151,7 @@ export const basics: TranslationBasics = {
     dbField: 'model_type',
     label: 'Model Type',
     dataType: TranslationDataType.ENUM,
-    formType: 'checkbox',
+    formType: TranslationFormType.CHECKBOX,
     options: {
       VOLUNTARY: 'Voluntary',
       MANDATORY_NATIONAL: 'Mandatory national',
@@ -170,7 +174,7 @@ export const basics: TranslationBasics = {
     dbField: 'model_type_other',
     label: 'Please specify',
     dataType: TranslationDataType.STRING,
-    formType: 'textarea',
+    formType: TranslationFormType.TEXTAREA,
     isOtherType: true,
     otherParentField: 'modelType',
     filterGroups: [
@@ -186,7 +190,7 @@ export const basics: TranslationBasics = {
     dbField: 'problem',
     label: 'Problem statement',
     dataType: TranslationDataType.STRING,
-    formType: 'textarea'
+    formType: TranslationFormType.TEXTAREA
   },
   goal: {
     gqlField: 'goal',
@@ -196,7 +200,7 @@ export const basics: TranslationBasics = {
     sublabel:
       'Please include the high level goal of the program and a description of the project.',
     dataType: TranslationDataType.STRING,
-    formType: 'textarea',
+    formType: TranslationFormType.TEXTAREA,
     filterGroups: [
       ModelViewFilter.DFSDM,
       ModelViewFilter.IPC,
@@ -210,7 +214,7 @@ export const basics: TranslationBasics = {
     dbField: 'test_interventions',
     label: 'Test Interventions',
     dataType: TranslationDataType.STRING,
-    formType: 'textarea'
+    formType: TranslationFormType.TEXTAREA
   },
   note: {
     gqlField: 'note',
@@ -218,7 +222,7 @@ export const basics: TranslationBasics = {
     dbField: 'note',
     label: 'Notes',
     dataType: TranslationDataType.STRING,
-    formType: 'textarea'
+    formType: TranslationFormType.TEXTAREA
   },
   completeICIP: {
     gqlField: 'completeICIP',
@@ -226,7 +230,7 @@ export const basics: TranslationBasics = {
     dbField: 'complete_icip',
     label: 'Complete ICIP',
     dataType: TranslationDataType.DATE,
-    formType: 'datePicker',
+    formType: TranslationFormType.DATEPICKER,
     filterGroups: [ModelViewFilter.IPC]
   },
   clearanceStarts: {
@@ -235,7 +239,7 @@ export const basics: TranslationBasics = {
     dbField: 'clearance_starts',
     label: 'Clearance start date',
     dataType: TranslationDataType.DATE,
-    formType: 'datePicker',
+    formType: TranslationFormType.DATEPICKER,
     filterGroups: [ModelViewFilter.IPC]
   },
   clearanceEnds: {
@@ -244,7 +248,7 @@ export const basics: TranslationBasics = {
     dbField: 'clearance_ends',
     label: 'Clearance end date',
     dataType: TranslationDataType.DATE,
-    formType: 'datePicker',
+    formType: TranslationFormType.DATEPICKER,
     filterGroups: [ModelViewFilter.IPC]
   },
   announced: {
@@ -253,7 +257,7 @@ export const basics: TranslationBasics = {
     dbField: 'announced',
     label: 'Announce model',
     dataType: TranslationDataType.DATE,
-    formType: 'datePicker',
+    formType: TranslationFormType.DATEPICKER,
     filterGroups: [
       ModelViewFilter.CBOSC,
       ModelViewFilter.IDDOC,
@@ -267,7 +271,7 @@ export const basics: TranslationBasics = {
     dbField: 'applications_starts',
     label: 'Application start date',
     dataType: TranslationDataType.DATE,
-    formType: 'datePicker',
+    formType: TranslationFormType.DATEPICKER,
     adjacentPositioning: {
       position: 'left',
       adjacentField: 'applicationsEnd'
@@ -280,7 +284,7 @@ export const basics: TranslationBasics = {
     dbField: 'applications_ends',
     label: 'Application end date',
     dataType: TranslationDataType.DATE,
-    formType: 'datePicker',
+    formType: TranslationFormType.DATEPICKER,
     adjacentPositioning: {
       position: 'right',
       adjacentField: 'applicationsStart'
@@ -293,7 +297,7 @@ export const basics: TranslationBasics = {
     dbField: 'performance_period_starts',
     label: 'Performance start date',
     dataType: TranslationDataType.DATE,
-    formType: 'datePicker',
+    formType: TranslationFormType.DATEPICKER,
     adjacentPositioning: {
       position: 'left',
       adjacentField: 'performancePeriodEnds'
@@ -313,7 +317,7 @@ export const basics: TranslationBasics = {
     dbField: 'performance_period_ends',
     label: 'Performance end date',
     dataType: TranslationDataType.DATE,
-    formType: 'datePicker',
+    formType: TranslationFormType.DATEPICKER,
     adjacentPositioning: {
       position: 'right',
       adjacentField: 'performancePeriodStarts'
@@ -333,7 +337,7 @@ export const basics: TranslationBasics = {
     dbField: 'high_level_note',
     label: 'Notes',
     dataType: TranslationDataType.STRING,
-    formType: 'textarea'
+    formType: TranslationFormType.TEXTAREA
   },
   wrapUpEnds: {
     gqlField: 'wrapUpEnds',
@@ -341,7 +345,7 @@ export const basics: TranslationBasics = {
     dbField: 'wrap_up_ends',
     label: 'Model wrap-up end date',
     dataType: TranslationDataType.DATE,
-    formType: 'datePicker',
+    formType: TranslationFormType.DATEPICKER,
     filterGroups: [ModelViewFilter.IPC]
   },
   phasedIn: {
@@ -353,7 +357,7 @@ export const basics: TranslationBasics = {
     sublabel:
       'That is, the basic model would start at the earliest possible date but additional facets could be phased in at a later quarter.',
     dataType: TranslationDataType.BOOLEAN,
-    formType: 'radio',
+    formType: TranslationFormType.RADIO,
     isPageStart: true,
     options: {
       true: 'Yes',
@@ -367,7 +371,7 @@ export const basics: TranslationBasics = {
     dbField: 'phased_in_note',
     label: 'Notes',
     dataType: TranslationDataType.STRING,
-    formType: 'textarea',
+    formType: TranslationFormType.TEXTAREA,
     filterGroups: [ModelViewFilter.IDDOC, ModelViewFilter.PBG]
   },
   status: {
@@ -376,7 +380,7 @@ export const basics: TranslationBasics = {
     dbField: 'status',
     label: 'Model Plan status',
     dataType: TranslationDataType.ENUM,
-    formType: 'checkbox',
+    formType: TranslationFormType.CHECKBOX,
     options: {
       READY: 'Ready',
       IN_PROGRESS: 'In progress',

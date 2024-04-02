@@ -1490,7 +1490,9 @@ type ComplexityRoot struct {
 	}
 
 	TranslationField struct {
+		DataType         func(childComplexity int) int
 		DbField          func(childComplexity int) int
+		FormType         func(childComplexity int) int
 		GoField          func(childComplexity int) int
 		GqlField         func(childComplexity int) int
 		IsArray          func(childComplexity int) int
@@ -1503,7 +1505,9 @@ type ComplexityRoot struct {
 	}
 
 	TranslationFieldWithOptions struct {
+		DataType         func(childComplexity int) int
 		DbField          func(childComplexity int) int
+		FormType         func(childComplexity int) int
 		GoField          func(childComplexity int) int
 		GqlField         func(childComplexity int) int
 		IsArray          func(childComplexity int) int
@@ -10846,12 +10850,26 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.TaskListSectionLockStatusChanged.LockStatus(childComplexity), true
 
+	case "TranslationField.dataType":
+		if e.complexity.TranslationField.DataType == nil {
+			break
+		}
+
+		return e.complexity.TranslationField.DataType(childComplexity), true
+
 	case "TranslationField.dbField":
 		if e.complexity.TranslationField.DbField == nil {
 			break
 		}
 
 		return e.complexity.TranslationField.DbField(childComplexity), true
+
+	case "TranslationField.formType":
+		if e.complexity.TranslationField.FormType == nil {
+			break
+		}
+
+		return e.complexity.TranslationField.FormType(childComplexity), true
 
 	case "TranslationField.goField":
 		if e.complexity.TranslationField.GoField == nil {
@@ -10916,12 +10934,26 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.TranslationField.Sublabel(childComplexity), true
 
+	case "TranslationFieldWithOptions.dataType":
+		if e.complexity.TranslationFieldWithOptions.DataType == nil {
+			break
+		}
+
+		return e.complexity.TranslationFieldWithOptions.DataType(childComplexity), true
+
 	case "TranslationFieldWithOptions.dbField":
 		if e.complexity.TranslationFieldWithOptions.DbField == nil {
 			break
 		}
 
 		return e.complexity.TranslationFieldWithOptions.DbField(childComplexity), true
+
+	case "TranslationFieldWithOptions.formType":
+		if e.complexity.TranslationFieldWithOptions.FormType == nil {
+			break
+		}
+
+		return e.complexity.TranslationFieldWithOptions.FormType(childComplexity), true
 
 	case "TranslationFieldWithOptions.goField":
 		if e.complexity.TranslationFieldWithOptions.GoField == nil {
@@ -14779,6 +14811,29 @@ Base typea that represents FE translation structure
 Translations are exported from FE for change history, and mapped to these types on the BE
 """
 
+# Represents the data type of the translation field
+enum TranslationDataType {
+  STRING
+  NUMBER
+  BOOLEAN
+  DATE
+  ENUM
+  OBJECT
+}
+
+# Represents the FORM type of the translation field
+enum TranslationFormType {
+  TEXT
+  TEXTAREA
+  NUMBER
+  BOOLEAN
+  RADIO
+  CHECKBOX
+  SELECT
+  MULTISELECT
+  DATEPICKER
+  RANGEINPUT
+}
 
 # TranslationField represents a question with no options
 type TranslationField {
@@ -14790,6 +14845,8 @@ type TranslationField {
   sublabel: String
   multiSelectLabel: String
   isArray: Boolean
+  dataType: TranslationDataType!
+  formType: TranslationFormType!
   isOtherType: Boolean # Is a question a followup to another that doesn't designate it's own readonly question/line,
   otherParentField: String # gql field name for the parent question for fields that represent Other, Please specify, etc.  Used in change history to render parent question for context
 }
@@ -14804,20 +14861,14 @@ type TranslationFieldWithOptions {
   sublabel: String
   multiSelectLabel: String
   isArray: Boolean
+  dataType: TranslationDataType!
+  formType: TranslationFormType!
   isOtherType: Boolean # Is a question a followup to another that doesn't designate it's own readonly question/line,
   otherParentField: String # gql field name for the parent question for fields that represent Other, Please specify, etc.  Used in change history to render parent question for context
   options: Map!
 }
 
-# Represents the data type of the translation field
-enum TranslationDataType {
-  STRING
-  NUMBER
-  BOOLEAN
-  DATE
-  ENUM
-  OBJECT
-}`, BuiltIn: false},
+`, BuiltIn: false},
 	{Name: "../schema/types/user_account.graphql", Input: `type UserAccount {
   id: UUID!
   username: String!
@@ -33632,6 +33683,10 @@ func (ec *executionContext) fieldContext_PlanBasicsTranslation_modelCategory(ctx
 				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationFieldWithOptions_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationFieldWithOptions_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
 			case "otherParentField":
@@ -33700,6 +33755,10 @@ func (ec *executionContext) fieldContext_PlanBasicsTranslation_additionalModelCa
 				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationFieldWithOptions_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationFieldWithOptions_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
 			case "otherParentField":
@@ -33768,6 +33827,10 @@ func (ec *executionContext) fieldContext_PlanBasicsTranslation_demoCode(ctx cont
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -33834,6 +33897,10 @@ func (ec *executionContext) fieldContext_PlanBasicsTranslation_amsModelID(ctx co
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -33900,6 +33967,10 @@ func (ec *executionContext) fieldContext_PlanBasicsTranslation_cmsCenters(ctx co
 				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationFieldWithOptions_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationFieldWithOptions_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
 			case "otherParentField":
@@ -33968,6 +34039,10 @@ func (ec *executionContext) fieldContext_PlanBasicsTranslation_cmmiGroups(ctx co
 				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationFieldWithOptions_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationFieldWithOptions_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
 			case "otherParentField":
@@ -34036,6 +34111,10 @@ func (ec *executionContext) fieldContext_PlanBasicsTranslation_modelType(ctx con
 				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationFieldWithOptions_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationFieldWithOptions_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
 			case "otherParentField":
@@ -34104,6 +34183,10 @@ func (ec *executionContext) fieldContext_PlanBasicsTranslation_modelTypeOther(ct
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -34170,6 +34253,10 @@ func (ec *executionContext) fieldContext_PlanBasicsTranslation_problem(ctx conte
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -34236,6 +34323,10 @@ func (ec *executionContext) fieldContext_PlanBasicsTranslation_goal(ctx context.
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -34302,6 +34393,10 @@ func (ec *executionContext) fieldContext_PlanBasicsTranslation_testInterventions
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -34368,6 +34463,10 @@ func (ec *executionContext) fieldContext_PlanBasicsTranslation_note(ctx context.
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -34434,6 +34533,10 @@ func (ec *executionContext) fieldContext_PlanBasicsTranslation_completeICIP(ctx 
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -34500,6 +34603,10 @@ func (ec *executionContext) fieldContext_PlanBasicsTranslation_clearanceStarts(c
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -34566,6 +34673,10 @@ func (ec *executionContext) fieldContext_PlanBasicsTranslation_clearanceEnds(ctx
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -34632,6 +34743,10 @@ func (ec *executionContext) fieldContext_PlanBasicsTranslation_announced(ctx con
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -34698,6 +34813,10 @@ func (ec *executionContext) fieldContext_PlanBasicsTranslation_applicationsStart
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -34764,6 +34883,10 @@ func (ec *executionContext) fieldContext_PlanBasicsTranslation_applicationsEnd(c
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -34830,6 +34953,10 @@ func (ec *executionContext) fieldContext_PlanBasicsTranslation_performancePeriod
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -34896,6 +35023,10 @@ func (ec *executionContext) fieldContext_PlanBasicsTranslation_performancePeriod
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -34962,6 +35093,10 @@ func (ec *executionContext) fieldContext_PlanBasicsTranslation_wrapUpEnds(ctx co
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -35028,6 +35163,10 @@ func (ec *executionContext) fieldContext_PlanBasicsTranslation_highLevelNote(ctx
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -35094,6 +35233,10 @@ func (ec *executionContext) fieldContext_PlanBasicsTranslation_phasedIn(ctx cont
 				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationFieldWithOptions_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationFieldWithOptions_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
 			case "otherParentField":
@@ -35162,6 +35305,10 @@ func (ec *executionContext) fieldContext_PlanBasicsTranslation_phasedInNote(ctx 
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -35228,6 +35375,10 @@ func (ec *executionContext) fieldContext_PlanBasicsTranslation_status(ctx contex
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -37260,6 +37411,10 @@ func (ec *executionContext) fieldContext_PlanBeneficiariesTranslation_beneficiar
 				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationFieldWithOptions_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationFieldWithOptions_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
 			case "otherParentField":
@@ -37328,6 +37483,10 @@ func (ec *executionContext) fieldContext_PlanBeneficiariesTranslation_beneficiar
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -37394,6 +37553,10 @@ func (ec *executionContext) fieldContext_PlanBeneficiariesTranslation_beneficiar
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -37460,6 +37623,10 @@ func (ec *executionContext) fieldContext_PlanBeneficiariesTranslation_diseaseSpe
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -37526,6 +37693,10 @@ func (ec *executionContext) fieldContext_PlanBeneficiariesTranslation_treatDualE
 				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationFieldWithOptions_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationFieldWithOptions_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
 			case "otherParentField":
@@ -37594,6 +37765,10 @@ func (ec *executionContext) fieldContext_PlanBeneficiariesTranslation_treatDualE
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -37660,6 +37835,10 @@ func (ec *executionContext) fieldContext_PlanBeneficiariesTranslation_treatDualE
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -37726,6 +37905,10 @@ func (ec *executionContext) fieldContext_PlanBeneficiariesTranslation_excludeCer
 				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationFieldWithOptions_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationFieldWithOptions_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
 			case "otherParentField":
@@ -37794,6 +37977,10 @@ func (ec *executionContext) fieldContext_PlanBeneficiariesTranslation_excludeCer
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -37860,6 +38047,10 @@ func (ec *executionContext) fieldContext_PlanBeneficiariesTranslation_excludeCer
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -37926,6 +38117,10 @@ func (ec *executionContext) fieldContext_PlanBeneficiariesTranslation_numberPeop
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -37992,6 +38187,10 @@ func (ec *executionContext) fieldContext_PlanBeneficiariesTranslation_estimateCo
 				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationFieldWithOptions_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationFieldWithOptions_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
 			case "otherParentField":
@@ -38060,6 +38259,10 @@ func (ec *executionContext) fieldContext_PlanBeneficiariesTranslation_confidence
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -38126,6 +38329,10 @@ func (ec *executionContext) fieldContext_PlanBeneficiariesTranslation_beneficiar
 				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationFieldWithOptions_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationFieldWithOptions_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
 			case "otherParentField":
@@ -38194,6 +38401,10 @@ func (ec *executionContext) fieldContext_PlanBeneficiariesTranslation_beneficiar
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -38260,6 +38471,10 @@ func (ec *executionContext) fieldContext_PlanBeneficiariesTranslation_beneficiar
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -38326,6 +38541,10 @@ func (ec *executionContext) fieldContext_PlanBeneficiariesTranslation_beneficiar
 				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationFieldWithOptions_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationFieldWithOptions_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
 			case "otherParentField":
@@ -38394,6 +38613,10 @@ func (ec *executionContext) fieldContext_PlanBeneficiariesTranslation_beneficiar
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -38460,6 +38683,10 @@ func (ec *executionContext) fieldContext_PlanBeneficiariesTranslation_beneficiar
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -38526,6 +38753,10 @@ func (ec *executionContext) fieldContext_PlanBeneficiariesTranslation_beneficiar
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -38592,6 +38823,10 @@ func (ec *executionContext) fieldContext_PlanBeneficiariesTranslation_beneficiar
 				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationFieldWithOptions_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationFieldWithOptions_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
 			case "otherParentField":
@@ -38660,6 +38895,10 @@ func (ec *executionContext) fieldContext_PlanBeneficiariesTranslation_beneficiar
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -38726,6 +38965,10 @@ func (ec *executionContext) fieldContext_PlanBeneficiariesTranslation_beneficiar
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -38792,6 +39035,10 @@ func (ec *executionContext) fieldContext_PlanBeneficiariesTranslation_beneficiar
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -38858,6 +39105,10 @@ func (ec *executionContext) fieldContext_PlanBeneficiariesTranslation_beneficiar
 				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationFieldWithOptions_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationFieldWithOptions_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
 			case "otherParentField":
@@ -38926,6 +39177,10 @@ func (ec *executionContext) fieldContext_PlanBeneficiariesTranslation_beneficiar
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -38992,6 +39247,10 @@ func (ec *executionContext) fieldContext_PlanBeneficiariesTranslation_precedence
 				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationFieldWithOptions_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationFieldWithOptions_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
 			case "otherParentField":
@@ -39060,6 +39319,10 @@ func (ec *executionContext) fieldContext_PlanBeneficiariesTranslation_precedence
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -39126,6 +39389,10 @@ func (ec *executionContext) fieldContext_PlanBeneficiariesTranslation_precedence
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -39192,6 +39459,10 @@ func (ec *executionContext) fieldContext_PlanBeneficiariesTranslation_precedence
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -39258,6 +39529,10 @@ func (ec *executionContext) fieldContext_PlanBeneficiariesTranslation_status(ctx
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -40466,6 +40741,10 @@ func (ec *executionContext) fieldContext_PlanCollaboratorTranslation_username(ct
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -40532,6 +40811,10 @@ func (ec *executionContext) fieldContext_PlanCollaboratorTranslation_teamRoles(c
 				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationFieldWithOptions_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationFieldWithOptions_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
 			case "otherParentField":
@@ -46975,6 +47258,10 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristicsTranslation_i
 				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationFieldWithOptions_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationFieldWithOptions_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
 			case "otherParentField":
@@ -47043,6 +47330,10 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristicsTranslation_e
 				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationFieldWithOptions_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationFieldWithOptions_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
 			case "otherParentField":
@@ -47111,6 +47402,10 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristicsTranslation_r
 				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationFieldWithOptions_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationFieldWithOptions_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
 			case "otherParentField":
@@ -47179,6 +47474,10 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristicsTranslation_r
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -47245,6 +47544,10 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristicsTranslation_r
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -47311,6 +47614,10 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristicsTranslation_r
 				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationFieldWithOptions_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationFieldWithOptions_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
 			case "otherParentField":
@@ -47379,6 +47686,10 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristicsTranslation_r
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -47445,6 +47756,10 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristicsTranslation_r
 				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationFieldWithOptions_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationFieldWithOptions_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
 			case "otherParentField":
@@ -47513,6 +47828,10 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristicsTranslation_r
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -47579,6 +47898,10 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristicsTranslation_r
 				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationFieldWithOptions_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationFieldWithOptions_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
 			case "otherParentField":
@@ -47647,6 +47970,10 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristicsTranslation_p
 				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationFieldWithOptions_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationFieldWithOptions_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
 			case "otherParentField":
@@ -47715,6 +48042,10 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristicsTranslation_p
 				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationFieldWithOptions_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationFieldWithOptions_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
 			case "otherParentField":
@@ -47783,6 +48114,10 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristicsTranslation_p
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -47849,6 +48184,10 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristicsTranslation_p
 				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationFieldWithOptions_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationFieldWithOptions_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
 			case "otherParentField":
@@ -47917,6 +48256,10 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristicsTranslation_p
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -47983,6 +48326,10 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristicsTranslation_p
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -48049,6 +48396,10 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristicsTranslation_p
 				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationFieldWithOptions_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationFieldWithOptions_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
 			case "otherParentField":
@@ -48117,6 +48468,10 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristicsTranslation_h
 				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationFieldWithOptions_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationFieldWithOptions_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
 			case "otherParentField":
@@ -48185,6 +48540,10 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristicsTranslation_h
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -48251,6 +48610,10 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristicsTranslation_h
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -48317,6 +48680,10 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristicsTranslation_a
 				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationFieldWithOptions_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationFieldWithOptions_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
 			case "otherParentField":
@@ -48385,6 +48752,10 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristicsTranslation_a
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -48451,6 +48822,10 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristicsTranslation_a
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -48517,6 +48892,10 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristicsTranslation_a
 				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationFieldWithOptions_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationFieldWithOptions_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
 			case "otherParentField":
@@ -48585,6 +48964,10 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristicsTranslation_a
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -48651,6 +49034,10 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristicsTranslation_k
 				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationFieldWithOptions_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationFieldWithOptions_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
 			case "otherParentField":
@@ -48719,6 +49106,10 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristicsTranslation_k
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -48785,6 +49176,10 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristicsTranslation_k
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -48851,6 +49246,10 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristicsTranslation_c
 				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationFieldWithOptions_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationFieldWithOptions_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
 			case "otherParentField":
@@ -48919,6 +49318,10 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristicsTranslation_c
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -48985,6 +49388,10 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristicsTranslation_m
 				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationFieldWithOptions_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationFieldWithOptions_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
 			case "otherParentField":
@@ -49053,6 +49460,10 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristicsTranslation_m
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -49119,6 +49530,10 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristicsTranslation_p
 				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationFieldWithOptions_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationFieldWithOptions_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
 			case "otherParentField":
@@ -49187,6 +49602,10 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristicsTranslation_p
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -49253,6 +49672,10 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristicsTranslation_c
 				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationFieldWithOptions_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationFieldWithOptions_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
 			case "otherParentField":
@@ -49321,6 +49744,10 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristicsTranslation_c
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -49387,6 +49814,10 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristicsTranslation_c
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -49453,6 +49884,10 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristicsTranslation_a
 				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationFieldWithOptions_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationFieldWithOptions_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
 			case "otherParentField":
@@ -49521,6 +49956,10 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristicsTranslation_a
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -49587,6 +50026,10 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristicsTranslation_a
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -49653,6 +50096,10 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristicsTranslation_c
 				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationFieldWithOptions_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationFieldWithOptions_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
 			case "otherParentField":
@@ -49721,6 +50168,10 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristicsTranslation_c
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -49787,6 +50238,10 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristicsTranslation_c
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -49853,6 +50308,10 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristicsTranslation_g
 				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationFieldWithOptions_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationFieldWithOptions_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
 			case "otherParentField":
@@ -49921,6 +50380,10 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristicsTranslation_g
 				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationFieldWithOptions_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationFieldWithOptions_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
 			case "otherParentField":
@@ -49989,6 +50452,10 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristicsTranslation_g
 				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationFieldWithOptions_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationFieldWithOptions_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
 			case "otherParentField":
@@ -50057,6 +50524,10 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristicsTranslation_g
 				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationFieldWithOptions_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationFieldWithOptions_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
 			case "otherParentField":
@@ -50125,6 +50596,10 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristicsTranslation_g
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -50191,6 +50666,10 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristicsTranslation_g
 				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationFieldWithOptions_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationFieldWithOptions_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
 			case "otherParentField":
@@ -50259,6 +50738,10 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristicsTranslation_g
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -50325,6 +50808,10 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristicsTranslation_g
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -50391,6 +50878,10 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristicsTranslation_p
 				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationFieldWithOptions_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationFieldWithOptions_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
 			case "otherParentField":
@@ -50459,6 +50950,10 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristicsTranslation_p
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -50525,6 +51020,10 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristicsTranslation_a
 				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationFieldWithOptions_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationFieldWithOptions_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
 			case "otherParentField":
@@ -50593,6 +51092,10 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristicsTranslation_a
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -50659,6 +51162,10 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristicsTranslation_m
 				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationFieldWithOptions_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationFieldWithOptions_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
 			case "otherParentField":
@@ -50727,6 +51234,10 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristicsTranslation_m
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -50793,6 +51304,10 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristicsTranslation_r
 				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationFieldWithOptions_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationFieldWithOptions_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
 			case "otherParentField":
@@ -50861,6 +51376,10 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristicsTranslation_r
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -50927,6 +51446,10 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristicsTranslation_r
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -50993,6 +51516,10 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristicsTranslation_a
 				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationFieldWithOptions_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationFieldWithOptions_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
 			case "otherParentField":
@@ -51061,6 +51588,10 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristicsTranslation_a
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -51127,6 +51658,10 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristicsTranslation_a
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -51193,6 +51728,10 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristicsTranslation_w
 				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationFieldWithOptions_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationFieldWithOptions_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
 			case "otherParentField":
@@ -51261,6 +51800,10 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristicsTranslation_w
 				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationFieldWithOptions_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationFieldWithOptions_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
 			case "otherParentField":
@@ -51329,6 +51872,10 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristicsTranslation_w
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -51395,6 +51942,10 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristicsTranslation_s
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -56151,6 +56702,10 @@ func (ec *executionContext) fieldContext_PlanOpsEvalAndLearningTranslation_stake
 				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationFieldWithOptions_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationFieldWithOptions_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
 			case "otherParentField":
@@ -56219,6 +56774,10 @@ func (ec *executionContext) fieldContext_PlanOpsEvalAndLearningTranslation_stake
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -56285,6 +56844,10 @@ func (ec *executionContext) fieldContext_PlanOpsEvalAndLearningTranslation_stake
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -56351,6 +56914,10 @@ func (ec *executionContext) fieldContext_PlanOpsEvalAndLearningTranslation_helpd
 				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationFieldWithOptions_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationFieldWithOptions_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
 			case "otherParentField":
@@ -56419,6 +56986,10 @@ func (ec *executionContext) fieldContext_PlanOpsEvalAndLearningTranslation_helpd
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -56485,6 +57056,10 @@ func (ec *executionContext) fieldContext_PlanOpsEvalAndLearningTranslation_contr
 				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationFieldWithOptions_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationFieldWithOptions_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
 			case "otherParentField":
@@ -56553,6 +57128,10 @@ func (ec *executionContext) fieldContext_PlanOpsEvalAndLearningTranslation_contr
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -56619,6 +57198,10 @@ func (ec *executionContext) fieldContext_PlanOpsEvalAndLearningTranslation_contr
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -56685,6 +57268,10 @@ func (ec *executionContext) fieldContext_PlanOpsEvalAndLearningTranslation_contr
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -56751,6 +57338,10 @@ func (ec *executionContext) fieldContext_PlanOpsEvalAndLearningTranslation_iddoc
 				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationFieldWithOptions_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationFieldWithOptions_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
 			case "otherParentField":
@@ -56819,6 +57410,10 @@ func (ec *executionContext) fieldContext_PlanOpsEvalAndLearningTranslation_iddoc
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -56885,6 +57480,10 @@ func (ec *executionContext) fieldContext_PlanOpsEvalAndLearningTranslation_techn
 				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationFieldWithOptions_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationFieldWithOptions_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
 			case "otherParentField":
@@ -56953,6 +57552,10 @@ func (ec *executionContext) fieldContext_PlanOpsEvalAndLearningTranslation_techn
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -57019,6 +57622,10 @@ func (ec *executionContext) fieldContext_PlanOpsEvalAndLearningTranslation_techn
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -57085,6 +57692,10 @@ func (ec *executionContext) fieldContext_PlanOpsEvalAndLearningTranslation_captu
 				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationFieldWithOptions_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationFieldWithOptions_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
 			case "otherParentField":
@@ -57153,6 +57764,10 @@ func (ec *executionContext) fieldContext_PlanOpsEvalAndLearningTranslation_captu
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -57219,6 +57834,10 @@ func (ec *executionContext) fieldContext_PlanOpsEvalAndLearningTranslation_icdOw
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -57285,6 +57904,10 @@ func (ec *executionContext) fieldContext_PlanOpsEvalAndLearningTranslation_draft
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -57351,6 +57974,10 @@ func (ec *executionContext) fieldContext_PlanOpsEvalAndLearningTranslation_icdNo
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -57417,6 +58044,10 @@ func (ec *executionContext) fieldContext_PlanOpsEvalAndLearningTranslation_uatNe
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -57483,6 +58114,10 @@ func (ec *executionContext) fieldContext_PlanOpsEvalAndLearningTranslation_stcNe
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -57549,6 +58184,10 @@ func (ec *executionContext) fieldContext_PlanOpsEvalAndLearningTranslation_testi
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -57615,6 +58254,10 @@ func (ec *executionContext) fieldContext_PlanOpsEvalAndLearningTranslation_testi
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -57681,6 +58324,10 @@ func (ec *executionContext) fieldContext_PlanOpsEvalAndLearningTranslation_dataM
 				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationFieldWithOptions_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationFieldWithOptions_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
 			case "otherParentField":
@@ -57749,6 +58396,10 @@ func (ec *executionContext) fieldContext_PlanOpsEvalAndLearningTranslation_dataM
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -57815,6 +58466,10 @@ func (ec *executionContext) fieldContext_PlanOpsEvalAndLearningTranslation_dataR
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -57881,6 +58536,10 @@ func (ec *executionContext) fieldContext_PlanOpsEvalAndLearningTranslation_dataR
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -57947,6 +58606,10 @@ func (ec *executionContext) fieldContext_PlanOpsEvalAndLearningTranslation_dataF
 				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationFieldWithOptions_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationFieldWithOptions_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
 			case "otherParentField":
@@ -58015,6 +58678,10 @@ func (ec *executionContext) fieldContext_PlanOpsEvalAndLearningTranslation_eftSe
 				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationFieldWithOptions_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationFieldWithOptions_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
 			case "otherParentField":
@@ -58083,6 +58750,10 @@ func (ec *executionContext) fieldContext_PlanOpsEvalAndLearningTranslation_unsol
 				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationFieldWithOptions_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationFieldWithOptions_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
 			case "otherParentField":
@@ -58151,6 +58822,10 @@ func (ec *executionContext) fieldContext_PlanOpsEvalAndLearningTranslation_dataF
 				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationFieldWithOptions_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationFieldWithOptions_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
 			case "otherParentField":
@@ -58219,6 +58894,10 @@ func (ec *executionContext) fieldContext_PlanOpsEvalAndLearningTranslation_produ
 				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationFieldWithOptions_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationFieldWithOptions_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
 			case "otherParentField":
@@ -58287,6 +58966,10 @@ func (ec *executionContext) fieldContext_PlanOpsEvalAndLearningTranslation_fileN
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -58353,6 +59036,10 @@ func (ec *executionContext) fieldContext_PlanOpsEvalAndLearningTranslation_dataM
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -58419,6 +59106,10 @@ func (ec *executionContext) fieldContext_PlanOpsEvalAndLearningTranslation_bench
 				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationFieldWithOptions_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationFieldWithOptions_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
 			case "otherParentField":
@@ -58487,6 +59178,10 @@ func (ec *executionContext) fieldContext_PlanOpsEvalAndLearningTranslation_bench
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -58553,6 +59248,10 @@ func (ec *executionContext) fieldContext_PlanOpsEvalAndLearningTranslation_compu
 				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationFieldWithOptions_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationFieldWithOptions_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
 			case "otherParentField":
@@ -58621,6 +59320,10 @@ func (ec *executionContext) fieldContext_PlanOpsEvalAndLearningTranslation_compu
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -58687,6 +59390,10 @@ func (ec *executionContext) fieldContext_PlanOpsEvalAndLearningTranslation_riskA
 				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationFieldWithOptions_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationFieldWithOptions_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
 			case "otherParentField":
@@ -58755,6 +59462,10 @@ func (ec *executionContext) fieldContext_PlanOpsEvalAndLearningTranslation_riskA
 				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationFieldWithOptions_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationFieldWithOptions_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
 			case "otherParentField":
@@ -58823,6 +59534,10 @@ func (ec *executionContext) fieldContext_PlanOpsEvalAndLearningTranslation_riskA
 				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationFieldWithOptions_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationFieldWithOptions_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
 			case "otherParentField":
@@ -58891,6 +59606,10 @@ func (ec *executionContext) fieldContext_PlanOpsEvalAndLearningTranslation_riskA
 				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationFieldWithOptions_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationFieldWithOptions_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
 			case "otherParentField":
@@ -58959,6 +59678,10 @@ func (ec *executionContext) fieldContext_PlanOpsEvalAndLearningTranslation_riskA
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -59025,6 +59748,10 @@ func (ec *executionContext) fieldContext_PlanOpsEvalAndLearningTranslation_appea
 				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationFieldWithOptions_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationFieldWithOptions_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
 			case "otherParentField":
@@ -59093,6 +59820,10 @@ func (ec *executionContext) fieldContext_PlanOpsEvalAndLearningTranslation_appea
 				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationFieldWithOptions_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationFieldWithOptions_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
 			case "otherParentField":
@@ -59161,6 +59892,10 @@ func (ec *executionContext) fieldContext_PlanOpsEvalAndLearningTranslation_appea
 				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationFieldWithOptions_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationFieldWithOptions_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
 			case "otherParentField":
@@ -59229,6 +59964,10 @@ func (ec *executionContext) fieldContext_PlanOpsEvalAndLearningTranslation_appea
 				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationFieldWithOptions_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationFieldWithOptions_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
 			case "otherParentField":
@@ -59297,6 +60036,10 @@ func (ec *executionContext) fieldContext_PlanOpsEvalAndLearningTranslation_appea
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -59363,6 +60106,10 @@ func (ec *executionContext) fieldContext_PlanOpsEvalAndLearningTranslation_evalu
 				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationFieldWithOptions_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationFieldWithOptions_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
 			case "otherParentField":
@@ -59431,6 +60178,10 @@ func (ec *executionContext) fieldContext_PlanOpsEvalAndLearningTranslation_evalu
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -59497,6 +60248,10 @@ func (ec *executionContext) fieldContext_PlanOpsEvalAndLearningTranslation_evalu
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -59563,6 +60318,10 @@ func (ec *executionContext) fieldContext_PlanOpsEvalAndLearningTranslation_ccmIn
 				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationFieldWithOptions_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationFieldWithOptions_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
 			case "otherParentField":
@@ -59631,6 +60390,10 @@ func (ec *executionContext) fieldContext_PlanOpsEvalAndLearningTranslation_ccmIn
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -59697,6 +60460,10 @@ func (ec *executionContext) fieldContext_PlanOpsEvalAndLearningTranslation_ccmIn
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -59763,6 +60530,10 @@ func (ec *executionContext) fieldContext_PlanOpsEvalAndLearningTranslation_dataN
 				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationFieldWithOptions_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationFieldWithOptions_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
 			case "otherParentField":
@@ -59831,6 +60602,10 @@ func (ec *executionContext) fieldContext_PlanOpsEvalAndLearningTranslation_dataN
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -59897,6 +60672,10 @@ func (ec *executionContext) fieldContext_PlanOpsEvalAndLearningTranslation_dataN
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -59963,6 +60742,10 @@ func (ec *executionContext) fieldContext_PlanOpsEvalAndLearningTranslation_dataT
 				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationFieldWithOptions_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationFieldWithOptions_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
 			case "otherParentField":
@@ -60031,6 +60814,10 @@ func (ec *executionContext) fieldContext_PlanOpsEvalAndLearningTranslation_dataT
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -60097,6 +60884,10 @@ func (ec *executionContext) fieldContext_PlanOpsEvalAndLearningTranslation_dataT
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -60163,6 +60954,10 @@ func (ec *executionContext) fieldContext_PlanOpsEvalAndLearningTranslation_share
 				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationFieldWithOptions_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationFieldWithOptions_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
 			case "otherParentField":
@@ -60231,6 +61026,10 @@ func (ec *executionContext) fieldContext_PlanOpsEvalAndLearningTranslation_share
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -60297,6 +61096,10 @@ func (ec *executionContext) fieldContext_PlanOpsEvalAndLearningTranslation_sendF
 				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationFieldWithOptions_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationFieldWithOptions_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
 			case "otherParentField":
@@ -60365,6 +61168,10 @@ func (ec *executionContext) fieldContext_PlanOpsEvalAndLearningTranslation_sendF
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -60431,6 +61238,10 @@ func (ec *executionContext) fieldContext_PlanOpsEvalAndLearningTranslation_appTo
 				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationFieldWithOptions_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationFieldWithOptions_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
 			case "otherParentField":
@@ -60499,6 +61310,10 @@ func (ec *executionContext) fieldContext_PlanOpsEvalAndLearningTranslation_appTo
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -60565,6 +61380,10 @@ func (ec *executionContext) fieldContext_PlanOpsEvalAndLearningTranslation_appTo
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -60631,6 +61450,10 @@ func (ec *executionContext) fieldContext_PlanOpsEvalAndLearningTranslation_useCc
 				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationFieldWithOptions_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationFieldWithOptions_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
 			case "otherParentField":
@@ -60699,6 +61522,10 @@ func (ec *executionContext) fieldContext_PlanOpsEvalAndLearningTranslation_useCc
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -60765,6 +61592,10 @@ func (ec *executionContext) fieldContext_PlanOpsEvalAndLearningTranslation_devel
 				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationFieldWithOptions_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationFieldWithOptions_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
 			case "otherParentField":
@@ -60833,6 +61664,10 @@ func (ec *executionContext) fieldContext_PlanOpsEvalAndLearningTranslation_devel
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -60899,6 +61734,10 @@ func (ec *executionContext) fieldContext_PlanOpsEvalAndLearningTranslation_quali
 				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationFieldWithOptions_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationFieldWithOptions_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
 			case "otherParentField":
@@ -60967,6 +61806,10 @@ func (ec *executionContext) fieldContext_PlanOpsEvalAndLearningTranslation_quali
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -61033,6 +61876,10 @@ func (ec *executionContext) fieldContext_PlanOpsEvalAndLearningTranslation_quali
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -61099,6 +61946,10 @@ func (ec *executionContext) fieldContext_PlanOpsEvalAndLearningTranslation_dataS
 				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationFieldWithOptions_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationFieldWithOptions_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
 			case "otherParentField":
@@ -61167,6 +62018,10 @@ func (ec *executionContext) fieldContext_PlanOpsEvalAndLearningTranslation_dataS
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -61233,6 +62088,10 @@ func (ec *executionContext) fieldContext_PlanOpsEvalAndLearningTranslation_dataS
 				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationFieldWithOptions_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationFieldWithOptions_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
 			case "otherParentField":
@@ -61301,6 +62160,10 @@ func (ec *executionContext) fieldContext_PlanOpsEvalAndLearningTranslation_dataS
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -61367,6 +62230,10 @@ func (ec *executionContext) fieldContext_PlanOpsEvalAndLearningTranslation_dataS
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -61433,6 +62300,10 @@ func (ec *executionContext) fieldContext_PlanOpsEvalAndLearningTranslation_dataS
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -61499,6 +62370,10 @@ func (ec *executionContext) fieldContext_PlanOpsEvalAndLearningTranslation_dataC
 				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationFieldWithOptions_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationFieldWithOptions_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
 			case "otherParentField":
@@ -61567,6 +62442,10 @@ func (ec *executionContext) fieldContext_PlanOpsEvalAndLearningTranslation_dataC
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -61633,6 +62512,10 @@ func (ec *executionContext) fieldContext_PlanOpsEvalAndLearningTranslation_dataC
 				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationFieldWithOptions_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationFieldWithOptions_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
 			case "otherParentField":
@@ -61701,6 +62584,10 @@ func (ec *executionContext) fieldContext_PlanOpsEvalAndLearningTranslation_dataC
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -61767,6 +62654,10 @@ func (ec *executionContext) fieldContext_PlanOpsEvalAndLearningTranslation_dataC
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -61833,6 +62724,10 @@ func (ec *executionContext) fieldContext_PlanOpsEvalAndLearningTranslation_dataC
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -61899,6 +62794,10 @@ func (ec *executionContext) fieldContext_PlanOpsEvalAndLearningTranslation_quali
 				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationFieldWithOptions_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationFieldWithOptions_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
 			case "otherParentField":
@@ -61967,6 +62866,10 @@ func (ec *executionContext) fieldContext_PlanOpsEvalAndLearningTranslation_quali
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -62033,6 +62936,10 @@ func (ec *executionContext) fieldContext_PlanOpsEvalAndLearningTranslation_quali
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -62099,6 +63006,10 @@ func (ec *executionContext) fieldContext_PlanOpsEvalAndLearningTranslation_quali
 				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationFieldWithOptions_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationFieldWithOptions_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
 			case "otherParentField":
@@ -62167,6 +63078,10 @@ func (ec *executionContext) fieldContext_PlanOpsEvalAndLearningTranslation_quali
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -62233,6 +63148,10 @@ func (ec *executionContext) fieldContext_PlanOpsEvalAndLearningTranslation_quali
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -62299,6 +63218,10 @@ func (ec *executionContext) fieldContext_PlanOpsEvalAndLearningTranslation_model
 				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationFieldWithOptions_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationFieldWithOptions_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
 			case "otherParentField":
@@ -62367,6 +63290,10 @@ func (ec *executionContext) fieldContext_PlanOpsEvalAndLearningTranslation_model
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -62433,6 +63360,10 @@ func (ec *executionContext) fieldContext_PlanOpsEvalAndLearningTranslation_model
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -62499,6 +63430,10 @@ func (ec *executionContext) fieldContext_PlanOpsEvalAndLearningTranslation_antic
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -62565,6 +63500,10 @@ func (ec *executionContext) fieldContext_PlanOpsEvalAndLearningTranslation_statu
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -65848,6 +66787,10 @@ func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation
 				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationFieldWithOptions_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationFieldWithOptions_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
 			case "otherParentField":
@@ -65916,6 +66859,10 @@ func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -65982,6 +66929,10 @@ func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -66048,6 +66999,10 @@ func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -66114,6 +67069,10 @@ func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -66180,6 +67139,10 @@ func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation
 				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationFieldWithOptions_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationFieldWithOptions_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
 			case "otherParentField":
@@ -66248,6 +67211,10 @@ func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -66314,6 +67281,10 @@ func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -66380,6 +67351,10 @@ func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -66446,6 +67421,10 @@ func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation
 				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationFieldWithOptions_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationFieldWithOptions_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
 			case "otherParentField":
@@ -66514,6 +67493,10 @@ func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -66580,6 +67563,10 @@ func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation
 				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationFieldWithOptions_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationFieldWithOptions_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
 			case "otherParentField":
@@ -66648,6 +67635,10 @@ func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -66714,6 +67705,10 @@ func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -66780,6 +67775,10 @@ func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation
 				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationFieldWithOptions_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationFieldWithOptions_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
 			case "otherParentField":
@@ -66848,6 +67847,10 @@ func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -66914,6 +67917,10 @@ func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -66980,6 +67987,10 @@ func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation
 				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationFieldWithOptions_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationFieldWithOptions_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
 			case "otherParentField":
@@ -67048,6 +68059,10 @@ func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -67114,6 +68129,10 @@ func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -67180,6 +68199,10 @@ func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -67246,6 +68269,10 @@ func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation
 				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationFieldWithOptions_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationFieldWithOptions_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
 			case "otherParentField":
@@ -67314,6 +68341,10 @@ func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -67380,6 +68411,10 @@ func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -67446,6 +68481,10 @@ func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -67512,6 +68551,10 @@ func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation
 				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationFieldWithOptions_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationFieldWithOptions_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
 			case "otherParentField":
@@ -67580,6 +68623,10 @@ func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -67646,6 +68693,10 @@ func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -67712,6 +68763,10 @@ func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation
 				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationFieldWithOptions_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationFieldWithOptions_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
 			case "otherParentField":
@@ -67780,6 +68835,10 @@ func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -67846,6 +68905,10 @@ func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -67912,6 +68975,10 @@ func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation
 				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationFieldWithOptions_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationFieldWithOptions_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
 			case "otherParentField":
@@ -67980,6 +69047,10 @@ func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -68046,6 +69117,10 @@ func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation
 				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationFieldWithOptions_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationFieldWithOptions_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
 			case "otherParentField":
@@ -68114,6 +69189,10 @@ func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -68180,6 +69259,10 @@ func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation
 				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationFieldWithOptions_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationFieldWithOptions_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
 			case "otherParentField":
@@ -68248,6 +69331,10 @@ func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation
 				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationFieldWithOptions_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationFieldWithOptions_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
 			case "otherParentField":
@@ -68316,6 +69403,10 @@ func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -68382,6 +69473,10 @@ func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation
 				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationFieldWithOptions_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationFieldWithOptions_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
 			case "otherParentField":
@@ -68450,6 +69545,10 @@ func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -68516,6 +69615,10 @@ func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation
 				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationFieldWithOptions_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationFieldWithOptions_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
 			case "otherParentField":
@@ -68584,6 +69687,10 @@ func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -68650,6 +69757,10 @@ func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -68716,6 +69827,10 @@ func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation
 				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationFieldWithOptions_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationFieldWithOptions_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
 			case "otherParentField":
@@ -68784,6 +69899,10 @@ func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -68850,6 +69969,10 @@ func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -68916,6 +70039,10 @@ func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -68982,6 +70109,10 @@ func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation
 				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationFieldWithOptions_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationFieldWithOptions_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
 			case "otherParentField":
@@ -69050,6 +70181,10 @@ func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -69116,6 +70251,10 @@ func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -69182,6 +70321,10 @@ func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation
 				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationFieldWithOptions_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationFieldWithOptions_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
 			case "otherParentField":
@@ -69250,6 +70393,10 @@ func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -69316,6 +70463,10 @@ func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -69382,6 +70533,10 @@ func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation
 				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationFieldWithOptions_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationFieldWithOptions_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
 			case "otherParentField":
@@ -69450,6 +70605,10 @@ func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -69516,6 +70675,10 @@ func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -69582,6 +70745,10 @@ func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -69648,6 +70815,10 @@ func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation
 				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationFieldWithOptions_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationFieldWithOptions_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
 			case "otherParentField":
@@ -69716,6 +70887,10 @@ func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -69782,6 +70957,10 @@ func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -69848,6 +71027,10 @@ func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -73655,6 +74838,10 @@ func (ec *executionContext) fieldContext_PlanPaymentsTranslation_fundingSource(c
 				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationFieldWithOptions_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationFieldWithOptions_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
 			case "otherParentField":
@@ -73723,6 +74910,10 @@ func (ec *executionContext) fieldContext_PlanPaymentsTranslation_fundingSourceMe
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -73789,6 +74980,10 @@ func (ec *executionContext) fieldContext_PlanPaymentsTranslation_fundingSourceMe
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -73855,6 +75050,10 @@ func (ec *executionContext) fieldContext_PlanPaymentsTranslation_fundingSourceOt
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -73921,6 +75120,10 @@ func (ec *executionContext) fieldContext_PlanPaymentsTranslation_fundingSourceNo
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -73987,6 +75190,10 @@ func (ec *executionContext) fieldContext_PlanPaymentsTranslation_fundingSourceR(
 				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationFieldWithOptions_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationFieldWithOptions_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
 			case "otherParentField":
@@ -74055,6 +75262,10 @@ func (ec *executionContext) fieldContext_PlanPaymentsTranslation_fundingSourceRM
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -74121,6 +75332,10 @@ func (ec *executionContext) fieldContext_PlanPaymentsTranslation_fundingSourceRM
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -74187,6 +75402,10 @@ func (ec *executionContext) fieldContext_PlanPaymentsTranslation_fundingSourceRO
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -74253,6 +75472,10 @@ func (ec *executionContext) fieldContext_PlanPaymentsTranslation_fundingSourceRN
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -74319,6 +75542,10 @@ func (ec *executionContext) fieldContext_PlanPaymentsTranslation_payRecipients(c
 				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationFieldWithOptions_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationFieldWithOptions_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
 			case "otherParentField":
@@ -74387,6 +75614,10 @@ func (ec *executionContext) fieldContext_PlanPaymentsTranslation_payRecipientsOt
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -74453,6 +75684,10 @@ func (ec *executionContext) fieldContext_PlanPaymentsTranslation_payRecipientsNo
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -74519,6 +75754,10 @@ func (ec *executionContext) fieldContext_PlanPaymentsTranslation_payType(ctx con
 				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationFieldWithOptions_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationFieldWithOptions_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
 			case "otherParentField":
@@ -74587,6 +75826,10 @@ func (ec *executionContext) fieldContext_PlanPaymentsTranslation_payTypeNote(ctx
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -74653,6 +75896,10 @@ func (ec *executionContext) fieldContext_PlanPaymentsTranslation_payClaims(ctx c
 				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationFieldWithOptions_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationFieldWithOptions_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
 			case "otherParentField":
@@ -74721,6 +75968,10 @@ func (ec *executionContext) fieldContext_PlanPaymentsTranslation_payClaimsOther(
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -74787,6 +76038,10 @@ func (ec *executionContext) fieldContext_PlanPaymentsTranslation_payClaimsNote(c
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -74853,6 +76108,10 @@ func (ec *executionContext) fieldContext_PlanPaymentsTranslation_shouldAnyProvid
 				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationFieldWithOptions_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationFieldWithOptions_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
 			case "otherParentField":
@@ -74921,6 +76180,10 @@ func (ec *executionContext) fieldContext_PlanPaymentsTranslation_shouldAnyProvid
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -74987,6 +76250,10 @@ func (ec *executionContext) fieldContext_PlanPaymentsTranslation_changesMedicare
 				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationFieldWithOptions_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationFieldWithOptions_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
 			case "otherParentField":
@@ -75055,6 +76322,10 @@ func (ec *executionContext) fieldContext_PlanPaymentsTranslation_changesMedicare
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -75121,6 +76392,10 @@ func (ec *executionContext) fieldContext_PlanPaymentsTranslation_affectsMedicare
 				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationFieldWithOptions_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationFieldWithOptions_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
 			case "otherParentField":
@@ -75189,6 +76464,10 @@ func (ec *executionContext) fieldContext_PlanPaymentsTranslation_affectsMedicare
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -75255,6 +76534,10 @@ func (ec *executionContext) fieldContext_PlanPaymentsTranslation_affectsMedicare
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -75321,6 +76604,10 @@ func (ec *executionContext) fieldContext_PlanPaymentsTranslation_payModelDiffere
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -75387,6 +76674,10 @@ func (ec *executionContext) fieldContext_PlanPaymentsTranslation_creatingDepende
 				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationFieldWithOptions_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationFieldWithOptions_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
 			case "otherParentField":
@@ -75455,6 +76746,10 @@ func (ec *executionContext) fieldContext_PlanPaymentsTranslation_creatingDepende
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -75521,6 +76816,10 @@ func (ec *executionContext) fieldContext_PlanPaymentsTranslation_needsClaimsData
 				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationFieldWithOptions_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationFieldWithOptions_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
 			case "otherParentField":
@@ -75589,6 +76888,10 @@ func (ec *executionContext) fieldContext_PlanPaymentsTranslation_needsClaimsData
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -75655,6 +76958,10 @@ func (ec *executionContext) fieldContext_PlanPaymentsTranslation_providingThirdP
 				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationFieldWithOptions_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationFieldWithOptions_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
 			case "otherParentField":
@@ -75723,6 +77030,10 @@ func (ec *executionContext) fieldContext_PlanPaymentsTranslation_isContractorAwa
 				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationFieldWithOptions_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationFieldWithOptions_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
 			case "otherParentField":
@@ -75791,6 +77102,10 @@ func (ec *executionContext) fieldContext_PlanPaymentsTranslation_beneficiaryCost
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -75857,6 +77172,10 @@ func (ec *executionContext) fieldContext_PlanPaymentsTranslation_waiveBeneficiar
 				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationFieldWithOptions_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationFieldWithOptions_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
 			case "otherParentField":
@@ -75925,6 +77244,10 @@ func (ec *executionContext) fieldContext_PlanPaymentsTranslation_waiveBeneficiar
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -75991,6 +77314,10 @@ func (ec *executionContext) fieldContext_PlanPaymentsTranslation_waiverOnlyAppli
 				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationFieldWithOptions_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationFieldWithOptions_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
 			case "otherParentField":
@@ -76059,6 +77386,10 @@ func (ec *executionContext) fieldContext_PlanPaymentsTranslation_waiveBeneficiar
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -76125,6 +77456,10 @@ func (ec *executionContext) fieldContext_PlanPaymentsTranslation_nonClaimsPaymen
 				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationFieldWithOptions_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationFieldWithOptions_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
 			case "otherParentField":
@@ -76193,6 +77528,10 @@ func (ec *executionContext) fieldContext_PlanPaymentsTranslation_nonClaimsPaymen
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -76259,6 +77598,10 @@ func (ec *executionContext) fieldContext_PlanPaymentsTranslation_nonClaimsPaymen
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -76325,6 +77668,10 @@ func (ec *executionContext) fieldContext_PlanPaymentsTranslation_paymentCalculat
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -76391,6 +77738,10 @@ func (ec *executionContext) fieldContext_PlanPaymentsTranslation_numberPaymentsP
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -76457,6 +77808,10 @@ func (ec *executionContext) fieldContext_PlanPaymentsTranslation_numberPaymentsP
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -76523,6 +77878,10 @@ func (ec *executionContext) fieldContext_PlanPaymentsTranslation_sharedSystemsIn
 				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationFieldWithOptions_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationFieldWithOptions_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
 			case "otherParentField":
@@ -76591,6 +77950,10 @@ func (ec *executionContext) fieldContext_PlanPaymentsTranslation_sharedSystemsIn
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -76657,6 +78020,10 @@ func (ec *executionContext) fieldContext_PlanPaymentsTranslation_planningToUseIn
 				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationFieldWithOptions_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationFieldWithOptions_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
 			case "otherParentField":
@@ -76725,6 +78092,10 @@ func (ec *executionContext) fieldContext_PlanPaymentsTranslation_planningToUseIn
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -76791,6 +78162,10 @@ func (ec *executionContext) fieldContext_PlanPaymentsTranslation_expectedCalcula
 				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationFieldWithOptions_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationFieldWithOptions_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
 			case "otherParentField":
@@ -76859,6 +78234,10 @@ func (ec *executionContext) fieldContext_PlanPaymentsTranslation_expectedCalcula
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -76925,6 +78304,10 @@ func (ec *executionContext) fieldContext_PlanPaymentsTranslation_claimsProcessin
 				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationFieldWithOptions_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationFieldWithOptions_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
 			case "otherParentField":
@@ -76993,6 +78376,10 @@ func (ec *executionContext) fieldContext_PlanPaymentsTranslation_claimsProcessin
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -77059,6 +78446,10 @@ func (ec *executionContext) fieldContext_PlanPaymentsTranslation_claimsProcessin
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -77125,6 +78516,10 @@ func (ec *executionContext) fieldContext_PlanPaymentsTranslation_canParticipants
 				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationFieldWithOptions_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationFieldWithOptions_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
 			case "otherParentField":
@@ -77193,6 +78588,10 @@ func (ec *executionContext) fieldContext_PlanPaymentsTranslation_canParticipants
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -77259,6 +78658,10 @@ func (ec *executionContext) fieldContext_PlanPaymentsTranslation_canParticipants
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -77325,6 +78728,10 @@ func (ec *executionContext) fieldContext_PlanPaymentsTranslation_anticipatedPaym
 				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationFieldWithOptions_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationFieldWithOptions_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
 			case "otherParentField":
@@ -77393,6 +78800,10 @@ func (ec *executionContext) fieldContext_PlanPaymentsTranslation_anticipatedPaym
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -77459,6 +78870,10 @@ func (ec *executionContext) fieldContext_PlanPaymentsTranslation_anticipatedPaym
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -77525,6 +78940,10 @@ func (ec *executionContext) fieldContext_PlanPaymentsTranslation_anticipatedPaym
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -77591,6 +79010,10 @@ func (ec *executionContext) fieldContext_PlanPaymentsTranslation_willRecoverPaym
 				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationFieldWithOptions_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationFieldWithOptions_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
 			case "otherParentField":
@@ -77659,6 +79082,10 @@ func (ec *executionContext) fieldContext_PlanPaymentsTranslation_willRecoverPaym
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -77725,6 +79152,10 @@ func (ec *executionContext) fieldContext_PlanPaymentsTranslation_anticipateRecon
 				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationFieldWithOptions_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationFieldWithOptions_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
 			case "otherParentField":
@@ -77793,6 +79224,10 @@ func (ec *executionContext) fieldContext_PlanPaymentsTranslation_anticipateRecon
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -77859,6 +79294,10 @@ func (ec *executionContext) fieldContext_PlanPaymentsTranslation_paymentReconcil
 				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationFieldWithOptions_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationFieldWithOptions_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
 			case "otherParentField":
@@ -77927,6 +79366,10 @@ func (ec *executionContext) fieldContext_PlanPaymentsTranslation_paymentReconcil
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -77993,6 +79436,10 @@ func (ec *executionContext) fieldContext_PlanPaymentsTranslation_paymentReconcil
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -78059,6 +79506,10 @@ func (ec *executionContext) fieldContext_PlanPaymentsTranslation_paymentReconcil
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -78125,6 +79576,10 @@ func (ec *executionContext) fieldContext_PlanPaymentsTranslation_paymentDemandRe
 				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationFieldWithOptions_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationFieldWithOptions_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
 			case "otherParentField":
@@ -78193,6 +79648,10 @@ func (ec *executionContext) fieldContext_PlanPaymentsTranslation_paymentDemandRe
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -78259,6 +79718,10 @@ func (ec *executionContext) fieldContext_PlanPaymentsTranslation_paymentDemandRe
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -78325,6 +79788,10 @@ func (ec *executionContext) fieldContext_PlanPaymentsTranslation_paymentDemandRe
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -78391,6 +79858,10 @@ func (ec *executionContext) fieldContext_PlanPaymentsTranslation_paymentStartDat
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -78457,6 +79928,10 @@ func (ec *executionContext) fieldContext_PlanPaymentsTranslation_paymentStartDat
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -78523,6 +79998,10 @@ func (ec *executionContext) fieldContext_PlanPaymentsTranslation_status(ctx cont
 				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
 			case "isArray":
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "dataType":
+				return ec.fieldContext_TranslationField_dataType(ctx, field)
+			case "formType":
+				return ec.fieldContext_TranslationField_formType(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
 			case "otherParentField":
@@ -85955,6 +87434,94 @@ func (ec *executionContext) fieldContext_TranslationField_isArray(ctx context.Co
 	return fc, nil
 }
 
+func (ec *executionContext) _TranslationField_dataType(ctx context.Context, field graphql.CollectedField, obj *model.TranslationField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_TranslationField_dataType(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.DataType, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(model.TranslationDataType)
+	fc.Result = res
+	return ec.marshalNTranslationDataType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationDataType(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_TranslationField_dataType(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "TranslationField",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type TranslationDataType does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _TranslationField_formType(ctx context.Context, field graphql.CollectedField, obj *model.TranslationField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_TranslationField_formType(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.FormType, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(model.TranslationFormType)
+	fc.Result = res
+	return ec.marshalNTranslationFormType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationFormType(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_TranslationField_formType(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "TranslationField",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type TranslationFormType does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
 func (ec *executionContext) _TranslationField_isOtherType(ctx context.Context, field graphql.CollectedField, obj *model.TranslationField) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_TranslationField_isOtherType(ctx, field)
 	if err != nil {
@@ -86372,6 +87939,94 @@ func (ec *executionContext) fieldContext_TranslationFieldWithOptions_isArray(ctx
 		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return nil, errors.New("field of type Boolean does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _TranslationFieldWithOptions_dataType(ctx context.Context, field graphql.CollectedField, obj *model.TranslationFieldWithOptions) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_TranslationFieldWithOptions_dataType(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.DataType, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(model.TranslationDataType)
+	fc.Result = res
+	return ec.marshalNTranslationDataType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationDataType(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_TranslationFieldWithOptions_dataType(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "TranslationFieldWithOptions",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type TranslationDataType does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _TranslationFieldWithOptions_formType(ctx context.Context, field graphql.CollectedField, obj *model.TranslationFieldWithOptions) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_TranslationFieldWithOptions_formType(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.FormType, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(model.TranslationFormType)
+	fc.Result = res
+	return ec.marshalNTranslationFormType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationFormType(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_TranslationFieldWithOptions_formType(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "TranslationFieldWithOptions",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type TranslationFormType does not have child fields")
 		},
 	}
 	return fc, nil
@@ -103778,6 +105433,16 @@ func (ec *executionContext) _TranslationField(ctx context.Context, sel ast.Selec
 			out.Values[i] = ec._TranslationField_multiSelectLabel(ctx, field, obj)
 		case "isArray":
 			out.Values[i] = ec._TranslationField_isArray(ctx, field, obj)
+		case "dataType":
+			out.Values[i] = ec._TranslationField_dataType(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "formType":
+			out.Values[i] = ec._TranslationField_formType(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
 		case "isOtherType":
 			out.Values[i] = ec._TranslationField_isOtherType(ctx, field, obj)
 		case "otherParentField":
@@ -103844,6 +105509,16 @@ func (ec *executionContext) _TranslationFieldWithOptions(ctx context.Context, se
 			out.Values[i] = ec._TranslationFieldWithOptions_multiSelectLabel(ctx, field, obj)
 		case "isArray":
 			out.Values[i] = ec._TranslationFieldWithOptions_isArray(ctx, field, obj)
+		case "dataType":
+			out.Values[i] = ec._TranslationFieldWithOptions_dataType(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "formType":
+			out.Values[i] = ec._TranslationFieldWithOptions_formType(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
 		case "isOtherType":
 			out.Values[i] = ec._TranslationFieldWithOptions_isOtherType(ctx, field, obj)
 		case "otherParentField":
@@ -109644,6 +111319,16 @@ func (ec *executionContext) marshalNTime2ᚖtimeᚐTime(ctx context.Context, sel
 	return res
 }
 
+func (ec *executionContext) unmarshalNTranslationDataType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationDataType(ctx context.Context, v interface{}) (model.TranslationDataType, error) {
+	var res model.TranslationDataType
+	err := res.UnmarshalGQL(v)
+	return res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalNTranslationDataType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationDataType(ctx context.Context, sel ast.SelectionSet, v model.TranslationDataType) graphql.Marshaler {
+	return v
+}
+
 func (ec *executionContext) marshalNTranslationField2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationField(ctx context.Context, sel ast.SelectionSet, v *model.TranslationField) graphql.Marshaler {
 	if v == nil {
 		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
@@ -109662,6 +111347,16 @@ func (ec *executionContext) marshalNTranslationFieldWithOptions2ᚖgithubᚗcom�
 		return graphql.Null
 	}
 	return ec._TranslationFieldWithOptions(ctx, sel, v)
+}
+
+func (ec *executionContext) unmarshalNTranslationFormType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationFormType(ctx context.Context, v interface{}) (model.TranslationFormType, error) {
+	var res model.TranslationFormType
+	err := res.UnmarshalGQL(v)
+	return res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalNTranslationFormType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationFormType(ctx context.Context, sel ast.SelectionSet, v model.TranslationFormType) graphql.Marshaler {
+	return v
 }
 
 func (ec *executionContext) unmarshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx context.Context, v interface{}) (uuid.UUID, error) {

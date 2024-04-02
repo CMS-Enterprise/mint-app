@@ -3206,6 +3206,10 @@ export enum TeamRole {
   QUALITY = 'QUALITY'
 }
 
+/**
+ * Base typea that represents FE translation structure
+ * Translations are exported from FE for change history, and mapped to these types on the BE
+ */
 export enum TranslationDataType {
   BOOLEAN = 'BOOLEAN',
   DATE = 'DATE',
@@ -3215,13 +3219,11 @@ export enum TranslationDataType {
   STRING = 'STRING'
 }
 
-/**
- * Base typea that represents FE translation structure
- * Translations are exported from FE for change history, and mapped to these types on the BE
- */
 export type TranslationField = {
   __typename: 'TranslationField';
+  dataType: TranslationDataType;
   dbField: Scalars['String']['output'];
+  formType: TranslationFormType;
   goField: Scalars['String']['output'];
   gqlField: Scalars['String']['output'];
   isArray?: Maybe<Scalars['Boolean']['output']>;
@@ -3235,7 +3237,9 @@ export type TranslationField = {
 
 export type TranslationFieldWithOptions = {
   __typename: 'TranslationFieldWithOptions';
+  dataType: TranslationDataType;
   dbField: Scalars['String']['output'];
+  formType: TranslationFormType;
   goField: Scalars['String']['output'];
   gqlField: Scalars['String']['output'];
   isArray?: Maybe<Scalars['Boolean']['output']>;
@@ -3247,6 +3251,19 @@ export type TranslationFieldWithOptions = {
   readonlyLabel?: Maybe<Scalars['String']['output']>;
   sublabel?: Maybe<Scalars['String']['output']>;
 };
+
+export enum TranslationFormType {
+  BOOLEAN = 'BOOLEAN',
+  CHECKBOX = 'CHECKBOX',
+  DATEPICKER = 'DATEPICKER',
+  MULTISELECT = 'MULTISELECT',
+  NUMBER = 'NUMBER',
+  RADIO = 'RADIO',
+  RANGEINPUT = 'RANGEINPUT',
+  SELECT = 'SELECT',
+  TEXT = 'TEXT',
+  TEXTAREA = 'TEXTAREA'
+}
 
 export enum TriStateAnswer {
   NO = 'NO',

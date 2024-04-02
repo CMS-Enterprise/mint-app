@@ -1,4 +1,8 @@
-import { ModelViewFilter, TranslationDataType } from 'gql/gen/graphql';
+import {
+  ModelViewFilter,
+  TranslationDataType,
+  TranslationFormType
+} from 'gql/gen/graphql';
 
 import { TranslationPayments } from 'types/translation';
 
@@ -13,7 +17,7 @@ export const payments: TranslationPayments = {
       'What will be the funding source for payments? Select all that apply.',
     readonlyLabel: 'What will be the funding source for payments?',
     dataType: TranslationDataType.ENUM,
-    formType: 'checkbox',
+    formType: TranslationFormType.CHECKBOX,
     options: {
       PATIENT_PROTECTION_AFFORDABLE_CARE_ACT:
         'Patient Protection Affordable Care Act (Sec 3021)',
@@ -45,7 +49,7 @@ export const payments: TranslationPayments = {
     dbField: 'funding_source_medicare_a_info',
     label: 'Additional details',
     dataType: TranslationDataType.STRING,
-    formType: 'text',
+    formType: TranslationFormType.TEXT,
     isOtherType: true,
     otherParentField: 'fundingSource',
     filterGroups: [
@@ -60,7 +64,7 @@ export const payments: TranslationPayments = {
     dbField: 'funding_source_medicare_b_info',
     label: 'Additional details',
     dataType: TranslationDataType.STRING,
-    formType: 'text',
+    formType: TranslationFormType.TEXT,
     isOtherType: true,
     otherParentField: 'fundingSource',
     filterGroups: [
@@ -75,7 +79,7 @@ export const payments: TranslationPayments = {
     dbField: 'funding_source_other',
     label: 'Please describe the funding source.',
     dataType: TranslationDataType.STRING,
-    formType: 'textarea',
+    formType: TranslationFormType.TEXTAREA,
     isOtherType: true,
     filterGroups: [
       ModelViewFilter.DFSDM,
@@ -89,7 +93,7 @@ export const payments: TranslationPayments = {
     dbField: 'funding_source_note',
     label: 'Notes',
     dataType: TranslationDataType.STRING,
-    formType: 'textarea',
+    formType: TranslationFormType.TEXTAREA,
     filterGroups: [
       ModelViewFilter.DFSDM,
       ModelViewFilter.IPC,
@@ -105,7 +109,7 @@ export const payments: TranslationPayments = {
     readonlyLabel:
       'What is the funding source for reconciliation or other expenditures?',
     dataType: TranslationDataType.ENUM,
-    formType: 'checkbox',
+    formType: TranslationFormType.CHECKBOX,
     options: {
       PATIENT_PROTECTION_AFFORDABLE_CARE_ACT:
         'Patient Protection Affordable Care Act (Sec 3021)',
@@ -137,7 +141,7 @@ export const payments: TranslationPayments = {
     dbField: 'funding_source_r_medicare_a_info',
     label: 'Additional details',
     dataType: TranslationDataType.STRING,
-    formType: 'text',
+    formType: TranslationFormType.TEXT,
     isOtherType: true,
     otherParentField: 'fundingSourceR',
     filterGroups: [
@@ -152,7 +156,7 @@ export const payments: TranslationPayments = {
     dbField: 'funding_source_r_medicare_b_info',
     label: 'Additional details',
     dataType: TranslationDataType.STRING,
-    formType: 'text',
+    formType: TranslationFormType.TEXT,
     isOtherType: true,
     otherParentField: 'fundingSourceR',
     filterGroups: [
@@ -167,7 +171,7 @@ export const payments: TranslationPayments = {
     dbField: 'funding_source_r_other',
     label: 'Please describe the funding source.',
     dataType: TranslationDataType.STRING,
-    formType: 'textarea',
+    formType: TranslationFormType.TEXTAREA,
     isOtherType: true,
     filterGroups: [
       ModelViewFilter.DFSDM,
@@ -181,7 +185,7 @@ export const payments: TranslationPayments = {
     dbField: 'funding_source_r_note',
     label: 'Notes',
     dataType: TranslationDataType.STRING,
-    formType: 'textarea',
+    formType: TranslationFormType.TEXTAREA,
     filterGroups: [
       ModelViewFilter.DFSDM,
       ModelViewFilter.IPC,
@@ -195,7 +199,7 @@ export const payments: TranslationPayments = {
     label: 'Who will you pay? Select all that apply.',
     readonlyLabel: 'Who will you pay?',
     dataType: TranslationDataType.ENUM,
-    formType: 'checkbox',
+    formType: TranslationFormType.CHECKBOX,
     options: {
       PROVIDERS: 'Providers',
       BENEFICIARIES: 'Beneficiaries',
@@ -210,7 +214,7 @@ export const payments: TranslationPayments = {
     dbField: 'pay_recipients_other_specification',
     label: 'Please specify who you will pay.',
     dataType: TranslationDataType.STRING,
-    formType: 'textarea'
+    formType: TranslationFormType.TEXTAREA
   },
   payRecipientsNote: {
     gqlField: 'payRecipientsNote',
@@ -218,7 +222,7 @@ export const payments: TranslationPayments = {
     dbField: 'pay_recipients_note',
     label: 'Notes',
     dataType: TranslationDataType.STRING,
-    formType: 'textarea'
+    formType: TranslationFormType.TEXTAREA
   },
   payType: {
     gqlField: 'payType',
@@ -228,7 +232,7 @@ export const payments: TranslationPayments = {
     sublabel:
       'If you select claims-based payments or non-claims-based payments, there will be additional questions to answer.',
     dataType: TranslationDataType.ENUM,
-    formType: 'checkbox',
+    formType: TranslationFormType.CHECKBOX,
     hideRelatedQuestionAlert: true,
     options: {
       CLAIMS_BASED_PAYMENTS: 'Claims-Based Payments',
@@ -264,7 +268,7 @@ export const payments: TranslationPayments = {
     dbField: 'pay_type_note',
     label: 'Notes',
     dataType: TranslationDataType.STRING,
-    formType: 'textarea',
+    formType: TranslationFormType.TEXTAREA,
     filterGroups: [ModelViewFilter.CMMI, ModelViewFilter.IPC]
   },
   payClaims: {
@@ -276,7 +280,7 @@ export const payments: TranslationPayments = {
       'If you select reductions to beneficiary cost-sharing or other, there will be additional questions to answer.',
     disconnectedLabel: `questionNotApplicableBeneficiary`,
     dataType: TranslationDataType.ENUM,
-    formType: 'multiSelect',
+    formType: TranslationFormType.MULTISELECT,
     multiSelectLabel: 'Selected claims-based payments',
     hideRelatedQuestionAlert: true,
     disconnectedChildren: true,
@@ -318,7 +322,7 @@ export const payments: TranslationPayments = {
     dbField: 'pay_claims_other',
     label: 'Please describe the other claims-based payments you will pay',
     dataType: TranslationDataType.STRING,
-    formType: 'textarea',
+    formType: TranslationFormType.TEXTAREA,
     isOtherType: true,
     filterGroups: [ModelViewFilter.CMMI, ModelViewFilter.OACT]
   },
@@ -328,7 +332,7 @@ export const payments: TranslationPayments = {
     dbField: 'pay_claims_note',
     label: 'Notes',
     dataType: TranslationDataType.STRING,
-    formType: 'textarea',
+    formType: TranslationFormType.TEXTAREA,
     filterGroups: [ModelViewFilter.CMMI, ModelViewFilter.OACT]
   },
   shouldAnyProvidersExcludedFFSSystems: {
@@ -338,7 +342,7 @@ export const payments: TranslationPayments = {
     label:
       'Should any model providers be excluded from existing Fee-for-Service payment systems?',
     dataType: TranslationDataType.BOOLEAN,
-    formType: 'radio',
+    formType: TranslationFormType.RADIO,
     options: {
       true: 'Yes',
       false: 'No'
@@ -352,7 +356,7 @@ export const payments: TranslationPayments = {
     dbField: 'should_any_providers_excluded_ffs_systems_note',
     label: 'Notes',
     dataType: TranslationDataType.STRING,
-    formType: 'textarea',
+    formType: TranslationFormType.TEXTAREA,
     filterGroups: [ModelViewFilter.IDDOC, ModelViewFilter.PBG]
   },
   changesMedicarePhysicianFeeSchedule: {
@@ -363,7 +367,7 @@ export const payments: TranslationPayments = {
     sublabel:
       'If so, it might impact Critical Access Hospitals paid under Method II.',
     dataType: TranslationDataType.BOOLEAN,
-    formType: 'radio',
+    formType: TranslationFormType.RADIO,
     options: {
       true: 'Yes',
       false: 'No'
@@ -377,7 +381,7 @@ export const payments: TranslationPayments = {
     dbField: 'changes_medicare_physician_fee_schedule_note',
     label: 'Notes',
     dataType: TranslationDataType.STRING,
-    formType: 'textarea',
+    formType: TranslationFormType.TEXTAREA,
     filterGroups: [ModelViewFilter.IDDOC, ModelViewFilter.PBG]
   },
   affectsMedicareSecondaryPayerClaims: {
@@ -388,7 +392,7 @@ export const payments: TranslationPayments = {
     readonlyLabel:
       'Does the model affect Medicare Secondary Payer claims? How so?',
     dataType: TranslationDataType.BOOLEAN,
-    formType: 'radio',
+    formType: TranslationFormType.RADIO,
     options: {
       true: 'Yes',
       false: 'No'
@@ -405,7 +409,7 @@ export const payments: TranslationPayments = {
     dbField: 'affects_medicare_secondary_payer_claims_how',
     label: 'How so?',
     dataType: TranslationDataType.STRING,
-    formType: 'textarea',
+    formType: TranslationFormType.TEXTAREA,
     isOtherType: true,
     otherParentField: 'affectsMedicareSecondaryPayerClaims',
     filterGroups: [ModelViewFilter.IDDOC, ModelViewFilter.PBG]
@@ -416,7 +420,7 @@ export const payments: TranslationPayments = {
     dbField: 'affects_medicare_secondary_payer_claims_note',
     label: 'Notes',
     dataType: TranslationDataType.STRING,
-    formType: 'textarea',
+    formType: TranslationFormType.TEXTAREA,
     filterGroups: [ModelViewFilter.IDDOC, ModelViewFilter.PBG]
   },
   payModelDifferentiation: {
@@ -426,7 +430,7 @@ export const payments: TranslationPayments = {
     label:
       'How does the model differ from current policy, especially in terms of payment rates and periodicity of payment?',
     dataType: TranslationDataType.STRING,
-    formType: 'textarea',
+    formType: TranslationFormType.TEXTAREA,
     parentRelation: () => payments.payType,
     filterGroups: [ModelViewFilter.IDDOC, ModelViewFilter.PBG]
   },
@@ -438,7 +442,7 @@ export const payments: TranslationPayments = {
     sublabel:
       'Examples: Service B cannot be paid until Service A has been paid; Service A cannot be paid without Diagnosis 1; If a certain service or diagnosis exists in history, then Service A cannot be paid.',
     dataType: TranslationDataType.BOOLEAN,
-    formType: 'radio',
+    formType: TranslationFormType.RADIO,
     options: {
       true: 'Yes',
       false: 'No'
@@ -452,7 +456,7 @@ export const payments: TranslationPayments = {
     dbField: 'creating_dependencies_between_services_note',
     label: 'Notes',
     dataType: TranslationDataType.STRING,
-    formType: 'textarea',
+    formType: TranslationFormType.TEXTAREA,
     filterGroups: [ModelViewFilter.IDDOC, ModelViewFilter.PBG]
   },
   needsClaimsDataCollection: {
@@ -463,7 +467,7 @@ export const payments: TranslationPayments = {
     sublabel:
       'If you are not sure what current data is collected via provider billing, please ask Provider Billing Group (PBG)',
     dataType: TranslationDataType.BOOLEAN,
-    formType: 'radio',
+    formType: TranslationFormType.RADIO,
     options: {
       true: 'Yes',
       false: 'No'
@@ -477,7 +481,7 @@ export const payments: TranslationPayments = {
     dbField: 'needs_claims_data_collection_note',
     label: 'Notes',
     dataType: TranslationDataType.STRING,
-    formType: 'textarea',
+    formType: TranslationFormType.TEXTAREA,
     filterGroups: [ModelViewFilter.IDDOC, ModelViewFilter.PBG]
   },
   providingThirdPartyFile: {
@@ -487,7 +491,7 @@ export const payments: TranslationPayments = {
     label:
       'Will your contractor be providing data (a Third Party File) that will be used in claims processing?',
     dataType: TranslationDataType.BOOLEAN,
-    formType: 'radio',
+    formType: TranslationFormType.RADIO,
     options: {
       true: 'Yes',
       false: 'No'
@@ -502,7 +506,7 @@ export const payments: TranslationPayments = {
     label:
       'Is your contractor aware that test data will be needed, and when that test data must be available?',
     dataType: TranslationDataType.BOOLEAN,
-    formType: 'radio',
+    formType: TranslationFormType.RADIO,
     options: {
       true: 'Yes',
       false: 'No'
@@ -521,7 +525,7 @@ export const payments: TranslationPayments = {
     label:
       'What is the intended level of beneficiary cost-sharing and how will it be handled?',
     dataType: TranslationDataType.STRING,
-    formType: 'textarea',
+    formType: TranslationFormType.TEXTAREA,
     parentRelation: () => payments.payClaims,
     filterGroups: [
       ModelViewFilter.IDDOC,
@@ -538,7 +542,7 @@ export const payments: TranslationPayments = {
     readonlyLabel:
       'Will you waive beneficiary cost-sharing (coinsurance and/or deductible) for any services in the model? If so, please specify which services.',
     dataType: TranslationDataType.BOOLEAN,
-    formType: 'radio',
+    formType: TranslationFormType.RADIO,
     options: {
       true: 'Yes',
       false: 'No'
@@ -559,7 +563,7 @@ export const payments: TranslationPayments = {
     dbField: 'waive_beneficiary_cost_sharing_service_specification',
     label: 'Please specify which services.',
     dataType: TranslationDataType.STRING,
-    formType: 'textarea',
+    formType: TranslationFormType.TEXTAREA,
     isOtherType: true,
     otherParentField: 'waiveBeneficiaryCostSharingForAnyServices',
     filterGroups: [
@@ -576,7 +580,7 @@ export const payments: TranslationPayments = {
     sublabel:
       'For example, we would assess cost-sharing for the service itself, but not for an add-on payment',
     dataType: TranslationDataType.BOOLEAN,
-    formType: 'radio',
+    formType: TranslationFormType.RADIO,
     options: {
       true: 'Yes',
       false: 'No'
@@ -590,7 +594,7 @@ export const payments: TranslationPayments = {
     dbField: 'waive_beneficiary_cost_sharing_note',
     label: 'Notes',
     dataType: TranslationDataType.STRING,
-    formType: 'textarea',
+    formType: TranslationFormType.TEXTAREA,
     filterGroups: [
       ModelViewFilter.IDDOC,
       ModelViewFilter.OACT,
@@ -603,7 +607,7 @@ export const payments: TranslationPayments = {
     dbField: 'non_claims_payments',
     label: 'Select which non-claims-based payments will you pay.',
     dataType: TranslationDataType.ENUM,
-    formType: 'multiSelect',
+    formType: TranslationFormType.MULTISELECT,
     multiSelectLabel: 'Selected non-claims-based payments',
     options: {
       ADVANCED_PAYMENT: 'Advanced Payment',
@@ -636,7 +640,7 @@ export const payments: TranslationPayments = {
     dbField: 'non_claims_payments_other',
     label: 'Please describe the other non-claims-based payments you will pay.',
     dataType: TranslationDataType.STRING,
-    formType: 'textarea',
+    formType: TranslationFormType.TEXTAREA,
     isOtherType: true,
     filterGroups: [
       ModelViewFilter.CMMI,
@@ -651,7 +655,7 @@ export const payments: TranslationPayments = {
     dbField: 'non_claims_payments_note',
     label: 'Notes',
     dataType: TranslationDataType.STRING,
-    formType: 'textarea',
+    formType: TranslationFormType.TEXTAREA,
     filterGroups: [
       ModelViewFilter.CMMI,
       ModelViewFilter.IDDOC,
@@ -665,7 +669,7 @@ export const payments: TranslationPayments = {
     dbField: 'payment_calculation_owner',
     label: 'Who will calculate the non-claims based payments?',
     dataType: TranslationDataType.STRING,
-    formType: 'text',
+    formType: TranslationFormType.TEXT,
     parentRelation: () => payments.payType
   },
   numberPaymentsPerPayCycle: {
@@ -675,7 +679,7 @@ export const payments: TranslationPayments = {
     label: 'Number of payments per payment cycle',
     sublabel: 'This only applies if you are making non-claims-based payments',
     dataType: TranslationDataType.STRING,
-    formType: 'text',
+    formType: TranslationFormType.TEXT,
     parentRelation: () => payments.payType,
     filterGroups: [ModelViewFilter.DFSDM, ModelViewFilter.IPC]
   },
@@ -685,7 +689,7 @@ export const payments: TranslationPayments = {
     dbField: 'number_payments_per_pay_cycle_note',
     label: 'Notes',
     dataType: TranslationDataType.STRING,
-    formType: 'textarea',
+    formType: TranslationFormType.TEXTAREA,
     filterGroups: [ModelViewFilter.DFSDM, ModelViewFilter.IPC]
   },
   sharedSystemsInvolvedAdditionalClaimPayment: {
@@ -695,7 +699,7 @@ export const payments: TranslationPayments = {
     label:
       'Will the Shared Systems be involved for additional payment of claims?',
     dataType: TranslationDataType.BOOLEAN,
-    formType: 'radio',
+    formType: TranslationFormType.RADIO,
     options: {
       true: 'Yes',
       false: 'No'
@@ -709,7 +713,7 @@ export const payments: TranslationPayments = {
     dbField: 'shared_systems_involved_additional_claim_payment_note',
     label: 'Notes',
     dataType: TranslationDataType.STRING,
-    formType: 'textarea',
+    formType: TranslationFormType.TEXTAREA,
     filterGroups: [ModelViewFilter.CCW]
   },
   planningToUseInnovationPaymentContractor: {
@@ -719,7 +723,7 @@ export const payments: TranslationPayments = {
     label: 'Are you planning to use the Innovation Payment Contractor?',
     sublabel: 'Note: If there will be 30+ payees we recommend a contractor.',
     dataType: TranslationDataType.BOOLEAN,
-    formType: 'radio',
+    formType: TranslationFormType.RADIO,
     options: {
       true: 'Yes',
       false: 'No'
@@ -738,7 +742,7 @@ export const payments: TranslationPayments = {
     dbField: 'planning_to_use_innovation_payment_contractor_note',
     label: 'Notes',
     dataType: TranslationDataType.STRING,
-    formType: 'textarea',
+    formType: TranslationFormType.TEXTAREA,
     filterGroups: [
       ModelViewFilter.DFSDM,
       ModelViewFilter.IPC,
@@ -752,7 +756,7 @@ export const payments: TranslationPayments = {
     dbField: 'expected_calculation_complexity_level',
     label: 'What level of complexity do you expect calculations to be?',
     dataType: TranslationDataType.ENUM,
-    formType: 'radio',
+    formType: TranslationFormType.RADIO,
     isPageStart: true,
     options: {
       LOW: 'Low level',
@@ -766,7 +770,7 @@ export const payments: TranslationPayments = {
     dbField: 'expected_calculation_complexity_level_note',
     label: 'Notes',
     dataType: TranslationDataType.STRING,
-    formType: 'textarea'
+    formType: TranslationFormType.TEXTAREA
   },
   claimsProcessingPrecedence: {
     gqlField: 'claimsProcessingPrecedence',
@@ -777,7 +781,7 @@ export const payments: TranslationPayments = {
     readonlyLabel:
       'Are there any business requirement(s) that address claims processing precedence order with the other model(s)? If so, please specify.',
     dataType: TranslationDataType.ENUM,
-    formType: 'checkbox',
+    formType: TranslationFormType.CHECKBOX,
     options: {
       true: 'Yes',
       false: 'No'
@@ -792,7 +796,7 @@ export const payments: TranslationPayments = {
     dbField: 'claims_processing_precedence_other',
     label: 'Please specify',
     dataType: TranslationDataType.STRING,
-    formType: 'text',
+    formType: TranslationFormType.TEXT,
     isOtherType: true,
     otherParentField: 'claimsProcessingPrecedence'
   },
@@ -802,7 +806,7 @@ export const payments: TranslationPayments = {
     dbField: 'claims_processing_precedence_note',
     label: 'Notes',
     dataType: TranslationDataType.STRING,
-    formType: 'text'
+    formType: TranslationFormType.TEXT
   },
   canParticipantsSelectBetweenPaymentMechanisms: {
     gqlField: 'canParticipantsSelectBetweenPaymentMechanisms',
@@ -813,7 +817,7 @@ export const payments: TranslationPayments = {
     readonlyLabel:
       'Will participants be allowed to select between multiple payment mechanisms? If so, please describe.',
     dataType: TranslationDataType.BOOLEAN,
-    formType: 'radio',
+    formType: TranslationFormType.RADIO,
     options: {
       true: 'Yes',
       false: 'No'
@@ -829,7 +833,7 @@ export const payments: TranslationPayments = {
     dbField: 'can_participants_select_between_payment_mechanisms_how',
     label: 'Please describe',
     dataType: TranslationDataType.STRING,
-    formType: 'textarea',
+    formType: TranslationFormType.TEXTAREA,
     isOtherType: true,
     otherParentField: 'canParticipantsSelectBetweenPaymentMechanisms',
     filterGroups: [ModelViewFilter.CMMI]
@@ -840,7 +844,7 @@ export const payments: TranslationPayments = {
     dbField: 'can_participants_select_between_payment_mechanisms_note',
     label: 'Notes',
     dataType: TranslationDataType.STRING,
-    formType: 'textarea',
+    formType: TranslationFormType.TEXTAREA,
     filterGroups: [ModelViewFilter.CMMI]
   },
   anticipatedPaymentFrequency: {
@@ -849,7 +853,7 @@ export const payments: TranslationPayments = {
     dbField: 'anticipated_payment_frequency',
     label: 'How often do you anticipate making payments?',
     dataType: TranslationDataType.ENUM,
-    formType: 'checkbox',
+    formType: TranslationFormType.CHECKBOX,
     options: frequencyOptions,
     optionsRelatedInfo: {
       CONTINUALLY: 'anticipatedPaymentFrequencyContinually',
@@ -867,7 +871,7 @@ export const payments: TranslationPayments = {
     dbField: 'anticipated_payment_frequency_continually',
     label: 'Please specify',
     dataType: TranslationDataType.STRING,
-    formType: 'textarea',
+    formType: TranslationFormType.TEXTAREA,
     isOtherType: true,
     otherParentField: 'anticipatedPaymentFrequency',
     filterGroups: [
@@ -882,7 +886,7 @@ export const payments: TranslationPayments = {
     dbField: 'anticipated_payment_frequency_other',
     label: 'Please specify',
     dataType: TranslationDataType.STRING,
-    formType: 'textarea',
+    formType: TranslationFormType.TEXTAREA,
     isOtherType: true,
     otherParentField: 'anticipatedPaymentFrequency',
     filterGroups: [
@@ -897,7 +901,7 @@ export const payments: TranslationPayments = {
     dbField: 'anticipated_payment_frequency_note',
     label: 'Notes',
     dataType: TranslationDataType.STRING,
-    formType: 'textarea',
+    formType: TranslationFormType.TEXTAREA,
     filterGroups: [
       ModelViewFilter.CMMI,
       ModelViewFilter.DFSDM,
@@ -910,7 +914,7 @@ export const payments: TranslationPayments = {
     dbField: 'will_recover_payments',
     label: 'Will you recover the payments?',
     dataType: TranslationDataType.BOOLEAN,
-    formType: 'radio',
+    formType: TranslationFormType.RADIO,
     isPageStart: true,
     options: {
       true: 'Yes',
@@ -924,7 +928,7 @@ export const payments: TranslationPayments = {
     dbField: 'will_recover_payments_note',
     label: 'Notes',
     dataType: TranslationDataType.STRING,
-    formType: 'textarea',
+    formType: TranslationFormType.TEXTAREA,
     filterGroups: [ModelViewFilter.CMMI, ModelViewFilter.IPC]
   },
   anticipateReconcilingPaymentsRetrospectively: {
@@ -933,7 +937,7 @@ export const payments: TranslationPayments = {
     dbField: 'anticipate_reconciling_payments_retrospectively',
     label: 'Do you anticipate reconciling payments retrospectively?',
     dataType: TranslationDataType.BOOLEAN,
-    formType: 'radio',
+    formType: TranslationFormType.RADIO,
     options: {
       true: 'Yes',
       false: 'No'
@@ -950,7 +954,7 @@ export const payments: TranslationPayments = {
     dbField: 'anticipate_reconciling_payments_retrospectively_note',
     label: 'Notes',
     dataType: TranslationDataType.STRING,
-    formType: 'textarea',
+    formType: TranslationFormType.TEXTAREA,
     filterGroups: [
       ModelViewFilter.IDDOC,
       ModelViewFilter.IPC,
@@ -963,7 +967,7 @@ export const payments: TranslationPayments = {
     dbField: 'payment_reconciliation_frequency',
     label: 'How often are payments reconciled?',
     dataType: TranslationDataType.ENUM,
-    formType: 'checkbox',
+    formType: TranslationFormType.CHECKBOX,
     options: frequencyOptions,
     optionsRelatedInfo: {
       CONTINUALLY: 'paymentReconciliationFrequencyContinually',
@@ -976,7 +980,7 @@ export const payments: TranslationPayments = {
     dbField: 'payment_reconciliation_frequency_continually',
     label: 'Please specify',
     dataType: TranslationDataType.STRING,
-    formType: 'textarea',
+    formType: TranslationFormType.TEXTAREA,
     isOtherType: true,
     otherParentField: 'paymentReconciliationFrequency'
   },
@@ -986,7 +990,7 @@ export const payments: TranslationPayments = {
     dbField: 'payment_reconciliation_frequency_other',
     label: 'Please specify',
     dataType: TranslationDataType.STRING,
-    formType: 'textarea',
+    formType: TranslationFormType.TEXTAREA,
     isOtherType: true,
     otherParentField: 'paymentReconciliationFrequency'
   },
@@ -996,7 +1000,7 @@ export const payments: TranslationPayments = {
     dbField: 'payment_reconciliation_frequency_note',
     label: 'Notes',
     dataType: TranslationDataType.STRING,
-    formType: 'textarea'
+    formType: TranslationFormType.TEXTAREA
   },
   paymentDemandRecoupmentFrequency: {
     gqlField: 'paymentDemandRecoupmentFrequency',
@@ -1004,7 +1008,7 @@ export const payments: TranslationPayments = {
     dbField: 'payment_demand_recoupment_frequency',
     label: 'How frequently do you anticipate making demands/recoupments?',
     dataType: TranslationDataType.ENUM,
-    formType: 'checkbox',
+    formType: TranslationFormType.CHECKBOX,
     options: frequencyOptions,
     optionsRelatedInfo: {
       CONTINUALLY: 'paymentDemandRecoupmentFrequencyContinually',
@@ -1017,7 +1021,7 @@ export const payments: TranslationPayments = {
     dbField: 'payment_demand_recoupment_frequency_continually',
     label: 'Please specify',
     dataType: TranslationDataType.STRING,
-    formType: 'textarea',
+    formType: TranslationFormType.TEXTAREA,
     isOtherType: true,
     otherParentField: 'paymentDemandRecoupmentFrequency'
   },
@@ -1027,7 +1031,7 @@ export const payments: TranslationPayments = {
     dbField: 'payment_demand_recoupment_frequency_other',
     label: 'Please specify',
     dataType: TranslationDataType.STRING,
-    formType: 'textarea',
+    formType: TranslationFormType.TEXTAREA,
     isOtherType: true,
     otherParentField: 'paymentDemandRecoupmentFrequency'
   },
@@ -1037,7 +1041,7 @@ export const payments: TranslationPayments = {
     dbField: 'payment_demand_recoupment_frequency_note',
     label: 'Notes',
     dataType: TranslationDataType.STRING,
-    formType: 'textarea'
+    formType: TranslationFormType.TEXTAREA
   },
   paymentStartDate: {
     gqlField: 'paymentStartDate',
@@ -1048,7 +1052,7 @@ export const payments: TranslationPayments = {
     sublabel:
       'Note: If you are unsure of an approximate date, please select the first day of the approximate month.',
     dataType: TranslationDataType.DATE,
-    formType: 'datePicker',
+    formType: TranslationFormType.DATEPICKER,
     filterGroups: [ModelViewFilter.DFSDM, ModelViewFilter.IPC]
   },
   paymentStartDateNote: {
@@ -1057,7 +1061,7 @@ export const payments: TranslationPayments = {
     dbField: 'payment_start_date_note',
     label: 'Notes',
     dataType: TranslationDataType.STRING,
-    formType: 'textarea'
+    formType: TranslationFormType.TEXTAREA
   },
   status: {
     gqlField: 'status',
@@ -1065,7 +1069,7 @@ export const payments: TranslationPayments = {
     dbField: 'status',
     label: 'Model Plan status',
     dataType: TranslationDataType.ENUM,
-    formType: 'checkbox',
+    formType: TranslationFormType.CHECKBOX,
     options: {
       READY: 'Ready',
       IN_PROGRESS: 'In progress',

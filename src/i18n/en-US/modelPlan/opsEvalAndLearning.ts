@@ -1,4 +1,8 @@
-import { ModelViewFilter, TranslationDataType } from 'gql/gen/graphql';
+import {
+  ModelViewFilter,
+  TranslationDataType,
+  TranslationFormType
+} from 'gql/gen/graphql';
 
 import { TranslationOpsEvalAndLearning } from 'types/translation';
 
@@ -11,7 +15,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     dbField: 'stakeholders',
     label: 'What stakeholders do you plan to communicate with?',
     dataType: TranslationDataType.ENUM,
-    formType: 'multiSelect',
+    formType: TranslationFormType.MULTISELECT,
     multiSelectLabel: 'Selected stakeholders',
     options: {
       BENEFICIARIES: 'Beneficiaries',
@@ -34,7 +38,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     label:
       'Please describe the other stakeholders you plan to communicate with.',
     dataType: TranslationDataType.STRING,
-    formType: 'textarea',
+    formType: TranslationFormType.TEXTAREA,
     isOtherType: true,
     filterGroups: [ModelViewFilter.CBOSC]
   },
@@ -44,7 +48,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     dbField: 'stakeholders_note',
     label: 'Notes',
     dataType: TranslationDataType.STRING,
-    formType: 'textarea',
+    formType: TranslationFormType.TEXTAREA,
     filterGroups: [ModelViewFilter.CBOSC]
   },
   helpdeskUse: {
@@ -53,7 +57,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     dbField: 'helpdesk_use',
     label: 'Do you plan to use a helpdesk?',
     dataType: TranslationDataType.BOOLEAN,
-    formType: 'radio',
+    formType: TranslationFormType.RADIO,
     options: {
       true: 'Yes',
       false: 'No'
@@ -66,7 +70,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     dbField: 'helpdesk_use_note',
     label: 'Notes',
     dataType: TranslationDataType.STRING,
-    formType: 'textarea',
+    formType: TranslationFormType.TEXTAREA,
     filterGroups: [ModelViewFilter.CBOSC]
   },
   contractorSupport: {
@@ -75,7 +79,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     dbField: 'contractor_support',
     label: 'What contractors will support your model?',
     dataType: TranslationDataType.ENUM,
-    formType: 'checkbox',
+    formType: TranslationFormType.CHECKBOX,
     options: {
       ONE: 'One contractor to support implementation',
       MULTIPLE:
@@ -103,7 +107,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     dbField: 'contractor_support_other',
     label: 'Please specify',
     dataType: TranslationDataType.STRING,
-    formType: 'textarea',
+    formType: TranslationFormType.TEXTAREA,
     isOtherType: true,
     otherParentField: 'contractorSupport',
     filterGroups: [
@@ -119,7 +123,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     label: 'In what capacity will they support your model?',
     sublabel: '(implementation, data analysis, quality, etc.)',
     dataType: TranslationDataType.STRING,
-    formType: 'textarea',
+    formType: TranslationFormType.TEXTAREA,
     parentRelation: () => opsEvalAndLearning.contractorSupport,
     filterGroups: [
       ModelViewFilter.CBOSC,
@@ -133,7 +137,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     dbField: 'contractor_support_note',
     label: 'Notes',
     dataType: TranslationDataType.STRING,
-    formType: 'textarea',
+    formType: TranslationFormType.TEXTAREA,
     filterGroups: [
       ModelViewFilter.CBOSC,
       ModelViewFilter.IDDOC,
@@ -148,7 +152,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     sublabel:
       'IDDOC is commonly known as ACO-OS (Accountable Care Organization Operating System). They can provide support for design, development, operations, and maintenance.',
     dataType: TranslationDataType.BOOLEAN,
-    formType: 'radio',
+    formType: TranslationFormType.RADIO,
     isPageStart: true,
     readonlyHeader: 'IDDOC operations',
     options: {
@@ -183,7 +187,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     dbField: 'iddoc_support_note',
     label: 'Notes',
     dataType: TranslationDataType.STRING,
-    formType: 'textarea',
+    formType: TranslationFormType.TEXTAREA,
     filterGroups: [ModelViewFilter.IDDOC]
   },
   technicalContactsIdentified: {
@@ -192,7 +196,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     dbField: 'technical_contacts_identified',
     label: 'Are technical contacts identified?',
     dataType: TranslationDataType.BOOLEAN,
-    formType: 'radio',
+    formType: TranslationFormType.RADIO,
     options: {
       true: 'Yes',
       false: 'No'
@@ -209,7 +213,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     dbField: 'technical_contacts_identified_detail',
     label: 'Please specify',
     dataType: TranslationDataType.STRING,
-    formType: 'textarea',
+    formType: TranslationFormType.TEXTAREA,
     isOtherType: true,
     otherParentField: 'technicalContactsIdentified',
     filterGroups: [ModelViewFilter.IDDOC]
@@ -220,7 +224,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     dbField: 'technical_contacts_identified_note',
     label: 'Notes',
     dataType: TranslationDataType.STRING,
-    formType: 'textarea',
+    formType: TranslationFormType.TEXTAREA,
     filterGroups: [ModelViewFilter.IDDOC]
   },
   captureParticipantInfo: {
@@ -231,7 +235,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     sublabel:
       'This means the participant record for a model would be included in the ACO-OS Entity File.',
     dataType: TranslationDataType.BOOLEAN,
-    formType: 'radio',
+    formType: TranslationFormType.RADIO,
     options: {
       true: 'Yes',
       false: 'No'
@@ -245,7 +249,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     dbField: 'capture_participant_info_note',
     label: 'Notes',
     dataType: TranslationDataType.STRING,
-    formType: 'textarea',
+    formType: TranslationFormType.TEXTAREA,
     filterGroups: [ModelViewFilter.IDDOC]
   },
   icdOwner: {
@@ -254,7 +258,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     dbField: 'icd_owner',
     label: 'ICD owner',
     dataType: TranslationDataType.STRING,
-    formType: 'text',
+    formType: TranslationFormType.TEXT,
     isPageStart: true,
     readonlyHeader: 'Interface Control Document (ICD)',
     parentRelation: () => opsEvalAndLearning.iddocSupport,
@@ -266,7 +270,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     dbField: 'draft_icd_due_date',
     label: 'Draft ICD required by',
     dataType: TranslationDataType.DATE,
-    formType: 'datePicker',
+    formType: TranslationFormType.DATEPICKER,
     parentRelation: () => opsEvalAndLearning.iddocSupport,
     filterGroups: [ModelViewFilter.IDDOC]
   },
@@ -276,7 +280,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     dbField: 'icd_note',
     label: 'Notes',
     dataType: TranslationDataType.STRING,
-    formType: 'textarea',
+    formType: TranslationFormType.TEXTAREA,
     parentRelation: () => opsEvalAndLearning.iddocSupport,
     filterGroups: [ModelViewFilter.IDDOC]
   },
@@ -286,7 +290,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     dbField: 'uat_needs',
     label: 'User Acceptance Testing (UAT) – test data needs',
     dataType: TranslationDataType.STRING,
-    formType: 'textarea',
+    formType: TranslationFormType.TEXTAREA,
     isPageStart: true,
     readonlyHeader: 'Testing',
     parentRelation: () => opsEvalAndLearning.iddocSupport,
@@ -298,7 +302,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     dbField: 'stc_needs',
     label: 'STC – test data needs',
     dataType: TranslationDataType.STRING,
-    formType: 'textarea',
+    formType: TranslationFormType.TEXTAREA,
     parentRelation: () => opsEvalAndLearning.iddocSupport,
     filterGroups: [ModelViewFilter.IDDOC]
   },
@@ -308,7 +312,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     dbField: 'testing_timelines',
     label: 'Define the testing timelines',
     dataType: TranslationDataType.STRING,
-    formType: 'textarea',
+    formType: TranslationFormType.TEXTAREA,
     parentRelation: () => opsEvalAndLearning.iddocSupport,
     filterGroups: [ModelViewFilter.IDDOC]
   },
@@ -318,7 +322,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     dbField: 'testing_note',
     label: 'Notes',
     dataType: TranslationDataType.STRING,
-    formType: 'textarea',
+    formType: TranslationFormType.TEXTAREA,
     filterGroups: [ModelViewFilter.IDDOC]
   },
   dataMonitoringFileTypes: {
@@ -328,7 +332,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     label: 'What types of files? Select all that apply.',
     readonlyLabel: 'What types of files?',
     dataType: TranslationDataType.ENUM,
-    formType: 'checkbox',
+    formType: TranslationFormType.CHECKBOX,
     isPageStart: true,
     readonlyHeader: 'Data monitoring',
     options: {
@@ -350,7 +354,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     dbField: 'data_monitoring_file_other',
     label: 'What types of responses?',
     dataType: TranslationDataType.STRING,
-    formType: 'text',
+    formType: TranslationFormType.TEXT,
     isOtherType: true,
     otherParentField: 'dataMonitoringFileTypes',
     filterGroups: [ModelViewFilter.IDDOC]
@@ -361,7 +365,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     dbField: 'data_response_type',
     label: 'What types of responses?',
     dataType: TranslationDataType.STRING,
-    formType: 'textarea',
+    formType: TranslationFormType.TEXTAREA,
     parentRelation: () => opsEvalAndLearning.iddocSupport,
     filterGroups: [ModelViewFilter.IDDOC]
   },
@@ -371,7 +375,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     dbField: 'data_response_file_frequency',
     label: 'Frequency of files?',
     dataType: TranslationDataType.STRING,
-    formType: 'text',
+    formType: TranslationFormType.TEXT,
     parentRelation: () => opsEvalAndLearning.iddocSupport,
     filterGroups: [ModelViewFilter.IDDOC]
   },
@@ -381,7 +385,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     dbField: 'data_full_time_or_incremental',
     label: 'Full time or incremental?',
     dataType: TranslationDataType.BOOLEAN,
-    formType: 'radio',
+    formType: TranslationFormType.RADIO,
     options: {
       FULL_TIME: 'Full time',
       INCREMENTAL: 'Incremental'
@@ -395,7 +399,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     dbField: 'eft_set_up',
     label: 'Are Electronic File Transfer (EFT) and connectivity set up?',
     dataType: TranslationDataType.BOOLEAN,
-    formType: 'radio',
+    formType: TranslationFormType.RADIO,
     options: {
       true: 'Yes',
       false: 'No'
@@ -409,7 +413,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     dbField: 'unsolicited_adjustments_included',
     label: 'Will unsolicited adjustments be included?',
     dataType: TranslationDataType.BOOLEAN,
-    formType: 'radio',
+    formType: TranslationFormType.RADIO,
     options: {
       true: 'Yes',
       false: 'No'
@@ -423,7 +427,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     dbField: 'data_flow_diagrams_needed',
     label: 'Are data flow diagrams needed?',
     dataType: TranslationDataType.BOOLEAN,
-    formType: 'radio',
+    formType: TranslationFormType.RADIO,
     options: {
       true: 'Yes',
       false: 'No'
@@ -439,7 +443,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     sublabel:
       'This means we would use these files for Participating and Preferred Providers.',
     dataType: TranslationDataType.BOOLEAN,
-    formType: 'radio',
+    formType: TranslationFormType.RADIO,
     options: {
       true: 'Yes',
       false: 'No'
@@ -453,7 +457,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     dbField: 'file_naming_conventions',
     label: 'File naming conventions',
     dataType: TranslationDataType.STRING,
-    formType: 'text',
+    formType: TranslationFormType.TEXT,
     parentRelation: () => opsEvalAndLearning.iddocSupport,
     filterGroups: [ModelViewFilter.IDDOC]
   },
@@ -463,7 +467,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     dbField: 'data_monitoring_note',
     label: 'Notes',
     dataType: TranslationDataType.STRING,
-    formType: 'textarea',
+    formType: TranslationFormType.TEXTAREA,
     filterGroups: [ModelViewFilter.IDDOC]
   },
   benchmarkForPerformance: {
@@ -472,7 +476,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     dbField: 'benchmark_for_performance',
     label: 'Will you establish a benchmark to capture performance?',
     dataType: TranslationDataType.ENUM,
-    formType: 'radio',
+    formType: TranslationFormType.RADIO,
     isPageStart: true,
     options: {
       YES_RECONCILE: 'Yes, and we will reconcile actual performance against it',
@@ -488,7 +492,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     dbField: 'benchmark_for_performance_note',
     label: 'Notes',
     dataType: TranslationDataType.STRING,
-    formType: 'textarea',
+    formType: TranslationFormType.TEXTAREA,
     filterGroups: [ModelViewFilter.CMMI]
   },
   computePerformanceScores: {
@@ -497,7 +501,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     dbField: 'compute_performance_scores',
     label: 'Will you compute performance scores?',
     dataType: TranslationDataType.BOOLEAN,
-    formType: 'radio',
+    formType: TranslationFormType.RADIO,
     options: {
       true: 'Yes',
       false: 'No'
@@ -510,7 +514,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     dbField: 'compute_performance_scores_note',
     label: 'Notes',
     dataType: TranslationDataType.STRING,
-    formType: 'textarea',
+    formType: TranslationFormType.TEXTAREA,
     filterGroups: [ModelViewFilter.CMMI]
   },
   riskAdjustPerformance: {
@@ -520,7 +524,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     label: 'Performance Scores',
     readonlyLabel: 'Will you make risk adjustments to performance scores?',
     dataType: TranslationDataType.BOOLEAN,
-    formType: 'radio',
+    formType: TranslationFormType.RADIO,
     options: {
       true: 'Yes',
       false: 'No'
@@ -538,7 +542,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     label: 'Feedback Results',
     readonlyLabel: 'Will you make risk adjustments to feedback results?',
     dataType: TranslationDataType.BOOLEAN,
-    formType: 'radio',
+    formType: TranslationFormType.RADIO,
     options: {
       true: 'Yes',
       false: 'No'
@@ -555,7 +559,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     label: 'Payments',
     readonlyLabel: 'Will you make risk adjustments to payments?',
     dataType: TranslationDataType.BOOLEAN,
-    formType: 'radio',
+    formType: TranslationFormType.RADIO,
     options: {
       true: 'Yes',
       false: 'No'
@@ -573,7 +577,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     label: 'Others',
     readonlyLabel: 'Will you make risk adjustments to others?',
     dataType: TranslationDataType.BOOLEAN,
-    formType: 'radio',
+    formType: TranslationFormType.RADIO,
     options: {
       true: 'Yes',
       false: 'No'
@@ -589,7 +593,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     dbField: 'risk_adjust_note',
     label: 'Notes',
     dataType: TranslationDataType.STRING,
-    formType: 'textarea'
+    formType: TranslationFormType.TEXTAREA
   },
   appealPerformance: {
     gqlField: 'appealPerformance',
@@ -598,7 +602,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     label: 'Performance Scores',
     readonlyLabel: 'Will participants be able to appeal performance scores?',
     dataType: TranslationDataType.BOOLEAN,
-    formType: 'radio',
+    formType: TranslationFormType.RADIO,
     options: {
       true: 'Yes',
       false: 'No'
@@ -615,7 +619,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     label: 'Feedback Results',
     readonlyLabel: 'Will participants be able to appeal feedback results?',
     dataType: TranslationDataType.BOOLEAN,
-    formType: 'radio',
+    formType: TranslationFormType.RADIO,
     options: {
       true: 'Yes',
       false: 'No'
@@ -632,7 +636,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     label: 'Payments',
     readonlyLabel: 'Will participants be able to appeal payments?',
     dataType: TranslationDataType.BOOLEAN,
-    formType: 'radio',
+    formType: TranslationFormType.RADIO,
     options: {
       true: 'Yes',
       false: 'No'
@@ -649,7 +653,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     label: 'Others',
     readonlyLabel: 'Will participants be able to appeal others?',
     dataType: TranslationDataType.BOOLEAN,
-    formType: 'radio',
+    formType: TranslationFormType.RADIO,
     options: {
       true: 'Yes',
       false: 'No'
@@ -665,7 +669,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     dbField: 'appeal_note',
     label: 'Notes',
     dataType: TranslationDataType.STRING,
-    formType: 'textarea'
+    formType: TranslationFormType.TEXTAREA
   },
   evaluationApproaches: {
     gqlField: 'evaluationApproaches',
@@ -675,7 +679,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
       'What type of evaluation approach are you considering? Select all that apply.',
     readonlyLabel: 'What type of evaluation approach are you considering?',
     dataType: TranslationDataType.ENUM,
-    formType: 'checkbox',
+    formType: TranslationFormType.CHECKBOX,
     isPageStart: true,
     options: {
       COMPARISON_MATCH: 'Identify a comparison/match group',
@@ -695,7 +699,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     dbField: 'evaluation_approach_other',
     label: 'Please describe the other evaluation approach you are considering.',
     dataType: TranslationDataType.STRING,
-    formType: 'textarea',
+    formType: TranslationFormType.TEXTAREA,
     isOtherType: true
   },
   evalutaionApproachNote: {
@@ -704,7 +708,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     dbField: 'evalutaion_approach_note',
     label: 'Notes',
     dataType: TranslationDataType.STRING,
-    formType: 'textarea'
+    formType: TranslationFormType.TEXTAREA
   },
   ccmInvolvment: {
     gqlField: 'ccmInvolvment',
@@ -714,7 +718,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     sublabel:
       'If you select either yes option, there will be additional questions to answer.',
     dataType: TranslationDataType.ENUM,
-    formType: 'checkbox',
+    formType: TranslationFormType.CHECKBOX,
     hideRelatedQuestionAlert: true,
     options: {
       YES_EVALUATION: 'Yes, for evaluation',
@@ -745,7 +749,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     dbField: 'ccm_involvment_other',
     label: 'Please specify',
     dataType: TranslationDataType.STRING,
-    formType: 'textarea',
+    formType: TranslationFormType.TEXTAREA,
     isOtherType: true,
     otherParentField: 'ccmInvolvment',
     filterGroups: [ModelViewFilter.CCW]
@@ -756,7 +760,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     dbField: 'ccm_involvment_note',
     label: 'Notes',
     dataType: TranslationDataType.STRING,
-    formType: 'textarea',
+    formType: TranslationFormType.TEXTAREA,
     filterGroups: [ModelViewFilter.CCW]
   },
   dataNeededForMonitoring: {
@@ -768,7 +772,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     sublabel:
       'If you select quality claims-based measures or quality reported measures, there will be additional questions to answer.',
     dataType: TranslationDataType.ENUM,
-    formType: 'multiSelect',
+    formType: TranslationFormType.MULTISELECT,
     multiSelectLabel: 'Selected data',
     options: {
       SITE_VISITS: 'Site visits',
@@ -806,7 +810,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     dbField: 'data_needed_for_monitoring_other',
     label: 'What other data do you need to monitor?',
     dataType: TranslationDataType.STRING,
-    formType: 'textarea',
+    formType: TranslationFormType.TEXTAREA,
     isOtherType: true,
     filterGroups: [ModelViewFilter.CMMI, ModelViewFilter.IDDOC]
   },
@@ -816,7 +820,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     dbField: 'data_needed_for_monitoring_note',
     label: 'Notes',
     dataType: TranslationDataType.STRING,
-    formType: 'textarea',
+    formType: TranslationFormType.TEXTAREA,
     filterGroups: [ModelViewFilter.CMMI, ModelViewFilter.IDDOC]
   },
   dataToSendParticicipants: {
@@ -826,7 +830,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     label: 'What data will you send to participants? Select all that apply.',
     readonlyLabel: 'What data will you send to participants?',
     dataType: TranslationDataType.ENUM,
-    formType: 'multiSelect',
+    formType: TranslationFormType.MULTISELECT,
     options: {
       BASELINE_HISTORICAL_DATA: 'Baseline/historical data',
       CLAIMS_LEVEL_DATA: 'Claims-level data',
@@ -847,7 +851,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     dbField: 'data_to_send_particicipants_other',
     label: 'What other data do you need to send?',
     dataType: TranslationDataType.STRING,
-    formType: 'textarea',
+    formType: TranslationFormType.TEXTAREA,
     isOtherType: true,
     otherParentField: 'dataToSendParticicipants',
     filterGroups: [ModelViewFilter.CMMI]
@@ -858,7 +862,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     dbField: 'data_to_send_particicipants_note',
     label: 'Notes',
     dataType: TranslationDataType.STRING,
-    formType: 'textarea',
+    formType: TranslationFormType.TEXTAREA,
     filterGroups: [ModelViewFilter.CMMI]
   },
   shareCclfData: {
@@ -868,7 +872,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     label:
       'Does the model require that identifiable Claim and Claim Line Feed (CCLFs) data need to be shared with participants?',
     dataType: TranslationDataType.BOOLEAN,
-    formType: 'radio',
+    formType: TranslationFormType.RADIO,
     options: {
       true: 'Yes',
       false: 'No'
@@ -881,7 +885,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     dbField: 'share_cclf_data_note',
     label: 'Notes',
     dataType: TranslationDataType.STRING,
-    formType: 'textarea',
+    formType: TranslationFormType.TEXTAREA,
     filterGroups: [ModelViewFilter.CMMI]
   },
   sendFilesBetweenCcw: {
@@ -891,7 +895,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     label:
       'Will you need to send files between the CCW and other applications?',
     dataType: TranslationDataType.BOOLEAN,
-    formType: 'radio',
+    formType: TranslationFormType.RADIO,
     options: {
       true: 'Yes',
       false: 'No'
@@ -905,7 +909,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     dbField: 'send_files_between_ccw_note',
     label: 'Notes',
     dataType: TranslationDataType.STRING,
-    formType: 'textarea',
+    formType: TranslationFormType.TEXTAREA,
     filterGroups: [ModelViewFilter.CCW]
   },
   appToSendFilesToKnown: {
@@ -917,7 +921,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     readonlyLabel:
       'Do you know which applications will be on the other sides of the file transfers? If so, please specify.',
     dataType: TranslationDataType.BOOLEAN,
-    formType: 'radio',
+    formType: TranslationFormType.RADIO,
     options: {
       true: 'Yes',
       false: 'No'
@@ -934,7 +938,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     dbField: 'app_to_send_files_to_which',
     label: 'Please specify',
     dataType: TranslationDataType.STRING,
-    formType: 'textarea',
+    formType: TranslationFormType.TEXTAREA,
     isOtherType: true,
     otherParentField: 'appToSendFilesToWhich',
     filterGroups: [ModelViewFilter.CCW]
@@ -945,7 +949,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     dbField: 'app_to_send_files_to_note',
     label: 'Notes',
     dataType: TranslationDataType.STRING,
-    formType: 'textarea',
+    formType: TranslationFormType.TEXTAREA,
     filterGroups: [ModelViewFilter.CCW]
   },
   useCcwForFileDistribiutionToParticipants: {
@@ -955,7 +959,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     label:
       'Will you use the CCW to distribute files to and from model participants?',
     dataType: TranslationDataType.BOOLEAN,
-    formType: 'radio',
+    formType: TranslationFormType.RADIO,
     options: {
       true: 'Yes',
       false: 'No'
@@ -969,7 +973,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     dbField: 'use_ccw_for_file_distribiution_to_participants_note',
     label: 'Notes',
     dataType: TranslationDataType.STRING,
-    formType: 'textarea',
+    formType: TranslationFormType.TEXTAREA,
     filterGroups: [ModelViewFilter.CCW]
   },
   developNewQualityMeasures: {
@@ -979,7 +983,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     label:
       'Do you plan to develop a new validated quality measure for your model?',
     dataType: TranslationDataType.BOOLEAN,
-    formType: 'radio',
+    formType: TranslationFormType.RADIO,
     options: {
       true: 'Yes',
       false: 'No'
@@ -993,7 +997,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     dbField: 'develop_new_quality_measures_note',
     label: 'Notes',
     dataType: TranslationDataType.STRING,
-    formType: 'textarea',
+    formType: TranslationFormType.TEXTAREA,
     filterGroups: [ModelViewFilter.CMMI]
   },
   qualityPerformanceImpactsPayment: {
@@ -1002,7 +1006,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     dbField: 'quality_performance_impacts_payment',
     label: 'Does quality performance impact payment?',
     dataType: TranslationDataType.BOOLEAN,
-    formType: 'radio',
+    formType: TranslationFormType.RADIO,
     options: {
       YES: 'Yes',
       NO: 'No',
@@ -1020,7 +1024,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     dbField: 'quality_performance_impacts_payment_other',
     label: 'Please specify',
     dataType: TranslationDataType.STRING,
-    formType: 'text',
+    formType: TranslationFormType.TEXT,
     isOtherType: true,
     otherParentField: 'qualityPerformanceImpactsPayment',
     filterGroups: [ModelViewFilter.CMMI]
@@ -1031,7 +1035,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     dbField: 'quality_performance_impacts_payment_note',
     label: 'Notes',
     dataType: TranslationDataType.STRING,
-    formType: 'text',
+    formType: TranslationFormType.TEXT,
     filterGroups: [ModelViewFilter.CMMI]
   },
   dataSharingStarts: {
@@ -1042,7 +1046,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     sublabel:
       'If using ACO-OS support, SSM request to begin analysis at least 1 year before implementation',
     dataType: TranslationDataType.ENUM,
-    formType: 'select',
+    formType: TranslationFormType.SELECT,
     isPageStart: true,
     readonlyHeader:
       'Data sharing, collection, and reporting timing and frequency',
@@ -1069,7 +1073,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     dbField: 'data_sharing_starts_other',
     label: 'Please specify',
     dataType: TranslationDataType.STRING,
-    formType: 'textarea',
+    formType: TranslationFormType.TEXTAREA,
     isOtherType: true,
     otherParentField: 'dataSharingStarts',
     filterGroups: [ModelViewFilter.IDDOC]
@@ -1080,7 +1084,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     dbField: 'data_sharing_frequency',
     label: 'How often do you anticipate sharing data?',
     dataType: TranslationDataType.ENUM,
-    formType: 'checkbox',
+    formType: TranslationFormType.CHECKBOX,
     options: frequencyOptions,
     optionsRelatedInfo: {
       CONTINUALLY: 'dataSharingFrequencyContinually',
@@ -1094,7 +1098,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     dbField: 'data_sharing_frequency_continually',
     label: 'Please specify',
     dataType: TranslationDataType.STRING,
-    formType: 'textarea',
+    formType: TranslationFormType.TEXTAREA,
     isOtherType: true,
     otherParentField: 'dataSharingFrequency',
     filterGroups: [ModelViewFilter.CMMI, ModelViewFilter.IDDOC]
@@ -1105,7 +1109,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     dbField: 'data_sharing_frequency_other',
     label: 'Please specify',
     dataType: TranslationDataType.STRING,
-    formType: 'textarea',
+    formType: TranslationFormType.TEXTAREA,
     isOtherType: true,
     otherParentField: 'dataSharingFrequency',
     filterGroups: [ModelViewFilter.CMMI, ModelViewFilter.IDDOC]
@@ -1116,7 +1120,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     dbField: 'data_sharing_starts_note',
     label: 'Notes',
     dataType: TranslationDataType.STRING,
-    formType: 'textarea',
+    formType: TranslationFormType.TEXTAREA,
     filterGroups: [ModelViewFilter.CMMI, ModelViewFilter.IDDOC]
   },
   dataCollectionStarts: {
@@ -1125,7 +1129,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     dbField: 'data_collection_starts',
     label: 'Data collection starts',
     dataType: TranslationDataType.ENUM,
-    formType: 'select',
+    formType: TranslationFormType.SELECT,
     options: {
       DURING_APPLICATION_PERIOD: 'During application period',
       SHORTLY_BEFORE_THE_START_DATE: 'Shortly before the start date',
@@ -1149,7 +1153,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     dbField: 'data_collection_starts_other',
     label: 'Please specify',
     dataType: TranslationDataType.STRING,
-    formType: 'textarea',
+    formType: TranslationFormType.TEXTAREA,
     isOtherType: true,
     otherParentField: 'dataCollectionStarts',
     filterGroups: [ModelViewFilter.IDDOC]
@@ -1160,7 +1164,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     dbField: 'data_collection_frequency',
     label: 'How often do you anticipate collecting data?',
     dataType: TranslationDataType.ENUM,
-    formType: 'checkbox',
+    formType: TranslationFormType.CHECKBOX,
     options: frequencyOptions,
     optionsRelatedInfo: {
       CONTINUALLY: 'dataCollectionFrequencyContinually',
@@ -1174,7 +1178,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     dbField: 'data_collection_frequency_continually',
     label: 'Please specify',
     dataType: TranslationDataType.STRING,
-    formType: 'textarea',
+    formType: TranslationFormType.TEXTAREA,
     isOtherType: true,
     otherParentField: 'dataCollectionFrequency',
     filterGroups: [ModelViewFilter.CMMI]
@@ -1185,7 +1189,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     dbField: 'data_collection_frequency_other',
     label: 'Please specify',
     dataType: TranslationDataType.STRING,
-    formType: 'textarea',
+    formType: TranslationFormType.TEXTAREA,
     isOtherType: true,
     otherParentField: 'dataCollectionFrequency',
     filterGroups: [ModelViewFilter.CMMI]
@@ -1196,7 +1200,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     dbField: 'data_collection_frequency_note',
     label: 'Notes',
     dataType: TranslationDataType.STRING,
-    formType: 'textarea',
+    formType: TranslationFormType.TEXTAREA,
     filterGroups: [ModelViewFilter.CMMI]
   },
   qualityReportingStarts: {
@@ -1205,7 +1209,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     dbField: 'quality_reporting_starts',
     label: 'Quality reporting starts',
     dataType: TranslationDataType.ENUM,
-    formType: 'select',
+    formType: TranslationFormType.SELECT,
     options: {
       DURING_APPLICATION_PERIOD: 'During application period',
       SHORTLY_BEFORE_THE_START_DATE: 'Shortly before the start date',
@@ -1228,7 +1232,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     dbField: 'quality_reporting_starts_other',
     label: 'Please specify',
     dataType: TranslationDataType.STRING,
-    formType: 'textarea',
+    formType: TranslationFormType.TEXTAREA,
     isOtherType: true,
     otherParentField: 'qualityReportingStarts'
   },
@@ -1238,7 +1242,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     dbField: 'quality_reporting_starts_note',
     label: 'Notes',
     dataType: TranslationDataType.STRING,
-    formType: 'textarea'
+    formType: TranslationFormType.TEXTAREA
   },
   qualityReportingFrequency: {
     gqlField: 'qualityReportingFrequency',
@@ -1246,7 +1250,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     dbField: 'quality_reporting_frequency',
     label: 'How frequently does quality reporting happen?',
     dataType: TranslationDataType.ENUM,
-    formType: 'checkbox',
+    formType: TranslationFormType.CHECKBOX,
     options: frequencyOptions,
     optionsRelatedInfo: {
       CONTINUALLY: 'qualityReportingFrequencyContinually',
@@ -1259,7 +1263,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     dbField: 'quality_reporting_frequency_continually',
     label: 'Please specify',
     dataType: TranslationDataType.STRING,
-    formType: 'textarea',
+    formType: TranslationFormType.TEXTAREA,
     isOtherType: true,
     otherParentField: 'qualityReportingFrequency'
   },
@@ -1269,7 +1273,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     dbField: 'quality_reporting_frequency_other',
     label: 'Please specify',
     dataType: TranslationDataType.STRING,
-    formType: 'textarea',
+    formType: TranslationFormType.TEXTAREA,
     isOtherType: true,
     otherParentField: 'qualityReportingFrequency'
   },
@@ -1279,7 +1283,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     dbField: 'model_learning_systems',
     label: 'Will the model have a learning strategy?',
     dataType: TranslationDataType.ENUM,
-    formType: 'checkbox',
+    formType: TranslationFormType.CHECKBOX,
     isPageStart: true,
     options: {
       LEARNING_CONTRACTOR:
@@ -1301,7 +1305,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     dbField: 'model_learning_systems_other',
     label: 'Please specify',
     dataType: TranslationDataType.STRING,
-    formType: 'textarea',
+    formType: TranslationFormType.TEXTAREA,
     isOtherType: true,
     otherParentField: 'modelLearningSystems'
   },
@@ -1311,7 +1315,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     dbField: 'model_learning_systems_note',
     label: 'Notes',
     dataType: TranslationDataType.STRING,
-    formType: 'textarea'
+    formType: TranslationFormType.TEXTAREA
   },
   anticipatedChallenges: {
     gqlField: 'anticipatedChallenges',
@@ -1322,7 +1326,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     sublabel:
       'Please list and known ’unknowns,’ that is, are there policy decisions that you are aware of that are still pending or are subject to change? If so, please list to the best of your ability.',
     dataType: TranslationDataType.STRING,
-    formType: 'textarea',
+    formType: TranslationFormType.TEXTAREA,
     filterGroups: [ModelViewFilter.IDDOC, ModelViewFilter.PBG]
   },
   status: {
@@ -1331,7 +1335,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     dbField: 'status',
     label: 'Model Plan status',
     dataType: TranslationDataType.ENUM,
-    formType: 'checkbox',
+    formType: TranslationFormType.CHECKBOX,
     options: {
       READY: 'Ready',
       IN_PROGRESS: 'In progress',

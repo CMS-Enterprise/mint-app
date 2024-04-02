@@ -1,4 +1,8 @@
-import { ModelViewFilter, TranslationDataType } from 'gql/gen/graphql';
+import {
+  ModelViewFilter,
+  TranslationDataType,
+  TranslationFormType
+} from 'gql/gen/graphql';
 
 import { TranslationModelPlan } from 'types/translation';
 
@@ -9,7 +13,7 @@ export const modelPlan: TranslationModelPlan = {
     dbField: 'model_name',
     label: 'Model name',
     dataType: TranslationDataType.STRING,
-    formType: 'text'
+    formType: TranslationFormType.TEXT
   },
   previousName: {
     gqlField: 'previousName',
@@ -17,7 +21,7 @@ export const modelPlan: TranslationModelPlan = {
     dbField: 'previous_name',
     label: 'Previous names',
     dataType: TranslationDataType.STRING,
-    formType: 'text'
+    formType: TranslationFormType.TEXT
   },
   nameHistory: {
     gqlField: 'nameHistory',
@@ -26,7 +30,7 @@ export const modelPlan: TranslationModelPlan = {
     label: 'Previous names',
     dataType: TranslationDataType.STRING,
     isArray: true,
-    formType: 'text',
+    formType: TranslationFormType.TEXT,
     filterGroups: [
       ModelViewFilter.OACT,
       ModelViewFilter.DFSDM,
@@ -46,7 +50,7 @@ export const modelPlan: TranslationModelPlan = {
     sublabel:
       'The abbreviation, acronym, or other common name used for the model.',
     dataType: TranslationDataType.STRING,
-    formType: 'text'
+    formType: TranslationFormType.TEXT
   },
   archived: {
     gqlField: 'archived',
@@ -54,7 +58,7 @@ export const modelPlan: TranslationModelPlan = {
     dbField: 'archived',
     label: 'Archived',
     dataType: TranslationDataType.BOOLEAN,
-    formType: 'radio',
+    formType: TranslationFormType.RADIO,
     options: {
       true: 'Yes',
       false: 'No'
@@ -66,7 +70,7 @@ export const modelPlan: TranslationModelPlan = {
     dbField: 'status',
     label: 'What is the status of your Model Plan?',
     dataType: TranslationDataType.ENUM,
-    formType: 'select',
+    formType: TranslationFormType.SELECT,
     options: {
       PLAN_DRAFT: 'Draft Model Plan',
       PLAN_COMPLETE: 'Model Plan complete',

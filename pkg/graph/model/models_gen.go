@@ -519,19 +519,19 @@ type TaskListSectionLockStatusChanged struct {
 	ActionType ActionType                 `json:"actionType"`
 }
 
-// Base typea that represents FE translation structure
-// Translations are exported from FE for change history, and mapped to these types on the BE
 type TranslationField struct {
-	GqlField         string  `json:"gqlField"`
-	GoField          string  `json:"goField"`
-	DbField          string  `json:"dbField"`
-	Label            string  `json:"label"`
-	ReadonlyLabel    *string `json:"readonlyLabel,omitempty"`
-	Sublabel         *string `json:"sublabel,omitempty"`
-	MultiSelectLabel *string `json:"multiSelectLabel,omitempty"`
-	IsArray          *bool   `json:"isArray,omitempty"`
-	IsOtherType      *bool   `json:"isOtherType,omitempty"`
-	OtherParentField *string `json:"otherParentField,omitempty"`
+	GqlField         string              `json:"gqlField"`
+	GoField          string              `json:"goField"`
+	DbField          string              `json:"dbField"`
+	Label            string              `json:"label"`
+	ReadonlyLabel    *string             `json:"readonlyLabel,omitempty"`
+	Sublabel         *string             `json:"sublabel,omitempty"`
+	MultiSelectLabel *string             `json:"multiSelectLabel,omitempty"`
+	IsArray          *bool               `json:"isArray,omitempty"`
+	DataType         TranslationDataType `json:"dataType"`
+	FormType         TranslationFormType `json:"formType"`
+	IsOtherType      *bool               `json:"isOtherType,omitempty"`
+	OtherParentField *string             `json:"otherParentField,omitempty"`
 }
 
 type TranslationFieldWithOptions struct {
@@ -543,6 +543,8 @@ type TranslationFieldWithOptions struct {
 	Sublabel         *string                `json:"sublabel,omitempty"`
 	MultiSelectLabel *string                `json:"multiSelectLabel,omitempty"`
 	IsArray          *bool                  `json:"isArray,omitempty"`
+	DataType         TranslationDataType    `json:"dataType"`
+	FormType         TranslationFormType    `json:"formType"`
 	IsOtherType      *bool                  `json:"isOtherType,omitempty"`
 	OtherParentField *string                `json:"otherParentField,omitempty"`
 	Options          map[string]interface{} `json:"options"`
@@ -2389,6 +2391,8 @@ func (e TaskStatusInput) MarshalGQL(w io.Writer) {
 	fmt.Fprint(w, strconv.Quote(e.String()))
 }
 
+// Base typea that represents FE translation structure
+// Translations are exported from FE for change history, and mapped to these types on the BE
 type TranslationDataType string
 
 const (
@@ -2435,6 +2439,63 @@ func (e *TranslationDataType) UnmarshalGQL(v interface{}) error {
 }
 
 func (e TranslationDataType) MarshalGQL(w io.Writer) {
+	fmt.Fprint(w, strconv.Quote(e.String()))
+}
+
+type TranslationFormType string
+
+const (
+	TranslationFormTypeText        TranslationFormType = "TEXT"
+	TranslationFormTypeTextarea    TranslationFormType = "TEXTAREA"
+	TranslationFormTypeNumber      TranslationFormType = "NUMBER"
+	TranslationFormTypeBoolean     TranslationFormType = "BOOLEAN"
+	TranslationFormTypeRadio       TranslationFormType = "RADIO"
+	TranslationFormTypeCheckbox    TranslationFormType = "CHECKBOX"
+	TranslationFormTypeSelect      TranslationFormType = "SELECT"
+	TranslationFormTypeMultiselect TranslationFormType = "MULTISELECT"
+	TranslationFormTypeDatepicker  TranslationFormType = "DATEPICKER"
+	TranslationFormTypeRangeinput  TranslationFormType = "RANGEINPUT"
+)
+
+var AllTranslationFormType = []TranslationFormType{
+	TranslationFormTypeText,
+	TranslationFormTypeTextarea,
+	TranslationFormTypeNumber,
+	TranslationFormTypeBoolean,
+	TranslationFormTypeRadio,
+	TranslationFormTypeCheckbox,
+	TranslationFormTypeSelect,
+	TranslationFormTypeMultiselect,
+	TranslationFormTypeDatepicker,
+	TranslationFormTypeRangeinput,
+}
+
+func (e TranslationFormType) IsValid() bool {
+	switch e {
+	case TranslationFormTypeText, TranslationFormTypeTextarea, TranslationFormTypeNumber, TranslationFormTypeBoolean, TranslationFormTypeRadio, TranslationFormTypeCheckbox, TranslationFormTypeSelect, TranslationFormTypeMultiselect, TranslationFormTypeDatepicker, TranslationFormTypeRangeinput:
+		return true
+	}
+	return false
+}
+
+func (e TranslationFormType) String() string {
+	return string(e)
+}
+
+func (e *TranslationFormType) UnmarshalGQL(v interface{}) error {
+	str, ok := v.(string)
+	if !ok {
+		return fmt.Errorf("enums must be strings")
+	}
+
+	*e = TranslationFormType(str)
+	if !e.IsValid() {
+		return fmt.Errorf("%s is not a valid TranslationFormType", str)
+	}
+	return nil
+}
+
+func (e TranslationFormType) MarshalGQL(w io.Writer) {
 	fmt.Fprint(w, strconv.Quote(e.String()))
 }
 

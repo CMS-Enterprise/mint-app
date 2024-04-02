@@ -1,4 +1,4 @@
-import { TranslationDataType } from 'gql/gen/graphql';
+import { TranslationDataType, TranslationFormType } from 'gql/gen/graphql';
 
 import { TranslationCollaborators } from 'types/translation';
 
@@ -9,7 +9,7 @@ export const collaborators: TranslationCollaborators = {
     dbField: 'user_account.common_name',
     label: 'Team member name',
     dataType: TranslationDataType.STRING,
-    formType: 'select'
+    formType: TranslationFormType.SELECT
   },
   teamRoles: {
     gqlField: 'teamRoles',
@@ -17,7 +17,7 @@ export const collaborators: TranslationCollaborators = {
     dbField: 'team_roles',
     label: 'Team member role(s)',
     dataType: TranslationDataType.ENUM,
-    formType: 'select',
+    formType: TranslationFormType.SELECT,
     options: {
       CM_FFS_COUNTERPART: 'CM FFS counterpart',
       COR: `Contracting Officer's Representative (COR)`,

@@ -3,6 +3,29 @@ Base typea that represents FE translation structure
 Translations are exported from FE for change history, and mapped to these types on the BE
 """
 
+# Represents the data type of the translation field
+enum TranslationDataType {
+  STRING
+  NUMBER
+  BOOLEAN
+  DATE
+  ENUM
+  OBJECT
+}
+
+# Represents the FORM type of the translation field
+enum TranslationFormType {
+  TEXT
+  TEXTAREA
+  NUMBER
+  BOOLEAN
+  RADIO
+  CHECKBOX
+  SELECT
+  MULTISELECT
+  DATEPICKER
+  RANGEINPUT
+}
 
 # TranslationField represents a question with no options
 type TranslationField {
@@ -14,6 +37,8 @@ type TranslationField {
   sublabel: String
   multiSelectLabel: String
   isArray: Boolean
+  dataType: TranslationDataType!
+  formType: TranslationFormType!
   isOtherType: Boolean # Is a question a followup to another that doesn't designate it's own readonly question/line,
   otherParentField: String # gql field name for the parent question for fields that represent Other, Please specify, etc.  Used in change history to render parent question for context
 }
@@ -28,17 +53,10 @@ type TranslationFieldWithOptions {
   sublabel: String
   multiSelectLabel: String
   isArray: Boolean
+  dataType: TranslationDataType!
+  formType: TranslationFormType!
   isOtherType: Boolean # Is a question a followup to another that doesn't designate it's own readonly question/line,
   otherParentField: String # gql field name for the parent question for fields that represent Other, Please specify, etc.  Used in change history to render parent question for context
   options: Map!
 }
 
-# Represents the data type of the translation field
-enum TranslationDataType {
-  STRING
-  NUMBER
-  BOOLEAN
-  DATE
-  ENUM
-  OBJECT
-}

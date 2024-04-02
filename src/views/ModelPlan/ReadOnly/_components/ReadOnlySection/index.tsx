@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Grid, Icon } from '@trussworks/react-uswds';
+import { TranslationFormType } from 'gql/gen/graphql';
 
 import Alert from 'components/shared/Alert';
 import CollapsableLink from 'components/shared/CollapsableLink';
@@ -151,7 +152,7 @@ const RenderReadonlyValue = <
   // May also renders a conditinal followup value/s to the selection
   if (
     isTranslationFieldPropertiesWithOptions(config) &&
-    config.formType === 'radio'
+    config.formType === TranslationFormType.RADIO
   ) {
     return (
       <RadioValue field={field} values={values} translations={translations} />
