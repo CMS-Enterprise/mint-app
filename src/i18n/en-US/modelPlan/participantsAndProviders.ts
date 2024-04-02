@@ -54,6 +54,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     dataType: 'string',
     formType: 'textarea',
     isOtherType: true,
+    otherParentField: 'participants',
     filterGroups: [
       ModelViewFilter.CBOSC,
       ModelViewFilter.CMMI,
@@ -231,7 +232,8 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     label: 'Please specify',
     dataType: 'string',
     formType: 'textarea',
-    isOtherType: true
+    isOtherType: true,
+    otherParentField: 'recruitmentMethod'
   },
   recruitmentNote: {
     gqlField: 'recruitmentNote',
@@ -322,6 +324,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     dataType: 'string',
     formType: 'text',
     isOtherType: true,
+    otherParentField: 'participantAddedFrequency',
     filterGroups: [ModelViewFilter.IPC]
   },
   participantAddedFrequencyOther: {
@@ -332,6 +335,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     dataType: 'string',
     formType: 'text',
     isOtherType: true,
+    otherParentField: 'participantAddedFrequency',
     filterGroups: [ModelViewFilter.IPC]
   },
   participantAddedFrequencyNote: {
@@ -365,6 +369,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     dataType: 'string',
     formType: 'text',
     isOtherType: true,
+    otherParentField: 'participantRemovedFrequency',
     filterGroups: [ModelViewFilter.IPC]
   },
   participantRemovedFrequencyOther: {
@@ -375,6 +380,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     dataType: 'string',
     formType: 'text',
     isOtherType: true,
+    otherParentField: 'participantRemovedFrequency',
     filterGroups: [ModelViewFilter.IPC]
   },
   participantRemovedFrequencyNote: {
@@ -413,6 +419,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     dataType: 'string',
     formType: 'textarea',
     isOtherType: true,
+    otherParentField: 'communicationMethod',
     filterGroups: [ModelViewFilter.CBOSC, ModelViewFilter.IPC]
   },
   communicationNote: {
@@ -449,7 +456,8 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     label: 'Please specify',
     dataType: 'string',
     formType: 'textarea',
-    isOtherType: true
+    isOtherType: true,
+    otherParentField: 'riskType'
   },
   riskNote: {
     gqlField: 'riskNote',
@@ -625,7 +633,8 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     label: 'Please specify',
     dataType: 'string',
     formType: 'text',
-    isOtherType: true
+    isOtherType: true,
+    otherParentField: 'gainsharePaymentsEligibility'
   },
   gainsharePaymentsNote: {
     gqlField: 'gainsharePaymentsNote',
@@ -665,6 +674,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     dataType: 'string',
     formType: 'textarea',
     isOtherType: true,
+    otherParentField: 'participantsIds',
     filterGroups: [ModelViewFilter.IDDOC]
   },
   participantsIDSNote: {
@@ -699,6 +709,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     dataType: 'string',
     formType: 'textarea',
     isOtherType: true,
+    otherParentField: 'providerAdditionFrequency',
     filterGroups: [ModelViewFilter.OACT, ModelViewFilter.IPC]
   },
   providerAdditionFrequencyOther: {
@@ -709,6 +720,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     dataType: 'string',
     formType: 'textarea',
     isOtherType: true,
+    otherParentField: 'providerAdditionFrequency',
     filterGroups: [ModelViewFilter.OACT, ModelViewFilter.IPC]
   },
   providerAdditionFrequencyNote: {
@@ -800,8 +812,9 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     label: 'Please specify',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: [ModelViewFilter.IPC, ModelViewFilter.OACT],
-    isOtherType: true
+    isOtherType: true,
+    otherParentField: 'providerLeaveMethod',
+    filterGroups: [ModelViewFilter.IPC, ModelViewFilter.OACT]
   },
   providerLeaveMethodNote: {
     gqlField: 'providerLeaveMethodNote',
@@ -832,7 +845,8 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     label: 'Please specify',
     dataType: 'string',
     formType: 'text',
-    isOtherType: true
+    isOtherType: true,
+    otherParentField: 'providerRemovalFrequency'
   },
   providerRemovalFrequencyOther: {
     gqlField: 'providerRemovalFrequencyOther',
@@ -841,7 +855,8 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     label: 'Please specify',
     dataType: 'string',
     formType: 'text',
-    isOtherType: true
+    isOtherType: true,
+    otherParentField: 'providerRemovalFrequency'
   },
   providerRemovalFrequencyNote: {
     gqlField: 'providerRemovalFrequencyNote',
