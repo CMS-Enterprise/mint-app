@@ -63,6 +63,10 @@ const IndividualNotification = ({
     }
   };
 
+  const handleMarkAsReadAndToggleDailyDigest = (notificationID: string) => {
+    handleMarkAsRead(notificationID, () => setIsExpanded(!isExpanded));
+  };
+
   const handleMarkAsReadAndViewDiscussion = (
     notificationID: string,
     modelPlanID: string,
@@ -73,10 +77,6 @@ const IndividualNotification = ({
         `/models/${modelPlanID}/read-only/discussions?discussionID=${discussionID}`
       );
     });
-  };
-
-  const handleMarkAsReadAndToggleDailyDigest = (notificationID: string) => {
-    handleMarkAsRead(notificationID, () => setIsExpanded(!isExpanded));
   };
 
   const handleMarkAsReadAndStartCollab = (
