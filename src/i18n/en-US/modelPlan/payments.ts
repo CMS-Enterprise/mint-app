@@ -47,6 +47,7 @@ export const payments: TranslationPayments = {
     dataType: 'string',
     formType: 'text',
     isOtherType: true,
+    otherParentField: 'fundingSource',
     filterGroups: [
       ModelViewFilter.DFSDM,
       ModelViewFilter.IPC,
@@ -61,6 +62,7 @@ export const payments: TranslationPayments = {
     dataType: 'string',
     formType: 'text',
     isOtherType: true,
+    otherParentField: 'fundingSource',
     filterGroups: [
       ModelViewFilter.DFSDM,
       ModelViewFilter.IPC,
@@ -137,6 +139,7 @@ export const payments: TranslationPayments = {
     dataType: 'string',
     formType: 'text',
     isOtherType: true,
+    otherParentField: 'fundingSourceR',
     filterGroups: [
       ModelViewFilter.DFSDM,
       ModelViewFilter.IPC,
@@ -151,6 +154,7 @@ export const payments: TranslationPayments = {
     dataType: 'string',
     formType: 'text',
     isOtherType: true,
+    otherParentField: 'fundingSourceR',
     filterGroups: [
       ModelViewFilter.DFSDM,
       ModelViewFilter.IPC,
@@ -403,6 +407,7 @@ export const payments: TranslationPayments = {
     dataType: 'string',
     formType: 'textarea',
     isOtherType: true,
+    otherParentField: 'affectsMedicareSecondaryPayerClaims',
     filterGroups: [ModelViewFilter.IDDOC, ModelViewFilter.PBG]
   },
   affectsMedicareSecondaryPayerClaimsNote: {
@@ -556,6 +561,7 @@ export const payments: TranslationPayments = {
     dataType: 'string',
     formType: 'textarea',
     isOtherType: true,
+    otherParentField: 'waiveBeneficiaryCostSharingForAnyServices',
     filterGroups: [
       ModelViewFilter.IDDOC,
       ModelViewFilter.OACT,
@@ -787,7 +793,8 @@ export const payments: TranslationPayments = {
     label: 'Please specify',
     dataType: 'string',
     formType: 'text',
-    isOtherType: true
+    isOtherType: true,
+    otherParentField: 'claimsProcessingPrecedence'
   },
   claimsProcessingPrecedenceNote: {
     gqlField: 'claimsProcessingPrecedenceNote',
@@ -824,6 +831,7 @@ export const payments: TranslationPayments = {
     dataType: 'string',
     formType: 'textarea',
     isOtherType: true,
+    otherParentField: 'canParticipantsSelectBetweenPaymentMechanisms',
     filterGroups: [ModelViewFilter.CMMI]
   },
   canParticipantsSelectBetweenPaymentMechanismsNote: {
@@ -861,6 +869,7 @@ export const payments: TranslationPayments = {
     dataType: 'string',
     formType: 'textarea',
     isOtherType: true,
+    otherParentField: 'anticipatedPaymentFrequency',
     filterGroups: [
       ModelViewFilter.CMMI,
       ModelViewFilter.DFSDM,
@@ -875,6 +884,7 @@ export const payments: TranslationPayments = {
     dataType: 'string',
     formType: 'textarea',
     isOtherType: true,
+    otherParentField: 'anticipatedPaymentFrequency',
     filterGroups: [
       ModelViewFilter.CMMI,
       ModelViewFilter.DFSDM,
@@ -967,7 +977,8 @@ export const payments: TranslationPayments = {
     label: 'Please specify',
     dataType: 'string',
     formType: 'textarea',
-    isOtherType: true
+    isOtherType: true,
+    otherParentField: 'paymentReconciliationFrequency'
   },
   paymentReconciliationFrequencyOther: {
     gqlField: 'paymentReconciliationFrequencyOther',
@@ -976,7 +987,8 @@ export const payments: TranslationPayments = {
     label: 'Please specify',
     dataType: 'string',
     formType: 'textarea',
-    isOtherType: true
+    isOtherType: true,
+    otherParentField: 'paymentReconciliationFrequency'
   },
   paymentReconciliationFrequencyNote: {
     gqlField: 'paymentReconciliationFrequencyNote',
@@ -1006,7 +1018,8 @@ export const payments: TranslationPayments = {
     label: 'Please specify',
     dataType: 'string',
     formType: 'textarea',
-    isOtherType: true
+    isOtherType: true,
+    otherParentField: 'paymentDemandRecoupmentFrequency'
   },
   paymentDemandRecoupmentFrequencyOther: {
     gqlField: 'paymentDemandRecoupmentFrequencyOther',
@@ -1015,7 +1028,8 @@ export const payments: TranslationPayments = {
     label: 'Please specify',
     dataType: 'string',
     formType: 'textarea',
-    isOtherType: true
+    isOtherType: true,
+    otherParentField: 'paymentDemandRecoupmentFrequency'
   },
   paymentDemandRecoupmentFrequencyNote: {
     gqlField: 'paymentDemandRecoupmentFrequencyNote',
