@@ -46,6 +46,7 @@ import {
   PlanBasicsTranslation,
   PlanBeneficiariesTranslation,
   PlanGeneralCharacteristicsTranslation,
+  PlanOpsEvalAndLearningTranslation,
   PlanParticipantsAndProvidersTranslation,
   ProviderAddType,
   ProviderLeaveType,
@@ -597,7 +598,7 @@ export type TranslationBeneficiaries = {
 /* 
   Operations Evaluation and Learning
 */
-export type TranslationOpsEvalAndLearning = {
+export type TranslationOpsEvalAndLearningForm = {
   stakeholders: TranslationFieldPropertiesWithOptions<StakeholdersType>;
   stakeholdersOther: TranslationFieldProperties;
   stakeholdersNote: TranslationFieldProperties;
@@ -739,6 +740,17 @@ export type TranslationOpsEvalAndLearning = {
   modelLearningSystemsNote: TranslationFieldProperties;
   anticipatedChallenges: TranslationFieldProperties;
   status: TranslationFieldPropertiesWithOptions<TaskStatus>;
+};
+
+type TranslationOpsEvalAndLearningGQL = Omit<
+  PlanOpsEvalAndLearningTranslation, // graphql gen type
+  '__typename'
+>;
+
+// Merged keys from graphql gen with FE form types
+// Create a tighter connection between BE/FE translation types
+export type TranslationOpsEvalAndLearning = {
+  [K in keyof TranslationOpsEvalAndLearningGQL]: TranslationOpsEvalAndLearningForm[K]; // FE form type
 };
 
 /* 

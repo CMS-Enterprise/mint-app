@@ -68,7 +68,7 @@ type PlanBasicsTranslation struct {
 	Status                    *TranslationField            `json:"status"`
 }
 
-// Plan Beneficiaries represents the the beneficiaries section of the task list
+// Represents plan beneficiaries translation data
 type PlanBeneficiariesTranslation struct {
 	Beneficiaries                            *TranslationFieldWithOptions `json:"beneficiaries"`
 	BeneficiariesOther                       *TranslationField            `json:"beneficiaries_other"`
@@ -148,7 +148,7 @@ type PlanDocumentLinkInput struct {
 	OptionalNotes        *string             `json:"optionalNotes,omitempty"`
 }
 
-// PlanGeneralCharacteristics represents a plan general characteristics translation object
+// Represents a plan general characteristics translation object
 type PlanGeneralCharacteristicsTranslation struct {
 	IsNewModel                                    *TranslationFieldWithOptions `json:"is_new_model"`
 	ExistingModel                                 *TranslationFieldWithOptions `json:"existing_model"`
@@ -217,6 +217,107 @@ type PlanGeneralCharacteristicsTranslation struct {
 	WaiversRequiredTypes                          *TranslationFieldWithOptions `json:"waivers_required_types"`
 	WaiversRequiredNote                           *TranslationField            `json:"waivers_required_note"`
 	Status                                        *TranslationField            `json:"status"`
+}
+
+// Represents plan ops eval and learning translation data
+type PlanOpsEvalAndLearningTranslation struct {
+	Stakeholders                                 *TranslationFieldWithOptions `json:"stakeholders"`
+	StakeholdersOther                            *TranslationField            `json:"stakeholders_other"`
+	StakeholdersNote                             *TranslationField            `json:"stakeholders_note"`
+	HelpdeskUse                                  *TranslationFieldWithOptions `json:"helpdesk_use"`
+	HelpdeskUseNote                              *TranslationField            `json:"helpdesk_use_note"`
+	ContractorSupport                            *TranslationFieldWithOptions `json:"contractor_support"`
+	ContractorSupportOther                       *TranslationField            `json:"contractor_support_other"`
+	ContractorSupportHow                         *TranslationField            `json:"contractor_support_how"`
+	ContractorSupportNote                        *TranslationField            `json:"contractor_support_note"`
+	IddocSupport                                 *TranslationFieldWithOptions `json:"iddoc_support"`
+	IddocSupportNote                             *TranslationField            `json:"iddoc_support_note"`
+	TechnicalContactsIdentified                  *TranslationFieldWithOptions `json:"technical_contacts_identified"`
+	TechnicalContactsIdentifiedDetail            *TranslationField            `json:"technical_contacts_identified_detail"`
+	TechnicalContactsIdentifiedNote              *TranslationField            `json:"technical_contacts_identified_note"`
+	CaptureParticipantInfo                       *TranslationFieldWithOptions `json:"capture_participant_info"`
+	CaptureParticipantInfoNote                   *TranslationField            `json:"capture_participant_info_note"`
+	IcdOwner                                     *TranslationField            `json:"icd_owner"`
+	DraftIcdDueDate                              *TranslationField            `json:"draft_icd_due_date"`
+	IcdNote                                      *TranslationField            `json:"icd_note"`
+	UatNeeds                                     *TranslationField            `json:"uat_needs"`
+	StcNeeds                                     *TranslationField            `json:"stc_needs"`
+	TestingTimelines                             *TranslationField            `json:"testing_timelines"`
+	TestingNote                                  *TranslationField            `json:"testing_note"`
+	DataMonitoringFileTypes                      *TranslationFieldWithOptions `json:"data_monitoring_file_types"`
+	DataMonitoringFileOther                      *TranslationField            `json:"data_monitoring_file_other"`
+	DataResponseType                             *TranslationField            `json:"data_response_type"`
+	DataResponseFileFrequency                    *TranslationField            `json:"data_response_file_frequency"`
+	DataFullTimeOrIncremental                    *TranslationFieldWithOptions `json:"data_full_time_or_incremental"`
+	EftSetUp                                     *TranslationFieldWithOptions `json:"eft_set_up"`
+	UnsolicitedAdjustmentsIncluded               *TranslationFieldWithOptions `json:"unsolicited_adjustments_included"`
+	DataFlowDiagramsNeeded                       *TranslationFieldWithOptions `json:"data_flow_diagrams_needed"`
+	ProduceBenefitEnhancementFiles               *TranslationFieldWithOptions `json:"produce_benefit_enhancement_files"`
+	FileNamingConventions                        *TranslationField            `json:"file_naming_conventions"`
+	DataMonitoringNote                           *TranslationField            `json:"data_monitoring_note"`
+	BenchmarkForPerformance                      *TranslationFieldWithOptions `json:"benchmark_for_performance"`
+	BenchmarkForPerformanceNote                  *TranslationField            `json:"benchmark_for_performance_note"`
+	ComputePerformanceScores                     *TranslationFieldWithOptions `json:"compute_performance_scores"`
+	ComputePerformanceScoresNote                 *TranslationField            `json:"compute_performance_scores_note"`
+	RiskAdjustPerformance                        *TranslationFieldWithOptions `json:"risk_adjust_performance"`
+	RiskAdjustFeedback                           *TranslationFieldWithOptions `json:"risk_adjust_feedback"`
+	RiskAdjustPayments                           *TranslationFieldWithOptions `json:"risk_adjust_payments"`
+	RiskAdjustOther                              *TranslationFieldWithOptions `json:"risk_adjust_other"`
+	RiskAdjustNote                               *TranslationField            `json:"risk_adjust_note"`
+	AppealPerformance                            *TranslationFieldWithOptions `json:"appeal_performance"`
+	AppealFeedback                               *TranslationFieldWithOptions `json:"appeal_feedback"`
+	AppealPayments                               *TranslationFieldWithOptions `json:"appeal_payments"`
+	AppealOther                                  *TranslationFieldWithOptions `json:"appeal_other"`
+	AppealNote                                   *TranslationField            `json:"appeal_note"`
+	EvaluationApproaches                         *TranslationFieldWithOptions `json:"evaluation_approaches"`
+	EvaluationApproachOther                      *TranslationField            `json:"evaluation_approach_other"`
+	EvalutaionApproachNote                       *TranslationField            `json:"evalutaion_approach_note"`
+	CcmInvolvment                                *TranslationFieldWithOptions `json:"ccm_involvment"`
+	CcmInvolvmentOther                           *TranslationField            `json:"ccm_involvment_other"`
+	CcmInvolvmentNote                            *TranslationField            `json:"ccm_involvment_note"`
+	DataNeededForMonitoring                      *TranslationFieldWithOptions `json:"data_needed_for_monitoring"`
+	DataNeededForMonitoringOther                 *TranslationField            `json:"data_needed_for_monitoring_other"`
+	DataNeededForMonitoringNote                  *TranslationField            `json:"data_needed_for_monitoring_note"`
+	DataToSendParticicipants                     *TranslationFieldWithOptions `json:"data_to_send_particicipants"`
+	DataToSendParticicipantsOther                *TranslationField            `json:"data_to_send_particicipants_other"`
+	DataToSendParticicipantsNote                 *TranslationField            `json:"data_to_send_particicipants_note"`
+	ShareCclfData                                *TranslationFieldWithOptions `json:"share_cclf_data"`
+	ShareCclfDataNote                            *TranslationField            `json:"share_cclf_data_note"`
+	SendFilesBetweenCcw                          *TranslationFieldWithOptions `json:"send_files_between_ccw"`
+	SendFilesBetweenCcwNote                      *TranslationField            `json:"send_files_between_ccw_note"`
+	AppToSendFilesToKnown                        *TranslationFieldWithOptions `json:"app_to_send_files_to_known"`
+	AppToSendFilesToWhich                        *TranslationField            `json:"app_to_send_files_to_which"`
+	AppToSendFilesToNote                         *TranslationField            `json:"app_to_send_files_to_note"`
+	UseCcwForFileDistribiutionToParticipants     *TranslationFieldWithOptions `json:"use_ccw_for_file_distribiution_to_participants"`
+	UseCcwForFileDistribiutionToParticipantsNote *TranslationField            `json:"use_ccw_for_file_distribiution_to_participants_note"`
+	DevelopNewQualityMeasures                    *TranslationFieldWithOptions `json:"develop_new_quality_measures"`
+	DevelopNewQualityMeasuresNote                *TranslationField            `json:"develop_new_quality_measures_note"`
+	QualityPerformanceImpactsPayment             *TranslationFieldWithOptions `json:"quality_performance_impacts_payment"`
+	QualityPerformanceImpactsPaymentOther        *TranslationField            `json:"quality_performance_impacts_payment_other"`
+	QualityPerformanceImpactsPaymentNote         *TranslationField            `json:"quality_performance_impacts_payment_note"`
+	DataSharingStarts                            *TranslationFieldWithOptions `json:"data_sharing_starts"`
+	DataSharingStartsOther                       *TranslationField            `json:"data_sharing_starts_other"`
+	DataSharingFrequency                         *TranslationFieldWithOptions `json:"data_sharing_frequency"`
+	DataSharingFrequencyContinually              *TranslationField            `json:"data_sharing_frequency_continually"`
+	DataSharingFrequencyOther                    *TranslationField            `json:"data_sharing_frequency_other"`
+	DataSharingStartsNote                        *TranslationField            `json:"data_sharing_starts_note"`
+	DataCollectionStarts                         *TranslationFieldWithOptions `json:"data_collection_starts"`
+	DataCollectionStartsOther                    *TranslationField            `json:"data_collection_starts_other"`
+	DataCollectionFrequency                      *TranslationFieldWithOptions `json:"data_collection_frequency"`
+	DataCollectionFrequencyContinually           *TranslationField            `json:"data_collection_frequency_continually"`
+	DataCollectionFrequencyOther                 *TranslationField            `json:"data_collection_frequency_other"`
+	DataCollectionFrequencyNote                  *TranslationField            `json:"data_collection_frequency_note"`
+	QualityReportingStarts                       *TranslationFieldWithOptions `json:"quality_reporting_starts"`
+	QualityReportingStartsOther                  *TranslationField            `json:"quality_reporting_starts_other"`
+	QualityReportingStartsNote                   *TranslationField            `json:"quality_reporting_starts_note"`
+	QualityReportingFrequency                    *TranslationFieldWithOptions `json:"quality_reporting_frequency"`
+	QualityReportingFrequencyContinually         *TranslationField            `json:"quality_reporting_frequency_continually"`
+	QualityReportingFrequencyOther               *TranslationField            `json:"quality_reporting_frequency_other"`
+	ModelLearningSystems                         *TranslationFieldWithOptions `json:"model_learning_systems"`
+	ModelLearningSystemsOther                    *TranslationField            `json:"model_learning_systems_other"`
+	ModelLearningSystemsNote                     *TranslationField            `json:"model_learning_systems_note"`
+	AnticipatedChallenges                        *TranslationField            `json:"anticipated_challenges"`
+	Status                                       *TranslationField            `json:"status"`
 }
 
 // PlanParticipantsAndProviders represents a plan participants and providers translation object

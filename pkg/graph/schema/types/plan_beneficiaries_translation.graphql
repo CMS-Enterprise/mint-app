@@ -1,5 +1,5 @@
 """
-Plan Beneficiaries represents the the beneficiaries section of the task list
+Represents plan beneficiaries translation data
 """
 
 type PlanBeneficiariesTranslation {

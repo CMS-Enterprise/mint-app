@@ -1441,7 +1441,7 @@ export type PlanBeneficiariesChanges = {
   treatDualElligibleDifferentNote?: InputMaybe<Scalars['String']['input']>;
 };
 
-/** Plan Beneficiaries represents the the beneficiaries section of the task list */
+/** Represents plan beneficiaries translation data */
 export type PlanBeneficiariesTranslation = {
   __typename: 'PlanBeneficiariesTranslation';
   beneficiaries: TranslationFieldWithOptions;
@@ -1825,7 +1825,7 @@ export type PlanGeneralCharacteristicsChanges = {
   waiversRequiredTypes?: InputMaybe<Array<WaiverType>>;
 };
 
-/** PlanGeneralCharacteristics represents a plan general characteristics translation object */
+/** Represents a plan general characteristics translation object */
 export type PlanGeneralCharacteristicsTranslation = {
   __typename: 'PlanGeneralCharacteristicsTranslation';
   additionalServicesInvolved: TranslationFieldWithOptions;
@@ -2117,6 +2117,108 @@ export type PlanOpsEvalAndLearningChanges = {
   unsolicitedAdjustmentsIncluded?: InputMaybe<Scalars['Boolean']['input']>;
   useCcwForFileDistribiutionToParticipants?: InputMaybe<Scalars['Boolean']['input']>;
   useCcwForFileDistribiutionToParticipantsNote?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** Represents plan ops eval and learning translation data */
+export type PlanOpsEvalAndLearningTranslation = {
+  __typename: 'PlanOpsEvalAndLearningTranslation';
+  anticipatedChallenges: TranslationField;
+  appToSendFilesToKnown: TranslationFieldWithOptions;
+  appToSendFilesToNote: TranslationField;
+  appToSendFilesToWhich: TranslationField;
+  appealFeedback: TranslationFieldWithOptions;
+  appealNote: TranslationField;
+  appealOther: TranslationFieldWithOptions;
+  appealPayments: TranslationFieldWithOptions;
+  appealPerformance: TranslationFieldWithOptions;
+  benchmarkForPerformance: TranslationFieldWithOptions;
+  benchmarkForPerformanceNote: TranslationField;
+  captureParticipantInfo: TranslationFieldWithOptions;
+  captureParticipantInfoNote: TranslationField;
+  ccmInvolvment: TranslationFieldWithOptions;
+  ccmInvolvmentNote: TranslationField;
+  ccmInvolvmentOther: TranslationField;
+  computePerformanceScores: TranslationFieldWithOptions;
+  computePerformanceScoresNote: TranslationField;
+  contractorSupport: TranslationFieldWithOptions;
+  contractorSupportHow: TranslationField;
+  contractorSupportNote: TranslationField;
+  contractorSupportOther: TranslationField;
+  dataCollectionFrequency: TranslationFieldWithOptions;
+  dataCollectionFrequencyContinually: TranslationField;
+  dataCollectionFrequencyNote: TranslationField;
+  dataCollectionFrequencyOther: TranslationField;
+  dataCollectionStarts: TranslationFieldWithOptions;
+  dataCollectionStartsOther: TranslationField;
+  dataFlowDiagramsNeeded: TranslationFieldWithOptions;
+  dataFullTimeOrIncremental: TranslationFieldWithOptions;
+  dataMonitoringFileOther: TranslationField;
+  dataMonitoringFileTypes: TranslationFieldWithOptions;
+  dataMonitoringNote: TranslationField;
+  dataNeededForMonitoring: TranslationFieldWithOptions;
+  dataNeededForMonitoringNote: TranslationField;
+  dataNeededForMonitoringOther: TranslationField;
+  dataResponseFileFrequency: TranslationField;
+  dataResponseType: TranslationField;
+  dataSharingFrequency: TranslationFieldWithOptions;
+  dataSharingFrequencyContinually: TranslationField;
+  dataSharingFrequencyOther: TranslationField;
+  dataSharingStarts: TranslationFieldWithOptions;
+  dataSharingStartsNote: TranslationField;
+  dataSharingStartsOther: TranslationField;
+  dataToSendParticicipants: TranslationFieldWithOptions;
+  dataToSendParticicipantsNote: TranslationField;
+  dataToSendParticicipantsOther: TranslationField;
+  developNewQualityMeasures: TranslationFieldWithOptions;
+  developNewQualityMeasuresNote: TranslationField;
+  draftIcdDueDate: TranslationField;
+  eftSetUp: TranslationFieldWithOptions;
+  evaluationApproachOther: TranslationField;
+  evaluationApproaches: TranslationFieldWithOptions;
+  evalutaionApproachNote: TranslationField;
+  fileNamingConventions: TranslationField;
+  helpdeskUse: TranslationFieldWithOptions;
+  helpdeskUseNote: TranslationField;
+  icdNote: TranslationField;
+  icdOwner: TranslationField;
+  iddocSupport: TranslationFieldWithOptions;
+  iddocSupportNote: TranslationField;
+  modelLearningSystems: TranslationFieldWithOptions;
+  modelLearningSystemsNote: TranslationField;
+  modelLearningSystemsOther: TranslationField;
+  produceBenefitEnhancementFiles: TranslationFieldWithOptions;
+  qualityPerformanceImpactsPayment: TranslationFieldWithOptions;
+  qualityPerformanceImpactsPaymentNote: TranslationField;
+  qualityPerformanceImpactsPaymentOther: TranslationField;
+  qualityReportingFrequency: TranslationFieldWithOptions;
+  qualityReportingFrequencyContinually: TranslationField;
+  qualityReportingFrequencyOther: TranslationField;
+  qualityReportingStarts: TranslationFieldWithOptions;
+  qualityReportingStartsNote: TranslationField;
+  qualityReportingStartsOther: TranslationField;
+  riskAdjustFeedback: TranslationFieldWithOptions;
+  riskAdjustNote: TranslationField;
+  riskAdjustOther: TranslationFieldWithOptions;
+  riskAdjustPayments: TranslationFieldWithOptions;
+  riskAdjustPerformance: TranslationFieldWithOptions;
+  sendFilesBetweenCcw: TranslationFieldWithOptions;
+  sendFilesBetweenCcwNote: TranslationField;
+  shareCclfData: TranslationFieldWithOptions;
+  shareCclfDataNote: TranslationField;
+  stakeholders: TranslationFieldWithOptions;
+  stakeholdersNote: TranslationField;
+  stakeholdersOther: TranslationField;
+  status: TranslationField;
+  stcNeeds: TranslationField;
+  technicalContactsIdentified: TranslationFieldWithOptions;
+  technicalContactsIdentifiedDetail: TranslationField;
+  technicalContactsIdentifiedNote: TranslationField;
+  testingNote: TranslationField;
+  testingTimelines: TranslationField;
+  uatNeeds: TranslationField;
+  unsolicitedAdjustmentsIncluded: TranslationFieldWithOptions;
+  useCcwForFileDistribiutionToParticipants: TranslationFieldWithOptions;
+  useCcwForFileDistribiutionToParticipantsNote: TranslationField;
 };
 
 /** PlanParticipantsAndProviders is the task list section that deals with information regarding all Providers and Participants */

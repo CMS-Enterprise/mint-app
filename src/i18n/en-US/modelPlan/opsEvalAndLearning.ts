@@ -30,7 +30,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
   stakeholdersOther: {
     gqlField: 'stakeholdersOther',
     goField: 'StakeholdersOther',
-    dbField: 'stakeholders',
+    dbField: 'stakeholders_other',
     label:
       'Please describe the other stakeholders you plan to communicate with.',
     dataType: TranslationDataType.STRING,
@@ -50,7 +50,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
   helpdeskUse: {
     gqlField: 'helpdeskUse',
     goField: 'HelpdeskUse',
-    dbField: 'stakeholders_note',
+    dbField: 'helpdesk_use',
     label: 'Do you plan to use a helpdesk?',
     dataType: TranslationDataType.BOOLEAN,
     formType: 'radio',
@@ -242,7 +242,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
   captureParticipantInfoNote: {
     gqlField: 'captureParticipantInfoNote',
     goField: 'CaptureParticipantInfoNote',
-    dbField: 'capture_participant_info',
+    dbField: 'capture_participant_info_note',
     label: 'Notes',
     dataType: TranslationDataType.STRING,
     formType: 'textarea',

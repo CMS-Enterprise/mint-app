@@ -1,0 +1,120 @@
+"""
+Represents plan ops eval and learning translation data
+"""
+type PlanOpsEvalAndLearningTranslation {
+  #Page 1
+  stakeholders: TranslationFieldWithOptions! @goTag(key: "json", value: "stakeholders")
+  stakeholdersOther: TranslationField! @goTag(key: "json", value: "stakeholders_other")
+  stakeholdersNote: TranslationField! @goTag(key: "json", value: "stakeholders_note")
+  helpdeskUse: TranslationFieldWithOptions! @goTag(key: "json", value: "helpdesk_use")
+  helpdeskUseNote: TranslationField! @goTag(key: "json", value: "helpdesk_use_note")
+  contractorSupport: TranslationFieldWithOptions! @goTag(key: "json", value: "contractor_support")
+  contractorSupportOther: TranslationField! @goTag(key: "json", value: "contractor_support_other")
+  contractorSupportHow: TranslationField! @goTag(key: "json", value: "contractor_support_how")
+  contractorSupportNote: TranslationField! @goTag(key: "json", value: "contractor_support_note")
+  iddocSupport: TranslationFieldWithOptions! @goTag(key: "json", value: "iddoc_support")
+  iddocSupportNote: TranslationField! @goTag(key: "json", value: "iddoc_support_note")
+
+  #Page 2
+  technicalContactsIdentified: TranslationFieldWithOptions! @goTag(key: "json", value: "technical_contacts_identified")
+  technicalContactsIdentifiedDetail: TranslationField! @goTag(key: "json", value: "technical_contacts_identified_detail")
+  technicalContactsIdentifiedNote: TranslationField! @goTag(key: "json", value: "technical_contacts_identified_note")
+  captureParticipantInfo: TranslationFieldWithOptions! @goTag(key: "json", value: "capture_participant_info")
+  captureParticipantInfoNote: TranslationField! @goTag(key: "json", value: "capture_participant_info_note")
+  icdOwner: TranslationField! @goTag(key: "json", value: "icd_owner")
+  draftIcdDueDate: TranslationField! @goTag(key: "json", value: "draft_icd_due_date")
+  icdNote: TranslationField! @goTag(key: "json", value: "icd_note")
+
+  #Page 3
+  uatNeeds: TranslationField! @goTag(key: "json", value: "uat_needs")
+  stcNeeds: TranslationField! @goTag(key: "json", value: "stc_needs")
+  testingTimelines: TranslationField! @goTag(key: "json", value: "testing_timelines")
+  testingNote: TranslationField! @goTag(key: "json", value: "testing_note")
+  dataMonitoringFileTypes: TranslationFieldWithOptions! @goTag(key: "json", value: "data_monitoring_file_types")
+  dataMonitoringFileOther: TranslationField! @goTag(key: "json", value: "data_monitoring_file_other")
+  dataResponseType: TranslationField! @goTag(key: "json", value: "data_response_type")
+  dataResponseFileFrequency: TranslationField! @goTag(key: "json", value: "data_response_file_frequency")
+
+  #Page 4
+  dataFullTimeOrIncremental: TranslationFieldWithOptions! @goTag(key: "json", value: "data_full_time_or_incremental")
+  eftSetUp: TranslationFieldWithOptions! @goTag(key: "json", value: "eft_set_up")
+  unsolicitedAdjustmentsIncluded: TranslationFieldWithOptions! @goTag(key: "json", value: "unsolicited_adjustments_included")
+  dataFlowDiagramsNeeded: TranslationFieldWithOptions! @goTag(key: "json", value: "data_flow_diagrams_needed")
+  produceBenefitEnhancementFiles: TranslationFieldWithOptions! @goTag(key: "json", value: "produce_benefit_enhancement_files")
+  fileNamingConventions: TranslationField! @goTag(key: "json", value: "file_naming_conventions")
+  dataMonitoringNote: TranslationField! @goTag(key: "json", value: "data_monitoring_note")
+
+  #Page 5
+  benchmarkForPerformance: TranslationFieldWithOptions! @goTag(key: "json", value: "benchmark_for_performance")
+  benchmarkForPerformanceNote: TranslationField! @goTag(key: "json", value: "benchmark_for_performance_note")
+  computePerformanceScores: TranslationFieldWithOptions! @goTag(key: "json", value: "compute_performance_scores")
+  computePerformanceScoresNote: TranslationField! @goTag(key: "json", value: "compute_performance_scores_note")
+  riskAdjustPerformance: TranslationFieldWithOptions! @goTag(key: "json", value: "risk_adjust_performance")
+  riskAdjustFeedback: TranslationFieldWithOptions! @goTag(key: "json", value: "risk_adjust_feedback")
+  riskAdjustPayments: TranslationFieldWithOptions! @goTag(key: "json", value: "risk_adjust_payments")
+  riskAdjustOther: TranslationFieldWithOptions! @goTag(key: "json", value: "risk_adjust_other")
+  riskAdjustNote: TranslationField! @goTag(key: "json", value: "risk_adjust_note")
+  appealPerformance: TranslationFieldWithOptions! @goTag(key: "json", value: "appeal_performance")
+  appealFeedback: TranslationFieldWithOptions! @goTag(key: "json", value: "appeal_feedback")
+  appealPayments: TranslationFieldWithOptions! @goTag(key: "json", value: "appeal_payments")
+  appealOther: TranslationFieldWithOptions! @goTag(key: "json", value: "appeal_other")
+  appealNote: TranslationField! @goTag(key: "json", value: "appeal_note")
+
+  #Page 6
+  evaluationApproaches: TranslationFieldWithOptions! @goTag(key: "json", value: "evaluation_approaches")
+  evaluationApproachOther: TranslationField! @goTag(key: "json", value: "evaluation_approach_other")
+  evalutaionApproachNote: TranslationField! @goTag(key: "json", value: "evalutaion_approach_note")
+  ccmInvolvment: TranslationFieldWithOptions! @goTag(key: "json", value: "ccm_involvment")
+  ccmInvolvmentOther: TranslationField! @goTag(key: "json", value: "ccm_involvment_other")
+  ccmInvolvmentNote: TranslationField! @goTag(key: "json", value: "ccm_involvment_note")
+  dataNeededForMonitoring: TranslationFieldWithOptions! @goTag(key: "json", value: "data_needed_for_monitoring")
+  dataNeededForMonitoringOther: TranslationField! @goTag(key: "json", value: "data_needed_for_monitoring_other")
+  dataNeededForMonitoringNote: TranslationField! @goTag(key: "json", value: "data_needed_for_monitoring_note")
+  dataToSendParticicipants: TranslationFieldWithOptions! @goTag(key: "json", value: "data_to_send_particicipants")
+  dataToSendParticicipantsOther: TranslationField! @goTag(key: "json", value: "data_to_send_particicipants_other")
+  dataToSendParticicipantsNote: TranslationField! @goTag(key: "json", value: "data_to_send_particicipants_note")
+  shareCclfData: TranslationFieldWithOptions! @goTag(key: "json", value: "share_cclf_data")
+  shareCclfDataNote: TranslationField! @goTag(key: "json", value: "share_cclf_data_note")
+
+  #Page 7
+  sendFilesBetweenCcw: TranslationFieldWithOptions! @goTag(key: "json", value: "send_files_between_ccw")
+  sendFilesBetweenCcwNote: TranslationField! @goTag(key: "json", value: "send_files_between_ccw_note")
+  appToSendFilesToKnown: TranslationFieldWithOptions! @goTag(key: "json", value: "app_to_send_files_to_known")
+  appToSendFilesToWhich: TranslationField! @goTag(key: "json", value: "app_to_send_files_to_which")
+  appToSendFilesToNote: TranslationField! @goTag(key: "json", value: "app_to_send_files_to_note")
+  useCcwForFileDistribiutionToParticipants: TranslationFieldWithOptions! @goTag(key: "json", value: "use_ccw_for_file_distribiution_to_participants")
+  useCcwForFileDistribiutionToParticipantsNote: TranslationField! @goTag(key: "json", value: "use_ccw_for_file_distribiution_to_participants_note")
+  developNewQualityMeasures: TranslationFieldWithOptions! @goTag(key: "json", value: "develop_new_quality_measures")
+  developNewQualityMeasuresNote: TranslationField! @goTag(key: "json", value: "develop_new_quality_measures_note")
+  qualityPerformanceImpactsPayment: TranslationFieldWithOptions! @goTag(key: "json", value: "quality_performance_impacts_payment")
+  qualityPerformanceImpactsPaymentOther: TranslationField! @goTag(key: "json", value: "quality_performance_impacts_payment_other")
+  qualityPerformanceImpactsPaymentNote: TranslationField! @goTag(key: "json", value: "quality_performance_impacts_payment_note")
+
+  #Page 8
+  dataSharingStarts: TranslationFieldWithOptions! @goTag(key: "json", value: "data_sharing_starts")
+  dataSharingStartsOther: TranslationField! @goTag(key: "json", value: "data_sharing_starts_other")
+  dataSharingFrequency: TranslationFieldWithOptions! @goTag(key: "json", value: "data_sharing_frequency")
+  dataSharingFrequencyContinually: TranslationField! @goTag(key: "json", value: "data_sharing_frequency_continually")
+  dataSharingFrequencyOther: TranslationField! @goTag(key: "json", value: "data_sharing_frequency_other")
+  dataSharingStartsNote: TranslationField! @goTag(key: "json", value: "data_sharing_starts_note")
+  dataCollectionStarts: TranslationFieldWithOptions! @goTag(key: "json", value: "data_collection_starts")
+  dataCollectionStartsOther: TranslationField! @goTag(key: "json", value: "data_collection_starts_other")
+  dataCollectionFrequency: TranslationFieldWithOptions! @goTag(key: "json", value: "data_collection_frequency")
+  dataCollectionFrequencyContinually: TranslationField! @goTag(key: "json", value: "data_collection_frequency_continually")
+  dataCollectionFrequencyOther: TranslationField! @goTag(key: "json", value: "data_collection_frequency_other")
+  dataCollectionFrequencyNote: TranslationField! @goTag(key: "json", value: "data_collection_frequency_note")
+  qualityReportingStarts: TranslationFieldWithOptions! @goTag(key: "json", value: "quality_reporting_starts")
+  qualityReportingStartsOther: TranslationField! @goTag(key: "json", value: "quality_reporting_starts_other")
+  qualityReportingStartsNote: TranslationField! @goTag(key: "json", value: "quality_reporting_starts_note")
+  qualityReportingFrequency: TranslationFieldWithOptions! @goTag(key: "json", value: "quality_reporting_frequency")
+  qualityReportingFrequencyContinually: TranslationField! @goTag(key: "json", value: "quality_reporting_frequency_continually")
+  qualityReportingFrequencyOther: TranslationField! @goTag(key: "json", value: "quality_reporting_frequency_other")
+
+  #Page 9
+  modelLearningSystems: TranslationFieldWithOptions! @goTag(key: "json", value: "model_learning_systems")
+  modelLearningSystemsOther: TranslationField! @goTag(key: "json", value: "model_learning_systems_other")
+  modelLearningSystemsNote: TranslationField! @goTag(key: "json", value: "model_learning_systems_note")
+  anticipatedChallenges: TranslationField! @goTag(key: "json", value: "anticipated_challenges")
+
+  status: TranslationField! @goTag(key: "json", value: "status")
+}
