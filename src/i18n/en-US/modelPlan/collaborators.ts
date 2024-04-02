@@ -6,7 +6,7 @@ export const collaborators: TranslationCollaborators = {
   username: {
     gqlField: 'username',
     goField: 'Username',
-    dbField: 'user_account.common_name',
+    dbField: 'user_account.username',
     label: 'Team member name',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.SELECT
