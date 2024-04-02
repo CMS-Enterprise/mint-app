@@ -30,8 +30,10 @@ func TestPlanBasicsTranslationAsMap(t *testing.T) {
 	// basicsMap, err := PlanBasicsTranslationMap()
 	// basicsMap, err := models.StructToTranslationMap(translation)
 	// basicsMap, err := models.StructToTypedMap[models.ITranslationField](translation)
-	basicsMap, err := models.StructToMapDBTag(*translation)
+	// basicsMap, err := models.StructToMapDBTag(*translation)
 	// basicsMap, err := translation.ToMap()
+	basicsMap, err := models.StructToTranslationMap(*translation)
+	// basicsMap, err := models.StructToMap(translation)
 
 	assert.NoError(t, err)
 	assert.NotNil(t, basicsMap)
