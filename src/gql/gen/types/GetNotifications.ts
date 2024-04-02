@@ -14,7 +14,6 @@ export interface GetNotifications_currentUser_notifications_notifications_activi
   commonName: string;
 }
 
-<<<<<<< HEAD
 export interface GetNotifications_currentUser_notifications_notifications_activity_metaData_NewDiscussionRepliedActivityMeta_modelPlan {
   __typename: "ModelPlan";
   modelName: string;
@@ -29,10 +28,6 @@ export interface GetNotifications_currentUser_notifications_notifications_activi
   modelPlanID: UUID;
   modelPlan: GetNotifications_currentUser_notifications_notifications_activity_metaData_NewDiscussionRepliedActivityMeta_modelPlan;
   content: string;
-=======
-export interface GetNotifications_currentUser_notifications_notifications_activity_metaData_ActivityMetaBaseStruct {
-  __typename: "ActivityMetaBaseStruct" | "ModelPlanSharedActivityMeta";
->>>>>>> dce1a584 ([EASI-3947] 'On Model Plan Shared' notification (#1013))
 }
 
 export interface GetNotifications_currentUser_notifications_notifications_activity_metaData_TaggedInPlanDiscussionActivityMeta_modelPlan {
@@ -64,6 +59,20 @@ export interface GetNotifications_currentUser_notifications_notifications_activi
   discussionID: UUID;
   replyID: UUID;
   content: string;
+}
+
+export interface GetNotifications_currentUser_notifications_notifications_activity_metaData_ModelPlanSharedActivityMeta_modelPlan {
+  __typename: "ModelPlan";
+  modelName: string;
+}
+
+export interface GetNotifications_currentUser_notifications_notifications_activity_metaData_ModelPlanSharedActivityMeta {
+  __typename: "ModelPlanSharedActivityMeta";
+  version: number;
+  type: ActivityType;
+  modelPlanID: UUID;
+  modelPlan: GetNotifications_currentUser_notifications_notifications_activity_metaData_ModelPlanSharedActivityMeta_modelPlan;
+  optionalMessage: string | null;
 }
 
 export interface GetNotifications_currentUser_notifications_notifications_activity_metaData_DailyDigestCompleteActivityMeta_analyzedAudits_changes_modelPlan {
@@ -136,7 +145,7 @@ export interface GetNotifications_currentUser_notifications_notifications_activi
   analyzedAudits: GetNotifications_currentUser_notifications_notifications_activity_metaData_DailyDigestCompleteActivityMeta_analyzedAudits[];
 }
 
-export type GetNotifications_currentUser_notifications_notifications_activity_metaData = GetNotifications_currentUser_notifications_notifications_activity_metaData_NewDiscussionRepliedActivityMeta | GetNotifications_currentUser_notifications_notifications_activity_metaData_TaggedInPlanDiscussionActivityMeta | GetNotifications_currentUser_notifications_notifications_activity_metaData_TaggedInDiscussionReplyActivityMeta | GetNotifications_currentUser_notifications_notifications_activity_metaData_DailyDigestCompleteActivityMeta;
+export type GetNotifications_currentUser_notifications_notifications_activity_metaData = GetNotifications_currentUser_notifications_notifications_activity_metaData_NewDiscussionRepliedActivityMeta | GetNotifications_currentUser_notifications_notifications_activity_metaData_TaggedInPlanDiscussionActivityMeta | GetNotifications_currentUser_notifications_notifications_activity_metaData_TaggedInDiscussionReplyActivityMeta | GetNotifications_currentUser_notifications_notifications_activity_metaData_ModelPlanSharedActivityMeta | GetNotifications_currentUser_notifications_notifications_activity_metaData_DailyDigestCompleteActivityMeta;
 
 export interface GetNotifications_currentUser_notifications_notifications_activity {
   __typename: "Activity";
