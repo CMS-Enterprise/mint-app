@@ -62,6 +62,8 @@ export const filterUnneededField = (
   return filteredObj;
 };
 
+// Checks translation questions for 'otherParentField'
+// Replaces gql field residing in 'otherParentField' with the dbField of the referenced parent
 export const mapOtherParentFieldToDBField = (
   planSection: TranslationPlanSection
 ) => {
@@ -75,15 +77,29 @@ export const mapOtherParentFieldToDBField = (
       fieldObj.otherParentField = parentObj.dbField;
     }
 
-    const sectionName: keyof typeof planSection = fieldObj.gqlField;
-
-    formattedSection[sectionName] = fieldObj;
+    formattedSection[field] = fieldObj;
   });
   return formattedSection;
 };
 
-// Restructures translations to key off db_field rather than gql_field
-export const mapDBFieldToKey = (translations: typeof translationSections) => {
+// Maps translations gql key fields to db fields
+// Ex: 'modelCategory' will become 'model_category'
+export const mapDBFieldToKey = (planSection: TranslationPlanSection) => {
+  const formattedSection: any = {};
+  getKeys(planSection).forEach(field => {
+    const fieldObj = planSection[field] as TranslationFieldProperties;
+
+    const filteredObj = filterUnneededField(fieldObj, unneededFields);
+
+    formattedSection[fieldObj.dbField] = filteredObj;
+  });
+  return formattedSection;
+};
+
+// Processes translation data in prep for BE use for export
+export const processDataMapping = (
+  translations: typeof translationSections
+) => {
   const formattedTranslation: any = {};
 
   getKeys(translations).forEach((section: keyof typeof translationSections) => {
@@ -95,15 +111,9 @@ export const mapDBFieldToKey = (translations: typeof translationSections) => {
       planSection
     );
 
-    getKeys(formattedOtherParentFields).forEach(field => {
-      const fieldObj = formattedOtherParentFields[
-        field
-      ] as TranslationFieldProperties;
+    const formattedKeyFields = mapDBFieldToKey(formattedOtherParentFields);
 
-      const filteredObj = filterUnneededField(fieldObj, unneededFields);
-
-      formattedTranslation[section][fieldObj.dbField] = filteredObj;
-    });
+    formattedTranslation[section] = formattedKeyFields;
   });
 
   return formattedTranslation;
@@ -116,7 +126,9 @@ const parseTypscriptToJSON = (translations: any, outputFile: string) => {
 };
 
 function main() {
-  const transformedTranslationSections = mapDBFieldToKey(translationSections);
+  const transformedTranslationSections = processDataMapping(
+    translationSections
+  );
 
   // Create JSON file for each translation task list section
   getKeys(transformedTranslationSections).forEach(section =>
