@@ -49,13 +49,6 @@ export default gql(/* GraphQL */ `
                 modelPlan {
                   modelName
                 }
-                collaboratorID
-                collaborator {
-                  teamRoles
-                  userAccount {
-                    commonName
-                  }
-                }
               }
               ... on TaggedInDiscussionReplyActivityMeta {
                 version

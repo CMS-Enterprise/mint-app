@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { ActivityType, TeamRole } from "./../../../types/graphql-global-types";
+import { ActivityType } from "./../../../types/graphql-global-types";
 
 // ====================================================
 // GraphQL query operation: GetNotifications
@@ -50,25 +50,12 @@ export interface GetNotifications_currentUser_notifications_notifications_activi
   modelName: string;
 }
 
-export interface GetNotifications_currentUser_notifications_notifications_activity_metaData_AddedAsCollaboratorMeta_collaborator_userAccount {
-  __typename: "UserAccount";
-  commonName: string;
-}
-
-export interface GetNotifications_currentUser_notifications_notifications_activity_metaData_AddedAsCollaboratorMeta_collaborator {
-  __typename: "PlanCollaborator";
-  teamRoles: TeamRole[];
-  userAccount: GetNotifications_currentUser_notifications_notifications_activity_metaData_AddedAsCollaboratorMeta_collaborator_userAccount;
-}
-
 export interface GetNotifications_currentUser_notifications_notifications_activity_metaData_AddedAsCollaboratorMeta {
   __typename: "AddedAsCollaboratorMeta";
   version: number;
   type: ActivityType;
   modelPlanID: UUID;
   modelPlan: GetNotifications_currentUser_notifications_notifications_activity_metaData_AddedAsCollaboratorMeta_modelPlan;
-  collaboratorID: UUID;
-  collaborator: GetNotifications_currentUser_notifications_notifications_activity_metaData_AddedAsCollaboratorMeta_collaborator;
 }
 
 export interface GetNotifications_currentUser_notifications_notifications_activity_metaData_TaggedInDiscussionReplyActivityMeta_modelPlan {
