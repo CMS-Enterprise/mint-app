@@ -1441,6 +1441,42 @@ export type PlanBeneficiariesChanges = {
   treatDualElligibleDifferentNote?: InputMaybe<Scalars['String']['input']>;
 };
 
+/** Plan Beneficiaries represents the the beneficiaries section of the task list */
+export type PlanBeneficiariesTranslation = {
+  __typename: 'PlanBeneficiariesTranslation';
+  beneficiaries: TranslationFieldWithOptions;
+  beneficiariesNote: TranslationField;
+  beneficiariesOther: TranslationField;
+  beneficiaryOverlap: TranslationFieldWithOptions;
+  beneficiaryOverlapNote: TranslationField;
+  beneficiaryRemovalFrequency: TranslationFieldWithOptions;
+  beneficiaryRemovalFrequencyContinually: TranslationField;
+  beneficiaryRemovalFrequencyNote: TranslationField;
+  beneficiaryRemovalFrequencyOther: TranslationField;
+  beneficiarySelectionFrequency: TranslationFieldWithOptions;
+  beneficiarySelectionFrequencyContinually: TranslationField;
+  beneficiarySelectionFrequencyNote: TranslationField;
+  beneficiarySelectionFrequencyOther: TranslationField;
+  beneficiarySelectionMethod: TranslationFieldWithOptions;
+  beneficiarySelectionNote: TranslationField;
+  beneficiarySelectionOther: TranslationField;
+  confidenceNote: TranslationField;
+  diseaseSpecificGroup: TranslationField;
+  estimateConfidence: TranslationFieldWithOptions;
+  excludeCertainCharacteristics: TranslationFieldWithOptions;
+  excludeCertainCharacteristicsCriteria: TranslationField;
+  excludeCertainCharacteristicsNote: TranslationField;
+  numberPeopleImpacted: TranslationField;
+  precedenceRules: TranslationFieldWithOptions;
+  precedenceRulesNo: TranslationField;
+  precedenceRulesNote: TranslationField;
+  precedenceRulesYes: TranslationField;
+  status: TranslationField;
+  treatDualElligibleDifferent: TranslationFieldWithOptions;
+  treatDualElligibleDifferentHow: TranslationField;
+  treatDualElligibleDifferentNote: TranslationField;
+};
+
 export type PlanCr = {
   __typename: 'PlanCR';
   createdBy: Scalars['UUID']['output'];
@@ -3004,6 +3040,7 @@ export type TranslationField = {
   isOtherType?: Maybe<Scalars['Boolean']['output']>;
   label: Scalars['String']['output'];
   multiSelectLabel?: Maybe<Scalars['String']['output']>;
+  otherParentField?: Maybe<Scalars['String']['output']>;
   readonlyLabel?: Maybe<Scalars['String']['output']>;
   sublabel?: Maybe<Scalars['String']['output']>;
 };
@@ -3018,6 +3055,7 @@ export type TranslationFieldWithOptions = {
   label: Scalars['String']['output'];
   multiSelectLabel?: Maybe<Scalars['String']['output']>;
   options: Scalars['Map']['output'];
+  otherParentField?: Maybe<Scalars['String']['output']>;
   readonlyLabel?: Maybe<Scalars['String']['output']>;
   sublabel?: Maybe<Scalars['String']['output']>;
 };

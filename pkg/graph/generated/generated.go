@@ -519,6 +519,40 @@ type ComplexityRoot struct {
 		TreatDualElligibleDifferentNote          func(childComplexity int) int
 	}
 
+	PlanBeneficiariesTranslation struct {
+		Beneficiaries                            func(childComplexity int) int
+		BeneficiariesNote                        func(childComplexity int) int
+		BeneficiariesOther                       func(childComplexity int) int
+		BeneficiaryOverlap                       func(childComplexity int) int
+		BeneficiaryOverlapNote                   func(childComplexity int) int
+		BeneficiaryRemovalFrequency              func(childComplexity int) int
+		BeneficiaryRemovalFrequencyContinually   func(childComplexity int) int
+		BeneficiaryRemovalFrequencyNote          func(childComplexity int) int
+		BeneficiaryRemovalFrequencyOther         func(childComplexity int) int
+		BeneficiarySelectionFrequency            func(childComplexity int) int
+		BeneficiarySelectionFrequencyContinually func(childComplexity int) int
+		BeneficiarySelectionFrequencyNote        func(childComplexity int) int
+		BeneficiarySelectionFrequencyOther       func(childComplexity int) int
+		BeneficiarySelectionMethod               func(childComplexity int) int
+		BeneficiarySelectionNote                 func(childComplexity int) int
+		BeneficiarySelectionOther                func(childComplexity int) int
+		ConfidenceNote                           func(childComplexity int) int
+		DiseaseSpecificGroup                     func(childComplexity int) int
+		EstimateConfidence                       func(childComplexity int) int
+		ExcludeCertainCharacteristics            func(childComplexity int) int
+		ExcludeCertainCharacteristicsCriteria    func(childComplexity int) int
+		ExcludeCertainCharacteristicsNote        func(childComplexity int) int
+		NumberPeopleImpacted                     func(childComplexity int) int
+		PrecedenceRules                          func(childComplexity int) int
+		PrecedenceRulesNo                        func(childComplexity int) int
+		PrecedenceRulesNote                      func(childComplexity int) int
+		PrecedenceRulesYes                       func(childComplexity int) int
+		Status                                   func(childComplexity int) int
+		TreatDualElligibleDifferent              func(childComplexity int) int
+		TreatDualElligibleDifferentHow           func(childComplexity int) int
+		TreatDualElligibleDifferentNote          func(childComplexity int) int
+	}
+
 	PlanCR struct {
 		CreatedBy             func(childComplexity int) int
 		CreatedByUserAccount  func(childComplexity int) int
@@ -1281,6 +1315,7 @@ type ComplexityRoot struct {
 		IsOtherType      func(childComplexity int) int
 		Label            func(childComplexity int) int
 		MultiSelectLabel func(childComplexity int) int
+		OtherParentField func(childComplexity int) int
 		ReadonlyLabel    func(childComplexity int) int
 		Sublabel         func(childComplexity int) int
 	}
@@ -1294,6 +1329,7 @@ type ComplexityRoot struct {
 		Label            func(childComplexity int) int
 		MultiSelectLabel func(childComplexity int) int
 		Options          func(childComplexity int) int
+		OtherParentField func(childComplexity int) int
 		ReadonlyLabel    func(childComplexity int) int
 		Sublabel         func(childComplexity int) int
 	}
@@ -4356,6 +4392,223 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.PlanBeneficiaries.TreatDualElligibleDifferentNote(childComplexity), true
+
+	case "PlanBeneficiariesTranslation.beneficiaries":
+		if e.complexity.PlanBeneficiariesTranslation.Beneficiaries == nil {
+			break
+		}
+
+		return e.complexity.PlanBeneficiariesTranslation.Beneficiaries(childComplexity), true
+
+	case "PlanBeneficiariesTranslation.beneficiariesNote":
+		if e.complexity.PlanBeneficiariesTranslation.BeneficiariesNote == nil {
+			break
+		}
+
+		return e.complexity.PlanBeneficiariesTranslation.BeneficiariesNote(childComplexity), true
+
+	case "PlanBeneficiariesTranslation.beneficiariesOther":
+		if e.complexity.PlanBeneficiariesTranslation.BeneficiariesOther == nil {
+			break
+		}
+
+		return e.complexity.PlanBeneficiariesTranslation.BeneficiariesOther(childComplexity), true
+
+	case "PlanBeneficiariesTranslation.beneficiaryOverlap":
+		if e.complexity.PlanBeneficiariesTranslation.BeneficiaryOverlap == nil {
+			break
+		}
+
+		return e.complexity.PlanBeneficiariesTranslation.BeneficiaryOverlap(childComplexity), true
+
+	case "PlanBeneficiariesTranslation.beneficiaryOverlapNote":
+		if e.complexity.PlanBeneficiariesTranslation.BeneficiaryOverlapNote == nil {
+			break
+		}
+
+		return e.complexity.PlanBeneficiariesTranslation.BeneficiaryOverlapNote(childComplexity), true
+
+	case "PlanBeneficiariesTranslation.beneficiaryRemovalFrequency":
+		if e.complexity.PlanBeneficiariesTranslation.BeneficiaryRemovalFrequency == nil {
+			break
+		}
+
+		return e.complexity.PlanBeneficiariesTranslation.BeneficiaryRemovalFrequency(childComplexity), true
+
+	case "PlanBeneficiariesTranslation.beneficiaryRemovalFrequencyContinually":
+		if e.complexity.PlanBeneficiariesTranslation.BeneficiaryRemovalFrequencyContinually == nil {
+			break
+		}
+
+		return e.complexity.PlanBeneficiariesTranslation.BeneficiaryRemovalFrequencyContinually(childComplexity), true
+
+	case "PlanBeneficiariesTranslation.beneficiaryRemovalFrequencyNote":
+		if e.complexity.PlanBeneficiariesTranslation.BeneficiaryRemovalFrequencyNote == nil {
+			break
+		}
+
+		return e.complexity.PlanBeneficiariesTranslation.BeneficiaryRemovalFrequencyNote(childComplexity), true
+
+	case "PlanBeneficiariesTranslation.beneficiaryRemovalFrequencyOther":
+		if e.complexity.PlanBeneficiariesTranslation.BeneficiaryRemovalFrequencyOther == nil {
+			break
+		}
+
+		return e.complexity.PlanBeneficiariesTranslation.BeneficiaryRemovalFrequencyOther(childComplexity), true
+
+	case "PlanBeneficiariesTranslation.beneficiarySelectionFrequency":
+		if e.complexity.PlanBeneficiariesTranslation.BeneficiarySelectionFrequency == nil {
+			break
+		}
+
+		return e.complexity.PlanBeneficiariesTranslation.BeneficiarySelectionFrequency(childComplexity), true
+
+	case "PlanBeneficiariesTranslation.beneficiarySelectionFrequencyContinually":
+		if e.complexity.PlanBeneficiariesTranslation.BeneficiarySelectionFrequencyContinually == nil {
+			break
+		}
+
+		return e.complexity.PlanBeneficiariesTranslation.BeneficiarySelectionFrequencyContinually(childComplexity), true
+
+	case "PlanBeneficiariesTranslation.beneficiarySelectionFrequencyNote":
+		if e.complexity.PlanBeneficiariesTranslation.BeneficiarySelectionFrequencyNote == nil {
+			break
+		}
+
+		return e.complexity.PlanBeneficiariesTranslation.BeneficiarySelectionFrequencyNote(childComplexity), true
+
+	case "PlanBeneficiariesTranslation.beneficiarySelectionFrequencyOther":
+		if e.complexity.PlanBeneficiariesTranslation.BeneficiarySelectionFrequencyOther == nil {
+			break
+		}
+
+		return e.complexity.PlanBeneficiariesTranslation.BeneficiarySelectionFrequencyOther(childComplexity), true
+
+	case "PlanBeneficiariesTranslation.beneficiarySelectionMethod":
+		if e.complexity.PlanBeneficiariesTranslation.BeneficiarySelectionMethod == nil {
+			break
+		}
+
+		return e.complexity.PlanBeneficiariesTranslation.BeneficiarySelectionMethod(childComplexity), true
+
+	case "PlanBeneficiariesTranslation.beneficiarySelectionNote":
+		if e.complexity.PlanBeneficiariesTranslation.BeneficiarySelectionNote == nil {
+			break
+		}
+
+		return e.complexity.PlanBeneficiariesTranslation.BeneficiarySelectionNote(childComplexity), true
+
+	case "PlanBeneficiariesTranslation.beneficiarySelectionOther":
+		if e.complexity.PlanBeneficiariesTranslation.BeneficiarySelectionOther == nil {
+			break
+		}
+
+		return e.complexity.PlanBeneficiariesTranslation.BeneficiarySelectionOther(childComplexity), true
+
+	case "PlanBeneficiariesTranslation.confidenceNote":
+		if e.complexity.PlanBeneficiariesTranslation.ConfidenceNote == nil {
+			break
+		}
+
+		return e.complexity.PlanBeneficiariesTranslation.ConfidenceNote(childComplexity), true
+
+	case "PlanBeneficiariesTranslation.diseaseSpecificGroup":
+		if e.complexity.PlanBeneficiariesTranslation.DiseaseSpecificGroup == nil {
+			break
+		}
+
+		return e.complexity.PlanBeneficiariesTranslation.DiseaseSpecificGroup(childComplexity), true
+
+	case "PlanBeneficiariesTranslation.estimateConfidence":
+		if e.complexity.PlanBeneficiariesTranslation.EstimateConfidence == nil {
+			break
+		}
+
+		return e.complexity.PlanBeneficiariesTranslation.EstimateConfidence(childComplexity), true
+
+	case "PlanBeneficiariesTranslation.excludeCertainCharacteristics":
+		if e.complexity.PlanBeneficiariesTranslation.ExcludeCertainCharacteristics == nil {
+			break
+		}
+
+		return e.complexity.PlanBeneficiariesTranslation.ExcludeCertainCharacteristics(childComplexity), true
+
+	case "PlanBeneficiariesTranslation.excludeCertainCharacteristicsCriteria":
+		if e.complexity.PlanBeneficiariesTranslation.ExcludeCertainCharacteristicsCriteria == nil {
+			break
+		}
+
+		return e.complexity.PlanBeneficiariesTranslation.ExcludeCertainCharacteristicsCriteria(childComplexity), true
+
+	case "PlanBeneficiariesTranslation.excludeCertainCharacteristicsNote":
+		if e.complexity.PlanBeneficiariesTranslation.ExcludeCertainCharacteristicsNote == nil {
+			break
+		}
+
+		return e.complexity.PlanBeneficiariesTranslation.ExcludeCertainCharacteristicsNote(childComplexity), true
+
+	case "PlanBeneficiariesTranslation.numberPeopleImpacted":
+		if e.complexity.PlanBeneficiariesTranslation.NumberPeopleImpacted == nil {
+			break
+		}
+
+		return e.complexity.PlanBeneficiariesTranslation.NumberPeopleImpacted(childComplexity), true
+
+	case "PlanBeneficiariesTranslation.precedenceRules":
+		if e.complexity.PlanBeneficiariesTranslation.PrecedenceRules == nil {
+			break
+		}
+
+		return e.complexity.PlanBeneficiariesTranslation.PrecedenceRules(childComplexity), true
+
+	case "PlanBeneficiariesTranslation.precedenceRulesNo":
+		if e.complexity.PlanBeneficiariesTranslation.PrecedenceRulesNo == nil {
+			break
+		}
+
+		return e.complexity.PlanBeneficiariesTranslation.PrecedenceRulesNo(childComplexity), true
+
+	case "PlanBeneficiariesTranslation.precedenceRulesNote":
+		if e.complexity.PlanBeneficiariesTranslation.PrecedenceRulesNote == nil {
+			break
+		}
+
+		return e.complexity.PlanBeneficiariesTranslation.PrecedenceRulesNote(childComplexity), true
+
+	case "PlanBeneficiariesTranslation.precedenceRulesYes":
+		if e.complexity.PlanBeneficiariesTranslation.PrecedenceRulesYes == nil {
+			break
+		}
+
+		return e.complexity.PlanBeneficiariesTranslation.PrecedenceRulesYes(childComplexity), true
+
+	case "PlanBeneficiariesTranslation.status":
+		if e.complexity.PlanBeneficiariesTranslation.Status == nil {
+			break
+		}
+
+		return e.complexity.PlanBeneficiariesTranslation.Status(childComplexity), true
+
+	case "PlanBeneficiariesTranslation.treatDualElligibleDifferent":
+		if e.complexity.PlanBeneficiariesTranslation.TreatDualElligibleDifferent == nil {
+			break
+		}
+
+		return e.complexity.PlanBeneficiariesTranslation.TreatDualElligibleDifferent(childComplexity), true
+
+	case "PlanBeneficiariesTranslation.treatDualElligibleDifferentHow":
+		if e.complexity.PlanBeneficiariesTranslation.TreatDualElligibleDifferentHow == nil {
+			break
+		}
+
+		return e.complexity.PlanBeneficiariesTranslation.TreatDualElligibleDifferentHow(childComplexity), true
+
+	case "PlanBeneficiariesTranslation.treatDualElligibleDifferentNote":
+		if e.complexity.PlanBeneficiariesTranslation.TreatDualElligibleDifferentNote == nil {
+			break
+		}
+
+		return e.complexity.PlanBeneficiariesTranslation.TreatDualElligibleDifferentNote(childComplexity), true
 
 	case "PlanCR.createdBy":
 		if e.complexity.PlanCR.CreatedBy == nil {
@@ -9249,6 +9502,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.TranslationField.MultiSelectLabel(childComplexity), true
 
+	case "TranslationField.otherParentField":
+		if e.complexity.TranslationField.OtherParentField == nil {
+			break
+		}
+
+		return e.complexity.TranslationField.OtherParentField(childComplexity), true
+
 	case "TranslationField.readonlyLabel":
 		if e.complexity.TranslationField.ReadonlyLabel == nil {
 			break
@@ -9318,6 +9578,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.TranslationFieldWithOptions.Options(childComplexity), true
+
+	case "TranslationFieldWithOptions.otherParentField":
+		if e.complexity.TranslationFieldWithOptions.OtherParentField == nil {
+			break
+		}
+
+		return e.complexity.TranslationFieldWithOptions.OtherParentField(childComplexity), true
 
 	case "TranslationFieldWithOptions.readonlyLabel":
 		if e.complexity.TranslationFieldWithOptions.ReadonlyLabel == nil {
@@ -10678,6 +10945,50 @@ extend type Mutation {
   updatePlanBeneficiaries(id: UUID!, changes: PlanBeneficiariesChanges!): PlanBeneficiaries!
   @hasRole(role: MINT_USER)
 }`, BuiltIn: false},
+	{Name: "../schema/types/plan_beneficiaries_translation.graphql", Input: `"""
+Plan Beneficiaries represents the the beneficiaries section of the task list
+"""
+
+type PlanBeneficiariesTranslation {
+  #Page 1
+  beneficiaries: TranslationFieldWithOptions! @goTag(key: "json", value: "beneficiaries")
+  beneficiariesOther: TranslationField! @goTag(key: "json", value: "beneficiaries_other")
+  beneficiariesNote: TranslationField! @goTag(key: "json", value: "beneficiaries_note")
+  diseaseSpecificGroup: TranslationField! @goTag(key: "json", value: "disease_specific_group")
+  treatDualElligibleDifferent: TranslationFieldWithOptions! @goTag(key: "json", value: "treat_dual_elligible_different")
+  treatDualElligibleDifferentHow: TranslationField! @goTag(key: "json", value: "treat_dual_elligible_different_how")
+  treatDualElligibleDifferentNote: TranslationField! @goTag(key: "json", value: "treat_dual_elligible_different_note")
+  excludeCertainCharacteristics: TranslationFieldWithOptions! @goTag(key: "json", value: "exclude_certain_characteristics")
+  excludeCertainCharacteristicsCriteria: TranslationField! @goTag(key: "json", value: "exclude_certain_characteristics_criteria")
+  excludeCertainCharacteristicsNote: TranslationField! @goTag(key: "json", value: "exclude_certain_characteristics_note")
+
+  #Page 2
+  numberPeopleImpacted: TranslationField! @goTag(key: "json", value: "number_people_impacted")
+  estimateConfidence: TranslationFieldWithOptions! @goTag(key: "json", value: "estimate_confidence")
+  confidenceNote: TranslationField! @goTag(key: "json", value: "confidence_note")
+  beneficiarySelectionMethod: TranslationFieldWithOptions! @goTag(key: "json", value: "beneficiary_selection_method")
+  beneficiarySelectionOther: TranslationField! @goTag(key: "json", value: "beneficiary_selection_other")
+  beneficiarySelectionNote: TranslationField! @goTag(key: "json", value: "beneficiary_selection_note")
+
+  #Page 3
+  beneficiarySelectionFrequency: TranslationFieldWithOptions! @goTag(key: "json", value: "beneficiary_selection_frequency")
+  beneficiarySelectionFrequencyContinually: TranslationField! @goTag(key: "json", value: "beneficiary_selection_frequency_continually")
+  beneficiarySelectionFrequencyOther: TranslationField! @goTag(key: "json", value: "beneficiary_selection_frequency_other")
+  beneficiarySelectionFrequencyNote: TranslationField! @goTag(key: "json", value: "beneficiary_selection_frequency_note")
+  beneficiaryRemovalFrequency: TranslationFieldWithOptions! @goTag(key: "json", value: "beneficiary_removal_frequency")
+  beneficiaryRemovalFrequencyContinually: TranslationField! @goTag(key: "json", value: "beneficiary_removal_frequency_continually")
+  beneficiaryRemovalFrequencyOther: TranslationField! @goTag(key: "json", value: "beneficiary_removal_frequency_other")
+  beneficiaryRemovalFrequencyNote: TranslationField! @goTag(key: "json", value: "beneficiary_removal_frequency_note")
+  beneficiaryOverlap: TranslationFieldWithOptions! @goTag(key: "json", value: "beneficiary_overlap")
+  beneficiaryOverlapNote: TranslationField! @goTag(key: "json", value: "beneficiary_overlap_note")
+  precedenceRules: TranslationFieldWithOptions! @goTag(key: "json", value: "precedence_rules")
+  precedenceRulesYes: TranslationField! @goTag(key: "json", value: "precedence_rules_yes")
+  precedenceRulesNo: TranslationField! @goTag(key: "json", value: "precedence_rules_no")
+  precedenceRulesNote: TranslationField! @goTag(key: "json", value: "precedence_rules_note")
+
+  status: TranslationField! @goTag(key: "json", value: "status")
+}
+`, BuiltIn: false},
 	{Name: "../schema/types/plan_collaborator.graphql", Input: `enum TeamRole {
   MODEL_LEAD
   MODEL_TEAM
@@ -12865,7 +13176,8 @@ type TranslationField {
   sublabel: String
   multiSelectLabel: String
   isArray: Boolean
-  isOtherType: Boolean
+  isOtherType: Boolean # Is a question a followup to another that doesn't designate it's own readonly question/line,
+  otherParentField: String # gql field name for the parent question for fields that represent Other, Please specify, etc.  Used in change history to render parent question for context
 }
 
 # TranslationField represents a question with options
@@ -12878,7 +13190,8 @@ type TranslationFieldWithOptions {
   sublabel: String
   multiSelectLabel: String
   isArray: Boolean
-  isOtherType: Boolean
+  isOtherType: Boolean # Is a question a followup to another that doesn't designate it's own readonly question/line,
+  otherParentField: String # gql field name for the parent question for fields that represent Other, Please specify, etc.  Used in change history to render parent question for context
   options: Map!
 }
 
@@ -31707,6 +32020,8 @@ func (ec *executionContext) fieldContext_PlanBasicsTranslation_modelCategory(ctx
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationFieldWithOptions_otherParentField(ctx, field)
 			case "options":
 				return ec.fieldContext_TranslationFieldWithOptions_options(ctx, field)
 			}
@@ -31773,6 +32088,8 @@ func (ec *executionContext) fieldContext_PlanBasicsTranslation_additionalModelCa
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationFieldWithOptions_otherParentField(ctx, field)
 			case "options":
 				return ec.fieldContext_TranslationFieldWithOptions_options(ctx, field)
 			}
@@ -31839,6 +32156,8 @@ func (ec *executionContext) fieldContext_PlanBasicsTranslation_demoCode(ctx cont
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationField_otherParentField(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
 		},
@@ -31903,6 +32222,8 @@ func (ec *executionContext) fieldContext_PlanBasicsTranslation_amsModelID(ctx co
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationField_otherParentField(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
 		},
@@ -31967,6 +32288,8 @@ func (ec *executionContext) fieldContext_PlanBasicsTranslation_cmsCenters(ctx co
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationFieldWithOptions_otherParentField(ctx, field)
 			case "options":
 				return ec.fieldContext_TranslationFieldWithOptions_options(ctx, field)
 			}
@@ -32033,6 +32356,8 @@ func (ec *executionContext) fieldContext_PlanBasicsTranslation_cmmiGroups(ctx co
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationFieldWithOptions_otherParentField(ctx, field)
 			case "options":
 				return ec.fieldContext_TranslationFieldWithOptions_options(ctx, field)
 			}
@@ -32099,6 +32424,8 @@ func (ec *executionContext) fieldContext_PlanBasicsTranslation_modelType(ctx con
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationFieldWithOptions_otherParentField(ctx, field)
 			case "options":
 				return ec.fieldContext_TranslationFieldWithOptions_options(ctx, field)
 			}
@@ -32165,6 +32492,8 @@ func (ec *executionContext) fieldContext_PlanBasicsTranslation_modelTypeOther(ct
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationField_otherParentField(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
 		},
@@ -32229,6 +32558,8 @@ func (ec *executionContext) fieldContext_PlanBasicsTranslation_problem(ctx conte
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationField_otherParentField(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
 		},
@@ -32293,6 +32624,8 @@ func (ec *executionContext) fieldContext_PlanBasicsTranslation_goal(ctx context.
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationField_otherParentField(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
 		},
@@ -32357,6 +32690,8 @@ func (ec *executionContext) fieldContext_PlanBasicsTranslation_testInterventions
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationField_otherParentField(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
 		},
@@ -32421,6 +32756,8 @@ func (ec *executionContext) fieldContext_PlanBasicsTranslation_note(ctx context.
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationField_otherParentField(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
 		},
@@ -32485,6 +32822,8 @@ func (ec *executionContext) fieldContext_PlanBasicsTranslation_completeICIP(ctx 
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationField_otherParentField(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
 		},
@@ -32549,6 +32888,8 @@ func (ec *executionContext) fieldContext_PlanBasicsTranslation_clearanceStarts(c
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationField_otherParentField(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
 		},
@@ -32613,6 +32954,8 @@ func (ec *executionContext) fieldContext_PlanBasicsTranslation_clearanceEnds(ctx
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationField_otherParentField(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
 		},
@@ -32677,6 +33020,8 @@ func (ec *executionContext) fieldContext_PlanBasicsTranslation_announced(ctx con
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationField_otherParentField(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
 		},
@@ -32741,6 +33086,8 @@ func (ec *executionContext) fieldContext_PlanBasicsTranslation_applicationsStart
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationField_otherParentField(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
 		},
@@ -32805,6 +33152,8 @@ func (ec *executionContext) fieldContext_PlanBasicsTranslation_applicationsEnd(c
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationField_otherParentField(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
 		},
@@ -32869,6 +33218,8 @@ func (ec *executionContext) fieldContext_PlanBasicsTranslation_performancePeriod
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationField_otherParentField(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
 		},
@@ -32933,6 +33284,8 @@ func (ec *executionContext) fieldContext_PlanBasicsTranslation_performancePeriod
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationField_otherParentField(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
 		},
@@ -32997,6 +33350,8 @@ func (ec *executionContext) fieldContext_PlanBasicsTranslation_wrapUpEnds(ctx co
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationField_otherParentField(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
 		},
@@ -33061,6 +33416,8 @@ func (ec *executionContext) fieldContext_PlanBasicsTranslation_highLevelNote(ctx
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationField_otherParentField(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
 		},
@@ -33125,6 +33482,8 @@ func (ec *executionContext) fieldContext_PlanBasicsTranslation_phasedIn(ctx cont
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationFieldWithOptions_otherParentField(ctx, field)
 			case "options":
 				return ec.fieldContext_TranslationFieldWithOptions_options(ctx, field)
 			}
@@ -33191,6 +33550,8 @@ func (ec *executionContext) fieldContext_PlanBasicsTranslation_phasedInNote(ctx 
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationField_otherParentField(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
 		},
@@ -33255,6 +33616,8 @@ func (ec *executionContext) fieldContext_PlanBasicsTranslation_status(ctx contex
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationField_otherParentField(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
 		},
@@ -35223,6 +35586,2070 @@ func (ec *executionContext) fieldContext_PlanBeneficiaries_status(ctx context.Co
 		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return nil, errors.New("field of type TaskStatus does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanBeneficiariesTranslation_beneficiaries(ctx context.Context, field graphql.CollectedField, obj *model.PlanBeneficiariesTranslation) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanBeneficiariesTranslation_beneficiaries(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Beneficiaries, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*model.TranslationFieldWithOptions)
+	fc.Result = res
+	return ec.marshalNTranslationFieldWithOptions2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationFieldWithOptions(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanBeneficiariesTranslation_beneficiaries(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanBeneficiariesTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "gqlField":
+				return ec.fieldContext_TranslationFieldWithOptions_gqlField(ctx, field)
+			case "goField":
+				return ec.fieldContext_TranslationFieldWithOptions_goField(ctx, field)
+			case "dbField":
+				return ec.fieldContext_TranslationFieldWithOptions_dbField(ctx, field)
+			case "label":
+				return ec.fieldContext_TranslationFieldWithOptions_label(ctx, field)
+			case "readonlyLabel":
+				return ec.fieldContext_TranslationFieldWithOptions_readonlyLabel(ctx, field)
+			case "sublabel":
+				return ec.fieldContext_TranslationFieldWithOptions_sublabel(ctx, field)
+			case "multiSelectLabel":
+				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
+			case "isArray":
+				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "isOtherType":
+				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationFieldWithOptions_otherParentField(ctx, field)
+			case "options":
+				return ec.fieldContext_TranslationFieldWithOptions_options(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type TranslationFieldWithOptions", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanBeneficiariesTranslation_beneficiariesOther(ctx context.Context, field graphql.CollectedField, obj *model.PlanBeneficiariesTranslation) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanBeneficiariesTranslation_beneficiariesOther(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.BeneficiariesOther, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*model.TranslationField)
+	fc.Result = res
+	return ec.marshalNTranslationField2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationField(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanBeneficiariesTranslation_beneficiariesOther(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanBeneficiariesTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "gqlField":
+				return ec.fieldContext_TranslationField_gqlField(ctx, field)
+			case "goField":
+				return ec.fieldContext_TranslationField_goField(ctx, field)
+			case "dbField":
+				return ec.fieldContext_TranslationField_dbField(ctx, field)
+			case "label":
+				return ec.fieldContext_TranslationField_label(ctx, field)
+			case "readonlyLabel":
+				return ec.fieldContext_TranslationField_readonlyLabel(ctx, field)
+			case "sublabel":
+				return ec.fieldContext_TranslationField_sublabel(ctx, field)
+			case "multiSelectLabel":
+				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
+			case "isArray":
+				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "isOtherType":
+				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationField_otherParentField(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanBeneficiariesTranslation_beneficiariesNote(ctx context.Context, field graphql.CollectedField, obj *model.PlanBeneficiariesTranslation) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanBeneficiariesTranslation_beneficiariesNote(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.BeneficiariesNote, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*model.TranslationField)
+	fc.Result = res
+	return ec.marshalNTranslationField2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationField(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanBeneficiariesTranslation_beneficiariesNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanBeneficiariesTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "gqlField":
+				return ec.fieldContext_TranslationField_gqlField(ctx, field)
+			case "goField":
+				return ec.fieldContext_TranslationField_goField(ctx, field)
+			case "dbField":
+				return ec.fieldContext_TranslationField_dbField(ctx, field)
+			case "label":
+				return ec.fieldContext_TranslationField_label(ctx, field)
+			case "readonlyLabel":
+				return ec.fieldContext_TranslationField_readonlyLabel(ctx, field)
+			case "sublabel":
+				return ec.fieldContext_TranslationField_sublabel(ctx, field)
+			case "multiSelectLabel":
+				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
+			case "isArray":
+				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "isOtherType":
+				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationField_otherParentField(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanBeneficiariesTranslation_diseaseSpecificGroup(ctx context.Context, field graphql.CollectedField, obj *model.PlanBeneficiariesTranslation) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanBeneficiariesTranslation_diseaseSpecificGroup(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.DiseaseSpecificGroup, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*model.TranslationField)
+	fc.Result = res
+	return ec.marshalNTranslationField2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationField(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanBeneficiariesTranslation_diseaseSpecificGroup(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanBeneficiariesTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "gqlField":
+				return ec.fieldContext_TranslationField_gqlField(ctx, field)
+			case "goField":
+				return ec.fieldContext_TranslationField_goField(ctx, field)
+			case "dbField":
+				return ec.fieldContext_TranslationField_dbField(ctx, field)
+			case "label":
+				return ec.fieldContext_TranslationField_label(ctx, field)
+			case "readonlyLabel":
+				return ec.fieldContext_TranslationField_readonlyLabel(ctx, field)
+			case "sublabel":
+				return ec.fieldContext_TranslationField_sublabel(ctx, field)
+			case "multiSelectLabel":
+				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
+			case "isArray":
+				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "isOtherType":
+				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationField_otherParentField(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanBeneficiariesTranslation_treatDualElligibleDifferent(ctx context.Context, field graphql.CollectedField, obj *model.PlanBeneficiariesTranslation) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanBeneficiariesTranslation_treatDualElligibleDifferent(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.TreatDualElligibleDifferent, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*model.TranslationFieldWithOptions)
+	fc.Result = res
+	return ec.marshalNTranslationFieldWithOptions2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationFieldWithOptions(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanBeneficiariesTranslation_treatDualElligibleDifferent(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanBeneficiariesTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "gqlField":
+				return ec.fieldContext_TranslationFieldWithOptions_gqlField(ctx, field)
+			case "goField":
+				return ec.fieldContext_TranslationFieldWithOptions_goField(ctx, field)
+			case "dbField":
+				return ec.fieldContext_TranslationFieldWithOptions_dbField(ctx, field)
+			case "label":
+				return ec.fieldContext_TranslationFieldWithOptions_label(ctx, field)
+			case "readonlyLabel":
+				return ec.fieldContext_TranslationFieldWithOptions_readonlyLabel(ctx, field)
+			case "sublabel":
+				return ec.fieldContext_TranslationFieldWithOptions_sublabel(ctx, field)
+			case "multiSelectLabel":
+				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
+			case "isArray":
+				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "isOtherType":
+				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationFieldWithOptions_otherParentField(ctx, field)
+			case "options":
+				return ec.fieldContext_TranslationFieldWithOptions_options(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type TranslationFieldWithOptions", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanBeneficiariesTranslation_treatDualElligibleDifferentHow(ctx context.Context, field graphql.CollectedField, obj *model.PlanBeneficiariesTranslation) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanBeneficiariesTranslation_treatDualElligibleDifferentHow(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.TreatDualElligibleDifferentHow, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*model.TranslationField)
+	fc.Result = res
+	return ec.marshalNTranslationField2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationField(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanBeneficiariesTranslation_treatDualElligibleDifferentHow(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanBeneficiariesTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "gqlField":
+				return ec.fieldContext_TranslationField_gqlField(ctx, field)
+			case "goField":
+				return ec.fieldContext_TranslationField_goField(ctx, field)
+			case "dbField":
+				return ec.fieldContext_TranslationField_dbField(ctx, field)
+			case "label":
+				return ec.fieldContext_TranslationField_label(ctx, field)
+			case "readonlyLabel":
+				return ec.fieldContext_TranslationField_readonlyLabel(ctx, field)
+			case "sublabel":
+				return ec.fieldContext_TranslationField_sublabel(ctx, field)
+			case "multiSelectLabel":
+				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
+			case "isArray":
+				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "isOtherType":
+				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationField_otherParentField(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanBeneficiariesTranslation_treatDualElligibleDifferentNote(ctx context.Context, field graphql.CollectedField, obj *model.PlanBeneficiariesTranslation) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanBeneficiariesTranslation_treatDualElligibleDifferentNote(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.TreatDualElligibleDifferentNote, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*model.TranslationField)
+	fc.Result = res
+	return ec.marshalNTranslationField2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationField(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanBeneficiariesTranslation_treatDualElligibleDifferentNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanBeneficiariesTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "gqlField":
+				return ec.fieldContext_TranslationField_gqlField(ctx, field)
+			case "goField":
+				return ec.fieldContext_TranslationField_goField(ctx, field)
+			case "dbField":
+				return ec.fieldContext_TranslationField_dbField(ctx, field)
+			case "label":
+				return ec.fieldContext_TranslationField_label(ctx, field)
+			case "readonlyLabel":
+				return ec.fieldContext_TranslationField_readonlyLabel(ctx, field)
+			case "sublabel":
+				return ec.fieldContext_TranslationField_sublabel(ctx, field)
+			case "multiSelectLabel":
+				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
+			case "isArray":
+				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "isOtherType":
+				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationField_otherParentField(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanBeneficiariesTranslation_excludeCertainCharacteristics(ctx context.Context, field graphql.CollectedField, obj *model.PlanBeneficiariesTranslation) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanBeneficiariesTranslation_excludeCertainCharacteristics(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ExcludeCertainCharacteristics, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*model.TranslationFieldWithOptions)
+	fc.Result = res
+	return ec.marshalNTranslationFieldWithOptions2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationFieldWithOptions(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanBeneficiariesTranslation_excludeCertainCharacteristics(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanBeneficiariesTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "gqlField":
+				return ec.fieldContext_TranslationFieldWithOptions_gqlField(ctx, field)
+			case "goField":
+				return ec.fieldContext_TranslationFieldWithOptions_goField(ctx, field)
+			case "dbField":
+				return ec.fieldContext_TranslationFieldWithOptions_dbField(ctx, field)
+			case "label":
+				return ec.fieldContext_TranslationFieldWithOptions_label(ctx, field)
+			case "readonlyLabel":
+				return ec.fieldContext_TranslationFieldWithOptions_readonlyLabel(ctx, field)
+			case "sublabel":
+				return ec.fieldContext_TranslationFieldWithOptions_sublabel(ctx, field)
+			case "multiSelectLabel":
+				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
+			case "isArray":
+				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "isOtherType":
+				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationFieldWithOptions_otherParentField(ctx, field)
+			case "options":
+				return ec.fieldContext_TranslationFieldWithOptions_options(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type TranslationFieldWithOptions", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanBeneficiariesTranslation_excludeCertainCharacteristicsCriteria(ctx context.Context, field graphql.CollectedField, obj *model.PlanBeneficiariesTranslation) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanBeneficiariesTranslation_excludeCertainCharacteristicsCriteria(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ExcludeCertainCharacteristicsCriteria, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*model.TranslationField)
+	fc.Result = res
+	return ec.marshalNTranslationField2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationField(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanBeneficiariesTranslation_excludeCertainCharacteristicsCriteria(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanBeneficiariesTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "gqlField":
+				return ec.fieldContext_TranslationField_gqlField(ctx, field)
+			case "goField":
+				return ec.fieldContext_TranslationField_goField(ctx, field)
+			case "dbField":
+				return ec.fieldContext_TranslationField_dbField(ctx, field)
+			case "label":
+				return ec.fieldContext_TranslationField_label(ctx, field)
+			case "readonlyLabel":
+				return ec.fieldContext_TranslationField_readonlyLabel(ctx, field)
+			case "sublabel":
+				return ec.fieldContext_TranslationField_sublabel(ctx, field)
+			case "multiSelectLabel":
+				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
+			case "isArray":
+				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "isOtherType":
+				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationField_otherParentField(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanBeneficiariesTranslation_excludeCertainCharacteristicsNote(ctx context.Context, field graphql.CollectedField, obj *model.PlanBeneficiariesTranslation) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanBeneficiariesTranslation_excludeCertainCharacteristicsNote(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ExcludeCertainCharacteristicsNote, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*model.TranslationField)
+	fc.Result = res
+	return ec.marshalNTranslationField2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationField(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanBeneficiariesTranslation_excludeCertainCharacteristicsNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanBeneficiariesTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "gqlField":
+				return ec.fieldContext_TranslationField_gqlField(ctx, field)
+			case "goField":
+				return ec.fieldContext_TranslationField_goField(ctx, field)
+			case "dbField":
+				return ec.fieldContext_TranslationField_dbField(ctx, field)
+			case "label":
+				return ec.fieldContext_TranslationField_label(ctx, field)
+			case "readonlyLabel":
+				return ec.fieldContext_TranslationField_readonlyLabel(ctx, field)
+			case "sublabel":
+				return ec.fieldContext_TranslationField_sublabel(ctx, field)
+			case "multiSelectLabel":
+				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
+			case "isArray":
+				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "isOtherType":
+				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationField_otherParentField(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanBeneficiariesTranslation_numberPeopleImpacted(ctx context.Context, field graphql.CollectedField, obj *model.PlanBeneficiariesTranslation) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanBeneficiariesTranslation_numberPeopleImpacted(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.NumberPeopleImpacted, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*model.TranslationField)
+	fc.Result = res
+	return ec.marshalNTranslationField2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationField(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanBeneficiariesTranslation_numberPeopleImpacted(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanBeneficiariesTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "gqlField":
+				return ec.fieldContext_TranslationField_gqlField(ctx, field)
+			case "goField":
+				return ec.fieldContext_TranslationField_goField(ctx, field)
+			case "dbField":
+				return ec.fieldContext_TranslationField_dbField(ctx, field)
+			case "label":
+				return ec.fieldContext_TranslationField_label(ctx, field)
+			case "readonlyLabel":
+				return ec.fieldContext_TranslationField_readonlyLabel(ctx, field)
+			case "sublabel":
+				return ec.fieldContext_TranslationField_sublabel(ctx, field)
+			case "multiSelectLabel":
+				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
+			case "isArray":
+				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "isOtherType":
+				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationField_otherParentField(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanBeneficiariesTranslation_estimateConfidence(ctx context.Context, field graphql.CollectedField, obj *model.PlanBeneficiariesTranslation) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanBeneficiariesTranslation_estimateConfidence(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.EstimateConfidence, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*model.TranslationFieldWithOptions)
+	fc.Result = res
+	return ec.marshalNTranslationFieldWithOptions2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationFieldWithOptions(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanBeneficiariesTranslation_estimateConfidence(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanBeneficiariesTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "gqlField":
+				return ec.fieldContext_TranslationFieldWithOptions_gqlField(ctx, field)
+			case "goField":
+				return ec.fieldContext_TranslationFieldWithOptions_goField(ctx, field)
+			case "dbField":
+				return ec.fieldContext_TranslationFieldWithOptions_dbField(ctx, field)
+			case "label":
+				return ec.fieldContext_TranslationFieldWithOptions_label(ctx, field)
+			case "readonlyLabel":
+				return ec.fieldContext_TranslationFieldWithOptions_readonlyLabel(ctx, field)
+			case "sublabel":
+				return ec.fieldContext_TranslationFieldWithOptions_sublabel(ctx, field)
+			case "multiSelectLabel":
+				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
+			case "isArray":
+				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "isOtherType":
+				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationFieldWithOptions_otherParentField(ctx, field)
+			case "options":
+				return ec.fieldContext_TranslationFieldWithOptions_options(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type TranslationFieldWithOptions", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanBeneficiariesTranslation_confidenceNote(ctx context.Context, field graphql.CollectedField, obj *model.PlanBeneficiariesTranslation) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanBeneficiariesTranslation_confidenceNote(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ConfidenceNote, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*model.TranslationField)
+	fc.Result = res
+	return ec.marshalNTranslationField2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationField(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanBeneficiariesTranslation_confidenceNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanBeneficiariesTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "gqlField":
+				return ec.fieldContext_TranslationField_gqlField(ctx, field)
+			case "goField":
+				return ec.fieldContext_TranslationField_goField(ctx, field)
+			case "dbField":
+				return ec.fieldContext_TranslationField_dbField(ctx, field)
+			case "label":
+				return ec.fieldContext_TranslationField_label(ctx, field)
+			case "readonlyLabel":
+				return ec.fieldContext_TranslationField_readonlyLabel(ctx, field)
+			case "sublabel":
+				return ec.fieldContext_TranslationField_sublabel(ctx, field)
+			case "multiSelectLabel":
+				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
+			case "isArray":
+				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "isOtherType":
+				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationField_otherParentField(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanBeneficiariesTranslation_beneficiarySelectionMethod(ctx context.Context, field graphql.CollectedField, obj *model.PlanBeneficiariesTranslation) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanBeneficiariesTranslation_beneficiarySelectionMethod(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.BeneficiarySelectionMethod, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*model.TranslationFieldWithOptions)
+	fc.Result = res
+	return ec.marshalNTranslationFieldWithOptions2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationFieldWithOptions(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanBeneficiariesTranslation_beneficiarySelectionMethod(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanBeneficiariesTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "gqlField":
+				return ec.fieldContext_TranslationFieldWithOptions_gqlField(ctx, field)
+			case "goField":
+				return ec.fieldContext_TranslationFieldWithOptions_goField(ctx, field)
+			case "dbField":
+				return ec.fieldContext_TranslationFieldWithOptions_dbField(ctx, field)
+			case "label":
+				return ec.fieldContext_TranslationFieldWithOptions_label(ctx, field)
+			case "readonlyLabel":
+				return ec.fieldContext_TranslationFieldWithOptions_readonlyLabel(ctx, field)
+			case "sublabel":
+				return ec.fieldContext_TranslationFieldWithOptions_sublabel(ctx, field)
+			case "multiSelectLabel":
+				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
+			case "isArray":
+				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "isOtherType":
+				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationFieldWithOptions_otherParentField(ctx, field)
+			case "options":
+				return ec.fieldContext_TranslationFieldWithOptions_options(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type TranslationFieldWithOptions", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanBeneficiariesTranslation_beneficiarySelectionOther(ctx context.Context, field graphql.CollectedField, obj *model.PlanBeneficiariesTranslation) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanBeneficiariesTranslation_beneficiarySelectionOther(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.BeneficiarySelectionOther, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*model.TranslationField)
+	fc.Result = res
+	return ec.marshalNTranslationField2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationField(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanBeneficiariesTranslation_beneficiarySelectionOther(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanBeneficiariesTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "gqlField":
+				return ec.fieldContext_TranslationField_gqlField(ctx, field)
+			case "goField":
+				return ec.fieldContext_TranslationField_goField(ctx, field)
+			case "dbField":
+				return ec.fieldContext_TranslationField_dbField(ctx, field)
+			case "label":
+				return ec.fieldContext_TranslationField_label(ctx, field)
+			case "readonlyLabel":
+				return ec.fieldContext_TranslationField_readonlyLabel(ctx, field)
+			case "sublabel":
+				return ec.fieldContext_TranslationField_sublabel(ctx, field)
+			case "multiSelectLabel":
+				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
+			case "isArray":
+				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "isOtherType":
+				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationField_otherParentField(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanBeneficiariesTranslation_beneficiarySelectionNote(ctx context.Context, field graphql.CollectedField, obj *model.PlanBeneficiariesTranslation) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanBeneficiariesTranslation_beneficiarySelectionNote(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.BeneficiarySelectionNote, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*model.TranslationField)
+	fc.Result = res
+	return ec.marshalNTranslationField2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationField(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanBeneficiariesTranslation_beneficiarySelectionNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanBeneficiariesTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "gqlField":
+				return ec.fieldContext_TranslationField_gqlField(ctx, field)
+			case "goField":
+				return ec.fieldContext_TranslationField_goField(ctx, field)
+			case "dbField":
+				return ec.fieldContext_TranslationField_dbField(ctx, field)
+			case "label":
+				return ec.fieldContext_TranslationField_label(ctx, field)
+			case "readonlyLabel":
+				return ec.fieldContext_TranslationField_readonlyLabel(ctx, field)
+			case "sublabel":
+				return ec.fieldContext_TranslationField_sublabel(ctx, field)
+			case "multiSelectLabel":
+				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
+			case "isArray":
+				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "isOtherType":
+				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationField_otherParentField(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanBeneficiariesTranslation_beneficiarySelectionFrequency(ctx context.Context, field graphql.CollectedField, obj *model.PlanBeneficiariesTranslation) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanBeneficiariesTranslation_beneficiarySelectionFrequency(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.BeneficiarySelectionFrequency, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*model.TranslationFieldWithOptions)
+	fc.Result = res
+	return ec.marshalNTranslationFieldWithOptions2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationFieldWithOptions(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanBeneficiariesTranslation_beneficiarySelectionFrequency(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanBeneficiariesTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "gqlField":
+				return ec.fieldContext_TranslationFieldWithOptions_gqlField(ctx, field)
+			case "goField":
+				return ec.fieldContext_TranslationFieldWithOptions_goField(ctx, field)
+			case "dbField":
+				return ec.fieldContext_TranslationFieldWithOptions_dbField(ctx, field)
+			case "label":
+				return ec.fieldContext_TranslationFieldWithOptions_label(ctx, field)
+			case "readonlyLabel":
+				return ec.fieldContext_TranslationFieldWithOptions_readonlyLabel(ctx, field)
+			case "sublabel":
+				return ec.fieldContext_TranslationFieldWithOptions_sublabel(ctx, field)
+			case "multiSelectLabel":
+				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
+			case "isArray":
+				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "isOtherType":
+				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationFieldWithOptions_otherParentField(ctx, field)
+			case "options":
+				return ec.fieldContext_TranslationFieldWithOptions_options(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type TranslationFieldWithOptions", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanBeneficiariesTranslation_beneficiarySelectionFrequencyContinually(ctx context.Context, field graphql.CollectedField, obj *model.PlanBeneficiariesTranslation) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanBeneficiariesTranslation_beneficiarySelectionFrequencyContinually(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.BeneficiarySelectionFrequencyContinually, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*model.TranslationField)
+	fc.Result = res
+	return ec.marshalNTranslationField2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationField(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanBeneficiariesTranslation_beneficiarySelectionFrequencyContinually(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanBeneficiariesTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "gqlField":
+				return ec.fieldContext_TranslationField_gqlField(ctx, field)
+			case "goField":
+				return ec.fieldContext_TranslationField_goField(ctx, field)
+			case "dbField":
+				return ec.fieldContext_TranslationField_dbField(ctx, field)
+			case "label":
+				return ec.fieldContext_TranslationField_label(ctx, field)
+			case "readonlyLabel":
+				return ec.fieldContext_TranslationField_readonlyLabel(ctx, field)
+			case "sublabel":
+				return ec.fieldContext_TranslationField_sublabel(ctx, field)
+			case "multiSelectLabel":
+				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
+			case "isArray":
+				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "isOtherType":
+				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationField_otherParentField(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanBeneficiariesTranslation_beneficiarySelectionFrequencyOther(ctx context.Context, field graphql.CollectedField, obj *model.PlanBeneficiariesTranslation) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanBeneficiariesTranslation_beneficiarySelectionFrequencyOther(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.BeneficiarySelectionFrequencyOther, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*model.TranslationField)
+	fc.Result = res
+	return ec.marshalNTranslationField2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationField(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanBeneficiariesTranslation_beneficiarySelectionFrequencyOther(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanBeneficiariesTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "gqlField":
+				return ec.fieldContext_TranslationField_gqlField(ctx, field)
+			case "goField":
+				return ec.fieldContext_TranslationField_goField(ctx, field)
+			case "dbField":
+				return ec.fieldContext_TranslationField_dbField(ctx, field)
+			case "label":
+				return ec.fieldContext_TranslationField_label(ctx, field)
+			case "readonlyLabel":
+				return ec.fieldContext_TranslationField_readonlyLabel(ctx, field)
+			case "sublabel":
+				return ec.fieldContext_TranslationField_sublabel(ctx, field)
+			case "multiSelectLabel":
+				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
+			case "isArray":
+				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "isOtherType":
+				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationField_otherParentField(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanBeneficiariesTranslation_beneficiarySelectionFrequencyNote(ctx context.Context, field graphql.CollectedField, obj *model.PlanBeneficiariesTranslation) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanBeneficiariesTranslation_beneficiarySelectionFrequencyNote(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.BeneficiarySelectionFrequencyNote, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*model.TranslationField)
+	fc.Result = res
+	return ec.marshalNTranslationField2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationField(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanBeneficiariesTranslation_beneficiarySelectionFrequencyNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanBeneficiariesTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "gqlField":
+				return ec.fieldContext_TranslationField_gqlField(ctx, field)
+			case "goField":
+				return ec.fieldContext_TranslationField_goField(ctx, field)
+			case "dbField":
+				return ec.fieldContext_TranslationField_dbField(ctx, field)
+			case "label":
+				return ec.fieldContext_TranslationField_label(ctx, field)
+			case "readonlyLabel":
+				return ec.fieldContext_TranslationField_readonlyLabel(ctx, field)
+			case "sublabel":
+				return ec.fieldContext_TranslationField_sublabel(ctx, field)
+			case "multiSelectLabel":
+				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
+			case "isArray":
+				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "isOtherType":
+				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationField_otherParentField(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanBeneficiariesTranslation_beneficiaryRemovalFrequency(ctx context.Context, field graphql.CollectedField, obj *model.PlanBeneficiariesTranslation) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanBeneficiariesTranslation_beneficiaryRemovalFrequency(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.BeneficiaryRemovalFrequency, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*model.TranslationFieldWithOptions)
+	fc.Result = res
+	return ec.marshalNTranslationFieldWithOptions2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationFieldWithOptions(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanBeneficiariesTranslation_beneficiaryRemovalFrequency(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanBeneficiariesTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "gqlField":
+				return ec.fieldContext_TranslationFieldWithOptions_gqlField(ctx, field)
+			case "goField":
+				return ec.fieldContext_TranslationFieldWithOptions_goField(ctx, field)
+			case "dbField":
+				return ec.fieldContext_TranslationFieldWithOptions_dbField(ctx, field)
+			case "label":
+				return ec.fieldContext_TranslationFieldWithOptions_label(ctx, field)
+			case "readonlyLabel":
+				return ec.fieldContext_TranslationFieldWithOptions_readonlyLabel(ctx, field)
+			case "sublabel":
+				return ec.fieldContext_TranslationFieldWithOptions_sublabel(ctx, field)
+			case "multiSelectLabel":
+				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
+			case "isArray":
+				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "isOtherType":
+				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationFieldWithOptions_otherParentField(ctx, field)
+			case "options":
+				return ec.fieldContext_TranslationFieldWithOptions_options(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type TranslationFieldWithOptions", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanBeneficiariesTranslation_beneficiaryRemovalFrequencyContinually(ctx context.Context, field graphql.CollectedField, obj *model.PlanBeneficiariesTranslation) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanBeneficiariesTranslation_beneficiaryRemovalFrequencyContinually(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.BeneficiaryRemovalFrequencyContinually, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*model.TranslationField)
+	fc.Result = res
+	return ec.marshalNTranslationField2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationField(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanBeneficiariesTranslation_beneficiaryRemovalFrequencyContinually(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanBeneficiariesTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "gqlField":
+				return ec.fieldContext_TranslationField_gqlField(ctx, field)
+			case "goField":
+				return ec.fieldContext_TranslationField_goField(ctx, field)
+			case "dbField":
+				return ec.fieldContext_TranslationField_dbField(ctx, field)
+			case "label":
+				return ec.fieldContext_TranslationField_label(ctx, field)
+			case "readonlyLabel":
+				return ec.fieldContext_TranslationField_readonlyLabel(ctx, field)
+			case "sublabel":
+				return ec.fieldContext_TranslationField_sublabel(ctx, field)
+			case "multiSelectLabel":
+				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
+			case "isArray":
+				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "isOtherType":
+				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationField_otherParentField(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanBeneficiariesTranslation_beneficiaryRemovalFrequencyOther(ctx context.Context, field graphql.CollectedField, obj *model.PlanBeneficiariesTranslation) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanBeneficiariesTranslation_beneficiaryRemovalFrequencyOther(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.BeneficiaryRemovalFrequencyOther, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*model.TranslationField)
+	fc.Result = res
+	return ec.marshalNTranslationField2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationField(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanBeneficiariesTranslation_beneficiaryRemovalFrequencyOther(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanBeneficiariesTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "gqlField":
+				return ec.fieldContext_TranslationField_gqlField(ctx, field)
+			case "goField":
+				return ec.fieldContext_TranslationField_goField(ctx, field)
+			case "dbField":
+				return ec.fieldContext_TranslationField_dbField(ctx, field)
+			case "label":
+				return ec.fieldContext_TranslationField_label(ctx, field)
+			case "readonlyLabel":
+				return ec.fieldContext_TranslationField_readonlyLabel(ctx, field)
+			case "sublabel":
+				return ec.fieldContext_TranslationField_sublabel(ctx, field)
+			case "multiSelectLabel":
+				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
+			case "isArray":
+				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "isOtherType":
+				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationField_otherParentField(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanBeneficiariesTranslation_beneficiaryRemovalFrequencyNote(ctx context.Context, field graphql.CollectedField, obj *model.PlanBeneficiariesTranslation) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanBeneficiariesTranslation_beneficiaryRemovalFrequencyNote(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.BeneficiaryRemovalFrequencyNote, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*model.TranslationField)
+	fc.Result = res
+	return ec.marshalNTranslationField2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationField(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanBeneficiariesTranslation_beneficiaryRemovalFrequencyNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanBeneficiariesTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "gqlField":
+				return ec.fieldContext_TranslationField_gqlField(ctx, field)
+			case "goField":
+				return ec.fieldContext_TranslationField_goField(ctx, field)
+			case "dbField":
+				return ec.fieldContext_TranslationField_dbField(ctx, field)
+			case "label":
+				return ec.fieldContext_TranslationField_label(ctx, field)
+			case "readonlyLabel":
+				return ec.fieldContext_TranslationField_readonlyLabel(ctx, field)
+			case "sublabel":
+				return ec.fieldContext_TranslationField_sublabel(ctx, field)
+			case "multiSelectLabel":
+				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
+			case "isArray":
+				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "isOtherType":
+				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationField_otherParentField(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanBeneficiariesTranslation_beneficiaryOverlap(ctx context.Context, field graphql.CollectedField, obj *model.PlanBeneficiariesTranslation) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanBeneficiariesTranslation_beneficiaryOverlap(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.BeneficiaryOverlap, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*model.TranslationFieldWithOptions)
+	fc.Result = res
+	return ec.marshalNTranslationFieldWithOptions2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationFieldWithOptions(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanBeneficiariesTranslation_beneficiaryOverlap(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanBeneficiariesTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "gqlField":
+				return ec.fieldContext_TranslationFieldWithOptions_gqlField(ctx, field)
+			case "goField":
+				return ec.fieldContext_TranslationFieldWithOptions_goField(ctx, field)
+			case "dbField":
+				return ec.fieldContext_TranslationFieldWithOptions_dbField(ctx, field)
+			case "label":
+				return ec.fieldContext_TranslationFieldWithOptions_label(ctx, field)
+			case "readonlyLabel":
+				return ec.fieldContext_TranslationFieldWithOptions_readonlyLabel(ctx, field)
+			case "sublabel":
+				return ec.fieldContext_TranslationFieldWithOptions_sublabel(ctx, field)
+			case "multiSelectLabel":
+				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
+			case "isArray":
+				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "isOtherType":
+				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationFieldWithOptions_otherParentField(ctx, field)
+			case "options":
+				return ec.fieldContext_TranslationFieldWithOptions_options(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type TranslationFieldWithOptions", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanBeneficiariesTranslation_beneficiaryOverlapNote(ctx context.Context, field graphql.CollectedField, obj *model.PlanBeneficiariesTranslation) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanBeneficiariesTranslation_beneficiaryOverlapNote(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.BeneficiaryOverlapNote, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*model.TranslationField)
+	fc.Result = res
+	return ec.marshalNTranslationField2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationField(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanBeneficiariesTranslation_beneficiaryOverlapNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanBeneficiariesTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "gqlField":
+				return ec.fieldContext_TranslationField_gqlField(ctx, field)
+			case "goField":
+				return ec.fieldContext_TranslationField_goField(ctx, field)
+			case "dbField":
+				return ec.fieldContext_TranslationField_dbField(ctx, field)
+			case "label":
+				return ec.fieldContext_TranslationField_label(ctx, field)
+			case "readonlyLabel":
+				return ec.fieldContext_TranslationField_readonlyLabel(ctx, field)
+			case "sublabel":
+				return ec.fieldContext_TranslationField_sublabel(ctx, field)
+			case "multiSelectLabel":
+				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
+			case "isArray":
+				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "isOtherType":
+				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationField_otherParentField(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanBeneficiariesTranslation_precedenceRules(ctx context.Context, field graphql.CollectedField, obj *model.PlanBeneficiariesTranslation) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanBeneficiariesTranslation_precedenceRules(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.PrecedenceRules, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*model.TranslationFieldWithOptions)
+	fc.Result = res
+	return ec.marshalNTranslationFieldWithOptions2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationFieldWithOptions(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanBeneficiariesTranslation_precedenceRules(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanBeneficiariesTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "gqlField":
+				return ec.fieldContext_TranslationFieldWithOptions_gqlField(ctx, field)
+			case "goField":
+				return ec.fieldContext_TranslationFieldWithOptions_goField(ctx, field)
+			case "dbField":
+				return ec.fieldContext_TranslationFieldWithOptions_dbField(ctx, field)
+			case "label":
+				return ec.fieldContext_TranslationFieldWithOptions_label(ctx, field)
+			case "readonlyLabel":
+				return ec.fieldContext_TranslationFieldWithOptions_readonlyLabel(ctx, field)
+			case "sublabel":
+				return ec.fieldContext_TranslationFieldWithOptions_sublabel(ctx, field)
+			case "multiSelectLabel":
+				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
+			case "isArray":
+				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
+			case "isOtherType":
+				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationFieldWithOptions_otherParentField(ctx, field)
+			case "options":
+				return ec.fieldContext_TranslationFieldWithOptions_options(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type TranslationFieldWithOptions", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanBeneficiariesTranslation_precedenceRulesYes(ctx context.Context, field graphql.CollectedField, obj *model.PlanBeneficiariesTranslation) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanBeneficiariesTranslation_precedenceRulesYes(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.PrecedenceRulesYes, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*model.TranslationField)
+	fc.Result = res
+	return ec.marshalNTranslationField2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationField(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanBeneficiariesTranslation_precedenceRulesYes(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanBeneficiariesTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "gqlField":
+				return ec.fieldContext_TranslationField_gqlField(ctx, field)
+			case "goField":
+				return ec.fieldContext_TranslationField_goField(ctx, field)
+			case "dbField":
+				return ec.fieldContext_TranslationField_dbField(ctx, field)
+			case "label":
+				return ec.fieldContext_TranslationField_label(ctx, field)
+			case "readonlyLabel":
+				return ec.fieldContext_TranslationField_readonlyLabel(ctx, field)
+			case "sublabel":
+				return ec.fieldContext_TranslationField_sublabel(ctx, field)
+			case "multiSelectLabel":
+				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
+			case "isArray":
+				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "isOtherType":
+				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationField_otherParentField(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanBeneficiariesTranslation_precedenceRulesNo(ctx context.Context, field graphql.CollectedField, obj *model.PlanBeneficiariesTranslation) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanBeneficiariesTranslation_precedenceRulesNo(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.PrecedenceRulesNo, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*model.TranslationField)
+	fc.Result = res
+	return ec.marshalNTranslationField2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationField(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanBeneficiariesTranslation_precedenceRulesNo(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanBeneficiariesTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "gqlField":
+				return ec.fieldContext_TranslationField_gqlField(ctx, field)
+			case "goField":
+				return ec.fieldContext_TranslationField_goField(ctx, field)
+			case "dbField":
+				return ec.fieldContext_TranslationField_dbField(ctx, field)
+			case "label":
+				return ec.fieldContext_TranslationField_label(ctx, field)
+			case "readonlyLabel":
+				return ec.fieldContext_TranslationField_readonlyLabel(ctx, field)
+			case "sublabel":
+				return ec.fieldContext_TranslationField_sublabel(ctx, field)
+			case "multiSelectLabel":
+				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
+			case "isArray":
+				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "isOtherType":
+				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationField_otherParentField(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanBeneficiariesTranslation_precedenceRulesNote(ctx context.Context, field graphql.CollectedField, obj *model.PlanBeneficiariesTranslation) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanBeneficiariesTranslation_precedenceRulesNote(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.PrecedenceRulesNote, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*model.TranslationField)
+	fc.Result = res
+	return ec.marshalNTranslationField2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationField(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanBeneficiariesTranslation_precedenceRulesNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanBeneficiariesTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "gqlField":
+				return ec.fieldContext_TranslationField_gqlField(ctx, field)
+			case "goField":
+				return ec.fieldContext_TranslationField_goField(ctx, field)
+			case "dbField":
+				return ec.fieldContext_TranslationField_dbField(ctx, field)
+			case "label":
+				return ec.fieldContext_TranslationField_label(ctx, field)
+			case "readonlyLabel":
+				return ec.fieldContext_TranslationField_readonlyLabel(ctx, field)
+			case "sublabel":
+				return ec.fieldContext_TranslationField_sublabel(ctx, field)
+			case "multiSelectLabel":
+				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
+			case "isArray":
+				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "isOtherType":
+				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationField_otherParentField(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanBeneficiariesTranslation_status(ctx context.Context, field graphql.CollectedField, obj *model.PlanBeneficiariesTranslation) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanBeneficiariesTranslation_status(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Status, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*model.TranslationField)
+	fc.Result = res
+	return ec.marshalNTranslationField2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTranslationField(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanBeneficiariesTranslation_status(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanBeneficiariesTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "gqlField":
+				return ec.fieldContext_TranslationField_gqlField(ctx, field)
+			case "goField":
+				return ec.fieldContext_TranslationField_goField(ctx, field)
+			case "dbField":
+				return ec.fieldContext_TranslationField_dbField(ctx, field)
+			case "label":
+				return ec.fieldContext_TranslationField_label(ctx, field)
+			case "readonlyLabel":
+				return ec.fieldContext_TranslationField_readonlyLabel(ctx, field)
+			case "sublabel":
+				return ec.fieldContext_TranslationField_sublabel(ctx, field)
+			case "multiSelectLabel":
+				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
+			case "isArray":
+				return ec.fieldContext_TranslationField_isArray(ctx, field)
+			case "isOtherType":
+				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationField_otherParentField(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
 		},
 	}
 	return fc, nil
@@ -42802,6 +45229,8 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristicsTranslation_i
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationFieldWithOptions_otherParentField(ctx, field)
 			case "options":
 				return ec.fieldContext_TranslationFieldWithOptions_options(ctx, field)
 			}
@@ -42868,6 +45297,8 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristicsTranslation_e
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationFieldWithOptions_otherParentField(ctx, field)
 			case "options":
 				return ec.fieldContext_TranslationFieldWithOptions_options(ctx, field)
 			}
@@ -42934,6 +45365,8 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristicsTranslation_r
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationFieldWithOptions_otherParentField(ctx, field)
 			case "options":
 				return ec.fieldContext_TranslationFieldWithOptions_options(ctx, field)
 			}
@@ -43000,6 +45433,8 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristicsTranslation_r
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationField_otherParentField(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
 		},
@@ -43064,6 +45499,8 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristicsTranslation_r
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationField_otherParentField(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
 		},
@@ -43128,6 +45565,8 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristicsTranslation_r
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationFieldWithOptions_otherParentField(ctx, field)
 			case "options":
 				return ec.fieldContext_TranslationFieldWithOptions_options(ctx, field)
 			}
@@ -43194,6 +45633,8 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristicsTranslation_r
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationField_otherParentField(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
 		},
@@ -43258,6 +45699,8 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristicsTranslation_r
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationFieldWithOptions_otherParentField(ctx, field)
 			case "options":
 				return ec.fieldContext_TranslationFieldWithOptions_options(ctx, field)
 			}
@@ -43324,6 +45767,8 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristicsTranslation_r
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationField_otherParentField(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
 		},
@@ -43388,6 +45833,8 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristicsTranslation_r
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationFieldWithOptions_otherParentField(ctx, field)
 			case "options":
 				return ec.fieldContext_TranslationFieldWithOptions_options(ctx, field)
 			}
@@ -43454,6 +45901,8 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristicsTranslation_p
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationFieldWithOptions_otherParentField(ctx, field)
 			case "options":
 				return ec.fieldContext_TranslationFieldWithOptions_options(ctx, field)
 			}
@@ -43520,6 +45969,8 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristicsTranslation_p
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationFieldWithOptions_otherParentField(ctx, field)
 			case "options":
 				return ec.fieldContext_TranslationFieldWithOptions_options(ctx, field)
 			}
@@ -43586,6 +46037,8 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristicsTranslation_p
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationField_otherParentField(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
 		},
@@ -43650,6 +46103,8 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristicsTranslation_p
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationFieldWithOptions_otherParentField(ctx, field)
 			case "options":
 				return ec.fieldContext_TranslationFieldWithOptions_options(ctx, field)
 			}
@@ -43716,6 +46171,8 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristicsTranslation_p
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationField_otherParentField(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
 		},
@@ -43780,6 +46237,8 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristicsTranslation_p
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationField_otherParentField(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
 		},
@@ -43844,6 +46303,8 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristicsTranslation_p
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationFieldWithOptions_otherParentField(ctx, field)
 			case "options":
 				return ec.fieldContext_TranslationFieldWithOptions_options(ctx, field)
 			}
@@ -43910,6 +46371,8 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristicsTranslation_h
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationFieldWithOptions_otherParentField(ctx, field)
 			case "options":
 				return ec.fieldContext_TranslationFieldWithOptions_options(ctx, field)
 			}
@@ -43976,6 +46439,8 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristicsTranslation_h
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationField_otherParentField(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
 		},
@@ -44040,6 +46505,8 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristicsTranslation_h
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationField_otherParentField(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
 		},
@@ -44104,6 +46571,8 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristicsTranslation_a
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationFieldWithOptions_otherParentField(ctx, field)
 			case "options":
 				return ec.fieldContext_TranslationFieldWithOptions_options(ctx, field)
 			}
@@ -44170,6 +46639,8 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristicsTranslation_a
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationField_otherParentField(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
 		},
@@ -44234,6 +46705,8 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristicsTranslation_a
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationField_otherParentField(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
 		},
@@ -44298,6 +46771,8 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristicsTranslation_a
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationFieldWithOptions_otherParentField(ctx, field)
 			case "options":
 				return ec.fieldContext_TranslationFieldWithOptions_options(ctx, field)
 			}
@@ -44364,6 +46839,8 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristicsTranslation_a
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationField_otherParentField(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
 		},
@@ -44428,6 +46905,8 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristicsTranslation_k
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationFieldWithOptions_otherParentField(ctx, field)
 			case "options":
 				return ec.fieldContext_TranslationFieldWithOptions_options(ctx, field)
 			}
@@ -44494,6 +46973,8 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristicsTranslation_k
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationField_otherParentField(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
 		},
@@ -44558,6 +47039,8 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristicsTranslation_k
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationField_otherParentField(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
 		},
@@ -44622,6 +47105,8 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristicsTranslation_c
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationFieldWithOptions_otherParentField(ctx, field)
 			case "options":
 				return ec.fieldContext_TranslationFieldWithOptions_options(ctx, field)
 			}
@@ -44688,6 +47173,8 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristicsTranslation_c
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationField_otherParentField(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
 		},
@@ -44752,6 +47239,8 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristicsTranslation_m
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationFieldWithOptions_otherParentField(ctx, field)
 			case "options":
 				return ec.fieldContext_TranslationFieldWithOptions_options(ctx, field)
 			}
@@ -44818,6 +47307,8 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristicsTranslation_m
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationField_otherParentField(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
 		},
@@ -44882,6 +47373,8 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristicsTranslation_p
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationFieldWithOptions_otherParentField(ctx, field)
 			case "options":
 				return ec.fieldContext_TranslationFieldWithOptions_options(ctx, field)
 			}
@@ -44948,6 +47441,8 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristicsTranslation_p
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationField_otherParentField(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
 		},
@@ -45012,6 +47507,8 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristicsTranslation_c
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationFieldWithOptions_otherParentField(ctx, field)
 			case "options":
 				return ec.fieldContext_TranslationFieldWithOptions_options(ctx, field)
 			}
@@ -45078,6 +47575,8 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristicsTranslation_c
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationField_otherParentField(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
 		},
@@ -45142,6 +47641,8 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristicsTranslation_c
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationField_otherParentField(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
 		},
@@ -45206,6 +47707,8 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristicsTranslation_a
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationFieldWithOptions_otherParentField(ctx, field)
 			case "options":
 				return ec.fieldContext_TranslationFieldWithOptions_options(ctx, field)
 			}
@@ -45272,6 +47775,8 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristicsTranslation_a
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationField_otherParentField(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
 		},
@@ -45336,6 +47841,8 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristicsTranslation_a
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationField_otherParentField(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
 		},
@@ -45400,6 +47907,8 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristicsTranslation_c
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationFieldWithOptions_otherParentField(ctx, field)
 			case "options":
 				return ec.fieldContext_TranslationFieldWithOptions_options(ctx, field)
 			}
@@ -45466,6 +47975,8 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristicsTranslation_c
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationField_otherParentField(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
 		},
@@ -45530,6 +48041,8 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristicsTranslation_c
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationField_otherParentField(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
 		},
@@ -45594,6 +48107,8 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristicsTranslation_g
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationFieldWithOptions_otherParentField(ctx, field)
 			case "options":
 				return ec.fieldContext_TranslationFieldWithOptions_options(ctx, field)
 			}
@@ -45660,6 +48175,8 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristicsTranslation_g
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationFieldWithOptions_otherParentField(ctx, field)
 			case "options":
 				return ec.fieldContext_TranslationFieldWithOptions_options(ctx, field)
 			}
@@ -45726,6 +48243,8 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristicsTranslation_g
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationFieldWithOptions_otherParentField(ctx, field)
 			case "options":
 				return ec.fieldContext_TranslationFieldWithOptions_options(ctx, field)
 			}
@@ -45792,6 +48311,8 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristicsTranslation_g
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationFieldWithOptions_otherParentField(ctx, field)
 			case "options":
 				return ec.fieldContext_TranslationFieldWithOptions_options(ctx, field)
 			}
@@ -45858,6 +48379,8 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristicsTranslation_g
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationField_otherParentField(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
 		},
@@ -45922,6 +48445,8 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristicsTranslation_g
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationFieldWithOptions_otherParentField(ctx, field)
 			case "options":
 				return ec.fieldContext_TranslationFieldWithOptions_options(ctx, field)
 			}
@@ -45988,6 +48513,8 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristicsTranslation_g
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationField_otherParentField(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
 		},
@@ -46052,6 +48579,8 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristicsTranslation_g
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationField_otherParentField(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
 		},
@@ -46116,6 +48645,8 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristicsTranslation_p
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationFieldWithOptions_otherParentField(ctx, field)
 			case "options":
 				return ec.fieldContext_TranslationFieldWithOptions_options(ctx, field)
 			}
@@ -46182,6 +48713,8 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristicsTranslation_p
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationField_otherParentField(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
 		},
@@ -46246,6 +48779,8 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristicsTranslation_a
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationFieldWithOptions_otherParentField(ctx, field)
 			case "options":
 				return ec.fieldContext_TranslationFieldWithOptions_options(ctx, field)
 			}
@@ -46312,6 +48847,8 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristicsTranslation_a
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationField_otherParentField(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
 		},
@@ -46376,6 +48913,8 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristicsTranslation_m
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationFieldWithOptions_otherParentField(ctx, field)
 			case "options":
 				return ec.fieldContext_TranslationFieldWithOptions_options(ctx, field)
 			}
@@ -46442,6 +48981,8 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristicsTranslation_m
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationField_otherParentField(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
 		},
@@ -46506,6 +49047,8 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristicsTranslation_r
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationFieldWithOptions_otherParentField(ctx, field)
 			case "options":
 				return ec.fieldContext_TranslationFieldWithOptions_options(ctx, field)
 			}
@@ -46572,6 +49115,8 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristicsTranslation_r
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationField_otherParentField(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
 		},
@@ -46636,6 +49181,8 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristicsTranslation_r
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationField_otherParentField(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
 		},
@@ -46700,6 +49247,8 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristicsTranslation_a
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationFieldWithOptions_otherParentField(ctx, field)
 			case "options":
 				return ec.fieldContext_TranslationFieldWithOptions_options(ctx, field)
 			}
@@ -46766,6 +49315,8 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristicsTranslation_a
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationField_otherParentField(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
 		},
@@ -46830,6 +49381,8 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristicsTranslation_a
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationField_otherParentField(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
 		},
@@ -46894,6 +49447,8 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristicsTranslation_w
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationFieldWithOptions_otherParentField(ctx, field)
 			case "options":
 				return ec.fieldContext_TranslationFieldWithOptions_options(ctx, field)
 			}
@@ -46960,6 +49515,8 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristicsTranslation_w
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationFieldWithOptions_otherParentField(ctx, field)
 			case "options":
 				return ec.fieldContext_TranslationFieldWithOptions_options(ctx, field)
 			}
@@ -47026,6 +49583,8 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristicsTranslation_w
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationField_otherParentField(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
 		},
@@ -47090,6 +49649,8 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristicsTranslation_s
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationField_otherParentField(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
 		},
@@ -55061,6 +57622,8 @@ func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationFieldWithOptions_otherParentField(ctx, field)
 			case "options":
 				return ec.fieldContext_TranslationFieldWithOptions_options(ctx, field)
 			}
@@ -55127,6 +57690,8 @@ func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationField_otherParentField(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
 		},
@@ -55191,6 +57756,8 @@ func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationField_otherParentField(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
 		},
@@ -55255,6 +57822,8 @@ func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationField_otherParentField(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
 		},
@@ -55319,6 +57888,8 @@ func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationField_otherParentField(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
 		},
@@ -55383,6 +57954,8 @@ func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationFieldWithOptions_otherParentField(ctx, field)
 			case "options":
 				return ec.fieldContext_TranslationFieldWithOptions_options(ctx, field)
 			}
@@ -55449,6 +58022,8 @@ func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationField_otherParentField(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
 		},
@@ -55513,6 +58088,8 @@ func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationField_otherParentField(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
 		},
@@ -55577,6 +58154,8 @@ func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationField_otherParentField(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
 		},
@@ -55641,6 +58220,8 @@ func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationFieldWithOptions_otherParentField(ctx, field)
 			case "options":
 				return ec.fieldContext_TranslationFieldWithOptions_options(ctx, field)
 			}
@@ -55707,6 +58288,8 @@ func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationField_otherParentField(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
 		},
@@ -55771,6 +58354,8 @@ func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationFieldWithOptions_otherParentField(ctx, field)
 			case "options":
 				return ec.fieldContext_TranslationFieldWithOptions_options(ctx, field)
 			}
@@ -55837,6 +58422,8 @@ func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationField_otherParentField(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
 		},
@@ -55901,6 +58488,8 @@ func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationField_otherParentField(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
 		},
@@ -55965,6 +58554,8 @@ func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationFieldWithOptions_otherParentField(ctx, field)
 			case "options":
 				return ec.fieldContext_TranslationFieldWithOptions_options(ctx, field)
 			}
@@ -56031,6 +58622,8 @@ func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationField_otherParentField(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
 		},
@@ -56095,6 +58688,8 @@ func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationField_otherParentField(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
 		},
@@ -56159,6 +58754,8 @@ func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationFieldWithOptions_otherParentField(ctx, field)
 			case "options":
 				return ec.fieldContext_TranslationFieldWithOptions_options(ctx, field)
 			}
@@ -56225,6 +58822,8 @@ func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationField_otherParentField(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
 		},
@@ -56289,6 +58888,8 @@ func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationField_otherParentField(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
 		},
@@ -56353,6 +58954,8 @@ func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationField_otherParentField(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
 		},
@@ -56417,6 +59020,8 @@ func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationFieldWithOptions_otherParentField(ctx, field)
 			case "options":
 				return ec.fieldContext_TranslationFieldWithOptions_options(ctx, field)
 			}
@@ -56483,6 +59088,8 @@ func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationField_otherParentField(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
 		},
@@ -56547,6 +59154,8 @@ func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationField_otherParentField(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
 		},
@@ -56611,6 +59220,8 @@ func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationField_otherParentField(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
 		},
@@ -56675,6 +59286,8 @@ func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationFieldWithOptions_otherParentField(ctx, field)
 			case "options":
 				return ec.fieldContext_TranslationFieldWithOptions_options(ctx, field)
 			}
@@ -56741,6 +59354,8 @@ func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationField_otherParentField(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
 		},
@@ -56805,6 +59420,8 @@ func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationField_otherParentField(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
 		},
@@ -56869,6 +59486,8 @@ func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationFieldWithOptions_otherParentField(ctx, field)
 			case "options":
 				return ec.fieldContext_TranslationFieldWithOptions_options(ctx, field)
 			}
@@ -56935,6 +59554,8 @@ func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationField_otherParentField(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
 		},
@@ -56999,6 +59620,8 @@ func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationField_otherParentField(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
 		},
@@ -57063,6 +59686,8 @@ func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationFieldWithOptions_otherParentField(ctx, field)
 			case "options":
 				return ec.fieldContext_TranslationFieldWithOptions_options(ctx, field)
 			}
@@ -57129,6 +59754,8 @@ func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationField_otherParentField(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
 		},
@@ -57193,6 +59820,8 @@ func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationFieldWithOptions_otherParentField(ctx, field)
 			case "options":
 				return ec.fieldContext_TranslationFieldWithOptions_options(ctx, field)
 			}
@@ -57259,6 +59888,8 @@ func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationField_otherParentField(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
 		},
@@ -57323,6 +59954,8 @@ func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationFieldWithOptions_otherParentField(ctx, field)
 			case "options":
 				return ec.fieldContext_TranslationFieldWithOptions_options(ctx, field)
 			}
@@ -57389,6 +60022,8 @@ func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationFieldWithOptions_otherParentField(ctx, field)
 			case "options":
 				return ec.fieldContext_TranslationFieldWithOptions_options(ctx, field)
 			}
@@ -57455,6 +60090,8 @@ func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationField_otherParentField(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
 		},
@@ -57519,6 +60156,8 @@ func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationFieldWithOptions_otherParentField(ctx, field)
 			case "options":
 				return ec.fieldContext_TranslationFieldWithOptions_options(ctx, field)
 			}
@@ -57585,6 +60224,8 @@ func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationField_otherParentField(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
 		},
@@ -57649,6 +60290,8 @@ func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationFieldWithOptions_otherParentField(ctx, field)
 			case "options":
 				return ec.fieldContext_TranslationFieldWithOptions_options(ctx, field)
 			}
@@ -57715,6 +60358,8 @@ func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationField_otherParentField(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
 		},
@@ -57779,6 +60424,8 @@ func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationField_otherParentField(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
 		},
@@ -57843,6 +60490,8 @@ func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationFieldWithOptions_otherParentField(ctx, field)
 			case "options":
 				return ec.fieldContext_TranslationFieldWithOptions_options(ctx, field)
 			}
@@ -57909,6 +60558,8 @@ func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationField_otherParentField(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
 		},
@@ -57973,6 +60624,8 @@ func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationField_otherParentField(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
 		},
@@ -58037,6 +60690,8 @@ func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationField_otherParentField(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
 		},
@@ -58101,6 +60756,8 @@ func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationFieldWithOptions_otherParentField(ctx, field)
 			case "options":
 				return ec.fieldContext_TranslationFieldWithOptions_options(ctx, field)
 			}
@@ -58167,6 +60824,8 @@ func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationField_otherParentField(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
 		},
@@ -58231,6 +60890,8 @@ func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationField_otherParentField(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
 		},
@@ -58295,6 +60956,8 @@ func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationFieldWithOptions_otherParentField(ctx, field)
 			case "options":
 				return ec.fieldContext_TranslationFieldWithOptions_options(ctx, field)
 			}
@@ -58361,6 +61024,8 @@ func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationField_otherParentField(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
 		},
@@ -58425,6 +61090,8 @@ func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationField_otherParentField(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
 		},
@@ -58489,6 +61156,8 @@ func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationFieldWithOptions_otherParentField(ctx, field)
 			case "options":
 				return ec.fieldContext_TranslationFieldWithOptions_options(ctx, field)
 			}
@@ -58555,6 +61224,8 @@ func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationField_otherParentField(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
 		},
@@ -58619,6 +61290,8 @@ func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationField_otherParentField(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
 		},
@@ -58683,6 +61356,8 @@ func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationField_otherParentField(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
 		},
@@ -58747,6 +61422,8 @@ func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation
 				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationFieldWithOptions_otherParentField(ctx, field)
 			case "options":
 				return ec.fieldContext_TranslationFieldWithOptions_options(ctx, field)
 			}
@@ -58813,6 +61490,8 @@ func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationField_otherParentField(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
 		},
@@ -58877,6 +61556,8 @@ func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationField_otherParentField(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
 		},
@@ -58941,6 +61622,8 @@ func (ec *executionContext) fieldContext_PlanParticipantsAndProvidersTranslation
 				return ec.fieldContext_TranslationField_isArray(ctx, field)
 			case "isOtherType":
 				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+			case "otherParentField":
+				return ec.fieldContext_TranslationField_otherParentField(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
 		},
@@ -70151,6 +72834,47 @@ func (ec *executionContext) fieldContext_TranslationField_isOtherType(ctx contex
 	return fc, nil
 }
 
+func (ec *executionContext) _TranslationField_otherParentField(ctx context.Context, field graphql.CollectedField, obj *model.TranslationField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_TranslationField_otherParentField(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.OtherParentField, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_TranslationField_otherParentField(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "TranslationField",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
 func (ec *executionContext) _TranslationFieldWithOptions_gqlField(ctx context.Context, field graphql.CollectedField, obj *model.TranslationFieldWithOptions) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_TranslationFieldWithOptions_gqlField(ctx, field)
 	if err != nil {
@@ -70527,6 +73251,47 @@ func (ec *executionContext) fieldContext_TranslationFieldWithOptions_isOtherType
 		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return nil, errors.New("field of type Boolean does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _TranslationFieldWithOptions_otherParentField(ctx context.Context, field graphql.CollectedField, obj *model.TranslationFieldWithOptions) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_TranslationFieldWithOptions_otherParentField(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.OtherParentField, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_TranslationFieldWithOptions_otherParentField(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "TranslationFieldWithOptions",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
 		},
 	}
 	return fc, nil
@@ -79823,6 +82588,195 @@ func (ec *executionContext) _PlanBeneficiaries(ctx context.Context, sel ast.Sele
 	return out
 }
 
+var planBeneficiariesTranslationImplementors = []string{"PlanBeneficiariesTranslation"}
+
+func (ec *executionContext) _PlanBeneficiariesTranslation(ctx context.Context, sel ast.SelectionSet, obj *model.PlanBeneficiariesTranslation) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, planBeneficiariesTranslationImplementors)
+
+	out := graphql.NewFieldSet(fields)
+	deferred := make(map[string]*graphql.FieldSet)
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("PlanBeneficiariesTranslation")
+		case "beneficiaries":
+			out.Values[i] = ec._PlanBeneficiariesTranslation_beneficiaries(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "beneficiariesOther":
+			out.Values[i] = ec._PlanBeneficiariesTranslation_beneficiariesOther(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "beneficiariesNote":
+			out.Values[i] = ec._PlanBeneficiariesTranslation_beneficiariesNote(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "diseaseSpecificGroup":
+			out.Values[i] = ec._PlanBeneficiariesTranslation_diseaseSpecificGroup(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "treatDualElligibleDifferent":
+			out.Values[i] = ec._PlanBeneficiariesTranslation_treatDualElligibleDifferent(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "treatDualElligibleDifferentHow":
+			out.Values[i] = ec._PlanBeneficiariesTranslation_treatDualElligibleDifferentHow(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "treatDualElligibleDifferentNote":
+			out.Values[i] = ec._PlanBeneficiariesTranslation_treatDualElligibleDifferentNote(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "excludeCertainCharacteristics":
+			out.Values[i] = ec._PlanBeneficiariesTranslation_excludeCertainCharacteristics(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "excludeCertainCharacteristicsCriteria":
+			out.Values[i] = ec._PlanBeneficiariesTranslation_excludeCertainCharacteristicsCriteria(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "excludeCertainCharacteristicsNote":
+			out.Values[i] = ec._PlanBeneficiariesTranslation_excludeCertainCharacteristicsNote(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "numberPeopleImpacted":
+			out.Values[i] = ec._PlanBeneficiariesTranslation_numberPeopleImpacted(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "estimateConfidence":
+			out.Values[i] = ec._PlanBeneficiariesTranslation_estimateConfidence(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "confidenceNote":
+			out.Values[i] = ec._PlanBeneficiariesTranslation_confidenceNote(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "beneficiarySelectionMethod":
+			out.Values[i] = ec._PlanBeneficiariesTranslation_beneficiarySelectionMethod(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "beneficiarySelectionOther":
+			out.Values[i] = ec._PlanBeneficiariesTranslation_beneficiarySelectionOther(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "beneficiarySelectionNote":
+			out.Values[i] = ec._PlanBeneficiariesTranslation_beneficiarySelectionNote(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "beneficiarySelectionFrequency":
+			out.Values[i] = ec._PlanBeneficiariesTranslation_beneficiarySelectionFrequency(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "beneficiarySelectionFrequencyContinually":
+			out.Values[i] = ec._PlanBeneficiariesTranslation_beneficiarySelectionFrequencyContinually(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "beneficiarySelectionFrequencyOther":
+			out.Values[i] = ec._PlanBeneficiariesTranslation_beneficiarySelectionFrequencyOther(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "beneficiarySelectionFrequencyNote":
+			out.Values[i] = ec._PlanBeneficiariesTranslation_beneficiarySelectionFrequencyNote(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "beneficiaryRemovalFrequency":
+			out.Values[i] = ec._PlanBeneficiariesTranslation_beneficiaryRemovalFrequency(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "beneficiaryRemovalFrequencyContinually":
+			out.Values[i] = ec._PlanBeneficiariesTranslation_beneficiaryRemovalFrequencyContinually(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "beneficiaryRemovalFrequencyOther":
+			out.Values[i] = ec._PlanBeneficiariesTranslation_beneficiaryRemovalFrequencyOther(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "beneficiaryRemovalFrequencyNote":
+			out.Values[i] = ec._PlanBeneficiariesTranslation_beneficiaryRemovalFrequencyNote(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "beneficiaryOverlap":
+			out.Values[i] = ec._PlanBeneficiariesTranslation_beneficiaryOverlap(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "beneficiaryOverlapNote":
+			out.Values[i] = ec._PlanBeneficiariesTranslation_beneficiaryOverlapNote(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "precedenceRules":
+			out.Values[i] = ec._PlanBeneficiariesTranslation_precedenceRules(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "precedenceRulesYes":
+			out.Values[i] = ec._PlanBeneficiariesTranslation_precedenceRulesYes(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "precedenceRulesNo":
+			out.Values[i] = ec._PlanBeneficiariesTranslation_precedenceRulesNo(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "precedenceRulesNote":
+			out.Values[i] = ec._PlanBeneficiariesTranslation_precedenceRulesNote(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "status":
+			out.Values[i] = ec._PlanBeneficiariesTranslation_status(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch(ctx)
+	if out.Invalids > 0 {
+		return graphql.Null
+	}
+
+	atomic.AddInt32(&ec.deferred, int32(len(deferred)))
+
+	for label, dfs := range deferred {
+		ec.processDeferredGroup(graphql.DeferredGroup{
+			Label:    label,
+			Path:     graphql.GetPath(ctx),
+			FieldSet: dfs,
+			Context:  ctx,
+		})
+	}
+
+	return out
+}
+
 var planCRImplementors = []string{"PlanCR"}
 
 func (ec *executionContext) _PlanCR(ctx context.Context, sel ast.SelectionSet, obj *models.PlanCR) graphql.Marshaler {
@@ -86697,6 +89651,8 @@ func (ec *executionContext) _TranslationField(ctx context.Context, sel ast.Selec
 			out.Values[i] = ec._TranslationField_isArray(ctx, field, obj)
 		case "isOtherType":
 			out.Values[i] = ec._TranslationField_isOtherType(ctx, field, obj)
+		case "otherParentField":
+			out.Values[i] = ec._TranslationField_otherParentField(ctx, field, obj)
 		default:
 			panic("unknown field " + strconv.Quote(field.Name))
 		}
@@ -86761,6 +89717,8 @@ func (ec *executionContext) _TranslationFieldWithOptions(ctx context.Context, se
 			out.Values[i] = ec._TranslationFieldWithOptions_isArray(ctx, field, obj)
 		case "isOtherType":
 			out.Values[i] = ec._TranslationFieldWithOptions_isOtherType(ctx, field, obj)
+		case "otherParentField":
+			out.Values[i] = ec._TranslationFieldWithOptions_otherParentField(ctx, field, obj)
 		case "options":
 			out.Values[i] = ec._TranslationFieldWithOptions_options(ctx, field, obj)
 			if out.Values[i] == graphql.Null {

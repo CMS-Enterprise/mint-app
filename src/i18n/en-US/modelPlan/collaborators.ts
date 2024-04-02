@@ -1,7 +1,6 @@
-import {
-  TranslationCollaborators,
-  TranslationDataType
-} from 'types/translation';
+import { TranslationDataType } from 'gql/gen/graphql';
+
+import { TranslationCollaborators } from 'types/translation';
 
 export const collaborators: TranslationCollaborators = {
   username: {

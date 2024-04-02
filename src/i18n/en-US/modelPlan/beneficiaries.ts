@@ -59,7 +59,7 @@ export const beneficiaries: TranslationBeneficiaries = {
   beneficiariesNote: {
     gqlField: 'beneficiariesNote',
     goField: 'BeneficiariesNote',
-    dbField: 'beneficiaries_other',
+    dbField: 'beneficiaries_note',
     label: 'Notes',
     dataType: TranslationDataType.STRING,
     formType: 'textarea',
@@ -88,7 +88,7 @@ export const beneficiaries: TranslationBeneficiaries = {
   treatDualElligibleDifferentHow: {
     gqlField: 'treatDualElligibleDifferentHow',
     goField: 'TreatDualElligibleDifferentHow',
-    dbField: 'treat_dual_elligible_different',
+    dbField: 'treat_dual_elligible_different_how',
     label: 'How so?',
     dataType: TranslationDataType.STRING,
     formType: 'textarea',

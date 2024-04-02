@@ -14,7 +14,8 @@ type TranslationField {
   sublabel: String
   multiSelectLabel: String
   isArray: Boolean
-  isOtherType: Boolean
+  isOtherType: Boolean # Is a question a followup to another that doesn't designate it's own readonly question/line,
+  otherParentField: String # gql field name for the parent question for fields that represent Other, Please specify, etc.  Used in change history to render parent question for context
 }
 
 # TranslationField represents a question with options
@@ -27,7 +28,8 @@ type TranslationFieldWithOptions {
   sublabel: String
   multiSelectLabel: String
   isArray: Boolean
-  isOtherType: Boolean
+  isOtherType: Boolean # Is a question a followup to another that doesn't designate it's own readonly question/line,
+  otherParentField: String # gql field name for the parent question for fields that represent Other, Please specify, etc.  Used in change history to render parent question for context
   options: Map!
 }
 

@@ -27,7 +27,8 @@ module.exports = {
       'TranslationDataType',
       'PlanBasicsTranslation',
       'PlanGeneralCharacteristicsTranslation',
-      'PlanParticipantsAndProvidersTranslation'
+      'PlanParticipantsAndProvidersTranslation',
+      'PlanBeneficiariesTranslation'
     ]
   }
 };

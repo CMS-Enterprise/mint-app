@@ -68,6 +68,41 @@ type PlanBasicsTranslation struct {
 	Status                    *TranslationField            `json:"status"`
 }
 
+// Plan Beneficiaries represents the the beneficiaries section of the task list
+type PlanBeneficiariesTranslation struct {
+	Beneficiaries                            *TranslationFieldWithOptions `json:"beneficiaries"`
+	BeneficiariesOther                       *TranslationField            `json:"beneficiaries_other"`
+	BeneficiariesNote                        *TranslationField            `json:"beneficiaries_note"`
+	DiseaseSpecificGroup                     *TranslationField            `json:"disease_specific_group"`
+	TreatDualElligibleDifferent              *TranslationFieldWithOptions `json:"treat_dual_elligible_different"`
+	TreatDualElligibleDifferentHow           *TranslationField            `json:"treat_dual_elligible_different_how"`
+	TreatDualElligibleDifferentNote          *TranslationField            `json:"treat_dual_elligible_different_note"`
+	ExcludeCertainCharacteristics            *TranslationFieldWithOptions `json:"exclude_certain_characteristics"`
+	ExcludeCertainCharacteristicsCriteria    *TranslationField            `json:"exclude_certain_characteristics_criteria"`
+	ExcludeCertainCharacteristicsNote        *TranslationField            `json:"exclude_certain_characteristics_note"`
+	NumberPeopleImpacted                     *TranslationField            `json:"number_people_impacted"`
+	EstimateConfidence                       *TranslationFieldWithOptions `json:"estimate_confidence"`
+	ConfidenceNote                           *TranslationField            `json:"confidence_note"`
+	BeneficiarySelectionMethod               *TranslationFieldWithOptions `json:"beneficiary_selection_method"`
+	BeneficiarySelectionOther                *TranslationField            `json:"beneficiary_selection_other"`
+	BeneficiarySelectionNote                 *TranslationField            `json:"beneficiary_selection_note"`
+	BeneficiarySelectionFrequency            *TranslationFieldWithOptions `json:"beneficiary_selection_frequency"`
+	BeneficiarySelectionFrequencyContinually *TranslationField            `json:"beneficiary_selection_frequency_continually"`
+	BeneficiarySelectionFrequencyOther       *TranslationField            `json:"beneficiary_selection_frequency_other"`
+	BeneficiarySelectionFrequencyNote        *TranslationField            `json:"beneficiary_selection_frequency_note"`
+	BeneficiaryRemovalFrequency              *TranslationFieldWithOptions `json:"beneficiary_removal_frequency"`
+	BeneficiaryRemovalFrequencyContinually   *TranslationField            `json:"beneficiary_removal_frequency_continually"`
+	BeneficiaryRemovalFrequencyOther         *TranslationField            `json:"beneficiary_removal_frequency_other"`
+	BeneficiaryRemovalFrequencyNote          *TranslationField            `json:"beneficiary_removal_frequency_note"`
+	BeneficiaryOverlap                       *TranslationFieldWithOptions `json:"beneficiary_overlap"`
+	BeneficiaryOverlapNote                   *TranslationField            `json:"beneficiary_overlap_note"`
+	PrecedenceRules                          *TranslationFieldWithOptions `json:"precedence_rules"`
+	PrecedenceRulesYes                       *TranslationField            `json:"precedence_rules_yes"`
+	PrecedenceRulesNo                        *TranslationField            `json:"precedence_rules_no"`
+	PrecedenceRulesNote                      *TranslationField            `json:"precedence_rules_note"`
+	Status                                   *TranslationField            `json:"status"`
+}
+
 type PlanCRCreateInput struct {
 	ModelPlanID     uuid.UUID `json:"modelPlanID"`
 	IDNumber        string    `json:"idNumber"`
@@ -311,6 +346,7 @@ type TranslationField struct {
 	MultiSelectLabel *string `json:"multiSelectLabel,omitempty"`
 	IsArray          *bool   `json:"isArray,omitempty"`
 	IsOtherType      *bool   `json:"isOtherType,omitempty"`
+	OtherParentField *string `json:"otherParentField,omitempty"`
 }
 
 type TranslationFieldWithOptions struct {
@@ -323,6 +359,7 @@ type TranslationFieldWithOptions struct {
 	MultiSelectLabel *string                `json:"multiSelectLabel,omitempty"`
 	IsArray          *bool                  `json:"isArray,omitempty"`
 	IsOtherType      *bool                  `json:"isOtherType,omitempty"`
+	OtherParentField *string                `json:"otherParentField,omitempty"`
 	Options          map[string]interface{} `json:"options"`
 }
 
