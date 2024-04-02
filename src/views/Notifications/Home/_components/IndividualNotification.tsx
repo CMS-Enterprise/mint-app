@@ -47,45 +47,20 @@ const IndividualNotification = ({
 
   const [markAsRead] = useMarkNotificationAsReadMutation();
 
-  const handleMarkAsRead = (notificationID: string, onSuccess: () => void) => {
+  const handleMarkAsRead = (action: () => void) => {
     if (!isRead) {
       markAsRead({
         variables: {
-          notificationID
+          notificationID: id
         }
       }).then(response => {
         if (!response?.errors) {
-          onSuccess();
+          action();
         }
       });
     } else {
-      onSuccess();
+      action();
     }
-  };
-
-  const handleMarkAsReadAndToggleDailyDigest = (notificationID: string) => {
-    handleMarkAsRead(notificationID, () => setIsExpanded(!isExpanded));
-  };
-
-  const handleMarkAsReadAndViewDiscussion = (
-    notificationID: string,
-    modelPlanID: string,
-    discussionID: string
-  ) => {
-    handleMarkAsRead(notificationID, () => {
-      history.push(
-        `/models/${modelPlanID}/read-only/discussions?discussionID=${discussionID}`
-      );
-    });
-  };
-
-  const handleMarkAsReadAndStartCollab = (
-    notificationID: string,
-    modelPlanID: string
-  ) => {
-    handleMarkAsRead(notificationID, () => {
-      history.push(`/models/${modelPlanID}/task-list`);
-    });
   };
 
   // Mint System Account -> MINT
@@ -144,17 +119,21 @@ const IndividualNotification = ({
                       isTaggedInDiscussionReply(metaData) ||
                       isNewDiscussionReply(metaData)
                     ) {
-                      handleMarkAsReadAndViewDiscussion(
-                        id,
-                        metaData.modelPlanID,
-                        metaData.discussionID
+                      handleMarkAsRead(() =>
+                        history.push(
+                          `/models/${metaData.modelPlanID}/read-only/discussions?discussionID=${metaData.discussionID}`
+                        )
                       );
                     }
                     if (isDailyDigest(metaData)) {
-                      handleMarkAsReadAndToggleDailyDigest(id);
+                      handleMarkAsRead(() => setIsExpanded(!isExpanded));
                     }
                     if (isAddingCollaborator(metaData)) {
-                      handleMarkAsReadAndStartCollab(id, metaData.modelPlanID);
+                      handleMarkAsRead(() => {
+                        history.push(
+                          `/models/${metaData.modelPlanID}/task-list`
+                        );
+                      });
                     }
                   }}
                 >
