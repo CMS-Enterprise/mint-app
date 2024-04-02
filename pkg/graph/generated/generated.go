@@ -50,6 +50,7 @@ type ResolverRoot interface {
 	ExistingModelLink() ExistingModelLinkResolver
 	ExistingModelLinks() ExistingModelLinksResolver
 	ModelPlan() ModelPlanResolver
+	ModelPlanSharedActivityMeta() ModelPlanSharedActivityMetaResolver
 	Mutation() MutationResolver
 	NewDiscussionRepliedActivityMeta() NewDiscussionRepliedActivityMetaResolver
 	OperationalNeed() OperationalNeedResolver
@@ -279,6 +280,14 @@ type ComplexityRoot struct {
 		PrepareForClearance      func(childComplexity int) int
 		Status                   func(childComplexity int) int
 		Tdls                     func(childComplexity int) int
+	}
+
+	ModelPlanSharedActivityMeta struct {
+		ModelPlan       func(childComplexity int) int
+		ModelPlanID     func(childComplexity int) int
+		OptionalMessage func(childComplexity int) int
+		Type            func(childComplexity int) int
+		Version         func(childComplexity int) int
 	}
 
 	Mutation struct {
@@ -1217,6 +1226,9 @@ type ModelPlanResolver interface {
 	PrepareForClearance(ctx context.Context, obj *models.ModelPlan) (*model.PrepareForClearance, error)
 	NameHistory(ctx context.Context, obj *models.ModelPlan, sort models.SortDirection) ([]string, error)
 	OperationalNeeds(ctx context.Context, obj *models.ModelPlan) ([]*models.OperationalNeed, error)
+}
+type ModelPlanSharedActivityMetaResolver interface {
+	ModelPlan(ctx context.Context, obj *models.ModelPlanSharedActivityMeta) (*models.ModelPlan, error)
 }
 type MutationResolver interface {
 	CreateDiscussionReply(ctx context.Context, input model.DiscussionReplyCreateInput) (*models.DiscussionReply, error)
@@ -2472,6 +2484,41 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.ModelPlan.Tdls(childComplexity), true
+
+	case "ModelPlanSharedActivityMeta.modelPlan":
+		if e.complexity.ModelPlanSharedActivityMeta.ModelPlan == nil {
+			break
+		}
+
+		return e.complexity.ModelPlanSharedActivityMeta.ModelPlan(childComplexity), true
+
+	case "ModelPlanSharedActivityMeta.modelPlanID":
+		if e.complexity.ModelPlanSharedActivityMeta.ModelPlanID == nil {
+			break
+		}
+
+		return e.complexity.ModelPlanSharedActivityMeta.ModelPlanID(childComplexity), true
+
+	case "ModelPlanSharedActivityMeta.optionalMessage":
+		if e.complexity.ModelPlanSharedActivityMeta.OptionalMessage == nil {
+			break
+		}
+
+		return e.complexity.ModelPlanSharedActivityMeta.OptionalMessage(childComplexity), true
+
+	case "ModelPlanSharedActivityMeta.type":
+		if e.complexity.ModelPlanSharedActivityMeta.Type == nil {
+			break
+		}
+
+		return e.complexity.ModelPlanSharedActivityMeta.Type(childComplexity), true
+
+	case "ModelPlanSharedActivityMeta.version":
+		if e.complexity.ModelPlanSharedActivityMeta.Version == nil {
+			break
+		}
+
+		return e.complexity.ModelPlanSharedActivityMeta.Version(childComplexity), true
 
 	case "Mutation.addOrUpdateCustomOperationalNeed":
 		if e.complexity.Mutation.AddOrUpdateCustomOperationalNeed == nil {
@@ -8414,7 +8461,7 @@ enum ActivityType {
 """
 ActivityMetaData is a type that represents all the data that can be captured in an Activity
 """
-union ActivityMetaData = TaggedInPlanDiscussionActivityMeta  | TaggedInDiscussionReplyActivityMeta | DailyDigestCompleteActivityMeta | NewDiscussionRepliedActivityMeta
+union ActivityMetaData = TaggedInPlanDiscussionActivityMeta  | TaggedInDiscussionReplyActivityMeta | DailyDigestCompleteActivityMeta | NewDiscussionRepliedActivityMeta | ModelPlanSharedActivityMeta
 
 type TaggedInPlanDiscussionActivityMeta {
   version: Int!
@@ -8436,6 +8483,14 @@ type TaggedInDiscussionReplyActivityMeta {
   replyID: UUID!
   reply: DiscussionReply!
   content: String!
+}
+
+type ModelPlanSharedActivityMeta {
+  version: Int!
+  type: ActivityType!
+  modelPlanID: UUID!
+  modelPlan: ModelPlan!
+  optionalMessage: String
 }
 
 type NewDiscussionRepliedActivityMeta {
@@ -20314,6 +20369,279 @@ func (ec *executionContext) fieldContext_ModelPlan_operationalNeeds(ctx context.
 				return ec.fieldContext_OperationalNeed_modifiedDts(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type OperationalNeed", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _ModelPlanSharedActivityMeta_version(ctx context.Context, field graphql.CollectedField, obj *models.ModelPlanSharedActivityMeta) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_ModelPlanSharedActivityMeta_version(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Version, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(int)
+	fc.Result = res
+	return ec.marshalNInt2int(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_ModelPlanSharedActivityMeta_version(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "ModelPlanSharedActivityMeta",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Int does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _ModelPlanSharedActivityMeta_type(ctx context.Context, field graphql.CollectedField, obj *models.ModelPlanSharedActivityMeta) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_ModelPlanSharedActivityMeta_type(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Type, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(models.ActivityType)
+	fc.Result = res
+	return ec.marshalNActivityType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐActivityType(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_ModelPlanSharedActivityMeta_type(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "ModelPlanSharedActivityMeta",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type ActivityType does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _ModelPlanSharedActivityMeta_modelPlanID(ctx context.Context, field graphql.CollectedField, obj *models.ModelPlanSharedActivityMeta) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_ModelPlanSharedActivityMeta_modelPlanID(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ModelPlanID, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(uuid.UUID)
+	fc.Result = res
+	return ec.marshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_ModelPlanSharedActivityMeta_modelPlanID(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "ModelPlanSharedActivityMeta",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type UUID does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _ModelPlanSharedActivityMeta_modelPlan(ctx context.Context, field graphql.CollectedField, obj *models.ModelPlanSharedActivityMeta) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_ModelPlanSharedActivityMeta_modelPlan(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.ModelPlanSharedActivityMeta().ModelPlan(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*models.ModelPlan)
+	fc.Result = res
+	return ec.marshalNModelPlan2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐModelPlan(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_ModelPlanSharedActivityMeta_modelPlan(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "ModelPlanSharedActivityMeta",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_ModelPlan_id(ctx, field)
+			case "modelName":
+				return ec.fieldContext_ModelPlan_modelName(ctx, field)
+			case "abbreviation":
+				return ec.fieldContext_ModelPlan_abbreviation(ctx, field)
+			case "archived":
+				return ec.fieldContext_ModelPlan_archived(ctx, field)
+			case "createdBy":
+				return ec.fieldContext_ModelPlan_createdBy(ctx, field)
+			case "createdByUserAccount":
+				return ec.fieldContext_ModelPlan_createdByUserAccount(ctx, field)
+			case "createdDts":
+				return ec.fieldContext_ModelPlan_createdDts(ctx, field)
+			case "modifiedBy":
+				return ec.fieldContext_ModelPlan_modifiedBy(ctx, field)
+			case "modifiedByUserAccount":
+				return ec.fieldContext_ModelPlan_modifiedByUserAccount(ctx, field)
+			case "modifiedDts":
+				return ec.fieldContext_ModelPlan_modifiedDts(ctx, field)
+			case "basics":
+				return ec.fieldContext_ModelPlan_basics(ctx, field)
+			case "generalCharacteristics":
+				return ec.fieldContext_ModelPlan_generalCharacteristics(ctx, field)
+			case "participantsAndProviders":
+				return ec.fieldContext_ModelPlan_participantsAndProviders(ctx, field)
+			case "beneficiaries":
+				return ec.fieldContext_ModelPlan_beneficiaries(ctx, field)
+			case "opsEvalAndLearning":
+				return ec.fieldContext_ModelPlan_opsEvalAndLearning(ctx, field)
+			case "collaborators":
+				return ec.fieldContext_ModelPlan_collaborators(ctx, field)
+			case "documents":
+				return ec.fieldContext_ModelPlan_documents(ctx, field)
+			case "discussions":
+				return ec.fieldContext_ModelPlan_discussions(ctx, field)
+			case "payments":
+				return ec.fieldContext_ModelPlan_payments(ctx, field)
+			case "status":
+				return ec.fieldContext_ModelPlan_status(ctx, field)
+			case "isFavorite":
+				return ec.fieldContext_ModelPlan_isFavorite(ctx, field)
+			case "isCollaborator":
+				return ec.fieldContext_ModelPlan_isCollaborator(ctx, field)
+			case "crs":
+				return ec.fieldContext_ModelPlan_crs(ctx, field)
+			case "tdls":
+				return ec.fieldContext_ModelPlan_tdls(ctx, field)
+			case "prepareForClearance":
+				return ec.fieldContext_ModelPlan_prepareForClearance(ctx, field)
+			case "nameHistory":
+				return ec.fieldContext_ModelPlan_nameHistory(ctx, field)
+			case "operationalNeeds":
+				return ec.fieldContext_ModelPlan_operationalNeeds(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type ModelPlan", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _ModelPlanSharedActivityMeta_optionalMessage(ctx context.Context, field graphql.CollectedField, obj *models.ModelPlanSharedActivityMeta) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_ModelPlanSharedActivityMeta_optionalMessage(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.OptionalMessage, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_ModelPlanSharedActivityMeta_optionalMessage(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "ModelPlanSharedActivityMeta",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
 		},
 	}
 	return fc, nil
@@ -62883,6 +63211,11 @@ func (ec *executionContext) _ActivityMetaData(ctx context.Context, sel ast.Selec
 			return graphql.Null
 		}
 		return ec._NewDiscussionRepliedActivityMeta(ctx, sel, obj)
+	case *models.ModelPlanSharedActivityMeta:
+		if obj == nil {
+			return graphql.Null
+		}
+		return ec._ModelPlanSharedActivityMeta(ctx, sel, obj)
 	default:
 		panic(fmt.Errorf("unexpected type %T", obj))
 	}
@@ -65373,6 +65706,93 @@ func (ec *executionContext) _ModelPlan(ctx context.Context, sel ast.SelectionSet
 			}
 
 			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch(ctx)
+	if out.Invalids > 0 {
+		return graphql.Null
+	}
+
+	atomic.AddInt32(&ec.deferred, int32(len(deferred)))
+
+	for label, dfs := range deferred {
+		ec.processDeferredGroup(graphql.DeferredGroup{
+			Label:    label,
+			Path:     graphql.GetPath(ctx),
+			FieldSet: dfs,
+			Context:  ctx,
+		})
+	}
+
+	return out
+}
+
+var modelPlanSharedActivityMetaImplementors = []string{"ModelPlanSharedActivityMeta", "ActivityMetaData"}
+
+func (ec *executionContext) _ModelPlanSharedActivityMeta(ctx context.Context, sel ast.SelectionSet, obj *models.ModelPlanSharedActivityMeta) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, modelPlanSharedActivityMetaImplementors)
+
+	out := graphql.NewFieldSet(fields)
+	deferred := make(map[string]*graphql.FieldSet)
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("ModelPlanSharedActivityMeta")
+		case "version":
+			out.Values[i] = ec._ModelPlanSharedActivityMeta_version(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "type":
+			out.Values[i] = ec._ModelPlanSharedActivityMeta_type(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "modelPlanID":
+			out.Values[i] = ec._ModelPlanSharedActivityMeta_modelPlanID(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "modelPlan":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._ModelPlanSharedActivityMeta_modelPlan(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
+				return res
+			}
+
+			if field.Deferrable != nil {
+				dfs, ok := deferred[field.Deferrable.Label]
+				di := 0
+				if ok {
+					dfs.AddField(field)
+					di = len(dfs.Values) - 1
+				} else {
+					dfs = graphql.NewFieldSet([]graphql.CollectedField{field})
+					deferred[field.Deferrable.Label] = dfs
+				}
+				dfs.Concurrently(di, func(ctx context.Context) graphql.Marshaler {
+					return innerFunc(ctx, dfs)
+				})
+
+				// don't run the out.Concurrently() call below
+				out.Values[i] = graphql.Null
+				continue
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+		case "optionalMessage":
+			out.Values[i] = ec._ModelPlanSharedActivityMeta_optionalMessage(ctx, field, obj)
 		default:
 			panic("unknown field " + strconv.Quote(field.Name))
 		}
