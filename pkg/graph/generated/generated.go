@@ -11772,29 +11772,30 @@ enum YesNoOtherType {
   OTHER
 }`, BuiltIn: false},
 	{Name: "../schema/types/translation.graphql", Input: `type TranslationField {
-  gqlField: String! @goTag(key: "json", value: "")
-  goField: String! @goTag(key: "json", value: "")
-  dbField: String! @goTag(key: "json", value: "")
-  label: String! @goTag(key: "json", value: "")
-  readonlyLabel: String @goTag(key: "json", value: "")
-  sublabel: String @goTag(key: "json", value: "")
-  multiSelectLabel: String @goTag(key: "json", value: "")
-  isArray: Boolean @goTag(key: "json", value: "")
-  isOtherType: Boolean @goTag(key: "json", value: "")
+  gqlField: String!
+  goField: String!
+  dbField: String!
+  label: String!
+  readonlyLabel: String
+  sublabel: String
+  multiSelectLabel: String
+  isArray: Boolean
+  isOtherType: Boolean
 }
 
 type TranslationFieldWithOptions {
-  gqlField: String! @goTag(key: "json", value: "")
-  goField: String! @goTag(key: "json", value: "")
-  dbField: String! @goTag(key: "json", value: "")
-  label: String! @goTag(key: "json", value: "")
-  readonlyLabel: String @goTag(key: "json", value: "")
-  sublabel: String @goTag(key: "json", value: "")
-  multiSelectLabel: String @goTag(key: "json", value: "")
-  isArray: Boolean @goTag(key: "json", value: "")
-  isOtherType: Boolean @goTag(key: "json", value: "")
-  options: Map! @goTag(key: "json", value: "")
+  gqlField: String!
+  goField: String!
+  dbField: String!
+  label: String!
+  readonlyLabel: String
+  sublabel: String
+  multiSelectLabel: String
+  isArray: Boolean
+  isOtherType: Boolean
+  options: Map!
 }
+
 
 """
 Represents plan basics
@@ -11825,7 +11826,7 @@ type PlanBasicsTranslation {
   performancePeriodEnds: TranslationField! @goTag(key: "json", value: "performance_period_ends")
   wrapUpEnds: TranslationField! @goTag(key: "json", value: "wrap_up_ends")
   highLevelNote: TranslationField! @goTag(key: "json", value: "high_level_note")
-  phasedIn: TranslationField! @goTag(key: "json", value: "phased_in")
+  phasedIn: TranslationFieldWithOptions! @goTag(key: "json", value: "phased_in")
   phasedInNote: TranslationField! @goTag(key: "json", value: "phased_in_note")
   status: TranslationField! @goTag(key: "json", value: "status")
 }`, BuiltIn: false},
@@ -32721,9 +32722,9 @@ func (ec *executionContext) _PlanBasicsTranslation_phasedIn(ctx context.Context,
 		}
 		return graphql.Null
 	}
-	res := resTmp.(models.TranslationField)
+	res := resTmp.(models.TranslationFieldWithOptions)
 	fc.Result = res
-	return ec.marshalNTranslationField2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTranslationField(ctx, field.Selections, res)
+	return ec.marshalNTranslationFieldWithOptions2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTranslationFieldWithOptions(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanBasicsTranslation_phasedIn(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -32735,25 +32736,27 @@ func (ec *executionContext) fieldContext_PlanBasicsTranslation_phasedIn(ctx cont
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			switch field.Name {
 			case "gqlField":
-				return ec.fieldContext_TranslationField_gqlField(ctx, field)
+				return ec.fieldContext_TranslationFieldWithOptions_gqlField(ctx, field)
 			case "goField":
-				return ec.fieldContext_TranslationField_goField(ctx, field)
+				return ec.fieldContext_TranslationFieldWithOptions_goField(ctx, field)
 			case "dbField":
-				return ec.fieldContext_TranslationField_dbField(ctx, field)
+				return ec.fieldContext_TranslationFieldWithOptions_dbField(ctx, field)
 			case "label":
-				return ec.fieldContext_TranslationField_label(ctx, field)
+				return ec.fieldContext_TranslationFieldWithOptions_label(ctx, field)
 			case "readonlyLabel":
-				return ec.fieldContext_TranslationField_readonlyLabel(ctx, field)
+				return ec.fieldContext_TranslationFieldWithOptions_readonlyLabel(ctx, field)
 			case "sublabel":
-				return ec.fieldContext_TranslationField_sublabel(ctx, field)
+				return ec.fieldContext_TranslationFieldWithOptions_sublabel(ctx, field)
 			case "multiSelectLabel":
-				return ec.fieldContext_TranslationField_multiSelectLabel(ctx, field)
+				return ec.fieldContext_TranslationFieldWithOptions_multiSelectLabel(ctx, field)
 			case "isArray":
-				return ec.fieldContext_TranslationField_isArray(ctx, field)
+				return ec.fieldContext_TranslationFieldWithOptions_isArray(ctx, field)
 			case "isOtherType":
-				return ec.fieldContext_TranslationField_isOtherType(ctx, field)
+				return ec.fieldContext_TranslationFieldWithOptions_isOtherType(ctx, field)
+			case "options":
+				return ec.fieldContext_TranslationFieldWithOptions_options(ctx, field)
 			}
-			return nil, fmt.Errorf("no field named %q was found under type TranslationField", field.Name)
+			return nil, fmt.Errorf("no field named %q was found under type TranslationFieldWithOptions", field.Name)
 		},
 	}
 	return fc, nil

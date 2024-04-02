@@ -26,6 +26,45 @@ func StructToMap(source interface{}) (map[string]interface{}, error) {
 
 }
 
+// // ConvertEnums converts a pq.StringArray to specific, castable type
+// func ConvertEnums[EnumType ~string](pqGroups pq.StringArray) []EnumType {
+// 	enumValues := []EnumType{}
+// 	for _, item := range pqGroups {
+// 		enumValues = append(enumValues, EnumType(item))
+// 	}
+// 	return enumValues
+// }
+
+// StructToTypedMap converts a struct to a Map  string generic type
+func StructToTypedMap[MapType any](source interface{}) (map[string]MapType, error) {
+	retVal := map[string]MapType{}
+	bytes, err := json.Marshal(source)
+	if err != nil {
+		return nil, err
+	}
+	err = json.Unmarshal(bytes, &retVal)
+	if err != nil {
+		return nil, err
+	}
+	return retVal, err
+
+}
+
+// StructToTranslationMap converts a struct to a Map  string translation type
+func StructToTranslationMap(source interface{}) (map[string]ITranslationField, error) {
+	retVal := map[string]ITranslationField{}
+	bytes, err := json.Marshal(source)
+	if err != nil {
+		return nil, err
+	}
+	err = json.Unmarshal(bytes, &retVal)
+	if err != nil {
+		return nil, err
+	}
+	return retVal, err
+
+}
+
 // StructToMapDBTag converts a struct to a map[string]interface{}, using the db tag on the struct.
 func StructToMapDBTag(source interface{}) (map[string]interface{}, error) {
 	//TODO (ChChCh Changes!) Consider expanding this to translate an underlying struct type, eg a pointer to a struct

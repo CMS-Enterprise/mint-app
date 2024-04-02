@@ -1391,7 +1391,7 @@ export type PlanBasicsTranslation = {
   note: TranslationField;
   performancePeriodEnds: TranslationField;
   performancePeriodStarts: TranslationField;
-  phasedIn: TranslationField;
+  phasedIn: TranslationFieldWithOptions;
   phasedInNote: TranslationField;
   problem: TranslationField;
   status: TranslationField;

@@ -1,27 +1,28 @@
 type TranslationField {
-  gqlField: String! @goTag(key: "json", value: "")
-  goField: String! @goTag(key: "json", value: "")
-  dbField: String! @goTag(key: "json", value: "")
-  label: String! @goTag(key: "json", value: "")
-  readonlyLabel: String @goTag(key: "json", value: "")
-  sublabel: String @goTag(key: "json", value: "")
-  multiSelectLabel: String @goTag(key: "json", value: "")
-  isArray: Boolean @goTag(key: "json", value: "")
-  isOtherType: Boolean @goTag(key: "json", value: "")
+  gqlField: String!
+  goField: String!
+  dbField: String!
+  label: String!
+  readonlyLabel: String
+  sublabel: String
+  multiSelectLabel: String
+  isArray: Boolean
+  isOtherType: Boolean
 }
 
 type TranslationFieldWithOptions {
-  gqlField: String! @goTag(key: "json", value: "")
-  goField: String! @goTag(key: "json", value: "")
-  dbField: String! @goTag(key: "json", value: "")
-  label: String! @goTag(key: "json", value: "")
-  readonlyLabel: String @goTag(key: "json", value: "")
-  sublabel: String @goTag(key: "json", value: "")
-  multiSelectLabel: String @goTag(key: "json", value: "")
-  isArray: Boolean @goTag(key: "json", value: "")
-  isOtherType: Boolean @goTag(key: "json", value: "")
-  options: Map! @goTag(key: "json", value: "")
+  gqlField: String!
+  goField: String!
+  dbField: String!
+  label: String!
+  readonlyLabel: String
+  sublabel: String
+  multiSelectLabel: String
+  isArray: Boolean
+  isOtherType: Boolean
+  options: Map!
 }
+
 
 """
 Represents plan basics

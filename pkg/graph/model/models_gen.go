@@ -41,31 +41,31 @@ type NDAInfo struct {
 
 // Represents plan basics
 type PlanBasicsTranslation struct {
-	DemoCode                  models.TranslationField            `json:"demo_code"`
-	AmsModelID                models.TranslationField            `json:"ams_model_id"`
-	ModelCategory             models.TranslationField            `json:"model_category"`
-	AdditionalModelCategories models.TranslationFieldWithOptions `json:"additional_model_categories"`
-	CmsCenters                models.TranslationFieldWithOptions `json:"cms_centers"`
-	CmmiGroups                models.TranslationFieldWithOptions `json:"cmmi_groups"`
-	ModelType                 models.TranslationFieldWithOptions `json:"model_type"`
-	ModelTypeOther            models.TranslationField            `json:"model_type_other"`
-	Problem                   models.TranslationField            `json:"problem"`
-	Goal                      models.TranslationField            `json:"goal"`
-	TestInterventions         models.TranslationField            `json:"test_interventions"`
-	Note                      models.TranslationField            `json:"note"`
-	CompleteIcip              models.TranslationField            `json:"complete_icip"`
-	ClearanceStarts           models.TranslationField            `json:"clearance_starts"`
-	ClearanceEnds             models.TranslationField            `json:"clearance_ends"`
-	Announced                 models.TranslationField            `json:"announced"`
-	ApplicationsStart         models.TranslationField            `json:"applications_starts"`
-	ApplicationsEnd           models.TranslationField            `json:"applications_ends"`
-	PerformancePeriodStarts   models.TranslationField            `json:"performance_period_starts"`
-	PerformancePeriodEnds     models.TranslationField            `json:"performance_period_ends"`
-	WrapUpEnds                models.TranslationField            `json:"wrap_up_ends"`
-	HighLevelNote             models.TranslationField            `json:"high_level_note"`
-	PhasedIn                  models.TranslationField            `json:"phased_in"`
-	PhasedInNote              models.TranslationField            `json:"phased_in_note"`
-	Status                    models.TranslationField            `json:"status"`
+	DemoCode                  models.TranslationField            `json:"demo_code" db:"demo_code"`
+	AmsModelID                models.TranslationField            `json:"ams_model_id" db:"ams_model_id"`
+	ModelCategory             models.TranslationField            `json:"model_category" db:"model_category"`
+	AdditionalModelCategories models.TranslationFieldWithOptions `json:"additional_model_categories" db:"additional_model_categories"`
+	CmsCenters                models.TranslationFieldWithOptions `json:"cms_centers" db:"cms_centers"`
+	CmmiGroups                models.TranslationFieldWithOptions `json:"cmmi_groups" db:"cmmi_groups"`
+	ModelType                 models.TranslationFieldWithOptions `json:"model_type" db:"model_type"`
+	ModelTypeOther            models.TranslationField            `json:"model_type_other" db:"model_type_other"`
+	Problem                   models.TranslationField            `json:"problem" db:"problem"`
+	Goal                      models.TranslationField            `json:"goal" db:"goal"`
+	TestInterventions         models.TranslationField            `json:"test_interventions" db:"test_interventions"`
+	Note                      models.TranslationField            `json:"note" db:"note"`
+	CompleteIcip              models.TranslationField            `json:"complete_icip" db:"complete_icip"`
+	ClearanceStarts           models.TranslationField            `json:"clearance_starts" db:"clearance_starts"`
+	ClearanceEnds             models.TranslationField            `json:"clearance_ends" db:"clearance_ends"`
+	Announced                 models.TranslationField            `json:"announced" db:"announced"`
+	ApplicationsStart         models.TranslationField            `json:"applications_starts" db:"applications_starts"`
+	ApplicationsEnd           models.TranslationField            `json:"applications_ends" db:"applications_ends"`
+	PerformancePeriodStarts   models.TranslationField            `json:"performance_period_starts" db:"performance_period_starts"`
+	PerformancePeriodEnds     models.TranslationField            `json:"performance_period_ends" db:"performance_period_ends"`
+	WrapUpEnds                models.TranslationField            `json:"wrap_up_ends" db:"wrap_up_ends"`
+	HighLevelNote             models.TranslationField            `json:"high_level_note" db:"high_level_note"`
+	PhasedIn                  models.TranslationFieldWithOptions `json:"phased_in" db:"phased_in"`
+	PhasedInNote              models.TranslationField            `json:"phased_in_note" db:"phased_in_note"`
+	Status                    models.TranslationField            `json:"status" db:"status"`
 }
 
 type PlanCRCreateInput struct {

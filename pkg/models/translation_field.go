@@ -26,9 +26,42 @@ func (tf TranslationField) GetLabel() string {
 
 }
 
+// HasOptions specifies if a translation field has options or not
+func (tf TranslationField) HasOptions() bool {
+	return false
+}
+
+// GetOptions returns options for a translation. It re
+func (tf TranslationField) GetOptions() (map[string]interface{}, bool) {
+	return nil, tf.HasOptions()
+}
+
 // TranslationFieldWithOptions Represents a TranslationField that has options
 type TranslationFieldWithOptions struct {
 	TranslationField
 	Options map[string]interface{} `json:"options"`
 	// AllowMultipleSelections bool              `json:"allowMultipleSelections,omitempty"`
+}
+
+// GetLabel implements the GetLabel function of the ITranslationField interface
+func (tfo TranslationFieldWithOptions) GetLabel() string {
+	return tfo.TranslationField.GetLabel()
+}
+
+// HasOptions specifies if a translation field has options or not
+func (tfo TranslationFieldWithOptions) HasOptions() bool {
+	return true
+}
+
+// ITranslationField defines the signature every translation is expected to have
+type ITranslationField interface {
+	GetLabel() string
+	HasOptions() bool
+	// Returns options if a translationField has options
+	GetOptions() (map[string]interface{}, bool)
+}
+
+// GetOptions returns options for a translation
+func (tfo TranslationFieldWithOptions) GetOptions() (map[string]interface{}, bool) {
+	return tfo.Options, tfo.HasOptions()
 }
