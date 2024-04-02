@@ -1,13 +1,9 @@
 import React from 'react';
 import { Trans, useTranslation } from 'react-i18next';
-import { useQuery } from '@apollo/client';
 import { Card, CardHeader, Grid, Icon, Link } from '@trussworks/react-uswds';
+import { useGetModelCollaboratorsQuery } from 'gql/gen/graphql';
+import { GetModelCollaborators_modelPlan_collaborators as CollaboratorsType } from 'gql/gen/types/GetModelCollaborators';
 
-import GetModelPlanCollaborators from 'queries/Collaborators/GetModelCollaborators';
-import {
-  GetModelCollaborators,
-  GetModelCollaborators_modelPlan_collaborators as CollaboratorsType
-} from 'queries/Collaborators/types/GetModelCollaborators';
 import { TeamRole } from 'types/graphql-global-types';
 import { collaboratorsOrderedByModelLeads } from 'utils/modelPlan';
 import { NotFoundPartial } from 'views/NotFound';
@@ -106,14 +102,11 @@ const ReadOnlyTeamInfo = ({
   filteredView?: string;
 }) => {
   const { t } = useTranslation('generalReadOnly');
-  const { data, loading, error } = useQuery<GetModelCollaborators>(
-    GetModelPlanCollaborators,
-    {
-      variables: {
-        id: modelID
-      }
+  const { data, loading, error } = useGetModelCollaboratorsQuery({
+    variables: {
+      id: modelID
     }
-  );
+  });
 
   if ((!loading && error) || (!loading && !data?.modelPlan)) {
     return <NotFoundPartial />;

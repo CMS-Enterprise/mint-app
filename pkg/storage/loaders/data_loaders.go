@@ -32,6 +32,8 @@ type DataLoaders struct {
 
 	ActivityLoader                    *WrappedDataLoader
 	UserNotificationPreferencesLoader *WrappedDataLoader
+
+	AnalyzedAuditLoader *WrappedDataLoader
 }
 
 // NewDataLoaders instantiates data loaders for the middleware
@@ -68,6 +70,8 @@ func NewDataLoaders(store *storage.Store) *DataLoaders {
 
 	loaders.ActivityLoader = newWrappedDataLoader(loaders.activityGetByIDLoaderBatch)
 	loaders.UserNotificationPreferencesLoader = newWrappedDataLoader(loaders.userNotificationPreferencesGetByUserIDBatch)
+
+	loaders.AnalyzedAuditLoader = newWrappedDataLoader(loaders.analyzedAuditGetByModelPlanIDAndDateBatch)
 
 	return loaders
 }

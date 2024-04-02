@@ -32,7 +32,6 @@ func (s *Store) TruncateAllTablesDANGEROUS(logger *zap.Logger) error {
 	existing_model_link,
     model_plan,
 	user_notification,
-	user_notification_preferences,
 	activity,
 	audit.change
 	`

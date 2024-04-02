@@ -105,6 +105,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     dataType: 'string',
     formType: 'textarea',
     isOtherType: true,
+    otherParentField: 'contractorSupport',
     filterGroups: [
       ModelViewFilter.CBOSC,
       ModelViewFilter.IDDOC,
@@ -210,6 +211,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     dataType: 'string',
     formType: 'textarea',
     isOtherType: true,
+    otherParentField: 'technicalContactsIdentified',
     filterGroups: [ModelViewFilter.IDDOC]
   },
   technicalContactsIdentifiedNote: {
@@ -350,6 +352,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     dataType: 'string',
     formType: 'text',
     isOtherType: true,
+    otherParentField: 'dataMonitoringFileTypes',
     filterGroups: [ModelViewFilter.IDDOC]
   },
   dataResponseType: {
@@ -744,6 +747,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     dataType: 'string',
     formType: 'textarea',
     isOtherType: true,
+    otherParentField: 'ccmInvolvment',
     filterGroups: [ModelViewFilter.CCW]
   },
   ccmInvolvmentNote: {
@@ -845,6 +849,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     dataType: 'string',
     formType: 'textarea',
     isOtherType: true,
+    otherParentField: 'dataToSendParticicipants',
     filterGroups: [ModelViewFilter.CMMI]
   },
   dataToSendParticicipantsNote: {
@@ -931,6 +936,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     dataType: 'string',
     formType: 'textarea',
     isOtherType: true,
+    otherParentField: 'appToSendFilesToWhich',
     filterGroups: [ModelViewFilter.CCW]
   },
   appToSendFilesToNote: {
@@ -1016,6 +1022,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     dataType: 'string',
     formType: 'text',
     isOtherType: true,
+    otherParentField: 'qualityPerformanceImpactsPayment',
     filterGroups: [ModelViewFilter.CMMI]
   },
   qualityPerformanceImpactsPaymentNote: {
@@ -1064,6 +1071,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     dataType: 'string',
     formType: 'textarea',
     isOtherType: true,
+    otherParentField: 'dataSharingStarts',
     filterGroups: [ModelViewFilter.IDDOC]
   },
   dataSharingFrequency: {
@@ -1088,6 +1096,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     dataType: 'string',
     formType: 'textarea',
     isOtherType: true,
+    otherParentField: 'dataSharingFrequency',
     filterGroups: [ModelViewFilter.CMMI, ModelViewFilter.IDDOC]
   },
   dataSharingFrequencyOther: {
@@ -1098,6 +1107,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     dataType: 'string',
     formType: 'textarea',
     isOtherType: true,
+    otherParentField: 'dataSharingFrequency',
     filterGroups: [ModelViewFilter.CMMI, ModelViewFilter.IDDOC]
   },
   dataSharingStartsNote: {
@@ -1141,6 +1151,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     dataType: 'string',
     formType: 'textarea',
     isOtherType: true,
+    otherParentField: 'dataCollectionStarts',
     filterGroups: [ModelViewFilter.IDDOC]
   },
   dataCollectionFrequency: {
@@ -1165,6 +1176,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     dataType: 'string',
     formType: 'textarea',
     isOtherType: true,
+    otherParentField: 'dataCollectionFrequency',
     filterGroups: [ModelViewFilter.CMMI]
   },
   dataCollectionFrequencyOther: {
@@ -1175,6 +1187,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     dataType: 'string',
     formType: 'textarea',
     isOtherType: true,
+    otherParentField: 'dataCollectionFrequency',
     filterGroups: [ModelViewFilter.CMMI]
   },
   dataCollectionFrequencyNote: {
@@ -1206,7 +1219,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
       OTHER: 'Other'
     },
     optionsRelatedInfo: {
-      OTHER: ''
+      OTHER: 'qualityReportingStartsOther'
     }
   },
   qualityReportingStartsOther: {
@@ -1216,7 +1229,8 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     label: 'Please specify',
     dataType: 'string',
     formType: 'textarea',
-    isOtherType: true
+    isOtherType: true,
+    otherParentField: 'qualityReportingStarts'
   },
   qualityReportingStartsNote: {
     gqlField: 'qualityReportingStartsNote',
@@ -1246,7 +1260,8 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     label: 'Please specify',
     dataType: 'string',
     formType: 'textarea',
-    isOtherType: true
+    isOtherType: true,
+    otherParentField: 'qualityReportingFrequency'
   },
   qualityReportingFrequencyOther: {
     gqlField: 'qualityReportingFrequencyOther',
@@ -1255,7 +1270,8 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     label: 'Please specify',
     dataType: 'string',
     formType: 'textarea',
-    isOtherType: true
+    isOtherType: true,
+    otherParentField: 'qualityReportingFrequency'
   },
   modelLearningSystems: {
     gqlField: 'modelLearningSystems',
@@ -1286,7 +1302,8 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     label: 'Please specify',
     dataType: 'string',
     formType: 'textarea',
-    isOtherType: true
+    isOtherType: true,
+    otherParentField: 'modelLearningSystems'
   },
   modelLearningSystemsNote: {
     gqlField: 'modelLearningSystemsNote',

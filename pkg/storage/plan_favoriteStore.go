@@ -150,14 +150,15 @@ func (s *Store) PlanFavoriteCollectionGetUniqueUserIDs() ([]uuid.UUID, error) {
 }
 
 // PlanFavoriteGetCollectionByUserID returns plan favorites by userID
-func (s *Store) PlanFavoriteGetCollectionByUserID(
+func PlanFavoriteGetCollectionByUserID(
+	np sqlutils.NamedPreparer,
 	_ *zap.Logger,
 	userAccountID uuid.UUID,
 ) ([]*models.PlanFavorite, error) {
 
 	var planFavorites []*models.PlanFavorite
 
-	stmt, err := s.db.PrepareNamed(planFavoriteGetCollectionByUserIDSQL)
+	stmt, err := np.PrepareNamed(planFavoriteGetCollectionByUserIDSQL)
 	if err != nil {
 		return nil, err
 	}

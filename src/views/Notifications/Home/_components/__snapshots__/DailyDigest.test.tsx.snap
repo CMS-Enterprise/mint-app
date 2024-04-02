@@ -1,0 +1,91 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Daily Digest in Notifications > matches snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="desktop:grid-col-12 border-1 border-base-lightest padding-x-3 padding-y-5"
+    data-testid="notification--daily-digest"
+  >
+    <h2
+      aria-live="polite"
+      class="mint-h1 margin-top-0 margin-bottom-4"
+      tabindex="-1"
+    >
+      Your daily updates
+    </h2>
+    <div
+      class="margin-bottom-4"
+    >
+      <h3
+        aria-live="polite"
+        class="mint-h1 margin-top-0 margin-bottom-1"
+        tabindex="-1"
+      >
+        Empty Plan
+      </h3>
+      <ul
+        class="padding-left-205"
+      >
+        <li
+          class="line-height-sans-5"
+        >
+          This model has been renamed (previously Old Name Plan)
+        </li>
+        <li
+          class="line-height-sans-5"
+        >
+          MINT Doe has been added as a model lead
+        </li>
+        <li
+          class="line-height-sans-5"
+        >
+          2 new documents have been uploaded
+        </li>
+        <li
+          class="line-height-sans-5"
+        >
+          Updates to Basics
+        </li>
+        <li
+          class="line-height-sans-5"
+        >
+          This Model Plan is complete
+        </li>
+      </ul>
+      <a
+        class="usa-link display width-fit-content"
+        href="/models/1bf249a6-577b-42fd-8dd2-46563e3d1d9e/read-only"
+      >
+        <div
+          class="display-flex flex-align-center"
+        >
+          View this Model Plan
+          <svg
+            aria-hidden="true"
+            class="usa-icon margin-left-1"
+            focusable="false"
+            height="1em"
+            role="img"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
+            />
+          </svg>
+        </div>
+      </a>
+    </div>
+    <div
+      class="border-top-1px border-base-light padding-top-2"
+    >
+      <p
+        class="margin-y-0"
+      >
+        To stop receiving notifications for a specific model, unfollow the model at the top of the Model Plan page.
+      </p>
+    </div>
+  </div>
+</DocumentFragment>
+`;

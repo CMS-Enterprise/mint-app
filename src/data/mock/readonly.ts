@@ -35,6 +35,8 @@ import {
   GetAllParticipantsAndProvidersQuery,
   GetAllPaymentsDocument,
   GetAllPaymentsQuery,
+  GetModelCollaboratorsDocument,
+  GetModelSummaryDocument,
   KeyCharacteristic,
   ModelCategory,
   ModelLearningSystemType,
@@ -66,13 +68,11 @@ import {
   YesNoOtherType,
   YesNoType
 } from 'gql/gen/graphql';
+import { GetModelCollaborators_modelPlan_collaborators as GetModelCollaboratorsType } from 'gql/gen/types/GetModelCollaborators';
+import { GetModelSummary_modelPlan as GetModelSummaryTypes } from 'gql/gen/types/GetModelSummary';
 
-import GetModelPlanCollaborators from 'queries/Collaborators/GetModelCollaborators';
-import { GetModelCollaborators_modelPlan_collaborators as GetModelCollaboratorsType } from 'queries/Collaborators/types/GetModelCollaborators';
 import GetOperationalNeeds from 'queries/ITSolutions/GetOperationalNeeds';
 import { GetOperationalNeeds as GetOperationalNeedsType } from 'queries/ITSolutions/types/GetOperationalNeeds';
-import GetModelSummary from 'queries/ReadOnly/GetModelSummary';
-import { GetModelSummary_modelPlan as GetModelSummaryTypes } from 'queries/ReadOnly/types/GetModelSummary';
 
 export const modelID: string = 'f11eb129-2c80-4080-9440-439cbe1a286f';
 
@@ -704,7 +704,7 @@ const summaryData: GetModelSummaryTypes = {
 export const summaryMock = [
   {
     request: {
-      query: GetModelSummary,
+      query: GetModelSummaryDocument,
       variables: { id: modelID }
     },
     result: {
@@ -753,7 +753,7 @@ const collaboratorsData: GetModelCollaboratorsType[] = [
 export const collaboratorsMocks = [
   {
     request: {
-      query: GetModelPlanCollaborators,
+      query: GetModelCollaboratorsDocument,
       variables: { id: modelID }
     },
     result: {

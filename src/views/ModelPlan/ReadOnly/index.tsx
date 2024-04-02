@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { RootStateOrAny, useSelector } from 'react-redux';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
-import { useQuery } from '@apollo/client';
 import { Grid, GridContainer, Icon, SummaryBox } from '@trussworks/react-uswds';
 import classnames from 'classnames';
-import { GetCrtdLsQuery } from 'gql/gen/graphql';
+import { GetCrtdLsQuery, useGetModelSummaryQuery } from 'gql/gen/graphql';
+import { GetModelSummary_modelPlan as GetModelSummaryTypes } from 'gql/gen/types/GetModelSummary';
 import { useFlags } from 'launchdarkly-react-client-sdk';
 
 import { FavoriteIcon } from 'components/FavoriteCard';
@@ -20,11 +20,6 @@ import ShareExportModal from 'components/ShareExport';
 import SAMPLE_MODEL_UUID_STRING from 'constants/sampleModelPlan';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import useFavoritePlan from 'hooks/useFavoritePlan';
-import GetModelSummary from 'queries/ReadOnly/GetModelSummary';
-import {
-  GetModelSummary as GetModelSummaryType,
-  GetModelSummary_modelPlan as GetModelSummaryTypes
-} from 'queries/ReadOnly/types/GetModelSummary';
 import { ModelStatus, TeamRole } from 'types/graphql-global-types';
 import { isAssessment, isMAC } from 'utils/user';
 import NotFound from 'views/NotFound';
@@ -239,14 +234,11 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
 
   const [isExportModalOpen, setIsExportModalOpen] = useState<boolean>(false);
 
-  const { data, loading, error, refetch } = useQuery<GetModelSummaryType>(
-    GetModelSummary,
-    {
-      variables: {
-        id: modelID
-      }
+  const { data, loading, error, refetch } = useGetModelSummaryQuery({
+    variables: {
+      id: modelID
     }
-  );
+  });
 
   const favoriteMutations = useFavoritePlan();
 
@@ -258,7 +250,7 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
       variables: {
         modelPlanID
       }
-    }).then(refetch);
+    }).then(() => refetch());
   };
 
   const {
@@ -382,7 +374,7 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
               loading={loading}
               modelName={modelName}
               characteristics={generalCharacteristics}
-              performancePeriodStarts={basics?.performancePeriodStarts}
+              performancePeriodStarts={basics?.performancePeriodStarts ?? null}
               modelLeads={collaborators?.filter(c =>
                 c.teamRoles.includes(TeamRole.MODEL_LEAD)
               )}

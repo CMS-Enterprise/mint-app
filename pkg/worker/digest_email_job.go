@@ -4,18 +4,13 @@ import (
 	"context"
 	"time"
 
-	"github.com/samber/lo"
-	"go.uber.org/zap"
-
+	"github.com/cmsgov/mint-app/pkg/graph/resolvers"
+	"github.com/cmsgov/mint-app/pkg/models"
 	"github.com/cmsgov/mint-app/pkg/storage"
 
 	faktory "github.com/contribsys/faktory/client"
 	faktory_worker "github.com/contribsys/faktory_worker_go"
 	"github.com/google/uuid"
-
-	"github.com/cmsgov/mint-app/pkg/email"
-	"github.com/cmsgov/mint-app/pkg/models"
-	"github.com/cmsgov/mint-app/pkg/shared/oddmail"
 )
 
 /*
@@ -44,7 +39,7 @@ func (w *Worker) DigestEmailBatchJob(ctx context.Context, args ...interface{}) e
 
 		return batch.Jobs(func() error {
 			for _, id := range userIDs {
-				job := faktory.NewJob("DigestEmailJob", dateAnalyzed, id) //TODO verify!
+				job := faktory.NewJob("DigestEmailJob", dateAnalyzed, id)
 				job.Queue = emailQueue
 				err = batch.Push(job)
 				if err != nil {
@@ -69,6 +64,7 @@ func (w *Worker) DigestEmailBatchJobSuccess(ctx context.Context, args ...interfa
 // DigestEmailJob will generate and send an email based on a users favorited Models.
 // args[0] date, args[1] userID
 func (w *Worker) DigestEmailJob(ctx context.Context, args ...interface{}) error {
+
 	dateAnalyzed, err := time.Parse("2006-01-02", args[0].(string))
 	if err != nil {
 		return err
@@ -79,44 +75,14 @@ func (w *Worker) DigestEmailJob(ctx context.Context, args ...interface{}) error 
 	if err != nil {
 		return err
 	}
-
-	account, err := w.Store.UserAccountGetByID(w.Store, userID)
-	if err != nil {
-		return err
+	preferenceFunctions := func(ctx context.Context, user_id uuid.UUID) (*models.UserNotificationPreferences, error) {
+		return storage.UserNotificationPreferencesGetByUserID(w.Store, user_id)
 	}
+	// Note, if desired we can wrap this in a transaction so if there is a failure sending an email, the notification in the database also gets rolled back.
+	// This is not needed currently.
+	sendErr := resolvers.DailyDigestNotificationSend(ctx, w.Store, w.Logger, dateAnalyzed, userID, preferenceFunctions, w.EmailService, &w.EmailTemplateService, w.AddressBook)
+	return sendErr
 
-	recipientEmail := account.Email
-
-	// Get all analyzedAudits based on users favorited models
-	analyzedAudits, err := getDigestAnalyzedAudits(userID, dateAnalyzed, w.Store, w.Logger)
-	if err != nil {
-		return err
-	}
-
-	if len(analyzedAudits) == 0 {
-		return nil
-	}
-
-	// Generate email subject and body from template
-	emailSubject, emailBody, err := generateDigestEmail(analyzedAudits, w.EmailTemplateService, w.EmailService)
-	if err != nil {
-		return err
-	}
-
-	// Send generated email
-	err = w.EmailService.Send(
-		w.AddressBook.DefaultSender,
-		[]string{recipientEmail},
-		nil,
-		emailSubject,
-		"text/html",
-		emailBody,
-	)
-	if err != nil {
-		return err
-	}
-
-	return nil
 }
 
 // AggregatedDigestEmailJob will generate and send an email based on all models changed in the audit period
@@ -139,64 +105,4 @@ func (w *Worker) AggregatedDigestEmailJob(ctx context.Context, args ...interface
 	}
 
 	return nil
-}
-
-/*
-############################
-# DigestEmail Jobs Helpers #
-############################
-*/
-
-// getDigestAnalyzedAudits gets AnalyzedAudits based on a users favorited plans and date
-func getDigestAnalyzedAudits(
-	userID uuid.UUID,
-	date time.Time,
-	store *storage.Store,
-	logger *zap.Logger,
-) ([]*models.AnalyzedAudit, error) {
-
-	planFavorites, err := store.PlanFavoriteGetCollectionByUserID(logger, userID)
-	if err != nil {
-		return nil, err
-	}
-	if len(planFavorites) == 0 {
-		return nil, nil
-	}
-
-	modelPlanIds := lo.Map(planFavorites, func(p *models.PlanFavorite, index int) uuid.UUID {
-		return p.ModelPlanID
-	})
-	if len(modelPlanIds) == 0 {
-		return nil, nil
-	}
-
-	analyzedAudits, err := store.AnalyzedAuditGetByModelPlanIDsAndDate(logger, modelPlanIds, date)
-	if err != nil {
-		return nil, err
-	}
-
-	return analyzedAudits, nil
-}
-
-// generateDigestEmail will generate the daily digest email from template
-func generateDigestEmail(analyzedAudits []*models.AnalyzedAudit, emailTemplateService email.TemplateServiceImpl, emailService oddmail.EmailService) (string, string, error) {
-	emailTemplate, err := emailTemplateService.GetEmailTemplate(email.DailyDigetsTemplateName)
-	if err != nil {
-		return "", "", err
-	}
-
-	emailSubject, err := emailTemplate.GetExecutedSubject(email.DailyDigestSubjectContent{})
-	if err != nil {
-		return "", "", err
-	}
-
-	emailBody, err := emailTemplate.GetExecutedBody(email.DailyDigestBodyContent{
-		AnalyzedAudits: analyzedAudits,
-		ClientAddress:  emailService.GetConfig().GetClientAddress(),
-	})
-	if err != nil {
-		return "", "", err
-	}
-
-	return emailSubject, emailBody, nil
 }
