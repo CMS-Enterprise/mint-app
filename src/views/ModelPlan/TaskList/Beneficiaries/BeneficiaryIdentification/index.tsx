@@ -1,6 +1,6 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
-import { Link, useHistory, useParams } from 'react-router-dom';
+import { Link, useHistory, useLocation, useParams } from 'react-router-dom';
 import {
   Breadcrumb,
   BreadcrumbBar,
@@ -27,7 +27,6 @@ import AskAQuestion from 'components/AskAQuestion';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import Alert from 'components/shared/Alert';
-import AutoSave from 'components/shared/AutoSave';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
@@ -62,6 +61,7 @@ const BeneficiaryIdentification = () => {
     null
   );
   const history = useHistory();
+  const { pathname } = useLocation();
 
   const { data, loading, error } = useGetBeneficiaryIdentificationQuery({
     variables: {
@@ -88,31 +88,33 @@ const BeneficiaryIdentification = () => {
 
   const [update] = useUpdateModelPlanBeneficiariesMutation();
 
-  const handleFormSubmit = (redirect?: 'next' | 'back') => {
-    update({
-      variables: {
-        id,
-        changes: dirtyInput(
-          formikRef?.current?.initialValues,
-          formikRef?.current?.values
-        )
-      }
-    })
-      .then(response => {
-        if (!response?.errors) {
-          if (redirect === 'next') {
-            history.push(
-              `/models/${modelID}/task-list/beneficiaries/people-impact`
-            );
-          } else if (redirect === 'back') {
-            history.push(`/models/${modelID}/task-list/`);
-          }
+  useEffect(() => {
+    const unblock = history.block(location => {
+      update({
+        variables: {
+          id,
+          changes: dirtyInput(
+            formikRef?.current?.initialValues,
+            formikRef?.current?.values
+          )
         }
       })
-      .catch(errors => {
-        formikRef?.current?.setErrors(errors);
-      });
-  };
+        .then(response => {
+          if (!response?.errors) {
+            unblock();
+            history.push(location.pathname);
+          }
+        })
+        .catch(errors => {
+          formikRef?.current?.setErrors(errors);
+        });
+      return false;
+    });
+
+    return () => {
+      unblock();
+    };
+  }, [history, id, update]);
 
   const initialValues: BeneficiaryIdentificationFormType = {
     __typename: 'PlanBeneficiaries',
@@ -171,7 +173,9 @@ const BeneficiaryIdentification = () => {
       <Formik
         initialValues={initialValues}
         onSubmit={() => {
-          handleFormSubmit('next');
+          history.push(
+            `/models/${modelID}/task-list/beneficiaries/people-impact`
+          );
         }}
         enableReinitialize
         innerRef={formikRef}
@@ -179,10 +183,10 @@ const BeneficiaryIdentification = () => {
         {(formikProps: FormikProps<BeneficiaryIdentificationFormType>) => {
           const {
             errors,
-            handleSubmit,
             setErrors,
             setFieldValue,
-            values
+            values,
+            handleSubmit
           } = formikProps;
           const flatErrors = flattenErrors(errors);
 
@@ -568,7 +572,9 @@ const BeneficiaryIdentification = () => {
                         <Button
                           type="button"
                           className="usa-button usa-button--unstyled"
-                          onClick={() => handleFormSubmit('back')}
+                          onClick={() =>
+                            history.push(`/models/${modelID}/task-list/`)
+                          }
                         >
                           <Icon.ArrowBack
                             className="margin-right-1"
@@ -582,16 +588,6 @@ const BeneficiaryIdentification = () => {
                   </Grid>
                 </Grid>
               </GridContainer>
-
-              {id && (
-                <AutoSave
-                  values={values}
-                  onSave={() => {
-                    handleFormSubmit();
-                  }}
-                  debounceDelay={3000}
-                />
-              )}
             </>
           );
         }}
