@@ -64,6 +64,7 @@ const BeneficiaryIdentification = () => {
   const formikRef = useRef<FormikProps<BeneficiaryIdentificationFormType>>(
     null
   );
+
   const history = useHistory();
 
   const { data, loading, error } = useGetBeneficiaryIdentificationQuery({
@@ -96,7 +97,7 @@ const BeneficiaryIdentification = () => {
       const unblock = history.block(location => {
         update({
           variables: {
-            id: '23423432',
+            id,
             changes: dirtyInput(
               formikRef?.current?.initialValues,
               formikRef?.current?.values
@@ -123,6 +124,7 @@ const BeneficiaryIdentification = () => {
         unblock();
       };
     }
+    return () => {};
   }, [history, id, update, isMutationErrorModalOpen]);
 
   const initialValues: BeneficiaryIdentificationFormType = {
