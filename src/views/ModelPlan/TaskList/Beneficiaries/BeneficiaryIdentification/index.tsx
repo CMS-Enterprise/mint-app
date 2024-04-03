@@ -1,6 +1,6 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
-import { Link, useHistory, useLocation, useParams } from 'react-router-dom';
+import { Link, useHistory, useParams } from 'react-router-dom';
 import {
   Breadcrumb,
   BreadcrumbBar,
@@ -24,6 +24,7 @@ import {
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
+import MutationErrorModal from 'components/MutationErrorModal';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import Alert from 'components/shared/Alert';
@@ -49,6 +50,9 @@ const BeneficiaryIdentification = () => {
 
   const { t: miscellaneousT } = useTranslation('miscellaneous');
 
+  const [isMutationErrorModalOpen, setMutationErrorModalOpen] = useState(false);
+  const [destinationURL, setDestinationURL] = useState<string>('');
+
   const {
     beneficiaries: beneficiariesConfig,
     treatDualElligibleDifferent: treatDualElligibleDifferentConfig,
@@ -61,7 +65,6 @@ const BeneficiaryIdentification = () => {
     null
   );
   const history = useHistory();
-  const { pathname } = useLocation();
 
   const { data, loading, error } = useGetBeneficiaryIdentificationQuery({
     variables: {
@@ -89,32 +92,38 @@ const BeneficiaryIdentification = () => {
   const [update] = useUpdateModelPlanBeneficiariesMutation();
 
   useEffect(() => {
-    const unblock = history.block(location => {
-      update({
-        variables: {
-          id,
-          changes: dirtyInput(
-            formikRef?.current?.initialValues,
-            formikRef?.current?.values
-          )
-        }
-      })
-        .then(response => {
-          if (!response?.errors) {
-            unblock();
-            history.push(location.pathname);
+    if (!isMutationErrorModalOpen) {
+      const unblock = history.block(location => {
+        update({
+          variables: {
+            id: '23423432',
+            changes: dirtyInput(
+              formikRef?.current?.initialValues,
+              formikRef?.current?.values
+            )
           }
         })
-        .catch(errors => {
-          formikRef?.current?.setErrors(errors);
-        });
-      return false;
-    });
+          .then(response => {
+            if (!response?.errors) {
+              unblock();
+              history.push(location.pathname);
+            }
+          })
+          .catch(errors => {
+            unblock();
+            setDestinationURL(location.pathname);
+            setMutationErrorModalOpen(true);
 
-    return () => {
-      unblock();
-    };
-  }, [history, id, update]);
+            formikRef?.current?.setErrors(errors);
+          });
+        return false;
+      });
+
+      return () => {
+        unblock();
+      };
+    }
+  }, [history, id, update, isMutationErrorModalOpen]);
 
   const initialValues: BeneficiaryIdentificationFormType = {
     __typename: 'PlanBeneficiaries',
@@ -138,6 +147,12 @@ const BeneficiaryIdentification = () => {
 
   return (
     <>
+      <MutationErrorModal
+        isOpen={isMutationErrorModalOpen}
+        closeModal={() => setMutationErrorModalOpen(false)}
+        url={destinationURL}
+      />
+
       <BreadcrumbBar variant="wrap">
         <Breadcrumb>
           <BreadcrumbLink asCustom={Link} to="/">
