@@ -1,5 +1,5 @@
 """
-Represents a plan general characteristics translation object
+Represents plan general characteristics translation data
 """
 type PlanGeneralCharacteristicsTranslation {
   # Page 1

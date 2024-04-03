@@ -1,6 +1,6 @@
 
 """
-Represents collaborator translation data
+Represents plan collaborator translation data
 """
 type PlanCollaboratorTranslation {
   username: TranslationField! @goTag(key: "db", value: "user_account.username")

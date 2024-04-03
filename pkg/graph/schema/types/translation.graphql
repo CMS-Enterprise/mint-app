@@ -1,9 +1,10 @@
-"""
-Base typea that represents FE translation structure
-Translations are exported from FE for change history, and mapped to these types on the BE
-"""
+# Base typea that represents FE translation structure
+# Translations are exported from FE for change history, and mapped to these types on the BE
 
-# Represents the data type of the translation field
+
+"""
+Represents the data type of the translation field
+"""
 enum TranslationDataType {
   STRING
   NUMBER
@@ -13,7 +14,9 @@ enum TranslationDataType {
   OBJECT
 }
 
-# Represents the FORM type of the translation field
+"""
+Represents the FORM type of the translation field
+"""
 enum TranslationFormType {
   TEXT
   TEXTAREA
@@ -27,7 +30,9 @@ enum TranslationFormType {
   RANGEINPUT
 }
 
-# TranslationField represents a question with no options
+"""
+Represents a translation question with no options
+"""
 type TranslationField {
   gqlField: String!
   goField: String!
@@ -40,10 +45,12 @@ type TranslationField {
   dataType: TranslationDataType!
   formType: TranslationFormType!
   isOtherType: Boolean # Is a question a followup to another that doesn't designate it's own readonly question/line,
-  otherParentField: String # gql field name for the parent question for fields that represent Other, Please specify, etc.  Used in change history to render parent question for context
+  otherParentField: String # field name for the parent question for fields that represent Other, Please specify, etc.  Used in change history to render parent question for context
 }
 
-# TranslationField represents a question with options
+"""
+Represents a translation question with options
+"""
 type TranslationFieldWithOptions {
   gqlField: String!
   goField: String!

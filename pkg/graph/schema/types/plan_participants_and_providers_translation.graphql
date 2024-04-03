@@ -1,5 +1,5 @@
 """
-PlanParticipantsAndProviders represents a plan participants and providers translation object
+Represents plan participants and providers translation data
 """
 type PlanParticipantsAndProvidersTranslation {
   #Page 1
