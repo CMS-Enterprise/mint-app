@@ -21,20 +21,39 @@
       "DISEASE_SPECIFIC": "(based on a diagnosis, procedure code, condition, etc.)"
     }
   },
-  "disease_specific_group": {
+  "diseaseSpecificGroup": {
     "gqlField": "diseaseSpecificGroup",
     "goField": "DiseaseSpecificGroup",
     "dbField": "disease_specific_group",
     "label": "Please describe the disease-specific groups this model will impact.",
     "isOtherType": true
   },
-  "beneficiaries_other": {
+  "beneficiariesOther": {
+    "gqlField": "beneficiariesOther",
+    "goField": "BeneficiariesOther",
+    "dbField": "beneficiaries_other",
+    "label": "Please describe the other groups this model will impact.",
+    "isOtherType": true
+  },
+  "beneficiariesNote": {
     "gqlField": "beneficiariesNote",
     "goField": "BeneficiariesNote",
     "dbField": "beneficiaries_other",
     "label": "Notes"
   },
-  "treat_dual_elligible_different": {
+  "treatDualElligibleDifferent": {
+    "gqlField": "treatDualElligibleDifferent",
+    "goField": "TreatDualElligibleDifferent",
+    "dbField": "treat_dual_elligible_different",
+    "label": "Should dually-eligible beneficiaries be treated differently than non-dually eligibles?",
+    "readonlyLabel": "Should dually-eligible beneficiaries be treated differently than non-dually eligibles? How so?",
+    "options": {
+      "YES": "Yes",
+      "NO": "No",
+      "TBD": "Not applicable"
+    }
+  },
+  "treatDualElligibleDifferentHow": {
     "gqlField": "treatDualElligibleDifferentHow",
     "goField": "TreatDualElligibleDifferentHow",
     "dbField": "treat_dual_elligible_different",
@@ -42,13 +61,13 @@
     "isOtherType": true,
     "otherParentField": "treat_dual_elligible_different"
   },
-  "treat_dual_elligible_different_note": {
+  "treatDualElligibleDifferentNote": {
     "gqlField": "treatDualElligibleDifferentNote",
     "goField": "TreatDualElligibleDifferentNote",
     "dbField": "treat_dual_elligible_different_note",
     "label": "Notes"
   },
-  "exclude_certain_characteristics": {
+  "excludeCertainCharacteristics": {
     "gqlField": "excludeCertainCharacteristics",
     "goField": "ExcludeCertainCharacteristics",
     "dbField": "exclude_certain_characteristics",
@@ -60,7 +79,7 @@
       "TBD": "Not applicable"
     }
   },
-  "exclude_certain_characteristics_criteria": {
+  "excludeCertainCharacteristicsCriteria": {
     "gqlField": "excludeCertainCharacteristicsCriteria",
     "goField": "ExcludeCertainCharacteristicsCriteria",
     "dbField": "exclude_certain_characteristics_criteria",
@@ -68,19 +87,19 @@
     "isOtherType": true,
     "otherParentField": "exclude_certain_characteristics"
   },
-  "exclude_certain_characteristics_note": {
+  "excludeCertainCharacteristicsNote": {
     "gqlField": "excludeCertainCharacteristicsNote",
     "goField": "ExcludeCertainCharacteristicsNote",
     "dbField": "exclude_certain_characteristics_note",
     "label": "Notes"
   },
-  "number_people_impacted": {
+  "numberPeopleImpacted": {
     "gqlField": "numberPeopleImpacted",
     "goField": "NumberPeopleImpacted",
     "dbField": "number_people_impacted",
     "label": "How many people do you think will be impacted by this model?"
   },
-  "estimate_confidence": {
+  "estimateConfidence": {
     "gqlField": "estimateConfidence",
     "goField": "EstimateConfidence",
     "dbField": "estimate_confidence",
@@ -92,13 +111,13 @@
       "COMPLETELY": "Completely confident"
     }
   },
-  "confidence_note": {
+  "confidenceNote": {
     "gqlField": "confidenceNote",
     "goField": "ConfidenceNote",
     "dbField": "confidence_note",
     "label": "Notes"
   },
-  "beneficiary_selection_method": {
+  "beneficiarySelectionMethod": {
     "gqlField": "beneficiarySelectionMethod",
     "goField": "BeneficiarySelectionMethod",
     "dbField": "beneficiary_selection_method",
@@ -115,20 +134,20 @@
       "NA": "Not applicable"
     }
   },
-  "beneficiary_selection_other": {
+  "beneficiarySelectionOther": {
     "gqlField": "beneficiarySelectionOther",
     "goField": "BeneficiarySelectionOther",
     "dbField": "beneficiary_selection_other",
     "label": "Please describe the other method for choosing beneficiaries.",
     "isOtherType": true
   },
-  "beneficiary_selection_note": {
+  "beneficiarySelectionNote": {
     "gqlField": "beneficiarySelectionNote",
     "goField": "BeneficiarySelectionNote",
     "dbField": "beneficiary_selection_note",
     "label": "Notes"
   },
-  "beneficiary_selection_frequency": {
+  "beneficiarySelectionFrequency": {
     "gqlField": "beneficiarySelectionFrequency",
     "goField": "BeneficiarySelectionFrequency",
     "dbField": "beneficiary_selection_frequency",
@@ -142,7 +161,7 @@
       "OTHER": "Other"
     }
   },
-  "beneficiary_selection_frequency_continually": {
+  "beneficiarySelectionFrequencyContinually": {
     "gqlField": "beneficiarySelectionFrequencyContinually",
     "goField": "BeneficiarySelectionFrequencyContinually",
     "dbField": "beneficiary_selection_frequency_continually",
@@ -150,7 +169,7 @@
     "isOtherType": true,
     "otherParentField": "beneficiary_selection_frequency"
   },
-  "beneficiary_selection_frequency_other": {
+  "beneficiarySelectionFrequencyOther": {
     "gqlField": "beneficiarySelectionFrequencyOther",
     "goField": "BeneficiarySelectionFrequencyOther",
     "dbField": "beneficiary_selection_frequency_other",
@@ -158,13 +177,13 @@
     "isOtherType": true,
     "otherParentField": "beneficiary_selection_frequency"
   },
-  "beneficiary_selection_frequency_note": {
+  "beneficiarySelectionFrequencyNote": {
     "gqlField": "beneficiarySelectionFrequencyNote",
     "goField": "BeneficiarySelectionFrequencyNote",
     "dbField": "beneficiary_selection_frequency_note",
     "label": "Notes"
   },
-  "beneficiary_removal_frequency": {
+  "beneficiaryRemovalFrequency": {
     "gqlField": "beneficiaryRemovalFrequency",
     "goField": "BeneficiaryRemovalFrequency",
     "dbField": "beneficiary_removal_frequency",
@@ -178,7 +197,7 @@
       "OTHER": "Other"
     }
   },
-  "beneficiary_removal_frequency_continually": {
+  "beneficiaryRemovalFrequencyContinually": {
     "gqlField": "beneficiaryRemovalFrequencyContinually",
     "goField": "BeneficiaryRemovalFrequencyContinually",
     "dbField": "beneficiary_removal_frequency_continually",
@@ -186,7 +205,7 @@
     "isOtherType": true,
     "otherParentField": "beneficiary_removal_frequency"
   },
-  "beneficiary_removal_frequency_other": {
+  "beneficiaryRemovalFrequencyOther": {
     "gqlField": "beneficiaryRemovalFrequencyOther",
     "goField": "BeneficiaryRemovalFrequencyOther",
     "dbField": "beneficiary_removal_frequency_other",
@@ -194,13 +213,13 @@
     "isOtherType": true,
     "otherParentField": "beneficiary_removal_frequency"
   },
-  "beneficiary_removal_frequency_note": {
+  "beneficiaryRemovalFrequencyNote": {
     "gqlField": "beneficiaryRemovalFrequencyNote",
     "goField": "BeneficiaryRemovalFrequencyNote",
     "dbField": "beneficiary_removal_frequency_note",
     "label": "Notes"
   },
-  "beneficiary_overlap": {
+  "beneficiaryOverlap": {
     "gqlField": "beneficiaryOverlap",
     "goField": "BeneficiaryOverlap",
     "dbField": "beneficiary_overlap",
@@ -211,13 +230,13 @@
       "NO": "No"
     }
   },
-  "beneficiary_overlap_note": {
+  "beneficiaryOverlapNote": {
     "gqlField": "beneficiaryOverlapNote",
     "goField": "BeneficiaryOverlapNote",
     "dbField": "beneficiary_overlap_note",
     "label": "Notes"
   },
-  "precedence_rules": {
+  "precedenceRules": {
     "gqlField": "precedenceRules",
     "goField": "PrecedenceRules",
     "dbField": "precedence_rules",
@@ -228,7 +247,7 @@
       "NO": "No"
     }
   },
-  "precedence_rules_yes": {
+  "precedenceRulesYes": {
     "gqlField": "precedenceRulesYes",
     "goField": "PrecedenceRulesYes",
     "dbField": "precedence_rules_yes",
@@ -236,7 +255,7 @@
     "isOtherType": true,
     "otherParentField": "precedence_rules"
   },
-  "precedence_rules_no": {
+  "precedenceRulesNo": {
     "gqlField": "precedenceRulesNo",
     "goField": "PrecedenceRulesNo",
     "dbField": "precedence_rules_no",
@@ -244,7 +263,7 @@
     "isOtherType": true,
     "otherParentField": "precedence_rules"
   },
-  "precedence_rules_note": {
+  "precedenceRulesNote": {
     "gqlField": "precedenceRulesNote",
     "goField": "PrecedenceRulesNote",
     "dbField": "precedence_rules_note",

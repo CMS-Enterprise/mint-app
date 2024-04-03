@@ -1,17 +1,17 @@
 {
-  "model_name": {
+  "modelName": {
     "gqlField": "modelName",
     "goField": "ModelName",
     "dbField": "model_name",
     "label": "Model name"
   },
-  "previous_name": {
+  "previousName": {
     "gqlField": "previousName",
     "goField": "PreviousName",
     "dbField": "previous_name",
     "label": "Previous names"
   },
-  "name_history": {
+  "nameHistory": {
     "gqlField": "nameHistory",
     "goField": "NameHistory",
     "dbField": "name_history",

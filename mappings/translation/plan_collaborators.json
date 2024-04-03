@@ -5,7 +5,7 @@
     "dbField": "username",
     "label": "Team member name"
   },
-  "team_roles": {
+  "teamRoles": {
     "gqlField": "teamRoles",
     "goField": "TeamRoles",
     "dbField": "team_roles",

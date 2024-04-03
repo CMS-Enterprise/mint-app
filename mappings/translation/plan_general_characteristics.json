@@ -1,5 +1,5 @@
 {
-  "is_new_model": {
+  "isNewModel": {
     "gqlField": "isNewModel",
     "goField": "IsNewModel",
     "dbField": "is_new_model",
@@ -9,14 +9,14 @@
       "false": "New track of an existing model"
     }
   },
-  "existing_model": {
+  "existingModel": {
     "gqlField": "existingModel",
     "goField": "ExistingModel",
     "dbField": "existing_model",
     "label": "Which existing model?",
     "sublabel": "Start typing the name of the model"
   },
-  "resembles_existing_model": {
+  "resemblesExistingModel": {
     "gqlField": "resemblesExistingModel",
     "goField": "ResemblesExistingModel",
     "dbField": "resembles_existing_model",
@@ -27,13 +27,13 @@
       "OTHER": "Other"
     }
   },
-  "resembles_existing_model_why_how": {
+  "resemblesExistingModelWhyHow": {
     "gqlField": "resemblesExistingModelWhyHow",
     "goField": "ResemblesExistingModelWhyHow",
     "dbField": "resembles_existing_model_why_how",
     "label": "Explain why and how the model made this decision."
   },
-  "resembles_existing_model_which": {
+  "resemblesExistingModelWhich": {
     "gqlField": "resemblesExistingModelWhich",
     "goField": "ResemblesExistingModelWhich",
     "dbField": "resembles_existing_model_which",
@@ -45,13 +45,13 @@
       "Other": "Other"
     }
   },
-  "resembles_existing_model_how": {
+  "resemblesExistingModelHow": {
     "gqlField": "resemblesExistingModelHow",
     "goField": "ResemblesExistingModelHow",
     "dbField": "resembles_existing_model_how",
     "label": "In what way does the new model resemble the selected model(s)?"
   },
-  "resembles_existing_model_other_specify": {
+  "resemblesExistingModelOtherSpecify": {
     "gqlField": "resemblesExistingModelOtherSpecify",
     "goField": "ResemblesExistingModelOtherSpecify",
     "dbField": "resembles_existing_model_other_specify",
@@ -59,7 +59,7 @@
     "isOtherType": true,
     "otherParentField": "resembles_existing_model"
   },
-  "resembles_existing_model_other_selected": {
+  "resemblesExistingModelOtherSelected": {
     "gqlField": "resemblesExistingModelOtherSelected",
     "goField": "ResemblesExistingModelOtherSelected",
     "dbField": "resembles_existing_model_other_selected",
@@ -70,20 +70,20 @@
       "false": ""
     }
   },
-  "resembles_existing_model_other_option": {
+  "resemblesExistingModelOtherOption": {
     "gqlField": "resemblesExistingModelOtherOption",
     "goField": "ResemblesExistingModelOtherOption",
     "dbField": "resembles_existing_model_other_option",
     "label": "Please specify other",
     "isOtherType": true
   },
-  "resembles_existing_model_note": {
+  "resemblesExistingModelNote": {
     "gqlField": "resemblesExistingModelNote",
     "goField": "ResemblesExistingModelNote",
     "dbField": "resembles_existing_model_note",
     "label": "Notes"
   },
-  "participation_in_model_precondition": {
+  "participationInModelPrecondition": {
     "gqlField": "participationInModelPrecondition",
     "goField": "ParticipationInModelPrecondition",
     "dbField": "participation_in_model_precondition",
@@ -94,7 +94,7 @@
       "OTHER": "Other"
     }
   },
-  "participation_in_model_precondition_other_specify": {
+  "participationInModelPreconditionOtherSpecify": {
     "gqlField": "participationInModelPreconditionOtherSpecify",
     "goField": "ParticipationInModelPreconditionOtherSpecify",
     "dbField": "participation_in_model_precondition_other_specify",
@@ -102,7 +102,7 @@
     "isOtherType": true,
     "otherParentField": "participation_in_model_precondition"
   },
-  "participation_in_model_precondition_which": {
+  "participationInModelPreconditionWhich": {
     "gqlField": "participationInModelPreconditionWhich",
     "goField": "ParticipationInModelPreconditionWhich",
     "dbField": "participation_in_model_precondition_which",
@@ -114,7 +114,7 @@
       "Other": "Other"
     }
   },
-  "participation_in_model_precondition_other_selected": {
+  "participationInModelPreconditionOtherSelected": {
     "gqlField": "participationInModelPreconditionOtherSelected",
     "goField": "ParticipationInModelPreconditionOtherSelected",
     "dbField": "participation_in_model_precondition_other_selected",
@@ -125,7 +125,7 @@
       "false": ""
     }
   },
-  "participation_in_model_precondition_other_option": {
+  "participationInModelPreconditionOtherOption": {
     "gqlField": "participationInModelPreconditionOtherOption",
     "goField": "ParticipationInModelPreconditionOtherOption",
     "dbField": "participation_in_model_precondition_other_option",
@@ -133,19 +133,19 @@
     "isOtherType": true,
     "otherParentField": "participation_in_model_precondition_which"
   },
-  "participation_in_model_precondition_why_how": {
+  "participationInModelPreconditionWhyHow": {
     "gqlField": "participationInModelPreconditionWhyHow",
     "goField": "ParticipationInModelPreconditionWhyHow",
     "dbField": "participation_in_model_precondition_why_how",
     "label": "Explain any details including if it is just part of the model."
   },
-  "participation_in_model_precondition_note": {
+  "participationInModelPreconditionNote": {
     "gqlField": "participationInModelPreconditionNote",
     "goField": "ParticipationInModelPreconditionNote",
     "dbField": "participation_in_model_precondition_note",
     "label": "Notes"
   },
-  "has_components_or_tracks": {
+  "hasComponentsOrTracks": {
     "gqlField": "hasComponentsOrTracks",
     "goField": "HasComponentsOrTracks",
     "dbField": "has_components_or_tracks",
@@ -156,7 +156,7 @@
       "false": "No"
     }
   },
-  "has_components_or_tracks_differ": {
+  "hasComponentsOrTracksDiffer": {
     "gqlField": "hasComponentsOrTracksDiffer",
     "goField": "HasComponentsOrTracksDiffer",
     "dbField": "has_components_or_tracks_differ",
@@ -164,13 +164,13 @@
     "isOtherType": true,
     "otherParentField": "has_components_or_tracks"
   },
-  "has_components_or_tracks_note": {
+  "hasComponentsOrTracksNote": {
     "gqlField": "hasComponentsOrTracksNote",
     "goField": "HasComponentsOrTracksNote",
     "dbField": "has_components_or_tracks_note",
     "label": "Notes"
   },
-  "agency_or_state_help": {
+  "agencyOrStateHelp": {
     "gqlField": "agencyOrStateHelp",
     "goField": "AgencyOrStateHelp",
     "dbField": "agency_or_state_help",
@@ -184,7 +184,7 @@
       "OTHER": "Other"
     }
   },
-  "agency_or_state_help_other": {
+  "agencyOrStateHelpOther": {
     "gqlField": "agencyOrStateHelpOther",
     "goField": "AgencyOrStateHelpOther",
     "dbField": "agency_or_state_help_other",
@@ -192,13 +192,13 @@
     "isOtherType": true,
     "otherParentField": "agency_or_state_help"
   },
-  "agency_or_state_help_note": {
+  "agencyOrStateHelpNote": {
     "gqlField": "agencyOrStateHelpNote",
     "goField": "AgencyOrStateHelpNote",
     "dbField": "agency_or_state_help_note",
     "label": "Notes"
   },
-  "alternative_payment_model_types": {
+  "alternativePaymentModelTypes": {
     "gqlField": "alternativePaymentModelTypes",
     "goField": "AlternativePaymentModelTypes",
     "dbField": "alternative_payment_model_types",
@@ -211,13 +211,13 @@
       "NOT_APM": "It is not an APM"
     }
   },
-  "alternative_payment_model_note": {
+  "alternativePaymentModelNote": {
     "gqlField": "alternativePaymentModelNote",
     "goField": "AlternativePaymentModelNote",
     "dbField": "alternative_payment_model_note",
     "label": "Notes"
   },
-  "key_characteristics": {
+  "keyCharacteristics": {
     "gqlField": "keyCharacteristics",
     "goField": "KeyCharacteristics",
     "dbField": "key_characteristics",
@@ -238,20 +238,20 @@
       "OTHER": "Other"
     }
   },
-  "key_characteristics_other": {
+  "keyCharacteristicsOther": {
     "gqlField": "keyCharacteristicsOther",
     "goField": "KeyCharacteristicsOther",
     "dbField": "key_characteristics_other",
     "label": "Please describe the other key characteristics",
     "isOtherType": true
   },
-  "key_characteristics_note": {
+  "keyCharacteristicsNote": {
     "gqlField": "keyCharacteristicsNote",
     "goField": "KeyCharacteristicsNote",
     "dbField": "key_characteristics_note",
     "label": "Notes"
   },
-  "collect_plan_bids": {
+  "collectPlanBids": {
     "gqlField": "collectPlanBids",
     "goField": "CollectPlanBids",
     "dbField": "collect_plan_bids",
@@ -261,13 +261,13 @@
       "false": "No"
     }
   },
-  "collect_plan_bids_note": {
+  "collectPlanBidsNote": {
     "gqlField": "collectPlanBidsNote",
     "goField": "CollectPlanBidsNote",
     "dbField": "collect_plan_bids_note",
     "label": "Notes"
   },
-  "manage_part_c_d_enrollment": {
+  "managePartCDEnrollment": {
     "gqlField": "managePartCDEnrollment",
     "goField": "ManagePartCDEnrollment",
     "dbField": "manage_part_c_d_enrollment",
@@ -277,13 +277,13 @@
       "false": "No"
     }
   },
-  "manage_part_c_d_enrollment_note": {
+  "managePartCDEnrollmentNote": {
     "gqlField": "managePartCDEnrollmentNote",
     "goField": "ManagePartCDEnrollmentNote",
     "dbField": "manage_part_c_d_enrollment_note",
     "label": "Notes"
   },
-  "plan_contract_updated": {
+  "planContractUpdated": {
     "gqlField": "planContractUpdated",
     "goField": "PlanContractUpdated",
     "dbField": "plan_contract_updated",
@@ -293,13 +293,13 @@
       "false": "No"
     }
   },
-  "plan_contract_updated_note": {
+  "planContractUpdatedNote": {
     "gqlField": "planContractUpdatedNote",
     "goField": "PlanContractUpdatedNote",
     "dbField": "plan_contract_updated_note",
     "label": "Notes"
   },
-  "care_coordination_involved": {
+  "careCoordinationInvolved": {
     "gqlField": "careCoordinationInvolved",
     "goField": "CareCoordinationInvolved",
     "dbField": "care_coordination_involved",
@@ -310,7 +310,7 @@
       "false": "No"
     }
   },
-  "care_coordination_involved_description": {
+  "careCoordinationInvolvedDescription": {
     "gqlField": "careCoordinationInvolvedDescription",
     "goField": "CareCoordinationInvolvedDescription",
     "dbField": "care_coordination_involved_description",
@@ -318,13 +318,13 @@
     "isOtherType": true,
     "otherParentField": "care_coordination_involved"
   },
-  "care_coordination_involved_note": {
+  "careCoordinationInvolvedNote": {
     "gqlField": "careCoordinationInvolvedNote",
     "goField": "CareCoordinationInvolvedNote",
     "dbField": "care_coordination_involved_note",
     "label": "Notes"
   },
-  "additional_services_involved": {
+  "additionalServicesInvolved": {
     "gqlField": "additionalServicesInvolved",
     "goField": "AdditionalServicesInvolved",
     "dbField": "additional_services_involved",
@@ -335,7 +335,7 @@
       "false": "No"
     }
   },
-  "additional_services_involved_description": {
+  "additionalServicesInvolvedDescription": {
     "gqlField": "additionalServicesInvolvedDescription",
     "goField": "AdditionalServicesInvolvedDescription",
     "dbField": "additional_services_involved_description",
@@ -343,13 +343,24 @@
     "isOtherType": true,
     "otherParentField": "additional_services_involved"
   },
-  "additional_services_involved_note": {
+  "additionalServicesInvolvedNote": {
     "gqlField": "additionalServicesInvolvedNote",
     "goField": "AdditionalServicesInvolvedNote",
     "dbField": "additional_services_involved_note",
     "label": "Notes"
   },
-  "community_partners_involved": {
+  "communityPartnersInvolved": {
+    "gqlField": "communityPartnersInvolved",
+    "goField": "CommunityPartnersInvolved",
+    "dbField": "community_partners_involved",
+    "label": "Are community partners involved?",
+    "readonlyLabel": "Are community partners involved? How so?",
+    "options": {
+      "true": "Yes",
+      "false": "No"
+    }
+  },
+  "communityPartnersInvolvedDescription": {
     "gqlField": "communityPartnersInvolvedDescription",
     "goField": "CommunityPartnersInvolvedDescription",
     "dbField": "community_partners_involved",
@@ -357,13 +368,13 @@
     "isOtherType": true,
     "otherParentField": "community_partners_involved"
   },
-  "community_partners_involved_note": {
+  "communityPartnersInvolvedNote": {
     "gqlField": "communityPartnersInvolvedNote",
     "goField": "CommunityPartnersInvolvedNote",
     "dbField": "community_partners_involved_note",
     "label": "Notes"
   },
-  "geographies_targeted": {
+  "geographiesTargeted": {
     "gqlField": "geographiesTargeted",
     "goField": "GeographiesTargeted",
     "dbField": "geographies_targeted",
@@ -373,7 +384,7 @@
       "false": "No"
     }
   },
-  "geographies_targeted_types": {
+  "geographiesTargetedTypes": {
     "gqlField": "geographiesTargetedTypes",
     "goField": "GeographiesTargetedTypes",
     "dbField": "geographies_targeted_types",
@@ -384,7 +395,7 @@
       "OTHER": "Other"
     }
   },
-  "geographies_states_and_territories": {
+  "geographiesStatesAndTerritories": {
     "gqlField": "geographiesStatesAndTerritories",
     "goField": "GeographiesStatesAndTerritories",
     "dbField": "geographies_states_and_territories",
@@ -510,7 +521,7 @@
       "VI": "U.S. Virgin Islands"
     }
   },
-  "geographies_region_types": {
+  "geographiesRegionTypes": {
     "gqlField": "geographiesRegionTypes",
     "goField": "GeographiesRegionTypes",
     "dbField": "geographies_region_types",
@@ -522,7 +533,7 @@
       "MSA": "Metropolitan Statistical Areas (MSAs)"
     }
   },
-  "geographies_targeted_types_other": {
+  "geographiesTargetedTypesOther": {
     "gqlField": "geographiesTargetedTypesOther",
     "goField": "GeographiesTargetedTypesOther",
     "dbField": "geographies_targeted_types_other",
@@ -530,7 +541,7 @@
     "isOtherType": true,
     "otherParentField": "geographies_targeted_types"
   },
-  "geographies_targeted_applied_to": {
+  "geographiesTargetedAppliedTo": {
     "gqlField": "geographiesTargetedAppliedTo",
     "goField": "GeographiesTargetedAppliedTo",
     "dbField": "geographies_targeted_applied_to",
@@ -542,20 +553,20 @@
       "OTHER": "Other"
     }
   },
-  "geographies_targeted_applied_to_other": {
+  "geographiesTargetedAppliedToOther": {
     "gqlField": "geographiesTargetedAppliedToOther",
     "goField": "GeographiesTargetedAppliedToOther",
     "dbField": "geographies_targeted_applied_to_other",
     "label": "Please specify what the geographies are applied to.",
     "isOtherType": true
   },
-  "geographies_targeted_note": {
+  "geographiesTargetedNote": {
     "gqlField": "geographiesTargetedNote",
     "goField": "GeographiesTargetedNote",
     "dbField": "geographies_targeted_note",
     "label": "Notes"
   },
-  "participation_options": {
+  "participationOptions": {
     "gqlField": "participationOptions",
     "goField": "ParticipationOptions",
     "dbField": "participation_options",
@@ -565,13 +576,13 @@
       "false": "No"
     }
   },
-  "participation_options_note": {
+  "participationOptionsNote": {
     "gqlField": "participationOptionsNote",
     "goField": "ParticipationOptionsNote",
     "dbField": "participation_options_note",
     "label": "Notes"
   },
-  "agreement_types": {
+  "agreementTypes": {
     "gqlField": "agreementTypes",
     "goField": "AgreementTypes",
     "dbField": "agreement_types",
@@ -583,7 +594,7 @@
       "OTHER": "Other"
     }
   },
-  "agreement_types_other": {
+  "agreementTypesOther": {
     "gqlField": "agreementTypesOther",
     "goField": "AgreementTypesOther",
     "dbField": "agreement_types_other",
@@ -591,20 +602,24 @@
     "isOtherType": true,
     "otherParentField": "agreement_types"
   },
-  "multiple_patricipation_agreements_needed": {
+  "multiplePatricipationAgreementsNeeded": {
     "gqlField": "multiplePatricipationAgreementsNeeded",
     "goField": "MultiplePatricipationAgreementsNeeded",
     "dbField": "multiple_patricipation_agreements_needed",
-    "label": "Which rule do you anticipate using and what is the target date of display for that regulation?",
-    "isOtherType": true
+    "label": "Will more than one participation agreement be needed?",
+    "sublabel": "depending on awardee selections or characteristics such as risk/type/size",
+    "options": {
+      "true": "Yes",
+      "false": "No"
+    }
   },
-  "multiple_patricipation_agreements_needed_note": {
+  "multiplePatricipationAgreementsNeededNote": {
     "gqlField": "multiplePatricipationAgreementsNeededNote",
     "goField": "MultiplePatricipationAgreementsNeededNote",
     "dbField": "multiple_patricipation_agreements_needed_note",
     "label": "Notes"
   },
-  "rulemaking_required": {
+  "rulemakingRequired": {
     "gqlField": "rulemakingRequired",
     "goField": "RulemakingRequired",
     "dbField": "rulemaking_required",
@@ -615,13 +630,20 @@
       "false": "No"
     }
   },
-  "rulemaking_required_note": {
+  "rulemakingRequiredDescription": {
+    "gqlField": "multiplePatricipationAgreementsNeeded",
+    "goField": "MultiplePatricipationAgreementsNeeded",
+    "dbField": "multiple_patricipation_agreements_needed",
+    "label": "Which rule do you anticipate using and what is the target date of display for that regulation?",
+    "isOtherType": true
+  },
+  "rulemakingRequiredNote": {
     "gqlField": "rulemakingRequiredNote",
     "goField": "RulemakingRequiredNote",
     "dbField": "rulemaking_required_note",
     "label": "Notes"
   },
-  "authority_allowances": {
+  "authorityAllowances": {
     "gqlField": "authorityAllowances",
     "goField": "AuthorityAllowances",
     "dbField": "authority_allowances",
@@ -633,7 +655,7 @@
       "OTHER": "Other"
     }
   },
-  "authority_allowances_other": {
+  "authorityAllowancesOther": {
     "gqlField": "authorityAllowancesOther",
     "goField": "AuthorityAllowancesOther",
     "dbField": "authority_allowances_other",
@@ -641,13 +663,13 @@
     "isOtherType": true,
     "otherParentField": "authority_allowances"
   },
-  "authority_allowances_note": {
+  "authorityAllowancesNote": {
     "gqlField": "authorityAllowancesNote",
     "goField": "AuthorityAllowancesNote",
     "dbField": "authority_allowances_note",
     "label": "Notes"
   },
-  "waivers_required": {
+  "waiversRequired": {
     "gqlField": "waiversRequired",
     "goField": "WaiversRequired",
     "dbField": "waivers_required",
@@ -658,7 +680,7 @@
       "false": "No"
     }
   },
-  "waivers_required_types": {
+  "waiversRequiredTypes": {
     "gqlField": "waiversRequiredTypes",
     "goField": "WaiversRequiredTypes",
     "dbField": "waivers_required_types",
@@ -676,7 +698,7 @@
       "PROGRAM_PAYMENT": "(Note: CMMI writes, Office of General Council (OGC) adivses, full clearance process is required)"
     }
   },
-  "waivers_required_note": {
+  "waiversRequiredNote": {
     "gqlField": "waiversRequiredNote",
     "goField": "WaiversRequiredNote",
     "dbField": "waivers_required_note",

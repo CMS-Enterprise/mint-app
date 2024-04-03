@@ -1,5 +1,5 @@
 {
-  "model_category": {
+  "modelCategory": {
     "gqlField": "modelCategory",
     "goField": "ModelCategory",
     "dbField": "model_category",
@@ -14,7 +14,7 @@
       "TO_BE_DETERMINED": "To be determined"
     }
   },
-  "additional_model_categories": {
+  "additionalModelCategories": {
     "gqlField": "additionalModelCategories",
     "goField": "AdditionalModelCategories",
     "dbField": "additional_model_categories",
@@ -30,19 +30,19 @@
       "TO_BE_DETERMINED": "To be determined"
     }
   },
-  "ams_model_ID": {
+  "amsModelID": {
     "gqlField": "amsModelID",
     "goField": "AmsModelID",
     "dbField": "ams_model_ID",
     "label": "Model ID"
   },
-  "demo_code": {
+  "demoCode": {
     "gqlField": "demoCode",
     "goField": "DemoCode",
     "dbField": "demo_code",
     "label": "Demo code(s)"
   },
-  "cmmi_groups": {
+  "cmsCenters": {
     "gqlField": "cmsCenters",
     "goField": "CMMIGroups",
     "dbField": "cmmi_groups",
@@ -56,7 +56,7 @@
       "CENTER_FOR_PROGRAM_INTEGRITY": "Center for Program Integrity (CPI)"
     }
   },
-  "cms_centers": {
+  "cmmiGroups": {
     "gqlField": "cmmiGroups",
     "goField": "CMSCenters",
     "dbField": "cms_centers",
@@ -70,7 +70,7 @@
       "TBD": "To be determined"
     }
   },
-  "model_type": {
+  "modelType": {
     "gqlField": "modelType",
     "goField": "ModelType",
     "dbField": "model_type",
@@ -82,7 +82,7 @@
       "OTHER": "Other"
     }
   },
-  "model_type_other": {
+  "modelTypeOther": {
     "gqlField": "modelTypeOther",
     "goField": "ModelTypeOther",
     "dbField": "model_type_other",
@@ -103,7 +103,7 @@
     "label": "Goal",
     "sublabel": "Please include the high level goal of the program and a description of the project."
   },
-  "test_interventions": {
+  "testInterventions": {
     "gqlField": "testInterventions",
     "goField": "TestInterventions",
     "dbField": "test_interventions",
@@ -115,19 +115,19 @@
     "dbField": "note",
     "label": "Notes"
   },
-  "complete_icip": {
+  "completeICIP": {
     "gqlField": "completeICIP",
     "goField": "CompleteICIP",
     "dbField": "complete_icip",
     "label": "Complete ICIP"
   },
-  "clearance_starts": {
+  "clearanceStarts": {
     "gqlField": "clearanceStarts",
     "goField": "ClearanceStarts",
     "dbField": "clearance_starts",
     "label": "Clearance start date"
   },
-  "clearance_ends": {
+  "clearanceEnds": {
     "gqlField": "clearanceEnds",
     "goField": "ClearanceEnds",
     "dbField": "clearance_ends",
@@ -139,43 +139,43 @@
     "dbField": "announced",
     "label": "Announce model"
   },
-  "applications_starts": {
+  "applicationsStart": {
     "gqlField": "applicationsStart",
     "goField": "ApplicationsStart",
     "dbField": "applications_starts",
     "label": "Application start date"
   },
-  "applications_ends": {
+  "applicationsEnd": {
     "gqlField": "applicationsEnd",
     "goField": "ApplicationsEnd",
     "dbField": "applications_ends",
     "label": "Application end date"
   },
-  "performance_period_starts": {
+  "performancePeriodStarts": {
     "gqlField": "performancePeriodStarts",
     "goField": "PerformancePeriodStarts",
     "dbField": "performance_period_starts",
     "label": "Performance start date"
   },
-  "performance_period_ends": {
+  "performancePeriodEnds": {
     "gqlField": "performancePeriodEnds",
     "goField": "PerformancePeriodEnds",
     "dbField": "performance_period_ends",
     "label": "Performance end date"
   },
-  "high_level_note": {
+  "highLevelNote": {
     "gqlField": "highLevelNote",
     "goField": "HighLevelNote",
     "dbField": "high_level_note",
     "label": "Notes"
   },
-  "wrap_up_ends": {
+  "wrapUpEnds": {
     "gqlField": "wrapUpEnds",
     "goField": "WrapUpEnds",
     "dbField": "wrap_up_ends",
     "label": "Model wrap-up end date"
   },
-  "phased_in": {
+  "phasedIn": {
     "gqlField": "phasedIn",
     "goField": "PhasedIn",
     "dbField": "phased_in",
@@ -186,7 +186,7 @@
       "false": "No"
     }
   },
-  "phased_in_note": {
+  "phasedInNote": {
     "gqlField": "phasedInNote",
     "goField": "PhasedInNote",
     "dbField": "phased_in_note",

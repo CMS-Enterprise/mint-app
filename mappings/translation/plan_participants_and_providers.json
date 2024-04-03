@@ -24,7 +24,7 @@
       "OTHER": "Other"
     }
   },
-  "medicare_provider_type": {
+  "medicareProviderType": {
     "gqlField": "medicareProviderType",
     "goField": "MedicareProviderType",
     "dbField": "medicare_provider_type",
@@ -32,7 +32,7 @@
     "isOtherType": true,
     "otherParentField": "participants"
   },
-  "states_engagement": {
+  "statesEngagement": {
     "gqlField": "statesEngagement",
     "goField": "StatesEngagement",
     "dbField": "states_engagement",
@@ -52,7 +52,18 @@
     "dbField": "participantsNote",
     "label": "Notes"
   },
-  "participants_currently_in_models_note": {
+  "participantsCurrentlyInModels": {
+    "gqlField": "participantsCurrentlyInModels",
+    "goField": "ParticipantsCurrentlyInModels",
+    "dbField": "participants_currently_in_models_note",
+    "label": "Are the participants in CMMI models now?",
+    "sublabel": "If you have selected more than one participant in the questions above, specify which participants already participate in CMMI models.",
+    "options": {
+      "true": "Yes",
+      "false": "No"
+    }
+  },
+  "participantsCurrentlyInModelsNote": {
     "gqlField": "participantsCurrentlyInModelsNote",
     "goField": "ParticipantsCurrentlyInModelsNote",
     "dbField": "participants_currently_in_models_note",
@@ -65,14 +76,14 @@
     "label": "At what level will the model apply?",
     "sublabel": "(e.g., all services identified at the CPT or ICD-10 code level, epsiode of care for a specific span of time, all hospitals unpaid under the Inpatient Prospective Payment System in a certain state)"
   },
-  "expected_number_of_participants": {
+  "expectedNumberOfParticipants": {
     "gqlField": "expectedNumberOfParticipants",
     "goField": "ExpectedNumberOfParticipants",
     "dbField": "expected_number_of_participants",
     "label": "How many participants do you expect?",
     "sublabel": "Note: Sometimes RRCEG provides a minimum for the power calculation. Other times stakeholder research may inform the team about who are good candidates or might be interested in participating."
   },
-  "estimate_confidence": {
+  "estimateConfidence": {
     "gqlField": "estimateConfidence",
     "goField": "EstimateConfidence",
     "dbField": "estimate_confidence",
@@ -84,13 +95,13 @@
       "COMPLETELY": "Completely confident"
     }
   },
-  "confidence_note": {
+  "confidenceNote": {
     "gqlField": "confidenceNote",
     "goField": "ConfidenceNote",
     "dbField": "confidence_note",
     "label": "Notes"
   },
-  "recruitment_method": {
+  "recruitmentMethod": {
     "gqlField": "recruitmentMethod",
     "goField": "RecruitmentMethod",
     "dbField": "recruitment_method",
@@ -106,7 +117,7 @@
       "NOFO": "CMMI writes, Office of General Council (OGC) reviews and approves"
     }
   },
-  "recruitment_other": {
+  "recruitmentOther": {
     "gqlField": "recruitmentOther",
     "goField": "RecruitmentOther",
     "dbField": "recruitment_other",
@@ -114,13 +125,13 @@
     "isOtherType": true,
     "otherParentField": "recruitment_method"
   },
-  "recruitment_note": {
+  "recruitmentNote": {
     "gqlField": "recruitmentNote",
     "goField": "RecruitmentNote",
     "dbField": "recruitment_note",
     "label": "Notes"
   },
-  "selection_method": {
+  "selectionMethod": {
     "gqlField": "selectionMethod",
     "goField": "SelectionMethod",
     "dbField": "selection_method",
@@ -138,20 +149,20 @@
       "NO_SELECTING_PARTICIPANTS": "We won’t be selecting participants"
     }
   },
-  "selection_other": {
+  "selectionOther": {
     "gqlField": "selectionOther",
     "goField": "SelectionOther",
     "dbField": "selection_other",
     "label": "Please describe the other participants engaging with this model",
     "isOtherType": true
   },
-  "selection_note": {
+  "selectionNote": {
     "gqlField": "selectionNote",
     "goField": "SelectionNote",
     "dbField": "selection_note",
     "label": "Notes"
   },
-  "participant_added_frequency": {
+  "participantAddedFrequency": {
     "gqlField": "participantAddedFrequency",
     "goField": "ParticipantAddedFrequency",
     "dbField": "participant_added_frequency",
@@ -165,7 +176,7 @@
       "OTHER": "Other"
     }
   },
-  "participant_added_frequency_continually": {
+  "participantAddedFrequencyContinually": {
     "gqlField": "participantAddedFrequencyContinually",
     "goField": "ParticipantAddedFrequencyContinually",
     "dbField": "participant_added_frequency_continually",
@@ -173,7 +184,7 @@
     "isOtherType": true,
     "otherParentField": "participant_added_frequency"
   },
-  "participant_added_frequency_other": {
+  "participantAddedFrequencyOther": {
     "gqlField": "participantAddedFrequencyOther",
     "goField": "ParticipantAddedFrequencyOther",
     "dbField": "participant_added_frequency_other",
@@ -181,13 +192,13 @@
     "isOtherType": true,
     "otherParentField": "participant_added_frequency"
   },
-  "participant_added_frequency_note": {
+  "participantAddedFrequencyNote": {
     "gqlField": "participantAddedFrequencyNote",
     "goField": "ParticipantAddedFrequencyNote",
     "dbField": "participant_added_frequency_note",
     "label": "Notes"
   },
-  "participant_removed_frequency": {
+  "participantRemovedFrequency": {
     "gqlField": "participantRemovedFrequency",
     "goField": "ParticipantRemovedFrequency",
     "dbField": "participant_removed_frequency",
@@ -201,7 +212,7 @@
       "OTHER": "Other"
     }
   },
-  "participant_removed_frequency_continually": {
+  "participantRemovedFrequencyContinually": {
     "gqlField": "participantRemovedFrequencyContinually",
     "goField": "ParticipantRemovedFrequencyContinually",
     "dbField": "participant_removed_frequency_continually",
@@ -209,7 +220,7 @@
     "isOtherType": true,
     "otherParentField": "participant_removed_frequency"
   },
-  "participant_removed_frequency_other": {
+  "participantRemovedFrequencyOther": {
     "gqlField": "participantRemovedFrequencyOther",
     "goField": "ParticipantRemovedFrequencyOther",
     "dbField": "participant_removed_frequency_other",
@@ -217,13 +228,25 @@
     "isOtherType": true,
     "otherParentField": "participant_removed_frequency"
   },
-  "participant_removed_frequency_note": {
+  "participantRemovedFrequencyNote": {
     "gqlField": "participantRemovedFrequencyNote",
     "goField": "ParticipantRemovedFrequencyNote",
     "dbField": "participant_removed_frequency_note",
     "label": "Notes"
   },
-  "communication_method": {
+  "communicationMethod": {
+    "gqlField": "communicationMethod",
+    "goField": "CommunicationMethod",
+    "dbField": "communication_method",
+    "label": "How will you communicate with participants?",
+    "options": {
+      "IT_TOOL": "Manage ongoing communications with participants using an IT tool",
+      "MASS_EMAIL": "Send mass emails to new participants",
+      "OTHER": "Other",
+      "NO_COMMUNICATION": "We are not planning to communicate"
+    }
+  },
+  "communicationMethodOther": {
     "gqlField": "communicationMethodOther",
     "goField": "CommunicationMethodOther",
     "dbField": "communication_method",
@@ -231,13 +254,13 @@
     "isOtherType": true,
     "otherParentField": "communication_method"
   },
-  "communication_note": {
+  "communicationNote": {
     "gqlField": "communicationNote",
     "goField": "CommunicationNote",
     "dbField": "communication_note",
     "label": "Notes"
   },
-  "risk_type": {
+  "riskType": {
     "gqlField": "riskType",
     "goField": "RiskType",
     "dbField": "risk_type",
@@ -250,7 +273,7 @@
       "OTHER": "Other"
     }
   },
-  "risk_other": {
+  "riskOther": {
     "gqlField": "riskOther",
     "goField": "RiskOther",
     "dbField": "risk_other",
@@ -258,13 +281,13 @@
     "isOtherType": true,
     "otherParentField": "risk_type"
   },
-  "risk_note": {
+  "riskNote": {
     "gqlField": "riskNote",
     "goField": "RiskNote",
     "dbField": "risk_note",
     "label": "Notes"
   },
-  "will_risk_change": {
+  "willRiskChange": {
     "gqlField": "willRiskChange",
     "goField": "WillRiskChange",
     "dbField": "will_risk_change",
@@ -274,13 +297,13 @@
       "false": "No"
     }
   },
-  "will_risk_change_note": {
+  "willRiskChangeNote": {
     "gqlField": "willRiskChangeNote",
     "goField": "WillRiskChangeNote",
     "dbField": "will_risk_change_note",
     "label": "Notes"
   },
-  "coordinate_work": {
+  "coordinateWork": {
     "gqlField": "coordinateWork",
     "goField": "CoordinateWork",
     "dbField": "coordinate_work",
@@ -291,13 +314,13 @@
       "false": "No"
     }
   },
-  "coordinate_work_note": {
+  "coordinateWorkNote": {
     "gqlField": "coordinateWorkNote",
     "goField": "CoordinateWorkNote",
     "dbField": "coordinate_work_note",
     "label": "Notes"
   },
-  "gainshare_payments": {
+  "gainsharePayments": {
     "gqlField": "gainsharePayments",
     "goField": "GainsharePayments",
     "dbField": "gainshare_payments",
@@ -307,7 +330,7 @@
       "false": "No"
     }
   },
-  "gainshare_payments_track": {
+  "gainsharePaymentsTrack": {
     "gqlField": "gainsharePaymentsTrack",
     "goField": "GainsharePaymentsTrack",
     "dbField": "gainshare_payments_track",
@@ -317,7 +340,7 @@
       "false": "No"
     }
   },
-  "gainshare_payments_eligibility": {
+  "gainsharePaymentsEligibility": {
     "gqlField": "gainsharePaymentsEligibility",
     "goField": "GainsharePaymentsEligibility",
     "dbField": "gainshare_payments_eligibility",
@@ -329,7 +352,7 @@
       "NO": "No"
     }
   },
-  "gainshare_payments_eligibility_other": {
+  "gainsharePaymentsEligibilityOther": {
     "gqlField": "gainsharePaymentsEligibilityOther",
     "goField": "GainsharePaymentsEligibilityOther",
     "dbField": "gainshare_payments_eligibility_other",
@@ -337,13 +360,13 @@
     "isOtherType": true,
     "otherParentField": "gainshare_payments_eligibility"
   },
-  "gainshare_payments_note": {
+  "gainsharePaymentsNote": {
     "gqlField": "gainsharePaymentsNote",
     "goField": "GainsharePaymentsNote",
     "dbField": "gainshare_payments_note",
     "label": "Notes"
   },
-  "participants_ids": {
+  "participantsIds": {
     "gqlField": "participantsIds",
     "goField": "ParticipantsIds",
     "dbField": "participants_ids",
@@ -358,7 +381,7 @@
       "NO_IDENTIFIERS": "No, we will not collect provider identifiers"
     }
   },
-  "participants_ids_other": {
+  "participantsIdsOther": {
     "gqlField": "participantsIdsOther",
     "goField": "ParticipantsIdsOther",
     "dbField": "participants_ids_other",
@@ -366,13 +389,13 @@
     "isOtherType": true,
     "otherParentField": "participants_ids"
   },
-  "participants_ids_note": {
+  "participantsIDSNote": {
     "gqlField": "participantsIDSNote",
     "goField": "ParticipantsIDSNote",
     "dbField": "participants_ids_note",
     "label": "Notes"
   },
-  "provider_addition_frequency": {
+  "providerAdditionFrequency": {
     "gqlField": "providerAdditionFrequency",
     "goField": "ProviderAdditionFrequency",
     "dbField": "provider_addition_frequency",
@@ -386,7 +409,7 @@
       "OTHER": "Other"
     }
   },
-  "provide_addition_frequency_continually": {
+  "providerAdditionFrequencyContinually": {
     "gqlField": "providerAdditionFrequencyContinually",
     "goField": "ProviderAdditionFrequencyContinually",
     "dbField": "provide_addition_frequency_continually",
@@ -394,7 +417,7 @@
     "isOtherType": true,
     "otherParentField": "provider_addition_frequency"
   },
-  "provider_addition_frequency_other": {
+  "providerAdditionFrequencyOther": {
     "gqlField": "providerAdditionFrequencyOther",
     "goField": "ProviderAdditionFrequencyOther",
     "dbField": "provider_addition_frequency_other",
@@ -402,13 +425,13 @@
     "isOtherType": true,
     "otherParentField": "provider_addition_frequency"
   },
-  "provider_addition_frequency_note": {
+  "providerAdditionFrequencyNote": {
     "gqlField": "providerAdditionFrequencyNote",
     "goField": "ProviderAdditionFrequencyNote",
     "dbField": "provider_addition_frequency_note",
     "label": "Notes"
   },
-  "provider_add_method": {
+  "providerAddMethod": {
     "gqlField": "providerAddMethod",
     "goField": "ProviderAddMethod",
     "dbField": "provider_add_method",
@@ -426,20 +449,20 @@
       "NA": "Not applicable"
     }
   },
-  "provider_add_method_other": {
+  "providerAddMethodOther": {
     "gqlField": "providerAddMethodOther",
     "goField": "ProviderAddMethodOther",
     "dbField": "provider_add_method_other",
     "label": "Please describe the other method for deciding which providers to add.",
     "isOtherType": true
   },
-  "provider_add_method_note": {
+  "providerAddMethodNote": {
     "gqlField": "providerAddMethodNote",
     "goField": "ProviderAddMethodNote",
     "dbField": "provider_add_method_note",
     "label": "Notes"
   },
-  "provider_leave_method": {
+  "providerLeaveMethod": {
     "gqlField": "providerLeaveMethod",
     "goField": "ProviderLeaveMethod",
     "dbField": "provider_leave_method",
@@ -455,7 +478,7 @@
       "NOT_APPLICABLE": "Not applicable"
     }
   },
-  "provider_leave_method_other": {
+  "providerLeaveMethodOther": {
     "gqlField": "providerLeaveMethodOther",
     "goField": "ProviderLeaveMethodOther",
     "dbField": "provider_leave_method_other",
@@ -463,13 +486,13 @@
     "isOtherType": true,
     "otherParentField": "provider_leave_method"
   },
-  "provider_leave_method_note": {
+  "providerLeaveMethodNote": {
     "gqlField": "providerLeaveMethodNote",
     "goField": "ProviderLeaveMethodNote",
     "dbField": "provider_leave_method_note",
     "label": "Notes"
   },
-  "provider_removal_frequency": {
+  "providerRemovalFrequency": {
     "gqlField": "providerRemovalFrequency",
     "goField": "ProviderRemovalFrequency",
     "dbField": "provider_removal_frequency",
@@ -483,7 +506,7 @@
       "OTHER": "Other"
     }
   },
-  "provide_removal_frequency_continually": {
+  "providerRemovalFrequencyContinually": {
     "gqlField": "providerRemovalFrequencyContinually",
     "goField": "ProviderRemovalFrequencyContinually",
     "dbField": "provide_removal_frequency_continually",
@@ -491,7 +514,7 @@
     "isOtherType": true,
     "otherParentField": "provider_removal_frequency"
   },
-  "provider_removal_frequency_other": {
+  "providerRemovalFrequencyOther": {
     "gqlField": "providerRemovalFrequencyOther",
     "goField": "ProviderRemovalFrequencyOther",
     "dbField": "provider_removal_frequency_other",
@@ -499,13 +522,13 @@
     "isOtherType": true,
     "otherParentField": "provider_removal_frequency"
   },
-  "provider_removal_frequency_note": {
+  "providerRemovalFrequencyNote": {
     "gqlField": "providerRemovalFrequencyNote",
     "goField": "ProviderRemovalFrequencyNote",
     "dbField": "provider_removal_frequency_note",
     "label": "Notes"
   },
-  "provider_overlap": {
+  "providerOverlap": {
     "gqlField": "providerOverlap",
     "goField": "ProviderOverlap",
     "dbField": "provider_overlap",
@@ -516,13 +539,13 @@
       "NO": "No"
     }
   },
-  "provider_overlap_hierarchy": {
+  "providerOverlapHierarchy": {
     "gqlField": "providerOverlapHierarchy",
     "goField": "ProviderOverlapHierarchy",
     "dbField": "provider_overlap_hierarchy",
     "label": "If model providers can be in multiple models that may interact, please note the desired hierarchy of how any payment changes or edits should be applied."
   },
-  "provider_overlap_note": {
+  "providerOverlapNote": {
     "gqlField": "providerOverlapNote",
     "goField": "ProviderOverlapNote",
     "dbField": "provider_overlap_note",

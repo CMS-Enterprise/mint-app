@@ -1,5 +1,5 @@
 {
-  "funding_source": {
+  "fundingSource": {
     "gqlField": "fundingSource",
     "goField": "FundingSource",
     "dbField": "funding_source",
@@ -12,7 +12,7 @@
       "OTHER": "Other"
     }
   },
-  "funding_source_medicare_a_info": {
+  "fundingSourceMedicareAInfo": {
     "gqlField": "fundingSourceMedicareAInfo",
     "goField": "FundingSourceMedicareAInfo",
     "dbField": "funding_source_medicare_a_info",
@@ -20,7 +20,7 @@
     "isOtherType": true,
     "otherParentField": "funding_source"
   },
-  "funding_source_medicare_b_info": {
+  "fundingSourceMedicareBInfo": {
     "gqlField": "fundingSourceMedicareBInfo",
     "goField": "FundingSourceMedicareBInfo",
     "dbField": "funding_source_medicare_b_info",
@@ -28,20 +28,20 @@
     "isOtherType": true,
     "otherParentField": "funding_source"
   },
-  "funding_source_other": {
+  "fundingSourceOther": {
     "gqlField": "fundingSourceOther",
     "goField": "FundingSourceOther",
     "dbField": "funding_source_other",
     "label": "Please describe the funding source.",
     "isOtherType": true
   },
-  "funding_source_note": {
+  "fundingSourceNote": {
     "gqlField": "fundingSourceNote",
     "goField": "FundingSourceNote",
     "dbField": "funding_source_note",
     "label": "Notes"
   },
-  "funding_source_r": {
+  "fundingSourceR": {
     "gqlField": "fundingSourceR",
     "goField": "FundingSourceR",
     "dbField": "funding_source_r",
@@ -54,7 +54,7 @@
       "OTHER": "Other"
     }
   },
-  "funding_source_r_medicare_a_info": {
+  "fundingSourceRMedicareAInfo": {
     "gqlField": "fundingSourceRMedicareAInfo",
     "goField": "FundingSourceRMedicareAInfo",
     "dbField": "funding_source_r_medicare_a_info",
@@ -62,7 +62,7 @@
     "isOtherType": true,
     "otherParentField": "funding_source_r"
   },
-  "funding_source_r_medicare_b_info": {
+  "fundingSourceRMedicareBInfo": {
     "gqlField": "fundingSourceRMedicareBInfo",
     "goField": "FundingSourceRMedicareBInfo",
     "dbField": "funding_source_r_medicare_b_info",
@@ -70,20 +70,20 @@
     "isOtherType": true,
     "otherParentField": "funding_source_r"
   },
-  "funding_source_r_other": {
+  "fundingSourceROther": {
     "gqlField": "fundingSourceROther",
     "goField": "FundingSourceROther",
     "dbField": "funding_source_r_other",
     "label": "Please describe the funding source.",
     "isOtherType": true
   },
-  "funding_source_r_note": {
+  "fundingSourceRNote": {
     "gqlField": "fundingSourceRNote",
     "goField": "FundingSourceRNote",
     "dbField": "funding_source_r_note",
     "label": "Notes"
   },
-  "pay_recipients": {
+  "payRecipients": {
     "gqlField": "payRecipients",
     "goField": "PayRecipients",
     "dbField": "pay_recipients",
@@ -97,19 +97,19 @@
       "OTHER": "Other"
     }
   },
-  "pay_recipients_other_specification": {
+  "payRecipientsOtherSpecification": {
     "gqlField": "payRecipientsOtherSpecification",
     "goField": "PayRecipientsOtherSpecification",
     "dbField": "pay_recipients_other_specification",
     "label": "Please specify who you will pay."
   },
-  "pay_recipients_note": {
+  "payRecipientsNote": {
     "gqlField": "payRecipientsNote",
     "goField": "PayRecipientsNote",
     "dbField": "pay_recipients_note",
     "label": "Notes"
   },
-  "pay_type": {
+  "payType": {
     "gqlField": "payType",
     "goField": "PayType",
     "dbField": "pay_type",
@@ -121,13 +121,13 @@
       "GRANTS": "Grants"
     }
   },
-  "pay_type_note": {
+  "payTypeNote": {
     "gqlField": "payTypeNote",
     "goField": "PayTypeNote",
     "dbField": "pay_type_note",
     "label": "Notes"
   },
-  "pay_claims": {
+  "payClaims": {
     "gqlField": "payClaims",
     "goField": "PayClaims",
     "dbField": "pay_claims",
@@ -145,20 +145,20 @@
       "OTHER": "Other"
     }
   },
-  "pay_claims_other": {
+  "payClaimsOther": {
     "gqlField": "payClaimsOther",
     "goField": "PayClaimsOther",
     "dbField": "pay_claims_other",
     "label": "Please describe the other claims-based payments you will pay",
     "isOtherType": true
   },
-  "pay_claims_note": {
+  "payClaimsNote": {
     "gqlField": "payClaimsNote",
     "goField": "PayClaimsNote",
     "dbField": "pay_claims_note",
     "label": "Notes"
   },
-  "should_any_providers_excluded_ffs_systems": {
+  "shouldAnyProvidersExcludedFFSSystems": {
     "gqlField": "shouldAnyProvidersExcludedFFSSystems",
     "goField": "ShouldAnyProvidersExcludedFFSSystems",
     "dbField": "should_any_providers_excluded_ffs_systems",
@@ -168,13 +168,13 @@
       "false": "No"
     }
   },
-  "should_any_providers_excluded_ffs_systems_note": {
+  "shouldAnyProviderExcludedFFSSystemsNote": {
     "gqlField": "shouldAnyProviderExcludedFFSSystemsNote",
     "goField": "ShouldAnyProviderExcludedFFSSystemsNote",
     "dbField": "should_any_providers_excluded_ffs_systems_note",
     "label": "Notes"
   },
-  "changes_medicare_physician_fee_schedule": {
+  "changesMedicarePhysicianFeeSchedule": {
     "gqlField": "changesMedicarePhysicianFeeSchedule",
     "goField": "ChangesMedicarePhysicianFeeSchedule",
     "dbField": "changes_medicare_physician_fee_schedule",
@@ -185,13 +185,13 @@
       "false": "No"
     }
   },
-  "changes_medicare_physician_fee_schedule_note": {
+  "changesMedicarePhysicianFeeScheduleNote": {
     "gqlField": "changesMedicarePhysicianFeeScheduleNote",
     "goField": "ChangesMedicarePhysicianFeeScheduleNote",
     "dbField": "changes_medicare_physician_fee_schedule_note",
     "label": "Notes"
   },
-  "affects_medicare_secondary_payer_claims": {
+  "affectsMedicareSecondaryPayerClaims": {
     "gqlField": "affectsMedicareSecondaryPayerClaims",
     "goField": "AffectsMedicareSecondaryPayerClaims",
     "dbField": "affects_medicare_secondary_payer_claims",
@@ -202,7 +202,7 @@
       "false": "No"
     }
   },
-  "affects_medicare_secondary_payer_claims_how": {
+  "affectsMedicareSecondaryPayerClaimsHow": {
     "gqlField": "affectsMedicareSecondaryPayerClaimsHow",
     "goField": "AffectsMedicareSecondaryPayerClaimsHow",
     "dbField": "affects_medicare_secondary_payer_claims_how",
@@ -210,19 +210,19 @@
     "isOtherType": true,
     "otherParentField": "affects_medicare_secondary_payer_claims"
   },
-  "affects_medicare_secondary_payer_claims_note": {
+  "affectsMedicareSecondaryPayerClaimsNote": {
     "gqlField": "affectsMedicareSecondaryPayerClaimsNote",
     "goField": "AffectsMedicareSecondaryPayerClaimsNote",
     "dbField": "affects_medicare_secondary_payer_claims_note",
     "label": "Notes"
   },
-  "pay_model_differentiation": {
+  "payModelDifferentiation": {
     "gqlField": "payModelDifferentiation",
     "goField": "PayModelDifferentiation",
     "dbField": "pay_model_differentiation",
     "label": "How does the model differ from current policy, especially in terms of payment rates and periodicity of payment?"
   },
-  "creating_dependencies_between_services": {
+  "creatingDependenciesBetweenServices": {
     "gqlField": "creatingDependenciesBetweenServices",
     "goField": "CreatingDependenciesBetweenServices",
     "dbField": "creating_dependencies_between_services",
@@ -233,13 +233,13 @@
       "false": "No"
     }
   },
-  "creating_dependencies_between_services_note": {
+  "creatingDependenciesBetweenServicesNote": {
     "gqlField": "creatingDependenciesBetweenServicesNote",
     "goField": "CreatingDependenciesBetweenServicesNote",
     "dbField": "creating_dependencies_between_services_note",
     "label": "Notes"
   },
-  "needs_claims_data_collection": {
+  "needsClaimsDataCollection": {
     "gqlField": "needsClaimsDataCollection",
     "goField": "NeedsClaimsDataCollection",
     "dbField": "needs_claims_data_collection",
@@ -250,13 +250,13 @@
       "false": "No"
     }
   },
-  "needs_claims_data_collection_note": {
+  "needsClaimsDataCollectionNote": {
     "gqlField": "needsClaimsDataCollectionNote",
     "goField": "NeedsClaimsDataCollectionNote",
     "dbField": "needs_claims_data_collection_note",
     "label": "Notes"
   },
-  "providing_third_party_file": {
+  "providingThirdPartyFile": {
     "gqlField": "providingThirdPartyFile",
     "goField": "ProvidingThirdPartyFile",
     "dbField": "providing_third_party_file",
@@ -266,13 +266,59 @@
       "false": "No"
     }
   },
-  "is_contractor_aware_test_data_requirements": {
+  "isContractorAwareTestDataRequirements": {
+    "gqlField": "isContractorAwareTestDataRequirements",
+    "goField": "IsContractorAwareTestDataRequirements",
+    "dbField": "is_contractor_aware_test_data_requirements",
+    "label": "Is your contractor aware that test data will be needed, and when that test data must be available?",
+    "options": {
+      "true": "Yes",
+      "false": "No"
+    }
+  },
+  "beneficiaryCostSharingLevelAndHandling": {
+    "gqlField": "beneficiaryCostSharingLevelAndHandling",
+    "goField": "BeneficiaryCostSharingLevelAndHandling",
+    "dbField": "is_contractor_aware_test_data_requirements",
+    "label": "What is the intended level of beneficiary cost-sharing and how will it be handled?"
+  },
+  "waiveBeneficiaryCostSharingForAnyServices": {
+    "gqlField": "waiveBeneficiaryCostSharingForAnyServices",
+    "goField": "WaiveBeneficiaryCostSharingForAnyServices",
+    "dbField": "is_contractor_aware_test_data_requirements",
+    "label": "Will you waive beneficiary cost-sharing (coinsurance and/or deductible) for any services in the model?",
+    "readonlyLabel": "Will you waive beneficiary cost-sharing (coinsurance and/or deductible) for any services in the model? If so, please specify which services.",
+    "options": {
+      "true": "Yes",
+      "false": "No"
+    }
+  },
+  "waiveBeneficiaryCostSharingServiceSpecification": {
+    "gqlField": "waiveBeneficiaryCostSharingServiceSpecification",
+    "goField": "WaiveBeneficiaryCostSharingServiceSpecification",
+    "dbField": "is_contractor_aware_test_data_requirements",
+    "label": "Please specify which services.",
+    "isOtherType": true,
+    "otherParentField": "is_contractor_aware_test_data_requirements"
+  },
+  "waiverOnlyAppliesPartOfPayment": {
+    "gqlField": "waiverOnlyAppliesPartOfPayment",
+    "goField": "WaiverOnlyAppliesPartOfPayment",
+    "dbField": "is_contractor_aware_test_data_requirements",
+    "label": "Would the waiver only apply for part of the payment?",
+    "sublabel": "For example, we would assess cost-sharing for the service itself, but not for an add-on payment",
+    "options": {
+      "true": "Yes",
+      "false": "No"
+    }
+  },
+  "waiveBeneficiaryCostSharingNote": {
     "gqlField": "waiveBeneficiaryCostSharingNote",
     "goField": "WaiveBeneficiaryCostSharingNote",
     "dbField": "is_contractor_aware_test_data_requirements",
     "label": "Notes"
   },
-  "non_claims_payments": {
+  "nonClaimsPayments": {
     "gqlField": "nonClaimsPayments",
     "goField": "NonClaimsPayments",
     "dbField": "non_claims_payments",
@@ -291,39 +337,39 @@
       "OTHER": "Other"
     }
   },
-  "non_claims_payments_other": {
+  "nonClaimsPaymentOther": {
     "gqlField": "nonClaimsPaymentOther",
     "goField": "NonClaimsPaymentOther",
     "dbField": "non_claims_payments_other",
     "label": "Please describe the other non-claims-based payments you will pay.",
     "isOtherType": true
   },
-  "non_claims_payments_note": {
+  "nonClaimsPaymentsNote": {
     "gqlField": "nonClaimsPaymentsNote",
     "goField": "NonClaimsPaymentsNote",
     "dbField": "non_claims_payments_note",
     "label": "Notes"
   },
-  "payment_calculation_owner": {
+  "paymentCalculationOwner": {
     "gqlField": "paymentCalculationOwner",
     "goField": "PaymentCalculationOwner",
     "dbField": "payment_calculation_owner",
     "label": "Who will calculate the non-claims based payments?"
   },
-  "number_payments_per_pay_cycle": {
+  "numberPaymentsPerPayCycle": {
     "gqlField": "numberPaymentsPerPayCycle",
     "goField": "NumberPaymentsPerPayCycle",
     "dbField": "number_payments_per_pay_cycle",
     "label": "Number of payments per payment cycle",
     "sublabel": "This only applies if you are making non-claims-based payments"
   },
-  "number_payments_per_pay_cycle_note": {
+  "numberPaymentsPerPayCycleNote": {
     "gqlField": "numberPaymentsPerPayCycleNote",
     "goField": "NumberPaymentsPerPayCycleNote",
     "dbField": "number_payments_per_pay_cycle_note",
     "label": "Notes"
   },
-  "shared_systems_involved_additional_claim_payment": {
+  "sharedSystemsInvolvedAdditionalClaimPayment": {
     "gqlField": "sharedSystemsInvolvedAdditionalClaimPayment",
     "goField": "SharedSystemsInvolvedAdditionalClaimPayment",
     "dbField": "shared_systems_involved_additional_claim_payment",
@@ -333,13 +379,13 @@
       "false": "No"
     }
   },
-  "shared_systems_involved_additional_claim_payment_note": {
+  "sharedSystemsInvolvedAdditionalClaimPaymentNote": {
     "gqlField": "sharedSystemsInvolvedAdditionalClaimPaymentNote",
     "goField": "SharedSystemsInvolvedAdditionalClaimPaymentNote",
     "dbField": "shared_systems_involved_additional_claim_payment_note",
     "label": "Notes"
   },
-  "planning_to_use_innovation_payment_contractor": {
+  "planningToUseInnovationPaymentContractor": {
     "gqlField": "planningToUseInnovationPaymentContractor",
     "goField": "PlanningToUseInnovationPaymentContractor",
     "dbField": "planning_to_use_innovation_payment_contractor",
@@ -350,13 +396,13 @@
       "false": "No"
     }
   },
-  "planning_to_use_innovation_payment_contractor_note": {
+  "planningToUseInnovationPaymentContractorNote": {
     "gqlField": "planningToUseInnovationPaymentContractorNote",
     "goField": "PlanningToUseInnovationPaymentContractorNote",
     "dbField": "planning_to_use_innovation_payment_contractor_note",
     "label": "Notes"
   },
-  "expected_calculation_complexity_level": {
+  "expectedCalculationComplexityLevel": {
     "gqlField": "expectedCalculationComplexityLevel",
     "goField": "ExpectedCalculationComplexityLevel",
     "dbField": "expected_calculation_complexity_level",
@@ -367,13 +413,13 @@
       "HIGH": "High level"
     }
   },
-  "expected_calculation_complexity_level_note": {
+  "expectedCalculationComplexityLevelNote": {
     "gqlField": "expectedCalculationComplexityLevelNote",
     "goField": "ExpectedCalculationComplexityLevelNote",
     "dbField": "expected_calculation_complexity_level_note",
     "label": "Notes"
   },
-  "claims_processing_precedence": {
+  "claimsProcessingPrecedence": {
     "gqlField": "claimsProcessingPrecedence",
     "goField": "ClaimsProcessingPrecedence",
     "dbField": "claims_processing_precedence",
@@ -384,7 +430,7 @@
       "false": "No"
     }
   },
-  "claims_processing_precedence_other": {
+  "claimsProcessingPrecedenceOther": {
     "gqlField": "claimsProcessingPrecedenceOther",
     "goField": "ClaimsProcessingPrecedenceOther",
     "dbField": "claims_processing_precedence_other",
@@ -392,13 +438,13 @@
     "isOtherType": true,
     "otherParentField": "claims_processing_precedence"
   },
-  "claims_processing_precedence_note": {
+  "claimsProcessingPrecedenceNote": {
     "gqlField": "claimsProcessingPrecedenceNote",
     "goField": "ClaimsProcessingPrecedenceNote",
     "dbField": "claims_processing_precedence_note",
     "label": "Notes"
   },
-  "can_participants_select_between_payment_mechanisms": {
+  "canParticipantsSelectBetweenPaymentMechanisms": {
     "gqlField": "canParticipantsSelectBetweenPaymentMechanisms",
     "goField": "CanParticipantsSelectBetweenPaymentMechanisms",
     "dbField": "can_participants_select_between_payment_mechanisms",
@@ -409,7 +455,7 @@
       "false": "No"
     }
   },
-  "can_participants_select_between_payment_mechanisms_how": {
+  "canParticipantsSelectBetweenPaymentMechanismsHow": {
     "gqlField": "canParticipantsSelectBetweenPaymentMechanismsHow",
     "goField": "CanParticipantsSelectBetweenPaymentMechanismsHow",
     "dbField": "can_participants_select_between_payment_mechanisms_how",
@@ -417,13 +463,13 @@
     "isOtherType": true,
     "otherParentField": "can_participants_select_between_payment_mechanisms"
   },
-  "can_participants_select_between_payment_mechanisms_note": {
+  "canParticipantsSelectBetweenPaymentMechanismsNote": {
     "gqlField": "canParticipantsSelectBetweenPaymentMechanismsNote",
     "goField": "CanParticipantsSelectBetweenPaymentMechanismsNote",
     "dbField": "can_participants_select_between_payment_mechanisms_note",
     "label": "Notes"
   },
-  "anticipated_payment_frequency": {
+  "anticipatedPaymentFrequency": {
     "gqlField": "anticipatedPaymentFrequency",
     "goField": "AnticipatedPaymentFrequency",
     "dbField": "anticipated_payment_frequency",
@@ -437,7 +483,7 @@
       "OTHER": "Other"
     }
   },
-  "anticipated_payment_frequency_continually": {
+  "anticipatedPaymentFrequencyContinually": {
     "gqlField": "anticipatedPaymentFrequencyContinually",
     "goField": "AnticipatedPaymentFrequencyContinually",
     "dbField": "anticipated_payment_frequency_continually",
@@ -445,7 +491,7 @@
     "isOtherType": true,
     "otherParentField": "anticipated_payment_frequency"
   },
-  "anticipated_payment_frequency_other": {
+  "anticipatedPaymentFrequencyOther": {
     "gqlField": "anticipatedPaymentFrequencyOther",
     "goField": "AnticipatedPaymentFrequencyOther",
     "dbField": "anticipated_payment_frequency_other",
@@ -453,13 +499,13 @@
     "isOtherType": true,
     "otherParentField": "anticipated_payment_frequency"
   },
-  "anticipated_payment_frequency_note": {
+  "anticipatedPaymentFrequencyNote": {
     "gqlField": "anticipatedPaymentFrequencyNote",
     "goField": "AnticipatedPaymentFrequencyNote",
     "dbField": "anticipated_payment_frequency_note",
     "label": "Notes"
   },
-  "will_recover_payments": {
+  "willRecoverPayments": {
     "gqlField": "willRecoverPayments",
     "goField": "WillRecoverPayments",
     "dbField": "will_recover_payments",
@@ -469,13 +515,13 @@
       "false": "No"
     }
   },
-  "will_recover_payments_note": {
+  "willRecoverPaymentsNote": {
     "gqlField": "willRecoverPaymentsNote",
     "goField": "WillRecoverPaymentsNote",
     "dbField": "will_recover_payments_note",
     "label": "Notes"
   },
-  "anticipate_reconciling_payments_retrospectively": {
+  "anticipateReconcilingPaymentsRetrospectively": {
     "gqlField": "anticipateReconcilingPaymentsRetrospectively",
     "goField": "AnticipateReconcilingPaymentsRetrospectively",
     "dbField": "anticipate_reconciling_payments_retrospectively",
@@ -485,13 +531,13 @@
       "false": "No"
     }
   },
-  "anticipate_reconciling_payments_retrospectively_note": {
+  "anticipateReconcilingPaymentsRetrospectivelyNote": {
     "gqlField": "anticipateReconcilingPaymentsRetrospectivelyNote",
     "goField": "AnticipateReconcilingPaymentsRetrospectivelyNote",
     "dbField": "anticipate_reconciling_payments_retrospectively_note",
     "label": "Notes"
   },
-  "payment_reconciliation_frequency": {
+  "paymentReconciliationFrequency": {
     "gqlField": "paymentReconciliationFrequency",
     "goField": "PaymentReconciliationFrequency",
     "dbField": "payment_reconciliation_frequency",
@@ -505,7 +551,7 @@
       "OTHER": "Other"
     }
   },
-  "payment_reconciliation_frequency_continually": {
+  "paymentReconciliationFrequencyContinually": {
     "gqlField": "paymentReconciliationFrequencyContinually",
     "goField": "PaymentReconciliationFrequencyContinually",
     "dbField": "payment_reconciliation_frequency_continually",
@@ -513,7 +559,7 @@
     "isOtherType": true,
     "otherParentField": "payment_reconciliation_frequency"
   },
-  "payment_reconciliation_frequency_other": {
+  "paymentReconciliationFrequencyOther": {
     "gqlField": "paymentReconciliationFrequencyOther",
     "goField": "PaymentReconciliationFrequencyOther",
     "dbField": "payment_reconciliation_frequency_other",
@@ -521,13 +567,13 @@
     "isOtherType": true,
     "otherParentField": "payment_reconciliation_frequency"
   },
-  "payment_reconciliation_frequency_note": {
+  "paymentReconciliationFrequencyNote": {
     "gqlField": "paymentReconciliationFrequencyNote",
     "goField": "PaymentReconciliationFrequencyNote",
     "dbField": "payment_reconciliation_frequency_note",
     "label": "Notes"
   },
-  "payment_demand_recoupment_frequency": {
+  "paymentDemandRecoupmentFrequency": {
     "gqlField": "paymentDemandRecoupmentFrequency",
     "goField": "PaymentDemandRecoupmentFrequency",
     "dbField": "payment_demand_recoupment_frequency",
@@ -541,7 +587,7 @@
       "OTHER": "Other"
     }
   },
-  "payment_demand_recoupment_frequency_continually": {
+  "paymentDemandRecoupmentFrequencyContinually": {
     "gqlField": "paymentDemandRecoupmentFrequencyContinually",
     "goField": "PaymentDemandRecoupmentFrequencyContinually",
     "dbField": "payment_demand_recoupment_frequency_continually",
@@ -549,7 +595,7 @@
     "isOtherType": true,
     "otherParentField": "payment_demand_recoupment_frequency"
   },
-  "payment_demand_recoupment_frequency_other": {
+  "paymentDemandRecoupmentFrequencyOther": {
     "gqlField": "paymentDemandRecoupmentFrequencyOther",
     "goField": "PaymentReconciliationFrequencyOther",
     "dbField": "payment_demand_recoupment_frequency_other",
@@ -557,13 +603,13 @@
     "isOtherType": true,
     "otherParentField": "payment_demand_recoupment_frequency"
   },
-  "payment_demand_recoupment_frequency_note": {
+  "paymentDemandRecoupmentFrequencyNote": {
     "gqlField": "paymentDemandRecoupmentFrequencyNote",
     "goField": "PaymentReconciliationFrequencyNote",
     "dbField": "payment_demand_recoupment_frequency_note",
     "label": "Notes"
   },
-  "payment_start_date": {
+  "paymentStartDate": {
     "gqlField": "paymentStartDate",
     "goField": "PaymentStartDate",
     "dbField": "payment_start_date",
@@ -571,7 +617,7 @@
     "readonlyLabel": "When will payments start?",
     "sublabel": "Note: If you are unsure of an approximate date, please select the first day of the approximate month."
   },
-  "payment_start_date_note": {
+  "paymentStartDateNote": {
     "gqlField": "paymentStartDateNote",
     "goField": "PaymentStartDateNote",
     "dbField": "payment_start_date_note",

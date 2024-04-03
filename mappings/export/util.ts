@@ -1,23 +1,21 @@
 /*
   Util for formatting and transforming Typescript translation file to JSON
-  Output filename/directory - /mappings/translations/model_plan_translations.json
   For BE use for storing translated data to database
 */
-import * as fs from 'fs';
 
-import basics from './i18n/en-US/modelPlan/basics';
-import beneficiaries from './i18n/en-US/modelPlan/beneficiaries';
-import collaborators from './i18n/en-US/modelPlan/collaborators';
-import generalCharacteristics from './i18n/en-US/modelPlan/generalCharacteristics';
-import modelPlan from './i18n/en-US/modelPlan/modelPlan';
-import opsEvalAndLearning from './i18n/en-US/modelPlan/opsEvalAndLearning';
-import participantsAndProviders from './i18n/en-US/modelPlan/participantsAndProviders';
-import payments from './i18n/en-US/modelPlan/payments';
+import basics from '../../src/i18n/en-US/modelPlan/basics';
+import beneficiaries from '../../src/i18n/en-US/modelPlan/beneficiaries';
+import collaborators from '../../src/i18n/en-US/modelPlan/collaborators';
+import generalCharacteristics from '../../src/i18n/en-US/modelPlan/generalCharacteristics';
+import modelPlan from '../../src/i18n/en-US/modelPlan/modelPlan';
+import opsEvalAndLearning from '../../src/i18n/en-US/modelPlan/opsEvalAndLearning';
+import participantsAndProviders from '../../src/i18n/en-US/modelPlan/participantsAndProviders';
+import payments from '../../src/i18n/en-US/modelPlan/payments';
 import {
   getKeys,
   TranslationFieldProperties,
   TranslationPlanSection
-} from './types/translation';
+} from '../../src/types/translation';
 
 export const translationSections = {
   model_plan: modelPlan,
@@ -77,21 +75,9 @@ export const mapOtherParentFieldToDBField = (
       fieldObj.otherParentField = parentObj.dbField;
     }
 
-    formattedSection[field] = fieldObj;
-  });
-  return formattedSection;
-};
-
-// Maps translations gql key fields to db fields
-// Ex: 'modelCategory' will become 'model_category'
-export const mapDBFieldToKey = (planSection: TranslationPlanSection) => {
-  const formattedSection: any = {};
-  getKeys(planSection).forEach(field => {
-    const fieldObj = planSection[field] as TranslationFieldProperties;
-
     const filteredObj = filterUnneededField(fieldObj, unneededFields);
 
-    formattedSection[fieldObj.dbField] = filteredObj;
+    formattedSection[field] = filteredObj;
   });
   return formattedSection;
 };
@@ -111,32 +97,8 @@ export const processDataMapping = (
       planSection
     );
 
-    const formattedKeyFields = mapDBFieldToKey(formattedOtherParentFields);
-
-    formattedTranslation[section] = formattedKeyFields;
+    formattedTranslation[section] = formattedOtherParentFields;
   });
 
   return formattedTranslation;
 };
-
-const parseTypscriptToJSON = (translations: any, outputFile: string) => {
-  const jsonString = JSON.stringify(translations, null, 2);
-
-  fs.writeFileSync(outputFile, jsonString);
-};
-
-function main() {
-  const transformedTranslationSections = processDataMapping(
-    translationSections
-  );
-
-  // Create JSON file for each translation task list section
-  getKeys(transformedTranslationSections).forEach(section =>
-    parseTypscriptToJSON(
-      transformedTranslationSections[section],
-      `./mappings/translation/${String(section)}.json`
-    )
-  );
-}
-
-module.exports = { main };

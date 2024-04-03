@@ -1,12 +1,34 @@
 {
   "stakeholders": {
+    "gqlField": "stakeholders",
+    "goField": "Stakeholders",
+    "dbField": "stakeholders",
+    "label": "What stakeholders do you plan to communicate with?",
+    "multiSelectLabel": "Selected stakeholders",
+    "options": {
+      "BENEFICIARIES": "Beneficiaries",
+      "COMMUNITY_ORGANIZATIONS": "Community organizations",
+      "PARTICIPANTS": "Participants",
+      "PROFESSIONAL_ORGANIZATIONS": "Professional organizations",
+      "PROVIDERS": "Providers",
+      "STATES": "States",
+      "OTHER": "Other"
+    }
+  },
+  "stakeholdersOther": {
     "gqlField": "stakeholdersOther",
     "goField": "StakeholdersOther",
     "dbField": "stakeholders",
     "label": "Please describe the other stakeholders you plan to communicate with.",
     "isOtherType": true
   },
-  "stakeholders_note": {
+  "stakeholdersNote": {
+    "gqlField": "stakeholdersNote",
+    "goField": "StakeholdersNote",
+    "dbField": "stakeholders_note",
+    "label": "Notes"
+  },
+  "helpdeskUse": {
     "gqlField": "helpdeskUse",
     "goField": "HelpdeskUse",
     "dbField": "stakeholders_note",
@@ -16,13 +38,13 @@
       "false": "No"
     }
   },
-  "helpdesk_use_note": {
+  "helpdeskUseNote": {
     "gqlField": "helpdeskUseNote",
     "goField": "HelpdeskUseNote",
     "dbField": "helpdesk_use_note",
     "label": "Notes"
   },
-  "contractor_support": {
+  "contractorSupport": {
     "gqlField": "contractorSupport",
     "goField": "ContractorSupport",
     "dbField": "contractor_support",
@@ -34,7 +56,7 @@
       "OTHER": "Other"
     }
   },
-  "contractor_support_other": {
+  "contractorSupportOther": {
     "gqlField": "contractorSupportOther",
     "goField": "ContractorSupportOther",
     "dbField": "contractor_support_other",
@@ -42,20 +64,20 @@
     "isOtherType": true,
     "otherParentField": "contractor_support"
   },
-  "contractor_support_how": {
+  "contractorSupportHow": {
     "gqlField": "contractorSupportHow",
     "goField": "ContractorSupportHow",
     "dbField": "contractor_support_how",
     "label": "In what capacity will they support your model?",
     "sublabel": "(implementation, data analysis, quality, etc.)"
   },
-  "contractor_support_note": {
+  "contractorSupportNote": {
     "gqlField": "contractorSupportNote",
     "goField": "ContractorSupportNote",
     "dbField": "contractor_support_note",
     "label": "Notes"
   },
-  "iddoc_support": {
+  "iddocSupport": {
     "gqlField": "iddocSupport",
     "goField": "IddocSupport",
     "dbField": "iddoc_support",
@@ -66,13 +88,13 @@
       "false": "No"
     }
   },
-  "iddoc_support_note": {
+  "iddocSupportNote": {
     "gqlField": "iddocSupportNote",
     "goField": "IddocSupportNote",
     "dbField": "iddoc_support_note",
     "label": "Notes"
   },
-  "technical_contacts_identified": {
+  "technicalContactsIdentified": {
     "gqlField": "technicalContactsIdentified",
     "goField": "TechnicalContactsIdentified",
     "dbField": "technical_contacts_identified",
@@ -82,7 +104,7 @@
       "false": "No"
     }
   },
-  "technical_contacts_identified_detail": {
+  "technicalContactsIdentifiedDetail": {
     "gqlField": "technicalContactsIdentifiedDetail",
     "goField": "TechnicalContactsIdentifiedDetail",
     "dbField": "technical_contacts_identified_detail",
@@ -90,61 +112,72 @@
     "isOtherType": true,
     "otherParentField": "technical_contacts_identified"
   },
-  "technical_contacts_identified_note": {
+  "technicalContactsIdentifiedNote": {
     "gqlField": "technicalContactsIdentifiedNote",
     "goField": "TechnicalContactsIdentifiedNote",
     "dbField": "technical_contacts_identified_note",
     "label": "Notes"
   },
-  "capture_participant_info": {
+  "captureParticipantInfo": {
+    "gqlField": "captureParticipantInfo",
+    "goField": "CaptureParticipantInfo",
+    "dbField": "capture_participant_info",
+    "label": "Will you collect participant information?",
+    "sublabel": "This means the participant record for a model would be included in the ACO-OS Entity File.",
+    "options": {
+      "true": "Yes",
+      "false": "No"
+    }
+  },
+  "captureParticipantInfoNote": {
     "gqlField": "captureParticipantInfoNote",
     "goField": "CaptureParticipantInfoNote",
     "dbField": "capture_participant_info",
     "label": "Notes"
   },
-  "icd_owner": {
+  "icdOwner": {
     "gqlField": "icdOwner",
     "goField": "IcdOwner",
     "dbField": "icd_owner",
     "label": "ICD owner"
   },
-  "draft_icd_due_date": {
+  "draftIcdDueDate": {
     "gqlField": "draftIcdDueDate",
     "goField": "DraftIcdDueDate",
     "dbField": "draft_icd_due_date",
     "label": "Draft ICD required by"
   },
-  "icd_note": {
+  "icdNote": {
     "gqlField": "icdNote",
     "goField": "IcdNote",
     "dbField": "icd_note",
     "label": "Notes"
   },
-  "uat_needs": {
+  "uatNeeds": {
     "gqlField": "uatNeeds",
     "goField": "UatNeeds",
     "dbField": "uat_needs",
     "label": "User Acceptance Testing (UAT) – test data needs"
   },
-  "stc_needs": {
+  "stcNeeds": {
     "gqlField": "stcNeeds",
     "goField": "StcNeeds",
     "dbField": "stc_needs",
     "label": "STC – test data needs"
   },
-  "testing_timelines": {
+  "testingTimelines": {
     "gqlField": "testingTimelines",
     "goField": "TestingTimelines",
     "dbField": "testing_timelines",
     "label": "Define the testing timelines"
   },
-  "testing_note": {
+  "testingNote": {
     "gqlField": "testingNote",
     "goField": "TestingNote",
     "dbField": "testing_note",
     "label": "Notes"
   },
-  "data_monitoring_file_types": {
+  "dataMonitoringFileTypes": {
     "gqlField": "dataMonitoringFileTypes",
     "goField": "DataMonitoringFileTypes",
     "dbField": "data_monitoring_file_types",
@@ -158,7 +191,7 @@
       "OTHER": "Other"
     }
   },
-  "data_monitoring_file_other": {
+  "dataMonitoringFileOther": {
     "gqlField": "dataMonitoringFileOther",
     "goField": "DataMonitoringFileOther",
     "dbField": "data_monitoring_file_other",
@@ -166,19 +199,19 @@
     "isOtherType": true,
     "otherParentField": "data_monitoring_file_types"
   },
-  "data_response_type": {
+  "dataResponseType": {
     "gqlField": "dataResponseType",
     "goField": "DataResponseType",
     "dbField": "data_response_type",
     "label": "What types of responses?"
   },
-  "data_response_file_frequency": {
+  "dataResponseFileFrequency": {
     "gqlField": "dataResponseFileFrequency",
     "goField": "DataResponseFileFrequency",
     "dbField": "data_response_file_frequency",
     "label": "Frequency of files?"
   },
-  "data_full_time_or_incremental": {
+  "dataFullTimeOrIncremental": {
     "gqlField": "dataFullTimeOrIncremental",
     "goField": "DataFullTimeOrIncremental",
     "dbField": "data_full_time_or_incremental",
@@ -188,7 +221,7 @@
       "INCREMENTAL": "Incremental"
     }
   },
-  "eft_set_up": {
+  "eftSetUp": {
     "gqlField": "eftSetUp",
     "goField": "EftSetUp",
     "dbField": "eft_set_up",
@@ -198,7 +231,7 @@
       "false": "No"
     }
   },
-  "unsolicited_adjustments_included": {
+  "unsolicitedAdjustmentsIncluded": {
     "gqlField": "unsolicitedAdjustmentsIncluded",
     "goField": "UnsolicitedAdjustmentsIncluded",
     "dbField": "unsolicited_adjustments_included",
@@ -208,7 +241,7 @@
       "false": "No"
     }
   },
-  "data_flow_diagrams_needed": {
+  "dataFlowDiagramsNeeded": {
     "gqlField": "dataFlowDiagramsNeeded",
     "goField": "DataFlowDiagramsNeeded",
     "dbField": "data_flow_diagrams_needed",
@@ -218,7 +251,7 @@
       "false": "No"
     }
   },
-  "produce_benefit_enhancement_files": {
+  "produceBenefitEnhancementFiles": {
     "gqlField": "produceBenefitEnhancementFiles",
     "goField": "ProduceBenefitEnhancementFiles",
     "dbField": "produce_benefit_enhancement_files",
@@ -229,19 +262,19 @@
       "false": "No"
     }
   },
-  "file_naming_conventions": {
+  "fileNamingConventions": {
     "gqlField": "fileNamingConventions",
     "goField": "FileNamingConventions",
     "dbField": "file_naming_conventions",
     "label": "File naming conventions"
   },
-  "data_monitoring_note": {
+  "dataMonitoringNote": {
     "gqlField": "dataMonitoringNote",
     "goField": "DataMonitoringNote",
     "dbField": "data_monitoring_note",
     "label": "Notes"
   },
-  "benchmark_for_performance": {
+  "benchmarkForPerformance": {
     "gqlField": "benchmarkForPerformance",
     "goField": "BenchmarkForPerformance",
     "dbField": "benchmark_for_performance",
@@ -252,13 +285,13 @@
       "NO": "No"
     }
   },
-  "benchmark_for_performance_note": {
+  "benchmarkForPerformanceNote": {
     "gqlField": "benchmarkForPerformanceNote",
     "goField": "BenchmarkForPerformanceNote",
     "dbField": "benchmark_for_performance_note",
     "label": "Notes"
   },
-  "compute_performance_scores": {
+  "computePerformanceScores": {
     "gqlField": "computePerformanceScores",
     "goField": "ComputePerformanceScores",
     "dbField": "compute_performance_scores",
@@ -268,13 +301,13 @@
       "false": "No"
     }
   },
-  "compute_performance_scores_note": {
+  "computePerformanceScoresNote": {
     "gqlField": "computePerformanceScoresNote",
     "goField": "ComputePerformanceScoresNote",
     "dbField": "compute_performance_scores_note",
     "label": "Notes"
   },
-  "risk_adjust_performance": {
+  "riskAdjustPerformance": {
     "gqlField": "riskAdjustPerformance",
     "goField": "RiskAdjustPerformance",
     "dbField": "risk_adjust_performance",
@@ -285,7 +318,7 @@
       "false": "No"
     }
   },
-  "risk_adjust_feedback": {
+  "riskAdjustFeedback": {
     "gqlField": "riskAdjustFeedback",
     "goField": "RiskAdjustFeedback",
     "dbField": "risk_adjust_feedback",
@@ -296,7 +329,7 @@
       "false": "No"
     }
   },
-  "risk_adjust_payments": {
+  "riskAdjustPayments": {
     "gqlField": "riskAdjustPayments",
     "goField": "RiskAdjustPayments",
     "dbField": "risk_adjust_payments",
@@ -307,7 +340,7 @@
       "false": "No"
     }
   },
-  "risk_adjust_other": {
+  "riskAdjustOther": {
     "gqlField": "riskAdjustOther",
     "goField": "RiskAdjustOther",
     "dbField": "risk_adjust_other",
@@ -318,13 +351,13 @@
       "false": "No"
     }
   },
-  "risk_adjust_note": {
+  "riskAdjustNote": {
     "gqlField": "riskAdjustNote",
     "goField": "RiskAdjustNote",
     "dbField": "risk_adjust_note",
     "label": "Notes"
   },
-  "appeal_performance": {
+  "appealPerformance": {
     "gqlField": "appealPerformance",
     "goField": "AppealPerformance",
     "dbField": "appeal_performance",
@@ -335,7 +368,7 @@
       "false": "No"
     }
   },
-  "appeal_feedback": {
+  "appealFeedback": {
     "gqlField": "appealFeedback",
     "goField": "AppealFeedback",
     "dbField": "appeal_feedback",
@@ -346,7 +379,7 @@
       "false": "No"
     }
   },
-  "appeal_payments": {
+  "appealPayments": {
     "gqlField": "appealPayments",
     "goField": "AppealPayments",
     "dbField": "appeal_payments",
@@ -357,7 +390,7 @@
       "false": "No"
     }
   },
-  "appeal_other": {
+  "appealOther": {
     "gqlField": "appealOther",
     "goField": "AppealOther",
     "dbField": "appeal_other",
@@ -368,13 +401,13 @@
       "false": "No"
     }
   },
-  "appeal_note": {
+  "appealNote": {
     "gqlField": "appealNote",
     "goField": "AppealNote",
     "dbField": "appeal_note",
     "label": "Notes"
   },
-  "evaluation_approaches": {
+  "evaluationApproaches": {
     "gqlField": "evaluationApproaches",
     "goField": "eEvaluationApproaches",
     "dbField": "evaluation_approaches",
@@ -388,20 +421,20 @@
       "OTHER": "Other"
     }
   },
-  "evaluation_approach_other": {
+  "evaluationApproachOther": {
     "gqlField": "evaluationApproachOther",
     "goField": "EvaluationApproachOther",
     "dbField": "evaluation_approach_other",
     "label": "Please describe the other evaluation approach you are considering.",
     "isOtherType": true
   },
-  "evalutaion_approach_note": {
+  "evalutaionApproachNote": {
     "gqlField": "evalutaionApproachNote",
     "goField": "EvalutaionApproachNote",
     "dbField": "evalutaion_approach_note",
     "label": "Notes"
   },
-  "ccm_involvment": {
+  "ccmInvolvment": {
     "gqlField": "ccmInvolvment",
     "goField": "CcmInvolvment",
     "dbField": "ccm_involvment",
@@ -414,7 +447,7 @@
       "OTHER": "Other"
     }
   },
-  "ccm_involvment_other": {
+  "ccmInvolvmentOther": {
     "gqlField": "ccmInvolvmentOther",
     "goField": "CcmInvolvmentOther",
     "dbField": "ccm_involvment_other",
@@ -422,13 +455,13 @@
     "isOtherType": true,
     "otherParentField": "ccm_involvment"
   },
-  "ccm_involvment_note": {
+  "ccmInvolvmentNote": {
     "gqlField": "ccmInvolvmentNote",
     "goField": "CcmInvolvmentNote",
     "dbField": "ccm_involvment_note",
     "label": "Notes"
   },
-  "data_needed_for_monitoring": {
+  "dataNeededForMonitoring": {
     "gqlField": "dataNeededForMonitoring",
     "goField": "DataNeededForMonitoring",
     "dbField": "data_needed_for_monitoring",
@@ -451,20 +484,20 @@
       "NOT_PLANNING_TO_COLLECT_DATA": "Not planning to collect data"
     }
   },
-  "data_needed_for_monitoring_other": {
+  "dataNeededForMonitoringOther": {
     "gqlField": "dataNeededForMonitoringOther",
     "goField": "DataNeededForMonitoringOther",
     "dbField": "data_needed_for_monitoring_other",
     "label": "What other data do you need to monitor?",
     "isOtherType": true
   },
-  "data_needed_for_monitoring_note": {
+  "dataNeededForMonitoringNote": {
     "gqlField": "dataNeededForMonitoringNote",
     "goField": "DataNeededForMonitoringNote",
     "dbField": "data_needed_for_monitoring_note",
     "label": "Notes"
   },
-  "data_to_send_particicipants": {
+  "dataToSendParticicipants": {
     "gqlField": "dataToSendParticicipants",
     "goField": "DataToSendParticicipants",
     "dbField": "data_to_send_particicipants",
@@ -480,7 +513,7 @@
       "NOT_PLANNING_TO_SEND_DATA": "Not planning to send data"
     }
   },
-  "data_to_send_particicipants_other": {
+  "dataToSendParticicipantsOther": {
     "gqlField": "dataToSendParticicipantsOther",
     "goField": "DataToSendParticicipantsOther",
     "dbField": "data_to_send_particicipants_other",
@@ -488,13 +521,13 @@
     "isOtherType": true,
     "otherParentField": "data_to_send_particicipants"
   },
-  "data_to_send_particicipants_note": {
+  "dataToSendParticicipantsNote": {
     "gqlField": "dataToSendParticicipantsNote",
     "goField": "DataToSendParticicipantsNote",
     "dbField": "data_to_send_particicipants_note",
     "label": "Notes"
   },
-  "share_cclf_data": {
+  "shareCclfData": {
     "gqlField": "shareCclfData",
     "goField": "ShareCclfData",
     "dbField": "share_cclf_data",
@@ -504,13 +537,13 @@
       "false": "No"
     }
   },
-  "share_cclf_data_note": {
+  "shareCclfDataNote": {
     "gqlField": "shareCclfDataNote",
     "goField": "ShareCclfDataNote",
     "dbField": "share_cclf_data_note",
     "label": "Notes"
   },
-  "send_files_between_ccw": {
+  "sendFilesBetweenCcw": {
     "gqlField": "sendFilesBetweenCcw",
     "goField": "SendFilesBetweenCcw",
     "dbField": "send_files_between_ccw",
@@ -520,13 +553,13 @@
       "false": "No"
     }
   },
-  "send_files_between_ccw_note": {
+  "sendFilesBetweenCcwNote": {
     "gqlField": "sendFilesBetweenCcwNote",
     "goField": "SendFilesBetweenCcwNote",
     "dbField": "send_files_between_ccw_note",
     "label": "Notes"
   },
-  "app_to_send_files_to_known": {
+  "appToSendFilesToKnown": {
     "gqlField": "appToSendFilesToKnown",
     "goField": "AppToSendFilesToKnown",
     "dbField": "app_to_send_files_to_known",
@@ -537,7 +570,7 @@
       "false": "No"
     }
   },
-  "app_to_send_files_to_which": {
+  "appToSendFilesToWhich": {
     "gqlField": "appToSendFilesToWhich",
     "goField": "AppToSendFilesToWhich",
     "dbField": "app_to_send_files_to_which",
@@ -545,13 +578,13 @@
     "isOtherType": true,
     "otherParentField": "app_to_send_files_to_which"
   },
-  "app_to_send_files_to_note": {
+  "appToSendFilesToNote": {
     "gqlField": "appToSendFilesToNote",
     "goField": "AppToSendFilesToNote",
     "dbField": "app_to_send_files_to_note",
     "label": "Notes"
   },
-  "use_ccw_for_file_distribiution_to_participants": {
+  "useCcwForFileDistribiutionToParticipants": {
     "gqlField": "useCcwForFileDistribiutionToParticipants",
     "goField": "UseCcwForFileDistribiutionToParticipants",
     "dbField": "use_ccw_for_file_distribiution_to_participants",
@@ -561,13 +594,13 @@
       "false": "No"
     }
   },
-  "use_ccw_for_file_distribiution_to_participants_note": {
+  "useCcwForFileDistribiutionToParticipantsNote": {
     "gqlField": "useCcwForFileDistribiutionToParticipantsNote",
     "goField": "UseCcwForFileDistribiutionToParticipantsNote",
     "dbField": "use_ccw_for_file_distribiution_to_participants_note",
     "label": "Notes"
   },
-  "develop_new_quality_measures": {
+  "developNewQualityMeasures": {
     "gqlField": "developNewQualityMeasures",
     "goField": "DevelopNewQualityMeasures",
     "dbField": "develop_new_quality_measures",
@@ -577,13 +610,13 @@
       "false": "No"
     }
   },
-  "develop_new_quality_measures_note": {
+  "developNewQualityMeasuresNote": {
     "gqlField": "developNewQualityMeasuresNote",
     "goField": "DevelopNewQualityMeasuresNote",
     "dbField": "develop_new_quality_measures_note",
     "label": "Notes"
   },
-  "quality_performance_impacts_payment": {
+  "qualityPerformanceImpactsPayment": {
     "gqlField": "qualityPerformanceImpactsPayment",
     "goField": "QualityPerformanceImpactsPayment",
     "dbField": "quality_performance_impacts_payment",
@@ -594,7 +627,7 @@
       "OTHER": "Other"
     }
   },
-  "quality_performance_impacts_payment_other": {
+  "qualityPerformanceImpactsPaymentOther": {
     "gqlField": "qualityPerformanceImpactsPaymentOther",
     "goField": "QualityPerformanceImpactsPaymentOther",
     "dbField": "quality_performance_impacts_payment_other",
@@ -602,13 +635,13 @@
     "isOtherType": true,
     "otherParentField": "quality_performance_impacts_payment"
   },
-  "quality_performance_impacts_payment_note": {
+  "qualityPerformanceImpactsPaymentNote": {
     "gqlField": "qualityPerformanceImpactsPaymentNote",
     "goField": "QualityPerformanceImpactsPaymentNote",
     "dbField": "quality_performance_impacts_payment_note",
     "label": "Notes"
   },
-  "data_sharing_starts": {
+  "dataSharingStarts": {
     "gqlField": "dataSharingStarts",
     "goField": "DataSharingStarts",
     "dbField": "data_sharing_starts",
@@ -625,7 +658,7 @@
       "OTHER": "Other"
     }
   },
-  "data_sharing_starts_other": {
+  "dataSharingStartsOther": {
     "gqlField": "dataSharingStartsOther",
     "goField": "DataSharingStartsOther",
     "dbField": "data_sharing_starts_other",
@@ -633,7 +666,7 @@
     "isOtherType": true,
     "otherParentField": "data_sharing_starts"
   },
-  "data_sharing_frequency": {
+  "dataSharingFrequency": {
     "gqlField": "dataSharingFrequency",
     "goField": "DataSharingFrequency",
     "dbField": "data_sharing_frequency",
@@ -647,7 +680,7 @@
       "OTHER": "Other"
     }
   },
-  "data_sharing_frequency_continually": {
+  "dataSharingFrequencyContinually": {
     "gqlField": "dataSharingFrequencyContinually",
     "goField": "DataSharingFrequencyContinually",
     "dbField": "data_sharing_frequency_continually",
@@ -655,7 +688,7 @@
     "isOtherType": true,
     "otherParentField": "data_sharing_frequency"
   },
-  "data_sharing_frequency_other": {
+  "dataSharingFrequencyOther": {
     "gqlField": "dataSharingFrequencyOther",
     "goField": "DataSharingFrequencyOther",
     "dbField": "data_sharing_frequency_other",
@@ -663,13 +696,13 @@
     "isOtherType": true,
     "otherParentField": "data_sharing_frequency"
   },
-  "data_sharing_starts_note": {
+  "dataSharingStartsNote": {
     "gqlField": "dataSharingStartsNote",
     "goField": "DataSharingStartsNote",
     "dbField": "data_sharing_starts_note",
     "label": "Notes"
   },
-  "data_collection_starts": {
+  "dataCollectionStarts": {
     "gqlField": "dataCollectionStarts",
     "goField": "DataCollectionStarts",
     "dbField": "data_collection_starts",
@@ -685,7 +718,7 @@
       "OTHER": "Other"
     }
   },
-  "data_collection_starts_other": {
+  "dataCollectionStartsOther": {
     "gqlField": "dataCollectionStartsOther",
     "goField": "DataCollectionStartsOther",
     "dbField": "data_collection_starts_other",
@@ -693,7 +726,7 @@
     "isOtherType": true,
     "otherParentField": "data_collection_starts"
   },
-  "data_collection_frequency": {
+  "dataCollectionFrequency": {
     "gqlField": "dataCollectionFrequency",
     "goField": "DataCollectionFrequency",
     "dbField": "data_collection_frequency",
@@ -707,7 +740,7 @@
       "OTHER": "Other"
     }
   },
-  "data_collection_frequency_continually": {
+  "dataCollectionFrequencyContinually": {
     "gqlField": "dataCollectionFrequencyContinually",
     "goField": "DataCollectionFrequencyContinually",
     "dbField": "data_collection_frequency_continually",
@@ -715,7 +748,7 @@
     "isOtherType": true,
     "otherParentField": "data_collection_frequency"
   },
-  "data_collection_frequency_other": {
+  "dataCollectionFrequencyOther": {
     "gqlField": "dataCollectionFrequencyOther",
     "goField": "DataCollectionFrequencyOther",
     "dbField": "data_collection_frequency_other",
@@ -723,13 +756,13 @@
     "isOtherType": true,
     "otherParentField": "data_collection_frequency"
   },
-  "data_collection_frequency_note": {
+  "dataCollectionFrequencyNote": {
     "gqlField": "dataCollectionFrequencyNote",
     "goField": "DataCollectionFrequencyNote",
     "dbField": "data_collection_frequency_note",
     "label": "Notes"
   },
-  "quality_reporting_starts": {
+  "qualityReportingStarts": {
     "gqlField": "qualityReportingStarts",
     "goField": "QualityReportingStarts",
     "dbField": "quality_reporting_starts",
@@ -745,7 +778,7 @@
       "OTHER": "Other"
     }
   },
-  "quality_reporting_starts_other": {
+  "qualityReportingStartsOther": {
     "gqlField": "qualityReportingStartsOther",
     "goField": "QualityReportingStartsOther",
     "dbField": "quality_reporting_starts_other",
@@ -753,13 +786,13 @@
     "isOtherType": true,
     "otherParentField": "quality_reporting_starts"
   },
-  "quality_reporting_starts_note": {
+  "qualityReportingStartsNote": {
     "gqlField": "qualityReportingStartsNote",
     "goField": "QualityReportingStartsNote",
     "dbField": "quality_reporting_starts_note",
     "label": "Notes"
   },
-  "quality_reporting_frequency": {
+  "qualityReportingFrequency": {
     "gqlField": "qualityReportingFrequency",
     "goField": "QualityReportingFrequency",
     "dbField": "quality_reporting_frequency",
@@ -773,7 +806,7 @@
       "OTHER": "Other"
     }
   },
-  "quality_reporting_frequency_continually": {
+  "qualityReportingFrequencyContinually": {
     "gqlField": "qualityReportingFrequencyContinually",
     "goField": "QualityReportingFrequencyContinually",
     "dbField": "quality_reporting_frequency_continually",
@@ -781,7 +814,7 @@
     "isOtherType": true,
     "otherParentField": "quality_reporting_frequency"
   },
-  "quality_reporting_frequency_other": {
+  "qualityReportingFrequencyOther": {
     "gqlField": "qualityReportingFrequencyOther",
     "goField": "QualityReportingFrequencyOther",
     "dbField": "quality_reporting_frequency_other",
@@ -789,7 +822,7 @@
     "isOtherType": true,
     "otherParentField": "quality_reporting_frequency"
   },
-  "model_learning_systems": {
+  "modelLearningSystems": {
     "gqlField": "modelLearningSystems",
     "goField": "ModelLearningSystems",
     "dbField": "model_learning_systems",
@@ -803,7 +836,7 @@
       "NO_LEARNING_SYSTEM": "No, we will not have a learning strategy"
     }
   },
-  "model_learning_systems_other": {
+  "modelLearningSystemsOther": {
     "gqlField": "modelLearningSystemsOther",
     "goField": "ModelLearningSystemsOther",
     "dbField": "model_learning_systems_other",
@@ -811,13 +844,13 @@
     "isOtherType": true,
     "otherParentField": "model_learning_systems"
   },
-  "model_learning_systems_note": {
+  "modelLearningSystemsNote": {
     "gqlField": "modelLearningSystemsNote",
     "goField": "ModelLearningSystemsNote",
     "dbField": "model_learning_systems_note",
     "label": "Notes"
   },
-  "anticipated_challenges": {
+  "anticipatedChallenges": {
     "gqlField": "anticipatedChallenges",
     "goField": "AnticipatedChallenges",
     "dbField": "anticipated_challenges",
