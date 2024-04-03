@@ -15,6 +15,7 @@ import {
   activityText,
   isDailyDigest,
   isNewDiscussionReply,
+  isSharedActivity,
   isTaggedInDiscussion,
   isTaggedInDiscussionReply
 } from './_utils';
@@ -70,6 +71,25 @@ const IndividualNotification = ({
     }
   };
 
+  const handleMarkAsReadAndViewModelPlan = (
+    notificationID: string,
+    modelPlanID: string
+  ) => {
+    if (!isRead) {
+      markAsRead({
+        variables: {
+          notificationID
+        }
+      }).then(response => {
+        if (!response?.errors) {
+          history.push(`/models/${modelPlanID}/read-only`);
+        }
+      });
+    } else {
+      history.push(`/models/${modelPlanID}/read-only`);
+    }
+  };
+
   const handleMarkAsReadAndToggleDailyDigest = (notificationID: string) => {
     if (!isRead) {
       markAsRead({
@@ -117,18 +137,23 @@ const IndividualNotification = ({
                 {getUserInitials(name)}
               </div>
 
-              <div className="margin-top-05">
-                <p className="line-height-sans-4 margin-left-1 margin-bottom-1 margin-top-0 ">
+              <div className="margin-top-05 padding-left-1">
+                <p className="line-height-sans-4 margin-bottom-1 margin-top-0 ">
                   <strong>{name}</strong>
                   {activityText(metaData)}
                 </p>
-                {!isDailyDigest(metaData) && (
+                {!isDailyDigest(metaData) && !isSharedActivity(metaData) && (
                   <MentionTextArea
                     className="notification__content text-base-darker"
                     id={`mention-${metaData.discussionID}`}
                     editable={false}
                     initialContent={`“${metaData.content}”`}
                   />
+                )}
+                {isSharedActivity(metaData) && metaData.optionalMessage && (
+                  <p className="margin-bottom-1 margin-top-0 text-base-darker">
+                    “{metaData.optionalMessage}”
+                  </p>
                 )}
 
                 <Button
@@ -149,6 +174,12 @@ const IndividualNotification = ({
                     }
                     if (isDailyDigest(metaData)) {
                       handleMarkAsReadAndToggleDailyDigest(id);
+                    }
+                    if (isSharedActivity(metaData)) {
+                      handleMarkAsReadAndViewModelPlan(
+                        id,
+                        metaData.modelPlanID
+                      );
                     }
                   }}
                 >
