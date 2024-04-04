@@ -15,15 +15,13 @@ import {
   ProcessListItem
 } from '@trussworks/react-uswds';
 import { Form, Formik, FormikProps } from 'formik';
-import {
-  GetMilestonesQuery,
-  useGetMilestonesQuery,
-  useUpdateBasicsMutation
-} from 'gql/gen/graphql';
+import UpdateBasics from 'gql/apolloGQL/Basics/UpdateBasics';
+import { GetMilestonesQuery, useGetMilestonesQuery } from 'gql/gen/graphql';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
 import BooleanRadio from 'components/BooleanRadioForm';
+import MutationErrorModal from 'components/MutationErrorModal';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import ReadyForReview from 'components/ReadyForReview';
@@ -33,12 +31,11 @@ import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import ExternalLink from 'components/shared/ExternalLink';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
+import useHandleMutation from 'hooks/useHandleMutation';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import { getKeys } from 'types/translation';
 import { isDateInPast } from 'utils/date';
 import flattenErrors from 'utils/flattenErrors';
-import { dirtyInput } from 'utils/formDiff';
-import sanitizeStatus from 'utils/status';
 import { NotFoundPartial } from 'views/NotFound';
 
 import './index.scss';
@@ -90,39 +87,11 @@ const Milestones = () => {
     status
   } = (data?.modelPlan?.basics || {}) as MilestonesFormType;
 
-  const [update] = useUpdateBasicsMutation();
-
-  const handleFormSubmit = (redirect?: 'back' | 'task-list') => {
-    const dirtyInputs = dirtyInput(
-      formikRef?.current?.initialValues,
-      formikRef?.current?.values
-    );
-
-    if (dirtyInputs.status) {
-      dirtyInputs.status = sanitizeStatus(dirtyInputs.status);
-    }
-
-    update({
-      variables: {
-        id,
-        changes: dirtyInputs
-      }
-    })
-      .then(response => {
-        if (!response?.errors) {
-          if (redirect === 'task-list') {
-            history.push(`/models/${modelID}/task-list`);
-          } else if (redirect === 'back') {
-            history.push(`/models/${modelID}/task-list/basics/overview`);
-          } else {
-            history.push(`/models/${modelID}/task-list/characteristics`);
-          }
-        }
-      })
-      .catch(errors => {
-        formikRef?.current?.setErrors(errors);
-      });
-  };
+  const { destinationURL, isModalOpen, setIsModalOpen } = useHandleMutation(
+    id,
+    UpdateBasics,
+    formikRef
+  );
 
   const initialValues: InitialValueType = {
     __typename: 'PlanBasics',
@@ -148,6 +117,12 @@ const Milestones = () => {
 
   return (
     <div>
+      <MutationErrorModal
+        isOpen={isModalOpen}
+        closeModal={() => setIsModalOpen(false)}
+        url={destinationURL}
+      />
+
       <BreadcrumbBar variant="wrap">
         <Breadcrumb>
           <BreadcrumbLink asCustom={Link} to="/">
@@ -186,7 +161,7 @@ const Milestones = () => {
         <Formik
           initialValues={initialValues}
           onSubmit={() => {
-            handleFormSubmit();
+            history.push(`/models/${modelID}/task-list/characteristics`);
           }}
           enableReinitialize
           validateOnBlur={false}
@@ -559,7 +534,9 @@ const Milestones = () => {
                               if (getKeys(err).length > 0) {
                                 window.scrollTo(0, 0);
                               } else {
-                                handleFormSubmit('back');
+                                history.push(
+                                  `/models/${modelID}/task-list/basics/overview`
+                                );
                               }
                             });
                           }
@@ -580,7 +557,11 @@ const Milestones = () => {
                     <Button
                       type="button"
                       className="usa-button usa-button--unstyled"
-                      onClick={() => handleFormSubmit('task-list')}
+                      onClick={() =>
+                        history.push(
+                          `/models/${modelID}/task-list/characteristics`
+                        )
+                      }
                     >
                       <Icon.ArrowBack className="margin-right-1" aria-hidden />
 

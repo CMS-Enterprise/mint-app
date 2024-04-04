@@ -141,7 +141,9 @@ const PeopleImpact = () => {
       <Formik
         initialValues={initialValues}
         onSubmit={() => {
-          history.push(`/models/${modelID}/task-list/beneficiary-frequency`);
+          history.push(
+            `/models/${modelID}/task-list/beneficiaries/beneficiary-frequency`
+          );
         }}
         enableReinitialize
         innerRef={formikRef}

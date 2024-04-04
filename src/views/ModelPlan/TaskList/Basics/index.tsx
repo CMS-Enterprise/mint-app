@@ -1,4 +1,4 @@
-import React, { Fragment, useRef } from 'react';
+import React, { Fragment, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, Route, Switch, useHistory, useParams } from 'react-router-dom';
 import {
@@ -28,9 +28,9 @@ import {
 
 import AskAQuestion from 'components/AskAQuestion';
 import MainContent from 'components/MainContent';
+import MutationErrorModal from 'components/MutationErrorModal';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
-import AutoSave from 'components/shared/AutoSave';
 import CheckboxField from 'components/shared/CheckboxField';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
@@ -70,6 +70,9 @@ const BasicsContent = () => {
 
   const history = useHistory();
 
+  const [destinationURL, setDestinationURL] = useState<string>('');
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+
   const { data, loading, error } = useGetBasicsQuery({
     variables: {
       id: modelID
@@ -96,53 +99,64 @@ const BasicsContent = () => {
 
   const [update] = useUpdateModelPlanAndBasicsMutation();
 
-  const handleFormSubmit = (
-    formikValues: ModelPlanInfoFormType,
-    redirect?: 'next' | 'back'
-  ) => {
-    if (!formikValues.modelName) {
-      formikRef?.current?.setFieldError('modelName', 'Enter the Model name');
-      return;
-    }
+  useEffect(() => {
+    if (!isModalOpen) {
+      const unblock = history.block(location => {
+        if (!formikRef.current?.values.modelName) {
+          formikRef?.current?.setFieldError(
+            'modelName',
+            'Enter the Model name'
+          );
+          return false;
+        }
 
-    const {
-      id: updateId,
-      modelName: updateModelName,
-      abbreviation: updateAbbreviation,
-      basics: updateBasics
-    } = formikValues;
-
-    update({
-      variables: {
-        id: updateId,
-        changes: {
+        const {
+          id: updateId,
           modelName: updateModelName,
-          abbreviation: updateAbbreviation
-        },
-        basicsId: updateBasics.id,
-        basicsChanges: {
-          demoCode: updateBasics.demoCode,
-          amsModelID: updateBasics.amsModelID,
-          modelCategory: updateBasics.modelCategory,
-          additionalModelCategories: updateBasics.additionalModelCategories,
-          cmsCenters: updateBasics.cmsCenters,
-          cmmiGroups: updateBasics.cmmiGroups
-        }
-      }
-    })
-      .then(response => {
-        if (!response?.errors) {
-          if (redirect === 'next') {
-            history.push(`/models/${modelID}/task-list/basics/overview`);
-          } else if (redirect === 'back') {
-            history.push(`/models/${modelID}/task-list/`);
+          abbreviation: updateAbbreviation,
+          basics: updateBasics
+        } = formikRef.current?.values;
+
+        update({
+          variables: {
+            id: updateId,
+            changes: {
+              modelName: updateModelName,
+              abbreviation: updateAbbreviation
+            },
+            basicsId: updateBasics.id,
+            basicsChanges: {
+              demoCode: updateBasics.demoCode,
+              amsModelID: updateBasics.amsModelID,
+              modelCategory: updateBasics.modelCategory,
+              additionalModelCategories: updateBasics.additionalModelCategories,
+              cmsCenters: updateBasics.cmsCenters,
+              cmmiGroups: updateBasics.cmmiGroups
+            }
           }
-        }
-      })
-      .catch(errors => {
-        formikRef?.current?.setErrors(errors);
+        })
+          .then(response => {
+            if (!response?.errors) {
+              unblock();
+              history.push(location.pathname);
+            }
+          })
+          .catch(errors => {
+            unblock();
+            setDestinationURL(location.pathname);
+            setIsModalOpen(true);
+
+            formikRef?.current?.setErrors(errors);
+          });
+        return false;
       });
-  };
+
+      return () => {
+        unblock();
+      };
+    }
+    return () => {};
+  }, [history, id, update, isModalOpen, formikRef, setIsModalOpen]);
 
   const initialValues: ModelPlanInfoFormType = {
     __typename: 'ModelPlan',
@@ -167,6 +181,12 @@ const BasicsContent = () => {
 
   return (
     <>
+      <MutationErrorModal
+        isOpen={isModalOpen}
+        closeModal={() => setIsModalOpen(false)}
+        url={destinationURL}
+      />
+
       <BreadcrumbBar variant="wrap">
         <Breadcrumb>
           <BreadcrumbLink asCustom={Link} to="/">
@@ -199,7 +219,7 @@ const BasicsContent = () => {
       <Formik
         initialValues={initialValues}
         onSubmit={values => {
-          handleFormSubmit(values, 'next');
+          history.push(`/models/${modelID}/task-list/basics/overview`);
         }}
         enableReinitialize
         validationSchema={planBasicsSchema.pageOneSchema}
@@ -594,7 +614,9 @@ const BasicsContent = () => {
                         <Button
                           type="button"
                           className="usa-button usa-button--unstyled"
-                          onClick={() => handleFormSubmit(values, 'back')}
+                          onClick={() =>
+                            history.push(`/models/${modelID}/task-list`)
+                          }
                         >
                           <Icon.ArrowBack
                             className="margin-right-1"
@@ -630,17 +652,6 @@ const BasicsContent = () => {
                   </Grid>
                 </Grid>
               </GridContainer>
-
-              {id && (
-                <AutoSave
-                  values={values}
-                  onSave={() => {
-                    if (formikRef.current!.values.modelName)
-                      handleFormSubmit(formikRef.current!.values);
-                  }}
-                  debounceDelay={3000}
-                />
-              )}
             </>
           );
         }}

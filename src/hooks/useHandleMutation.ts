@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import {
   OperationVariables,
   TypedDocumentNode,
@@ -16,6 +16,7 @@ function useHandleMutation<TData = any, TVariables = OperationVariables>(
   formikRef: React.RefObject<FormikProps<any>>
 ) {
   const history = useHistory();
+  const { pathname } = useLocation();
 
   const [destinationURL, setDestinationURL] = useState<string>('');
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -25,6 +26,10 @@ function useHandleMutation<TData = any, TVariables = OperationVariables>(
   useEffect(() => {
     if (!isModalOpen) {
       const unblock = history.block(location => {
+        if (location.pathname === pathname) {
+          return false;
+        }
+
         update({
           variables: {
             id,
@@ -55,7 +60,7 @@ function useHandleMutation<TData = any, TVariables = OperationVariables>(
       };
     }
     return () => {};
-  }, [history, id, update, isModalOpen, formikRef, setIsModalOpen]);
+  }, [history, id, update, isModalOpen, formikRef, setIsModalOpen, pathname]);
 
   return { destinationURL, isModalOpen, setIsModalOpen };
 }
