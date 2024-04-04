@@ -41,3 +41,8 @@ We will also expose some more information to make future filtering and searching
 There are many possible implementations for a job to translate the data. We plan to make implementation generic enough to be able to easily switch between options. Practically, this means we will keep business logic separate from the job logic.
 
 Practically speaking, we are already using factory (see [worker framework](0006-adr-worker-framework.md)) for other jobs. We will plan to use factory for the first pass implementation. If we ever adopt a micro-service framework, this job could be it's own service separate from factory.
+
+### Deprecate Autosave
+Currently, the frontend implements autosave to save all of our form data. This feature creates numerous transactions during the course of a form being filled out. While this does mean that data is saved very quickly, it makes the audit trail less meaningful (as parts of sentences could show up as a separate changes). 
+
+To make more meaningful change groupings, we are going to save on navigation instead of saving after a small period of time. This will allow us to show all the changes that happened at the same time in a meaningful manner. We will ensure that saving data remains an easy intuitive experience. 
