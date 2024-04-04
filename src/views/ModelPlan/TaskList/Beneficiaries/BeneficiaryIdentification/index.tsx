@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { Link, useHistory, useParams } from 'react-router-dom';
 import {
@@ -14,12 +14,12 @@ import {
   Radio
 } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
+import UpdateBeneficiaries from 'gql/apolloGQL/Beneficiaries/UpdateBeneficiaries';
 import {
   BeneficiariesType,
   GetBeneficiaryIdentificationQuery,
   TriStateAnswer,
-  useGetBeneficiaryIdentificationQuery,
-  useUpdateModelPlanBeneficiariesMutation
+  useGetBeneficiaryIdentificationQuery
 } from 'gql/gen/graphql';
 
 import AddNote from 'components/AddNote';
@@ -34,10 +34,10 @@ import FieldGroup from 'components/shared/FieldGroup';
 import MultiSelect from 'components/shared/MultiSelect';
 import TextAreaField from 'components/shared/TextAreaField';
 import TextField from 'components/shared/TextField';
+import useHandleMutation from 'hooks/useHandleMutation';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import { getKeys } from 'types/translation';
 import flattenErrors from 'utils/flattenErrors';
-import { dirtyInput } from 'utils/formDiff';
 import { composeMultiSelectOptions } from 'utils/modelPlan';
 import { NotFoundPartial } from 'views/NotFound';
 
@@ -49,9 +49,6 @@ const BeneficiaryIdentification = () => {
   const { t: beneficiariesMiscT } = useTranslation('beneficiariesMisc');
 
   const { t: miscellaneousT } = useTranslation('miscellaneous');
-
-  const [isMutationErrorModalOpen, setMutationErrorModalOpen] = useState(false);
-  const [destinationURL, setDestinationURL] = useState<string>('');
 
   const {
     beneficiaries: beneficiariesConfig,
@@ -90,42 +87,11 @@ const BeneficiaryIdentification = () => {
 
   const modelName = data?.modelPlan?.modelName || '';
 
-  const [update] = useUpdateModelPlanBeneficiariesMutation();
-
-  useEffect(() => {
-    if (!isMutationErrorModalOpen) {
-      const unblock = history.block(location => {
-        update({
-          variables: {
-            id,
-            changes: dirtyInput(
-              formikRef?.current?.initialValues,
-              formikRef?.current?.values
-            )
-          }
-        })
-          .then(response => {
-            if (!response?.errors) {
-              unblock();
-              history.push(location.pathname);
-            }
-          })
-          .catch(errors => {
-            unblock();
-            setDestinationURL(location.pathname);
-            setMutationErrorModalOpen(true);
-
-            formikRef?.current?.setErrors(errors);
-          });
-        return false;
-      });
-
-      return () => {
-        unblock();
-      };
-    }
-    return () => {};
-  }, [history, id, update, isMutationErrorModalOpen]);
+  const { destinationURL, isModalOpen, setIsModalOpen } = useHandleMutation(
+    id,
+    UpdateBeneficiaries,
+    formikRef
+  );
 
   const initialValues: BeneficiaryIdentificationFormType = {
     __typename: 'PlanBeneficiaries',
@@ -150,8 +116,8 @@ const BeneficiaryIdentification = () => {
   return (
     <>
       <MutationErrorModal
-        isOpen={isMutationErrorModalOpen}
-        closeModal={() => setMutationErrorModalOpen(false)}
+        isOpen={isModalOpen}
+        closeModal={() => setIsModalOpen(false)}
         url={destinationURL}
       />
 
