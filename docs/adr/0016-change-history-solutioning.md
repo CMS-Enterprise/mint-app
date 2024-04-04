@@ -4,7 +4,7 @@
 
 A new feature is going to be implemented in MINT, exposing change history in a manner that is viewable on the front end. We currently have data auditing happening in the database, however this is not human readable, and not easily searchable ([see data auditing](0007-adr-data-auditing.md)).
 
-As such, we need the ability to translate the data that is already stored, or change how we sort the data.
+As such, we need the ability to translate the data that is already stored, or change how we store the data.
 
 ## Decision Outcome
 
