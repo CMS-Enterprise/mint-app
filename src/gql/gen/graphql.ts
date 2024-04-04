@@ -1534,7 +1534,7 @@ export type PlanCollaboratorCreateInput = {
   userName: Scalars['String']['input'];
 };
 
-/** Represents collaborator translation data */
+/** Represents plan collaborator translation data */
 export type PlanCollaboratorTranslation = {
   __typename: 'PlanCollaboratorTranslation';
   teamRoles: TranslationFieldWithOptions;
@@ -1832,7 +1832,7 @@ export type PlanGeneralCharacteristicsChanges = {
   waiversRequiredTypes?: InputMaybe<Array<WaiverType>>;
 };
 
-/** Represents a plan general characteristics translation object */
+/** Represents plan general characteristics translation data */
 export type PlanGeneralCharacteristicsTranslation = {
   __typename: 'PlanGeneralCharacteristicsTranslation';
   additionalServicesInvolved: TranslationFieldWithOptions;
@@ -2378,7 +2378,7 @@ export type PlanParticipantsAndProvidersChanges = {
   willRiskChangeNote?: InputMaybe<Scalars['String']['input']>;
 };
 
-/** PlanParticipantsAndProviders represents a plan participants and providers translation object */
+/** Represents plan participants and providers translation data */
 export type PlanParticipantsAndProvidersTranslation = {
   __typename: 'PlanParticipantsAndProvidersTranslation';
   communicationMethod: TranslationFieldWithOptions;
@@ -3206,10 +3206,7 @@ export enum TeamRole {
   QUALITY = 'QUALITY'
 }
 
-/**
- * Base typea that represents FE translation structure
- * Translations are exported from FE for change history, and mapped to these types on the BE
- */
+/** Represents the data type of the translation field */
 export enum TranslationDataType {
   BOOLEAN = 'BOOLEAN',
   DATE = 'DATE',
@@ -3219,6 +3216,7 @@ export enum TranslationDataType {
   STRING = 'STRING'
 }
 
+/** Represents a translation question with no options */
 export type TranslationField = {
   __typename: 'TranslationField';
   dataType: TranslationDataType;
@@ -3227,14 +3225,17 @@ export type TranslationField = {
   goField: Scalars['String']['output'];
   gqlField: Scalars['String']['output'];
   isArray?: Maybe<Scalars['Boolean']['output']>;
+  /** Is a question a followup to another that doesn't designate it's own readonly question/line */
   isOtherType?: Maybe<Scalars['Boolean']['output']>;
   label: Scalars['String']['output'];
   multiSelectLabel?: Maybe<Scalars['String']['output']>;
+  /** Field name for the parent question for fields that represent Other, Please specify, etc.  Used in change history to render parent question for context */
   otherParentField?: Maybe<Scalars['String']['output']>;
   readonlyLabel?: Maybe<Scalars['String']['output']>;
   sublabel?: Maybe<Scalars['String']['output']>;
 };
 
+/** Represents a translation question with options */
 export type TranslationFieldWithOptions = {
   __typename: 'TranslationFieldWithOptions';
   dataType: TranslationDataType;
@@ -3243,15 +3244,18 @@ export type TranslationFieldWithOptions = {
   goField: Scalars['String']['output'];
   gqlField: Scalars['String']['output'];
   isArray?: Maybe<Scalars['Boolean']['output']>;
+  /** Is a question a followup to another that doesn't designate it's own readonly question/line */
   isOtherType?: Maybe<Scalars['Boolean']['output']>;
   label: Scalars['String']['output'];
   multiSelectLabel?: Maybe<Scalars['String']['output']>;
   options: Scalars['Map']['output'];
+  /** Field name for the parent question for fields that represent Other, Please specify, etc.  Used in change history to render parent question for context */
   otherParentField?: Maybe<Scalars['String']['output']>;
   readonlyLabel?: Maybe<Scalars['String']['output']>;
   sublabel?: Maybe<Scalars['String']['output']>;
 };
 
+/** Represents the FORM type of the translation field */
 export enum TranslationFormType {
   BOOLEAN = 'BOOLEAN',
   CHECKBOX = 'CHECKBOX',

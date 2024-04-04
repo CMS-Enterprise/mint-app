@@ -12471,7 +12471,7 @@ extend type Mutation {
 }`, BuiltIn: false},
 	{Name: "../schema/types/plan_collaborator_translations.graphql", Input: `
 """
-Represents collaborator translation data
+Represents plan collaborator translation data
 """
 type PlanCollaboratorTranslation {
   username: TranslationField! @goTag(key: "db", value: "user_account.username")
@@ -13077,7 +13077,7 @@ extend type Mutation {
   @hasRole(role: MINT_USER)
 }`, BuiltIn: false},
 	{Name: "../schema/types/plan_general_characteristics_translation.graphql", Input: `"""
-Represents a plan general characteristics translation object
+Represents plan general characteristics translation data
 """
 type PlanGeneralCharacteristicsTranslation {
   # Page 1
@@ -13899,7 +13899,7 @@ extend type Mutation {
   @hasRole(role: MINT_USER)
 }`, BuiltIn: false},
 	{Name: "../schema/types/plan_participants_and_providers_translation.graphql", Input: `"""
-PlanParticipantsAndProviders represents a plan participants and providers translation object
+Represents plan participants and providers translation data
 """
 type PlanParticipantsAndProvidersTranslation {
   #Page 1
@@ -14806,12 +14806,13 @@ type Subscription {
   onLockTaskListSectionContext(modelPlanID: UUID!): TaskListSectionLockStatusChanged!
   @hasRole(role: MINT_USER)
 }`, BuiltIn: false},
-	{Name: "../schema/types/translation.graphql", Input: `"""
-Base typea that represents FE translation structure
-Translations are exported from FE for change history, and mapped to these types on the BE
-"""
+	{Name: "../schema/types/translation.graphql", Input: `# Base types that represents FE translation structure
+# Translations are exported from FE for change history, and mapped to these types on the BE
 
-# Represents the data type of the translation field
+
+"""
+Represents the data type of the translation field
+"""
 enum TranslationDataType {
   STRING
   NUMBER
@@ -14821,7 +14822,9 @@ enum TranslationDataType {
   OBJECT
 }
 
-# Represents the FORM type of the translation field
+"""
+Represents the FORM type of the translation field
+"""
 enum TranslationFormType {
   TEXT
   TEXTAREA
@@ -14835,7 +14838,9 @@ enum TranslationFormType {
   RANGEINPUT
 }
 
-# TranslationField represents a question with no options
+"""
+Represents a translation question with no options
+"""
 type TranslationField {
   gqlField: String!
   goField: String!
@@ -14847,11 +14852,19 @@ type TranslationField {
   isArray: Boolean
   dataType: TranslationDataType!
   formType: TranslationFormType!
-  isOtherType: Boolean # Is a question a followup to another that doesn't designate it's own readonly question/line,
-  otherParentField: String # gql field name for the parent question for fields that represent Other, Please specify, etc.  Used in change history to render parent question for context
+  """
+  Is a question a followup to another that doesn't designate it's own readonly question/line
+  """
+  isOtherType: Boolean
+  """
+  Field name for the parent question for fields that represent Other, Please specify, etc.  Used in change history to render parent question for context
+  """
+  otherParentField: String
 }
 
-# TranslationField represents a question with options
+"""
+Represents a translation question with options
+"""
 type TranslationFieldWithOptions {
   gqlField: String!
   goField: String!
@@ -14863,8 +14876,14 @@ type TranslationFieldWithOptions {
   isArray: Boolean
   dataType: TranslationDataType!
   formType: TranslationFormType!
-  isOtherType: Boolean # Is a question a followup to another that doesn't designate it's own readonly question/line,
-  otherParentField: String # gql field name for the parent question for fields that represent Other, Please specify, etc.  Used in change history to render parent question for context
+  """
+  Is a question a followup to another that doesn't designate it's own readonly question/line
+  """
+  isOtherType: Boolean
+  """
+  Field name for the parent question for fields that represent Other, Please specify, etc.  Used in change history to render parent question for context
+  """
+  otherParentField: String
   options: Map!
 }
 

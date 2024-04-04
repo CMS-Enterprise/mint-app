@@ -1,4 +1,4 @@
-# Base typea that represents FE translation structure
+# Base types that represents FE translation structure
 # Translations are exported from FE for change history, and mapped to these types on the BE
 
 
@@ -44,8 +44,14 @@ type TranslationField {
   isArray: Boolean
   dataType: TranslationDataType!
   formType: TranslationFormType!
-  isOtherType: Boolean # Is a question a followup to another that doesn't designate it's own readonly question/line,
-  otherParentField: String # field name for the parent question for fields that represent Other, Please specify, etc.  Used in change history to render parent question for context
+  """
+  Is a question a followup to another that doesn't designate it's own readonly question/line
+  """
+  isOtherType: Boolean
+  """
+  Field name for the parent question for fields that represent Other, Please specify, etc.  Used in change history to render parent question for context
+  """
+  otherParentField: String
 }
 
 """
@@ -62,8 +68,14 @@ type TranslationFieldWithOptions {
   isArray: Boolean
   dataType: TranslationDataType!
   formType: TranslationFormType!
-  isOtherType: Boolean # Is a question a followup to another that doesn't designate it's own readonly question/line,
-  otherParentField: String # gql field name for the parent question for fields that represent Other, Please specify, etc.  Used in change history to render parent question for context
+  """
+  Is a question a followup to another that doesn't designate it's own readonly question/line
+  """
+  isOtherType: Boolean
+  """
+  Field name for the parent question for fields that represent Other, Please specify, etc.  Used in change history to render parent question for context
+  """
+  otherParentField: String
   options: Map!
 }
 

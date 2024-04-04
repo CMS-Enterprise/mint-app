@@ -119,7 +119,7 @@ type PlanCollaboratorCreateInput struct {
 	TeamRoles   []models.TeamRole `json:"teamRoles"`
 }
 
-// Represents collaborator translation data
+// Represents plan collaborator translation data
 type PlanCollaboratorTranslation struct {
 	Username  *TranslationField            `json:"username" db:"user_account.username"`
 	TeamRoles *TranslationFieldWithOptions `json:"teamRoles" db:"team_roles"`
@@ -154,7 +154,7 @@ type PlanDocumentLinkInput struct {
 	OptionalNotes        *string             `json:"optionalNotes,omitempty"`
 }
 
-// Represents a plan general characteristics translation object
+// Represents plan general characteristics translation data
 type PlanGeneralCharacteristicsTranslation struct {
 	IsNewModel                                    *TranslationFieldWithOptions `json:"isNewModel" db:"is_new_model"`
 	ExistingModel                                 *TranslationFieldWithOptions `json:"existingModel" db:"existing_model"`
@@ -326,7 +326,7 @@ type PlanOpsEvalAndLearningTranslation struct {
 	Status                                       *TranslationField            `json:"status" db:"status"`
 }
 
-// PlanParticipantsAndProviders represents a plan participants and providers translation object
+// Represents plan participants and providers translation data
 type PlanParticipantsAndProvidersTranslation struct {
 	Participants                           *TranslationFieldWithOptions `json:"participants" db:"participants"`
 	MedicareProviderType                   *TranslationField            `json:"medicareProviderType" db:"medicare_provider_type"`
@@ -519,6 +519,7 @@ type TaskListSectionLockStatusChanged struct {
 	ActionType ActionType                 `json:"actionType"`
 }
 
+// Represents a translation question with no options
 type TranslationField struct {
 	GqlField         string              `json:"gqlField"`
 	GoField          string              `json:"goField"`
@@ -530,22 +531,27 @@ type TranslationField struct {
 	IsArray          *bool               `json:"isArray,omitempty"`
 	DataType         TranslationDataType `json:"dataType"`
 	FormType         TranslationFormType `json:"formType"`
-	IsOtherType      *bool               `json:"isOtherType,omitempty"`
-	OtherParentField *string             `json:"otherParentField,omitempty"`
+	// Is a question a followup to another that doesn't designate it's own readonly question/line
+	IsOtherType *bool `json:"isOtherType,omitempty"`
+	// Field name for the parent question for fields that represent Other, Please specify, etc.  Used in change history to render parent question for context
+	OtherParentField *string `json:"otherParentField,omitempty"`
 }
 
+// Represents a translation question with options
 type TranslationFieldWithOptions struct {
-	GqlField         string                 `json:"gqlField"`
-	GoField          string                 `json:"goField"`
-	DbField          string                 `json:"dbField"`
-	Label            string                 `json:"label"`
-	ReadonlyLabel    *string                `json:"readonlyLabel,omitempty"`
-	Sublabel         *string                `json:"sublabel,omitempty"`
-	MultiSelectLabel *string                `json:"multiSelectLabel,omitempty"`
-	IsArray          *bool                  `json:"isArray,omitempty"`
-	DataType         TranslationDataType    `json:"dataType"`
-	FormType         TranslationFormType    `json:"formType"`
-	IsOtherType      *bool                  `json:"isOtherType,omitempty"`
+	GqlField         string              `json:"gqlField"`
+	GoField          string              `json:"goField"`
+	DbField          string              `json:"dbField"`
+	Label            string              `json:"label"`
+	ReadonlyLabel    *string             `json:"readonlyLabel,omitempty"`
+	Sublabel         *string             `json:"sublabel,omitempty"`
+	MultiSelectLabel *string             `json:"multiSelectLabel,omitempty"`
+	IsArray          *bool               `json:"isArray,omitempty"`
+	DataType         TranslationDataType `json:"dataType"`
+	FormType         TranslationFormType `json:"formType"`
+	// Is a question a followup to another that doesn't designate it's own readonly question/line
+	IsOtherType *bool `json:"isOtherType,omitempty"`
+	// Field name for the parent question for fields that represent Other, Please specify, etc.  Used in change history to render parent question for context
 	OtherParentField *string                `json:"otherParentField,omitempty"`
 	Options          map[string]interface{} `json:"options"`
 }
@@ -2391,8 +2397,7 @@ func (e TaskStatusInput) MarshalGQL(w io.Writer) {
 	fmt.Fprint(w, strconv.Quote(e.String()))
 }
 
-// Base typea that represents FE translation structure
-// Translations are exported from FE for change history, and mapped to these types on the BE
+// Represents the data type of the translation field
 type TranslationDataType string
 
 const (
@@ -2442,6 +2447,7 @@ func (e TranslationDataType) MarshalGQL(w io.Writer) {
 	fmt.Fprint(w, strconv.Quote(e.String()))
 }
 
+// Represents the FORM type of the translation field
 type TranslationFormType string
 
 const (
