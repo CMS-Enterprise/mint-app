@@ -16,7 +16,9 @@ jobs:
   build_frontend_assets:
     strategy:
       matrix:
-        env: [dev, test, impl, prod]
+        # EASI-4179: Temporary disable dev build
+        # env: [dev, test, impl, prod]
+        env: [test, impl, prod]
     uses: ./.github/workflows/build_frontend_assets.yml
     with:
       env: ${{ matrix.env }}
