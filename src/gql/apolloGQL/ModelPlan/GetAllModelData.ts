@@ -139,6 +139,10 @@ export default gql(/* GraphQL */ `
         riskNote
         willRiskChange
         willRiskChangeNote
+        participantRequireFinancialGuarantee
+        participantRequireFinancialGuaranteeType
+        participantRequireFinancialGuaranteeOther
+        participantRequireFinancialGuaranteeNote
         coordinateWork
         coordinateWorkNote
         gainsharePayments

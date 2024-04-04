@@ -139,6 +139,10 @@ const csvFields = [
   'participantsAndProviders.riskNote',
   'participantsAndProviders.willRiskChange',
   'participantsAndProviders.willRiskChangeNote',
+  'participantsAndProviders.participantRequireFinancialGuarantee',
+  'participantsAndProviders.participantRequireFinancialGuaranteeType', // array
+  'participantsAndProviders.participantRequireFinancialGuaranteeOther',
+  'participantsAndProviders.participantRequireFinancialGuaranteeNote',
   'participantsAndProviders.coordinateWork',
   'participantsAndProviders.coordinateWorkNote',
   'participantsAndProviders.gainsharePayments',

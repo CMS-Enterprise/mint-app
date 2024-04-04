@@ -32,11 +32,15 @@ exports[`Read Only Model Plan Summary -- Model Basics > matches snapshot 1`] = `
       <div
         class="read-only-section read-only-section--previous-names margin-bottom-3"
       >
-        <p
-          class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+        <div
+          class="display-flex flex-align-center"
         >
-          Previous names
-        </p>
+          <p
+            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+          >
+            Previous names
+          </p>
+        </div>
         <ul
           class="margin-y-0 padding-left-3"
         >
@@ -133,11 +137,15 @@ exports[`Read Only Model Plan Summary -- Model Basics > matches snapshot 1`] = `
             <div
               class="read-only-section read-only-section--primary-model-category margin-bottom-3"
             >
-              <p
-                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+              <div
+                class="display-flex flex-align-center"
               >
-                Primary model category
-              </p>
+                <p
+                  class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                >
+                  Primary model category
+                </p>
+              </div>
               <div
                 class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
               >
@@ -198,11 +206,15 @@ exports[`Read Only Model Plan Summary -- Model Basics > matches snapshot 1`] = `
             <div
               class="read-only-section read-only-section--additional-model-categories margin-bottom-3"
             >
-              <p
-                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+              <div
+                class="display-flex flex-align-center"
               >
-                Additional model categories
-              </p>
+                <p
+                  class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                >
+                  Additional model categories
+                </p>
+              </div>
               <ul
                 class="margin-y-0 padding-left-3"
               >
@@ -280,11 +292,15 @@ exports[`Read Only Model Plan Summary -- Model Basics > matches snapshot 1`] = `
             <div
               class="read-only-section read-only-section--cms-component margin-bottom-3"
             >
-              <p
-                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+              <div
+                class="display-flex flex-align-center"
               >
-                CMS component
-              </p>
+                <p
+                  class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                >
+                  CMS component
+                </p>
+              </div>
               <ul
                 class="margin-y-0 padding-left-3"
               >
@@ -315,11 +331,15 @@ exports[`Read Only Model Plan Summary -- Model Basics > matches snapshot 1`] = `
             <div
               class="read-only-section read-only-section--cmmi-group margin-bottom-3"
             >
-              <p
-                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+              <div
+                class="display-flex flex-align-center"
               >
-                CMMI Group
-              </p>
+                <p
+                  class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                >
+                  CMMI Group
+                </p>
+              </div>
               <ul
                 class="margin-y-0 padding-left-3"
               >
@@ -354,11 +374,15 @@ exports[`Read Only Model Plan Summary -- Model Basics > matches snapshot 1`] = `
         <div
           class="read-only-section read-only-section--model-type margin-bottom-3"
         >
-          <p
-            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+          <div
+            class="display-flex flex-align-center"
           >
-            Model Type
-          </p>
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Model Type
+            </p>
+          </div>
           <ul
             class="margin-y-0 padding-left-3"
           >
@@ -385,11 +409,15 @@ exports[`Read Only Model Plan Summary -- Model Basics > matches snapshot 1`] = `
         <div
           class="read-only-section read-only-section--problem-statement margin-bottom-3"
         >
-          <p
-            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+          <div
+            class="display-flex flex-align-center"
           >
-            Problem statement
-          </p>
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Problem statement
+            </p>
+          </div>
           <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
           >
@@ -408,11 +436,15 @@ exports[`Read Only Model Plan Summary -- Model Basics > matches snapshot 1`] = `
         <div
           class="read-only-section read-only-section--goal margin-bottom-3"
         >
-          <p
-            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+          <div
+            class="display-flex flex-align-center"
           >
-            Goal
-          </p>
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Goal
+            </p>
+          </div>
           <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
           >
@@ -431,11 +463,15 @@ exports[`Read Only Model Plan Summary -- Model Basics > matches snapshot 1`] = `
         <div
           class="read-only-section read-only-section--test-interventions margin-bottom-3"
         >
-          <p
-            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+          <div
+            class="display-flex flex-align-center"
           >
-            Test Interventions
-          </p>
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Test Interventions
+            </p>
+          </div>
           <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
           >
@@ -454,11 +490,15 @@ exports[`Read Only Model Plan Summary -- Model Basics > matches snapshot 1`] = `
         <div
           class="read-only-section read-only-section--notes margin-bottom-3"
         >
-          <p
-            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+          <div
+            class="display-flex flex-align-center"
           >
-            Notes
-          </p>
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Notes
+            </p>
+          </div>
           <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
           >
@@ -665,11 +705,15 @@ exports[`Read Only Model Plan Summary -- Model Basics > matches snapshot 1`] = `
       <div
         class="read-only-section read-only-section--if-timelines-are-tight--might-there-be-pieces-of-the-model-that-can-be-phased-in-over-time margin-bottom-3"
       >
-        <p
-          class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+        <div
+          class="display-flex flex-align-center"
         >
-          If timelines are tight, might there be pieces of the model that can be phased in over time?
-        </p>
+          <p
+            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+          >
+            If timelines are tight, might there be pieces of the model that can be phased in over time?
+          </p>
+        </div>
         <div
           class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
         >
@@ -684,11 +728,15 @@ exports[`Read Only Model Plan Summary -- Model Basics > matches snapshot 1`] = `
       <div
         class="read-only-section read-only-section--notes margin-bottom-3"
       >
-        <p
-          class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+        <div
+          class="display-flex flex-align-center"
         >
-          Notes
-        </p>
+          <p
+            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+          >
+            Notes
+          </p>
+        </div>
         <div
           class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
         >

@@ -3,7 +3,7 @@
 exports[`The AddNote component > matches snapshot 1`] = `
 <DocumentFragment>
   <div
-    class="margin-top-4 margin-bottom-8"
+    class="margin-top-3 margin-bottom-6"
   >
     <button
       class="usa-button usa-button usa-button--unstyled"
