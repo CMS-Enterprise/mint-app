@@ -84,6 +84,13 @@ enum ProviderLeaveType {
   NOT_APPLICABLE
 }
 
+enum ParticipantRequireFinancialGuaranteeType {
+  SURETY_BOND,
+  LETTER_OF_CREDIT,
+  ESCROW,
+  OTHER
+}
+
 """
 PlanParticipantsAndProviders is the task list section that deals with information regarding all Providers and Participants
 """
@@ -131,6 +138,10 @@ type PlanParticipantsAndProviders {
   willRiskChangeNote:    String
 
   #Page 4
+  participantRequireFinancialGuarantee: Boolean
+  participantRequireFinancialGuaranteeType: [ParticipantRequireFinancialGuaranteeType!]!
+  participantRequireFinancialGuaranteeOther: String
+  participantRequireFinancialGuaranteeNote: String
   coordinateWork:          Boolean
   coordinateWorkNote:      String
   gainsharePayments:       Boolean
@@ -226,6 +237,10 @@ input PlanParticipantsAndProvidersChanges @goModel(model: "map[string]interface{
   willRiskChangeNote:    String
 
   #Page 4
+  participantRequireFinancialGuarantee: Boolean
+  participantRequireFinancialGuaranteeType: [ParticipantRequireFinancialGuaranteeType!]
+  participantRequireFinancialGuaranteeOther: String
+  participantRequireFinancialGuaranteeNote: String
   coordinateWork:          Boolean
   coordinateWorkNote:      String
   gainsharePayments:       Boolean

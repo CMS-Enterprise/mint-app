@@ -61,6 +61,15 @@ export default gql(/* GraphQL */ `
                 replyID
                 content
               }
+              ... on ModelPlanSharedActivityMeta {
+                version
+                type
+                modelPlanID
+                modelPlan {
+                  modelName
+                }
+                optionalMessage
+              }
               ... on DailyDigestCompleteActivityMeta {
                 version
                 type

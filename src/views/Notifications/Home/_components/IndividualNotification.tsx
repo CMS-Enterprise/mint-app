@@ -16,6 +16,7 @@ import {
   isAddingCollaborator,
   isDailyDigest,
   isNewDiscussionReply,
+  isSharedActivity,
   isTaggedInDiscussion,
   isTaggedInDiscussionReply
 } from './_utils';
@@ -94,12 +95,13 @@ const IndividualNotification = ({
                 {getUserInitials(name)}
               </div>
 
-              <div className="margin-top-05">
-                <p className="line-height-sans-4 margin-left-1 margin-bottom-1 margin-top-0 ">
+              <div className="margin-top-05 padding-left-1">
+                <p className="line-height-sans-4 margin-bottom-1 margin-top-0 ">
                   <strong>{name}</strong>
                   {activityText(metaData)}
                 </p>
                 {!isDailyDigest(metaData) &&
+                  !isSharedActivity(metaData) &&
                   !isAddingCollaborator(metaData) && (
                     <MentionTextArea
                       className="notification__content text-base-darker"
@@ -108,6 +110,11 @@ const IndividualNotification = ({
                       initialContent={`“${metaData.content}”`}
                     />
                   )}
+                {isSharedActivity(metaData) && metaData.optionalMessage && (
+                  <p className="margin-bottom-1 margin-top-0 text-base-darker">
+                    “{metaData.optionalMessage}”
+                  </p>
+                )}
 
                 <Button
                   type="button"
@@ -132,6 +139,13 @@ const IndividualNotification = ({
                       handleMarkAsRead(() => {
                         history.push(
                           `/models/${metaData.modelPlanID}/task-list`
+                        );
+                      });
+                    }
+                    if (isSharedActivity(metaData)) {
+                      handleMarkAsRead(() => {
+                        history.push(
+                          `/models/${metaData.modelPlanID}/read-only`
                         );
                       });
                     }

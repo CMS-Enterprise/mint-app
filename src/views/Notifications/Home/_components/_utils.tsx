@@ -6,6 +6,7 @@ import {
   GetNotifications_currentUser_notifications_notifications_activity_metaData_AddedAsCollaboratorMeta as AddCollaboratorType,
   GetNotifications_currentUser_notifications_notifications_activity_metaData_DailyDigestCompleteActivityMeta as DailyDigestCompleteActivityType,
   GetNotifications_currentUser_notifications_notifications_activity_metaData_DailyDigestCompleteActivityMeta_analyzedAudits_changes as ChangeTypes,
+  GetNotifications_currentUser_notifications_notifications_activity_metaData_ModelPlanSharedActivityMeta as NewSharedActivityType,
   GetNotifications_currentUser_notifications_notifications_activity_metaData_NewDiscussionRepliedActivityMeta as NewReplyActivityType,
   GetNotifications_currentUser_notifications_notifications_activity_metaData_TaggedInDiscussionReplyActivityMeta as TaggedInDiscussionReplyActivityType,
   GetNotifications_currentUser_notifications_notifications_activity_metaData_TaggedInPlanDiscussionActivityMeta as TaggedInDiscussionActivityType
@@ -18,6 +19,7 @@ export const isTaggedInDiscussion = (
     | TaggedInDiscussionActivityType
     | DailyDigestCompleteActivityType
     | NewReplyActivityType
+    | NewSharedActivityType
     | AddCollaboratorType
 ): data is TaggedInDiscussionActivityType => {
   /* eslint no-underscore-dangle: 0 */
@@ -30,6 +32,7 @@ export const isTaggedInDiscussionReply = (
     | TaggedInDiscussionActivityType
     | DailyDigestCompleteActivityType
     | NewReplyActivityType
+    | NewSharedActivityType
     | AddCollaboratorType
 ): data is TaggedInDiscussionReplyActivityType => {
   /* eslint no-underscore-dangle: 0 */
@@ -42,6 +45,7 @@ export const isDailyDigest = (
     | TaggedInDiscussionActivityType
     | DailyDigestCompleteActivityType
     | NewReplyActivityType
+    | NewSharedActivityType
     | AddCollaboratorType
 ): data is DailyDigestCompleteActivityType => {
   /* eslint no-underscore-dangle: 0 */
@@ -54,10 +58,24 @@ export const isNewDiscussionReply = (
     | TaggedInDiscussionActivityType
     | DailyDigestCompleteActivityType
     | NewReplyActivityType
+    | NewSharedActivityType
     | AddCollaboratorType
 ): data is NewReplyActivityType => {
   /* eslint no-underscore-dangle: 0 */
   return data.__typename === 'NewDiscussionRepliedActivityMeta';
+};
+
+export const isSharedActivity = (
+  data:
+    | TaggedInDiscussionReplyActivityType
+    | TaggedInDiscussionActivityType
+    | DailyDigestCompleteActivityType
+    | NewReplyActivityType
+    | NewSharedActivityType
+    | AddCollaboratorType
+): data is NewSharedActivityType => {
+  /* eslint no-underscore-dangle: 0 */
+  return data.__typename === 'ModelPlanSharedActivityMeta';
 };
 
 export const isAddingCollaborator = (
@@ -66,6 +84,7 @@ export const isAddingCollaborator = (
     | TaggedInDiscussionActivityType
     | DailyDigestCompleteActivityType
     | NewReplyActivityType
+    | NewSharedActivityType
     | AddCollaboratorType
 ): data is AddCollaboratorType => {
   /* eslint no-underscore-dangle: 0 */
@@ -92,6 +111,14 @@ export const activityText = (data: MetaDataType) => {
   if (isDailyDigest(data)) {
     return (
       <Trans i18nKey="notifications:index.activityType.dailyDigestComplete.text" />
+    );
+  }
+  if (isSharedActivity(data)) {
+    return (
+      <Trans
+        i18nKey="notifications:index.activityType.modelPlanShared.text"
+        values={{ modelName: data.modelPlan.modelName }}
+      />
     );
   }
   if (isAddingCollaborator(data)) {
@@ -140,6 +167,14 @@ export const ActivityCTA = ({
     return (
       <>
         <Trans i18nKey="notifications:index.activityType.newDiscussionReply.cta" />
+        <Icon.ArrowForward className="margin-left-1" aria-hidden />
+      </>
+    );
+  }
+  if (isSharedActivity(data)) {
+    return (
+      <>
+        <Trans i18nKey="notifications:index.activityType.modelPlanShared.cta" />
         <Icon.ArrowForward className="margin-left-1" aria-hidden />
       </>
     );
