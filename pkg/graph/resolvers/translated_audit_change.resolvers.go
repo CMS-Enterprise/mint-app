@@ -6,7 +6,6 @@ package resolvers
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/google/uuid"
 
@@ -15,5 +14,5 @@ import (
 
 // TranslatedAuditChangeCollection is the resolver for the translatedAuditChangeCollection field.
 func (r *queryResolver) TranslatedAuditChangeCollection(ctx context.Context, modelPlanID uuid.UUID) ([]*models.TranslatedAuditChange, error) {
-	panic(fmt.Errorf("not implemented: TranslatedAuditChangeCollection - translatedAuditChangeCollection"))
+	return TranslatedAuditChangeCollectionGetByModelPlanID(r.store, modelPlanID)
 }
