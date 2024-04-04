@@ -247,7 +247,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     gqlField: 'selectionMethod',
     goField: 'SelectionMethod',
     dbField: 'selection_method',
-    label: 'How will you select participants? Select all that appy.',
+    label: 'How will you select participants? Select all that apply.',
     readonlyLabel: 'How will you select participants?',
     multiSelectLabel: 'Selected participants',
     dataType: 'enum',
