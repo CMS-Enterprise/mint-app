@@ -14,8 +14,11 @@ import {
   Radio
 } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
-import UpdateBeneficiaries from 'gql/apolloGQL/Beneficiaries/UpdateBeneficiaries';
-import { GetFrequencyQuery, useGetFrequencyQuery } from 'gql/gen/graphql';
+import {
+  GetFrequencyQuery,
+  TypedUpdateModelPlanBeneficiariesDocument,
+  useGetFrequencyQuery
+} from 'gql/gen/graphql';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
@@ -99,9 +102,11 @@ const Frequency = () => {
   useScrollElement(!loading);
 
   const { destinationURL, isModalOpen, setIsModalOpen } = useHandleMutation(
-    id,
-    UpdateBeneficiaries,
-    formikRef
+    TypedUpdateModelPlanBeneficiariesDocument,
+    {
+      id,
+      formikRef
+    }
   );
 
   const initialValues: InitialValueType = {

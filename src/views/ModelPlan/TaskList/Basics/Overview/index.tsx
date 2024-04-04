@@ -12,10 +12,10 @@ import {
   TextInput
 } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
-import UpdateBasics from 'gql/apolloGQL/Basics/UpdateBasics';
 import {
   GetOverviewQuery,
   ModelType,
+  TypedUpdateBasicsDocument,
   useGetOverviewQuery
 } from 'gql/gen/graphql';
 
@@ -68,9 +68,11 @@ const Overview = () => {
   } = (data?.modelPlan?.basics || {}) as BasicsFormType;
 
   const { destinationURL, isModalOpen, setIsModalOpen } = useHandleMutation(
-    id,
-    UpdateBasics,
-    formikRef
+    TypedUpdateBasicsDocument,
+    {
+      id,
+      formikRef
+    }
   );
 
   const initialValues: BasicsFormType = {

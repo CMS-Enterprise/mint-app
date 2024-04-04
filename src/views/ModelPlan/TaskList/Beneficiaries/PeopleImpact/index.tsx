@@ -16,10 +16,10 @@ import {
   TextInput
 } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
-import UpdateBeneficiaries from 'gql/apolloGQL/Beneficiaries/UpdateBeneficiaries';
 import {
   GetPeopleImpactedQuery,
   SelectionMethodType,
+  TypedUpdateModelPlanBeneficiariesDocument,
   useGetPeopleImpactedQuery
 } from 'gql/gen/graphql';
 
@@ -78,9 +78,11 @@ const PeopleImpact = () => {
   const modelName = data?.modelPlan?.modelName || '';
 
   const { destinationURL, isModalOpen, setIsModalOpen } = useHandleMutation(
-    id,
-    UpdateBeneficiaries,
-    formikRef
+    TypedUpdateModelPlanBeneficiariesDocument,
+    {
+      id,
+      formikRef
+    }
   );
 
   const initialValues: PeopleImpactedFormType = {

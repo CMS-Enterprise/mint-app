@@ -103,9 +103,11 @@ const KeyCharacteristics = () => {
   useScrollElement(!loading);
 
   const { destinationURL, isModalOpen, setIsModalOpen } = useHandleMutation(
-    id,
     TypedUpdatePlanGeneralCharacteristicsDocument,
-    formikRef
+    {
+      id,
+      formikRef
+    }
   );
 
   const initialValues: KeyCharacteristicsFormType = {

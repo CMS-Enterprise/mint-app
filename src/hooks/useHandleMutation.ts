@@ -10,10 +10,14 @@ import { DocumentNode } from 'graphql';
 
 import dirtyInput from 'utils/formDiff';
 
+type HandleMutationConfigType = {
+  id: string;
+  formikRef: React.RefObject<FormikProps<any>>;
+};
+
 function useHandleMutation<TData = any, TVariables = OperationVariables>(
-  id: string,
   mutation: DocumentNode | TypedDocumentNode<TData, TVariables>,
-  formikRef: React.RefObject<FormikProps<any>>
+  config: HandleMutationConfigType
 ) {
   const history = useHistory();
   const { pathname } = useLocation();
@@ -22,6 +26,8 @@ function useHandleMutation<TData = any, TVariables = OperationVariables>(
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   const [update] = useMutation<TData, OperationVariables>(mutation);
+
+  const { id, formikRef } = config;
 
   useEffect(() => {
     if (!isModalOpen) {

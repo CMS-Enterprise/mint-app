@@ -15,8 +15,11 @@ import {
   ProcessListItem
 } from '@trussworks/react-uswds';
 import { Form, Formik, FormikProps } from 'formik';
-import UpdateBasics from 'gql/apolloGQL/Basics/UpdateBasics';
-import { GetMilestonesQuery, useGetMilestonesQuery } from 'gql/gen/graphql';
+import {
+  GetMilestonesQuery,
+  TypedUpdateBasicsDocument,
+  useGetMilestonesQuery
+} from 'gql/gen/graphql';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
@@ -88,9 +91,11 @@ const Milestones = () => {
   } = (data?.modelPlan?.basics || {}) as MilestonesFormType;
 
   const { destinationURL, isModalOpen, setIsModalOpen } = useHandleMutation(
-    id,
-    UpdateBasics,
-    formikRef
+    TypedUpdateBasicsDocument,
+    {
+      id,
+      formikRef
+    }
   );
 
   const initialValues: InitialValueType = {
