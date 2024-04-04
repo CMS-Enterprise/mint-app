@@ -68,7 +68,9 @@ function useHandleMutation<TData = any, TVariables = OperationVariables>(
     return () => {};
   }, [history, id, update, isModalOpen, formikRef, setIsModalOpen, pathname]);
 
-  return { destinationURL, isModalOpen, setIsModalOpen };
+  return {
+    mutationError: { isModalOpen, setIsModalOpen, destinationURL }
+  };
 }
 
 export default useHandleMutation;

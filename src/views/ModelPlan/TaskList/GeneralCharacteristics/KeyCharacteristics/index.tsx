@@ -102,7 +102,7 @@ const KeyCharacteristics = () => {
   // If redirected from Operational Solutions, scrolls to the relevant question
   useScrollElement(!loading);
 
-  const { destinationURL, isModalOpen, setIsModalOpen } = useHandleMutation(
+  const { mutationError } = useHandleMutation(
     TypedUpdatePlanGeneralCharacteristicsDocument,
     {
       id,
@@ -136,9 +136,9 @@ const KeyCharacteristics = () => {
   return (
     <>
       <MutationErrorModal
-        isOpen={isModalOpen}
-        closeModal={() => setIsModalOpen(false)}
-        url={destinationURL}
+        isOpen={mutationError.isModalOpen}
+        closeModal={() => mutationError.setIsModalOpen(false)}
+        url={mutationError.destinationURL}
       />
 
       <BreadcrumbBar variant="wrap">

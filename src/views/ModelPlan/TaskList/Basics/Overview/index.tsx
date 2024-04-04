@@ -67,13 +67,10 @@ const Overview = () => {
     note
   } = (data?.modelPlan?.basics || {}) as BasicsFormType;
 
-  const { destinationURL, isModalOpen, setIsModalOpen } = useHandleMutation(
-    TypedUpdateBasicsDocument,
-    {
-      id,
-      formikRef
-    }
-  );
+  const { mutationError } = useHandleMutation(TypedUpdateBasicsDocument, {
+    id,
+    formikRef
+  });
 
   const initialValues: BasicsFormType = {
     __typename: 'PlanBasics',
@@ -93,9 +90,9 @@ const Overview = () => {
   return (
     <div data-testid="model-plan-overview">
       <MutationErrorModal
-        isOpen={isModalOpen}
-        closeModal={() => setIsModalOpen(false)}
-        url={destinationURL}
+        isOpen={mutationError.isModalOpen}
+        closeModal={() => mutationError.setIsModalOpen(false)}
+        url={mutationError.destinationURL}
       />
 
       <BreadcrumbBar variant="wrap">

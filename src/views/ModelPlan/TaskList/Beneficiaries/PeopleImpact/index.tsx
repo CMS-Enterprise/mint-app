@@ -77,7 +77,7 @@ const PeopleImpact = () => {
 
   const modelName = data?.modelPlan?.modelName || '';
 
-  const { destinationURL, isModalOpen, setIsModalOpen } = useHandleMutation(
+  const { mutationError } = useHandleMutation(
     TypedUpdateModelPlanBeneficiariesDocument,
     {
       id,
@@ -103,9 +103,9 @@ const PeopleImpact = () => {
   return (
     <>
       <MutationErrorModal
-        isOpen={isModalOpen}
-        closeModal={() => setIsModalOpen(false)}
-        url={destinationURL}
+        isOpen={mutationError.isModalOpen}
+        closeModal={() => mutationError.setIsModalOpen(false)}
+        url={mutationError.destinationURL}
       />
 
       <BreadcrumbBar variant="wrap">
