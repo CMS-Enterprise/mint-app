@@ -12,14 +12,12 @@ import {
   TextInput
 } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
-import UpdateGeneralCharacteristics from 'gql/apolloGQL/GeneralCharacteristics/UpdateGeneralCharacteristics';
 import {
   AgencyOrStateHelpType,
   AlternativePaymentModelType,
   GetKeyCharacteristicsQuery,
   KeyCharacteristic,
-  UpdatePlanGeneralCharacteristicsMutation,
-  UpdatePlanGeneralCharacteristicsMutationVariables,
+  TypedUpdatePlanGeneralCharacteristicsDocument,
   useGetKeyCharacteristicsQuery
 } from 'gql/gen/graphql';
 
@@ -104,10 +102,11 @@ const KeyCharacteristics = () => {
   // If redirected from Operational Solutions, scrolls to the relevant question
   useScrollElement(!loading);
 
-  const { destinationURL, isModalOpen, setIsModalOpen } = useHandleMutation<
-    UpdatePlanGeneralCharacteristicsMutation,
-    UpdatePlanGeneralCharacteristicsMutationVariables
-  >(id, UpdateGeneralCharacteristics, formikRef);
+  const { destinationURL, isModalOpen, setIsModalOpen } = useHandleMutation(
+    id,
+    TypedUpdatePlanGeneralCharacteristicsDocument,
+    formikRef
+  );
 
   const initialValues: KeyCharacteristicsFormType = {
     __typename: 'PlanGeneralCharacteristics',
