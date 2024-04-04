@@ -2,12 +2,15 @@ package storage
 
 import (
 	_ "embed"
+	"fmt"
 	"time"
 
 	"github.com/google/uuid"
 	zap "go.uber.org/zap"
 
 	"github.com/cmsgov/mint-app/pkg/models"
+	"github.com/cmsgov/mint-app/pkg/sqlqueries"
+	"github.com/cmsgov/mint-app/pkg/sqlutils"
 )
 
 //go:embed SQL/audit_change/collection_by_id_and_table.sql
@@ -129,4 +132,30 @@ func (s *Store) AuditChangeCollectionByPrimaryKeyOrForeignKeyAndDate(
 	}
 
 	return auditChanges, nil
+}
+
+// AuditChangeCollectionGetByModelPlanIDandTimeRange gets all audit_changes associated with a Model Plan for a specific date range
+// It joins on the foreign key field to trace every relevant change back to it's parent model_plan_id.
+// It currently knows how to handle model_plan_id, discussion_id, operational_need_id, and solution_id.
+// If another level of relationships is added that point back to model_plan_id, this should be updated.
+func AuditChangeCollectionGetByModelPlanIDandTimeRange(
+	np sqlutils.NamedPreparer,
+	_ *zap.Logger,
+	modelPlanID uuid.UUID,
+	timeStart time.Time,
+	timeEnd time.Time,
+) ([]*models.AuditChange, error) {
+
+	arg := map[string]interface{}{
+		"model_plan_id": modelPlanID,
+		"time_start":    timeStart,
+		"time_end":      timeEnd,
+	}
+
+	humanizedAuditCollection, procErr := sqlutils.SelectProcedure[models.AuditChange](np, sqlqueries.AuditChange.CollectionGetByModelPlanIDAndDateRange, arg)
+	if procErr != nil {
+		return nil, fmt.Errorf("issue getting audit collection by model_plan_id (%s) for  date range (%s -- %s)  : %w", modelPlanID, timeStart, timeEnd, procErr)
+	}
+	return humanizedAuditCollection, nil
+
 }

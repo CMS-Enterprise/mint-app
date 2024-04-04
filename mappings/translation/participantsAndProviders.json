@@ -1,0 +1,169 @@
+{
+  "participants": {
+    "gqlField": "participants",
+    "goField": "Participants",
+    "dbField": "participants",
+    "label": "Who are the participants? Select all that apply.",
+    "readonlyLabel": "Who are the participants?",
+    "multiSelectLabel": "Selected participants",
+    "dataType": "enum",
+    "formType": "multiSelect",
+    "options": {
+      "ACCOUNTABLE_CARE_ORGANIZATION": "Accountable Care Organization (ACO)",
+      "COMMERCIAL_PAYERS": "Commercial payers",
+      "COMMUNITY_BASED_ORGANIZATIONS": "Community-based organizations (CBO)",
+      "CONVENER": "Convener",
+      "ENTITIES": "Legal Entities",
+      "MEDICAID_MANAGED_CARE_ORGANIZATIONS": "Medicaid Managed Care organizations",
+      "MEDICAID_PROVIDERS": "Medicaid providers",
+      "MEDICARE_ADVANTAGE_PLANS": "Medicare Advantage plans",
+      "MEDICARE_ADVANTAGE_PRESCRIPTION_DRUG_PLANS": "Medicare Advantage Prescription Drug (MAPD) plans",
+      "MEDICARE_PROVIDERS": "Medicare providers/suppliers",
+      "NON_PROFIT_ORGANIZATIONS": "Non-profit organizations",
+      "STANDALONE_PART_D_PLANS": "Standalone Part D plans",
+      "STATES": "States",
+      "STATE_MEDICAID_AGENCIES": "State Medicaid agencies",
+      "OTHER": "Other"
+    },
+    "optionsRelatedInfo": {
+      "MEDICARE_PROVIDERS": "medicareProviderType",
+      "STATES": "statesEngagement",
+      "OTHER": "participantsOther"
+    },
+    "filterGroups": [
+      "CBOSC",
+      "CMMI",
+      "IPC",
+      "IDDOC",
+      "PBG"
+    ]
+  },
+  "medicareProviderType": {
+    "gqlField": "medicareProviderType",
+    "goField": "MedicareProviderType",
+    "dbField": "medicare_provider_type",
+    "label": "Which type of Medicare providers/suppliers?",
+    "dataType": "string",
+    "formType": "textarea",
+    "isOtherType": true,
+    "filterGroups": [
+      "CBOSC",
+      "CMMI",
+      "IPC",
+      "IDDOC",
+      "PBG"
+    ]
+  },
+  "statesEngagement": {
+    "gqlField": "statesEngagement",
+    "goField": "StatesEngagement",
+    "dbField": "states_engagement",
+    "label": "Please describe how states will engage with your model.",
+    "dataType": "string",
+    "formType": "textarea",
+    "isOtherType": true,
+    "filterGroups": [
+      "CBOSC",
+      "CMMI",
+      "IPC",
+      "IDDOC",
+      "PBG"
+    ]
+  },
+  "participantsOther": {
+    "gqlField": "participantsOther",
+    "goField": "ParticipantsOther",
+    "dbField": "participantsOther",
+    "label": "Please describe the other participants engaging with this model",
+    "dataType": "string",
+    "formType": "textarea",
+    "isOtherType": true,
+    "filterGroups": [
+      "CBOSC",
+      "CMMI",
+      "IPC",
+      "IDDOC",
+      "PBG"
+    ]
+  },
+  "participantsNote": {
+    "gqlField": "participantsNote",
+    "goField": "ParticipantsNote",
+    "dbField": "participantsNote",
+    "label": "Notes",
+    "dataType": "string",
+    "formType": "textarea",
+    "filterGroups": [
+      "CBOSC",
+      "CMMI",
+      "IPC",
+      "IDDOC",
+      "PBG"
+    ]
+  },
+  "participantsCurrentlyInModels": {
+    "gqlField": "participantsCurrentlyInModels",
+    "goField": "ParticipantsCurrentlyInModels",
+    "dbField": "participants_currently_in_models_note",
+    "label": "Are the participants in CMMI models now?",
+    "sublabel": "If you have selected more than one participant in the questions above, specify which participants already participate in CMMI models.",
+    "dataType": "boolean",
+    "formType": "radio",
+    "options": {
+      "true": "Yes",
+      "false": "No"
+    }
+  },
+  "participantsCurrentlyInModelsNote": {
+    "gqlField": "participantsCurrentlyInModelsNote",
+    "goField": "ParticipantsCurrentlyInModelsNote",
+    "dbField": "participants_currently_in_models_note",
+    "label": "Notes",
+    "dataType": "string",
+    "formType": "textarea"
+  },
+  "modelApplicationLevel": {
+    "gqlField": "modelApplicationLevel",
+    "goField": "ModelApplicationLevel",
+    "dbField": "modelApplicationLevel",
+    "label": "At what level will the model apply?",
+    "sublabel": "(e.g., all services identified at the CPT or ICD-10 code level, epsiode of care for a specific span of time, all hospitals unpaid under the Inpatient Prospective Payment System in a certain state)",
+    "dataType": "string",
+    "formType": "textarea",
+    "filterGroups": [
+      "IDDOC",
+      "PBG"
+    ]
+  },
+  "expectedNumberOfParticipants": {
+    "gqlField": "expectedNumberOfParticipants",
+    "goField": "ExpectedNumberOfParticipants",
+    "dbField": "expected_number_of_participants",
+    "label": "How many participants do you expect?",
+    "sublabel": "Note: Sometimes RRCEG provides a minimum for the power calculation. Other times stakeholder buy-in leads to a larger number.",
+    "dataType": "integer",
+    "formType": "input",
+    "filterGroups": [
+      "IDDOC",
+      "PBG"
+    ]
+  },
+  "expectedNumberOfBeneficiaries": {
+    "gqlField": "expectedNumberOfBeneficiaries",
+    "goField": "ExpectedNumberOfBeneficiaries",
+    "dbField": "expected_number_of_beneficiaries",
+    "label": "How many beneficiaries do you expect in the model?",
+    "dataType": "integer",
+    "formType": "input",
+    "filterGroups": [
+      "IDDOC",
+      "PBG"
+    ]
+  },
+  "participantsAndProvidersSummary": {
+    "gqlField": "participantsAndProvidersSummary",
+    "goField": "ParticipantsAndProvidersSummary",
+    "dbField": "participants_and_providers_summary",
+    "label": "Summary"
+  }
+}

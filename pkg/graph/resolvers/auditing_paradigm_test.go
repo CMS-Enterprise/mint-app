@@ -101,8 +101,8 @@ func verifyDeleteAuditChange(suite *ResolverSuite, discussionReply *models.Discu
 	if !entryFound {
 		return fmt.Errorf("no audit entry found for deletion of discussion reply %s", discussionReply.ID)
 	}
-	if *deleteEntry.ModifiedBy != discussionReply.CreatedBy {
-		return fmt.Errorf("disucssion reply audit of delete action credited to the incorrect user")
+	if deleteEntry.ModifiedBy != discussionReply.CreatedBy {
+		return fmt.Errorf("discussion reply audit of delete action credited to the incorrect user")
 	}
 
 	return nil

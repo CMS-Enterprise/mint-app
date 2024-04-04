@@ -1454,7 +1454,6 @@ type QueryResolver interface {
 	MostRecentDiscussionRoleSelection(ctx context.Context) (*models.DiscussionRoleSelection, error)
 	ExistingModelCollection(ctx context.Context) ([]*models.ExistingModel, error)
 	ExistingModelLink(ctx context.Context, id uuid.UUID) (*models.ExistingModelLink, error)
-	TranslatedAuditChangeCollection(ctx context.Context, modelPlanID uuid.UUID) ([]*models.TranslatedAuditChange, error)
 	ModelPlan(ctx context.Context, id uuid.UUID) (*models.ModelPlan, error)
 	ModelPlanCollection(ctx context.Context, filter model.ModelPlanFilter) ([]*models.ModelPlan, error)
 	NdaInfo(ctx context.Context) (*model.NDAInfo, error)
@@ -1469,6 +1468,7 @@ type QueryResolver interface {
 	PossibleOperationalNeeds(ctx context.Context) ([]*models.PossibleOperationalNeed, error)
 	PossibleOperationalSolutions(ctx context.Context) ([]*models.PossibleOperationalSolution, error)
 	TaskListSectionLocks(ctx context.Context, modelPlanID uuid.UUID) ([]*model.TaskListSectionLockStatus, error)
+	TranslatedAuditChangeCollection(ctx context.Context, modelPlanID uuid.UUID) ([]*models.TranslatedAuditChange, error)
 	UserAccount(ctx context.Context, username string) (*authentication.UserAccount, error)
 	SearchOktaUsers(ctx context.Context, searchTerm string) ([]*models.UserInfo, error)
 }
@@ -8933,63 +8933,6 @@ extend type Mutation {
   updateExistingModelLinks(modelPlanID: UUID!,fieldName: ExisitingModelLinkFieldType!,  existingModelIDs: [Int!],currentModelPlanIDs: [UUID!]): ExistingModelLinks!
   @hasRole(role: MINT_USER)
 }`, BuiltIn: false},
-	{Name: "../schema/types/humanized_audit_change.graphql", Input: `"""
-TranslatedAuditMetaData is a type that represents all the data that can be captured in a Translated audit
-"""
-union TranslatedAuditMetaData = TranslatedAuditMetaBaseStruct 
-
-
-type TranslatedAuditMetaBaseStruct {
-    version: Int!
-    tableName: String
-
-}
-
-enum DatabaseOperation {
-    INSERT
-    UPDATE
-    DELETE
-    TRUNCATE
-}
-
-"""
-TranslatedAuditChange represent a point in time change made to part of application.
-"""
-type TranslatedAuditChange {
-    id: UUID!
-    modelName: String!
-    
-    tableID: Int!
-    tableName: String!
-    primaryKey: UUID!
-    
-    date: Time!
-    action: DatabaseOperation!
-    fieldName: String!
-    fieldNameTranslated: String!
-    old: Any 
-    oldTranslated: Any
-    new: Any
-    newTranslated: Any
-
-    actorID: UUID!
-    actorName: String!  #TODO: (ChChCh Changes!)This could live in the actor account, but this is meant to facilitate search
-    changeID: Int! # This points to a specific audit change.
-    metaData: TranslatedAuditMetaData!
-
-
-    createdBy: UUID!
-    createdByUserAccount: UserAccount!
-    createdDts: Time!
-    modifiedBy: UUID
-    modifiedByUserAccount: UserAccount
-    modifiedDts: Time
-}
-
-extend type Query {
-    translatedAuditChangeCollection(modelPlanID: UUID!): [TranslatedAuditChange!]
-  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
-}  `, BuiltIn: false},
 	{Name: "../schema/types/launch_darkly_settings.graphql", Input: `"""
 The current user's Launch Darkly key
 """
@@ -11545,6 +11488,63 @@ type Subscription {
   onLockTaskListSectionContext(modelPlanID: UUID!): TaskListSectionLockStatusChanged!
   @hasRole(role: MINT_USER)
 }`, BuiltIn: false},
+	{Name: "../schema/types/translated_audit_change.graphql", Input: `"""
+TranslatedAuditMetaData is a type that represents all the data that can be captured in a Translated audit
+"""
+union TranslatedAuditMetaData = TranslatedAuditMetaBaseStruct 
+
+
+type TranslatedAuditMetaBaseStruct {
+    version: Int!
+    tableName: String
+
+}
+
+enum DatabaseOperation {
+    INSERT
+    UPDATE
+    DELETE
+    TRUNCATE
+}
+
+"""
+TranslatedAuditChange represent a point in time change made to part of application.
+"""
+type TranslatedAuditChange {
+    id: UUID!
+    modelName: String!
+    
+    tableID: Int!
+    tableName: String!
+    primaryKey: UUID!
+    
+    date: Time!
+    action: DatabaseOperation!
+    fieldName: String!
+    fieldNameTranslated: String!
+    old: Any 
+    oldTranslated: Any
+    new: Any
+    newTranslated: Any
+
+    actorID: UUID!
+    actorName: String!  #TODO: (ChChCh Changes!)This could live in the actor account, but this is meant to facilitate search
+    changeID: Int! # This points to a specific audit change.
+    metaData: TranslatedAuditMetaData!
+
+
+    createdBy: UUID!
+    createdByUserAccount: UserAccount!
+    createdDts: Time!
+    modifiedBy: UUID
+    modifiedByUserAccount: UserAccount
+    modifiedDts: Time
+}
+
+extend type Query {
+    translatedAuditChangeCollection(modelPlanID: UUID!): [TranslatedAuditChange!]
+  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+}  `, BuiltIn: false},
 	{Name: "../schema/types/user_account.graphql", Input: `type UserAccount {
   id: UUID!
   username: String!
@@ -15236,9 +15236,9 @@ func (ec *executionContext) _AuditChange_modifiedBy(ctx context.Context, field g
 	if resTmp == nil {
 		return graphql.Null
 	}
-	res := resTmp.(*uuid.UUID)
+	res := resTmp.(uuid.UUID)
 	fc.Result = res
-	return ec.marshalOUUID2ᚖgithubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
+	return ec.marshalOUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_AuditChange_modifiedBy(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -15268,7 +15268,7 @@ func (ec *executionContext) _AuditChange_modifiedByUserAccount(ctx context.Conte
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.ModifiedByUserAccount(ctx), nil
+		return obj.ModifiedByUserAccount(ctx)
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -15340,9 +15340,9 @@ func (ec *executionContext) _AuditChange_modifiedDts(ctx context.Context, field 
 	if resTmp == nil {
 		return graphql.Null
 	}
-	res := resTmp.(*time.Time)
+	res := resTmp.(time.Time)
 	fc.Result = res
-	return ec.marshalOTime2ᚖtimeᚐTime(ctx, field.Selections, res)
+	return ec.marshalOTime2timeᚐTime(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_AuditChange_modifiedDts(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -54327,130 +54327,6 @@ func (ec *executionContext) fieldContext_Query_existingModelLink(ctx context.Con
 	return fc, nil
 }
 
-func (ec *executionContext) _Query_translatedAuditChangeCollection(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Query_translatedAuditChangeCollection(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		directive0 := func(rctx context.Context) (interface{}, error) {
-			ctx = rctx // use context from middleware stack in children
-			return ec.resolvers.Query().TranslatedAuditChangeCollection(rctx, fc.Args["modelPlanID"].(uuid.UUID))
-		}
-		directive1 := func(ctx context.Context) (interface{}, error) {
-			roles, err := ec.unmarshalNRole2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRoleᚄ(ctx, []interface{}{"MINT_USER", "MINT_MAC"})
-			if err != nil {
-				return nil, err
-			}
-			if ec.directives.HasAnyRole == nil {
-				return nil, errors.New("directive hasAnyRole is not implemented")
-			}
-			return ec.directives.HasAnyRole(ctx, nil, directive0, roles)
-		}
-
-		tmp, err := directive1(rctx)
-		if err != nil {
-			return nil, graphql.ErrorOnPath(ctx, err)
-		}
-		if tmp == nil {
-			return nil, nil
-		}
-		if data, ok := tmp.([]*models.TranslatedAuditChange); ok {
-			return data, nil
-		}
-		return nil, fmt.Errorf(`unexpected type %T from directive, should be []*github.com/cmsgov/mint-app/pkg/models.TranslatedAuditChange`, tmp)
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		return graphql.Null
-	}
-	res := resTmp.([]*models.TranslatedAuditChange)
-	fc.Result = res
-	return ec.marshalOTranslatedAuditChange2ᚕᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTranslatedAuditChangeᚄ(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_Query_translatedAuditChangeCollection(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "Query",
-		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			switch field.Name {
-			case "id":
-				return ec.fieldContext_TranslatedAuditChange_id(ctx, field)
-			case "modelName":
-				return ec.fieldContext_TranslatedAuditChange_modelName(ctx, field)
-			case "tableID":
-				return ec.fieldContext_TranslatedAuditChange_tableID(ctx, field)
-			case "tableName":
-				return ec.fieldContext_TranslatedAuditChange_tableName(ctx, field)
-			case "primaryKey":
-				return ec.fieldContext_TranslatedAuditChange_primaryKey(ctx, field)
-			case "date":
-				return ec.fieldContext_TranslatedAuditChange_date(ctx, field)
-			case "action":
-				return ec.fieldContext_TranslatedAuditChange_action(ctx, field)
-			case "fieldName":
-				return ec.fieldContext_TranslatedAuditChange_fieldName(ctx, field)
-			case "fieldNameTranslated":
-				return ec.fieldContext_TranslatedAuditChange_fieldNameTranslated(ctx, field)
-			case "old":
-				return ec.fieldContext_TranslatedAuditChange_old(ctx, field)
-			case "oldTranslated":
-				return ec.fieldContext_TranslatedAuditChange_oldTranslated(ctx, field)
-			case "new":
-				return ec.fieldContext_TranslatedAuditChange_new(ctx, field)
-			case "newTranslated":
-				return ec.fieldContext_TranslatedAuditChange_newTranslated(ctx, field)
-			case "actorID":
-				return ec.fieldContext_TranslatedAuditChange_actorID(ctx, field)
-			case "actorName":
-				return ec.fieldContext_TranslatedAuditChange_actorName(ctx, field)
-			case "changeID":
-				return ec.fieldContext_TranslatedAuditChange_changeID(ctx, field)
-			case "metaData":
-				return ec.fieldContext_TranslatedAuditChange_metaData(ctx, field)
-			case "createdBy":
-				return ec.fieldContext_TranslatedAuditChange_createdBy(ctx, field)
-			case "createdByUserAccount":
-				return ec.fieldContext_TranslatedAuditChange_createdByUserAccount(ctx, field)
-			case "createdDts":
-				return ec.fieldContext_TranslatedAuditChange_createdDts(ctx, field)
-			case "modifiedBy":
-				return ec.fieldContext_TranslatedAuditChange_modifiedBy(ctx, field)
-			case "modifiedByUserAccount":
-				return ec.fieldContext_TranslatedAuditChange_modifiedByUserAccount(ctx, field)
-			case "modifiedDts":
-				return ec.fieldContext_TranslatedAuditChange_modifiedDts(ctx, field)
-			}
-			return nil, fmt.Errorf("no field named %q was found under type TranslatedAuditChange", field.Name)
-		},
-	}
-	defer func() {
-		if r := recover(); r != nil {
-			err = ec.Recover(ctx, r)
-			ec.Error(ctx, err)
-		}
-	}()
-	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Query_translatedAuditChangeCollection_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
-		ec.Error(ctx, err)
-		return fc, err
-	}
-	return fc, nil
-}
-
 func (ec *executionContext) _Query_modelPlan(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_Query_modelPlan(ctx, field)
 	if err != nil {
@@ -56128,6 +56004,130 @@ func (ec *executionContext) fieldContext_Query_taskListSectionLocks(ctx context.
 	}()
 	ctx = graphql.WithFieldContext(ctx, fc)
 	if fc.Args, err = ec.field_Query_taskListSectionLocks_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Query_translatedAuditChangeCollection(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Query_translatedAuditChangeCollection(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		directive0 := func(rctx context.Context) (interface{}, error) {
+			ctx = rctx // use context from middleware stack in children
+			return ec.resolvers.Query().TranslatedAuditChangeCollection(rctx, fc.Args["modelPlanID"].(uuid.UUID))
+		}
+		directive1 := func(ctx context.Context) (interface{}, error) {
+			roles, err := ec.unmarshalNRole2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRoleᚄ(ctx, []interface{}{"MINT_USER", "MINT_MAC"})
+			if err != nil {
+				return nil, err
+			}
+			if ec.directives.HasAnyRole == nil {
+				return nil, errors.New("directive hasAnyRole is not implemented")
+			}
+			return ec.directives.HasAnyRole(ctx, nil, directive0, roles)
+		}
+
+		tmp, err := directive1(rctx)
+		if err != nil {
+			return nil, graphql.ErrorOnPath(ctx, err)
+		}
+		if tmp == nil {
+			return nil, nil
+		}
+		if data, ok := tmp.([]*models.TranslatedAuditChange); ok {
+			return data, nil
+		}
+		return nil, fmt.Errorf(`unexpected type %T from directive, should be []*github.com/cmsgov/mint-app/pkg/models.TranslatedAuditChange`, tmp)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.([]*models.TranslatedAuditChange)
+	fc.Result = res
+	return ec.marshalOTranslatedAuditChange2ᚕᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTranslatedAuditChangeᚄ(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Query_translatedAuditChangeCollection(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Query",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_TranslatedAuditChange_id(ctx, field)
+			case "modelName":
+				return ec.fieldContext_TranslatedAuditChange_modelName(ctx, field)
+			case "tableID":
+				return ec.fieldContext_TranslatedAuditChange_tableID(ctx, field)
+			case "tableName":
+				return ec.fieldContext_TranslatedAuditChange_tableName(ctx, field)
+			case "primaryKey":
+				return ec.fieldContext_TranslatedAuditChange_primaryKey(ctx, field)
+			case "date":
+				return ec.fieldContext_TranslatedAuditChange_date(ctx, field)
+			case "action":
+				return ec.fieldContext_TranslatedAuditChange_action(ctx, field)
+			case "fieldName":
+				return ec.fieldContext_TranslatedAuditChange_fieldName(ctx, field)
+			case "fieldNameTranslated":
+				return ec.fieldContext_TranslatedAuditChange_fieldNameTranslated(ctx, field)
+			case "old":
+				return ec.fieldContext_TranslatedAuditChange_old(ctx, field)
+			case "oldTranslated":
+				return ec.fieldContext_TranslatedAuditChange_oldTranslated(ctx, field)
+			case "new":
+				return ec.fieldContext_TranslatedAuditChange_new(ctx, field)
+			case "newTranslated":
+				return ec.fieldContext_TranslatedAuditChange_newTranslated(ctx, field)
+			case "actorID":
+				return ec.fieldContext_TranslatedAuditChange_actorID(ctx, field)
+			case "actorName":
+				return ec.fieldContext_TranslatedAuditChange_actorName(ctx, field)
+			case "changeID":
+				return ec.fieldContext_TranslatedAuditChange_changeID(ctx, field)
+			case "metaData":
+				return ec.fieldContext_TranslatedAuditChange_metaData(ctx, field)
+			case "createdBy":
+				return ec.fieldContext_TranslatedAuditChange_createdBy(ctx, field)
+			case "createdByUserAccount":
+				return ec.fieldContext_TranslatedAuditChange_createdByUserAccount(ctx, field)
+			case "createdDts":
+				return ec.fieldContext_TranslatedAuditChange_createdDts(ctx, field)
+			case "modifiedBy":
+				return ec.fieldContext_TranslatedAuditChange_modifiedBy(ctx, field)
+			case "modifiedByUserAccount":
+				return ec.fieldContext_TranslatedAuditChange_modifiedByUserAccount(ctx, field)
+			case "modifiedDts":
+				return ec.fieldContext_TranslatedAuditChange_modifiedDts(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type TranslatedAuditChange", field.Name)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Query_translatedAuditChangeCollection_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
 		ec.Error(ctx, err)
 		return fc, err
 	}
@@ -73937,25 +73937,6 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 			}
 
 			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return rrm(innerCtx) })
-		case "translatedAuditChangeCollection":
-			field := field
-
-			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
-				defer func() {
-					if r := recover(); r != nil {
-						ec.Error(ctx, ec.Recover(ctx, r))
-					}
-				}()
-				res = ec._Query_translatedAuditChangeCollection(ctx, field)
-				return res
-			}
-
-			rrm := func(ctx context.Context) graphql.Marshaler {
-				return ec.OperationContext.RootResolverMiddleware(ctx,
-					func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
-			}
-
-			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return rrm(innerCtx) })
 		case "modelPlan":
 			field := field
 
@@ -74255,6 +74236,25 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 				if res == graphql.Null {
 					atomic.AddUint32(&fs.Invalids, 1)
 				}
+				return res
+			}
+
+			rrm := func(ctx context.Context) graphql.Marshaler {
+				return ec.OperationContext.RootResolverMiddleware(ctx,
+					func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return rrm(innerCtx) })
+		case "translatedAuditChangeCollection":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Query_translatedAuditChangeCollection(ctx, field)
 				return res
 			}
 
@@ -85050,6 +85050,16 @@ func (ec *executionContext) marshalOTaskStatusInput2ᚖgithubᚗcomᚋcmsgovᚋm
 		return graphql.Null
 	}
 	return v
+}
+
+func (ec *executionContext) unmarshalOTime2timeᚐTime(ctx context.Context, v interface{}) (time.Time, error) {
+	res, err := graphql.UnmarshalTime(v)
+	return res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalOTime2timeᚐTime(ctx context.Context, sel ast.SelectionSet, v time.Time) graphql.Marshaler {
+	res := graphql.MarshalTime(v)
+	return res
 }
 
 func (ec *executionContext) unmarshalOTime2ᚖtimeᚐTime(ctx context.Context, v interface{}) (*time.Time, error) {
