@@ -1327,6 +1327,36 @@ export type PlanBasicsChanges = {
   wrapUpEnds?: InputMaybe<Scalars['Time']['input']>;
 };
 
+/** Represents plan basics translation data */
+export type PlanBasicsTranslation = {
+  __typename: 'PlanBasicsTranslation';
+  additionalModelCategories: TranslationFieldWithOptions;
+  amsModelID: TranslationField;
+  announced: TranslationField;
+  applicationsEnd: TranslationField;
+  applicationsStart: TranslationField;
+  clearanceEnds: TranslationField;
+  clearanceStarts: TranslationField;
+  cmmiGroups: TranslationFieldWithOptions;
+  cmsCenters: TranslationFieldWithOptions;
+  completeICIP: TranslationField;
+  demoCode: TranslationField;
+  goal: TranslationField;
+  highLevelNote: TranslationField;
+  modelCategory: TranslationFieldWithOptions;
+  modelType: TranslationFieldWithOptions;
+  modelTypeOther: TranslationField;
+  note: TranslationField;
+  performancePeriodEnds: TranslationField;
+  performancePeriodStarts: TranslationField;
+  phasedIn: TranslationFieldWithOptions;
+  phasedInNote: TranslationField;
+  problem: TranslationField;
+  status: TranslationField;
+  testInterventions: TranslationField;
+  wrapUpEnds: TranslationField;
+};
+
 /** Plan Beneficiaries represents the the beneficiaries section of the task list */
 export type PlanBeneficiaries = {
   __typename: 'PlanBeneficiaries';
@@ -1411,6 +1441,42 @@ export type PlanBeneficiariesChanges = {
   treatDualElligibleDifferentNote?: InputMaybe<Scalars['String']['input']>;
 };
 
+/** Represents plan beneficiaries translation data */
+export type PlanBeneficiariesTranslation = {
+  __typename: 'PlanBeneficiariesTranslation';
+  beneficiaries: TranslationFieldWithOptions;
+  beneficiariesNote: TranslationField;
+  beneficiariesOther: TranslationField;
+  beneficiaryOverlap: TranslationFieldWithOptions;
+  beneficiaryOverlapNote: TranslationField;
+  beneficiaryRemovalFrequency: TranslationFieldWithOptions;
+  beneficiaryRemovalFrequencyContinually: TranslationField;
+  beneficiaryRemovalFrequencyNote: TranslationField;
+  beneficiaryRemovalFrequencyOther: TranslationField;
+  beneficiarySelectionFrequency: TranslationFieldWithOptions;
+  beneficiarySelectionFrequencyContinually: TranslationField;
+  beneficiarySelectionFrequencyNote: TranslationField;
+  beneficiarySelectionFrequencyOther: TranslationField;
+  beneficiarySelectionMethod: TranslationFieldWithOptions;
+  beneficiarySelectionNote: TranslationField;
+  beneficiarySelectionOther: TranslationField;
+  confidenceNote: TranslationField;
+  diseaseSpecificGroup: TranslationField;
+  estimateConfidence: TranslationFieldWithOptions;
+  excludeCertainCharacteristics: TranslationFieldWithOptions;
+  excludeCertainCharacteristicsCriteria: TranslationField;
+  excludeCertainCharacteristicsNote: TranslationField;
+  numberPeopleImpacted: TranslationField;
+  precedenceRules: TranslationFieldWithOptions;
+  precedenceRulesNo: TranslationField;
+  precedenceRulesNote: TranslationField;
+  precedenceRulesYes: TranslationField;
+  status: TranslationField;
+  treatDualElligibleDifferent: TranslationFieldWithOptions;
+  treatDualElligibleDifferentHow: TranslationField;
+  treatDualElligibleDifferentNote: TranslationField;
+};
+
 export type PlanCr = {
   __typename: 'PlanCR';
   createdBy: Scalars['UUID']['output'];
@@ -1466,6 +1532,13 @@ export type PlanCollaboratorCreateInput = {
   modelPlanID: Scalars['UUID']['input'];
   teamRoles: Array<TeamRole>;
   userName: Scalars['String']['input'];
+};
+
+/** Represents plan collaborator translation data */
+export type PlanCollaboratorTranslation = {
+  __typename: 'PlanCollaboratorTranslation';
+  teamRoles: TranslationFieldWithOptions;
+  username: TranslationField;
 };
 
 /** PlanDiscussion represents plan discussion */
@@ -1759,6 +1832,78 @@ export type PlanGeneralCharacteristicsChanges = {
   waiversRequiredTypes?: InputMaybe<Array<WaiverType>>;
 };
 
+/** Represents plan general characteristics translation data */
+export type PlanGeneralCharacteristicsTranslation = {
+  __typename: 'PlanGeneralCharacteristicsTranslation';
+  additionalServicesInvolved: TranslationFieldWithOptions;
+  additionalServicesInvolvedDescription: TranslationField;
+  additionalServicesInvolvedNote: TranslationField;
+  agencyOrStateHelp: TranslationFieldWithOptions;
+  agencyOrStateHelpNote: TranslationField;
+  agencyOrStateHelpOther: TranslationField;
+  agreementTypes: TranslationFieldWithOptions;
+  agreementTypesOther: TranslationField;
+  alternativePaymentModelNote: TranslationField;
+  alternativePaymentModelTypes: TranslationFieldWithOptions;
+  authorityAllowances: TranslationFieldWithOptions;
+  authorityAllowancesNote: TranslationField;
+  authorityAllowancesOther: TranslationField;
+  careCoordinationInvolved: TranslationFieldWithOptions;
+  careCoordinationInvolvedDescription: TranslationField;
+  careCoordinationInvolvedNote: TranslationField;
+  collectPlanBids: TranslationFieldWithOptions;
+  collectPlanBidsNote: TranslationField;
+  communityPartnersInvolved: TranslationFieldWithOptions;
+  communityPartnersInvolvedDescription: TranslationField;
+  communityPartnersInvolvedNote: TranslationField;
+  existingModel: TranslationFieldWithOptions;
+  geographiesRegionTypes: TranslationFieldWithOptions;
+  geographiesStatesAndTerritories: TranslationFieldWithOptions;
+  geographiesTargeted: TranslationFieldWithOptions;
+  geographiesTargetedAppliedTo: TranslationFieldWithOptions;
+  geographiesTargetedAppliedToOther: TranslationField;
+  geographiesTargetedNote: TranslationField;
+  geographiesTargetedTypes: TranslationFieldWithOptions;
+  geographiesTargetedTypesOther: TranslationField;
+  hasComponentsOrTracks: TranslationFieldWithOptions;
+  hasComponentsOrTracksDiffer: TranslationField;
+  hasComponentsOrTracksNote: TranslationField;
+  isNewModel: TranslationFieldWithOptions;
+  keyCharacteristics: TranslationFieldWithOptions;
+  keyCharacteristicsNote: TranslationField;
+  keyCharacteristicsOther: TranslationField;
+  managePartCDEnrollment: TranslationFieldWithOptions;
+  managePartCDEnrollmentNote: TranslationField;
+  multiplePatricipationAgreementsNeeded: TranslationFieldWithOptions;
+  multiplePatricipationAgreementsNeededNote: TranslationField;
+  participationInModelPrecondition: TranslationFieldWithOptions;
+  participationInModelPreconditionNote: TranslationField;
+  participationInModelPreconditionOtherOption: TranslationField;
+  participationInModelPreconditionOtherSelected: TranslationFieldWithOptions;
+  participationInModelPreconditionOtherSpecify: TranslationField;
+  participationInModelPreconditionWhich: TranslationFieldWithOptions;
+  participationInModelPreconditionWhyHow: TranslationFieldWithOptions;
+  participationOptions: TranslationFieldWithOptions;
+  participationOptionsNote: TranslationField;
+  planContractUpdated: TranslationFieldWithOptions;
+  planContractUpdatedNote: TranslationField;
+  resemblesExistingModel: TranslationFieldWithOptions;
+  resemblesExistingModelHow: TranslationFieldWithOptions;
+  resemblesExistingModelNote: TranslationField;
+  resemblesExistingModelOtherOption: TranslationField;
+  resemblesExistingModelOtherSelected: TranslationFieldWithOptions;
+  resemblesExistingModelOtherSpecify: TranslationField;
+  resemblesExistingModelWhich: TranslationFieldWithOptions;
+  resemblesExistingModelWhyHow: TranslationField;
+  rulemakingRequired: TranslationFieldWithOptions;
+  rulemakingRequiredDescription: TranslationField;
+  rulemakingRequiredNote: TranslationField;
+  status: TranslationField;
+  waiversRequired: TranslationFieldWithOptions;
+  waiversRequiredNote: TranslationField;
+  waiversRequiredTypes: TranslationFieldWithOptions;
+};
+
 /** PlanOpsEvalAndLearning represents the task list section that deals with information regarding the Ops Eval and Learning */
 export type PlanOpsEvalAndLearning = {
   __typename: 'PlanOpsEvalAndLearning';
@@ -1981,6 +2126,108 @@ export type PlanOpsEvalAndLearningChanges = {
   useCcwForFileDistribiutionToParticipantsNote?: InputMaybe<Scalars['String']['input']>;
 };
 
+/** Represents plan ops eval and learning translation data */
+export type PlanOpsEvalAndLearningTranslation = {
+  __typename: 'PlanOpsEvalAndLearningTranslation';
+  anticipatedChallenges: TranslationField;
+  appToSendFilesToKnown: TranslationFieldWithOptions;
+  appToSendFilesToNote: TranslationField;
+  appToSendFilesToWhich: TranslationField;
+  appealFeedback: TranslationFieldWithOptions;
+  appealNote: TranslationField;
+  appealOther: TranslationFieldWithOptions;
+  appealPayments: TranslationFieldWithOptions;
+  appealPerformance: TranslationFieldWithOptions;
+  benchmarkForPerformance: TranslationFieldWithOptions;
+  benchmarkForPerformanceNote: TranslationField;
+  captureParticipantInfo: TranslationFieldWithOptions;
+  captureParticipantInfoNote: TranslationField;
+  ccmInvolvment: TranslationFieldWithOptions;
+  ccmInvolvmentNote: TranslationField;
+  ccmInvolvmentOther: TranslationField;
+  computePerformanceScores: TranslationFieldWithOptions;
+  computePerformanceScoresNote: TranslationField;
+  contractorSupport: TranslationFieldWithOptions;
+  contractorSupportHow: TranslationField;
+  contractorSupportNote: TranslationField;
+  contractorSupportOther: TranslationField;
+  dataCollectionFrequency: TranslationFieldWithOptions;
+  dataCollectionFrequencyContinually: TranslationField;
+  dataCollectionFrequencyNote: TranslationField;
+  dataCollectionFrequencyOther: TranslationField;
+  dataCollectionStarts: TranslationFieldWithOptions;
+  dataCollectionStartsOther: TranslationField;
+  dataFlowDiagramsNeeded: TranslationFieldWithOptions;
+  dataFullTimeOrIncremental: TranslationFieldWithOptions;
+  dataMonitoringFileOther: TranslationField;
+  dataMonitoringFileTypes: TranslationFieldWithOptions;
+  dataMonitoringNote: TranslationField;
+  dataNeededForMonitoring: TranslationFieldWithOptions;
+  dataNeededForMonitoringNote: TranslationField;
+  dataNeededForMonitoringOther: TranslationField;
+  dataResponseFileFrequency: TranslationField;
+  dataResponseType: TranslationField;
+  dataSharingFrequency: TranslationFieldWithOptions;
+  dataSharingFrequencyContinually: TranslationField;
+  dataSharingFrequencyOther: TranslationField;
+  dataSharingStarts: TranslationFieldWithOptions;
+  dataSharingStartsNote: TranslationField;
+  dataSharingStartsOther: TranslationField;
+  dataToSendParticicipants: TranslationFieldWithOptions;
+  dataToSendParticicipantsNote: TranslationField;
+  dataToSendParticicipantsOther: TranslationField;
+  developNewQualityMeasures: TranslationFieldWithOptions;
+  developNewQualityMeasuresNote: TranslationField;
+  draftIcdDueDate: TranslationField;
+  eftSetUp: TranslationFieldWithOptions;
+  evaluationApproachOther: TranslationField;
+  evaluationApproaches: TranslationFieldWithOptions;
+  evalutaionApproachNote: TranslationField;
+  fileNamingConventions: TranslationField;
+  helpdeskUse: TranslationFieldWithOptions;
+  helpdeskUseNote: TranslationField;
+  icdNote: TranslationField;
+  icdOwner: TranslationField;
+  iddocSupport: TranslationFieldWithOptions;
+  iddocSupportNote: TranslationField;
+  modelLearningSystems: TranslationFieldWithOptions;
+  modelLearningSystemsNote: TranslationField;
+  modelLearningSystemsOther: TranslationField;
+  produceBenefitEnhancementFiles: TranslationFieldWithOptions;
+  qualityPerformanceImpactsPayment: TranslationFieldWithOptions;
+  qualityPerformanceImpactsPaymentNote: TranslationField;
+  qualityPerformanceImpactsPaymentOther: TranslationField;
+  qualityReportingFrequency: TranslationFieldWithOptions;
+  qualityReportingFrequencyContinually: TranslationField;
+  qualityReportingFrequencyOther: TranslationField;
+  qualityReportingStarts: TranslationFieldWithOptions;
+  qualityReportingStartsNote: TranslationField;
+  qualityReportingStartsOther: TranslationField;
+  riskAdjustFeedback: TranslationFieldWithOptions;
+  riskAdjustNote: TranslationField;
+  riskAdjustOther: TranslationFieldWithOptions;
+  riskAdjustPayments: TranslationFieldWithOptions;
+  riskAdjustPerformance: TranslationFieldWithOptions;
+  sendFilesBetweenCcw: TranslationFieldWithOptions;
+  sendFilesBetweenCcwNote: TranslationField;
+  shareCclfData: TranslationFieldWithOptions;
+  shareCclfDataNote: TranslationField;
+  stakeholders: TranslationFieldWithOptions;
+  stakeholdersNote: TranslationField;
+  stakeholdersOther: TranslationField;
+  status: TranslationField;
+  stcNeeds: TranslationField;
+  technicalContactsIdentified: TranslationFieldWithOptions;
+  technicalContactsIdentifiedDetail: TranslationField;
+  technicalContactsIdentifiedNote: TranslationField;
+  testingNote: TranslationField;
+  testingTimelines: TranslationField;
+  uatNeeds: TranslationField;
+  unsolicitedAdjustmentsIncluded: TranslationFieldWithOptions;
+  useCcwForFileDistribiutionToParticipants: TranslationFieldWithOptions;
+  useCcwForFileDistribiutionToParticipantsNote: TranslationField;
+};
+
 /** PlanParticipantsAndProviders is the task list section that deals with information regarding all Providers and Participants */
 export type PlanParticipantsAndProviders = {
   __typename: 'PlanParticipantsAndProviders';
@@ -2129,6 +2376,72 @@ export type PlanParticipantsAndProvidersChanges = {
   status?: InputMaybe<TaskStatusInput>;
   willRiskChange?: InputMaybe<Scalars['Boolean']['input']>;
   willRiskChangeNote?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** Represents plan participants and providers translation data */
+export type PlanParticipantsAndProvidersTranslation = {
+  __typename: 'PlanParticipantsAndProvidersTranslation';
+  communicationMethod: TranslationFieldWithOptions;
+  communicationMethodOther: TranslationField;
+  communicationNote: TranslationField;
+  confidenceNote: TranslationField;
+  coordinateWork: TranslationFieldWithOptions;
+  coordinateWorkNote: TranslationField;
+  estimateConfidence: TranslationFieldWithOptions;
+  expectedNumberOfParticipants: TranslationField;
+  gainsharePayments: TranslationFieldWithOptions;
+  gainsharePaymentsEligibility: TranslationFieldWithOptions;
+  gainsharePaymentsEligibilityOther: TranslationField;
+  gainsharePaymentsNote: TranslationField;
+  gainsharePaymentsTrack: TranslationFieldWithOptions;
+  medicareProviderType: TranslationField;
+  modelApplicationLevel: TranslationField;
+  participantAddedFrequency: TranslationFieldWithOptions;
+  participantAddedFrequencyContinually: TranslationField;
+  participantAddedFrequencyNote: TranslationField;
+  participantAddedFrequencyOther: TranslationField;
+  participantRemovedFrequency: TranslationFieldWithOptions;
+  participantRemovedFrequencyContinually: TranslationField;
+  participantRemovedFrequencyNote: TranslationField;
+  participantRemovedFrequencyOther: TranslationField;
+  participants: TranslationFieldWithOptions;
+  participantsCurrentlyInModels: TranslationFieldWithOptions;
+  participantsCurrentlyInModelsNote: TranslationField;
+  participantsIDSNote: TranslationField;
+  participantsIds: TranslationFieldWithOptions;
+  participantsIdsOther: TranslationField;
+  participantsNote: TranslationField;
+  participantsOther: TranslationField;
+  providerAddMethod: TranslationFieldWithOptions;
+  providerAddMethodNote: TranslationField;
+  providerAddMethodOther: TranslationField;
+  providerAdditionFrequency: TranslationFieldWithOptions;
+  providerAdditionFrequencyContinually: TranslationField;
+  providerAdditionFrequencyNote: TranslationField;
+  providerAdditionFrequencyOther: TranslationField;
+  providerLeaveMethod: TranslationFieldWithOptions;
+  providerLeaveMethodNote: TranslationField;
+  providerLeaveMethodOther: TranslationField;
+  providerOverlap: TranslationFieldWithOptions;
+  providerOverlapHierarchy: TranslationField;
+  providerOverlapNote: TranslationField;
+  providerRemovalFrequency: TranslationFieldWithOptions;
+  providerRemovalFrequencyContinually: TranslationField;
+  providerRemovalFrequencyNote: TranslationField;
+  providerRemovalFrequencyOther: TranslationField;
+  recruitmentMethod: TranslationFieldWithOptions;
+  recruitmentNote: TranslationField;
+  recruitmentOther: TranslationField;
+  riskNote: TranslationField;
+  riskOther: TranslationField;
+  riskType: TranslationFieldWithOptions;
+  selectionMethod: TranslationFieldWithOptions;
+  selectionNote: TranslationField;
+  selectionOther: TranslationField;
+  statesEngagement: TranslationField;
+  status: TranslationField;
+  willRiskChange: TranslationFieldWithOptions;
+  willRiskChangeNote: TranslationField;
 };
 
 /** PlanPayments is the task list section that deals with information regarding Payments */
@@ -2299,6 +2612,85 @@ export type PlanPaymentsChanges = {
   waiverOnlyAppliesPartOfPayment?: InputMaybe<Scalars['Boolean']['input']>;
   willRecoverPayments?: InputMaybe<Scalars['Boolean']['input']>;
   willRecoverPaymentsNote?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** Represents payments translation data */
+export type PlanPaymentsTranslation = {
+  __typename: 'PlanPaymentsTranslation';
+  affectsMedicareSecondaryPayerClaims: TranslationFieldWithOptions;
+  affectsMedicareSecondaryPayerClaimsHow: TranslationField;
+  affectsMedicareSecondaryPayerClaimsNote: TranslationField;
+  anticipateReconcilingPaymentsRetrospectively: TranslationFieldWithOptions;
+  anticipateReconcilingPaymentsRetrospectivelyNote: TranslationField;
+  anticipatedPaymentFrequency: TranslationFieldWithOptions;
+  anticipatedPaymentFrequencyContinually: TranslationField;
+  anticipatedPaymentFrequencyNote: TranslationField;
+  anticipatedPaymentFrequencyOther: TranslationField;
+  beneficiaryCostSharingLevelAndHandling: TranslationField;
+  canParticipantsSelectBetweenPaymentMechanisms: TranslationFieldWithOptions;
+  canParticipantsSelectBetweenPaymentMechanismsHow: TranslationField;
+  canParticipantsSelectBetweenPaymentMechanismsNote: TranslationField;
+  changesMedicarePhysicianFeeSchedule: TranslationFieldWithOptions;
+  changesMedicarePhysicianFeeScheduleNote: TranslationField;
+  claimsProcessingPrecedence: TranslationFieldWithOptions;
+  claimsProcessingPrecedenceNote: TranslationField;
+  claimsProcessingPrecedenceOther: TranslationField;
+  creatingDependenciesBetweenServices: TranslationFieldWithOptions;
+  creatingDependenciesBetweenServicesNote: TranslationField;
+  expectedCalculationComplexityLevel: TranslationFieldWithOptions;
+  expectedCalculationComplexityLevelNote: TranslationField;
+  fundingSource: TranslationFieldWithOptions;
+  fundingSourceMedicareAInfo: TranslationField;
+  fundingSourceMedicareBInfo: TranslationField;
+  fundingSourceNote: TranslationField;
+  fundingSourceOther: TranslationField;
+  fundingSourceR: TranslationFieldWithOptions;
+  fundingSourceRMedicareAInfo: TranslationField;
+  fundingSourceRMedicareBInfo: TranslationField;
+  fundingSourceRNote: TranslationField;
+  fundingSourceROther: TranslationField;
+  isContractorAwareTestDataRequirements: TranslationFieldWithOptions;
+  needsClaimsDataCollection: TranslationFieldWithOptions;
+  needsClaimsDataCollectionNote: TranslationField;
+  nonClaimsPaymentOther: TranslationField;
+  nonClaimsPayments: TranslationFieldWithOptions;
+  nonClaimsPaymentsNote: TranslationField;
+  numberPaymentsPerPayCycle: TranslationField;
+  numberPaymentsPerPayCycleNote: TranslationField;
+  payClaims: TranslationFieldWithOptions;
+  payClaimsNote: TranslationField;
+  payClaimsOther: TranslationField;
+  payModelDifferentiation: TranslationField;
+  payRecipients: TranslationFieldWithOptions;
+  payRecipientsNote: TranslationField;
+  payRecipientsOtherSpecification: TranslationField;
+  payType: TranslationFieldWithOptions;
+  payTypeNote: TranslationField;
+  paymentCalculationOwner: TranslationField;
+  paymentDemandRecoupmentFrequency: TranslationFieldWithOptions;
+  paymentDemandRecoupmentFrequencyContinually: TranslationField;
+  paymentDemandRecoupmentFrequencyNote: TranslationField;
+  paymentDemandRecoupmentFrequencyOther: TranslationField;
+  paymentReconciliationFrequency: TranslationFieldWithOptions;
+  paymentReconciliationFrequencyContinually: TranslationField;
+  paymentReconciliationFrequencyNote: TranslationField;
+  paymentReconciliationFrequencyOther: TranslationField;
+  paymentStartDate: TranslationField;
+  paymentStartDateNote: TranslationField;
+  planningToUseInnovationPaymentContractor: TranslationFieldWithOptions;
+  planningToUseInnovationPaymentContractorNote: TranslationField;
+  providingThirdPartyFile: TranslationFieldWithOptions;
+  sharedSystemsInvolvedAdditionalClaimPayment: TranslationFieldWithOptions;
+  sharedSystemsInvolvedAdditionalClaimPaymentNote: TranslationField;
+  shouldAnyProviderExcludedFFSSystemsNote: TranslationField;
+  shouldAnyProvidersExcludedFFSSystems: TranslationFieldWithOptions;
+  status: TranslationField;
+  waiveBeneficiaryCostSharingForAnyServices: TranslationFieldWithOptions;
+  waiveBeneficiaryCostSharingNote: TranslationField;
+  waiveBeneficiaryCostSharingServiceSpecification: TranslationField;
+  waiverOnlyAppliesPartOfPayment: TranslationFieldWithOptions;
+  willRecoverPayments: TranslationFieldWithOptions;
+  willRecoverPaymentsNote: TranslationField;
 };
 
 export type PlanTdl = {
@@ -2812,6 +3204,69 @@ export enum TeamRole {
   OACT = 'OACT',
   PAYMENT = 'PAYMENT',
   QUALITY = 'QUALITY'
+}
+
+/** Represents the data type of the translation field */
+export enum TranslationDataType {
+  BOOLEAN = 'BOOLEAN',
+  DATE = 'DATE',
+  ENUM = 'ENUM',
+  NUMBER = 'NUMBER',
+  OBJECT = 'OBJECT',
+  STRING = 'STRING'
+}
+
+/** Represents a translation question with no options */
+export type TranslationField = {
+  __typename: 'TranslationField';
+  dataType: TranslationDataType;
+  dbField: Scalars['String']['output'];
+  formType: TranslationFormType;
+  goField: Scalars['String']['output'];
+  gqlField: Scalars['String']['output'];
+  isArray?: Maybe<Scalars['Boolean']['output']>;
+  /** Is a question a followup to another that doesn't designate it's own readonly question/line */
+  isOtherType?: Maybe<Scalars['Boolean']['output']>;
+  label: Scalars['String']['output'];
+  multiSelectLabel?: Maybe<Scalars['String']['output']>;
+  /** Field name for the parent question for fields that represent Other, Please specify, etc.  Used in change history to render parent question for context */
+  otherParentField?: Maybe<Scalars['String']['output']>;
+  readonlyLabel?: Maybe<Scalars['String']['output']>;
+  sublabel?: Maybe<Scalars['String']['output']>;
+};
+
+/** Represents a translation question with options */
+export type TranslationFieldWithOptions = {
+  __typename: 'TranslationFieldWithOptions';
+  dataType: TranslationDataType;
+  dbField: Scalars['String']['output'];
+  formType: TranslationFormType;
+  goField: Scalars['String']['output'];
+  gqlField: Scalars['String']['output'];
+  isArray?: Maybe<Scalars['Boolean']['output']>;
+  /** Is a question a followup to another that doesn't designate it's own readonly question/line */
+  isOtherType?: Maybe<Scalars['Boolean']['output']>;
+  label: Scalars['String']['output'];
+  multiSelectLabel?: Maybe<Scalars['String']['output']>;
+  options: Scalars['Map']['output'];
+  /** Field name for the parent question for fields that represent Other, Please specify, etc.  Used in change history to render parent question for context */
+  otherParentField?: Maybe<Scalars['String']['output']>;
+  readonlyLabel?: Maybe<Scalars['String']['output']>;
+  sublabel?: Maybe<Scalars['String']['output']>;
+};
+
+/** Represents the FORM type of the translation field */
+export enum TranslationFormType {
+  BOOLEAN = 'BOOLEAN',
+  CHECKBOX = 'CHECKBOX',
+  DATEPICKER = 'DATEPICKER',
+  MULTISELECT = 'MULTISELECT',
+  NUMBER = 'NUMBER',
+  RADIO = 'RADIO',
+  RANGEINPUT = 'RANGEINPUT',
+  SELECT = 'SELECT',
+  TEXT = 'TEXT',
+  TEXTAREA = 'TEXTAREA'
 }
 
 export enum TriStateAnswer {

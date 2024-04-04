@@ -1,4 +1,8 @@
-import { ModelViewFilter } from 'gql/gen/graphql';
+import {
+  ModelViewFilter,
+  TranslationDataType,
+  TranslationFormType
+} from 'gql/gen/graphql';
 
 import { TranslationModelPlan } from 'types/translation';
 
@@ -8,25 +12,25 @@ export const modelPlan: TranslationModelPlan = {
     goField: 'ModelName',
     dbField: 'model_name',
     label: 'Model name',
-    dataType: 'string',
-    formType: 'text'
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXT
   },
   previousName: {
     gqlField: 'previousName',
     goField: 'PreviousName',
     dbField: 'previous_name',
     label: 'Previous names',
-    dataType: 'string',
-    formType: 'text'
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXT
   },
   nameHistory: {
     gqlField: 'nameHistory',
     goField: 'NameHistory',
     dbField: 'name_history',
     label: 'Previous names',
-    dataType: 'string',
+    dataType: TranslationDataType.STRING,
     isArray: true,
-    formType: 'text',
+    formType: TranslationFormType.TEXT,
     filterGroups: [
       ModelViewFilter.OACT,
       ModelViewFilter.DFSDM,
@@ -45,16 +49,16 @@ export const modelPlan: TranslationModelPlan = {
     label: 'Short name',
     sublabel:
       'The abbreviation, acronym, or other common name used for the model.',
-    dataType: 'string',
-    formType: 'text'
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXT
   },
   archived: {
     gqlField: 'archived',
     goField: 'Archived',
     dbField: 'archived',
     label: 'Archived',
-    dataType: 'boolean',
-    formType: 'radio',
+    dataType: TranslationDataType.BOOLEAN,
+    formType: TranslationFormType.RADIO,
     options: {
       true: 'Yes',
       false: 'No'
@@ -65,8 +69,8 @@ export const modelPlan: TranslationModelPlan = {
     goField: 'Status',
     dbField: 'status',
     label: 'What is the status of your Model Plan?',
-    dataType: 'enum',
-    formType: 'select',
+    dataType: TranslationDataType.ENUM,
+    formType: TranslationFormType.SELECT,
     options: {
       PLAN_DRAFT: 'Draft Model Plan',
       PLAN_COMPLETE: 'Model Plan complete',
