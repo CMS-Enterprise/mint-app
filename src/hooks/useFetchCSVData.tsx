@@ -11,6 +11,7 @@ import {
   GetAllModelDataQueryHookResult,
   GetAllSingleModelDataQuery,
   GetAllSingleModelDataQueryHookResult,
+  TranslationDataType,
   useGetAllModelDataLazyQuery,
   useGetAllSingleModelDataLazyQuery
 } from 'gql/gen/graphql';
@@ -138,7 +139,7 @@ export const dataFormatter = (
 
     // Translates and predefined/custom date field to human readable date
     else if (
-      allPlanTranslation?.[key]?.dataType === 'date' &&
+      allPlanTranslation?.[key]?.dataType === TranslationDataType.DATE &&
       transformObj[key]
     ) {
       mappedObj[key] = formatDateLocal(transformObj[key], 'MM/dd/yyyy');

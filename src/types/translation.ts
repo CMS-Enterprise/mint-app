@@ -43,6 +43,13 @@ import {
   ParticipantsType,
   PayRecipient,
   PayType,
+  PlanBasicsTranslation,
+  PlanBeneficiariesTranslation,
+  PlanCollaboratorTranslation,
+  PlanGeneralCharacteristicsTranslation,
+  PlanOpsEvalAndLearningTranslation,
+  PlanParticipantsAndProvidersTranslation,
+  PlanPaymentsTranslation,
   ProviderAddType,
   ProviderLeaveType,
   RecruitmentType,
@@ -51,12 +58,13 @@ import {
   StatesAndTerritories,
   TaskStatus,
   TeamRole,
+  TranslationField,
+  TranslationFieldWithOptions,
   TriStateAnswer,
   WaiverType,
   YesNoOtherType,
   YesNoType
 } from 'gql/gen/graphql';
-
 // Util used to preserve type defintions when mapping over keys of object
 // https://stackoverflow.com/questions/52856496/typescript-object-keys-return-string
 export const getKeys = Object.keys as <T extends object>(
@@ -68,27 +76,10 @@ export enum Bool {
   false = 'false'
 }
 
-export type TranslationFieldProperties = {
-  gqlField: string;
-  goField: string;
-  dbField: string;
-  label: string;
-  readonlyLabel?: string;
-  sublabel?: string;
-  multiSelectLabel?: string;
-  dataType: 'string' | 'number' | 'boolean' | 'date' | 'enum' | 'object';
-  isArray?: boolean;
-  formType:
-    | 'text'
-    | 'textarea'
-    | 'number'
-    | 'boolean'
-    | 'radio'
-    | 'checkbox'
-    | 'select'
-    | 'multiSelect'
-    | 'datePicker'
-    | 'rangeInput';
+export type TranslationFieldProperties = Omit<
+  TranslationField,
+  '__typename'
+> & {
   filterGroups?: ModelViewFilter[]; // Used to render questions within Readonly filter group view (Also CSV/PDF export)
   tags?: string[];
   isModelLinks?: boolean; // Used to designate if a field is a ExistingModelLinks type with nested fields - ex: names,
@@ -99,9 +90,7 @@ export type TranslationFieldProperties = {
     position: 'left' | 'right';
     adjacentField: string;
   };
-  isOtherType?: boolean; // Is a question a followup to another that doesn't designate it's own readonly question/line,
   hideRelatedQuestionAlert?: boolean; // Ex: CCW and Quality questions do not need to render the alert immediately following the question
-  otherParentField?: string; // gql field name for the parent question for fields that represent Other, Please specify, etc.  Used in change history to render parent question for context
 };
 
 /* 
@@ -132,7 +121,11 @@ type ChildRelation<
   Extended type for questions that have options - boolean, radio, checkbox, etc.
   Takes in a enum/generic for translation key
 */
-type TranslationOptions<T extends keyof T | string> = {
+
+export type TranslationOptions<T extends keyof T | string> = Omit<
+  TranslationFieldWithOptions,
+  'options' | '__typename'
+> & {
   options: Record<T, string>;
   readonlyOptions?: Partial<Record<T, string>>; // An alternative set of translations for options specific to readonly
   optionsLabels?: Partial<Record<T, string>>; // Sub labels to be rendered directly underneath options
@@ -299,7 +292,7 @@ export type TranslationModelPlan = {
 /* 
   Basics
 */
-export type TranslationBasics = {
+export type TranslationBasicsForm = {
   // Model Plan
   amsModelID: TranslationFieldProperties;
   demoCode: TranslationFieldProperties;
@@ -330,10 +323,21 @@ export type TranslationBasics = {
   status: TranslationFieldPropertiesWithOptions<TaskStatus>;
 };
 
+type TranslationBasicsGQL = Omit<
+  PlanBasicsTranslation, // graphql gen type
+  '__typename'
+>;
+
+// Merged keys from graphql gen with FE form types
+// Create a tighter connection between BE/FE translation types
+export type TranslationBasics = {
+  [K in keyof TranslationBasicsGQL]: TranslationBasicsForm[K]; // FE form type
+};
+
 /* 
   General Characteristics
 */
-export type TranslationGeneralCharacteristics = {
+export type TranslationGeneralCharacteristicsForm = {
   isNewModel: TranslationFieldPropertiesWithOptionsAndChildren<Bool>;
   existingModel: TranslationFieldPropertiesWithParent<Bool>;
   resemblesExistingModel: TranslationFieldPropertiesWithOptionsAndChildren<YesNoOtherType>;
@@ -425,10 +429,21 @@ export type TranslationGeneralCharacteristics = {
   status: TranslationFieldPropertiesWithOptions<TaskStatus>;
 };
 
+type TranslationGeneralCharacteristicsGQL = Omit<
+  PlanGeneralCharacteristicsTranslation, // graphql gen type
+  '__typename'
+>;
+
+// Merged keys from graphql gen with FE form types
+// Create a tighter connection between BE/FE translation types
+export type TranslationGeneralCharacteristics = {
+  [K in keyof TranslationGeneralCharacteristicsGQL]: TranslationGeneralCharacteristicsForm[K]; // FE form type
+};
+
 /* 
   Participants and Providers
 */
-export type TranslationParticipantsAndProviders = {
+export type TranslationParticipantsAndProvidersForm = {
   participants: TranslationFieldPropertiesWithOptions<ParticipantsType>;
   medicareProviderType: TranslationFieldProperties;
   statesEngagement: TranslationFieldProperties;
@@ -508,10 +523,21 @@ export type TranslationParticipantsAndProviders = {
   status: TranslationFieldPropertiesWithOptions<TaskStatus>;
 };
 
+type TranslationPlanParticipantsAndProvidersGQL = Omit<
+  PlanParticipantsAndProvidersTranslation, // graphql gen type
+  '__typename'
+>;
+
+// Merged keys from graphql gen with FE form types
+// Create a tighter connection between BE/FE translation types
+export type TranslationParticipantsAndProviders = {
+  [K in keyof TranslationPlanParticipantsAndProvidersGQL]: TranslationParticipantsAndProvidersForm[K]; // FE form type
+};
+
 /* 
   Beneficiaries
 */
-export type TranslationBeneficiaries = {
+export type TranslationBeneficiariesForm = {
   beneficiaries: TranslationFieldPropertiesWithOptions<BeneficiariesType>;
   diseaseSpecificGroup: TranslationFieldProperties;
   beneficiariesOther: TranslationFieldProperties;
@@ -547,10 +573,21 @@ export type TranslationBeneficiaries = {
   status: TranslationFieldPropertiesWithOptions<TaskStatus>;
 };
 
+type TranslationBeneficiariesGQL = Omit<
+  PlanBeneficiariesTranslation, // graphql gen type
+  '__typename'
+>;
+
+// Merged keys from graphql gen with FE form types
+// Create a tighter connection between BE/FE translation types
+export type TranslationBeneficiaries = {
+  [K in keyof TranslationBeneficiariesGQL]: TranslationBeneficiariesForm[K]; // FE form type
+};
+
 /* 
   Operations Evaluation and Learning
 */
-export type TranslationOpsEvalAndLearning = {
+export type TranslationOpsEvalAndLearningForm = {
   stakeholders: TranslationFieldPropertiesWithOptions<StakeholdersType>;
   stakeholdersOther: TranslationFieldProperties;
   stakeholdersNote: TranslationFieldProperties;
@@ -694,10 +731,21 @@ export type TranslationOpsEvalAndLearning = {
   status: TranslationFieldPropertiesWithOptions<TaskStatus>;
 };
 
+type TranslationOpsEvalAndLearningGQL = Omit<
+  PlanOpsEvalAndLearningTranslation, // graphql gen type
+  '__typename'
+>;
+
+// Merged keys from graphql gen with FE form types
+// Create a tighter connection between BE/FE translation types
+export type TranslationOpsEvalAndLearning = {
+  [K in keyof TranslationOpsEvalAndLearningGQL]: TranslationOpsEvalAndLearningForm[K]; // FE form type
+};
+
 /* 
   Payments
 */
-export type TranslationPayments = {
+export type TranslationPaymentsForm = {
   fundingSource: TranslationFieldPropertiesWithOptions<FundingSource>;
   fundingSourceMedicareAInfo: TranslationFieldProperties;
   fundingSourceMedicareBInfo: TranslationFieldProperties;
@@ -819,12 +867,34 @@ export type TranslationPayments = {
   status: TranslationFieldPropertiesWithOptions<TaskStatus>;
 };
 
+type TranslationPaymentsGQL = Omit<
+  PlanPaymentsTranslation, // graphql gen type
+  '__typename'
+>;
+
+// Merged keys from graphql gen with FE form types
+// Create a tighter connection between BE/FE translation types
+export type TranslationPayments = {
+  [K in keyof TranslationPaymentsGQL]: TranslationPaymentsForm[K]; // FE form type
+};
+
 /* 
   Collaborators
 */
-export type TranslationCollaborators = {
+export type TranslationCollaboratorsForm = {
   teamRoles: TranslationFieldPropertiesWithOptions<TeamRole>;
   username: TranslationFieldProperties;
+};
+
+type TranslationCollaboratorGQL = Omit<
+  PlanCollaboratorTranslation, // graphql gen type
+  '__typename'
+>;
+
+// Merged keys from graphql gen with FE form types
+// Create a tighter connection between BE/FE translation types
+export type TranslationCollaborators = {
+  [K in keyof TranslationCollaboratorGQL]: TranslationCollaboratorsForm[K]; // FE form type
 };
 
 export type TranslationPlan = {
