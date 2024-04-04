@@ -1046,6 +1046,7 @@ type ComplexityRoot struct {
 		PossibleOperationalSolutions      func(childComplexity int) int
 		SearchOktaUsers                   func(childComplexity int, searchTerm string) int
 		TaskListSectionLocks              func(childComplexity int, modelPlanID uuid.UUID) int
+		TranslatedAuditChangeCollection   func(childComplexity int, modelPlanID uuid.UUID) int
 		UserAccount                       func(childComplexity int, username string) int
 	}
 
@@ -1109,6 +1110,37 @@ type ComplexityRoot struct {
 		ActionType func(childComplexity int) int
 		ChangeType func(childComplexity int) int
 		LockStatus func(childComplexity int) int
+	}
+
+	TranslatedAuditChange struct {
+		Action                func(childComplexity int) int
+		ActorID               func(childComplexity int) int
+		ActorName             func(childComplexity int) int
+		ChangeID              func(childComplexity int) int
+		CreatedBy             func(childComplexity int) int
+		CreatedByUserAccount  func(childComplexity int) int
+		CreatedDts            func(childComplexity int) int
+		Date                  func(childComplexity int) int
+		FieldName             func(childComplexity int) int
+		FieldNameTranslated   func(childComplexity int) int
+		ID                    func(childComplexity int) int
+		MetaData              func(childComplexity int) int
+		ModelName             func(childComplexity int) int
+		ModifiedBy            func(childComplexity int) int
+		ModifiedByUserAccount func(childComplexity int) int
+		ModifiedDts           func(childComplexity int) int
+		New                   func(childComplexity int) int
+		NewTranslated         func(childComplexity int) int
+		Old                   func(childComplexity int) int
+		OldTranslated         func(childComplexity int) int
+		PrimaryKey            func(childComplexity int) int
+		TableID               func(childComplexity int) int
+		TableName             func(childComplexity int) int
+	}
+
+	TranslatedAuditMetaBaseStruct struct {
+		TableName func(childComplexity int) int
+		Version   func(childComplexity int) int
 	}
 
 	UserAccount struct {
@@ -1422,6 +1454,7 @@ type QueryResolver interface {
 	MostRecentDiscussionRoleSelection(ctx context.Context) (*models.DiscussionRoleSelection, error)
 	ExistingModelCollection(ctx context.Context) ([]*models.ExistingModel, error)
 	ExistingModelLink(ctx context.Context, id uuid.UUID) (*models.ExistingModelLink, error)
+	TranslatedAuditChangeCollection(ctx context.Context, modelPlanID uuid.UUID) ([]*models.TranslatedAuditChange, error)
 	ModelPlan(ctx context.Context, id uuid.UUID) (*models.ModelPlan, error)
 	ModelPlanCollection(ctx context.Context, filter model.ModelPlanFilter) ([]*models.ModelPlan, error)
 	NdaInfo(ctx context.Context) (*model.NDAInfo, error)
@@ -7633,6 +7666,18 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Query.TaskListSectionLocks(childComplexity, args["modelPlanID"].(uuid.UUID)), true
 
+	case "Query.translatedAuditChangeCollection":
+		if e.complexity.Query.TranslatedAuditChangeCollection == nil {
+			break
+		}
+
+		args, err := ec.field_Query_translatedAuditChangeCollection_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Query.TranslatedAuditChangeCollection(childComplexity, args["modelPlanID"].(uuid.UUID)), true
+
 	case "Query.userAccount":
 		if e.complexity.Query.UserAccount == nil {
 			break
@@ -7941,6 +7986,181 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.TaskListSectionLockStatusChanged.LockStatus(childComplexity), true
+
+	case "TranslatedAuditChange.action":
+		if e.complexity.TranslatedAuditChange.Action == nil {
+			break
+		}
+
+		return e.complexity.TranslatedAuditChange.Action(childComplexity), true
+
+	case "TranslatedAuditChange.actorID":
+		if e.complexity.TranslatedAuditChange.ActorID == nil {
+			break
+		}
+
+		return e.complexity.TranslatedAuditChange.ActorID(childComplexity), true
+
+	case "TranslatedAuditChange.actorName":
+		if e.complexity.TranslatedAuditChange.ActorName == nil {
+			break
+		}
+
+		return e.complexity.TranslatedAuditChange.ActorName(childComplexity), true
+
+	case "TranslatedAuditChange.changeID":
+		if e.complexity.TranslatedAuditChange.ChangeID == nil {
+			break
+		}
+
+		return e.complexity.TranslatedAuditChange.ChangeID(childComplexity), true
+
+	case "TranslatedAuditChange.createdBy":
+		if e.complexity.TranslatedAuditChange.CreatedBy == nil {
+			break
+		}
+
+		return e.complexity.TranslatedAuditChange.CreatedBy(childComplexity), true
+
+	case "TranslatedAuditChange.createdByUserAccount":
+		if e.complexity.TranslatedAuditChange.CreatedByUserAccount == nil {
+			break
+		}
+
+		return e.complexity.TranslatedAuditChange.CreatedByUserAccount(childComplexity), true
+
+	case "TranslatedAuditChange.createdDts":
+		if e.complexity.TranslatedAuditChange.CreatedDts == nil {
+			break
+		}
+
+		return e.complexity.TranslatedAuditChange.CreatedDts(childComplexity), true
+
+	case "TranslatedAuditChange.date":
+		if e.complexity.TranslatedAuditChange.Date == nil {
+			break
+		}
+
+		return e.complexity.TranslatedAuditChange.Date(childComplexity), true
+
+	case "TranslatedAuditChange.fieldName":
+		if e.complexity.TranslatedAuditChange.FieldName == nil {
+			break
+		}
+
+		return e.complexity.TranslatedAuditChange.FieldName(childComplexity), true
+
+	case "TranslatedAuditChange.fieldNameTranslated":
+		if e.complexity.TranslatedAuditChange.FieldNameTranslated == nil {
+			break
+		}
+
+		return e.complexity.TranslatedAuditChange.FieldNameTranslated(childComplexity), true
+
+	case "TranslatedAuditChange.id":
+		if e.complexity.TranslatedAuditChange.ID == nil {
+			break
+		}
+
+		return e.complexity.TranslatedAuditChange.ID(childComplexity), true
+
+	case "TranslatedAuditChange.metaData":
+		if e.complexity.TranslatedAuditChange.MetaData == nil {
+			break
+		}
+
+		return e.complexity.TranslatedAuditChange.MetaData(childComplexity), true
+
+	case "TranslatedAuditChange.modelName":
+		if e.complexity.TranslatedAuditChange.ModelName == nil {
+			break
+		}
+
+		return e.complexity.TranslatedAuditChange.ModelName(childComplexity), true
+
+	case "TranslatedAuditChange.modifiedBy":
+		if e.complexity.TranslatedAuditChange.ModifiedBy == nil {
+			break
+		}
+
+		return e.complexity.TranslatedAuditChange.ModifiedBy(childComplexity), true
+
+	case "TranslatedAuditChange.modifiedByUserAccount":
+		if e.complexity.TranslatedAuditChange.ModifiedByUserAccount == nil {
+			break
+		}
+
+		return e.complexity.TranslatedAuditChange.ModifiedByUserAccount(childComplexity), true
+
+	case "TranslatedAuditChange.modifiedDts":
+		if e.complexity.TranslatedAuditChange.ModifiedDts == nil {
+			break
+		}
+
+		return e.complexity.TranslatedAuditChange.ModifiedDts(childComplexity), true
+
+	case "TranslatedAuditChange.new":
+		if e.complexity.TranslatedAuditChange.New == nil {
+			break
+		}
+
+		return e.complexity.TranslatedAuditChange.New(childComplexity), true
+
+	case "TranslatedAuditChange.newTranslated":
+		if e.complexity.TranslatedAuditChange.NewTranslated == nil {
+			break
+		}
+
+		return e.complexity.TranslatedAuditChange.NewTranslated(childComplexity), true
+
+	case "TranslatedAuditChange.old":
+		if e.complexity.TranslatedAuditChange.Old == nil {
+			break
+		}
+
+		return e.complexity.TranslatedAuditChange.Old(childComplexity), true
+
+	case "TranslatedAuditChange.oldTranslated":
+		if e.complexity.TranslatedAuditChange.OldTranslated == nil {
+			break
+		}
+
+		return e.complexity.TranslatedAuditChange.OldTranslated(childComplexity), true
+
+	case "TranslatedAuditChange.primaryKey":
+		if e.complexity.TranslatedAuditChange.PrimaryKey == nil {
+			break
+		}
+
+		return e.complexity.TranslatedAuditChange.PrimaryKey(childComplexity), true
+
+	case "TranslatedAuditChange.tableID":
+		if e.complexity.TranslatedAuditChange.TableID == nil {
+			break
+		}
+
+		return e.complexity.TranslatedAuditChange.TableID(childComplexity), true
+
+	case "TranslatedAuditChange.tableName":
+		if e.complexity.TranslatedAuditChange.TableName == nil {
+			break
+		}
+
+		return e.complexity.TranslatedAuditChange.TableName(childComplexity), true
+
+	case "TranslatedAuditMetaBaseStruct.tableName":
+		if e.complexity.TranslatedAuditMetaBaseStruct.TableName == nil {
+			break
+		}
+
+		return e.complexity.TranslatedAuditMetaBaseStruct.TableName(childComplexity), true
+
+	case "TranslatedAuditMetaBaseStruct.version":
+		if e.complexity.TranslatedAuditMetaBaseStruct.Version == nil {
+			break
+		}
+
+		return e.complexity.TranslatedAuditMetaBaseStruct.Version(childComplexity), true
 
 	case "UserAccount.commonName":
 		if e.complexity.UserAccount.CommonName == nil {
@@ -8713,6 +8933,63 @@ extend type Mutation {
   updateExistingModelLinks(modelPlanID: UUID!,fieldName: ExisitingModelLinkFieldType!,  existingModelIDs: [Int!],currentModelPlanIDs: [UUID!]): ExistingModelLinks!
   @hasRole(role: MINT_USER)
 }`, BuiltIn: false},
+	{Name: "../schema/types/humanized_audit_change.graphql", Input: `"""
+TranslatedAuditMetaData is a type that represents all the data that can be captured in a Translated audit
+"""
+union TranslatedAuditMetaData = TranslatedAuditMetaBaseStruct 
+
+
+type TranslatedAuditMetaBaseStruct {
+    version: Int!
+    tableName: String
+
+}
+
+enum DatabaseOperation {
+    INSERT
+    UPDATE
+    DELETE
+    TRUNCATE
+}
+
+"""
+TranslatedAuditChange represent a point in time change made to part of application.
+"""
+type TranslatedAuditChange {
+    id: UUID!
+    modelName: String!
+    
+    tableID: Int!
+    tableName: String!
+    primaryKey: UUID!
+    
+    date: Time!
+    action: DatabaseOperation!
+    fieldName: String!
+    fieldNameTranslated: String!
+    old: Any 
+    oldTranslated: Any
+    new: Any
+    newTranslated: Any
+
+    actorID: UUID!
+    actorName: String!  #TODO: (ChChCh Changes!)This could live in the actor account, but this is meant to facilitate search
+    changeID: Int! # This points to a specific audit change.
+    metaData: TranslatedAuditMetaData!
+
+
+    createdBy: UUID!
+    createdByUserAccount: UserAccount!
+    createdDts: Time!
+    modifiedBy: UUID
+    modifiedByUserAccount: UserAccount
+    modifiedDts: Time
+}
+
+extend type Query {
+    translatedAuditChangeCollection(modelPlanID: UUID!): [TranslatedAuditChange!]
+  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+}  `, BuiltIn: false},
 	{Name: "../schema/types/launch_darkly_settings.graphql", Input: `"""
 The current user's Launch Darkly key
 """
@@ -10961,7 +11238,14 @@ scalar TaggedHTML
 https://gqlgen.com/reference/file-upload/
 Represents a multipart file upload
 """
-scalar Upload`, BuiltIn: false},
+scalar Upload
+
+"""
+https://gqlgen.com/reference/scalars/#any
+Maps an arbitrary GraphQL value to a interface{} Go type.
+"""
+scalar Any
+`, BuiltIn: false},
 	{Name: "../schema/types/send_feedback_email.graphql", Input: `enum MintUses {
   VIEW_MODEL
   EDIT_MODEL
@@ -12619,6 +12903,21 @@ func (ec *executionContext) field_Query_searchOktaUsers_args(ctx context.Context
 }
 
 func (ec *executionContext) field_Query_taskListSectionLocks_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+	var err error
+	args := map[string]interface{}{}
+	var arg0 uuid.UUID
+	if tmp, ok := rawArgs["modelPlanID"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("modelPlanID"))
+		arg0, err = ec.unmarshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["modelPlanID"] = arg0
+	return args, nil
+}
+
+func (ec *executionContext) field_Query_translatedAuditChangeCollection_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
 	var arg0 uuid.UUID
@@ -54028,6 +54327,130 @@ func (ec *executionContext) fieldContext_Query_existingModelLink(ctx context.Con
 	return fc, nil
 }
 
+func (ec *executionContext) _Query_translatedAuditChangeCollection(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Query_translatedAuditChangeCollection(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		directive0 := func(rctx context.Context) (interface{}, error) {
+			ctx = rctx // use context from middleware stack in children
+			return ec.resolvers.Query().TranslatedAuditChangeCollection(rctx, fc.Args["modelPlanID"].(uuid.UUID))
+		}
+		directive1 := func(ctx context.Context) (interface{}, error) {
+			roles, err := ec.unmarshalNRole2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRoleᚄ(ctx, []interface{}{"MINT_USER", "MINT_MAC"})
+			if err != nil {
+				return nil, err
+			}
+			if ec.directives.HasAnyRole == nil {
+				return nil, errors.New("directive hasAnyRole is not implemented")
+			}
+			return ec.directives.HasAnyRole(ctx, nil, directive0, roles)
+		}
+
+		tmp, err := directive1(rctx)
+		if err != nil {
+			return nil, graphql.ErrorOnPath(ctx, err)
+		}
+		if tmp == nil {
+			return nil, nil
+		}
+		if data, ok := tmp.([]*models.TranslatedAuditChange); ok {
+			return data, nil
+		}
+		return nil, fmt.Errorf(`unexpected type %T from directive, should be []*github.com/cmsgov/mint-app/pkg/models.TranslatedAuditChange`, tmp)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.([]*models.TranslatedAuditChange)
+	fc.Result = res
+	return ec.marshalOTranslatedAuditChange2ᚕᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTranslatedAuditChangeᚄ(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Query_translatedAuditChangeCollection(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Query",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_TranslatedAuditChange_id(ctx, field)
+			case "modelName":
+				return ec.fieldContext_TranslatedAuditChange_modelName(ctx, field)
+			case "tableID":
+				return ec.fieldContext_TranslatedAuditChange_tableID(ctx, field)
+			case "tableName":
+				return ec.fieldContext_TranslatedAuditChange_tableName(ctx, field)
+			case "primaryKey":
+				return ec.fieldContext_TranslatedAuditChange_primaryKey(ctx, field)
+			case "date":
+				return ec.fieldContext_TranslatedAuditChange_date(ctx, field)
+			case "action":
+				return ec.fieldContext_TranslatedAuditChange_action(ctx, field)
+			case "fieldName":
+				return ec.fieldContext_TranslatedAuditChange_fieldName(ctx, field)
+			case "fieldNameTranslated":
+				return ec.fieldContext_TranslatedAuditChange_fieldNameTranslated(ctx, field)
+			case "old":
+				return ec.fieldContext_TranslatedAuditChange_old(ctx, field)
+			case "oldTranslated":
+				return ec.fieldContext_TranslatedAuditChange_oldTranslated(ctx, field)
+			case "new":
+				return ec.fieldContext_TranslatedAuditChange_new(ctx, field)
+			case "newTranslated":
+				return ec.fieldContext_TranslatedAuditChange_newTranslated(ctx, field)
+			case "actorID":
+				return ec.fieldContext_TranslatedAuditChange_actorID(ctx, field)
+			case "actorName":
+				return ec.fieldContext_TranslatedAuditChange_actorName(ctx, field)
+			case "changeID":
+				return ec.fieldContext_TranslatedAuditChange_changeID(ctx, field)
+			case "metaData":
+				return ec.fieldContext_TranslatedAuditChange_metaData(ctx, field)
+			case "createdBy":
+				return ec.fieldContext_TranslatedAuditChange_createdBy(ctx, field)
+			case "createdByUserAccount":
+				return ec.fieldContext_TranslatedAuditChange_createdByUserAccount(ctx, field)
+			case "createdDts":
+				return ec.fieldContext_TranslatedAuditChange_createdDts(ctx, field)
+			case "modifiedBy":
+				return ec.fieldContext_TranslatedAuditChange_modifiedBy(ctx, field)
+			case "modifiedByUserAccount":
+				return ec.fieldContext_TranslatedAuditChange_modifiedByUserAccount(ctx, field)
+			case "modifiedDts":
+				return ec.fieldContext_TranslatedAuditChange_modifiedDts(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type TranslatedAuditChange", field.Name)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Query_translatedAuditChangeCollection_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
+	}
+	return fc, nil
+}
+
 func (ec *executionContext) _Query_modelPlan(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_Query_modelPlan(ctx, field)
 	if err != nil {
@@ -58227,6 +58650,1126 @@ func (ec *executionContext) fieldContext_TaskListSectionLockStatusChanged_action
 		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return nil, errors.New("field of type ActionType does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _TranslatedAuditChange_id(ctx context.Context, field graphql.CollectedField, obj *models.TranslatedAuditChange) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_TranslatedAuditChange_id(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ID, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(uuid.UUID)
+	fc.Result = res
+	return ec.marshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_TranslatedAuditChange_id(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "TranslatedAuditChange",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type UUID does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _TranslatedAuditChange_modelName(ctx context.Context, field graphql.CollectedField, obj *models.TranslatedAuditChange) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_TranslatedAuditChange_modelName(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ModelName, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalNString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_TranslatedAuditChange_modelName(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "TranslatedAuditChange",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _TranslatedAuditChange_tableID(ctx context.Context, field graphql.CollectedField, obj *models.TranslatedAuditChange) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_TranslatedAuditChange_tableID(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.TableID, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(int)
+	fc.Result = res
+	return ec.marshalNInt2int(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_TranslatedAuditChange_tableID(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "TranslatedAuditChange",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Int does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _TranslatedAuditChange_tableName(ctx context.Context, field graphql.CollectedField, obj *models.TranslatedAuditChange) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_TranslatedAuditChange_tableName(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.TableName, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalNString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_TranslatedAuditChange_tableName(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "TranslatedAuditChange",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _TranslatedAuditChange_primaryKey(ctx context.Context, field graphql.CollectedField, obj *models.TranslatedAuditChange) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_TranslatedAuditChange_primaryKey(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.PrimaryKey, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(uuid.UUID)
+	fc.Result = res
+	return ec.marshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_TranslatedAuditChange_primaryKey(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "TranslatedAuditChange",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type UUID does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _TranslatedAuditChange_date(ctx context.Context, field graphql.CollectedField, obj *models.TranslatedAuditChange) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_TranslatedAuditChange_date(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Date, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(time.Time)
+	fc.Result = res
+	return ec.marshalNTime2timeᚐTime(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_TranslatedAuditChange_date(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "TranslatedAuditChange",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Time does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _TranslatedAuditChange_action(ctx context.Context, field graphql.CollectedField, obj *models.TranslatedAuditChange) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_TranslatedAuditChange_action(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Action, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(models.DatabaseOperation)
+	fc.Result = res
+	return ec.marshalNDatabaseOperation2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐDatabaseOperation(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_TranslatedAuditChange_action(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "TranslatedAuditChange",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type DatabaseOperation does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _TranslatedAuditChange_fieldName(ctx context.Context, field graphql.CollectedField, obj *models.TranslatedAuditChange) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_TranslatedAuditChange_fieldName(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.FieldName, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalNString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_TranslatedAuditChange_fieldName(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "TranslatedAuditChange",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _TranslatedAuditChange_fieldNameTranslated(ctx context.Context, field graphql.CollectedField, obj *models.TranslatedAuditChange) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_TranslatedAuditChange_fieldNameTranslated(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.FieldNameTranslated, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalNString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_TranslatedAuditChange_fieldNameTranslated(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "TranslatedAuditChange",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _TranslatedAuditChange_old(ctx context.Context, field graphql.CollectedField, obj *models.TranslatedAuditChange) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_TranslatedAuditChange_old(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Old, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(interface{})
+	fc.Result = res
+	return ec.marshalOAny2interface(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_TranslatedAuditChange_old(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "TranslatedAuditChange",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Any does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _TranslatedAuditChange_oldTranslated(ctx context.Context, field graphql.CollectedField, obj *models.TranslatedAuditChange) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_TranslatedAuditChange_oldTranslated(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.OldTranslated, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(interface{})
+	fc.Result = res
+	return ec.marshalOAny2interface(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_TranslatedAuditChange_oldTranslated(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "TranslatedAuditChange",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Any does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _TranslatedAuditChange_new(ctx context.Context, field graphql.CollectedField, obj *models.TranslatedAuditChange) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_TranslatedAuditChange_new(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.New, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(interface{})
+	fc.Result = res
+	return ec.marshalOAny2interface(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_TranslatedAuditChange_new(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "TranslatedAuditChange",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Any does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _TranslatedAuditChange_newTranslated(ctx context.Context, field graphql.CollectedField, obj *models.TranslatedAuditChange) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_TranslatedAuditChange_newTranslated(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.NewTranslated, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(interface{})
+	fc.Result = res
+	return ec.marshalOAny2interface(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_TranslatedAuditChange_newTranslated(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "TranslatedAuditChange",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Any does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _TranslatedAuditChange_actorID(ctx context.Context, field graphql.CollectedField, obj *models.TranslatedAuditChange) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_TranslatedAuditChange_actorID(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ActorID, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(uuid.UUID)
+	fc.Result = res
+	return ec.marshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_TranslatedAuditChange_actorID(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "TranslatedAuditChange",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type UUID does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _TranslatedAuditChange_actorName(ctx context.Context, field graphql.CollectedField, obj *models.TranslatedAuditChange) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_TranslatedAuditChange_actorName(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ActorName, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalNString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_TranslatedAuditChange_actorName(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "TranslatedAuditChange",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _TranslatedAuditChange_changeID(ctx context.Context, field graphql.CollectedField, obj *models.TranslatedAuditChange) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_TranslatedAuditChange_changeID(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ChangeID, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(int)
+	fc.Result = res
+	return ec.marshalNInt2int(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_TranslatedAuditChange_changeID(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "TranslatedAuditChange",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Int does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _TranslatedAuditChange_metaData(ctx context.Context, field graphql.CollectedField, obj *models.TranslatedAuditChange) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_TranslatedAuditChange_metaData(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.MetaData, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(models.TranslatedAuditMetaData)
+	fc.Result = res
+	return ec.marshalNTranslatedAuditMetaData2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTranslatedAuditMetaData(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_TranslatedAuditChange_metaData(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "TranslatedAuditChange",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type TranslatedAuditMetaData does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _TranslatedAuditChange_createdBy(ctx context.Context, field graphql.CollectedField, obj *models.TranslatedAuditChange) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_TranslatedAuditChange_createdBy(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.CreatedBy, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(uuid.UUID)
+	fc.Result = res
+	return ec.marshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_TranslatedAuditChange_createdBy(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "TranslatedAuditChange",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type UUID does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _TranslatedAuditChange_createdByUserAccount(ctx context.Context, field graphql.CollectedField, obj *models.TranslatedAuditChange) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_TranslatedAuditChange_createdByUserAccount(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.CreatedByUserAccount(ctx), nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*authentication.UserAccount)
+	fc.Result = res
+	return ec.marshalNUserAccount2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋauthenticationᚐUserAccount(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_TranslatedAuditChange_createdByUserAccount(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "TranslatedAuditChange",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_UserAccount_id(ctx, field)
+			case "username":
+				return ec.fieldContext_UserAccount_username(ctx, field)
+			case "isEUAID":
+				return ec.fieldContext_UserAccount_isEUAID(ctx, field)
+			case "commonName":
+				return ec.fieldContext_UserAccount_commonName(ctx, field)
+			case "locale":
+				return ec.fieldContext_UserAccount_locale(ctx, field)
+			case "email":
+				return ec.fieldContext_UserAccount_email(ctx, field)
+			case "givenName":
+				return ec.fieldContext_UserAccount_givenName(ctx, field)
+			case "familyName":
+				return ec.fieldContext_UserAccount_familyName(ctx, field)
+			case "zoneInfo":
+				return ec.fieldContext_UserAccount_zoneInfo(ctx, field)
+			case "hasLoggedIn":
+				return ec.fieldContext_UserAccount_hasLoggedIn(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type UserAccount", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _TranslatedAuditChange_createdDts(ctx context.Context, field graphql.CollectedField, obj *models.TranslatedAuditChange) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_TranslatedAuditChange_createdDts(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.CreatedDts, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(time.Time)
+	fc.Result = res
+	return ec.marshalNTime2timeᚐTime(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_TranslatedAuditChange_createdDts(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "TranslatedAuditChange",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Time does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _TranslatedAuditChange_modifiedBy(ctx context.Context, field graphql.CollectedField, obj *models.TranslatedAuditChange) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_TranslatedAuditChange_modifiedBy(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ModifiedBy, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*uuid.UUID)
+	fc.Result = res
+	return ec.marshalOUUID2ᚖgithubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_TranslatedAuditChange_modifiedBy(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "TranslatedAuditChange",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type UUID does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _TranslatedAuditChange_modifiedByUserAccount(ctx context.Context, field graphql.CollectedField, obj *models.TranslatedAuditChange) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_TranslatedAuditChange_modifiedByUserAccount(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ModifiedByUserAccount(ctx), nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*authentication.UserAccount)
+	fc.Result = res
+	return ec.marshalOUserAccount2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋauthenticationᚐUserAccount(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_TranslatedAuditChange_modifiedByUserAccount(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "TranslatedAuditChange",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_UserAccount_id(ctx, field)
+			case "username":
+				return ec.fieldContext_UserAccount_username(ctx, field)
+			case "isEUAID":
+				return ec.fieldContext_UserAccount_isEUAID(ctx, field)
+			case "commonName":
+				return ec.fieldContext_UserAccount_commonName(ctx, field)
+			case "locale":
+				return ec.fieldContext_UserAccount_locale(ctx, field)
+			case "email":
+				return ec.fieldContext_UserAccount_email(ctx, field)
+			case "givenName":
+				return ec.fieldContext_UserAccount_givenName(ctx, field)
+			case "familyName":
+				return ec.fieldContext_UserAccount_familyName(ctx, field)
+			case "zoneInfo":
+				return ec.fieldContext_UserAccount_zoneInfo(ctx, field)
+			case "hasLoggedIn":
+				return ec.fieldContext_UserAccount_hasLoggedIn(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type UserAccount", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _TranslatedAuditChange_modifiedDts(ctx context.Context, field graphql.CollectedField, obj *models.TranslatedAuditChange) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_TranslatedAuditChange_modifiedDts(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ModifiedDts, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*time.Time)
+	fc.Result = res
+	return ec.marshalOTime2ᚖtimeᚐTime(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_TranslatedAuditChange_modifiedDts(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "TranslatedAuditChange",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Time does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _TranslatedAuditMetaBaseStruct_version(ctx context.Context, field graphql.CollectedField, obj *models.TranslatedAuditMetaBaseStruct) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_TranslatedAuditMetaBaseStruct_version(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Version, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(int)
+	fc.Result = res
+	return ec.marshalNInt2int(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_TranslatedAuditMetaBaseStruct_version(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "TranslatedAuditMetaBaseStruct",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Int does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _TranslatedAuditMetaBaseStruct_tableName(ctx context.Context, field graphql.CollectedField, obj *models.TranslatedAuditMetaBaseStruct) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_TranslatedAuditMetaBaseStruct_tableName(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.TableName, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalOString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_TranslatedAuditMetaBaseStruct_tableName(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "TranslatedAuditMetaBaseStruct",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
 		},
 	}
 	return fc, nil
@@ -62929,6 +64472,20 @@ func (ec *executionContext) _TaggedEntity(ctx context.Context, sel ast.Selection
 			return graphql.Null
 		}
 		return ec._PossibleOperationalSolution(ctx, sel, obj)
+	default:
+		panic(fmt.Errorf("unexpected type %T", obj))
+	}
+}
+
+func (ec *executionContext) _TranslatedAuditMetaData(ctx context.Context, sel ast.SelectionSet, obj models.TranslatedAuditMetaData) graphql.Marshaler {
+	switch obj := (obj).(type) {
+	case nil:
+		return graphql.Null
+	case *models.TranslatedAuditMetaBaseStruct:
+		if obj == nil {
+			return graphql.Null
+		}
+		return ec._TranslatedAuditMetaBaseStruct(ctx, sel, obj)
 	default:
 		panic(fmt.Errorf("unexpected type %T", obj))
 	}
@@ -72380,6 +73937,25 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 			}
 
 			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return rrm(innerCtx) })
+		case "translatedAuditChangeCollection":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Query_translatedAuditChangeCollection(ctx, field)
+				return res
+			}
+
+			rrm := func(ctx context.Context) graphql.Marshaler {
+				return ec.OperationContext.RootResolverMiddleware(ctx,
+					func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return rrm(innerCtx) })
 		case "modelPlan":
 			field := field
 
@@ -73422,6 +74998,237 @@ func (ec *executionContext) _TaskListSectionLockStatusChanged(ctx context.Contex
 			if out.Values[i] == graphql.Null {
 				out.Invalids++
 			}
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch(ctx)
+	if out.Invalids > 0 {
+		return graphql.Null
+	}
+
+	atomic.AddInt32(&ec.deferred, int32(len(deferred)))
+
+	for label, dfs := range deferred {
+		ec.processDeferredGroup(graphql.DeferredGroup{
+			Label:    label,
+			Path:     graphql.GetPath(ctx),
+			FieldSet: dfs,
+			Context:  ctx,
+		})
+	}
+
+	return out
+}
+
+var translatedAuditChangeImplementors = []string{"TranslatedAuditChange"}
+
+func (ec *executionContext) _TranslatedAuditChange(ctx context.Context, sel ast.SelectionSet, obj *models.TranslatedAuditChange) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, translatedAuditChangeImplementors)
+
+	out := graphql.NewFieldSet(fields)
+	deferred := make(map[string]*graphql.FieldSet)
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("TranslatedAuditChange")
+		case "id":
+			out.Values[i] = ec._TranslatedAuditChange_id(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "modelName":
+			out.Values[i] = ec._TranslatedAuditChange_modelName(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "tableID":
+			out.Values[i] = ec._TranslatedAuditChange_tableID(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "tableName":
+			out.Values[i] = ec._TranslatedAuditChange_tableName(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "primaryKey":
+			out.Values[i] = ec._TranslatedAuditChange_primaryKey(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "date":
+			out.Values[i] = ec._TranslatedAuditChange_date(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "action":
+			out.Values[i] = ec._TranslatedAuditChange_action(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "fieldName":
+			out.Values[i] = ec._TranslatedAuditChange_fieldName(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "fieldNameTranslated":
+			out.Values[i] = ec._TranslatedAuditChange_fieldNameTranslated(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "old":
+			out.Values[i] = ec._TranslatedAuditChange_old(ctx, field, obj)
+		case "oldTranslated":
+			out.Values[i] = ec._TranslatedAuditChange_oldTranslated(ctx, field, obj)
+		case "new":
+			out.Values[i] = ec._TranslatedAuditChange_new(ctx, field, obj)
+		case "newTranslated":
+			out.Values[i] = ec._TranslatedAuditChange_newTranslated(ctx, field, obj)
+		case "actorID":
+			out.Values[i] = ec._TranslatedAuditChange_actorID(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "actorName":
+			out.Values[i] = ec._TranslatedAuditChange_actorName(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "changeID":
+			out.Values[i] = ec._TranslatedAuditChange_changeID(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "metaData":
+			out.Values[i] = ec._TranslatedAuditChange_metaData(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "createdBy":
+			out.Values[i] = ec._TranslatedAuditChange_createdBy(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "createdByUserAccount":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._TranslatedAuditChange_createdByUserAccount(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
+				return res
+			}
+
+			if field.Deferrable != nil {
+				dfs, ok := deferred[field.Deferrable.Label]
+				di := 0
+				if ok {
+					dfs.AddField(field)
+					di = len(dfs.Values) - 1
+				} else {
+					dfs = graphql.NewFieldSet([]graphql.CollectedField{field})
+					deferred[field.Deferrable.Label] = dfs
+				}
+				dfs.Concurrently(di, func(ctx context.Context) graphql.Marshaler {
+					return innerFunc(ctx, dfs)
+				})
+
+				// don't run the out.Concurrently() call below
+				out.Values[i] = graphql.Null
+				continue
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+		case "createdDts":
+			out.Values[i] = ec._TranslatedAuditChange_createdDts(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "modifiedBy":
+			out.Values[i] = ec._TranslatedAuditChange_modifiedBy(ctx, field, obj)
+		case "modifiedByUserAccount":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._TranslatedAuditChange_modifiedByUserAccount(ctx, field, obj)
+				return res
+			}
+
+			if field.Deferrable != nil {
+				dfs, ok := deferred[field.Deferrable.Label]
+				di := 0
+				if ok {
+					dfs.AddField(field)
+					di = len(dfs.Values) - 1
+				} else {
+					dfs = graphql.NewFieldSet([]graphql.CollectedField{field})
+					deferred[field.Deferrable.Label] = dfs
+				}
+				dfs.Concurrently(di, func(ctx context.Context) graphql.Marshaler {
+					return innerFunc(ctx, dfs)
+				})
+
+				// don't run the out.Concurrently() call below
+				out.Values[i] = graphql.Null
+				continue
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+		case "modifiedDts":
+			out.Values[i] = ec._TranslatedAuditChange_modifiedDts(ctx, field, obj)
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch(ctx)
+	if out.Invalids > 0 {
+		return graphql.Null
+	}
+
+	atomic.AddInt32(&ec.deferred, int32(len(deferred)))
+
+	for label, dfs := range deferred {
+		ec.processDeferredGroup(graphql.DeferredGroup{
+			Label:    label,
+			Path:     graphql.GetPath(ctx),
+			FieldSet: dfs,
+			Context:  ctx,
+		})
+	}
+
+	return out
+}
+
+var translatedAuditMetaBaseStructImplementors = []string{"TranslatedAuditMetaBaseStruct", "TranslatedAuditMetaData"}
+
+func (ec *executionContext) _TranslatedAuditMetaBaseStruct(ctx context.Context, sel ast.SelectionSet, obj *models.TranslatedAuditMetaBaseStruct) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, translatedAuditMetaBaseStructImplementors)
+
+	out := graphql.NewFieldSet(fields)
+	deferred := make(map[string]*graphql.FieldSet)
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("TranslatedAuditMetaBaseStruct")
+		case "version":
+			out.Values[i] = ec._TranslatedAuditMetaBaseStruct_version(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "tableName":
+			out.Values[i] = ec._TranslatedAuditMetaBaseStruct_tableName(ctx, field, obj)
 		default:
 			panic("unknown field " + strconv.Quote(field.Name))
 		}
@@ -75631,6 +77438,22 @@ func (ec *executionContext) marshalNDataToSendParticipantsType2ᚕgithubᚗcom�
 	}
 
 	return ret
+}
+
+func (ec *executionContext) unmarshalNDatabaseOperation2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐDatabaseOperation(ctx context.Context, v interface{}) (models.DatabaseOperation, error) {
+	tmp, err := graphql.UnmarshalString(v)
+	res := models.DatabaseOperation(tmp)
+	return res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalNDatabaseOperation2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐDatabaseOperation(ctx context.Context, sel ast.SelectionSet, v models.DatabaseOperation) graphql.Marshaler {
+	res := graphql.MarshalString(string(v))
+	if res == graphql.Null {
+		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
+			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
+		}
+	}
+	return res
 }
 
 func (ec *executionContext) marshalNDiscussionReply2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐDiscussionReply(ctx context.Context, sel ast.SelectionSet, v models.DiscussionReply) graphql.Marshaler {
@@ -79213,6 +81036,26 @@ func (ec *executionContext) marshalNTime2ᚖtimeᚐTime(ctx context.Context, sel
 	return res
 }
 
+func (ec *executionContext) marshalNTranslatedAuditChange2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTranslatedAuditChange(ctx context.Context, sel ast.SelectionSet, v *models.TranslatedAuditChange) graphql.Marshaler {
+	if v == nil {
+		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
+			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
+		}
+		return graphql.Null
+	}
+	return ec._TranslatedAuditChange(ctx, sel, v)
+}
+
+func (ec *executionContext) marshalNTranslatedAuditMetaData2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTranslatedAuditMetaData(ctx context.Context, sel ast.SelectionSet, v models.TranslatedAuditMetaData) graphql.Marshaler {
+	if v == nil {
+		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
+			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
+		}
+		return graphql.Null
+	}
+	return ec._TranslatedAuditMetaData(ctx, sel, v)
+}
+
 func (ec *executionContext) unmarshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx context.Context, v interface{}) (uuid.UUID, error) {
 	res, err := models.UnmarshalUUID(v)
 	return res, graphql.ErrorOnPath(ctx, err)
@@ -80178,6 +82021,22 @@ func (ec *executionContext) marshalOAnalyzedPlanSections2ᚖgithubᚗcomᚋcmsgo
 		return graphql.Null
 	}
 	return ec._AnalyzedPlanSections(ctx, sel, v)
+}
+
+func (ec *executionContext) unmarshalOAny2interface(ctx context.Context, v interface{}) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	res, err := graphql.UnmarshalAny(v)
+	return res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalOAny2interface(ctx context.Context, sel ast.SelectionSet, v interface{}) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	res := graphql.MarshalAny(v)
+	return res
 }
 
 func (ec *executionContext) unmarshalOAuthorityAllowance2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐAuthorityAllowanceᚄ(ctx context.Context, v interface{}) ([]model.AuthorityAllowance, error) {
@@ -83207,6 +85066,53 @@ func (ec *executionContext) marshalOTime2ᚖtimeᚐTime(ctx context.Context, sel
 	}
 	res := graphql.MarshalTime(*v)
 	return res
+}
+
+func (ec *executionContext) marshalOTranslatedAuditChange2ᚕᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTranslatedAuditChangeᚄ(ctx context.Context, sel ast.SelectionSet, v []*models.TranslatedAuditChange) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	ret := make(graphql.Array, len(v))
+	var wg sync.WaitGroup
+	isLen1 := len(v) == 1
+	if !isLen1 {
+		wg.Add(len(v))
+	}
+	for i := range v {
+		i := i
+		fc := &graphql.FieldContext{
+			Index:  &i,
+			Result: &v[i],
+		}
+		ctx := graphql.WithFieldContext(ctx, fc)
+		f := func(i int) {
+			defer func() {
+				if r := recover(); r != nil {
+					ec.Error(ctx, ec.Recover(ctx, r))
+					ret = nil
+				}
+			}()
+			if !isLen1 {
+				defer wg.Done()
+			}
+			ret[i] = ec.marshalNTranslatedAuditChange2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTranslatedAuditChange(ctx, sel, v[i])
+		}
+		if isLen1 {
+			f(i)
+		} else {
+			go f(i)
+		}
+
+	}
+	wg.Wait()
+
+	for _, e := range ret {
+		if e == graphql.Null {
+			return graphql.Null
+		}
+	}
+
+	return ret
 }
 
 func (ec *executionContext) unmarshalOTriStateAnswer2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTriStateAnswer(ctx context.Context, v interface{}) (*models.TriStateAnswer, error) {

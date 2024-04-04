@@ -27,8 +27,8 @@ const (
 
 */
 
-// HumanizedAuditChange is a structure that shows grouped, humanReadable Audit data
-type HumanizedAuditChange struct {
+// TranslatedAuditChange is a structure that shows grouped, humanReadable Audit data
+type TranslatedAuditChange struct {
 	// Ticket: (ChChCh Changes!) Think about what should be in the row....
 	//Perhaps we want this to be a time frame, and have an array of specific changes instead of just meta data?
 
@@ -53,8 +53,8 @@ type HumanizedAuditChange struct {
 	ActorName string    `json:"actorName" db:"actor_name"` //Maybe normalize this?
 	ChangeID  int       `json:"changeID" db:"change_id"`
 
-	MetaDataRaw interface{}            `db:"meta_data"`
-	MetaData    HumanizedAuditMetaData `json:"metaData"`
+	MetaDataRaw interface{}             `db:"meta_data"`
+	MetaData    TranslatedAuditMetaData `json:"metaData"`
 }
 
 // NewHumanizedAuditChange
@@ -76,10 +76,10 @@ func NewHumanizedAuditChange(
 	oldTranslated interface{},
 	new interface{},
 	newTranslated interface{},
-) HumanizedAuditChange {
+) TranslatedAuditChange {
 	version := 0
-	genericMeta := NewHumanizedAuditMetaBaseStruct(tableName, version)
-	return HumanizedAuditChange{
+	genericMeta := NewTranslatedAuditMetaBaseStruct(tableName, version)
+	return TranslatedAuditChange{
 		baseStruct:          NewBaseStruct(createdBy),
 		ActorID:             actorID,
 		ActorName:           actorName,
@@ -104,9 +104,9 @@ func NewHumanizedAuditChange(
 }
 
 // ParseMetaData parses raw MetaData into Typed meta data per the provided struct
-func (hmc *HumanizedAuditChange) ParseMetaData() error {
+func (hmc *TranslatedAuditChange) ParseMetaData() error {
 
-	meta, err := parseRawHumanizedAuditMetaData(hmc.TableName, hmc.MetaDataRaw)
+	meta, err := parseRawTranslatedAuditMetaData(hmc.TableName, hmc.MetaDataRaw)
 	if err != nil {
 		return err
 	}

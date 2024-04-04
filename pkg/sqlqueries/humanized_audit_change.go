@@ -2,27 +2,27 @@ package sqlqueries
 
 import _ "embed"
 
-// humanizedAuditChangeCreateSQL creates a new HumanizedAuditChange object
+// translatedAuditChangeCreateSQL creates a new TranslatedAuditChange object
 //
-//go:embed SQL/humanized_audit_change/create.sql
-var humanizedAuditChangeCreateSQL string
+//go:embed SQL/translated_audit_change/create.sql
+var translatedAuditChangeCreateSQL string
 
-// humanizedAuditChangeCollectionGetByModelPlanID returns all humanized changed for a given model plan id
+// translatedAuditChangeCollectionGetByModelPlanID returns all translated changed for a given model plan id
 //
-//go:embed SQL/humanized_audit_change/collection_get_by_model_plan_ids.sql
-var humanizedAuditChangeCollectionGetByModelPlanID string
+//go:embed SQL/translated_audit_change/collection_get_by_model_plan_ids.sql
+var translatedAuditChangeCollectionGetByModelPlanID string
 
-// humanizedAuditChangeScripts holds all the relevant SQL related to Humanized Audit changes
-type humanizedAuditChangeScripts struct {
-	// Holds the SQL query to create a HumanizedAuditChange
+// translatedAuditChangeScripts holds all the relevant SQL related to Translated Audit changes
+type translatedAuditChangeScripts struct {
+	// Holds the SQL query to create a translatedAuditChange
 	Create string
 
-	// Holds the SQL query to return all HumanizedAuditChanges for a given ModelPlanID
+	// Holds the SQL query to return all translatedAuditChanges for a given ModelPlanID
 	CollectionGetByModelPlanID string
 }
 
-// HumanizedAuditChange holds all the SQL scrips related to the HumanizedAuditChange Entity
-var HumanizedAuditChange = humanizedAuditChangeScripts{
-	Create:                     humanizedAuditChangeCreateSQL,
-	CollectionGetByModelPlanID: humanizedAuditChangeCollectionGetByModelPlanID,
+// TranslatedAuditChange holds all the SQL scrips related to the translatedAuditChange Entity
+var TranslatedAuditChange = translatedAuditChangeScripts{
+	Create:                     translatedAuditChangeCreateSQL,
+	CollectionGetByModelPlanID: translatedAuditChangeCollectionGetByModelPlanID,
 }

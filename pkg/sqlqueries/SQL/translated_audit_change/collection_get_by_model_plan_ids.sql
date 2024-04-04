@@ -21,5 +21,5 @@ SELECT
     created_dts,
     modified_by,
     modified_dts
-FROM humanized_audit_change
+FROM translated_audit_change
 WHERE model_plan_id = :model_plan_id;

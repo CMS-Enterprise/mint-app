@@ -7,8 +7,8 @@ import (
 	"fmt"
 )
 
-// HumanizedAuditMetaData is an interface that all Humanized meta data structs must implement
-type HumanizedAuditMetaData interface {
+// TranslatedAuditMetaData is an interface that all Humanized meta data structs must implement
+type TranslatedAuditMetaData interface {
 	isAuditMetaData()
 	Value() (driver.Value, error)
 	Scan(src interface{}) error
@@ -19,32 +19,32 @@ type HumanizedAuditMetaData interface {
 
 //Ticket: (ChChCh Changes!) Should we store these as single entries in the database? Or should we store them grouped in the database?
 
-// HumanizedAuditMetaBaseStruct represents the shared data in common between all HumanizedAuditChanges
-type HumanizedAuditMetaBaseStruct struct {
+// TranslatedAuditMetaBaseStruct represents the shared data in common between all HumanizedAuditChanges
+type TranslatedAuditMetaBaseStruct struct {
 	TableName string `json:"tableName"`
 	Version   int    `json:"id"`
 }
 
-// NewHumanizedAuditMetaBaseStruct creates a New HumanizedAuditMetaBaseStruct
-func NewHumanizedAuditMetaBaseStruct(tableName string, version int) HumanizedAuditMetaBaseStruct {
+// NewTranslatedAuditMetaBaseStruct creates a New TranslatedAuditMetaBaseStruct
+func NewTranslatedAuditMetaBaseStruct(tableName string, version int) TranslatedAuditMetaBaseStruct {
 
-	return HumanizedAuditMetaBaseStruct{
+	return TranslatedAuditMetaBaseStruct{
 		TableName: tableName,
 		Version:   version,
 	}
 }
 
 // isActivityMetaData implements the IActivityMetaBaseStruct
-func (hmb HumanizedAuditMetaBaseStruct) isAuditMetaData() {}
+func (hmb TranslatedAuditMetaBaseStruct) isAuditMetaData() {}
 
 // Value allows us to satisfy the valuer interface so we can write to the database
-func (hmb HumanizedAuditMetaBaseStruct) Value() (driver.Value, error) {
+func (hmb TranslatedAuditMetaBaseStruct) Value() (driver.Value, error) {
 	j, err := json.Marshal(hmb)
 	return j, err
 }
 
 // Scan implements the scanner interface so we can translate the JSONb from the db to an object in GO
-func (hmb *HumanizedAuditMetaBaseStruct) Scan(src interface{}) error {
+func (hmb *TranslatedAuditMetaBaseStruct) Scan(src interface{}) error {
 	if src == nil {
 		return nil
 	}
@@ -60,8 +60,8 @@ func (hmb *HumanizedAuditMetaBaseStruct) Scan(src interface{}) error {
 	return nil
 }
 
-// parseRawHumanizedAuditMetaData conditionally parses meta data from JSON to a specific meta data type
-func parseRawHumanizedAuditMetaData(tableName string, rawMetaDataJSON interface{}) (HumanizedAuditMetaData, error) {
+// parseRawTranslatedAuditMetaData conditionally parses meta data from JSON to a specific meta data type
+func parseRawTranslatedAuditMetaData(tableName string, rawMetaDataJSON interface{}) (TranslatedAuditMetaData, error) {
 	//Future Enhancement: can this be genericized instead of switching on table name?
 
 	var rawData []byte
@@ -81,14 +81,14 @@ func parseRawHumanizedAuditMetaData(tableName string, rawMetaDataJSON interface{
 	switch tableName {
 	case "model_plan":
 		// Deserialize the raw JSON into HumanizedAuditMetaBaseStruct
-		meta := HumanizedAuditMetaBaseStruct{}
+		meta := TranslatedAuditMetaBaseStruct{}
 		if err := json.Unmarshal(rawData, &meta); err != nil {
 			return nil, err
 		}
 		return &meta, nil
 	case "plan_participants_and_providers":
 		// Deserialize the raw JSON into HumanizedAuditMetaBaseStruct
-		meta := HumanizedAuditMetaBaseStruct{}
+		meta := TranslatedAuditMetaBaseStruct{}
 		if err := json.Unmarshal(rawData, &meta); err != nil {
 
 			return nil, err
@@ -99,7 +99,7 @@ func parseRawHumanizedAuditMetaData(tableName string, rawMetaDataJSON interface{
 
 	default:
 		// Return a default implementation or handle unsupported types
-		meta := HumanizedAuditMetaBaseStruct{}
+		meta := TranslatedAuditMetaBaseStruct{}
 		if err := json.Unmarshal(rawData, &meta); err != nil {
 			return nil, err
 		}

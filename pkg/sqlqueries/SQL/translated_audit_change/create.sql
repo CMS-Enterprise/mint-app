@@ -1,4 +1,4 @@
-INSERT INTO humanized_audit_change(
+INSERT INTO translated_audit_change(
     id,
     model_plan_id,
     actor_id,

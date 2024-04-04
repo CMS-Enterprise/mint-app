@@ -11,8 +11,8 @@ import (
 )
 
 // HumanizedAuditChangeCollectionGetByModelPlanID returns all HumanizedAuditChange for a given model plan id
-func HumanizedAuditChangeCollectionGetByModelPlanID(np sqlutils.NamedPreparer, modelPlanID uuid.UUID) ([]*models.HumanizedAuditChange, error) {
-	humanizedChangeCollection, err := storage.HumanizedAuditChangeCollectionGetByModelPlanID(np, modelPlanID)
+func HumanizedAuditChangeCollectionGetByModelPlanID(np sqlutils.NamedPreparer, modelPlanID uuid.UUID) ([]*models.TranslatedAuditChange, error) {
+	humanizedChangeCollection, err := storage.TranslatedAuditChangeCollectionGetByModelPlanID(np, modelPlanID)
 	if err != nil {
 		return nil, err
 	}
