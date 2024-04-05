@@ -74,16 +74,23 @@ const NotificationsHome = () => {
             </Grid>
 
             <Grid className="margin-bottom-2">
-              {numUnreadNotifications !== 0 && (
-                <Button
-                  type="button"
-                  unstyled
-                  className="width-auto margin-right-2"
-                  onClick={() => markAllAsRead().then(() => refetch())}
-                >
-                  {notificationsT('index.markAllAsRead')}
-                </Button>
-              )}
+              <Button
+                type="button"
+                disabled={numUnreadNotifications === 0}
+                unstyled
+                className={`width-auto margin-right-2 ${
+                  numUnreadNotifications === 0 ? 'text-uswds-disabled' : ''
+                }`}
+                onClick={() => {
+                  if (numUnreadNotifications !== 0) {
+                    markAllAsRead().then(() => refetch());
+                  }
+                }}
+              >
+                {notificationsT('index.markAllAsRead', {
+                  number: numUnreadNotifications
+                })}
+              </Button>
 
               <UswdsReactLink
                 className={`margin-y-0 ${

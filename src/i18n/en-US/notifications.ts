@@ -2,7 +2,7 @@ const notifications = {
   breadcrumb: 'Notifications',
   index: {
     heading: 'Notifications',
-    markAllAsRead: 'Mark all as read',
+    markAllAsRead: 'Mark all ({{-number}}) as read',
     notificationSettings: 'Notification settings',
     infoBanner: {
       emptyState:
