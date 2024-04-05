@@ -23,6 +23,7 @@ import {
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 import Alert from 'components/shared/Alert';
+import useMessage from 'hooks/useMessage';
 import { getKeys } from 'types/translation';
 import { dirtyInput } from 'utils/formDiff';
 import { NotFoundPartial } from 'views/NotFound';
@@ -44,6 +45,8 @@ const NotificationSettings = () => {
   > = notificationsT('settings.configurations', { returnObjects: true });
 
   const formikRef = useRef<FormikProps<NotificationSettingsFormType>>(null);
+
+  const { showMessageOnNextPage } = useMessage();
 
   const history = useHistory();
 
@@ -83,6 +86,18 @@ const NotificationSettings = () => {
     })
       .then(response => {
         if (!response?.errors) {
+          showMessageOnNextPage(
+            <>
+              <Alert
+                type="success"
+                slim
+                data-testid="success-collaborator-alert"
+                className="margin-y-4"
+              >
+                {notificationsT('settings.success')}
+              </Alert>
+            </>
+          );
           history.push('/notifications');
         }
       })

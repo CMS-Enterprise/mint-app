@@ -89,6 +89,7 @@ const notifications = {
     },
     save: 'Save',
     dontUpdate: 'Don’t update and return to previous page',
+    success: 'Success! Your notification settings have been updated.',
     error:
       'An error occurred while saving your notification settings. Please try again.'
   }

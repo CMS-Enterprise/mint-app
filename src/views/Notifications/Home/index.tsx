@@ -12,7 +12,9 @@ import Breadcrumbs from 'components/Breadcrumbs';
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
+import Expire from 'components/shared/Expire';
 import Spinner from 'components/Spinner';
+import useMessage from 'hooks/useMessage';
 import { NotFoundPartial } from 'views/NotFound';
 
 import IndividualNotification from './_components/IndividualNotification';
@@ -23,6 +25,8 @@ const NotificationsHome = () => {
   const { t: notificationsT } = useTranslation('notifications');
   const { t: generalT } = useTranslation('general');
   const { t: miscellaneousT } = useTranslation('miscellaneous');
+
+  const { message } = useMessage();
 
   const { data, loading, error, refetch } = useGetNotificationsQuery();
   const [markAllAsRead] = useUpdateAllNotificationsAsReadMutation();
@@ -61,6 +65,8 @@ const NotificationsHome = () => {
       <GridContainer>
         <Grid desktop={{ col: 12 }} tablet={{ col: 12 }} mobile={{ col: 12 }}>
           <Breadcrumbs className="margin-bottom-4" items={breadcrumbs} />
+
+          {message && <Expire delay={45000}>{message}</Expire>}
 
           <Grid
             row
