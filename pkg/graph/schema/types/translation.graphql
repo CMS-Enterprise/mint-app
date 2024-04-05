@@ -101,8 +101,10 @@ type TranslationFieldWithParent {
   Field name for the parent question for fields that represent Other, Please specify, etc.  Used in change history to render parent question for context
   """
   otherParentField: String
-  parentRelation: Map!
+  parentRelation: TranslationField!
 }
+
+union ChildTranslation = TranslationFieldWithParent | TranslationFieldWithOptionsAndParent
 
 """
 Represents a translation question with options and child/children
@@ -127,7 +129,7 @@ type TranslationFieldWithOptionsAndChildren {
   """
   otherParentField: String
   options: Map!
-  childRelation: Map!
+  childRelation: ChildTranslation!
 }
 
 """
@@ -153,7 +155,7 @@ type TranslationFieldWithOptionsAndParent {
   """
   otherParentField: String
   options: Map!
-  parentRelation: Map!
+  parentRelation: TranslationFieldWithOptionsAndChildren!
 }
 
 """
@@ -179,8 +181,8 @@ type TranslationFieldWithParentAndChildren {
   """
   otherParentField: String
   options: Map!
-  parentRelation: Map!
-  childRelation: Map!
+  parentRelation: TranslationFieldWithOptionsAndChildren!
+  childRelation: TranslationFieldWithParent!
 }
 
 

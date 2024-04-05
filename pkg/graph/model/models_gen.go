@@ -14,6 +14,10 @@ import (
 	"github.com/google/uuid"
 )
 
+type ChildTranslation interface {
+	IsChildTranslation()
+}
+
 type CreateOperationalSolutionSubtaskInput struct {
 	Name   string                                  `json:"name"`
 	Status models.OperationalSolutionSubtaskStatus `json:"status"`
@@ -587,7 +591,7 @@ type TranslationFieldWithOptionsAndChildren struct {
 	// Field name for the parent question for fields that represent Other, Please specify, etc.  Used in change history to render parent question for context
 	OtherParentField *string                `json:"otherParentField,omitempty"`
 	Options          map[string]interface{} `json:"options"`
-	ChildRelation    map[string]interface{} `json:"childRelation"`
+	ChildRelation    ChildTranslation       `json:"childRelation"`
 }
 
 // Represents a translation question with options and parent
@@ -605,10 +609,12 @@ type TranslationFieldWithOptionsAndParent struct {
 	// Is a question a followup to another that doesn't designate it's own readonly question/line
 	IsOtherType *bool `json:"isOtherType,omitempty"`
 	// Field name for the parent question for fields that represent Other, Please specify, etc.  Used in change history to render parent question for context
-	OtherParentField *string                `json:"otherParentField,omitempty"`
-	Options          map[string]interface{} `json:"options"`
-	ParentRelation   map[string]interface{} `json:"parentRelation"`
+	OtherParentField *string                                 `json:"otherParentField,omitempty"`
+	Options          map[string]interface{}                  `json:"options"`
+	ParentRelation   *TranslationFieldWithOptionsAndChildren `json:"parentRelation"`
 }
+
+func (TranslationFieldWithOptionsAndParent) IsChildTranslation() {}
 
 // Represents a translation question with no options and a parent
 type TranslationFieldWithParent struct {
@@ -625,9 +631,11 @@ type TranslationFieldWithParent struct {
 	// Is a question a followup to another that doesn't designate it's own readonly question/line
 	IsOtherType *bool `json:"isOtherType,omitempty"`
 	// Field name for the parent question for fields that represent Other, Please specify, etc.  Used in change history to render parent question for context
-	OtherParentField *string                `json:"otherParentField,omitempty"`
-	ParentRelation   map[string]interface{} `json:"parentRelation"`
+	OtherParentField *string           `json:"otherParentField,omitempty"`
+	ParentRelation   *TranslationField `json:"parentRelation"`
 }
+
+func (TranslationFieldWithParent) IsChildTranslation() {}
 
 // Represents a translation question with options and parent and children
 type TranslationFieldWithParentAndChildren struct {
@@ -644,10 +652,10 @@ type TranslationFieldWithParentAndChildren struct {
 	// Is a question a followup to another that doesn't designate it's own readonly question/line
 	IsOtherType *bool `json:"isOtherType,omitempty"`
 	// Field name for the parent question for fields that represent Other, Please specify, etc.  Used in change history to render parent question for context
-	OtherParentField *string                `json:"otherParentField,omitempty"`
-	Options          map[string]interface{} `json:"options"`
-	ParentRelation   map[string]interface{} `json:"parentRelation"`
-	ChildRelation    map[string]interface{} `json:"childRelation"`
+	OtherParentField *string                                 `json:"otherParentField,omitempty"`
+	Options          map[string]interface{}                  `json:"options"`
+	ParentRelation   *TranslationFieldWithOptionsAndChildren `json:"parentRelation"`
+	ChildRelation    *TranslationFieldWithParent             `json:"childRelation"`
 }
 
 type UpdateOperationalSolutionSubtaskInput struct {

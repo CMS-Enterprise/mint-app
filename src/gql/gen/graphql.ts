@@ -233,6 +233,8 @@ export enum ChangeType {
   UPDATED = 'UPDATED'
 }
 
+export type ChildTranslation = TranslationFieldWithOptionsAndParent | TranslationFieldWithParent;
+
 export enum ClaimsBasedPayType {
   ADJUSTMENTS_TO_FFS_PAYMENTS = 'ADJUSTMENTS_TO_FFS_PAYMENTS',
   CARE_MANAGEMENT_HOME_VISITS = 'CARE_MANAGEMENT_HOME_VISITS',
@@ -3307,7 +3309,7 @@ export type TranslationFieldWithOptions = {
 /** Represents a translation question with options and child/children */
 export type TranslationFieldWithOptionsAndChildren = {
   __typename: 'TranslationFieldWithOptionsAndChildren';
-  childRelation: Scalars['Map']['output'];
+  childRelation: ChildTranslation;
   dataType: TranslationDataType;
   dbField: Scalars['String']['output'];
   formType: TranslationFormType;
@@ -3341,7 +3343,7 @@ export type TranslationFieldWithOptionsAndParent = {
   options: Scalars['Map']['output'];
   /** Field name for the parent question for fields that represent Other, Please specify, etc.  Used in change history to render parent question for context */
   otherParentField?: Maybe<Scalars['String']['output']>;
-  parentRelation: Scalars['Map']['output'];
+  parentRelation: TranslationFieldWithOptionsAndChildren;
   readonlyLabel?: Maybe<Scalars['String']['output']>;
   sublabel?: Maybe<Scalars['String']['output']>;
 };
@@ -3361,7 +3363,7 @@ export type TranslationFieldWithParent = {
   multiSelectLabel?: Maybe<Scalars['String']['output']>;
   /** Field name for the parent question for fields that represent Other, Please specify, etc.  Used in change history to render parent question for context */
   otherParentField?: Maybe<Scalars['String']['output']>;
-  parentRelation: Scalars['Map']['output'];
+  parentRelation: TranslationField;
   readonlyLabel?: Maybe<Scalars['String']['output']>;
   sublabel?: Maybe<Scalars['String']['output']>;
 };
@@ -3369,7 +3371,7 @@ export type TranslationFieldWithParent = {
 /** Represents a translation question with options and parent and children */
 export type TranslationFieldWithParentAndChildren = {
   __typename: 'TranslationFieldWithParentAndChildren';
-  childRelation: Scalars['Map']['output'];
+  childRelation: TranslationFieldWithParent;
   dataType: TranslationDataType;
   dbField: Scalars['String']['output'];
   formType: TranslationFormType;
@@ -3383,7 +3385,7 @@ export type TranslationFieldWithParentAndChildren = {
   options: Scalars['Map']['output'];
   /** Field name for the parent question for fields that represent Other, Please specify, etc.  Used in change history to render parent question for context */
   otherParentField?: Maybe<Scalars['String']['output']>;
-  parentRelation: Scalars['Map']['output'];
+  parentRelation: TranslationFieldWithOptionsAndChildren;
   readonlyLabel?: Maybe<Scalars['String']['output']>;
   sublabel?: Maybe<Scalars['String']['output']>;
 };
