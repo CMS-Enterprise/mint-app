@@ -14,7 +14,7 @@ import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 import RequiredAsterisk from 'components/shared/RequiredAsterisk';
 
-import DocumentUpload from './documentUpload';
+import DocumentUpload from './DocumentUpload';
 import LinkDocument from './LinkDocument';
 
 const AddDocument = () => {

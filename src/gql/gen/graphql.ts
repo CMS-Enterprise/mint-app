@@ -3205,6 +3205,13 @@ export type LinkNewPlanDocumentMutationVariables = Exact<{
 
 export type LinkNewPlanDocumentMutation = { __typename: 'Mutation', linkNewPlanDocument: { __typename: 'PlanDocument', id: UUID } };
 
+export type UploadNewPlanDocumentMutationVariables = Exact<{
+  input: PlanDocumentInput;
+}>;
+
+
+export type UploadNewPlanDocumentMutation = { __typename: 'Mutation', uploadNewPlanDocument: { __typename: 'PlanDocument', id: UUID } };
+
 export type AddPlanFavoriteMutationVariables = Exact<{
   modelPlanID: Scalars['UUID']['input'];
 }>;
@@ -5245,6 +5252,39 @@ export function useLinkNewPlanDocumentMutation(baseOptions?: Apollo.MutationHook
 export type LinkNewPlanDocumentMutationHookResult = ReturnType<typeof useLinkNewPlanDocumentMutation>;
 export type LinkNewPlanDocumentMutationResult = Apollo.MutationResult<LinkNewPlanDocumentMutation>;
 export type LinkNewPlanDocumentMutationOptions = Apollo.BaseMutationOptions<LinkNewPlanDocumentMutation, LinkNewPlanDocumentMutationVariables>;
+export const UploadNewPlanDocumentDocument = gql`
+    mutation UploadNewPlanDocument($input: PlanDocumentInput!) {
+  uploadNewPlanDocument(input: $input) {
+    id
+  }
+}
+    `;
+export type UploadNewPlanDocumentMutationFn = Apollo.MutationFunction<UploadNewPlanDocumentMutation, UploadNewPlanDocumentMutationVariables>;
+
+/**
+ * __useUploadNewPlanDocumentMutation__
+ *
+ * To run a mutation, you first call `useUploadNewPlanDocumentMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUploadNewPlanDocumentMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [uploadNewPlanDocumentMutation, { data, loading, error }] = useUploadNewPlanDocumentMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useUploadNewPlanDocumentMutation(baseOptions?: Apollo.MutationHookOptions<UploadNewPlanDocumentMutation, UploadNewPlanDocumentMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UploadNewPlanDocumentMutation, UploadNewPlanDocumentMutationVariables>(UploadNewPlanDocumentDocument, options);
+      }
+export type UploadNewPlanDocumentMutationHookResult = ReturnType<typeof useUploadNewPlanDocumentMutation>;
+export type UploadNewPlanDocumentMutationResult = Apollo.MutationResult<UploadNewPlanDocumentMutation>;
+export type UploadNewPlanDocumentMutationOptions = Apollo.BaseMutationOptions<UploadNewPlanDocumentMutation, UploadNewPlanDocumentMutationVariables>;
 export const AddPlanFavoriteDocument = gql`
     mutation AddPlanFavorite($modelPlanID: UUID!) {
   addPlanFavorite(modelPlanID: $modelPlanID) {
