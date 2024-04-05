@@ -4,8 +4,8 @@ Represents model plan base translation data
 """
 type ModelPlanTranslation {
   modelName: TranslationField! @goTag(key: "db", value: "model_name")
-  previousName: TranslationField! @goTag(key: "db", value: "previous_name")
-  nameHistory: TranslationField! @goTag(key: "db", value: "name_history")
+  previousName: TranslationField! # This field does not represent a database field, rather it's generated from a resolver
+  nameHistory: TranslationField! # This field does not represent a database field, rather it's generated from a resolver
   abbreviation: TranslationField! @goTag(key: "db", value: "abbreviation")
   archived: TranslationFieldWithOptions! @goTag(key: "db", value: "archived")
 
