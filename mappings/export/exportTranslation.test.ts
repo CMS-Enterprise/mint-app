@@ -81,8 +81,8 @@ describe('exportTranslation Util', () => {
       },
       cmsCenters: {
         gqlField: 'cmsCenters',
-        goField: 'CMMIGroups',
-        dbField: 'cmmi_groups',
+        goField: 'CMSCenters',
+        dbField: 'cms_centers',
         label: 'CMS component',
         options: {
           CMMI: 'Center for Medicare and Medicaid Innovation (CMMI)',
@@ -98,8 +98,8 @@ describe('exportTranslation Util', () => {
       },
       cmmiGroups: {
         gqlField: 'cmmiGroups',
-        goField: 'CMSCenters',
-        dbField: 'cms_centers',
+        goField: 'CMMIGroups',
+        dbField: 'cmmi_groups',
         label: 'CMMI Group',
         sublabel:
           'You only need to select the CMMI group if CMMI is selected as the main CMS component.',
