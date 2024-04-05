@@ -1,6 +1,9 @@
-import { TranslationDataType, TranslationFormType } from 'gql/gen/graphql';
-
 import { TranslationCollaborators } from 'types/translation';
+
+import {
+  TranslationDataType,
+  TranslationFormType
+} from '../../../gql/gen/graphql';
 
 export const collaborators: TranslationCollaborators = {
   username: {

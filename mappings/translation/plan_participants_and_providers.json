@@ -1,0 +1,566 @@
+{
+  "participants": {
+    "gqlField": "participants",
+    "goField": "Participants",
+    "dbField": "participants",
+    "label": "Who are the participants? Select all that apply.",
+    "readonlyLabel": "Who are the participants?",
+    "multiSelectLabel": "Selected participants",
+    "options": {
+      "ACCOUNTABLE_CARE_ORGANIZATION": "Accountable Care Organization (ACO)",
+      "COMMERCIAL_PAYERS": "Commercial payers",
+      "COMMUNITY_BASED_ORGANIZATIONS": "Community-based organizations (CBO)",
+      "CONVENER": "Convener",
+      "ENTITIES": "Legal Entities",
+      "MEDICAID_MANAGED_CARE_ORGANIZATIONS": "Medicaid Managed Care organizations",
+      "MEDICAID_PROVIDERS": "Medicaid providers",
+      "MEDICARE_ADVANTAGE_PLANS": "Medicare Advantage plans",
+      "MEDICARE_ADVANTAGE_PRESCRIPTION_DRUG_PLANS": "Medicare Advantage Prescription Drug (MAPD) plans",
+      "MEDICARE_PROVIDERS": "Medicare providers/suppliers",
+      "NON_PROFIT_ORGANIZATIONS": "Non-profit organizations",
+      "STANDALONE_PART_D_PLANS": "Standalone Part D plans",
+      "STATES": "States",
+      "STATE_MEDICAID_AGENCIES": "State Medicaid agencies",
+      "OTHER": "Other"
+    }
+  },
+  "medicareProviderType": {
+    "gqlField": "medicareProviderType",
+    "goField": "MedicareProviderType",
+    "dbField": "medicare_provider_type",
+    "label": "Which type of Medicare providers/suppliers?",
+    "isOtherType": true,
+    "otherParentField": "participants"
+  },
+  "statesEngagement": {
+    "gqlField": "statesEngagement",
+    "goField": "StatesEngagement",
+    "dbField": "states_engagement",
+    "label": "Please describe how states will engage with your model.",
+    "isOtherType": true
+  },
+  "participantsOther": {
+    "gqlField": "participantsOther",
+    "goField": "ParticipantsOther",
+    "dbField": "participantsOther",
+    "label": "Please describe the other participants engaging with this model",
+    "isOtherType": true
+  },
+  "participantsNote": {
+    "gqlField": "participantsNote",
+    "goField": "ParticipantsNote",
+    "dbField": "participantsNote",
+    "label": "Notes"
+  },
+  "participantsCurrentlyInModels": {
+    "gqlField": "participantsCurrentlyInModels",
+    "goField": "ParticipantsCurrentlyInModels",
+    "dbField": "participants_currently_in_models_note",
+    "label": "Are the participants in CMMI models now?",
+    "sublabel": "If you have selected more than one participant in the questions above, specify which participants already participate in CMMI models.",
+    "options": {
+      "true": "Yes",
+      "false": "No"
+    }
+  },
+  "participantsCurrentlyInModelsNote": {
+    "gqlField": "participantsCurrentlyInModelsNote",
+    "goField": "ParticipantsCurrentlyInModelsNote",
+    "dbField": "participants_currently_in_models_note",
+    "label": "Notes"
+  },
+  "modelApplicationLevel": {
+    "gqlField": "modelApplicationLevel",
+    "goField": "ModelApplicationLevel",
+    "dbField": "modelApplicationLevel",
+    "label": "At what level will the model apply?",
+    "sublabel": "(e.g., all services identified at the CPT or ICD-10 code level, epsiode of care for a specific span of time, all hospitals unpaid under the Inpatient Prospective Payment System in a certain state)"
+  },
+  "expectedNumberOfParticipants": {
+    "gqlField": "expectedNumberOfParticipants",
+    "goField": "ExpectedNumberOfParticipants",
+    "dbField": "expected_number_of_participants",
+    "label": "How many participants do you expect?",
+    "sublabel": "Note: Sometimes RRCEG provides a minimum for the power calculation. Other times stakeholder research may inform the team about who are good candidates or might be interested in participating."
+  },
+  "estimateConfidence": {
+    "gqlField": "estimateConfidence",
+    "goField": "EstimateConfidence",
+    "dbField": "estimate_confidence",
+    "label": "What is your level of confidence on this estimate?",
+    "options": {
+      "NOT_AT_ALL": "Not at all confident",
+      "SLIGHTLY": "Slightly confident",
+      "FAIRLY": "Fairly confident",
+      "COMPLETELY": "Completely confident"
+    }
+  },
+  "confidenceNote": {
+    "gqlField": "confidenceNote",
+    "goField": "ConfidenceNote",
+    "dbField": "confidence_note",
+    "label": "Notes"
+  },
+  "recruitmentMethod": {
+    "gqlField": "recruitmentMethod",
+    "goField": "RecruitmentMethod",
+    "dbField": "recruitment_method",
+    "label": "How will you recruit the participants?",
+    "options": {
+      "APPLICATION_COLLECTION_TOOL": "Use an application collection tool",
+      "LOI": "LOI (Letter of intent)",
+      "NOFO": "NOFO (Notice of funding opportunity for grants/cooperative agreements)",
+      "OTHER": "Other",
+      "NA": "Not applicable"
+    },
+    "optionsLabels": {
+      "NOFO": "CMMI writes, Office of General Council (OGC) reviews and approves"
+    }
+  },
+  "recruitmentOther": {
+    "gqlField": "recruitmentOther",
+    "goField": "RecruitmentOther",
+    "dbField": "recruitment_other",
+    "label": "Please specify",
+    "isOtherType": true,
+    "otherParentField": "recruitment_method"
+  },
+  "recruitmentNote": {
+    "gqlField": "recruitmentNote",
+    "goField": "RecruitmentNote",
+    "dbField": "recruitment_note",
+    "label": "Notes"
+  },
+  "selectionMethod": {
+    "gqlField": "selectionMethod",
+    "goField": "SelectionMethod",
+    "dbField": "selection_method",
+    "label": "How will you select participants? Select all that appy.",
+    "readonlyLabel": "How will you select participants?",
+    "multiSelectLabel": "Selected participants",
+    "options": {
+      "APPLICATION_REVIEW_AND_SCORING_TOOL": "Use an application review and scoring tool",
+      "APPLICATION_SUPPORT_CONTRACTOR": "Get an application support contractor",
+      "BASIC_CRITERIA": "We have a basic set of criteria and plan to accept any participant that meets them",
+      "CMS_COMPONENT_OR_PROCESS": "Another CMS component or process will provide support",
+      "MODEL_TEAM_REVIEW_APPLICATIONS": "Model team will review applications",
+      "SUPPORT_FROM_CMMI": "Solicit support for CMII staff",
+      "OTHER": "Other",
+      "NO_SELECTING_PARTICIPANTS": "We won’t be selecting participants"
+    }
+  },
+  "selectionOther": {
+    "gqlField": "selectionOther",
+    "goField": "SelectionOther",
+    "dbField": "selection_other",
+    "label": "Please describe the other participants engaging with this model",
+    "isOtherType": true
+  },
+  "selectionNote": {
+    "gqlField": "selectionNote",
+    "goField": "SelectionNote",
+    "dbField": "selection_note",
+    "label": "Notes"
+  },
+  "participantAddedFrequency": {
+    "gqlField": "participantAddedFrequency",
+    "goField": "ParticipantAddedFrequency",
+    "dbField": "participant_added_frequency",
+    "label": "How frequently are participants added?",
+    "options": {
+      "ANNUALLY": "Annually",
+      "SEMIANNUALLY": "Semi-annually",
+      "QUARTERLY": "Quarterly",
+      "MONTHLY": "Monthly",
+      "CONTINUALLY": "Continually",
+      "OTHER": "Other"
+    }
+  },
+  "participantAddedFrequencyContinually": {
+    "gqlField": "participantAddedFrequencyContinually",
+    "goField": "ParticipantAddedFrequencyContinually",
+    "dbField": "participant_added_frequency_continually",
+    "label": "Please specify",
+    "isOtherType": true,
+    "otherParentField": "participant_added_frequency"
+  },
+  "participantAddedFrequencyOther": {
+    "gqlField": "participantAddedFrequencyOther",
+    "goField": "ParticipantAddedFrequencyOther",
+    "dbField": "participant_added_frequency_other",
+    "label": "Please specify",
+    "isOtherType": true,
+    "otherParentField": "participant_added_frequency"
+  },
+  "participantAddedFrequencyNote": {
+    "gqlField": "participantAddedFrequencyNote",
+    "goField": "ParticipantAddedFrequencyNote",
+    "dbField": "participant_added_frequency_note",
+    "label": "Notes"
+  },
+  "participantRemovedFrequency": {
+    "gqlField": "participantRemovedFrequency",
+    "goField": "ParticipantRemovedFrequency",
+    "dbField": "participant_removed_frequency",
+    "label": "How frequently are participants removed?",
+    "options": {
+      "ANNUALLY": "Annually",
+      "SEMIANNUALLY": "Semi-annually",
+      "QUARTERLY": "Quarterly",
+      "MONTHLY": "Monthly",
+      "CONTINUALLY": "Continually",
+      "OTHER": "Other"
+    }
+  },
+  "participantRemovedFrequencyContinually": {
+    "gqlField": "participantRemovedFrequencyContinually",
+    "goField": "ParticipantRemovedFrequencyContinually",
+    "dbField": "participant_removed_frequency_continually",
+    "label": "Please specify",
+    "isOtherType": true,
+    "otherParentField": "participant_removed_frequency"
+  },
+  "participantRemovedFrequencyOther": {
+    "gqlField": "participantRemovedFrequencyOther",
+    "goField": "ParticipantRemovedFrequencyOther",
+    "dbField": "participant_removed_frequency_other",
+    "label": "Please specify",
+    "isOtherType": true,
+    "otherParentField": "participant_removed_frequency"
+  },
+  "participantRemovedFrequencyNote": {
+    "gqlField": "participantRemovedFrequencyNote",
+    "goField": "ParticipantRemovedFrequencyNote",
+    "dbField": "participant_removed_frequency_note",
+    "label": "Notes"
+  },
+  "communicationMethod": {
+    "gqlField": "communicationMethod",
+    "goField": "CommunicationMethod",
+    "dbField": "communication_method",
+    "label": "How will you communicate with participants?",
+    "options": {
+      "IT_TOOL": "Manage ongoing communications with participants using an IT tool",
+      "MASS_EMAIL": "Send mass emails to new participants",
+      "OTHER": "Other",
+      "NO_COMMUNICATION": "We are not planning to communicate"
+    }
+  },
+  "communicationMethodOther": {
+    "gqlField": "communicationMethodOther",
+    "goField": "CommunicationMethodOther",
+    "dbField": "communication_method",
+    "label": "Please specify",
+    "isOtherType": true,
+    "otherParentField": "communication_method"
+  },
+  "communicationNote": {
+    "gqlField": "communicationNote",
+    "goField": "CommunicationNote",
+    "dbField": "communication_note",
+    "label": "Notes"
+  },
+  "riskType": {
+    "gqlField": "riskType",
+    "goField": "RiskType",
+    "dbField": "risk_type",
+    "label": "What type of risk will the participant assume?",
+    "options": {
+      "TWO_SIDED": "Two-sided",
+      "ONE_SIDED": "One-sided",
+      "CAPITATION": "Capitation",
+      "NOT_RISK_BASED": "Not risk-based",
+      "OTHER": "Other"
+    }
+  },
+  "riskOther": {
+    "gqlField": "riskOther",
+    "goField": "RiskOther",
+    "dbField": "risk_other",
+    "label": "Please specify",
+    "isOtherType": true,
+    "otherParentField": "risk_type"
+  },
+  "riskNote": {
+    "gqlField": "riskNote",
+    "goField": "RiskNote",
+    "dbField": "risk_note",
+    "label": "Notes"
+  },
+  "willRiskChange": {
+    "gqlField": "willRiskChange",
+    "goField": "WillRiskChange",
+    "dbField": "will_risk_change",
+    "label": "Will the risk arrangement change as the model progresses?",
+    "options": {
+      "true": "Yes",
+      "false": "No"
+    }
+  },
+  "willRiskChangeNote": {
+    "gqlField": "willRiskChangeNote",
+    "goField": "WillRiskChangeNote",
+    "dbField": "will_risk_change_note",
+    "label": "Notes"
+  },
+  "coordinateWork": {
+    "gqlField": "coordinateWork",
+    "goField": "CoordinateWork",
+    "dbField": "coordinate_work",
+    "label": "Will the participants coordinate the work of others?",
+    "sublabel": "(e.g. conveners)",
+    "options": {
+      "true": "Yes",
+      "false": "No"
+    }
+  },
+  "coordinateWorkNote": {
+    "gqlField": "coordinateWorkNote",
+    "goField": "CoordinateWorkNote",
+    "dbField": "coordinate_work_note",
+    "label": "Notes"
+  },
+  "gainsharePayments": {
+    "gqlField": "gainsharePayments",
+    "goField": "GainsharePayments",
+    "dbField": "gainshare_payments",
+    "label": "Will there be gainsharing payments?",
+    "options": {
+      "true": "Yes",
+      "false": "No"
+    }
+  },
+  "gainsharePaymentsTrack": {
+    "gqlField": "gainsharePaymentsTrack",
+    "goField": "GainsharePaymentsTrack",
+    "dbField": "gainshare_payments_track",
+    "label": "Will you track gainsharing payments?",
+    "options": {
+      "true": "Yes",
+      "false": "No"
+    }
+  },
+  "gainsharePaymentsEligibility": {
+    "gqlField": "gainsharePaymentsEligibility",
+    "goField": "GainsharePaymentsEligibility",
+    "dbField": "gainshare_payments_eligibility",
+    "label": "Are providers eligible to participate in gainsharing arrangements?",
+    "options": {
+      "ALL_PROVIDERS": "All providers",
+      "SOME_PROVIDERS": "Some providers",
+      "OTHER": "Other",
+      "NO": "No"
+    }
+  },
+  "gainsharePaymentsEligibilityOther": {
+    "gqlField": "gainsharePaymentsEligibilityOther",
+    "goField": "GainsharePaymentsEligibilityOther",
+    "dbField": "gainshare_payments_eligibility_other",
+    "label": "Please specify",
+    "isOtherType": true,
+    "otherParentField": "gainshare_payments_eligibility"
+  },
+  "gainsharePaymentsNote": {
+    "gqlField": "gainsharePaymentsNote",
+    "goField": "GainsharePaymentsNote",
+    "dbField": "gainshare_payments_note",
+    "label": "Notes"
+  },
+  "participantsIds": {
+    "gqlField": "participantsIds",
+    "goField": "ParticipantsIds",
+    "dbField": "participants_ids",
+    "label": "Will you collect participant IDs? If so, select which types.",
+    "sublabel": "Note: If this will be a MIPS or Advanced APM, you need to collect provider TIN-NPIs for participants to benefit from QPP. In addition, CPI vetting needs to be preformed.",
+    "readonlyLabel": "Will you collect participant IDs?",
+    "options": {
+      "CCNS": "CCNs",
+      "NPIS": "NPIs",
+      "TINS": "TINs",
+      "OTHER": "Other",
+      "NO_IDENTIFIERS": "No, we will not collect provider identifiers"
+    }
+  },
+  "participantsIdsOther": {
+    "gqlField": "participantsIdsOther",
+    "goField": "ParticipantsIdsOther",
+    "dbField": "participants_ids_other",
+    "label": "Please specify",
+    "isOtherType": true,
+    "otherParentField": "participants_ids"
+  },
+  "participantsIDSNote": {
+    "gqlField": "participantsIDSNote",
+    "goField": "ParticipantsIDSNote",
+    "dbField": "participants_ids_note",
+    "label": "Notes"
+  },
+  "providerAdditionFrequency": {
+    "gqlField": "providerAdditionFrequency",
+    "goField": "ProviderAdditionFrequency",
+    "dbField": "provider_addition_frequency",
+    "label": "How frequently are providers added?",
+    "options": {
+      "ANNUALLY": "Annually",
+      "SEMIANNUALLY": "Semi-annually",
+      "QUARTERLY": "Quarterly",
+      "MONTHLY": "Monthly",
+      "CONTINUALLY": "Continually",
+      "OTHER": "Other"
+    }
+  },
+  "providerAdditionFrequencyContinually": {
+    "gqlField": "providerAdditionFrequencyContinually",
+    "goField": "ProviderAdditionFrequencyContinually",
+    "dbField": "provide_addition_frequency_continually",
+    "label": "Please specify",
+    "isOtherType": true,
+    "otherParentField": "provider_addition_frequency"
+  },
+  "providerAdditionFrequencyOther": {
+    "gqlField": "providerAdditionFrequencyOther",
+    "goField": "ProviderAdditionFrequencyOther",
+    "dbField": "provider_addition_frequency_other",
+    "label": "Please specify",
+    "isOtherType": true,
+    "otherParentField": "provider_addition_frequency"
+  },
+  "providerAdditionFrequencyNote": {
+    "gqlField": "providerAdditionFrequencyNote",
+    "goField": "ProviderAdditionFrequencyNote",
+    "dbField": "provider_addition_frequency_note",
+    "label": "Notes"
+  },
+  "providerAddMethod": {
+    "gqlField": "providerAddMethod",
+    "goField": "ProviderAddMethod",
+    "dbField": "provider_add_method",
+    "label": "How will you decide to add providers? Select all that apply.",
+    "sublabel": "Please include details on decision points, timing, and implications of adding them to the model in an additional note.",
+    "readonlyLabel": "How will you decide to add providers?",
+    "multiSelectLabel": "How will you add providers?",
+    "options": {
+      "PROSPECTIVELY": "Add prospectively (based on previous year’s interactions)",
+      "RETROSPECTIVELY": "Add retrospectively (once an interaction happens this year)",
+      "VOLUNTARILY": "Add voluntarily",
+      "MANDATORILY": "Add mandatorily",
+      "ONLINE_TOOLS": "Use online tools to view what types of participant files and data have been uploaded and downloaded",
+      "OTHER": "Other",
+      "NA": "Not applicable"
+    }
+  },
+  "providerAddMethodOther": {
+    "gqlField": "providerAddMethodOther",
+    "goField": "ProviderAddMethodOther",
+    "dbField": "provider_add_method_other",
+    "label": "Please describe the other method for deciding which providers to add.",
+    "isOtherType": true
+  },
+  "providerAddMethodNote": {
+    "gqlField": "providerAddMethodNote",
+    "goField": "ProviderAddMethodNote",
+    "dbField": "provider_add_method_note",
+    "label": "Notes"
+  },
+  "providerLeaveMethod": {
+    "gqlField": "providerLeaveMethod",
+    "goField": "ProviderLeaveMethod",
+    "dbField": "provider_leave_method",
+    "label": "Can providers leave the model? Select all that apply.",
+    "readonlyLabel": "Can providers leave the model?",
+    "sublabel": "Please include details on decision points, timing, and implications of leaving the model in an additional note.",
+    "options": {
+      "VARIES_BY_TYPE_OF_PROVIDER": "It varies by type of provider",
+      "NOT_ALLOWED_TO_LEAVE": "They are not allowed to leave",
+      "AFTER_A_CERTAIN_WITH_IMPLICATIONS": "They can leave after a certain date but there are implications",
+      "VOLUNTARILY_WITHOUT_IMPLICATIONS": "They can leave voluntarily at any time without implications",
+      "OTHER": "Other",
+      "NOT_APPLICABLE": "Not applicable"
+    }
+  },
+  "providerLeaveMethodOther": {
+    "gqlField": "providerLeaveMethodOther",
+    "goField": "ProviderLeaveMethodOther",
+    "dbField": "provider_leave_method_other",
+    "label": "Please specify",
+    "isOtherType": true,
+    "otherParentField": "provider_leave_method"
+  },
+  "providerLeaveMethodNote": {
+    "gqlField": "providerLeaveMethodNote",
+    "goField": "ProviderLeaveMethodNote",
+    "dbField": "provider_leave_method_note",
+    "label": "Notes"
+  },
+  "providerRemovalFrequency": {
+    "gqlField": "providerRemovalFrequency",
+    "goField": "ProviderRemovalFrequency",
+    "dbField": "provider_removal_frequency",
+    "label": "How frequently are providers removed?",
+    "options": {
+      "ANNUALLY": "Annually",
+      "SEMIANNUALLY": "Semi-annually",
+      "QUARTERLY": "Quarterly",
+      "MONTHLY": "Monthly",
+      "CONTINUALLY": "Continually",
+      "OTHER": "Other"
+    }
+  },
+  "providerRemovalFrequencyContinually": {
+    "gqlField": "providerRemovalFrequencyContinually",
+    "goField": "ProviderRemovalFrequencyContinually",
+    "dbField": "provide_removal_frequency_continually",
+    "label": "Please specify",
+    "isOtherType": true,
+    "otherParentField": "provider_removal_frequency"
+  },
+  "providerRemovalFrequencyOther": {
+    "gqlField": "providerRemovalFrequencyOther",
+    "goField": "ProviderRemovalFrequencyOther",
+    "dbField": "provider_removal_frequency_other",
+    "label": "Please specify",
+    "isOtherType": true,
+    "otherParentField": "provider_removal_frequency"
+  },
+  "providerRemovalFrequencyNote": {
+    "gqlField": "providerRemovalFrequencyNote",
+    "goField": "ProviderRemovalFrequencyNote",
+    "dbField": "provider_removal_frequency_note",
+    "label": "Notes"
+  },
+  "providerOverlap": {
+    "gqlField": "providerOverlap",
+    "goField": "ProviderOverlap",
+    "dbField": "provider_overlap",
+    "label": "Will the providers overlap with other models?",
+    "options": {
+      "YES_NEED_POLICIES": "Yes, we expect to develop policies to manage the overlaps",
+      "YES_NO_ISSUES": "Yes, and the overlaps would not be an issue",
+      "NO": "No"
+    }
+  },
+  "providerOverlapHierarchy": {
+    "gqlField": "providerOverlapHierarchy",
+    "goField": "ProviderOverlapHierarchy",
+    "dbField": "provider_overlap_hierarchy",
+    "label": "If model providers can be in multiple models that may interact, please note the desired hierarchy of how any payment changes or edits should be applied."
+  },
+  "providerOverlapNote": {
+    "gqlField": "providerOverlapNote",
+    "goField": "ProviderOverlapNote",
+    "dbField": "provider_overlap_note",
+    "label": "Notes"
+  },
+  "status": {
+    "gqlField": "status",
+    "goField": "Status",
+    "dbField": "status",
+    "label": "Model Plan status",
+    "options": {
+      "READY": "Ready",
+      "IN_PROGRESS": "In progress",
+      "READY_FOR_REVIEW": "Ready for review",
+      "READY_FOR_CLEARANCE": "Ready for clearance"
+    }
+  }
+}

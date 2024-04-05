@@ -1,10 +1,10 @@
+import { TranslationPayments } from 'types/translation';
+
 import {
   ModelViewFilter,
   TranslationDataType,
   TranslationFormType
-} from 'gql/gen/graphql';
-
-import { TranslationPayments } from 'types/translation';
+} from '../../../gql/gen/graphql';
 
 import { frequencyOptions } from './miscellaneous';
 

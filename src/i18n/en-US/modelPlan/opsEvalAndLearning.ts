@@ -1,10 +1,10 @@
+import { TranslationOpsEvalAndLearning } from 'types/translation';
+
 import {
   ModelViewFilter,
   TranslationDataType,
   TranslationFormType
-} from 'gql/gen/graphql';
-
-import { TranslationOpsEvalAndLearning } from 'types/translation';
+} from '../../../gql/gen/graphql';
 
 import { frequencyOptions } from './miscellaneous';
 
