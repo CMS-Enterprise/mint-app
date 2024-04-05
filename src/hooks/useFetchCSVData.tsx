@@ -251,7 +251,10 @@ export const removedUnneededData = (
 
       if (
         allPlanTranslation[section][fieldName] &&
-        isHiddenByParentCondition(allPlanTranslation[section][fieldName], data)
+        isHiddenByParentCondition(
+          allPlanTranslation[section][fieldName],
+          data[section]
+        )
       ) {
         return false;
       }
