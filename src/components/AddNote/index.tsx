@@ -40,7 +40,7 @@ const AddNote = ({ field: fieldName, id, className }: AddNoteType) => {
   const { setValue } = helpers;
 
   return (
-    <div className={classNames('margin-top-4 margin-bottom-8', className)}>
+    <div className={classNames('margin-top-3 margin-bottom-6', className)}>
       {!note && !open && !touched && (
         <Button
           type="button"

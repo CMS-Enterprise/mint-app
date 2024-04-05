@@ -1,6 +1,10 @@
-import { ModelViewFilter } from 'gql/gen/graphql';
-
 import { TranslationBasics } from 'types/translation';
+
+import {
+  ModelViewFilter,
+  TranslationDataType,
+  TranslationFormType
+} from '../../../gql/gen/graphql';
 
 export const basics: TranslationBasics = {
   modelCategory: {
@@ -8,8 +12,8 @@ export const basics: TranslationBasics = {
     goField: 'ModelCategory',
     dbField: 'model_category',
     label: 'Primary model category',
-    dataType: 'enum',
-    formType: 'radio',
+    dataType: TranslationDataType.ENUM,
+    formType: TranslationFormType.RADIO,
     adjacentPositioning: {
       position: 'left',
       adjacentField: 'additionalModelCategories'
@@ -46,8 +50,8 @@ export const basics: TranslationBasics = {
     label: 'Additional model categories',
     sublabel:
       'If your model doesn’t fall into any additional categories, you can skip this.',
-    dataType: 'string',
-    formType: 'checkbox',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.CHECKBOX,
     adjacentPositioning: {
       position: 'right',
       adjacentField: 'modelCategory'
@@ -82,24 +86,24 @@ export const basics: TranslationBasics = {
     goField: 'AmsModelID',
     dbField: 'ams_model_ID',
     label: 'Model ID',
-    dataType: 'string',
-    formType: 'textarea'
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXTAREA
   },
   demoCode: {
     gqlField: 'demoCode',
     goField: 'DemoCode',
     dbField: 'demo_code',
     label: 'Demo code(s)',
-    dataType: 'string',
-    formType: 'textarea'
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXTAREA
   },
   cmsCenters: {
     gqlField: 'cmsCenters',
-    goField: 'CMMIGroups',
-    dbField: 'cmmi_groups',
+    goField: 'CMSCenters',
+    dbField: 'cms_centers',
     label: 'CMS component',
-    dataType: 'enum',
-    formType: 'checkbox',
+    dataType: TranslationDataType.ENUM,
+    formType: TranslationFormType.CHECKBOX,
     adjacentPositioning: {
       position: 'left',
       adjacentField: 'cmmiGroups'
@@ -120,13 +124,13 @@ export const basics: TranslationBasics = {
   },
   cmmiGroups: {
     gqlField: 'cmmiGroups',
-    goField: 'CMSCenters',
-    dbField: 'cms_centers',
+    goField: 'CMMIGroups',
+    dbField: 'cmmi_groups',
     label: 'CMMI Group',
     sublabel:
       'You only need to select the CMMI group if CMMI is selected as the main CMS component.',
-    dataType: 'enum',
-    formType: 'checkbox',
+    dataType: TranslationDataType.ENUM,
+    formType: TranslationFormType.CHECKBOX,
     adjacentPositioning: {
       position: 'right',
       adjacentField: 'cmsCenters'
@@ -146,8 +150,8 @@ export const basics: TranslationBasics = {
     goField: 'ModelType',
     dbField: 'model_type',
     label: 'Model Type',
-    dataType: 'enum',
-    formType: 'checkbox',
+    dataType: TranslationDataType.ENUM,
+    formType: TranslationFormType.CHECKBOX,
     options: {
       VOLUNTARY: 'Voluntary',
       MANDATORY_NATIONAL: 'Mandatory national',
@@ -169,8 +173,8 @@ export const basics: TranslationBasics = {
     goField: 'ModelTypeOther',
     dbField: 'model_type_other',
     label: 'Please specify',
-    dataType: 'string',
-    formType: 'textarea',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXTAREA,
     isOtherType: true,
     otherParentField: 'modelType',
     filterGroups: [
@@ -185,8 +189,8 @@ export const basics: TranslationBasics = {
     goField: 'Problem',
     dbField: 'problem',
     label: 'Problem statement',
-    dataType: 'string',
-    formType: 'textarea'
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXTAREA
   },
   goal: {
     gqlField: 'goal',
@@ -195,8 +199,8 @@ export const basics: TranslationBasics = {
     label: 'Goal',
     sublabel:
       'Please include the high level goal of the program and a description of the project.',
-    dataType: 'string',
-    formType: 'textarea',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXTAREA,
     filterGroups: [
       ModelViewFilter.DFSDM,
       ModelViewFilter.IPC,
@@ -209,24 +213,24 @@ export const basics: TranslationBasics = {
     goField: 'TestInterventions',
     dbField: 'test_interventions',
     label: 'Test Interventions',
-    dataType: 'string',
-    formType: 'textarea'
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXTAREA
   },
   note: {
     gqlField: 'note',
     goField: 'Note',
     dbField: 'note',
     label: 'Notes',
-    dataType: 'string',
-    formType: 'textarea'
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXTAREA
   },
   completeICIP: {
     gqlField: 'completeICIP',
     goField: 'CompleteICIP',
     dbField: 'complete_icip',
     label: 'Complete ICIP',
-    dataType: 'date',
-    formType: 'datePicker',
+    dataType: TranslationDataType.DATE,
+    formType: TranslationFormType.DATEPICKER,
     filterGroups: [ModelViewFilter.IPC]
   },
   clearanceStarts: {
@@ -234,8 +238,8 @@ export const basics: TranslationBasics = {
     goField: 'ClearanceStarts',
     dbField: 'clearance_starts',
     label: 'Clearance start date',
-    dataType: 'date',
-    formType: 'datePicker',
+    dataType: TranslationDataType.DATE,
+    formType: TranslationFormType.DATEPICKER,
     filterGroups: [ModelViewFilter.IPC]
   },
   clearanceEnds: {
@@ -243,8 +247,8 @@ export const basics: TranslationBasics = {
     goField: 'ClearanceEnds',
     dbField: 'clearance_ends',
     label: 'Clearance end date',
-    dataType: 'date',
-    formType: 'datePicker',
+    dataType: TranslationDataType.DATE,
+    formType: TranslationFormType.DATEPICKER,
     filterGroups: [ModelViewFilter.IPC]
   },
   announced: {
@@ -252,8 +256,8 @@ export const basics: TranslationBasics = {
     goField: 'Announced',
     dbField: 'announced',
     label: 'Announce model',
-    dataType: 'date',
-    formType: 'datePicker',
+    dataType: TranslationDataType.DATE,
+    formType: TranslationFormType.DATEPICKER,
     filterGroups: [
       ModelViewFilter.CBOSC,
       ModelViewFilter.IDDOC,
@@ -266,8 +270,8 @@ export const basics: TranslationBasics = {
     goField: 'ApplicationsStart',
     dbField: 'applications_starts',
     label: 'Application start date',
-    dataType: 'date',
-    formType: 'datePicker',
+    dataType: TranslationDataType.DATE,
+    formType: TranslationFormType.DATEPICKER,
     adjacentPositioning: {
       position: 'left',
       adjacentField: 'applicationsEnd'
@@ -279,8 +283,8 @@ export const basics: TranslationBasics = {
     goField: 'ApplicationsEnd',
     dbField: 'applications_ends',
     label: 'Application end date',
-    dataType: 'date',
-    formType: 'datePicker',
+    dataType: TranslationDataType.DATE,
+    formType: TranslationFormType.DATEPICKER,
     adjacentPositioning: {
       position: 'right',
       adjacentField: 'applicationsStart'
@@ -292,8 +296,8 @@ export const basics: TranslationBasics = {
     goField: 'PerformancePeriodStarts',
     dbField: 'performance_period_starts',
     label: 'Performance start date',
-    dataType: 'date',
-    formType: 'datePicker',
+    dataType: TranslationDataType.DATE,
+    formType: TranslationFormType.DATEPICKER,
     adjacentPositioning: {
       position: 'left',
       adjacentField: 'performancePeriodEnds'
@@ -312,8 +316,8 @@ export const basics: TranslationBasics = {
     goField: 'PerformancePeriodEnds',
     dbField: 'performance_period_ends',
     label: 'Performance end date',
-    dataType: 'date',
-    formType: 'datePicker',
+    dataType: TranslationDataType.DATE,
+    formType: TranslationFormType.DATEPICKER,
     adjacentPositioning: {
       position: 'right',
       adjacentField: 'performancePeriodStarts'
@@ -332,16 +336,16 @@ export const basics: TranslationBasics = {
     goField: 'HighLevelNote',
     dbField: 'high_level_note',
     label: 'Notes',
-    dataType: 'string',
-    formType: 'textarea'
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXTAREA
   },
   wrapUpEnds: {
     gqlField: 'wrapUpEnds',
     goField: 'WrapUpEnds',
     dbField: 'wrap_up_ends',
     label: 'Model wrap-up end date',
-    dataType: 'date',
-    formType: 'datePicker',
+    dataType: TranslationDataType.DATE,
+    formType: TranslationFormType.DATEPICKER,
     filterGroups: [ModelViewFilter.IPC]
   },
   phasedIn: {
@@ -352,8 +356,8 @@ export const basics: TranslationBasics = {
       'If timelines are tight, might there be pieces of the model that can be phased in over time?',
     sublabel:
       'That is, the basic model would start at the earliest possible date but additional facets could be phased in at a later quarter.',
-    dataType: 'boolean',
-    formType: 'radio',
+    dataType: TranslationDataType.BOOLEAN,
+    formType: TranslationFormType.RADIO,
     isPageStart: true,
     options: {
       true: 'Yes',
@@ -366,8 +370,8 @@ export const basics: TranslationBasics = {
     goField: 'PhasedInNote',
     dbField: 'phased_in_note',
     label: 'Notes',
-    dataType: 'string',
-    formType: 'textarea',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXTAREA,
     filterGroups: [ModelViewFilter.IDDOC, ModelViewFilter.PBG]
   },
   status: {
@@ -375,8 +379,8 @@ export const basics: TranslationBasics = {
     goField: 'Status',
     dbField: 'status',
     label: 'Model Plan status',
-    dataType: 'enum',
-    formType: 'checkbox',
+    dataType: TranslationDataType.ENUM,
+    formType: TranslationFormType.CHECKBOX,
     options: {
       READY: 'Ready',
       IN_PROGRESS: 'In progress',

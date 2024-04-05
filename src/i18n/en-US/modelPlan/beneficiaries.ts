@@ -1,6 +1,10 @@
-import { ModelViewFilter } from 'gql/gen/graphql';
-
 import { TranslationBeneficiaries } from 'types/translation';
+
+import {
+  ModelViewFilter,
+  TranslationDataType,
+  TranslationFormType
+} from '../../../gql/gen/graphql';
 
 import { frequencyOptions } from './miscellaneous';
 
@@ -11,8 +15,8 @@ export const beneficiaries: TranslationBeneficiaries = {
     dbField: 'beneficiaries',
     label: 'Who are the beneficiaries of this model? Select all that apply.',
     readonlyLabel: 'Who are the beneficiaries of this model?',
-    dataType: 'enum',
-    formType: 'multiSelect',
+    dataType: TranslationDataType.ENUM,
+    formType: TranslationFormType.MULTISELECT,
     multiSelectLabel: 'Selected groups',
     options: {
       DISEASE_SPECIFIC: 'Disease-specific',
@@ -41,8 +45,8 @@ export const beneficiaries: TranslationBeneficiaries = {
     dbField: 'disease_specific_group',
     label:
       'Please describe the disease-specific groups this model will impact.',
-    dataType: 'string',
-    formType: 'text',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXT,
     isOtherType: true,
     filterGroups: [ModelViewFilter.MDM]
   },
@@ -51,18 +55,18 @@ export const beneficiaries: TranslationBeneficiaries = {
     goField: 'BeneficiariesOther',
     dbField: 'beneficiaries_other',
     label: 'Please describe the other groups this model will impact.',
-    dataType: 'string',
-    formType: 'textarea',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXTAREA,
     isOtherType: true,
     filterGroups: [ModelViewFilter.MDM]
   },
   beneficiariesNote: {
     gqlField: 'beneficiariesNote',
     goField: 'BeneficiariesNote',
-    dbField: 'beneficiaries_other',
+    dbField: 'beneficiaries_note',
     label: 'Notes',
-    dataType: 'string',
-    formType: 'textarea',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXTAREA,
     filterGroups: [ModelViewFilter.MDM]
   },
   treatDualElligibleDifferent: {
@@ -73,8 +77,8 @@ export const beneficiaries: TranslationBeneficiaries = {
       'Should dually-eligible beneficiaries be treated differently than non-dually eligibles?',
     readonlyLabel:
       'Should dually-eligible beneficiaries be treated differently than non-dually eligibles? How so?',
-    dataType: 'boolean',
-    formType: 'radio',
+    dataType: TranslationDataType.BOOLEAN,
+    formType: TranslationFormType.RADIO,
     options: {
       YES: 'Yes',
       NO: 'No',
@@ -88,10 +92,10 @@ export const beneficiaries: TranslationBeneficiaries = {
   treatDualElligibleDifferentHow: {
     gqlField: 'treatDualElligibleDifferentHow',
     goField: 'TreatDualElligibleDifferentHow',
-    dbField: 'treat_dual_elligible_different',
+    dbField: 'treat_dual_elligible_different_how',
     label: 'How so?',
-    dataType: 'string',
-    formType: 'textarea',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXTAREA,
     isOtherType: true,
     otherParentField: 'treatDualElligibleDifferent',
     filterGroups: [ModelViewFilter.IDDOC, ModelViewFilter.PBG]
@@ -101,8 +105,8 @@ export const beneficiaries: TranslationBeneficiaries = {
     goField: 'TreatDualElligibleDifferentNote',
     dbField: 'treat_dual_elligible_different_note',
     label: 'Notes',
-    dataType: 'string',
-    formType: 'textarea',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXTAREA,
     filterGroups: [ModelViewFilter.IDDOC, ModelViewFilter.PBG]
   },
   excludeCertainCharacteristics: {
@@ -113,8 +117,8 @@ export const beneficiaries: TranslationBeneficiaries = {
       'Should beneficiaries with certain characteristics or enrollments be excluded?',
     readonlyLabel:
       'Should beneficiaries with certain characteristics or enrollments be excluded? How so, what are the exclusionary criteria?',
-    dataType: 'boolean',
-    formType: 'radio',
+    dataType: TranslationDataType.BOOLEAN,
+    formType: TranslationFormType.RADIO,
     options: {
       YES: 'Yes',
       NO: 'No',
@@ -130,8 +134,8 @@ export const beneficiaries: TranslationBeneficiaries = {
     goField: 'ExcludeCertainCharacteristicsCriteria',
     dbField: 'exclude_certain_characteristics_criteria',
     label: 'What are the exclusionary criteria?',
-    dataType: 'string',
-    formType: 'textarea',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXTAREA,
     isOtherType: true,
     otherParentField: 'excludeCertainCharacteristics',
     filterGroups: [ModelViewFilter.IDDOC, ModelViewFilter.PBG]
@@ -141,8 +145,8 @@ export const beneficiaries: TranslationBeneficiaries = {
     goField: 'ExcludeCertainCharacteristicsNote',
     dbField: 'exclude_certain_characteristics_note',
     label: 'Notes',
-    dataType: 'string',
-    formType: 'textarea',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXTAREA,
     filterGroups: [ModelViewFilter.IDDOC, ModelViewFilter.PBG]
   },
   numberPeopleImpacted: {
@@ -150,8 +154,8 @@ export const beneficiaries: TranslationBeneficiaries = {
     goField: 'NumberPeopleImpacted',
     dbField: 'number_people_impacted',
     label: 'How many people do you think will be impacted by this model?',
-    dataType: 'number',
-    formType: 'rangeInput',
+    dataType: TranslationDataType.NUMBER,
+    formType: TranslationFormType.RANGEINPUT,
     isPageStart: true,
     adjacentPositioning: {
       position: 'left',
@@ -164,8 +168,8 @@ export const beneficiaries: TranslationBeneficiaries = {
     goField: 'EstimateConfidence',
     dbField: 'estimate_confidence',
     label: 'What is your level of confidence on this estimate?',
-    dataType: 'enum',
-    formType: 'radio',
+    dataType: TranslationDataType.ENUM,
+    formType: TranslationFormType.RADIO,
     options: {
       NOT_AT_ALL: 'Not at all confident',
       SLIGHTLY: 'Slightly confident',
@@ -183,8 +187,8 @@ export const beneficiaries: TranslationBeneficiaries = {
     goField: 'ConfidenceNote',
     dbField: 'confidence_note',
     label: 'Notes',
-    dataType: 'string',
-    formType: 'textarea',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXTAREA,
     filterGroups: [ModelViewFilter.MDM]
   },
   beneficiarySelectionMethod: {
@@ -193,8 +197,8 @@ export const beneficiaries: TranslationBeneficiaries = {
     dbField: 'beneficiary_selection_method',
     label: 'How will you choose beneficiaries? Select all that apply.',
     readonlyLabel: 'How will you choose beneficiaries?',
-    dataType: 'enum',
-    formType: 'multiSelect',
+    dataType: TranslationDataType.ENUM,
+    formType: TranslationFormType.MULTISELECT,
     multiSelectLabel: 'Selected methods',
     options: {
       HISTORICAL: 'Historical claims',
@@ -215,8 +219,8 @@ export const beneficiaries: TranslationBeneficiaries = {
     goField: 'BeneficiarySelectionOther',
     dbField: 'beneficiary_selection_other',
     label: 'Please describe the other method for choosing beneficiaries.',
-    dataType: 'string',
-    formType: 'textarea',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXTAREA,
     isOtherType: true,
     filterGroups: [ModelViewFilter.CMMI]
   },
@@ -225,8 +229,8 @@ export const beneficiaries: TranslationBeneficiaries = {
     goField: 'BeneficiarySelectionNote',
     dbField: 'beneficiary_selection_note',
     label: 'Notes',
-    dataType: 'string',
-    formType: 'textarea',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXTAREA,
     filterGroups: [ModelViewFilter.CMMI]
   },
   beneficiarySelectionFrequency: {
@@ -234,8 +238,8 @@ export const beneficiaries: TranslationBeneficiaries = {
     goField: 'BeneficiarySelectionFrequency',
     dbField: 'beneficiary_selection_frequency',
     label: 'How frequently are beneficiaries added?',
-    dataType: 'enum',
-    formType: 'checkbox',
+    dataType: TranslationDataType.ENUM,
+    formType: TranslationFormType.CHECKBOX,
     isPageStart: true,
     options: frequencyOptions,
     optionsRelatedInfo: {
@@ -253,8 +257,8 @@ export const beneficiaries: TranslationBeneficiaries = {
     goField: 'BeneficiarySelectionFrequencyContinually',
     dbField: 'beneficiary_selection_frequency_continually',
     label: 'Please specify',
-    dataType: 'string',
-    formType: 'text',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXT,
     isOtherType: true,
     otherParentField: 'beneficiarySelectionFrequency',
     filterGroups: [ModelViewFilter.CMMI]
@@ -264,8 +268,8 @@ export const beneficiaries: TranslationBeneficiaries = {
     goField: 'BeneficiarySelectionFrequencyOther',
     dbField: 'beneficiary_selection_frequency_other',
     label: 'Please specify',
-    dataType: 'string',
-    formType: 'text',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXT,
     isOtherType: true,
     otherParentField: 'beneficiarySelectionFrequency',
     filterGroups: [ModelViewFilter.CMMI]
@@ -275,8 +279,8 @@ export const beneficiaries: TranslationBeneficiaries = {
     goField: 'BeneficiarySelectionFrequencyNote',
     dbField: 'beneficiary_selection_frequency_note',
     label: 'Notes',
-    dataType: 'string',
-    formType: 'text',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXT,
     filterGroups: [ModelViewFilter.CMMI]
   },
   beneficiaryRemovalFrequency: {
@@ -284,8 +288,8 @@ export const beneficiaries: TranslationBeneficiaries = {
     goField: 'BeneficiaryRemovalFrequency',
     dbField: 'beneficiary_removal_frequency',
     label: 'How frequently are beneficiaries removed?',
-    dataType: 'enum',
-    formType: 'checkbox',
+    dataType: TranslationDataType.ENUM,
+    formType: TranslationFormType.CHECKBOX,
     options: frequencyOptions,
     optionsRelatedInfo: {
       ANNUALLY: '',
@@ -301,8 +305,8 @@ export const beneficiaries: TranslationBeneficiaries = {
     goField: 'BeneficiaryRemovalFrequencyContinually',
     dbField: 'beneficiary_removal_frequency_continually',
     label: 'Please specify',
-    dataType: 'string',
-    formType: 'text',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXT,
     isOtherType: true,
     otherParentField: 'beneficiaryRemovalFrequency',
     filterGroups: [ModelViewFilter.CMMI]
@@ -312,8 +316,8 @@ export const beneficiaries: TranslationBeneficiaries = {
     goField: 'BeneficiaryRemovalFrequencyOther',
     dbField: 'beneficiary_removal_frequency_other',
     label: 'Please specify',
-    dataType: 'string',
-    formType: 'text',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXT,
     isOtherType: true,
     otherParentField: 'beneficiaryRemovalFrequency',
     filterGroups: [ModelViewFilter.CMMI]
@@ -323,8 +327,8 @@ export const beneficiaries: TranslationBeneficiaries = {
     goField: 'BeneficiaryRemovalFrequencyNote',
     dbField: 'beneficiary_removal_frequency_note',
     label: 'Notes',
-    dataType: 'string',
-    formType: 'text',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXT,
     filterGroups: [ModelViewFilter.CMMI]
   },
   beneficiaryOverlap: {
@@ -332,8 +336,8 @@ export const beneficiaries: TranslationBeneficiaries = {
     goField: 'BeneficiaryOverlap',
     dbField: 'beneficiary_overlap',
     label: 'Will the beneficiaries overlap with other models?',
-    dataType: 'enum',
-    formType: 'radio',
+    dataType: TranslationDataType.ENUM,
+    formType: TranslationFormType.RADIO,
     options: {
       YES_NEED_POLICIES:
         'Yes, we expect to develop policies to manage the overlaps',
@@ -347,8 +351,8 @@ export const beneficiaries: TranslationBeneficiaries = {
     goField: 'BeneficiaryOverlapNote',
     dbField: 'beneficiary_overlap_note',
     label: 'Notes',
-    dataType: 'string',
-    formType: 'textarea',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXTAREA,
     filterGroups: [ModelViewFilter.MDM]
   },
   precedenceRules: {
@@ -358,8 +362,8 @@ export const beneficiaries: TranslationBeneficiaries = {
     label: 'Are there precedence rules between this model and other model(s)?',
     sublabel:
       'i.e. other models have precedence over you (e.g. mandatory or statutory models running at the same time as yours)',
-    dataType: 'enum',
-    formType: 'checkbox',
+    dataType: TranslationDataType.ENUM,
+    formType: TranslationFormType.CHECKBOX,
     options: {
       YES: 'Yes',
       NO: 'No'
@@ -375,8 +379,8 @@ export const beneficiaries: TranslationBeneficiaries = {
     goField: 'PrecedenceRulesYes',
     dbField: 'precedence_rules_yes',
     label: 'Please describe',
-    dataType: 'string',
-    formType: 'textarea',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXTAREA,
     isOtherType: true,
     otherParentField: 'precedenceRules',
     filterGroups: [ModelViewFilter.MDM, ModelViewFilter.OACT]
@@ -386,8 +390,8 @@ export const beneficiaries: TranslationBeneficiaries = {
     goField: 'PrecedenceRulesNo',
     dbField: 'precedence_rules_no',
     label: 'Please describe',
-    dataType: 'string',
-    formType: 'textarea',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXTAREA,
     isOtherType: true,
     otherParentField: 'precedenceRules',
     filterGroups: [ModelViewFilter.MDM, ModelViewFilter.OACT]
@@ -397,8 +401,8 @@ export const beneficiaries: TranslationBeneficiaries = {
     goField: 'PrecedenceRulesNote',
     dbField: 'precedence_rules_note',
     label: 'Notes',
-    dataType: 'string',
-    formType: 'textarea',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXTAREA,
     filterGroups: [ModelViewFilter.MDM, ModelViewFilter.OACT]
   },
   status: {
@@ -406,8 +410,8 @@ export const beneficiaries: TranslationBeneficiaries = {
     goField: 'Status',
     dbField: 'status',
     label: 'Model Plan status',
-    dataType: 'enum',
-    formType: 'checkbox',
+    dataType: TranslationDataType.ENUM,
+    formType: TranslationFormType.CHECKBOX,
     options: {
       READY: 'Ready',
       IN_PROGRESS: 'In progress',

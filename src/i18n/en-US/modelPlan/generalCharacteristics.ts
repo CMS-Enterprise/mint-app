@@ -1,6 +1,10 @@
-import { ModelViewFilter } from 'gql/gen/graphql';
-
 import { TranslationGeneralCharacteristics } from 'types/translation';
+
+import {
+  ModelViewFilter,
+  TranslationDataType,
+  TranslationFormType
+} from '../../../gql/gen/graphql';
 
 export const generalCharacteristics: TranslationGeneralCharacteristics = {
   isNewModel: {
@@ -8,8 +12,8 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     goField: 'IsNewModel',
     dbField: 'is_new_model',
     label: 'Is this a new track of an existing model or a new model?',
-    dataType: 'boolean',
-    formType: 'radio',
+    dataType: TranslationDataType.BOOLEAN,
+    formType: TranslationFormType.RADIO,
     options: {
       true: 'New model',
       false: 'New track of an existing model'
@@ -25,8 +29,8 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     dbField: 'existing_model',
     label: 'Which existing model?',
     sublabel: 'Start typing the name of the model',
-    dataType: 'string',
-    formType: 'select',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.SELECT,
     parentRelation: () => generalCharacteristics.isNewModel,
     filterGroups: [ModelViewFilter.IPC]
   },
@@ -35,8 +39,8 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     goField: 'ResemblesExistingModel',
     dbField: 'resembles_existing_model',
     label: 'Does your proposed track/model resemble any existing models?',
-    dataType: 'enum',
-    formType: 'radio',
+    dataType: TranslationDataType.ENUM,
+    formType: TranslationFormType.RADIO,
     options: {
       YES: 'Yes',
       NO: 'No',
@@ -60,8 +64,8 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     goField: 'ResemblesExistingModelWhyHow',
     dbField: 'resembles_existing_model_why_how',
     label: 'Explain why and how the model made this decision.',
-    dataType: 'string',
-    formType: 'textarea'
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXTAREA
   },
   resemblesExistingModelWhich: {
     gqlField: 'resemblesExistingModelWhich',
@@ -71,8 +75,8 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
       'Which existing models does your proposed track/model most closely resemble?',
     sublabel: 'Start typing the name of the model',
     multiSelectLabel: 'Selected models',
-    dataType: 'string',
-    formType: 'multiSelect',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.MULTISELECT,
     isArray: true,
     isModelLinks: true, // Used to designate if a field is a ExistingModelLinks type with nested fields - ex: names,
     parentRelation: () => generalCharacteristics.resemblesExistingModel,
@@ -89,8 +93,8 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     goField: 'ResemblesExistingModelHow',
     dbField: 'resembles_existing_model_how',
     label: 'In what way does the new model resemble the selected model(s)?',
-    dataType: 'string',
-    formType: 'textarea',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXTAREA,
     parentRelation: () => generalCharacteristics.resemblesExistingModel,
     filterGroups: [ModelViewFilter.IPC]
   },
@@ -99,8 +103,8 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     goField: 'ResemblesExistingModelOtherSpecify',
     dbField: 'resembles_existing_model_other_specify',
     label: 'Please specify',
-    dataType: 'string',
-    formType: 'text',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXT,
     isOtherType: true,
     otherParentField: 'resemblesExistingModel'
   },
@@ -110,8 +114,8 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     goField: 'ResemblesExistingModelOtherSelected',
     dbField: 'resembles_existing_model_other_selected',
     label: '',
-    dataType: 'boolean',
-    formType: 'radio',
+    dataType: TranslationDataType.BOOLEAN,
+    formType: TranslationFormType.RADIO,
     isOtherType: true,
     options: {
       true: '',
@@ -123,8 +127,8 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     goField: 'ResemblesExistingModelOtherOption',
     dbField: 'resembles_existing_model_other_option',
     label: 'Please specify other',
-    dataType: 'string',
-    formType: 'text',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXT,
     isOtherType: true
   },
   resemblesExistingModelNote: {
@@ -132,8 +136,8 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     goField: 'ResemblesExistingModelNote',
     dbField: 'resembles_existing_model_note',
     label: 'Notes',
-    dataType: 'string',
-    formType: 'textarea'
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXTAREA
   },
   participationInModelPrecondition: {
     gqlField: 'participationInModelPrecondition',
@@ -141,8 +145,8 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     dbField: 'participation_in_model_precondition',
     label:
       'Is participation in another model a precondition for participation in this model?',
-    dataType: 'enum',
-    formType: 'radio',
+    dataType: TranslationDataType.ENUM,
+    formType: TranslationFormType.RADIO,
     options: {
       YES: 'Yes',
       NO: 'No',
@@ -163,8 +167,8 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     goField: 'ParticipationInModelPreconditionOtherSpecify',
     dbField: 'participation_in_model_precondition_other_specify',
     label: 'Please specify',
-    dataType: 'string',
-    formType: 'text',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXT,
     isOtherType: true,
     otherParentField: 'participationInModelPrecondition'
   },
@@ -175,8 +179,8 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     label: 'Which models?',
     sublabel: 'Start typing the name of the model',
     multiSelectLabel: 'Selected models',
-    dataType: 'string',
-    formType: 'multiSelect',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.MULTISELECT,
     isArray: true,
     isModelLinks: true, // Used to designate if a field is a ExistingModelLinks type with nested fields - ex: names
     parentRelation: () =>
@@ -194,8 +198,8 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     goField: 'ParticipationInModelPreconditionOtherSelected',
     dbField: 'participation_in_model_precondition_other_selected',
     label: '',
-    dataType: 'boolean',
-    formType: 'radio',
+    dataType: TranslationDataType.BOOLEAN,
+    formType: TranslationFormType.RADIO,
     isOtherType: true,
     options: {
       true: '',
@@ -207,8 +211,8 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     goField: 'ParticipationInModelPreconditionOtherOption',
     dbField: 'participation_in_model_precondition_other_option',
     label: 'Please specify other',
-    dataType: 'string',
-    formType: 'text',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXT,
     isOtherType: true,
     otherParentField: 'participationInModelPreconditionWhich'
   },
@@ -217,8 +221,8 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     goField: 'ParticipationInModelPreconditionWhyHow',
     dbField: 'participation_in_model_precondition_why_how',
     label: 'Explain any details including if it is just part of the model.',
-    dataType: 'string',
-    formType: 'textarea',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXTAREA,
     parentRelation: () =>
       generalCharacteristics.participationInModelPrecondition
   },
@@ -227,8 +231,8 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     goField: 'ParticipationInModelPreconditionNote',
     dbField: 'participation_in_model_precondition_note',
     label: 'Notes',
-    dataType: 'string',
-    formType: 'textarea'
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXTAREA
   },
   hasComponentsOrTracks: {
     gqlField: 'hasComponentsOrTracks',
@@ -237,8 +241,8 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     label: 'Are there different components/tracks?',
     readonlyLabel:
       'Are there different components/tracks? If so, how do the tracks differ?',
-    dataType: 'boolean',
-    formType: 'radio',
+    dataType: TranslationDataType.BOOLEAN,
+    formType: TranslationFormType.RADIO,
     options: {
       true: 'Yes',
       false: 'No'
@@ -253,8 +257,8 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     goField: 'HasComponentsOrTracksDiffer',
     dbField: 'has_components_or_tracks_differ',
     label: 'How do the tracks differ?',
-    dataType: 'string',
-    formType: 'textarea',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXTAREA,
     isOtherType: true,
     otherParentField: 'hasComponentsOrTracks',
     filterGroups: [ModelViewFilter.IPC]
@@ -264,8 +268,8 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     goField: 'HasComponentsOrTracksNote',
     dbField: 'has_components_or_tracks_note',
     label: 'Notes',
-    dataType: 'string',
-    formType: 'textarea'
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXTAREA
   },
   agencyOrStateHelp: {
     gqlField: 'agencyOrStateHelp',
@@ -275,8 +279,8 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
       'Will another Agency or State help design/operate the model? Select all that apply.',
     readonlyLabel:
       'Will another Agency or State help design/operate the model?',
-    dataType: 'enum',
-    formType: 'checkbox',
+    dataType: TranslationDataType.ENUM,
+    formType: TranslationFormType.CHECKBOX,
     isPageStart: true,
     options: {
       YES_STATE: 'Yes, we will partner with states',
@@ -295,8 +299,8 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     goField: 'AgencyOrStateHelpOther',
     dbField: 'agency_or_state_help_other',
     label: 'Please specify',
-    dataType: 'string',
-    formType: 'textarea',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXTAREA,
     isOtherType: true,
     otherParentField: 'agencyOrStateHelp'
   },
@@ -305,8 +309,8 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     goField: 'AgencyOrStateHelpNote',
     dbField: 'agency_or_state_help_note',
     label: 'Notes',
-    dataType: 'string',
-    formType: 'textarea'
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXTAREA
   },
   alternativePaymentModelTypes: {
     gqlField: 'alternativePaymentModelTypes',
@@ -316,8 +320,8 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
       'What type of Alternative Payment Model (APM) do you think the model could be?',
     sublabel:
       'In order to be considered by the Quality Payment Program (QPP), and to be MIPS or Advanced APM, you will need to collect TINs and NPIs for providers.',
-    dataType: 'enum',
-    formType: 'checkbox',
+    dataType: TranslationDataType.ENUM,
+    formType: TranslationFormType.CHECKBOX,
     options: {
       ADVANCED: 'Advanced APM',
       MIPS: 'MIPS APM',
@@ -331,8 +335,8 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     goField: 'AlternativePaymentModelNote',
     dbField: 'alternative_payment_model_note',
     label: 'Notes',
-    dataType: 'string',
-    formType: 'textarea',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXTAREA,
     filterGroups: [ModelViewFilter.CMMI, ModelViewFilter.OACT]
   },
   keyCharacteristics: {
@@ -341,8 +345,8 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     dbField: 'key_characteristics',
     label: 'What are the model key characteristics? Select all that apply.',
     readonlyLabel: 'What are the model key characteristics?',
-    dataType: 'enum',
-    formType: 'multiSelect',
+    dataType: TranslationDataType.ENUM,
+    formType: TranslationFormType.MULTISELECT,
     multiSelectLabel: 'Selected key characteristics',
     options: {
       EPISODE_BASED: 'Episode-Based Model',
@@ -383,8 +387,8 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     goField: 'KeyCharacteristicsOther',
     dbField: 'key_characteristics_other',
     label: 'Please describe the other key characteristics',
-    dataType: 'string',
-    formType: 'text',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXT,
     isOtherType: true
   },
   keyCharacteristicsNote: {
@@ -392,8 +396,8 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     goField: 'KeyCharacteristicsNote',
     dbField: 'key_characteristics_note',
     label: 'Notes',
-    dataType: 'string',
-    formType: 'textarea',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXTAREA,
     filterGroups: [
       ModelViewFilter.CMMI,
       ModelViewFilter.IDDOC,
@@ -405,8 +409,8 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     goField: 'CollectPlanBids',
     dbField: 'collect_plan_bids',
     label: 'Will you review and collect plan bids?',
-    dataType: 'boolean',
-    formType: 'radio',
+    dataType: TranslationDataType.BOOLEAN,
+    formType: TranslationFormType.RADIO,
     options: {
       true: 'Yes',
       false: 'No'
@@ -418,16 +422,16 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     goField: 'CollectPlanBidsNote',
     dbField: 'collect_plan_bids_note',
     label: 'Notes',
-    dataType: 'string',
-    formType: 'textarea'
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXTAREA
   },
   managePartCDEnrollment: {
     gqlField: 'managePartCDEnrollment',
     goField: 'ManagePartCDEnrollment',
     dbField: 'manage_part_c_d_enrollment',
     label: 'Will you manage Part C/D enrollment?',
-    dataType: 'boolean',
-    formType: 'radio',
+    dataType: TranslationDataType.BOOLEAN,
+    formType: TranslationFormType.RADIO,
     options: {
       true: 'Yes',
       false: 'No'
@@ -439,16 +443,16 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     goField: 'ManagePartCDEnrollmentNote',
     dbField: 'manage_part_c_d_enrollment_note',
     label: 'Notes',
-    dataType: 'string',
-    formType: 'textarea'
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXTAREA
   },
   planContractUpdated: {
     gqlField: 'planContractUpdated',
     goField: 'PlanContractUpdated',
     dbField: 'plan_contract_updated',
     label: 'Have you updated the plan’s contract?',
-    dataType: 'boolean',
-    formType: 'radio',
+    dataType: TranslationDataType.BOOLEAN,
+    formType: TranslationFormType.RADIO,
     options: {
       true: 'Yes',
       false: 'No'
@@ -460,8 +464,8 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     goField: 'PlanContractUpdatedNote',
     dbField: 'plan_contract_updated_note',
     label: 'Notes',
-    dataType: 'string',
-    formType: 'textarea'
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXTAREA
   },
   careCoordinationInvolved: {
     gqlField: 'careCoordinationInvolved',
@@ -469,8 +473,8 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     dbField: 'care_coordination_involved',
     label: 'Is care coordination involved?',
     readonlyLabel: 'Is care coordination involved? How so?',
-    dataType: 'boolean',
-    formType: 'radio',
+    dataType: TranslationDataType.BOOLEAN,
+    formType: TranslationFormType.RADIO,
     isPageStart: true,
     options: {
       true: 'Yes',
@@ -485,8 +489,8 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     goField: 'CareCoordinationInvolvedDescription',
     dbField: 'care_coordination_involved_description',
     label: 'How so?',
-    dataType: 'string',
-    formType: 'textarea',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXTAREA,
     isOtherType: true,
     otherParentField: 'careCoordinationInvolved'
   },
@@ -495,8 +499,8 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     goField: 'CareCoordinationInvolvedNote',
     dbField: 'care_coordination_involved_note',
     label: 'Notes',
-    dataType: 'string',
-    formType: 'textarea'
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXTAREA
   },
   additionalServicesInvolved: {
     gqlField: 'additionalServicesInvolved',
@@ -504,8 +508,8 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     dbField: 'additional_services_involved',
     label: 'Are additional services involved?',
     readonlyLabel: 'Are additional services involved? How so?',
-    dataType: 'boolean',
-    formType: 'radio',
+    dataType: TranslationDataType.BOOLEAN,
+    formType: TranslationFormType.RADIO,
     options: {
       true: 'Yes',
       false: 'No'
@@ -519,8 +523,8 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     goField: 'AdditionalServicesInvolvedDescription',
     dbField: 'additional_services_involved_description',
     label: 'How so?',
-    dataType: 'string',
-    formType: 'textarea',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXTAREA,
     isOtherType: true,
     otherParentField: 'additionalServicesInvolved'
   },
@@ -529,8 +533,8 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     goField: 'AdditionalServicesInvolvedNote',
     dbField: 'additional_services_involved_note',
     label: 'Notes',
-    dataType: 'string',
-    formType: 'textarea'
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXTAREA
   },
   communityPartnersInvolved: {
     gqlField: 'communityPartnersInvolved',
@@ -538,8 +542,8 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     dbField: 'community_partners_involved',
     label: 'Are community partners involved?',
     readonlyLabel: 'Are community partners involved? How so?',
-    dataType: 'boolean',
-    formType: 'radio',
+    dataType: TranslationDataType.BOOLEAN,
+    formType: TranslationFormType.RADIO,
     options: {
       true: 'Yes',
       false: 'No'
@@ -551,10 +555,10 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
   communityPartnersInvolvedDescription: {
     gqlField: 'communityPartnersInvolvedDescription',
     goField: 'CommunityPartnersInvolvedDescription',
-    dbField: 'community_partners_involved',
+    dbField: 'community_partners_involved_description',
     label: 'How so?',
-    dataType: 'string',
-    formType: 'textarea',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXTAREA,
     isOtherType: true,
     otherParentField: 'communityPartnersInvolved'
   },
@@ -563,16 +567,16 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     goField: 'CommunityPartnersInvolvedNote',
     dbField: 'community_partners_involved_note',
     label: 'Notes',
-    dataType: 'string',
-    formType: 'textarea'
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXTAREA
   },
   geographiesTargeted: {
     gqlField: 'geographiesTargeted',
     goField: 'GeographiesTargeted',
     dbField: 'geographies_targeted',
     label: 'Is the model targeted at specific geographies?',
-    dataType: 'boolean',
-    formType: 'radio',
+    dataType: TranslationDataType.BOOLEAN,
+    formType: TranslationFormType.RADIO,
     isPageStart: true,
     options: {
       true: 'Yes',
@@ -591,8 +595,8 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     goField: 'GeographiesTargetedTypes',
     dbField: 'geographies_targeted_types',
     label: 'Geography type is',
-    dataType: 'enum',
-    formType: 'checkbox',
+    dataType: TranslationDataType.ENUM,
+    formType: TranslationFormType.CHECKBOX,
     options: {
       STATE: 'States and territories',
       REGION: 'Region',
@@ -614,8 +618,8 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     dbField: 'geographies_states_and_territories',
     label: 'Which states and territories?',
     multiSelectLabel: 'States and territories',
-    dataType: 'enum',
-    formType: 'multiSelect',
+    dataType: TranslationDataType.ENUM,
+    formType: TranslationFormType.MULTISELECT,
     isOtherType: true,
     options: {
       AL: 'AL - Alabama',
@@ -743,8 +747,8 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     goField: 'GeographiesRegionTypes',
     dbField: 'geographies_region_types',
     label: 'Geography region types',
-    dataType: 'enum',
-    formType: 'checkbox',
+    dataType: TranslationDataType.ENUM,
+    formType: TranslationFormType.CHECKBOX,
     isOtherType: true,
     options: {
       CBSA: 'Core-based statistical areas (CBSAs)',
@@ -759,8 +763,8 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     goField: 'GeographiesTargetedTypesOther',
     dbField: 'geographies_targeted_types_other',
     label: 'Please specify what the other geography type is.',
-    dataType: 'string',
-    formType: 'text',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXT,
     isOtherType: true,
     otherParentField: 'geographiesTargetedTypes',
     filterGroups: [ModelViewFilter.IDDOC, ModelViewFilter.PBG]
@@ -770,8 +774,8 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     goField: 'GeographiesTargetedAppliedTo',
     dbField: 'geographies_targeted_applied_to',
     label: 'Geographies are applied to',
-    dataType: 'enum',
-    formType: 'checkbox',
+    dataType: TranslationDataType.ENUM,
+    formType: TranslationFormType.CHECKBOX,
     options: {
       BENEFICIARIES: 'Beneficiaries',
       PARTICIPANTS: 'Participants',
@@ -789,8 +793,8 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     goField: 'GeographiesTargetedAppliedToOther',
     dbField: 'geographies_targeted_applied_to_other',
     label: 'Please specify what the geographies are applied to.',
-    dataType: 'string',
-    formType: 'text',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXT,
     isOtherType: true,
     filterGroups: [ModelViewFilter.IDDOC, ModelViewFilter.PBG]
   },
@@ -799,8 +803,8 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     goField: 'GeographiesTargetedNote',
     dbField: 'geographies_targeted_note',
     label: 'Notes',
-    dataType: 'boolean',
-    formType: 'radio',
+    dataType: TranslationDataType.BOOLEAN,
+    formType: TranslationFormType.RADIO,
     filterGroups: [ModelViewFilter.IDDOC, ModelViewFilter.PBG]
   },
   participationOptions: {
@@ -808,8 +812,8 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     goField: 'ParticipationOptions',
     dbField: 'participation_options',
     label: 'Does the model offer different options for participation?',
-    dataType: 'boolean',
-    formType: 'radio',
+    dataType: TranslationDataType.BOOLEAN,
+    formType: TranslationFormType.RADIO,
     options: {
       true: 'Yes',
       false: 'No'
@@ -821,8 +825,8 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     goField: 'ParticipationOptionsNote',
     dbField: 'participation_options_note',
     label: 'Notes',
-    dataType: 'boolean',
-    formType: 'radio',
+    dataType: TranslationDataType.BOOLEAN,
+    formType: TranslationFormType.RADIO,
     filterGroups: [ModelViewFilter.CMMI]
   },
   agreementTypes: {
@@ -832,8 +836,8 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     label: 'What is the agreement type?',
     sublabel:
       'Note: CMMI writes, Office of General Council (OGC) approves both types of agreements',
-    dataType: 'boolean',
-    formType: 'checkbox',
+    dataType: TranslationDataType.BOOLEAN,
+    formType: TranslationFormType.CHECKBOX,
     options: {
       COOPERATIVE: 'Co-Operative Agreement/Grant',
       PARTICIPATION: 'Participation Agreement',
@@ -854,8 +858,8 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     goField: 'AgreementTypesOther',
     dbField: 'agreement_types_other',
     label: 'Please specify',
-    dataType: 'string',
-    formType: 'text',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXT,
     isOtherType: true,
     otherParentField: 'agreementTypes',
     filterGroups: [ModelViewFilter.CMMI]
@@ -867,8 +871,8 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     label: 'Will more than one participation agreement be needed?',
     sublabel:
       'depending on awardee selections or characteristics such as risk/type/size',
-    dataType: 'boolean',
-    formType: 'radio',
+    dataType: TranslationDataType.BOOLEAN,
+    formType: TranslationFormType.RADIO,
     options: {
       true: 'Yes',
       false: 'No'
@@ -881,8 +885,8 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     goField: 'MultiplePatricipationAgreementsNeededNote',
     dbField: 'multiple_patricipation_agreements_needed_note',
     label: 'Notes',
-    dataType: 'string',
-    formType: 'textarea',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXTAREA,
     filterGroups: [ModelViewFilter.CMMI]
   },
   rulemakingRequired: {
@@ -892,8 +896,8 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     label: 'Is rulemaking required?',
     readonlyLabel:
       'Is rulemaking required? If so, which rule do you anticipate using and what is the target date of display for that regulation?',
-    dataType: 'boolean',
-    formType: 'radio',
+    dataType: TranslationDataType.BOOLEAN,
+    formType: TranslationFormType.RADIO,
     options: {
       true: 'Yes',
       false: 'No'
@@ -904,13 +908,13 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     filterGroups: [ModelViewFilter.IDDOC, ModelViewFilter.PBG]
   },
   rulemakingRequiredDescription: {
-    gqlField: 'multiplePatricipationAgreementsNeeded',
-    goField: 'MultiplePatricipationAgreementsNeeded',
-    dbField: 'multiple_patricipation_agreements_needed',
+    gqlField: 'rulemakingRequiredDescription',
+    goField: 'RulemakingRequiredDescription',
+    dbField: 'rulemaking_required_description',
     label:
       'Which rule do you anticipate using and what is the target date of display for that regulation?',
-    dataType: 'string',
-    formType: 'textarea',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXTAREA,
     isOtherType: true,
     filterGroups: [ModelViewFilter.IDDOC, ModelViewFilter.PBG]
   },
@@ -919,16 +923,16 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     goField: 'RulemakingRequiredNote',
     dbField: 'rulemaking_required_note',
     label: 'Notes',
-    dataType: 'string',
-    formType: 'textarea'
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXTAREA
   },
   authorityAllowances: {
     gqlField: 'authorityAllowances',
     goField: 'AuthorityAllowances',
     dbField: 'authority_allowances',
     label: 'What authority allows CMMI to test the model?',
-    dataType: 'enum',
-    formType: 'checkbox',
+    dataType: TranslationDataType.ENUM,
+    formType: TranslationFormType.CHECKBOX,
     options: {
       ACA: '3021 Affordable Care Act (ACA)',
       CONGRESSIONALLY_MANDATED: 'Congressionally Mandated Demonstration',
@@ -946,8 +950,8 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     goField: 'AuthorityAllowancesOther',
     dbField: 'authority_allowances_other',
     label: 'Please specify',
-    dataType: 'string',
-    formType: 'textarea',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXTAREA,
     isOtherType: true,
     otherParentField: 'authorityAllowances',
     filterGroups: [ModelViewFilter.CMMI]
@@ -957,8 +961,8 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     goField: 'AuthorityAllowancesNote',
     dbField: 'authority_allowances_note',
     label: 'Notes',
-    dataType: 'string',
-    formType: 'textarea',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXTAREA,
     filterGroups: [ModelViewFilter.CMMI]
   },
   waiversRequired: {
@@ -967,8 +971,8 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     dbField: 'waivers_required',
     label: 'Are waivers required?',
     readonlyLabel: 'Are waivers required? If so, which types of waivers?',
-    dataType: 'boolean',
-    formType: 'radio',
+    dataType: TranslationDataType.BOOLEAN,
+    formType: TranslationFormType.RADIO,
     options: {
       true: 'Yes',
       false: 'No'
@@ -984,8 +988,8 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     dbField: 'waivers_required_types',
     label: 'Which types of waivers are required? Select all that apply.',
     readonlyLabel: 'Which types of waivers are required?',
-    dataType: 'enum',
-    formType: 'checkbox',
+    dataType: TranslationDataType.ENUM,
+    formType: TranslationFormType.CHECKBOX,
     isOtherType: true,
     options: {
       FRAUD_ABUSE: 'Fraud and Abuse',
@@ -1005,8 +1009,8 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     goField: 'WaiversRequiredNote',
     dbField: 'waivers_required_note',
     label: 'Notes',
-    dataType: 'string',
-    formType: 'textarea',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXTAREA,
     filterGroups: [ModelViewFilter.CMMI]
   },
   status: {
@@ -1014,8 +1018,8 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     goField: 'Status',
     dbField: 'status',
     label: 'Model Plan status',
-    dataType: 'enum',
-    formType: 'checkbox',
+    dataType: TranslationDataType.ENUM,
+    formType: TranslationFormType.CHECKBOX,
     options: {
       READY: 'Ready',
       IN_PROGRESS: 'In progress',

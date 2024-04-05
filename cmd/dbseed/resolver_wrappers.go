@@ -28,7 +28,7 @@ func (s *Seeder) createModelPlan(
 
 	princ := s.getTestPrincipalByUsername(euaID)
 	plan, err := resolvers.ModelPlanCreate(
-		context.Background(),
+		s.Config.Context,
 		s.Config.Logger,
 		nil,
 		nil,
@@ -110,8 +110,8 @@ func (s *Seeder) addPlanCollaborator(
 ) *models.PlanCollaborator {
 	princ := s.getTestPrincipalByUUID(mp.CreatedBy)
 
-	collaborator, _, err := resolvers.CreatePlanCollaborator(
-		context.Background(),
+	collaborator, _, err := resolvers.PlanCollaboratorCreate(
+		s.Config.Context,
 		s.Config.Store,
 		s.Config.Store,
 		s.Config.Logger,
@@ -122,6 +122,7 @@ func (s *Seeder) addPlanCollaborator(
 		princ,
 		true,
 		userhelpers.GetUserInfoAccountInfoWrapperFunc(stubFetchUserInfo),
+		true,
 	)
 	if err != nil {
 		panic(err)
@@ -274,7 +275,7 @@ func (s *Seeder) addPlanDocumentSolutionLinks(
 
 func (s *Seeder) getTestPrincipalByUsername(userName string) *authentication.ApplicationPrincipal {
 
-	userAccount, _ := userhelpers.GetOrCreateUserAccount(context.Background(), s.Config.Store, s.Config.Store, userName, true, false, userhelpers.GetOktaAccountInfoWrapperFunction(userhelpers.GetUserInfoFromOktaLocal))
+	userAccount, _ := userhelpers.GetOrCreateUserAccount(s.Config.Context, s.Config.Store, s.Config.Store, userName, true, false, userhelpers.GetOktaAccountInfoWrapperFunction(userhelpers.GetUserInfoFromOktaLocal))
 
 	princ := &authentication.ApplicationPrincipal{
 		Username:          userName,
