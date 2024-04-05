@@ -41,9 +41,7 @@ export const unneededFields: string[] = [
   'tooltips',
   'optionsRelatedInfo',
   'disconnectedChildren',
-  'disconnectedLabel',
-  'parentRelation',
-  'childRelation'
+  'disconnectedLabel'
 ];
 
 // Removes fields from export that are not needed by BE
@@ -53,7 +51,7 @@ export const filterUnneededField = (
 ) => {
   const filteredObj: any = {};
   getKeys(translationsObj).forEach(subField => {
-    if (!fieldsToExclude.includes(subField)) {
+    if (!fieldsToExclude.includes(subField as string)) {
       filteredObj[subField] = translationsObj[subField];
     }
   });
@@ -69,13 +67,37 @@ export const mapOtherParentFieldToDBField = (
   getKeys(formattedSection).forEach(field => {
     const fieldObj = planSection[field] as any;
 
-    if (fieldObj.otherParentField) {
-      const parentObj =
-        planSection[fieldObj.otherParentField as keyof TranslationPlanSection];
-      fieldObj.otherParentField = parentObj.dbField;
+    const filteredObj = filterUnneededField(fieldObj, unneededFields);
+
+    if (filteredObj.otherParentField) {
+      const parentObj = planSection[
+        filteredObj.otherParentField as keyof TranslationPlanSection
+      ] as TranslationFieldProperties;
+      filteredObj.otherParentField = parentObj.dbField;
     }
 
-    const filteredObj = filterUnneededField(fieldObj, unneededFields);
+    if (filteredObj.parentRelation) {
+      const parentObj = { ...filteredObj.parentRelation() };
+      delete parentObj.childRelation;
+      filteredObj.parentRelation = filterUnneededField(
+        parentObj,
+        unneededFields
+      );
+    }
+
+    if (filteredObj.childRelation) {
+      getKeys(filteredObj.childRelation).forEach(option => {
+        const parentOption = filteredObj.childRelation[option];
+        const calledClosures: TranslationFieldProperties[] = [];
+        getKeys(parentOption).forEach((child, index) => {
+          const childObj = parentOption[index]();
+          calledClosures.push(
+            filterUnneededField({ ...childObj }, unneededFields)
+          );
+        });
+        filteredObj.childRelation[option] = calledClosures;
+      });
+    }
 
     formattedSection[field] = filteredObj;
   });

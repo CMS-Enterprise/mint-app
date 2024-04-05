@@ -18,7 +18,7 @@
   "stakeholdersOther": {
     "gqlField": "stakeholdersOther",
     "goField": "StakeholdersOther",
-    "dbField": "stakeholders",
+    "dbField": "stakeholders_other",
     "label": "Please describe the other stakeholders you plan to communicate with.",
     "isOtherType": true
   },
@@ -31,7 +31,7 @@
   "helpdeskUse": {
     "gqlField": "helpdeskUse",
     "goField": "HelpdeskUse",
-    "dbField": "stakeholders_note",
+    "dbField": "helpdesk_use",
     "label": "Do you plan to use a helpdesk?",
     "options": {
       "true": "Yes",
@@ -54,6 +54,35 @@
       "MULTIPLE": "May have separate contractors for different implementation functions",
       "NONE": "Do not plan to use an implemenation contractor",
       "OTHER": "Other"
+    },
+    "childRelation": {
+      "ONE": [
+        {
+          "gqlField": "contractorSupportHow",
+          "goField": "ContractorSupportHow",
+          "dbField": "contractor_support_how",
+          "label": "In what capacity will they support your model?",
+          "sublabel": "(implementation, data analysis, quality, etc.)"
+        }
+      ],
+      "MULTIPLE": [
+        {
+          "gqlField": "contractorSupportHow",
+          "goField": "ContractorSupportHow",
+          "dbField": "contractor_support_how",
+          "label": "In what capacity will they support your model?",
+          "sublabel": "(implementation, data analysis, quality, etc.)"
+        }
+      ],
+      "OTHER": [
+        {
+          "gqlField": "contractorSupportHow",
+          "goField": "ContractorSupportHow",
+          "dbField": "contractor_support_how",
+          "label": "In what capacity will they support your model?",
+          "sublabel": "(implementation, data analysis, quality, etc.)"
+        }
+      ]
     }
   },
   "contractorSupportOther": {
@@ -69,7 +98,19 @@
     "goField": "ContractorSupportHow",
     "dbField": "contractor_support_how",
     "label": "In what capacity will they support your model?",
-    "sublabel": "(implementation, data analysis, quality, etc.)"
+    "sublabel": "(implementation, data analysis, quality, etc.)",
+    "parentRelation": {
+      "gqlField": "contractorSupport",
+      "goField": "ContractorSupport",
+      "dbField": "contractor_support",
+      "label": "What contractors will support your model?",
+      "options": {
+        "ONE": "One contractor to support implementation",
+        "MULTIPLE": "May have separate contractors for different implementation functions",
+        "NONE": "Do not plan to use an implemenation contractor",
+        "OTHER": "Other"
+      }
+    }
   },
   "contractorSupportNote": {
     "gqlField": "contractorSupportNote",
@@ -86,6 +127,144 @@
     "options": {
       "true": "Yes",
       "false": "No"
+    },
+    "childRelation": {
+      "true": [
+        {
+          "gqlField": "technicalContactsIdentified",
+          "goField": "TechnicalContactsIdentified",
+          "dbField": "technical_contacts_identified",
+          "label": "Are technical contacts identified?",
+          "options": {
+            "true": "Yes",
+            "false": "No"
+          }
+        },
+        {
+          "gqlField": "captureParticipantInfo",
+          "goField": "CaptureParticipantInfo",
+          "dbField": "capture_participant_info",
+          "label": "Will you collect participant information?",
+          "sublabel": "This means the participant record for a model would be included in the ACO-OS Entity File.",
+          "options": {
+            "true": "Yes",
+            "false": "No"
+          }
+        },
+        {
+          "gqlField": "icdOwner",
+          "goField": "IcdOwner",
+          "dbField": "icd_owner",
+          "label": "ICD owner"
+        },
+        {
+          "gqlField": "draftIcdDueDate",
+          "goField": "DraftIcdDueDate",
+          "dbField": "draft_icd_due_date",
+          "label": "Draft ICD required by"
+        },
+        {
+          "gqlField": "uatNeeds",
+          "goField": "UatNeeds",
+          "dbField": "uat_needs",
+          "label": "User Acceptance Testing (UAT) – test data needs"
+        },
+        {
+          "gqlField": "stcNeeds",
+          "goField": "StcNeeds",
+          "dbField": "stc_needs",
+          "label": "STC – test data needs"
+        },
+        {
+          "gqlField": "testingTimelines",
+          "goField": "TestingTimelines",
+          "dbField": "testing_timelines",
+          "label": "Define the testing timelines"
+        },
+        {
+          "gqlField": "dataMonitoringFileTypes",
+          "goField": "DataMonitoringFileTypes",
+          "dbField": "data_monitoring_file_types",
+          "label": "What types of files? Select all that apply.",
+          "readonlyLabel": "What types of files?",
+          "options": {
+            "BENEFICIARY": "Beneficiary",
+            "PROVIDER": "Provider",
+            "PART_A": "Part A",
+            "PART_B": "Part B",
+            "OTHER": "Other"
+          }
+        },
+        {
+          "gqlField": "dataResponseType",
+          "goField": "DataResponseType",
+          "dbField": "data_response_type",
+          "label": "What types of responses?"
+        },
+        {
+          "gqlField": "dataResponseFileFrequency",
+          "goField": "DataResponseFileFrequency",
+          "dbField": "data_response_file_frequency",
+          "label": "Frequency of files?"
+        },
+        {
+          "gqlField": "dataFullTimeOrIncremental",
+          "goField": "DataFullTimeOrIncremental",
+          "dbField": "data_full_time_or_incremental",
+          "label": "Full time or incremental?",
+          "options": {
+            "FULL_TIME": "Full time",
+            "INCREMENTAL": "Incremental"
+          }
+        },
+        {
+          "gqlField": "eftSetUp",
+          "goField": "EftSetUp",
+          "dbField": "eft_set_up",
+          "label": "Are Electronic File Transfer (EFT) and connectivity set up?",
+          "options": {
+            "true": "Yes",
+            "false": "No"
+          }
+        },
+        {
+          "gqlField": "unsolicitedAdjustmentsIncluded",
+          "goField": "UnsolicitedAdjustmentsIncluded",
+          "dbField": "unsolicited_adjustments_included",
+          "label": "Will unsolicited adjustments be included?",
+          "options": {
+            "true": "Yes",
+            "false": "No"
+          }
+        },
+        {
+          "gqlField": "dataFlowDiagramsNeeded",
+          "goField": "DataFlowDiagramsNeeded",
+          "dbField": "data_flow_diagrams_needed",
+          "label": "Are data flow diagrams needed?",
+          "options": {
+            "true": "Yes",
+            "false": "No"
+          }
+        },
+        {
+          "gqlField": "produceBenefitEnhancementFiles",
+          "goField": "ProduceBenefitEnhancementFiles",
+          "dbField": "produce_benefit_enhancement_files",
+          "label": "Will you produce Benefit Enhancement Files?",
+          "sublabel": "This means we would use these files for Participating and Preferred Providers.",
+          "options": {
+            "true": "Yes",
+            "false": "No"
+          }
+        },
+        {
+          "gqlField": "fileNamingConventions",
+          "goField": "FileNamingConventions",
+          "dbField": "file_naming_conventions",
+          "label": "File naming conventions"
+        }
+      ]
     }
   },
   "iddocSupportNote": {
@@ -102,6 +281,17 @@
     "options": {
       "true": "Yes",
       "false": "No"
+    },
+    "parentRelation": {
+      "gqlField": "iddocSupport",
+      "goField": "IddocSupport",
+      "dbField": "iddoc_support",
+      "label": "Are you planning to use IDDOC support?",
+      "sublabel": "IDDOC is commonly known as ACO-OS (Accountable Care Organization Operating System). They can provide support for design, development, operations, and maintenance.",
+      "options": {
+        "true": "Yes",
+        "false": "No"
+      }
     }
   },
   "technicalContactsIdentifiedDetail": {
@@ -127,49 +317,126 @@
     "options": {
       "true": "Yes",
       "false": "No"
+    },
+    "parentRelation": {
+      "gqlField": "iddocSupport",
+      "goField": "IddocSupport",
+      "dbField": "iddoc_support",
+      "label": "Are you planning to use IDDOC support?",
+      "sublabel": "IDDOC is commonly known as ACO-OS (Accountable Care Organization Operating System). They can provide support for design, development, operations, and maintenance.",
+      "options": {
+        "true": "Yes",
+        "false": "No"
+      }
     }
   },
   "captureParticipantInfoNote": {
     "gqlField": "captureParticipantInfoNote",
     "goField": "CaptureParticipantInfoNote",
-    "dbField": "capture_participant_info",
+    "dbField": "capture_participant_info_note",
     "label": "Notes"
   },
   "icdOwner": {
     "gqlField": "icdOwner",
     "goField": "IcdOwner",
     "dbField": "icd_owner",
-    "label": "ICD owner"
+    "label": "ICD owner",
+    "parentRelation": {
+      "gqlField": "iddocSupport",
+      "goField": "IddocSupport",
+      "dbField": "iddoc_support",
+      "label": "Are you planning to use IDDOC support?",
+      "sublabel": "IDDOC is commonly known as ACO-OS (Accountable Care Organization Operating System). They can provide support for design, development, operations, and maintenance.",
+      "options": {
+        "true": "Yes",
+        "false": "No"
+      }
+    }
   },
   "draftIcdDueDate": {
     "gqlField": "draftIcdDueDate",
     "goField": "DraftIcdDueDate",
     "dbField": "draft_icd_due_date",
-    "label": "Draft ICD required by"
+    "label": "Draft ICD required by",
+    "parentRelation": {
+      "gqlField": "iddocSupport",
+      "goField": "IddocSupport",
+      "dbField": "iddoc_support",
+      "label": "Are you planning to use IDDOC support?",
+      "sublabel": "IDDOC is commonly known as ACO-OS (Accountable Care Organization Operating System). They can provide support for design, development, operations, and maintenance.",
+      "options": {
+        "true": "Yes",
+        "false": "No"
+      }
+    }
   },
   "icdNote": {
     "gqlField": "icdNote",
     "goField": "IcdNote",
     "dbField": "icd_note",
-    "label": "Notes"
+    "label": "Notes",
+    "parentRelation": {
+      "gqlField": "iddocSupport",
+      "goField": "IddocSupport",
+      "dbField": "iddoc_support",
+      "label": "Are you planning to use IDDOC support?",
+      "sublabel": "IDDOC is commonly known as ACO-OS (Accountable Care Organization Operating System). They can provide support for design, development, operations, and maintenance.",
+      "options": {
+        "true": "Yes",
+        "false": "No"
+      }
+    }
   },
   "uatNeeds": {
     "gqlField": "uatNeeds",
     "goField": "UatNeeds",
     "dbField": "uat_needs",
-    "label": "User Acceptance Testing (UAT) – test data needs"
+    "label": "User Acceptance Testing (UAT) – test data needs",
+    "parentRelation": {
+      "gqlField": "iddocSupport",
+      "goField": "IddocSupport",
+      "dbField": "iddoc_support",
+      "label": "Are you planning to use IDDOC support?",
+      "sublabel": "IDDOC is commonly known as ACO-OS (Accountable Care Organization Operating System). They can provide support for design, development, operations, and maintenance.",
+      "options": {
+        "true": "Yes",
+        "false": "No"
+      }
+    }
   },
   "stcNeeds": {
     "gqlField": "stcNeeds",
     "goField": "StcNeeds",
     "dbField": "stc_needs",
-    "label": "STC – test data needs"
+    "label": "STC – test data needs",
+    "parentRelation": {
+      "gqlField": "iddocSupport",
+      "goField": "IddocSupport",
+      "dbField": "iddoc_support",
+      "label": "Are you planning to use IDDOC support?",
+      "sublabel": "IDDOC is commonly known as ACO-OS (Accountable Care Organization Operating System). They can provide support for design, development, operations, and maintenance.",
+      "options": {
+        "true": "Yes",
+        "false": "No"
+      }
+    }
   },
   "testingTimelines": {
     "gqlField": "testingTimelines",
     "goField": "TestingTimelines",
     "dbField": "testing_timelines",
-    "label": "Define the testing timelines"
+    "label": "Define the testing timelines",
+    "parentRelation": {
+      "gqlField": "iddocSupport",
+      "goField": "IddocSupport",
+      "dbField": "iddoc_support",
+      "label": "Are you planning to use IDDOC support?",
+      "sublabel": "IDDOC is commonly known as ACO-OS (Accountable Care Organization Operating System). They can provide support for design, development, operations, and maintenance.",
+      "options": {
+        "true": "Yes",
+        "false": "No"
+      }
+    }
   },
   "testingNote": {
     "gqlField": "testingNote",
@@ -189,6 +456,17 @@
       "PART_A": "Part A",
       "PART_B": "Part B",
       "OTHER": "Other"
+    },
+    "parentRelation": {
+      "gqlField": "iddocSupport",
+      "goField": "IddocSupport",
+      "dbField": "iddoc_support",
+      "label": "Are you planning to use IDDOC support?",
+      "sublabel": "IDDOC is commonly known as ACO-OS (Accountable Care Organization Operating System). They can provide support for design, development, operations, and maintenance.",
+      "options": {
+        "true": "Yes",
+        "false": "No"
+      }
     }
   },
   "dataMonitoringFileOther": {
@@ -203,13 +481,35 @@
     "gqlField": "dataResponseType",
     "goField": "DataResponseType",
     "dbField": "data_response_type",
-    "label": "What types of responses?"
+    "label": "What types of responses?",
+    "parentRelation": {
+      "gqlField": "iddocSupport",
+      "goField": "IddocSupport",
+      "dbField": "iddoc_support",
+      "label": "Are you planning to use IDDOC support?",
+      "sublabel": "IDDOC is commonly known as ACO-OS (Accountable Care Organization Operating System). They can provide support for design, development, operations, and maintenance.",
+      "options": {
+        "true": "Yes",
+        "false": "No"
+      }
+    }
   },
   "dataResponseFileFrequency": {
     "gqlField": "dataResponseFileFrequency",
     "goField": "DataResponseFileFrequency",
     "dbField": "data_response_file_frequency",
-    "label": "Frequency of files?"
+    "label": "Frequency of files?",
+    "parentRelation": {
+      "gqlField": "iddocSupport",
+      "goField": "IddocSupport",
+      "dbField": "iddoc_support",
+      "label": "Are you planning to use IDDOC support?",
+      "sublabel": "IDDOC is commonly known as ACO-OS (Accountable Care Organization Operating System). They can provide support for design, development, operations, and maintenance.",
+      "options": {
+        "true": "Yes",
+        "false": "No"
+      }
+    }
   },
   "dataFullTimeOrIncremental": {
     "gqlField": "dataFullTimeOrIncremental",
@@ -219,6 +519,17 @@
     "options": {
       "FULL_TIME": "Full time",
       "INCREMENTAL": "Incremental"
+    },
+    "parentRelation": {
+      "gqlField": "iddocSupport",
+      "goField": "IddocSupport",
+      "dbField": "iddoc_support",
+      "label": "Are you planning to use IDDOC support?",
+      "sublabel": "IDDOC is commonly known as ACO-OS (Accountable Care Organization Operating System). They can provide support for design, development, operations, and maintenance.",
+      "options": {
+        "true": "Yes",
+        "false": "No"
+      }
     }
   },
   "eftSetUp": {
@@ -229,6 +540,17 @@
     "options": {
       "true": "Yes",
       "false": "No"
+    },
+    "parentRelation": {
+      "gqlField": "iddocSupport",
+      "goField": "IddocSupport",
+      "dbField": "iddoc_support",
+      "label": "Are you planning to use IDDOC support?",
+      "sublabel": "IDDOC is commonly known as ACO-OS (Accountable Care Organization Operating System). They can provide support for design, development, operations, and maintenance.",
+      "options": {
+        "true": "Yes",
+        "false": "No"
+      }
     }
   },
   "unsolicitedAdjustmentsIncluded": {
@@ -239,6 +561,17 @@
     "options": {
       "true": "Yes",
       "false": "No"
+    },
+    "parentRelation": {
+      "gqlField": "iddocSupport",
+      "goField": "IddocSupport",
+      "dbField": "iddoc_support",
+      "label": "Are you planning to use IDDOC support?",
+      "sublabel": "IDDOC is commonly known as ACO-OS (Accountable Care Organization Operating System). They can provide support for design, development, operations, and maintenance.",
+      "options": {
+        "true": "Yes",
+        "false": "No"
+      }
     }
   },
   "dataFlowDiagramsNeeded": {
@@ -249,6 +582,17 @@
     "options": {
       "true": "Yes",
       "false": "No"
+    },
+    "parentRelation": {
+      "gqlField": "iddocSupport",
+      "goField": "IddocSupport",
+      "dbField": "iddoc_support",
+      "label": "Are you planning to use IDDOC support?",
+      "sublabel": "IDDOC is commonly known as ACO-OS (Accountable Care Organization Operating System). They can provide support for design, development, operations, and maintenance.",
+      "options": {
+        "true": "Yes",
+        "false": "No"
+      }
     }
   },
   "produceBenefitEnhancementFiles": {
@@ -260,13 +604,35 @@
     "options": {
       "true": "Yes",
       "false": "No"
+    },
+    "parentRelation": {
+      "gqlField": "iddocSupport",
+      "goField": "IddocSupport",
+      "dbField": "iddoc_support",
+      "label": "Are you planning to use IDDOC support?",
+      "sublabel": "IDDOC is commonly known as ACO-OS (Accountable Care Organization Operating System). They can provide support for design, development, operations, and maintenance.",
+      "options": {
+        "true": "Yes",
+        "false": "No"
+      }
     }
   },
   "fileNamingConventions": {
     "gqlField": "fileNamingConventions",
     "goField": "FileNamingConventions",
     "dbField": "file_naming_conventions",
-    "label": "File naming conventions"
+    "label": "File naming conventions",
+    "parentRelation": {
+      "gqlField": "iddocSupport",
+      "goField": "IddocSupport",
+      "dbField": "iddoc_support",
+      "label": "Are you planning to use IDDOC support?",
+      "sublabel": "IDDOC is commonly known as ACO-OS (Accountable Care Organization Operating System). They can provide support for design, development, operations, and maintenance.",
+      "options": {
+        "true": "Yes",
+        "false": "No"
+      }
+    }
   },
   "dataMonitoringNote": {
     "gqlField": "dataMonitoringNote",
@@ -445,6 +811,74 @@
       "YES__IMPLEMENTATION": "Yes, for implementation",
       "NO": "No",
       "OTHER": "Other"
+    },
+    "childRelation": {
+      "YES_EVALUATION": [
+        {
+          "gqlField": "sendFilesBetweenCcw",
+          "goField": "SendFilesBetweenCcw",
+          "dbField": "send_files_between_ccw",
+          "label": "Will you need to send files between the CCW and other applications?",
+          "options": {
+            "true": "Yes",
+            "false": "No"
+          }
+        },
+        {
+          "gqlField": "appToSendFilesToKnown",
+          "goField": "AppToSendFilesToKnown",
+          "dbField": "app_to_send_files_to_known",
+          "label": "Do you know which applications will be on the other sides of the file transfers?",
+          "readonlyLabel": "Do you know which applications will be on the other sides of the file transfers? If so, please specify.",
+          "options": {
+            "true": "Yes",
+            "false": "No"
+          }
+        },
+        {
+          "gqlField": "useCcwForFileDistribiutionToParticipants",
+          "goField": "UseCcwForFileDistribiutionToParticipants",
+          "dbField": "use_ccw_for_file_distribiution_to_participants",
+          "label": "Will you use the CCW to distribute files to and from model participants?",
+          "options": {
+            "true": "Yes",
+            "false": "No"
+          }
+        }
+      ],
+      "YES__IMPLEMENTATION": [
+        {
+          "gqlField": "sendFilesBetweenCcw",
+          "goField": "SendFilesBetweenCcw",
+          "dbField": "send_files_between_ccw",
+          "label": "Will you need to send files between the CCW and other applications?",
+          "options": {
+            "true": "Yes",
+            "false": "No"
+          }
+        },
+        {
+          "gqlField": "appToSendFilesToKnown",
+          "goField": "AppToSendFilesToKnown",
+          "dbField": "app_to_send_files_to_known",
+          "label": "Do you know which applications will be on the other sides of the file transfers?",
+          "readonlyLabel": "Do you know which applications will be on the other sides of the file transfers? If so, please specify.",
+          "options": {
+            "true": "Yes",
+            "false": "No"
+          }
+        },
+        {
+          "gqlField": "useCcwForFileDistribiutionToParticipants",
+          "goField": "UseCcwForFileDistribiutionToParticipants",
+          "dbField": "use_ccw_for_file_distribiution_to_participants",
+          "label": "Will you use the CCW to distribute files to and from model participants?",
+          "options": {
+            "true": "Yes",
+            "false": "No"
+          }
+        }
+      ]
     }
   },
   "ccmInvolvmentOther": {
@@ -482,6 +916,54 @@
       "NON_MEDICAL_DATA": "Non-medical data (e.g., housing, nutrition)",
       "OTHER": "Other",
       "NOT_PLANNING_TO_COLLECT_DATA": "Not planning to collect data"
+    },
+    "childRelation": {
+      "QUALITY_CLAIMS_BASED_MEASURES": [
+        {
+          "gqlField": "developNewQualityMeasures",
+          "goField": "DevelopNewQualityMeasures",
+          "dbField": "develop_new_quality_measures",
+          "label": "Do you plan to develop a new validated quality measure for your model?",
+          "options": {
+            "true": "Yes",
+            "false": "No"
+          }
+        },
+        {
+          "gqlField": "qualityPerformanceImpactsPayment",
+          "goField": "QualityPerformanceImpactsPayment",
+          "dbField": "quality_performance_impacts_payment",
+          "label": "Does quality performance impact payment?",
+          "options": {
+            "YES": "Yes",
+            "NO": "No",
+            "OTHER": "Other"
+          }
+        }
+      ],
+      "QUALITY_REPORTED_MEASURES": [
+        {
+          "gqlField": "developNewQualityMeasures",
+          "goField": "DevelopNewQualityMeasures",
+          "dbField": "develop_new_quality_measures",
+          "label": "Do you plan to develop a new validated quality measure for your model?",
+          "options": {
+            "true": "Yes",
+            "false": "No"
+          }
+        },
+        {
+          "gqlField": "qualityPerformanceImpactsPayment",
+          "goField": "QualityPerformanceImpactsPayment",
+          "dbField": "quality_performance_impacts_payment",
+          "label": "Does quality performance impact payment?",
+          "options": {
+            "YES": "Yes",
+            "NO": "No",
+            "OTHER": "Other"
+          }
+        }
+      ]
     }
   },
   "dataNeededForMonitoringOther": {
@@ -551,6 +1033,19 @@
     "options": {
       "true": "Yes",
       "false": "No"
+    },
+    "parentRelation": {
+      "gqlField": "ccmInvolvment",
+      "goField": "CcmInvolvment",
+      "dbField": "ccm_involvment",
+      "label": "Is Chronic Conditions Warehouse (CCW) involved in the model?",
+      "sublabel": "If you select either yes option, there will be additional questions to answer.",
+      "options": {
+        "YES_EVALUATION": "Yes, for evaluation",
+        "YES__IMPLEMENTATION": "Yes, for implementation",
+        "NO": "No",
+        "OTHER": "Other"
+      }
     }
   },
   "sendFilesBetweenCcwNote": {
@@ -568,6 +1063,19 @@
     "options": {
       "true": "Yes",
       "false": "No"
+    },
+    "parentRelation": {
+      "gqlField": "ccmInvolvment",
+      "goField": "CcmInvolvment",
+      "dbField": "ccm_involvment",
+      "label": "Is Chronic Conditions Warehouse (CCW) involved in the model?",
+      "sublabel": "If you select either yes option, there will be additional questions to answer.",
+      "options": {
+        "YES_EVALUATION": "Yes, for evaluation",
+        "YES__IMPLEMENTATION": "Yes, for implementation",
+        "NO": "No",
+        "OTHER": "Other"
+      }
     }
   },
   "appToSendFilesToWhich": {
@@ -592,6 +1100,19 @@
     "options": {
       "true": "Yes",
       "false": "No"
+    },
+    "parentRelation": {
+      "gqlField": "ccmInvolvment",
+      "goField": "CcmInvolvment",
+      "dbField": "ccm_involvment",
+      "label": "Is Chronic Conditions Warehouse (CCW) involved in the model?",
+      "sublabel": "If you select either yes option, there will be additional questions to answer.",
+      "options": {
+        "YES_EVALUATION": "Yes, for evaluation",
+        "YES__IMPLEMENTATION": "Yes, for implementation",
+        "NO": "No",
+        "OTHER": "Other"
+      }
     }
   },
   "useCcwForFileDistribiutionToParticipantsNote": {
@@ -608,6 +1129,29 @@
     "options": {
       "true": "Yes",
       "false": "No"
+    },
+    "parentRelation": {
+      "gqlField": "dataNeededForMonitoring",
+      "goField": "DataNeededForMonitoring",
+      "dbField": "data_needed_for_monitoring",
+      "label": "What data do you need to monitor the model? Select all that apply.",
+      "readonlyLabel": "What data do you need to monitor the model?",
+      "sublabel": "If you select quality claims-based measures or quality reported measures, there will be additional questions to answer.",
+      "multiSelectLabel": "Selected data",
+      "options": {
+        "SITE_VISITS": "Site visits",
+        "MEDICARE_CLAIMS": "Medicare claims",
+        "MEDICAID_CLAIMS": "Medicaid claims",
+        "ENCOUNTER_DATA": "Encounter data",
+        "NO_PAY_CLAIMS": "No pay claims",
+        "QUALITY_CLAIMS_BASED_MEASURES": "Quality claims-based measures",
+        "QUALITY_REPORTED_MEASURES": "Quality reported measures",
+        "CLINICAL_DATA": "Clinical data",
+        "NON_CLINICAL_DATA": "Non-clinical data (e.g., surveys)",
+        "NON_MEDICAL_DATA": "Non-medical data (e.g., housing, nutrition)",
+        "OTHER": "Other",
+        "NOT_PLANNING_TO_COLLECT_DATA": "Not planning to collect data"
+      }
     }
   },
   "developNewQualityMeasuresNote": {
@@ -625,6 +1169,29 @@
       "YES": "Yes",
       "NO": "No",
       "OTHER": "Other"
+    },
+    "parentRelation": {
+      "gqlField": "dataNeededForMonitoring",
+      "goField": "DataNeededForMonitoring",
+      "dbField": "data_needed_for_monitoring",
+      "label": "What data do you need to monitor the model? Select all that apply.",
+      "readonlyLabel": "What data do you need to monitor the model?",
+      "sublabel": "If you select quality claims-based measures or quality reported measures, there will be additional questions to answer.",
+      "multiSelectLabel": "Selected data",
+      "options": {
+        "SITE_VISITS": "Site visits",
+        "MEDICARE_CLAIMS": "Medicare claims",
+        "MEDICAID_CLAIMS": "Medicaid claims",
+        "ENCOUNTER_DATA": "Encounter data",
+        "NO_PAY_CLAIMS": "No pay claims",
+        "QUALITY_CLAIMS_BASED_MEASURES": "Quality claims-based measures",
+        "QUALITY_REPORTED_MEASURES": "Quality reported measures",
+        "CLINICAL_DATA": "Clinical data",
+        "NON_CLINICAL_DATA": "Non-clinical data (e.g., surveys)",
+        "NON_MEDICAL_DATA": "Non-medical data (e.g., housing, nutrition)",
+        "OTHER": "Other",
+        "NOT_PLANNING_TO_COLLECT_DATA": "Not planning to collect data"
+      }
     }
   },
   "qualityPerformanceImpactsPaymentOther": {
