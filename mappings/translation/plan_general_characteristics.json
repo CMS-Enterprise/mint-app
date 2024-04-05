@@ -7,6 +7,17 @@
     "options": {
       "true": "New model",
       "false": "New track of an existing model"
+    },
+    "childRelation": {
+      "false": [
+        {
+          "gqlField": "existingModel",
+          "goField": "ExistingModel",
+          "dbField": "existing_model",
+          "label": "Which existing model?",
+          "sublabel": "Start typing the name of the model"
+        }
+      ]
     }
   },
   "existingModel": {
@@ -14,7 +25,17 @@
     "goField": "ExistingModel",
     "dbField": "existing_model",
     "label": "Which existing model?",
-    "sublabel": "Start typing the name of the model"
+    "sublabel": "Start typing the name of the model",
+    "parentRelation": {
+      "gqlField": "isNewModel",
+      "goField": "IsNewModel",
+      "dbField": "is_new_model",
+      "label": "Is this a new track of an existing model or a new model?",
+      "options": {
+        "true": "New model",
+        "false": "New track of an existing model"
+      }
+    }
   },
   "resemblesExistingModel": {
     "gqlField": "resemblesExistingModel",
@@ -25,6 +46,42 @@
       "YES": "Yes",
       "NO": "No",
       "OTHER": "Other"
+    },
+    "childRelation": {
+      "YES": [
+        {
+          "gqlField": "resemblesExistingModelWhyHow",
+          "goField": "ResemblesExistingModelWhyHow",
+          "dbField": "resembles_existing_model_why_how",
+          "label": "Explain why and how the model made this decision."
+        },
+        {
+          "gqlField": "resemblesExistingModelWhich",
+          "goField": "ResemblesExistingModelWhich",
+          "dbField": "resembles_existing_model_which",
+          "label": "Which existing models does your proposed track/model most closely resemble?",
+          "sublabel": "Start typing the name of the model",
+          "multiSelectLabel": "Selected models",
+          "isArray": true,
+          "options": {
+            "Other": "Other"
+          }
+        },
+        {
+          "gqlField": "resemblesExistingModelHow",
+          "goField": "ResemblesExistingModelHow",
+          "dbField": "resembles_existing_model_how",
+          "label": "In what way does the new model resemble the selected model(s)?"
+        }
+      ],
+      "NO": [
+        {
+          "gqlField": "resemblesExistingModelWhyHow",
+          "goField": "ResemblesExistingModelWhyHow",
+          "dbField": "resembles_existing_model_why_how",
+          "label": "Explain why and how the model made this decision."
+        }
+      ]
     }
   },
   "resemblesExistingModelWhyHow": {
@@ -41,6 +98,17 @@
     "sublabel": "Start typing the name of the model",
     "multiSelectLabel": "Selected models",
     "isArray": true,
+    "parentRelation": {
+      "gqlField": "resemblesExistingModel",
+      "goField": "ResemblesExistingModel",
+      "dbField": "resembles_existing_model",
+      "label": "Does your proposed track/model resemble any existing models?",
+      "options": {
+        "YES": "Yes",
+        "NO": "No",
+        "OTHER": "Other"
+      }
+    },
     "options": {
       "Other": "Other"
     }
@@ -49,7 +117,18 @@
     "gqlField": "resemblesExistingModelHow",
     "goField": "ResemblesExistingModelHow",
     "dbField": "resembles_existing_model_how",
-    "label": "In what way does the new model resemble the selected model(s)?"
+    "label": "In what way does the new model resemble the selected model(s)?",
+    "parentRelation": {
+      "gqlField": "resemblesExistingModel",
+      "goField": "ResemblesExistingModel",
+      "dbField": "resembles_existing_model",
+      "label": "Does your proposed track/model resemble any existing models?",
+      "options": {
+        "YES": "Yes",
+        "NO": "No",
+        "OTHER": "Other"
+      }
+    }
   },
   "resemblesExistingModelOtherSpecify": {
     "gqlField": "resemblesExistingModelOtherSpecify",
@@ -92,6 +171,28 @@
       "YES": "Yes",
       "NO": "No",
       "OTHER": "Other"
+    },
+    "childRelation": {
+      "YES": [
+        {
+          "gqlField": "participationInModelPreconditionWhich",
+          "goField": "ParticipationInModelPreconditionWhich",
+          "dbField": "participation_in_model_precondition_which",
+          "label": "Which models?",
+          "sublabel": "Start typing the name of the model",
+          "multiSelectLabel": "Selected models",
+          "isArray": true,
+          "options": {
+            "Other": "Other"
+          }
+        },
+        {
+          "gqlField": "participationInModelPreconditionWhyHow",
+          "goField": "ParticipationInModelPreconditionWhyHow",
+          "dbField": "participation_in_model_precondition_why_how",
+          "label": "Explain any details including if it is just part of the model."
+        }
+      ]
     }
   },
   "participationInModelPreconditionOtherSpecify": {
@@ -110,6 +211,17 @@
     "sublabel": "Start typing the name of the model",
     "multiSelectLabel": "Selected models",
     "isArray": true,
+    "parentRelation": {
+      "gqlField": "participationInModelPrecondition",
+      "goField": "ParticipationInModelPrecondition",
+      "dbField": "participation_in_model_precondition",
+      "label": "Is participation in another model a precondition for participation in this model?",
+      "options": {
+        "YES": "Yes",
+        "NO": "No",
+        "OTHER": "Other"
+      }
+    },
     "options": {
       "Other": "Other"
     }
@@ -137,7 +249,18 @@
     "gqlField": "participationInModelPreconditionWhyHow",
     "goField": "ParticipationInModelPreconditionWhyHow",
     "dbField": "participation_in_model_precondition_why_how",
-    "label": "Explain any details including if it is just part of the model."
+    "label": "Explain any details including if it is just part of the model.",
+    "parentRelation": {
+      "gqlField": "participationInModelPrecondition",
+      "goField": "ParticipationInModelPrecondition",
+      "dbField": "participation_in_model_precondition",
+      "label": "Is participation in another model a precondition for participation in this model?",
+      "options": {
+        "YES": "Yes",
+        "NO": "No",
+        "OTHER": "Other"
+      }
+    }
   },
   "participationInModelPreconditionNote": {
     "gqlField": "participationInModelPreconditionNote",
@@ -236,6 +359,72 @@
       "SERVICE_DELIVERY": "Service Delivery Model",
       "SHARED_SAVINGS": "Shared Savings Model",
       "OTHER": "Other"
+    },
+    "childRelation": {
+      "PART_C": [
+        {
+          "gqlField": "collectPlanBids",
+          "goField": "CollectPlanBids",
+          "dbField": "collect_plan_bids",
+          "label": "Will you review and collect plan bids?",
+          "options": {
+            "true": "Yes",
+            "false": "No"
+          }
+        },
+        {
+          "gqlField": "managePartCDEnrollment",
+          "goField": "ManagePartCDEnrollment",
+          "dbField": "manage_part_c_d_enrollment",
+          "label": "Will you manage Part C/D enrollment?",
+          "options": {
+            "true": "Yes",
+            "false": "No"
+          }
+        },
+        {
+          "gqlField": "planContractUpdated",
+          "goField": "PlanContractUpdated",
+          "dbField": "plan_contract_updated",
+          "label": "Have you updated the plan’s contract?",
+          "options": {
+            "true": "Yes",
+            "false": "No"
+          }
+        }
+      ],
+      "PART_D": [
+        {
+          "gqlField": "collectPlanBids",
+          "goField": "CollectPlanBids",
+          "dbField": "collect_plan_bids",
+          "label": "Will you review and collect plan bids?",
+          "options": {
+            "true": "Yes",
+            "false": "No"
+          }
+        },
+        {
+          "gqlField": "managePartCDEnrollment",
+          "goField": "ManagePartCDEnrollment",
+          "dbField": "manage_part_c_d_enrollment",
+          "label": "Will you manage Part C/D enrollment?",
+          "options": {
+            "true": "Yes",
+            "false": "No"
+          }
+        },
+        {
+          "gqlField": "planContractUpdated",
+          "goField": "PlanContractUpdated",
+          "dbField": "plan_contract_updated",
+          "label": "Have you updated the plan’s contract?",
+          "options": {
+            "true": "Yes",
+            "false": "No"
+          }
+        }
+      ]
     }
   },
   "keyCharacteristicsOther": {
@@ -259,6 +448,27 @@
     "options": {
       "true": "Yes",
       "false": "No"
+    },
+    "parentRelation": {
+      "gqlField": "keyCharacteristics",
+      "goField": "KeyCharacteristics",
+      "dbField": "key_characteristics",
+      "label": "What are the model key characteristics? Select all that apply.",
+      "readonlyLabel": "What are the model key characteristics?",
+      "multiSelectLabel": "Selected key characteristics",
+      "options": {
+        "EPISODE_BASED": "Episode-Based Model",
+        "MEDICAID_MODEL": "Medicaid Model",
+        "PART_C": "Medicare-Advantage (Part C) Model",
+        "MEDICARE_FFS_MODEL": "Medicare Fee-for-Service (FFS) Model",
+        "PART_D": "Medicare Prescription Drug (Part D) Model",
+        "PAYMENT": "Payment Model",
+        "POPULATION_BASED": "Population-based Model",
+        "PREVENTATIVE": "Preventative Model",
+        "SERVICE_DELIVERY": "Service Delivery Model",
+        "SHARED_SAVINGS": "Shared Savings Model",
+        "OTHER": "Other"
+      }
     }
   },
   "collectPlanBidsNote": {
@@ -275,6 +485,27 @@
     "options": {
       "true": "Yes",
       "false": "No"
+    },
+    "parentRelation": {
+      "gqlField": "keyCharacteristics",
+      "goField": "KeyCharacteristics",
+      "dbField": "key_characteristics",
+      "label": "What are the model key characteristics? Select all that apply.",
+      "readonlyLabel": "What are the model key characteristics?",
+      "multiSelectLabel": "Selected key characteristics",
+      "options": {
+        "EPISODE_BASED": "Episode-Based Model",
+        "MEDICAID_MODEL": "Medicaid Model",
+        "PART_C": "Medicare-Advantage (Part C) Model",
+        "MEDICARE_FFS_MODEL": "Medicare Fee-for-Service (FFS) Model",
+        "PART_D": "Medicare Prescription Drug (Part D) Model",
+        "PAYMENT": "Payment Model",
+        "POPULATION_BASED": "Population-based Model",
+        "PREVENTATIVE": "Preventative Model",
+        "SERVICE_DELIVERY": "Service Delivery Model",
+        "SHARED_SAVINGS": "Shared Savings Model",
+        "OTHER": "Other"
+      }
     }
   },
   "managePartCDEnrollmentNote": {
@@ -291,6 +522,27 @@
     "options": {
       "true": "Yes",
       "false": "No"
+    },
+    "parentRelation": {
+      "gqlField": "keyCharacteristics",
+      "goField": "KeyCharacteristics",
+      "dbField": "key_characteristics",
+      "label": "What are the model key characteristics? Select all that apply.",
+      "readonlyLabel": "What are the model key characteristics?",
+      "multiSelectLabel": "Selected key characteristics",
+      "options": {
+        "EPISODE_BASED": "Episode-Based Model",
+        "MEDICAID_MODEL": "Medicaid Model",
+        "PART_C": "Medicare-Advantage (Part C) Model",
+        "MEDICARE_FFS_MODEL": "Medicare Fee-for-Service (FFS) Model",
+        "PART_D": "Medicare Prescription Drug (Part D) Model",
+        "PAYMENT": "Payment Model",
+        "POPULATION_BASED": "Population-based Model",
+        "PREVENTATIVE": "Preventative Model",
+        "SERVICE_DELIVERY": "Service Delivery Model",
+        "SHARED_SAVINGS": "Shared Savings Model",
+        "OTHER": "Other"
+      }
     }
   },
   "planContractUpdatedNote": {
@@ -363,7 +615,7 @@
   "communityPartnersInvolvedDescription": {
     "gqlField": "communityPartnersInvolvedDescription",
     "goField": "CommunityPartnersInvolvedDescription",
-    "dbField": "community_partners_involved",
+    "dbField": "community_partners_involved_description",
     "label": "How so?",
     "isOtherType": true,
     "otherParentField": "community_partners_involved"
@@ -382,6 +634,177 @@
     "options": {
       "true": "Yes",
       "false": "No"
+    },
+    "childRelation": {
+      "true": [
+        {
+          "gqlField": "geographiesTargetedTypes",
+          "goField": "GeographiesTargetedTypes",
+          "dbField": "geographies_targeted_types",
+          "label": "Geography type is",
+          "options": {
+            "STATE": "States and territories",
+            "REGION": "Region",
+            "OTHER": "Other"
+          },
+          "childRelation": {
+            "STATE": [
+              {
+                "gqlField": "geographiesStatesAndTerritories",
+                "goField": "GeographiesStatesAndTerritories",
+                "dbField": "geographies_states_and_territories",
+                "label": "Which states and territories?",
+                "multiSelectLabel": "States and territories",
+                "isOtherType": true,
+                "options": {
+                  "AL": "AL - Alabama",
+                  "AK": "AK - Alaska",
+                  "AZ": "AZ - Arizona",
+                  "AR": "AR - Arkansas",
+                  "CA": "CA - California",
+                  "CO": "CO - Colorado",
+                  "CT": "CT - Connecticut",
+                  "DE": "DE - Delaware",
+                  "DC": "DC - District of Columbia",
+                  "FL": "FL - Florida",
+                  "GA": "GA - Georgia",
+                  "HI": "HI - Hawaii",
+                  "ID": "ID - Idaho",
+                  "IL": "IL - Illinois",
+                  "IN": "IN - Indiana",
+                  "IA": "IA - Iowa",
+                  "KS": "KS - Kansas",
+                  "KY": "KY - Kentucky",
+                  "LA": "LA - Louisiana",
+                  "ME": "ME - Maine",
+                  "MD": "MD - Maryland",
+                  "MA": "MA - Massachusetts",
+                  "MI": "MI - Michigan",
+                  "MN": "MN - Minnesota",
+                  "MS": "MS - Mississippi",
+                  "MO": "MO - Missouri",
+                  "MT": "MT - Montana",
+                  "NE": "NE - Nebraska",
+                  "NV": "NV - Nevada",
+                  "NH": "NH - New Hampshire",
+                  "NJ": "NJ - New Jersey",
+                  "NM": "NM - New Mexico",
+                  "NY": "NY - New York",
+                  "NC": "NC - North Carolina",
+                  "ND": "ND - North Dakota",
+                  "OH": "OH - Ohio",
+                  "OK": "OK - Oklahoma",
+                  "OR": "OR - Oregon",
+                  "PA": "PA - Pennsylvania",
+                  "RI": "RI - Rhode Island",
+                  "SC": "SC - South Carolina",
+                  "SD": "SD - South Dakota",
+                  "TN": "TN - Tennessee",
+                  "TX": "TX - Texas",
+                  "UT": "UT - Utah",
+                  "VT": "VT - Vermont",
+                  "VA": "VA - Virginia",
+                  "WA": "WA - Washington",
+                  "WV": "WV - West Virginia",
+                  "WI": "WI - Wisconsin",
+                  "WY": "WY - Wyoming",
+                  "AS": "AS - American Samoa",
+                  "GU": "GU - Guam",
+                  "MP": "MP - Northern Mariana Islands",
+                  "PR": "PR - Puerto Rico",
+                  "UM": "UM - U.S. Minor Outlying Islands",
+                  "VI": "VI - U.S. Virgin Islands"
+                },
+                "readonlyOptions": {
+                  "AL": "Alabama",
+                  "AK": "Alaska",
+                  "AZ": "Arizona",
+                  "AR": "Arkansas",
+                  "CA": "California",
+                  "CO": "Colorado",
+                  "CT": "Connecticut",
+                  "DE": "Delaware",
+                  "DC": "District of Columbia",
+                  "FL": "Florida",
+                  "GA": "Georgia",
+                  "HI": "Hawaii",
+                  "ID": "Idaho",
+                  "IL": "Illinois",
+                  "IN": "Indiana",
+                  "IA": "Iowa",
+                  "KS": "Kansas",
+                  "KY": "Kentucky",
+                  "LA": "Louisiana",
+                  "ME": "Maine",
+                  "MD": "Maryland",
+                  "MA": "Massachusetts",
+                  "MI": "Michigan",
+                  "MN": "Minnesota",
+                  "MS": "Mississippi",
+                  "MO": "Missouri",
+                  "MT": "Montana",
+                  "NE": "Nebraska",
+                  "NV": "Nevada",
+                  "NH": "New Hampshire",
+                  "NJ": "New Jersey",
+                  "NM": "New Mexico",
+                  "NY": "New York",
+                  "NC": "North Carolina",
+                  "ND": "North Dakota",
+                  "OH": "Ohio",
+                  "OK": "Oklahoma",
+                  "OR": "Oregon",
+                  "PA": "Pennsylvania",
+                  "RI": "Rhode Island",
+                  "SC": "South Carolina",
+                  "SD": "South Dakota",
+                  "TN": "Tennessee",
+                  "TX": "Texas",
+                  "UT": "Utah",
+                  "VT": "Vermont",
+                  "VA": "Virginia",
+                  "WA": "Washington",
+                  "WV": "West Virginia",
+                  "WI": "Wisconsin",
+                  "WY": "Wyoming",
+                  "AS": "American Samoa",
+                  "GU": "Guam",
+                  "MP": "Northern Mariana Islands",
+                  "PR": "Puerto Rico",
+                  "UM": "U.S. Minor Outlying Islands",
+                  "VI": "U.S. Virgin Islands"
+                }
+              }
+            ],
+            "REGION": [
+              {
+                "gqlField": "geographiesRegionTypes",
+                "goField": "GeographiesRegionTypes",
+                "dbField": "geographies_region_types",
+                "label": "Geography region types",
+                "isOtherType": true,
+                "options": {
+                  "CBSA": "Core-based statistical areas (CBSAs)",
+                  "HRR": "Hospital Referral Regions (HRR)",
+                  "MSA": "Metropolitan Statistical Areas (MSAs)"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "gqlField": "geographiesTargetedAppliedTo",
+          "goField": "GeographiesTargetedAppliedTo",
+          "dbField": "geographies_targeted_applied_to",
+          "label": "Geographies are applied to",
+          "options": {
+            "BENEFICIARIES": "Beneficiaries",
+            "PARTICIPANTS": "Participants",
+            "PROVIDERS": "Providers",
+            "OTHER": "Other"
+          }
+        }
+      ]
     }
   },
   "geographiesTargetedTypes": {
@@ -393,6 +816,160 @@
       "STATE": "States and territories",
       "REGION": "Region",
       "OTHER": "Other"
+    },
+    "parentRelation": {
+      "gqlField": "geographiesTargeted",
+      "goField": "GeographiesTargeted",
+      "dbField": "geographies_targeted",
+      "label": "Is the model targeted at specific geographies?",
+      "options": {
+        "true": "Yes",
+        "false": "No"
+      }
+    },
+    "childRelation": {
+      "STATE": [
+        {
+          "gqlField": "geographiesStatesAndTerritories",
+          "goField": "GeographiesStatesAndTerritories",
+          "dbField": "geographies_states_and_territories",
+          "label": "Which states and territories?",
+          "multiSelectLabel": "States and territories",
+          "isOtherType": true,
+          "options": {
+            "AL": "AL - Alabama",
+            "AK": "AK - Alaska",
+            "AZ": "AZ - Arizona",
+            "AR": "AR - Arkansas",
+            "CA": "CA - California",
+            "CO": "CO - Colorado",
+            "CT": "CT - Connecticut",
+            "DE": "DE - Delaware",
+            "DC": "DC - District of Columbia",
+            "FL": "FL - Florida",
+            "GA": "GA - Georgia",
+            "HI": "HI - Hawaii",
+            "ID": "ID - Idaho",
+            "IL": "IL - Illinois",
+            "IN": "IN - Indiana",
+            "IA": "IA - Iowa",
+            "KS": "KS - Kansas",
+            "KY": "KY - Kentucky",
+            "LA": "LA - Louisiana",
+            "ME": "ME - Maine",
+            "MD": "MD - Maryland",
+            "MA": "MA - Massachusetts",
+            "MI": "MI - Michigan",
+            "MN": "MN - Minnesota",
+            "MS": "MS - Mississippi",
+            "MO": "MO - Missouri",
+            "MT": "MT - Montana",
+            "NE": "NE - Nebraska",
+            "NV": "NV - Nevada",
+            "NH": "NH - New Hampshire",
+            "NJ": "NJ - New Jersey",
+            "NM": "NM - New Mexico",
+            "NY": "NY - New York",
+            "NC": "NC - North Carolina",
+            "ND": "ND - North Dakota",
+            "OH": "OH - Ohio",
+            "OK": "OK - Oklahoma",
+            "OR": "OR - Oregon",
+            "PA": "PA - Pennsylvania",
+            "RI": "RI - Rhode Island",
+            "SC": "SC - South Carolina",
+            "SD": "SD - South Dakota",
+            "TN": "TN - Tennessee",
+            "TX": "TX - Texas",
+            "UT": "UT - Utah",
+            "VT": "VT - Vermont",
+            "VA": "VA - Virginia",
+            "WA": "WA - Washington",
+            "WV": "WV - West Virginia",
+            "WI": "WI - Wisconsin",
+            "WY": "WY - Wyoming",
+            "AS": "AS - American Samoa",
+            "GU": "GU - Guam",
+            "MP": "MP - Northern Mariana Islands",
+            "PR": "PR - Puerto Rico",
+            "UM": "UM - U.S. Minor Outlying Islands",
+            "VI": "VI - U.S. Virgin Islands"
+          },
+          "readonlyOptions": {
+            "AL": "Alabama",
+            "AK": "Alaska",
+            "AZ": "Arizona",
+            "AR": "Arkansas",
+            "CA": "California",
+            "CO": "Colorado",
+            "CT": "Connecticut",
+            "DE": "Delaware",
+            "DC": "District of Columbia",
+            "FL": "Florida",
+            "GA": "Georgia",
+            "HI": "Hawaii",
+            "ID": "Idaho",
+            "IL": "Illinois",
+            "IN": "Indiana",
+            "IA": "Iowa",
+            "KS": "Kansas",
+            "KY": "Kentucky",
+            "LA": "Louisiana",
+            "ME": "Maine",
+            "MD": "Maryland",
+            "MA": "Massachusetts",
+            "MI": "Michigan",
+            "MN": "Minnesota",
+            "MS": "Mississippi",
+            "MO": "Missouri",
+            "MT": "Montana",
+            "NE": "Nebraska",
+            "NV": "Nevada",
+            "NH": "New Hampshire",
+            "NJ": "New Jersey",
+            "NM": "New Mexico",
+            "NY": "New York",
+            "NC": "North Carolina",
+            "ND": "North Dakota",
+            "OH": "Ohio",
+            "OK": "Oklahoma",
+            "OR": "Oregon",
+            "PA": "Pennsylvania",
+            "RI": "Rhode Island",
+            "SC": "South Carolina",
+            "SD": "South Dakota",
+            "TN": "Tennessee",
+            "TX": "Texas",
+            "UT": "Utah",
+            "VT": "Vermont",
+            "VA": "Virginia",
+            "WA": "Washington",
+            "WV": "West Virginia",
+            "WI": "Wisconsin",
+            "WY": "Wyoming",
+            "AS": "American Samoa",
+            "GU": "Guam",
+            "MP": "Northern Mariana Islands",
+            "PR": "Puerto Rico",
+            "UM": "U.S. Minor Outlying Islands",
+            "VI": "U.S. Virgin Islands"
+          }
+        }
+      ],
+      "REGION": [
+        {
+          "gqlField": "geographiesRegionTypes",
+          "goField": "GeographiesRegionTypes",
+          "dbField": "geographies_region_types",
+          "label": "Geography region types",
+          "isOtherType": true,
+          "options": {
+            "CBSA": "Core-based statistical areas (CBSAs)",
+            "HRR": "Hospital Referral Regions (HRR)",
+            "MSA": "Metropolitan Statistical Areas (MSAs)"
+          }
+        }
+      ]
     }
   },
   "geographiesStatesAndTerritories": {
@@ -519,6 +1096,17 @@
       "PR": "Puerto Rico",
       "UM": "U.S. Minor Outlying Islands",
       "VI": "U.S. Virgin Islands"
+    },
+    "parentRelation": {
+      "gqlField": "geographiesTargetedTypes",
+      "goField": "GeographiesTargetedTypes",
+      "dbField": "geographies_targeted_types",
+      "label": "Geography type is",
+      "options": {
+        "STATE": "States and territories",
+        "REGION": "Region",
+        "OTHER": "Other"
+      }
     }
   },
   "geographiesRegionTypes": {
@@ -531,6 +1119,17 @@
       "CBSA": "Core-based statistical areas (CBSAs)",
       "HRR": "Hospital Referral Regions (HRR)",
       "MSA": "Metropolitan Statistical Areas (MSAs)"
+    },
+    "parentRelation": {
+      "gqlField": "geographiesTargetedTypes",
+      "goField": "GeographiesTargetedTypes",
+      "dbField": "geographies_targeted_types",
+      "label": "Geography type is",
+      "options": {
+        "STATE": "States and territories",
+        "REGION": "Region",
+        "OTHER": "Other"
+      }
     }
   },
   "geographiesTargetedTypesOther": {
@@ -551,6 +1150,16 @@
       "PARTICIPANTS": "Participants",
       "PROVIDERS": "Providers",
       "OTHER": "Other"
+    },
+    "parentRelation": {
+      "gqlField": "geographiesTargeted",
+      "goField": "GeographiesTargeted",
+      "dbField": "geographies_targeted",
+      "label": "Is the model targeted at specific geographies?",
+      "options": {
+        "true": "Yes",
+        "false": "No"
+      }
     }
   },
   "geographiesTargetedAppliedToOther": {
@@ -592,6 +1201,21 @@
       "COOPERATIVE": "Co-Operative Agreement/Grant",
       "PARTICIPATION": "Participation Agreement",
       "OTHER": "Other"
+    },
+    "childRelation": {
+      "PARTICIPATION": [
+        {
+          "gqlField": "multiplePatricipationAgreementsNeeded",
+          "goField": "MultiplePatricipationAgreementsNeeded",
+          "dbField": "multiple_patricipation_agreements_needed",
+          "label": "Will more than one participation agreement be needed?",
+          "sublabel": "depending on awardee selections or characteristics such as risk/type/size",
+          "options": {
+            "true": "Yes",
+            "false": "No"
+          }
+        }
+      ]
     }
   },
   "agreementTypesOther": {
@@ -611,6 +1235,18 @@
     "options": {
       "true": "Yes",
       "false": "No"
+    },
+    "parentRelation": {
+      "gqlField": "agreementTypes",
+      "goField": "AgreementTypes",
+      "dbField": "agreement_types",
+      "label": "What is the agreement type?",
+      "sublabel": "Note: CMMI writes, Office of General Council (OGC) approves both types of agreements",
+      "options": {
+        "COOPERATIVE": "Co-Operative Agreement/Grant",
+        "PARTICIPATION": "Participation Agreement",
+        "OTHER": "Other"
+      }
     }
   },
   "multiplePatricipationAgreementsNeededNote": {
@@ -631,9 +1267,9 @@
     }
   },
   "rulemakingRequiredDescription": {
-    "gqlField": "multiplePatricipationAgreementsNeeded",
-    "goField": "MultiplePatricipationAgreementsNeeded",
-    "dbField": "multiple_patricipation_agreements_needed",
+    "gqlField": "rulemakingRequiredDescription",
+    "goField": "RulemakingRequiredDescription",
+    "dbField": "rulemaking_required_description",
     "label": "Which rule do you anticipate using and what is the target date of display for that regulation?",
     "isOtherType": true
   },

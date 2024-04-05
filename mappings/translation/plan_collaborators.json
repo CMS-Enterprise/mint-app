@@ -2,7 +2,7 @@
   "username": {
     "gqlField": "username",
     "goField": "Username",
-    "dbField": "username",
+    "dbField": "user_account.username",
     "label": "Team member name"
   },
   "teamRoles": {

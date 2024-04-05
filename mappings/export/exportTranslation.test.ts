@@ -30,7 +30,7 @@ describe('exportTranslation Util', () => {
     });
   });
 
-  it('replaces otherParentField gql field with db fields', () => {
+  it('calls closures and replaces otherParentField gql field with db fields', () => {
     const translationPlanSections = { ...translationSections };
     expect(
       mapOtherParentFieldToDBField(translationPlanSections.plan_basics)
