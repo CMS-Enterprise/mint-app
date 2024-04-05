@@ -18,20 +18,8 @@ const (
 	DBOpTruncate DatabaseOperation = "TRUNCATE"
 )
 
-/* TODO: EASI-(ChChCh Changes!) Work on a job to process data and make type safe audit results
-1. See about making a method that will
-   a. get all changes from a time period
-   b. debounce the changes
-   c. create a typed record
-
-
-*/
-
 // TranslatedAuditChange is a structure that shows grouped, humanReadable Audit data
 type TranslatedAuditChange struct {
-	// Ticket: (ChChCh Changes!) Think about what should be in the row....
-	//Perhaps we want this to be a time frame, and have an array of specific changes instead of just meta data?
-
 	baseStruct
 	modelPlanRelation
 	ModelName           string            `json:"modelName" db:"model_name"`
@@ -57,8 +45,8 @@ type TranslatedAuditChange struct {
 	MetaData    TranslatedAuditMetaData `json:"metaData"`
 }
 
-// NewHumanizedAuditChange
-func NewHumanizedAuditChange(
+// NewTranslatedAuditChange
+func NewTranslatedAuditChange(
 	createdBy uuid.UUID,
 	actorID uuid.UUID,
 	actorName string,
@@ -104,13 +92,13 @@ func NewHumanizedAuditChange(
 }
 
 // ParseMetaData parses raw MetaData into Typed meta data per the provided struct
-func (hmc *TranslatedAuditChange) ParseMetaData() error {
+func (tac *TranslatedAuditChange) ParseMetaData() error {
 
-	meta, err := parseRawTranslatedAuditMetaData(hmc.TableName, hmc.MetaDataRaw)
+	meta, err := parseRawTranslatedAuditMetaData(tac.TableName, tac.MetaDataRaw)
 	if err != nil {
 		return err
 	}
 
-	hmc.MetaData = meta
+	tac.MetaData = meta
 	return nil
 }

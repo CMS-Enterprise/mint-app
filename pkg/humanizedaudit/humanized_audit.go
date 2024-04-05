@@ -98,7 +98,7 @@ func humanizeModelPlanAudits(ctx context.Context, store *storage.Store, plan *mo
 		}
 
 		for fieldName, field := range modelAudit.Fields { //fieldName
-			change := models.NewHumanizedAuditChange(
+			change := models.NewTranslatedAuditChange(
 				constants.GetSystemAccountUUID(),
 				modelAudit.ModifiedBy,
 				actorAccount.CommonName,
@@ -209,7 +209,7 @@ func translateField(fieldName string, field models.AuditField, audit *models.Aud
 		translatedNew = field.New
 	}
 
-	change := models.NewHumanizedAuditChange(
+	change := models.NewTranslatedAuditChange(
 		constants.GetSystemAccountUUID(),
 		audit.ModifiedBy,
 		actorAccount.CommonName,

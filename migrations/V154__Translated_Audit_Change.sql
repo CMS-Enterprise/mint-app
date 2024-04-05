@@ -16,12 +16,7 @@ CREATE TABLE translated_audit_change (
     table_name ZERO_STRING NOT NULL, --potentially normalize this, wouldn't need to store, but useful?
     primary_key UUID NOT NULL,
     action DATABASE_OPERATION NOT NULL, 
-    field_name ZERO_STRING NOT NULL,
-    field_name_translated ZERO_STRING NOT NULL,
-    old ZERO_STRING, -- could be null
-    old_translated ZERO_STRING, -- could be null
-    new ZERO_STRING NOT NULL, -- never null?
-    new_translated ZERO_STRING NOT NULL, -- -- never null?
+
     meta_data JSONB NOT NULL, -- This could be whatever
     model_name ZERO_STRING NOT NULL,
     created_by UUID NOT NULL REFERENCES user_account(id),
@@ -29,14 +24,15 @@ CREATE TABLE translated_audit_change (
     modified_by UUID REFERENCES user_account(id),
     modified_dts TIMESTAMP WITH TIME ZONE
 );
---Ticket: (ChChCh Changes!) we might type the action table instead
 
---Ticket: (ChChCh Changes!) We might want to put time info in a single column...
---Ticket (ChChCh Changes!)  Consider removing time start and time end and just use date
+
+--Ticket (ChChCh Changes!) Decide if we want to normalize the references that duplicate data, eg, actor_name, model_name etc. All of this is technically already in the audit.change table...
 
 -- Comment for the table
-COMMENT ON TABLE translated_audit_change IS 'Table storing human-readable audit trail of changes made to model plans.';
+COMMENT ON TABLE translated_audit_change IS 'Table storing human-readable audit trail of changes made to model plans. There should be at most one entry per audit.change entry ';
 
+
+--Ticket (ChChCh Changes!) Update these comments for the new table
 -- Comments for each column
 COMMENT ON COLUMN translated_audit_change.id IS 'Unique identifier for the audit trail change record.';
 COMMENT ON COLUMN translated_audit_change.model_plan_id IS 'Identifier referencing the model plan associated with this audit trail change.';
@@ -57,3 +53,24 @@ COMMENT ON COLUMN translated_audit_change.modified_dts IS 'Timestamp with time z
 -- Should we make some paradigm choices eg changes have to be grouped by user? I think that is reasonable...
 
 -- Ticket: (ChChCh Changes!) Ensure that we only allow one entry in a time span per user. We wouldn't want to have multiple for that range
+
+
+CREATE TABLE translated_audit_field (
+    id UUID PRIMARY KEY,
+    translated_audit_id UUID UNIQUE NOT NULL REFERENCES translated_audit_change(id), --foreign key to translated_audit_change table
+
+
+    field_name ZERO_STRING NOT NULL,
+    field_name_translated ZERO_STRING NOT NULL,
+    old ZERO_STRING,
+    old_translated ZERO_STRING, 
+    new ZERO_STRING,
+    new_translated ZERO_STRING, 
+    meta_data JSONB NOT NULL, -- This could be whatever
+
+    model_name ZERO_STRING NOT NULL,
+    created_by UUID NOT NULL REFERENCES user_account(id),
+    created_dts TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    modified_by UUID REFERENCES user_account(id),
+    modified_dts TIMESTAMP WITH TIME ZONE
+)
