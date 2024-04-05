@@ -12,6 +12,7 @@ import { getUserInitials } from 'utils/modelPlan';
 import {
   ActivityCTA,
   activityText,
+  extractContent,
   isAddingCollaborator,
   isDailyDigest,
   isNewDiscussionReply,
@@ -65,11 +66,6 @@ const IndividualNotification = ({
 
   // Mint System Account -> MINT
   const name = commonName === 'Mint System Account' ? 'MINT' : commonName;
-
-  const extractContent = (text: string) => {
-    return new DOMParser().parseFromString(text, 'text/html').documentElement
-      .textContent;
-  };
 
   return (
     <Grid row data-testid="individual-notification">
