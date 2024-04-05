@@ -7,6 +7,7 @@ import {
   UserNotificationPreferenceFlag
 } from 'gql/gen/graphql';
 
+import { MessageProvider } from 'hooks/useMessage';
 import setup from 'utils/testing/setup';
 
 import NotificationSettings from '.';
@@ -59,7 +60,9 @@ describe('Notification Settings Page', () => {
         <MemoryRouter initialEntries={[`/notifications/settings`]}>
           <MockedProvider mocks={notificationsSettingsMock} addTypename={false}>
             <Route path="/notifications/settings">
-              <NotificationSettings />
+              <MessageProvider>
+                <NotificationSettings />
+              </MessageProvider>
             </Route>
           </MockedProvider>
         </MemoryRouter>
@@ -92,7 +95,9 @@ describe('Notification Settings Page', () => {
       <MemoryRouter initialEntries={[`/notifications/settings`]}>
         <MockedProvider mocks={notificationsSettingsMock} addTypename={false}>
           <Route path="/notifications/settings">
-            <NotificationSettings />
+            <MessageProvider>
+              <NotificationSettings />
+            </MessageProvider>
           </Route>
         </MockedProvider>
       </MemoryRouter>

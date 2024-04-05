@@ -4,6 +4,7 @@ import { MockedProvider } from '@apollo/client/testing';
 import { act, render, screen, waitFor } from '@testing-library/react';
 import { GetNotificationsDocument } from 'gql/gen/graphql';
 
+import { MessageProvider } from 'hooks/useMessage';
 import setup from 'utils/testing/setup';
 
 import NotificationsHome from '.';
@@ -88,7 +89,9 @@ describe('Notification Page', () => {
         <MemoryRouter initialEntries={[`/notifications`]}>
           <MockedProvider mocks={notificationsMock} addTypename={false}>
             <Route path="/notifications">
-              <NotificationsHome />
+              <MessageProvider>
+                <NotificationsHome />
+              </MessageProvider>
             </Route>
           </MockedProvider>
         </MemoryRouter>
@@ -107,7 +110,9 @@ describe('Notification Page', () => {
       <MemoryRouter initialEntries={[`/notifications`]}>
         <MockedProvider mocks={notificationsMock} addTypename={false}>
           <Route path="/notifications">
-            <NotificationsHome />
+            <MessageProvider>
+              <NotificationsHome />
+            </MessageProvider>
           </Route>
         </MockedProvider>
       </MemoryRouter>
