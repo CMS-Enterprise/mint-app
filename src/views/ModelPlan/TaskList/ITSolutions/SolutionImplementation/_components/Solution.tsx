@@ -2,14 +2,14 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { DatePicker, Fieldset, Label, Radio } from '@trussworks/react-uswds';
 import { Field, FormikProps } from 'formik';
+import {
+  GetOperationalNeed_operationalNeed as OperationNeedType,
+  GetOperationalNeed_operationalNeed_solutions as OpertionalNeedSolutionTypes
+} from 'gql/gen/types/GetOperationalNeed';
 
 import Divider from 'components/shared/Divider';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
-import {
-  GetOperationalNeed_operationalNeed as OperationNeedType,
-  GetOperationalNeed_operationalNeed_solutions as OpertionalNeedSolutionTypes
-} from 'queries/ITSolutions/types/GetOperationalNeed';
 import { GetOperationalSolution_operationalSolution as GetOperationalSolutionType } from 'queries/ITSolutions/types/GetOperationalSolution';
 import { OpSolutionStatus } from 'types/graphql-global-types';
 import { translateOpNeedsStatusType } from 'utils/modelPlan';

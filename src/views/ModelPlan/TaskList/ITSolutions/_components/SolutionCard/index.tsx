@@ -8,13 +8,13 @@ import { useTranslation } from 'react-i18next';
 import { useLocation, useParams } from 'react-router-dom';
 import { Card, CardGroup, Grid, Icon, Link } from '@trussworks/react-uswds';
 import classNames from 'classnames';
+import { GetOperationalNeed_operationalNeed_solutions as GetOperationalNeedSolutionsType } from 'gql/gen/types/GetOperationalNeed';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import Divider from 'components/shared/Divider';
 import Spinner from 'components/Spinner';
 import useHelpSolution from 'hooks/useHelpSolutions';
 import useModalSolutionState from 'hooks/useModalSolutionState';
-import { GetOperationalNeed_operationalNeed_solutions as GetOperationalNeedSolutionsType } from 'queries/ITSolutions/types/GetOperationalNeed';
 import { OperationalSolutionKey } from 'types/graphql-global-types';
 import { translateOperationalSolutionKey } from 'utils/modelPlan';
 import SolutionDetailsModal from 'views/HelpAndKnowledge/SolutionsHelp/SolutionDetails/Modal';

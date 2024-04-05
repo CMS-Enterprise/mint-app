@@ -3,17 +3,13 @@ import { useTranslation } from 'react-i18next';
 import { useQuery } from '@apollo/client';
 import { Button, Grid, GridContainer } from '@trussworks/react-uswds';
 import classNames from 'classnames';
+import { useGetOperationalNeedQuery } from 'gql/gen/graphql';
+import { GetOperationalNeed_operationalNeed as GetOperationalNeedOperationalNeedType } from 'gql/gen/types/GetOperationalNeed';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import Spinner from 'components/Spinner';
 import operationalNeedMap, { NeedMap } from 'data/operationalNeedMap';
-import GetOperationalNeed from 'queries/ITSolutions/GetOperationalNeed';
 import GetOperationalNeedAnswer from 'queries/ITSolutions/GetOperationalNeedAnswer';
-import {
-  GetOperationalNeed as GetOperationalNeedType,
-  GetOperationalNeed_operationalNeed as GetOperationalNeedOperationalNeedType,
-  GetOperationalNeedVariables
-} from 'queries/ITSolutions/types/GetOperationalNeed';
 import { GetOperationalNeedAnswer_modelPlan as GetOperationalNeedAnswerModelPlanType } from 'queries/ITSolutions/types/GetOperationalNeedAnswer';
 import { GetOperationalSolution_operationalSolution as GetOperationalSolutionType } from 'queries/ITSolutions/types/GetOperationalSolution';
 
@@ -97,10 +93,7 @@ const NeedQuestionAndAnswer = ({
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   // Fetch operational need answer to question
-  const { data: need, loading } = useQuery<
-    GetOperationalNeedType,
-    GetOperationalNeedVariables
-  >(GetOperationalNeed, {
+  const { data: need, loading } = useGetOperationalNeedQuery({
     variables: {
       id: operationalNeedID,
       includeNotNeeded: false

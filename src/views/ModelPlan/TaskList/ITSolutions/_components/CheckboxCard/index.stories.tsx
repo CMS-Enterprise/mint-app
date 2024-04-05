@@ -2,8 +2,8 @@ import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { Meta } from '@storybook/react';
 import { Formik } from 'formik';
+import { GetOperationalNeed_operationalNeed_solutions as GetOperationalNeedSolutionsType } from 'gql/gen/types/GetOperationalNeed';
 
-import { GetOperationalNeed_operationalNeed_solutions as GetOperationalNeedSolutionsType } from 'queries/ITSolutions/types/GetOperationalNeed';
 import {
   OperationalSolutionKey,
   OpSolutionStatus

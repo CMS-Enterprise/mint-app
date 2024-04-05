@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@trussworks/react-uswds';
+import { GetOperationalNeed_operationalNeed as GetOperationalNeedType } from 'gql/gen/types/GetOperationalNeed';
 
 import AskAQuestion from 'components/AskAQuestion';
-import { GetOperationalNeed_operationalNeed as GetOperationalNeedType } from 'queries/ITSolutions/types/GetOperationalNeed';
 
 import OperationalNeedRemovalModal from '../OperationalNeedRemovalModal';
 

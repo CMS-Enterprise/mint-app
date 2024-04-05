@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
 import { Button, Grid, Icon } from '@trussworks/react-uswds';
+import { GetOperationalNeed_operationalNeed as GetOperationalNeedOperationalNeedType } from 'gql/gen/types/GetOperationalNeed';
 import { isEqual } from 'lodash';
 
 import Breadcrumbs from 'components/Breadcrumbs';
@@ -21,7 +22,6 @@ import DeleteDocumentSolutionLinks from 'queries/ITSolutions/DeleteDocumentSolut
 import GetOperationalSolution from 'queries/ITSolutions/GetOperationalSolution';
 import { CreateDocumentSolutionLinksVariables } from 'queries/ITSolutions/types/CreateDocumentSolutionLinks';
 import { DeleteDocumentSolutionLinkVariables } from 'queries/ITSolutions/types/DeleteDocumentSolutionLink';
-import { GetOperationalNeed_operationalNeed as GetOperationalNeedOperationalNeedType } from 'queries/ITSolutions/types/GetOperationalNeed';
 import {
   GetOperationalSolution as GetOperationalSolutionType,
   GetOperationalSolution_operationalSolution as GetOperationalSolutionOperationalSolutionType,

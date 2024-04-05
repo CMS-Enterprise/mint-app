@@ -6,9 +6,11 @@ Displays relevant operational need question and answers
 import React, { useContext, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
-import { useMutation, useQuery } from '@apollo/client';
+import { useMutation } from '@apollo/client';
 import { Button, Fieldset, Grid, Icon } from '@trussworks/react-uswds';
 import { Form, Formik, FormikProps } from 'formik';
+import { useGetOperationalNeedQuery } from 'gql/gen/graphql';
+import { GetOperationalNeed_operationalNeed as GetOperationalNeedOperationalNeedType } from 'gql/gen/types/GetOperationalNeed';
 
 import Breadcrumbs from 'components/Breadcrumbs';
 import PageHeading from 'components/PageHeading';
@@ -16,12 +18,6 @@ import PageLoading from 'components/PageLoading';
 import Alert from 'components/shared/Alert';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import useMessage from 'hooks/useMessage';
-import GetOperationalNeed from 'queries/ITSolutions/GetOperationalNeed';
-import {
-  GetOperationalNeed as GetOperationalNeedType,
-  GetOperationalNeed_operationalNeed as GetOperationalNeedOperationalNeedType,
-  GetOperationalNeedVariables
-} from 'queries/ITSolutions/types/GetOperationalNeed';
 import { GetOperationalSolution_operationalSolution as GetOperationalSolutionType } from 'queries/ITSolutions/types/GetOperationalSolution';
 import { UpdateOperationalSolutionVariables } from 'queries/ITSolutions/types/UpdateOperationalSolution';
 import UpdateOperationalSolution from 'queries/ITSolutions/UpdateOperationalSolution';
@@ -78,10 +74,7 @@ const SolutionImplementation = () => {
 
   const { modelName } = useContext(ModelInfoContext);
 
-  const { data, loading, error } = useQuery<
-    GetOperationalNeedType,
-    GetOperationalNeedVariables
-  >(GetOperationalNeed, {
+  const { data, loading, error } = useGetOperationalNeedQuery({
     variables: {
       id: operationalNeedID,
       includeNotNeeded: false

@@ -3302,6 +3302,14 @@ export type UpdatePlanGeneralCharacteristicsMutationVariables = Exact<{
 
 export type UpdatePlanGeneralCharacteristicsMutation = { __typename: 'Mutation', updatePlanGeneralCharacteristics: { __typename: 'PlanGeneralCharacteristics', id: UUID } };
 
+export type GetOperationalNeedQueryVariables = Exact<{
+  id: Scalars['UUID']['input'];
+  includeNotNeeded?: InputMaybe<Scalars['Boolean']['input']>;
+}>;
+
+
+export type GetOperationalNeedQuery = { __typename: 'Query', operationalNeed: { __typename: 'OperationalNeed', id: UUID, modelPlanID: UUID, name?: string | null, key?: OperationalNeedKey | null, nameOther?: string | null, needed?: boolean | null, solutions: Array<{ __typename: 'OperationalSolution', id: UUID, name?: string | null, key?: OperationalSolutionKey | null, pocName?: string | null, pocEmail?: string | null, needed?: boolean | null, nameOther?: string | null, isOther: boolean, isCommonSolution: boolean, otherHeader?: string | null, mustStartDts?: Time | null, mustFinishDts?: Time | null, status: OpSolutionStatus }> } };
+
 export type GetExistingModelPlansQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -5932,6 +5940,67 @@ export function useUpdatePlanGeneralCharacteristicsMutation(baseOptions?: Apollo
 export type UpdatePlanGeneralCharacteristicsMutationHookResult = ReturnType<typeof useUpdatePlanGeneralCharacteristicsMutation>;
 export type UpdatePlanGeneralCharacteristicsMutationResult = Apollo.MutationResult<UpdatePlanGeneralCharacteristicsMutation>;
 export type UpdatePlanGeneralCharacteristicsMutationOptions = Apollo.BaseMutationOptions<UpdatePlanGeneralCharacteristicsMutation, UpdatePlanGeneralCharacteristicsMutationVariables>;
+export const GetOperationalNeedDocument = gql`
+    query GetOperationalNeed($id: UUID!, $includeNotNeeded: Boolean = true) {
+  operationalNeed(id: $id) {
+    id
+    modelPlanID
+    name
+    key
+    nameOther
+    needed
+    solutions(includeNotNeeded: $includeNotNeeded) {
+      id
+      name
+      key
+      pocName
+      pocEmail
+      needed
+      nameOther
+      isOther
+      isCommonSolution
+      otherHeader
+      mustStartDts
+      mustFinishDts
+      status
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetOperationalNeedQuery__
+ *
+ * To run a query within a React component, call `useGetOperationalNeedQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetOperationalNeedQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetOperationalNeedQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *      includeNotNeeded: // value for 'includeNotNeeded'
+ *   },
+ * });
+ */
+export function useGetOperationalNeedQuery(baseOptions: Apollo.QueryHookOptions<GetOperationalNeedQuery, GetOperationalNeedQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetOperationalNeedQuery, GetOperationalNeedQueryVariables>(GetOperationalNeedDocument, options);
+      }
+export function useGetOperationalNeedLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetOperationalNeedQuery, GetOperationalNeedQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetOperationalNeedQuery, GetOperationalNeedQueryVariables>(GetOperationalNeedDocument, options);
+        }
+export function useGetOperationalNeedSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetOperationalNeedQuery, GetOperationalNeedQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetOperationalNeedQuery, GetOperationalNeedQueryVariables>(GetOperationalNeedDocument, options);
+        }
+export type GetOperationalNeedQueryHookResult = ReturnType<typeof useGetOperationalNeedQuery>;
+export type GetOperationalNeedLazyQueryHookResult = ReturnType<typeof useGetOperationalNeedLazyQuery>;
+export type GetOperationalNeedSuspenseQueryHookResult = ReturnType<typeof useGetOperationalNeedSuspenseQuery>;
+export type GetOperationalNeedQueryResult = Apollo.QueryResult<GetOperationalNeedQuery, GetOperationalNeedQueryVariables>;
 export const GetExistingModelPlansDocument = gql`
     query GetExistingModelPlans {
   existingModelCollection {

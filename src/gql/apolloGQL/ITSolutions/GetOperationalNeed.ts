@@ -1,6 +1,6 @@
 import { gql } from '@apollo/client';
 
-export default gql`
+export default gql(/* GraphQL */ `
   query GetOperationalNeed($id: UUID!, $includeNotNeeded: Boolean = true) {
     operationalNeed(id: $id) {
       id
@@ -26,4 +26,4 @@ export default gql`
       }
     }
   }
-`;
+`);

@@ -1,7 +1,9 @@
 import GetPossibleSolutions from 'gql/apolloGQL/Solutions/GetPossibleSolutions';
-import { OperationalSolutionKey } from 'gql/gen/graphql';
+import {
+  GetOperationalNeedDocument,
+  OperationalSolutionKey
+} from 'gql/gen/graphql';
 
-import GetOperationalNeed from 'queries/ITSolutions/GetOperationalNeed';
 import GetOperationalNeedAnswer from 'queries/ITSolutions/GetOperationalNeedAnswer';
 import {
   OperationalNeedKey,
@@ -90,7 +92,7 @@ export const possibleSolutionsMock = [
 export const needQuestionAndAnswerMock = [
   {
     request: {
-      query: GetOperationalNeed,
+      query: GetOperationalNeedDocument,
       variables: {
         id: operationalNeedID,
         includeNotNeeded: false
@@ -192,7 +194,7 @@ export const needQuestionAndAnswerMock = [
 export const operationalNeedMock = (includeNotNeeded: boolean = false) => [
   {
     request: {
-      query: GetOperationalNeed,
+      query: GetOperationalNeedDocument,
       variables: {
         id: operationalNeedID,
         includeNotNeeded

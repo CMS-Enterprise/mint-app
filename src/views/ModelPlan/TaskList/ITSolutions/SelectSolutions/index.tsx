@@ -6,7 +6,7 @@ Displays relevant operational need question and answers
 import React, { useContext, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
-import { useMutation, useQuery } from '@apollo/client';
+import { useMutation } from '@apollo/client';
 import {
   Button,
   CardGroup,
@@ -15,6 +15,11 @@ import {
   Icon
 } from '@trussworks/react-uswds';
 import { Form, Formik, FormikProps } from 'formik';
+import { useGetOperationalNeedQuery } from 'gql/gen/graphql';
+import {
+  GetOperationalNeed_operationalNeed as GetOperationalNeedOperationalNeedType,
+  GetOperationalNeed_operationalNeed_solutions as GetOperationalNeedSolutionsType
+} from 'gql/gen/types/GetOperationalNeed';
 import { partition } from 'lodash';
 
 import Breadcrumbs from 'components/Breadcrumbs';
@@ -25,17 +30,10 @@ import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import useMessage from 'hooks/useMessage';
 import CreateOperationalSolution from 'queries/ITSolutions/CreateOperationalSolution';
-import GetOperationalNeed from 'queries/ITSolutions/GetOperationalNeed';
 import {
   CreateOperationalSolution as CreateOperationalSolutionType,
   CreateOperationalSolutionVariables
 } from 'queries/ITSolutions/types/CreateOperationalSolution';
-import {
-  GetOperationalNeed as GetOperationalNeedType,
-  GetOperationalNeed_operationalNeed as GetOperationalNeedOperationalNeedType,
-  GetOperationalNeed_operationalNeed_solutions as GetOperationalNeedSolutionsType,
-  GetOperationalNeedVariables
-} from 'queries/ITSolutions/types/GetOperationalNeed';
 import {
   UpdateOperationalSolution as UpdateOperationalSolutionType,
   UpdateOperationalSolutionVariables
@@ -101,10 +99,7 @@ const SelectSolutions = () => {
 
   const { modelName } = useContext(ModelInfoContext);
 
-  const { data, loading, error } = useQuery<
-    GetOperationalNeedType,
-    GetOperationalNeedVariables
-  >(GetOperationalNeed, {
+  const { data, loading, error } = useGetOperationalNeedQuery({
     variables: {
       id: operationalNeedID,
       includeNotNeeded: true

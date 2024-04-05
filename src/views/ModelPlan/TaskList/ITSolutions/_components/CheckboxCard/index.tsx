@@ -16,12 +16,12 @@ import {
 } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import { Field } from 'formik';
+import { GetOperationalNeed_operationalNeed_solutions as GetOperationalNeedSolutionsType } from 'gql/gen/types/GetOperationalNeed';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import Spinner from 'components/Spinner';
 import useHelpSolution from 'hooks/useHelpSolutions';
 import useModalSolutionState from 'hooks/useModalSolutionState';
-import { GetOperationalNeed_operationalNeed_solutions as GetOperationalNeedSolutionsType } from 'queries/ITSolutions/types/GetOperationalNeed';
 import { OperationalSolutionKey } from 'types/graphql-global-types';
 import { translateOperationalSolutionKey } from 'utils/modelPlan';
 import SolutionDetailsModal from 'views/HelpAndKnowledge/SolutionsHelp/SolutionDetails/Modal';
