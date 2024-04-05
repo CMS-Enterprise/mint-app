@@ -164,7 +164,7 @@ exports[`Model Plan -- Recover > matches snapshot 1`] = `
                 </div>
               </fieldset>
               <div
-                class="margin-top-4 margin-bottom-8"
+                class="margin-top-3 margin-bottom-6"
               >
                 <div
                   class="usa-form-group"
@@ -243,7 +243,7 @@ exports[`Model Plan -- Recover > matches snapshot 1`] = `
                 </div>
               </fieldset>
               <div
-                class="margin-top-4 margin-bottom-8"
+                class="margin-top-3 margin-bottom-6"
               >
                 <div
                   class="usa-form-group"
@@ -417,7 +417,7 @@ exports[`Model Plan -- Recover > matches snapshot 1`] = `
                 />
               </div>
               <div
-                class="margin-top-4 margin-bottom-8"
+                class="margin-top-3 margin-bottom-6"
               >
                 <div
                   class="usa-form-group"
@@ -591,7 +591,7 @@ exports[`Model Plan -- Recover > matches snapshot 1`] = `
                 />
               </div>
               <div
-                class="margin-top-4 margin-bottom-8"
+                class="margin-top-3 margin-bottom-6"
               >
                 <div
                   class="usa-form-group"
@@ -698,7 +698,7 @@ exports[`Model Plan -- Recover > matches snapshot 1`] = `
               </div>
             </div>
             <div
-              class="margin-top-4 margin-bottom-8"
+              class="margin-top-3 margin-bottom-6"
             >
               <div
                 class="usa-form-group"

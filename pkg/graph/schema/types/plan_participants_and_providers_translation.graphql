@@ -42,6 +42,10 @@ type PlanParticipantsAndProvidersTranslation {
   willRiskChangeNote: TranslationField! @goTag(key: "db", value: "will_risk_change_note")
 
   #Page 4
+  participantRequireFinancialGuarantee: TranslationFieldWithOptions! @goTag(key: "db", value: "participant_require_financial_guarantee")
+  participantRequireFinancialGuaranteeType: TranslationFieldWithOptions! @goTag(key: "db", value: "participant_require_financial_guarantee_type")
+  participantRequireFinancialGuaranteeOther: TranslationField! @goTag(key: "db", value: "participant_require_financial_guarantee_other")
+  participantRequireFinancialGuaranteeNote: TranslationField! @goTag(key: "db", value: "participant_require_financial_guarantee_note")
   coordinateWork: TranslationFieldWithOptions! @goTag(key: "db", value: "coordinate_work")
   coordinateWorkNote: TranslationField! @goTag(key: "db", value: "coordinate_work_note")
   gainsharePayments: TranslationFieldWithOptions! @goTag(key: "db", value: "gainshare_payments")

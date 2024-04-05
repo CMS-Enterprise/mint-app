@@ -5,6 +5,7 @@ import (
 	"fmt"
 
 	"github.com/cmsgov/mint-app/pkg/shared/utilitySQL"
+	"github.com/cmsgov/mint-app/pkg/sqlqueries"
 	"github.com/cmsgov/mint-app/pkg/sqlutils"
 
 	"github.com/google/uuid"
@@ -14,21 +15,6 @@ import (
 	"github.com/cmsgov/mint-app/pkg/shared/utilityUUID"
 )
 
-//go:embed SQL/plan_collaborator/create.sql
-var planCollaboratorCreateSQL string
-
-//go:embed SQL/plan_collaborator/update.sql
-var planCollaboratorUpdateSQL string
-
-//go:embed SQL/plan_collaborator/delete.sql
-var planCollaboratorDeleteSQL string
-
-//go:embed SQL/plan_collaborator/fetch_by_id.sql
-var planCollaboratorFetchByIDSQL string
-
-//go:embed SQL/plan_collaborator/get_by_model_plan_id_LOADER.sql
-var planCollaboratorGetByModelPlanIDLoaderSQL string
-
 // PlanCollaboratorGetByModelPlanIDLOADER returns the plan GeneralCharacteristics for a slice of model plan ids
 func (s *Store) PlanCollaboratorGetByModelPlanIDLOADER(
 	_ *zap.Logger,
@@ -36,8 +22,7 @@ func (s *Store) PlanCollaboratorGetByModelPlanIDLOADER(
 ) ([]*models.PlanCollaborator, error) {
 
 	var collabSlice []*models.PlanCollaborator
-
-	stmt, err := s.db.PrepareNamed(planCollaboratorGetByModelPlanIDLoaderSQL)
+	stmt, err := s.db.PrepareNamed(sqlqueries.PlanCollaborator.CollectionGetByModelPlanIDLoader)
 	if err != nil {
 		return nil, err
 	}
@@ -56,6 +41,23 @@ func (s *Store) PlanCollaboratorGetByModelPlanIDLOADER(
 	return collabSlice, nil
 }
 
+// PlanCollaboratorGetIDLOADER returns the plan collaborators corresponding to an array of plan collaborator IDs stored in JSON array
+func PlanCollaboratorGetIDLOADER(
+	np sqlutils.NamedPreparer,
+	paramTableJSON string,
+) ([]*models.PlanCollaborator, error) {
+	arg := map[string]interface{}{
+		"paramTableJSON": paramTableJSON,
+	}
+
+	retCollaborators, err := sqlutils.SelectProcedure[models.PlanCollaborator](np, sqlqueries.PlanCollaborator.CollectionGetByIDLoader, arg)
+	if err != nil {
+		return nil, fmt.Errorf("issue selecting plan collaborators by ids with the data loader, %w", err)
+	}
+
+	return retCollaborators, nil
+}
+
 // PlanCollaboratorCreate creates a new plan collaborator
 func (s *Store) PlanCollaboratorCreate(
 	np sqlutils.NamedPreparer,
@@ -65,7 +67,7 @@ func (s *Store) PlanCollaboratorCreate(
 
 	collaborator.ID = utilityUUID.ValueOrNewUUID(collaborator.ID)
 
-	stmt, err := np.PrepareNamed(planCollaboratorCreateSQL)
+	stmt, err := np.PrepareNamed(sqlqueries.PlanCollaborator.Create)
 	if err != nil {
 		return nil, err
 	}
@@ -88,7 +90,7 @@ func (s *Store) PlanCollaboratorUpdate(
 	collaborator *models.PlanCollaborator,
 ) (*models.PlanCollaborator, error) {
 
-	stmt, err := s.db.PrepareNamed(planCollaboratorUpdateSQL)
+	stmt, err := s.db.PrepareNamed(sqlqueries.PlanCollaborator.Update)
 	if err != nil {
 		return nil, err
 	}
@@ -117,7 +119,7 @@ func (s *Store) PlanCollaboratorDelete(
 		return nil, err
 	}
 
-	stmt, err := tx.PrepareNamed(planCollaboratorDeleteSQL)
+	stmt, err := tx.PrepareNamed(sqlqueries.PlanCollaborator.Delete)
 	if err != nil {
 		return nil, err
 	}
@@ -137,10 +139,11 @@ func (s *Store) PlanCollaboratorDelete(
 	return collaborator, nil
 }
 
-// PlanCollaboratorFetchByID returns a plan collaborator for a given database ID, or nil if none found
-func (s *Store) PlanCollaboratorFetchByID(id uuid.UUID) (*models.PlanCollaborator, error) {
+// PlanCollaboratorGetByID returns a plan collaborator for a given database ID, or nil if none found
+// Note: The dataloader method should be preferred over this method.
+func (s *Store) PlanCollaboratorGetByID(id uuid.UUID) (*models.PlanCollaborator, error) {
 
-	stmt, err := s.db.PrepareNamed(planCollaboratorFetchByIDSQL)
+	stmt, err := s.db.PrepareNamed(sqlqueries.PlanCollaborator.GetByID)
 	if err != nil {
 		return nil, err
 	}

@@ -348,7 +348,7 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
           </textarea>
         </div>
         <div
-          class="margin-top-4 margin-bottom-8"
+          class="margin-top-3 margin-bottom-6"
         >
           <button
             class="usa-button usa-button usa-button--unstyled"
@@ -567,7 +567,7 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
           </textarea>
         </div>
         <div
-          class="margin-top-4 margin-bottom-8"
+          class="margin-top-3 margin-bottom-6"
         >
           <div
             class="usa-form-group"
@@ -671,7 +671,7 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
           </div>
         </fieldset>
         <div
-          class="margin-top-4 margin-bottom-8"
+          class="margin-top-3 margin-bottom-6"
         >
           <div
             class="usa-form-group"

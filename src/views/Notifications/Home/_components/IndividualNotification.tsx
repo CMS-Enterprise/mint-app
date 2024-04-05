@@ -13,8 +13,10 @@ import { getUserInitials } from 'utils/modelPlan';
 import {
   ActivityCTA,
   activityText,
+  isAddingCollaborator,
   isDailyDigest,
   isNewDiscussionReply,
+  isSharedActivity,
   isTaggedInDiscussion,
   isTaggedInDiscussionReply
 } from './_utils';
@@ -46,43 +48,19 @@ const IndividualNotification = ({
 
   const [markAsRead] = useMarkNotificationAsReadMutation();
 
-  const handleMarkAsReadAndViewDiscussion = (
-    notificationID: string,
-    modelPlanID: string,
-    discussionID: string
-  ) => {
+  const handleMarkAsRead = (action: () => void) => {
     if (!isRead) {
       markAsRead({
         variables: {
-          notificationID
+          notificationID: id
         }
       }).then(response => {
         if (!response?.errors) {
-          history.push(
-            `/models/${modelPlanID}/read-only/discussions?discussionID=${discussionID}`
-          );
+          action();
         }
       });
     } else {
-      history.push(
-        `/models/${modelPlanID}/read-only/discussions?discussionID=${discussionID}`
-      );
-    }
-  };
-
-  const handleMarkAsReadAndToggleDailyDigest = (notificationID: string) => {
-    if (!isRead) {
-      markAsRead({
-        variables: {
-          notificationID
-        }
-      }).then(response => {
-        if (!response?.errors) {
-          setIsExpanded(!isExpanded);
-        }
-      });
-    } else {
-      setIsExpanded(!isExpanded);
+      action();
     }
   };
 
@@ -117,18 +95,25 @@ const IndividualNotification = ({
                 {getUserInitials(name)}
               </div>
 
-              <div className="margin-top-05">
-                <p className="line-height-sans-4 margin-left-1 margin-bottom-1 margin-top-0 ">
+              <div className="margin-top-05 padding-left-1">
+                <p className="line-height-sans-4 margin-bottom-1 margin-top-0 ">
                   <strong>{name}</strong>
                   {activityText(metaData)}
                 </p>
-                {!isDailyDigest(metaData) && (
-                  <MentionTextArea
-                    className="notification__content text-base-darker"
-                    id={`mention-${metaData.discussionID}`}
-                    editable={false}
-                    initialContent={`“${metaData.content}”`}
-                  />
+                {!isDailyDigest(metaData) &&
+                  !isSharedActivity(metaData) &&
+                  !isAddingCollaborator(metaData) && (
+                    <MentionTextArea
+                      className="notification__content text-base-darker"
+                      id={`mention-${metaData.discussionID}`}
+                      editable={false}
+                      initialContent={`“${metaData.content}”`}
+                    />
+                  )}
+                {isSharedActivity(metaData) && metaData.optionalMessage && (
+                  <p className="margin-bottom-1 margin-top-0 text-base-darker">
+                    “{metaData.optionalMessage}”
+                  </p>
                 )}
 
                 <Button
@@ -141,14 +126,28 @@ const IndividualNotification = ({
                       isTaggedInDiscussionReply(metaData) ||
                       isNewDiscussionReply(metaData)
                     ) {
-                      handleMarkAsReadAndViewDiscussion(
-                        id,
-                        metaData.modelPlanID,
-                        metaData.discussionID
+                      handleMarkAsRead(() =>
+                        history.push(
+                          `/models/${metaData.modelPlanID}/read-only/discussions?discussionID=${metaData.discussionID}`
+                        )
                       );
                     }
                     if (isDailyDigest(metaData)) {
-                      handleMarkAsReadAndToggleDailyDigest(id);
+                      handleMarkAsRead(() => setIsExpanded(!isExpanded));
+                    }
+                    if (isAddingCollaborator(metaData)) {
+                      handleMarkAsRead(() => {
+                        history.push(
+                          `/models/${metaData.modelPlanID}/task-list`
+                        );
+                      });
+                    }
+                    if (isSharedActivity(metaData)) {
+                      handleMarkAsRead(() => {
+                        history.push(
+                          `/models/${metaData.modelPlanID}/read-only`
+                        );
+                      });
                     }
                   }}
                 >

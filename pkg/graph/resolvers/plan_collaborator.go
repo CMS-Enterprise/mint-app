@@ -2,11 +2,13 @@ package resolvers
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/google/uuid"
 	"go.uber.org/zap"
 
 	"github.com/cmsgov/mint-app/pkg/email"
+	"github.com/cmsgov/mint-app/pkg/notifications"
 	"github.com/cmsgov/mint-app/pkg/shared/oddmail"
 	"github.com/cmsgov/mint-app/pkg/sqlutils"
 	"github.com/cmsgov/mint-app/pkg/storage/loaders"
@@ -25,7 +27,7 @@ import (
 //
 // A plan favorite is created for the collaborating user when the user is added as a collaborator
 // The transaction object does not commit or rollback in the scope of this function
-func CreatePlanCollaborator(
+func PlanCollaboratorCreate(
 	ctx context.Context,
 	np sqlutils.NamedPreparer,
 	store *storage.Store,
@@ -36,7 +38,9 @@ func CreatePlanCollaborator(
 	input *model.PlanCollaboratorCreateInput,
 	principal authentication.Principal,
 	checkAccess bool,
-	getAccountInformation userhelpers.GetAccountInfoFunc) (*models.PlanCollaborator, *models.PlanFavorite, error) {
+	getAccountInformation userhelpers.GetAccountInfoFunc,
+	createNotification bool,
+) (*models.PlanCollaborator, *models.PlanFavorite, error) {
 	//TODO make these clustered with store methods?
 
 	isMacUser := false
@@ -65,8 +69,23 @@ func CreatePlanCollaborator(
 	if err != nil {
 		return retCollaborator, nil, err
 	}
+	// If a this is false, we return without creating a notification or an email.
+	if !createNotification {
+		return retCollaborator, planFavorite, nil
+	}
+	// Note, we could pass the get preferences function to CreatePlanCollaborator, but instead we assume that every method that calls this will have data loaders on context
+	_, notificationError := notifications.ActivityAddedAsCollaboratorCreate(ctx, np, principal.Account().ID, modelPlan.ID, retCollaborator.ID, collabAccount.ID, loaders.UserNotificationPreferencesGetByUserID)
+	if notificationError != nil {
+		return nil, nil, notificationError
+	}
 
-	if emailService != nil && emailTemplateService != nil {
+	pref, err := loaders.UserNotificationPreferencesGetByUserID(ctx, collabAccount.ID)
+	if err != nil {
+		return nil, nil, fmt.Errorf("issue creating collaborator, couldn't get collaborator preferences. Err: %w", err)
+
+	}
+
+	if emailService != nil && emailTemplateService != nil && pref.AddedAsCollaborator.SendEmail() {
 		err = sendCollaboratorAddedEmail(emailService, emailTemplateService, addressBook, collabAccount.Email, modelPlan)
 		if err != nil {
 			return retCollaborator, planFavorite, err
@@ -115,10 +134,10 @@ func sendCollaboratorAddedEmail(
 	return nil
 }
 
-// UpdatePlanCollaborator implements resolver logic to update a plan collaborator
-func UpdatePlanCollaborator(logger *zap.Logger, id uuid.UUID, newRoles []models.TeamRole, principal authentication.Principal, store *storage.Store) (*models.PlanCollaborator, error) {
+// PlanCollaboratorUpdate implements resolver logic to update a plan collaborator
+func PlanCollaboratorUpdate(logger *zap.Logger, id uuid.UUID, newRoles []models.TeamRole, principal authentication.Principal, store *storage.Store) (*models.PlanCollaborator, error) {
 	// Get existing collaborator
-	existingCollaborator, err := store.PlanCollaboratorFetchByID(id)
+	existingCollaborator, err := store.PlanCollaboratorGetByID(id)
 	if err != nil {
 		return nil, err
 	}
@@ -132,9 +151,9 @@ func UpdatePlanCollaborator(logger *zap.Logger, id uuid.UUID, newRoles []models.
 	return store.PlanCollaboratorUpdate(logger, existingCollaborator)
 }
 
-// DeletePlanCollaborator implements resolver logic to delete a plan collaborator
-func DeletePlanCollaborator(logger *zap.Logger, id uuid.UUID, principal authentication.Principal, store *storage.Store) (*models.PlanCollaborator, error) {
-	existingCollaborator, err := store.PlanCollaboratorFetchByID(id)
+// PlanCollaboratorDelete implements resolver logic to delete a plan collaborator
+func PlanCollaboratorDelete(logger *zap.Logger, id uuid.UUID, principal authentication.Principal, store *storage.Store) (*models.PlanCollaborator, error) {
+	existingCollaborator, err := store.PlanCollaboratorGetByID(id)
 	if err != nil {
 		return nil, err
 	}
@@ -149,7 +168,7 @@ func DeletePlanCollaborator(logger *zap.Logger, id uuid.UUID, principal authenti
 // PlanCollaboratorGetByModelPlanIDLOADER implements resolver logic to get Plan Collaborator by a model plan ID using a data loader
 func PlanCollaboratorGetByModelPlanIDLOADER(ctx context.Context, modelPlanID uuid.UUID) ([]*models.PlanCollaborator, error) {
 	allLoaders := loaders.Loaders(ctx)
-	collabLoader := allLoaders.PlanCollaboratorLoader
+	collabLoader := allLoaders.PlanCollaboratorByModelPlanLoader
 	key := loaders.NewKeyArgs()
 	key.Args["model_plan_id"] = modelPlanID
 
@@ -163,13 +182,13 @@ func PlanCollaboratorGetByModelPlanIDLOADER(ctx context.Context, modelPlanID uui
 	return result.([]*models.PlanCollaborator), nil
 }
 
-// FetchCollaboratorByID implements resolver logic to fetch a plan collaborator by ID
-func FetchCollaboratorByID(logger *zap.Logger, id uuid.UUID, store *storage.Store) (*models.PlanCollaborator, error) {
-	collaborator, err := store.PlanCollaboratorFetchByID(id)
-	return collaborator, err
+// PlanCollaboratorGetByID implements resolver logic to fetch a plan collaborator by ID. It requires the ctx to have a DataLoader embedded.
+func PlanCollaboratorGetByID(ctx context.Context, id uuid.UUID) (*models.PlanCollaborator, error) {
+	return loaders.PlanCollaboratorByID(ctx, id)
 }
 
 // IsPlanCollaborator checks if a user is a collaborator on model plan is a favorite.
 func IsPlanCollaborator(logger *zap.Logger, principal authentication.Principal, store *storage.Store, modelPlanID uuid.UUID) (bool, error) {
+	// Future Enhancement: Consider making this a dataloader.
 	return store.CheckIfCollaborator(logger, principal.Account().ID, modelPlanID)
 }

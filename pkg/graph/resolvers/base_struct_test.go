@@ -19,7 +19,7 @@ func (suite *ResolverSuite) TestModifiedByUserAccount() {
 	nilModifiedAccount := colab.ModifiedByUserAccount(suite.testConfigs.Context)
 	suite.Nil(nilModifiedAccount)
 
-	updatedCollab, err := UpdatePlanCollaborator(
+	updatedCollab, err := PlanCollaboratorUpdate(
 		suite.testConfigs.Logger,
 		colab.ID,
 		[]models.TeamRole{models.TeamRoleITLead},
