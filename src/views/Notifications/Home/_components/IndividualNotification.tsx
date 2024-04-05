@@ -6,7 +6,6 @@ import { useMarkNotificationAsReadMutation } from 'gql/gen/graphql';
 import { GetNotifications_currentUser_notifications_notifications_activity as NotificationActivityType } from 'gql/gen/types/GetNotifications';
 
 import { arrayOfColors } from 'components/shared/IconInitial';
-import MentionTextArea from 'components/shared/MentionTextArea';
 import { getTimeElapsed } from 'utils/date';
 import { getUserInitials } from 'utils/modelPlan';
 
@@ -67,6 +66,11 @@ const IndividualNotification = ({
   // Mint System Account -> MINT
   const name = commonName === 'Mint System Account' ? 'MINT' : commonName;
 
+  const extractContent = (text: string) => {
+    return new DOMParser().parseFromString(text, 'text/html').documentElement
+      .textContent;
+  };
+
   return (
     <Grid row data-testid="individual-notification">
       <Grid desktop={{ col: 12 }} className="position-relative">
@@ -103,12 +107,9 @@ const IndividualNotification = ({
                 {!isDailyDigest(metaData) &&
                   !isSharedActivity(metaData) &&
                   !isAddingCollaborator(metaData) && (
-                    <MentionTextArea
-                      className="notification__content text-base-darker margin-bottom-1"
-                      id={`mention-${metaData.discussionID}`}
-                      editable={false}
-                      initialContent={`“${metaData.content}”`}
-                    />
+                    <p className="margin-bottom-1 margin-top-0 text-base-darker">
+                      {extractContent(`“${metaData.content}”`)}
+                    </p>
                   )}
                 {isSharedActivity(metaData) && metaData.optionalMessage && (
                   <p className="margin-bottom-1 margin-top-0 text-base-darker">
