@@ -3191,6 +3191,13 @@ export type GetModelPlanDocumentQueryVariables = Exact<{
 
 export type GetModelPlanDocumentQuery = { __typename: 'Query', planDocument: { __typename: 'PlanDocument', id: UUID, modelPlanID: UUID, fileType: string, bucket: string, fileKey: string, virusScanned: boolean, virusClean: boolean, fileName: string, fileSize: number, restricted: boolean, documentType: DocumentType, otherType?: string | null, createdDts: Time } };
 
+export type GetModelPlanDocumentsQueryVariables = Exact<{
+  id: Scalars['UUID']['input'];
+}>;
+
+
+export type GetModelPlanDocumentsQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, isCollaborator: boolean, documents: Array<{ __typename: 'PlanDocument', id: UUID, virusScanned: boolean, virusClean: boolean, fileName: string, fileType: string, downloadUrl?: string | null, restricted: boolean, documentType: DocumentType, createdDts: Time, optionalNotes?: string | null, otherType?: string | null, numLinkedSolutions: number, isLink: boolean, url?: string | null }> } };
+
 export type LinkNewPlanDocumentMutationVariables = Exact<{
   input: PlanDocumentLinkInput;
 }>;
@@ -5148,6 +5155,63 @@ export type GetModelPlanDocumentQueryHookResult = ReturnType<typeof useGetModelP
 export type GetModelPlanDocumentLazyQueryHookResult = ReturnType<typeof useGetModelPlanDocumentLazyQuery>;
 export type GetModelPlanDocumentSuspenseQueryHookResult = ReturnType<typeof useGetModelPlanDocumentSuspenseQuery>;
 export type GetModelPlanDocumentQueryResult = Apollo.QueryResult<GetModelPlanDocumentQuery, GetModelPlanDocumentQueryVariables>;
+export const GetModelPlanDocumentsDocument = gql`
+    query GetModelPlanDocuments($id: UUID!) {
+  modelPlan(id: $id) {
+    id
+    isCollaborator
+    documents {
+      id
+      virusScanned
+      virusClean
+      fileName
+      fileType
+      downloadUrl
+      restricted
+      documentType
+      createdDts
+      optionalNotes
+      otherType
+      numLinkedSolutions
+      isLink
+      url
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetModelPlanDocumentsQuery__
+ *
+ * To run a query within a React component, call `useGetModelPlanDocumentsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetModelPlanDocumentsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetModelPlanDocumentsQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetModelPlanDocumentsQuery(baseOptions: Apollo.QueryHookOptions<GetModelPlanDocumentsQuery, GetModelPlanDocumentsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetModelPlanDocumentsQuery, GetModelPlanDocumentsQueryVariables>(GetModelPlanDocumentsDocument, options);
+      }
+export function useGetModelPlanDocumentsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetModelPlanDocumentsQuery, GetModelPlanDocumentsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetModelPlanDocumentsQuery, GetModelPlanDocumentsQueryVariables>(GetModelPlanDocumentsDocument, options);
+        }
+export function useGetModelPlanDocumentsSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetModelPlanDocumentsQuery, GetModelPlanDocumentsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetModelPlanDocumentsQuery, GetModelPlanDocumentsQueryVariables>(GetModelPlanDocumentsDocument, options);
+        }
+export type GetModelPlanDocumentsQueryHookResult = ReturnType<typeof useGetModelPlanDocumentsQuery>;
+export type GetModelPlanDocumentsLazyQueryHookResult = ReturnType<typeof useGetModelPlanDocumentsLazyQuery>;
+export type GetModelPlanDocumentsSuspenseQueryHookResult = ReturnType<typeof useGetModelPlanDocumentsSuspenseQuery>;
+export type GetModelPlanDocumentsQueryResult = Apollo.QueryResult<GetModelPlanDocumentsQuery, GetModelPlanDocumentsQueryVariables>;
 export const LinkNewPlanDocumentDocument = gql`
     mutation LinkNewPlanDocument($input: PlanDocumentLinkInput!) {
   linkNewPlanDocument(input: $input) {

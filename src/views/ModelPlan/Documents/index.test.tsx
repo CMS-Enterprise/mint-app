@@ -3,12 +3,12 @@ import { Provider } from 'react-redux';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
+import { GetModelPlanDocumentsDocument } from 'gql/gen/graphql';
+import { GetModelPlanDocuments as GetModelPlanDocumentsType } from 'gql/gen/types/GetModelPlanDocuments';
 import configureMockStore from 'redux-mock-store';
 
 import { ASSESSMENT } from 'constants/jobCodes';
 import { MessageProvider } from 'hooks/useMessage';
-import GetModelPlanDocuments from 'queries/Documents/GetModelPlanDocuments';
-import { GetModelPlanDocuments as GetModelPlanDocumentsType } from 'queries/Documents/types/GetModelPlanDocuments';
 import { DocumentType } from 'types/graphql-global-types';
 
 import { DocumentsContent } from './index';
@@ -60,7 +60,7 @@ const docMock: GetModelPlanDocumentsType = {
 const documentMocks = [
   {
     request: {
-      query: GetModelPlanDocuments,
+      query: GetModelPlanDocumentsDocument,
       variables: { id: 'ce3405a0-3399-4e3a-88d7-3cfc613d2905' }
     },
     result: {
