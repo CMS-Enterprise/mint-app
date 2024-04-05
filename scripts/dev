@@ -382,9 +382,9 @@ namespace :db do
     operational_need,
     existing_model_link,
     model_plan,
-    audit.change,
     user_notification,
-    activity"
+    activity,
+    audit.change"
 
     puts "Cleaning database..."
     `echo "TRUNCATE #{tableList}" | psql`
