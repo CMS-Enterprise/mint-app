@@ -26,13 +26,18 @@ module.exports = {
       'TranslationFieldWithOptions',
       'TranslationDataType',
       'TranslationFormType',
+      'ModelPlanTranslation',
       'PlanBasicsTranslation',
       'PlanGeneralCharacteristicsTranslation',
       'PlanParticipantsAndProvidersTranslation',
       'PlanBeneficiariesTranslation',
       'PlanOpsEvalAndLearningTranslation',
       'PlanPaymentsTranslation',
-      'PlanCollaboratorTranslation'
+      'PlanCollaboratorTranslation',
+      'TranslationFieldWithParent',
+      'TranslationFieldWithOptionsAndChildren',
+      'TranslationFieldWithOptionsAndParent',
+      'TranslationFieldWithParentAndChildren'
     ]
   }
 };

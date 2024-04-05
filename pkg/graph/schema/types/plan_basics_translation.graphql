@@ -29,5 +29,5 @@ type PlanBasicsTranslation {
   phasedIn: TranslationFieldWithOptions! @goTag(key: "db", value: "phased_in")
   phasedInNote: TranslationField! @goTag(key: "db", value: "phased_in_note")
 
-  status: TranslationField! @goTag(key: "db", value: "status")
+  status: TranslationFieldWithOptions! @goTag(key: "db", value: "status")
 }

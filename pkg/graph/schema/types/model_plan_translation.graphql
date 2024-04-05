@@ -1,0 +1,13 @@
+
+"""
+Represents model plan base translation data
+"""
+type ModelPlanTranslation {
+  modelName: TranslationField! @goTag(key: "db", value: "model_name")
+  previousName: TranslationField! @goTag(key: "db", value: "previous_name")
+  nameHistory: TranslationField! @goTag(key: "db", value: "name_history")
+  abbreviation: TranslationField! @goTag(key: "db", value: "abbreviation")
+  archived: TranslationFieldWithOptions! @goTag(key: "db", value: "archived")
+
+  status: TranslationFieldWithOptions! @goTag(key: "db", value: "status")
+}

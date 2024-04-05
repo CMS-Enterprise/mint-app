@@ -39,5 +39,5 @@ type PlanBeneficiariesTranslation {
   precedenceRulesNo: TranslationField! @goTag(key: "db", value: "precedence_rules_no")
   precedenceRulesNote: TranslationField! @goTag(key: "db", value: "precedence_rules_note")
 
-  status: TranslationField! @goTag(key: "db", value: "status")
+  status: TranslationFieldWithOptions! @goTag(key: "db", value: "status")
 }
