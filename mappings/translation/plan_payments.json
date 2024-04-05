@@ -119,6 +119,195 @@
       "CLAIMS_BASED_PAYMENTS": "Claims-Based Payments",
       "NON_CLAIMS_BASED_PAYMENTS": "Non-Claims-Based Payments",
       "GRANTS": "Grants"
+    },
+    "childRelation": {
+      "CLAIMS_BASED_PAYMENTS": [
+        {
+          "gqlField": "payClaims",
+          "goField": "PayClaims",
+          "dbField": "pay_claims",
+          "label": "Select which claims-based payments will you pay.",
+          "sublabel": "If you select reductions to beneficiary cost-sharing or other, there will be additional questions to answer.",
+          "multiSelectLabel": "Selected claims-based payments",
+          "options": {
+            "ADJUSTMENTS_TO_FFS_PAYMENTS": "Adjustments to FFS payments",
+            "CARE_MANAGEMENT_HOME_VISITS": "Payments for care management home visits",
+            "PAYMENTS_FOR_POST_DISCHARGE_HOME_VISITS": "Payments for post-discharge home visits",
+            "SERVICES_NOT_COVERED_THROUGH_TRADITIONAL_MEDICARE": "Payments for services not covered through Traditional Medicare",
+            "SNF_CLAIMS_WITHOUT_3DAY_HOSPITAL_ADMISSIONS": "Payments for SNF claims without 3-day hospital admissions",
+            "TELEHEALTH_SERVICES_NOT_TRADITIONAL_MEDICARE": "Payments for telehealth services not covered through Traditional Medicare",
+            "REDUCTIONS_TO_BENEFICIARY_COST_SHARING": "Reductions to beneficiary cost-sharing",
+            "OTHER": "Other"
+          },
+          "childRelation": {
+            "REDUCTIONS_TO_BENEFICIARY_COST_SHARING": [
+              {
+                "gqlField": "beneficiaryCostSharingLevelAndHandling",
+                "goField": "BeneficiaryCostSharingLevelAndHandling",
+                "dbField": "beneficiary_cost_sharing_level_and_handling",
+                "label": "What is the intended level of beneficiary cost-sharing and how will it be handled?"
+              },
+              {
+                "gqlField": "waiveBeneficiaryCostSharingForAnyServices",
+                "goField": "WaiveBeneficiaryCostSharingForAnyServices",
+                "dbField": "waive_beneficiary_cost_sharing_for_any_services",
+                "label": "Will you waive beneficiary cost-sharing (coinsurance and/or deductible) for any services in the model?",
+                "readonlyLabel": "Will you waive beneficiary cost-sharing (coinsurance and/or deductible) for any services in the model? If so, please specify which services.",
+                "options": {
+                  "true": "Yes",
+                  "false": "No"
+                }
+              },
+              {
+                "gqlField": "waiverOnlyAppliesPartOfPayment",
+                "goField": "WaiverOnlyAppliesPartOfPayment",
+                "dbField": "waiver_only_applies_part_of_payment",
+                "label": "Would the waiver only apply for part of the payment?",
+                "sublabel": "For example, we would assess cost-sharing for the service itself, but not for an add-on payment",
+                "options": {
+                  "true": "Yes",
+                  "false": "No"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "gqlField": "shouldAnyProvidersExcludedFFSSystems",
+          "goField": "ShouldAnyProvidersExcludedFFSSystems",
+          "dbField": "should_any_providers_excluded_ffs_systems",
+          "label": "Should any model providers be excluded from existing Fee-for-Service payment systems?",
+          "options": {
+            "true": "Yes",
+            "false": "No"
+          }
+        },
+        {
+          "gqlField": "changesMedicarePhysicianFeeSchedule",
+          "goField": "ChangesMedicarePhysicianFeeSchedule",
+          "dbField": "changes_medicare_physician_fee_schedule",
+          "label": "Will the model change the Medicare Physician Fee Schedule?",
+          "sublabel": "If so, it might impact Critical Access Hospitals paid under Method II.",
+          "options": {
+            "true": "Yes",
+            "false": "No"
+          }
+        },
+        {
+          "gqlField": "affectsMedicareSecondaryPayerClaims",
+          "goField": "AffectsMedicareSecondaryPayerClaims",
+          "dbField": "affects_medicare_secondary_payer_claims",
+          "label": "Does the model affect Medicare Secondary Payer claims?",
+          "readonlyLabel": "Does the model affect Medicare Secondary Payer claims? How so?",
+          "options": {
+            "true": "Yes",
+            "false": "No"
+          }
+        },
+        {
+          "gqlField": "payModelDifferentiation",
+          "goField": "PayModelDifferentiation",
+          "dbField": "pay_model_differentiation",
+          "label": "How does the model differ from current policy, especially in terms of payment rates and periodicity of payment?"
+        },
+        {
+          "gqlField": "creatingDependenciesBetweenServices",
+          "goField": "CreatingDependenciesBetweenServices",
+          "dbField": "creating_dependencies_between_services",
+          "label": "Are you anticipating creating dependencies between services?",
+          "sublabel": "Examples: Service B cannot be paid until Service A has been paid; Service A cannot be paid without Diagnosis 1; If a certain service or diagnosis exists in history, then Service A cannot be paid.",
+          "options": {
+            "true": "Yes",
+            "false": "No"
+          }
+        },
+        {
+          "gqlField": "needsClaimsDataCollection",
+          "goField": "NeedsClaimsDataCollection",
+          "dbField": "needs_claims_data_collection",
+          "label": "Will any additional data need to be collected for claims?",
+          "sublabel": "If you are not sure what current data is collected via provider billing, please ask Provider Billing Group (PBG)",
+          "options": {
+            "true": "Yes",
+            "false": "No"
+          }
+        },
+        {
+          "gqlField": "providingThirdPartyFile",
+          "goField": "ProvidingThirdPartyFile",
+          "dbField": "providing_third_party_file",
+          "label": "Will your contractor be providing data (a Third Party File) that will be used in claims processing?",
+          "options": {
+            "true": "Yes",
+            "false": "No"
+          }
+        },
+        {
+          "gqlField": "isContractorAwareTestDataRequirements",
+          "goField": "IsContractorAwareTestDataRequirements",
+          "dbField": "is_contractor_aware_test_data_requirements",
+          "label": "Is your contractor aware that test data will be needed, and when that test data must be available?",
+          "options": {
+            "true": "Yes",
+            "false": "No"
+          }
+        }
+      ],
+      "NON_CLAIMS_BASED_PAYMENTS": [
+        {
+          "gqlField": "nonClaimsPayments",
+          "goField": "NonClaimsPayments",
+          "dbField": "non_claims_payments",
+          "label": "Select which non-claims-based payments will you pay.",
+          "multiSelectLabel": "Selected non-claims-based payments",
+          "options": {
+            "ADVANCED_PAYMENT": "Advanced Payment",
+            "BUNDLED_EPISODE_OF_CARE": "Bundled/Episode of Care",
+            "CAPITATION_POPULATION_BASED_FULL": "Capitation/Population Based - Full",
+            "CAPITATION_POPULATION_BASED_PARTIAL": "Capitation/Population Based - Partial",
+            "CARE_COORDINATION_MANAGEMENT_FEE": "Care Coordination/Management Fee",
+            "GLOBAL_BUDGET": "Global Budget",
+            "INCENTIVE_PAYMENT": "Incentive Payment",
+            "MAPD_SHARED_SAVINGS": "Medicare Advantage Prescription Drug (MAPD) Shared Savings",
+            "SHARED_SAVINGS": "Shared Savings",
+            "OTHER": "Other"
+          }
+        },
+        {
+          "gqlField": "paymentCalculationOwner",
+          "goField": "PaymentCalculationOwner",
+          "dbField": "payment_calculation_owner",
+          "label": "Who will calculate the non-claims based payments?"
+        },
+        {
+          "gqlField": "numberPaymentsPerPayCycle",
+          "goField": "NumberPaymentsPerPayCycle",
+          "dbField": "number_payments_per_pay_cycle",
+          "label": "Number of payments per payment cycle",
+          "sublabel": "This only applies if you are making non-claims-based payments"
+        },
+        {
+          "gqlField": "sharedSystemsInvolvedAdditionalClaimPayment",
+          "goField": "SharedSystemsInvolvedAdditionalClaimPayment",
+          "dbField": "shared_systems_involved_additional_claim_payment",
+          "label": "Will the Shared Systems be involved for additional payment of claims?",
+          "options": {
+            "true": "Yes",
+            "false": "No"
+          }
+        },
+        {
+          "gqlField": "planningToUseInnovationPaymentContractor",
+          "goField": "PlanningToUseInnovationPaymentContractor",
+          "dbField": "planning_to_use_innovation_payment_contractor",
+          "label": "Are you planning to use the Innovation Payment Contractor?",
+          "sublabel": "Note: If there will be 30+ payees we recommend a contractor.",
+          "options": {
+            "true": "Yes",
+            "false": "No"
+          }
+        }
+      ]
     }
   },
   "payTypeNote": {
@@ -143,6 +332,50 @@
       "TELEHEALTH_SERVICES_NOT_TRADITIONAL_MEDICARE": "Payments for telehealth services not covered through Traditional Medicare",
       "REDUCTIONS_TO_BENEFICIARY_COST_SHARING": "Reductions to beneficiary cost-sharing",
       "OTHER": "Other"
+    },
+    "childRelation": {
+      "REDUCTIONS_TO_BENEFICIARY_COST_SHARING": [
+        {
+          "gqlField": "beneficiaryCostSharingLevelAndHandling",
+          "goField": "BeneficiaryCostSharingLevelAndHandling",
+          "dbField": "beneficiary_cost_sharing_level_and_handling",
+          "label": "What is the intended level of beneficiary cost-sharing and how will it be handled?"
+        },
+        {
+          "gqlField": "waiveBeneficiaryCostSharingForAnyServices",
+          "goField": "WaiveBeneficiaryCostSharingForAnyServices",
+          "dbField": "waive_beneficiary_cost_sharing_for_any_services",
+          "label": "Will you waive beneficiary cost-sharing (coinsurance and/or deductible) for any services in the model?",
+          "readonlyLabel": "Will you waive beneficiary cost-sharing (coinsurance and/or deductible) for any services in the model? If so, please specify which services.",
+          "options": {
+            "true": "Yes",
+            "false": "No"
+          }
+        },
+        {
+          "gqlField": "waiverOnlyAppliesPartOfPayment",
+          "goField": "WaiverOnlyAppliesPartOfPayment",
+          "dbField": "waiver_only_applies_part_of_payment",
+          "label": "Would the waiver only apply for part of the payment?",
+          "sublabel": "For example, we would assess cost-sharing for the service itself, but not for an add-on payment",
+          "options": {
+            "true": "Yes",
+            "false": "No"
+          }
+        }
+      ]
+    },
+    "parentRelation": {
+      "gqlField": "payType",
+      "goField": "PayType",
+      "dbField": "pay_type",
+      "label": "What will you pay?",
+      "sublabel": "If you select claims-based payments or non-claims-based payments, there will be additional questions to answer.",
+      "options": {
+        "CLAIMS_BASED_PAYMENTS": "Claims-Based Payments",
+        "NON_CLAIMS_BASED_PAYMENTS": "Non-Claims-Based Payments",
+        "GRANTS": "Grants"
+      }
     }
   },
   "payClaimsOther": {
@@ -166,6 +399,18 @@
     "options": {
       "true": "Yes",
       "false": "No"
+    },
+    "parentRelation": {
+      "gqlField": "payType",
+      "goField": "PayType",
+      "dbField": "pay_type",
+      "label": "What will you pay?",
+      "sublabel": "If you select claims-based payments or non-claims-based payments, there will be additional questions to answer.",
+      "options": {
+        "CLAIMS_BASED_PAYMENTS": "Claims-Based Payments",
+        "NON_CLAIMS_BASED_PAYMENTS": "Non-Claims-Based Payments",
+        "GRANTS": "Grants"
+      }
     }
   },
   "shouldAnyProviderExcludedFFSSystemsNote": {
@@ -183,6 +428,18 @@
     "options": {
       "true": "Yes",
       "false": "No"
+    },
+    "parentRelation": {
+      "gqlField": "payType",
+      "goField": "PayType",
+      "dbField": "pay_type",
+      "label": "What will you pay?",
+      "sublabel": "If you select claims-based payments or non-claims-based payments, there will be additional questions to answer.",
+      "options": {
+        "CLAIMS_BASED_PAYMENTS": "Claims-Based Payments",
+        "NON_CLAIMS_BASED_PAYMENTS": "Non-Claims-Based Payments",
+        "GRANTS": "Grants"
+      }
     }
   },
   "changesMedicarePhysicianFeeScheduleNote": {
@@ -200,6 +457,18 @@
     "options": {
       "true": "Yes",
       "false": "No"
+    },
+    "parentRelation": {
+      "gqlField": "payType",
+      "goField": "PayType",
+      "dbField": "pay_type",
+      "label": "What will you pay?",
+      "sublabel": "If you select claims-based payments or non-claims-based payments, there will be additional questions to answer.",
+      "options": {
+        "CLAIMS_BASED_PAYMENTS": "Claims-Based Payments",
+        "NON_CLAIMS_BASED_PAYMENTS": "Non-Claims-Based Payments",
+        "GRANTS": "Grants"
+      }
     }
   },
   "affectsMedicareSecondaryPayerClaimsHow": {
@@ -220,7 +489,19 @@
     "gqlField": "payModelDifferentiation",
     "goField": "PayModelDifferentiation",
     "dbField": "pay_model_differentiation",
-    "label": "How does the model differ from current policy, especially in terms of payment rates and periodicity of payment?"
+    "label": "How does the model differ from current policy, especially in terms of payment rates and periodicity of payment?",
+    "parentRelation": {
+      "gqlField": "payType",
+      "goField": "PayType",
+      "dbField": "pay_type",
+      "label": "What will you pay?",
+      "sublabel": "If you select claims-based payments or non-claims-based payments, there will be additional questions to answer.",
+      "options": {
+        "CLAIMS_BASED_PAYMENTS": "Claims-Based Payments",
+        "NON_CLAIMS_BASED_PAYMENTS": "Non-Claims-Based Payments",
+        "GRANTS": "Grants"
+      }
+    }
   },
   "creatingDependenciesBetweenServices": {
     "gqlField": "creatingDependenciesBetweenServices",
@@ -231,6 +512,18 @@
     "options": {
       "true": "Yes",
       "false": "No"
+    },
+    "parentRelation": {
+      "gqlField": "payType",
+      "goField": "PayType",
+      "dbField": "pay_type",
+      "label": "What will you pay?",
+      "sublabel": "If you select claims-based payments or non-claims-based payments, there will be additional questions to answer.",
+      "options": {
+        "CLAIMS_BASED_PAYMENTS": "Claims-Based Payments",
+        "NON_CLAIMS_BASED_PAYMENTS": "Non-Claims-Based Payments",
+        "GRANTS": "Grants"
+      }
     }
   },
   "creatingDependenciesBetweenServicesNote": {
@@ -248,6 +541,18 @@
     "options": {
       "true": "Yes",
       "false": "No"
+    },
+    "parentRelation": {
+      "gqlField": "payType",
+      "goField": "PayType",
+      "dbField": "pay_type",
+      "label": "What will you pay?",
+      "sublabel": "If you select claims-based payments or non-claims-based payments, there will be additional questions to answer.",
+      "options": {
+        "CLAIMS_BASED_PAYMENTS": "Claims-Based Payments",
+        "NON_CLAIMS_BASED_PAYMENTS": "Non-Claims-Based Payments",
+        "GRANTS": "Grants"
+      }
     }
   },
   "needsClaimsDataCollectionNote": {
@@ -264,6 +569,18 @@
     "options": {
       "true": "Yes",
       "false": "No"
+    },
+    "parentRelation": {
+      "gqlField": "payType",
+      "goField": "PayType",
+      "dbField": "pay_type",
+      "label": "What will you pay?",
+      "sublabel": "If you select claims-based payments or non-claims-based payments, there will be additional questions to answer.",
+      "options": {
+        "CLAIMS_BASED_PAYMENTS": "Claims-Based Payments",
+        "NON_CLAIMS_BASED_PAYMENTS": "Non-Claims-Based Payments",
+        "GRANTS": "Grants"
+      }
     }
   },
   "isContractorAwareTestDataRequirements": {
@@ -274,48 +591,114 @@
     "options": {
       "true": "Yes",
       "false": "No"
+    },
+    "parentRelation": {
+      "gqlField": "payType",
+      "goField": "PayType",
+      "dbField": "pay_type",
+      "label": "What will you pay?",
+      "sublabel": "If you select claims-based payments or non-claims-based payments, there will be additional questions to answer.",
+      "options": {
+        "CLAIMS_BASED_PAYMENTS": "Claims-Based Payments",
+        "NON_CLAIMS_BASED_PAYMENTS": "Non-Claims-Based Payments",
+        "GRANTS": "Grants"
+      }
     }
   },
   "beneficiaryCostSharingLevelAndHandling": {
     "gqlField": "beneficiaryCostSharingLevelAndHandling",
     "goField": "BeneficiaryCostSharingLevelAndHandling",
-    "dbField": "is_contractor_aware_test_data_requirements",
-    "label": "What is the intended level of beneficiary cost-sharing and how will it be handled?"
+    "dbField": "beneficiary_cost_sharing_level_and_handling",
+    "label": "What is the intended level of beneficiary cost-sharing and how will it be handled?",
+    "parentRelation": {
+      "gqlField": "payClaims",
+      "goField": "PayClaims",
+      "dbField": "pay_claims",
+      "label": "Select which claims-based payments will you pay.",
+      "sublabel": "If you select reductions to beneficiary cost-sharing or other, there will be additional questions to answer.",
+      "multiSelectLabel": "Selected claims-based payments",
+      "options": {
+        "ADJUSTMENTS_TO_FFS_PAYMENTS": "Adjustments to FFS payments",
+        "CARE_MANAGEMENT_HOME_VISITS": "Payments for care management home visits",
+        "PAYMENTS_FOR_POST_DISCHARGE_HOME_VISITS": "Payments for post-discharge home visits",
+        "SERVICES_NOT_COVERED_THROUGH_TRADITIONAL_MEDICARE": "Payments for services not covered through Traditional Medicare",
+        "SNF_CLAIMS_WITHOUT_3DAY_HOSPITAL_ADMISSIONS": "Payments for SNF claims without 3-day hospital admissions",
+        "TELEHEALTH_SERVICES_NOT_TRADITIONAL_MEDICARE": "Payments for telehealth services not covered through Traditional Medicare",
+        "REDUCTIONS_TO_BENEFICIARY_COST_SHARING": "Reductions to beneficiary cost-sharing",
+        "OTHER": "Other"
+      }
+    }
   },
   "waiveBeneficiaryCostSharingForAnyServices": {
     "gqlField": "waiveBeneficiaryCostSharingForAnyServices",
     "goField": "WaiveBeneficiaryCostSharingForAnyServices",
-    "dbField": "is_contractor_aware_test_data_requirements",
+    "dbField": "waive_beneficiary_cost_sharing_for_any_services",
     "label": "Will you waive beneficiary cost-sharing (coinsurance and/or deductible) for any services in the model?",
     "readonlyLabel": "Will you waive beneficiary cost-sharing (coinsurance and/or deductible) for any services in the model? If so, please specify which services.",
     "options": {
       "true": "Yes",
       "false": "No"
+    },
+    "parentRelation": {
+      "gqlField": "payClaims",
+      "goField": "PayClaims",
+      "dbField": "pay_claims",
+      "label": "Select which claims-based payments will you pay.",
+      "sublabel": "If you select reductions to beneficiary cost-sharing or other, there will be additional questions to answer.",
+      "multiSelectLabel": "Selected claims-based payments",
+      "options": {
+        "ADJUSTMENTS_TO_FFS_PAYMENTS": "Adjustments to FFS payments",
+        "CARE_MANAGEMENT_HOME_VISITS": "Payments for care management home visits",
+        "PAYMENTS_FOR_POST_DISCHARGE_HOME_VISITS": "Payments for post-discharge home visits",
+        "SERVICES_NOT_COVERED_THROUGH_TRADITIONAL_MEDICARE": "Payments for services not covered through Traditional Medicare",
+        "SNF_CLAIMS_WITHOUT_3DAY_HOSPITAL_ADMISSIONS": "Payments for SNF claims without 3-day hospital admissions",
+        "TELEHEALTH_SERVICES_NOT_TRADITIONAL_MEDICARE": "Payments for telehealth services not covered through Traditional Medicare",
+        "REDUCTIONS_TO_BENEFICIARY_COST_SHARING": "Reductions to beneficiary cost-sharing",
+        "OTHER": "Other"
+      }
     }
   },
   "waiveBeneficiaryCostSharingServiceSpecification": {
     "gqlField": "waiveBeneficiaryCostSharingServiceSpecification",
     "goField": "WaiveBeneficiaryCostSharingServiceSpecification",
-    "dbField": "is_contractor_aware_test_data_requirements",
+    "dbField": "waive_beneficiary_cost_sharing_service_specification",
     "label": "Please specify which services.",
     "isOtherType": true,
-    "otherParentField": "is_contractor_aware_test_data_requirements"
+    "otherParentField": "waive_beneficiary_cost_sharing_for_any_services"
   },
   "waiverOnlyAppliesPartOfPayment": {
     "gqlField": "waiverOnlyAppliesPartOfPayment",
     "goField": "WaiverOnlyAppliesPartOfPayment",
-    "dbField": "is_contractor_aware_test_data_requirements",
+    "dbField": "waiver_only_applies_part_of_payment",
     "label": "Would the waiver only apply for part of the payment?",
     "sublabel": "For example, we would assess cost-sharing for the service itself, but not for an add-on payment",
     "options": {
       "true": "Yes",
       "false": "No"
+    },
+    "parentRelation": {
+      "gqlField": "payClaims",
+      "goField": "PayClaims",
+      "dbField": "pay_claims",
+      "label": "Select which claims-based payments will you pay.",
+      "sublabel": "If you select reductions to beneficiary cost-sharing or other, there will be additional questions to answer.",
+      "multiSelectLabel": "Selected claims-based payments",
+      "options": {
+        "ADJUSTMENTS_TO_FFS_PAYMENTS": "Adjustments to FFS payments",
+        "CARE_MANAGEMENT_HOME_VISITS": "Payments for care management home visits",
+        "PAYMENTS_FOR_POST_DISCHARGE_HOME_VISITS": "Payments for post-discharge home visits",
+        "SERVICES_NOT_COVERED_THROUGH_TRADITIONAL_MEDICARE": "Payments for services not covered through Traditional Medicare",
+        "SNF_CLAIMS_WITHOUT_3DAY_HOSPITAL_ADMISSIONS": "Payments for SNF claims without 3-day hospital admissions",
+        "TELEHEALTH_SERVICES_NOT_TRADITIONAL_MEDICARE": "Payments for telehealth services not covered through Traditional Medicare",
+        "REDUCTIONS_TO_BENEFICIARY_COST_SHARING": "Reductions to beneficiary cost-sharing",
+        "OTHER": "Other"
+      }
     }
   },
   "waiveBeneficiaryCostSharingNote": {
     "gqlField": "waiveBeneficiaryCostSharingNote",
     "goField": "WaiveBeneficiaryCostSharingNote",
-    "dbField": "is_contractor_aware_test_data_requirements",
+    "dbField": "waive_beneficiary_cost_sharing_note",
     "label": "Notes"
   },
   "nonClaimsPayments": {
@@ -335,6 +718,18 @@
       "MAPD_SHARED_SAVINGS": "Medicare Advantage Prescription Drug (MAPD) Shared Savings",
       "SHARED_SAVINGS": "Shared Savings",
       "OTHER": "Other"
+    },
+    "parentRelation": {
+      "gqlField": "payType",
+      "goField": "PayType",
+      "dbField": "pay_type",
+      "label": "What will you pay?",
+      "sublabel": "If you select claims-based payments or non-claims-based payments, there will be additional questions to answer.",
+      "options": {
+        "CLAIMS_BASED_PAYMENTS": "Claims-Based Payments",
+        "NON_CLAIMS_BASED_PAYMENTS": "Non-Claims-Based Payments",
+        "GRANTS": "Grants"
+      }
     }
   },
   "nonClaimsPaymentOther": {
@@ -354,14 +749,38 @@
     "gqlField": "paymentCalculationOwner",
     "goField": "PaymentCalculationOwner",
     "dbField": "payment_calculation_owner",
-    "label": "Who will calculate the non-claims based payments?"
+    "label": "Who will calculate the non-claims based payments?",
+    "parentRelation": {
+      "gqlField": "payType",
+      "goField": "PayType",
+      "dbField": "pay_type",
+      "label": "What will you pay?",
+      "sublabel": "If you select claims-based payments or non-claims-based payments, there will be additional questions to answer.",
+      "options": {
+        "CLAIMS_BASED_PAYMENTS": "Claims-Based Payments",
+        "NON_CLAIMS_BASED_PAYMENTS": "Non-Claims-Based Payments",
+        "GRANTS": "Grants"
+      }
+    }
   },
   "numberPaymentsPerPayCycle": {
     "gqlField": "numberPaymentsPerPayCycle",
     "goField": "NumberPaymentsPerPayCycle",
     "dbField": "number_payments_per_pay_cycle",
     "label": "Number of payments per payment cycle",
-    "sublabel": "This only applies if you are making non-claims-based payments"
+    "sublabel": "This only applies if you are making non-claims-based payments",
+    "parentRelation": {
+      "gqlField": "payType",
+      "goField": "PayType",
+      "dbField": "pay_type",
+      "label": "What will you pay?",
+      "sublabel": "If you select claims-based payments or non-claims-based payments, there will be additional questions to answer.",
+      "options": {
+        "CLAIMS_BASED_PAYMENTS": "Claims-Based Payments",
+        "NON_CLAIMS_BASED_PAYMENTS": "Non-Claims-Based Payments",
+        "GRANTS": "Grants"
+      }
+    }
   },
   "numberPaymentsPerPayCycleNote": {
     "gqlField": "numberPaymentsPerPayCycleNote",
@@ -377,6 +796,18 @@
     "options": {
       "true": "Yes",
       "false": "No"
+    },
+    "parentRelation": {
+      "gqlField": "payType",
+      "goField": "PayType",
+      "dbField": "pay_type",
+      "label": "What will you pay?",
+      "sublabel": "If you select claims-based payments or non-claims-based payments, there will be additional questions to answer.",
+      "options": {
+        "CLAIMS_BASED_PAYMENTS": "Claims-Based Payments",
+        "NON_CLAIMS_BASED_PAYMENTS": "Non-Claims-Based Payments",
+        "GRANTS": "Grants"
+      }
     }
   },
   "sharedSystemsInvolvedAdditionalClaimPaymentNote": {
@@ -394,6 +825,18 @@
     "options": {
       "true": "Yes",
       "false": "No"
+    },
+    "parentRelation": {
+      "gqlField": "payType",
+      "goField": "PayType",
+      "dbField": "pay_type",
+      "label": "What will you pay?",
+      "sublabel": "If you select claims-based payments or non-claims-based payments, there will be additional questions to answer.",
+      "options": {
+        "CLAIMS_BASED_PAYMENTS": "Claims-Based Payments",
+        "NON_CLAIMS_BASED_PAYMENTS": "Non-Claims-Based Payments",
+        "GRANTS": "Grants"
+      }
     }
   },
   "planningToUseInnovationPaymentContractorNote": {
