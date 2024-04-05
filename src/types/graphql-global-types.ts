@@ -464,6 +464,13 @@ export enum ParticipantCommunicationType {
   OTHER = "OTHER",
 }
 
+export enum ParticipantRequireFinancialGuaranteeType {
+  ESCROW = "ESCROW",
+  LETTER_OF_CREDIT = "LETTER_OF_CREDIT",
+  OTHER = "OTHER",
+  SURETY_BOND = "SURETY_BOND",
+}
+
 export enum ParticipantRiskType {
   CAPITATION = "CAPITATION",
   NOT_RISK_BASED = "NOT_RISK_BASED",
@@ -1113,6 +1120,10 @@ export interface PlanParticipantsAndProvidersChanges {
   riskNote?: string | null;
   willRiskChange?: boolean | null;
   willRiskChangeNote?: string | null;
+  participantRequireFinancialGuarantee?: boolean | null;
+  participantRequireFinancialGuaranteeType?: ParticipantRequireFinancialGuaranteeType[] | null;
+  participantRequireFinancialGuaranteeOther?: string | null;
+  participantRequireFinancialGuaranteeNote?: string | null;
   coordinateWork?: boolean | null;
   coordinateWorkNote?: string | null;
   gainsharePayments?: boolean | null;

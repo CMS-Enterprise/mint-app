@@ -19,5 +19,20 @@ module.exports = {
     // "relay-page-info-spec",
     // 'type-fields-sorted-alphabetically',
     'types-are-capitalized'
-  ]
+  ],
+  ignore: {
+    'defined-types-are-used': [
+      'TranslationField',
+      'TranslationFieldWithOptions',
+      'TranslationDataType',
+      'TranslationFormType',
+      'PlanBasicsTranslation',
+      'PlanGeneralCharacteristicsTranslation',
+      'PlanParticipantsAndProvidersTranslation',
+      'PlanBeneficiariesTranslation',
+      'PlanOpsEvalAndLearningTranslation',
+      'PlanPaymentsTranslation',
+      'PlanCollaboratorTranslation'
+    ]
+  }
 };

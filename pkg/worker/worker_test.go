@@ -105,7 +105,7 @@ func (suite *WorkerSuite) createPlanCollaborator(
 		TeamRoles:   teamRoles,
 	}
 
-	collaborator, _, err := resolvers.CreatePlanCollaborator(
+	collaborator, _, err := resolvers.PlanCollaboratorCreate(
 		context.Background(),
 		suite.testConfigs.Store,
 		suite.testConfigs.Store,
@@ -117,6 +117,7 @@ func (suite *WorkerSuite) createPlanCollaborator(
 		suite.testConfigs.Principal,
 		false,
 		userhelpers.GetUserInfoAccountInfoWrapperFunc(suite.stubFetchUserInfo),
+		false, // This needs to be false because there are no data loaders on the worker package
 	)
 	suite.NoError(err)
 	return collaborator

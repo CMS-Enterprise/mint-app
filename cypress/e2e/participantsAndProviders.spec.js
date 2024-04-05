@@ -166,6 +166,20 @@ describe('The Model Plan Participants and Providers Form', () => {
 
     // Page - /participants-and-providers/coordination
 
+    cy.get(
+      '#participants-and-providers-participant-require-financial-guarantee-true'
+    )
+      .should('not.be.disabled')
+      .check({ force: true })
+      .should('be.checked');
+
+    cy.get(
+      '#participants-and-providers-participant-require-financial-guarantee-type-SURETY_BOND'
+    )
+      .should('not.be.disabled')
+      .check({ force: true })
+      .should('be.checked');
+
     cy.get('#participants-and-providers-coordniate-work-true')
       .should('not.be.disabled')
       .check({ force: true })

@@ -60,7 +60,7 @@ export type Activity = {
 };
 
 /** ActivityMetaData is a type that represents all the data that can be captured in an Activity */
-export type ActivityMetaData = DailyDigestCompleteActivityMeta | NewDiscussionRepliedActivityMeta | TaggedInDiscussionReplyActivityMeta | TaggedInPlanDiscussionActivityMeta;
+export type ActivityMetaData = AddedAsCollaboratorMeta | DailyDigestCompleteActivityMeta | ModelPlanSharedActivityMeta | NewDiscussionRepliedActivityMeta | TaggedInDiscussionReplyActivityMeta | TaggedInPlanDiscussionActivityMeta;
 
 /** ActivityType represents the possible activities that happen in application that might result in a notification */
 export enum ActivityType {
@@ -71,6 +71,16 @@ export enum ActivityType {
   TAGGED_IN_DISCUSSION = 'TAGGED_IN_DISCUSSION',
   TAGGED_IN_DISCUSSION_REPLY = 'TAGGED_IN_DISCUSSION_REPLY'
 }
+
+export type AddedAsCollaboratorMeta = {
+  __typename: 'AddedAsCollaboratorMeta';
+  collaborator: PlanCollaborator;
+  collaboratorID: Scalars['UUID']['output'];
+  modelPlan: ModelPlan;
+  modelPlanID: Scalars['UUID']['output'];
+  type: ActivityType;
+  version: Scalars['Int']['output'];
+};
 
 export enum AgencyOrStateHelpType {
   NO = 'NO',
@@ -604,6 +614,15 @@ export enum ModelPlanFilter {
   INCLUDE_ALL = 'INCLUDE_ALL',
   WITH_CR_TDLS = 'WITH_CR_TDLS'
 }
+
+export type ModelPlanSharedActivityMeta = {
+  __typename: 'ModelPlanSharedActivityMeta';
+  modelPlan: ModelPlan;
+  modelPlanID: Scalars['UUID']['output'];
+  optionalMessage?: Maybe<Scalars['String']['output']>;
+  type: ActivityType;
+  version: Scalars['Int']['output'];
+};
 
 export enum ModelStatus {
   ACTIVE = 'ACTIVE',
@@ -1203,6 +1222,13 @@ export enum ParticipantCommunicationType {
   OTHER = 'OTHER'
 }
 
+export enum ParticipantRequireFinancialGuaranteeType {
+  ESCROW = 'ESCROW',
+  LETTER_OF_CREDIT = 'LETTER_OF_CREDIT',
+  OTHER = 'OTHER',
+  SURETY_BOND = 'SURETY_BOND'
+}
+
 export enum ParticipantRiskType {
   CAPITATION = 'CAPITATION',
   NOT_RISK_BASED = 'NOT_RISK_BASED',
@@ -1339,6 +1365,36 @@ export type PlanBasicsChanges = {
   wrapUpEnds?: InputMaybe<Scalars['Time']['input']>;
 };
 
+/** Represents plan basics translation data */
+export type PlanBasicsTranslation = {
+  __typename: 'PlanBasicsTranslation';
+  additionalModelCategories: TranslationFieldWithOptions;
+  amsModelID: TranslationField;
+  announced: TranslationField;
+  applicationsEnd: TranslationField;
+  applicationsStart: TranslationField;
+  clearanceEnds: TranslationField;
+  clearanceStarts: TranslationField;
+  cmmiGroups: TranslationFieldWithOptions;
+  cmsCenters: TranslationFieldWithOptions;
+  completeICIP: TranslationField;
+  demoCode: TranslationField;
+  goal: TranslationField;
+  highLevelNote: TranslationField;
+  modelCategory: TranslationFieldWithOptions;
+  modelType: TranslationFieldWithOptions;
+  modelTypeOther: TranslationField;
+  note: TranslationField;
+  performancePeriodEnds: TranslationField;
+  performancePeriodStarts: TranslationField;
+  phasedIn: TranslationFieldWithOptions;
+  phasedInNote: TranslationField;
+  problem: TranslationField;
+  status: TranslationField;
+  testInterventions: TranslationField;
+  wrapUpEnds: TranslationField;
+};
+
 /** Plan Beneficiaries represents the the beneficiaries section of the task list */
 export type PlanBeneficiaries = {
   __typename: 'PlanBeneficiaries';
@@ -1423,6 +1479,42 @@ export type PlanBeneficiariesChanges = {
   treatDualElligibleDifferentNote?: InputMaybe<Scalars['String']['input']>;
 };
 
+/** Represents plan beneficiaries translation data */
+export type PlanBeneficiariesTranslation = {
+  __typename: 'PlanBeneficiariesTranslation';
+  beneficiaries: TranslationFieldWithOptions;
+  beneficiariesNote: TranslationField;
+  beneficiariesOther: TranslationField;
+  beneficiaryOverlap: TranslationFieldWithOptions;
+  beneficiaryOverlapNote: TranslationField;
+  beneficiaryRemovalFrequency: TranslationFieldWithOptions;
+  beneficiaryRemovalFrequencyContinually: TranslationField;
+  beneficiaryRemovalFrequencyNote: TranslationField;
+  beneficiaryRemovalFrequencyOther: TranslationField;
+  beneficiarySelectionFrequency: TranslationFieldWithOptions;
+  beneficiarySelectionFrequencyContinually: TranslationField;
+  beneficiarySelectionFrequencyNote: TranslationField;
+  beneficiarySelectionFrequencyOther: TranslationField;
+  beneficiarySelectionMethod: TranslationFieldWithOptions;
+  beneficiarySelectionNote: TranslationField;
+  beneficiarySelectionOther: TranslationField;
+  confidenceNote: TranslationField;
+  diseaseSpecificGroup: TranslationField;
+  estimateConfidence: TranslationFieldWithOptions;
+  excludeCertainCharacteristics: TranslationFieldWithOptions;
+  excludeCertainCharacteristicsCriteria: TranslationField;
+  excludeCertainCharacteristicsNote: TranslationField;
+  numberPeopleImpacted: TranslationField;
+  precedenceRules: TranslationFieldWithOptions;
+  precedenceRulesNo: TranslationField;
+  precedenceRulesNote: TranslationField;
+  precedenceRulesYes: TranslationField;
+  status: TranslationField;
+  treatDualElligibleDifferent: TranslationFieldWithOptions;
+  treatDualElligibleDifferentHow: TranslationField;
+  treatDualElligibleDifferentNote: TranslationField;
+};
+
 export type PlanCr = {
   __typename: 'PlanCR';
   createdBy: Scalars['UUID']['output'];
@@ -1478,6 +1570,13 @@ export type PlanCollaboratorCreateInput = {
   modelPlanID: Scalars['UUID']['input'];
   teamRoles: Array<TeamRole>;
   userName: Scalars['String']['input'];
+};
+
+/** Represents plan collaborator translation data */
+export type PlanCollaboratorTranslation = {
+  __typename: 'PlanCollaboratorTranslation';
+  teamRoles: TranslationFieldWithOptions;
+  username: TranslationField;
 };
 
 /** PlanDiscussion represents plan discussion */
@@ -1771,6 +1870,78 @@ export type PlanGeneralCharacteristicsChanges = {
   waiversRequiredTypes?: InputMaybe<Array<WaiverType>>;
 };
 
+/** Represents plan general characteristics translation data */
+export type PlanGeneralCharacteristicsTranslation = {
+  __typename: 'PlanGeneralCharacteristicsTranslation';
+  additionalServicesInvolved: TranslationFieldWithOptions;
+  additionalServicesInvolvedDescription: TranslationField;
+  additionalServicesInvolvedNote: TranslationField;
+  agencyOrStateHelp: TranslationFieldWithOptions;
+  agencyOrStateHelpNote: TranslationField;
+  agencyOrStateHelpOther: TranslationField;
+  agreementTypes: TranslationFieldWithOptions;
+  agreementTypesOther: TranslationField;
+  alternativePaymentModelNote: TranslationField;
+  alternativePaymentModelTypes: TranslationFieldWithOptions;
+  authorityAllowances: TranslationFieldWithOptions;
+  authorityAllowancesNote: TranslationField;
+  authorityAllowancesOther: TranslationField;
+  careCoordinationInvolved: TranslationFieldWithOptions;
+  careCoordinationInvolvedDescription: TranslationField;
+  careCoordinationInvolvedNote: TranslationField;
+  collectPlanBids: TranslationFieldWithOptions;
+  collectPlanBidsNote: TranslationField;
+  communityPartnersInvolved: TranslationFieldWithOptions;
+  communityPartnersInvolvedDescription: TranslationField;
+  communityPartnersInvolvedNote: TranslationField;
+  existingModel: TranslationFieldWithOptions;
+  geographiesRegionTypes: TranslationFieldWithOptions;
+  geographiesStatesAndTerritories: TranslationFieldWithOptions;
+  geographiesTargeted: TranslationFieldWithOptions;
+  geographiesTargetedAppliedTo: TranslationFieldWithOptions;
+  geographiesTargetedAppliedToOther: TranslationField;
+  geographiesTargetedNote: TranslationField;
+  geographiesTargetedTypes: TranslationFieldWithOptions;
+  geographiesTargetedTypesOther: TranslationField;
+  hasComponentsOrTracks: TranslationFieldWithOptions;
+  hasComponentsOrTracksDiffer: TranslationField;
+  hasComponentsOrTracksNote: TranslationField;
+  isNewModel: TranslationFieldWithOptions;
+  keyCharacteristics: TranslationFieldWithOptions;
+  keyCharacteristicsNote: TranslationField;
+  keyCharacteristicsOther: TranslationField;
+  managePartCDEnrollment: TranslationFieldWithOptions;
+  managePartCDEnrollmentNote: TranslationField;
+  multiplePatricipationAgreementsNeeded: TranslationFieldWithOptions;
+  multiplePatricipationAgreementsNeededNote: TranslationField;
+  participationInModelPrecondition: TranslationFieldWithOptions;
+  participationInModelPreconditionNote: TranslationField;
+  participationInModelPreconditionOtherOption: TranslationField;
+  participationInModelPreconditionOtherSelected: TranslationFieldWithOptions;
+  participationInModelPreconditionOtherSpecify: TranslationField;
+  participationInModelPreconditionWhich: TranslationFieldWithOptions;
+  participationInModelPreconditionWhyHow: TranslationFieldWithOptions;
+  participationOptions: TranslationFieldWithOptions;
+  participationOptionsNote: TranslationField;
+  planContractUpdated: TranslationFieldWithOptions;
+  planContractUpdatedNote: TranslationField;
+  resemblesExistingModel: TranslationFieldWithOptions;
+  resemblesExistingModelHow: TranslationFieldWithOptions;
+  resemblesExistingModelNote: TranslationField;
+  resemblesExistingModelOtherOption: TranslationField;
+  resemblesExistingModelOtherSelected: TranslationFieldWithOptions;
+  resemblesExistingModelOtherSpecify: TranslationField;
+  resemblesExistingModelWhich: TranslationFieldWithOptions;
+  resemblesExistingModelWhyHow: TranslationField;
+  rulemakingRequired: TranslationFieldWithOptions;
+  rulemakingRequiredDescription: TranslationField;
+  rulemakingRequiredNote: TranslationField;
+  status: TranslationField;
+  waiversRequired: TranslationFieldWithOptions;
+  waiversRequiredNote: TranslationField;
+  waiversRequiredTypes: TranslationFieldWithOptions;
+};
+
 /** PlanOpsEvalAndLearning represents the task list section that deals with information regarding the Ops Eval and Learning */
 export type PlanOpsEvalAndLearning = {
   __typename: 'PlanOpsEvalAndLearning';
@@ -1993,6 +2164,108 @@ export type PlanOpsEvalAndLearningChanges = {
   useCcwForFileDistribiutionToParticipantsNote?: InputMaybe<Scalars['String']['input']>;
 };
 
+/** Represents plan ops eval and learning translation data */
+export type PlanOpsEvalAndLearningTranslation = {
+  __typename: 'PlanOpsEvalAndLearningTranslation';
+  anticipatedChallenges: TranslationField;
+  appToSendFilesToKnown: TranslationFieldWithOptions;
+  appToSendFilesToNote: TranslationField;
+  appToSendFilesToWhich: TranslationField;
+  appealFeedback: TranslationFieldWithOptions;
+  appealNote: TranslationField;
+  appealOther: TranslationFieldWithOptions;
+  appealPayments: TranslationFieldWithOptions;
+  appealPerformance: TranslationFieldWithOptions;
+  benchmarkForPerformance: TranslationFieldWithOptions;
+  benchmarkForPerformanceNote: TranslationField;
+  captureParticipantInfo: TranslationFieldWithOptions;
+  captureParticipantInfoNote: TranslationField;
+  ccmInvolvment: TranslationFieldWithOptions;
+  ccmInvolvmentNote: TranslationField;
+  ccmInvolvmentOther: TranslationField;
+  computePerformanceScores: TranslationFieldWithOptions;
+  computePerformanceScoresNote: TranslationField;
+  contractorSupport: TranslationFieldWithOptions;
+  contractorSupportHow: TranslationField;
+  contractorSupportNote: TranslationField;
+  contractorSupportOther: TranslationField;
+  dataCollectionFrequency: TranslationFieldWithOptions;
+  dataCollectionFrequencyContinually: TranslationField;
+  dataCollectionFrequencyNote: TranslationField;
+  dataCollectionFrequencyOther: TranslationField;
+  dataCollectionStarts: TranslationFieldWithOptions;
+  dataCollectionStartsOther: TranslationField;
+  dataFlowDiagramsNeeded: TranslationFieldWithOptions;
+  dataFullTimeOrIncremental: TranslationFieldWithOptions;
+  dataMonitoringFileOther: TranslationField;
+  dataMonitoringFileTypes: TranslationFieldWithOptions;
+  dataMonitoringNote: TranslationField;
+  dataNeededForMonitoring: TranslationFieldWithOptions;
+  dataNeededForMonitoringNote: TranslationField;
+  dataNeededForMonitoringOther: TranslationField;
+  dataResponseFileFrequency: TranslationField;
+  dataResponseType: TranslationField;
+  dataSharingFrequency: TranslationFieldWithOptions;
+  dataSharingFrequencyContinually: TranslationField;
+  dataSharingFrequencyOther: TranslationField;
+  dataSharingStarts: TranslationFieldWithOptions;
+  dataSharingStartsNote: TranslationField;
+  dataSharingStartsOther: TranslationField;
+  dataToSendParticicipants: TranslationFieldWithOptions;
+  dataToSendParticicipantsNote: TranslationField;
+  dataToSendParticicipantsOther: TranslationField;
+  developNewQualityMeasures: TranslationFieldWithOptions;
+  developNewQualityMeasuresNote: TranslationField;
+  draftIcdDueDate: TranslationField;
+  eftSetUp: TranslationFieldWithOptions;
+  evaluationApproachOther: TranslationField;
+  evaluationApproaches: TranslationFieldWithOptions;
+  evalutaionApproachNote: TranslationField;
+  fileNamingConventions: TranslationField;
+  helpdeskUse: TranslationFieldWithOptions;
+  helpdeskUseNote: TranslationField;
+  icdNote: TranslationField;
+  icdOwner: TranslationField;
+  iddocSupport: TranslationFieldWithOptions;
+  iddocSupportNote: TranslationField;
+  modelLearningSystems: TranslationFieldWithOptions;
+  modelLearningSystemsNote: TranslationField;
+  modelLearningSystemsOther: TranslationField;
+  produceBenefitEnhancementFiles: TranslationFieldWithOptions;
+  qualityPerformanceImpactsPayment: TranslationFieldWithOptions;
+  qualityPerformanceImpactsPaymentNote: TranslationField;
+  qualityPerformanceImpactsPaymentOther: TranslationField;
+  qualityReportingFrequency: TranslationFieldWithOptions;
+  qualityReportingFrequencyContinually: TranslationField;
+  qualityReportingFrequencyOther: TranslationField;
+  qualityReportingStarts: TranslationFieldWithOptions;
+  qualityReportingStartsNote: TranslationField;
+  qualityReportingStartsOther: TranslationField;
+  riskAdjustFeedback: TranslationFieldWithOptions;
+  riskAdjustNote: TranslationField;
+  riskAdjustOther: TranslationFieldWithOptions;
+  riskAdjustPayments: TranslationFieldWithOptions;
+  riskAdjustPerformance: TranslationFieldWithOptions;
+  sendFilesBetweenCcw: TranslationFieldWithOptions;
+  sendFilesBetweenCcwNote: TranslationField;
+  shareCclfData: TranslationFieldWithOptions;
+  shareCclfDataNote: TranslationField;
+  stakeholders: TranslationFieldWithOptions;
+  stakeholdersNote: TranslationField;
+  stakeholdersOther: TranslationField;
+  status: TranslationField;
+  stcNeeds: TranslationField;
+  technicalContactsIdentified: TranslationFieldWithOptions;
+  technicalContactsIdentifiedDetail: TranslationField;
+  technicalContactsIdentifiedNote: TranslationField;
+  testingNote: TranslationField;
+  testingTimelines: TranslationField;
+  uatNeeds: TranslationField;
+  unsolicitedAdjustmentsIncluded: TranslationFieldWithOptions;
+  useCcwForFileDistribiutionToParticipants: TranslationFieldWithOptions;
+  useCcwForFileDistribiutionToParticipantsNote: TranslationField;
+};
+
 /** PlanParticipantsAndProviders is the task list section that deals with information regarding all Providers and Participants */
 export type PlanParticipantsAndProviders = {
   __typename: 'PlanParticipantsAndProviders';
@@ -2027,6 +2300,10 @@ export type PlanParticipantsAndProviders = {
   participantRemovedFrequencyContinually?: Maybe<Scalars['String']['output']>;
   participantRemovedFrequencyNote?: Maybe<Scalars['String']['output']>;
   participantRemovedFrequencyOther?: Maybe<Scalars['String']['output']>;
+  participantRequireFinancialGuarantee?: Maybe<Scalars['Boolean']['output']>;
+  participantRequireFinancialGuaranteeNote?: Maybe<Scalars['String']['output']>;
+  participantRequireFinancialGuaranteeOther?: Maybe<Scalars['String']['output']>;
+  participantRequireFinancialGuaranteeType: Array<ParticipantRequireFinancialGuaranteeType>;
   participants: Array<ParticipantsType>;
   participantsCurrentlyInModels?: Maybe<Scalars['Boolean']['output']>;
   participantsCurrentlyInModelsNote?: Maybe<Scalars['String']['output']>;
@@ -2103,6 +2380,10 @@ export type PlanParticipantsAndProvidersChanges = {
   participantRemovedFrequencyContinually?: InputMaybe<Scalars['String']['input']>;
   participantRemovedFrequencyNote?: InputMaybe<Scalars['String']['input']>;
   participantRemovedFrequencyOther?: InputMaybe<Scalars['String']['input']>;
+  participantRequireFinancialGuarantee?: InputMaybe<Scalars['Boolean']['input']>;
+  participantRequireFinancialGuaranteeNote?: InputMaybe<Scalars['String']['input']>;
+  participantRequireFinancialGuaranteeOther?: InputMaybe<Scalars['String']['input']>;
+  participantRequireFinancialGuaranteeType?: InputMaybe<Array<ParticipantRequireFinancialGuaranteeType>>;
   participants?: InputMaybe<Array<ParticipantsType>>;
   participantsCurrentlyInModels?: InputMaybe<Scalars['Boolean']['input']>;
   participantsCurrentlyInModelsNote?: InputMaybe<Scalars['String']['input']>;
@@ -2141,6 +2422,76 @@ export type PlanParticipantsAndProvidersChanges = {
   status?: InputMaybe<TaskStatusInput>;
   willRiskChange?: InputMaybe<Scalars['Boolean']['input']>;
   willRiskChangeNote?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** Represents plan participants and providers translation data */
+export type PlanParticipantsAndProvidersTranslation = {
+  __typename: 'PlanParticipantsAndProvidersTranslation';
+  communicationMethod: TranslationFieldWithOptions;
+  communicationMethodOther: TranslationField;
+  communicationNote: TranslationField;
+  confidenceNote: TranslationField;
+  coordinateWork: TranslationFieldWithOptions;
+  coordinateWorkNote: TranslationField;
+  estimateConfidence: TranslationFieldWithOptions;
+  expectedNumberOfParticipants: TranslationField;
+  gainsharePayments: TranslationFieldWithOptions;
+  gainsharePaymentsEligibility: TranslationFieldWithOptions;
+  gainsharePaymentsEligibilityOther: TranslationField;
+  gainsharePaymentsNote: TranslationField;
+  gainsharePaymentsTrack: TranslationFieldWithOptions;
+  medicareProviderType: TranslationField;
+  modelApplicationLevel: TranslationField;
+  participantAddedFrequency: TranslationFieldWithOptions;
+  participantAddedFrequencyContinually: TranslationField;
+  participantAddedFrequencyNote: TranslationField;
+  participantAddedFrequencyOther: TranslationField;
+  participantRemovedFrequency: TranslationFieldWithOptions;
+  participantRemovedFrequencyContinually: TranslationField;
+  participantRemovedFrequencyNote: TranslationField;
+  participantRemovedFrequencyOther: TranslationField;
+  participantRequireFinancialGuarantee: TranslationFieldWithOptions;
+  participantRequireFinancialGuaranteeNote: TranslationField;
+  participantRequireFinancialGuaranteeOther: TranslationField;
+  participantRequireFinancialGuaranteeType: TranslationFieldWithOptions;
+  participants: TranslationFieldWithOptions;
+  participantsCurrentlyInModels: TranslationFieldWithOptions;
+  participantsCurrentlyInModelsNote: TranslationField;
+  participantsIDSNote: TranslationField;
+  participantsIds: TranslationFieldWithOptions;
+  participantsIdsOther: TranslationField;
+  participantsNote: TranslationField;
+  participantsOther: TranslationField;
+  providerAddMethod: TranslationFieldWithOptions;
+  providerAddMethodNote: TranslationField;
+  providerAddMethodOther: TranslationField;
+  providerAdditionFrequency: TranslationFieldWithOptions;
+  providerAdditionFrequencyContinually: TranslationField;
+  providerAdditionFrequencyNote: TranslationField;
+  providerAdditionFrequencyOther: TranslationField;
+  providerLeaveMethod: TranslationFieldWithOptions;
+  providerLeaveMethodNote: TranslationField;
+  providerLeaveMethodOther: TranslationField;
+  providerOverlap: TranslationFieldWithOptions;
+  providerOverlapHierarchy: TranslationField;
+  providerOverlapNote: TranslationField;
+  providerRemovalFrequency: TranslationFieldWithOptions;
+  providerRemovalFrequencyContinually: TranslationField;
+  providerRemovalFrequencyNote: TranslationField;
+  providerRemovalFrequencyOther: TranslationField;
+  recruitmentMethod: TranslationFieldWithOptions;
+  recruitmentNote: TranslationField;
+  recruitmentOther: TranslationField;
+  riskNote: TranslationField;
+  riskOther: TranslationField;
+  riskType: TranslationFieldWithOptions;
+  selectionMethod: TranslationFieldWithOptions;
+  selectionNote: TranslationField;
+  selectionOther: TranslationField;
+  statesEngagement: TranslationField;
+  status: TranslationField;
+  willRiskChange: TranslationFieldWithOptions;
+  willRiskChangeNote: TranslationField;
 };
 
 /** PlanPayments is the task list section that deals with information regarding Payments */
@@ -2311,6 +2662,85 @@ export type PlanPaymentsChanges = {
   waiverOnlyAppliesPartOfPayment?: InputMaybe<Scalars['Boolean']['input']>;
   willRecoverPayments?: InputMaybe<Scalars['Boolean']['input']>;
   willRecoverPaymentsNote?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** Represents payments translation data */
+export type PlanPaymentsTranslation = {
+  __typename: 'PlanPaymentsTranslation';
+  affectsMedicareSecondaryPayerClaims: TranslationFieldWithOptions;
+  affectsMedicareSecondaryPayerClaimsHow: TranslationField;
+  affectsMedicareSecondaryPayerClaimsNote: TranslationField;
+  anticipateReconcilingPaymentsRetrospectively: TranslationFieldWithOptions;
+  anticipateReconcilingPaymentsRetrospectivelyNote: TranslationField;
+  anticipatedPaymentFrequency: TranslationFieldWithOptions;
+  anticipatedPaymentFrequencyContinually: TranslationField;
+  anticipatedPaymentFrequencyNote: TranslationField;
+  anticipatedPaymentFrequencyOther: TranslationField;
+  beneficiaryCostSharingLevelAndHandling: TranslationField;
+  canParticipantsSelectBetweenPaymentMechanisms: TranslationFieldWithOptions;
+  canParticipantsSelectBetweenPaymentMechanismsHow: TranslationField;
+  canParticipantsSelectBetweenPaymentMechanismsNote: TranslationField;
+  changesMedicarePhysicianFeeSchedule: TranslationFieldWithOptions;
+  changesMedicarePhysicianFeeScheduleNote: TranslationField;
+  claimsProcessingPrecedence: TranslationFieldWithOptions;
+  claimsProcessingPrecedenceNote: TranslationField;
+  claimsProcessingPrecedenceOther: TranslationField;
+  creatingDependenciesBetweenServices: TranslationFieldWithOptions;
+  creatingDependenciesBetweenServicesNote: TranslationField;
+  expectedCalculationComplexityLevel: TranslationFieldWithOptions;
+  expectedCalculationComplexityLevelNote: TranslationField;
+  fundingSource: TranslationFieldWithOptions;
+  fundingSourceMedicareAInfo: TranslationField;
+  fundingSourceMedicareBInfo: TranslationField;
+  fundingSourceNote: TranslationField;
+  fundingSourceOther: TranslationField;
+  fundingSourceR: TranslationFieldWithOptions;
+  fundingSourceRMedicareAInfo: TranslationField;
+  fundingSourceRMedicareBInfo: TranslationField;
+  fundingSourceRNote: TranslationField;
+  fundingSourceROther: TranslationField;
+  isContractorAwareTestDataRequirements: TranslationFieldWithOptions;
+  needsClaimsDataCollection: TranslationFieldWithOptions;
+  needsClaimsDataCollectionNote: TranslationField;
+  nonClaimsPaymentOther: TranslationField;
+  nonClaimsPayments: TranslationFieldWithOptions;
+  nonClaimsPaymentsNote: TranslationField;
+  numberPaymentsPerPayCycle: TranslationField;
+  numberPaymentsPerPayCycleNote: TranslationField;
+  payClaims: TranslationFieldWithOptions;
+  payClaimsNote: TranslationField;
+  payClaimsOther: TranslationField;
+  payModelDifferentiation: TranslationField;
+  payRecipients: TranslationFieldWithOptions;
+  payRecipientsNote: TranslationField;
+  payRecipientsOtherSpecification: TranslationField;
+  payType: TranslationFieldWithOptions;
+  payTypeNote: TranslationField;
+  paymentCalculationOwner: TranslationField;
+  paymentDemandRecoupmentFrequency: TranslationFieldWithOptions;
+  paymentDemandRecoupmentFrequencyContinually: TranslationField;
+  paymentDemandRecoupmentFrequencyNote: TranslationField;
+  paymentDemandRecoupmentFrequencyOther: TranslationField;
+  paymentReconciliationFrequency: TranslationFieldWithOptions;
+  paymentReconciliationFrequencyContinually: TranslationField;
+  paymentReconciliationFrequencyNote: TranslationField;
+  paymentReconciliationFrequencyOther: TranslationField;
+  paymentStartDate: TranslationField;
+  paymentStartDateNote: TranslationField;
+  planningToUseInnovationPaymentContractor: TranslationFieldWithOptions;
+  planningToUseInnovationPaymentContractorNote: TranslationField;
+  providingThirdPartyFile: TranslationFieldWithOptions;
+  sharedSystemsInvolvedAdditionalClaimPayment: TranslationFieldWithOptions;
+  sharedSystemsInvolvedAdditionalClaimPaymentNote: TranslationField;
+  shouldAnyProviderExcludedFFSSystemsNote: TranslationField;
+  shouldAnyProvidersExcludedFFSSystems: TranslationFieldWithOptions;
+  status: TranslationField;
+  waiveBeneficiaryCostSharingForAnyServices: TranslationFieldWithOptions;
+  waiveBeneficiaryCostSharingNote: TranslationField;
+  waiveBeneficiaryCostSharingServiceSpecification: TranslationField;
+  waiverOnlyAppliesPartOfPayment: TranslationFieldWithOptions;
+  willRecoverPayments: TranslationFieldWithOptions;
+  willRecoverPaymentsNote: TranslationField;
 };
 
 export type PlanTdl = {
@@ -2870,6 +3300,69 @@ export type TranslatedAuditMetaBaseStruct = {
 /** TranslatedAuditMetaData is a type that represents all the data that can be captured in a Translated audit */
 export type TranslatedAuditMetaData = TranslatedAuditMetaBaseStruct;
 
+/** Represents the data type of the translation field */
+export enum TranslationDataType {
+  BOOLEAN = 'BOOLEAN',
+  DATE = 'DATE',
+  ENUM = 'ENUM',
+  NUMBER = 'NUMBER',
+  OBJECT = 'OBJECT',
+  STRING = 'STRING'
+}
+
+/** Represents a translation question with no options */
+export type TranslationField = {
+  __typename: 'TranslationField';
+  dataType: TranslationDataType;
+  dbField: Scalars['String']['output'];
+  formType: TranslationFormType;
+  goField: Scalars['String']['output'];
+  gqlField: Scalars['String']['output'];
+  isArray?: Maybe<Scalars['Boolean']['output']>;
+  /** Is a question a followup to another that doesn't designate it's own readonly question/line */
+  isOtherType?: Maybe<Scalars['Boolean']['output']>;
+  label: Scalars['String']['output'];
+  multiSelectLabel?: Maybe<Scalars['String']['output']>;
+  /** Field name for the parent question for fields that represent Other, Please specify, etc.  Used in change history to render parent question for context */
+  otherParentField?: Maybe<Scalars['String']['output']>;
+  readonlyLabel?: Maybe<Scalars['String']['output']>;
+  sublabel?: Maybe<Scalars['String']['output']>;
+};
+
+/** Represents a translation question with options */
+export type TranslationFieldWithOptions = {
+  __typename: 'TranslationFieldWithOptions';
+  dataType: TranslationDataType;
+  dbField: Scalars['String']['output'];
+  formType: TranslationFormType;
+  goField: Scalars['String']['output'];
+  gqlField: Scalars['String']['output'];
+  isArray?: Maybe<Scalars['Boolean']['output']>;
+  /** Is a question a followup to another that doesn't designate it's own readonly question/line */
+  isOtherType?: Maybe<Scalars['Boolean']['output']>;
+  label: Scalars['String']['output'];
+  multiSelectLabel?: Maybe<Scalars['String']['output']>;
+  options: Scalars['Map']['output'];
+  /** Field name for the parent question for fields that represent Other, Please specify, etc.  Used in change history to render parent question for context */
+  otherParentField?: Maybe<Scalars['String']['output']>;
+  readonlyLabel?: Maybe<Scalars['String']['output']>;
+  sublabel?: Maybe<Scalars['String']['output']>;
+};
+
+/** Represents the FORM type of the translation field */
+export enum TranslationFormType {
+  BOOLEAN = 'BOOLEAN',
+  CHECKBOX = 'CHECKBOX',
+  DATEPICKER = 'DATEPICKER',
+  MULTISELECT = 'MULTISELECT',
+  NUMBER = 'NUMBER',
+  RADIO = 'RADIO',
+  RANGEINPUT = 'RANGEINPUT',
+  SELECT = 'SELECT',
+  TEXT = 'TEXT',
+  TEXTAREA = 'TEXTAREA'
+}
+
 export enum TriStateAnswer {
   NO = 'NO',
   TBD = 'TBD',
@@ -3352,14 +3845,14 @@ export type CreateModelPlanReplyMutation = { __typename: 'Mutation', createDiscu
 export type GetAllModelDataQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetAllModelDataQuery = { __typename: 'Query', modelPlanCollection: Array<{ __typename: 'ModelPlan', id: UUID, modelName: string, nameHistory: Array<string>, abbreviation?: string | null, archived: boolean, createdDts: Time, status: ModelStatus, createdByUserAccount: { __typename: 'UserAccount', commonName: string }, basics: { __typename: 'PlanBasics', id: UUID, modelCategory?: ModelCategory | null, amsModelID?: string | null, demoCode?: string | null, cmsCenters: Array<CmsCenter>, cmmiGroups: Array<CmmiGroup>, modelType: Array<ModelType>, modelTypeOther?: string | null, problem?: string | null, goal?: string | null, testInterventions?: string | null, note?: string | null, completeICIP?: Time | null, clearanceStarts?: Time | null, clearanceEnds?: Time | null, announced?: Time | null, applicationsStart?: Time | null, applicationsEnd?: Time | null, performancePeriodStarts?: Time | null, performancePeriodEnds?: Time | null, highLevelNote?: string | null, wrapUpEnds?: Time | null, phasedIn?: boolean | null, phasedInNote?: string | null, readyForReviewDts?: Time | null, status: TaskStatus, readyForReviewByUserAccount?: { __typename: 'UserAccount', commonName: string } | null }, generalCharacteristics: { __typename: 'PlanGeneralCharacteristics', id: UUID, rulemakingRequired?: boolean | null, rulemakingRequiredDescription?: string | null, rulemakingRequiredNote?: string | null, authorityAllowances: Array<AuthorityAllowance>, authorityAllowancesOther?: string | null, authorityAllowancesNote?: string | null, waiversRequired?: boolean | null, waiversRequiredTypes: Array<WaiverType>, waiversRequiredNote?: string | null, isNewModel?: boolean | null, existingModel?: string | null, resemblesExistingModel?: YesNoOtherType | null, resemblesExistingModelWhyHow?: string | null, resemblesExistingModelHow?: string | null, resemblesExistingModelNote?: string | null, resemblesExistingModelOtherSpecify?: string | null, resemblesExistingModelOtherOption?: string | null, participationInModelPrecondition?: YesNoOtherType | null, participationInModelPreconditionOtherSpecify?: string | null, participationInModelPreconditionOtherOption?: string | null, participationInModelPreconditionWhyHow?: string | null, participationInModelPreconditionNote?: string | null, hasComponentsOrTracks?: boolean | null, hasComponentsOrTracksDiffer?: string | null, hasComponentsOrTracksNote?: string | null, careCoordinationInvolved?: boolean | null, careCoordinationInvolvedDescription?: string | null, careCoordinationInvolvedNote?: string | null, additionalServicesInvolved?: boolean | null, additionalServicesInvolvedDescription?: string | null, additionalServicesInvolvedNote?: string | null, communityPartnersInvolved?: boolean | null, communityPartnersInvolvedDescription?: string | null, communityPartnersInvolvedNote?: string | null, agencyOrStateHelp: Array<AgencyOrStateHelpType>, agencyOrStateHelpOther?: string | null, agencyOrStateHelpNote?: string | null, alternativePaymentModelTypes: Array<AlternativePaymentModelType>, alternativePaymentModelNote?: string | null, keyCharacteristics: Array<KeyCharacteristic>, keyCharacteristicsNote?: string | null, keyCharacteristicsOther?: string | null, collectPlanBids?: boolean | null, collectPlanBidsNote?: string | null, managePartCDEnrollment?: boolean | null, managePartCDEnrollmentNote?: string | null, planContractUpdated?: boolean | null, planContractUpdatedNote?: string | null, geographiesTargeted?: boolean | null, geographiesTargetedTypes: Array<GeographyType>, geographiesStatesAndTerritories: Array<StatesAndTerritories>, geographiesRegionTypes: Array<GeographyRegionType>, geographiesTargetedTypesOther?: string | null, geographiesTargetedAppliedTo: Array<GeographyApplication>, geographiesTargetedAppliedToOther?: string | null, geographiesTargetedNote?: string | null, participationOptions?: boolean | null, participationOptionsNote?: string | null, agreementTypes: Array<AgreementType>, agreementTypesOther?: string | null, multiplePatricipationAgreementsNeeded?: boolean | null, multiplePatricipationAgreementsNeededNote?: string | null, readyForReviewDts?: Time | null, status: TaskStatus, resemblesExistingModelWhich?: { __typename: 'ExistingModelLinks', names: Array<string> } | null, participationInModelPreconditionWhich?: { __typename: 'ExistingModelLinks', names: Array<string> } | null, readyForReviewByUserAccount?: { __typename: 'UserAccount', commonName: string } | null }, participantsAndProviders: { __typename: 'PlanParticipantsAndProviders', id: UUID, participantAddedFrequency: Array<FrequencyType>, participantAddedFrequencyContinually?: string | null, participantAddedFrequencyOther?: string | null, participantAddedFrequencyNote?: string | null, participantRemovedFrequency: Array<FrequencyType>, participantRemovedFrequencyContinually?: string | null, participantRemovedFrequencyOther?: string | null, participantRemovedFrequencyNote?: string | null, communicationMethod: Array<ParticipantCommunicationType>, communicationMethodOther?: string | null, communicationNote?: string | null, riskType: Array<ParticipantRiskType>, riskOther?: string | null, riskNote?: string | null, willRiskChange?: boolean | null, willRiskChangeNote?: string | null, coordinateWork?: boolean | null, coordinateWorkNote?: string | null, gainsharePayments?: boolean | null, gainsharePaymentsTrack?: boolean | null, gainsharePaymentsEligibility: Array<GainshareArrangementEligibility>, gainsharePaymentsEligibilityOther?: string | null, gainsharePaymentsNote?: string | null, participantsIds: Array<ParticipantsIdType>, participantsIdsOther?: string | null, participantsIDSNote?: string | null, expectedNumberOfParticipants?: number | null, estimateConfidence?: ConfidenceType | null, confidenceNote?: string | null, recruitmentMethod?: RecruitmentType | null, recruitmentOther?: string | null, recruitmentNote?: string | null, selectionMethod: Array<ParticipantSelectionType>, selectionOther?: string | null, selectionNote?: string | null, participants: Array<ParticipantsType>, medicareProviderType?: string | null, statesEngagement?: string | null, participantsOther?: string | null, participantsNote?: string | null, participantsCurrentlyInModels?: boolean | null, participantsCurrentlyInModelsNote?: string | null, modelApplicationLevel?: string | null, providerAdditionFrequency: Array<FrequencyType>, providerAdditionFrequencyContinually?: string | null, providerAdditionFrequencyOther?: string | null, providerAdditionFrequencyNote?: string | null, providerAddMethod: Array<ProviderAddType>, providerAddMethodOther?: string | null, providerAddMethodNote?: string | null, providerLeaveMethod: Array<ProviderLeaveType>, providerLeaveMethodOther?: string | null, providerLeaveMethodNote?: string | null, providerRemovalFrequency: Array<FrequencyType>, providerRemovalFrequencyContinually?: string | null, providerRemovalFrequencyOther?: string | null, providerRemovalFrequencyNote?: string | null, providerOverlap?: OverlapType | null, providerOverlapHierarchy?: string | null, providerOverlapNote?: string | null, readyForReviewDts?: Time | null, status: TaskStatus, readyForReviewByUserAccount?: { __typename: 'UserAccount', commonName: string } | null }, beneficiaries: { __typename: 'PlanBeneficiaries', id: UUID, beneficiaries: Array<BeneficiariesType>, beneficiariesNote?: string | null, beneficiariesOther?: string | null, beneficiaryOverlap?: OverlapType | null, beneficiaryOverlapNote?: string | null, beneficiarySelectionNote?: string | null, beneficiarySelectionOther?: string | null, beneficiarySelectionMethod: Array<SelectionMethodType>, treatDualElligibleDifferent?: TriStateAnswer | null, treatDualElligibleDifferentHow?: string | null, treatDualElligibleDifferentNote?: string | null, excludeCertainCharacteristics?: TriStateAnswer | null, excludeCertainCharacteristicsCriteria?: string | null, excludeCertainCharacteristicsNote?: string | null, beneficiarySelectionFrequency: Array<FrequencyType>, beneficiarySelectionFrequencyContinually?: string | null, beneficiarySelectionFrequencyNote?: string | null, beneficiarySelectionFrequencyOther?: string | null, beneficiaryRemovalFrequency: Array<FrequencyType>, beneficiaryRemovalFrequencyContinually?: string | null, beneficiaryRemovalFrequencyNote?: string | null, beneficiaryRemovalFrequencyOther?: string | null, precedenceRules: Array<YesNoType>, precedenceRulesYes?: string | null, precedenceRulesNo?: string | null, precedenceRulesNote?: string | null, numberPeopleImpacted?: number | null, estimateConfidence?: ConfidenceType | null, confidenceNote?: string | null, readyForReviewDts?: Time | null, status: TaskStatus, readyForReviewByUserAccount?: { __typename: 'UserAccount', commonName: string } | null }, opsEvalAndLearning: { __typename: 'PlanOpsEvalAndLearning', id: UUID, ccmInvolvment: Array<CcmInvolvmentType>, ccmInvolvmentOther?: string | null, ccmInvolvmentNote?: string | null, iddocSupport?: boolean | null, iddocSupportNote?: string | null, sendFilesBetweenCcw?: boolean | null, sendFilesBetweenCcwNote?: string | null, appToSendFilesToKnown?: boolean | null, appToSendFilesToWhich?: string | null, appToSendFilesToNote?: string | null, useCcwForFileDistribiutionToParticipants?: boolean | null, useCcwForFileDistribiutionToParticipantsNote?: string | null, developNewQualityMeasures?: boolean | null, developNewQualityMeasuresNote?: string | null, qualityPerformanceImpactsPayment?: YesNoOtherType | null, qualityPerformanceImpactsPaymentOther?: string | null, qualityPerformanceImpactsPaymentNote?: string | null, dataSharingStarts?: DataStartsType | null, dataSharingStartsOther?: string | null, dataSharingFrequency: Array<FrequencyType>, dataSharingFrequencyContinually?: string | null, dataSharingFrequencyOther?: string | null, dataSharingStartsNote?: string | null, dataCollectionStarts?: DataStartsType | null, dataCollectionStartsOther?: string | null, dataCollectionFrequency: Array<FrequencyType>, dataCollectionFrequencyContinually?: string | null, dataCollectionFrequencyOther?: string | null, dataCollectionFrequencyNote?: string | null, qualityReportingStarts?: DataStartsType | null, qualityReportingStartsOther?: string | null, qualityReportingStartsNote?: string | null, qualityReportingFrequency: Array<FrequencyType>, qualityReportingFrequencyContinually?: string | null, qualityReportingFrequencyOther?: string | null, evaluationApproaches: Array<EvaluationApproachType>, evaluationApproachOther?: string | null, evalutaionApproachNote?: string | null, dataNeededForMonitoring: Array<DataForMonitoringType>, dataNeededForMonitoringOther?: string | null, dataNeededForMonitoringNote?: string | null, dataToSendParticicipants: Array<DataToSendParticipantsType>, dataToSendParticicipantsOther?: string | null, dataToSendParticicipantsNote?: string | null, shareCclfData?: boolean | null, shareCclfDataNote?: string | null, technicalContactsIdentified?: boolean | null, technicalContactsIdentifiedDetail?: string | null, technicalContactsIdentifiedNote?: string | null, captureParticipantInfo?: boolean | null, captureParticipantInfoNote?: string | null, icdOwner?: string | null, draftIcdDueDate?: Time | null, icdNote?: string | null, dataFullTimeOrIncremental?: DataFullTimeOrIncrementalType | null, eftSetUp?: boolean | null, unsolicitedAdjustmentsIncluded?: boolean | null, dataFlowDiagramsNeeded?: boolean | null, produceBenefitEnhancementFiles?: boolean | null, fileNamingConventions?: string | null, dataMonitoringNote?: string | null, uatNeeds?: string | null, stcNeeds?: string | null, testingTimelines?: string | null, testingNote?: string | null, dataMonitoringFileTypes: Array<MonitoringFileType>, dataMonitoringFileOther?: string | null, dataResponseType?: string | null, dataResponseFileFrequency?: string | null, modelLearningSystems: Array<ModelLearningSystemType>, modelLearningSystemsOther?: string | null, modelLearningSystemsNote?: string | null, anticipatedChallenges?: string | null, stakeholders: Array<StakeholdersType>, stakeholdersOther?: string | null, stakeholdersNote?: string | null, helpdeskUse?: boolean | null, helpdeskUseNote?: string | null, contractorSupport: Array<ContractorSupportType>, contractorSupportOther?: string | null, contractorSupportHow?: string | null, contractorSupportNote?: string | null, benchmarkForPerformance?: BenchmarkForPerformanceType | null, benchmarkForPerformanceNote?: string | null, computePerformanceScores?: boolean | null, computePerformanceScoresNote?: string | null, riskAdjustPerformance?: boolean | null, riskAdjustFeedback?: boolean | null, riskAdjustPayments?: boolean | null, riskAdjustOther?: boolean | null, riskAdjustNote?: string | null, appealPerformance?: boolean | null, appealFeedback?: boolean | null, appealPayments?: boolean | null, appealOther?: boolean | null, appealNote?: string | null, readyForReviewDts?: Time | null, status: TaskStatus, readyForReviewByUserAccount?: { __typename: 'UserAccount', commonName: string } | null }, payments: { __typename: 'PlanPayments', id: UUID, payType: Array<PayType>, payClaims: Array<ClaimsBasedPayType>, creatingDependenciesBetweenServices?: boolean | null, creatingDependenciesBetweenServicesNote?: string | null, needsClaimsDataCollection?: boolean | null, needsClaimsDataCollectionNote?: string | null, providingThirdPartyFile?: boolean | null, isContractorAwareTestDataRequirements?: boolean | null, beneficiaryCostSharingLevelAndHandling?: string | null, waiveBeneficiaryCostSharingForAnyServices?: boolean | null, waiveBeneficiaryCostSharingServiceSpecification?: string | null, waiverOnlyAppliesPartOfPayment?: boolean | null, waiveBeneficiaryCostSharingNote?: string | null, payClaimsNote?: string | null, payClaimsOther?: string | null, shouldAnyProvidersExcludedFFSSystems?: boolean | null, shouldAnyProviderExcludedFFSSystemsNote?: string | null, changesMedicarePhysicianFeeSchedule?: boolean | null, changesMedicarePhysicianFeeScheduleNote?: string | null, affectsMedicareSecondaryPayerClaims?: boolean | null, affectsMedicareSecondaryPayerClaimsHow?: string | null, affectsMedicareSecondaryPayerClaimsNote?: string | null, payModelDifferentiation?: string | null, expectedCalculationComplexityLevel?: ComplexityCalculationLevelType | null, expectedCalculationComplexityLevelNote?: string | null, claimsProcessingPrecedence?: boolean | null, claimsProcessingPrecedenceOther?: string | null, claimsProcessingPrecedenceNote?: string | null, canParticipantsSelectBetweenPaymentMechanisms?: boolean | null, canParticipantsSelectBetweenPaymentMechanismsHow?: string | null, canParticipantsSelectBetweenPaymentMechanismsNote?: string | null, anticipatedPaymentFrequency: Array<FrequencyType>, anticipatedPaymentFrequencyContinually?: string | null, anticipatedPaymentFrequencyOther?: string | null, anticipatedPaymentFrequencyNote?: string | null, fundingSource: Array<FundingSource>, fundingSourceMedicareAInfo?: string | null, fundingSourceMedicareBInfo?: string | null, fundingSourceOther?: string | null, fundingSourceNote?: string | null, fundingSourceR: Array<FundingSource>, fundingSourceRMedicareAInfo?: string | null, fundingSourceRMedicareBInfo?: string | null, fundingSourceROther?: string | null, fundingSourceRNote?: string | null, payRecipients: Array<PayRecipient>, payRecipientsOtherSpecification?: string | null, payRecipientsNote?: string | null, payTypeNote?: string | null, nonClaimsPayments: Array<NonClaimsBasedPayType>, nonClaimsPaymentOther?: string | null, paymentCalculationOwner?: string | null, numberPaymentsPerPayCycle?: string | null, numberPaymentsPerPayCycleNote?: string | null, sharedSystemsInvolvedAdditionalClaimPayment?: boolean | null, sharedSystemsInvolvedAdditionalClaimPaymentNote?: string | null, planningToUseInnovationPaymentContractor?: boolean | null, planningToUseInnovationPaymentContractorNote?: string | null, willRecoverPayments?: boolean | null, willRecoverPaymentsNote?: string | null, anticipateReconcilingPaymentsRetrospectively?: boolean | null, anticipateReconcilingPaymentsRetrospectivelyNote?: string | null, paymentReconciliationFrequency: Array<FrequencyType>, paymentReconciliationFrequencyContinually?: string | null, paymentReconciliationFrequencyOther?: string | null, paymentReconciliationFrequencyNote?: string | null, paymentDemandRecoupmentFrequency: Array<FrequencyType>, paymentDemandRecoupmentFrequencyContinually?: string | null, paymentDemandRecoupmentFrequencyOther?: string | null, paymentDemandRecoupmentFrequencyNote?: string | null, paymentStartDate?: Time | null, paymentStartDateNote?: string | null, readyForReviewDts?: Time | null, status: TaskStatus, readyForReviewByUserAccount?: { __typename: 'UserAccount', commonName: string } | null }, collaborators: Array<{ __typename: 'PlanCollaborator', id: UUID, userID: UUID, teamRoles: Array<TeamRole>, modelPlanID: UUID, createdDts: Time, userAccount: { __typename: 'UserAccount', id: UUID, commonName: string, email: string, username: string } }>, discussions: Array<{ __typename: 'PlanDiscussion', id: UUID, userRole?: DiscussionUserRole | null, userRoleDescription?: string | null, createdDts: Time, content?: { __typename: 'TaggedContent', rawContent: string } | null, createdByUserAccount: { __typename: 'UserAccount', commonName: string }, replies: Array<{ __typename: 'DiscussionReply', id: UUID, discussionID: UUID, userRole?: DiscussionUserRole | null, userRoleDescription?: string | null, createdDts: Time, content?: { __typename: 'TaggedContent', rawContent: string } | null, createdByUserAccount: { __typename: 'UserAccount', commonName: string } }> }> }> };
+export type GetAllModelDataQuery = { __typename: 'Query', modelPlanCollection: Array<{ __typename: 'ModelPlan', id: UUID, modelName: string, nameHistory: Array<string>, abbreviation?: string | null, archived: boolean, createdDts: Time, status: ModelStatus, createdByUserAccount: { __typename: 'UserAccount', commonName: string }, basics: { __typename: 'PlanBasics', id: UUID, modelCategory?: ModelCategory | null, amsModelID?: string | null, demoCode?: string | null, cmsCenters: Array<CmsCenter>, cmmiGroups: Array<CmmiGroup>, modelType: Array<ModelType>, modelTypeOther?: string | null, problem?: string | null, goal?: string | null, testInterventions?: string | null, note?: string | null, completeICIP?: Time | null, clearanceStarts?: Time | null, clearanceEnds?: Time | null, announced?: Time | null, applicationsStart?: Time | null, applicationsEnd?: Time | null, performancePeriodStarts?: Time | null, performancePeriodEnds?: Time | null, highLevelNote?: string | null, wrapUpEnds?: Time | null, phasedIn?: boolean | null, phasedInNote?: string | null, readyForReviewDts?: Time | null, status: TaskStatus, readyForReviewByUserAccount?: { __typename: 'UserAccount', commonName: string } | null }, generalCharacteristics: { __typename: 'PlanGeneralCharacteristics', id: UUID, rulemakingRequired?: boolean | null, rulemakingRequiredDescription?: string | null, rulemakingRequiredNote?: string | null, authorityAllowances: Array<AuthorityAllowance>, authorityAllowancesOther?: string | null, authorityAllowancesNote?: string | null, waiversRequired?: boolean | null, waiversRequiredTypes: Array<WaiverType>, waiversRequiredNote?: string | null, isNewModel?: boolean | null, existingModel?: string | null, resemblesExistingModel?: YesNoOtherType | null, resemblesExistingModelWhyHow?: string | null, resemblesExistingModelHow?: string | null, resemblesExistingModelNote?: string | null, resemblesExistingModelOtherSpecify?: string | null, resemblesExistingModelOtherOption?: string | null, participationInModelPrecondition?: YesNoOtherType | null, participationInModelPreconditionOtherSpecify?: string | null, participationInModelPreconditionOtherOption?: string | null, participationInModelPreconditionWhyHow?: string | null, participationInModelPreconditionNote?: string | null, hasComponentsOrTracks?: boolean | null, hasComponentsOrTracksDiffer?: string | null, hasComponentsOrTracksNote?: string | null, careCoordinationInvolved?: boolean | null, careCoordinationInvolvedDescription?: string | null, careCoordinationInvolvedNote?: string | null, additionalServicesInvolved?: boolean | null, additionalServicesInvolvedDescription?: string | null, additionalServicesInvolvedNote?: string | null, communityPartnersInvolved?: boolean | null, communityPartnersInvolvedDescription?: string | null, communityPartnersInvolvedNote?: string | null, agencyOrStateHelp: Array<AgencyOrStateHelpType>, agencyOrStateHelpOther?: string | null, agencyOrStateHelpNote?: string | null, alternativePaymentModelTypes: Array<AlternativePaymentModelType>, alternativePaymentModelNote?: string | null, keyCharacteristics: Array<KeyCharacteristic>, keyCharacteristicsNote?: string | null, keyCharacteristicsOther?: string | null, collectPlanBids?: boolean | null, collectPlanBidsNote?: string | null, managePartCDEnrollment?: boolean | null, managePartCDEnrollmentNote?: string | null, planContractUpdated?: boolean | null, planContractUpdatedNote?: string | null, geographiesTargeted?: boolean | null, geographiesTargetedTypes: Array<GeographyType>, geographiesStatesAndTerritories: Array<StatesAndTerritories>, geographiesRegionTypes: Array<GeographyRegionType>, geographiesTargetedTypesOther?: string | null, geographiesTargetedAppliedTo: Array<GeographyApplication>, geographiesTargetedAppliedToOther?: string | null, geographiesTargetedNote?: string | null, participationOptions?: boolean | null, participationOptionsNote?: string | null, agreementTypes: Array<AgreementType>, agreementTypesOther?: string | null, multiplePatricipationAgreementsNeeded?: boolean | null, multiplePatricipationAgreementsNeededNote?: string | null, readyForReviewDts?: Time | null, status: TaskStatus, resemblesExistingModelWhich?: { __typename: 'ExistingModelLinks', names: Array<string> } | null, participationInModelPreconditionWhich?: { __typename: 'ExistingModelLinks', names: Array<string> } | null, readyForReviewByUserAccount?: { __typename: 'UserAccount', commonName: string } | null }, participantsAndProviders: { __typename: 'PlanParticipantsAndProviders', id: UUID, participantAddedFrequency: Array<FrequencyType>, participantAddedFrequencyContinually?: string | null, participantAddedFrequencyOther?: string | null, participantAddedFrequencyNote?: string | null, participantRemovedFrequency: Array<FrequencyType>, participantRemovedFrequencyContinually?: string | null, participantRemovedFrequencyOther?: string | null, participantRemovedFrequencyNote?: string | null, communicationMethod: Array<ParticipantCommunicationType>, communicationMethodOther?: string | null, communicationNote?: string | null, riskType: Array<ParticipantRiskType>, riskOther?: string | null, riskNote?: string | null, willRiskChange?: boolean | null, willRiskChangeNote?: string | null, participantRequireFinancialGuarantee?: boolean | null, participantRequireFinancialGuaranteeType: Array<ParticipantRequireFinancialGuaranteeType>, participantRequireFinancialGuaranteeOther?: string | null, participantRequireFinancialGuaranteeNote?: string | null, coordinateWork?: boolean | null, coordinateWorkNote?: string | null, gainsharePayments?: boolean | null, gainsharePaymentsTrack?: boolean | null, gainsharePaymentsEligibility: Array<GainshareArrangementEligibility>, gainsharePaymentsEligibilityOther?: string | null, gainsharePaymentsNote?: string | null, participantsIds: Array<ParticipantsIdType>, participantsIdsOther?: string | null, participantsIDSNote?: string | null, expectedNumberOfParticipants?: number | null, estimateConfidence?: ConfidenceType | null, confidenceNote?: string | null, recruitmentMethod?: RecruitmentType | null, recruitmentOther?: string | null, recruitmentNote?: string | null, selectionMethod: Array<ParticipantSelectionType>, selectionOther?: string | null, selectionNote?: string | null, participants: Array<ParticipantsType>, medicareProviderType?: string | null, statesEngagement?: string | null, participantsOther?: string | null, participantsNote?: string | null, participantsCurrentlyInModels?: boolean | null, participantsCurrentlyInModelsNote?: string | null, modelApplicationLevel?: string | null, providerAdditionFrequency: Array<FrequencyType>, providerAdditionFrequencyContinually?: string | null, providerAdditionFrequencyOther?: string | null, providerAdditionFrequencyNote?: string | null, providerAddMethod: Array<ProviderAddType>, providerAddMethodOther?: string | null, providerAddMethodNote?: string | null, providerLeaveMethod: Array<ProviderLeaveType>, providerLeaveMethodOther?: string | null, providerLeaveMethodNote?: string | null, providerRemovalFrequency: Array<FrequencyType>, providerRemovalFrequencyContinually?: string | null, providerRemovalFrequencyOther?: string | null, providerRemovalFrequencyNote?: string | null, providerOverlap?: OverlapType | null, providerOverlapHierarchy?: string | null, providerOverlapNote?: string | null, readyForReviewDts?: Time | null, status: TaskStatus, readyForReviewByUserAccount?: { __typename: 'UserAccount', commonName: string } | null }, beneficiaries: { __typename: 'PlanBeneficiaries', id: UUID, beneficiaries: Array<BeneficiariesType>, beneficiariesNote?: string | null, beneficiariesOther?: string | null, beneficiaryOverlap?: OverlapType | null, beneficiaryOverlapNote?: string | null, beneficiarySelectionNote?: string | null, beneficiarySelectionOther?: string | null, beneficiarySelectionMethod: Array<SelectionMethodType>, treatDualElligibleDifferent?: TriStateAnswer | null, treatDualElligibleDifferentHow?: string | null, treatDualElligibleDifferentNote?: string | null, excludeCertainCharacteristics?: TriStateAnswer | null, excludeCertainCharacteristicsCriteria?: string | null, excludeCertainCharacteristicsNote?: string | null, beneficiarySelectionFrequency: Array<FrequencyType>, beneficiarySelectionFrequencyContinually?: string | null, beneficiarySelectionFrequencyNote?: string | null, beneficiarySelectionFrequencyOther?: string | null, beneficiaryRemovalFrequency: Array<FrequencyType>, beneficiaryRemovalFrequencyContinually?: string | null, beneficiaryRemovalFrequencyNote?: string | null, beneficiaryRemovalFrequencyOther?: string | null, precedenceRules: Array<YesNoType>, precedenceRulesYes?: string | null, precedenceRulesNo?: string | null, precedenceRulesNote?: string | null, numberPeopleImpacted?: number | null, estimateConfidence?: ConfidenceType | null, confidenceNote?: string | null, readyForReviewDts?: Time | null, status: TaskStatus, readyForReviewByUserAccount?: { __typename: 'UserAccount', commonName: string } | null }, opsEvalAndLearning: { __typename: 'PlanOpsEvalAndLearning', id: UUID, ccmInvolvment: Array<CcmInvolvmentType>, ccmInvolvmentOther?: string | null, ccmInvolvmentNote?: string | null, iddocSupport?: boolean | null, iddocSupportNote?: string | null, sendFilesBetweenCcw?: boolean | null, sendFilesBetweenCcwNote?: string | null, appToSendFilesToKnown?: boolean | null, appToSendFilesToWhich?: string | null, appToSendFilesToNote?: string | null, useCcwForFileDistribiutionToParticipants?: boolean | null, useCcwForFileDistribiutionToParticipantsNote?: string | null, developNewQualityMeasures?: boolean | null, developNewQualityMeasuresNote?: string | null, qualityPerformanceImpactsPayment?: YesNoOtherType | null, qualityPerformanceImpactsPaymentOther?: string | null, qualityPerformanceImpactsPaymentNote?: string | null, dataSharingStarts?: DataStartsType | null, dataSharingStartsOther?: string | null, dataSharingFrequency: Array<FrequencyType>, dataSharingFrequencyContinually?: string | null, dataSharingFrequencyOther?: string | null, dataSharingStartsNote?: string | null, dataCollectionStarts?: DataStartsType | null, dataCollectionStartsOther?: string | null, dataCollectionFrequency: Array<FrequencyType>, dataCollectionFrequencyContinually?: string | null, dataCollectionFrequencyOther?: string | null, dataCollectionFrequencyNote?: string | null, qualityReportingStarts?: DataStartsType | null, qualityReportingStartsOther?: string | null, qualityReportingStartsNote?: string | null, qualityReportingFrequency: Array<FrequencyType>, qualityReportingFrequencyContinually?: string | null, qualityReportingFrequencyOther?: string | null, evaluationApproaches: Array<EvaluationApproachType>, evaluationApproachOther?: string | null, evalutaionApproachNote?: string | null, dataNeededForMonitoring: Array<DataForMonitoringType>, dataNeededForMonitoringOther?: string | null, dataNeededForMonitoringNote?: string | null, dataToSendParticicipants: Array<DataToSendParticipantsType>, dataToSendParticicipantsOther?: string | null, dataToSendParticicipantsNote?: string | null, shareCclfData?: boolean | null, shareCclfDataNote?: string | null, technicalContactsIdentified?: boolean | null, technicalContactsIdentifiedDetail?: string | null, technicalContactsIdentifiedNote?: string | null, captureParticipantInfo?: boolean | null, captureParticipantInfoNote?: string | null, icdOwner?: string | null, draftIcdDueDate?: Time | null, icdNote?: string | null, dataFullTimeOrIncremental?: DataFullTimeOrIncrementalType | null, eftSetUp?: boolean | null, unsolicitedAdjustmentsIncluded?: boolean | null, dataFlowDiagramsNeeded?: boolean | null, produceBenefitEnhancementFiles?: boolean | null, fileNamingConventions?: string | null, dataMonitoringNote?: string | null, uatNeeds?: string | null, stcNeeds?: string | null, testingTimelines?: string | null, testingNote?: string | null, dataMonitoringFileTypes: Array<MonitoringFileType>, dataMonitoringFileOther?: string | null, dataResponseType?: string | null, dataResponseFileFrequency?: string | null, modelLearningSystems: Array<ModelLearningSystemType>, modelLearningSystemsOther?: string | null, modelLearningSystemsNote?: string | null, anticipatedChallenges?: string | null, stakeholders: Array<StakeholdersType>, stakeholdersOther?: string | null, stakeholdersNote?: string | null, helpdeskUse?: boolean | null, helpdeskUseNote?: string | null, contractorSupport: Array<ContractorSupportType>, contractorSupportOther?: string | null, contractorSupportHow?: string | null, contractorSupportNote?: string | null, benchmarkForPerformance?: BenchmarkForPerformanceType | null, benchmarkForPerformanceNote?: string | null, computePerformanceScores?: boolean | null, computePerformanceScoresNote?: string | null, riskAdjustPerformance?: boolean | null, riskAdjustFeedback?: boolean | null, riskAdjustPayments?: boolean | null, riskAdjustOther?: boolean | null, riskAdjustNote?: string | null, appealPerformance?: boolean | null, appealFeedback?: boolean | null, appealPayments?: boolean | null, appealOther?: boolean | null, appealNote?: string | null, readyForReviewDts?: Time | null, status: TaskStatus, readyForReviewByUserAccount?: { __typename: 'UserAccount', commonName: string } | null }, payments: { __typename: 'PlanPayments', id: UUID, payType: Array<PayType>, payClaims: Array<ClaimsBasedPayType>, creatingDependenciesBetweenServices?: boolean | null, creatingDependenciesBetweenServicesNote?: string | null, needsClaimsDataCollection?: boolean | null, needsClaimsDataCollectionNote?: string | null, providingThirdPartyFile?: boolean | null, isContractorAwareTestDataRequirements?: boolean | null, beneficiaryCostSharingLevelAndHandling?: string | null, waiveBeneficiaryCostSharingForAnyServices?: boolean | null, waiveBeneficiaryCostSharingServiceSpecification?: string | null, waiverOnlyAppliesPartOfPayment?: boolean | null, waiveBeneficiaryCostSharingNote?: string | null, payClaimsNote?: string | null, payClaimsOther?: string | null, shouldAnyProvidersExcludedFFSSystems?: boolean | null, shouldAnyProviderExcludedFFSSystemsNote?: string | null, changesMedicarePhysicianFeeSchedule?: boolean | null, changesMedicarePhysicianFeeScheduleNote?: string | null, affectsMedicareSecondaryPayerClaims?: boolean | null, affectsMedicareSecondaryPayerClaimsHow?: string | null, affectsMedicareSecondaryPayerClaimsNote?: string | null, payModelDifferentiation?: string | null, expectedCalculationComplexityLevel?: ComplexityCalculationLevelType | null, expectedCalculationComplexityLevelNote?: string | null, claimsProcessingPrecedence?: boolean | null, claimsProcessingPrecedenceOther?: string | null, claimsProcessingPrecedenceNote?: string | null, canParticipantsSelectBetweenPaymentMechanisms?: boolean | null, canParticipantsSelectBetweenPaymentMechanismsHow?: string | null, canParticipantsSelectBetweenPaymentMechanismsNote?: string | null, anticipatedPaymentFrequency: Array<FrequencyType>, anticipatedPaymentFrequencyContinually?: string | null, anticipatedPaymentFrequencyOther?: string | null, anticipatedPaymentFrequencyNote?: string | null, fundingSource: Array<FundingSource>, fundingSourceMedicareAInfo?: string | null, fundingSourceMedicareBInfo?: string | null, fundingSourceOther?: string | null, fundingSourceNote?: string | null, fundingSourceR: Array<FundingSource>, fundingSourceRMedicareAInfo?: string | null, fundingSourceRMedicareBInfo?: string | null, fundingSourceROther?: string | null, fundingSourceRNote?: string | null, payRecipients: Array<PayRecipient>, payRecipientsOtherSpecification?: string | null, payRecipientsNote?: string | null, payTypeNote?: string | null, nonClaimsPayments: Array<NonClaimsBasedPayType>, nonClaimsPaymentOther?: string | null, paymentCalculationOwner?: string | null, numberPaymentsPerPayCycle?: string | null, numberPaymentsPerPayCycleNote?: string | null, sharedSystemsInvolvedAdditionalClaimPayment?: boolean | null, sharedSystemsInvolvedAdditionalClaimPaymentNote?: string | null, planningToUseInnovationPaymentContractor?: boolean | null, planningToUseInnovationPaymentContractorNote?: string | null, willRecoverPayments?: boolean | null, willRecoverPaymentsNote?: string | null, anticipateReconcilingPaymentsRetrospectively?: boolean | null, anticipateReconcilingPaymentsRetrospectivelyNote?: string | null, paymentReconciliationFrequency: Array<FrequencyType>, paymentReconciliationFrequencyContinually?: string | null, paymentReconciliationFrequencyOther?: string | null, paymentReconciliationFrequencyNote?: string | null, paymentDemandRecoupmentFrequency: Array<FrequencyType>, paymentDemandRecoupmentFrequencyContinually?: string | null, paymentDemandRecoupmentFrequencyOther?: string | null, paymentDemandRecoupmentFrequencyNote?: string | null, paymentStartDate?: Time | null, paymentStartDateNote?: string | null, readyForReviewDts?: Time | null, status: TaskStatus, readyForReviewByUserAccount?: { __typename: 'UserAccount', commonName: string } | null }, collaborators: Array<{ __typename: 'PlanCollaborator', id: UUID, userID: UUID, teamRoles: Array<TeamRole>, modelPlanID: UUID, createdDts: Time, userAccount: { __typename: 'UserAccount', id: UUID, commonName: string, email: string, username: string } }>, discussions: Array<{ __typename: 'PlanDiscussion', id: UUID, userRole?: DiscussionUserRole | null, userRoleDescription?: string | null, createdDts: Time, content?: { __typename: 'TaggedContent', rawContent: string } | null, createdByUserAccount: { __typename: 'UserAccount', commonName: string }, replies: Array<{ __typename: 'DiscussionReply', id: UUID, discussionID: UUID, userRole?: DiscussionUserRole | null, userRoleDescription?: string | null, createdDts: Time, content?: { __typename: 'TaggedContent', rawContent: string } | null, createdByUserAccount: { __typename: 'UserAccount', commonName: string } }> }> }> };
 
 export type GetAllSingleModelDataQueryVariables = Exact<{
   id: Scalars['UUID']['input'];
 }>;
 
 
-export type GetAllSingleModelDataQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, nameHistory: Array<string>, abbreviation?: string | null, archived: boolean, createdDts: Time, status: ModelStatus, createdByUserAccount: { __typename: 'UserAccount', commonName: string }, basics: { __typename: 'PlanBasics', id: UUID, modelCategory?: ModelCategory | null, amsModelID?: string | null, demoCode?: string | null, cmsCenters: Array<CmsCenter>, cmmiGroups: Array<CmmiGroup>, modelType: Array<ModelType>, modelTypeOther?: string | null, problem?: string | null, goal?: string | null, testInterventions?: string | null, note?: string | null, completeICIP?: Time | null, clearanceStarts?: Time | null, clearanceEnds?: Time | null, announced?: Time | null, applicationsStart?: Time | null, applicationsEnd?: Time | null, performancePeriodStarts?: Time | null, performancePeriodEnds?: Time | null, highLevelNote?: string | null, wrapUpEnds?: Time | null, phasedIn?: boolean | null, phasedInNote?: string | null, readyForReviewDts?: Time | null, status: TaskStatus, readyForReviewByUserAccount?: { __typename: 'UserAccount', commonName: string } | null }, generalCharacteristics: { __typename: 'PlanGeneralCharacteristics', id: UUID, rulemakingRequired?: boolean | null, rulemakingRequiredDescription?: string | null, rulemakingRequiredNote?: string | null, authorityAllowances: Array<AuthorityAllowance>, authorityAllowancesOther?: string | null, authorityAllowancesNote?: string | null, waiversRequired?: boolean | null, waiversRequiredTypes: Array<WaiverType>, waiversRequiredNote?: string | null, isNewModel?: boolean | null, existingModel?: string | null, resemblesExistingModel?: YesNoOtherType | null, resemblesExistingModelWhyHow?: string | null, resemblesExistingModelHow?: string | null, resemblesExistingModelNote?: string | null, resemblesExistingModelOtherSpecify?: string | null, resemblesExistingModelOtherOption?: string | null, participationInModelPrecondition?: YesNoOtherType | null, participationInModelPreconditionOtherSpecify?: string | null, participationInModelPreconditionOtherOption?: string | null, participationInModelPreconditionWhyHow?: string | null, participationInModelPreconditionNote?: string | null, hasComponentsOrTracks?: boolean | null, hasComponentsOrTracksDiffer?: string | null, hasComponentsOrTracksNote?: string | null, careCoordinationInvolved?: boolean | null, careCoordinationInvolvedDescription?: string | null, careCoordinationInvolvedNote?: string | null, additionalServicesInvolved?: boolean | null, additionalServicesInvolvedDescription?: string | null, additionalServicesInvolvedNote?: string | null, communityPartnersInvolved?: boolean | null, communityPartnersInvolvedDescription?: string | null, communityPartnersInvolvedNote?: string | null, agencyOrStateHelp: Array<AgencyOrStateHelpType>, agencyOrStateHelpOther?: string | null, agencyOrStateHelpNote?: string | null, alternativePaymentModelTypes: Array<AlternativePaymentModelType>, alternativePaymentModelNote?: string | null, keyCharacteristics: Array<KeyCharacteristic>, keyCharacteristicsNote?: string | null, keyCharacteristicsOther?: string | null, collectPlanBids?: boolean | null, collectPlanBidsNote?: string | null, managePartCDEnrollment?: boolean | null, managePartCDEnrollmentNote?: string | null, planContractUpdated?: boolean | null, planContractUpdatedNote?: string | null, geographiesTargeted?: boolean | null, geographiesTargetedTypes: Array<GeographyType>, geographiesStatesAndTerritories: Array<StatesAndTerritories>, geographiesRegionTypes: Array<GeographyRegionType>, geographiesTargetedTypesOther?: string | null, geographiesTargetedAppliedTo: Array<GeographyApplication>, geographiesTargetedAppliedToOther?: string | null, geographiesTargetedNote?: string | null, participationOptions?: boolean | null, participationOptionsNote?: string | null, agreementTypes: Array<AgreementType>, agreementTypesOther?: string | null, multiplePatricipationAgreementsNeeded?: boolean | null, multiplePatricipationAgreementsNeededNote?: string | null, readyForReviewDts?: Time | null, status: TaskStatus, resemblesExistingModelWhich?: { __typename: 'ExistingModelLinks', names: Array<string> } | null, participationInModelPreconditionWhich?: { __typename: 'ExistingModelLinks', names: Array<string> } | null, readyForReviewByUserAccount?: { __typename: 'UserAccount', commonName: string } | null }, participantsAndProviders: { __typename: 'PlanParticipantsAndProviders', id: UUID, participantAddedFrequency: Array<FrequencyType>, participantAddedFrequencyContinually?: string | null, participantAddedFrequencyOther?: string | null, participantAddedFrequencyNote?: string | null, participantRemovedFrequency: Array<FrequencyType>, participantRemovedFrequencyContinually?: string | null, participantRemovedFrequencyOther?: string | null, participantRemovedFrequencyNote?: string | null, communicationMethod: Array<ParticipantCommunicationType>, communicationMethodOther?: string | null, communicationNote?: string | null, riskType: Array<ParticipantRiskType>, riskOther?: string | null, riskNote?: string | null, willRiskChange?: boolean | null, willRiskChangeNote?: string | null, coordinateWork?: boolean | null, coordinateWorkNote?: string | null, gainsharePayments?: boolean | null, gainsharePaymentsTrack?: boolean | null, gainsharePaymentsEligibility: Array<GainshareArrangementEligibility>, gainsharePaymentsEligibilityOther?: string | null, gainsharePaymentsNote?: string | null, participantsIds: Array<ParticipantsIdType>, participantsIdsOther?: string | null, participantsIDSNote?: string | null, expectedNumberOfParticipants?: number | null, estimateConfidence?: ConfidenceType | null, confidenceNote?: string | null, recruitmentMethod?: RecruitmentType | null, recruitmentOther?: string | null, recruitmentNote?: string | null, selectionMethod: Array<ParticipantSelectionType>, selectionOther?: string | null, selectionNote?: string | null, participants: Array<ParticipantsType>, medicareProviderType?: string | null, statesEngagement?: string | null, participantsOther?: string | null, participantsNote?: string | null, participantsCurrentlyInModels?: boolean | null, participantsCurrentlyInModelsNote?: string | null, modelApplicationLevel?: string | null, providerAdditionFrequency: Array<FrequencyType>, providerAdditionFrequencyContinually?: string | null, providerAdditionFrequencyOther?: string | null, providerAdditionFrequencyNote?: string | null, providerAddMethod: Array<ProviderAddType>, providerAddMethodOther?: string | null, providerAddMethodNote?: string | null, providerLeaveMethod: Array<ProviderLeaveType>, providerLeaveMethodOther?: string | null, providerLeaveMethodNote?: string | null, providerRemovalFrequency: Array<FrequencyType>, providerRemovalFrequencyContinually?: string | null, providerRemovalFrequencyOther?: string | null, providerRemovalFrequencyNote?: string | null, providerOverlap?: OverlapType | null, providerOverlapHierarchy?: string | null, providerOverlapNote?: string | null, readyForReviewDts?: Time | null, status: TaskStatus, readyForReviewByUserAccount?: { __typename: 'UserAccount', commonName: string } | null }, beneficiaries: { __typename: 'PlanBeneficiaries', id: UUID, beneficiaries: Array<BeneficiariesType>, beneficiariesNote?: string | null, beneficiariesOther?: string | null, beneficiaryOverlap?: OverlapType | null, beneficiaryOverlapNote?: string | null, beneficiarySelectionNote?: string | null, beneficiarySelectionOther?: string | null, beneficiarySelectionMethod: Array<SelectionMethodType>, treatDualElligibleDifferent?: TriStateAnswer | null, treatDualElligibleDifferentHow?: string | null, treatDualElligibleDifferentNote?: string | null, excludeCertainCharacteristics?: TriStateAnswer | null, excludeCertainCharacteristicsCriteria?: string | null, excludeCertainCharacteristicsNote?: string | null, beneficiarySelectionFrequency: Array<FrequencyType>, beneficiarySelectionFrequencyContinually?: string | null, beneficiarySelectionFrequencyNote?: string | null, beneficiarySelectionFrequencyOther?: string | null, beneficiaryRemovalFrequency: Array<FrequencyType>, beneficiaryRemovalFrequencyContinually?: string | null, beneficiaryRemovalFrequencyNote?: string | null, beneficiaryRemovalFrequencyOther?: string | null, precedenceRules: Array<YesNoType>, precedenceRulesYes?: string | null, precedenceRulesNo?: string | null, precedenceRulesNote?: string | null, numberPeopleImpacted?: number | null, estimateConfidence?: ConfidenceType | null, confidenceNote?: string | null, readyForReviewDts?: Time | null, status: TaskStatus, readyForReviewByUserAccount?: { __typename: 'UserAccount', commonName: string } | null }, opsEvalAndLearning: { __typename: 'PlanOpsEvalAndLearning', id: UUID, ccmInvolvment: Array<CcmInvolvmentType>, ccmInvolvmentOther?: string | null, ccmInvolvmentNote?: string | null, iddocSupport?: boolean | null, iddocSupportNote?: string | null, sendFilesBetweenCcw?: boolean | null, sendFilesBetweenCcwNote?: string | null, appToSendFilesToKnown?: boolean | null, appToSendFilesToWhich?: string | null, appToSendFilesToNote?: string | null, useCcwForFileDistribiutionToParticipants?: boolean | null, useCcwForFileDistribiutionToParticipantsNote?: string | null, developNewQualityMeasures?: boolean | null, developNewQualityMeasuresNote?: string | null, qualityPerformanceImpactsPayment?: YesNoOtherType | null, qualityPerformanceImpactsPaymentOther?: string | null, qualityPerformanceImpactsPaymentNote?: string | null, dataSharingStarts?: DataStartsType | null, dataSharingStartsOther?: string | null, dataSharingFrequency: Array<FrequencyType>, dataSharingFrequencyContinually?: string | null, dataSharingFrequencyOther?: string | null, dataSharingStartsNote?: string | null, dataCollectionStarts?: DataStartsType | null, dataCollectionStartsOther?: string | null, dataCollectionFrequency: Array<FrequencyType>, dataCollectionFrequencyContinually?: string | null, dataCollectionFrequencyOther?: string | null, dataCollectionFrequencyNote?: string | null, qualityReportingStarts?: DataStartsType | null, qualityReportingStartsOther?: string | null, qualityReportingStartsNote?: string | null, qualityReportingFrequency: Array<FrequencyType>, qualityReportingFrequencyContinually?: string | null, qualityReportingFrequencyOther?: string | null, evaluationApproaches: Array<EvaluationApproachType>, evaluationApproachOther?: string | null, evalutaionApproachNote?: string | null, dataNeededForMonitoring: Array<DataForMonitoringType>, dataNeededForMonitoringOther?: string | null, dataNeededForMonitoringNote?: string | null, dataToSendParticicipants: Array<DataToSendParticipantsType>, dataToSendParticicipantsOther?: string | null, dataToSendParticicipantsNote?: string | null, shareCclfData?: boolean | null, shareCclfDataNote?: string | null, technicalContactsIdentified?: boolean | null, technicalContactsIdentifiedDetail?: string | null, technicalContactsIdentifiedNote?: string | null, captureParticipantInfo?: boolean | null, captureParticipantInfoNote?: string | null, icdOwner?: string | null, draftIcdDueDate?: Time | null, icdNote?: string | null, dataFullTimeOrIncremental?: DataFullTimeOrIncrementalType | null, eftSetUp?: boolean | null, unsolicitedAdjustmentsIncluded?: boolean | null, dataFlowDiagramsNeeded?: boolean | null, produceBenefitEnhancementFiles?: boolean | null, fileNamingConventions?: string | null, dataMonitoringNote?: string | null, uatNeeds?: string | null, stcNeeds?: string | null, testingTimelines?: string | null, testingNote?: string | null, dataMonitoringFileTypes: Array<MonitoringFileType>, dataMonitoringFileOther?: string | null, dataResponseType?: string | null, dataResponseFileFrequency?: string | null, modelLearningSystems: Array<ModelLearningSystemType>, modelLearningSystemsOther?: string | null, modelLearningSystemsNote?: string | null, anticipatedChallenges?: string | null, stakeholders: Array<StakeholdersType>, stakeholdersOther?: string | null, stakeholdersNote?: string | null, helpdeskUse?: boolean | null, helpdeskUseNote?: string | null, contractorSupport: Array<ContractorSupportType>, contractorSupportOther?: string | null, contractorSupportHow?: string | null, contractorSupportNote?: string | null, benchmarkForPerformance?: BenchmarkForPerformanceType | null, benchmarkForPerformanceNote?: string | null, computePerformanceScores?: boolean | null, computePerformanceScoresNote?: string | null, riskAdjustPerformance?: boolean | null, riskAdjustFeedback?: boolean | null, riskAdjustPayments?: boolean | null, riskAdjustOther?: boolean | null, riskAdjustNote?: string | null, appealPerformance?: boolean | null, appealFeedback?: boolean | null, appealPayments?: boolean | null, appealOther?: boolean | null, appealNote?: string | null, readyForReviewDts?: Time | null, status: TaskStatus, readyForReviewByUserAccount?: { __typename: 'UserAccount', commonName: string } | null }, payments: { __typename: 'PlanPayments', id: UUID, payType: Array<PayType>, payClaims: Array<ClaimsBasedPayType>, creatingDependenciesBetweenServices?: boolean | null, creatingDependenciesBetweenServicesNote?: string | null, needsClaimsDataCollection?: boolean | null, needsClaimsDataCollectionNote?: string | null, providingThirdPartyFile?: boolean | null, isContractorAwareTestDataRequirements?: boolean | null, beneficiaryCostSharingLevelAndHandling?: string | null, waiveBeneficiaryCostSharingForAnyServices?: boolean | null, waiveBeneficiaryCostSharingServiceSpecification?: string | null, waiverOnlyAppliesPartOfPayment?: boolean | null, waiveBeneficiaryCostSharingNote?: string | null, payClaimsNote?: string | null, payClaimsOther?: string | null, shouldAnyProvidersExcludedFFSSystems?: boolean | null, shouldAnyProviderExcludedFFSSystemsNote?: string | null, changesMedicarePhysicianFeeSchedule?: boolean | null, changesMedicarePhysicianFeeScheduleNote?: string | null, affectsMedicareSecondaryPayerClaims?: boolean | null, affectsMedicareSecondaryPayerClaimsHow?: string | null, affectsMedicareSecondaryPayerClaimsNote?: string | null, payModelDifferentiation?: string | null, expectedCalculationComplexityLevel?: ComplexityCalculationLevelType | null, expectedCalculationComplexityLevelNote?: string | null, claimsProcessingPrecedence?: boolean | null, claimsProcessingPrecedenceOther?: string | null, claimsProcessingPrecedenceNote?: string | null, canParticipantsSelectBetweenPaymentMechanisms?: boolean | null, canParticipantsSelectBetweenPaymentMechanismsHow?: string | null, canParticipantsSelectBetweenPaymentMechanismsNote?: string | null, anticipatedPaymentFrequency: Array<FrequencyType>, anticipatedPaymentFrequencyContinually?: string | null, anticipatedPaymentFrequencyOther?: string | null, anticipatedPaymentFrequencyNote?: string | null, fundingSource: Array<FundingSource>, fundingSourceMedicareAInfo?: string | null, fundingSourceMedicareBInfo?: string | null, fundingSourceOther?: string | null, fundingSourceNote?: string | null, fundingSourceR: Array<FundingSource>, fundingSourceRMedicareAInfo?: string | null, fundingSourceRMedicareBInfo?: string | null, fundingSourceROther?: string | null, fundingSourceRNote?: string | null, payRecipients: Array<PayRecipient>, payRecipientsOtherSpecification?: string | null, payRecipientsNote?: string | null, payTypeNote?: string | null, nonClaimsPayments: Array<NonClaimsBasedPayType>, nonClaimsPaymentOther?: string | null, paymentCalculationOwner?: string | null, numberPaymentsPerPayCycle?: string | null, numberPaymentsPerPayCycleNote?: string | null, sharedSystemsInvolvedAdditionalClaimPayment?: boolean | null, sharedSystemsInvolvedAdditionalClaimPaymentNote?: string | null, planningToUseInnovationPaymentContractor?: boolean | null, planningToUseInnovationPaymentContractorNote?: string | null, willRecoverPayments?: boolean | null, willRecoverPaymentsNote?: string | null, anticipateReconcilingPaymentsRetrospectively?: boolean | null, anticipateReconcilingPaymentsRetrospectivelyNote?: string | null, paymentReconciliationFrequency: Array<FrequencyType>, paymentReconciliationFrequencyContinually?: string | null, paymentReconciliationFrequencyOther?: string | null, paymentReconciliationFrequencyNote?: string | null, paymentDemandRecoupmentFrequency: Array<FrequencyType>, paymentDemandRecoupmentFrequencyContinually?: string | null, paymentDemandRecoupmentFrequencyOther?: string | null, paymentDemandRecoupmentFrequencyNote?: string | null, paymentStartDate?: Time | null, paymentStartDateNote?: string | null, readyForReviewDts?: Time | null, status: TaskStatus, readyForReviewByUserAccount?: { __typename: 'UserAccount', commonName: string } | null }, collaborators: Array<{ __typename: 'PlanCollaborator', id: UUID, userID: UUID, teamRoles: Array<TeamRole>, modelPlanID: UUID, createdDts: Time, userAccount: { __typename: 'UserAccount', id: UUID, commonName: string, email: string, username: string } }>, discussions: Array<{ __typename: 'PlanDiscussion', id: UUID, userRole?: DiscussionUserRole | null, userRoleDescription?: string | null, createdDts: Time, content?: { __typename: 'TaggedContent', rawContent: string } | null, createdByUserAccount: { __typename: 'UserAccount', commonName: string }, replies: Array<{ __typename: 'DiscussionReply', id: UUID, discussionID: UUID, userRole?: DiscussionUserRole | null, userRoleDescription?: string | null, createdDts: Time, content?: { __typename: 'TaggedContent', rawContent: string } | null, createdByUserAccount: { __typename: 'UserAccount', commonName: string } }> }> } };
+export type GetAllSingleModelDataQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, nameHistory: Array<string>, abbreviation?: string | null, archived: boolean, createdDts: Time, status: ModelStatus, createdByUserAccount: { __typename: 'UserAccount', commonName: string }, basics: { __typename: 'PlanBasics', id: UUID, modelCategory?: ModelCategory | null, amsModelID?: string | null, demoCode?: string | null, cmsCenters: Array<CmsCenter>, cmmiGroups: Array<CmmiGroup>, modelType: Array<ModelType>, modelTypeOther?: string | null, problem?: string | null, goal?: string | null, testInterventions?: string | null, note?: string | null, completeICIP?: Time | null, clearanceStarts?: Time | null, clearanceEnds?: Time | null, announced?: Time | null, applicationsStart?: Time | null, applicationsEnd?: Time | null, performancePeriodStarts?: Time | null, performancePeriodEnds?: Time | null, highLevelNote?: string | null, wrapUpEnds?: Time | null, phasedIn?: boolean | null, phasedInNote?: string | null, readyForReviewDts?: Time | null, status: TaskStatus, readyForReviewByUserAccount?: { __typename: 'UserAccount', commonName: string } | null }, generalCharacteristics: { __typename: 'PlanGeneralCharacteristics', id: UUID, rulemakingRequired?: boolean | null, rulemakingRequiredDescription?: string | null, rulemakingRequiredNote?: string | null, authorityAllowances: Array<AuthorityAllowance>, authorityAllowancesOther?: string | null, authorityAllowancesNote?: string | null, waiversRequired?: boolean | null, waiversRequiredTypes: Array<WaiverType>, waiversRequiredNote?: string | null, isNewModel?: boolean | null, existingModel?: string | null, resemblesExistingModel?: YesNoOtherType | null, resemblesExistingModelWhyHow?: string | null, resemblesExistingModelHow?: string | null, resemblesExistingModelNote?: string | null, resemblesExistingModelOtherSpecify?: string | null, resemblesExistingModelOtherOption?: string | null, participationInModelPrecondition?: YesNoOtherType | null, participationInModelPreconditionOtherSpecify?: string | null, participationInModelPreconditionOtherOption?: string | null, participationInModelPreconditionWhyHow?: string | null, participationInModelPreconditionNote?: string | null, hasComponentsOrTracks?: boolean | null, hasComponentsOrTracksDiffer?: string | null, hasComponentsOrTracksNote?: string | null, careCoordinationInvolved?: boolean | null, careCoordinationInvolvedDescription?: string | null, careCoordinationInvolvedNote?: string | null, additionalServicesInvolved?: boolean | null, additionalServicesInvolvedDescription?: string | null, additionalServicesInvolvedNote?: string | null, communityPartnersInvolved?: boolean | null, communityPartnersInvolvedDescription?: string | null, communityPartnersInvolvedNote?: string | null, agencyOrStateHelp: Array<AgencyOrStateHelpType>, agencyOrStateHelpOther?: string | null, agencyOrStateHelpNote?: string | null, alternativePaymentModelTypes: Array<AlternativePaymentModelType>, alternativePaymentModelNote?: string | null, keyCharacteristics: Array<KeyCharacteristic>, keyCharacteristicsNote?: string | null, keyCharacteristicsOther?: string | null, collectPlanBids?: boolean | null, collectPlanBidsNote?: string | null, managePartCDEnrollment?: boolean | null, managePartCDEnrollmentNote?: string | null, planContractUpdated?: boolean | null, planContractUpdatedNote?: string | null, geographiesTargeted?: boolean | null, geographiesTargetedTypes: Array<GeographyType>, geographiesStatesAndTerritories: Array<StatesAndTerritories>, geographiesRegionTypes: Array<GeographyRegionType>, geographiesTargetedTypesOther?: string | null, geographiesTargetedAppliedTo: Array<GeographyApplication>, geographiesTargetedAppliedToOther?: string | null, geographiesTargetedNote?: string | null, participationOptions?: boolean | null, participationOptionsNote?: string | null, agreementTypes: Array<AgreementType>, agreementTypesOther?: string | null, multiplePatricipationAgreementsNeeded?: boolean | null, multiplePatricipationAgreementsNeededNote?: string | null, readyForReviewDts?: Time | null, status: TaskStatus, resemblesExistingModelWhich?: { __typename: 'ExistingModelLinks', names: Array<string> } | null, participationInModelPreconditionWhich?: { __typename: 'ExistingModelLinks', names: Array<string> } | null, readyForReviewByUserAccount?: { __typename: 'UserAccount', commonName: string } | null }, participantsAndProviders: { __typename: 'PlanParticipantsAndProviders', id: UUID, participantAddedFrequency: Array<FrequencyType>, participantAddedFrequencyContinually?: string | null, participantAddedFrequencyOther?: string | null, participantAddedFrequencyNote?: string | null, participantRemovedFrequency: Array<FrequencyType>, participantRemovedFrequencyContinually?: string | null, participantRemovedFrequencyOther?: string | null, participantRemovedFrequencyNote?: string | null, communicationMethod: Array<ParticipantCommunicationType>, communicationMethodOther?: string | null, communicationNote?: string | null, riskType: Array<ParticipantRiskType>, riskOther?: string | null, riskNote?: string | null, willRiskChange?: boolean | null, willRiskChangeNote?: string | null, participantRequireFinancialGuarantee?: boolean | null, participantRequireFinancialGuaranteeType: Array<ParticipantRequireFinancialGuaranteeType>, participantRequireFinancialGuaranteeOther?: string | null, participantRequireFinancialGuaranteeNote?: string | null, coordinateWork?: boolean | null, coordinateWorkNote?: string | null, gainsharePayments?: boolean | null, gainsharePaymentsTrack?: boolean | null, gainsharePaymentsEligibility: Array<GainshareArrangementEligibility>, gainsharePaymentsEligibilityOther?: string | null, gainsharePaymentsNote?: string | null, participantsIds: Array<ParticipantsIdType>, participantsIdsOther?: string | null, participantsIDSNote?: string | null, expectedNumberOfParticipants?: number | null, estimateConfidence?: ConfidenceType | null, confidenceNote?: string | null, recruitmentMethod?: RecruitmentType | null, recruitmentOther?: string | null, recruitmentNote?: string | null, selectionMethod: Array<ParticipantSelectionType>, selectionOther?: string | null, selectionNote?: string | null, participants: Array<ParticipantsType>, medicareProviderType?: string | null, statesEngagement?: string | null, participantsOther?: string | null, participantsNote?: string | null, participantsCurrentlyInModels?: boolean | null, participantsCurrentlyInModelsNote?: string | null, modelApplicationLevel?: string | null, providerAdditionFrequency: Array<FrequencyType>, providerAdditionFrequencyContinually?: string | null, providerAdditionFrequencyOther?: string | null, providerAdditionFrequencyNote?: string | null, providerAddMethod: Array<ProviderAddType>, providerAddMethodOther?: string | null, providerAddMethodNote?: string | null, providerLeaveMethod: Array<ProviderLeaveType>, providerLeaveMethodOther?: string | null, providerLeaveMethodNote?: string | null, providerRemovalFrequency: Array<FrequencyType>, providerRemovalFrequencyContinually?: string | null, providerRemovalFrequencyOther?: string | null, providerRemovalFrequencyNote?: string | null, providerOverlap?: OverlapType | null, providerOverlapHierarchy?: string | null, providerOverlapNote?: string | null, readyForReviewDts?: Time | null, status: TaskStatus, readyForReviewByUserAccount?: { __typename: 'UserAccount', commonName: string } | null }, beneficiaries: { __typename: 'PlanBeneficiaries', id: UUID, beneficiaries: Array<BeneficiariesType>, beneficiariesNote?: string | null, beneficiariesOther?: string | null, beneficiaryOverlap?: OverlapType | null, beneficiaryOverlapNote?: string | null, beneficiarySelectionNote?: string | null, beneficiarySelectionOther?: string | null, beneficiarySelectionMethod: Array<SelectionMethodType>, treatDualElligibleDifferent?: TriStateAnswer | null, treatDualElligibleDifferentHow?: string | null, treatDualElligibleDifferentNote?: string | null, excludeCertainCharacteristics?: TriStateAnswer | null, excludeCertainCharacteristicsCriteria?: string | null, excludeCertainCharacteristicsNote?: string | null, beneficiarySelectionFrequency: Array<FrequencyType>, beneficiarySelectionFrequencyContinually?: string | null, beneficiarySelectionFrequencyNote?: string | null, beneficiarySelectionFrequencyOther?: string | null, beneficiaryRemovalFrequency: Array<FrequencyType>, beneficiaryRemovalFrequencyContinually?: string | null, beneficiaryRemovalFrequencyNote?: string | null, beneficiaryRemovalFrequencyOther?: string | null, precedenceRules: Array<YesNoType>, precedenceRulesYes?: string | null, precedenceRulesNo?: string | null, precedenceRulesNote?: string | null, numberPeopleImpacted?: number | null, estimateConfidence?: ConfidenceType | null, confidenceNote?: string | null, readyForReviewDts?: Time | null, status: TaskStatus, readyForReviewByUserAccount?: { __typename: 'UserAccount', commonName: string } | null }, opsEvalAndLearning: { __typename: 'PlanOpsEvalAndLearning', id: UUID, ccmInvolvment: Array<CcmInvolvmentType>, ccmInvolvmentOther?: string | null, ccmInvolvmentNote?: string | null, iddocSupport?: boolean | null, iddocSupportNote?: string | null, sendFilesBetweenCcw?: boolean | null, sendFilesBetweenCcwNote?: string | null, appToSendFilesToKnown?: boolean | null, appToSendFilesToWhich?: string | null, appToSendFilesToNote?: string | null, useCcwForFileDistribiutionToParticipants?: boolean | null, useCcwForFileDistribiutionToParticipantsNote?: string | null, developNewQualityMeasures?: boolean | null, developNewQualityMeasuresNote?: string | null, qualityPerformanceImpactsPayment?: YesNoOtherType | null, qualityPerformanceImpactsPaymentOther?: string | null, qualityPerformanceImpactsPaymentNote?: string | null, dataSharingStarts?: DataStartsType | null, dataSharingStartsOther?: string | null, dataSharingFrequency: Array<FrequencyType>, dataSharingFrequencyContinually?: string | null, dataSharingFrequencyOther?: string | null, dataSharingStartsNote?: string | null, dataCollectionStarts?: DataStartsType | null, dataCollectionStartsOther?: string | null, dataCollectionFrequency: Array<FrequencyType>, dataCollectionFrequencyContinually?: string | null, dataCollectionFrequencyOther?: string | null, dataCollectionFrequencyNote?: string | null, qualityReportingStarts?: DataStartsType | null, qualityReportingStartsOther?: string | null, qualityReportingStartsNote?: string | null, qualityReportingFrequency: Array<FrequencyType>, qualityReportingFrequencyContinually?: string | null, qualityReportingFrequencyOther?: string | null, evaluationApproaches: Array<EvaluationApproachType>, evaluationApproachOther?: string | null, evalutaionApproachNote?: string | null, dataNeededForMonitoring: Array<DataForMonitoringType>, dataNeededForMonitoringOther?: string | null, dataNeededForMonitoringNote?: string | null, dataToSendParticicipants: Array<DataToSendParticipantsType>, dataToSendParticicipantsOther?: string | null, dataToSendParticicipantsNote?: string | null, shareCclfData?: boolean | null, shareCclfDataNote?: string | null, technicalContactsIdentified?: boolean | null, technicalContactsIdentifiedDetail?: string | null, technicalContactsIdentifiedNote?: string | null, captureParticipantInfo?: boolean | null, captureParticipantInfoNote?: string | null, icdOwner?: string | null, draftIcdDueDate?: Time | null, icdNote?: string | null, dataFullTimeOrIncremental?: DataFullTimeOrIncrementalType | null, eftSetUp?: boolean | null, unsolicitedAdjustmentsIncluded?: boolean | null, dataFlowDiagramsNeeded?: boolean | null, produceBenefitEnhancementFiles?: boolean | null, fileNamingConventions?: string | null, dataMonitoringNote?: string | null, uatNeeds?: string | null, stcNeeds?: string | null, testingTimelines?: string | null, testingNote?: string | null, dataMonitoringFileTypes: Array<MonitoringFileType>, dataMonitoringFileOther?: string | null, dataResponseType?: string | null, dataResponseFileFrequency?: string | null, modelLearningSystems: Array<ModelLearningSystemType>, modelLearningSystemsOther?: string | null, modelLearningSystemsNote?: string | null, anticipatedChallenges?: string | null, stakeholders: Array<StakeholdersType>, stakeholdersOther?: string | null, stakeholdersNote?: string | null, helpdeskUse?: boolean | null, helpdeskUseNote?: string | null, contractorSupport: Array<ContractorSupportType>, contractorSupportOther?: string | null, contractorSupportHow?: string | null, contractorSupportNote?: string | null, benchmarkForPerformance?: BenchmarkForPerformanceType | null, benchmarkForPerformanceNote?: string | null, computePerformanceScores?: boolean | null, computePerformanceScoresNote?: string | null, riskAdjustPerformance?: boolean | null, riskAdjustFeedback?: boolean | null, riskAdjustPayments?: boolean | null, riskAdjustOther?: boolean | null, riskAdjustNote?: string | null, appealPerformance?: boolean | null, appealFeedback?: boolean | null, appealPayments?: boolean | null, appealOther?: boolean | null, appealNote?: string | null, readyForReviewDts?: Time | null, status: TaskStatus, readyForReviewByUserAccount?: { __typename: 'UserAccount', commonName: string } | null }, payments: { __typename: 'PlanPayments', id: UUID, payType: Array<PayType>, payClaims: Array<ClaimsBasedPayType>, creatingDependenciesBetweenServices?: boolean | null, creatingDependenciesBetweenServicesNote?: string | null, needsClaimsDataCollection?: boolean | null, needsClaimsDataCollectionNote?: string | null, providingThirdPartyFile?: boolean | null, isContractorAwareTestDataRequirements?: boolean | null, beneficiaryCostSharingLevelAndHandling?: string | null, waiveBeneficiaryCostSharingForAnyServices?: boolean | null, waiveBeneficiaryCostSharingServiceSpecification?: string | null, waiverOnlyAppliesPartOfPayment?: boolean | null, waiveBeneficiaryCostSharingNote?: string | null, payClaimsNote?: string | null, payClaimsOther?: string | null, shouldAnyProvidersExcludedFFSSystems?: boolean | null, shouldAnyProviderExcludedFFSSystemsNote?: string | null, changesMedicarePhysicianFeeSchedule?: boolean | null, changesMedicarePhysicianFeeScheduleNote?: string | null, affectsMedicareSecondaryPayerClaims?: boolean | null, affectsMedicareSecondaryPayerClaimsHow?: string | null, affectsMedicareSecondaryPayerClaimsNote?: string | null, payModelDifferentiation?: string | null, expectedCalculationComplexityLevel?: ComplexityCalculationLevelType | null, expectedCalculationComplexityLevelNote?: string | null, claimsProcessingPrecedence?: boolean | null, claimsProcessingPrecedenceOther?: string | null, claimsProcessingPrecedenceNote?: string | null, canParticipantsSelectBetweenPaymentMechanisms?: boolean | null, canParticipantsSelectBetweenPaymentMechanismsHow?: string | null, canParticipantsSelectBetweenPaymentMechanismsNote?: string | null, anticipatedPaymentFrequency: Array<FrequencyType>, anticipatedPaymentFrequencyContinually?: string | null, anticipatedPaymentFrequencyOther?: string | null, anticipatedPaymentFrequencyNote?: string | null, fundingSource: Array<FundingSource>, fundingSourceMedicareAInfo?: string | null, fundingSourceMedicareBInfo?: string | null, fundingSourceOther?: string | null, fundingSourceNote?: string | null, fundingSourceR: Array<FundingSource>, fundingSourceRMedicareAInfo?: string | null, fundingSourceRMedicareBInfo?: string | null, fundingSourceROther?: string | null, fundingSourceRNote?: string | null, payRecipients: Array<PayRecipient>, payRecipientsOtherSpecification?: string | null, payRecipientsNote?: string | null, payTypeNote?: string | null, nonClaimsPayments: Array<NonClaimsBasedPayType>, nonClaimsPaymentOther?: string | null, paymentCalculationOwner?: string | null, numberPaymentsPerPayCycle?: string | null, numberPaymentsPerPayCycleNote?: string | null, sharedSystemsInvolvedAdditionalClaimPayment?: boolean | null, sharedSystemsInvolvedAdditionalClaimPaymentNote?: string | null, planningToUseInnovationPaymentContractor?: boolean | null, planningToUseInnovationPaymentContractorNote?: string | null, willRecoverPayments?: boolean | null, willRecoverPaymentsNote?: string | null, anticipateReconcilingPaymentsRetrospectively?: boolean | null, anticipateReconcilingPaymentsRetrospectivelyNote?: string | null, paymentReconciliationFrequency: Array<FrequencyType>, paymentReconciliationFrequencyContinually?: string | null, paymentReconciliationFrequencyOther?: string | null, paymentReconciliationFrequencyNote?: string | null, paymentDemandRecoupmentFrequency: Array<FrequencyType>, paymentDemandRecoupmentFrequencyContinually?: string | null, paymentDemandRecoupmentFrequencyOther?: string | null, paymentDemandRecoupmentFrequencyNote?: string | null, paymentStartDate?: Time | null, paymentStartDateNote?: string | null, readyForReviewDts?: Time | null, status: TaskStatus, readyForReviewByUserAccount?: { __typename: 'UserAccount', commonName: string } | null }, collaborators: Array<{ __typename: 'PlanCollaborator', id: UUID, userID: UUID, teamRoles: Array<TeamRole>, modelPlanID: UUID, createdDts: Time, userAccount: { __typename: 'UserAccount', id: UUID, commonName: string, email: string, username: string } }>, discussions: Array<{ __typename: 'PlanDiscussion', id: UUID, userRole?: DiscussionUserRole | null, userRoleDescription?: string | null, createdDts: Time, content?: { __typename: 'TaggedContent', rawContent: string } | null, createdByUserAccount: { __typename: 'UserAccount', commonName: string }, replies: Array<{ __typename: 'DiscussionReply', id: UUID, discussionID: UUID, userRole?: DiscussionUserRole | null, userRoleDescription?: string | null, createdDts: Time, content?: { __typename: 'TaggedContent', rawContent: string } | null, createdByUserAccount: { __typename: 'UserAccount', commonName: string } }> }> } };
 
 export type GetCurrentUserQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -3431,7 +3924,7 @@ export type GetNotificationSettingsQuery = { __typename: 'Query', currentUser: {
 export type GetNotificationsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetNotificationsQuery = { __typename: 'Query', currentUser: { __typename: 'CurrentUser', notifications: { __typename: 'UserNotifications', numUnreadNotifications: number, notifications: Array<{ __typename: 'UserNotification', id: UUID, isRead: boolean, inAppSent: boolean, emailSent: boolean, createdDts: Time, activity: { __typename: 'Activity', activityType: ActivityType, entityID: UUID, actorID: UUID, actorUserAccount: { __typename: 'UserAccount', commonName: string }, metaData: { __typename: 'DailyDigestCompleteActivityMeta', version: number, type: ActivityType, modelPlanIDs: Array<UUID>, date: Time, analyzedAudits: Array<{ __typename: 'AnalyzedAudit', id: UUID, modelPlanID: UUID, modelName: string, date: Time, changes: { __typename: 'AnalyzedAuditChange', modelPlan?: { __typename: 'AnalyzedModelPlan', oldName?: string | null, statusChanges?: Array<string | null> | null } | null, documents?: { __typename: 'AnalyzedDocuments', count?: number | null } | null, crTdls?: { __typename: 'AnalyzedCrTdls', activity?: boolean | null } | null, planSections?: { __typename: 'AnalyzedPlanSections', updated: Array<string>, readyForReview: Array<string>, readyForClearance: Array<string> } | null, modelLeads?: { __typename: 'AnalyzedModelLeads', added: Array<{ __typename: 'AnalyzedModelLeadInfo', id: UUID, commonName: string }> } | null, planDiscussions?: { __typename: 'AnalyzedPlanDiscussions', activity?: boolean | null } | null } }> } | { __typename: 'NewDiscussionRepliedActivityMeta', version: number, type: ActivityType, discussionID: UUID, replyID: UUID, modelPlanID: UUID, content: string, modelPlan: { __typename: 'ModelPlan', modelName: string } } | { __typename: 'TaggedInDiscussionReplyActivityMeta', version: number, type: ActivityType, modelPlanID: UUID, discussionID: UUID, replyID: UUID, content: string, modelPlan: { __typename: 'ModelPlan', modelName: string } } | { __typename: 'TaggedInPlanDiscussionActivityMeta', version: number, type: ActivityType, modelPlanID: UUID, discussionID: UUID, content: string, modelPlan: { __typename: 'ModelPlan', modelName: string } } } }> } } };
+export type GetNotificationsQuery = { __typename: 'Query', currentUser: { __typename: 'CurrentUser', notifications: { __typename: 'UserNotifications', numUnreadNotifications: number, notifications: Array<{ __typename: 'UserNotification', id: UUID, isRead: boolean, inAppSent: boolean, emailSent: boolean, createdDts: Time, activity: { __typename: 'Activity', activityType: ActivityType, entityID: UUID, actorID: UUID, actorUserAccount: { __typename: 'UserAccount', commonName: string }, metaData: { __typename: 'AddedAsCollaboratorMeta', version: number, type: ActivityType, modelPlanID: UUID, modelPlan: { __typename: 'ModelPlan', modelName: string } } | { __typename: 'DailyDigestCompleteActivityMeta', version: number, type: ActivityType, modelPlanIDs: Array<UUID>, date: Time, analyzedAudits: Array<{ __typename: 'AnalyzedAudit', id: UUID, modelPlanID: UUID, modelName: string, date: Time, changes: { __typename: 'AnalyzedAuditChange', modelPlan?: { __typename: 'AnalyzedModelPlan', oldName?: string | null, statusChanges?: Array<string | null> | null } | null, documents?: { __typename: 'AnalyzedDocuments', count?: number | null } | null, crTdls?: { __typename: 'AnalyzedCrTdls', activity?: boolean | null } | null, planSections?: { __typename: 'AnalyzedPlanSections', updated: Array<string>, readyForReview: Array<string>, readyForClearance: Array<string> } | null, modelLeads?: { __typename: 'AnalyzedModelLeads', added: Array<{ __typename: 'AnalyzedModelLeadInfo', id: UUID, commonName: string }> } | null, planDiscussions?: { __typename: 'AnalyzedPlanDiscussions', activity?: boolean | null } | null } }> } | { __typename: 'ModelPlanSharedActivityMeta', version: number, type: ActivityType, modelPlanID: UUID, optionalMessage?: string | null, modelPlan: { __typename: 'ModelPlan', modelName: string } } | { __typename: 'NewDiscussionRepliedActivityMeta', version: number, type: ActivityType, discussionID: UUID, replyID: UUID, modelPlanID: UUID, content: string, modelPlan: { __typename: 'ModelPlan', modelName: string } } | { __typename: 'TaggedInDiscussionReplyActivityMeta', version: number, type: ActivityType, modelPlanID: UUID, discussionID: UUID, replyID: UUID, content: string, modelPlan: { __typename: 'ModelPlan', modelName: string } } | { __typename: 'TaggedInPlanDiscussionActivityMeta', version: number, type: ActivityType, modelPlanID: UUID, discussionID: UUID, content: string, modelPlan: { __typename: 'ModelPlan', modelName: string } } } }> } } };
 
 export type GetPollNotificationsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -3540,7 +4033,7 @@ export type GetAllParticipantsAndProvidersQueryVariables = Exact<{
 }>;
 
 
-export type GetAllParticipantsAndProvidersQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, participantsAndProviders: { __typename: 'PlanParticipantsAndProviders', id: UUID, participants: Array<ParticipantsType>, medicareProviderType?: string | null, statesEngagement?: string | null, participantsOther?: string | null, participantsNote?: string | null, participantsCurrentlyInModels?: boolean | null, participantsCurrentlyInModelsNote?: string | null, modelApplicationLevel?: string | null, expectedNumberOfParticipants?: number | null, estimateConfidence?: ConfidenceType | null, confidenceNote?: string | null, recruitmentMethod?: RecruitmentType | null, recruitmentOther?: string | null, recruitmentNote?: string | null, selectionMethod: Array<ParticipantSelectionType>, selectionOther?: string | null, selectionNote?: string | null, participantAddedFrequency: Array<FrequencyType>, participantAddedFrequencyContinually?: string | null, participantAddedFrequencyOther?: string | null, participantAddedFrequencyNote?: string | null, participantRemovedFrequency: Array<FrequencyType>, participantRemovedFrequencyContinually?: string | null, participantRemovedFrequencyOther?: string | null, participantRemovedFrequencyNote?: string | null, communicationMethod: Array<ParticipantCommunicationType>, communicationMethodOther?: string | null, communicationNote?: string | null, riskType: Array<ParticipantRiskType>, riskOther?: string | null, riskNote?: string | null, willRiskChange?: boolean | null, willRiskChangeNote?: string | null, coordinateWork?: boolean | null, coordinateWorkNote?: string | null, gainsharePayments?: boolean | null, gainsharePaymentsTrack?: boolean | null, gainsharePaymentsNote?: string | null, gainsharePaymentsEligibility: Array<GainshareArrangementEligibility>, gainsharePaymentsEligibilityOther?: string | null, participantsIds: Array<ParticipantsIdType>, participantsIdsOther?: string | null, participantsIDSNote?: string | null, providerAdditionFrequency: Array<FrequencyType>, providerAdditionFrequencyContinually?: string | null, providerAdditionFrequencyOther?: string | null, providerAdditionFrequencyNote?: string | null, providerAddMethod: Array<ProviderAddType>, providerAddMethodOther?: string | null, providerAddMethodNote?: string | null, providerLeaveMethod: Array<ProviderLeaveType>, providerLeaveMethodOther?: string | null, providerLeaveMethodNote?: string | null, providerRemovalFrequency: Array<FrequencyType>, providerRemovalFrequencyContinually?: string | null, providerRemovalFrequencyOther?: string | null, providerRemovalFrequencyNote?: string | null, providerOverlap?: OverlapType | null, providerOverlapHierarchy?: string | null, providerOverlapNote?: string | null, status: TaskStatus } } };
+export type GetAllParticipantsAndProvidersQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, participantsAndProviders: { __typename: 'PlanParticipantsAndProviders', id: UUID, participants: Array<ParticipantsType>, medicareProviderType?: string | null, statesEngagement?: string | null, participantsOther?: string | null, participantsNote?: string | null, participantsCurrentlyInModels?: boolean | null, participantsCurrentlyInModelsNote?: string | null, modelApplicationLevel?: string | null, expectedNumberOfParticipants?: number | null, estimateConfidence?: ConfidenceType | null, confidenceNote?: string | null, recruitmentMethod?: RecruitmentType | null, recruitmentOther?: string | null, recruitmentNote?: string | null, selectionMethod: Array<ParticipantSelectionType>, selectionOther?: string | null, selectionNote?: string | null, participantAddedFrequency: Array<FrequencyType>, participantAddedFrequencyContinually?: string | null, participantAddedFrequencyOther?: string | null, participantAddedFrequencyNote?: string | null, participantRemovedFrequency: Array<FrequencyType>, participantRemovedFrequencyContinually?: string | null, participantRemovedFrequencyOther?: string | null, participantRemovedFrequencyNote?: string | null, communicationMethod: Array<ParticipantCommunicationType>, communicationMethodOther?: string | null, communicationNote?: string | null, riskType: Array<ParticipantRiskType>, riskOther?: string | null, riskNote?: string | null, willRiskChange?: boolean | null, willRiskChangeNote?: string | null, participantRequireFinancialGuarantee?: boolean | null, participantRequireFinancialGuaranteeType: Array<ParticipantRequireFinancialGuaranteeType>, participantRequireFinancialGuaranteeOther?: string | null, participantRequireFinancialGuaranteeNote?: string | null, coordinateWork?: boolean | null, coordinateWorkNote?: string | null, gainsharePayments?: boolean | null, gainsharePaymentsTrack?: boolean | null, gainsharePaymentsNote?: string | null, gainsharePaymentsEligibility: Array<GainshareArrangementEligibility>, gainsharePaymentsEligibilityOther?: string | null, participantsIds: Array<ParticipantsIdType>, participantsIdsOther?: string | null, participantsIDSNote?: string | null, providerAdditionFrequency: Array<FrequencyType>, providerAdditionFrequencyContinually?: string | null, providerAdditionFrequencyOther?: string | null, providerAdditionFrequencyNote?: string | null, providerAddMethod: Array<ProviderAddType>, providerAddMethodOther?: string | null, providerAddMethodNote?: string | null, providerLeaveMethod: Array<ProviderLeaveType>, providerLeaveMethodOther?: string | null, providerLeaveMethodNote?: string | null, providerRemovalFrequency: Array<FrequencyType>, providerRemovalFrequencyContinually?: string | null, providerRemovalFrequencyOther?: string | null, providerRemovalFrequencyNote?: string | null, providerOverlap?: OverlapType | null, providerOverlapHierarchy?: string | null, providerOverlapNote?: string | null, status: TaskStatus } } };
 
 export type GetCommunicationQueryVariables = Exact<{
   id: Scalars['UUID']['input'];
@@ -3554,7 +4047,7 @@ export type GetCoordinationQueryVariables = Exact<{
 }>;
 
 
-export type GetCoordinationQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, participantsAndProviders: { __typename: 'PlanParticipantsAndProviders', id: UUID, coordinateWork?: boolean | null, coordinateWorkNote?: string | null, gainsharePayments?: boolean | null, gainsharePaymentsEligibility: Array<GainshareArrangementEligibility>, gainsharePaymentsEligibilityOther?: string | null, gainsharePaymentsTrack?: boolean | null, gainsharePaymentsNote?: string | null, participantsIds: Array<ParticipantsIdType>, participantsIdsOther?: string | null, participantsIDSNote?: string | null }, operationalNeeds: Array<{ __typename: 'OperationalNeed', id: UUID, modifiedDts?: Time | null }> } };
+export type GetCoordinationQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, participantsAndProviders: { __typename: 'PlanParticipantsAndProviders', id: UUID, participantRequireFinancialGuarantee?: boolean | null, participantRequireFinancialGuaranteeType: Array<ParticipantRequireFinancialGuaranteeType>, participantRequireFinancialGuaranteeOther?: string | null, participantRequireFinancialGuaranteeNote?: string | null, coordinateWork?: boolean | null, coordinateWorkNote?: string | null, gainsharePayments?: boolean | null, gainsharePaymentsEligibility: Array<GainshareArrangementEligibility>, gainsharePaymentsEligibilityOther?: string | null, gainsharePaymentsTrack?: boolean | null, gainsharePaymentsNote?: string | null, participantsIds: Array<ParticipantsIdType>, participantsIdsOther?: string | null, participantsIDSNote?: string | null }, operationalNeeds: Array<{ __typename: 'OperationalNeed', id: UUID, modifiedDts?: Time | null }> } };
 
 export type GetParticipantOptionsQueryVariables = Exact<{
   id: Scalars['UUID']['input'];
@@ -6257,6 +6750,10 @@ export const GetAllModelDataDocument = gql`
       riskNote
       willRiskChange
       willRiskChangeNote
+      participantRequireFinancialGuarantee
+      participantRequireFinancialGuaranteeType
+      participantRequireFinancialGuaranteeOther
+      participantRequireFinancialGuaranteeNote
       coordinateWork
       coordinateWorkNote
       gainsharePayments
@@ -6739,6 +7236,10 @@ export const GetAllSingleModelDataDocument = gql`
       riskNote
       willRiskChange
       willRiskChangeNote
+      participantRequireFinancialGuarantee
+      participantRequireFinancialGuaranteeType
+      participantRequireFinancialGuaranteeOther
+      participantRequireFinancialGuaranteeNote
       coordinateWork
       coordinateWorkNote
       gainsharePayments
@@ -7714,6 +8215,14 @@ export const GetNotificationsDocument = gql`
               discussionID
               content
             }
+            ... on AddedAsCollaboratorMeta {
+              version
+              type
+              modelPlanID
+              modelPlan {
+                modelName
+              }
+            }
             ... on TaggedInDiscussionReplyActivityMeta {
               version
               type
@@ -7724,6 +8233,15 @@ export const GetNotificationsDocument = gql`
               discussionID
               replyID
               content
+            }
+            ... on ModelPlanSharedActivityMeta {
+              version
+              type
+              modelPlanID
+              modelPlan {
+                modelName
+              }
+              optionalMessage
             }
             ... on DailyDigestCompleteActivityMeta {
               version
@@ -8706,6 +9224,10 @@ export const GetAllParticipantsAndProvidersDocument = gql`
       riskNote
       willRiskChange
       willRiskChangeNote
+      participantRequireFinancialGuarantee
+      participantRequireFinancialGuaranteeType
+      participantRequireFinancialGuaranteeOther
+      participantRequireFinancialGuaranteeNote
       coordinateWork
       coordinateWorkNote
       gainsharePayments
@@ -8842,6 +9364,10 @@ export const GetCoordinationDocument = gql`
     modelName
     participantsAndProviders {
       id
+      participantRequireFinancialGuarantee
+      participantRequireFinancialGuaranteeType
+      participantRequireFinancialGuaranteeOther
+      participantRequireFinancialGuaranteeNote
       coordinateWork
       coordinateWorkNote
       gainsharePayments

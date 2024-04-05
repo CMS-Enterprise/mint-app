@@ -44,7 +44,7 @@ jobs:
         run: |
           ./scripts/rds-snapshot-app-db.sh    
       - name: Clean the database
-        if: contains(inputs.env, 'dev')
+        if:  ${{ contains(inputs.env, 'dev') && vars.ENABLE_DEV_DB_CLEAN == '1' }}
         env:
           ECR_REGISTRY: ${{ secrets.ECR_REGISTRY }}
           ECR_REPOSITORY: mint-db-clean
