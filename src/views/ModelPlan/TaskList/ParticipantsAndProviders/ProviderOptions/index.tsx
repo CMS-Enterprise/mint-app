@@ -18,31 +18,30 @@ import {
   OverlapType,
   ProviderAddType,
   ProviderLeaveType,
-  useGetProviderOptionsQuery,
-  useUpdatePlanParticipantsAndProvidersMutation
+  TypedUpdatePlanParticipantsAndProvidersDocument,
+  useGetProviderOptionsQuery
 } from 'gql/gen/graphql';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
 import FrequencyForm from 'components/FrequencyForm';
 import ITSolutionsWarning from 'components/ITSolutionsWarning';
+import MutationErrorModal from 'components/MutationErrorModal';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import ReadyForReview from 'components/ReadyForReview';
-import AutoSave from 'components/shared/AutoSave';
 import CheckboxField from 'components/shared/CheckboxField';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import MultiSelect from 'components/shared/MultiSelect';
 import TextAreaField from 'components/shared/TextAreaField';
+import useHandleMutation from 'hooks/useHandleMutation';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import useScrollElement from 'hooks/useScrollElement';
 import { getKeys } from 'types/translation';
 import flattenErrors from 'utils/flattenErrors';
-import { dirtyInput } from 'utils/formDiff';
 import { composeMultiSelectOptions } from 'utils/modelPlan';
-import sanitizeStatus from 'utils/status';
 import { NotFoundPartial } from 'views/NotFound';
 
 type ProviderOptionsFormType = GetProviderOptionsQuery['modelPlan']['participantsAndProviders'];
@@ -114,45 +113,13 @@ export const ProviderOptions = () => {
 
   useScrollElement(!loading);
 
-  const [update] = useUpdatePlanParticipantsAndProvidersMutation();
-
-  const handleFormSubmit = (
-    redirect?: 'back' | 'task-list' | 'next' | string
-  ) => {
-    const dirtyInputs: any = dirtyInput(
-      formikRef?.current?.initialValues,
-      formikRef?.current?.values
-    );
-
-    if (dirtyInputs.status) {
-      dirtyInputs.status = sanitizeStatus(dirtyInputs.status);
+  const { mutationError } = useHandleMutation(
+    TypedUpdatePlanParticipantsAndProvidersDocument,
+    {
+      id,
+      formikRef
     }
-
-    update({
-      variables: {
-        id,
-        changes: dirtyInputs
-      }
-    })
-      .then(response => {
-        if (!response?.errors) {
-          if (redirect === 'back') {
-            history.push(
-              `/models/${modelID}/task-list/participants-and-providers/coordination`
-            );
-          } else if (redirect === 'task-list') {
-            history.push(`/models/${modelID}/task-list`);
-          } else if (redirect === 'next') {
-            history.push(`/models/${modelID}/task-list/beneficiaries`);
-          } else if (redirect) {
-            history.push(redirect);
-          }
-        }
-      })
-      .catch(errors => {
-        formikRef?.current?.setErrors(errors);
-      });
-  };
+  );
 
   const initialValues: InitialValueType = {
     __typename: 'PlanParticipantsAndProviders',
@@ -185,6 +152,12 @@ export const ProviderOptions = () => {
 
   return (
     <>
+      <MutationErrorModal
+        isOpen={mutationError.isModalOpen}
+        closeModal={() => mutationError.setIsModalOpen(false)}
+        url={mutationError.destinationURL}
+      />
+
       <BreadcrumbBar variant="wrap">
         <Breadcrumb>
           <BreadcrumbLink asCustom={Link} to="/">
@@ -220,7 +193,7 @@ export const ProviderOptions = () => {
       <Formik
         initialValues={initialValues}
         onSubmit={() => {
-          handleFormSubmit('next');
+          history.push(`/models/${modelID}/task-list/beneficiaries`);
         }}
         enableReinitialize
         innerRef={formikRef}
@@ -438,7 +411,7 @@ export const ProviderOptions = () => {
                       <ITSolutionsWarning
                         id="participants-and-providers-provider-overlap-warning"
                         onClick={() =>
-                          handleFormSubmit(
+                          history.push(
                             `/models/${modelID}/task-list/it-solutions`
                           )
                         }
@@ -515,7 +488,9 @@ export const ProviderOptions = () => {
                       type="button"
                       className="usa-button usa-button--outline margin-bottom-1"
                       onClick={() => {
-                        handleFormSubmit('back');
+                        history.push(
+                          `/models/${modelID}/task-list/participants-and-providers/coordination`
+                        );
                       }}
                     >
                       {miscellaneousT('back')}
@@ -529,7 +504,7 @@ export const ProviderOptions = () => {
                   <Button
                     type="button"
                     className="usa-button usa-button--unstyled"
-                    onClick={() => handleFormSubmit('task-list')}
+                    onClick={() => history.push(`/models/${modelID}/task-list`)}
                   >
                     <Icon.ArrowBack className="margin-right-1" aria-hidden />
 
@@ -537,16 +512,6 @@ export const ProviderOptions = () => {
                   </Button>
                 </Fieldset>
               </Form>
-
-              {id && (
-                <AutoSave
-                  values={values}
-                  onSave={() => {
-                    handleFormSubmit();
-                  }}
-                  debounceDelay={3000}
-                />
-              )}
             </>
           );
         }}

@@ -9,6 +9,7 @@ import { FormikProps } from 'formik';
 import { DocumentNode } from 'graphql';
 
 import dirtyInput from 'utils/formDiff';
+import sanitizeStatus from 'utils/status';
 
 type HandleMutationConfigType = {
   id: string;
@@ -36,13 +37,19 @@ function useHandleMutation<TData = any, TVariables = OperationVariables>(
           return false;
         }
 
+        const changes = dirtyInput(
+          formikRef?.current?.initialValues,
+          formikRef?.current?.values
+        );
+
+        if (changes.status) {
+          changes.status = sanitizeStatus(changes.status);
+        }
+
         update({
           variables: {
             id,
-            changes: dirtyInput(
-              formikRef?.current?.initialValues,
-              formikRef?.current?.values
-            )
+            changes
           }
         })
           .then(response => {

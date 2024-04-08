@@ -19,25 +19,25 @@ import { Field, Form, Formik, FormikProps } from 'formik';
 import {
   GetParticipantsAndProvidersQuery,
   ParticipantsType,
-  useGetParticipantsAndProvidersQuery,
-  useUpdatePlanParticipantsAndProvidersMutation
+  TypedUpdatePlanParticipantsAndProvidersDocument,
+  useGetParticipantsAndProvidersQuery
 } from 'gql/gen/graphql';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
 import BooleanRadio from 'components/BooleanRadioForm';
 import MainContent from 'components/MainContent';
+import MutationErrorModal from 'components/MutationErrorModal';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
-import AutoSave from 'components/shared/AutoSave';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import MultiSelect from 'components/shared/MultiSelect';
 import TextAreaField from 'components/shared/TextAreaField';
+import useHandleMutation from 'hooks/useHandleMutation';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import flattenErrors from 'utils/flattenErrors';
-import { dirtyInput } from 'utils/formDiff';
 import { composeMultiSelectOptions } from 'utils/modelPlan';
 import { NotFoundPartial } from 'views/NotFound';
 
@@ -91,33 +91,13 @@ export const ParticipantsAndProvidersContent = () => {
 
   const modelName = data?.modelPlan?.modelName || '';
 
-  const [update] = useUpdatePlanParticipantsAndProvidersMutation();
-
-  const handleFormSubmit = (redirect?: 'next' | 'back') => {
-    update({
-      variables: {
-        id,
-        changes: dirtyInput(
-          formikRef?.current?.initialValues,
-          formikRef?.current?.values
-        )
-      }
-    })
-      .then(response => {
-        if (!response?.errors) {
-          if (redirect === 'next') {
-            history.push(
-              `/models/${modelID}/task-list/participants-and-providers/participants-options`
-            );
-          } else if (redirect === 'back') {
-            history.push(`/models/${modelID}/task-list/`);
-          }
-        }
-      })
-      .catch(errors => {
-        formikRef?.current?.setErrors(errors);
-      });
-  };
+  const { mutationError } = useHandleMutation(
+    TypedUpdatePlanParticipantsAndProvidersDocument,
+    {
+      id,
+      formikRef
+    }
+  );
 
   const initialValues: ParticipantsAndProvidersFormType = {
     __typename: 'PlanParticipantsAndProviders',
@@ -138,6 +118,12 @@ export const ParticipantsAndProvidersContent = () => {
 
   return (
     <>
+      <MutationErrorModal
+        isOpen={mutationError.isModalOpen}
+        closeModal={() => mutationError.setIsModalOpen(false)}
+        url={mutationError.destinationURL}
+      />
+
       <BreadcrumbBar variant="wrap">
         <Breadcrumb>
           <BreadcrumbLink asCustom={Link} to="/">
@@ -174,7 +160,9 @@ export const ParticipantsAndProvidersContent = () => {
       <Formik
         initialValues={initialValues}
         onSubmit={() => {
-          handleFormSubmit('next');
+          history.push(
+            `/models/${modelID}/task-list/participants-and-providers/participants-options`
+          );
         }}
         enableReinitialize
         innerRef={formikRef}
@@ -431,7 +419,9 @@ export const ParticipantsAndProvidersContent = () => {
                         <Button
                           type="button"
                           className="usa-button usa-button--unstyled"
-                          onClick={() => handleFormSubmit('back')}
+                          onClick={() =>
+                            history.push(`/models/${modelID}/task-list`)
+                          }
                         >
                           <Icon.ArrowBack
                             className="margin-right-1"
@@ -465,16 +455,6 @@ export const ParticipantsAndProvidersContent = () => {
                   </Grid>
                 </Grid>
               </GridContainer>
-
-              {id && (
-                <AutoSave
-                  values={values}
-                  onSave={() => {
-                    handleFormSubmit();
-                  }}
-                  debounceDelay={3000}
-                />
-              )}
             </>
           );
         }}
