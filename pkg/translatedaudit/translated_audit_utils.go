@@ -1,4 +1,4 @@
-package humanizedaudit
+package translatedaudit
 
 import "github.com/cmsgov/mint-app/pkg/models"
 

@@ -1,5 +1,5 @@
-// Package humanizedaudit translates audit delta slices to human readable changes
-package humanizedaudit
+// Package translatedaudit translates audit delta slices to human readable changes
+package translatedaudit
 
 import "testing"
 

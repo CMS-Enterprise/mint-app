@@ -1,5 +1,5 @@
 // Package humanizedaudit translates audit delta slices to human readable changes
-package humanizedaudit
+package translatedaudit
 
 import (
 	"context"
@@ -68,7 +68,6 @@ func translateChangeSet(
 	})
 
 	partsAndProviderChanges, err := genericAuditTranslation(ctx, store, plan, partsProvidersChanges)
-	// partsAndProviderChanges, err := humanizeParticipantsAndProviders(ctx, store, plan, audits)
 	if err != nil {
 		return nil, err
 	}

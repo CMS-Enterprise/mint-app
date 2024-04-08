@@ -11,9 +11,9 @@ import (
 	"github.com/spf13/cobra"
 
 	"github.com/cmsgov/mint-app/pkg/graph/resolvers"
-	"github.com/cmsgov/mint-app/pkg/humanizedaudit"
 	"github.com/cmsgov/mint-app/pkg/models"
 	"github.com/cmsgov/mint-app/pkg/storage"
+	humanizedaudit "github.com/cmsgov/mint-app/pkg/translatedaudit"
 )
 
 // analyzeAuditCommand is an entry point for analyzing audits for all model plans
