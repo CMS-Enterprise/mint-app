@@ -62,6 +62,7 @@ type TranslatedAuditField {
     new: Any
     newTranslated: Any
 
+    # Ticket (EASI-4147) Decide if this field is needed here, or just on the parent level... Also, consider if it makes sense to leave this nullable?
     metaData: TranslatedAuditFieldMetaData!
 
     createdBy: UUID!
@@ -81,5 +82,5 @@ type TranslatedAuditFieldMetaBaseStruct {
 
 extend type Query {
     translatedAuditChangeCollection(modelPlanID: UUID!): [TranslatedAuditChange!]
-  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+    @hasAnyRole(roles: [MINT_USER, MINT_MAC])
 }  

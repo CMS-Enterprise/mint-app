@@ -10,6 +10,7 @@ CREATE TABLE translated_audit_change (
     model_plan_id UUID NOT NULL REFERENCES model_plan(id),
     actor_id UUID NOT NULL REFERENCES user_account(id), --foreign key to user table
     actor_name ZERO_STRING NOT NULL, --foreign key to user table
+    -- change_id BIGINT UNIQUE NOT NULL REFERENCES audit.change(id), --foreign key to user table
     change_id BIGINT NOT NULL REFERENCES audit.change(id), --foreign key to user table
     date TIMESTAMP NOT NULL, 
     table_id INTEGER REFERENCES audit.table_config(id), --foreign key to the audit table
@@ -24,7 +25,7 @@ CREATE TABLE translated_audit_change (
     modified_by UUID REFERENCES user_account(id),
     modified_dts TIMESTAMP WITH TIME ZONE
 );
-
+--Ticket (EASI-4147) Turn on unique change record constrain
 
 --Ticket (ChChCh Changes!) Decide if we want to normalize the references that duplicate data, eg, actor_name, model_name etc. All of this is technically already in the audit.change table...
 
