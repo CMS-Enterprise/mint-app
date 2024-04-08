@@ -104,8 +104,6 @@ type TranslationFieldWithParent {
   parentRelation: TranslationField!
 }
 
-union ChildTranslation = TranslationFieldWithParent | TranslationFieldWithOptionsAndParent
-
 """
 Represents a translation question with options and child/children
 """
@@ -129,7 +127,7 @@ type TranslationFieldWithOptionsAndChildren {
   """
   otherParentField: String
   options: Map!
-  childRelation: ChildTranslation!
+  childRelation: Map!
 }
 
 """
@@ -182,7 +180,7 @@ type TranslationFieldWithParentAndChildren {
   otherParentField: String
   options: Map!
   parentRelation: TranslationFieldWithOptionsAndChildren!
-  childRelation: TranslationFieldWithParent!
+  childRelation: Map!
 }
 
 

@@ -233,8 +233,6 @@ export enum ChangeType {
   UPDATED = 'UPDATED'
 }
 
-export type ChildTranslation = TranslationFieldWithOptionsAndParent | TranslationFieldWithParent;
-
 export enum ClaimsBasedPayType {
   ADJUSTMENTS_TO_FFS_PAYMENTS = 'ADJUSTMENTS_TO_FFS_PAYMENTS',
   CARE_MANAGEMENT_HOME_VISITS = 'CARE_MANAGEMENT_HOME_VISITS',
@@ -3309,7 +3307,7 @@ export type TranslationFieldWithOptions = {
 /** Represents a translation question with options and child/children */
 export type TranslationFieldWithOptionsAndChildren = {
   __typename: 'TranslationFieldWithOptionsAndChildren';
-  childRelation: ChildTranslation;
+  childRelation: Scalars['Map']['output'];
   dataType: TranslationDataType;
   dbField: Scalars['String']['output'];
   formType: TranslationFormType;
@@ -3371,7 +3369,7 @@ export type TranslationFieldWithParent = {
 /** Represents a translation question with options and parent and children */
 export type TranslationFieldWithParentAndChildren = {
   __typename: 'TranslationFieldWithParentAndChildren';
-  childRelation: TranslationFieldWithParent;
+  childRelation: Scalars['Map']['output'];
   dataType: TranslationDataType;
   dbField: Scalars['String']['output'];
   formType: TranslationFormType;
