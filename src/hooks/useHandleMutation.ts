@@ -16,10 +16,33 @@ type HandleMutationConfigType = {
   formikRef: React.RefObject<FormikProps<any>>;
 };
 
+type ModalConfigType = {
+  isModalOpen: boolean;
+  setIsModalOpen: (setOpen: boolean) => void;
+  destinationURL: string;
+};
+
+type MutationReturnType = {
+  mutationError: ModalConfigType;
+};
+
+/**
+ * __useHandleMutation__
+ *
+ * Custom hook used to handle generic/most mutations on the model plan task list
+ * Leverages react-router-dom history.block to wait for route transition while the mutation is called
+ * On success, will forward to destinationURL, on error will set isModalOpen to true, allowing component to render a modal
+ *
+ *
+ * @param {DocumentNode | TypedDocumentNode<TData, TVariables>} mutation
+ * @param {HandleMutationConfigType} config
+ * @returns MutationReturnType
+ */
+
 function useHandleMutation<TData = any, TVariables = OperationVariables>(
   mutation: DocumentNode | TypedDocumentNode<TData, TVariables>,
   config: HandleMutationConfigType
-) {
+): MutationReturnType {
   const history = useHistory();
   const { pathname } = useLocation();
 
@@ -32,6 +55,7 @@ function useHandleMutation<TData = any, TVariables = OperationVariables>(
 
   useEffect(() => {
     if (!isModalOpen) {
+      // Blocks the route transition until unblock() is called
       const unblock = history.block(location => {
         if (location.pathname === pathname) {
           return false;
