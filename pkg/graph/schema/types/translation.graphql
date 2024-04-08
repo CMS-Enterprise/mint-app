@@ -79,3 +79,109 @@ type TranslationFieldWithOptions {
   options: Map!
 }
 
+"""
+Represents a translation question with no options and a parent
+"""
+type TranslationFieldWithParent {
+  gqlField: String!
+  goField: String!
+  dbField: String!
+  label: String!
+  readonlyLabel: String
+  sublabel: String
+  multiSelectLabel: String
+  isArray: Boolean
+  dataType: TranslationDataType!
+  formType: TranslationFormType!
+  """
+  Is a question a followup to another that doesn't designate it's own readonly question/line
+  """
+  isOtherType: Boolean
+  """
+  Field name for the parent question for fields that represent Other, Please specify, etc.  Used in change history to render parent question for context
+  """
+  otherParentField: String
+  parentRelation: TranslationField!
+}
+
+"""
+Represents a translation question with options and child/children
+"""
+type TranslationFieldWithOptionsAndChildren {
+  gqlField: String!
+  goField: String!
+  dbField: String!
+  label: String!
+  readonlyLabel: String
+  sublabel: String
+  multiSelectLabel: String
+  isArray: Boolean
+  dataType: TranslationDataType!
+  formType: TranslationFormType!
+  """
+  Is a question a followup to another that doesn't designate it's own readonly question/line
+  """
+  isOtherType: Boolean
+  """
+  Field name for the parent question for fields that represent Other, Please specify, etc.  Used in change history to render parent question for context
+  """
+  otherParentField: String
+  options: Map!
+  childRelation: Map!
+}
+
+"""
+Represents a translation question with options and parent
+"""
+type TranslationFieldWithOptionsAndParent {
+  gqlField: String!
+  goField: String!
+  dbField: String!
+  label: String! 
+  readonlyLabel: String
+  sublabel: String
+  multiSelectLabel: String
+  isArray: Boolean
+  dataType: TranslationDataType!
+  formType: TranslationFormType!
+  """
+  Is a question a followup to another that doesn't designate it's own readonly question/line
+  """
+  isOtherType: Boolean
+  """
+  Field name for the parent question for fields that represent Other, Please specify, etc.  Used in change history to render parent question for context
+  """
+  otherParentField: String
+  options: Map!
+  parentRelation: TranslationFieldWithOptionsAndChildren!
+}
+
+"""
+Represents a translation question with options and parent and children
+"""
+type TranslationFieldWithParentAndChildren {
+  gqlField: String!
+  goField: String!
+  dbField: String!
+  label: String!
+  readonlyLabel: String
+  sublabel: String
+  multiSelectLabel: String
+  isArray: Boolean
+  dataType: TranslationDataType!
+  formType: TranslationFormType!
+  """
+  Is a question a followup to another that doesn't designate it's own readonly question/line
+  """
+  isOtherType: Boolean
+  """
+  Field name for the parent question for fields that represent Other, Please specify, etc.  Used in change history to render parent question for context
+  """
+  otherParentField: String
+  options: Map!
+  parentRelation: TranslationFieldWithOptionsAndChildren!
+  childRelation: Map!
+}
+
+
+
