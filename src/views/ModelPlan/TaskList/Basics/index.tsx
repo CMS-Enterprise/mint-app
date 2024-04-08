@@ -100,13 +100,19 @@ const BasicsContent = () => {
   const [update] = useUpdateModelPlanAndBasicsMutation();
 
   useEffect(() => {
-    if (!isModalOpen) {
-      const unblock = history.block(location => {
+    if (!isModalOpen && modelID) {
+      const unblock = history.block(destination => {
         if (!formikRef.current?.values.modelName) {
           formikRef?.current?.setFieldError(
             'modelName',
             'Enter the Model name'
           );
+          return false;
+        }
+
+        // Don't call mutation if attempting to access a locked section
+        if (destination.pathname.includes('locked-task-list-section')) {
+          history.push(destination.pathname);
           return false;
         }
 
@@ -138,12 +144,12 @@ const BasicsContent = () => {
           .then(response => {
             if (!response?.errors) {
               unblock();
-              history.push(location.pathname);
+              history.push(destination.pathname);
             }
           })
           .catch(errors => {
             unblock();
-            setDestinationURL(location.pathname);
+            setDestinationURL(destination.pathname);
             setIsModalOpen(true);
 
             formikRef?.current?.setErrors(errors);
@@ -156,7 +162,7 @@ const BasicsContent = () => {
       };
     }
     return () => {};
-  }, [history, id, update, isModalOpen, formikRef, setIsModalOpen]);
+  }, [history, id, update, isModalOpen, formikRef, setIsModalOpen, modelID]);
 
   const initialValues: ModelPlanInfoFormType = {
     __typename: 'ModelPlan',

@@ -52,12 +52,17 @@ function useHandleMutation<TData = any, TVariables = OperationVariables>(
   const [update] = useMutation<TData, OperationVariables>(mutation);
 
   const { id, formikRef } = config;
-
   useEffect(() => {
     if (!isModalOpen) {
       // Blocks the route transition until unblock() is called
-      const unblock = history.block(location => {
-        if (location.pathname === pathname) {
+      const unblock = history.block(destination => {
+        // Don't call mutation if attempting to access a locked section
+        if (destination.pathname.includes('locked-task-list-section')) {
+          history.push(destination.pathname);
+          return false;
+        }
+
+        if (destination.pathname === pathname) {
           return false;
         }
 
@@ -79,12 +84,12 @@ function useHandleMutation<TData = any, TVariables = OperationVariables>(
           .then(response => {
             if (!response?.errors) {
               unblock();
-              history.push(location.pathname);
+              history.push(destination.pathname);
             }
           })
           .catch(errors => {
             unblock();
-            setDestinationURL(location.pathname);
+            setDestinationURL(destination.pathname);
             setIsModalOpen(true);
 
             formikRef?.current?.setErrors(errors);

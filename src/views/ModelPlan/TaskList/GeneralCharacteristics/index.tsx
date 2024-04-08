@@ -7,7 +7,14 @@ import React, {
   useState
 } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link, Route, Switch, useHistory, useParams } from 'react-router-dom';
+import {
+  Link,
+  Route,
+  Switch,
+  useHistory,
+  useLocation,
+  useParams
+} from 'react-router-dom';
 import {
   Breadcrumb,
   BreadcrumbBar,
@@ -97,6 +104,7 @@ export const CharacteristicsContent = () => {
   >(null);
 
   const history = useHistory();
+  const location = useLocation();
 
   const {
     data: modelData,
@@ -247,9 +255,15 @@ export const CharacteristicsContent = () => {
   const [updateExistingLinks] = useUpdateExistingModelLinksMutation();
 
   useEffect(() => {
-    if (!isModalOpen) {
+    if (!isModalOpen && id) {
       // Submit handler for existing links as well as regular form updates
-      const unblock = history.block(location => {
+      const unblock = history.block(destination => {
+        // Don't call mutation if attempting to access a locked section
+        if (destination.pathname.includes('locked-task-list-section')) {
+          history.push(destination.pathname);
+          return false;
+        }
+
         const formValues = formikRef?.current?.values!;
 
         // Getting the inital values of model links
@@ -357,7 +371,8 @@ export const CharacteristicsContent = () => {
     miscellaneousT,
     modelData?.modelPlanCollection,
     updateExistingLinks,
-    modelID
+    modelID,
+    location.pathname
   ]);
 
   const initialValues: GetGeneralCharacteristicsFormTypeWithLinks = {
