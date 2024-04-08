@@ -28,20 +28,12 @@ type TranslatedAuditChangeWithTranslatedFields struct {
 type TranslatedAuditChange struct {
 	baseStruct
 	modelPlanRelation
-	ModelName           string            `json:"modelName" db:"model_name"`
-	TableID             int               `json:"tableID" db:"table_id"`
-	TableName           string            `json:"tableName" db:"table_name"`
-	PrimaryKey          uuid.UUID         `json:"primaryKey" db:"primary_key"`
-	Date                time.Time         `json:"date" db:"date"`
-	Action              DatabaseOperation `json:"action" db:"action"`
-	FieldName           string            `json:"fieldName" db:"field_name"`
-	FieldNameTranslated string            `json:"fieldNameTranslated" db:"field_name_translated"`
-
-	// Ticket: (ChChCh Changes!) We might consider changing the type from interface to string? But it could be an array. This gives us options
-	Old           interface{} `json:"old" db:"old"`
-	OldTranslated interface{} `json:"oldTranslated" db:"old_translated"`
-	New           interface{} `json:"new" db:"new"`
-	NewTranslated interface{} `json:"newTranslated" db:"new_translated"`
+	ModelName  string            `json:"modelName" db:"model_name"`
+	TableID    int               `json:"tableID" db:"table_id"`
+	TableName  string            `json:"tableName" db:"table_name"`
+	PrimaryKey uuid.UUID         `json:"primaryKey" db:"primary_key"`
+	Date       time.Time         `json:"date" db:"date"`
+	Action     DatabaseOperation `json:"action" db:"action"`
 
 	ActorID   uuid.UUID `json:"actorID" db:"actor_id"`
 	ActorName string    `json:"actorName" db:"actor_name"` //Maybe normalize this?
@@ -64,33 +56,21 @@ func NewTranslatedAuditChange(
 	changeID int,
 	primaryKey uuid.UUID,
 	action DatabaseOperation,
-	fieldName string,
-	fieldNameTranslated string,
-	old interface{},
-	oldTranslated interface{},
-	new interface{},
-	newTranslated interface{},
 ) TranslatedAuditChange {
 	version := 0
 	genericMeta := NewTranslatedAuditMetaBaseStruct(tableName, version)
 	return TranslatedAuditChange{
-		baseStruct:          NewBaseStruct(createdBy),
-		ActorID:             actorID,
-		ActorName:           actorName,
-		modelPlanRelation:   NewModelPlanRelation(modelPlanID),
-		ModelName:           modelName,
-		Date:                date,
-		TableName:           tableName,
-		TableID:             tableID,
-		ChangeID:            changeID,
-		PrimaryKey:          primaryKey,
-		Action:              action,
-		FieldName:           fieldName,
-		FieldNameTranslated: fieldNameTranslated,
-		Old:                 old,
-		OldTranslated:       oldTranslated,
-		New:                 new,
-		NewTranslated:       newTranslated,
+		baseStruct:        NewBaseStruct(createdBy),
+		ActorID:           actorID,
+		ActorName:         actorName,
+		modelPlanRelation: NewModelPlanRelation(modelPlanID),
+		ModelName:         modelName,
+		Date:              date,
+		TableName:         tableName,
+		TableID:           tableID,
+		ChangeID:          changeID,
+		PrimaryKey:        primaryKey,
+		Action:            action,
 
 		MetaData: &genericMeta,
 	}

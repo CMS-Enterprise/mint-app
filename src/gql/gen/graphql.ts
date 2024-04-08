@@ -3274,11 +3274,28 @@ export type TranslatedAuditChange = {
   createdByUserAccount: UserAccount;
   createdDts: Scalars['Time']['output'];
   date: Scalars['Time']['output'];
-  fieldName: Scalars['String']['output'];
-  fieldNameTranslated: Scalars['String']['output'];
   id: Scalars['UUID']['output'];
   metaData: TranslatedAuditMetaData;
   modelName: Scalars['String']['output'];
+  modifiedBy?: Maybe<Scalars['UUID']['output']>;
+  modifiedByUserAccount?: Maybe<UserAccount>;
+  modifiedDts?: Maybe<Scalars['Time']['output']>;
+  primaryKey: Scalars['UUID']['output'];
+  tableID: Scalars['Int']['output'];
+  tableName: Scalars['String']['output'];
+  /** The specific fields that were changed by the transaction */
+  translatedFields: Array<TranslatedAuditField>;
+};
+
+export type TranslatedAuditField = {
+  __typename: 'TranslatedAuditField';
+  createdBy: Scalars['UUID']['output'];
+  createdByUserAccount: UserAccount;
+  createdDts: Scalars['Time']['output'];
+  fieldName: Scalars['String']['output'];
+  fieldNameTranslated: Scalars['String']['output'];
+  id: Scalars['UUID']['output'];
+  metaData: TranslatedAuditFieldMetaData;
   modifiedBy?: Maybe<Scalars['UUID']['output']>;
   modifiedByUserAccount?: Maybe<UserAccount>;
   modifiedDts?: Maybe<Scalars['Time']['output']>;
@@ -3286,10 +3303,15 @@ export type TranslatedAuditChange = {
   newTranslated?: Maybe<Scalars['Any']['output']>;
   old?: Maybe<Scalars['Any']['output']>;
   oldTranslated?: Maybe<Scalars['Any']['output']>;
-  primaryKey: Scalars['UUID']['output'];
-  tableID: Scalars['Int']['output'];
-  tableName: Scalars['String']['output'];
+  translatedAuditID: Scalars['UUID']['output'];
 };
+
+export type TranslatedAuditFieldMetaBaseStruct = {
+  __typename: 'TranslatedAuditFieldMetaBaseStruct';
+  version: Scalars['Int']['output'];
+};
+
+export type TranslatedAuditFieldMetaData = TranslatedAuditFieldMetaBaseStruct;
 
 export type TranslatedAuditMetaBaseStruct = {
   __typename: 'TranslatedAuditMetaBaseStruct';

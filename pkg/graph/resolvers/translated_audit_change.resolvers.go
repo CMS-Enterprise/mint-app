@@ -9,6 +9,7 @@ import (
 
 	"github.com/google/uuid"
 
+	"github.com/cmsgov/mint-app/pkg/graph/generated"
 	"github.com/cmsgov/mint-app/pkg/models"
 )
 
@@ -16,3 +17,15 @@ import (
 func (r *queryResolver) TranslatedAuditChangeCollection(ctx context.Context, modelPlanID uuid.UUID) ([]*models.TranslatedAuditChange, error) {
 	return TranslatedAuditChangeCollectionGetByModelPlanID(r.store, modelPlanID)
 }
+
+// TranslatedFields is the resolver for the translatedFields field.
+func (r *translatedAuditChangeResolver) TranslatedFields(ctx context.Context, obj *models.TranslatedAuditChange) ([]*models.TranslatedAuditField, error) {
+	return TranslatedAuditFieldCollectionGetByTranslatedAuditID(r.store, obj.ID)
+}
+
+// TranslatedAuditChange returns generated.TranslatedAuditChangeResolver implementation.
+func (r *Resolver) TranslatedAuditChange() generated.TranslatedAuditChangeResolver {
+	return &translatedAuditChangeResolver{r}
+}
+
+type translatedAuditChangeResolver struct{ *Resolver }

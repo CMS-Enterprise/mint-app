@@ -30,17 +30,17 @@ type TranslatedAuditChange {
     
     date: Time!
     action: DatabaseOperation!
-    fieldName: String!
-    fieldNameTranslated: String!
-    old: Any 
-    oldTranslated: Any
-    new: Any
-    newTranslated: Any
+
 
     actorID: UUID!
     actorName: String!  #TODO: (ChChCh Changes!)This could live in the actor account, but this is meant to facilitate search
     changeID: Int! # This points to a specific audit change.
     metaData: TranslatedAuditMetaData!
+
+    """
+    The specific fields that were changed by the transaction
+    """
+    translatedFields: [TranslatedAuditField!]!
 
 
     createdBy: UUID!
@@ -49,6 +49,34 @@ type TranslatedAuditChange {
     modifiedBy: UUID
     modifiedByUserAccount: UserAccount
     modifiedDts: Time
+}
+
+type TranslatedAuditField {
+    id: UUID!
+    translatedAuditID: UUID!
+
+    fieldName: String!
+    fieldNameTranslated: String!
+    old: Any 
+    oldTranslated: Any
+    new: Any
+    newTranslated: Any
+
+    metaData: TranslatedAuditFieldMetaData!
+
+    createdBy: UUID!
+    createdByUserAccount: UserAccount!
+    createdDts: Time!
+    modifiedBy: UUID
+    modifiedByUserAccount: UserAccount
+    modifiedDts: Time
+}
+
+union TranslatedAuditFieldMetaData = TranslatedAuditFieldMetaBaseStruct 
+
+
+type TranslatedAuditFieldMetaBaseStruct {
+    version: Int!
 }
 
 extend type Query {

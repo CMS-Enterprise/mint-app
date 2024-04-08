@@ -180,12 +180,6 @@ func genericAuditTranslation(ctx context.Context, store *storage.Store, plan *mo
 			audit.ID,
 			audit.PrimaryKey,
 			operation,
-			"",
-			"",
-			"",
-			"",
-			"",
-			"",
 		)
 		translatedAudit.TranslatedAuditChange = change
 
