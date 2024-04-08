@@ -560,9 +560,7 @@ const Milestones = () => {
                       type="button"
                       className="usa-button usa-button--unstyled"
                       onClick={() =>
-                        history.push(
-                          `/models/${modelID}/task-list/characteristics`
-                        )
+                        history.push(`/models/${modelID}/task-list`)
                       }
                     >
                       <Icon.ArrowBack className="margin-right-1" aria-hidden />
