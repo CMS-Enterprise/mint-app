@@ -40,8 +40,8 @@ type LaunchDarklySettings struct {
 // Represents model plan base translation data
 type ModelPlanTranslation struct {
 	ModelName    *TranslationField            `json:"modelName" db:"model_name"`
-	PreviousName *TranslationField            `json:"previousName" db:"previous_name"`
-	NameHistory  *TranslationField            `json:"nameHistory" db:"name_history"`
+	PreviousName *TranslationField            `json:"previousName"`
+	NameHistory  *TranslationField            `json:"nameHistory"`
 	Abbreviation *TranslationField            `json:"abbreviation" db:"abbreviation"`
 	Archived     *TranslationFieldWithOptions `json:"archived" db:"archived"`
 	Status       *TranslationFieldWithOptions `json:"status" db:"status"`
