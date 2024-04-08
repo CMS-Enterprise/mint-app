@@ -15,6 +15,11 @@ export type Scalars = {
   Boolean: { input: boolean; output: boolean; }
   Int: { input: number; output: number; }
   Float: { input: number; output: number; }
+  /**
+   * https://gqlgen.com/reference/scalars/#any
+   * Maps an arbitrary GraphQL value to a interface{} Go type.
+   */
+  Any: { input: any; output: any; }
   /** Maps an arbitrary GraphQL value to a map[string]interface{} Go type. */
   Map: { input: any; output: any; }
   /** TaggedHTML represents an input type for HTML that could also include tags that reference another entity */
@@ -327,6 +332,13 @@ export enum DataToSendParticipantsType {
   OTHER_MIPS_DATA = 'OTHER_MIPS_DATA',
   PARTICIPANT_LEVEL_DATA = 'PARTICIPANT_LEVEL_DATA',
   PROVIDER_LEVEL_DATA = 'PROVIDER_LEVEL_DATA'
+}
+
+export enum DatabaseOperation {
+  DELETE = 'DELETE',
+  INSERT = 'INSERT',
+  TRUNCATE = 'TRUNCATE',
+  UPDATE = 'UPDATE'
 }
 
 /** DiscussionReply represents a discussion reply */
@@ -2877,6 +2889,7 @@ export type Query = {
   possibleOperationalSolutions: Array<PossibleOperationalSolution>;
   searchOktaUsers: Array<UserInfo>;
   taskListSectionLocks: Array<TaskListSectionLockStatus>;
+  translatedAuditChangeCollection?: Maybe<Array<TranslatedAuditChange>>;
   userAccount: UserAccount;
 };
 
@@ -2969,6 +2982,12 @@ export type QuerySearchOktaUsersArgs = {
 
 /** Query definition for the schema */
 export type QueryTaskListSectionLocksArgs = {
+  modelPlanID: Scalars['UUID']['input'];
+};
+
+
+/** Query definition for the schema */
+export type QueryTranslatedAuditChangeCollectionArgs = {
   modelPlanID: Scalars['UUID']['input'];
 };
 
@@ -3254,6 +3273,43 @@ export enum TeamRole {
   PAYMENT = 'PAYMENT',
   QUALITY = 'QUALITY'
 }
+
+/** TranslatedAuditChange represent a point in time change made to part of application. */
+export type TranslatedAuditChange = {
+  __typename: 'TranslatedAuditChange';
+  action: DatabaseOperation;
+  actorID: Scalars['UUID']['output'];
+  actorName: Scalars['String']['output'];
+  changeID: Scalars['Int']['output'];
+  createdBy: Scalars['UUID']['output'];
+  createdByUserAccount: UserAccount;
+  createdDts: Scalars['Time']['output'];
+  date: Scalars['Time']['output'];
+  fieldName: Scalars['String']['output'];
+  fieldNameTranslated: Scalars['String']['output'];
+  id: Scalars['UUID']['output'];
+  metaData: TranslatedAuditMetaData;
+  modelName: Scalars['String']['output'];
+  modifiedBy?: Maybe<Scalars['UUID']['output']>;
+  modifiedByUserAccount?: Maybe<UserAccount>;
+  modifiedDts?: Maybe<Scalars['Time']['output']>;
+  new?: Maybe<Scalars['Any']['output']>;
+  newTranslated?: Maybe<Scalars['Any']['output']>;
+  old?: Maybe<Scalars['Any']['output']>;
+  oldTranslated?: Maybe<Scalars['Any']['output']>;
+  primaryKey: Scalars['UUID']['output'];
+  tableID: Scalars['Int']['output'];
+  tableName: Scalars['String']['output'];
+};
+
+export type TranslatedAuditMetaBaseStruct = {
+  __typename: 'TranslatedAuditMetaBaseStruct';
+  tableName?: Maybe<Scalars['String']['output']>;
+  version: Scalars['Int']['output'];
+};
+
+/** TranslatedAuditMetaData is a type that represents all the data that can be captured in a Translated audit */
+export type TranslatedAuditMetaData = TranslatedAuditMetaBaseStruct;
 
 /** Represents the data type of the translation field */
 export enum TranslationDataType {

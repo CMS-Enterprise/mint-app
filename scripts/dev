@@ -350,7 +350,7 @@ namespace :db do
 
   desc "Seed local database with development data"
   task :seed do
-    sh "go run ./cmd/dbseed"
+    sh "go run ./cmd/dbseed/*go dbseed"
   end
 
   task :drop_connections do
@@ -384,10 +384,12 @@ namespace :db do
     model_plan,
     user_notification,
     activity,
+    translated_audit_change,
     audit.change"
 
     puts "Cleaning database..."
     `echo "TRUNCATE #{tableList}" | psql`
+    # Ticket: (ChChCh Changes!) Update this to use the seed commands implementation of clean, so we don't need this in two places
 
     #remove all non system accounts
     systemAccounts =  "( 'UNKNOWN_USER','MINT_SYSTEM')"

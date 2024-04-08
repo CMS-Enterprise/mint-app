@@ -1,0 +1,57 @@
+"""
+TranslatedAuditMetaData is a type that represents all the data that can be captured in a Translated audit
+"""
+union TranslatedAuditMetaData = TranslatedAuditMetaBaseStruct 
+
+
+type TranslatedAuditMetaBaseStruct {
+    version: Int!
+    tableName: String
+
+}
+
+enum DatabaseOperation {
+    INSERT
+    UPDATE
+    DELETE
+    TRUNCATE
+}
+
+"""
+TranslatedAuditChange represent a point in time change made to part of application.
+"""
+type TranslatedAuditChange {
+    id: UUID!
+    modelName: String!
+    
+    tableID: Int!
+    tableName: String!
+    primaryKey: UUID!
+    
+    date: Time!
+    action: DatabaseOperation!
+    fieldName: String!
+    fieldNameTranslated: String!
+    old: Any 
+    oldTranslated: Any
+    new: Any
+    newTranslated: Any
+
+    actorID: UUID!
+    actorName: String!  #TODO: (ChChCh Changes!)This could live in the actor account, but this is meant to facilitate search
+    changeID: Int! # This points to a specific audit change.
+    metaData: TranslatedAuditMetaData!
+
+
+    createdBy: UUID!
+    createdByUserAccount: UserAccount!
+    createdDts: Time!
+    modifiedBy: UUID
+    modifiedByUserAccount: UserAccount
+    modifiedDts: Time
+}
+
+extend type Query {
+    translatedAuditChangeCollection(modelPlanID: UUID!): [TranslatedAuditChange!]
+  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+}  
