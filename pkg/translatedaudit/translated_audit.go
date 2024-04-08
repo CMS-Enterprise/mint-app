@@ -9,6 +9,7 @@ import (
 	"time"
 
 	"github.com/google/uuid"
+	"github.com/jmoiron/sqlx"
 	"github.com/lib/pq"
 	"github.com/samber/lo"
 	"go.uber.org/zap"
@@ -17,6 +18,7 @@ import (
 	"github.com/cmsgov/mint-app/pkg/authentication"
 	"github.com/cmsgov/mint-app/pkg/constants"
 	"github.com/cmsgov/mint-app/pkg/models"
+	"github.com/cmsgov/mint-app/pkg/sqlutils"
 	"github.com/cmsgov/mint-app/pkg/storage"
 )
 
@@ -28,7 +30,7 @@ func TranslateAuditsForModelPlan(
 	logger *zap.Logger,
 	timeStart time.Time,
 	timeEnd time.Time,
-	modelPlanID uuid.UUID) ([]*models.TranslatedAuditChange, error) {
+	modelPlanID uuid.UUID) ([]*models.TranslatedAuditChangeWithTranslatedFields, error) {
 
 	plan, err := store.ModelPlanGetByID(store, logger, modelPlanID)
 	if err != nil {
@@ -39,12 +41,17 @@ func TranslateAuditsForModelPlan(
 	if err != nil {
 		return nil, err
 	}
-	humanizedChanges, err := translateChangeSet(ctx, store, plan, audits)
+	translatedChanges, err := translateChangeSet(ctx, store, plan, audits)
 	if err != nil {
 		return nil, fmt.Errorf("issue analyzing model plan change set for time start %s to time end %s. Error : %w", timeStart, timeEnd, err)
 	}
 
-	retTranslatedChanges, err := storage.TranslatedAuditChangeCreateCollection(store, humanizedChanges)
+	retTranslatedChanges, err := saveTranslatedAuditAndFields(store, translatedChanges)
+	if err != nil {
+		return nil, fmt.Errorf("issue saving model plan change set for time start %s to time end %s. Error : %w", timeStart, timeEnd, err)
+	}
+
+	// retTranslatedChanges, err := storage.TranslatedAuditChangeCreateCollection(store, translatedChanges)
 
 	return retTranslatedChanges, err
 
@@ -56,12 +63,12 @@ func translateChangeSet(
 	store *storage.Store,
 	plan *models.ModelPlan,
 	audits []*models.AuditChange,
-) ([]*models.TranslatedAuditChange, error) {
+) ([]*models.TranslatedAuditChangeWithTranslatedFields, error) {
 
-	planChanges, err := humanizeModelPlanAudits(ctx, store, plan, audits)
-	if err != nil {
-		return nil, err
-	}
+	// planChanges, err := humanizeModelPlanAudits(ctx, store, plan, audits)
+	// if err != nil {
+	// 	return nil, err
+	// }
 
 	partsProvidersChanges := lo.Filter(audits, func(m *models.AuditChange, index int) bool {
 		return m.TableName == "plan_participants_and_providers"
@@ -72,70 +79,71 @@ func translateChangeSet(
 		return nil, err
 	}
 
-	combinedChanges := append(planChanges, partsAndProviderChanges...)
+	// combinedChanges := append(planChanges, partsAndProviderChanges...)
+	combinedChanges := partsAndProviderChanges
 
 	return combinedChanges, nil
 
 }
 
-func humanizeModelPlanAudits(ctx context.Context, store *storage.Store, plan *models.ModelPlan, audits []*models.AuditChange) ([]*models.TranslatedAuditChange, error) {
-	// model PL
-	changes := []*models.TranslatedAuditChange{}
+// func humanizeModelPlanAudits(ctx context.Context, store *storage.Store, plan *models.ModelPlan, audits []*models.AuditChange) ([]*models.TranslatedAuditChange, error) {
+// 	// model PL
+// 	changes := []*models.TranslatedAuditChange{}
 
-	modelPlanAudits := lo.Filter(audits, func(m *models.AuditChange, index int) bool {
-		return m.TableName == "model_plan"
-	})
-	for _, modelAudit := range modelPlanAudits {
-		actorAccount, err := modelAudit.ModifiedByUserAccount(ctx)
-		if err != nil {
-			fmt.Printf("issue getting actor for audit  (%d) for plan %s, while attempting humanization ", modelAudit.ID, plan.ModelName)
-			continue
-		}
-		operation, isValidOperation := GetDatabaseOperation(modelAudit.Action)
-		if !isValidOperation {
-			fmt.Printf("issue converting operation to valid DB operation for audit  (%d) for plan %s, while attempting humanization. Provided value was %s ", modelAudit.ID, plan.ModelName, modelAudit.Action)
-		}
+// 	modelPlanAudits := lo.Filter(audits, func(m *models.AuditChange, index int) bool {
+// 		return m.TableName == "model_plan"
+// 	})
+// 	for _, modelAudit := range modelPlanAudits {
+// 		actorAccount, err := modelAudit.ModifiedByUserAccount(ctx)
+// 		if err != nil {
+// 			fmt.Printf("issue getting actor for audit  (%d) for plan %s, while attempting humanization ", modelAudit.ID, plan.ModelName)
+// 			continue
+// 		}
+// 		operation, isValidOperation := GetDatabaseOperation(modelAudit.Action)
+// 		if !isValidOperation {
+// 			fmt.Printf("issue converting operation to valid DB operation for audit  (%d) for plan %s, while attempting humanization. Provided value was %s ", modelAudit.ID, plan.ModelName, modelAudit.Action)
+// 		}
 
-		for fieldName, field := range modelAudit.Fields { //fieldName
-			change := models.NewTranslatedAuditChange(
-				constants.GetSystemAccountUUID(),
-				modelAudit.ModifiedBy,
-				actorAccount.CommonName,
+// 		for fieldName, field := range modelAudit.Fields { //fieldName
+// 			change := models.NewTranslatedAuditChange(
+// 				constants.GetSystemAccountUUID(),
+// 				modelAudit.ModifiedBy,
+// 				actorAccount.CommonName,
 
-				plan.ID,
-				plan.ModelName,
-				modelAudit.ModifiedDts,
-				modelAudit.TableName,
-				modelAudit.TableID,
-				modelAudit.ID,
-				modelAudit.PrimaryKey,
-				operation,
-				fieldName,
-				fieldName, //TODO: (ChChCh Changes!) Add Translation
-				field.Old,
-				field.Old, //TODO: (ChChCh Changes!) Add Translation
-				field.New,
-				field.New, //TODO: (ChChCh Changes!) Add Translation
-			)
-			change.MetaDataRaw = field
+// 				plan.ID,
+// 				plan.ModelName,
+// 				modelAudit.ModifiedDts,
+// 				modelAudit.TableName,
+// 				modelAudit.TableID,
+// 				modelAudit.ID,
+// 				modelAudit.PrimaryKey,
+// 				operation,
+// 				fieldName,
+// 				fieldName, //TODO: (ChChCh Changes!) Add Translation
+// 				field.Old,
+// 				field.Old, //TODO: (ChChCh Changes!) Add Translation
+// 				field.New,
+// 				field.New, //TODO: (ChChCh Changes!) Add Translation
+// 			)
+// 			change.MetaDataRaw = field
 
-			changes = append(changes, &change)
+// 			changes = append(changes, &change)
 
-		}
+// 		}
 
-	}
+// 	}
 
-	return changes, nil
-}
+// 	return changes, nil
+// }
 
 // genericAuditTranslation provides an entry point to translate every audit change generically
-func genericAuditTranslation(ctx context.Context, store *storage.Store, plan *models.ModelPlan, audits []*models.AuditChange) ([]*models.TranslatedAuditChange, error) {
+func genericAuditTranslation(ctx context.Context, store *storage.Store, plan *models.ModelPlan, audits []*models.AuditChange) ([]*models.TranslatedAuditChangeWithTranslatedFields, error) {
 
 	if len(audits) == 0 {
 		return nil, nil
 	}
 	// model PL
-	changes := []*models.TranslatedAuditChange{}
+	changes := []*models.TranslatedAuditChangeWithTranslatedFields{}
 	//Ticket (ChChCh Changes!) Think about grouping all the changes first so we don't actually have to parse this each time.
 	audit := audits[0]
 	trans, err := mappings.GetTranslation(audit.TableName)
@@ -157,26 +165,48 @@ func genericAuditTranslation(ctx context.Context, store *storage.Store, plan *mo
 		if !isValidOperation {
 			fmt.Printf("issue converting operation to valid DB operation for audit  (%d) for plan %s, while attempting humanization. Provided value was %s ", audit.ID, plan.ModelName, audit.Action)
 		}
+		translatedAudit := models.TranslatedAuditChangeWithTranslatedFields{
+			TranslatedFields: []*models.TranslatedAuditField{},
+		}
+		change := models.NewTranslatedAuditChange(
+			constants.GetSystemAccountUUID(),
+			audit.ModifiedBy,
+			actorAccount.CommonName,
+			plan.ID,
+			plan.ModelName,
+			audit.ModifiedDts,
+			audit.TableName,
+			audit.TableID,
+			audit.ID,
+			audit.PrimaryKey,
+			operation,
+			"",
+			"",
+			"",
+			"",
+			"",
+			"",
+		)
+		translatedAudit.TranslatedAuditChange = change
 
 		for fieldName, field := range audit.Fields {
 
-			change, err := translateField(fieldName, field, audit, actorAccount, operation, plan, translationMap)
+			transField, err := translateField(fieldName, field, audit, actorAccount, operation, plan, translationMap)
 			if err != nil {
-
 				fmt.Printf("issue translating field (%s) for plan %s ", fieldName, plan.ModelName)
 				continue
-
 			}
+			translatedAudit.TranslatedFields = append(translatedAudit.TranslatedFields, transField)
 
-			changes = append(changes, change)
 		}
+		changes = append(changes, &translatedAudit) // append the whole audite
 
 	}
 
 	return changes, nil
 }
 
-func translateField(fieldName string, field models.AuditField, audit *models.AuditChange, actorAccount *authentication.UserAccount, operation models.DatabaseOperation, modelPlan *models.ModelPlan, translationMap map[string]interface{}) (*models.TranslatedAuditChange, error) {
+func translateField(fieldName string, field models.AuditField, audit *models.AuditChange, actorAccount *authentication.UserAccount, operation models.DatabaseOperation, modelPlan *models.ModelPlan, translationMap map[string]interface{}) (*models.TranslatedAuditField, error) {
 	var translatedLabel string
 	var translatedOld interface{}
 	var translatedNew interface{}
@@ -207,19 +237,7 @@ func translateField(fieldName string, field models.AuditField, audit *models.Aud
 		translatedOld = field.Old
 		translatedNew = field.New
 	}
-
-	change := models.NewTranslatedAuditChange(
-		constants.GetSystemAccountUUID(),
-		audit.ModifiedBy,
-		actorAccount.CommonName,
-		modelPlan.ID,
-		modelPlan.ModelName,
-		audit.ModifiedDts,
-		audit.TableName,
-		audit.TableID,
-		audit.ID,
-		audit.PrimaryKey,
-		operation,
+	translatedField := models.NewTranslatedAuditField(constants.GetSystemAccountUUID(),
 		fieldName,
 		translatedLabel,
 		field.Old,
@@ -227,9 +245,29 @@ func translateField(fieldName string, field models.AuditField, audit *models.Aud
 		field.New,
 		translatedNew,
 	)
+	// Ticket: (EASI-4147) extract this logic to another function
+	// change := models.NewTranslatedAuditChange(
+	// 	constants.GetSystemAccountUUID(),
+	// 	audit.ModifiedBy,
+	// 	actorAccount.CommonName,
+	// 	modelPlan.ID,
+	// 	modelPlan.ModelName,
+	// 	audit.ModifiedDts,
+	// 	audit.TableName,
+	// 	audit.TableID,
+	// 	audit.ID,
+	// 	audit.PrimaryKey,
+	// 	operation,
+	// 	fieldName,
+	// 	translatedLabel,
+	// 	field.Old,
+	// 	translatedOld,
+	// 	field.New,
+	// 	translatedNew,
+	// )
 	// change.MetaDataRaw = nil //Ticket: (ChChCh Changes!) This should be specific to the type of change...
 
-	return &change, nil
+	return &translatedField, nil
 
 }
 
@@ -312,4 +350,50 @@ func extractArrayValues(str string) []string {
 	}
 
 	return values
+}
+
+// saveTranslatedAuditAndFields is a helper method to save a change with it's related fields at the same time
+func saveTranslatedAuditAndFields(tp sqlutils.TransactionPreparer, translatedAudits []*models.TranslatedAuditChangeWithTranslatedFields) ([]*models.TranslatedAuditChangeWithTranslatedFields, error) {
+
+	retTranslatedAuditsWithFields := []*models.TranslatedAuditChangeWithTranslatedFields{}
+
+	// Ticket: (EASI-4147) Figure out how we want to error. Should each change and field be it's own transaction? That way if it fails, we still save other  changes? That's probably best
+	for _, translatedAudit := range translatedAudits {
+
+		retTranslated, err := sqlutils.WithTransaction[models.TranslatedAuditChangeWithTranslatedFields](tp, func(tx *sqlx.Tx) (*models.TranslatedAuditChangeWithTranslatedFields, error) {
+
+			change, err := storage.TranslatedAuditChangeCreate(tx, &translatedAudit.TranslatedAuditChange)
+			if err != nil {
+				return nil, err
+			}
+			if change == nil {
+				return nil, fmt.Errorf("translated change not created as expected.Err: %w", err)
+			}
+			retTranslated := models.TranslatedAuditChangeWithTranslatedFields{
+				TranslatedAuditChange: *change,
+			}
+
+			for _, translatedAuditField := range translatedAudit.TranslatedFields {
+				// Ticket: (EASI-4147) Combine this with the storage message loop
+				translatedAuditField.TranslatedAuditID = retTranslated.ID
+			}
+
+			retTranslatedFields, err := storage.TranslatedAuditFieldCreateCollection(tx, translatedAudit.TranslatedFields)
+			if err != nil {
+				return nil, fmt.Errorf("translated change fields not created as expected. Err: %w", err)
+			}
+
+			retTranslated.TranslatedFields = retTranslatedFields
+			return &retTranslated, nil
+
+		})
+		if err != nil {
+			return nil, err
+			// Ticket: (EASI-4147) Figure out, if one audit fails translation, should the whole job fail? Or should we just fail
+		}
+
+		retTranslatedAuditsWithFields = append(retTranslatedAuditsWithFields, retTranslated)
+
+	}
+	return retTranslatedAuditsWithFields, nil
 }

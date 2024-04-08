@@ -68,7 +68,6 @@ CREATE TABLE translated_audit_field (
     new_translated ZERO_STRING, 
     meta_data JSONB NOT NULL, -- This could be whatever
 
-    model_name ZERO_STRING NOT NULL,
     created_by UUID NOT NULL REFERENCES user_account(id),
     created_dts TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
     modified_by UUID REFERENCES user_account(id),

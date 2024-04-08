@@ -8,7 +8,6 @@ SELECT
     new,
     new_translated,
     meta_data,
-    model_name,
     created_by,
     created_dts,
     modified_by,

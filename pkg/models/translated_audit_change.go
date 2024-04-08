@@ -18,6 +18,12 @@ const (
 	DBOpTruncate DatabaseOperation = "TRUNCATE"
 )
 
+// TranslatedAuditChangeWithTranslatedFields is a struct that is used to group a translated audit change with the representative fields. It is meant to be used as a convenience grouping
+type TranslatedAuditChangeWithTranslatedFields struct {
+	TranslatedAuditChange
+	TranslatedFields []*TranslatedAuditField
+}
+
 // TranslatedAuditChange is a structure that shows grouped, humanReadable Audit data
 type TranslatedAuditChange struct {
 	baseStruct

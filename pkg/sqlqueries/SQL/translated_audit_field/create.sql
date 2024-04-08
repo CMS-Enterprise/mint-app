@@ -8,7 +8,6 @@ INSERT INTO public.translated_audit_field(
     new,
     new_translated,
     meta_data,
-    model_name,
     created_by
 )
 VALUES (
@@ -21,7 +20,6 @@ VALUES (
     :new,
     :new_translated,
     :meta_data,
-    :model_name,
     :created_by
 )
 RETURNING
@@ -34,7 +32,6 @@ old_translated,
 new,
 new_translated,
 meta_data,
-model_name,
 created_by,
 created_dts,
 modified_by,

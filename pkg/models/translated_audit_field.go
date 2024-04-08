@@ -35,8 +35,8 @@ type TranslatedAuditField struct {
 // NewTranslatedAuditField
 func NewTranslatedAuditField(
 	createdBy uuid.UUID,
-
-	translatedAuditID uuid.UUID,
+	// Ticket: (EASI-4147) Update this to make sure we save the audit ID as needed
+	// translatedAuditID uuid.UUID,
 
 	fieldName string,
 	fieldNameTranslated string,
@@ -51,7 +51,7 @@ func NewTranslatedAuditField(
 	return TranslatedAuditField{
 		baseStruct: NewBaseStruct(createdBy),
 
-		TranslatedAuditID: translatedAuditID,
+		// TranslatedAuditID: translatedAuditID,
 
 		FieldName:           fieldName,
 		FieldNameTranslated: fieldNameTranslated,
