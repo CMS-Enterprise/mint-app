@@ -4,6 +4,7 @@ type PossibleOperationalSolution {
   key: OperationalSolutionKey!
   treatAsOther: Boolean!
   pointsOfContact: [PossibleOperationalSolutionContact!]!
+  primaryPointOfContact: PossibleOperationalSolutionContact
   filterView: ModelViewFilter
 
   createdBy: UUID!
