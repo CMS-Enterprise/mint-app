@@ -24,6 +24,7 @@ import {
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
 import BooleanRadio from 'components/BooleanRadioForm';
+import ConfirmLeave from 'components/ConfirmLeave';
 import MutationErrorModal from 'components/MutationErrorModal';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
@@ -218,6 +219,8 @@ const Milestones = () => {
                     })}
                   </ErrorAlert>
                 )}
+
+                <ConfirmLeave />
 
                 <Form
                   className="desktop:grid-col-7 milestone-form margin-top-6"

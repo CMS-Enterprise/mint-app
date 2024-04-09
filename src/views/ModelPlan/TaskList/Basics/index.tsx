@@ -34,6 +34,7 @@ import {
 } from 'gql/gen/graphql';
 
 import AskAQuestion from 'components/AskAQuestion';
+import ConfirmLeave from 'components/ConfirmLeave';
 import MainContent from 'components/MainContent';
 import MutationErrorModal from 'components/MutationErrorModal';
 import PageHeading from 'components/PageHeading';
@@ -269,6 +270,8 @@ const BasicsContent = () => {
 
           return (
             <>
+              <ConfirmLeave />
+
               {getKeys(errors).length > 0 && (
                 <ErrorAlert
                   testId="formik-validation-errors"

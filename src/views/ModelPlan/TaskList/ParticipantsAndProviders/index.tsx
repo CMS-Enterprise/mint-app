@@ -26,6 +26,7 @@ import {
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
 import BooleanRadio from 'components/BooleanRadioForm';
+import ConfirmLeave from 'components/ConfirmLeave';
 import MainContent from 'components/MainContent';
 import MutationErrorModal from 'components/MutationErrorModal';
 import PageHeading from 'components/PageHeading';
@@ -196,6 +197,9 @@ export const ParticipantsAndProvidersContent = () => {
                   })}
                 </ErrorAlert>
               )}
+
+              <ConfirmLeave />
+
               <GridContainer className="padding-left-0 padding-right-0">
                 <Grid row gap className="participants-and-providers__info">
                   <Grid desktop={{ col: 6 }}>

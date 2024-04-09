@@ -32,7 +32,8 @@ const general = {
       'If you have content you don’t want to lose, we recommend saving that content in another format.',
     stay: 'Stay on this page',
     leave: 'Leave this page'
-  }
+  },
+  onPageLeaveMessage: 'You have unsaved changes. Continue?'
 };
 
 export default general;

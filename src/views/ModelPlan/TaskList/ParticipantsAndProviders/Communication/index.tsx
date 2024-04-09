@@ -23,6 +23,7 @@ import {
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
 import BooleanRadio from 'components/BooleanRadioForm';
+import ConfirmLeave from 'components/ConfirmLeave';
 import FrequencyForm from 'components/FrequencyForm';
 import ITSolutionsWarning from 'components/ITSolutionsWarning';
 import MutationErrorModal from 'components/MutationErrorModal';
@@ -213,6 +214,8 @@ export const Communication = () => {
                   })}
                 </ErrorAlert>
               )}
+
+              <ConfirmLeave />
 
               <Form
                 className="desktop:grid-col-6 margin-top-6"

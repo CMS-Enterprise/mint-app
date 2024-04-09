@@ -27,6 +27,7 @@ import {
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
 import BooleanRadio from 'components/BooleanRadioForm';
+import ConfirmLeave from 'components/ConfirmLeave';
 import ITSolutionsWarning from 'components/ITSolutionsWarning';
 import MainContent from 'components/MainContent';
 import MutationErrorModal from 'components/MutationErrorModal';
@@ -272,6 +273,8 @@ export const OpsEvalAndLearningContent = () => {
                   })}
                 </ErrorAlert>
               )}
+
+              <ConfirmLeave />
 
               <Form
                 className="desktop:grid-col-6 margin-top-6"
