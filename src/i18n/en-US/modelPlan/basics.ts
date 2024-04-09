@@ -374,6 +374,8 @@ export const basics: TranslationBasics = {
     goField: 'PhasedInNote',
     dbField: 'phased_in_note',
     label: 'Notes',
+    isNote: true,
+    otherParentField: 'phasedIn',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
     filterGroups: [ModelViewFilter.IDDOC, ModelViewFilter.PBG]

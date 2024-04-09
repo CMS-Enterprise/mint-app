@@ -239,7 +239,9 @@ describe('exportTranslation Util', () => {
         gqlField: 'phasedInNote',
         goField: 'PhasedInNote',
         dbField: 'phased_in_note',
-        label: 'Notes'
+        label: 'Notes',
+        isNote: true,
+        otherParentField: 'phased_in'
       },
       status: {
         gqlField: 'status',
