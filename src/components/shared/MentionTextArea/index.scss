@@ -19,8 +19,15 @@
     }
 
     &.notification__content {
-      .ProseMirror {
-        display: flex;
+      p {
+        quotes: "“" "”";
+
+        &::before {
+          content: open-quote;
+        }
+        &::after {
+          content: close-quote;
+        }
       }
     }
   }
