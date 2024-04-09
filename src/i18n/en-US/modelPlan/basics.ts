@@ -221,6 +221,8 @@ export const basics: TranslationBasics = {
     goField: 'Note',
     dbField: 'note',
     label: 'Notes',
+    isNote: true,
+    parentReferencesLabel: 'Model basics',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA
   },
@@ -336,6 +338,8 @@ export const basics: TranslationBasics = {
     goField: 'HighLevelNote',
     dbField: 'high_level_note',
     label: 'Notes',
+    isNote: true,
+    parentReferencesLabel: 'Timeline',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA
   },

@@ -3330,12 +3330,15 @@ export type TranslationField = {
   goField: Scalars['String']['output'];
   gqlField: Scalars['String']['output'];
   isArray?: Maybe<Scalars['Boolean']['output']>;
+  isNote?: Maybe<Scalars['Boolean']['output']>;
   /** Is a question a followup to another that doesn't designate it's own readonly question/line */
   isOtherType?: Maybe<Scalars['Boolean']['output']>;
   label: Scalars['String']['output'];
   multiSelectLabel?: Maybe<Scalars['String']['output']>;
   /** Field name for the parent question for fields that represent Other, Please specify, etc.  Used in change history to render parent question for context */
   otherParentField?: Maybe<Scalars['String']['output']>;
+  /** Label for fields that reference more than one parent - Ex: Notes - 'Note for Model Basics' */
+  parentReferencesLabel?: Maybe<Scalars['String']['output']>;
   readonlyLabel?: Maybe<Scalars['String']['output']>;
   sublabel?: Maybe<Scalars['String']['output']>;
 };
@@ -3349,6 +3352,7 @@ export type TranslationFieldWithOptions = {
   goField: Scalars['String']['output'];
   gqlField: Scalars['String']['output'];
   isArray?: Maybe<Scalars['Boolean']['output']>;
+  isNote?: Maybe<Scalars['Boolean']['output']>;
   /** Is a question a followup to another that doesn't designate it's own readonly question/line */
   isOtherType?: Maybe<Scalars['Boolean']['output']>;
   label: Scalars['String']['output'];
@@ -3356,6 +3360,8 @@ export type TranslationFieldWithOptions = {
   options: Scalars['Map']['output'];
   /** Field name for the parent question for fields that represent Other, Please specify, etc.  Used in change history to render parent question for context */
   otherParentField?: Maybe<Scalars['String']['output']>;
+  /** Label for fields that reference more than one parent - Ex: Notes - 'Note for Model Basics' */
+  parentReferencesLabel?: Maybe<Scalars['String']['output']>;
   readonlyLabel?: Maybe<Scalars['String']['output']>;
   sublabel?: Maybe<Scalars['String']['output']>;
 };
@@ -3370,6 +3376,7 @@ export type TranslationFieldWithOptionsAndChildren = {
   goField: Scalars['String']['output'];
   gqlField: Scalars['String']['output'];
   isArray?: Maybe<Scalars['Boolean']['output']>;
+  isNote?: Maybe<Scalars['Boolean']['output']>;
   /** Is a question a followup to another that doesn't designate it's own readonly question/line */
   isOtherType?: Maybe<Scalars['Boolean']['output']>;
   label: Scalars['String']['output'];
@@ -3377,6 +3384,8 @@ export type TranslationFieldWithOptionsAndChildren = {
   options: Scalars['Map']['output'];
   /** Field name for the parent question for fields that represent Other, Please specify, etc.  Used in change history to render parent question for context */
   otherParentField?: Maybe<Scalars['String']['output']>;
+  /** Label for fields that reference more than one parent - Ex: Notes - 'Note for Model Basics' */
+  parentReferencesLabel?: Maybe<Scalars['String']['output']>;
   readonlyLabel?: Maybe<Scalars['String']['output']>;
   sublabel?: Maybe<Scalars['String']['output']>;
 };
@@ -3390,6 +3399,7 @@ export type TranslationFieldWithOptionsAndParent = {
   goField: Scalars['String']['output'];
   gqlField: Scalars['String']['output'];
   isArray?: Maybe<Scalars['Boolean']['output']>;
+  isNote?: Maybe<Scalars['Boolean']['output']>;
   /** Is a question a followup to another that doesn't designate it's own readonly question/line */
   isOtherType?: Maybe<Scalars['Boolean']['output']>;
   label: Scalars['String']['output'];
@@ -3397,6 +3407,8 @@ export type TranslationFieldWithOptionsAndParent = {
   options: Scalars['Map']['output'];
   /** Field name for the parent question for fields that represent Other, Please specify, etc.  Used in change history to render parent question for context */
   otherParentField?: Maybe<Scalars['String']['output']>;
+  /** Label for fields that reference more than one parent - Ex: Notes - 'Note for Model Basics' */
+  parentReferencesLabel?: Maybe<Scalars['String']['output']>;
   parentRelation: TranslationFieldWithOptionsAndChildren;
   readonlyLabel?: Maybe<Scalars['String']['output']>;
   sublabel?: Maybe<Scalars['String']['output']>;
@@ -3411,12 +3423,15 @@ export type TranslationFieldWithParent = {
   goField: Scalars['String']['output'];
   gqlField: Scalars['String']['output'];
   isArray?: Maybe<Scalars['Boolean']['output']>;
+  isNote?: Maybe<Scalars['Boolean']['output']>;
   /** Is a question a followup to another that doesn't designate it's own readonly question/line */
   isOtherType?: Maybe<Scalars['Boolean']['output']>;
   label: Scalars['String']['output'];
   multiSelectLabel?: Maybe<Scalars['String']['output']>;
   /** Field name for the parent question for fields that represent Other, Please specify, etc.  Used in change history to render parent question for context */
   otherParentField?: Maybe<Scalars['String']['output']>;
+  /** Label for fields that reference more than one parent - Ex: Notes - 'Note for Model Basics' */
+  parentReferencesLabel?: Maybe<Scalars['String']['output']>;
   parentRelation: TranslationField;
   readonlyLabel?: Maybe<Scalars['String']['output']>;
   sublabel?: Maybe<Scalars['String']['output']>;
@@ -3432,6 +3447,7 @@ export type TranslationFieldWithParentAndChildren = {
   goField: Scalars['String']['output'];
   gqlField: Scalars['String']['output'];
   isArray?: Maybe<Scalars['Boolean']['output']>;
+  isNote?: Maybe<Scalars['Boolean']['output']>;
   /** Is a question a followup to another that doesn't designate it's own readonly question/line */
   isOtherType?: Maybe<Scalars['Boolean']['output']>;
   label: Scalars['String']['output'];
@@ -3439,6 +3455,8 @@ export type TranslationFieldWithParentAndChildren = {
   options: Scalars['Map']['output'];
   /** Field name for the parent question for fields that represent Other, Please specify, etc.  Used in change history to render parent question for context */
   otherParentField?: Maybe<Scalars['String']['output']>;
+  /** Label for fields that reference more than one parent - Ex: Notes - 'Note for Model Basics' */
+  parentReferencesLabel?: Maybe<Scalars['String']['output']>;
   parentRelation: TranslationFieldWithOptionsAndChildren;
   readonlyLabel?: Maybe<Scalars['String']['output']>;
   sublabel?: Maybe<Scalars['String']['output']>;

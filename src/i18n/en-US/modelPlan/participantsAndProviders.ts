@@ -104,6 +104,8 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     goField: 'ParticipantsNote',
     dbField: 'participants_note',
     label: 'Notes',
+    isNote: true,
+    otherParentField: 'participants',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
     filterGroups: [
@@ -133,6 +135,8 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     goField: 'ParticipantsCurrentlyInModelsNote',
     dbField: 'participants_currently_in_models_note',
     label: 'Notes',
+    isNote: true,
+    otherParentField: 'participantsCurrentlyInModels',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA
   },
@@ -198,6 +202,8 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     goField: 'ConfidenceNote',
     dbField: 'confidence_note',
     label: 'Notes',
+    isNote: true,
+    otherParentField: 'estimateConfidence',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
     filterGroups: [
@@ -244,6 +250,8 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     goField: 'RecruitmentNote',
     dbField: 'recruitment_note',
     label: 'Notes',
+    isNote: true,
+    otherParentField: 'recruitmentMethod',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA
   },
@@ -297,6 +305,8 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     goField: 'SelectionNote',
     dbField: 'selection_note',
     label: 'Notes',
+    isNote: true,
+    otherParentField: 'selectionMethod',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
     filterGroups: [
@@ -347,6 +357,8 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     goField: 'ParticipantAddedFrequencyNote',
     dbField: 'participant_added_frequency_note',
     label: 'Notes',
+    isNote: true,
+    otherParentField: 'participantAddedFrequency',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXT,
     filterGroups: [ModelViewFilter.IPC]
@@ -392,6 +404,8 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     goField: 'ParticipantRemovedFrequencyNote',
     dbField: 'participant_removed_frequency_note',
     label: 'Notes',
+    isNote: true,
+    otherParentField: 'participantRemovedFrequency',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXT,
     filterGroups: [ModelViewFilter.IPC]
@@ -431,6 +445,8 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     goField: 'CommunicationNote',
     dbField: 'communication_note',
     label: 'Notes',
+    isNote: true,
+    otherParentField: 'communicationMethod',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
     filterGroups: [ModelViewFilter.CBOSC, ModelViewFilter.IPC]
@@ -468,6 +484,8 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     goField: 'RiskNote',
     dbField: 'risk_note',
     label: 'Notes',
+    isNote: true,
+    otherParentField: 'riskType',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA
   },
@@ -488,6 +506,8 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     goField: 'WillRiskChangeNote',
     dbField: 'will_risk_change_note',
     label: 'Notes',
+    isNote: true,
+    otherParentField: 'willRiskChange',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA
   },
@@ -548,6 +568,8 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     goField: 'ParticipantRequireFinancialGuaranteeNote',
     dbField: 'participant_require_financial_guarantee_note',
     label: 'Notes',
+    isNote: true,
+    otherParentField: 'participantRequireFinancialGuaranteeType',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
     filterGroups: [ModelViewFilter.IPC]
@@ -570,6 +592,8 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     goField: 'CoordinateWorkNote',
     dbField: 'coordinate_work_note',
     label: 'Notes',
+    isNote: true,
+    otherParentField: 'coordinateWork',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA
   },
@@ -645,6 +669,8 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     goField: 'GainsharePaymentsNote',
     dbField: 'gainshare_payments_note',
     label: 'Notes',
+    isNote: true,
+    otherParentField: 'gainsharePaymentsEligibility',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA
   },
@@ -686,6 +712,8 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     goField: 'ParticipantsIDSNote',
     dbField: 'participants_ids_note',
     label: 'Notes',
+    isNote: true,
+    otherParentField: 'participantsIds',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
     filterGroups: [ModelViewFilter.IDDOC]
@@ -732,6 +760,8 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     goField: 'ProviderAdditionFrequencyNote',
     dbField: 'provider_addition_frequency_note',
     label: 'Notes',
+    isNote: true,
+    otherParentField: 'providerAdditionFrequency',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
     filterGroups: [ModelViewFilter.OACT, ModelViewFilter.IPC]
@@ -780,6 +810,8 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     goField: 'ProviderAddMethodNote',
     dbField: 'provider_add_method_note',
     label: 'Notes',
+    isNote: true,
+    otherParentField: 'providerAddMethod',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
     filterGroups: [ModelViewFilter.IPC, ModelViewFilter.OACT]
@@ -825,6 +857,8 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     goField: 'ProviderLeaveMethodNote',
     dbField: 'provider_leave_method_note',
     label: 'Notes',
+    isNote: true,
+    otherParentField: 'providerLeaveMethod',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
     filterGroups: [ModelViewFilter.IPC, ModelViewFilter.OACT]
@@ -867,6 +901,8 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     goField: 'ProviderRemovalFrequencyNote',
     dbField: 'provider_removal_frequency_note',
     label: 'Notes',
+    isNote: true,
+    otherParentField: 'providerRemovalFrequency',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA
   },
@@ -907,6 +943,8 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     goField: 'ProviderOverlapNote',
     dbField: 'provider_overlap_note',
     label: 'Notes',
+    isNote: true,
+    otherParentField: 'providerOverlap',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
     filterGroups: [ModelViewFilter.IDDOC, ModelViewFilter.PBG]

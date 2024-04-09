@@ -65,6 +65,8 @@ export const beneficiaries: TranslationBeneficiaries = {
     goField: 'BeneficiariesNote',
     dbField: 'beneficiaries_note',
     label: 'Notes',
+    isNote: true,
+    otherParentField: 'beneficiaries',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
     filterGroups: [ModelViewFilter.MDM]
@@ -105,6 +107,8 @@ export const beneficiaries: TranslationBeneficiaries = {
     goField: 'TreatDualElligibleDifferentNote',
     dbField: 'treat_dual_elligible_different_note',
     label: 'Notes',
+    isNote: true,
+    otherParentField: 'treatDualElligibleDifferent',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
     filterGroups: [ModelViewFilter.IDDOC, ModelViewFilter.PBG]
@@ -145,6 +149,8 @@ export const beneficiaries: TranslationBeneficiaries = {
     goField: 'ExcludeCertainCharacteristicsNote',
     dbField: 'exclude_certain_characteristics_note',
     label: 'Notes',
+    isNote: true,
+    otherParentField: 'excludeCertainCharacteristics',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
     filterGroups: [ModelViewFilter.IDDOC, ModelViewFilter.PBG]
@@ -187,6 +193,8 @@ export const beneficiaries: TranslationBeneficiaries = {
     goField: 'ConfidenceNote',
     dbField: 'confidence_note',
     label: 'Notes',
+    isNote: true,
+    otherParentField: 'numberPeopleImpacted',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
     filterGroups: [ModelViewFilter.MDM]
@@ -229,6 +237,8 @@ export const beneficiaries: TranslationBeneficiaries = {
     goField: 'BeneficiarySelectionNote',
     dbField: 'beneficiary_selection_note',
     label: 'Notes',
+    isNote: true,
+    otherParentField: 'beneficiarySelectionMethod',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
     filterGroups: [ModelViewFilter.CMMI]
@@ -279,6 +289,8 @@ export const beneficiaries: TranslationBeneficiaries = {
     goField: 'BeneficiarySelectionFrequencyNote',
     dbField: 'beneficiary_selection_frequency_note',
     label: 'Notes',
+    isNote: true,
+    otherParentField: 'beneficiarySelectionFrequency',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXT,
     filterGroups: [ModelViewFilter.CMMI]
@@ -327,6 +339,8 @@ export const beneficiaries: TranslationBeneficiaries = {
     goField: 'BeneficiaryRemovalFrequencyNote',
     dbField: 'beneficiary_removal_frequency_note',
     label: 'Notes',
+    isNote: true,
+    otherParentField: 'beneficiaryRemovalFrequency',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXT,
     filterGroups: [ModelViewFilter.CMMI]
@@ -351,6 +365,8 @@ export const beneficiaries: TranslationBeneficiaries = {
     goField: 'BeneficiaryOverlapNote',
     dbField: 'beneficiary_overlap_note',
     label: 'Notes',
+    isNote: true,
+    otherParentField: 'beneficiaryOverlap',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
     filterGroups: [ModelViewFilter.MDM]
@@ -401,6 +417,8 @@ export const beneficiaries: TranslationBeneficiaries = {
     goField: 'PrecedenceRulesNote',
     dbField: 'precedence_rules_note',
     label: 'Notes',
+    isNote: true,
+    otherParentField: 'precedenceRules',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
     filterGroups: [ModelViewFilter.MDM, ModelViewFilter.OACT]

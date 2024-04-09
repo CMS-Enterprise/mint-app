@@ -136,6 +136,8 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     goField: 'ResemblesExistingModelNote',
     dbField: 'resembles_existing_model_note',
     label: 'Notes',
+    isNote: true,
+    otherParentField: 'resemblesExistingModel',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA
   },
@@ -231,6 +233,8 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     goField: 'ParticipationInModelPreconditionNote',
     dbField: 'participation_in_model_precondition_note',
     label: 'Notes',
+    isNote: true,
+    otherParentField: 'participationInModelPrecondition',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA
   },
@@ -268,6 +272,8 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     goField: 'HasComponentsOrTracksNote',
     dbField: 'has_components_or_tracks_note',
     label: 'Notes',
+    isNote: true,
+    otherParentField: 'hasComponentsOrTracks',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA
   },
@@ -309,6 +315,8 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     goField: 'AgencyOrStateHelpNote',
     dbField: 'agency_or_state_help_note',
     label: 'Notes',
+    isNote: true,
+    otherParentField: 'agencyOrStateHelp',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA
   },
@@ -335,6 +343,8 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     goField: 'AlternativePaymentModelNote',
     dbField: 'alternative_payment_model_note',
     label: 'Notes',
+    isNote: true,
+    otherParentField: 'alternativePaymentModelTypes',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
     filterGroups: [ModelViewFilter.CMMI, ModelViewFilter.OACT]
@@ -396,6 +406,8 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     goField: 'KeyCharacteristicsNote',
     dbField: 'key_characteristics_note',
     label: 'Notes',
+    isNote: true,
+    otherParentField: 'keyCharacteristics',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
     filterGroups: [
@@ -422,6 +434,8 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     goField: 'CollectPlanBidsNote',
     dbField: 'collect_plan_bids_note',
     label: 'Notes',
+    isNote: true,
+    otherParentField: 'collectPlanBids',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA
   },
@@ -443,6 +457,8 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     goField: 'ManagePartCDEnrollmentNote',
     dbField: 'manage_part_c_d_enrollment_note',
     label: 'Notes',
+    isNote: true,
+    otherParentField: 'managePartCDEnrollment',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA
   },
@@ -464,6 +480,8 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     goField: 'PlanContractUpdatedNote',
     dbField: 'plan_contract_updated_note',
     label: 'Notes',
+    isNote: true,
+    otherParentField: 'planContractUpdated',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA
   },
@@ -499,6 +517,8 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     goField: 'CareCoordinationInvolvedNote',
     dbField: 'care_coordination_involved_note',
     label: 'Notes',
+    isNote: true,
+    otherParentField: 'careCoordinationInvolved',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA
   },
@@ -533,6 +553,8 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     goField: 'AdditionalServicesInvolvedNote',
     dbField: 'additional_services_involved_note',
     label: 'Notes',
+    isNote: true,
+    otherParentField: 'additionalServicesInvolved',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA
   },
@@ -567,6 +589,8 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     goField: 'CommunityPartnersInvolvedNote',
     dbField: 'community_partners_involved_note',
     label: 'Notes',
+    isNote: true,
+    otherParentField: 'communityPartnersInvolved',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA
   },
@@ -803,6 +827,8 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     goField: 'GeographiesTargetedNote',
     dbField: 'geographies_targeted_note',
     label: 'Notes',
+    isNote: true,
+    otherParentField: 'geographiesTargeted',
     dataType: TranslationDataType.BOOLEAN,
     formType: TranslationFormType.RADIO,
     filterGroups: [ModelViewFilter.IDDOC, ModelViewFilter.PBG]
@@ -825,6 +851,8 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     goField: 'ParticipationOptionsNote',
     dbField: 'participation_options_note',
     label: 'Notes',
+    isNote: true,
+    otherParentField: 'participationOptions',
     dataType: TranslationDataType.BOOLEAN,
     formType: TranslationFormType.RADIO,
     filterGroups: [ModelViewFilter.CMMI]
@@ -885,6 +913,8 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     goField: 'MultiplePatricipationAgreementsNeededNote',
     dbField: 'multiple_patricipation_agreements_needed_note',
     label: 'Notes',
+    isNote: true,
+    otherParentField: 'multiplePatricipationAgreementsNeeded',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
     filterGroups: [ModelViewFilter.CMMI]
@@ -923,6 +953,8 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     goField: 'RulemakingRequiredNote',
     dbField: 'rulemaking_required_note',
     label: 'Notes',
+    isNote: true,
+    otherParentField: 'rulemakingRequired',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA
   },
@@ -961,6 +993,8 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     goField: 'AuthorityAllowancesNote',
     dbField: 'authority_allowances_note',
     label: 'Notes',
+    isNote: true,
+    otherParentField: 'authorityAllowances',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
     filterGroups: [ModelViewFilter.CMMI]
@@ -1009,6 +1043,8 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     goField: 'WaiversRequiredNote',
     dbField: 'waivers_required_note',
     label: 'Notes',
+    isNote: true,
+    otherParentField: 'waiversRequired',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
     filterGroups: [ModelViewFilter.CMMI]
