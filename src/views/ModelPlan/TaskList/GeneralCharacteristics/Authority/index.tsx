@@ -22,6 +22,7 @@ import {
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
 import BooleanRadio from 'components/BooleanRadioForm';
+import ConfirmLeave from 'components/ConfirmLeave';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import ReadyForReview from 'components/ReadyForReview';
@@ -219,6 +220,8 @@ const Authority = () => {
                   })}
                 </ErrorAlert>
               )}
+
+              <ConfirmLeave />
 
               <Form
                 className="desktop:grid-col-6 margin-top-6"
