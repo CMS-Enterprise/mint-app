@@ -6,13 +6,13 @@ import { useMarkNotificationAsReadMutation } from 'gql/gen/graphql';
 import { GetNotifications_currentUser_notifications_notifications_activity as NotificationActivityType } from 'gql/gen/types/GetNotifications';
 
 import { arrayOfColors } from 'components/shared/IconInitial';
+import MentionTextArea from 'components/shared/MentionTextArea';
 import { getTimeElapsed } from 'utils/date';
 import { getUserInitials } from 'utils/modelPlan';
 
 import {
   ActivityCTA,
   activityText,
-  extractContent,
   isAddingCollaborator,
   isDailyDigest,
   isNewDiscussionReply,
@@ -103,9 +103,12 @@ const IndividualNotification = ({
                 {!isDailyDigest(metaData) &&
                   !isSharedActivity(metaData) &&
                   !isAddingCollaborator(metaData) && (
-                    <p className="margin-bottom-1 margin-top-0 text-base-darker">
-                      {extractContent(`“${metaData.content}”`)}
-                    </p>
+                    <MentionTextArea
+                      className="notification__content text-base-darker margin-bottom-1"
+                      id={`mention-${metaData.discussionID}`}
+                      editable={false}
+                      initialContent={metaData.content}
+                    />
                   )}
                 {isSharedActivity(metaData) && metaData.optionalMessage && (
                   <p className="margin-bottom-1 margin-top-0 text-base-darker">

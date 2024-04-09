@@ -291,22 +291,3 @@ export const pushValuesToChangesArray = (
   pushValues(obj);
   return changesArray;
 };
-
-/**
- * __extractContent__
- *
- * `metaData.content` has html elements in it, causing difficulty to render it onto page without extra massaging. This function parses out the raw text.
- *
- * Example:
-
-* - from: ```<p><span data-type=\"mention\" tag-type=\"USER_ACCOUNT\" class=\"mention\" data-id=\"JTTC\" data-id-db=\"735bee9e-90b2-4bf7-95f8-9039bbdc03b3\" data-label=\"Anabelle Jerde (JTTC)\">@Anabelle Jerde (JTTC)</span> reply</p>```
- *
- * - to: `@Anabelle Jerde (JTTC) reply`
- *
- * @param {string} metaData.content
- * @returns string
- */
-export const extractContent = (text: string) => {
-  return new DOMParser().parseFromString(text, 'text/html').documentElement
-    .textContent;
-};
