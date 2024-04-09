@@ -28,6 +28,10 @@
         &::after {
           content: close-quote;
         }
+
+        .ProseMirror-trailingBreak {
+          display: none;
+        }
       }
     }
   }
