@@ -20,7 +20,7 @@ func (r *queryResolver) TranslatedAuditChangeCollection(ctx context.Context, mod
 
 // TranslatedFields is the resolver for the translatedFields field.
 func (r *translatedAuditChangeResolver) TranslatedFields(ctx context.Context, obj *models.TranslatedAuditChange) ([]*models.TranslatedAuditField, error) {
-	return TranslatedAuditFieldCollectionGetByTranslatedAuditID(r.store, obj.ID)
+	return TranslatedAuditFieldCollectionGetByTranslatedAuditID(ctx, obj.ID)
 }
 
 // TranslatedAuditChange returns generated.TranslatedAuditChangeResolver implementation.
