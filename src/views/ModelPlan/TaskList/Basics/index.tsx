@@ -1,6 +1,13 @@
 import React, { Fragment, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link, Route, Switch, useHistory, useParams } from 'react-router-dom';
+import {
+  Link,
+  Route,
+  Switch,
+  useHistory,
+  useLocation,
+  useParams
+} from 'react-router-dom';
 import {
   Breadcrumb,
   BreadcrumbBar,
@@ -69,6 +76,7 @@ const BasicsContent = () => {
   const formikRef = useRef<FormikProps<ModelPlanInfoFormType>>(null);
 
   const history = useHistory();
+  const location = useLocation();
 
   const [destinationURL, setDestinationURL] = useState<string>('');
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -113,6 +121,10 @@ const BasicsContent = () => {
         // Don't call mutation if attempting to access a locked section
         if (destination.pathname.includes('locked-task-list-section')) {
           history.push(destination.pathname);
+          return false;
+        }
+
+        if (destination.pathname === location.pathname) {
           return false;
         }
 
@@ -162,7 +174,16 @@ const BasicsContent = () => {
       };
     }
     return () => {};
-  }, [history, id, update, isModalOpen, formikRef, setIsModalOpen, modelID]);
+  }, [
+    history,
+    id,
+    update,
+    isModalOpen,
+    formikRef,
+    setIsModalOpen,
+    modelID,
+    location.pathname
+  ]);
 
   const initialValues: ModelPlanInfoFormType = {
     __typename: 'ModelPlan',

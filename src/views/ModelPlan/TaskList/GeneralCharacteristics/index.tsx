@@ -264,6 +264,10 @@ export const CharacteristicsContent = () => {
           return false;
         }
 
+        if (destination.pathname === location.pathname) {
+          return false;
+        }
+
         const formValues = formikRef?.current?.values!;
 
         // Getting the inital values of model links
@@ -342,12 +346,12 @@ export const CharacteristicsContent = () => {
                 resemblesExistingModelLinks: miscellaneousT('apolloFailField')
               });
             } else {
-              history.push(location.pathname);
+              history.push(destination.pathname);
             }
           })
           .catch(errors => {
             unblock();
-            setDestinationURL(location.pathname);
+            setDestinationURL(destination.pathname);
             setIsModalOpen(true);
 
             formikRef?.current?.setErrors(errors);
