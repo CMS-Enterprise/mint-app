@@ -22,6 +22,7 @@ import {
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
+import ConfirmLeave from 'components/ConfirmLeave';
 import FrequencyForm from 'components/FrequencyForm';
 import ITSolutionsWarning from 'components/ITSolutionsWarning';
 import MutationErrorModal from 'components/MutationErrorModal';
@@ -196,6 +197,8 @@ const Frequency = () => {
 
           return (
             <>
+              <ConfirmLeave />
+
               {getKeys(errors).length > 0 && (
                 <ErrorAlert
                   testId="formik-validation-errors"
