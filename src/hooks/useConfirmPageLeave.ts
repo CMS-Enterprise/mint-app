@@ -4,6 +4,14 @@ import i18next from 'i18next';
 
 const confirmationMessage = i18next.t('general:onPageLeaveMessage');
 
+/**
+ * _useConfirmPageLeave_
+ *
+ * Custom hook used to trigger browser prompt on app leave
+ *
+ *
+ * @param {boolean} isUnsafeTabClose
+ */
 const useConfirmPageLeave = (isUnsafeTabClose: boolean) => {
   useEffect(() => {
     const handleBeforeUnload = (event: BeforeUnloadEvent) => {

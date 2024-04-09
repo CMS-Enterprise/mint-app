@@ -3,9 +3,14 @@ import { useFormikContext } from 'formik';
 
 import useConfirmPageLeave from 'hooks/useConfirmPageLeave';
 
+/**
+ * _ConfirmLeave_
+ *
+ * Util to be used in conjunction with Formik to trigger prompt on dirty form
+ */
 const ConfirmLeave = () => {
   const [isDirty, setIsDirty] = useState<boolean>(false);
-  // Grab values and submitForm from context
+  // Grab dirty value from Formik context
   const { dirty } = useFormikContext();
   useEffect(() => {
     setIsDirty(dirty);
