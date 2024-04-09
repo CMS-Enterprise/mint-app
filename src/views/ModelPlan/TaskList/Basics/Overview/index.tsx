@@ -15,24 +15,24 @@ import { Field, Form, Formik, FormikProps } from 'formik';
 import {
   GetOverviewQuery,
   ModelType,
-  useGetOverviewQuery,
-  useUpdateBasicsMutation
+  TypedUpdateBasicsDocument,
+  useGetOverviewQuery
 } from 'gql/gen/graphql';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
+import MutationErrorModal from 'components/MutationErrorModal';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
-import AutoSave from 'components/shared/AutoSave';
 import CheckboxField from 'components/shared/CheckboxField';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import TextAreaField from 'components/shared/TextAreaField';
+import useHandleMutation from 'hooks/useHandleMutation';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import { getKeys } from 'types/translation';
 import flattenErrors from 'utils/flattenErrors';
-import { dirtyInput } from 'utils/formDiff';
 import { NotFoundPartial } from 'views/NotFound';
 
 type BasicsFormType = GetOverviewQuery['modelPlan']['basics'];
@@ -67,33 +67,10 @@ const Overview = () => {
     note
   } = (data?.modelPlan?.basics || {}) as BasicsFormType;
 
-  const [update] = useUpdateBasicsMutation();
-
-  const handleFormSubmit = (redirect?: 'next' | 'back' | 'task-list') => {
-    update({
-      variables: {
-        id,
-        changes: dirtyInput(
-          formikRef?.current?.initialValues,
-          formikRef?.current?.values
-        )
-      }
-    })
-      .then(response => {
-        if (!response?.errors) {
-          if (redirect === 'next') {
-            history.push(`/models/${modelID}/task-list/basics/milestones`);
-          } else if (redirect === 'back') {
-            history.push(`/models/${modelID}/task-list/basics`);
-          } else if (redirect === 'task-list') {
-            history.push(`/models/${modelID}/task-list/`);
-          }
-        }
-      })
-      .catch(errors => {
-        formikRef?.current?.setErrors(errors);
-      });
-  };
+  const { mutationError } = useHandleMutation(TypedUpdateBasicsDocument, {
+    id,
+    formikRef
+  });
 
   const initialValues: BasicsFormType = {
     __typename: 'PlanBasics',
@@ -112,6 +89,12 @@ const Overview = () => {
 
   return (
     <div data-testid="model-plan-overview">
+      <MutationErrorModal
+        isOpen={mutationError.isModalOpen}
+        closeModal={() => mutationError.setIsModalOpen(false)}
+        url={mutationError.destinationURL}
+      />
+
       <BreadcrumbBar variant="wrap">
         <Breadcrumb>
           <BreadcrumbLink asCustom={Link} to="/">
@@ -145,7 +128,7 @@ const Overview = () => {
       <Formik
         initialValues={initialValues}
         onSubmit={() => {
-          handleFormSubmit('next');
+          history.push(`/models/${modelID}/task-list/basics/milestones`);
         }}
         enableReinitialize
         validateOnBlur={false}
@@ -281,7 +264,9 @@ const Overview = () => {
                     <Button
                       type="button"
                       className="usa-button usa-button--outline margin-bottom-1"
-                      onClick={() => handleFormSubmit('back')}
+                      onClick={() =>
+                        history.push(`/models/${modelID}/task-list/basics`)
+                      }
                     >
                       {miscellaneousT('back')}
                     </Button>
@@ -298,7 +283,7 @@ const Overview = () => {
                   <Button
                     type="button"
                     className="usa-button usa-button--unstyled"
-                    onClick={() => handleFormSubmit('task-list')}
+                    onClick={() => history.push(`/models/${modelID}/task-list`)}
                   >
                     <Icon.ArrowBack className="margin-right-1" aria-hidden />
 
@@ -306,18 +291,6 @@ const Overview = () => {
                   </Button>
                 </Fieldset>
               </Form>
-
-              {id && (
-                <AutoSave
-                  values={values}
-                  onSave={() => {
-                    if (getKeys(formikRef.current!.touched).length !== 0) {
-                      handleFormSubmit();
-                    }
-                  }}
-                  debounceDelay={3000}
-                />
-              )}
             </>
           );
         }}

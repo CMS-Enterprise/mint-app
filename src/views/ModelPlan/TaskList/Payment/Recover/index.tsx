@@ -17,8 +17,8 @@ import {
   ClaimsBasedPayType,
   GetRecoverQuery,
   PayType,
-  useGetRecoverQuery,
-  useUpdatePaymentsMutation
+  TypedUpdatePaymentsDocument,
+  useGetRecoverQuery
 } from 'gql/gen/graphql';
 import { useFlags } from 'launchdarkly-react-client-sdk';
 
@@ -27,20 +27,19 @@ import AskAQuestion from 'components/AskAQuestion';
 import BooleanRadio from 'components/BooleanRadioForm';
 import FrequencyForm from 'components/FrequencyForm';
 import ITSolutionsWarning from 'components/ITSolutionsWarning';
+import MutationErrorModal from 'components/MutationErrorModal';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import ReadyForReview from 'components/ReadyForReview';
-import AutoSave from 'components/shared/AutoSave';
 import MINTDatePicker from 'components/shared/DatePicker';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
+import useHandleMutation from 'hooks/useHandleMutation';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import useScrollElement from 'hooks/useScrollElement';
 import { getKeys } from 'types/translation';
 import flattenErrors from 'utils/flattenErrors';
-import { dirtyInput } from 'utils/formDiff';
-import sanitizeStatus from 'utils/status';
 import { NotFoundPartial } from 'views/NotFound';
 
 import { renderCurrentPage, renderTotalPages } from '..';
@@ -114,43 +113,10 @@ const Recover = () => {
 
   useScrollElement(!loading);
 
-  const [update] = useUpdatePaymentsMutation();
-
-  const handleFormSubmit = (
-    redirect?: 'back' | 'task-list' | 'next' | string
-  ) => {
-    const dirtyInputs = dirtyInput(
-      formikRef?.current?.initialValues,
-      formikRef?.current?.values
-    );
-
-    if (dirtyInputs.status) {
-      dirtyInputs.status = sanitizeStatus(dirtyInputs.status);
-    }
-
-    update({
-      variables: {
-        id,
-        changes: dirtyInputs
-      }
-    })
-      .then(response => {
-        if (!response?.errors) {
-          if (redirect === 'back') {
-            history.push(`/models/${modelID}/task-list/payment/complexity`);
-          } else if (redirect === 'task-list') {
-            history.push(`/models/${modelID}/task-list/`);
-          } else if (redirect === 'next') {
-            history.push(`/models/${modelID}/task-list/it-solutions`);
-          } else if (redirect) {
-            history.push(redirect);
-          }
-        }
-      })
-      .catch(errors => {
-        formikRef?.current?.setErrors(errors);
-      });
-  };
+  const { mutationError } = useHandleMutation(TypedUpdatePaymentsDocument, {
+    id,
+    formikRef
+  });
 
   const initialValues: InitialValueType = {
     __typename: 'PlanPayments',
@@ -188,6 +154,12 @@ const Recover = () => {
 
   return (
     <>
+      <MutationErrorModal
+        isOpen={mutationError.isModalOpen}
+        closeModal={() => mutationError.setIsModalOpen(false)}
+        url={mutationError.destinationURL}
+      />
+
       <BreadcrumbBar variant="wrap">
         <Breadcrumb>
           <BreadcrumbLink asCustom={Link} to="/">
@@ -224,7 +196,7 @@ const Recover = () => {
       <Formik
         initialValues={initialValues}
         onSubmit={() => {
-          handleFormSubmit('next');
+          history.push(`/models/${modelID}/task-list/it-solutions`);
         }}
         enableReinitialize
         innerRef={formikRef}
@@ -303,7 +275,7 @@ const Recover = () => {
                             <ITSolutionsWarning
                               id="payment-recover-payment-warning"
                               onClick={() =>
-                                handleFormSubmit(
+                                history.push(
                                   `/models/${modelID}/task-list/it-solutions`
                                 )
                               }
@@ -433,7 +405,9 @@ const Recover = () => {
                             type="button"
                             className="usa-button usa-button--outline margin-bottom-1"
                             onClick={() => {
-                              handleFormSubmit('back');
+                              history.push(
+                                `/models/${modelID}/task-list/payment/complexity`
+                              );
                             }}
                           >
                             {miscellaneousT('back')}
@@ -449,7 +423,9 @@ const Recover = () => {
                         <Button
                           type="button"
                           className="usa-button usa-button--unstyled"
-                          onClick={() => handleFormSubmit('task-list')}
+                          onClick={() =>
+                            history.push(`/models/${modelID}/task-list`)
+                          }
                         >
                           <Icon.ArrowBack
                             className="margin-right-1"
@@ -463,16 +439,6 @@ const Recover = () => {
                   </Grid>
                 </Grid>
               </GridContainer>
-
-              {id && (
-                <AutoSave
-                  values={values}
-                  onSave={() => {
-                    handleFormSubmit();
-                  }}
-                  debounceDelay={3000}
-                />
-              )}
             </>
           );
         }}

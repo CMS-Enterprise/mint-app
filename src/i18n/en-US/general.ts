@@ -23,7 +23,16 @@ const general = {
   noResults: 'No results',
   readMore: 'Read more',
   readLess: 'Read less',
-  newTab: 'Open in a new tab'
+  newTab: 'Open in a new tab',
+  mutationError: {
+    heading: 'We encountered an issue saving your changes.',
+    description:
+      'We are looking into this issue. If you leave this page, you will lose any new changes you’ve made to the page. Are you sure you wish to continue?',
+    alert:
+      'If you have content you don’t want to lose, we recommend saving that content in another format.',
+    stay: 'Stay on this page',
+    leave: 'Leave this page'
+  }
 };
 
 export default general;

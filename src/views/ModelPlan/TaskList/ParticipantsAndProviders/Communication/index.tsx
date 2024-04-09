@@ -16,8 +16,8 @@ import {
   GetCommunicationQuery,
   ParticipantCommunicationType,
   ParticipantRiskType,
-  useGetCommunicationQuery,
-  useUpdatePlanParticipantsAndProvidersMutation
+  TypedUpdatePlanParticipantsAndProvidersDocument,
+  useGetCommunicationQuery
 } from 'gql/gen/graphql';
 
 import AddNote from 'components/AddNote';
@@ -25,18 +25,18 @@ import AskAQuestion from 'components/AskAQuestion';
 import BooleanRadio from 'components/BooleanRadioForm';
 import FrequencyForm from 'components/FrequencyForm';
 import ITSolutionsWarning from 'components/ITSolutionsWarning';
+import MutationErrorModal from 'components/MutationErrorModal';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
-import AutoSave from 'components/shared/AutoSave';
 import CheckboxField from 'components/shared/CheckboxField';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
+import useHandleMutation from 'hooks/useHandleMutation';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import useScrollElement from 'hooks/useScrollElement';
 import { getKeys } from 'types/translation';
 import flattenErrors from 'utils/flattenErrors';
-import { dirtyInput } from 'utils/formDiff';
 import { NotFoundPartial } from 'views/NotFound';
 
 type CommunicationFormType = GetCommunicationQuery['modelPlan']['participantsAndProviders'];
@@ -99,41 +99,13 @@ export const Communication = () => {
   // If redirected from Operational Solutions, scrolls to the relevant question
   useScrollElement(!loading);
 
-  const [update] = useUpdatePlanParticipantsAndProvidersMutation();
-
-  const handleFormSubmit = (
-    redirect?: 'next' | 'back' | 'task-list' | string
-  ) => {
-    update({
-      variables: {
-        id,
-        changes: dirtyInput(
-          formikRef?.current?.initialValues,
-          formikRef?.current?.values
-        )
-      }
-    })
-      .then(response => {
-        if (!response?.errors) {
-          if (redirect === 'next') {
-            history.push(
-              `/models/${modelID}/task-list/participants-and-providers/coordination`
-            );
-          } else if (redirect === 'back') {
-            history.push(
-              `/models/${modelID}/task-list/participants-and-providers/participants-options`
-            );
-          } else if (redirect === 'task-list') {
-            history.push(`/models/${modelID}/task-list`);
-          } else if (redirect) {
-            history.push(redirect);
-          }
-        }
-      })
-      .catch(errors => {
-        formikRef?.current?.setErrors(errors);
-      });
-  };
+  const { mutationError } = useHandleMutation(
+    TypedUpdatePlanParticipantsAndProvidersDocument,
+    {
+      id,
+      formikRef
+    }
+  );
 
   const initialValues: CommunicationFormType = {
     __typename: 'PlanParticipantsAndProviders',
@@ -164,6 +136,12 @@ export const Communication = () => {
 
   return (
     <>
+      <MutationErrorModal
+        isOpen={mutationError.isModalOpen}
+        closeModal={() => mutationError.setIsModalOpen(false)}
+        url={mutationError.destinationURL}
+      />
+
       <BreadcrumbBar variant="wrap">
         <Breadcrumb>
           <BreadcrumbLink asCustom={Link} to="/">
@@ -199,7 +177,9 @@ export const Communication = () => {
       <Formik
         initialValues={initialValues}
         onSubmit={() => {
-          handleFormSubmit('next');
+          history.push(
+            `/models/${modelID}/task-list/participants-and-providers/coordination`
+          );
         }}
         enableReinitialize
         innerRef={formikRef}
@@ -278,7 +258,7 @@ export const Communication = () => {
                       <ITSolutionsWarning
                         id="participants-and-providers-communication-method-warning"
                         onClick={() =>
-                          handleFormSubmit(
+                          history.push(
                             `/models/${modelID}/task-list/it-solutions`
                           )
                         }
@@ -416,7 +396,9 @@ export const Communication = () => {
                       type="button"
                       className="usa-button usa-button--outline margin-bottom-1"
                       onClick={() => {
-                        handleFormSubmit('back');
+                        history.push(
+                          `/models/${modelID}/task-list/participants-and-providers/participants-options`
+                        );
                       }}
                     >
                       {miscellaneousT('back')}
@@ -430,7 +412,7 @@ export const Communication = () => {
                   <Button
                     type="button"
                     className="usa-button usa-button--unstyled"
-                    onClick={() => handleFormSubmit('task-list')}
+                    onClick={() => history.push(`/models/${modelID}/task-list`)}
                   >
                     <Icon.ArrowBack className="margin-right-1" aria-hidden />
 
@@ -438,16 +420,6 @@ export const Communication = () => {
                   </Button>
                 </Fieldset>
               </Form>
-
-              {id && (
-                <AutoSave
-                  values={values}
-                  onSave={() => {
-                    handleFormSubmit();
-                  }}
-                  debounceDelay={3000}
-                />
-              )}
             </>
           );
         }}

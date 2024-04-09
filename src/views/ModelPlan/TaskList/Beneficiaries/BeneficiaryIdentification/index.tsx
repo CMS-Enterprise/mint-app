@@ -18,26 +18,26 @@ import {
   BeneficiariesType,
   GetBeneficiaryIdentificationQuery,
   TriStateAnswer,
-  useGetBeneficiaryIdentificationQuery,
-  useUpdateModelPlanBeneficiariesMutation
+  TypedUpdateModelPlanBeneficiariesDocument,
+  useGetBeneficiaryIdentificationQuery
 } from 'gql/gen/graphql';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
+import MutationErrorModal from 'components/MutationErrorModal';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import Alert from 'components/shared/Alert';
-import AutoSave from 'components/shared/AutoSave';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import MultiSelect from 'components/shared/MultiSelect';
 import TextAreaField from 'components/shared/TextAreaField';
 import TextField from 'components/shared/TextField';
+import useHandleMutation from 'hooks/useHandleMutation';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import { getKeys } from 'types/translation';
 import flattenErrors from 'utils/flattenErrors';
-import { dirtyInput } from 'utils/formDiff';
 import { composeMultiSelectOptions } from 'utils/modelPlan';
 import { NotFoundPartial } from 'views/NotFound';
 
@@ -61,6 +61,7 @@ const BeneficiaryIdentification = () => {
   const formikRef = useRef<FormikProps<BeneficiaryIdentificationFormType>>(
     null
   );
+
   const history = useHistory();
 
   const { data, loading, error } = useGetBeneficiaryIdentificationQuery({
@@ -86,33 +87,13 @@ const BeneficiaryIdentification = () => {
 
   const modelName = data?.modelPlan?.modelName || '';
 
-  const [update] = useUpdateModelPlanBeneficiariesMutation();
-
-  const handleFormSubmit = (redirect?: 'next' | 'back') => {
-    update({
-      variables: {
-        id,
-        changes: dirtyInput(
-          formikRef?.current?.initialValues,
-          formikRef?.current?.values
-        )
-      }
-    })
-      .then(response => {
-        if (!response?.errors) {
-          if (redirect === 'next') {
-            history.push(
-              `/models/${modelID}/task-list/beneficiaries/people-impact`
-            );
-          } else if (redirect === 'back') {
-            history.push(`/models/${modelID}/task-list/`);
-          }
-        }
-      })
-      .catch(errors => {
-        formikRef?.current?.setErrors(errors);
-      });
-  };
+  const { mutationError } = useHandleMutation(
+    TypedUpdateModelPlanBeneficiariesDocument,
+    {
+      id,
+      formikRef
+    }
+  );
 
   const initialValues: BeneficiaryIdentificationFormType = {
     __typename: 'PlanBeneficiaries',
@@ -136,6 +117,12 @@ const BeneficiaryIdentification = () => {
 
   return (
     <>
+      <MutationErrorModal
+        isOpen={mutationError.isModalOpen}
+        closeModal={() => mutationError.setIsModalOpen(false)}
+        url={mutationError.destinationURL}
+      />
+
       <BreadcrumbBar variant="wrap">
         <Breadcrumb>
           <BreadcrumbLink asCustom={Link} to="/">
@@ -171,7 +158,9 @@ const BeneficiaryIdentification = () => {
       <Formik
         initialValues={initialValues}
         onSubmit={() => {
-          handleFormSubmit('next');
+          history.push(
+            `/models/${modelID}/task-list/beneficiaries/people-impact`
+          );
         }}
         enableReinitialize
         innerRef={formikRef}
@@ -179,10 +168,10 @@ const BeneficiaryIdentification = () => {
         {(formikProps: FormikProps<BeneficiaryIdentificationFormType>) => {
           const {
             errors,
-            handleSubmit,
             setErrors,
             setFieldValue,
-            values
+            values,
+            handleSubmit
           } = formikProps;
           const flatErrors = flattenErrors(errors);
 
@@ -568,7 +557,9 @@ const BeneficiaryIdentification = () => {
                         <Button
                           type="button"
                           className="usa-button usa-button--unstyled"
-                          onClick={() => handleFormSubmit('back')}
+                          onClick={() =>
+                            history.push(`/models/${modelID}/task-list/`)
+                          }
                         >
                           <Icon.ArrowBack
                             className="margin-right-1"
@@ -582,16 +573,6 @@ const BeneficiaryIdentification = () => {
                   </Grid>
                 </Grid>
               </GridContainer>
-
-              {id && (
-                <AutoSave
-                  values={values}
-                  onSave={() => {
-                    handleFormSubmit();
-                  }}
-                  debounceDelay={3000}
-                />
-              )}
             </>
           );
         }}

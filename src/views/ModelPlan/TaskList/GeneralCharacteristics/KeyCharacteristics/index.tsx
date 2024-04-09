@@ -17,29 +17,29 @@ import {
   AlternativePaymentModelType,
   GetKeyCharacteristicsQuery,
   KeyCharacteristic,
-  useGetKeyCharacteristicsQuery,
-  useUpdatePlanGeneralCharacteristicsMutation
+  TypedUpdatePlanGeneralCharacteristicsDocument,
+  useGetKeyCharacteristicsQuery
 } from 'gql/gen/graphql';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
 import BooleanRadio from 'components/BooleanRadioForm';
 import ITSolutionsWarning from 'components/ITSolutionsWarning';
+import MutationErrorModal from 'components/MutationErrorModal';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import Alert from 'components/shared/Alert';
-import AutoSave from 'components/shared/AutoSave';
 import CheckboxField from 'components/shared/CheckboxField';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import MultiSelect from 'components/shared/MultiSelect';
 import TextAreaField from 'components/shared/TextAreaField';
+import useHandleMutation from 'hooks/useHandleMutation';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import useScrollElement from 'hooks/useScrollElement';
 import { getKeys } from 'types/translation';
 import flattenErrors from 'utils/flattenErrors';
-import { dirtyInput } from 'utils/formDiff';
 import { composeMultiSelectOptions } from 'utils/modelPlan';
 import { NotFoundPartial } from 'views/NotFound';
 
@@ -102,39 +102,13 @@ const KeyCharacteristics = () => {
   // If redirected from Operational Solutions, scrolls to the relevant question
   useScrollElement(!loading);
 
-  const [update] = useUpdatePlanGeneralCharacteristicsMutation();
-
-  const handleFormSubmit = (
-    redirect?: 'next' | 'back' | 'task-list' | string
-  ) => {
-    update({
-      variables: {
-        id,
-        changes: dirtyInput(
-          formikRef?.current?.initialValues,
-          formikRef?.current?.values
-        )
-      }
-    })
-      .then(response => {
-        if (!response?.errors) {
-          if (redirect === 'next') {
-            history.push(
-              `/models/${modelID}/task-list/characteristics/involvements`
-            );
-          } else if (redirect === 'back') {
-            history.push(`/models/${modelID}/task-list/characteristics`);
-          } else if (redirect === 'task-list') {
-            history.push(`/models/${modelID}/task-list`);
-          } else if (redirect) {
-            history.push(redirect);
-          }
-        }
-      })
-      .catch(errors => {
-        formikRef?.current?.setErrors(errors);
-      });
-  };
+  const { mutationError } = useHandleMutation(
+    TypedUpdatePlanGeneralCharacteristicsDocument,
+    {
+      id,
+      formikRef
+    }
+  );
 
   const initialValues: KeyCharacteristicsFormType = {
     __typename: 'PlanGeneralCharacteristics',
@@ -161,6 +135,12 @@ const KeyCharacteristics = () => {
 
   return (
     <>
+      <MutationErrorModal
+        isOpen={mutationError.isModalOpen}
+        closeModal={() => mutationError.setIsModalOpen(false)}
+        url={mutationError.destinationURL}
+      />
+
       <BreadcrumbBar variant="wrap">
         <Breadcrumb>
           <BreadcrumbLink asCustom={Link} to="/">
@@ -196,7 +176,9 @@ const KeyCharacteristics = () => {
       <Formik
         initialValues={initialValues}
         onSubmit={() => {
-          handleFormSubmit('next');
+          history.push(
+            `/models/${modelID}/task-list/characteristics/involvements`
+          );
         }}
         enableReinitialize
         innerRef={formikRef}
@@ -477,7 +459,7 @@ const KeyCharacteristics = () => {
                           <ITSolutionsWarning
                             id="plan-characteristics-collect-bids-warning"
                             onClick={() =>
-                              handleFormSubmit(
+                              history.push(
                                 `/models/${modelID}/task-list/it-solutions`
                               )
                             }
@@ -521,7 +503,7 @@ const KeyCharacteristics = () => {
                           <ITSolutionsWarning
                             id="plan-characteristics-manage-enrollment-warning"
                             onClick={() =>
-                              handleFormSubmit(
+                              history.push(
                                 `/models/${modelID}/task-list/it-solutions`
                               )
                             }
@@ -563,7 +545,7 @@ const KeyCharacteristics = () => {
                           <ITSolutionsWarning
                             id="plan-characteristics-contact-updated-warning"
                             onClick={() =>
-                              handleFormSubmit(
+                              history.push(
                                 `/models/${modelID}/task-list/it-solutions`
                               )
                             }
@@ -595,7 +577,9 @@ const KeyCharacteristics = () => {
                       type="button"
                       className="usa-button usa-button--outline margin-bottom-1"
                       onClick={() => {
-                        handleFormSubmit('back');
+                        history.push(
+                          `/models/${modelID}/task-list/characteristics`
+                        );
                       }}
                     >
                       {miscellaneousT('back')}
@@ -608,7 +592,7 @@ const KeyCharacteristics = () => {
                   <Button
                     type="button"
                     className="usa-button usa-button--unstyled"
-                    onClick={() => handleFormSubmit('task-list')}
+                    onClick={() => history.push(`/models/${modelID}/task-list`)}
                   >
                     <Icon.ArrowBack className="margin-right-1" aria-hidden />
 
@@ -616,16 +600,6 @@ const KeyCharacteristics = () => {
                   </Button>
                 </Fieldset>
               </Form>
-
-              {id && (
-                <AutoSave
-                  values={values}
-                  onSave={() => {
-                    handleFormSubmit();
-                  }}
-                  debounceDelay={3000}
-                />
-              )}
             </>
           );
         }}

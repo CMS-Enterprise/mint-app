@@ -18,27 +18,27 @@ import {
   DataToSendParticipantsType,
   EvaluationApproachType,
   GetEvaluationQuery,
-  useGetEvaluationQuery,
-  useUpdatePlanOpsEvalAndLearningMutation
+  TypedUpdatePlanOpsEvalAndLearningDocument,
+  useGetEvaluationQuery
 } from 'gql/gen/graphql';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
 import BooleanRadio from 'components/BooleanRadioForm';
 import ITSolutionsWarning from 'components/ITSolutionsWarning';
+import MutationErrorModal from 'components/MutationErrorModal';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
-import AutoSave from 'components/shared/AutoSave';
 import CheckboxField from 'components/shared/CheckboxField';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import MultiSelect from 'components/shared/MultiSelect';
+import useHandleMutation from 'hooks/useHandleMutation';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import useScrollElement from 'hooks/useScrollElement';
 import { getKeys } from 'types/translation';
 import flattenErrors from 'utils/flattenErrors';
-import { dirtyInput } from 'utils/formDiff';
 import { composeMultiSelectOptions } from 'utils/modelPlan';
 import { NotFoundPartial } from 'views/NotFound';
 
@@ -106,51 +106,27 @@ const Evaluation = () => {
   // If redirected from Operational Solutions, scrolls to the relevant question
   useScrollElement(!loading);
 
-  const [update] = useUpdatePlanOpsEvalAndLearningMutation();
+  const { mutationError } = useHandleMutation(
+    TypedUpdatePlanOpsEvalAndLearningDocument,
+    {
+      id,
+      formikRef
+    }
+  );
 
-  const handleFormSubmit = (
-    redirect?: 'next' | 'back' | 'task-list' | string
-  ) => {
-    update({
-      variables: {
-        id,
-        changes: dirtyInput(
-          formikRef?.current?.initialValues,
-          formikRef?.current?.values
-        )
-      }
-    })
-      .then(response => {
-        if (!response?.errors) {
-          if (redirect === 'next') {
-            if (
-              isCCWInvolvement(formikRef?.current?.values.ccmInvolvment) ||
-              isQualityMeasures(
-                formikRef?.current?.values.dataNeededForMonitoring
-              )
-            ) {
-              history.push(
-                `/models/${modelID}/task-list/ops-eval-and-learning/ccw-and-quality`
-              );
-            } else {
-              history.push(
-                `/models/${modelID}/task-list/ops-eval-and-learning/data-sharing`
-              );
-            }
-          } else if (redirect === 'back') {
-            history.push(
-              `/models/${modelID}/task-list/ops-eval-and-learning/performance`
-            );
-          } else if (redirect === 'task-list') {
-            history.push(`/models/${modelID}/task-list`);
-          } else if (redirect) {
-            history.push(redirect);
-          }
-        }
-      })
-      .catch(errors => {
-        formikRef?.current?.setErrors(errors);
-      });
+  const nextPage = () => {
+    if (
+      isCCWInvolvement(formikRef?.current?.values.ccmInvolvment) ||
+      isQualityMeasures(formikRef?.current?.values.dataNeededForMonitoring)
+    ) {
+      history.push(
+        `/models/${modelID}/task-list/ops-eval-and-learning/ccw-and-quality`
+      );
+    } else {
+      history.push(
+        `/models/${modelID}/task-list/ops-eval-and-learning/data-sharing`
+      );
+    }
   };
 
   const initialValues: EvaluationFormType = {
@@ -179,6 +155,12 @@ const Evaluation = () => {
 
   return (
     <>
+      <MutationErrorModal
+        isOpen={mutationError.isModalOpen}
+        closeModal={() => mutationError.setIsModalOpen(false)}
+        url={mutationError.destinationURL}
+      />
+
       <BreadcrumbBar variant="wrap">
         <Breadcrumb>
           <BreadcrumbLink asCustom={Link} to="/">
@@ -212,7 +194,7 @@ const Evaluation = () => {
       <Formik
         initialValues={initialValues}
         onSubmit={() => {
-          handleFormSubmit('next');
+          nextPage();
         }}
         enableReinitialize
         innerRef={formikRef}
@@ -271,7 +253,7 @@ const Evaluation = () => {
                       <ITSolutionsWarning
                         id="ops-eval-and-learning-evaluation-approach-warning"
                         onClick={() =>
-                          handleFormSubmit(
+                          history.push(
                             `/models/${modelID}/task-list/it-solutions`
                           )
                         }
@@ -409,7 +391,7 @@ const Evaluation = () => {
                       <ITSolutionsWarning
                         id="ops-eval-and-learning-data-needed-warning"
                         onClick={() =>
-                          handleFormSubmit(
+                          history.push(
                             `/models/${modelID}/task-list/it-solutions`
                           )
                         }
@@ -491,7 +473,7 @@ const Evaluation = () => {
                       <ITSolutionsWarning
                         id="ops-eval-and-learning-data-to-send-warning"
                         onClick={() =>
-                          handleFormSubmit(
+                          history.push(
                             `/models/${modelID}/task-list/it-solutions`
                           )
                         }
@@ -585,7 +567,9 @@ const Evaluation = () => {
                       type="button"
                       className="usa-button usa-button--outline margin-bottom-1"
                       onClick={() => {
-                        handleFormSubmit('back');
+                        history.push(
+                          `/models/${modelID}/task-list/ops-eval-and-learning/performance`
+                        );
                       }}
                     >
                       {miscellaneousT('back')}
@@ -599,7 +583,7 @@ const Evaluation = () => {
                   <Button
                     type="button"
                     className="usa-button usa-button--unstyled"
-                    onClick={() => handleFormSubmit('task-list')}
+                    onClick={() => history.push(`/models/${modelID}/task-list`)}
                   >
                     <Icon.ArrowBack className="margin-right-1" aria-hidden />
 
@@ -607,16 +591,6 @@ const Evaluation = () => {
                   </Button>
                 </Fieldset>
               </Form>
-
-              {id && (
-                <AutoSave
-                  values={values}
-                  onSave={() => {
-                    handleFormSubmit();
-                  }}
-                  debounceDelay={3000}
-                />
-              )}
             </>
           );
         }}
