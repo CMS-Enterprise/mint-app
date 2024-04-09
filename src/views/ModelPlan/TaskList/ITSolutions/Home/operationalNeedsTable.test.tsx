@@ -3,9 +3,9 @@ import { Provider } from 'react-redux';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, waitFor } from '@testing-library/react';
+import { GetOperationalNeedsDocument } from 'gql/gen/graphql';
 import configureMockStore from 'redux-mock-store';
 
-import GetOperationalNeeds from 'queries/ITSolutions/GetOperationalNeeds';
 import {
   OperationalNeedKey,
   OperationalSolutionKey,
@@ -22,7 +22,7 @@ const returnNeeds = (needed: boolean | null) => {
   return [
     {
       request: {
-        query: GetOperationalNeeds,
+        query: GetOperationalNeedsDocument,
         variables: { id: modelID }
       },
       result: {

@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@trussworks/react-uswds';
-import { GetOperationalNeed_operationalNeed as GetOperationalNeedType } from 'gql/gen/types/GetOperationalNeed';
+import { GetOperationalNeedsQuery } from 'gql/gen/graphql';
 
 import AskAQuestion from 'components/AskAQuestion';
 
 import OperationalNeedRemovalModal from '../OperationalNeedRemovalModal';
+
+type GetOperationalNeedType = GetOperationalNeedsQuery['modelPlan']['operationalNeeds'][0];
 
 type ITSolutionsSidebarTypes = {
   modelID: string;

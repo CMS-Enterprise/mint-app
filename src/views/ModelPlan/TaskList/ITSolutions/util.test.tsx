@@ -1,8 +1,8 @@
 import React from 'react';
+import { GetOperationalNeeds_modelPlan_operationalNeeds as GetOperationalNeedsOperationalNeedsType } from 'gql/gen/types/GetOperationalNeeds';
 import i18next from 'i18next';
 
 import UswdsReactLink from 'components/LinkWrapper';
-import { GetOperationalNeeds_modelPlan_operationalNeeds as GetOperationalNeedsOperationalNeedsType } from 'queries/ITSolutions/types/GetOperationalNeeds';
 import {
   OperationalNeedKey,
   OpSolutionStatus

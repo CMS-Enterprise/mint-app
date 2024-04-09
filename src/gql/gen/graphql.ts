@@ -3348,6 +3348,13 @@ export type GetOperationalNeedAnswerQueryVariables = Exact<{
 
 export type GetOperationalNeedAnswerQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, generalCharacteristics?: { __typename: 'PlanGeneralCharacteristics', managePartCDEnrollment?: boolean | null, collectPlanBids?: boolean | null, planContractUpdated?: boolean | null, agreementTypes?: Array<AgreementType> }, participantsAndProviders?: { __typename: 'PlanParticipantsAndProviders', recruitmentMethod?: RecruitmentType | null, selectionMethod?: Array<ParticipantSelectionType>, communicationMethod?: Array<ParticipantCommunicationType>, providerOverlap?: OverlapType | null, participantsIds?: Array<ParticipantsIdType> }, beneficiaries?: { __typename: 'PlanBeneficiaries', beneficiaryOverlap?: OverlapType | null }, opsEvalAndLearning?: { __typename: 'PlanOpsEvalAndLearning', helpdeskUse?: boolean | null, iddocSupport?: boolean | null, benchmarkForPerformance?: BenchmarkForPerformanceType | null, appealPerformance?: boolean | null, appealFeedback?: boolean | null, appealPayments?: boolean | null, appealOther?: boolean | null, evaluationApproaches?: Array<EvaluationApproachType>, dataNeededForMonitoring?: Array<DataForMonitoringType>, dataToSendParticicipants?: Array<DataToSendParticipantsType>, modelLearningSystems?: Array<ModelLearningSystemType>, developNewQualityMeasures?: boolean | null }, payments?: { __typename: 'PlanPayments', payType?: Array<PayType>, shouldAnyProvidersExcludedFFSSystems?: boolean | null, nonClaimsPayments?: Array<NonClaimsBasedPayType>, willRecoverPayments?: boolean | null } } };
 
+export type GetOperationalNeedsQueryVariables = Exact<{
+  id: Scalars['UUID']['input'];
+}>;
+
+
+export type GetOperationalNeedsQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, isCollaborator: boolean, operationalNeeds: Array<{ __typename: 'OperationalNeed', id: UUID, modelPlanID: UUID, name?: string | null, key?: OperationalNeedKey | null, nameOther?: string | null, needed?: boolean | null, modifiedDts?: Time | null, solutions: Array<{ __typename: 'OperationalSolution', id: UUID, status: OpSolutionStatus, name?: string | null, mustStartDts?: Time | null, mustFinishDts?: Time | null, needed?: boolean | null, nameOther?: string | null, key?: OperationalSolutionKey | null, otherHeader?: string | null, pocEmail?: string | null, pocName?: string | null, createdBy: UUID, createdDts: Time, operationalSolutionSubtasks: Array<{ __typename: 'OperationalSolutionSubtask', id: UUID }> }> }> } };
+
 export type GetExistingModelPlansQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -6147,6 +6154,75 @@ export type GetOperationalNeedAnswerQueryHookResult = ReturnType<typeof useGetOp
 export type GetOperationalNeedAnswerLazyQueryHookResult = ReturnType<typeof useGetOperationalNeedAnswerLazyQuery>;
 export type GetOperationalNeedAnswerSuspenseQueryHookResult = ReturnType<typeof useGetOperationalNeedAnswerSuspenseQuery>;
 export type GetOperationalNeedAnswerQueryResult = Apollo.QueryResult<GetOperationalNeedAnswerQuery, GetOperationalNeedAnswerQueryVariables>;
+export const GetOperationalNeedsDocument = gql`
+    query GetOperationalNeeds($id: UUID!) {
+  modelPlan(id: $id) {
+    id
+    modelName
+    isCollaborator
+    operationalNeeds {
+      id
+      modelPlanID
+      name
+      key
+      nameOther
+      needed
+      modifiedDts
+      solutions {
+        id
+        status
+        name
+        mustStartDts
+        mustFinishDts
+        needed
+        nameOther
+        key
+        otherHeader
+        operationalSolutionSubtasks {
+          id
+        }
+        pocEmail
+        pocName
+        createdBy
+        createdDts
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetOperationalNeedsQuery__
+ *
+ * To run a query within a React component, call `useGetOperationalNeedsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetOperationalNeedsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetOperationalNeedsQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetOperationalNeedsQuery(baseOptions: Apollo.QueryHookOptions<GetOperationalNeedsQuery, GetOperationalNeedsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetOperationalNeedsQuery, GetOperationalNeedsQueryVariables>(GetOperationalNeedsDocument, options);
+      }
+export function useGetOperationalNeedsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetOperationalNeedsQuery, GetOperationalNeedsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetOperationalNeedsQuery, GetOperationalNeedsQueryVariables>(GetOperationalNeedsDocument, options);
+        }
+export function useGetOperationalNeedsSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetOperationalNeedsQuery, GetOperationalNeedsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetOperationalNeedsQuery, GetOperationalNeedsQueryVariables>(GetOperationalNeedsDocument, options);
+        }
+export type GetOperationalNeedsQueryHookResult = ReturnType<typeof useGetOperationalNeedsQuery>;
+export type GetOperationalNeedsLazyQueryHookResult = ReturnType<typeof useGetOperationalNeedsLazyQuery>;
+export type GetOperationalNeedsSuspenseQueryHookResult = ReturnType<typeof useGetOperationalNeedsSuspenseQuery>;
+export type GetOperationalNeedsQueryResult = Apollo.QueryResult<GetOperationalNeedsQuery, GetOperationalNeedsQueryVariables>;
 export const GetExistingModelPlansDocument = gql`
     query GetExistingModelPlans {
   existingModelCollection {
