@@ -15,28 +15,27 @@ import { Field, Form, Formik, FormikProps } from 'formik';
 import {
   AuthorityAllowance,
   GetAuthorityQuery,
-  useGetAuthorityQuery,
-  useUpdatePlanGeneralCharacteristicsMutation
+  TypedUpdatePlanGeneralCharacteristicsDocument,
+  useGetAuthorityQuery
 } from 'gql/gen/graphql';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
 import BooleanRadio from 'components/BooleanRadioForm';
 import ConfirmLeave from 'components/ConfirmLeave';
+import MutationErrorModal from 'components/MutationErrorModal';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import ReadyForReview from 'components/ReadyForReview';
-import AutoSave from 'components/shared/AutoSave';
 import CheckboxField from 'components/shared/CheckboxField';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import TextAreaField from 'components/shared/TextAreaField';
+import useHandleMutation from 'hooks/useHandleMutation';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import { getKeys } from 'types/translation';
 import flattenErrors from 'utils/flattenErrors';
-import { dirtyInput } from 'utils/formDiff';
-import sanitizeStatus from 'utils/status';
 import { NotFoundPartial } from 'views/NotFound';
 
 type AuthorityFormType = GetAuthorityQuery['modelPlan']['generalCharacteristics'];
@@ -93,43 +92,13 @@ const Authority = () => {
     status
   } = (data?.modelPlan?.generalCharacteristics || {}) as AuthorityFormType;
 
-  const [update] = useUpdatePlanGeneralCharacteristicsMutation();
-
-  const handleFormSubmit = (redirect?: 'back' | 'task-list' | 'next') => {
-    const dirtyInputs = dirtyInput(
-      formikRef?.current?.initialValues,
-      formikRef?.current?.values
-    );
-
-    if (dirtyInputs.status) {
-      dirtyInputs.status = sanitizeStatus(dirtyInputs.status);
+  const { mutationError } = useHandleMutation(
+    TypedUpdatePlanGeneralCharacteristicsDocument,
+    {
+      id,
+      formikRef
     }
-
-    update({
-      variables: {
-        id,
-        changes: dirtyInputs
-      }
-    })
-      .then(response => {
-        if (!response?.errors) {
-          if (redirect === 'back') {
-            history.push(
-              `/models/${modelID}/task-list/characteristics/targets-and-options`
-            );
-          } else if (redirect === 'task-list') {
-            history.push(`/models/${modelID}/task-list`);
-          } else if (redirect === 'next') {
-            history.push(
-              `/models/${modelID}/task-list/participants-and-providers`
-            );
-          }
-        }
-      })
-      .catch(errors => {
-        formikRef?.current?.setErrors(errors);
-      });
-  };
+  );
 
   const initialValues: InitialValueType = {
     __typename: 'PlanGeneralCharacteristics',
@@ -152,6 +121,12 @@ const Authority = () => {
 
   return (
     <>
+      <MutationErrorModal
+        isOpen={mutationError.isModalOpen}
+        closeModal={() => mutationError.setIsModalOpen(false)}
+        url={mutationError.destinationURL}
+      />
+
       <BreadcrumbBar variant="wrap">
         <Breadcrumb>
           <BreadcrumbLink asCustom={Link} to="/">
@@ -186,7 +161,9 @@ const Authority = () => {
       <Formik
         initialValues={initialValues}
         onSubmit={values => {
-          handleFormSubmit('next');
+          history.push(
+            `/models/${modelID}/task-list/participants-and-providers`
+          );
         }}
         enableReinitialize
         innerRef={formikRef}
@@ -423,7 +400,9 @@ const Authority = () => {
                       type="button"
                       className="usa-button usa-button--outline margin-bottom-1"
                       onClick={() => {
-                        handleFormSubmit('back');
+                        history.push(
+                          `/models/${modelID}/task-list/characteristics/targets-and-options`
+                        );
                       }}
                     >
                       {miscellaneousT('back')}
@@ -435,22 +414,13 @@ const Authority = () => {
                   <Button
                     type="button"
                     className="usa-button usa-button--unstyled"
-                    onClick={() => handleFormSubmit('task-list')}
+                    onClick={() => history.push(`/models/${modelID}/task-list`)}
                   >
                     <Icon.ArrowBack className="margin-right-1" aria-hidden />
                     {miscellaneousT('saveAndReturn')}
                   </Button>
                 </Fieldset>
               </Form>
-              {id && (
-                <AutoSave
-                  values={values}
-                  onSave={() => {
-                    handleFormSubmit();
-                  }}
-                  debounceDelay={3000}
-                />
-              )}
             </>
           );
         }}

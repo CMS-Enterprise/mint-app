@@ -25,6 +25,7 @@ import { useFlags } from 'launchdarkly-react-client-sdk';
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
 import BooleanRadio from 'components/BooleanRadioForm';
+import ConfirmLeave from 'components/ConfirmLeave';
 import FrequencyForm from 'components/FrequencyForm';
 import ITSolutionsWarning from 'components/ITSolutionsWarning';
 import MutationErrorModal from 'components/MutationErrorModal';
@@ -247,6 +248,8 @@ const Recover = () => {
                   })}
                 </ErrorAlert>
               )}
+
+              <ConfirmLeave />
 
               <GridContainer className="padding-left-0 padding-right-0">
                 <Grid row gap>
