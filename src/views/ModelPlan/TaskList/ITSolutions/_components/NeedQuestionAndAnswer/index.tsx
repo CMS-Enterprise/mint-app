@@ -1,16 +1,17 @@
 import React, { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useQuery } from '@apollo/client';
 import { Button, Grid, GridContainer } from '@trussworks/react-uswds';
 import classNames from 'classnames';
-import { useGetOperationalNeedQuery } from 'gql/gen/graphql';
+import {
+  useGetOperationalNeedAnswerQuery,
+  useGetOperationalNeedQuery
+} from 'gql/gen/graphql';
 import { GetOperationalNeed_operationalNeed as GetOperationalNeedOperationalNeedType } from 'gql/gen/types/GetOperationalNeed';
+import { GetOperationalNeedAnswer_modelPlan as GetOperationalNeedAnswerModelPlanType } from 'gql/gen/types/GetOperationalNeedAnswer';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import Spinner from 'components/Spinner';
 import operationalNeedMap, { NeedMap } from 'data/operationalNeedMap';
-import GetOperationalNeedAnswer from 'queries/ITSolutions/GetOperationalNeedAnswer';
-import { GetOperationalNeedAnswer_modelPlan as GetOperationalNeedAnswerModelPlanType } from 'queries/ITSolutions/types/GetOperationalNeedAnswer';
 import { GetOperationalSolution_operationalSolution as GetOperationalSolutionType } from 'queries/ITSolutions/types/GetOperationalSolution';
 
 import OperationalNeedRemovalModal from '../OperationalNeedRemovalModal';
@@ -150,8 +151,7 @@ const NeedQuestionAndAnswer = ({
 
   // Because of the dynamic nature of the input and return schema, having a standard TS type isn't applicable
   // Maybe reasearch into this further for better type safety
-  const { data, loading: answerLoading } = useQuery(
-    GetOperationalNeedAnswer,
+  const { data, loading: answerLoading } = useGetOperationalNeedAnswerQuery(
     queryVariables
   );
 

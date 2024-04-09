@@ -1,10 +1,10 @@
 import GetPossibleSolutions from 'gql/apolloGQL/Solutions/GetPossibleSolutions';
 import {
+  GetOperationalNeedAnswerDocument,
   GetOperationalNeedDocument,
   OperationalSolutionKey
 } from 'gql/gen/graphql';
 
-import GetOperationalNeedAnswer from 'queries/ITSolutions/GetOperationalNeedAnswer';
 import {
   OperationalNeedKey,
   OpSolutionStatus
@@ -135,7 +135,7 @@ export const needQuestionAndAnswerMock = [
   },
   {
     request: {
-      query: GetOperationalNeedAnswer,
+      query: GetOperationalNeedAnswerDocument,
       skip: false,
       variables: {
         id: modelID,
