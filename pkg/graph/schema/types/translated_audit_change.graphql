@@ -50,10 +50,20 @@ type TranslatedAuditChange {
     modifiedByUserAccount: UserAccount
     modifiedDts: Time
 }
+enum AuditFieldChangeType {
+    ANSWERED
+    UPDATED
+    REMOVED
+}
 
 type TranslatedAuditField {
     id: UUID!
     translatedAuditID: UUID!
+
+    """
+    This represents whether a field was answered, updated, or had the answer removed
+    """
+    changeType: AuditFieldChangeType! 
 
     fieldName: String!
     fieldNameTranslated: String!

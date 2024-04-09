@@ -1,6 +1,7 @@
 INSERT INTO public.translated_audit_field(
     id,
     translated_audit_id,
+    change_type,
     field_name,
     field_name_translated,
     old,
@@ -13,6 +14,7 @@ INSERT INTO public.translated_audit_field(
 VALUES (
     :id,
     :translated_audit_id,
+    :change_type,
     :field_name,
     :field_name_translated,
     :old,
@@ -25,6 +27,7 @@ VALUES (
 RETURNING
 id,
 translated_audit_id,
+change_type,
 field_name,
 field_name_translated,
 old,

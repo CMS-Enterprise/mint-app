@@ -61,8 +61,9 @@ func (hmb *TranslatedAuditMetaBaseStruct) Scan(src interface{}) error {
 }
 
 // parseRawTranslatedAuditMetaData conditionally parses meta data from JSON to a specific meta data type
-func parseRawTranslatedAuditMetaData(tableName string, rawMetaDataJSON interface{}) (TranslatedAuditMetaData, error) {
-	//Future Enhancement: can this be genericized instead of switching on table name?
+func parseRawTranslatedAuditMetaData(metaDataType string, rawMetaDataJSON interface{}) (TranslatedAuditMetaData, error) {
+	//Ticket: (EASI-4147) Figure out how we distinguish meta data type. This should be specific to a field / table, but that isn't here..... \
+	// We might need to partially deserialize this to a map, then cast to a type? OR! We could store more data about it in another column.
 
 	var rawData []byte
 
@@ -75,27 +76,10 @@ func parseRawTranslatedAuditMetaData(tableName string, rawMetaDataJSON interface
 		rawData = bytes
 	} else {
 		// Invalid type, return an error
-		return nil, fmt.Errorf("unsupported type for HumanizedAuditData: %T", rawMetaDataJSON)
+		return nil, fmt.Errorf("unsupported type for TranslatedAuditField Meta Data: %T", rawMetaDataJSON)
 	}
 
-	switch tableName {
-	case "model_plan":
-		// Deserialize the raw JSON into HumanizedAuditMetaBaseStruct
-		meta := TranslatedAuditMetaBaseStruct{}
-		if err := json.Unmarshal(rawData, &meta); err != nil {
-			return nil, err
-		}
-		return &meta, nil
-	case "plan_participants_and_providers":
-		// Deserialize the raw JSON into HumanizedAuditMetaBaseStruct
-		meta := TranslatedAuditMetaBaseStruct{}
-		if err := json.Unmarshal(rawData, &meta); err != nil {
-
-			return nil, err
-		}
-		return &meta, nil
-
-	// Add cases for other tables if needed
+	switch metaDataType {
 
 	default:
 		// Return a default implementation or handle unsupported types

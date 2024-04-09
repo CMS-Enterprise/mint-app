@@ -183,6 +183,12 @@ export type AuditChange = {
   tableName: Scalars['String']['output'];
 };
 
+export enum AuditFieldChangeType {
+  ANSWERED = 'ANSWERED',
+  REMOVED = 'REMOVED',
+  UPDATED = 'UPDATED'
+}
+
 export enum AuthorityAllowance {
   ACA = 'ACA',
   CONGRESSIONALLY_MANDATED = 'CONGRESSIONALLY_MANDATED',
@@ -3289,6 +3295,8 @@ export type TranslatedAuditChange = {
 
 export type TranslatedAuditField = {
   __typename: 'TranslatedAuditField';
+  /** This represents whether a field was answered, updated, or had the answer removed */
+  changeType: AuditFieldChangeType;
   createdBy: Scalars['UUID']['output'];
   createdByUserAccount: UserAccount;
   createdDts: Scalars['Time']['output'];

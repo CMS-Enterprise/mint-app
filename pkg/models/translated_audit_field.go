@@ -13,11 +13,23 @@ type TranslatedAuditFieldMetaData interface {
 	Scan(src interface{}) error
 }
 
+// AuditFieldChangeType is an enum that represents the possible types of changes that could happen to an audited field
+type AuditFieldChangeType string
+
+// These constants represent the different values of AuditFieldChangeType
+const (
+	AFCAnswered AuditFieldChangeType = "ANSWERED"
+	AFCUpdated  AuditFieldChangeType = "UPDATED"
+	AFCRemoved  AuditFieldChangeType = "REMOVED"
+)
+
 // TranslatedAuditField is a structure that shows fields that have been changed by a database action in a human readable format
 type TranslatedAuditField struct {
 	baseStruct
 
 	TranslatedAuditID uuid.UUID `json:"translatedAuditID" db:"translated_audit_id"`
+
+	ChangeType AuditFieldChangeType `json:"changeType" db:"change_type"`
 
 	FieldName           string `json:"fieldName" db:"field_name"`
 	FieldNameTranslated string `json:"fieldNameTranslated" db:"field_name_translated"`
@@ -66,15 +78,17 @@ func NewTranslatedAuditField(
 }
 
 // ParseMetaData parses raw MetaData into Typed meta data per the provided struct
-func (hmc *TranslatedAuditField) ParseMetaData() error {
+func (taf *TranslatedAuditField) ParseMetaData() error {
 
 	// Ticket (ChChCh Changes!) figure out if we need meta data here or not.
+	metaDataType := "generic"
+	// Ticket (EASI-4147) revisit how we determine what to parse here
 
-	// meta, err := parseRawTranslatedAuditMetaData(hmc.TableName, hmc.MetaDataRaw)
-	// if err != nil {
-	// 	return err
-	// }
+	meta, err := parseRawTranslatedAuditFieldMetaData(metaDataType, taf.MetaDataRaw)
+	if err != nil {
+		return err
+	}
 
-	// hmc.MetaData = meta
+	taf.MetaData = meta
 	return nil
 }

@@ -55,11 +55,16 @@ COMMENT ON COLUMN translated_audit_change.modified_dts IS 'Timestamp with time z
 
 -- Ticket: (ChChCh Changes!) Ensure that we only allow one entry in a time span per user. We wouldn't want to have multiple for that range
 
+CREATE TYPE AUDIT_FIELD_CHANGE_TYPE AS ENUM (
+    'ANSWERED', 'UPDATED', 'REMOVED'
+);
+
 
 CREATE TABLE translated_audit_field (
     id UUID PRIMARY KEY,
-    translated_audit_id UUID UNIQUE NOT NULL REFERENCES translated_audit_change(id), --foreign key to translated_audit_change table
+    translated_audit_id UUID NOT NULL REFERENCES translated_audit_change(id), --foreign key to translated_audit_change table
 
+    change_type AUDIT_FIELD_CHANGE_TYPE NOT NULL,
 
     field_name ZERO_STRING NOT NULL,
     field_name_translated ZERO_STRING NOT NULL,

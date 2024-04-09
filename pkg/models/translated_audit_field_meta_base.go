@@ -61,20 +61,20 @@ func parseRawTranslatedAuditFieldMetaData(tableName string, rawMetaDataJSON inte
 		rawData = bytes
 	} else {
 		// Invalid type, return an error
-		return nil, fmt.Errorf("unsupported type for HumanizedAuditData: %T", rawMetaDataJSON)
+		return nil, fmt.Errorf("unsupported type for translated audit field meta data: %T", rawMetaDataJSON)
 	}
 
 	switch tableName {
 	case "model_plan":
 		// Deserialize the raw JSON into HumanizedAuditMetaBaseStruct
-		meta := TranslatedAuditMetaBaseStruct{}
+		meta := TranslatedAuditFieldMetaBaseStruct{}
 		if err := json.Unmarshal(rawData, &meta); err != nil {
 			return nil, err
 		}
 		return &meta, nil
 	case "plan_participants_and_providers":
 		// Deserialize the raw JSON into HumanizedAuditMetaBaseStruct
-		meta := TranslatedAuditMetaBaseStruct{}
+		meta := TranslatedAuditFieldMetaBaseStruct{}
 		if err := json.Unmarshal(rawData, &meta); err != nil {
 
 			return nil, err
@@ -85,7 +85,7 @@ func parseRawTranslatedAuditFieldMetaData(tableName string, rawMetaDataJSON inte
 
 	default:
 		// Return a default implementation or handle unsupported types
-		meta := TranslatedAuditMetaBaseStruct{}
+		meta := TranslatedAuditFieldMetaBaseStruct{}
 		if err := json.Unmarshal(rawData, &meta); err != nil {
 			return nil, err
 		}

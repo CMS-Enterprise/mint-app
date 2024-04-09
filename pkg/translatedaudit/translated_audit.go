@@ -168,7 +168,7 @@ func genericAuditTranslation(ctx context.Context, store *storage.Store, plan *mo
 		translatedAudit := models.TranslatedAuditChangeWithTranslatedFields{
 			TranslatedFields: []*models.TranslatedAuditField{},
 		}
-		change := models.NewTranslatedAuditChange(
+		change := models.NewTranslatedAuditChange( // Ticket: (EASI-4147) extract this logic to another function
 			constants.GetSystemAccountUUID(),
 			audit.ModifiedBy,
 			actorAccount.CommonName,
@@ -239,30 +239,30 @@ func translateField(fieldName string, field models.AuditField, audit *models.Aud
 		field.New,
 		translatedNew,
 	)
-	// Ticket: (EASI-4147) extract this logic to another function
-	// change := models.NewTranslatedAuditChange(
-	// 	constants.GetSystemAccountUUID(),
-	// 	audit.ModifiedBy,
-	// 	actorAccount.CommonName,
-	// 	modelPlan.ID,
-	// 	modelPlan.ModelName,
-	// 	audit.ModifiedDts,
-	// 	audit.TableName,
-	// 	audit.TableID,
-	// 	audit.ID,
-	// 	audit.PrimaryKey,
-	// 	operation,
-	// 	fieldName,
-	// 	translatedLabel,
-	// 	field.Old,
-	// 	translatedOld,
-	// 	field.New,
-	// 	translatedNew,
-	// )
+	translatedField.ChangeType = getChangeType(field.Old, field.New)
+
 	// change.MetaDataRaw = nil //Ticket: (ChChCh Changes!) This should be specific to the type of change...
 
 	return &translatedField, nil
 
+}
+
+// getChangeType interprets the change that happened on a field to characterize it as an AuditFieldChangeType
+func getChangeType(old interface{}, new interface{}) models.AuditFieldChangeType {
+	//Ticket: (EASI-4147) Revisit this, make sure we handle all cases. Can this every be called for a field that has no answer? What about on insert? Or do we only have answer on insert if non-null?
+	// return models.AFCAnswered
+
+	if new == nil || new == "{}" {
+		if old == nil || old == "{}" {
+			//Ticket: (EASI-4147) Revisit this, is this possible?
+			return ""
+		}
+		return models.AFCRemoved
+	}
+	if old == nil || old == "{}" {
+		return models.AFCAnswered
+	}
+	return models.AFCUpdated
 }
 
 // translateValue takes a given value and maps it to a human readable value.

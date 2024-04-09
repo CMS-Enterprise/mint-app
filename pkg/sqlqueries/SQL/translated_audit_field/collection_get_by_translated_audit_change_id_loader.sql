@@ -9,6 +9,7 @@ WITH QUERIED_IDS AS (
 SELECT 
     TAF.id,
     TAF.translated_audit_id,
+    TAF.change_type,
     TAF.field_name,
     TAF.field_name_translated,
     TAF.old,

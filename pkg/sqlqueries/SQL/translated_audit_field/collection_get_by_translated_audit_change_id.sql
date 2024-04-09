@@ -1,6 +1,7 @@
 SELECT 
     id,
     translated_audit_id,
+    change_type,
     field_name,
     field_name_translated,
     old,
