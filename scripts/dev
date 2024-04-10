@@ -390,7 +390,7 @@ namespace :db do
 
     puts "Cleaning database..."
     `echo "TRUNCATE #{tableList}" | psql`
-    # Ticket: (ChChCh Changes!) Update this to use the seed commands implementation of clean, so we don't need this in two places
+    # Changes: (ChChCh Changes!) Update this to use the seed commands implementation of clean, so we don't need this in two places
 
     #remove all non system accounts
     systemAccounts =  "( 'UNKNOWN_USER','MINT_SYSTEM')"

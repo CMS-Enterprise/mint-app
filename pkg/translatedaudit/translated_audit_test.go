@@ -4,6 +4,6 @@ package translatedaudit
 import "testing"
 
 func TestHumanizeAuditsForModelPlan(t *testing.T) {
-	//Ticket: (ChChCh Changes!) This should really happen in this package, testing in the resolver package for now just for simplicity for a POC
+	//Changes: (ChChCh Changes!) This should really happen in this package, testing in the resolver package for now just for simplicity for a POC
 
 }

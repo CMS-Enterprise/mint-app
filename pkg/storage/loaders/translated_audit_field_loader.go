@@ -21,7 +21,7 @@ const (
 // each result will be an array of translatedAuditFields that correspond to a translatedAuditID
 func (loaders *DataLoaders) translatedAuditFieldCollectionGetByTranslatedAuditIDBatch(_ context.Context, keys dataloader.Keys) []*dataloader.Result {
 
-	// Ticket: (EASI-4147) Update the return value here, we should return a result per key, or there will be internal system error
+	// Changes: (EASI-4147) Update the return value here, we should return a result per key, or there will be internal system error
 	jsonParams, err := CovertToJSONArray(keys)
 	if err != nil {
 		return []*dataloader.Result{{Data: nil, Error: fmt.Errorf("issue converting keys to json for translatedAuditFieldCollectionGetByTranslatedAuditIDLoader, %w", err)}}

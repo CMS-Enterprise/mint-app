@@ -29,7 +29,7 @@ func TranslatedAuditChangeCreate(np sqlutils.NamedPreparer, translatedAuditChang
 // TranslatedAuditChangeCreateCollection creates a TranslatedAuditChange in the database, using the values passed in the translatedAuditChanges parameter
 func TranslatedAuditChangeCreateCollection(np sqlutils.NamedPreparer, translatedAuditChanges []*models.TranslatedAuditChange) ([]*models.TranslatedAuditChange, error) {
 	retChanges := []*models.TranslatedAuditChange{}
-	// Ticket (ChChCh Changes!) Make this a separate SQL call to try to insert all records at once instead of iterating through a collection.
+	// Changes (ChChCh Changes!) Make this a separate SQL call to try to insert all records at once instead of iterating through a collection.
 	// Note, even in this structure, a transaction is possible
 
 	for _, translatedAuditChange := range translatedAuditChanges {

@@ -25,15 +25,15 @@ CREATE TABLE translated_audit_change (
     modified_by UUID REFERENCES user_account(id),
     modified_dts TIMESTAMP WITH TIME ZONE
 );
---Ticket (EASI-4147) Turn on unique change record constrain
+-- Changes: (Serialization) Turn on unique change record constrain
 
---Ticket (ChChCh Changes!) Decide if we want to normalize the references that duplicate data, eg, actor_name, model_name etc. All of this is technically already in the audit.change table...
+-- Changes: (Serialization) Decide if we want to normalize the references that duplicate data, eg, actor_name, model_name etc. All of this is technically already in the audit.change table...
 
 -- Comment for the table
 COMMENT ON TABLE translated_audit_change IS 'Table storing human-readable audit trail of changes made to model plans. There should be at most one entry per audit.change entry ';
 
 
---Ticket (ChChCh Changes!) Update these comments for the new table
+-- Changes: (Serialization) Update these comments for the new table
 -- Comments for each column
 COMMENT ON COLUMN translated_audit_change.id IS 'Unique identifier for the audit trail change record.';
 COMMENT ON COLUMN translated_audit_change.model_plan_id IS 'Identifier referencing the model plan associated with this audit trail change.';
@@ -48,12 +48,12 @@ COMMENT ON COLUMN translated_audit_change.created_dts IS 'Timestamp with time zo
 COMMENT ON COLUMN translated_audit_change.modified_by IS 'Unique identifier of the user who last modified the audit trail change.';
 COMMENT ON COLUMN translated_audit_change.modified_dts IS 'Timestamp with time zone indicating the last modification time of the audit trail change.';
 
--- Ticket: (ChChCh Changes!) ADD MORE  comments for the new fields
+-- Changes: (Serialization) ADD MORE  comments for the new fields
 
--- Ticket: (ChChCh Changes!) Do we want to expose more fields to a parent level?
+-- Changes: (Serialization) Do we want to expose more fields to a parent level?
 -- Should we make some paradigm choices eg changes have to be grouped by user? I think that is reasonable...
 
--- Ticket: (ChChCh Changes!) Ensure that we only allow one entry in a time span per user. We wouldn't want to have multiple for that range
+-- Changes: (Serialization) Ensure that we only allow one entry in a time span per user. We wouldn't want to have multiple for that range
 
 CREATE TYPE AUDIT_FIELD_CHANGE_TYPE AS ENUM (
     'ANSWERED', 'UPDATED', 'REMOVED'

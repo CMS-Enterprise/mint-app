@@ -94,13 +94,13 @@ func genericAuditTranslation(ctx context.Context, store *storage.Store, plan *mo
 	}
 	// model PL
 	changes := []*models.TranslatedAuditChangeWithTranslatedFields{}
-	//Ticket (ChChCh Changes!) Think about grouping all the changes first so we don't actually have to parse this each time.
+	// Changes: (Serialization) Think about grouping all the changes first so we don't actually have to parse this each time.
 	audit := audits[0]
 	trans, err := mappings.GetTranslation(audit.TableName)
 	if err != nil {
 		return nil, fmt.Errorf("unable to get translation for %s , err : %w", audit.TableName, err)
 	}
-	translationMap, err := trans.ToMap() //TODO (ChChCh Changes!) Maybe make this return the map from the library?
+	translationMap, err := trans.ToMap() // Changes: (Translations)  Maybe make this return the map from the library?
 	if err != nil {
 		return nil, fmt.Errorf("unable to convert translation for %s to a map, err : %w", trans.TableName(), err)
 	}
@@ -118,7 +118,7 @@ func genericAuditTranslation(ctx context.Context, store *storage.Store, plan *mo
 		translatedAudit := models.TranslatedAuditChangeWithTranslatedFields{
 			TranslatedFields: []*models.TranslatedAuditField{},
 		}
-		change := models.NewTranslatedAuditChange( // Ticket: (EASI-4147) extract this logic to another function
+		change := models.NewTranslatedAuditChange( //  Changes: (Translations)  extract this logic to another function
 			constants.GetSystemAccountUUID(),
 			audit.ModifiedBy,
 			actorAccount.CommonName,
@@ -143,7 +143,7 @@ func genericAuditTranslation(ctx context.Context, store *storage.Store, plan *mo
 			translatedAudit.TranslatedFields = append(translatedAudit.TranslatedFields, transField)
 
 		}
-		changes = append(changes, &translatedAudit) // append the whole audite
+		changes = append(changes, &translatedAudit) // append the whole audit
 
 	}
 
@@ -156,11 +156,11 @@ func translateField(fieldName string, field models.AuditField, audit *models.Aud
 	var translatedNew interface{}
 
 	fieldInterface := translationMap[fieldName]
-	fieldTransOptionsAndParent, hasOptionsAndParent := fieldInterface.(mappings.TranslationFieldPropertiesWithOptionsAndParent) //TODO: (ChChCh Changes!) We can reduce this.
+	fieldTransOptionsAndParent, hasOptionsAndParent := fieldInterface.(mappings.TranslationFieldPropertiesWithOptionsAndParent) //Changes: (Translations) We can reduce the calls using an interface.
 	fieldTransOptions, hasOptions := fieldInterface.(mappings.TranslationFieldPropertiesWithOptions)
 	fieldTrans, hasTranslation := fieldInterface.(mappings.TranslationFieldProperties)
 
-	// Ticket: (ChChCh Changes!) Should we handle this better? There are different implementations we have to cast to
+	// Changes: (Translations) Should we handle this better? There are different implementations we have to cast to
 	if hasOptionsAndParent {
 		translatedLabel = fieldTransOptionsAndParent.GetLabel()
 		translatedOld = translateValue(field.Old, fieldTransOptionsAndParent.Options)
@@ -170,7 +170,7 @@ func translateField(fieldName string, field models.AuditField, audit *models.Aud
 		translatedOld = translateValue(field.Old, fieldTransOptions.Options)
 		translatedNew = translateValue(field.New, fieldTransOptions.Options)
 
-		// Ticket: (ChChCh Changes!) Verify this, there are other field types. We should have helper methods. This logic flow can be improved as well
+		// Changes: (Translations) Verify this, there are other field types. We should have helper methods. This logic flow can be improved as well
 	} else if hasTranslation {
 		translatedLabel = fieldTrans.GetLabel()
 		translatedOld = field.Old
@@ -191,7 +191,7 @@ func translateField(fieldName string, field models.AuditField, audit *models.Aud
 	)
 	translatedField.ChangeType = getChangeType(field.Old, field.New)
 
-	// change.MetaDataRaw = nil //Ticket: (ChChCh Changes!) This should be specific to the type of change...
+	// change.MetaDataRaw = nil //Changes: (Meta) This should be specific to the type of change...
 
 	return &translatedField, nil
 
@@ -199,12 +199,12 @@ func translateField(fieldName string, field models.AuditField, audit *models.Aud
 
 // getChangeType interprets the change that happened on a field to characterize it as an AuditFieldChangeType
 func getChangeType(old interface{}, new interface{}) models.AuditFieldChangeType {
-	//Ticket: (EASI-4147) Revisit this, make sure we handle all cases. Can this every be called for a field that has no answer? What about on insert? Or do we only have answer on insert if non-null?
+	//Changes: (Meta) Revisit this, make sure we handle all cases. Can this every be called for a field that has no answer? What about on insert? Or do we only have answer on insert if non-null?
 	// return models.AFCAnswered
 
 	if new == nil || new == "{}" {
 		if old == nil || old == "{}" {
-			//Ticket: (EASI-4147) Revisit this, is this possible?
+			//Changes: (Meta) Revisit this, is this possible?
 			return ""
 		}
 		return models.AFCRemoved
@@ -219,8 +219,8 @@ func getChangeType(old interface{}, new interface{}) models.AuditFieldChangeType
 // It checks in the value is an array, and if so it translates each value to a human readable form
 func translateValue(value interface{}, options map[string]string) interface{} {
 
-	//Ticket: (ChChCh Changes!) Check if value is nil, don't need to translate that.
-	//Ticket: (ChChCh Changes!) work on bool representation, they should come through here as a string, but show up as t, f. We will want to set they values
+	// Changes: (Translations) Check if value is nil, don't need to translate that.
+	// Changes: (Translations) work on bool representation, they should come through here as a string, but show up as t, f. We will want to set they values
 	// strSlice, isSlice := value.([]string)
 	str, isString := value.(string)
 	if !isString {
@@ -242,7 +242,7 @@ func translateValue(value interface{}, options map[string]string) interface{} {
 	if isString {
 		return translateValueSingle(str, options)
 	}
-	//Ticket: (ChChCh Changes!) Should we handle the case where we can't translate it more?
+	// Changes: (Translations)  Should we handle the case where we can't translate it more?
 	return value
 
 }
@@ -253,7 +253,7 @@ func translateValueSingle(value string, options map[string]string) string {
 	if ok {
 		return translated
 	}
-	//Ticket (ChChCh Changes!) If the map doesn't have a value, return the raw value instead.
+	// Changes: (Translations)  If the map doesn't have a value, return the raw value instead.
 	return value
 
 }
@@ -274,7 +274,7 @@ func isArray(str string) ([]string, bool) {
 }
 
 // extractArrayValues extracts array values from a string representation
-// Ticket (ChChCh Changes!) Verify the extraction, perhaps we can combine with earlier function?
+// Changes: (Translations)  Verify the extraction, perhaps we can combine with earlier function?
 func extractArrayValues(str string) []string {
 	// Define a regular expression to match the array format
 	arrayRegex := regexp.MustCompile(`\{(.+?)\}`)
@@ -301,7 +301,7 @@ func saveTranslatedAuditAndFields(tp sqlutils.TransactionPreparer, translatedAud
 
 	retTranslatedAuditsWithFields := []*models.TranslatedAuditChangeWithTranslatedFields{}
 
-	// Ticket: (EASI-4147) Figure out how we want to error. Should each change and field be it's own transaction? That way if it fails, we still save other  changes? That's probably best
+	// Changes: (Serialization) Figure out how we want to error. Should each change and field be it's own transaction? That way if it fails, we still save other  changes? That's probably best
 	for _, translatedAudit := range translatedAudits {
 
 		retTranslated, err := sqlutils.WithTransaction[models.TranslatedAuditChangeWithTranslatedFields](tp, func(tx *sqlx.Tx) (*models.TranslatedAuditChangeWithTranslatedFields, error) {
@@ -318,7 +318,7 @@ func saveTranslatedAuditAndFields(tp sqlutils.TransactionPreparer, translatedAud
 			}
 
 			for _, translatedAuditField := range translatedAudit.TranslatedFields {
-				// Ticket: (EASI-4147) Combine this with the storage message loop
+				// Changes: (Serialization) Combine this with the storage message loop
 				translatedAuditField.TranslatedAuditID = retTranslated.ID
 			}
 
@@ -333,7 +333,7 @@ func saveTranslatedAuditAndFields(tp sqlutils.TransactionPreparer, translatedAud
 		})
 		if err != nil {
 			return nil, err
-			// Ticket: (EASI-4147) Figure out, if one audit fails translation, should the whole job fail? Or should we just fail
+			// Changes: (Serialization)  Figure out, if one audit fails translation, should the whole job fail? Or should we just fail
 		}
 
 		retTranslatedAuditsWithFields = append(retTranslatedAuditsWithFields, retTranslated)

@@ -33,7 +33,7 @@ type TranslatedAuditChange {
 
 
     actorID: UUID!
-    actorName: String!  #TODO: (ChChCh Changes!)This could live in the actor account, but this is meant to facilitate search
+    actorName: String!  #Changes: (Serialization) This could live in the actor account, but this is meant to facilitate search
     changeID: Int! # This points to a specific audit change.
     metaData: TranslatedAuditMetaData!
 
@@ -72,7 +72,7 @@ type TranslatedAuditField {
     new: Any
     newTranslated: Any
 
-    # Ticket (Changes Structure) Decide if this field is needed here, or just on the parent level... Also, consider if it makes sense to leave this nullable?
+    # Changes: (Structure) Decide if this field is needed here, or just on the parent level... Also, consider if it makes sense to leave this nullable?
     metaData: TranslatedAuditFieldMetaData!
 
     createdBy: UUID!

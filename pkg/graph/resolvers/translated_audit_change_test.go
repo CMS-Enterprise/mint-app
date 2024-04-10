@@ -11,7 +11,7 @@ func (suite *ResolverSuite) TestHumanizeAuditsForModelPlan() {
 
 	// beforeYesterday := yesterday.AddDate(0, 0, -1)
 
-	//Ticket: (ChChCh Changes!) This should really happen in the translated audit package, testing in the resolver package for now just for simplicity for a POC
+	//Changes: (ChChCh Changes!) This should really happen in the translated audit package, testing in the resolver package for now just for simplicity for a POC
 	plan := suite.createModelPlan("test plan for changes")
 
 	planChanges := map[string]interface{}{

@@ -11,7 +11,6 @@ import (
 //go:embed translation/participantsAndProviders2.json
 var partsAndProvidersTranslationJSON []byte
 
-// Ticket: (ChChCh Changes!) Look at the JSON, I'm leaving out sharing mappings, eg for frequency options
 // translationParticipantsAndProviders shows the translation for every field in the Participants and Providers Data type
 type translationParticipantsAndProviders struct {
 	Participants                           TranslationFieldPropertiesWithOptionsAndParent `json:"participants" db:"participants"`
@@ -77,7 +76,7 @@ type translationParticipantsAndProviders struct {
 	Status                                 TranslationFieldPropertiesWithOptions          `json:"status" db:"status"`
 }
 
-/* Ticket: (ChChCh Changes!) to be useful to access programmatically, we need to be able to access the fields in the same manner that we do from the database,
+/* Changes: (ChChCh Changes!) to be useful to access programmatically, we need to be able to access the fields in the same manner that we do from the database,
 * eg by the db tag. This will be Marshalled, but it will be using the Go struct Names, which is not ideal... Perhaps the FE can export it by DB tags?
 Also, this doesn't have every single field. Ideally we really need every single field, otherwise we won't be able to translate the information when we are iterating through
 */
