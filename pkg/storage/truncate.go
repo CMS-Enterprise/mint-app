@@ -34,7 +34,7 @@ func (s *Store) TruncateAllTablesDANGEROUS(logger *zap.Logger) error {
 	user_notification,
 	activity,
 	translated_audit_field,
-	translated_audit_change,
+	translated_audit,
 	audit.change
 	`
 

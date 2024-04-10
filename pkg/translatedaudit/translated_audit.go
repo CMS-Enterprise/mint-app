@@ -30,7 +30,7 @@ func TranslateAuditsForModelPlan(
 	logger *zap.Logger,
 	timeStart time.Time,
 	timeEnd time.Time,
-	modelPlanID uuid.UUID) ([]*models.TranslatedAuditChangeWithTranslatedFields, error) {
+	modelPlanID uuid.UUID) ([]*models.TranslatedAuditWithTranslatedFields, error) {
 
 	plan, err := store.ModelPlanGetByID(store, logger, modelPlanID)
 	if err != nil {
@@ -63,7 +63,7 @@ func translateChangeSet(
 	store *storage.Store,
 	plan *models.ModelPlan,
 	audits []*models.AuditChange,
-) ([]*models.TranslatedAuditChangeWithTranslatedFields, error) {
+) ([]*models.TranslatedAuditWithTranslatedFields, error) {
 
 	// planChanges, err := humanizeModelPlanAudits(ctx, store, plan, audits)
 	// if err != nil {
@@ -87,13 +87,13 @@ func translateChangeSet(
 }
 
 // genericAuditTranslation provides an entry point to translate every audit change generically
-func genericAuditTranslation(ctx context.Context, store *storage.Store, plan *models.ModelPlan, audits []*models.AuditChange) ([]*models.TranslatedAuditChangeWithTranslatedFields, error) {
+func genericAuditTranslation(ctx context.Context, store *storage.Store, plan *models.ModelPlan, audits []*models.AuditChange) ([]*models.TranslatedAuditWithTranslatedFields, error) {
 
 	if len(audits) == 0 {
 		return nil, nil
 	}
 	// model PL
-	changes := []*models.TranslatedAuditChangeWithTranslatedFields{}
+	changes := []*models.TranslatedAuditWithTranslatedFields{}
 	// Changes: (Serialization) Think about grouping all the changes first so we don't actually have to parse this each time.
 	audit := audits[0]
 	trans, err := mappings.GetTranslation(audit.TableName)
@@ -115,7 +115,7 @@ func genericAuditTranslation(ctx context.Context, store *storage.Store, plan *mo
 		if !isValidOperation {
 			fmt.Printf("issue converting operation to valid DB operation for audit  (%d) for plan %s, while attempting humanization. Provided value was %s ", audit.ID, plan.ModelName, audit.Action)
 		}
-		translatedAudit := models.TranslatedAuditChangeWithTranslatedFields{
+		translatedAudit := models.TranslatedAuditWithTranslatedFields{
 			TranslatedFields: []*models.TranslatedAuditField{},
 		}
 		change := models.NewTranslatedAuditChange( //  Changes: (Translations)  extract this logic to another function
@@ -131,7 +131,7 @@ func genericAuditTranslation(ctx context.Context, store *storage.Store, plan *mo
 			audit.PrimaryKey,
 			operation,
 		)
-		translatedAudit.TranslatedAuditChange = change
+		translatedAudit.TranslatedAudit = change
 
 		for fieldName, field := range audit.Fields {
 
@@ -297,24 +297,24 @@ func extractArrayValues(str string) []string {
 }
 
 // saveTranslatedAuditAndFields is a helper method to save a change with it's related fields at the same time
-func saveTranslatedAuditAndFields(tp sqlutils.TransactionPreparer, translatedAudits []*models.TranslatedAuditChangeWithTranslatedFields) ([]*models.TranslatedAuditChangeWithTranslatedFields, error) {
+func saveTranslatedAuditAndFields(tp sqlutils.TransactionPreparer, translatedAudits []*models.TranslatedAuditWithTranslatedFields) ([]*models.TranslatedAuditWithTranslatedFields, error) {
 
-	retTranslatedAuditsWithFields := []*models.TranslatedAuditChangeWithTranslatedFields{}
+	retTranslatedAuditsWithFields := []*models.TranslatedAuditWithTranslatedFields{}
 
 	// Changes: (Serialization) Figure out how we want to error. Should each change and field be it's own transaction? That way if it fails, we still save other  changes? That's probably best
 	for _, translatedAudit := range translatedAudits {
 
-		retTranslated, err := sqlutils.WithTransaction[models.TranslatedAuditChangeWithTranslatedFields](tp, func(tx *sqlx.Tx) (*models.TranslatedAuditChangeWithTranslatedFields, error) {
+		retTranslated, err := sqlutils.WithTransaction[models.TranslatedAuditWithTranslatedFields](tp, func(tx *sqlx.Tx) (*models.TranslatedAuditWithTranslatedFields, error) {
 
-			change, err := storage.TranslatedAuditChangeCreate(tx, &translatedAudit.TranslatedAuditChange)
+			change, err := storage.TranslatedAuditCreate(tx, &translatedAudit.TranslatedAudit)
 			if err != nil {
 				return nil, err
 			}
 			if change == nil {
 				return nil, fmt.Errorf("translated change not created as expected.Err: %w", err)
 			}
-			retTranslated := models.TranslatedAuditChangeWithTranslatedFields{
-				TranslatedAuditChange: *change,
+			retTranslated := models.TranslatedAuditWithTranslatedFields{
+				TranslatedAudit: *change,
 			}
 
 			for _, translatedAuditField := range translatedAudit.TranslatedFields {

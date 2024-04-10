@@ -2896,7 +2896,7 @@ export type Query = {
   possibleOperationalSolutions: Array<PossibleOperationalSolution>;
   searchOktaUsers: Array<UserInfo>;
   taskListSectionLocks: Array<TaskListSectionLockStatus>;
-  translatedAuditChangeCollection?: Maybe<Array<TranslatedAuditChange>>;
+  translatedAuditCollection?: Maybe<Array<TranslatedAudit>>;
   userAccount: UserAccount;
 };
 
@@ -2994,7 +2994,7 @@ export type QueryTaskListSectionLocksArgs = {
 
 
 /** Query definition for the schema */
-export type QueryTranslatedAuditChangeCollectionArgs = {
+export type QueryTranslatedAuditCollectionArgs = {
   modelPlanID: Scalars['UUID']['input'];
 };
 
@@ -3281,9 +3281,9 @@ export enum TeamRole {
   QUALITY = 'QUALITY'
 }
 
-/** TranslatedAuditChange represent a point in time change made to part of application. */
-export type TranslatedAuditChange = {
-  __typename: 'TranslatedAuditChange';
+/** TranslatedAudit represent a point in time change made to part of application. */
+export type TranslatedAudit = {
+  __typename: 'TranslatedAudit';
   action: DatabaseOperation;
   actorID: Scalars['UUID']['output'];
   actorName: Scalars['String']['output'];
