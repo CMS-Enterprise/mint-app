@@ -2,8 +2,9 @@ import React, { useContext, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
-import { Button, Fieldset, Label, Radio } from '@trussworks/react-uswds';
+import { Button, Label } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
+import { DocumentType } from 'gql/gen/graphql';
 
 import BooleanRadio from 'components/BooleanRadioForm';
 import FileUpload from 'components/FileUpload';
@@ -22,7 +23,6 @@ import UploadNewPlanDocument from 'queries/Documents/UploadNewPlanDocument';
 import CreateDocumentSolutionLinks from 'queries/ITSolutions/CreateDocumentSolutionLinks';
 import { CreateDocumentSolutionLinksVariables } from 'queries/ITSolutions/types/CreateDocumentSolutionLinks';
 import { FileUploadForm, LinkingDocumentFormTypes } from 'types/files';
-import { DocumentType } from 'types/graphql-global-types';
 import { getKeys } from 'types/translation';
 import flattenErrors from 'utils/flattenErrors';
 import { DocumentUploadValidationSchema } from 'validations/documentUploadSchema';
@@ -39,7 +39,6 @@ const DocumentUpload = ({
   const history = useHistory();
   const { t: documentsT } = useTranslation('documents');
   const { t: documentsMiscT } = useTranslation('documentsMisc');
-  const { t: h } = useTranslation('draftModelPlan');
 
   const {
     documentType: documentTypeConfig,
@@ -62,7 +61,7 @@ const DocumentUpload = ({
     showMessageOnNextPage(
       <Alert type="success" slim className="margin-y-4" aria-live="assertive">
         <span className="mandatory-fields-alert__text">
-          {t(message, {
+          {documentsMiscT(message, {
             documentName: fileName,
             modelName
           })}

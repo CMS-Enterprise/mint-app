@@ -23,10 +23,10 @@ export const documents: TranslationDocuments = {
     dataType: 'string',
     formType: 'text'
   },
-  fileName: {
-    gqlField: 'fileName',
-    goField: 'FileName',
-    dbField: 'file_name',
+  name: {
+    gqlField: 'name',
+    goField: 'name',
+    dbField: 'name',
     label: 'File name',
     sublabel: 'Enter a name for your document.',
     dataType: 'string',

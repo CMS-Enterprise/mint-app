@@ -808,7 +808,7 @@ export type TranslationCollaborators = {
 export type TranslationDocuments = {
   isLink: TranslationFieldPropertiesWithOptions<Bool>;
   url: TranslationFieldProperties;
-  fileName: TranslationFieldProperties;
+  name: TranslationFieldProperties;
   restricted: TranslationFieldPropertiesWithOptions<Bool>;
   documentType: TranslationFieldPropertiesWithOptions<DocumentType>;
   optionalNotes: TranslationFieldProperties;
