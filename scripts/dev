@@ -350,7 +350,7 @@ namespace :db do
 
   desc "Seed local database with development data"
   task :seed do
-    sh "go run ./cmd/dbseed/*go dbseed"
+    sh "go run ./cmd/dbseed/*go seed"
   end
 
   task :drop_connections do
@@ -359,47 +359,7 @@ namespace :db do
 
   desc "Deletes all rows from all tables"
   task :clean do
-    tableList = "
-    tag,
-    analyzed_audit,
-    nda_agreement,
-    discussion_reply,
-    plan_basics,
-    plan_collaborator,
-    plan_discussion,
-    plan_document_solution_link,
-    plan_document,
-    plan_general_characteristics,
-    plan_beneficiaries,
-    plan_participants_and_providers,
-    plan_ops_eval_and_learning,
-    plan_payments,
-    plan_favorite,
-    plan_cr,
-    plan_tdl,
-    operational_solution_subtask,
-    operational_solution,
-    operational_need,
-    existing_model_link,
-    model_plan,
-    user_notification,
-    activity,
-    translated_audit_field,
-    translated_audit_change,
-    audit.change"
-
-    puts "Cleaning database..."
-    `echo "TRUNCATE #{tableList}" | psql`
-    # Changes: (ChChCh Changes!) Update this to use the seed commands implementation of clean, so we don't need this in two places
-
-    #remove all non system accounts
-    systemAccounts =  "( 'UNKNOWN_USER','MINT_SYSTEM')"
-
-    # remove preferences
-    `echo "DELETE FROM user_notification_preferences WHERE user_id IN ( SELECT id FROM user_account WHERE username NOT IN #{systemAccounts} )" | psql`
-
-    # remove accounts
-    `echo "DELETE FROM user_account WHERE username NOT IN #{systemAccounts}" | psql`
+    sh "go run ./cmd/dbseed/*go clean"
 
   end
 end

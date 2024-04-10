@@ -28,7 +28,7 @@ import (
 
 var viperConfig = viper.New()
 var rootCmd = &cobra.Command{
-	Use:   "interactive",
+	Use:   "seeder",
 	Short: "Runs the seed commands as an interactive tui",
 	Long:  "Runs the seed commands as an interactive tui",
 	Run: func(cmd *cobra.Command, args []string) {
@@ -36,7 +36,7 @@ var rootCmd = &cobra.Command{
 	},
 }
 var seedCmd = &cobra.Command{
-	Use:   "dbseed",
+	Use:   "seed",
 	Short: "Seed the DB",
 	Long:  "Seeds the Database with Model Plans and associated data",
 	Run: func(cmd *cobra.Command, args []string) {
@@ -45,7 +45,7 @@ var seedCmd = &cobra.Command{
 }
 
 var cleanCmd = &cobra.Command{
-	Use:   "dbseed",
+	Use:   "clean",
 	Short: "Clean the DB",
 	Long:  "Truncates all user entered data in the Database",
 	Run: func(cmd *cobra.Command, args []string) {
