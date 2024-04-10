@@ -12,8 +12,6 @@ import (
 
 // TranslatedAuditFieldCollectionGetByTranslatedAuditID returns all TranslatedAuditChange for a given translated audit id
 func TranslatedAuditFieldCollectionGetByTranslatedAuditID(ctx context.Context, translatedAuditID uuid.UUID) ([]*models.TranslatedAuditField, error) {
-	// Ticket: (EASI-4147) Update this to use a dataloader...
-	// translatedChangeCollection, err := storage.TranslatedAuditFieldCollectionGetByTranslatedAuditID(np, translatedAuditID)
 	translatedChangeCollection, err := loaders.TranslatedAuditFieldCollectionGetByTranslatedAuditID(ctx, translatedAuditID)
 	if err != nil {
 		return nil, err

@@ -86,56 +86,6 @@ func translateChangeSet(
 
 }
 
-// func humanizeModelPlanAudits(ctx context.Context, store *storage.Store, plan *models.ModelPlan, audits []*models.AuditChange) ([]*models.TranslatedAuditChange, error) {
-// 	// model PL
-// 	changes := []*models.TranslatedAuditChange{}
-
-// 	modelPlanAudits := lo.Filter(audits, func(m *models.AuditChange, index int) bool {
-// 		return m.TableName == "model_plan"
-// 	})
-// 	for _, modelAudit := range modelPlanAudits {
-// 		actorAccount, err := modelAudit.ModifiedByUserAccount(ctx)
-// 		if err != nil {
-// 			fmt.Printf("issue getting actor for audit  (%d) for plan %s, while attempting humanization ", modelAudit.ID, plan.ModelName)
-// 			continue
-// 		}
-// 		operation, isValidOperation := GetDatabaseOperation(modelAudit.Action)
-// 		if !isValidOperation {
-// 			fmt.Printf("issue converting operation to valid DB operation for audit  (%d) for plan %s, while attempting humanization. Provided value was %s ", modelAudit.ID, plan.ModelName, modelAudit.Action)
-// 		}
-
-// 		for fieldName, field := range modelAudit.Fields { //fieldName
-// 			change := models.NewTranslatedAuditChange(
-// 				constants.GetSystemAccountUUID(),
-// 				modelAudit.ModifiedBy,
-// 				actorAccount.CommonName,
-
-// 				plan.ID,
-// 				plan.ModelName,
-// 				modelAudit.ModifiedDts,
-// 				modelAudit.TableName,
-// 				modelAudit.TableID,
-// 				modelAudit.ID,
-// 				modelAudit.PrimaryKey,
-// 				operation,
-// 				fieldName,
-// 				fieldName, //TODO: (ChChCh Changes!) Add Translation
-// 				field.Old,
-// 				field.Old, //TODO: (ChChCh Changes!) Add Translation
-// 				field.New,
-// 				field.New, //TODO: (ChChCh Changes!) Add Translation
-// 			)
-// 			change.MetaDataRaw = field
-
-// 			changes = append(changes, &change)
-
-// 		}
-
-// 	}
-
-// 	return changes, nil
-// }
-
 // genericAuditTranslation provides an entry point to translate every audit change generically
 func genericAuditTranslation(ctx context.Context, store *storage.Store, plan *models.ModelPlan, audits []*models.AuditChange) ([]*models.TranslatedAuditChangeWithTranslatedFields, error) {
 

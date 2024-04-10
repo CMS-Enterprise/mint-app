@@ -72,7 +72,7 @@ type TranslatedAuditField {
     new: Any
     newTranslated: Any
 
-    # Ticket (EASI-4147) Decide if this field is needed here, or just on the parent level... Also, consider if it makes sense to leave this nullable?
+    # Ticket (Changes Structure) Decide if this field is needed here, or just on the parent level... Also, consider if it makes sense to leave this nullable?
     metaData: TranslatedAuditFieldMetaData!
 
     createdBy: UUID!

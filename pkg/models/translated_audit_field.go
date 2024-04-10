@@ -34,7 +34,6 @@ type TranslatedAuditField struct {
 	FieldName           string `json:"fieldName" db:"field_name"`
 	FieldNameTranslated string `json:"fieldNameTranslated" db:"field_name_translated"`
 
-	// Ticket: (ChChCh Changes!) We might consider changing the type from interface to string? But it could be an array. This gives us options
 	Old           interface{} `json:"old" db:"old"`
 	OldTranslated interface{} `json:"oldTranslated" db:"old_translated"`
 	New           interface{} `json:"new" db:"new"`
