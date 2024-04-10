@@ -62,7 +62,7 @@ func (hmb *TranslatedAuditMetaBaseStruct) Scan(src interface{}) error {
 
 // parseRawTranslatedAuditMetaData conditionally parses meta data from JSON to a specific meta data type
 func parseRawTranslatedAuditMetaData(metaDataType string, rawMetaDataJSON interface{}) (TranslatedAuditMetaData, error) {
-	//Ticket: (EASI-4147) Figure out how we distinguish meta data type. This should be specific to a field / table, but that isn't here..... \
+	//Changes: (Meta) Figure out how we distinguish meta data type. This should be specific to a field / table, but that isn't here..... \
 	// We might need to partially deserialize this to a map, then cast to a type? OR! We could store more data about it in another column.
 
 	var rawData []byte

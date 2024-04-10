@@ -76,13 +76,6 @@ type translationParticipantsAndProviders struct {
 	Status                                 TranslationFieldPropertiesWithOptions          `json:"status" db:"status"`
 }
 
-/* Changes: (ChChCh Changes!) to be useful to access programmatically, we need to be able to access the fields in the same manner that we do from the database,
-* eg by the db tag. This will be Marshalled, but it will be using the Go struct Names, which is not ideal... Perhaps the FE can export it by DB tags?
-Also, this doesn't have every single field. Ideally we really need every single field, otherwise we won't be able to translate the information when we are iterating through
-*/
-
-// var participantsAndProviders = getParticipantsAndProvidersTranslation()
-
 // ParticipantsAndProvidersTranslation Provides the translation for Participants and Providers
 func ParticipantsAndProvidersTranslation() (*translationParticipantsAndProviders, error) {
 	var participantsTranslation translationParticipantsAndProviders

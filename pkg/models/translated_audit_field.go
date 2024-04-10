@@ -46,8 +46,8 @@ type TranslatedAuditField struct {
 // NewTranslatedAuditField
 func NewTranslatedAuditField(
 	createdBy uuid.UUID,
-	// Ticket: (EASI-4147) Update this to make sure we save the audit ID as needed
-	// translatedAuditID uuid.UUID,
+
+	// translatedAuditID uuid.UUID, //Audit ID is handled during serialization
 
 	fieldName string,
 	fieldNameTranslated string,
@@ -79,9 +79,9 @@ func NewTranslatedAuditField(
 // ParseMetaData parses raw MetaData into Typed meta data per the provided struct
 func (taf *TranslatedAuditField) ParseMetaData() error {
 
-	// Ticket (ChChCh Changes!) figure out if we need meta data here or not.
+	// Ticket (Meta) figure out if we need meta data here or not.
 	metaDataType := "generic"
-	// Ticket (EASI-4147) revisit how we determine what to parse here
+	// Ticket (Meta) revisit how we determine what to parse here
 
 	meta, err := parseRawTranslatedAuditFieldMetaData(metaDataType, taf.MetaDataRaw)
 	if err != nil {
