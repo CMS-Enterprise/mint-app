@@ -204,7 +204,7 @@ const LinkDocument = ({
                       hint
                       className="text-normal text-base margin-y-1"
                     >
-                      {documentsMiscT('url.sublabel')}
+                      {documentsT('url.sublabel')}
                     </Label>
 
                     <FieldErrorMsg>{flatErrors.url}</FieldErrorMsg>
@@ -251,7 +251,7 @@ const LinkDocument = ({
                       </legend>
                       <FieldErrorMsg>{flatErrors.documentType}</FieldErrorMsg>
 
-                      {getKeys(DocumentType).map(documentType => {
+                      {getKeys(documentTypeConfig.options).map(documentType => {
                         return (
                           <Field
                             key={`FileUpload-${documentType}`}
