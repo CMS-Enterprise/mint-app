@@ -20,29 +20,30 @@ import {
   DataForMonitoringType,
   GetOpsEvalAndLearningQuery,
   StakeholdersType,
-  useGetOpsEvalAndLearningQuery,
-  useUpdatePlanOpsEvalAndLearningMutation
+  TypedUpdatePlanOpsEvalAndLearningDocument,
+  useGetOpsEvalAndLearningQuery
 } from 'gql/gen/graphql';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
 import BooleanRadio from 'components/BooleanRadioForm';
+import ConfirmLeave from 'components/ConfirmLeave';
 import ITSolutionsWarning from 'components/ITSolutionsWarning';
 import MainContent from 'components/MainContent';
+import MutationErrorModal from 'components/MutationErrorModal';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
-import AutoSave from 'components/shared/AutoSave';
 import CheckboxField from 'components/shared/CheckboxField';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import MultiSelect from 'components/shared/MultiSelect';
 import TextAreaField from 'components/shared/TextAreaField';
+import useHandleMutation from 'hooks/useHandleMutation';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import useScrollElement from 'hooks/useScrollElement';
 import { getKeys } from 'types/translation';
 import flattenErrors from 'utils/flattenErrors';
-import { dirtyInput } from 'utils/formDiff';
 import { composeMultiSelectOptions } from 'utils/modelPlan';
 import { NotFoundPartial } from 'views/NotFound';
 
@@ -157,40 +158,22 @@ export const OpsEvalAndLearningContent = () => {
   // If redirected from Operational Solutions, scrolls to the relevant question
   useScrollElement(!loading);
 
-  const [update] = useUpdatePlanOpsEvalAndLearningMutation();
+  const { mutationError } = useHandleMutation(
+    TypedUpdatePlanOpsEvalAndLearningDocument,
+    {
+      id,
+      formikRef
+    }
+  );
 
-  const handleFormSubmit = (redirect?: 'next' | 'back' | string) => {
-    update({
-      variables: {
-        id,
-        changes: dirtyInput(
-          formikRef?.current?.initialValues,
-          formikRef?.current?.values
-        )
-      }
-    })
-      .then(response => {
-        if (!response?.errors) {
-          if (redirect === 'next') {
-            if (formikRef?.current?.values.iddocSupport) {
-              history.push(
-                `/models/${modelID}/task-list/ops-eval-and-learning/iddoc`
-              );
-            } else {
-              history.push(
-                `/models/${modelID}/task-list/ops-eval-and-learning/performance`
-              );
-            }
-          } else if (redirect === 'back') {
-            history.push(`/models/${modelID}/task-list/`);
-          } else if (redirect) {
-            history.push(redirect);
-          }
-        }
-      })
-      .catch(errors => {
-        formikRef?.current?.setErrors(errors);
-      });
+  const nextPage = () => {
+    if (formikRef?.current?.values.iddocSupport) {
+      history.push(`/models/${modelID}/task-list/ops-eval-and-learning/iddoc`);
+    } else {
+      history.push(
+        `/models/${modelID}/task-list/ops-eval-and-learning/performance`
+      );
+    }
   };
 
   const initialValues: OpsEvalAndLearningFormType = {
@@ -217,6 +200,12 @@ export const OpsEvalAndLearningContent = () => {
 
   return (
     <>
+      <MutationErrorModal
+        isOpen={mutationError.isModalOpen}
+        closeModal={() => mutationError.setIsModalOpen(false)}
+        url={mutationError.destinationURL}
+      />
+
       <BreadcrumbBar variant="wrap">
         <Breadcrumb>
           <BreadcrumbLink asCustom={Link} to="/">
@@ -250,7 +239,7 @@ export const OpsEvalAndLearningContent = () => {
       <Formik
         initialValues={initialValues}
         onSubmit={() => {
-          handleFormSubmit('next');
+          nextPage();
         }}
         enableReinitialize
         innerRef={formikRef}
@@ -284,6 +273,8 @@ export const OpsEvalAndLearningContent = () => {
                   })}
                 </ErrorAlert>
               )}
+
+              <ConfirmLeave />
 
               <Form
                 className="desktop:grid-col-6 margin-top-6"
@@ -368,7 +359,7 @@ export const OpsEvalAndLearningContent = () => {
                       <ITSolutionsWarning
                         id="ops-eval-and-learning-help-desk-use-warning"
                         onClick={() =>
-                          handleFormSubmit(
+                          history.push(
                             `/models/${modelID}/task-list/it-solutions`
                           )
                         }
@@ -489,7 +480,7 @@ export const OpsEvalAndLearningContent = () => {
                       <ITSolutionsWarning
                         id="ops-eval-and-learning-iddoc-support-warning"
                         onClick={() =>
-                          handleFormSubmit(
+                          history.push(
                             `/models/${modelID}/task-list/it-solutions`
                           )
                         }
@@ -529,23 +520,13 @@ export const OpsEvalAndLearningContent = () => {
                   <Button
                     type="button"
                     className="usa-button usa-button--unstyled"
-                    onClick={() => handleFormSubmit('back')}
+                    onClick={() => history.push(`/models/${modelID}/task-list`)}
                   >
                     <Icon.ArrowBack className="margin-right-1" aria-hidden />
                     {miscellaneousT('saveAndReturn')}
                   </Button>
                 </Fieldset>
               </Form>
-
-              {id && (
-                <AutoSave
-                  values={values}
-                  onSave={() => {
-                    handleFormSubmit();
-                  }}
-                  debounceDelay={3000}
-                />
-              )}
             </>
           );
         }}

@@ -46,8 +46,6 @@ const ReadOnlySection = <
   values,
   filteredView
 }: ReadOnlySectionProps<T, C>): React.ReactElement | null => {
-  const { t: miscellaneousT } = useTranslation('miscellaneous');
-
   const config = translations[field];
 
   const value = values[config.gqlField];
@@ -77,7 +75,7 @@ const ReadOnlySection = <
   const sectionName = formatID(heading);
 
   // If no notes are written, do not render
-  if (heading === miscellaneousT('notes') && !value) {
+  if (config.isNote && !value) {
     return null;
   }
 
