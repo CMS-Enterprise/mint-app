@@ -3,15 +3,17 @@ package resolvers
 import (
 	"time"
 
+	"golang.org/x/sync/errgroup"
+
 	"github.com/cmsgov/mint-app/pkg/models"
 	"github.com/cmsgov/mint-app/pkg/translatedaudit"
 )
 
-func (suite *ResolverSuite) TestHumanizeAuditsForModelPlan() {
-
+func (suite *ResolverSuite) TestTranslatedAuditFieldCollectionGetByTranslatedAuditID() {
 	// beforeYesterday := yesterday.AddDate(0, 0, -1)
 
 	//Ticket: (ChChCh Changes!) This should really happen in the translated audit package, testing in the resolver package for now just for simplicity for a POC
+	//Ticket: (ChChCh Changes!) This could potentially be combined with the audit change test, but duplicating some logic here instead for clarity
 	plan := suite.createModelPlan("test plan for changes")
 
 	planChanges := map[string]interface{}{
@@ -60,6 +62,38 @@ func (suite *ResolverSuite) TestHumanizeAuditsForModelPlan() {
 	retTranslatedAuditsWithFields, changeErr := translatedaudit.TranslateAuditsForModelPlan(suite.testConfigs.Context, suite.testConfigs.Store, suite.testConfigs.Logger, yesterday, today, plan.ID)
 	suite.NoError(changeErr)
 	suite.NotNil(retTranslatedAuditsWithFields)
-	suite.Greater(len(retTranslatedAuditsWithFields), 2) // Make sure there are at least 2 changes, and two fields
+	suite.GreaterOrEqual(len(retTranslatedAuditsWithFields), 2) // Make sure there are at least 2 changes, and two fields
+
+	change1 := retTranslatedAuditsWithFields[0]
+	change1FieldCount := len(change1.TranslatedFields)
+	suite.Greater(change1FieldCount, 0)
+
+	change2 := retTranslatedAuditsWithFields[1]
+	change2FieldCount := len(change2.TranslatedFields)
+	suite.Greater(change2FieldCount, 0)
+
+	g, ctx := errgroup.WithContext(suite.testConfigs.Context)
+	g.Go(func() error {
+		fields, err := TranslatedAuditFieldCollectionGetByTranslatedAuditID(ctx, change1.ID)
+		suite.NoError(err)
+		suite.NotNil(fields)
+		suite.Len(fields, change1FieldCount)
+
+		field := fields[0]
+		suite.Equal(change1.ID, field.TranslatedAuditID)
+		return nil
+
+	})
+	g.Go(func() error {
+		fields, err := TranslatedAuditFieldCollectionGetByTranslatedAuditID(ctx, change2.ID)
+		suite.NoError(err)
+		suite.NotNil(fields)
+		suite.Len(fields, change2FieldCount)
+		field := fields[0]
+		suite.Equal(change2.ID, field.TranslatedAuditID)
+		return nil
+	})
+	err2 := g.Wait()
+	suite.NoError(err2)
 
 }
