@@ -545,10 +545,13 @@ type TranslationField struct {
 	IsArray          *bool               `json:"isArray,omitempty"`
 	DataType         TranslationDataType `json:"dataType"`
 	FormType         TranslationFormType `json:"formType"`
+	IsNote           *bool               `json:"isNote,omitempty"`
 	// Is a question a followup to another that doesn't designate it's own readonly question/line
 	IsOtherType *bool `json:"isOtherType,omitempty"`
 	// Field name for the parent question for fields that represent Other, Please specify, etc.  Used in change history to render parent question for context
 	OtherParentField *string `json:"otherParentField,omitempty"`
+	// Label for fields that reference more than one parent - Ex: Notes - 'Note for Model Basics'
+	ParentReferencesLabel *string `json:"parentReferencesLabel,omitempty"`
 }
 
 // Represents a translation question with options
@@ -563,11 +566,14 @@ type TranslationFieldWithOptions struct {
 	IsArray          *bool               `json:"isArray,omitempty"`
 	DataType         TranslationDataType `json:"dataType"`
 	FormType         TranslationFormType `json:"formType"`
+	IsNote           *bool               `json:"isNote,omitempty"`
 	// Is a question a followup to another that doesn't designate it's own readonly question/line
 	IsOtherType *bool `json:"isOtherType,omitempty"`
 	// Field name for the parent question for fields that represent Other, Please specify, etc.  Used in change history to render parent question for context
-	OtherParentField *string                `json:"otherParentField,omitempty"`
-	Options          map[string]interface{} `json:"options"`
+	OtherParentField *string `json:"otherParentField,omitempty"`
+	// Label for fields that reference more than one parent - Ex: Notes - 'Note for Model Basics'
+	ParentReferencesLabel *string                `json:"parentReferencesLabel,omitempty"`
+	Options               map[string]interface{} `json:"options"`
 }
 
 // Represents a translation question with options and child/children
@@ -582,12 +588,15 @@ type TranslationFieldWithOptionsAndChildren struct {
 	IsArray          *bool               `json:"isArray,omitempty"`
 	DataType         TranslationDataType `json:"dataType"`
 	FormType         TranslationFormType `json:"formType"`
+	IsNote           *bool               `json:"isNote,omitempty"`
 	// Is a question a followup to another that doesn't designate it's own readonly question/line
 	IsOtherType *bool `json:"isOtherType,omitempty"`
 	// Field name for the parent question for fields that represent Other, Please specify, etc.  Used in change history to render parent question for context
-	OtherParentField *string                `json:"otherParentField,omitempty"`
-	Options          map[string]interface{} `json:"options"`
-	ChildRelation    map[string]interface{} `json:"childRelation"`
+	OtherParentField *string `json:"otherParentField,omitempty"`
+	// Label for fields that reference more than one parent - Ex: Notes - 'Note for Model Basics'
+	ParentReferencesLabel *string                `json:"parentReferencesLabel,omitempty"`
+	Options               map[string]interface{} `json:"options"`
+	ChildRelation         map[string]interface{} `json:"childRelation"`
 }
 
 // Represents a translation question with options and parent
@@ -602,12 +611,15 @@ type TranslationFieldWithOptionsAndParent struct {
 	IsArray          *bool               `json:"isArray,omitempty"`
 	DataType         TranslationDataType `json:"dataType"`
 	FormType         TranslationFormType `json:"formType"`
+	IsNote           *bool               `json:"isNote,omitempty"`
 	// Is a question a followup to another that doesn't designate it's own readonly question/line
 	IsOtherType *bool `json:"isOtherType,omitempty"`
 	// Field name for the parent question for fields that represent Other, Please specify, etc.  Used in change history to render parent question for context
-	OtherParentField *string                                 `json:"otherParentField,omitempty"`
-	Options          map[string]interface{}                  `json:"options"`
-	ParentRelation   *TranslationFieldWithOptionsAndChildren `json:"parentRelation"`
+	OtherParentField *string `json:"otherParentField,omitempty"`
+	// Label for fields that reference more than one parent - Ex: Notes - 'Note for Model Basics'
+	ParentReferencesLabel *string                                 `json:"parentReferencesLabel,omitempty"`
+	Options               map[string]interface{}                  `json:"options"`
+	ParentRelation        *TranslationFieldWithOptionsAndChildren `json:"parentRelation"`
 }
 
 // Represents a translation question with no options and a parent
@@ -622,11 +634,14 @@ type TranslationFieldWithParent struct {
 	IsArray          *bool               `json:"isArray,omitempty"`
 	DataType         TranslationDataType `json:"dataType"`
 	FormType         TranslationFormType `json:"formType"`
+	IsNote           *bool               `json:"isNote,omitempty"`
 	// Is a question a followup to another that doesn't designate it's own readonly question/line
 	IsOtherType *bool `json:"isOtherType,omitempty"`
 	// Field name for the parent question for fields that represent Other, Please specify, etc.  Used in change history to render parent question for context
-	OtherParentField *string           `json:"otherParentField,omitempty"`
-	ParentRelation   *TranslationField `json:"parentRelation"`
+	OtherParentField *string `json:"otherParentField,omitempty"`
+	// Label for fields that reference more than one parent - Ex: Notes - 'Note for Model Basics'
+	ParentReferencesLabel *string           `json:"parentReferencesLabel,omitempty"`
+	ParentRelation        *TranslationField `json:"parentRelation"`
 }
 
 // Represents a translation question with options and parent and children
@@ -641,13 +656,16 @@ type TranslationFieldWithParentAndChildren struct {
 	IsArray          *bool               `json:"isArray,omitempty"`
 	DataType         TranslationDataType `json:"dataType"`
 	FormType         TranslationFormType `json:"formType"`
+	IsNote           *bool               `json:"isNote,omitempty"`
 	// Is a question a followup to another that doesn't designate it's own readonly question/line
 	IsOtherType *bool `json:"isOtherType,omitempty"`
 	// Field name for the parent question for fields that represent Other, Please specify, etc.  Used in change history to render parent question for context
-	OtherParentField *string                                 `json:"otherParentField,omitempty"`
-	Options          map[string]interface{}                  `json:"options"`
-	ParentRelation   *TranslationFieldWithOptionsAndChildren `json:"parentRelation"`
-	ChildRelation    map[string]interface{}                  `json:"childRelation"`
+	OtherParentField *string `json:"otherParentField,omitempty"`
+	// Label for fields that reference more than one parent - Ex: Notes - 'Note for Model Basics'
+	ParentReferencesLabel *string                                 `json:"parentReferencesLabel,omitempty"`
+	Options               map[string]interface{}                  `json:"options"`
+	ParentRelation        *TranslationFieldWithOptionsAndChildren `json:"parentRelation"`
+	ChildRelation         map[string]interface{}                  `json:"childRelation"`
 }
 
 type UpdateOperationalSolutionSubtaskInput struct {

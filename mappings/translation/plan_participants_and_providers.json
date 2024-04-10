@@ -50,7 +50,9 @@
     "gqlField": "participantsNote",
     "goField": "ParticipantsNote",
     "dbField": "participants_note",
-    "label": "Notes"
+    "label": "Notes",
+    "isNote": true,
+    "otherParentField": "participants"
   },
   "participantsCurrentlyInModels": {
     "gqlField": "participantsCurrentlyInModels",
@@ -67,7 +69,9 @@
     "gqlField": "participantsCurrentlyInModelsNote",
     "goField": "ParticipantsCurrentlyInModelsNote",
     "dbField": "participants_currently_in_models_note",
-    "label": "Notes"
+    "label": "Notes",
+    "isNote": true,
+    "otherParentField": "participants_currently_in_models"
   },
   "modelApplicationLevel": {
     "gqlField": "modelApplicationLevel",
@@ -99,7 +103,9 @@
     "gqlField": "confidenceNote",
     "goField": "ConfidenceNote",
     "dbField": "confidence_note",
-    "label": "Notes"
+    "label": "Notes",
+    "isNote": true,
+    "otherParentField": "estimate_confidence"
   },
   "recruitmentMethod": {
     "gqlField": "recruitmentMethod",
@@ -129,13 +135,15 @@
     "gqlField": "recruitmentNote",
     "goField": "RecruitmentNote",
     "dbField": "recruitment_note",
-    "label": "Notes"
+    "label": "Notes",
+    "isNote": true,
+    "otherParentField": "recruitment_method"
   },
   "selectionMethod": {
     "gqlField": "selectionMethod",
     "goField": "SelectionMethod",
     "dbField": "selection_method",
-    "label": "How will you select participants? Select all that appy.",
+    "label": "How will you select participants? Select all that apply.",
     "readonlyLabel": "How will you select participants?",
     "multiSelectLabel": "Selected participants",
     "options": {
@@ -160,7 +168,9 @@
     "gqlField": "selectionNote",
     "goField": "SelectionNote",
     "dbField": "selection_note",
-    "label": "Notes"
+    "label": "Notes",
+    "isNote": true,
+    "otherParentField": "selection_method"
   },
   "participantAddedFrequency": {
     "gqlField": "participantAddedFrequency",
@@ -196,7 +206,9 @@
     "gqlField": "participantAddedFrequencyNote",
     "goField": "ParticipantAddedFrequencyNote",
     "dbField": "participant_added_frequency_note",
-    "label": "Notes"
+    "label": "Notes",
+    "isNote": true,
+    "otherParentField": "participant_added_frequency"
   },
   "participantRemovedFrequency": {
     "gqlField": "participantRemovedFrequency",
@@ -232,7 +244,9 @@
     "gqlField": "participantRemovedFrequencyNote",
     "goField": "ParticipantRemovedFrequencyNote",
     "dbField": "participant_removed_frequency_note",
-    "label": "Notes"
+    "label": "Notes",
+    "isNote": true,
+    "otherParentField": "participant_removed_frequency"
   },
   "communicationMethod": {
     "gqlField": "communicationMethod",
@@ -258,7 +272,9 @@
     "gqlField": "communicationNote",
     "goField": "CommunicationNote",
     "dbField": "communication_note",
-    "label": "Notes"
+    "label": "Notes",
+    "isNote": true,
+    "otherParentField": "communication_method"
   },
   "riskType": {
     "gqlField": "riskType",
@@ -285,7 +301,9 @@
     "gqlField": "riskNote",
     "goField": "RiskNote",
     "dbField": "risk_note",
-    "label": "Notes"
+    "label": "Notes",
+    "isNote": true,
+    "otherParentField": "risk_type"
   },
   "willRiskChange": {
     "gqlField": "willRiskChange",
@@ -301,7 +319,50 @@
     "gqlField": "willRiskChangeNote",
     "goField": "WillRiskChangeNote",
     "dbField": "will_risk_change_note",
-    "label": "Notes"
+    "label": "Notes",
+    "isNote": true,
+    "otherParentField": "will_risk_change"
+  },
+  "participantRequireFinancialGuarantee": {
+    "gqlField": "participantRequireFinancialGuarantee",
+    "goField": "ParticipantRequireFinancialGuarantee",
+    "dbField": "participant_require_financial_guarantee",
+    "label": "Are participants required to retain a financial guarantee?",
+    "sublabel": "Note: Remember to include financial guarantee requirements when drafting your Participation Agreement.",
+    "questionTooltip": "Financial guarantees are commitments made by one party, typically a financial institution or a company, to assume responsibility for the payment of a debt or the performance of an obligation if the debtor or obligor fails to fulfill their obligations.",
+    "readonlyLabel": "Are participants required to retain a financial guarantee? If so, are there any limitations on the type?",
+    "options": {
+      "true": "Yes",
+      "false": "No"
+    }
+  },
+  "participantRequireFinancialGuaranteeType": {
+    "gqlField": "participantRequireFinancialGuaranteeType",
+    "goField": "ParticipantRequireFinancialGuaranteeType",
+    "dbField": "participant_require_financial_guarantee_type",
+    "label": "If so, are there any limitations on the type?",
+    "options": {
+      "SURETY_BOND": "Surety Bond",
+      "LETTER_OF_CREDIT": "Letter of Credit",
+      "ESCROW": "Escrow",
+      "OTHER": "Other"
+    },
+    "isOtherType": true
+  },
+  "participantRequireFinancialGuaranteeOther": {
+    "gqlField": "participantRequireFinancialGuaranteeOther",
+    "goField": "ParticipantRequireFinancialGuaranteeOther",
+    "dbField": "participant_require_financial_guarantee_other",
+    "label": "Please specify",
+    "isOtherType": true
+  },
+  "participantRequireFinancialGuaranteeNote": {
+    "gqlField": "participantRequireFinancialGuaranteeNote",
+    "goField": "ParticipantRequireFinancialGuaranteeNote",
+    "dbField": "participant_require_financial_guarantee_note",
+    "label": "Notes",
+    "isNote": true,
+    "otherParentField": "participant_require_financial_guarantee_type"
   },
   "coordinateWork": {
     "gqlField": "coordinateWork",
@@ -318,7 +379,9 @@
     "gqlField": "coordinateWorkNote",
     "goField": "CoordinateWorkNote",
     "dbField": "coordinate_work_note",
-    "label": "Notes"
+    "label": "Notes",
+    "isNote": true,
+    "otherParentField": "coordinate_work"
   },
   "gainsharePayments": {
     "gqlField": "gainsharePayments",
@@ -410,7 +473,9 @@
     "gqlField": "gainsharePaymentsNote",
     "goField": "GainsharePaymentsNote",
     "dbField": "gainshare_payments_note",
-    "label": "Notes"
+    "label": "Notes",
+    "isNote": true,
+    "otherParentField": "gainshare_payments_eligibility"
   },
   "participantsIds": {
     "gqlField": "participantsIds",
@@ -439,7 +504,9 @@
     "gqlField": "participantsIDSNote",
     "goField": "ParticipantsIDSNote",
     "dbField": "participants_ids_note",
-    "label": "Notes"
+    "label": "Notes",
+    "isNote": true,
+    "otherParentField": "participants_ids"
   },
   "providerAdditionFrequency": {
     "gqlField": "providerAdditionFrequency",
@@ -475,7 +542,9 @@
     "gqlField": "providerAdditionFrequencyNote",
     "goField": "ProviderAdditionFrequencyNote",
     "dbField": "provider_addition_frequency_note",
-    "label": "Notes"
+    "label": "Notes",
+    "isNote": true,
+    "otherParentField": "provider_addition_frequency"
   },
   "providerAddMethod": {
     "gqlField": "providerAddMethod",
@@ -506,7 +575,9 @@
     "gqlField": "providerAddMethodNote",
     "goField": "ProviderAddMethodNote",
     "dbField": "provider_add_method_note",
-    "label": "Notes"
+    "label": "Notes",
+    "isNote": true,
+    "otherParentField": "provider_add_method"
   },
   "providerLeaveMethod": {
     "gqlField": "providerLeaveMethod",
@@ -536,7 +607,9 @@
     "gqlField": "providerLeaveMethodNote",
     "goField": "ProviderLeaveMethodNote",
     "dbField": "provider_leave_method_note",
-    "label": "Notes"
+    "label": "Notes",
+    "isNote": true,
+    "otherParentField": "provider_leave_method"
   },
   "providerRemovalFrequency": {
     "gqlField": "providerRemovalFrequency",
@@ -572,7 +645,9 @@
     "gqlField": "providerRemovalFrequencyNote",
     "goField": "ProviderRemovalFrequencyNote",
     "dbField": "provider_removal_frequency_note",
-    "label": "Notes"
+    "label": "Notes",
+    "isNote": true,
+    "otherParentField": "provider_removal_frequency"
   },
   "providerOverlap": {
     "gqlField": "providerOverlap",
@@ -624,7 +699,9 @@
     "gqlField": "providerOverlapNote",
     "goField": "ProviderOverlapNote",
     "dbField": "provider_overlap_note",
-    "label": "Notes"
+    "label": "Notes",
+    "isNote": true,
+    "otherParentField": "provider_overlap"
   },
   "status": {
     "gqlField": "status",

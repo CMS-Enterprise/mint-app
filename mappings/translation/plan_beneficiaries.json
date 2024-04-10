@@ -39,7 +39,9 @@
     "gqlField": "beneficiariesNote",
     "goField": "BeneficiariesNote",
     "dbField": "beneficiaries_note",
-    "label": "Notes"
+    "label": "Notes",
+    "isNote": true,
+    "otherParentField": "beneficiaries"
   },
   "treatDualElligibleDifferent": {
     "gqlField": "treatDualElligibleDifferent",
@@ -65,7 +67,9 @@
     "gqlField": "treatDualElligibleDifferentNote",
     "goField": "TreatDualElligibleDifferentNote",
     "dbField": "treat_dual_elligible_different_note",
-    "label": "Notes"
+    "label": "Notes",
+    "isNote": true,
+    "otherParentField": "treat_dual_elligible_different"
   },
   "excludeCertainCharacteristics": {
     "gqlField": "excludeCertainCharacteristics",
@@ -91,7 +95,9 @@
     "gqlField": "excludeCertainCharacteristicsNote",
     "goField": "ExcludeCertainCharacteristicsNote",
     "dbField": "exclude_certain_characteristics_note",
-    "label": "Notes"
+    "label": "Notes",
+    "isNote": true,
+    "otherParentField": "exclude_certain_characteristics"
   },
   "numberPeopleImpacted": {
     "gqlField": "numberPeopleImpacted",
@@ -115,7 +121,9 @@
     "gqlField": "confidenceNote",
     "goField": "ConfidenceNote",
     "dbField": "confidence_note",
-    "label": "Notes"
+    "label": "Notes",
+    "isNote": true,
+    "otherParentField": "number_people_impacted"
   },
   "beneficiarySelectionMethod": {
     "gqlField": "beneficiarySelectionMethod",
@@ -145,7 +153,9 @@
     "gqlField": "beneficiarySelectionNote",
     "goField": "BeneficiarySelectionNote",
     "dbField": "beneficiary_selection_note",
-    "label": "Notes"
+    "label": "Notes",
+    "isNote": true,
+    "otherParentField": "beneficiary_selection_method"
   },
   "beneficiarySelectionFrequency": {
     "gqlField": "beneficiarySelectionFrequency",
@@ -181,7 +191,9 @@
     "gqlField": "beneficiarySelectionFrequencyNote",
     "goField": "BeneficiarySelectionFrequencyNote",
     "dbField": "beneficiary_selection_frequency_note",
-    "label": "Notes"
+    "label": "Notes",
+    "isNote": true,
+    "otherParentField": "beneficiary_selection_frequency"
   },
   "beneficiaryRemovalFrequency": {
     "gqlField": "beneficiaryRemovalFrequency",
@@ -217,7 +229,9 @@
     "gqlField": "beneficiaryRemovalFrequencyNote",
     "goField": "BeneficiaryRemovalFrequencyNote",
     "dbField": "beneficiary_removal_frequency_note",
-    "label": "Notes"
+    "label": "Notes",
+    "isNote": true,
+    "otherParentField": "beneficiary_removal_frequency"
   },
   "beneficiaryOverlap": {
     "gqlField": "beneficiaryOverlap",
@@ -234,7 +248,9 @@
     "gqlField": "beneficiaryOverlapNote",
     "goField": "BeneficiaryOverlapNote",
     "dbField": "beneficiary_overlap_note",
-    "label": "Notes"
+    "label": "Notes",
+    "isNote": true,
+    "otherParentField": "beneficiary_overlap"
   },
   "precedenceRules": {
     "gqlField": "precedenceRules",
@@ -267,7 +283,9 @@
     "gqlField": "precedenceRulesNote",
     "goField": "PrecedenceRulesNote",
     "dbField": "precedence_rules_note",
-    "label": "Notes"
+    "label": "Notes",
+    "isNote": true,
+    "otherParentField": "precedence_rules"
   },
   "status": {
     "gqlField": "status",

@@ -92,6 +92,8 @@ export const payments: TranslationPayments = {
     goField: 'FundingSourceNote',
     dbField: 'funding_source_note',
     label: 'Notes',
+    isNote: true,
+    otherParentField: 'fundingSource',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
     filterGroups: [
@@ -184,6 +186,8 @@ export const payments: TranslationPayments = {
     goField: 'FundingSourceRNote',
     dbField: 'funding_source_r_note',
     label: 'Notes',
+    isNote: true,
+    otherParentField: 'fundingSourceR',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
     filterGroups: [
@@ -221,6 +225,8 @@ export const payments: TranslationPayments = {
     goField: 'PayRecipientsNote',
     dbField: 'pay_recipients_note',
     label: 'Notes',
+    isNote: true,
+    otherParentField: 'payRecipients',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA
   },
@@ -267,6 +273,8 @@ export const payments: TranslationPayments = {
     goField: 'PayTypeNote',
     dbField: 'pay_type_note',
     label: 'Notes',
+    isNote: true,
+    otherParentField: 'payType',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
     filterGroups: [ModelViewFilter.CMMI, ModelViewFilter.IPC]
@@ -331,6 +339,8 @@ export const payments: TranslationPayments = {
     goField: 'PayClaimsNote',
     dbField: 'pay_claims_note',
     label: 'Notes',
+    isNote: true,
+    otherParentField: 'payClaims',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
     filterGroups: [ModelViewFilter.CMMI, ModelViewFilter.OACT]
@@ -355,6 +365,8 @@ export const payments: TranslationPayments = {
     goField: 'ShouldAnyProviderExcludedFFSSystemsNote',
     dbField: 'should_any_providers_excluded_ffs_systems_note',
     label: 'Notes',
+    isNote: true,
+    otherParentField: 'shouldAnyProvidersExcludedFFSSystems',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
     filterGroups: [ModelViewFilter.IDDOC, ModelViewFilter.PBG]
@@ -380,6 +392,8 @@ export const payments: TranslationPayments = {
     goField: 'ChangesMedicarePhysicianFeeScheduleNote',
     dbField: 'changes_medicare_physician_fee_schedule_note',
     label: 'Notes',
+    isNote: true,
+    otherParentField: 'changesMedicarePhysicianFeeSchedule',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
     filterGroups: [ModelViewFilter.IDDOC, ModelViewFilter.PBG]
@@ -419,6 +433,8 @@ export const payments: TranslationPayments = {
     goField: 'AffectsMedicareSecondaryPayerClaimsNote',
     dbField: 'affects_medicare_secondary_payer_claims_note',
     label: 'Notes',
+    isNote: true,
+    otherParentField: 'affectsMedicareSecondaryPayerClaims',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
     filterGroups: [ModelViewFilter.IDDOC, ModelViewFilter.PBG]
@@ -455,6 +471,8 @@ export const payments: TranslationPayments = {
     goField: 'CreatingDependenciesBetweenServicesNote',
     dbField: 'creating_dependencies_between_services_note',
     label: 'Notes',
+    isNote: true,
+    otherParentField: 'creatingDependenciesBetweenServices',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
     filterGroups: [ModelViewFilter.IDDOC, ModelViewFilter.PBG]
@@ -480,6 +498,8 @@ export const payments: TranslationPayments = {
     goField: 'NeedsClaimsDataCollectionNote',
     dbField: 'needs_claims_data_collection_note',
     label: 'Notes',
+    isNote: true,
+    otherParentField: 'needsClaimsDataCollection',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
     filterGroups: [ModelViewFilter.IDDOC, ModelViewFilter.PBG]
@@ -593,6 +613,8 @@ export const payments: TranslationPayments = {
     goField: 'WaiveBeneficiaryCostSharingNote',
     dbField: 'waive_beneficiary_cost_sharing_note',
     label: 'Notes',
+    isNote: true,
+    parentReferencesLabel: 'Beneficiary cost-sharing questions',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
     filterGroups: [
@@ -654,6 +676,8 @@ export const payments: TranslationPayments = {
     goField: 'NonClaimsPaymentsNote',
     dbField: 'non_claims_payments_note',
     label: 'Notes',
+    isNote: true,
+    otherParentField: 'nonClaimsPayments',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
     filterGroups: [
@@ -688,6 +712,8 @@ export const payments: TranslationPayments = {
     goField: 'NumberPaymentsPerPayCycleNote',
     dbField: 'number_payments_per_pay_cycle_note',
     label: 'Notes',
+    isNote: true,
+    otherParentField: 'numberPaymentsPerPayCycle',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
     filterGroups: [ModelViewFilter.DFSDM, ModelViewFilter.IPC]
@@ -712,6 +738,8 @@ export const payments: TranslationPayments = {
     goField: 'SharedSystemsInvolvedAdditionalClaimPaymentNote',
     dbField: 'shared_systems_involved_additional_claim_payment_note',
     label: 'Notes',
+    isNote: true,
+    otherParentField: 'sharedSystemsInvolvedAdditionalClaimPayment',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
     filterGroups: [ModelViewFilter.CCW]
@@ -741,6 +769,8 @@ export const payments: TranslationPayments = {
     goField: 'PlanningToUseInnovationPaymentContractorNote',
     dbField: 'planning_to_use_innovation_payment_contractor_note',
     label: 'Notes',
+    isNote: true,
+    otherParentField: 'planningToUseInnovationPaymentContractor',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
     filterGroups: [
@@ -769,6 +799,8 @@ export const payments: TranslationPayments = {
     goField: 'ExpectedCalculationComplexityLevelNote',
     dbField: 'expected_calculation_complexity_level_note',
     label: 'Notes',
+    isNote: true,
+    otherParentField: 'expectedCalculationComplexityLevel',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA
   },
@@ -805,6 +837,8 @@ export const payments: TranslationPayments = {
     goField: 'ClaimsProcessingPrecedenceNote',
     dbField: 'claims_processing_precedence_note',
     label: 'Notes',
+    isNote: true,
+    otherParentField: 'claimsProcessingPrecedence',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXT
   },
@@ -843,6 +877,8 @@ export const payments: TranslationPayments = {
     goField: 'CanParticipantsSelectBetweenPaymentMechanismsNote',
     dbField: 'can_participants_select_between_payment_mechanisms_note',
     label: 'Notes',
+    isNote: true,
+    otherParentField: 'canParticipantsSelectBetweenPaymentMechanisms',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
     filterGroups: [ModelViewFilter.CMMI]
@@ -900,6 +936,8 @@ export const payments: TranslationPayments = {
     goField: 'AnticipatedPaymentFrequencyNote',
     dbField: 'anticipated_payment_frequency_note',
     label: 'Notes',
+    isNote: true,
+    otherParentField: 'anticipatedPaymentFrequency',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
     filterGroups: [
@@ -927,6 +965,8 @@ export const payments: TranslationPayments = {
     goField: 'WillRecoverPaymentsNote',
     dbField: 'will_recover_payments_note',
     label: 'Notes',
+    isNote: true,
+    otherParentField: 'willRecoverPayments',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
     filterGroups: [ModelViewFilter.CMMI, ModelViewFilter.IPC]
@@ -953,6 +993,8 @@ export const payments: TranslationPayments = {
     goField: 'AnticipateReconcilingPaymentsRetrospectivelyNote',
     dbField: 'anticipate_reconciling_payments_retrospectively_note',
     label: 'Notes',
+    isNote: true,
+    otherParentField: 'anticipateReconcilingPaymentsRetrospectively',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
     filterGroups: [
@@ -999,6 +1041,8 @@ export const payments: TranslationPayments = {
     goField: 'PaymentReconciliationFrequencyNote',
     dbField: 'payment_reconciliation_frequency_note',
     label: 'Notes',
+    isNote: true,
+    otherParentField: 'paymentReconciliationFrequency',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA
   },
@@ -1040,6 +1084,8 @@ export const payments: TranslationPayments = {
     goField: 'PaymentReconciliationFrequencyNote',
     dbField: 'payment_demand_recoupment_frequency_note',
     label: 'Notes',
+    isNote: true,
+    otherParentField: 'paymentDemandRecoupmentFrequency',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA
   },
@@ -1060,6 +1106,8 @@ export const payments: TranslationPayments = {
     goField: 'PaymentStartDateNote',
     dbField: 'payment_start_date_note',
     label: 'Notes',
+    isNote: true,
+    otherParentField: 'paymentStartDate',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA
   },

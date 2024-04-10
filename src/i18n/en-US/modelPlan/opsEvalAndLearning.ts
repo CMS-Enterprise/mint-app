@@ -47,6 +47,8 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     goField: 'StakeholdersNote',
     dbField: 'stakeholders_note',
     label: 'Notes',
+    isNote: true,
+    otherParentField: 'stakeholders',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
     filterGroups: [ModelViewFilter.CBOSC]
@@ -69,6 +71,8 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     goField: 'HelpdeskUseNote',
     dbField: 'helpdesk_use_note',
     label: 'Notes',
+    isNote: true,
+    otherParentField: 'helpdeskUse',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
     filterGroups: [ModelViewFilter.CBOSC]
@@ -136,6 +140,8 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     goField: 'ContractorSupportNote',
     dbField: 'contractor_support_note',
     label: 'Notes',
+    isNote: true,
+    otherParentField: 'contractorSupport',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
     filterGroups: [
@@ -186,6 +192,8 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     goField: 'IddocSupportNote',
     dbField: 'iddoc_support_note',
     label: 'Notes',
+    isNote: true,
+    otherParentField: 'iddocSupport',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
     filterGroups: [ModelViewFilter.IDDOC]
@@ -223,6 +231,8 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     goField: 'TechnicalContactsIdentifiedNote',
     dbField: 'technical_contacts_identified_note',
     label: 'Notes',
+    isNote: true,
+    otherParentField: 'technicalContactsIdentified',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
     filterGroups: [ModelViewFilter.IDDOC]
@@ -248,6 +258,8 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     goField: 'CaptureParticipantInfoNote',
     dbField: 'capture_participant_info_note',
     label: 'Notes',
+    isNote: true,
+    otherParentField: 'captureParticipantInfo',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
     filterGroups: [ModelViewFilter.IDDOC]
@@ -279,6 +291,8 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     goField: 'IcdNote',
     dbField: 'icd_note',
     label: 'Notes',
+    isNote: true,
+    parentReferencesLabel: 'Interface Control Document (IDC) questions',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
     parentRelation: () => opsEvalAndLearning.iddocSupport,
@@ -321,6 +335,8 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     goField: 'TestingNote',
     dbField: 'testing_note',
     label: 'Notes',
+    isNote: true,
+    parentReferencesLabel: 'Testing questions',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
     filterGroups: [ModelViewFilter.IDDOC]
@@ -466,6 +482,8 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     goField: 'DataMonitoringNote',
     dbField: 'data_monitoring_note',
     label: 'Notes',
+    isNote: true,
+    parentReferencesLabel: 'Data monitoring questions',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
     filterGroups: [ModelViewFilter.IDDOC]
@@ -491,6 +509,8 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     goField: 'BenchmarkForPerformanceNote',
     dbField: 'benchmark_for_performance_note',
     label: 'Notes',
+    isNote: true,
+    otherParentField: 'benchmarkForPerformance',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
     filterGroups: [ModelViewFilter.CMMI]
@@ -513,6 +533,8 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     goField: 'ComputePerformanceScoresNote',
     dbField: 'compute_performance_scores_note',
     label: 'Notes',
+    isNote: true,
+    otherParentField: 'computePerformanceScores',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
     filterGroups: [ModelViewFilter.CMMI]
@@ -592,6 +614,8 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     goField: 'RiskAdjustNote',
     dbField: 'risk_adjust_note',
     label: 'Notes',
+    isNote: true,
+    parentReferencesLabel: 'Risk adjustment questions',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA
   },
@@ -668,6 +692,8 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     goField: 'AppealNote',
     dbField: 'appeal_note',
     label: 'Notes',
+    isNote: true,
+    parentReferencesLabel: 'Participant appeal questions',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA
   },
@@ -707,6 +733,8 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     goField: 'EvalutaionApproachNote',
     dbField: 'evalutaion_approach_note',
     label: 'Notes',
+    isNote: true,
+    otherParentField: 'evaluationApproaches',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA
   },
@@ -759,6 +787,8 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     goField: 'CcmInvolvmentNote',
     dbField: 'ccm_involvment_note',
     label: 'Notes',
+    isNote: true,
+    otherParentField: 'ccmInvolvment',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
     filterGroups: [ModelViewFilter.CCW]
@@ -819,6 +849,8 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     goField: 'DataNeededForMonitoringNote',
     dbField: 'data_needed_for_monitoring_note',
     label: 'Notes',
+    isNote: true,
+    otherParentField: 'dataNeededForMonitoring',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
     filterGroups: [ModelViewFilter.CMMI, ModelViewFilter.IDDOC]
@@ -861,6 +893,8 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     goField: 'DataToSendParticicipantsNote',
     dbField: 'data_to_send_particicipants_note',
     label: 'Notes',
+    isNote: true,
+    otherParentField: 'dataToSendParticicipants',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
     filterGroups: [ModelViewFilter.CMMI]
@@ -884,6 +918,8 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     goField: 'ShareCclfDataNote',
     dbField: 'share_cclf_data_note',
     label: 'Notes',
+    isNote: true,
+    otherParentField: 'shareCclfData',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
     filterGroups: [ModelViewFilter.CMMI]
@@ -908,6 +944,8 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     goField: 'SendFilesBetweenCcwNote',
     dbField: 'send_files_between_ccw_note',
     label: 'Notes',
+    isNote: true,
+    otherParentField: 'sendFilesBetweenCcw',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
     filterGroups: [ModelViewFilter.CCW]
@@ -948,6 +986,8 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     goField: 'AppToSendFilesToNote',
     dbField: 'app_to_send_files_to_note',
     label: 'Notes',
+    isNote: true,
+    otherParentField: 'appToSendFilesToKnown',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
     filterGroups: [ModelViewFilter.CCW]
@@ -972,6 +1012,8 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     goField: 'UseCcwForFileDistribiutionToParticipantsNote',
     dbField: 'use_ccw_for_file_distribiution_to_participants_note',
     label: 'Notes',
+    isNote: true,
+    otherParentField: 'useCcwForFileDistribiutionToParticipants',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
     filterGroups: [ModelViewFilter.CCW]
@@ -996,6 +1038,8 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     goField: 'DevelopNewQualityMeasuresNote',
     dbField: 'develop_new_quality_measures_note',
     label: 'Notes',
+    isNote: true,
+    otherParentField: 'developNewQualityMeasures',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
     filterGroups: [ModelViewFilter.CMMI]
@@ -1034,6 +1078,8 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     goField: 'QualityPerformanceImpactsPaymentNote',
     dbField: 'quality_performance_impacts_payment_note',
     label: 'Notes',
+    isNote: true,
+    otherParentField: 'qualityPerformanceImpactsPayment',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXT,
     filterGroups: [ModelViewFilter.CMMI]
@@ -1119,6 +1165,8 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     goField: 'DataSharingStartsNote',
     dbField: 'data_sharing_starts_note',
     label: 'Notes',
+    isNote: true,
+    parentReferencesLabel: 'Data sharing timing and frequency questions',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
     filterGroups: [ModelViewFilter.CMMI, ModelViewFilter.IDDOC]
@@ -1199,6 +1247,8 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     goField: 'DataCollectionFrequencyNote',
     dbField: 'data_collection_frequency_note',
     label: 'Notes',
+    isNote: true,
+    parentReferencesLabel: 'Data collection timing and frequency questions',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
     filterGroups: [ModelViewFilter.CMMI]
@@ -1241,6 +1291,8 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     goField: 'QualityReportingStartsNote',
     dbField: 'quality_reporting_starts_note',
     label: 'Notes',
+    isNote: true,
+    parentReferencesLabel: 'Quality reporting timing and frequency questions',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA
   },
@@ -1314,6 +1366,8 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     goField: 'ModelLearningSystemsNote',
     dbField: 'model_learning_systems_note',
     label: 'Notes',
+    isNote: true,
+    otherParentField: 'modelLearningSystems',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA
   },

@@ -26,7 +26,9 @@
     "gqlField": "stakeholdersNote",
     "goField": "StakeholdersNote",
     "dbField": "stakeholders_note",
-    "label": "Notes"
+    "label": "Notes",
+    "isNote": true,
+    "otherParentField": "stakeholders"
   },
   "helpdeskUse": {
     "gqlField": "helpdeskUse",
@@ -42,7 +44,9 @@
     "gqlField": "helpdeskUseNote",
     "goField": "HelpdeskUseNote",
     "dbField": "helpdesk_use_note",
-    "label": "Notes"
+    "label": "Notes",
+    "isNote": true,
+    "otherParentField": "helpdesk_use"
   },
   "contractorSupport": {
     "gqlField": "contractorSupport",
@@ -116,7 +120,9 @@
     "gqlField": "contractorSupportNote",
     "goField": "ContractorSupportNote",
     "dbField": "contractor_support_note",
-    "label": "Notes"
+    "label": "Notes",
+    "isNote": true,
+    "otherParentField": "contractor_support"
   },
   "iddocSupport": {
     "gqlField": "iddocSupport",
@@ -271,7 +277,9 @@
     "gqlField": "iddocSupportNote",
     "goField": "IddocSupportNote",
     "dbField": "iddoc_support_note",
-    "label": "Notes"
+    "label": "Notes",
+    "isNote": true,
+    "otherParentField": "iddoc_support"
   },
   "technicalContactsIdentified": {
     "gqlField": "technicalContactsIdentified",
@@ -306,7 +314,9 @@
     "gqlField": "technicalContactsIdentifiedNote",
     "goField": "TechnicalContactsIdentifiedNote",
     "dbField": "technical_contacts_identified_note",
-    "label": "Notes"
+    "label": "Notes",
+    "isNote": true,
+    "otherParentField": "technical_contacts_identified"
   },
   "captureParticipantInfo": {
     "gqlField": "captureParticipantInfo",
@@ -334,7 +344,9 @@
     "gqlField": "captureParticipantInfoNote",
     "goField": "CaptureParticipantInfoNote",
     "dbField": "capture_participant_info_note",
-    "label": "Notes"
+    "label": "Notes",
+    "isNote": true,
+    "otherParentField": "capture_participant_info"
   },
   "icdOwner": {
     "gqlField": "icdOwner",
@@ -375,6 +387,8 @@
     "goField": "IcdNote",
     "dbField": "icd_note",
     "label": "Notes",
+    "isNote": true,
+    "parentReferencesLabel": "Interface Control Document (IDC) questions",
     "parentRelation": {
       "gqlField": "iddocSupport",
       "goField": "IddocSupport",
@@ -442,7 +456,9 @@
     "gqlField": "testingNote",
     "goField": "TestingNote",
     "dbField": "testing_note",
-    "label": "Notes"
+    "label": "Notes",
+    "isNote": true,
+    "parentReferencesLabel": "Testing questions"
   },
   "dataMonitoringFileTypes": {
     "gqlField": "dataMonitoringFileTypes",
@@ -638,7 +654,9 @@
     "gqlField": "dataMonitoringNote",
     "goField": "DataMonitoringNote",
     "dbField": "data_monitoring_note",
-    "label": "Notes"
+    "label": "Notes",
+    "isNote": true,
+    "parentReferencesLabel": "Data monitoring questions"
   },
   "benchmarkForPerformance": {
     "gqlField": "benchmarkForPerformance",
@@ -655,7 +673,9 @@
     "gqlField": "benchmarkForPerformanceNote",
     "goField": "BenchmarkForPerformanceNote",
     "dbField": "benchmark_for_performance_note",
-    "label": "Notes"
+    "label": "Notes",
+    "isNote": true,
+    "otherParentField": "benchmark_for_performance"
   },
   "computePerformanceScores": {
     "gqlField": "computePerformanceScores",
@@ -671,7 +691,9 @@
     "gqlField": "computePerformanceScoresNote",
     "goField": "ComputePerformanceScoresNote",
     "dbField": "compute_performance_scores_note",
-    "label": "Notes"
+    "label": "Notes",
+    "isNote": true,
+    "otherParentField": "compute_performance_scores"
   },
   "riskAdjustPerformance": {
     "gqlField": "riskAdjustPerformance",
@@ -721,7 +743,9 @@
     "gqlField": "riskAdjustNote",
     "goField": "RiskAdjustNote",
     "dbField": "risk_adjust_note",
-    "label": "Notes"
+    "label": "Notes",
+    "isNote": true,
+    "parentReferencesLabel": "Risk adjustment questions"
   },
   "appealPerformance": {
     "gqlField": "appealPerformance",
@@ -771,7 +795,9 @@
     "gqlField": "appealNote",
     "goField": "AppealNote",
     "dbField": "appeal_note",
-    "label": "Notes"
+    "label": "Notes",
+    "isNote": true,
+    "parentReferencesLabel": "Participant appeal questions"
   },
   "evaluationApproaches": {
     "gqlField": "evaluationApproaches",
@@ -798,7 +824,9 @@
     "gqlField": "evalutaionApproachNote",
     "goField": "EvalutaionApproachNote",
     "dbField": "evalutaion_approach_note",
-    "label": "Notes"
+    "label": "Notes",
+    "isNote": true,
+    "otherParentField": "evaluation_approaches"
   },
   "ccmInvolvment": {
     "gqlField": "ccmInvolvment",
@@ -893,7 +921,9 @@
     "gqlField": "ccmInvolvmentNote",
     "goField": "CcmInvolvmentNote",
     "dbField": "ccm_involvment_note",
-    "label": "Notes"
+    "label": "Notes",
+    "isNote": true,
+    "otherParentField": "ccm_involvment"
   },
   "dataNeededForMonitoring": {
     "gqlField": "dataNeededForMonitoring",
@@ -977,7 +1007,9 @@
     "gqlField": "dataNeededForMonitoringNote",
     "goField": "DataNeededForMonitoringNote",
     "dbField": "data_needed_for_monitoring_note",
-    "label": "Notes"
+    "label": "Notes",
+    "isNote": true,
+    "otherParentField": "data_needed_for_monitoring"
   },
   "dataToSendParticicipants": {
     "gqlField": "dataToSendParticicipants",
@@ -1007,7 +1039,9 @@
     "gqlField": "dataToSendParticicipantsNote",
     "goField": "DataToSendParticicipantsNote",
     "dbField": "data_to_send_particicipants_note",
-    "label": "Notes"
+    "label": "Notes",
+    "isNote": true,
+    "otherParentField": "data_to_send_particicipants"
   },
   "shareCclfData": {
     "gqlField": "shareCclfData",
@@ -1023,7 +1057,9 @@
     "gqlField": "shareCclfDataNote",
     "goField": "ShareCclfDataNote",
     "dbField": "share_cclf_data_note",
-    "label": "Notes"
+    "label": "Notes",
+    "isNote": true,
+    "otherParentField": "share_cclf_data"
   },
   "sendFilesBetweenCcw": {
     "gqlField": "sendFilesBetweenCcw",
@@ -1052,7 +1088,9 @@
     "gqlField": "sendFilesBetweenCcwNote",
     "goField": "SendFilesBetweenCcwNote",
     "dbField": "send_files_between_ccw_note",
-    "label": "Notes"
+    "label": "Notes",
+    "isNote": true,
+    "otherParentField": "send_files_between_ccw"
   },
   "appToSendFilesToKnown": {
     "gqlField": "appToSendFilesToKnown",
@@ -1090,7 +1128,9 @@
     "gqlField": "appToSendFilesToNote",
     "goField": "AppToSendFilesToNote",
     "dbField": "app_to_send_files_to_note",
-    "label": "Notes"
+    "label": "Notes",
+    "isNote": true,
+    "otherParentField": "app_to_send_files_to_known"
   },
   "useCcwForFileDistribiutionToParticipants": {
     "gqlField": "useCcwForFileDistribiutionToParticipants",
@@ -1119,7 +1159,9 @@
     "gqlField": "useCcwForFileDistribiutionToParticipantsNote",
     "goField": "UseCcwForFileDistribiutionToParticipantsNote",
     "dbField": "use_ccw_for_file_distribiution_to_participants_note",
-    "label": "Notes"
+    "label": "Notes",
+    "isNote": true,
+    "otherParentField": "use_ccw_for_file_distribiution_to_participants"
   },
   "developNewQualityMeasures": {
     "gqlField": "developNewQualityMeasures",
@@ -1158,7 +1200,9 @@
     "gqlField": "developNewQualityMeasuresNote",
     "goField": "DevelopNewQualityMeasuresNote",
     "dbField": "develop_new_quality_measures_note",
-    "label": "Notes"
+    "label": "Notes",
+    "isNote": true,
+    "otherParentField": "develop_new_quality_measures"
   },
   "qualityPerformanceImpactsPayment": {
     "gqlField": "qualityPerformanceImpactsPayment",
@@ -1206,7 +1250,9 @@
     "gqlField": "qualityPerformanceImpactsPaymentNote",
     "goField": "QualityPerformanceImpactsPaymentNote",
     "dbField": "quality_performance_impacts_payment_note",
-    "label": "Notes"
+    "label": "Notes",
+    "isNote": true,
+    "otherParentField": "quality_performance_impacts_payment"
   },
   "dataSharingStarts": {
     "gqlField": "dataSharingStarts",
@@ -1267,7 +1313,9 @@
     "gqlField": "dataSharingStartsNote",
     "goField": "DataSharingStartsNote",
     "dbField": "data_sharing_starts_note",
-    "label": "Notes"
+    "label": "Notes",
+    "isNote": true,
+    "parentReferencesLabel": "Data sharing timing and frequency questions"
   },
   "dataCollectionStarts": {
     "gqlField": "dataCollectionStarts",
@@ -1327,7 +1375,9 @@
     "gqlField": "dataCollectionFrequencyNote",
     "goField": "DataCollectionFrequencyNote",
     "dbField": "data_collection_frequency_note",
-    "label": "Notes"
+    "label": "Notes",
+    "isNote": true,
+    "parentReferencesLabel": "Data collection timing and frequency questions"
   },
   "qualityReportingStarts": {
     "gqlField": "qualityReportingStarts",
@@ -1357,7 +1407,9 @@
     "gqlField": "qualityReportingStartsNote",
     "goField": "QualityReportingStartsNote",
     "dbField": "quality_reporting_starts_note",
-    "label": "Notes"
+    "label": "Notes",
+    "isNote": true,
+    "parentReferencesLabel": "Quality reporting timing and frequency questions"
   },
   "qualityReportingFrequency": {
     "gqlField": "qualityReportingFrequency",
@@ -1415,7 +1467,9 @@
     "gqlField": "modelLearningSystemsNote",
     "goField": "ModelLearningSystemsNote",
     "dbField": "model_learning_systems_note",
-    "label": "Notes"
+    "label": "Notes",
+    "isNote": true,
+    "otherParentField": "model_learning_systems"
   },
   "anticipatedChallenges": {
     "gqlField": "anticipatedChallenges",

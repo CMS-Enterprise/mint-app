@@ -156,7 +156,9 @@ describe('exportTranslation Util', () => {
         gqlField: 'note',
         goField: 'Note',
         dbField: 'note',
-        label: 'Notes'
+        label: 'Notes',
+        isNote: true,
+        parentReferencesLabel: 'Model basics'
       },
       completeICIP: {
         gqlField: 'completeICIP',
@@ -210,7 +212,9 @@ describe('exportTranslation Util', () => {
         gqlField: 'highLevelNote',
         goField: 'HighLevelNote',
         dbField: 'high_level_note',
-        label: 'Notes'
+        label: 'Notes',
+        isNote: true,
+        parentReferencesLabel: 'Timeline'
       },
       wrapUpEnds: {
         gqlField: 'wrapUpEnds',
@@ -235,7 +239,9 @@ describe('exportTranslation Util', () => {
         gqlField: 'phasedInNote',
         goField: 'PhasedInNote',
         dbField: 'phased_in_note',
-        label: 'Notes'
+        label: 'Notes',
+        isNote: true,
+        otherParentField: 'phased_in'
       },
       status: {
         gqlField: 'status',

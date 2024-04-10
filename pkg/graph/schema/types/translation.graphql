@@ -44,6 +44,7 @@ type TranslationField {
   isArray: Boolean
   dataType: TranslationDataType!
   formType: TranslationFormType!
+  isNote: Boolean
   """
   Is a question a followup to another that doesn't designate it's own readonly question/line
   """
@@ -52,6 +53,10 @@ type TranslationField {
   Field name for the parent question for fields that represent Other, Please specify, etc.  Used in change history to render parent question for context
   """
   otherParentField: String
+  """
+  Label for fields that reference more than one parent - Ex: Notes - 'Note for Model Basics'
+  """
+  parentReferencesLabel: String
 }
 
 """
@@ -68,6 +73,7 @@ type TranslationFieldWithOptions {
   isArray: Boolean
   dataType: TranslationDataType!
   formType: TranslationFormType!
+  isNote: Boolean
   """
   Is a question a followup to another that doesn't designate it's own readonly question/line
   """
@@ -76,6 +82,10 @@ type TranslationFieldWithOptions {
   Field name for the parent question for fields that represent Other, Please specify, etc.  Used in change history to render parent question for context
   """
   otherParentField: String
+  """
+  Label for fields that reference more than one parent - Ex: Notes - 'Note for Model Basics'
+  """
+  parentReferencesLabel: String
   options: Map!
 }
 
@@ -93,6 +103,7 @@ type TranslationFieldWithParent {
   isArray: Boolean
   dataType: TranslationDataType!
   formType: TranslationFormType!
+  isNote: Boolean
   """
   Is a question a followup to another that doesn't designate it's own readonly question/line
   """
@@ -101,6 +112,10 @@ type TranslationFieldWithParent {
   Field name for the parent question for fields that represent Other, Please specify, etc.  Used in change history to render parent question for context
   """
   otherParentField: String
+  """
+  Label for fields that reference more than one parent - Ex: Notes - 'Note for Model Basics'
+  """
+  parentReferencesLabel: String
   parentRelation: TranslationField!
 }
 
@@ -118,6 +133,7 @@ type TranslationFieldWithOptionsAndChildren {
   isArray: Boolean
   dataType: TranslationDataType!
   formType: TranslationFormType!
+  isNote: Boolean
   """
   Is a question a followup to another that doesn't designate it's own readonly question/line
   """
@@ -126,6 +142,10 @@ type TranslationFieldWithOptionsAndChildren {
   Field name for the parent question for fields that represent Other, Please specify, etc.  Used in change history to render parent question for context
   """
   otherParentField: String
+  """
+  Label for fields that reference more than one parent - Ex: Notes - 'Note for Model Basics'
+  """
+  parentReferencesLabel: String
   options: Map!
   childRelation: Map!
 }
@@ -144,6 +164,7 @@ type TranslationFieldWithOptionsAndParent {
   isArray: Boolean
   dataType: TranslationDataType!
   formType: TranslationFormType!
+  isNote: Boolean
   """
   Is a question a followup to another that doesn't designate it's own readonly question/line
   """
@@ -152,6 +173,10 @@ type TranslationFieldWithOptionsAndParent {
   Field name for the parent question for fields that represent Other, Please specify, etc.  Used in change history to render parent question for context
   """
   otherParentField: String
+  """
+  Label for fields that reference more than one parent - Ex: Notes - 'Note for Model Basics'
+  """
+  parentReferencesLabel: String
   options: Map!
   parentRelation: TranslationFieldWithOptionsAndChildren!
 }
@@ -170,6 +195,7 @@ type TranslationFieldWithParentAndChildren {
   isArray: Boolean
   dataType: TranslationDataType!
   formType: TranslationFormType!
+  isNote: Boolean
   """
   Is a question a followup to another that doesn't designate it's own readonly question/line
   """
@@ -178,6 +204,10 @@ type TranslationFieldWithParentAndChildren {
   Field name for the parent question for fields that represent Other, Please specify, etc.  Used in change history to render parent question for context
   """
   otherParentField: String
+  """
+  Label for fields that reference more than one parent - Ex: Notes - 'Note for Model Basics'
+  """
+  parentReferencesLabel: String
   options: Map!
   parentRelation: TranslationFieldWithOptionsAndChildren!
   childRelation: Map!
