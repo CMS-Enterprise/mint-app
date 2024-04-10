@@ -2298,6 +2298,51 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "Translated Audit",
+			"item": [
+				{
+					"name": "TranslatedAuditCollectionGET NORMALIZED",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query translatedAuditCollection {\n  translatedAuditCollection(modelPlanID: \"{{modelPlanID}}\") {\n    id\n    modelName\n    tableID\n    tableName\n    primaryKey\n    date\n    action\n\n    translatedFields {\n        id\n\n        changeType\n        fieldName\n        fieldNameTranslated\n        old\n        oldTranslated\n        new\n        newTranslated\n\n        metaData {\n        ... on TranslatedAuditFieldMetaBaseStruct{\n            version\n        }\n        }\n\n    }\n\n    actorID\n    actorName\n\n    changeID\n    metaData {\n    ... on TranslatedAuditMetaBaseStruct{\n            version\n            tableName\n        }\n    }\n\n    createdBy\n    # createdByUserAccount\n    createdDts\n    modifiedBy\n    # modifiedByUserAccount\n    modifiedDts\n  }\n}\n",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8085/api/graph/query",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8085",
+							"path": [
+								"api",
+								"graph",
+								"query"
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		}
 	],
 	"auth": {
