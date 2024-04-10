@@ -70,7 +70,7 @@ const PlanDocumentsTable = ({
   setLinkedDocs,
   className
 }: PlanDocumentsTableProps) => {
-  const { t } = useTranslation('documents');
+  const { t } = useTranslation('documentsMisc');
   const { error, loading, data, refetch: refetchDocuments } = useQuery<
     GetModelPlanDocumentsType,
     GetModelPlanDocumentsVariables
@@ -164,7 +164,7 @@ export const Table = ({
   handleDocumentUnlink,
   hasEditAccess
 }: TableProps) => {
-  const { t } = useTranslation('documents');
+  const { t } = useTranslation('documentsMisc');
   const [isModalOpen, setModalOpen] = useState(false);
   const [isExternalLinkModalOpen, setExternalLinkModalOpen] = useState(false);
   const [externalLinkUrl, setExternalLinkUrl] = useState('');

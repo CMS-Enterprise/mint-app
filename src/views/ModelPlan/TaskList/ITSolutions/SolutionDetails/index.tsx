@@ -48,7 +48,7 @@ const SolutionDetails = () => {
 
   const { t } = useTranslation('itSolutions');
   const { t: h } = useTranslation('draftModelPlan');
-  const { t: documentsT } = useTranslation('documents');
+  const { t: documentsT } = useTranslation('documentsMisc');
 
   const isDesktop = useCheckResponsiveScreen('tablet', 'larger');
 

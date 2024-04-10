@@ -1,18 +1,13 @@
 import { TranslationOperationalNeeds } from 'types/translation';
 
-import {
-  TranslationDataType,
-  TranslationFormType
-} from '../../../gql/gen/graphql';
-
-export const operationalNeeds: TranslationOperationalNeeds = {
+const operationalNeeds: TranslationOperationalNeeds = {
   name: {
     gqlField: 'name',
     goField: 'Name',
     dbField: 'name',
     label: 'Operational need',
-    dataType: TranslationDataType.STRING,
-    formType: TranslationFormType.TEXT
+    dataType: 'string',
+    formType: 'text'
   },
   nameOther: {
     gqlField: 'nameOther',
@@ -20,16 +15,16 @@ export const operationalNeeds: TranslationOperationalNeeds = {
     dbField: 'name_other',
     label: 'What operational need are you solving?',
     readonlyLabel: 'Operational need',
-    dataType: TranslationDataType.STRING,
-    formType: TranslationFormType.TEXT
+    dataType: 'string',
+    formType: 'text'
   },
   key: {
     gqlField: 'key',
     goField: 'Key',
     dbField: 'key',
     label: '',
-    dataType: TranslationDataType.ENUM,
-    formType: TranslationFormType.CHECKBOX,
+    dataType: 'enum',
+    formType: 'checkbox',
     options: {
       MANAGE_CD: 'Manage Part C/D enrollment',
       REV_COL_BIDS: 'Review and collect plan bids',
@@ -71,32 +66,13 @@ export const operationalNeeds: TranslationOperationalNeeds = {
     goField: 'Needed',
     dbField: 'needed',
     label: '',
-    readonlyLabel: 'Operational deed',
-    dataType: TranslationDataType.BOOLEAN,
-    formType: TranslationFormType.CHECKBOX,
+    dataType: 'boolean',
+    formType: 'checkbox',
     options: {
       true: 'Needed',
       false: 'Not needed'
     }
   }
-};
-
-export const operationalNeedsMisc: Record<string, string> = {
-  heading: 'Model name',
-  modelID: 'Model ID',
-  createdBy: 'Created by',
-  createdAt: 'Created at',
-  readyForReviewBy: 'Ready for review by',
-  readyForReviewAt: 'Ready for review at',
-  breadcrumb: 'Start a new Model Plan',
-  modeName: 'What is the name of your model?',
-  modelNameInfo:
-    'This is not a permanent name. If needed, you may update it later.',
-  headingStatus: 'Update status',
-  copy:
-    'After you’ve iterated on your Model Plan, update the status so others know what stage it’s at in the design and clearance process.',
-  updateButton: 'Update status',
-  return: 'Don’t update status and return to task list'
 };
 
 export default operationalNeeds;

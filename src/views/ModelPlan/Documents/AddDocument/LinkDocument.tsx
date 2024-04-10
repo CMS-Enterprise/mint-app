@@ -35,7 +35,7 @@ const LinkDocument = ({
 }) => {
   const { modelID } = useParams<{ modelID: string }>();
   const history = useHistory();
-  const { t } = useTranslation('documents');
+  const { t } = useTranslation('documentsMisc');
   const { t: h } = useTranslation('draftModelPlan');
 
   const { showMessageOnNextPage } = useMessage();

@@ -1,6 +1,6 @@
 import crtdl from './draftModelPlan/crtdl';
 import discussions from './draftModelPlan/discussions';
-import documents from './draftModelPlan/documents';
+import documentsOLD from './draftModelPlan/documents';
 import draftModelPlan from './draftModelPlan/draftModelPlan';
 import itSolutions from './draftModelPlan/itSolutions';
 import prepareForClearance from './draftModelPlan/prepareForClearance';
@@ -19,12 +19,17 @@ import helpAndKnowledge from './helpAndKnowledge/helpAndKnowledge';
 import { basics, basicsMisc } from './modelPlan/basics';
 import { beneficiaries, beneficiariesMisc } from './modelPlan/beneficiaries';
 import { collaborators, collaboratorsMisc } from './modelPlan/collaborators';
+import { documents, documentsMisc } from './modelPlan/documents';
 import {
   generalCharacteristics,
   generalCharacteristicsMisc
 } from './modelPlan/generalCharacteristics';
 import miscellaneous from './modelPlan/miscellaneous';
 import { modelPlan, modelPlanMisc } from './modelPlan/modelPlan';
+import operationalNeeds from './modelPlan/operationalNeeds';
+import operationalSolutions from './modelPlan/operationalSolutions';
+import operationalSolutionsMiscellaneous from './modelPlan/operationalSolutionsMiscellaneous';
+import operationalSolutionSubtasks from './modelPlan/operationalSolutionSubtasks';
 import {
   opsEvalAndLearning,
   opsEvalAndLearningMisc
@@ -63,7 +68,7 @@ const enUS = {
   cookies,
   crtdl,
   discussions,
-  documents,
+  documentsOLD,
   draftModelPlan,
   error,
   filterView,
@@ -97,6 +102,12 @@ const enUS = {
   opsEvalAndLearningMisc,
   payments,
   paymentsMisc,
+  operationalNeeds,
+  operationalSolutions,
+  operationalSolutionSubtasks,
+  operationalSolutionsMiscellaneous,
+  documents,
+  documentsMisc,
   collaborators,
   collaboratorsMisc,
   miscellaneous,

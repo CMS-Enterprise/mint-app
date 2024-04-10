@@ -72,32 +72,6 @@ export const translateOpNeedsStatusType = (type: string) => {
   }
 };
 
-/**
- * Translate the document type API enum to a human readable string
- */
-
-// TODO import gql gen document type
-export const translateDocumentType = (documentType: DocumentType) => {
-  switch (documentType) {
-    case 'CONCEPT_PAPER':
-      return i18next.t('documents:documentTypes.concept');
-    case 'DESIGN_PARAMETERS_MEMO':
-      return i18next.t('documents:documentTypes.designParamMemo');
-    case 'POLICY_PAPER':
-      return i18next.t('documents:documentTypes.policy');
-    case 'ICIP_DRAFT':
-      return i18next.t('documents:documentTypes.icipDraft');
-    case 'MARKET_RESEARCH':
-      return i18next.t('documents:documentTypes.marketResearch');
-    case 'OFFICE_OF_THE_ADMINISTRATOR_PRESENTATION':
-      return i18next.t('documents:documentTypes.adminOfficePresentation');
-    case 'OTHER':
-      return i18next.t('documents:documentTypes.other');
-    default:
-      return '';
-  }
-};
-
 // Sorts discussions by the most recent reply
 export const sortRepliesByDate = (
   discussionA: DiscussionType,
