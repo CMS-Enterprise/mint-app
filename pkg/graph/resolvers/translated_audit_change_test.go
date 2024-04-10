@@ -60,6 +60,6 @@ func (suite *ResolverSuite) TestHumanizeAuditsForModelPlan() {
 	retTranslatedAuditsWithFields, changeErr := translatedaudit.TranslateAuditsForModelPlan(suite.testConfigs.Context, suite.testConfigs.Store, suite.testConfigs.Logger, yesterday, today, plan.ID)
 	suite.NoError(changeErr)
 	suite.NotNil(retTranslatedAuditsWithFields)
-	suite.Greater(len(retTranslatedAuditsWithFields), 2) // Make sure there are at least 2 changes, and two fields
+	suite.GreaterOrEqual(len(retTranslatedAuditsWithFields), 2) // Make sure there are at least 2 changes, and two fields
 
 }

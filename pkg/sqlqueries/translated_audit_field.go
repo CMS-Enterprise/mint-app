@@ -15,7 +15,7 @@ var translatedAuditFieldCollectionGetByTranslatedAuditID string
 // translatedAuditFieldCollectionGetByTranslatedAuditID returns all translated audit fields for a given translated audit id
 // It expects a param called :paramTableJSON which is an array of (translated_audit_id)s. Using this, the dataloader returns all fields for all these ids
 //
-//go:embed SQL/translated_audit_field/collection_get_by_translated_audit_change_id_Loader.sql
+//go:embed SQL/translated_audit_field/collection_get_by_translated_audit_change_id_loader.sql
 var translatedAuditFieldCollectionGetByTranslatedAuditIDLoader string
 
 // translatedAuditFieldScripts holds all the relevant SQL related to Translated Audit fields
