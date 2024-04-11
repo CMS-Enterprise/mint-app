@@ -36,31 +36,41 @@ func (pct *PlanCollaboratorTranslation) ToMap() (map[string]models.ITranslationF
 }
 
 // TableName returns the table name for this translation, satisfying the Translation interface
-func (pbt *PlanGeneralCharacteristicsTranslation) TableName() string {
+func (pGct *PlanGeneralCharacteristicsTranslation) TableName() string {
 	return "plan_general_characteristics"
 }
 
 // ToMap translates this translation to a map, satisfying the Translation interface
-func (pbt *PlanGeneralCharacteristicsTranslation) ToMap() (map[string]models.ITranslationField, error) {
-	return models.StructToTranslationMap(*pbt)
+func (pGct *PlanGeneralCharacteristicsTranslation) ToMap() (map[string]models.ITranslationField, error) {
+	return models.StructToTranslationMap(*pGct)
 }
 
 // TableName returns the table name for this translation, satisfying the Translation interface
-func (pbt *PlanOpsEvalAndLearningTranslation) TableName() string {
+func (pOet *PlanOpsEvalAndLearningTranslation) TableName() string {
 	return "plan_ops_eval_and_learning"
 }
 
 // ToMap translates this translation to a map, satisfying the Translation interface
-func (pbt *PlanOpsEvalAndLearningTranslation) ToMap() (map[string]models.ITranslationField, error) {
-	return models.StructToTranslationMap(*pbt)
+func (pOet *PlanOpsEvalAndLearningTranslation) ToMap() (map[string]models.ITranslationField, error) {
+	return models.StructToTranslationMap(*pOet)
 }
 
 // TableName returns the table name for this translation, satisfying the Translation interface
-func (pbt *PlanPaymentsTranslation) TableName() string {
+func (ppt *PlanPaymentsTranslation) TableName() string {
 	return "plan_payments"
 }
 
 // ToMap translates this translation to a map, satisfying the Translation interface
-func (pbt *PlanPaymentsTranslation) ToMap() (map[string]models.ITranslationField, error) {
-	return models.StructToTranslationMap(*pbt)
+func (ppt *PlanPaymentsTranslation) ToMap() (map[string]models.ITranslationField, error) {
+	return models.StructToTranslationMap(*ppt)
+}
+
+// TableName returns the table name for this translation, satisfying the Translation interface
+func (tpp *PlanParticipantsAndProvidersTranslation) TableName() string {
+	return "plan_participants_and_providers"
+}
+
+// ToMap translates this translation to a map, satisfying the Translation interface
+func (tpp *PlanParticipantsAndProvidersTranslation) ToMap() (map[string]models.ITranslationField, error) {
+	return models.StructToTranslationMap(*tpp)
 }
