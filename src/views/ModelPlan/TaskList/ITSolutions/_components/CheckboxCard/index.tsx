@@ -42,7 +42,7 @@ const CheckboxCard = ({
   solution,
   index
 }: CheckboxCardProps) => {
-  const { t } = useTranslation('itSolutions');
+  const { t } = useTranslation('opSolutionsMisc');
   const { t: h } = useTranslation('generalReadOnly');
   const { modelID, operationalNeedID } = useParams<{
     modelID: string;

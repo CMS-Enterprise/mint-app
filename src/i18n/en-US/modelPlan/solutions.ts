@@ -5,7 +5,7 @@ const operationalSolutions: TranslationOperationalSolutions = {
     gqlField: 'name',
     goField: 'Name',
     dbField: 'name',
-    label: 'Operational solution',
+    label: 'Solution',
     dataType: 'string',
     formType: 'text'
   },
@@ -14,7 +14,7 @@ const operationalSolutions: TranslationOperationalSolutions = {
     goField: 'NameOther',
     dbField: 'name_other',
     label: 'How will you solve this?',
-    readonlyLabel: 'Operational solution',
+    exportLabel: 'Operational solution',
     dataType: 'string',
     formType: 'text'
   },
@@ -31,6 +31,7 @@ const operationalSolutions: TranslationOperationalSolutions = {
     goField: 'PocName',
     dbField: 'poc_name',
     label: 'Point of contact',
+    sublabel: '',
     dataType: 'string',
     formType: 'text'
   },
@@ -73,11 +74,12 @@ const operationalSolutions: TranslationOperationalSolutions = {
     }
   },
   key: {
-    gqlField: 'status',
-    goField: 'Status',
-    dbField: 'status',
-    label: '',
-    readonlyLabel: 'Status',
+    gqlField: 'key',
+    goField: 'Key',
+    dbField: 'key',
+    label: 'How will you solve this?',
+    sublabel:
+      'Select an operational solution or select "Other" if you’ll solve this a different way.',
     dataType: 'boolean',
     formType: 'checkbox',
     options: {
@@ -127,6 +129,7 @@ const operationalSolutions: TranslationOperationalSolutions = {
     goField: 'Status',
     dbField: 'status',
     label: 'What is the status of this solution?',
+    exportLabel: 'Status',
     dataType: 'boolean',
     formType: 'checkbox',
     options: {

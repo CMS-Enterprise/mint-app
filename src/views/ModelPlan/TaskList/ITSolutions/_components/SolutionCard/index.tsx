@@ -52,7 +52,7 @@ const SolutionCard = ({
 
   const [initLocation] = useState<string>(location.pathname);
 
-  const { t } = useTranslation('itSolutions');
+  const { t } = useTranslation('opSolutionsMisc');
   const { t: h } = useTranslation('generalReadOnly');
 
   const {

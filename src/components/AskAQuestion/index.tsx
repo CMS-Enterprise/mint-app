@@ -12,18 +12,18 @@ type AskAQuestionType = {
 
 const AskAQuestion = ({ modelID, renderTextFor }: AskAQuestionType) => {
   const { t } = useTranslation('discussions');
-  const { t: o } = useTranslation('itSolutions');
+  const { t: opSolutionsMiscT } = useTranslation('opSolutionsMisc');
   const [isDiscussionOpen, setIsDiscussionOpen] = useState(false);
 
   const renderText = (text: string | undefined) => {
     switch (text) {
       case 'need':
-        return o('notSureWhatToDoNext');
+        return opSolutionsMiscT('notSureWhatToDoNext');
       case 'status':
-        return o('helpTiming');
+        return opSolutionsMiscT('helpTiming');
       case 'solution':
       default:
-        return o('helpChoosing');
+        return opSolutionsMiscT('helpChoosing');
     }
   };
 

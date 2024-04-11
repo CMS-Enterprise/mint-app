@@ -46,7 +46,7 @@ const SolutionDetails = () => {
     operationalSolutionID: string;
   }>();
 
-  const { t } = useTranslation('itSolutions');
+  const { t } = useTranslation('opSolutionsMisc');
   const { t: h } = useTranslation('draftModelPlan');
   const { t: documentsT } = useTranslation('documentsMisc');
 

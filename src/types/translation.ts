@@ -55,6 +55,7 @@ import {
   SelectionMethodType,
   StakeholdersType,
   StatesAndTerritories,
+  TaskListSection,
   TaskStatus,
   TeamRole,
   TriStateAnswer,
@@ -109,6 +110,7 @@ export type TranslationFieldProperties = {
   hideRelatedQuestionAlert?: boolean; // Ex: CCW and Quality questions do not need to render the alert immediately following the question
   otherParentField?: string; // gql field name for the parent question for fields that represent Other, Please specify, etc.  Used in change history to render parent question for context
   questionTooltip?: string; // Render tooltip next to the question
+  exportLabel?: string;
 };
 
 /*
@@ -821,6 +823,7 @@ export type TranslationOperationalNeeds = {
   nameOther: TranslationFieldProperties;
   key: TranslationFieldPropertiesWithOptions<OperationalNeedKey>;
   needed: TranslationFieldPropertiesWithOptions<Bool>;
+  section: TranslationFieldPropertiesWithOptions<TaskListSection>;
 };
 
 // Operational Solution
@@ -854,7 +857,7 @@ export type TranslationPlan = {
   collaborators: TranslationCollaborators;
   documents: TranslationDocuments;
   operationalNeeds: TranslationOperationalNeeds;
-  operationalSolutions: TranslationOperationalSolutions;
+  solutions: TranslationOperationalSolutions;
   operationalSolutionSubtasks: TranslationOperationalSolutionSubtasks;
 };
 
@@ -878,6 +881,6 @@ export enum PlanSection {
   COLLABORATORS = 'collaborators',
   DOCUMENTS = 'documents',
   OPERATIONAL_NEEDS = 'operationalNeeds',
-  OPERATIONAL_SOLUTIONS = 'operationalSolutions',
+  OPERATIONAL_SOLUTIONS = 'solutions',
   OPERATIONAL_SOLUTION_SUBTASKS = 'operationalSolutionSubtasks'
 }

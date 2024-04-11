@@ -22,7 +22,7 @@ const ImplementationStatuses = ({
   className,
   slim
 }: ImplementationStatusProps) => {
-  const { t } = useTranslation('itSolutions');
+  const { t } = useTranslation('opSolutionsMisc');
 
   // Toggle the collapsed state of implementation status info
   const [infoToggle, setInfoToggle] = useState<boolean>(false);

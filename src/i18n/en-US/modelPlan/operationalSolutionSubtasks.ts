@@ -6,6 +6,7 @@ const operationalSolutionSubtasks: TranslationOperationalSolutionSubtasks = {
     goField: 'Name',
     dbField: 'name',
     label: 'Subtask name',
+    exportLabel: 'Subtask',
     dataType: 'string',
     formType: 'text'
   },
@@ -14,6 +15,7 @@ const operationalSolutionSubtasks: TranslationOperationalSolutionSubtasks = {
     goField: 'Status',
     dbField: 'status',
     label: 'What is the status of this subtask?',
+    exportLabel: 'Status',
     dataType: 'enum',
     formType: 'checkbox',
     options: {

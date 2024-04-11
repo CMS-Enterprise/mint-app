@@ -14,7 +14,7 @@ const operationalNeeds: TranslationOperationalNeeds = {
     goField: 'NameOther',
     dbField: 'name_other',
     label: 'What operational need are you solving?',
-    readonlyLabel: 'Operational need',
+    exportLabel: 'Operational need',
     dataType: 'string',
     formType: 'text'
   },
@@ -65,12 +65,30 @@ const operationalNeeds: TranslationOperationalNeeds = {
     gqlField: 'needed',
     goField: 'Needed',
     dbField: 'needed',
-    label: '',
+    label: 'Status',
     dataType: 'boolean',
     formType: 'checkbox',
     options: {
       true: 'Needed',
       false: 'Not needed'
+    }
+  },
+  section: {
+    gqlField: 'section',
+    goField: 'section',
+    dbField: 'section',
+    label: '	Model Plan section',
+    dataType: 'string',
+    formType: 'text',
+    options: {
+      BASICS: 'Model Basics',
+      GENERAL_CHARACTERISTICS: 'General characteristics',
+      PARTICIPANTS_AND_PROVIDERS: 'Participants and providers',
+      BENEFICIARIES: 'Beneficiaries',
+      OPERATIONS_EVALUATION_AND_LEARNING:
+        'Operations, evaluation, and learning',
+      PAYMENT: 'Payment',
+      PREPARE_FOR_CLEARANCE: 'Prepare for clearance'
     }
   }
 };

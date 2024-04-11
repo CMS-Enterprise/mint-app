@@ -1,10 +1,8 @@
 import crtdl from './draftModelPlan/crtdl';
 import discussions from './draftModelPlan/discussions';
-import documentsOLD from './draftModelPlan/documents';
 import draftModelPlan from './draftModelPlan/draftModelPlan';
 import itSolutions from './draftModelPlan/itSolutions';
 import prepareForClearance from './draftModelPlan/prepareForClearance';
-import subtasks from './draftModelPlan/subtasks';
 import getAccess from './helpAndKnowledge/Articles/getAccess';
 import highLevelProjectPlans from './helpAndKnowledge/Articles/highLevelProjectPlans';
 import modelPlanOverview from './helpAndKnowledge/Articles/modelPlanOverview';
@@ -27,18 +25,18 @@ import {
 import miscellaneous from './modelPlan/miscellaneous';
 import { modelPlan, modelPlanMisc } from './modelPlan/modelPlan';
 import operationalNeeds from './modelPlan/operationalNeeds';
-import operationalSolutions from './modelPlan/operationalSolutions';
-import operationalSolutionsMiscellaneous from './modelPlan/operationalSolutionsMiscellaneous';
 import operationalSolutionSubtasks from './modelPlan/operationalSolutionSubtasks';
 import {
   opsEvalAndLearning,
   opsEvalAndLearningMisc
 } from './modelPlan/opsEvalAndLearning';
+import opSolutionsMisc from './modelPlan/opSolutionsMisc';
 import {
   participantsAndProviders,
   participantsAndProvidersMisc
 } from './modelPlan/participantsAndProviders';
 import { payments, paymentsMisc } from './modelPlan/payments';
+import solutions from './modelPlan/solutions';
 import filterView from './readOnly/filterView';
 import generalReadOnly from './readOnly/generalReadOnly';
 import modelSummary from './readOnly/modelSummary';
@@ -68,7 +66,6 @@ const enUS = {
   cookies,
   crtdl,
   discussions,
-  documentsOLD,
   draftModelPlan,
   error,
   filterView,
@@ -103,9 +100,9 @@ const enUS = {
   payments,
   paymentsMisc,
   operationalNeeds,
-  operationalSolutions,
+  solutions,
   operationalSolutionSubtasks,
-  operationalSolutionsMiscellaneous,
+  opSolutionsMisc,
   documents,
   documentsMisc,
   collaborators,
@@ -126,7 +123,6 @@ const enUS = {
   twoPageMeeting,
   utilizingSolutions,
   // End Help and Knowledge Center Articles
-  subtasks,
   tableAndPagination,
   termsAndConditions,
   externalLinkModal
