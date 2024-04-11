@@ -11,7 +11,7 @@ import (
 	"github.com/cmsgov/mint-app/pkg/models"
 )
 
-// These constants represent the different values of ModelCategory
+// These constants represent keys constants used for the possible operational solution loaders
 const (
 	// DLPosOperationalSolutionKey is the key used to store and retrieve the possible operational solution id key
 	DLPosOperationalSolutionKey string = "possible_operational_solution_id"
@@ -60,7 +60,7 @@ func (loaders *DataLoaders) PossibleOperationalSolutionContactsGetByPossibleSolu
 			output[index] = &dataloader.Result{Data: contacts, Error: nil}
 
 		} else {
-			err := fmt.Errorf("could not retrive key from %s", key.String())
+			err := fmt.Errorf("could not retrieve key from %s", key.String())
 			output[index] = &dataloader.Result{Data: nil, Error: err}
 		}
 	}

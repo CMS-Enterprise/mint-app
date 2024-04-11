@@ -184,6 +184,12 @@ export type AuditChange = {
   tableName: Scalars['String']['output'];
 };
 
+export enum AuditFieldChangeType {
+  ANSWERED = 'ANSWERED',
+  REMOVED = 'REMOVED',
+  UPDATED = 'UPDATED'
+}
+
 export enum AuthorityAllowance {
   ACA = 'ACA',
   CONGRESSIONALLY_MANDATED = 'CONGRESSIONALLY_MANDATED',
@@ -2890,7 +2896,7 @@ export type Query = {
   possibleOperationalSolutions: Array<PossibleOperationalSolution>;
   searchOktaUsers: Array<UserInfo>;
   taskListSectionLocks: Array<TaskListSectionLockStatus>;
-  translatedAuditChangeCollection?: Maybe<Array<TranslatedAuditChange>>;
+  translatedAuditCollection?: Maybe<Array<TranslatedAudit>>;
   userAccount: UserAccount;
 };
 
@@ -2988,7 +2994,7 @@ export type QueryTaskListSectionLocksArgs = {
 
 
 /** Query definition for the schema */
-export type QueryTranslatedAuditChangeCollectionArgs = {
+export type QueryTranslatedAuditCollectionArgs = {
   modelPlanID: Scalars['UUID']['input'];
 };
 
@@ -3275,9 +3281,9 @@ export enum TeamRole {
   QUALITY = 'QUALITY'
 }
 
-/** TranslatedAuditChange represent a point in time change made to part of application. */
-export type TranslatedAuditChange = {
-  __typename: 'TranslatedAuditChange';
+/** TranslatedAudit represent a point in time change made to part of application. */
+export type TranslatedAudit = {
+  __typename: 'TranslatedAudit';
   action: DatabaseOperation;
   actorID: Scalars['UUID']['output'];
   actorName: Scalars['String']['output'];
@@ -3286,11 +3292,30 @@ export type TranslatedAuditChange = {
   createdByUserAccount: UserAccount;
   createdDts: Scalars['Time']['output'];
   date: Scalars['Time']['output'];
-  fieldName: Scalars['String']['output'];
-  fieldNameTranslated: Scalars['String']['output'];
   id: Scalars['UUID']['output'];
   metaData: TranslatedAuditMetaData;
   modelName: Scalars['String']['output'];
+  modifiedBy?: Maybe<Scalars['UUID']['output']>;
+  modifiedByUserAccount?: Maybe<UserAccount>;
+  modifiedDts?: Maybe<Scalars['Time']['output']>;
+  primaryKey: Scalars['UUID']['output'];
+  tableID: Scalars['Int']['output'];
+  tableName: Scalars['String']['output'];
+  /** The specific fields that were changed by the transaction */
+  translatedFields: Array<TranslatedAuditField>;
+};
+
+export type TranslatedAuditField = {
+  __typename: 'TranslatedAuditField';
+  /** This represents whether a field was answered, updated, or had the answer removed */
+  changeType: AuditFieldChangeType;
+  createdBy: Scalars['UUID']['output'];
+  createdByUserAccount: UserAccount;
+  createdDts: Scalars['Time']['output'];
+  fieldName: Scalars['String']['output'];
+  fieldNameTranslated: Scalars['String']['output'];
+  id: Scalars['UUID']['output'];
+  metaData: TranslatedAuditFieldMetaData;
   modifiedBy?: Maybe<Scalars['UUID']['output']>;
   modifiedByUserAccount?: Maybe<UserAccount>;
   modifiedDts?: Maybe<Scalars['Time']['output']>;
@@ -3298,10 +3323,15 @@ export type TranslatedAuditChange = {
   newTranslated?: Maybe<Scalars['Any']['output']>;
   old?: Maybe<Scalars['Any']['output']>;
   oldTranslated?: Maybe<Scalars['Any']['output']>;
-  primaryKey: Scalars['UUID']['output'];
-  tableID: Scalars['Int']['output'];
-  tableName: Scalars['String']['output'];
+  translatedAuditID: Scalars['UUID']['output'];
 };
+
+export type TranslatedAuditFieldMetaBaseStruct = {
+  __typename: 'TranslatedAuditFieldMetaBaseStruct';
+  version: Scalars['Int']['output'];
+};
+
+export type TranslatedAuditFieldMetaData = TranslatedAuditFieldMetaBaseStruct;
 
 export type TranslatedAuditMetaBaseStruct = {
   __typename: 'TranslatedAuditMetaBaseStruct';

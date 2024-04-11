@@ -91,5 +91,5 @@ FROM audit.change
 INNER JOIN audit.table_config ON audit.table_config.id = audit.change.table_id
 WHERE
     (audit.change.primary_key = (SELECT id FROM PLAN) AND audit.table_config.name = 'model_plan') 
-    -- TODO (ChChCh Changes!) Perhaps using the provided variable instead of selecting from a CTE?
+    -- Changes (ChChCh Changes!) Perhaps using the provided variable instead of selecting from a CTE?
     AND audit.change.modified_dts >= :time_start AND audit.change.modified_dts < :time_end
