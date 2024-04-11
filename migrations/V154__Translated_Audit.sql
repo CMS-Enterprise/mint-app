@@ -15,6 +15,7 @@ CREATE TABLE translated_audit (
     date TIMESTAMP NOT NULL, 
     table_id INTEGER REFERENCES audit.table_config(id), --foreign key to the audit table
     table_name ZERO_STRING NOT NULL, --potentially normalize this, wouldn't need to store, but useful?
+    -- Changes: (Translations) potentially translate the table name as well? Like we are doing for fields
     primary_key UUID NOT NULL,
     action DATABASE_OPERATION NOT NULL, 
 
