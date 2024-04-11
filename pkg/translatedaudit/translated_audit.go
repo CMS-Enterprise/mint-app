@@ -231,6 +231,8 @@ func translateValue(value interface{}, options map[string]interface{}) interface
 
 	if isSlice {
 		// transArray := []string{}
+		// Changes: (Translations) Determine if we can serialize a generic interface? it makes a weird artifact in the GQL
+		//   "{\"Mandatory national\",\"Other\"}",
 		transArray := pq.StringArray{}
 		for _, str := range strSlice {
 			translated := translateValueSingle(str, options)
