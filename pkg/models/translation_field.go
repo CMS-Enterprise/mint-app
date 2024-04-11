@@ -99,3 +99,68 @@ type ITranslationField interface {
 func (tfo TranslationFieldWithOptions) GetOptions() (map[string]interface{}, bool) {
 	return tfo.Options, tfo.HasOptions()
 }
+
+// TranslationFieldWithParent Represents a TranslationField that has a parent
+type TranslationFieldWithParent struct {
+	TranslationField
+	translationOptionRelation
+	translationParentRelation
+	// ParentRelation TranslationField `json:"parentRelation"`
+	// Options        map[string]interface{} `json:"options"`
+}
+
+// translationOptionRelation is struct that is mean to be embedded in other Translation types to expose options, and functionality of options
+type translationOptionRelation struct {
+	Options map[string]interface{} `json:"options"`
+}
+
+// HasOptions specifies if a translation field has options or not
+func (tor translationOptionRelation) HasOptions() bool {
+	return true
+}
+
+// GetOptions returns options for a translation
+func (tor translationOptionRelation) GetOptions() (map[string]interface{}, bool) {
+	return tor.Options, tor.HasOptions()
+}
+
+// TranslationFieldWithOptionsAndChildren Represents a TranslationField that has options and Children
+type TranslationFieldWithOptionsAndChildren struct {
+	TranslationField
+	translationOptionRelation
+	// Changes: (Translations) Determine how to use child relation
+	translationChildRelation
+	// ChildRelation map[string]interface{} `json:"childRelation"`
+	// Options       map[string]interface{} `json:"options"`
+}
+
+// translationChildRelation is struct that is mean to be embedded in other Translation types to expose functionality for translations that have a Child relationships
+type translationChildRelation struct {
+	ChildRelation map[string]interface{} `json:"childRelation"`
+}
+
+// translationParentRelation is struct that is mean to be embedded in other Translation types to expose functionality for translations that have a Parent
+type translationParentRelation struct {
+	ParentRelation TranslationField `json:"parentRelation"`
+}
+
+// translationParentRelation is struct that is mean to be embedded in other Translation types to expose functionality for translations that have a Parent
+type translationParentRelationWithOptionsAndChildren struct {
+	// Changes: (Structure) Figure out if we can make the parent relation structure match better? For now, making a separate implementation
+	ParentRelation TranslationFieldWithOptionsAndChildren `json:"parentRelation"`
+}
+
+// TranslationFieldWithOptionsAndParent is a translation field that has Options and a Parent
+type TranslationFieldWithOptionsAndParent struct {
+	TranslationField
+	translationOptionRelation
+	translationParentRelationWithOptionsAndChildren
+}
+
+// TranslationFieldWithParentAndChildren is a translation field that has a Parent and Children
+type TranslationFieldWithParentAndChildren struct {
+	TranslationField
+	translationOptionRelation
+	translationParentRelationWithOptionsAndChildren
+	translationChildRelation
+}

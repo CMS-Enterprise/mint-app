@@ -166,321 +166,321 @@ type PlanDocumentLinkInput struct {
 
 // Represents plan general characteristics translation data
 type PlanGeneralCharacteristicsTranslation struct {
-	IsNewModel                                    TranslationFieldWithOptionsAndChildren `json:"isNewModel" db:"is_new_model"`
-	ExistingModel                                 TranslationFieldWithParent             `json:"existingModel" db:"existing_model"`
-	ResemblesExistingModel                        TranslationFieldWithOptionsAndChildren `json:"resemblesExistingModel" db:"resembles_existing_model"`
-	ResemblesExistingModelWhyHow                  models.TranslationField                `json:"resemblesExistingModelWhyHow" db:"resembles_existing_model_why_how"`
-	ResemblesExistingModelOtherSpecify            models.TranslationField                `json:"resemblesExistingModelOtherSpecify" db:"resembles_existing_model_other_specify"`
-	ResemblesExistingModelOtherSelected           models.TranslationFieldWithOptions     `json:"resemblesExistingModelOtherSelected" db:"resembles_existing_model_other_selected"`
-	ResemblesExistingModelOtherOption             models.TranslationField                `json:"resemblesExistingModelOtherOption" db:"resembles_existing_model_other_option"`
-	ResemblesExistingModelHow                     TranslationFieldWithParent             `json:"resemblesExistingModelHow" db:"resembles_existing_model_how"`
-	ResemblesExistingModelNote                    models.TranslationField                `json:"resemblesExistingModelNote" db:"resembles_existing_model_note"`
-	ResemblesExistingModelWhich                   TranslationFieldWithOptionsAndParent   `json:"resemblesExistingModelWhich" db:"resembles_existing_model_which"`
-	ParticipationInModelPrecondition              TranslationFieldWithOptionsAndChildren `json:"participationInModelPrecondition" db:"participation_in_model_precondition"`
-	ParticipationInModelPreconditionWhyHow        TranslationFieldWithParent             `json:"participationInModelPreconditionWhyHow" db:"participation_in_model_precondition_why_how"`
-	ParticipationInModelPreconditionOtherSpecify  models.TranslationField                `json:"participationInModelPreconditionOtherSpecify" db:"participation_in_model_precondition_other_specify"`
-	ParticipationInModelPreconditionOtherSelected models.TranslationFieldWithOptions     `json:"participationInModelPreconditionOtherSelected" db:"participation_in_model_precondition_other_selected"`
-	ParticipationInModelPreconditionOtherOption   models.TranslationField                `json:"participationInModelPreconditionOtherOption" db:"participation_in_model_precondition_other_option"`
-	ParticipationInModelPreconditionNote          models.TranslationField                `json:"participationInModelPreconditionNote" db:"participation_in_model_precondition_note"`
-	ParticipationInModelPreconditionWhich         TranslationFieldWithOptionsAndParent   `json:"participationInModelPreconditionWhich" db:"participation_in_model_precondition_which"`
-	HasComponentsOrTracks                         models.TranslationFieldWithOptions     `json:"hasComponentsOrTracks" db:"has_components_or_tracks"`
-	HasComponentsOrTracksDiffer                   models.TranslationField                `json:"hasComponentsOrTracksDiffer" db:"has_components_or_tracks_differ"`
-	HasComponentsOrTracksNote                     models.TranslationField                `json:"hasComponentsOrTracksNote" db:"has_components_or_tracks_note"`
-	AgencyOrStateHelp                             models.TranslationFieldWithOptions     `json:"agencyOrStateHelp" db:"agency_or_state_help"`
-	AgencyOrStateHelpOther                        models.TranslationField                `json:"agencyOrStateHelpOther" db:"agency_or_state_help_other"`
-	AgencyOrStateHelpNote                         models.TranslationField                `json:"agencyOrStateHelpNote" db:"agency_or_state_help_note"`
-	AlternativePaymentModelTypes                  models.TranslationFieldWithOptions     `json:"alternativePaymentModelTypes" db:"alternative_payment_model_types"`
-	AlternativePaymentModelNote                   models.TranslationField                `json:"alternativePaymentModelNote" db:"alternative_payment_model_note"`
-	KeyCharacteristics                            TranslationFieldWithOptionsAndChildren `json:"keyCharacteristics" db:"key_characteristics"`
-	KeyCharacteristicsOther                       models.TranslationField                `json:"keyCharacteristicsOther" db:"key_characteristics_other"`
-	KeyCharacteristicsNote                        models.TranslationField                `json:"keyCharacteristicsNote" db:"key_characteristics_note"`
-	CollectPlanBids                               TranslationFieldWithOptionsAndParent   `json:"collectPlanBids" db:"collect_plan_bids"`
-	CollectPlanBidsNote                           models.TranslationField                `json:"collectPlanBidsNote" db:"collect_plan_bids_note"`
-	ManagePartCDEnrollment                        TranslationFieldWithOptionsAndParent   `json:"managePartCDEnrollment" db:"manage_part_c_d_enrollment"`
-	ManagePartCDEnrollmentNote                    models.TranslationField                `json:"managePartCDEnrollmentNote" db:"manage_part_c_d_enrollment_note"`
-	PlanContractUpdated                           TranslationFieldWithOptionsAndParent   `json:"planContractUpdated" db:"plan_contract_updated"`
-	PlanContractUpdatedNote                       models.TranslationField                `json:"planContractUpdatedNote" db:"plan_contract_updated_note"`
-	CareCoordinationInvolved                      models.TranslationFieldWithOptions     `json:"careCoordinationInvolved" db:"care_coordination_involved"`
-	CareCoordinationInvolvedDescription           models.TranslationField                `json:"careCoordinationInvolvedDescription" db:"care_coordination_involved_description"`
-	CareCoordinationInvolvedNote                  models.TranslationField                `json:"careCoordinationInvolvedNote" db:"care_coordination_involved_note"`
-	AdditionalServicesInvolved                    models.TranslationFieldWithOptions     `json:"additionalServicesInvolved" db:"additional_services_involved"`
-	AdditionalServicesInvolvedDescription         models.TranslationField                `json:"additionalServicesInvolvedDescription" db:"additional_services_involved_description"`
-	AdditionalServicesInvolvedNote                models.TranslationField                `json:"additionalServicesInvolvedNote" db:"additional_services_involved_note"`
-	CommunityPartnersInvolved                     models.TranslationFieldWithOptions     `json:"communityPartnersInvolved" db:"community_partners_involved"`
-	CommunityPartnersInvolvedDescription          models.TranslationField                `json:"communityPartnersInvolvedDescription" db:"community_partners_involved_description"`
-	CommunityPartnersInvolvedNote                 models.TranslationField                `json:"communityPartnersInvolvedNote" db:"community_partners_involved_note"`
-	GeographiesTargeted                           TranslationFieldWithOptionsAndChildren `json:"geographiesTargeted" db:"geographies_targeted"`
-	GeographiesTargetedTypes                      TranslationFieldWithParentAndChildren  `json:"geographiesTargetedTypes" db:"geographies_targeted_types"`
-	GeographiesStatesAndTerritories               TranslationFieldWithOptionsAndParent   `json:"geographiesStatesAndTerritories" db:"geographies_states_and_territories"`
-	GeographiesRegionTypes                        TranslationFieldWithOptionsAndParent   `json:"geographiesRegionTypes" db:"geographies_region_types"`
-	GeographiesTargetedTypesOther                 models.TranslationField                `json:"geographiesTargetedTypesOther" db:"geographies_targeted_types_other"`
-	GeographiesTargetedAppliedTo                  TranslationFieldWithOptionsAndParent   `json:"geographiesTargetedAppliedTo" db:"geographies_targeted_applied_to"`
-	GeographiesTargetedAppliedToOther             models.TranslationField                `json:"geographiesTargetedAppliedToOther" db:"geographies_targeted_applied_to_other"`
-	GeographiesTargetedNote                       models.TranslationField                `json:"geographiesTargetedNote" db:"geographies_targeted_note"`
-	ParticipationOptions                          models.TranslationFieldWithOptions     `json:"participationOptions" db:"participation_options"`
-	ParticipationOptionsNote                      models.TranslationField                `json:"participationOptionsNote" db:"participation_options_note"`
-	AgreementTypes                                TranslationFieldWithOptionsAndChildren `json:"agreementTypes" db:"agreement_types"`
-	AgreementTypesOther                           models.TranslationField                `json:"agreementTypesOther" db:"agreement_types_other"`
-	MultiplePatricipationAgreementsNeeded         TranslationFieldWithOptionsAndParent   `json:"multiplePatricipationAgreementsNeeded" db:"multiple_patricipation_agreements_needed"`
-	MultiplePatricipationAgreementsNeededNote     models.TranslationField                `json:"multiplePatricipationAgreementsNeededNote" db:"multiple_patricipation_agreements_needed_note"`
-	RulemakingRequired                            models.TranslationFieldWithOptions     `json:"rulemakingRequired" db:"rulemaking_required"`
-	RulemakingRequiredDescription                 models.TranslationField                `json:"rulemakingRequiredDescription" db:"rulemaking_required_description"`
-	RulemakingRequiredNote                        models.TranslationField                `json:"rulemakingRequiredNote" db:"rulemaking_required_note"`
-	AuthorityAllowances                           models.TranslationFieldWithOptions     `json:"authorityAllowances" db:"authority_allowances"`
-	AuthorityAllowancesOther                      models.TranslationField                `json:"authorityAllowancesOther" db:"authority_allowances_other"`
-	AuthorityAllowancesNote                       models.TranslationField                `json:"authorityAllowancesNote" db:"authority_allowances_note"`
-	WaiversRequired                               models.TranslationFieldWithOptions     `json:"waiversRequired" db:"waivers_required"`
-	WaiversRequiredTypes                          models.TranslationFieldWithOptions     `json:"waiversRequiredTypes" db:"waivers_required_types"`
-	WaiversRequiredNote                           models.TranslationField                `json:"waiversRequiredNote" db:"waivers_required_note"`
-	Status                                        models.TranslationFieldWithOptions     `json:"status" db:"status"`
+	IsNewModel                                    models.TranslationFieldWithOptionsAndChildren `json:"isNewModel" db:"is_new_model"`
+	ExistingModel                                 models.TranslationFieldWithParent             `json:"existingModel" db:"existing_model"`
+	ResemblesExistingModel                        models.TranslationFieldWithOptionsAndChildren `json:"resemblesExistingModel" db:"resembles_existing_model"`
+	ResemblesExistingModelWhyHow                  models.TranslationField                       `json:"resemblesExistingModelWhyHow" db:"resembles_existing_model_why_how"`
+	ResemblesExistingModelOtherSpecify            models.TranslationField                       `json:"resemblesExistingModelOtherSpecify" db:"resembles_existing_model_other_specify"`
+	ResemblesExistingModelOtherSelected           models.TranslationFieldWithOptions            `json:"resemblesExistingModelOtherSelected" db:"resembles_existing_model_other_selected"`
+	ResemblesExistingModelOtherOption             models.TranslationField                       `json:"resemblesExistingModelOtherOption" db:"resembles_existing_model_other_option"`
+	ResemblesExistingModelHow                     models.TranslationFieldWithParent             `json:"resemblesExistingModelHow" db:"resembles_existing_model_how"`
+	ResemblesExistingModelNote                    models.TranslationField                       `json:"resemblesExistingModelNote" db:"resembles_existing_model_note"`
+	ResemblesExistingModelWhich                   models.TranslationFieldWithOptionsAndParent   `json:"resemblesExistingModelWhich" db:"resembles_existing_model_which"`
+	ParticipationInModelPrecondition              models.TranslationFieldWithOptionsAndChildren `json:"participationInModelPrecondition" db:"participation_in_model_precondition"`
+	ParticipationInModelPreconditionWhyHow        models.TranslationFieldWithParent             `json:"participationInModelPreconditionWhyHow" db:"participation_in_model_precondition_why_how"`
+	ParticipationInModelPreconditionOtherSpecify  models.TranslationField                       `json:"participationInModelPreconditionOtherSpecify" db:"participation_in_model_precondition_other_specify"`
+	ParticipationInModelPreconditionOtherSelected models.TranslationFieldWithOptions            `json:"participationInModelPreconditionOtherSelected" db:"participation_in_model_precondition_other_selected"`
+	ParticipationInModelPreconditionOtherOption   models.TranslationField                       `json:"participationInModelPreconditionOtherOption" db:"participation_in_model_precondition_other_option"`
+	ParticipationInModelPreconditionNote          models.TranslationField                       `json:"participationInModelPreconditionNote" db:"participation_in_model_precondition_note"`
+	ParticipationInModelPreconditionWhich         models.TranslationFieldWithOptionsAndParent   `json:"participationInModelPreconditionWhich" db:"participation_in_model_precondition_which"`
+	HasComponentsOrTracks                         models.TranslationFieldWithOptions            `json:"hasComponentsOrTracks" db:"has_components_or_tracks"`
+	HasComponentsOrTracksDiffer                   models.TranslationField                       `json:"hasComponentsOrTracksDiffer" db:"has_components_or_tracks_differ"`
+	HasComponentsOrTracksNote                     models.TranslationField                       `json:"hasComponentsOrTracksNote" db:"has_components_or_tracks_note"`
+	AgencyOrStateHelp                             models.TranslationFieldWithOptions            `json:"agencyOrStateHelp" db:"agency_or_state_help"`
+	AgencyOrStateHelpOther                        models.TranslationField                       `json:"agencyOrStateHelpOther" db:"agency_or_state_help_other"`
+	AgencyOrStateHelpNote                         models.TranslationField                       `json:"agencyOrStateHelpNote" db:"agency_or_state_help_note"`
+	AlternativePaymentModelTypes                  models.TranslationFieldWithOptions            `json:"alternativePaymentModelTypes" db:"alternative_payment_model_types"`
+	AlternativePaymentModelNote                   models.TranslationField                       `json:"alternativePaymentModelNote" db:"alternative_payment_model_note"`
+	KeyCharacteristics                            models.TranslationFieldWithOptionsAndChildren `json:"keyCharacteristics" db:"key_characteristics"`
+	KeyCharacteristicsOther                       models.TranslationField                       `json:"keyCharacteristicsOther" db:"key_characteristics_other"`
+	KeyCharacteristicsNote                        models.TranslationField                       `json:"keyCharacteristicsNote" db:"key_characteristics_note"`
+	CollectPlanBids                               models.TranslationFieldWithOptionsAndParent   `json:"collectPlanBids" db:"collect_plan_bids"`
+	CollectPlanBidsNote                           models.TranslationField                       `json:"collectPlanBidsNote" db:"collect_plan_bids_note"`
+	ManagePartCDEnrollment                        models.TranslationFieldWithOptionsAndParent   `json:"managePartCDEnrollment" db:"manage_part_c_d_enrollment"`
+	ManagePartCDEnrollmentNote                    models.TranslationField                       `json:"managePartCDEnrollmentNote" db:"manage_part_c_d_enrollment_note"`
+	PlanContractUpdated                           models.TranslationFieldWithOptionsAndParent   `json:"planContractUpdated" db:"plan_contract_updated"`
+	PlanContractUpdatedNote                       models.TranslationField                       `json:"planContractUpdatedNote" db:"plan_contract_updated_note"`
+	CareCoordinationInvolved                      models.TranslationFieldWithOptions            `json:"careCoordinationInvolved" db:"care_coordination_involved"`
+	CareCoordinationInvolvedDescription           models.TranslationField                       `json:"careCoordinationInvolvedDescription" db:"care_coordination_involved_description"`
+	CareCoordinationInvolvedNote                  models.TranslationField                       `json:"careCoordinationInvolvedNote" db:"care_coordination_involved_note"`
+	AdditionalServicesInvolved                    models.TranslationFieldWithOptions            `json:"additionalServicesInvolved" db:"additional_services_involved"`
+	AdditionalServicesInvolvedDescription         models.TranslationField                       `json:"additionalServicesInvolvedDescription" db:"additional_services_involved_description"`
+	AdditionalServicesInvolvedNote                models.TranslationField                       `json:"additionalServicesInvolvedNote" db:"additional_services_involved_note"`
+	CommunityPartnersInvolved                     models.TranslationFieldWithOptions            `json:"communityPartnersInvolved" db:"community_partners_involved"`
+	CommunityPartnersInvolvedDescription          models.TranslationField                       `json:"communityPartnersInvolvedDescription" db:"community_partners_involved_description"`
+	CommunityPartnersInvolvedNote                 models.TranslationField                       `json:"communityPartnersInvolvedNote" db:"community_partners_involved_note"`
+	GeographiesTargeted                           models.TranslationFieldWithOptionsAndChildren `json:"geographiesTargeted" db:"geographies_targeted"`
+	GeographiesTargetedTypes                      models.TranslationFieldWithParentAndChildren  `json:"geographiesTargetedTypes" db:"geographies_targeted_types"`
+	GeographiesStatesAndTerritories               models.TranslationFieldWithOptionsAndParent   `json:"geographiesStatesAndTerritories" db:"geographies_states_and_territories"`
+	GeographiesRegionTypes                        models.TranslationFieldWithOptionsAndParent   `json:"geographiesRegionTypes" db:"geographies_region_types"`
+	GeographiesTargetedTypesOther                 models.TranslationField                       `json:"geographiesTargetedTypesOther" db:"geographies_targeted_types_other"`
+	GeographiesTargetedAppliedTo                  models.TranslationFieldWithOptionsAndParent   `json:"geographiesTargetedAppliedTo" db:"geographies_targeted_applied_to"`
+	GeographiesTargetedAppliedToOther             models.TranslationField                       `json:"geographiesTargetedAppliedToOther" db:"geographies_targeted_applied_to_other"`
+	GeographiesTargetedNote                       models.TranslationField                       `json:"geographiesTargetedNote" db:"geographies_targeted_note"`
+	ParticipationOptions                          models.TranslationFieldWithOptions            `json:"participationOptions" db:"participation_options"`
+	ParticipationOptionsNote                      models.TranslationField                       `json:"participationOptionsNote" db:"participation_options_note"`
+	AgreementTypes                                models.TranslationFieldWithOptionsAndChildren `json:"agreementTypes" db:"agreement_types"`
+	AgreementTypesOther                           models.TranslationField                       `json:"agreementTypesOther" db:"agreement_types_other"`
+	MultiplePatricipationAgreementsNeeded         models.TranslationFieldWithOptionsAndParent   `json:"multiplePatricipationAgreementsNeeded" db:"multiple_patricipation_agreements_needed"`
+	MultiplePatricipationAgreementsNeededNote     models.TranslationField                       `json:"multiplePatricipationAgreementsNeededNote" db:"multiple_patricipation_agreements_needed_note"`
+	RulemakingRequired                            models.TranslationFieldWithOptions            `json:"rulemakingRequired" db:"rulemaking_required"`
+	RulemakingRequiredDescription                 models.TranslationField                       `json:"rulemakingRequiredDescription" db:"rulemaking_required_description"`
+	RulemakingRequiredNote                        models.TranslationField                       `json:"rulemakingRequiredNote" db:"rulemaking_required_note"`
+	AuthorityAllowances                           models.TranslationFieldWithOptions            `json:"authorityAllowances" db:"authority_allowances"`
+	AuthorityAllowancesOther                      models.TranslationField                       `json:"authorityAllowancesOther" db:"authority_allowances_other"`
+	AuthorityAllowancesNote                       models.TranslationField                       `json:"authorityAllowancesNote" db:"authority_allowances_note"`
+	WaiversRequired                               models.TranslationFieldWithOptions            `json:"waiversRequired" db:"waivers_required"`
+	WaiversRequiredTypes                          models.TranslationFieldWithOptions            `json:"waiversRequiredTypes" db:"waivers_required_types"`
+	WaiversRequiredNote                           models.TranslationField                       `json:"waiversRequiredNote" db:"waivers_required_note"`
+	Status                                        models.TranslationFieldWithOptions            `json:"status" db:"status"`
 }
 
 // Represents plan ops eval and learning translation data
 type PlanOpsEvalAndLearningTranslation struct {
-	Stakeholders                                 models.TranslationFieldWithOptions     `json:"stakeholders" db:"stakeholders"`
-	StakeholdersOther                            models.TranslationField                `json:"stakeholdersOther" db:"stakeholders_other"`
-	StakeholdersNote                             models.TranslationField                `json:"stakeholdersNote" db:"stakeholders_note"`
-	HelpdeskUse                                  models.TranslationFieldWithOptions     `json:"helpdeskUse" db:"helpdesk_use"`
-	HelpdeskUseNote                              models.TranslationField                `json:"helpdeskUseNote" db:"helpdesk_use_note"`
-	ContractorSupport                            TranslationFieldWithOptionsAndChildren `json:"contractorSupport" db:"contractor_support"`
-	ContractorSupportOther                       models.TranslationField                `json:"contractorSupportOther" db:"contractor_support_other"`
-	ContractorSupportHow                         TranslationFieldWithParent             `json:"contractorSupportHow" db:"contractor_support_how"`
-	ContractorSupportNote                        models.TranslationField                `json:"contractorSupportNote" db:"contractor_support_note"`
-	IddocSupport                                 TranslationFieldWithOptionsAndChildren `json:"iddocSupport" db:"iddoc_support"`
-	IddocSupportNote                             models.TranslationField                `json:"iddocSupportNote" db:"iddoc_support_note"`
-	TechnicalContactsIdentified                  TranslationFieldWithOptionsAndParent   `json:"technicalContactsIdentified" db:"technical_contacts_identified"`
-	TechnicalContactsIdentifiedDetail            models.TranslationField                `json:"technicalContactsIdentifiedDetail" db:"technical_contacts_identified_detail"`
-	TechnicalContactsIdentifiedNote              models.TranslationField                `json:"technicalContactsIdentifiedNote" db:"technical_contacts_identified_note"`
-	CaptureParticipantInfo                       TranslationFieldWithOptionsAndParent   `json:"captureParticipantInfo" db:"capture_participant_info"`
-	CaptureParticipantInfoNote                   models.TranslationField                `json:"captureParticipantInfoNote" db:"capture_participant_info_note"`
-	IcdOwner                                     TranslationFieldWithParent             `json:"icdOwner" db:"icd_owner"`
-	DraftIcdDueDate                              TranslationFieldWithParent             `json:"draftIcdDueDate" db:"draft_icd_due_date"`
-	IcdNote                                      TranslationFieldWithParent             `json:"icdNote" db:"icd_note"`
-	UatNeeds                                     TranslationFieldWithParent             `json:"uatNeeds" db:"uat_needs"`
-	StcNeeds                                     TranslationFieldWithParent             `json:"stcNeeds" db:"stc_needs"`
-	TestingTimelines                             TranslationFieldWithParent             `json:"testingTimelines" db:"testing_timelines"`
-	TestingNote                                  models.TranslationField                `json:"testingNote" db:"testing_note"`
-	DataMonitoringFileTypes                      TranslationFieldWithOptionsAndParent   `json:"dataMonitoringFileTypes" db:"data_monitoring_file_types"`
-	DataMonitoringFileOther                      models.TranslationField                `json:"dataMonitoringFileOther" db:"data_monitoring_file_other"`
-	DataResponseType                             TranslationFieldWithParent             `json:"dataResponseType" db:"data_response_type"`
-	DataResponseFileFrequency                    TranslationFieldWithParent             `json:"dataResponseFileFrequency" db:"data_response_file_frequency"`
-	DataFullTimeOrIncremental                    TranslationFieldWithOptionsAndParent   `json:"dataFullTimeOrIncremental" db:"data_full_time_or_incremental"`
-	EftSetUp                                     TranslationFieldWithOptionsAndParent   `json:"eftSetUp" db:"eft_set_up"`
-	UnsolicitedAdjustmentsIncluded               TranslationFieldWithOptionsAndParent   `json:"unsolicitedAdjustmentsIncluded" db:"unsolicited_adjustments_included"`
-	DataFlowDiagramsNeeded                       TranslationFieldWithOptionsAndParent   `json:"dataFlowDiagramsNeeded" db:"data_flow_diagrams_needed"`
-	ProduceBenefitEnhancementFiles               TranslationFieldWithOptionsAndParent   `json:"produceBenefitEnhancementFiles" db:"produce_benefit_enhancement_files"`
-	FileNamingConventions                        TranslationFieldWithParent             `json:"fileNamingConventions" db:"file_naming_conventions"`
-	DataMonitoringNote                           models.TranslationField                `json:"dataMonitoringNote" db:"data_monitoring_note"`
-	BenchmarkForPerformance                      models.TranslationFieldWithOptions     `json:"benchmarkForPerformance" db:"benchmark_for_performance"`
-	BenchmarkForPerformanceNote                  models.TranslationField                `json:"benchmarkForPerformanceNote" db:"benchmark_for_performance_note"`
-	ComputePerformanceScores                     models.TranslationFieldWithOptions     `json:"computePerformanceScores" db:"compute_performance_scores"`
-	ComputePerformanceScoresNote                 models.TranslationField                `json:"computePerformanceScoresNote" db:"compute_performance_scores_note"`
-	RiskAdjustPerformance                        models.TranslationFieldWithOptions     `json:"riskAdjustPerformance" db:"risk_adjust_performance"`
-	RiskAdjustFeedback                           models.TranslationFieldWithOptions     `json:"riskAdjustFeedback" db:"risk_adjust_feedback"`
-	RiskAdjustPayments                           models.TranslationFieldWithOptions     `json:"riskAdjustPayments" db:"risk_adjust_payments"`
-	RiskAdjustOther                              models.TranslationFieldWithOptions     `json:"riskAdjustOther" db:"risk_adjust_other"`
-	RiskAdjustNote                               models.TranslationField                `json:"riskAdjustNote" db:"risk_adjust_note"`
-	AppealPerformance                            models.TranslationFieldWithOptions     `json:"appealPerformance" db:"appeal_performance"`
-	AppealFeedback                               models.TranslationFieldWithOptions     `json:"appealFeedback" db:"appeal_feedback"`
-	AppealPayments                               models.TranslationFieldWithOptions     `json:"appealPayments" db:"appeal_payments"`
-	AppealOther                                  models.TranslationFieldWithOptions     `json:"appealOther" db:"appeal_other"`
-	AppealNote                                   models.TranslationField                `json:"appealNote" db:"appeal_note"`
-	EvaluationApproaches                         models.TranslationFieldWithOptions     `json:"evaluationApproaches" db:"evaluation_approaches"`
-	EvaluationApproachOther                      models.TranslationField                `json:"evaluationApproachOther" db:"evaluation_approach_other"`
-	EvalutaionApproachNote                       models.TranslationField                `json:"evalutaionApproachNote" db:"evalutaion_approach_note"`
-	CcmInvolvment                                TranslationFieldWithOptionsAndChildren `json:"ccmInvolvment" db:"ccm_involvment"`
-	CcmInvolvmentOther                           models.TranslationField                `json:"ccmInvolvmentOther" db:"ccm_involvment_other"`
-	CcmInvolvmentNote                            models.TranslationField                `json:"ccmInvolvmentNote" db:"ccm_involvment_note"`
-	DataNeededForMonitoring                      TranslationFieldWithOptionsAndChildren `json:"dataNeededForMonitoring" db:"data_needed_for_monitoring"`
-	DataNeededForMonitoringOther                 models.TranslationField                `json:"dataNeededForMonitoringOther" db:"data_needed_for_monitoring_other"`
-	DataNeededForMonitoringNote                  models.TranslationField                `json:"dataNeededForMonitoringNote" db:"data_needed_for_monitoring_note"`
-	DataToSendParticicipants                     models.TranslationFieldWithOptions     `json:"dataToSendParticicipants" db:"data_to_send_particicipants"`
-	DataToSendParticicipantsOther                models.TranslationField                `json:"dataToSendParticicipantsOther" db:"data_to_send_particicipants_other"`
-	DataToSendParticicipantsNote                 models.TranslationField                `json:"dataToSendParticicipantsNote" db:"data_to_send_particicipants_note"`
-	ShareCclfData                                models.TranslationFieldWithOptions     `json:"shareCclfData" db:"share_cclf_data"`
-	ShareCclfDataNote                            models.TranslationField                `json:"shareCclfDataNote" db:"share_cclf_data_note"`
-	SendFilesBetweenCcw                          TranslationFieldWithOptionsAndParent   `json:"sendFilesBetweenCcw" db:"send_files_between_ccw"`
-	SendFilesBetweenCcwNote                      models.TranslationField                `json:"sendFilesBetweenCcwNote" db:"send_files_between_ccw_note"`
-	AppToSendFilesToKnown                        TranslationFieldWithOptionsAndParent   `json:"appToSendFilesToKnown" db:"app_to_send_files_to_known"`
-	AppToSendFilesToWhich                        models.TranslationField                `json:"appToSendFilesToWhich" db:"app_to_send_files_to_which"`
-	AppToSendFilesToNote                         models.TranslationField                `json:"appToSendFilesToNote" db:"app_to_send_files_to_note"`
-	UseCcwForFileDistribiutionToParticipants     TranslationFieldWithOptionsAndParent   `json:"useCcwForFileDistribiutionToParticipants" db:"use_ccw_for_file_distribiution_to_participants"`
-	UseCcwForFileDistribiutionToParticipantsNote models.TranslationField                `json:"useCcwForFileDistribiutionToParticipantsNote" db:"use_ccw_for_file_distribiution_to_participants_note"`
-	DevelopNewQualityMeasures                    TranslationFieldWithOptionsAndParent   `json:"developNewQualityMeasures" db:"develop_new_quality_measures"`
-	DevelopNewQualityMeasuresNote                models.TranslationField                `json:"developNewQualityMeasuresNote" db:"develop_new_quality_measures_note"`
-	QualityPerformanceImpactsPayment             TranslationFieldWithOptionsAndParent   `json:"qualityPerformanceImpactsPayment" db:"quality_performance_impacts_payment"`
-	QualityPerformanceImpactsPaymentOther        models.TranslationField                `json:"qualityPerformanceImpactsPaymentOther" db:"quality_performance_impacts_payment_other"`
-	QualityPerformanceImpactsPaymentNote         models.TranslationField                `json:"qualityPerformanceImpactsPaymentNote" db:"quality_performance_impacts_payment_note"`
-	DataSharingStarts                            models.TranslationFieldWithOptions     `json:"dataSharingStarts" db:"data_sharing_starts"`
-	DataSharingStartsOther                       models.TranslationField                `json:"dataSharingStartsOther" db:"data_sharing_starts_other"`
-	DataSharingFrequency                         models.TranslationFieldWithOptions     `json:"dataSharingFrequency" db:"data_sharing_frequency"`
-	DataSharingFrequencyContinually              models.TranslationField                `json:"dataSharingFrequencyContinually" db:"data_sharing_frequency_continually"`
-	DataSharingFrequencyOther                    models.TranslationField                `json:"dataSharingFrequencyOther" db:"data_sharing_frequency_other"`
-	DataSharingStartsNote                        models.TranslationField                `json:"dataSharingStartsNote" db:"data_sharing_starts_note"`
-	DataCollectionStarts                         models.TranslationFieldWithOptions     `json:"dataCollectionStarts" db:"data_collection_starts"`
-	DataCollectionStartsOther                    models.TranslationField                `json:"dataCollectionStartsOther" db:"data_collection_starts_other"`
-	DataCollectionFrequency                      models.TranslationFieldWithOptions     `json:"dataCollectionFrequency" db:"data_collection_frequency"`
-	DataCollectionFrequencyContinually           models.TranslationField                `json:"dataCollectionFrequencyContinually" db:"data_collection_frequency_continually"`
-	DataCollectionFrequencyOther                 models.TranslationField                `json:"dataCollectionFrequencyOther" db:"data_collection_frequency_other"`
-	DataCollectionFrequencyNote                  models.TranslationField                `json:"dataCollectionFrequencyNote" db:"data_collection_frequency_note"`
-	QualityReportingStarts                       models.TranslationFieldWithOptions     `json:"qualityReportingStarts" db:"quality_reporting_starts"`
-	QualityReportingStartsOther                  models.TranslationField                `json:"qualityReportingStartsOther" db:"quality_reporting_starts_other"`
-	QualityReportingStartsNote                   models.TranslationField                `json:"qualityReportingStartsNote" db:"quality_reporting_starts_note"`
-	QualityReportingFrequency                    models.TranslationFieldWithOptions     `json:"qualityReportingFrequency" db:"quality_reporting_frequency"`
-	QualityReportingFrequencyContinually         models.TranslationField                `json:"qualityReportingFrequencyContinually" db:"quality_reporting_frequency_continually"`
-	QualityReportingFrequencyOther               models.TranslationField                `json:"qualityReportingFrequencyOther" db:"quality_reporting_frequency_other"`
-	ModelLearningSystems                         models.TranslationFieldWithOptions     `json:"modelLearningSystems" db:"model_learning_systems"`
-	ModelLearningSystemsOther                    models.TranslationField                `json:"modelLearningSystemsOther" db:"model_learning_systems_other"`
-	ModelLearningSystemsNote                     models.TranslationField                `json:"modelLearningSystemsNote" db:"model_learning_systems_note"`
-	AnticipatedChallenges                        models.TranslationField                `json:"anticipatedChallenges" db:"anticipated_challenges"`
-	Status                                       models.TranslationFieldWithOptions     `json:"status" db:"status"`
+	Stakeholders                                 models.TranslationFieldWithOptions            `json:"stakeholders" db:"stakeholders"`
+	StakeholdersOther                            models.TranslationField                       `json:"stakeholdersOther" db:"stakeholders_other"`
+	StakeholdersNote                             models.TranslationField                       `json:"stakeholdersNote" db:"stakeholders_note"`
+	HelpdeskUse                                  models.TranslationFieldWithOptions            `json:"helpdeskUse" db:"helpdesk_use"`
+	HelpdeskUseNote                              models.TranslationField                       `json:"helpdeskUseNote" db:"helpdesk_use_note"`
+	ContractorSupport                            models.TranslationFieldWithOptionsAndChildren `json:"contractorSupport" db:"contractor_support"`
+	ContractorSupportOther                       models.TranslationField                       `json:"contractorSupportOther" db:"contractor_support_other"`
+	ContractorSupportHow                         models.TranslationFieldWithParent             `json:"contractorSupportHow" db:"contractor_support_how"`
+	ContractorSupportNote                        models.TranslationField                       `json:"contractorSupportNote" db:"contractor_support_note"`
+	IddocSupport                                 models.TranslationFieldWithOptionsAndChildren `json:"iddocSupport" db:"iddoc_support"`
+	IddocSupportNote                             models.TranslationField                       `json:"iddocSupportNote" db:"iddoc_support_note"`
+	TechnicalContactsIdentified                  models.TranslationFieldWithOptionsAndParent   `json:"technicalContactsIdentified" db:"technical_contacts_identified"`
+	TechnicalContactsIdentifiedDetail            models.TranslationField                       `json:"technicalContactsIdentifiedDetail" db:"technical_contacts_identified_detail"`
+	TechnicalContactsIdentifiedNote              models.TranslationField                       `json:"technicalContactsIdentifiedNote" db:"technical_contacts_identified_note"`
+	CaptureParticipantInfo                       models.TranslationFieldWithOptionsAndParent   `json:"captureParticipantInfo" db:"capture_participant_info"`
+	CaptureParticipantInfoNote                   models.TranslationField                       `json:"captureParticipantInfoNote" db:"capture_participant_info_note"`
+	IcdOwner                                     models.TranslationFieldWithParent             `json:"icdOwner" db:"icd_owner"`
+	DraftIcdDueDate                              models.TranslationFieldWithParent             `json:"draftIcdDueDate" db:"draft_icd_due_date"`
+	IcdNote                                      models.TranslationFieldWithParent             `json:"icdNote" db:"icd_note"`
+	UatNeeds                                     models.TranslationFieldWithParent             `json:"uatNeeds" db:"uat_needs"`
+	StcNeeds                                     models.TranslationFieldWithParent             `json:"stcNeeds" db:"stc_needs"`
+	TestingTimelines                             models.TranslationFieldWithParent             `json:"testingTimelines" db:"testing_timelines"`
+	TestingNote                                  models.TranslationField                       `json:"testingNote" db:"testing_note"`
+	DataMonitoringFileTypes                      models.TranslationFieldWithOptionsAndParent   `json:"dataMonitoringFileTypes" db:"data_monitoring_file_types"`
+	DataMonitoringFileOther                      models.TranslationField                       `json:"dataMonitoringFileOther" db:"data_monitoring_file_other"`
+	DataResponseType                             models.TranslationFieldWithParent             `json:"dataResponseType" db:"data_response_type"`
+	DataResponseFileFrequency                    models.TranslationFieldWithParent             `json:"dataResponseFileFrequency" db:"data_response_file_frequency"`
+	DataFullTimeOrIncremental                    models.TranslationFieldWithOptionsAndParent   `json:"dataFullTimeOrIncremental" db:"data_full_time_or_incremental"`
+	EftSetUp                                     models.TranslationFieldWithOptionsAndParent   `json:"eftSetUp" db:"eft_set_up"`
+	UnsolicitedAdjustmentsIncluded               models.TranslationFieldWithOptionsAndParent   `json:"unsolicitedAdjustmentsIncluded" db:"unsolicited_adjustments_included"`
+	DataFlowDiagramsNeeded                       models.TranslationFieldWithOptionsAndParent   `json:"dataFlowDiagramsNeeded" db:"data_flow_diagrams_needed"`
+	ProduceBenefitEnhancementFiles               models.TranslationFieldWithOptionsAndParent   `json:"produceBenefitEnhancementFiles" db:"produce_benefit_enhancement_files"`
+	FileNamingConventions                        models.TranslationFieldWithParent             `json:"fileNamingConventions" db:"file_naming_conventions"`
+	DataMonitoringNote                           models.TranslationField                       `json:"dataMonitoringNote" db:"data_monitoring_note"`
+	BenchmarkForPerformance                      models.TranslationFieldWithOptions            `json:"benchmarkForPerformance" db:"benchmark_for_performance"`
+	BenchmarkForPerformanceNote                  models.TranslationField                       `json:"benchmarkForPerformanceNote" db:"benchmark_for_performance_note"`
+	ComputePerformanceScores                     models.TranslationFieldWithOptions            `json:"computePerformanceScores" db:"compute_performance_scores"`
+	ComputePerformanceScoresNote                 models.TranslationField                       `json:"computePerformanceScoresNote" db:"compute_performance_scores_note"`
+	RiskAdjustPerformance                        models.TranslationFieldWithOptions            `json:"riskAdjustPerformance" db:"risk_adjust_performance"`
+	RiskAdjustFeedback                           models.TranslationFieldWithOptions            `json:"riskAdjustFeedback" db:"risk_adjust_feedback"`
+	RiskAdjustPayments                           models.TranslationFieldWithOptions            `json:"riskAdjustPayments" db:"risk_adjust_payments"`
+	RiskAdjustOther                              models.TranslationFieldWithOptions            `json:"riskAdjustOther" db:"risk_adjust_other"`
+	RiskAdjustNote                               models.TranslationField                       `json:"riskAdjustNote" db:"risk_adjust_note"`
+	AppealPerformance                            models.TranslationFieldWithOptions            `json:"appealPerformance" db:"appeal_performance"`
+	AppealFeedback                               models.TranslationFieldWithOptions            `json:"appealFeedback" db:"appeal_feedback"`
+	AppealPayments                               models.TranslationFieldWithOptions            `json:"appealPayments" db:"appeal_payments"`
+	AppealOther                                  models.TranslationFieldWithOptions            `json:"appealOther" db:"appeal_other"`
+	AppealNote                                   models.TranslationField                       `json:"appealNote" db:"appeal_note"`
+	EvaluationApproaches                         models.TranslationFieldWithOptions            `json:"evaluationApproaches" db:"evaluation_approaches"`
+	EvaluationApproachOther                      models.TranslationField                       `json:"evaluationApproachOther" db:"evaluation_approach_other"`
+	EvalutaionApproachNote                       models.TranslationField                       `json:"evalutaionApproachNote" db:"evalutaion_approach_note"`
+	CcmInvolvment                                models.TranslationFieldWithOptionsAndChildren `json:"ccmInvolvment" db:"ccm_involvment"`
+	CcmInvolvmentOther                           models.TranslationField                       `json:"ccmInvolvmentOther" db:"ccm_involvment_other"`
+	CcmInvolvmentNote                            models.TranslationField                       `json:"ccmInvolvmentNote" db:"ccm_involvment_note"`
+	DataNeededForMonitoring                      models.TranslationFieldWithOptionsAndChildren `json:"dataNeededForMonitoring" db:"data_needed_for_monitoring"`
+	DataNeededForMonitoringOther                 models.TranslationField                       `json:"dataNeededForMonitoringOther" db:"data_needed_for_monitoring_other"`
+	DataNeededForMonitoringNote                  models.TranslationField                       `json:"dataNeededForMonitoringNote" db:"data_needed_for_monitoring_note"`
+	DataToSendParticicipants                     models.TranslationFieldWithOptions            `json:"dataToSendParticicipants" db:"data_to_send_particicipants"`
+	DataToSendParticicipantsOther                models.TranslationField                       `json:"dataToSendParticicipantsOther" db:"data_to_send_particicipants_other"`
+	DataToSendParticicipantsNote                 models.TranslationField                       `json:"dataToSendParticicipantsNote" db:"data_to_send_particicipants_note"`
+	ShareCclfData                                models.TranslationFieldWithOptions            `json:"shareCclfData" db:"share_cclf_data"`
+	ShareCclfDataNote                            models.TranslationField                       `json:"shareCclfDataNote" db:"share_cclf_data_note"`
+	SendFilesBetweenCcw                          models.TranslationFieldWithOptionsAndParent   `json:"sendFilesBetweenCcw" db:"send_files_between_ccw"`
+	SendFilesBetweenCcwNote                      models.TranslationField                       `json:"sendFilesBetweenCcwNote" db:"send_files_between_ccw_note"`
+	AppToSendFilesToKnown                        models.TranslationFieldWithOptionsAndParent   `json:"appToSendFilesToKnown" db:"app_to_send_files_to_known"`
+	AppToSendFilesToWhich                        models.TranslationField                       `json:"appToSendFilesToWhich" db:"app_to_send_files_to_which"`
+	AppToSendFilesToNote                         models.TranslationField                       `json:"appToSendFilesToNote" db:"app_to_send_files_to_note"`
+	UseCcwForFileDistribiutionToParticipants     models.TranslationFieldWithOptionsAndParent   `json:"useCcwForFileDistribiutionToParticipants" db:"use_ccw_for_file_distribiution_to_participants"`
+	UseCcwForFileDistribiutionToParticipantsNote models.TranslationField                       `json:"useCcwForFileDistribiutionToParticipantsNote" db:"use_ccw_for_file_distribiution_to_participants_note"`
+	DevelopNewQualityMeasures                    models.TranslationFieldWithOptionsAndParent   `json:"developNewQualityMeasures" db:"develop_new_quality_measures"`
+	DevelopNewQualityMeasuresNote                models.TranslationField                       `json:"developNewQualityMeasuresNote" db:"develop_new_quality_measures_note"`
+	QualityPerformanceImpactsPayment             models.TranslationFieldWithOptionsAndParent   `json:"qualityPerformanceImpactsPayment" db:"quality_performance_impacts_payment"`
+	QualityPerformanceImpactsPaymentOther        models.TranslationField                       `json:"qualityPerformanceImpactsPaymentOther" db:"quality_performance_impacts_payment_other"`
+	QualityPerformanceImpactsPaymentNote         models.TranslationField                       `json:"qualityPerformanceImpactsPaymentNote" db:"quality_performance_impacts_payment_note"`
+	DataSharingStarts                            models.TranslationFieldWithOptions            `json:"dataSharingStarts" db:"data_sharing_starts"`
+	DataSharingStartsOther                       models.TranslationField                       `json:"dataSharingStartsOther" db:"data_sharing_starts_other"`
+	DataSharingFrequency                         models.TranslationFieldWithOptions            `json:"dataSharingFrequency" db:"data_sharing_frequency"`
+	DataSharingFrequencyContinually              models.TranslationField                       `json:"dataSharingFrequencyContinually" db:"data_sharing_frequency_continually"`
+	DataSharingFrequencyOther                    models.TranslationField                       `json:"dataSharingFrequencyOther" db:"data_sharing_frequency_other"`
+	DataSharingStartsNote                        models.TranslationField                       `json:"dataSharingStartsNote" db:"data_sharing_starts_note"`
+	DataCollectionStarts                         models.TranslationFieldWithOptions            `json:"dataCollectionStarts" db:"data_collection_starts"`
+	DataCollectionStartsOther                    models.TranslationField                       `json:"dataCollectionStartsOther" db:"data_collection_starts_other"`
+	DataCollectionFrequency                      models.TranslationFieldWithOptions            `json:"dataCollectionFrequency" db:"data_collection_frequency"`
+	DataCollectionFrequencyContinually           models.TranslationField                       `json:"dataCollectionFrequencyContinually" db:"data_collection_frequency_continually"`
+	DataCollectionFrequencyOther                 models.TranslationField                       `json:"dataCollectionFrequencyOther" db:"data_collection_frequency_other"`
+	DataCollectionFrequencyNote                  models.TranslationField                       `json:"dataCollectionFrequencyNote" db:"data_collection_frequency_note"`
+	QualityReportingStarts                       models.TranslationFieldWithOptions            `json:"qualityReportingStarts" db:"quality_reporting_starts"`
+	QualityReportingStartsOther                  models.TranslationField                       `json:"qualityReportingStartsOther" db:"quality_reporting_starts_other"`
+	QualityReportingStartsNote                   models.TranslationField                       `json:"qualityReportingStartsNote" db:"quality_reporting_starts_note"`
+	QualityReportingFrequency                    models.TranslationFieldWithOptions            `json:"qualityReportingFrequency" db:"quality_reporting_frequency"`
+	QualityReportingFrequencyContinually         models.TranslationField                       `json:"qualityReportingFrequencyContinually" db:"quality_reporting_frequency_continually"`
+	QualityReportingFrequencyOther               models.TranslationField                       `json:"qualityReportingFrequencyOther" db:"quality_reporting_frequency_other"`
+	ModelLearningSystems                         models.TranslationFieldWithOptions            `json:"modelLearningSystems" db:"model_learning_systems"`
+	ModelLearningSystemsOther                    models.TranslationField                       `json:"modelLearningSystemsOther" db:"model_learning_systems_other"`
+	ModelLearningSystemsNote                     models.TranslationField                       `json:"modelLearningSystemsNote" db:"model_learning_systems_note"`
+	AnticipatedChallenges                        models.TranslationField                       `json:"anticipatedChallenges" db:"anticipated_challenges"`
+	Status                                       models.TranslationFieldWithOptions            `json:"status" db:"status"`
 }
 
 // Represents plan participants and providers translation data
 type PlanParticipantsAndProvidersTranslation struct {
-	Participants                              models.TranslationFieldWithOptions     `json:"participants" db:"participants"`
-	MedicareProviderType                      models.TranslationField                `json:"medicareProviderType" db:"medicare_provider_type"`
-	StatesEngagement                          models.TranslationField                `json:"statesEngagement" db:"states_engagement"`
-	ParticipantsOther                         models.TranslationField                `json:"participantsOther" db:"participants_other"`
-	ParticipantsNote                          models.TranslationField                `json:"participantsNote" db:"participants_note"`
-	ParticipantsCurrentlyInModels             models.TranslationFieldWithOptions     `json:"participantsCurrentlyInModels" db:"participants_currently_in_models"`
-	ParticipantsCurrentlyInModelsNote         models.TranslationField                `json:"participantsCurrentlyInModelsNote" db:"participants_currently_in_models_note"`
-	ModelApplicationLevel                     models.TranslationField                `json:"modelApplicationLevel" db:"model_application_level"`
-	ExpectedNumberOfParticipants              models.TranslationField                `json:"expectedNumberOfParticipants" db:"expected_number_of_participants"`
-	EstimateConfidence                        models.TranslationFieldWithOptions     `json:"estimateConfidence" db:"estimate_confidence"`
-	ConfidenceNote                            models.TranslationField                `json:"confidenceNote" db:"confidence_note"`
-	RecruitmentMethod                         models.TranslationFieldWithOptions     `json:"recruitmentMethod" db:"recruitment_method"`
-	RecruitmentOther                          models.TranslationField                `json:"recruitmentOther" db:"recruitment_other"`
-	RecruitmentNote                           models.TranslationField                `json:"recruitmentNote" db:"recruitment_note"`
-	SelectionMethod                           models.TranslationFieldWithOptions     `json:"selectionMethod" db:"selection_method"`
-	SelectionOther                            models.TranslationField                `json:"selectionOther" db:"selection_other"`
-	SelectionNote                             models.TranslationField                `json:"selectionNote" db:"selection_note"`
-	ParticipantAddedFrequency                 models.TranslationFieldWithOptions     `json:"participantAddedFrequency" db:"participant_added_frequency"`
-	ParticipantAddedFrequencyContinually      models.TranslationField                `json:"participantAddedFrequencyContinually" db:"participant_added_frequency_continually"`
-	ParticipantAddedFrequencyOther            models.TranslationField                `json:"participantAddedFrequencyOther" db:"participant_added_frequency_other"`
-	ParticipantAddedFrequencyNote             models.TranslationField                `json:"participantAddedFrequencyNote" db:"participant_added_frequency_note"`
-	ParticipantRemovedFrequency               models.TranslationFieldWithOptions     `json:"participantRemovedFrequency" db:"participant_removed_frequency"`
-	ParticipantRemovedFrequencyContinually    models.TranslationField                `json:"participantRemovedFrequencyContinually" db:"participant_removed_frequency_continually"`
-	ParticipantRemovedFrequencyOther          models.TranslationField                `json:"participantRemovedFrequencyOther" db:"participant_removed_frequency_other"`
-	ParticipantRemovedFrequencyNote           models.TranslationField                `json:"participantRemovedFrequencyNote" db:"participant_removed_frequency_note"`
-	CommunicationMethod                       models.TranslationFieldWithOptions     `json:"communicationMethod" db:"communication_method"`
-	CommunicationMethodOther                  models.TranslationField                `json:"communicationMethodOther" db:"communication_method"`
-	CommunicationNote                         models.TranslationField                `json:"communicationNote" db:"communication_note"`
-	RiskType                                  models.TranslationFieldWithOptions     `json:"riskType" db:"risk_type"`
-	RiskOther                                 models.TranslationField                `json:"riskOther" db:"risk_other"`
-	RiskNote                                  models.TranslationField                `json:"riskNote" db:"risk_note"`
-	WillRiskChange                            models.TranslationFieldWithOptions     `json:"willRiskChange" db:"will_risk_change"`
-	WillRiskChangeNote                        models.TranslationField                `json:"willRiskChangeNote" db:"will_risk_change_note"`
-	ParticipantRequireFinancialGuarantee      models.TranslationFieldWithOptions     `json:"participantRequireFinancialGuarantee" db:"participant_require_financial_guarantee"`
-	ParticipantRequireFinancialGuaranteeType  models.TranslationFieldWithOptions     `json:"participantRequireFinancialGuaranteeType" db:"participant_require_financial_guarantee_type"`
-	ParticipantRequireFinancialGuaranteeOther models.TranslationField                `json:"participantRequireFinancialGuaranteeOther" db:"participant_require_financial_guarantee_other"`
-	ParticipantRequireFinancialGuaranteeNote  models.TranslationField                `json:"participantRequireFinancialGuaranteeNote" db:"participant_require_financial_guarantee_note"`
-	CoordinateWork                            models.TranslationFieldWithOptions     `json:"coordinateWork" db:"coordinate_work"`
-	CoordinateWorkNote                        models.TranslationField                `json:"coordinateWorkNote" db:"coordinate_work_note"`
-	GainsharePayments                         TranslationFieldWithOptionsAndChildren `json:"gainsharePayments" db:"gainshare_payments"`
-	GainsharePaymentsTrack                    TranslationFieldWithOptionsAndParent   `json:"gainsharePaymentsTrack" db:"gainshare_payments_track"`
-	GainsharePaymentsNote                     models.TranslationField                `json:"gainsharePaymentsNote" db:"gainshare_payments_note"`
-	GainsharePaymentsEligibility              TranslationFieldWithOptionsAndParent   `json:"gainsharePaymentsEligibility" db:"gainshare_payments_eligibility"`
-	GainsharePaymentsEligibilityOther         models.TranslationField                `json:"gainsharePaymentsEligibilityOther" db:"gainshare_payments_eligibility_other"`
-	ParticipantsIds                           models.TranslationFieldWithOptions     `json:"participantsIds" db:"participants_ids"`
-	ParticipantsIdsOther                      models.TranslationField                `json:"participantsIdsOther" db:"participants_ids_other"`
-	ParticipantsIDSNote                       models.TranslationField                `json:"participantsIDSNote" db:"participants_ids_note"`
-	ProviderAdditionFrequency                 models.TranslationFieldWithOptions     `json:"providerAdditionFrequency" db:"provider_addition_frequency"`
-	ProviderAdditionFrequencyContinually      models.TranslationField                `json:"providerAdditionFrequencyContinually" db:"provide_addition_frequency_continually"`
-	ProviderAdditionFrequencyOther            models.TranslationField                `json:"providerAdditionFrequencyOther" db:"provider_addition_frequency_other"`
-	ProviderAdditionFrequencyNote             models.TranslationField                `json:"providerAdditionFrequencyNote" db:"provider_addition_frequency_note"`
-	ProviderAddMethod                         models.TranslationFieldWithOptions     `json:"providerAddMethod" db:"provider_add_method"`
-	ProviderAddMethodOther                    models.TranslationField                `json:"providerAddMethodOther" db:"provider_add_method_other"`
-	ProviderAddMethodNote                     models.TranslationField                `json:"providerAddMethodNote" db:"provider_add_method_note"`
-	ProviderLeaveMethod                       models.TranslationFieldWithOptions     `json:"providerLeaveMethod" db:"provider_leave_method"`
-	ProviderLeaveMethodOther                  models.TranslationField                `json:"providerLeaveMethodOther" db:"provider_leave_method_other"`
-	ProviderLeaveMethodNote                   models.TranslationField                `json:"providerLeaveMethodNote" db:"provider_leave_method_note"`
-	ProviderRemovalFrequency                  models.TranslationFieldWithOptions     `json:"providerRemovalFrequency" db:"provider_removal_frequency"`
-	ProviderRemovalFrequencyContinually       models.TranslationField                `json:"providerRemovalFrequencyContinually" db:"provide_removal_frequency_continually"`
-	ProviderRemovalFrequencyOther             models.TranslationField                `json:"providerRemovalFrequencyOther" db:"provider_removal_frequency_other"`
-	ProviderRemovalFrequencyNote              models.TranslationField                `json:"providerRemovalFrequencyNote" db:"provider_removal_frequency_note"`
-	ProviderOverlap                           TranslationFieldWithOptionsAndChildren `json:"providerOverlap" db:"provider_overlap"`
-	ProviderOverlapHierarchy                  TranslationFieldWithParent             `json:"providerOverlapHierarchy" db:"provider_overlap_hierarchy"`
-	ProviderOverlapNote                       models.TranslationField                `json:"providerOverlapNote" db:"provider_overlap_note"`
-	Status                                    models.TranslationFieldWithOptions     `json:"status" db:"status"`
+	Participants                              models.TranslationFieldWithOptions            `json:"participants" db:"participants"`
+	MedicareProviderType                      models.TranslationField                       `json:"medicareProviderType" db:"medicare_provider_type"`
+	StatesEngagement                          models.TranslationField                       `json:"statesEngagement" db:"states_engagement"`
+	ParticipantsOther                         models.TranslationField                       `json:"participantsOther" db:"participants_other"`
+	ParticipantsNote                          models.TranslationField                       `json:"participantsNote" db:"participants_note"`
+	ParticipantsCurrentlyInModels             models.TranslationFieldWithOptions            `json:"participantsCurrentlyInModels" db:"participants_currently_in_models"`
+	ParticipantsCurrentlyInModelsNote         models.TranslationField                       `json:"participantsCurrentlyInModelsNote" db:"participants_currently_in_models_note"`
+	ModelApplicationLevel                     models.TranslationField                       `json:"modelApplicationLevel" db:"model_application_level"`
+	ExpectedNumberOfParticipants              models.TranslationField                       `json:"expectedNumberOfParticipants" db:"expected_number_of_participants"`
+	EstimateConfidence                        models.TranslationFieldWithOptions            `json:"estimateConfidence" db:"estimate_confidence"`
+	ConfidenceNote                            models.TranslationField                       `json:"confidenceNote" db:"confidence_note"`
+	RecruitmentMethod                         models.TranslationFieldWithOptions            `json:"recruitmentMethod" db:"recruitment_method"`
+	RecruitmentOther                          models.TranslationField                       `json:"recruitmentOther" db:"recruitment_other"`
+	RecruitmentNote                           models.TranslationField                       `json:"recruitmentNote" db:"recruitment_note"`
+	SelectionMethod                           models.TranslationFieldWithOptions            `json:"selectionMethod" db:"selection_method"`
+	SelectionOther                            models.TranslationField                       `json:"selectionOther" db:"selection_other"`
+	SelectionNote                             models.TranslationField                       `json:"selectionNote" db:"selection_note"`
+	ParticipantAddedFrequency                 models.TranslationFieldWithOptions            `json:"participantAddedFrequency" db:"participant_added_frequency"`
+	ParticipantAddedFrequencyContinually      models.TranslationField                       `json:"participantAddedFrequencyContinually" db:"participant_added_frequency_continually"`
+	ParticipantAddedFrequencyOther            models.TranslationField                       `json:"participantAddedFrequencyOther" db:"participant_added_frequency_other"`
+	ParticipantAddedFrequencyNote             models.TranslationField                       `json:"participantAddedFrequencyNote" db:"participant_added_frequency_note"`
+	ParticipantRemovedFrequency               models.TranslationFieldWithOptions            `json:"participantRemovedFrequency" db:"participant_removed_frequency"`
+	ParticipantRemovedFrequencyContinually    models.TranslationField                       `json:"participantRemovedFrequencyContinually" db:"participant_removed_frequency_continually"`
+	ParticipantRemovedFrequencyOther          models.TranslationField                       `json:"participantRemovedFrequencyOther" db:"participant_removed_frequency_other"`
+	ParticipantRemovedFrequencyNote           models.TranslationField                       `json:"participantRemovedFrequencyNote" db:"participant_removed_frequency_note"`
+	CommunicationMethod                       models.TranslationFieldWithOptions            `json:"communicationMethod" db:"communication_method"`
+	CommunicationMethodOther                  models.TranslationField                       `json:"communicationMethodOther" db:"communication_method"`
+	CommunicationNote                         models.TranslationField                       `json:"communicationNote" db:"communication_note"`
+	RiskType                                  models.TranslationFieldWithOptions            `json:"riskType" db:"risk_type"`
+	RiskOther                                 models.TranslationField                       `json:"riskOther" db:"risk_other"`
+	RiskNote                                  models.TranslationField                       `json:"riskNote" db:"risk_note"`
+	WillRiskChange                            models.TranslationFieldWithOptions            `json:"willRiskChange" db:"will_risk_change"`
+	WillRiskChangeNote                        models.TranslationField                       `json:"willRiskChangeNote" db:"will_risk_change_note"`
+	ParticipantRequireFinancialGuarantee      models.TranslationFieldWithOptions            `json:"participantRequireFinancialGuarantee" db:"participant_require_financial_guarantee"`
+	ParticipantRequireFinancialGuaranteeType  models.TranslationFieldWithOptions            `json:"participantRequireFinancialGuaranteeType" db:"participant_require_financial_guarantee_type"`
+	ParticipantRequireFinancialGuaranteeOther models.TranslationField                       `json:"participantRequireFinancialGuaranteeOther" db:"participant_require_financial_guarantee_other"`
+	ParticipantRequireFinancialGuaranteeNote  models.TranslationField                       `json:"participantRequireFinancialGuaranteeNote" db:"participant_require_financial_guarantee_note"`
+	CoordinateWork                            models.TranslationFieldWithOptions            `json:"coordinateWork" db:"coordinate_work"`
+	CoordinateWorkNote                        models.TranslationField                       `json:"coordinateWorkNote" db:"coordinate_work_note"`
+	GainsharePayments                         models.TranslationFieldWithOptionsAndChildren `json:"gainsharePayments" db:"gainshare_payments"`
+	GainsharePaymentsTrack                    models.TranslationFieldWithOptionsAndParent   `json:"gainsharePaymentsTrack" db:"gainshare_payments_track"`
+	GainsharePaymentsNote                     models.TranslationField                       `json:"gainsharePaymentsNote" db:"gainshare_payments_note"`
+	GainsharePaymentsEligibility              models.TranslationFieldWithOptionsAndParent   `json:"gainsharePaymentsEligibility" db:"gainshare_payments_eligibility"`
+	GainsharePaymentsEligibilityOther         models.TranslationField                       `json:"gainsharePaymentsEligibilityOther" db:"gainshare_payments_eligibility_other"`
+	ParticipantsIds                           models.TranslationFieldWithOptions            `json:"participantsIds" db:"participants_ids"`
+	ParticipantsIdsOther                      models.TranslationField                       `json:"participantsIdsOther" db:"participants_ids_other"`
+	ParticipantsIDSNote                       models.TranslationField                       `json:"participantsIDSNote" db:"participants_ids_note"`
+	ProviderAdditionFrequency                 models.TranslationFieldWithOptions            `json:"providerAdditionFrequency" db:"provider_addition_frequency"`
+	ProviderAdditionFrequencyContinually      models.TranslationField                       `json:"providerAdditionFrequencyContinually" db:"provide_addition_frequency_continually"`
+	ProviderAdditionFrequencyOther            models.TranslationField                       `json:"providerAdditionFrequencyOther" db:"provider_addition_frequency_other"`
+	ProviderAdditionFrequencyNote             models.TranslationField                       `json:"providerAdditionFrequencyNote" db:"provider_addition_frequency_note"`
+	ProviderAddMethod                         models.TranslationFieldWithOptions            `json:"providerAddMethod" db:"provider_add_method"`
+	ProviderAddMethodOther                    models.TranslationField                       `json:"providerAddMethodOther" db:"provider_add_method_other"`
+	ProviderAddMethodNote                     models.TranslationField                       `json:"providerAddMethodNote" db:"provider_add_method_note"`
+	ProviderLeaveMethod                       models.TranslationFieldWithOptions            `json:"providerLeaveMethod" db:"provider_leave_method"`
+	ProviderLeaveMethodOther                  models.TranslationField                       `json:"providerLeaveMethodOther" db:"provider_leave_method_other"`
+	ProviderLeaveMethodNote                   models.TranslationField                       `json:"providerLeaveMethodNote" db:"provider_leave_method_note"`
+	ProviderRemovalFrequency                  models.TranslationFieldWithOptions            `json:"providerRemovalFrequency" db:"provider_removal_frequency"`
+	ProviderRemovalFrequencyContinually       models.TranslationField                       `json:"providerRemovalFrequencyContinually" db:"provide_removal_frequency_continually"`
+	ProviderRemovalFrequencyOther             models.TranslationField                       `json:"providerRemovalFrequencyOther" db:"provider_removal_frequency_other"`
+	ProviderRemovalFrequencyNote              models.TranslationField                       `json:"providerRemovalFrequencyNote" db:"provider_removal_frequency_note"`
+	ProviderOverlap                           models.TranslationFieldWithOptionsAndChildren `json:"providerOverlap" db:"provider_overlap"`
+	ProviderOverlapHierarchy                  models.TranslationFieldWithParent             `json:"providerOverlapHierarchy" db:"provider_overlap_hierarchy"`
+	ProviderOverlapNote                       models.TranslationField                       `json:"providerOverlapNote" db:"provider_overlap_note"`
+	Status                                    models.TranslationFieldWithOptions            `json:"status" db:"status"`
 }
 
 // Represents payments translation data
 type PlanPaymentsTranslation struct {
-	FundingSource                                     models.TranslationFieldWithOptions    `json:"fundingSource" db:"funding_source"`
-	FundingSourceMedicareAInfo                        models.TranslationField               `json:"fundingSourceMedicareAInfo" db:"funding_source_medicare_a_info"`
-	FundingSourceMedicareBInfo                        models.TranslationField               `json:"fundingSourceMedicareBInfo" db:"funding_source_medicare_b_info"`
-	FundingSourceOther                                models.TranslationField               `json:"fundingSourceOther" db:"funding_source_other"`
-	FundingSourceNote                                 models.TranslationField               `json:"fundingSourceNote" db:"funding_source_note"`
-	FundingSourceR                                    models.TranslationFieldWithOptions    `json:"fundingSourceR" db:"funding_source_r"`
-	FundingSourceRMedicareAInfo                       models.TranslationField               `json:"fundingSourceRMedicareAInfo" db:"funding_source_r_medicare_a_info"`
-	FundingSourceRMedicareBInfo                       models.TranslationField               `json:"fundingSourceRMedicareBInfo" db:"funding_source_r_medicare_b_info"`
-	FundingSourceROther                               models.TranslationField               `json:"fundingSourceROther" db:"funding_source_r_other"`
-	FundingSourceRNote                                models.TranslationField               `json:"fundingSourceRNote" db:"funding_source_r_note"`
-	PayRecipients                                     models.TranslationFieldWithOptions    `json:"payRecipients" db:"pay_recipients"`
-	PayRecipientsOtherSpecification                   models.TranslationField               `json:"payRecipientsOtherSpecification" db:"pay_recipients_other_specification"`
-	PayRecipientsNote                                 models.TranslationField               `json:"payRecipientsNote" db:"pay_recipients_note"`
-	PayType                                           TranslationFieldWithParentAndChildren `json:"payType" db:"pay_type"`
-	PayTypeNote                                       models.TranslationField               `json:"payTypeNote" db:"pay_type_note"`
-	PayClaims                                         models.TranslationFieldWithOptions    `json:"payClaims" db:"pay_claims"`
-	PayClaimsOther                                    models.TranslationField               `json:"payClaimsOther" db:"pay_claims_other"`
-	PayClaimsNote                                     models.TranslationField               `json:"payClaimsNote" db:"pay_claims_note"`
-	ShouldAnyProvidersExcludedFFSSystems              TranslationFieldWithOptionsAndParent  `json:"shouldAnyProvidersExcludedFFSSystems" db:"should_any_providers_excluded_ffs_systems"`
-	ShouldAnyProviderExcludedFFSSystemsNote           models.TranslationField               `json:"shouldAnyProviderExcludedFFSSystemsNote" db:"should_any_providers_excluded_ffs_systems_note"`
-	ChangesMedicarePhysicianFeeSchedule               TranslationFieldWithOptionsAndParent  `json:"changesMedicarePhysicianFeeSchedule" db:"changes_medicare_physician_fee_schedule"`
-	ChangesMedicarePhysicianFeeScheduleNote           models.TranslationField               `json:"changesMedicarePhysicianFeeScheduleNote" db:"changes_medicare_physician_fee_schedule_note"`
-	AffectsMedicareSecondaryPayerClaims               TranslationFieldWithOptionsAndParent  `json:"affectsMedicareSecondaryPayerClaims" db:"affects_medicare_secondary_payer_claims"`
-	AffectsMedicareSecondaryPayerClaimsHow            models.TranslationField               `json:"affectsMedicareSecondaryPayerClaimsHow" db:"affects_medicare_secondary_payer_claims_how"`
-	AffectsMedicareSecondaryPayerClaimsNote           models.TranslationField               `json:"affectsMedicareSecondaryPayerClaimsNote" db:"affects_medicare_secondary_payer_claims_note"`
-	PayModelDifferentiation                           TranslationFieldWithParent            `json:"payModelDifferentiation" db:"pay_model_differentiation"`
-	CreatingDependenciesBetweenServices               TranslationFieldWithOptionsAndParent  `json:"creatingDependenciesBetweenServices" db:"creating_dependencies_between_services"`
-	CreatingDependenciesBetweenServicesNote           models.TranslationField               `json:"creatingDependenciesBetweenServicesNote" db:"creating_dependencies_between_services_note"`
-	NeedsClaimsDataCollection                         TranslationFieldWithOptionsAndParent  `json:"needsClaimsDataCollection" db:"needs_claims_data_collection"`
-	NeedsClaimsDataCollectionNote                     models.TranslationField               `json:"needsClaimsDataCollectionNote" db:"needs_claims_data_collection_note"`
-	ProvidingThirdPartyFile                           TranslationFieldWithOptionsAndParent  `json:"providingThirdPartyFile" db:"providing_third_party_file"`
-	IsContractorAwareTestDataRequirements             TranslationFieldWithOptionsAndParent  `json:"isContractorAwareTestDataRequirements" db:"is_contractor_aware_test_data_requirements"`
-	BeneficiaryCostSharingLevelAndHandling            TranslationFieldWithParent            `json:"beneficiaryCostSharingLevelAndHandling" db:"beneficiary_cost_sharing_level_and_handling"`
-	WaiveBeneficiaryCostSharingForAnyServices         TranslationFieldWithOptionsAndParent  `json:"waiveBeneficiaryCostSharingForAnyServices" db:"waive_beneficiary_cost_sharing_for_any_services"`
-	WaiveBeneficiaryCostSharingServiceSpecification   models.TranslationField               `json:"waiveBeneficiaryCostSharingServiceSpecification" db:"waive_beneficiary_cost_sharing_service_specification"`
-	WaiverOnlyAppliesPartOfPayment                    TranslationFieldWithOptionsAndParent  `json:"waiverOnlyAppliesPartOfPayment" db:"waiver_only_applies_part_of_payment"`
-	WaiveBeneficiaryCostSharingNote                   models.TranslationField               `json:"waiveBeneficiaryCostSharingNote" db:"waive_beneficiary_cost_sharing_note"`
-	NonClaimsPayments                                 TranslationFieldWithOptionsAndParent  `json:"nonClaimsPayments" db:"non_claims_payments"`
-	NonClaimsPaymentOther                             models.TranslationField               `json:"nonClaimsPaymentOther" db:"non_claims_payments_other"`
-	NonClaimsPaymentsNote                             models.TranslationField               `json:"nonClaimsPaymentsNote" db:"non_claims_payments_note"`
-	PaymentCalculationOwner                           TranslationFieldWithParent            `json:"paymentCalculationOwner" db:"payment_calculation_owner"`
-	NumberPaymentsPerPayCycle                         TranslationFieldWithParent            `json:"numberPaymentsPerPayCycle" db:"number_payments_per_pay_cycle"`
-	NumberPaymentsPerPayCycleNote                     models.TranslationField               `json:"numberPaymentsPerPayCycleNote" db:"number_payments_per_pay_cycle_note"`
-	SharedSystemsInvolvedAdditionalClaimPayment       TranslationFieldWithOptionsAndParent  `json:"sharedSystemsInvolvedAdditionalClaimPayment" db:"shared_systems_involved_additional_claim_payment"`
-	SharedSystemsInvolvedAdditionalClaimPaymentNote   models.TranslationField               `json:"sharedSystemsInvolvedAdditionalClaimPaymentNote" db:"shared_systems_involved_additional_claim_payment_note"`
-	PlanningToUseInnovationPaymentContractor          TranslationFieldWithOptionsAndParent  `json:"planningToUseInnovationPaymentContractor" db:"planning_to_use_innovation_payment_contractor"`
-	PlanningToUseInnovationPaymentContractorNote      models.TranslationField               `json:"planningToUseInnovationPaymentContractorNote" db:"planning_to_use_innovation_payment_contractor_note"`
-	ExpectedCalculationComplexityLevel                models.TranslationFieldWithOptions    `json:"expectedCalculationComplexityLevel" db:"expected_calculation_complexity_level"`
-	ExpectedCalculationComplexityLevelNote            models.TranslationField               `json:"expectedCalculationComplexityLevelNote" db:"expected_calculation_complexity_level_note"`
-	ClaimsProcessingPrecedence                        models.TranslationFieldWithOptions    `json:"claimsProcessingPrecedence" db:"claims_processing_precedence"`
-	ClaimsProcessingPrecedenceOther                   models.TranslationField               `json:"claimsProcessingPrecedenceOther" db:"claims_processing_precedence_other"`
-	ClaimsProcessingPrecedenceNote                    models.TranslationField               `json:"claimsProcessingPrecedenceNote" db:"claims_processing_precedence_note"`
-	CanParticipantsSelectBetweenPaymentMechanisms     models.TranslationFieldWithOptions    `json:"canParticipantsSelectBetweenPaymentMechanisms" db:"can_participants_select_between_payment_mechanisms"`
-	CanParticipantsSelectBetweenPaymentMechanismsHow  models.TranslationField               `json:"canParticipantsSelectBetweenPaymentMechanismsHow" db:"can_participants_select_between_payment_mechanisms_how"`
-	CanParticipantsSelectBetweenPaymentMechanismsNote models.TranslationField               `json:"canParticipantsSelectBetweenPaymentMechanismsNote" db:"can_participants_select_between_payment_mechanisms_note"`
-	AnticipatedPaymentFrequency                       models.TranslationFieldWithOptions    `json:"anticipatedPaymentFrequency" db:"anticipated_payment_frequency"`
-	AnticipatedPaymentFrequencyContinually            models.TranslationField               `json:"anticipatedPaymentFrequencyContinually" db:"anticipated_payment_frequency_continually"`
-	AnticipatedPaymentFrequencyOther                  models.TranslationField               `json:"anticipatedPaymentFrequencyOther" db:"anticipated_payment_frequency_other"`
-	AnticipatedPaymentFrequencyNote                   models.TranslationField               `json:"anticipatedPaymentFrequencyNote" db:"anticipated_payment_frequency_note"`
-	WillRecoverPayments                               models.TranslationFieldWithOptions    `json:"willRecoverPayments" db:"will_recover_payments"`
-	WillRecoverPaymentsNote                           models.TranslationField               `json:"willRecoverPaymentsNote" db:"will_recover_payments_note"`
-	AnticipateReconcilingPaymentsRetrospectively      models.TranslationFieldWithOptions    `json:"anticipateReconcilingPaymentsRetrospectively" db:"anticipate_reconciling_payments_retrospectively"`
-	AnticipateReconcilingPaymentsRetrospectivelyNote  models.TranslationField               `json:"anticipateReconcilingPaymentsRetrospectivelyNote" db:"anticipate_reconciling_payments_retrospectively_note"`
-	PaymentReconciliationFrequency                    models.TranslationFieldWithOptions    `json:"paymentReconciliationFrequency" db:"payment_reconciliation_frequency"`
-	PaymentReconciliationFrequencyContinually         models.TranslationField               `json:"paymentReconciliationFrequencyContinually" db:"payment_reconciliation_frequency_continually"`
-	PaymentReconciliationFrequencyOther               models.TranslationField               `json:"paymentReconciliationFrequencyOther" db:"payment_reconciliation_frequency_other"`
-	PaymentReconciliationFrequencyNote                models.TranslationField               `json:"paymentReconciliationFrequencyNote" db:"payment_reconciliation_frequency_note"`
-	PaymentDemandRecoupmentFrequency                  models.TranslationFieldWithOptions    `json:"paymentDemandRecoupmentFrequency" db:"payment_demand_recoupment_frequency"`
-	PaymentDemandRecoupmentFrequencyContinually       models.TranslationField               `json:"paymentDemandRecoupmentFrequencyContinually" db:"payment_demand_recoupment_frequency_continually"`
-	PaymentDemandRecoupmentFrequencyOther             models.TranslationField               `json:"paymentDemandRecoupmentFrequencyOther" db:"payment_demand_recoupment_frequency_other"`
-	PaymentDemandRecoupmentFrequencyNote              models.TranslationField               `json:"paymentDemandRecoupmentFrequencyNote" db:"payment_demand_recoupment_frequency_note"`
-	PaymentStartDate                                  models.TranslationField               `json:"paymentStartDate" db:"payment_start_date"`
-	PaymentStartDateNote                              models.TranslationField               `json:"paymentStartDateNote" db:"payment_start_date_note"`
-	Status                                            models.TranslationFieldWithOptions    `json:"status" db:"status"`
+	FundingSource                                     models.TranslationFieldWithOptions           `json:"fundingSource" db:"funding_source"`
+	FundingSourceMedicareAInfo                        models.TranslationField                      `json:"fundingSourceMedicareAInfo" db:"funding_source_medicare_a_info"`
+	FundingSourceMedicareBInfo                        models.TranslationField                      `json:"fundingSourceMedicareBInfo" db:"funding_source_medicare_b_info"`
+	FundingSourceOther                                models.TranslationField                      `json:"fundingSourceOther" db:"funding_source_other"`
+	FundingSourceNote                                 models.TranslationField                      `json:"fundingSourceNote" db:"funding_source_note"`
+	FundingSourceR                                    models.TranslationFieldWithOptions           `json:"fundingSourceR" db:"funding_source_r"`
+	FundingSourceRMedicareAInfo                       models.TranslationField                      `json:"fundingSourceRMedicareAInfo" db:"funding_source_r_medicare_a_info"`
+	FundingSourceRMedicareBInfo                       models.TranslationField                      `json:"fundingSourceRMedicareBInfo" db:"funding_source_r_medicare_b_info"`
+	FundingSourceROther                               models.TranslationField                      `json:"fundingSourceROther" db:"funding_source_r_other"`
+	FundingSourceRNote                                models.TranslationField                      `json:"fundingSourceRNote" db:"funding_source_r_note"`
+	PayRecipients                                     models.TranslationFieldWithOptions           `json:"payRecipients" db:"pay_recipients"`
+	PayRecipientsOtherSpecification                   models.TranslationField                      `json:"payRecipientsOtherSpecification" db:"pay_recipients_other_specification"`
+	PayRecipientsNote                                 models.TranslationField                      `json:"payRecipientsNote" db:"pay_recipients_note"`
+	PayType                                           models.TranslationFieldWithParentAndChildren `json:"payType" db:"pay_type"`
+	PayTypeNote                                       models.TranslationField                      `json:"payTypeNote" db:"pay_type_note"`
+	PayClaims                                         models.TranslationFieldWithOptions           `json:"payClaims" db:"pay_claims"`
+	PayClaimsOther                                    models.TranslationField                      `json:"payClaimsOther" db:"pay_claims_other"`
+	PayClaimsNote                                     models.TranslationField                      `json:"payClaimsNote" db:"pay_claims_note"`
+	ShouldAnyProvidersExcludedFFSSystems              models.TranslationFieldWithOptionsAndParent  `json:"shouldAnyProvidersExcludedFFSSystems" db:"should_any_providers_excluded_ffs_systems"`
+	ShouldAnyProviderExcludedFFSSystemsNote           models.TranslationField                      `json:"shouldAnyProviderExcludedFFSSystemsNote" db:"should_any_providers_excluded_ffs_systems_note"`
+	ChangesMedicarePhysicianFeeSchedule               models.TranslationFieldWithOptionsAndParent  `json:"changesMedicarePhysicianFeeSchedule" db:"changes_medicare_physician_fee_schedule"`
+	ChangesMedicarePhysicianFeeScheduleNote           models.TranslationField                      `json:"changesMedicarePhysicianFeeScheduleNote" db:"changes_medicare_physician_fee_schedule_note"`
+	AffectsMedicareSecondaryPayerClaims               models.TranslationFieldWithOptionsAndParent  `json:"affectsMedicareSecondaryPayerClaims" db:"affects_medicare_secondary_payer_claims"`
+	AffectsMedicareSecondaryPayerClaimsHow            models.TranslationField                      `json:"affectsMedicareSecondaryPayerClaimsHow" db:"affects_medicare_secondary_payer_claims_how"`
+	AffectsMedicareSecondaryPayerClaimsNote           models.TranslationField                      `json:"affectsMedicareSecondaryPayerClaimsNote" db:"affects_medicare_secondary_payer_claims_note"`
+	PayModelDifferentiation                           models.TranslationFieldWithParent            `json:"payModelDifferentiation" db:"pay_model_differentiation"`
+	CreatingDependenciesBetweenServices               models.TranslationFieldWithOptionsAndParent  `json:"creatingDependenciesBetweenServices" db:"creating_dependencies_between_services"`
+	CreatingDependenciesBetweenServicesNote           models.TranslationField                      `json:"creatingDependenciesBetweenServicesNote" db:"creating_dependencies_between_services_note"`
+	NeedsClaimsDataCollection                         models.TranslationFieldWithOptionsAndParent  `json:"needsClaimsDataCollection" db:"needs_claims_data_collection"`
+	NeedsClaimsDataCollectionNote                     models.TranslationField                      `json:"needsClaimsDataCollectionNote" db:"needs_claims_data_collection_note"`
+	ProvidingThirdPartyFile                           models.TranslationFieldWithOptionsAndParent  `json:"providingThirdPartyFile" db:"providing_third_party_file"`
+	IsContractorAwareTestDataRequirements             models.TranslationFieldWithOptionsAndParent  `json:"isContractorAwareTestDataRequirements" db:"is_contractor_aware_test_data_requirements"`
+	BeneficiaryCostSharingLevelAndHandling            models.TranslationFieldWithParent            `json:"beneficiaryCostSharingLevelAndHandling" db:"beneficiary_cost_sharing_level_and_handling"`
+	WaiveBeneficiaryCostSharingForAnyServices         models.TranslationFieldWithOptionsAndParent  `json:"waiveBeneficiaryCostSharingForAnyServices" db:"waive_beneficiary_cost_sharing_for_any_services"`
+	WaiveBeneficiaryCostSharingServiceSpecification   models.TranslationField                      `json:"waiveBeneficiaryCostSharingServiceSpecification" db:"waive_beneficiary_cost_sharing_service_specification"`
+	WaiverOnlyAppliesPartOfPayment                    models.TranslationFieldWithOptionsAndParent  `json:"waiverOnlyAppliesPartOfPayment" db:"waiver_only_applies_part_of_payment"`
+	WaiveBeneficiaryCostSharingNote                   models.TranslationField                      `json:"waiveBeneficiaryCostSharingNote" db:"waive_beneficiary_cost_sharing_note"`
+	NonClaimsPayments                                 models.TranslationFieldWithOptionsAndParent  `json:"nonClaimsPayments" db:"non_claims_payments"`
+	NonClaimsPaymentOther                             models.TranslationField                      `json:"nonClaimsPaymentOther" db:"non_claims_payments_other"`
+	NonClaimsPaymentsNote                             models.TranslationField                      `json:"nonClaimsPaymentsNote" db:"non_claims_payments_note"`
+	PaymentCalculationOwner                           models.TranslationFieldWithParent            `json:"paymentCalculationOwner" db:"payment_calculation_owner"`
+	NumberPaymentsPerPayCycle                         models.TranslationFieldWithParent            `json:"numberPaymentsPerPayCycle" db:"number_payments_per_pay_cycle"`
+	NumberPaymentsPerPayCycleNote                     models.TranslationField                      `json:"numberPaymentsPerPayCycleNote" db:"number_payments_per_pay_cycle_note"`
+	SharedSystemsInvolvedAdditionalClaimPayment       models.TranslationFieldWithOptionsAndParent  `json:"sharedSystemsInvolvedAdditionalClaimPayment" db:"shared_systems_involved_additional_claim_payment"`
+	SharedSystemsInvolvedAdditionalClaimPaymentNote   models.TranslationField                      `json:"sharedSystemsInvolvedAdditionalClaimPaymentNote" db:"shared_systems_involved_additional_claim_payment_note"`
+	PlanningToUseInnovationPaymentContractor          models.TranslationFieldWithOptionsAndParent  `json:"planningToUseInnovationPaymentContractor" db:"planning_to_use_innovation_payment_contractor"`
+	PlanningToUseInnovationPaymentContractorNote      models.TranslationField                      `json:"planningToUseInnovationPaymentContractorNote" db:"planning_to_use_innovation_payment_contractor_note"`
+	ExpectedCalculationComplexityLevel                models.TranslationFieldWithOptions           `json:"expectedCalculationComplexityLevel" db:"expected_calculation_complexity_level"`
+	ExpectedCalculationComplexityLevelNote            models.TranslationField                      `json:"expectedCalculationComplexityLevelNote" db:"expected_calculation_complexity_level_note"`
+	ClaimsProcessingPrecedence                        models.TranslationFieldWithOptions           `json:"claimsProcessingPrecedence" db:"claims_processing_precedence"`
+	ClaimsProcessingPrecedenceOther                   models.TranslationField                      `json:"claimsProcessingPrecedenceOther" db:"claims_processing_precedence_other"`
+	ClaimsProcessingPrecedenceNote                    models.TranslationField                      `json:"claimsProcessingPrecedenceNote" db:"claims_processing_precedence_note"`
+	CanParticipantsSelectBetweenPaymentMechanisms     models.TranslationFieldWithOptions           `json:"canParticipantsSelectBetweenPaymentMechanisms" db:"can_participants_select_between_payment_mechanisms"`
+	CanParticipantsSelectBetweenPaymentMechanismsHow  models.TranslationField                      `json:"canParticipantsSelectBetweenPaymentMechanismsHow" db:"can_participants_select_between_payment_mechanisms_how"`
+	CanParticipantsSelectBetweenPaymentMechanismsNote models.TranslationField                      `json:"canParticipantsSelectBetweenPaymentMechanismsNote" db:"can_participants_select_between_payment_mechanisms_note"`
+	AnticipatedPaymentFrequency                       models.TranslationFieldWithOptions           `json:"anticipatedPaymentFrequency" db:"anticipated_payment_frequency"`
+	AnticipatedPaymentFrequencyContinually            models.TranslationField                      `json:"anticipatedPaymentFrequencyContinually" db:"anticipated_payment_frequency_continually"`
+	AnticipatedPaymentFrequencyOther                  models.TranslationField                      `json:"anticipatedPaymentFrequencyOther" db:"anticipated_payment_frequency_other"`
+	AnticipatedPaymentFrequencyNote                   models.TranslationField                      `json:"anticipatedPaymentFrequencyNote" db:"anticipated_payment_frequency_note"`
+	WillRecoverPayments                               models.TranslationFieldWithOptions           `json:"willRecoverPayments" db:"will_recover_payments"`
+	WillRecoverPaymentsNote                           models.TranslationField                      `json:"willRecoverPaymentsNote" db:"will_recover_payments_note"`
+	AnticipateReconcilingPaymentsRetrospectively      models.TranslationFieldWithOptions           `json:"anticipateReconcilingPaymentsRetrospectively" db:"anticipate_reconciling_payments_retrospectively"`
+	AnticipateReconcilingPaymentsRetrospectivelyNote  models.TranslationField                      `json:"anticipateReconcilingPaymentsRetrospectivelyNote" db:"anticipate_reconciling_payments_retrospectively_note"`
+	PaymentReconciliationFrequency                    models.TranslationFieldWithOptions           `json:"paymentReconciliationFrequency" db:"payment_reconciliation_frequency"`
+	PaymentReconciliationFrequencyContinually         models.TranslationField                      `json:"paymentReconciliationFrequencyContinually" db:"payment_reconciliation_frequency_continually"`
+	PaymentReconciliationFrequencyOther               models.TranslationField                      `json:"paymentReconciliationFrequencyOther" db:"payment_reconciliation_frequency_other"`
+	PaymentReconciliationFrequencyNote                models.TranslationField                      `json:"paymentReconciliationFrequencyNote" db:"payment_reconciliation_frequency_note"`
+	PaymentDemandRecoupmentFrequency                  models.TranslationFieldWithOptions           `json:"paymentDemandRecoupmentFrequency" db:"payment_demand_recoupment_frequency"`
+	PaymentDemandRecoupmentFrequencyContinually       models.TranslationField                      `json:"paymentDemandRecoupmentFrequencyContinually" db:"payment_demand_recoupment_frequency_continually"`
+	PaymentDemandRecoupmentFrequencyOther             models.TranslationField                      `json:"paymentDemandRecoupmentFrequencyOther" db:"payment_demand_recoupment_frequency_other"`
+	PaymentDemandRecoupmentFrequencyNote              models.TranslationField                      `json:"paymentDemandRecoupmentFrequencyNote" db:"payment_demand_recoupment_frequency_note"`
+	PaymentStartDate                                  models.TranslationField                      `json:"paymentStartDate" db:"payment_start_date"`
+	PaymentStartDateNote                              models.TranslationField                      `json:"paymentStartDateNote" db:"payment_start_date_note"`
+	Status                                            models.TranslationFieldWithOptions           `json:"status" db:"status"`
 }
 
 type PlanTDLCreateInput struct {
@@ -531,98 +531,6 @@ type TaskListSectionLockStatusChanged struct {
 	ChangeType ChangeType                `json:"changeType"`
 	LockStatus TaskListSectionLockStatus `json:"lockStatus"`
 	ActionType ActionType                `json:"actionType"`
-}
-
-// Represents a translation question with options and child/children
-type TranslationFieldWithOptionsAndChildren struct {
-	GqlField         string                     `json:"gqlField"`
-	GoField          string                     `json:"goField"`
-	DbField          string                     `json:"dbField"`
-	Label            string                     `json:"label"`
-	ReadonlyLabel    *string                    `json:"readonlyLabel,omitempty"`
-	Sublabel         *string                    `json:"sublabel,omitempty"`
-	MultiSelectLabel *string                    `json:"multiSelectLabel,omitempty"`
-	IsArray          *bool                      `json:"isArray,omitempty"`
-	DataType         models.TranslationDataType `json:"dataType"`
-	FormType         models.TranslationFormType `json:"formType"`
-	IsNote           *bool                      `json:"isNote,omitempty"`
-	// Is a question a followup to another that doesn't designate it's own readonly question/line
-	IsOtherType *bool `json:"isOtherType,omitempty"`
-	// Field name for the parent question for fields that represent Other, Please specify, etc.  Used in change history to render parent question for context
-	OtherParentField *string `json:"otherParentField,omitempty"`
-	// Label for fields that reference more than one parent - Ex: Notes - 'Note for Model Basics'
-	ParentReferencesLabel *string                `json:"parentReferencesLabel,omitempty"`
-	Options               map[string]interface{} `json:"options"`
-	ChildRelation         map[string]interface{} `json:"childRelation"`
-}
-
-// Represents a translation question with options and parent
-type TranslationFieldWithOptionsAndParent struct {
-	GqlField         string                     `json:"gqlField"`
-	GoField          string                     `json:"goField"`
-	DbField          string                     `json:"dbField"`
-	Label            string                     `json:"label"`
-	ReadonlyLabel    *string                    `json:"readonlyLabel,omitempty"`
-	Sublabel         *string                    `json:"sublabel,omitempty"`
-	MultiSelectLabel *string                    `json:"multiSelectLabel,omitempty"`
-	IsArray          *bool                      `json:"isArray,omitempty"`
-	DataType         models.TranslationDataType `json:"dataType"`
-	FormType         models.TranslationFormType `json:"formType"`
-	IsNote           *bool                      `json:"isNote,omitempty"`
-	// Is a question a followup to another that doesn't designate it's own readonly question/line
-	IsOtherType *bool `json:"isOtherType,omitempty"`
-	// Field name for the parent question for fields that represent Other, Please specify, etc.  Used in change history to render parent question for context
-	OtherParentField *string `json:"otherParentField,omitempty"`
-	// Label for fields that reference more than one parent - Ex: Notes - 'Note for Model Basics'
-	ParentReferencesLabel *string                                `json:"parentReferencesLabel,omitempty"`
-	Options               map[string]interface{}                 `json:"options"`
-	ParentRelation        TranslationFieldWithOptionsAndChildren `json:"parentRelation"`
-}
-
-// Represents a translation question with no options and a parent
-type TranslationFieldWithParent struct {
-	GqlField         string                     `json:"gqlField"`
-	GoField          string                     `json:"goField"`
-	DbField          string                     `json:"dbField"`
-	Label            string                     `json:"label"`
-	ReadonlyLabel    *string                    `json:"readonlyLabel,omitempty"`
-	Sublabel         *string                    `json:"sublabel,omitempty"`
-	MultiSelectLabel *string                    `json:"multiSelectLabel,omitempty"`
-	IsArray          *bool                      `json:"isArray,omitempty"`
-	DataType         models.TranslationDataType `json:"dataType"`
-	FormType         models.TranslationFormType `json:"formType"`
-	IsNote           *bool                      `json:"isNote,omitempty"`
-	// Is a question a followup to another that doesn't designate it's own readonly question/line
-	IsOtherType *bool `json:"isOtherType,omitempty"`
-	// Field name for the parent question for fields that represent Other, Please specify, etc.  Used in change history to render parent question for context
-	OtherParentField *string `json:"otherParentField,omitempty"`
-	// Label for fields that reference more than one parent - Ex: Notes - 'Note for Model Basics'
-	ParentReferencesLabel *string                 `json:"parentReferencesLabel,omitempty"`
-	ParentRelation        models.TranslationField `json:"parentRelation"`
-}
-
-// Represents a translation question with options and parent and children
-type TranslationFieldWithParentAndChildren struct {
-	GqlField         string                     `json:"gqlField"`
-	GoField          string                     `json:"goField"`
-	DbField          string                     `json:"dbField"`
-	Label            string                     `json:"label"`
-	ReadonlyLabel    *string                    `json:"readonlyLabel,omitempty"`
-	Sublabel         *string                    `json:"sublabel,omitempty"`
-	MultiSelectLabel *string                    `json:"multiSelectLabel,omitempty"`
-	IsArray          *bool                      `json:"isArray,omitempty"`
-	DataType         models.TranslationDataType `json:"dataType"`
-	FormType         models.TranslationFormType `json:"formType"`
-	IsNote           *bool                      `json:"isNote,omitempty"`
-	// Is a question a followup to another that doesn't designate it's own readonly question/line
-	IsOtherType *bool `json:"isOtherType,omitempty"`
-	// Field name for the parent question for fields that represent Other, Please specify, etc.  Used in change history to render parent question for context
-	OtherParentField *string `json:"otherParentField,omitempty"`
-	// Label for fields that reference more than one parent - Ex: Notes - 'Note for Model Basics'
-	ParentReferencesLabel *string                                `json:"parentReferencesLabel,omitempty"`
-	Options               map[string]interface{}                 `json:"options"`
-	ParentRelation        TranslationFieldWithOptionsAndChildren `json:"parentRelation"`
-	ChildRelation         map[string]interface{}                 `json:"childRelation"`
 }
 
 type UpdateOperationalSolutionSubtaskInput struct {
