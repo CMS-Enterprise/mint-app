@@ -1,19 +1,53 @@
 package models
 
+// Represents the data type of the translation field
+type TranslationDataType string
+
+// These constants represent the different values of TranslationDataType
+const (
+	TDTString  TranslationDataType = "STRING"
+	TDTNumber  TranslationDataType = "NUMBER"
+	TDTBoolean TranslationDataType = "BOOLEAN"
+	TDTDate    TranslationDataType = "DATE"
+	TDTEnum    TranslationDataType = "ENUM"
+	TDTObject  TranslationDataType = "OBJECT"
+)
+
+// Represents the FORM type of the translation field
+type TranslationFormType string
+
+// These constants represent the different values of TranslationFormType
+const (
+	TFTText        TranslationFormType = "TEXT"
+	TFTTextarea    TranslationFormType = "TEXTAREA"
+	TFTNumber      TranslationFormType = "NUMBER"
+	TFTBoolean     TranslationFormType = "BOOLEAN"
+	TFTRadio       TranslationFormType = "RADIO"
+	TFTCheckbox    TranslationFormType = "CHECKBOX"
+	TFTSelect      TranslationFormType = "SELECT"
+	TFTMultiselect TranslationFormType = "MULTISELECT"
+	TFTDatePicker  TranslationFormType = "DATEPICKER"
+	TFTRangeInput  TranslationFormType = "RANGEINPUT"
+)
+
 // TranslationField represents a the translation of data to human readable format
 type TranslationField struct {
-	GqlField         string  `json:"gqlField"`
-	GoField          string  `json:"goField"`
-	DbField          string  `json:"dbField"`
-	Label            string  `json:"label"`
-	ReadOnlyLabel    *string `json:"readonlyLabel"`
-	SubLabel         *string `json:"sublabel"`
-	MultiSelectLabel *string `json:"multiSelectLabel"`
-	IsArray          bool    `json:"isArray"`
-	IsOtherType      bool    `json:"isOtherType"`
-	// DataType         string `json:"dataType"`
-	// FormType    string `json:"formType"`
-
+	GqlField         string              `json:"gqlField"`
+	GoField          string              `json:"goField"`
+	DbField          string              `json:"dbField"`
+	Label            string              `json:"label"`
+	ReadOnlyLabel    *string             `json:"readonlyLabel"`
+	SubLabel         *string             `json:"sublabel"`
+	MultiSelectLabel *string             `json:"multiSelectLabel"`
+	IsArray          bool                `json:"isArray"`
+	DataType         TranslationDataType `json:"dataType"`
+	FormType         TranslationFormType `json:"formType"`
+	IsNote           bool                `json:"isNote"`
+	IsOtherType      bool                `json:"isOtherType"`
+	// DB field name for the parent field, used to be able to grab the parent translation
+	OtherParentField string `json:"otherParentField"`
+	// Label for fields that reference more than one parent - Ex: Notes - 'Note for Model Basics'
+	ParentReferencesLabel string `json:"parentReferencesLabel"`
 }
 
 // GetLabel has logic to prioritize the translated label to be returned for a specific field. It prioritizes the Read only Label, a

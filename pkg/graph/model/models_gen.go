@@ -535,17 +535,17 @@ type TaskListSectionLockStatusChanged struct {
 
 // Represents a translation question with options and child/children
 type TranslationFieldWithOptionsAndChildren struct {
-	GqlField         string              `json:"gqlField"`
-	GoField          string              `json:"goField"`
-	DbField          string              `json:"dbField"`
-	Label            string              `json:"label"`
-	ReadonlyLabel    *string             `json:"readonlyLabel,omitempty"`
-	Sublabel         *string             `json:"sublabel,omitempty"`
-	MultiSelectLabel *string             `json:"multiSelectLabel,omitempty"`
-	IsArray          *bool               `json:"isArray,omitempty"`
-	DataType         TranslationDataType `json:"dataType"`
-	FormType         TranslationFormType `json:"formType"`
-	IsNote           *bool               `json:"isNote,omitempty"`
+	GqlField         string                     `json:"gqlField"`
+	GoField          string                     `json:"goField"`
+	DbField          string                     `json:"dbField"`
+	Label            string                     `json:"label"`
+	ReadonlyLabel    *string                    `json:"readonlyLabel,omitempty"`
+	Sublabel         *string                    `json:"sublabel,omitempty"`
+	MultiSelectLabel *string                    `json:"multiSelectLabel,omitempty"`
+	IsArray          *bool                      `json:"isArray,omitempty"`
+	DataType         models.TranslationDataType `json:"dataType"`
+	FormType         models.TranslationFormType `json:"formType"`
+	IsNote           *bool                      `json:"isNote,omitempty"`
 	// Is a question a followup to another that doesn't designate it's own readonly question/line
 	IsOtherType *bool `json:"isOtherType,omitempty"`
 	// Field name for the parent question for fields that represent Other, Please specify, etc.  Used in change history to render parent question for context
@@ -558,17 +558,17 @@ type TranslationFieldWithOptionsAndChildren struct {
 
 // Represents a translation question with options and parent
 type TranslationFieldWithOptionsAndParent struct {
-	GqlField         string              `json:"gqlField"`
-	GoField          string              `json:"goField"`
-	DbField          string              `json:"dbField"`
-	Label            string              `json:"label"`
-	ReadonlyLabel    *string             `json:"readonlyLabel,omitempty"`
-	Sublabel         *string             `json:"sublabel,omitempty"`
-	MultiSelectLabel *string             `json:"multiSelectLabel,omitempty"`
-	IsArray          *bool               `json:"isArray,omitempty"`
-	DataType         TranslationDataType `json:"dataType"`
-	FormType         TranslationFormType `json:"formType"`
-	IsNote           *bool               `json:"isNote,omitempty"`
+	GqlField         string                     `json:"gqlField"`
+	GoField          string                     `json:"goField"`
+	DbField          string                     `json:"dbField"`
+	Label            string                     `json:"label"`
+	ReadonlyLabel    *string                    `json:"readonlyLabel,omitempty"`
+	Sublabel         *string                    `json:"sublabel,omitempty"`
+	MultiSelectLabel *string                    `json:"multiSelectLabel,omitempty"`
+	IsArray          *bool                      `json:"isArray,omitempty"`
+	DataType         models.TranslationDataType `json:"dataType"`
+	FormType         models.TranslationFormType `json:"formType"`
+	IsNote           *bool                      `json:"isNote,omitempty"`
 	// Is a question a followup to another that doesn't designate it's own readonly question/line
 	IsOtherType *bool `json:"isOtherType,omitempty"`
 	// Field name for the parent question for fields that represent Other, Please specify, etc.  Used in change history to render parent question for context
@@ -581,17 +581,17 @@ type TranslationFieldWithOptionsAndParent struct {
 
 // Represents a translation question with no options and a parent
 type TranslationFieldWithParent struct {
-	GqlField         string              `json:"gqlField"`
-	GoField          string              `json:"goField"`
-	DbField          string              `json:"dbField"`
-	Label            string              `json:"label"`
-	ReadonlyLabel    *string             `json:"readonlyLabel,omitempty"`
-	Sublabel         *string             `json:"sublabel,omitempty"`
-	MultiSelectLabel *string             `json:"multiSelectLabel,omitempty"`
-	IsArray          *bool               `json:"isArray,omitempty"`
-	DataType         TranslationDataType `json:"dataType"`
-	FormType         TranslationFormType `json:"formType"`
-	IsNote           *bool               `json:"isNote,omitempty"`
+	GqlField         string                     `json:"gqlField"`
+	GoField          string                     `json:"goField"`
+	DbField          string                     `json:"dbField"`
+	Label            string                     `json:"label"`
+	ReadonlyLabel    *string                    `json:"readonlyLabel,omitempty"`
+	Sublabel         *string                    `json:"sublabel,omitempty"`
+	MultiSelectLabel *string                    `json:"multiSelectLabel,omitempty"`
+	IsArray          *bool                      `json:"isArray,omitempty"`
+	DataType         models.TranslationDataType `json:"dataType"`
+	FormType         models.TranslationFormType `json:"formType"`
+	IsNote           *bool                      `json:"isNote,omitempty"`
 	// Is a question a followup to another that doesn't designate it's own readonly question/line
 	IsOtherType *bool `json:"isOtherType,omitempty"`
 	// Field name for the parent question for fields that represent Other, Please specify, etc.  Used in change history to render parent question for context
@@ -603,17 +603,17 @@ type TranslationFieldWithParent struct {
 
 // Represents a translation question with options and parent and children
 type TranslationFieldWithParentAndChildren struct {
-	GqlField         string              `json:"gqlField"`
-	GoField          string              `json:"goField"`
-	DbField          string              `json:"dbField"`
-	Label            string              `json:"label"`
-	ReadonlyLabel    *string             `json:"readonlyLabel,omitempty"`
-	Sublabel         *string             `json:"sublabel,omitempty"`
-	MultiSelectLabel *string             `json:"multiSelectLabel,omitempty"`
-	IsArray          *bool               `json:"isArray,omitempty"`
-	DataType         TranslationDataType `json:"dataType"`
-	FormType         TranslationFormType `json:"formType"`
-	IsNote           *bool               `json:"isNote,omitempty"`
+	GqlField         string                     `json:"gqlField"`
+	GoField          string                     `json:"goField"`
+	DbField          string                     `json:"dbField"`
+	Label            string                     `json:"label"`
+	ReadonlyLabel    *string                    `json:"readonlyLabel,omitempty"`
+	Sublabel         *string                    `json:"sublabel,omitempty"`
+	MultiSelectLabel *string                    `json:"multiSelectLabel,omitempty"`
+	IsArray          *bool                      `json:"isArray,omitempty"`
+	DataType         models.TranslationDataType `json:"dataType"`
+	FormType         models.TranslationFormType `json:"formType"`
+	IsNote           *bool                      `json:"isNote,omitempty"`
 	// Is a question a followup to another that doesn't designate it's own readonly question/line
 	IsOtherType *bool `json:"isOtherType,omitempty"`
 	// Field name for the parent question for fields that represent Other, Please specify, etc.  Used in change history to render parent question for context
@@ -2508,114 +2508,6 @@ func (e *TaskStatusInput) UnmarshalGQL(v interface{}) error {
 }
 
 func (e TaskStatusInput) MarshalGQL(w io.Writer) {
-	fmt.Fprint(w, strconv.Quote(e.String()))
-}
-
-// Represents the data type of the translation field
-type TranslationDataType string
-
-const (
-	TranslationDataTypeString  TranslationDataType = "STRING"
-	TranslationDataTypeNumber  TranslationDataType = "NUMBER"
-	TranslationDataTypeBoolean TranslationDataType = "BOOLEAN"
-	TranslationDataTypeDate    TranslationDataType = "DATE"
-	TranslationDataTypeEnum    TranslationDataType = "ENUM"
-	TranslationDataTypeObject  TranslationDataType = "OBJECT"
-)
-
-var AllTranslationDataType = []TranslationDataType{
-	TranslationDataTypeString,
-	TranslationDataTypeNumber,
-	TranslationDataTypeBoolean,
-	TranslationDataTypeDate,
-	TranslationDataTypeEnum,
-	TranslationDataTypeObject,
-}
-
-func (e TranslationDataType) IsValid() bool {
-	switch e {
-	case TranslationDataTypeString, TranslationDataTypeNumber, TranslationDataTypeBoolean, TranslationDataTypeDate, TranslationDataTypeEnum, TranslationDataTypeObject:
-		return true
-	}
-	return false
-}
-
-func (e TranslationDataType) String() string {
-	return string(e)
-}
-
-func (e *TranslationDataType) UnmarshalGQL(v interface{}) error {
-	str, ok := v.(string)
-	if !ok {
-		return fmt.Errorf("enums must be strings")
-	}
-
-	*e = TranslationDataType(str)
-	if !e.IsValid() {
-		return fmt.Errorf("%s is not a valid TranslationDataType", str)
-	}
-	return nil
-}
-
-func (e TranslationDataType) MarshalGQL(w io.Writer) {
-	fmt.Fprint(w, strconv.Quote(e.String()))
-}
-
-// Represents the FORM type of the translation field
-type TranslationFormType string
-
-const (
-	TranslationFormTypeText        TranslationFormType = "TEXT"
-	TranslationFormTypeTextarea    TranslationFormType = "TEXTAREA"
-	TranslationFormTypeNumber      TranslationFormType = "NUMBER"
-	TranslationFormTypeBoolean     TranslationFormType = "BOOLEAN"
-	TranslationFormTypeRadio       TranslationFormType = "RADIO"
-	TranslationFormTypeCheckbox    TranslationFormType = "CHECKBOX"
-	TranslationFormTypeSelect      TranslationFormType = "SELECT"
-	TranslationFormTypeMultiselect TranslationFormType = "MULTISELECT"
-	TranslationFormTypeDatepicker  TranslationFormType = "DATEPICKER"
-	TranslationFormTypeRangeinput  TranslationFormType = "RANGEINPUT"
-)
-
-var AllTranslationFormType = []TranslationFormType{
-	TranslationFormTypeText,
-	TranslationFormTypeTextarea,
-	TranslationFormTypeNumber,
-	TranslationFormTypeBoolean,
-	TranslationFormTypeRadio,
-	TranslationFormTypeCheckbox,
-	TranslationFormTypeSelect,
-	TranslationFormTypeMultiselect,
-	TranslationFormTypeDatepicker,
-	TranslationFormTypeRangeinput,
-}
-
-func (e TranslationFormType) IsValid() bool {
-	switch e {
-	case TranslationFormTypeText, TranslationFormTypeTextarea, TranslationFormTypeNumber, TranslationFormTypeBoolean, TranslationFormTypeRadio, TranslationFormTypeCheckbox, TranslationFormTypeSelect, TranslationFormTypeMultiselect, TranslationFormTypeDatepicker, TranslationFormTypeRangeinput:
-		return true
-	}
-	return false
-}
-
-func (e TranslationFormType) String() string {
-	return string(e)
-}
-
-func (e *TranslationFormType) UnmarshalGQL(v interface{}) error {
-	str, ok := v.(string)
-	if !ok {
-		return fmt.Errorf("enums must be strings")
-	}
-
-	*e = TranslationFormType(str)
-	if !e.IsValid() {
-		return fmt.Errorf("%s is not a valid TranslationFormType", str)
-	}
-	return nil
-}
-
-func (e TranslationFormType) MarshalGQL(w io.Writer) {
 	fmt.Fprint(w, strconv.Quote(e.String()))
 }
 
