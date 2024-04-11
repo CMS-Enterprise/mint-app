@@ -234,10 +234,13 @@ func translateValue(value interface{}, options map[string]interface{}) interface
 		// Changes: (Translations) Determine if we can serialize a generic interface? it makes a weird artifact in the GQL
 		//   "{\"Mandatory national\",\"Other\"}",
 		transArray := pq.StringArray{}
+		// transArray := []interface{}{}
 		for _, str := range strSlice {
 			translated := translateValueSingle(str, options)
 			transArray = append(transArray, translated)
 		}
+		// Changes: (Translations) revisit this, even using generic array results in escape characters in GQL...
+		// genArray := pq.GenericArray{transArray}
 		return transArray
 	}
 	// str, isString := value.(string)
