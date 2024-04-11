@@ -32,6 +32,10 @@ const (
 
 // TranslationField represents a the translation of data to human readable format
 type TranslationField struct {
+	TranslationFieldBase
+	translationNoOptionRelation
+}
+type TranslationFieldBase struct {
 	GqlField         string              `json:"gqlField"`
 	GoField          string              `json:"goField"`
 	DbField          string              `json:"dbField"`
@@ -51,41 +55,46 @@ type TranslationField struct {
 }
 
 // GetLabel has logic to prioritize the translated label to be returned for a specific field. It prioritizes the Read only Label, a
-func (tf TranslationField) GetLabel() string {
-	if tf.ReadOnlyLabel != nil {
-		return *tf.ReadOnlyLabel
+func (tfb TranslationFieldBase) GetLabel() string {
+	if tfb.ReadOnlyLabel != nil {
+		return *tfb.ReadOnlyLabel
 	}
 
-	return tf.Label
+	return tfb.Label
 
 }
 
-// HasOptions specifies if a translation field has options or not
-func (tf TranslationField) HasOptions() bool {
-	return false
-}
+// // HasOptions specifies if a translation field has options or not
+// func (tf TranslationField) HasOptions() bool {
+// 	return false
+// }
 
-// GetOptions returns options for a translation. It re
-func (tf TranslationField) GetOptions() (map[string]interface{}, bool) {
-	return nil, tf.HasOptions()
-}
+// // GetOptions returns options for a translation. It re
+// func (tf TranslationField) GetOptions() (map[string]interface{}, bool) {
+// 	return nil, tf.HasOptions()
+// }
 
 // TranslationFieldWithOptions Represents a TranslationField that has options
 type TranslationFieldWithOptions struct {
-	TranslationField
-	Options map[string]interface{} `json:"options"`
+	TranslationFieldBase
+	translationOptionRelation
+	// Options map[string]interface{} `json:"options"`
 	// AllowMultipleSelections bool              `json:"allowMultipleSelections,omitempty"`
 }
 
-// GetLabel implements the GetLabel function of the ITranslationField interface
-func (tfo TranslationFieldWithOptions) GetLabel() string {
-	return tfo.TranslationField.GetLabel()
-}
+// // GetLabel implements the GetLabel function of the ITranslationField interface
+// func (tfo TranslationFieldWithOptions) GetLabel() string {
+// 	return tfo.TranslationField.GetLabel()
+// }
 
-// HasOptions specifies if a translation field has options or not
-func (tfo TranslationFieldWithOptions) HasOptions() bool {
-	return true
-}
+// // HasOptions specifies if a translation field has options or not
+// func (tfo TranslationFieldWithOptions) HasOptions() bool {
+// 	return true
+// }
+// // GetOptions returns options for a translation
+// func (tfo TranslationFieldWithOptions) GetOptions() (map[string]interface{}, bool) {
+// 	return tfo.Options, tfo.HasOptions()
+// }
 
 // ITranslationField defines the signature every translation is expected to have
 type ITranslationField interface {
@@ -93,11 +102,6 @@ type ITranslationField interface {
 	HasOptions() bool
 	// Returns options if a translationField has options
 	GetOptions() (map[string]interface{}, bool)
-}
-
-// GetOptions returns options for a translation
-func (tfo TranslationFieldWithOptions) GetOptions() (map[string]interface{}, bool) {
-	return tfo.Options, tfo.HasOptions()
 }
 
 // TranslationFieldWithParent Represents a TranslationField that has a parent
@@ -122,6 +126,20 @@ func (tor translationOptionRelation) HasOptions() bool {
 // GetOptions returns options for a translation
 func (tor translationOptionRelation) GetOptions() (map[string]interface{}, bool) {
 	return tor.Options, tor.HasOptions()
+}
+
+// translationNoOptionRelation is struct that is mean to be embedded in other Translation types to satisfy the ITranslation, and functionality of translations that don't have options
+type translationNoOptionRelation struct {
+}
+
+// HasOptions specifies if a translation field has options or not
+func (tor translationNoOptionRelation) HasOptions() bool {
+	return false
+}
+
+// GetOptions returns options for a translation
+func (tor translationNoOptionRelation) GetOptions() (map[string]interface{}, bool) {
+	return nil, tor.HasOptions()
 }
 
 // TranslationFieldWithOptionsAndChildren Represents a TranslationField that has options and Children
