@@ -12,3 +12,35 @@ func (pbt *PlanBasicsTranslation) TableName() string {
 func (pbt *PlanBasicsTranslation) ToMap() (map[string]models.ITranslationField, error) {
 	return models.StructToTranslationMap(*pbt)
 }
+
+// Changes: (Structure) Consider moving these all to their own file
+
+// TableName returns the table name for this translation, satisfying the Translation interface
+func (pbt *PlanBeneficiariesTranslation) TableName() string {
+	return "plan_beneficiaries"
+}
+
+// ToMap translates this translation to a map, satisfying the Translation interface
+func (pbt *PlanBeneficiariesTranslation) ToMap() (map[string]models.ITranslationField, error) {
+	return models.StructToTranslationMap(*pbt)
+}
+
+// TableName returns the table name for this translation, satisfying the Translation interface
+func (pct *PlanCollaboratorTranslation) TableName() string {
+	return "plan_collaborator"
+}
+
+// ToMap translates this translation to a map, satisfying the Translation interface
+func (pct *PlanCollaboratorTranslation) ToMap() (map[string]models.ITranslationField, error) {
+	return models.StructToTranslationMap(*pct)
+}
+
+// TableName returns the table name for this translation, satisfying the Translation interface
+func (pbt *PlanGeneralCharacteristicsTranslation) TableName() string {
+	return "plan_general_characteristics"
+}
+
+// ToMap translates this translation to a map, satisfying the Translation interface
+func (pbt *PlanGeneralCharacteristicsTranslation) ToMap() (map[string]models.ITranslationField, error) {
+	return models.StructToTranslationMap(*pbt)
+}
