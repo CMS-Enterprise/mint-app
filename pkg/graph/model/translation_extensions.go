@@ -44,3 +44,23 @@ func (pbt *PlanGeneralCharacteristicsTranslation) TableName() string {
 func (pbt *PlanGeneralCharacteristicsTranslation) ToMap() (map[string]models.ITranslationField, error) {
 	return models.StructToTranslationMap(*pbt)
 }
+
+// TableName returns the table name for this translation, satisfying the Translation interface
+func (pbt *PlanOpsEvalAndLearningTranslation) TableName() string {
+	return "plan_ops_eval_and_learning"
+}
+
+// ToMap translates this translation to a map, satisfying the Translation interface
+func (pbt *PlanOpsEvalAndLearningTranslation) ToMap() (map[string]models.ITranslationField, error) {
+	return models.StructToTranslationMap(*pbt)
+}
+
+// TableName returns the table name for this translation, satisfying the Translation interface
+func (pbt *PlanPaymentsTranslation) TableName() string {
+	return "plan_payments"
+}
+
+// ToMap translates this translation to a map, satisfying the Translation interface
+func (pbt *PlanPaymentsTranslation) ToMap() (map[string]models.ITranslationField, error) {
+	return models.StructToTranslationMap(*pbt)
+}
