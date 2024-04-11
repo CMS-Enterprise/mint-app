@@ -22,15 +22,18 @@
       p {
         quotes: "“" "”";
 
-        &::before {
+        &:first-child::before {
           content: open-quote;
         }
-        &::after {
+
+        &:last-child::after {
           content: close-quote;
         }
 
-        .ProseMirror-trailingBreak {
-          display: none;
+        span.react-renderer.node-mention {
+          & ~ .ProseMirror-trailingBreak {
+            display: none;
+          }
         }
       }
     }
