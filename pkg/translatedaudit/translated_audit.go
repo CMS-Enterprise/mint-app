@@ -70,17 +70,26 @@ func translateChangeSet(
 	// 	return nil, err
 	// }
 
-	partsProvidersChanges := lo.Filter(audits, func(m *models.AuditChange, index int) bool {
-		return m.TableName == "plan_participants_and_providers"
+	// partsProvidersChanges := lo.Filter(audits, func(m *models.AuditChange, index int) bool {
+	// 	return m.TableName == "plan_participants_and_providers"
+	// })
+
+	// partsAndProviderChanges, err := genericAuditTranslation(ctx, store, plan, partsProvidersChanges)
+	// if err != nil {
+	// 	return nil, err
+	// }
+	basicsAudits := lo.Filter(audits, func(m *models.AuditChange, index int) bool {
+		return m.TableName == "plan_basics"
 	})
 
-	partsAndProviderChanges, err := genericAuditTranslation(ctx, store, plan, partsProvidersChanges)
+	basicsChanges, err := genericAuditTranslation(ctx, store, plan, basicsAudits)
 	if err != nil {
 		return nil, err
 	}
 
 	// combinedChanges := append(planChanges, partsAndProviderChanges...)
-	combinedChanges := partsAndProviderChanges
+	// combinedChanges := partsAndProviderChanges
+	combinedChanges := basicsChanges
 
 	return combinedChanges, nil
 
@@ -150,36 +159,27 @@ func genericAuditTranslation(ctx context.Context, store *storage.Store, plan *mo
 	return changes, nil
 }
 
-func translateField(fieldName string, field models.AuditField, audit *models.AuditChange, actorAccount *authentication.UserAccount, operation models.DatabaseOperation, modelPlan *models.ModelPlan, translationMap map[string]interface{}) (*models.TranslatedAuditField, error) {
-	var translatedLabel string
-	var translatedOld interface{}
-	var translatedNew interface{}
+func translateField(fieldName string, field models.AuditField, audit *models.AuditChange, actorAccount *authentication.UserAccount, operation models.DatabaseOperation, modelPlan *models.ModelPlan, translationMap map[string]models.ITranslationField) (*models.TranslatedAuditField, error) {
 
-	fieldInterface := translationMap[fieldName]
-	fieldTransOptionsAndParent, hasOptionsAndParent := fieldInterface.(mappings.TranslationFieldPropertiesWithOptionsAndParent) //Changes: (Translations) We can reduce the calls using an interface.
-	fieldTransOptions, hasOptions := fieldInterface.(mappings.TranslationFieldPropertiesWithOptions)
-	fieldTrans, hasTranslation := fieldInterface.(mappings.TranslationFieldProperties)
+	// Set default values in case of missing translation
+	// Changes: (Translations) We should handle a nil / empty case what should we do in that case?
+	translatedLabel := fieldName
+	translatedOld := field.Old
+	translatedNew := field.New
+	changeType := getChangeType(field.Old, field.New)
 
-	// Changes: (Translations) Should we handle this better? There are different implementations we have to cast to
-	if hasOptionsAndParent {
-		translatedLabel = fieldTransOptionsAndParent.GetLabel()
-		translatedOld = translateValue(field.Old, fieldTransOptionsAndParent.Options)
-		translatedNew = translateValue(field.New, fieldTransOptionsAndParent.Options)
-	} else if hasOptions {
-		translatedLabel = fieldTransOptions.GetLabel()
-		translatedOld = translateValue(field.Old, fieldTransOptions.Options)
-		translatedNew = translateValue(field.New, fieldTransOptions.Options)
+	translationInterface := translationMap[fieldName]
+	if translationInterface != nil {
 
-		// Changes: (Translations) Verify this, there are other field types. We should have helper methods. This logic flow can be improved as well
-	} else if hasTranslation {
-		translatedLabel = fieldTrans.GetLabel()
-		translatedOld = field.Old
-		translatedNew = field.New
-
-	} else {
-		translatedLabel = fieldName
-		translatedOld = field.Old
-		translatedNew = field.New
+		translatedLabel = translationInterface.GetLabel()
+		options, hasOptions := translationInterface.GetOptions()
+		if hasOptions {
+			translatedOld = translateValue(field.Old, options)
+			translatedNew = translateValue(field.New, options)
+		} else {
+			translatedOld = field.Old
+			translatedNew = field.New
+		}
 	}
 	translatedField := models.NewTranslatedAuditField(constants.GetSystemAccountUUID(),
 		fieldName,
@@ -189,7 +189,7 @@ func translateField(fieldName string, field models.AuditField, audit *models.Aud
 		field.New,
 		translatedNew,
 	)
-	translatedField.ChangeType = getChangeType(field.Old, field.New)
+	translatedField.ChangeType = changeType
 
 	// change.MetaDataRaw = nil //Changes: (Meta) This should be specific to the type of change...
 
@@ -217,7 +217,7 @@ func getChangeType(old interface{}, new interface{}) models.AuditFieldChangeType
 
 // translateValue takes a given value and maps it to a human readable value.
 // It checks in the value is an array, and if so it translates each value to a human readable form
-func translateValue(value interface{}, options map[string]string) interface{} {
+func translateValue(value interface{}, options map[string]interface{}) interface{} {
 
 	// Changes: (Translations) Check if value is nil, don't need to translate that.
 	// Changes: (Translations) work on bool representation, they should come through here as a string, but show up as t, f. We will want to set they values
@@ -248,10 +248,10 @@ func translateValue(value interface{}, options map[string]string) interface{} {
 }
 
 // translateValueSingle translates a single audit value to a human readable string value
-func translateValueSingle(value string, options map[string]string) string {
+func translateValueSingle(value string, options map[string]interface{}) string {
 	translated, ok := options[value]
 	if ok {
-		return translated
+		return fmt.Sprint(translated) // Translations are always string representations
 	}
 	// Changes: (Translations)  If the map doesn't have a value, return the raw value instead.
 	return value

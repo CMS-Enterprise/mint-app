@@ -94,6 +94,6 @@ func (tpp *translationParticipantsAndProviders) TableName() string {
 }
 
 // ToMap translates this translation to a map, satisfying the Translation interface
-func (tpp *translationParticipantsAndProviders) ToMap() (map[string]interface{}, error) {
-	return models.StructToMapDBTag(*tpp)
+func (tpp *translationParticipantsAndProviders) ToMap() (map[string]models.ITranslationField, error) {
+	return models.StructToTranslationMap(*tpp)
 }
