@@ -19,3 +19,8 @@ extend type Query {
   possibleOperationalSolutions: [PossibleOperationalSolution!]!
   @hasAnyRole(roles: [MINT_USER, MINT_MAC])
 }
+
+extend type Mutation {
+  setPrimaryPointOfContact(possibleOperationalSolutionId: Int!, pointOfContactId: UUID!): Boolean!
+  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+}

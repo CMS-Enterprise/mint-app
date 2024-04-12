@@ -66,7 +66,6 @@ type ResolverRoot interface {
 	PlanPayments() PlanPaymentsResolver
 	PossibleOperationalNeed() PossibleOperationalNeedResolver
 	PossibleOperationalSolution() PossibleOperationalSolutionResolver
-	PossibleOperationalSolutionContact() PossibleOperationalSolutionContactResolver
 	Query() QueryResolver
 	Subscription() SubscriptionResolver
 	Tag() TagResolver
@@ -317,6 +316,7 @@ type ComplexityRoot struct {
 		RemovePlanDocumentSolutionLinks    func(childComplexity int, solutionID uuid.UUID, documentIDs []uuid.UUID) int
 		ReportAProblem                     func(childComplexity int, input model.ReportAProblemInput) int
 		SendFeedbackEmail                  func(childComplexity int, input model.SendFeedbackEmailInput) int
+		SetPrimaryPointOfContact           func(childComplexity int, possibleOperationalSolutionID int, pointOfContactID uuid.UUID) int
 		ShareModelPlan                     func(childComplexity int, modelPlanID uuid.UUID, viewFilter *models.ModelViewFilter, usernames []string, optionalMessage *string) int
 		UnlockAllTaskListSections          func(childComplexity int, modelPlanID uuid.UUID) int
 		UnlockTaskListSection              func(childComplexity int, modelPlanID uuid.UUID, section models.TaskListSection) int
@@ -1270,6 +1270,7 @@ type MutationResolver interface {
 	CreatePlanTdl(ctx context.Context, input model.PlanTDLCreateInput) (*models.PlanTDL, error)
 	UpdatePlanTdl(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanTDL, error)
 	DeletePlanTdl(ctx context.Context, id uuid.UUID) (*models.PlanTDL, error)
+	SetPrimaryPointOfContact(ctx context.Context, possibleOperationalSolutionID int, pointOfContactID uuid.UUID) (bool, error)
 	ReportAProblem(ctx context.Context, input model.ReportAProblemInput) (bool, error)
 	SendFeedbackEmail(ctx context.Context, input model.SendFeedbackEmailInput) (bool, error)
 	LockTaskListSection(ctx context.Context, modelPlanID uuid.UUID, section models.TaskListSection) (bool, error)
@@ -1430,9 +1431,6 @@ type PossibleOperationalNeedResolver interface {
 type PossibleOperationalSolutionResolver interface {
 	PointsOfContact(ctx context.Context, obj *models.PossibleOperationalSolution) ([]*models.PossibleOperationalSolutionContact, error)
 	PrimaryPointOfContact(ctx context.Context, obj *models.PossibleOperationalSolution) (*models.PossibleOperationalSolutionContact, error)
-}
-type PossibleOperationalSolutionContactResolver interface {
-	IsPrimary(ctx context.Context, obj *models.PossibleOperationalSolutionContact) (bool, error)
 }
 type QueryResolver interface {
 	AnalyzedAudits(ctx context.Context, dateAnalyzed time.Time) ([]*models.AnalyzedAudit, error)
@@ -2821,6 +2819,18 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Mutation.SendFeedbackEmail(childComplexity, args["input"].(model.SendFeedbackEmailInput)), true
+
+	case "Mutation.setPrimaryPointOfContact":
+		if e.complexity.Mutation.SetPrimaryPointOfContact == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_setPrimaryPointOfContact_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Mutation.SetPrimaryPointOfContact(childComplexity, args["possibleOperationalSolutionId"].(int), args["pointOfContactId"].(uuid.UUID)), true
 
 	case "Mutation.shareModelPlan":
 		if e.complexity.Mutation.ShareModelPlan == nil {
@@ -10952,6 +10962,11 @@ extend type Query {
 extend type Query {
   possibleOperationalSolutions: [PossibleOperationalSolution!]!
   @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+}
+
+extend type Mutation {
+  setPrimaryPointOfContact(possibleOperationalSolutionId: Int!, pointOfContactId: UUID!): Boolean!
+  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
 }`, BuiltIn: false},
 	{Name: "../schema/types/possible_operational_solution_contact.graphql", Input: `"""
 PossibleOperationalSolutionContact represents a contact for a possible operational solution
@@ -10964,7 +10979,7 @@ type PossibleOperationalSolutionContact {
   email: String!
   isTeam: Boolean!
   role: String
-  isPrimary: Boolean!
+  isPrimary: Boolean
 
   createdBy: UUID!
   createdByUserAccount: UserAccount!
@@ -11969,6 +11984,30 @@ func (ec *executionContext) field_Mutation_sendFeedbackEmail_args(ctx context.Co
 		}
 	}
 	args["input"] = arg0
+	return args, nil
+}
+
+func (ec *executionContext) field_Mutation_setPrimaryPointOfContact_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+	var err error
+	args := map[string]interface{}{}
+	var arg0 int
+	if tmp, ok := rawArgs["possibleOperationalSolutionId"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("possibleOperationalSolutionId"))
+		arg0, err = ec.unmarshalNInt2int(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["possibleOperationalSolutionId"] = arg0
+	var arg1 uuid.UUID
+	if tmp, ok := rawArgs["pointOfContactId"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("pointOfContactId"))
+		arg1, err = ec.unmarshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["pointOfContactId"] = arg1
 	return args, nil
 }
 
@@ -25176,6 +25215,85 @@ func (ec *executionContext) fieldContext_Mutation_deletePlanTDL(ctx context.Cont
 	}()
 	ctx = graphql.WithFieldContext(ctx, fc)
 	if fc.Args, err = ec.field_Mutation_deletePlanTDL_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Mutation_setPrimaryPointOfContact(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Mutation_setPrimaryPointOfContact(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		directive0 := func(rctx context.Context) (interface{}, error) {
+			ctx = rctx // use context from middleware stack in children
+			return ec.resolvers.Mutation().SetPrimaryPointOfContact(rctx, fc.Args["possibleOperationalSolutionId"].(int), fc.Args["pointOfContactId"].(uuid.UUID))
+		}
+		directive1 := func(ctx context.Context) (interface{}, error) {
+			roles, err := ec.unmarshalNRole2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRoleᚄ(ctx, []interface{}{"MINT_USER", "MINT_MAC"})
+			if err != nil {
+				return nil, err
+			}
+			if ec.directives.HasAnyRole == nil {
+				return nil, errors.New("directive hasAnyRole is not implemented")
+			}
+			return ec.directives.HasAnyRole(ctx, nil, directive0, roles)
+		}
+
+		tmp, err := directive1(rctx)
+		if err != nil {
+			return nil, graphql.ErrorOnPath(ctx, err)
+		}
+		if tmp == nil {
+			return nil, nil
+		}
+		if data, ok := tmp.(bool); ok {
+			return data, nil
+		}
+		return nil, fmt.Errorf(`unexpected type %T from directive, should be bool`, tmp)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(bool)
+	fc.Result = res
+	return ec.marshalNBoolean2bool(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Mutation_setPrimaryPointOfContact(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Mutation",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Boolean does not have child fields")
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Mutation_setPrimaryPointOfContact_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
 		ec.Error(ctx, err)
 		return fc, err
 	}
@@ -53537,29 +53655,26 @@ func (ec *executionContext) _PossibleOperationalSolutionContact_isPrimary(ctx co
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.PossibleOperationalSolutionContact().IsPrimary(rctx, obj)
+		return obj.IsPrimary, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
 		return graphql.Null
 	}
 	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
 		return graphql.Null
 	}
-	res := resTmp.(bool)
+	res := resTmp.(*bool)
 	fc.Result = res
-	return ec.marshalNBoolean2bool(ctx, field.Selections, res)
+	return ec.marshalOBoolean2ᚖbool(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PossibleOperationalSolutionContact_isPrimary(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "PossibleOperationalSolutionContact",
 		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
+		IsMethod:   false,
+		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return nil, errors.New("field of type Boolean does not have child fields")
 		},
@@ -66219,6 +66334,13 @@ func (ec *executionContext) _Mutation(ctx context.Context, sel ast.SelectionSet)
 			if out.Values[i] == graphql.Null {
 				out.Invalids++
 			}
+		case "setPrimaryPointOfContact":
+			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
+				return ec._Mutation_setPrimaryPointOfContact(ctx, field)
+			})
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
 		case "reportAProblem":
 			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
 				return ec._Mutation_reportAProblem(ctx, field)
@@ -72680,41 +72802,7 @@ func (ec *executionContext) _PossibleOperationalSolutionContact(ctx context.Cont
 		case "role":
 			out.Values[i] = ec._PossibleOperationalSolutionContact_role(ctx, field, obj)
 		case "isPrimary":
-			field := field
-
-			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
-				defer func() {
-					if r := recover(); r != nil {
-						ec.Error(ctx, ec.Recover(ctx, r))
-					}
-				}()
-				res = ec._PossibleOperationalSolutionContact_isPrimary(ctx, field, obj)
-				if res == graphql.Null {
-					atomic.AddUint32(&fs.Invalids, 1)
-				}
-				return res
-			}
-
-			if field.Deferrable != nil {
-				dfs, ok := deferred[field.Deferrable.Label]
-				di := 0
-				if ok {
-					dfs.AddField(field)
-					di = len(dfs.Values) - 1
-				} else {
-					dfs = graphql.NewFieldSet([]graphql.CollectedField{field})
-					deferred[field.Deferrable.Label] = dfs
-				}
-				dfs.Concurrently(di, func(ctx context.Context) graphql.Marshaler {
-					return innerFunc(ctx, dfs)
-				})
-
-				// don't run the out.Concurrently() call below
-				out.Values[i] = graphql.Null
-				continue
-			}
-
-			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+			out.Values[i] = ec._PossibleOperationalSolutionContact_isPrimary(ctx, field, obj)
 		case "createdBy":
 			out.Values[i] = ec._PossibleOperationalSolutionContact_createdBy(ctx, field, obj)
 			if out.Values[i] == graphql.Null {

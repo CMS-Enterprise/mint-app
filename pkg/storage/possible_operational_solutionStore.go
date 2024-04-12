@@ -5,6 +5,8 @@ import (
 	"errors"
 	"fmt"
 
+	"github.com/cmsgov/mint-app/pkg/authentication"
+
 	"go.uber.org/zap"
 
 	"github.com/google/uuid"
@@ -29,6 +31,12 @@ var possibleOperationalSolutionGetByIDSQL string
 
 //go:embed SQL/possible_operational_solution/get_by_key.sql
 var possibleOperationalSolutionGetByKeySQL string
+
+//go:embed SQL/possible_operational_solution/set_primary_contact_by_id.sql
+var possibleOperationalSolutionSetPrimaryContactByIDSQL string
+
+//go:embed SQL/possible_operational_solution/unset_primary_contact_by_id.sql
+var possibleOperationalSolutionUnsetPrimaryContactByIDSQL string
 
 // PossibleOperationalSolutionCollectionGetByNeedType returns possible
 // operational solutions for a given operational need
@@ -181,4 +189,80 @@ func (s *Store) PossibleOperationalSolutionGetByKey(logger *zap.Logger, solKey m
 	}
 
 	return &opSol, nil
+}
+
+// PossibleOperationalSolutionUnsetPrimaryContactByID unsets all primary contacts for a possible operational solution
+func (s *Store) PossibleOperationalSolutionUnsetPrimaryContactByID(
+	logger *zap.Logger,
+	possibleOperationalSolutionID int,
+	principal authentication.Principal,
+) error {
+
+	stmt, err := s.db.PrepareNamed(possibleOperationalSolutionUnsetPrimaryContactByIDSQL)
+	if err != nil {
+		return fmt.Errorf("failed to prepare SQL statement: %w", err)
+	}
+	defer stmt.Close()
+
+	args := map[string]interface{}{
+		"solution_id": possibleOperationalSolutionID,
+		"modified_by": principal.Account().ID,
+	}
+
+	_, err = stmt.Exec(args)
+	if err != nil {
+		logger.Error(
+			"failed to unset primary contact for possible operational solution",
+			zap.Error(err),
+			zap.Int("solution_id", possibleOperationalSolutionID),
+		)
+
+		return &apperrors.QueryError{
+			Err:       fmt.Errorf("failed to unset primary contact for possible operational solution: %w", err),
+			Operation: apperrors.QueryUpdate,
+		}
+	}
+
+	return nil
+}
+
+// PossibleOperationalSolutionSetPrimaryContactByID sets the primary point of
+// contact for a possible operational solution
+func (s *Store) PossibleOperationalSolutionSetPrimaryContactByID(
+	logger *zap.Logger,
+	possibleOperationalSolutionID int,
+	pointOfContactID uuid.UUID,
+	principal authentication.Principal,
+) (bool, error) {
+
+	opSol := models.PossibleOperationalSolution{}
+	stmt, err := s.db.PrepareNamed(possibleOperationalSolutionSetPrimaryContactByIDSQL)
+	if err != nil {
+		return false, fmt.Errorf("failed to prepare SQL statement: %w", err)
+	}
+	defer stmt.Close()
+
+	args := map[string]interface{}{
+		"solution_id": possibleOperationalSolutionID,
+		"contact_id":  pointOfContactID,
+		"modified_by": principal.Account().ID,
+	}
+
+	_, err = stmt.Exec(args)
+	if err != nil {
+		logger.Error(
+			"failed to set primary contact for possible operational solution",
+			zap.Error(err),
+			zap.Int("possible_operational_solution_id", possibleOperationalSolutionID),
+			zap.String("point_of_contact_id", pointOfContactID.String()),
+		)
+
+		return false, &apperrors.QueryError{
+			Err:       fmt.Errorf("failed to set primary contact for possible operational solution: %w", err),
+			Model:     opSol,
+			Operation: apperrors.QueryUpdate,
+		}
+	}
+
+	return true, nil
 }

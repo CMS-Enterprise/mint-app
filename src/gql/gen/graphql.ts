@@ -676,6 +676,7 @@ export type Mutation = {
   reportAProblem: Scalars['Boolean']['output'];
   /** This mutation sends feedback about the MINT product to the MINT team */
   sendFeedbackEmail: Scalars['Boolean']['output'];
+  setPrimaryPointOfContact: Scalars['Boolean']['output'];
   shareModelPlan: Scalars['Boolean']['output'];
   unlockAllTaskListSections: Array<TaskListSectionLockStatus>;
   unlockTaskListSection: Scalars['Boolean']['output'];
@@ -852,6 +853,13 @@ export type MutationReportAProblemArgs = {
 /** Mutations definition for the schema */
 export type MutationSendFeedbackEmailArgs = {
   input: SendFeedbackEmailInput;
+};
+
+
+/** Mutations definition for the schema */
+export type MutationSetPrimaryPointOfContactArgs = {
+  pointOfContactId: Scalars['UUID']['input'];
+  possibleOperationalSolutionId: Scalars['Int']['input'];
 };
 
 
@@ -2381,7 +2389,7 @@ export type PossibleOperationalSolutionContact = {
   createdDts: Scalars['Time']['output'];
   email: Scalars['String']['output'];
   id: Scalars['UUID']['output'];
-  isPrimary: Scalars['Boolean']['output'];
+  isPrimary?: Maybe<Scalars['Boolean']['output']>;
   isTeam: Scalars['Boolean']['output'];
   modifiedBy?: Maybe<Scalars['UUID']['output']>;
   modifiedByUserAccount?: Maybe<UserAccount>;

@@ -24,21 +24,3 @@ func PossibleOperationalSolutionContactsGetByPossibleSolutionID(ctx context.Cont
 
 	return result.([]*models.PossibleOperationalSolutionContact), nil
 }
-
-// PossibleOperationalSolutionPrimaryContactGetByPossibleSolutionID returns the primary contact associated with a
-// possible operational solution
-func PossibleOperationalSolutionPrimaryContactGetByPossibleSolutionID(ctx, obj.ID) (*models.PossibleOperationalSolutionContact, error) {
-	allLoaders := loaders.Loaders(ctx)
-	contactLoader := allLoaders.PossibleOperationSolutionPrimaryContactLoader
-	key := loaders.NewKeyArgs()
-	key.Args[loaders.DLPosOperationalSolutionKey] = obj.ID
-
-	thunk := contactLoader.Loader.Load(ctx, key)
-	result, err := thunk()
-
-	if err != nil {
-		return nil, err
-	}
-
-	return result.(*models.PossibleOperationalSolutionContact), nil
-}

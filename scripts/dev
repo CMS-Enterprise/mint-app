@@ -377,6 +377,7 @@ namespace :db do
     plan_favorite,
     plan_cr,
     plan_tdl,
+    possible_operational_solution_contact,
     operational_solution_subtask,
     operational_solution,
     operational_need,
