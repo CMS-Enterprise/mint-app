@@ -67,11 +67,11 @@ exports[`Notification Page > matches snapshot 1`] = `
             data-testid="grid"
           >
             <button
-              class="usa-button usa-button--unstyled width-auto margin-right-2"
+              class="usa-button usa-button--unstyled width-auto margin-right-2 "
               data-testid="button"
               type="button"
             >
-              Mark all as read
+              Mark all (2) as read
             </button>
             <a
               class="usa-link margin-y-0 margin-x-2"
@@ -124,7 +124,7 @@ exports[`Notification Page > matches snapshot 1`] = `
                          tagged you in a discussion for Excellent Model.
                       </p>
                       <div
-                        class="notification__content text-base-darker tiptap__readonly"
+                        class="notification__content text-base-darker margin-bottom-1 tiptap__readonly"
                         id="mention-279ba41b-232a-49b2-9607-a3951d301218"
                       >
                         <div
@@ -134,7 +134,7 @@ exports[`Notification Page > matches snapshot 1`] = `
                           translate="no"
                         >
                           <p>
-                            “First Notification”
+                            First Notification
                           </p>
                         </div>
                       </div>
@@ -215,7 +215,7 @@ exports[`Notification Page > matches snapshot 1`] = `
                          tagged you in a discussion for Great Model.
                       </p>
                       <div
-                        class="notification__content text-base-darker tiptap__readonly"
+                        class="notification__content text-base-darker margin-bottom-1 tiptap__readonly"
                         id="mention-ccf6830b-5c20-4394-84d6-78e0c9f31ec5"
                       >
                         <div
@@ -225,7 +225,7 @@ exports[`Notification Page > matches snapshot 1`] = `
                           translate="no"
                         >
                           <p>
-                            “Second Notification”
+                            Second Notification
                           </p>
                         </div>
                       </div>

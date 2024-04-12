@@ -104,10 +104,10 @@ const IndividualNotification = ({
                   !isSharedActivity(metaData) &&
                   !isAddingCollaborator(metaData) && (
                     <MentionTextArea
-                      className="notification__content text-base-darker"
+                      className="notification__content text-base-darker margin-bottom-1"
                       id={`mention-${metaData.discussionID}`}
                       editable={false}
-                      initialContent={`“${metaData.content}”`}
+                      initialContent={metaData.content}
                     />
                   )}
                 {isSharedActivity(metaData) && metaData.optionalMessage && (
