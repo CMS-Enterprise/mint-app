@@ -6,11 +6,16 @@ import { TeamRole } from 'gql/gen/graphql';
 import { getUserInitials } from 'utils/modelPlan';
 
 type AvatarCircleProps = {
-  className?: string;
   user: string;
+  className?: string;
+  isAssessment?: boolean;
 };
 
-export const AvatarCircle = ({ className, user }: AvatarCircleProps) => {
+export const AvatarCircle = ({
+  user,
+  className,
+  isAssessment
+}: AvatarCircleProps) => {
   // Color palette for user identification
   const palette: string[] = [
     'bg-red-cool-10',
@@ -49,26 +54,38 @@ export const AvatarCircle = ({ className, user }: AvatarCircleProps) => {
     return palette[index];
   };
 
+  if (isAssessment) {
+    return (
+      <div
+        className={`display-flex flex-align-center flex-justify-center minw-4 circle-4 bg-primary ${
+          className ?? ''
+        }`}
+      >
+        <Icon.Star className="text-white" size={3} />
+      </div>
+    );
+  }
+
+  if (user === 'MINT') {
+    return (
+      <div
+        className={`display-flex flex-align-center flex-justify-center minw-4 circle-4 bg-mint-cool-50v ${
+          className ?? ''
+        }`}
+      >
+        <Icon.Eco className="text-white" size={3} />
+      </div>
+    );
+  }
+
   return (
-    <>
-      {user === 'MINT' ? (
-        <div
-          className={`display-flex flex-align-center flex-justify-center minw-4 circle-4 bg-mint-cool-50v ${
-            className ?? ''
-          }`}
-        >
-          <Icon.Eco className="text-white" size={3} />
-        </div>
-      ) : (
-        <div
-          className={`display-flex flex-align-center flex-justify-center minw-4 circle-4 ${
-            className ?? ''
-          } ${getAvatarColorsFromUsername(user)} `}
-        >
-          {getUserInitials(user)}
-        </div>
-      )}
-    </>
+    <div
+      className={`display-flex flex-align-center flex-justify-center minw-4 circle-4 ${
+        className ?? ''
+      } ${getAvatarColorsFromUsername(user)} `}
+    >
+      {getUserInitials(user)}
+    </div>
   );
 };
 
