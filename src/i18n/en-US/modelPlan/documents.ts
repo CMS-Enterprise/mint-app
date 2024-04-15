@@ -40,7 +40,7 @@ export const documents: TranslationDocuments = {
     dataType: 'enum',
     formType: 'radio',
     options: {
-      CONCEPT_PAPER: 'Concept paper',
+      CONCEPT_PAPER: 'Concept Paper',
       DESIGN_PARAMETERS_MEMO: 'Design Parameter Memo',
       ICIP_DRAFT: 'ICIP Draft',
       MARKET_RESEARCH: 'Market Research',

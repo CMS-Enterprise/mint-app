@@ -13,7 +13,7 @@ const operationalSolutions: TranslationOperationalSolutions = {
     gqlField: 'nameOther',
     goField: 'NameOther',
     dbField: 'name_other',
-    label: 'How will you solve this?',
+    label: 'Please add a name for your solution or contractor',
     exportLabel: 'Operational solution',
     dataType: 'string',
     formType: 'text'

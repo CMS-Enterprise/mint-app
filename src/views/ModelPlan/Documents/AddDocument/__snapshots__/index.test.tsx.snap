@@ -380,10 +380,11 @@ exports[`Model Plan Add Documents page > matches snapshot 1`] = `
                   >
                     <input
                       class="usa-radio__input"
+                      data-testid="document-upload-restricted-true"
                       id="document-upload-restricted-true"
                       name="restricted"
                       type="radio"
-                      value="YES"
+                      value="TRUE"
                     />
                     <label
                       class="usa-radio__label"
@@ -398,10 +399,11 @@ exports[`Model Plan Add Documents page > matches snapshot 1`] = `
                   >
                     <input
                       class="usa-radio__input"
+                      data-testid="document-upload-restricted-false"
                       id="document-upload-restricted-false"
                       name="restricted"
                       type="radio"
-                      value="NO"
+                      value="FALSE"
                     />
                     <label
                       class="usa-radio__label"

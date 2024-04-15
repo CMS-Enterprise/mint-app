@@ -1,33 +1,9 @@
 import { TeamRole } from 'gql/gen/graphql';
 import { GetModelCollaborators_modelPlan_collaborators as GetCollaboratorsType } from 'gql/gen/types/GetModelCollaborators';
 import { GetModelPlan_modelPlan_discussions as DiscussionType } from 'gql/gen/types/GetModelPlan';
-import i18next from 'i18next';
 import { orderBy } from 'lodash';
 
 import { getKeys } from 'types/translation';
-
-export const translateOpNeedsStatusType = (type: string) => {
-  switch (type) {
-    case 'NOT_NEEDED':
-      return i18next.t('opSolutionsMisc:status.notNeeded');
-    case 'NOT_ANSWERED':
-      return i18next.t('opSolutionsMisc:status.notAnswered');
-    case 'NOT_STARTED':
-      return i18next.t('opSolutionsMisc:status.notStarted');
-    case 'ONBOARDING':
-      return i18next.t('opSolutionsMisc:status.onboarding');
-    case 'BACKLOG':
-      return i18next.t('opSolutionsMisc:status.backlog');
-    case 'IN_PROGRESS':
-      return i18next.t('opSolutionsMisc:status.inProgress');
-    case 'COMPLETED':
-      return i18next.t('opSolutionsMisc:status.completed');
-    case 'AT_RISK':
-      return i18next.t('opSolutionsMisc:status.atRisk');
-    default:
-      return '';
-  }
-};
 
 // Sorts discussions by the most recent reply
 export const sortRepliesByDate = (
