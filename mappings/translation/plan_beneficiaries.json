@@ -5,6 +5,8 @@
     "dbField": "beneficiaries",
     "label": "Who are the beneficiaries of this model? Select all that apply.",
     "readonlyLabel": "Who are the beneficiaries of this model?",
+    "dataType": "ENUM",
+    "formType": "MULTISELECT",
     "multiSelectLabel": "Selected groups",
     "options": {
       "DISEASE_SPECIFIC": "Disease-specific",
@@ -26,6 +28,8 @@
     "goField": "DiseaseSpecificGroup",
     "dbField": "disease_specific_group",
     "label": "Please describe the disease-specific groups this model will impact.",
+    "dataType": "STRING",
+    "formType": "TEXT",
     "isOtherType": true
   },
   "beneficiariesOther": {
@@ -33,6 +37,8 @@
     "goField": "BeneficiariesOther",
     "dbField": "beneficiaries_other",
     "label": "Please describe the other groups this model will impact.",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
     "isOtherType": true
   },
   "beneficiariesNote": {
@@ -41,7 +47,9 @@
     "dbField": "beneficiaries_note",
     "label": "Notes",
     "isNote": true,
-    "otherParentField": "beneficiaries"
+    "otherParentField": "beneficiaries",
+    "dataType": "STRING",
+    "formType": "TEXTAREA"
   },
   "treatDualElligibleDifferent": {
     "gqlField": "treatDualElligibleDifferent",
@@ -49,6 +57,8 @@
     "dbField": "treat_dual_elligible_different",
     "label": "Should dually-eligible beneficiaries be treated differently than non-dually eligibles?",
     "readonlyLabel": "Should dually-eligible beneficiaries be treated differently than non-dually eligibles? How so?",
+    "dataType": "BOOLEAN",
+    "formType": "RADIO",
     "options": {
       "YES": "Yes",
       "NO": "No",
@@ -60,6 +70,8 @@
     "goField": "TreatDualElligibleDifferentHow",
     "dbField": "treat_dual_elligible_different_how",
     "label": "How so?",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
     "isOtherType": true,
     "otherParentField": "treat_dual_elligible_different"
   },
@@ -69,7 +81,9 @@
     "dbField": "treat_dual_elligible_different_note",
     "label": "Notes",
     "isNote": true,
-    "otherParentField": "treat_dual_elligible_different"
+    "otherParentField": "treat_dual_elligible_different",
+    "dataType": "STRING",
+    "formType": "TEXTAREA"
   },
   "excludeCertainCharacteristics": {
     "gqlField": "excludeCertainCharacteristics",
@@ -77,6 +91,8 @@
     "dbField": "exclude_certain_characteristics",
     "label": "Should beneficiaries with certain characteristics or enrollments be excluded?",
     "readonlyLabel": "Should beneficiaries with certain characteristics or enrollments be excluded? How so, what are the exclusionary criteria?",
+    "dataType": "BOOLEAN",
+    "formType": "RADIO",
     "options": {
       "YES": "Yes",
       "NO": "No",
@@ -88,6 +104,8 @@
     "goField": "ExcludeCertainCharacteristicsCriteria",
     "dbField": "exclude_certain_characteristics_criteria",
     "label": "What are the exclusionary criteria?",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
     "isOtherType": true,
     "otherParentField": "exclude_certain_characteristics"
   },
@@ -97,19 +115,25 @@
     "dbField": "exclude_certain_characteristics_note",
     "label": "Notes",
     "isNote": true,
-    "otherParentField": "exclude_certain_characteristics"
+    "otherParentField": "exclude_certain_characteristics",
+    "dataType": "STRING",
+    "formType": "TEXTAREA"
   },
   "numberPeopleImpacted": {
     "gqlField": "numberPeopleImpacted",
     "goField": "NumberPeopleImpacted",
     "dbField": "number_people_impacted",
-    "label": "How many people do you think will be impacted by this model?"
+    "label": "How many people do you think will be impacted by this model?",
+    "dataType": "NUMBER",
+    "formType": "RANGEINPUT"
   },
   "estimateConfidence": {
     "gqlField": "estimateConfidence",
     "goField": "EstimateConfidence",
     "dbField": "estimate_confidence",
     "label": "What is your level of confidence on this estimate?",
+    "dataType": "ENUM",
+    "formType": "RADIO",
     "options": {
       "NOT_AT_ALL": "Not at all confident",
       "SLIGHTLY": "Slightly confident",
@@ -123,7 +147,9 @@
     "dbField": "confidence_note",
     "label": "Notes",
     "isNote": true,
-    "otherParentField": "number_people_impacted"
+    "otherParentField": "number_people_impacted",
+    "dataType": "STRING",
+    "formType": "TEXTAREA"
   },
   "beneficiarySelectionMethod": {
     "gqlField": "beneficiarySelectionMethod",
@@ -131,6 +157,8 @@
     "dbField": "beneficiary_selection_method",
     "label": "How will you choose beneficiaries? Select all that apply.",
     "readonlyLabel": "How will you choose beneficiaries?",
+    "dataType": "ENUM",
+    "formType": "MULTISELECT",
     "multiSelectLabel": "Selected methods",
     "options": {
       "HISTORICAL": "Historical claims",
@@ -147,6 +175,8 @@
     "goField": "BeneficiarySelectionOther",
     "dbField": "beneficiary_selection_other",
     "label": "Please describe the other method for choosing beneficiaries.",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
     "isOtherType": true
   },
   "beneficiarySelectionNote": {
@@ -155,13 +185,17 @@
     "dbField": "beneficiary_selection_note",
     "label": "Notes",
     "isNote": true,
-    "otherParentField": "beneficiary_selection_method"
+    "otherParentField": "beneficiary_selection_method",
+    "dataType": "STRING",
+    "formType": "TEXTAREA"
   },
   "beneficiarySelectionFrequency": {
     "gqlField": "beneficiarySelectionFrequency",
     "goField": "BeneficiarySelectionFrequency",
     "dbField": "beneficiary_selection_frequency",
     "label": "How frequently are beneficiaries added?",
+    "dataType": "ENUM",
+    "formType": "CHECKBOX",
     "options": {
       "ANNUALLY": "Annually",
       "SEMIANNUALLY": "Semi-annually",
@@ -176,6 +210,8 @@
     "goField": "BeneficiarySelectionFrequencyContinually",
     "dbField": "beneficiary_selection_frequency_continually",
     "label": "Please specify",
+    "dataType": "STRING",
+    "formType": "TEXT",
     "isOtherType": true,
     "otherParentField": "beneficiary_selection_frequency"
   },
@@ -184,6 +220,8 @@
     "goField": "BeneficiarySelectionFrequencyOther",
     "dbField": "beneficiary_selection_frequency_other",
     "label": "Please specify",
+    "dataType": "STRING",
+    "formType": "TEXT",
     "isOtherType": true,
     "otherParentField": "beneficiary_selection_frequency"
   },
@@ -193,13 +231,17 @@
     "dbField": "beneficiary_selection_frequency_note",
     "label": "Notes",
     "isNote": true,
-    "otherParentField": "beneficiary_selection_frequency"
+    "otherParentField": "beneficiary_selection_frequency",
+    "dataType": "STRING",
+    "formType": "TEXT"
   },
   "beneficiaryRemovalFrequency": {
     "gqlField": "beneficiaryRemovalFrequency",
     "goField": "BeneficiaryRemovalFrequency",
     "dbField": "beneficiary_removal_frequency",
     "label": "How frequently are beneficiaries removed?",
+    "dataType": "ENUM",
+    "formType": "CHECKBOX",
     "options": {
       "ANNUALLY": "Annually",
       "SEMIANNUALLY": "Semi-annually",
@@ -214,6 +256,8 @@
     "goField": "BeneficiaryRemovalFrequencyContinually",
     "dbField": "beneficiary_removal_frequency_continually",
     "label": "Please specify",
+    "dataType": "STRING",
+    "formType": "TEXT",
     "isOtherType": true,
     "otherParentField": "beneficiary_removal_frequency"
   },
@@ -222,6 +266,8 @@
     "goField": "BeneficiaryRemovalFrequencyOther",
     "dbField": "beneficiary_removal_frequency_other",
     "label": "Please specify",
+    "dataType": "STRING",
+    "formType": "TEXT",
     "isOtherType": true,
     "otherParentField": "beneficiary_removal_frequency"
   },
@@ -231,13 +277,17 @@
     "dbField": "beneficiary_removal_frequency_note",
     "label": "Notes",
     "isNote": true,
-    "otherParentField": "beneficiary_removal_frequency"
+    "otherParentField": "beneficiary_removal_frequency",
+    "dataType": "STRING",
+    "formType": "TEXT"
   },
   "beneficiaryOverlap": {
     "gqlField": "beneficiaryOverlap",
     "goField": "BeneficiaryOverlap",
     "dbField": "beneficiary_overlap",
     "label": "Will the beneficiaries overlap with other models?",
+    "dataType": "ENUM",
+    "formType": "RADIO",
     "options": {
       "YES_NEED_POLICIES": "Yes, we expect to develop policies to manage the overlaps",
       "YES_NO_ISSUES": "Yes, and the overlaps would not be an issue",
@@ -250,7 +300,9 @@
     "dbField": "beneficiary_overlap_note",
     "label": "Notes",
     "isNote": true,
-    "otherParentField": "beneficiary_overlap"
+    "otherParentField": "beneficiary_overlap",
+    "dataType": "STRING",
+    "formType": "TEXTAREA"
   },
   "precedenceRules": {
     "gqlField": "precedenceRules",
@@ -258,6 +310,8 @@
     "dbField": "precedence_rules",
     "label": "Are there precedence rules between this model and other model(s)?",
     "sublabel": "i.e. other models have precedence over you (e.g. mandatory or statutory models running at the same time as yours)",
+    "dataType": "ENUM",
+    "formType": "CHECKBOX",
     "options": {
       "YES": "Yes",
       "NO": "No"
@@ -268,6 +322,8 @@
     "goField": "PrecedenceRulesYes",
     "dbField": "precedence_rules_yes",
     "label": "Please describe",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
     "isOtherType": true,
     "otherParentField": "precedence_rules"
   },
@@ -276,6 +332,8 @@
     "goField": "PrecedenceRulesNo",
     "dbField": "precedence_rules_no",
     "label": "Please describe",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
     "isOtherType": true,
     "otherParentField": "precedence_rules"
   },
@@ -285,13 +343,17 @@
     "dbField": "precedence_rules_note",
     "label": "Notes",
     "isNote": true,
-    "otherParentField": "precedence_rules"
+    "otherParentField": "precedence_rules",
+    "dataType": "STRING",
+    "formType": "TEXTAREA"
   },
   "status": {
     "gqlField": "status",
     "goField": "Status",
     "dbField": "status",
     "label": "Model Plan status",
+    "dataType": "ENUM",
+    "formType": "CHECKBOX",
     "options": {
       "READY": "Ready",
       "IN_PROGRESS": "In progress",

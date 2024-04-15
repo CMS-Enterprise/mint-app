@@ -29,8 +29,6 @@ export const translationSections = {
 };
 
 export const unneededFields: string[] = [
-  'dataType',
-  'formType',
   'filterGroups',
   'tags',
   'isModelLinks',

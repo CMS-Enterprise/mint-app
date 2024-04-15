@@ -71,6 +71,10 @@ func newSeedCommandTuiModel() seedCommandTuiModel {
 		tabs:           tuiTabs,
 		options: []commandOption{
 			genericCommandOption{
+				CommandName: "Clean DB",
+				CommandRun:  func() { cleanCmd.Run(cleanCmd, []string{}) },
+			},
+			genericCommandOption{
 				CommandName: "Seed DB",
 				CommandRun:  func() { seedCmd.Run(seedCmd, []string{}) },
 			},
@@ -83,8 +87,8 @@ func newSeedCommandTuiModel() seedCommandTuiModel {
 				CommandRun:  func() { translateAuditsCommand.Run(translateAuditsCommand, []string{}) },
 			},
 			genericCommandOption{
-				CommandName: "Clean DB",
-				CommandRun:  func() { cleanCmd.Run(cleanCmd, []string{}) },
+				CommandName: "Export Translation Mappings",
+				CommandRun:  func() { translationExportCmd.Run(translationExportCmd, []string{}) },
 			},
 		},
 		// A map which indicates which choices are selected. We're using

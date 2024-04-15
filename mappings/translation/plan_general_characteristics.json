@@ -4,6 +4,8 @@
     "goField": "IsNewModel",
     "dbField": "is_new_model",
     "label": "Is this a new track of an existing model or a new model?",
+    "dataType": "BOOLEAN",
+    "formType": "RADIO",
     "options": {
       "true": "New model",
       "false": "New track of an existing model"
@@ -15,7 +17,9 @@
           "goField": "ExistingModel",
           "dbField": "existing_model",
           "label": "Which existing model?",
-          "sublabel": "Start typing the name of the model"
+          "sublabel": "Start typing the name of the model",
+          "dataType": "STRING",
+          "formType": "SELECT"
         }
       ]
     }
@@ -26,11 +30,15 @@
     "dbField": "existing_model",
     "label": "Which existing model?",
     "sublabel": "Start typing the name of the model",
+    "dataType": "STRING",
+    "formType": "SELECT",
     "parentRelation": {
       "gqlField": "isNewModel",
       "goField": "IsNewModel",
       "dbField": "is_new_model",
       "label": "Is this a new track of an existing model or a new model?",
+      "dataType": "BOOLEAN",
+      "formType": "RADIO",
       "options": {
         "true": "New model",
         "false": "New track of an existing model"
@@ -42,6 +50,8 @@
     "goField": "ResemblesExistingModel",
     "dbField": "resembles_existing_model",
     "label": "Does your proposed track/model resemble any existing models?",
+    "dataType": "ENUM",
+    "formType": "RADIO",
     "options": {
       "YES": "Yes",
       "NO": "No",
@@ -53,7 +63,9 @@
           "gqlField": "resemblesExistingModelWhyHow",
           "goField": "ResemblesExistingModelWhyHow",
           "dbField": "resembles_existing_model_why_how",
-          "label": "Explain why and how the model made this decision."
+          "label": "Explain why and how the model made this decision.",
+          "dataType": "STRING",
+          "formType": "TEXTAREA"
         },
         {
           "gqlField": "resemblesExistingModelWhich",
@@ -62,6 +74,8 @@
           "label": "Which existing models does your proposed track/model most closely resemble?",
           "sublabel": "Start typing the name of the model",
           "multiSelectLabel": "Selected models",
+          "dataType": "STRING",
+          "formType": "MULTISELECT",
           "isArray": true,
           "options": {
             "Other": "Other"
@@ -71,7 +85,9 @@
           "gqlField": "resemblesExistingModelHow",
           "goField": "ResemblesExistingModelHow",
           "dbField": "resembles_existing_model_how",
-          "label": "In what way does the new model resemble the selected model(s)?"
+          "label": "In what way does the new model resemble the selected model(s)?",
+          "dataType": "STRING",
+          "formType": "TEXTAREA"
         }
       ],
       "NO": [
@@ -79,7 +95,9 @@
           "gqlField": "resemblesExistingModelWhyHow",
           "goField": "ResemblesExistingModelWhyHow",
           "dbField": "resembles_existing_model_why_how",
-          "label": "Explain why and how the model made this decision."
+          "label": "Explain why and how the model made this decision.",
+          "dataType": "STRING",
+          "formType": "TEXTAREA"
         }
       ]
     }
@@ -88,7 +106,9 @@
     "gqlField": "resemblesExistingModelWhyHow",
     "goField": "ResemblesExistingModelWhyHow",
     "dbField": "resembles_existing_model_why_how",
-    "label": "Explain why and how the model made this decision."
+    "label": "Explain why and how the model made this decision.",
+    "dataType": "STRING",
+    "formType": "TEXTAREA"
   },
   "resemblesExistingModelWhich": {
     "gqlField": "resemblesExistingModelWhich",
@@ -97,12 +117,16 @@
     "label": "Which existing models does your proposed track/model most closely resemble?",
     "sublabel": "Start typing the name of the model",
     "multiSelectLabel": "Selected models",
+    "dataType": "STRING",
+    "formType": "MULTISELECT",
     "isArray": true,
     "parentRelation": {
       "gqlField": "resemblesExistingModel",
       "goField": "ResemblesExistingModel",
       "dbField": "resembles_existing_model",
       "label": "Does your proposed track/model resemble any existing models?",
+      "dataType": "ENUM",
+      "formType": "RADIO",
       "options": {
         "YES": "Yes",
         "NO": "No",
@@ -118,11 +142,15 @@
     "goField": "ResemblesExistingModelHow",
     "dbField": "resembles_existing_model_how",
     "label": "In what way does the new model resemble the selected model(s)?",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
     "parentRelation": {
       "gqlField": "resemblesExistingModel",
       "goField": "ResemblesExistingModel",
       "dbField": "resembles_existing_model",
       "label": "Does your proposed track/model resemble any existing models?",
+      "dataType": "ENUM",
+      "formType": "RADIO",
       "options": {
         "YES": "Yes",
         "NO": "No",
@@ -135,6 +163,8 @@
     "goField": "ResemblesExistingModelOtherSpecify",
     "dbField": "resembles_existing_model_other_specify",
     "label": "Please specify",
+    "dataType": "STRING",
+    "formType": "TEXT",
     "isOtherType": true,
     "otherParentField": "resembles_existing_model"
   },
@@ -143,6 +173,8 @@
     "goField": "ResemblesExistingModelOtherSelected",
     "dbField": "resembles_existing_model_other_selected",
     "label": "",
+    "dataType": "BOOLEAN",
+    "formType": "RADIO",
     "isOtherType": true,
     "options": {
       "true": "",
@@ -154,6 +186,8 @@
     "goField": "ResemblesExistingModelOtherOption",
     "dbField": "resembles_existing_model_other_option",
     "label": "Please specify other",
+    "dataType": "STRING",
+    "formType": "TEXT",
     "isOtherType": true
   },
   "resemblesExistingModelNote": {
@@ -162,13 +196,17 @@
     "dbField": "resembles_existing_model_note",
     "label": "Notes",
     "isNote": true,
-    "otherParentField": "resembles_existing_model"
+    "otherParentField": "resembles_existing_model",
+    "dataType": "STRING",
+    "formType": "TEXTAREA"
   },
   "participationInModelPrecondition": {
     "gqlField": "participationInModelPrecondition",
     "goField": "ParticipationInModelPrecondition",
     "dbField": "participation_in_model_precondition",
     "label": "Is participation in another model a precondition for participation in this model?",
+    "dataType": "ENUM",
+    "formType": "RADIO",
     "options": {
       "YES": "Yes",
       "NO": "No",
@@ -183,6 +221,8 @@
           "label": "Which models?",
           "sublabel": "Start typing the name of the model",
           "multiSelectLabel": "Selected models",
+          "dataType": "STRING",
+          "formType": "MULTISELECT",
           "isArray": true,
           "options": {
             "Other": "Other"
@@ -192,7 +232,9 @@
           "gqlField": "participationInModelPreconditionWhyHow",
           "goField": "ParticipationInModelPreconditionWhyHow",
           "dbField": "participation_in_model_precondition_why_how",
-          "label": "Explain any details including if it is just part of the model."
+          "label": "Explain any details including if it is just part of the model.",
+          "dataType": "STRING",
+          "formType": "TEXTAREA"
         }
       ]
     }
@@ -202,6 +244,8 @@
     "goField": "ParticipationInModelPreconditionOtherSpecify",
     "dbField": "participation_in_model_precondition_other_specify",
     "label": "Please specify",
+    "dataType": "STRING",
+    "formType": "TEXT",
     "isOtherType": true,
     "otherParentField": "participation_in_model_precondition"
   },
@@ -212,12 +256,16 @@
     "label": "Which models?",
     "sublabel": "Start typing the name of the model",
     "multiSelectLabel": "Selected models",
+    "dataType": "STRING",
+    "formType": "MULTISELECT",
     "isArray": true,
     "parentRelation": {
       "gqlField": "participationInModelPrecondition",
       "goField": "ParticipationInModelPrecondition",
       "dbField": "participation_in_model_precondition",
       "label": "Is participation in another model a precondition for participation in this model?",
+      "dataType": "ENUM",
+      "formType": "RADIO",
       "options": {
         "YES": "Yes",
         "NO": "No",
@@ -233,6 +281,8 @@
     "goField": "ParticipationInModelPreconditionOtherSelected",
     "dbField": "participation_in_model_precondition_other_selected",
     "label": "",
+    "dataType": "BOOLEAN",
+    "formType": "RADIO",
     "isOtherType": true,
     "options": {
       "true": "",
@@ -244,6 +294,8 @@
     "goField": "ParticipationInModelPreconditionOtherOption",
     "dbField": "participation_in_model_precondition_other_option",
     "label": "Please specify other",
+    "dataType": "STRING",
+    "formType": "TEXT",
     "isOtherType": true,
     "otherParentField": "participation_in_model_precondition_which"
   },
@@ -252,11 +304,15 @@
     "goField": "ParticipationInModelPreconditionWhyHow",
     "dbField": "participation_in_model_precondition_why_how",
     "label": "Explain any details including if it is just part of the model.",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
     "parentRelation": {
       "gqlField": "participationInModelPrecondition",
       "goField": "ParticipationInModelPrecondition",
       "dbField": "participation_in_model_precondition",
       "label": "Is participation in another model a precondition for participation in this model?",
+      "dataType": "ENUM",
+      "formType": "RADIO",
       "options": {
         "YES": "Yes",
         "NO": "No",
@@ -270,7 +326,9 @@
     "dbField": "participation_in_model_precondition_note",
     "label": "Notes",
     "isNote": true,
-    "otherParentField": "participation_in_model_precondition"
+    "otherParentField": "participation_in_model_precondition",
+    "dataType": "STRING",
+    "formType": "TEXTAREA"
   },
   "hasComponentsOrTracks": {
     "gqlField": "hasComponentsOrTracks",
@@ -278,6 +336,8 @@
     "dbField": "has_components_or_tracks",
     "label": "Are there different components/tracks?",
     "readonlyLabel": "Are there different components/tracks? If so, how do the tracks differ?",
+    "dataType": "BOOLEAN",
+    "formType": "RADIO",
     "options": {
       "true": "Yes",
       "false": "No"
@@ -288,6 +348,8 @@
     "goField": "HasComponentsOrTracksDiffer",
     "dbField": "has_components_or_tracks_differ",
     "label": "How do the tracks differ?",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
     "isOtherType": true,
     "otherParentField": "has_components_or_tracks"
   },
@@ -297,7 +359,9 @@
     "dbField": "has_components_or_tracks_note",
     "label": "Notes",
     "isNote": true,
-    "otherParentField": "has_components_or_tracks"
+    "otherParentField": "has_components_or_tracks",
+    "dataType": "STRING",
+    "formType": "TEXTAREA"
   },
   "agencyOrStateHelp": {
     "gqlField": "agencyOrStateHelp",
@@ -305,6 +369,8 @@
     "dbField": "agency_or_state_help",
     "label": "Will another Agency or State help design/operate the model? Select all that apply.",
     "readonlyLabel": "Will another Agency or State help design/operate the model?",
+    "dataType": "ENUM",
+    "formType": "CHECKBOX",
     "options": {
       "YES_STATE": "Yes, we will partner with states",
       "YES_AGENCY_IDEAS": "Yes, we will get ideas from another agency",
@@ -318,6 +384,8 @@
     "goField": "AgencyOrStateHelpOther",
     "dbField": "agency_or_state_help_other",
     "label": "Please specify",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
     "isOtherType": true,
     "otherParentField": "agency_or_state_help"
   },
@@ -327,7 +395,9 @@
     "dbField": "agency_or_state_help_note",
     "label": "Notes",
     "isNote": true,
-    "otherParentField": "agency_or_state_help"
+    "otherParentField": "agency_or_state_help",
+    "dataType": "STRING",
+    "formType": "TEXTAREA"
   },
   "alternativePaymentModelTypes": {
     "gqlField": "alternativePaymentModelTypes",
@@ -335,6 +405,8 @@
     "dbField": "alternative_payment_model_types",
     "label": "What type of Alternative Payment Model (APM) do you think the model could be?",
     "sublabel": "In order to be considered by the Quality Payment Program (QPP), and to be MIPS or Advanced APM, you will need to collect TINs and NPIs for providers.",
+    "dataType": "ENUM",
+    "formType": "CHECKBOX",
     "options": {
       "ADVANCED": "Advanced APM",
       "MIPS": "MIPS APM",
@@ -348,7 +420,9 @@
     "dbField": "alternative_payment_model_note",
     "label": "Notes",
     "isNote": true,
-    "otherParentField": "alternative_payment_model_types"
+    "otherParentField": "alternative_payment_model_types",
+    "dataType": "STRING",
+    "formType": "TEXTAREA"
   },
   "keyCharacteristics": {
     "gqlField": "keyCharacteristics",
@@ -356,6 +430,8 @@
     "dbField": "key_characteristics",
     "label": "What are the model key characteristics? Select all that apply.",
     "readonlyLabel": "What are the model key characteristics?",
+    "dataType": "ENUM",
+    "formType": "MULTISELECT",
     "multiSelectLabel": "Selected key characteristics",
     "options": {
       "EPISODE_BASED": "Episode-Based Model",
@@ -377,6 +453,8 @@
           "goField": "CollectPlanBids",
           "dbField": "collect_plan_bids",
           "label": "Will you review and collect plan bids?",
+          "dataType": "BOOLEAN",
+          "formType": "RADIO",
           "options": {
             "true": "Yes",
             "false": "No"
@@ -387,6 +465,8 @@
           "goField": "ManagePartCDEnrollment",
           "dbField": "manage_part_c_d_enrollment",
           "label": "Will you manage Part C/D enrollment?",
+          "dataType": "BOOLEAN",
+          "formType": "RADIO",
           "options": {
             "true": "Yes",
             "false": "No"
@@ -397,6 +477,8 @@
           "goField": "PlanContractUpdated",
           "dbField": "plan_contract_updated",
           "label": "Have you updated the plan’s contract?",
+          "dataType": "BOOLEAN",
+          "formType": "RADIO",
           "options": {
             "true": "Yes",
             "false": "No"
@@ -409,6 +491,8 @@
           "goField": "CollectPlanBids",
           "dbField": "collect_plan_bids",
           "label": "Will you review and collect plan bids?",
+          "dataType": "BOOLEAN",
+          "formType": "RADIO",
           "options": {
             "true": "Yes",
             "false": "No"
@@ -419,6 +503,8 @@
           "goField": "ManagePartCDEnrollment",
           "dbField": "manage_part_c_d_enrollment",
           "label": "Will you manage Part C/D enrollment?",
+          "dataType": "BOOLEAN",
+          "formType": "RADIO",
           "options": {
             "true": "Yes",
             "false": "No"
@@ -429,6 +515,8 @@
           "goField": "PlanContractUpdated",
           "dbField": "plan_contract_updated",
           "label": "Have you updated the plan’s contract?",
+          "dataType": "BOOLEAN",
+          "formType": "RADIO",
           "options": {
             "true": "Yes",
             "false": "No"
@@ -442,6 +530,8 @@
     "goField": "KeyCharacteristicsOther",
     "dbField": "key_characteristics_other",
     "label": "Please describe the other key characteristics",
+    "dataType": "STRING",
+    "formType": "TEXT",
     "isOtherType": true
   },
   "keyCharacteristicsNote": {
@@ -450,13 +540,17 @@
     "dbField": "key_characteristics_note",
     "label": "Notes",
     "isNote": true,
-    "otherParentField": "key_characteristics"
+    "otherParentField": "key_characteristics",
+    "dataType": "STRING",
+    "formType": "TEXTAREA"
   },
   "collectPlanBids": {
     "gqlField": "collectPlanBids",
     "goField": "CollectPlanBids",
     "dbField": "collect_plan_bids",
     "label": "Will you review and collect plan bids?",
+    "dataType": "BOOLEAN",
+    "formType": "RADIO",
     "options": {
       "true": "Yes",
       "false": "No"
@@ -467,6 +561,8 @@
       "dbField": "key_characteristics",
       "label": "What are the model key characteristics? Select all that apply.",
       "readonlyLabel": "What are the model key characteristics?",
+      "dataType": "ENUM",
+      "formType": "MULTISELECT",
       "multiSelectLabel": "Selected key characteristics",
       "options": {
         "EPISODE_BASED": "Episode-Based Model",
@@ -489,13 +585,17 @@
     "dbField": "collect_plan_bids_note",
     "label": "Notes",
     "isNote": true,
-    "otherParentField": "collect_plan_bids"
+    "otherParentField": "collect_plan_bids",
+    "dataType": "STRING",
+    "formType": "TEXTAREA"
   },
   "managePartCDEnrollment": {
     "gqlField": "managePartCDEnrollment",
     "goField": "ManagePartCDEnrollment",
     "dbField": "manage_part_c_d_enrollment",
     "label": "Will you manage Part C/D enrollment?",
+    "dataType": "BOOLEAN",
+    "formType": "RADIO",
     "options": {
       "true": "Yes",
       "false": "No"
@@ -506,6 +606,8 @@
       "dbField": "key_characteristics",
       "label": "What are the model key characteristics? Select all that apply.",
       "readonlyLabel": "What are the model key characteristics?",
+      "dataType": "ENUM",
+      "formType": "MULTISELECT",
       "multiSelectLabel": "Selected key characteristics",
       "options": {
         "EPISODE_BASED": "Episode-Based Model",
@@ -528,13 +630,17 @@
     "dbField": "manage_part_c_d_enrollment_note",
     "label": "Notes",
     "isNote": true,
-    "otherParentField": "manage_part_c_d_enrollment"
+    "otherParentField": "manage_part_c_d_enrollment",
+    "dataType": "STRING",
+    "formType": "TEXTAREA"
   },
   "planContractUpdated": {
     "gqlField": "planContractUpdated",
     "goField": "PlanContractUpdated",
     "dbField": "plan_contract_updated",
     "label": "Have you updated the plan’s contract?",
+    "dataType": "BOOLEAN",
+    "formType": "RADIO",
     "options": {
       "true": "Yes",
       "false": "No"
@@ -545,6 +651,8 @@
       "dbField": "key_characteristics",
       "label": "What are the model key characteristics? Select all that apply.",
       "readonlyLabel": "What are the model key characteristics?",
+      "dataType": "ENUM",
+      "formType": "MULTISELECT",
       "multiSelectLabel": "Selected key characteristics",
       "options": {
         "EPISODE_BASED": "Episode-Based Model",
@@ -567,7 +675,9 @@
     "dbField": "plan_contract_updated_note",
     "label": "Notes",
     "isNote": true,
-    "otherParentField": "plan_contract_updated"
+    "otherParentField": "plan_contract_updated",
+    "dataType": "STRING",
+    "formType": "TEXTAREA"
   },
   "careCoordinationInvolved": {
     "gqlField": "careCoordinationInvolved",
@@ -575,6 +685,8 @@
     "dbField": "care_coordination_involved",
     "label": "Is care coordination involved?",
     "readonlyLabel": "Is care coordination involved? How so?",
+    "dataType": "BOOLEAN",
+    "formType": "RADIO",
     "options": {
       "true": "Yes",
       "false": "No"
@@ -585,6 +697,8 @@
     "goField": "CareCoordinationInvolvedDescription",
     "dbField": "care_coordination_involved_description",
     "label": "How so?",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
     "isOtherType": true,
     "otherParentField": "care_coordination_involved"
   },
@@ -594,7 +708,9 @@
     "dbField": "care_coordination_involved_note",
     "label": "Notes",
     "isNote": true,
-    "otherParentField": "care_coordination_involved"
+    "otherParentField": "care_coordination_involved",
+    "dataType": "STRING",
+    "formType": "TEXTAREA"
   },
   "additionalServicesInvolved": {
     "gqlField": "additionalServicesInvolved",
@@ -602,6 +718,8 @@
     "dbField": "additional_services_involved",
     "label": "Are additional services involved?",
     "readonlyLabel": "Are additional services involved? How so?",
+    "dataType": "BOOLEAN",
+    "formType": "RADIO",
     "options": {
       "true": "Yes",
       "false": "No"
@@ -612,6 +730,8 @@
     "goField": "AdditionalServicesInvolvedDescription",
     "dbField": "additional_services_involved_description",
     "label": "How so?",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
     "isOtherType": true,
     "otherParentField": "additional_services_involved"
   },
@@ -621,7 +741,9 @@
     "dbField": "additional_services_involved_note",
     "label": "Notes",
     "isNote": true,
-    "otherParentField": "additional_services_involved"
+    "otherParentField": "additional_services_involved",
+    "dataType": "STRING",
+    "formType": "TEXTAREA"
   },
   "communityPartnersInvolved": {
     "gqlField": "communityPartnersInvolved",
@@ -629,6 +751,8 @@
     "dbField": "community_partners_involved",
     "label": "Are community partners involved?",
     "readonlyLabel": "Are community partners involved? How so?",
+    "dataType": "BOOLEAN",
+    "formType": "RADIO",
     "options": {
       "true": "Yes",
       "false": "No"
@@ -639,6 +763,8 @@
     "goField": "CommunityPartnersInvolvedDescription",
     "dbField": "community_partners_involved_description",
     "label": "How so?",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
     "isOtherType": true,
     "otherParentField": "community_partners_involved"
   },
@@ -648,13 +774,17 @@
     "dbField": "community_partners_involved_note",
     "label": "Notes",
     "isNote": true,
-    "otherParentField": "community_partners_involved"
+    "otherParentField": "community_partners_involved",
+    "dataType": "STRING",
+    "formType": "TEXTAREA"
   },
   "geographiesTargeted": {
     "gqlField": "geographiesTargeted",
     "goField": "GeographiesTargeted",
     "dbField": "geographies_targeted",
     "label": "Is the model targeted at specific geographies?",
+    "dataType": "BOOLEAN",
+    "formType": "RADIO",
     "options": {
       "true": "Yes",
       "false": "No"
@@ -666,6 +796,8 @@
           "goField": "GeographiesTargetedTypes",
           "dbField": "geographies_targeted_types",
           "label": "Geography type is",
+          "dataType": "ENUM",
+          "formType": "CHECKBOX",
           "options": {
             "STATE": "States and territories",
             "REGION": "Region",
@@ -679,6 +811,8 @@
                 "dbField": "geographies_states_and_territories",
                 "label": "Which states and territories?",
                 "multiSelectLabel": "States and territories",
+                "dataType": "ENUM",
+                "formType": "MULTISELECT",
                 "isOtherType": true,
                 "options": {
                   "AL": "AL - Alabama",
@@ -806,6 +940,8 @@
                 "goField": "GeographiesRegionTypes",
                 "dbField": "geographies_region_types",
                 "label": "Geography region types",
+                "dataType": "ENUM",
+                "formType": "CHECKBOX",
                 "isOtherType": true,
                 "options": {
                   "CBSA": "Core-based statistical areas (CBSAs)",
@@ -821,6 +957,8 @@
           "goField": "GeographiesTargetedAppliedTo",
           "dbField": "geographies_targeted_applied_to",
           "label": "Geographies are applied to",
+          "dataType": "ENUM",
+          "formType": "CHECKBOX",
           "options": {
             "BENEFICIARIES": "Beneficiaries",
             "PARTICIPANTS": "Participants",
@@ -836,6 +974,8 @@
     "goField": "GeographiesTargetedTypes",
     "dbField": "geographies_targeted_types",
     "label": "Geography type is",
+    "dataType": "ENUM",
+    "formType": "CHECKBOX",
     "options": {
       "STATE": "States and territories",
       "REGION": "Region",
@@ -846,6 +986,8 @@
       "goField": "GeographiesTargeted",
       "dbField": "geographies_targeted",
       "label": "Is the model targeted at specific geographies?",
+      "dataType": "BOOLEAN",
+      "formType": "RADIO",
       "options": {
         "true": "Yes",
         "false": "No"
@@ -859,6 +1001,8 @@
           "dbField": "geographies_states_and_territories",
           "label": "Which states and territories?",
           "multiSelectLabel": "States and territories",
+          "dataType": "ENUM",
+          "formType": "MULTISELECT",
           "isOtherType": true,
           "options": {
             "AL": "AL - Alabama",
@@ -986,6 +1130,8 @@
           "goField": "GeographiesRegionTypes",
           "dbField": "geographies_region_types",
           "label": "Geography region types",
+          "dataType": "ENUM",
+          "formType": "CHECKBOX",
           "isOtherType": true,
           "options": {
             "CBSA": "Core-based statistical areas (CBSAs)",
@@ -1002,6 +1148,8 @@
     "dbField": "geographies_states_and_territories",
     "label": "Which states and territories?",
     "multiSelectLabel": "States and territories",
+    "dataType": "ENUM",
+    "formType": "MULTISELECT",
     "isOtherType": true,
     "options": {
       "AL": "AL - Alabama",
@@ -1126,6 +1274,8 @@
       "goField": "GeographiesTargetedTypes",
       "dbField": "geographies_targeted_types",
       "label": "Geography type is",
+      "dataType": "ENUM",
+      "formType": "CHECKBOX",
       "options": {
         "STATE": "States and territories",
         "REGION": "Region",
@@ -1138,6 +1288,8 @@
     "goField": "GeographiesRegionTypes",
     "dbField": "geographies_region_types",
     "label": "Geography region types",
+    "dataType": "ENUM",
+    "formType": "CHECKBOX",
     "isOtherType": true,
     "options": {
       "CBSA": "Core-based statistical areas (CBSAs)",
@@ -1149,6 +1301,8 @@
       "goField": "GeographiesTargetedTypes",
       "dbField": "geographies_targeted_types",
       "label": "Geography type is",
+      "dataType": "ENUM",
+      "formType": "CHECKBOX",
       "options": {
         "STATE": "States and territories",
         "REGION": "Region",
@@ -1161,6 +1315,8 @@
     "goField": "GeographiesTargetedTypesOther",
     "dbField": "geographies_targeted_types_other",
     "label": "Please specify what the other geography type is.",
+    "dataType": "STRING",
+    "formType": "TEXT",
     "isOtherType": true,
     "otherParentField": "geographies_targeted_types"
   },
@@ -1169,6 +1325,8 @@
     "goField": "GeographiesTargetedAppliedTo",
     "dbField": "geographies_targeted_applied_to",
     "label": "Geographies are applied to",
+    "dataType": "ENUM",
+    "formType": "CHECKBOX",
     "options": {
       "BENEFICIARIES": "Beneficiaries",
       "PARTICIPANTS": "Participants",
@@ -1180,6 +1338,8 @@
       "goField": "GeographiesTargeted",
       "dbField": "geographies_targeted",
       "label": "Is the model targeted at specific geographies?",
+      "dataType": "BOOLEAN",
+      "formType": "RADIO",
       "options": {
         "true": "Yes",
         "false": "No"
@@ -1191,6 +1351,8 @@
     "goField": "GeographiesTargetedAppliedToOther",
     "dbField": "geographies_targeted_applied_to_other",
     "label": "Please specify what the geographies are applied to.",
+    "dataType": "STRING",
+    "formType": "TEXT",
     "isOtherType": true
   },
   "geographiesTargetedNote": {
@@ -1199,13 +1361,17 @@
     "dbField": "geographies_targeted_note",
     "label": "Notes",
     "isNote": true,
-    "otherParentField": "geographies_targeted"
+    "otherParentField": "geographies_targeted",
+    "dataType": "BOOLEAN",
+    "formType": "RADIO"
   },
   "participationOptions": {
     "gqlField": "participationOptions",
     "goField": "ParticipationOptions",
     "dbField": "participation_options",
     "label": "Does the model offer different options for participation?",
+    "dataType": "BOOLEAN",
+    "formType": "RADIO",
     "options": {
       "true": "Yes",
       "false": "No"
@@ -1217,7 +1383,9 @@
     "dbField": "participation_options_note",
     "label": "Notes",
     "isNote": true,
-    "otherParentField": "participation_options"
+    "otherParentField": "participation_options",
+    "dataType": "BOOLEAN",
+    "formType": "RADIO"
   },
   "agreementTypes": {
     "gqlField": "agreementTypes",
@@ -1225,6 +1393,8 @@
     "dbField": "agreement_types",
     "label": "What is the agreement type?",
     "sublabel": "Note: CMMI writes, Office of General Council (OGC) approves both types of agreements",
+    "dataType": "BOOLEAN",
+    "formType": "CHECKBOX",
     "options": {
       "COOPERATIVE": "Co-Operative Agreement/Grant",
       "PARTICIPATION": "Participation Agreement",
@@ -1238,6 +1408,8 @@
           "dbField": "multiple_patricipation_agreements_needed",
           "label": "Will more than one participation agreement be needed?",
           "sublabel": "depending on awardee selections or characteristics such as risk/type/size",
+          "dataType": "BOOLEAN",
+          "formType": "RADIO",
           "options": {
             "true": "Yes",
             "false": "No"
@@ -1251,6 +1423,8 @@
     "goField": "AgreementTypesOther",
     "dbField": "agreement_types_other",
     "label": "Please specify",
+    "dataType": "STRING",
+    "formType": "TEXT",
     "isOtherType": true,
     "otherParentField": "agreement_types"
   },
@@ -1260,6 +1434,8 @@
     "dbField": "multiple_patricipation_agreements_needed",
     "label": "Will more than one participation agreement be needed?",
     "sublabel": "depending on awardee selections or characteristics such as risk/type/size",
+    "dataType": "BOOLEAN",
+    "formType": "RADIO",
     "options": {
       "true": "Yes",
       "false": "No"
@@ -1270,6 +1446,8 @@
       "dbField": "agreement_types",
       "label": "What is the agreement type?",
       "sublabel": "Note: CMMI writes, Office of General Council (OGC) approves both types of agreements",
+      "dataType": "BOOLEAN",
+      "formType": "CHECKBOX",
       "options": {
         "COOPERATIVE": "Co-Operative Agreement/Grant",
         "PARTICIPATION": "Participation Agreement",
@@ -1283,7 +1461,9 @@
     "dbField": "multiple_patricipation_agreements_needed_note",
     "label": "Notes",
     "isNote": true,
-    "otherParentField": "multiple_patricipation_agreements_needed"
+    "otherParentField": "multiple_patricipation_agreements_needed",
+    "dataType": "STRING",
+    "formType": "TEXTAREA"
   },
   "rulemakingRequired": {
     "gqlField": "rulemakingRequired",
@@ -1291,6 +1471,8 @@
     "dbField": "rulemaking_required",
     "label": "Is rulemaking required?",
     "readonlyLabel": "Is rulemaking required? If so, which rule do you anticipate using and what is the target date of display for that regulation?",
+    "dataType": "BOOLEAN",
+    "formType": "RADIO",
     "options": {
       "true": "Yes",
       "false": "No"
@@ -1301,6 +1483,8 @@
     "goField": "RulemakingRequiredDescription",
     "dbField": "rulemaking_required_description",
     "label": "Which rule do you anticipate using and what is the target date of display for that regulation?",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
     "isOtherType": true
   },
   "rulemakingRequiredNote": {
@@ -1309,13 +1493,17 @@
     "dbField": "rulemaking_required_note",
     "label": "Notes",
     "isNote": true,
-    "otherParentField": "rulemaking_required"
+    "otherParentField": "rulemaking_required",
+    "dataType": "STRING",
+    "formType": "TEXTAREA"
   },
   "authorityAllowances": {
     "gqlField": "authorityAllowances",
     "goField": "AuthorityAllowances",
     "dbField": "authority_allowances",
     "label": "What authority allows CMMI to test the model?",
+    "dataType": "ENUM",
+    "formType": "CHECKBOX",
     "options": {
       "ACA": "3021 Affordable Care Act (ACA)",
       "CONGRESSIONALLY_MANDATED": "Congressionally Mandated Demonstration",
@@ -1328,6 +1516,8 @@
     "goField": "AuthorityAllowancesOther",
     "dbField": "authority_allowances_other",
     "label": "Please specify",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
     "isOtherType": true,
     "otherParentField": "authority_allowances"
   },
@@ -1337,7 +1527,9 @@
     "dbField": "authority_allowances_note",
     "label": "Notes",
     "isNote": true,
-    "otherParentField": "authority_allowances"
+    "otherParentField": "authority_allowances",
+    "dataType": "STRING",
+    "formType": "TEXTAREA"
   },
   "waiversRequired": {
     "gqlField": "waiversRequired",
@@ -1345,6 +1537,8 @@
     "dbField": "waivers_required",
     "label": "Are waivers required?",
     "readonlyLabel": "Are waivers required? If so, which types of waivers?",
+    "dataType": "BOOLEAN",
+    "formType": "RADIO",
     "options": {
       "true": "Yes",
       "false": "No"
@@ -1356,6 +1550,8 @@
     "dbField": "waivers_required_types",
     "label": "Which types of waivers are required? Select all that apply.",
     "readonlyLabel": "Which types of waivers are required?",
+    "dataType": "ENUM",
+    "formType": "CHECKBOX",
     "isOtherType": true,
     "options": {
       "FRAUD_ABUSE": "Fraud and Abuse",
@@ -1374,13 +1570,17 @@
     "dbField": "waivers_required_note",
     "label": "Notes",
     "isNote": true,
-    "otherParentField": "waivers_required"
+    "otherParentField": "waivers_required",
+    "dataType": "STRING",
+    "formType": "TEXTAREA"
   },
   "status": {
     "gqlField": "status",
     "goField": "Status",
     "dbField": "status",
     "label": "Model Plan status",
+    "dataType": "ENUM",
+    "formType": "CHECKBOX",
     "options": {
       "READY": "Ready",
       "IN_PROGRESS": "In progress",
