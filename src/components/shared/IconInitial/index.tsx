@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 import { TeamRole } from 'gql/gen/graphql';
 
-import { getUserInitials } from 'utils/modelPlan';
+import AvatarCircle from '../AvatarCircle';
 
 type IconInitialType = {
   user: string;
@@ -42,13 +42,7 @@ const IconInitial = ({
       )}
       key={user}
     >
-      <div
-        className={`display-flex flex-align-center flex-justify-center circle-4 margin-right-1 ${
-          arrayOfColors[index % arrayOfColors.length]
-        }`}
-      >
-        {getUserInitials(user)}
-      </div>
+      <AvatarCircle user={user} className="margin-right-1" />
       <div className="margin-y-0">
         <p className="margin-y-0">{user}</p>
         <p className="font-body-2xs margin-y-0">
