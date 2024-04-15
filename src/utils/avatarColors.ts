@@ -37,8 +37,3 @@ const getColorFromPalette = (username: string): string => {
 };
 
 export default getColorFromPalette;
-
-// // Example usage
-// const username: string = 'exampleUser';
-// const color: string = getColorFromPalette(username);
-// console.log(color); // Output the color for the username
