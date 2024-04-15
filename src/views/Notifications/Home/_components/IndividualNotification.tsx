@@ -5,8 +5,8 @@ import { Button, Grid } from '@trussworks/react-uswds';
 import { useMarkNotificationAsReadMutation } from 'gql/gen/graphql';
 import { GetNotifications_currentUser_notifications_notifications_activity as NotificationActivityType } from 'gql/gen/types/GetNotifications';
 
-import { arrayOfColors } from 'components/shared/IconInitial';
 import MentionTextArea from 'components/shared/MentionTextArea';
+import getColorFromPalette from 'utils/avatarColors';
 import { getTimeElapsed } from 'utils/date';
 import { getUserInitials } from 'utils/modelPlan';
 
@@ -89,7 +89,8 @@ const IndividualNotification = ({
               {/* Circle of Name */}
               <div
                 className={`display-flex flex-align-center flex-justify-center minw-4 circle-4 ${
-                  arrayOfColors[index % arrayOfColors.length]
+                  // arrayOfColors[index % arrayOfColors.length]
+                  getColorFromPalette(name)
                 }`}
               >
                 {getUserInitials(name)}
