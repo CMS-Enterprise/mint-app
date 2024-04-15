@@ -1,14 +1,13 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
-import { Button, Grid, Icon } from '@trussworks/react-uswds';
+import { Button, Grid } from '@trussworks/react-uswds';
 import { useMarkNotificationAsReadMutation } from 'gql/gen/graphql';
 import { GetNotifications_currentUser_notifications_notifications_activity as NotificationActivityType } from 'gql/gen/types/GetNotifications';
 
+import AvatarCircle from 'components/shared/AvatarCircle';
 import MentionTextArea from 'components/shared/MentionTextArea';
-import getAvatarColorsFromUsername from 'utils/avatarColors';
 import { getTimeElapsed } from 'utils/date';
-import { getUserInitials } from 'utils/modelPlan';
 
 import {
   ActivityCTA,
@@ -87,19 +86,7 @@ const IndividualNotification = ({
           <Grid col="fill">
             <div className="display-flex">
               {/* Circle of Name */}
-              {name === 'MINT' ? (
-                <div className="display-flex flex-align-center flex-justify-center minw-4 circle-4 bg-mint-cool-50v">
-                  <Icon.Eco className="text-white" size={3} />
-                </div>
-              ) : (
-                <div
-                  className={`display-flex flex-align-center flex-justify-center minw-4 circle-4 ${getAvatarColorsFromUsername(
-                    name
-                  )}`}
-                >
-                  {getUserInitials(name)}
-                </div>
-              )}
+              <AvatarCircle user={name} />
 
               <div className="margin-top-05 padding-left-1">
                 <p className="line-height-sans-4 margin-bottom-1 margin-top-0 ">
