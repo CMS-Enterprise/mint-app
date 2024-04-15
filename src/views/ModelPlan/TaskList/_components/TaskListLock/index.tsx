@@ -3,8 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { TaskListSubscription_onLockTaskListSectionContext_lockStatus_lockedByUserAccount as LockedByUserAccount } from 'gql/gen/types/TaskListSubscription';
 
 import AssessmentIcon from 'components/shared/AssessmentIcon';
-import { arrayOfColors } from 'components/shared/IconInitial';
-import { getUserInitials } from 'utils/modelPlan';
+import { AvatarCircle } from 'components/shared/Avatar';
 
 import './index.scss';
 
@@ -21,10 +20,6 @@ const TaskListLock = ({
 }: TaskListLockProps) => {
   const { t } = useTranslation('modelPlanTaskList');
 
-  const randomColorIndex = (min: number, max: number) => {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-  };
-
   const lockMessage = isAssessment
     ? t('assessmentLocked', {
         assessmentUser: lockedByUserAccount?.commonName
@@ -40,13 +35,7 @@ const TaskListLock = ({
           {isAssessment ? (
             <AssessmentIcon size={3} />
           ) : (
-            <div
-              className={`display-flex flex-align-center flex-justify-center circle-4 margin-right-1 flex-none ${
-                arrayOfColors[randomColorIndex(0, 3)]
-              }`}
-            >
-              {getUserInitials(lockedByUserAccount.commonName)}
-            </div>
+            <AvatarCircle user={lockedByUserAccount.commonName} />
           )}
 
           <div className="display-flex flex-align-center line-height-body-4 text-base">
