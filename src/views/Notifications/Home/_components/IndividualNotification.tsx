@@ -6,7 +6,7 @@ import { useMarkNotificationAsReadMutation } from 'gql/gen/graphql';
 import { GetNotifications_currentUser_notifications_notifications_activity as NotificationActivityType } from 'gql/gen/types/GetNotifications';
 
 import MentionTextArea from 'components/shared/MentionTextArea';
-import avatarColors from 'utils/avatarColors';
+import getAvatarColorsFromUsername from 'utils/avatarColors';
 import { getTimeElapsed } from 'utils/date';
 import { getUserInitials } from 'utils/modelPlan';
 
@@ -93,7 +93,7 @@ const IndividualNotification = ({
                 </div>
               ) : (
                 <div
-                  className={`display-flex flex-align-center flex-justify-center minw-4 circle-4 ${avatarColors(
+                  className={`display-flex flex-align-center flex-justify-center minw-4 circle-4 ${getAvatarColorsFromUsername(
                     name
                   )}`}
                 >

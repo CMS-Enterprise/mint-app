@@ -27,7 +27,7 @@ const hashString = (inputString: string): number => {
 };
 
 // Gets a color from the palette based on a username
-const avatarColors = (username: string): string => {
+const getAvatarColorsFromUsername = (username: string): string => {
   // Calculate the hash value of the username
   const hashValue: number = hashString(username);
   // Map the hash value to an index in the palette array
@@ -36,4 +36,4 @@ const avatarColors = (username: string): string => {
   return palette[index];
 };
 
-export default avatarColors;
+export default getAvatarColorsFromUsername;
