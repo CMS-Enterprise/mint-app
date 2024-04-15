@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 import { TeamRole } from 'gql/gen/graphql';
 
-import AvatarCircle from '../AvatarCircle';
+import { AvatarCircle } from '../Avatar';
 
 type IconInitialType = {
   user: string;

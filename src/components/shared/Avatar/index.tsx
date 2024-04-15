@@ -1,14 +1,16 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Icon } from '@trussworks/react-uswds';
+import { TeamRole } from 'gql/gen/graphql';
 
 import { getUserInitials } from 'utils/modelPlan';
 
 type AvatarCircleProps = {
-  user: string;
   className?: string;
+  user: string;
 };
 
-const AvatarCircle = ({ user, className }: AvatarCircleProps) => {
+export const AvatarCircle = ({ className, user }: AvatarCircleProps) => {
   // Color palette for user identification
   const palette: string[] = [
     'bg-red-cool-10',
@@ -51,15 +53,17 @@ const AvatarCircle = ({ user, className }: AvatarCircleProps) => {
     <>
       {user === 'MINT' ? (
         <div
-          className={`display-flex flex-align-center flex-justify-center minw-4 circle-4 bg-mint-cool-50v ${className}`}
+          className={`display-flex flex-align-center flex-justify-center minw-4 circle-4 bg-mint-cool-50v ${
+            className ?? ''
+          }`}
         >
           <Icon.Eco className="text-white" size={3} />
         </div>
       ) : (
         <div
-          className={`display-flex flex-align-center flex-justify-center minw-4 circle-4 ${className} ${getAvatarColorsFromUsername(
-            user
-          )} `}
+          className={`display-flex flex-align-center flex-justify-center minw-4 circle-4 ${
+            className ?? ''
+          } ${getAvatarColorsFromUsername(user)} `}
         >
           {getUserInitials(user)}
         </div>
@@ -68,4 +72,39 @@ const AvatarCircle = ({ user, className }: AvatarCircleProps) => {
   );
 };
 
-export default AvatarCircle;
+type AvatarProps = {
+  user: string;
+  className?: string;
+  teamRoles?: TeamRole[];
+};
+
+export const Avatar = ({ user, className, teamRoles }: AvatarProps) => {
+  const { t: collaboratorsT } = useTranslation('collaborators');
+
+  const modelLeadFirst = teamRoles && [
+    ...teamRoles.filter((role: TeamRole) => role === TeamRole.MODEL_LEAD),
+    ...teamRoles.filter((role: TeamRole) => role !== TeamRole.MODEL_LEAD)
+  ];
+
+  return (
+    <div
+      className={`display-flex ${className ?? ''} ${
+        teamRoles ? 'flex-align-start' : 'flex-align-center'
+      }`}
+    >
+      <AvatarCircle user={user} className="margin-right-1" />
+      <div className="margin-y-0">
+        <p className="margin-y-0">{user}</p>
+        {teamRoles && (
+          <p className="font-body-2xs margin-y-0">
+            {modelLeadFirst!
+              .map(role => {
+                return collaboratorsT(`teamRoles.options.${role}`);
+              })
+              .join(', ')}
+          </p>
+        )}
+      </div>
+    </div>
+  );
+};

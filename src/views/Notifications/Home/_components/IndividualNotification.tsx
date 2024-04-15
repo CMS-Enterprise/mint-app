@@ -5,7 +5,7 @@ import { Button, Grid } from '@trussworks/react-uswds';
 import { useMarkNotificationAsReadMutation } from 'gql/gen/graphql';
 import { GetNotifications_currentUser_notifications_notifications_activity as NotificationActivityType } from 'gql/gen/types/GetNotifications';
 
-import AvatarCircle from 'components/shared/AvatarCircle';
+import { AvatarCircle } from 'components/shared/Avatar';
 import MentionTextArea from 'components/shared/MentionTextArea';
 import { getTimeElapsed } from 'utils/date';
 
