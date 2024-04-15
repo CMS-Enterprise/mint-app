@@ -3,7 +3,12 @@ import { Icon } from '@trussworks/react-uswds';
 
 import { getUserInitials } from 'utils/modelPlan';
 
-const AvatarCircle = ({ user }: { user: string }) => {
+type AvatarCircleProps = {
+  user: string;
+  className?: string;
+};
+
+const AvatarCircle = ({ user, className }: AvatarCircleProps) => {
   // Color palette for user identification
   const palette: string[] = [
     'bg-red-cool-10',
@@ -45,14 +50,16 @@ const AvatarCircle = ({ user }: { user: string }) => {
   return (
     <>
       {user === 'MINT' ? (
-        <div className="display-flex flex-align-center flex-justify-center minw-4 circle-4 bg-mint-cool-50v">
+        <div
+          className={`display-flex flex-align-center flex-justify-center minw-4 circle-4 bg-mint-cool-50v ${className}`}
+        >
           <Icon.Eco className="text-white" size={3} />
         </div>
       ) : (
         <div
-          className={`display-flex flex-align-center flex-justify-center minw-4 circle-4 ${getAvatarColorsFromUsername(
+          className={`display-flex flex-align-center flex-justify-center minw-4 circle-4 ${className} ${getAvatarColorsFromUsername(
             user
-          )}`}
+          )} `}
         >
           {getUserInitials(user)}
         </div>
