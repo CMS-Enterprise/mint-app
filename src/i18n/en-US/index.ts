@@ -1,7 +1,6 @@
 import crtdl from './draftModelPlan/crtdl';
 import discussions from './draftModelPlan/discussions';
 import draftModelPlan from './draftModelPlan/draftModelPlan';
-import itSolutions from './draftModelPlan/itSolutions';
 import prepareForClearance from './draftModelPlan/prepareForClearance';
 import getAccess from './helpAndKnowledge/Articles/getAccess';
 import highLevelProjectPlans from './helpAndKnowledge/Articles/highLevelProjectPlans';
@@ -76,7 +75,6 @@ const enUS = {
   header,
   helpAndKnowledge,
   home,
-  itSolutions,
   landing,
   plan,
   modelPlanOverview,

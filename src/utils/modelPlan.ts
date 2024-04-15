@@ -4,69 +4,26 @@ import { GetModelPlan_modelPlan_discussions as DiscussionType } from 'gql/gen/ty
 import i18next from 'i18next';
 import { orderBy } from 'lodash';
 
-import {
-  DocumentType,
-  OperationalSolutionKey,
-  OperationalSolutionSubtaskStatus
-} from 'types/graphql-global-types';
 import { getKeys } from 'types/translation';
-
-/**
- * Translate the API enum to a human readable string
- */
-
-export const translateSubtasks = (status: string) => {
-  switch (status) {
-    case OperationalSolutionSubtaskStatus.TODO:
-      return i18next.t('itSolutions:subtasks.todo');
-    case OperationalSolutionSubtaskStatus.IN_PROGRESS:
-      return i18next.t('itSolutions:subtasks.inProgress');
-    case OperationalSolutionSubtaskStatus.DONE:
-      return i18next.t('itSolutions:subtasks.done');
-    default:
-      return '';
-  }
-};
-
-export const translateOperationalSolutionKey = (
-  key: OperationalSolutionKey
-) => {
-  switch (key) {
-    case OperationalSolutionKey.CONTRACTOR:
-      return i18next.t('itSolutions:operationalSolutionKey.contractor');
-    case OperationalSolutionKey.CROSS_MODEL_CONTRACT:
-      return i18next.t('itSolutions:operationalSolutionKey.crossModelContract');
-    case OperationalSolutionKey.EXISTING_CMS_DATA_AND_PROCESS:
-      return i18next.t(
-        'itSolutions:operationalSolutionKey.existingCmsDataAndProcess'
-      );
-    case OperationalSolutionKey.INTERNAL_STAFF:
-      return i18next.t('itSolutions:operationalSolutionKey.interalStaff');
-    case OperationalSolutionKey.OTHER_NEW_PROCESS:
-      return i18next.t('itSolutions:operationalSolutionKey.otherNewProcess');
-    default:
-      return '';
-  }
-};
 
 export const translateOpNeedsStatusType = (type: string) => {
   switch (type) {
     case 'NOT_NEEDED':
-      return i18next.t('itSolutions:status.notNeeded');
+      return i18next.t('opSolutionsMisc:status.notNeeded');
     case 'NOT_ANSWERED':
-      return i18next.t('itSolutions:status.notAnswered');
+      return i18next.t('opSolutionsMisc:status.notAnswered');
     case 'NOT_STARTED':
-      return i18next.t('itSolutions:status.notStarted');
+      return i18next.t('opSolutionsMisc:status.notStarted');
     case 'ONBOARDING':
-      return i18next.t('itSolutions:status.onboarding');
+      return i18next.t('opSolutionsMisc:status.onboarding');
     case 'BACKLOG':
-      return i18next.t('itSolutions:status.backlog');
+      return i18next.t('opSolutionsMisc:status.backlog');
     case 'IN_PROGRESS':
-      return i18next.t('itSolutions:status.inProgress');
+      return i18next.t('opSolutionsMisc:status.inProgress');
     case 'COMPLETED':
-      return i18next.t('itSolutions:status.completed');
+      return i18next.t('opSolutionsMisc:status.completed');
     case 'AT_RISK':
-      return i18next.t('itSolutions:status.atRisk');
+      return i18next.t('opSolutionsMisc:status.atRisk');
     default:
       return '';
   }

@@ -29,7 +29,7 @@ const ImplementationStatuses = ({
 
   // Fetches statuses and translations as object to map through and render as list
   const implentationStatuses: ImplementationStatus = t(
-    'itSolutions:solutionStatuses',
+    'opSolutionsMisc:solutionStatuses',
     {
       returnObjects: true
     }

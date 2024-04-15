@@ -23,6 +23,7 @@ import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import RequiredAsterisk from 'components/shared/RequiredAsterisk';
 import useMessage from 'hooks/useMessage';
+import usePlanTranslation from 'hooks/usePlanTranslation';
 import CreateOperationalSolutionSubtasks from 'queries/ITSolutions/CreateOperationalSolutionSubtasks';
 import DeleteOperationalSolutionSubtasks from 'queries/ITSolutions/DeleteOperationalSolutionSubtasks';
 import GetOperationalSolution from 'queries/ITSolutions/GetOperationalSolution';
@@ -40,8 +41,8 @@ import {
 import { UpdateOperationalSolutionSubtasksVariables } from 'queries/ITSolutions/types/UpdateOperationalSolutionSubtasks';
 import UpdateOperationalSolutionSubtasks from 'queries/ITSolutions/UpdateOperationalSolutionSubtasks';
 import { OperationalSolutionSubtaskStatus } from 'types/graphql-global-types';
+import { getKeys } from 'types/translation';
 import flattenErrors from 'utils/flattenErrors';
-import { translateSubtasks } from 'utils/modelPlan';
 import { ModelInfoContext } from 'views/ModelInfoWrapper';
 import NotFound from 'views/NotFound';
 
@@ -77,8 +78,13 @@ const Subtasks = ({
   const location = useLocation();
   const fromManageSubtasks = location.search.includes('manage-subtasks');
 
-  const { t } = useTranslation('subtasks');
+  const { t: opSolutionsMiscT } = useTranslation('opSolutionsMisc');
+  const { t: subtasksT } = useTranslation('operationalSolutionSubtasks');
   const { t: h } = useTranslation('draftModelPlan');
+
+  const { status: statusConfig } = usePlanTranslation(
+    'operationalSolutionSubtasks'
+  );
 
   const { modelName } = useContext(ModelInfoContext);
   const { showMessage, showMessageOnNextPage, message } = useMessage();
@@ -144,7 +150,9 @@ const Subtasks = ({
                 data-testid="success-subtask-alert"
                 className="margin-y-4"
               >
-                {t('subtasks.removeSubtaskSuccess', { subTaskName: name })}
+                {opSolutionsMiscT('subtasks.removeSubtaskSuccess', {
+                  subTaskName: name
+                })}
               </Alert>
             );
             refetch();
@@ -156,7 +164,9 @@ const Subtasks = ({
                 data-testid="success-subtask-alert"
                 className="margin-y-4"
               >
-                {t('subtasks.removeSubtaskSuccess', { subTaskName: name })}
+                {opSolutionsMiscT('subtasks.removeSubtaskSuccess', {
+                  subTaskName: name
+                })}
               </Alert>
             );
             history.push(
@@ -169,7 +179,9 @@ const Subtasks = ({
         showMessage(
           <Alert type="error" slim className="margin-y-4">
             <span className="mandatory-fields-alert__text">
-              {t('subtasks.removeSubtaskError', { subTaskName: name })}
+              {opSolutionsMiscT('subtasks.removeSubtaskError', {
+                subTaskName: name
+              })}
             </span>
           </Alert>
         );
@@ -200,7 +212,7 @@ const Subtasks = ({
                   data-testid="success-subtask-alert"
                   className="margin-y-4"
                 >
-                  {t('subtasks.successMessage')}
+                  {opSolutionsMiscT('subtasks.successMessage')}
                 </Alert>
               );
               history.push(
@@ -236,7 +248,7 @@ const Subtasks = ({
                   data-testid="success-subtask-alert"
                   className="margin-y-4"
                 >
-                  {t('subtasks.successfulUpdateMessage')}
+                  {opSolutionsMiscT('subtasks.successfulUpdateMessage')}
                 </Alert>
               );
               history.push(
@@ -270,13 +282,13 @@ const Subtasks = ({
           headingLevel="h3"
           className="margin-top-neg-2 margin-bottom-1"
         >
-          {t('subtasks.removeModal.header', {
+          {opSolutionsMiscT('subtasks.removeModal.header', {
             subTaskName: inputName
           })}
         </PageHeading>
 
         <p className="margin-top-2 margin-bottom-3">
-          {t('subtasks.removeModal.warning')}
+          {opSolutionsMiscT('subtasks.removeModal.warning')}
         </p>
 
         <Button
@@ -287,10 +299,10 @@ const Subtasks = ({
             setModalOpen(false);
           }}
         >
-          {t('subtasks.removeModal.removeSubtask')}
+          {opSolutionsMiscT('subtasks.removeModal.removeSubtask')}
         </Button>
         <Button type="button" unstyled onClick={() => setModalOpen(false)}>
-          {t('subtasks.removeModal.keepSubtask')}
+          {opSolutionsMiscT('subtasks.removeModal.keepSubtask')}
         </Button>
       </Modal>
     );
@@ -300,17 +312,17 @@ const Subtasks = ({
     { text: h('home'), url: '/' },
     { text: h('tasklistBreadcrumb'), url: `/models/${modelID}/task-list/` },
     {
-      text: t('subtasks.itSolutionsTrackerBreadcrumb'),
+      text: opSolutionsMiscT('subtasks.itSolutionsTrackerBreadcrumb'),
       url: `/models/${modelID}/task-list/it-solutions`
     },
     {
-      text: t('subtasks.solutionDetails'),
+      text: opSolutionsMiscT('subtasks.solutionDetails'),
       url: `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/${operationalSolutionID}/solution-details`
     },
     {
       text: managingSubtasks
-        ? t('subtasks.manageSubtasks')
-        : t('subtasks.addSubtask')
+        ? opSolutionsMiscT('subtasks.manageSubtasks')
+        : opSolutionsMiscT('subtasks.addSubtask')
     }
   ];
 
@@ -325,8 +337,8 @@ const Subtasks = ({
         <Grid tablet={{ col: 9 }}>
           <PageHeading className="margin-top-4 margin-bottom-2">
             {managingSubtasks
-              ? t('subtasks.manageSubtasks')
-              : t('subtasks.addSubtask')}
+              ? opSolutionsMiscT('subtasks.manageSubtasks')
+              : opSolutionsMiscT('subtasks.addSubtask')}
           </PageHeading>
 
           <p
@@ -338,8 +350,8 @@ const Subtasks = ({
 
           <p className="line-height-body-4">
             {managingSubtasks
-              ? t('subtasks.manageSubtaskInfo')
-              : t('subtasks.addSubtaskInfo')}
+              ? opSolutionsMiscT('subtasks.manageSubtaskInfo')
+              : opSolutionsMiscT('subtasks.addSubtaskInfo')}
           </p>
 
           <Grid tablet={{ col: 12 }} desktop={{ col: 8 }}>
@@ -427,7 +439,9 @@ const Subtasks = ({
                                       {managingSubtasks ? (
                                         <div className="margin-top-4">
                                           <p className="usa-label margin-0">
-                                            {t('subtasks.subtaskName')}
+                                            {opSolutionsMiscT(
+                                              'subtasks.subtaskName'
+                                            )}
                                           </p>
                                           <p className="margin-0">
                                             {input.name}
@@ -442,12 +456,14 @@ const Subtasks = ({
                                           <Label
                                             htmlFor={`subtasks[${index}].name`}
                                           >
-                                            {t('subtasks.subtaskName')}
+                                            {subtasksT('name.label')}
                                             <RequiredAsterisk />
                                           </Label>
+
                                           <FieldErrorMsg>
                                             {flatErrors.name}
                                           </FieldErrorMsg>
+
                                           <Field
                                             as={TextInput}
                                             id={`subtask-name--${index}`}
@@ -457,13 +473,15 @@ const Subtasks = ({
                                           />
                                         </FieldGroup>
                                       )}
+
                                       <FieldGroup className="margin-top-4">
                                         <Label
                                           htmlFor={`subtasks[${index}].status`}
                                         >
-                                          {t('subtasks.statusQuestion')}
+                                          {subtasksT('status.label')}
                                         </Label>
-                                        {Object.keys(
+
+                                        {getKeys(
                                           OperationalSolutionSubtaskStatus
                                         )
                                           .reverse()
@@ -474,9 +492,9 @@ const Subtasks = ({
                                                 as={Radio}
                                                 id={`subtask-status--${index}--${status}`}
                                                 name={`subtasks[${index}].status`}
-                                                label={translateSubtasks(
-                                                  status
-                                                )}
+                                                label={
+                                                  statusConfig.options[status]
+                                                }
                                                 value={status}
                                                 checked={
                                                   subtasks &&
@@ -486,6 +504,7 @@ const Subtasks = ({
                                               />
                                             );
                                           })}
+
                                         {!managingSubtasks &&
                                           subtasks.length > 1 && (
                                             <Button
@@ -493,9 +512,12 @@ const Subtasks = ({
                                               onClick={() => remove(index)}
                                               className="usa-button usa-button--unstyled line-height-body-5 text-red margin-y-3"
                                             >
-                                              {t('subtasks.removeSubtask')}
+                                              {opSolutionsMiscT(
+                                                'subtasks.removeSubtask'
+                                              )}
                                             </Button>
                                           )}
+
                                         {managingSubtasks &&
                                           isUpdateType(input) && (
                                             <Button
@@ -507,12 +529,15 @@ const Subtasks = ({
                                               }}
                                               className="usa-button usa-button--unstyled line-height-body-5 text-red margin-y-3"
                                             >
-                                              {t('subtasks.removeSubtask')}
+                                              {opSolutionsMiscT(
+                                                'subtasks.removeSubtask'
+                                              )}
                                             </Button>
                                           )}
                                       </FieldGroup>
                                     </div>
                                   ))}
+
                                 <div className="margin-top-3">
                                   <Button
                                     type="button"
@@ -532,7 +557,9 @@ const Subtasks = ({
                                     }
                                     outline
                                   >
-                                    {t('subtasks.addAnotherSubtask')}
+                                    {opSolutionsMiscT(
+                                      'subtasks.addAnotherSubtask'
+                                    )}
                                   </Button>
                                 </div>
                               </>
@@ -557,8 +584,8 @@ const Subtasks = ({
                           onClick={() => setErrors({})}
                         >
                           {managingSubtasks
-                            ? t('subtasks.updateSubtasks')
-                            : t('subtasks.addSubtask')}
+                            ? opSolutionsMiscT('subtasks.updateSubtasks')
+                            : opSolutionsMiscT('subtasks.addSubtask')}
                         </Button>
                       </div>
 
@@ -580,8 +607,8 @@ const Subtasks = ({
                           aria-hidden
                         />
                         {fromManageSubtasks
-                          ? t('subtasks.returnToPreviousPage')
-                          : t('subtasks.returnToDetails')}
+                          ? opSolutionsMiscT('subtasks.returnToPreviousPage')
+                          : opSolutionsMiscT('subtasks.returnToDetails')}
                       </Button>
                     </Form>
                   </>

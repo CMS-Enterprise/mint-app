@@ -117,12 +117,12 @@ export const returnActionLinks = (
         to={`/models/${modelID}/task-list/it-solutions/${operationalNeed.needID}/solution-implementation-details/${operationalNeed.id}`}
         className={`margin-right-2${readOnly ? ' display-block' : ''}`}
       >
-        {i18next.t('itSolutions:itSolutionsTable.updateStatus')}
+        {i18next.t('opSolutionsMisc:itSolutionsTable.updateStatus')}
       </UswdsReactLink>
       <UswdsReactLink
         to={`/models/${modelID}/task-list/it-solutions/${operationalNeed.needID}/${operationalNeed.id}/solution-details`}
       >
-        {i18next.t('itSolutions:itSolutionsTable.viewDetails')}
+        {i18next.t('opSolutionsMisc:itSolutionsTable.viewDetails')}
       </UswdsReactLink>
     </>
   );
@@ -137,7 +137,7 @@ export const returnActionLinks = (
       <UswdsReactLink
         to={`/models/${modelID}/task-list/it-solutions/update-need/${operationalNeed.id}`}
       >
-        {i18next.t('itSolutions:itSolutionsTable.updateNeed')}
+        {i18next.t('opSolutionsMisc:itSolutionsTable.updateNeed')}
       </UswdsReactLink>
     );
   }
@@ -166,7 +166,7 @@ export const returnActionLinks = (
             state: { scrollElement: operationalNeedObj.fieldName.toString() }
           }}
         >
-          {i18next.t('itSolutions:itSolutionsTable.changePlanAnswer')}
+          {i18next.t('opSolutionsMisc:itSolutionsTable.changePlanAnswer')}
         </UswdsReactLink>
       );
     case OperationalNeedStatus.NOT_NEEDED:
@@ -177,7 +177,7 @@ export const returnActionLinks = (
             state: { scrollElement: operationalNeedObj.fieldName.toString() }
           }}
         >
-          {i18next.t('itSolutions:itSolutionsTable.changeAnswer')}
+          {i18next.t('opSolutionsMisc:itSolutionsTable.changeAnswer')}
         </UswdsReactLink>
       ) : (
         <></>
@@ -195,7 +195,7 @@ export const returnActionLinks = (
             }
           }}
         >
-          {i18next.t('itSolutions:itSolutionsTable.answer')}
+          {i18next.t('opSolutionsMisc:itSolutionsTable.answer')}
         </UswdsReactLink>
       ) : (
         <></>
@@ -216,15 +216,15 @@ export const returnActionText = (
     case OpSolutionStatus.IN_PROGRESS:
     case OpSolutionStatus.ONBOARDING:
       return (
-        i18next.t('itSolutions:itSolutionsTable.updateStatus') +
-        i18next.t('itSolutions:itSolutionsTable.viewDetails')
+        i18next.t('opSolutionsMisc:itSolutionsTable.updateStatus') +
+        i18next.t('opSolutionsMisc:itSolutionsTable.viewDetails')
       );
     case OpSolutionStatus.NOT_STARTED:
-      return i18next.t('itSolutions:itSolutionsTable.changePlanAnswer');
+      return i18next.t('opSolutionsMisc:itSolutionsTable.changePlanAnswer');
     case OperationalNeedStatus.NOT_NEEDED:
-      return i18next.t('itSolutions:itSolutionsTable.changeAnswer');
+      return i18next.t('opSolutionsMisc:itSolutionsTable.changeAnswer');
     case OperationalNeedStatus.NOT_ANSWERED:
-      return i18next.t('itSolutions:itSolutionsTable.answer');
+      return i18next.t('opSolutionsMisc:itSolutionsTable.answer');
     default:
       return '';
   }

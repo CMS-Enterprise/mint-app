@@ -82,14 +82,14 @@ const opSolutionsMisc = {
       'This model has not specified they will use the following solution(s):'
   },
   status: {
-    notAnswered: 'Not answered',
-    notNeeded: 'Not needed',
-    notStarted: 'Not started',
-    onboarding: 'Onboarding',
-    backlog: 'Backlog',
-    inProgress: 'In progress',
-    completed: 'Completed',
-    atRisk: 'At risk'
+    NOT_ANSWERED: 'Not answered',
+    NOT_NEEDED: 'Not needed',
+    NOT_STARTED: 'Not started',
+    ONBOARDING: 'Onboarding',
+    BACKLOG: 'Backlog',
+    IN_PROGRESS: 'In progress',
+    COMPLETED: 'Completed',
+    AT_RISK: 'At risk'
   },
 
   warningRedirect:
