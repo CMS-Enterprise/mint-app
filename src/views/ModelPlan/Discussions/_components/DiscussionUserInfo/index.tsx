@@ -6,7 +6,6 @@ import {
   GetModelPlanDiscussions_modelPlan_discussions_replies as ReplyType
 } from 'gql/gen/types/GetModelPlanDiscussions';
 
-import AssessmentIcon from 'components/shared/AssessmentIcon';
 import { Avatar } from 'components/shared/Avatar';
 import { getTimeElapsed } from 'utils/date';
 
@@ -25,20 +24,11 @@ const DiscussionUserInfo = ({
   return (
     <div className="discussion-user-info display-flex flex-wrap flex-justify">
       <div>
-        {discussionTopic.isAssessment ? (
-          <div className="display-flex flex-align-center margin-bottom-05">
-            <AssessmentIcon size={3} />{' '}
-            <span>
-              {discussionT('assessment')} |{' '}
-              {discussionTopic.createdByUserAccount.commonName}
-            </span>
-          </div>
-        ) : (
-          <Avatar
-            className="margin-bottom-05"
-            user={discussionTopic.createdByUserAccount.commonName}
-          />
-        )}
+        <Avatar
+          className="margin-bottom-05"
+          user={discussionTopic.createdByUserAccount.commonName}
+          isAssessment={discussionTopic.isAssessment}
+        />
         {discussionTopic.userRole && (
           <div
             className={`dui__userRole ${

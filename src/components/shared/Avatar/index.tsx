@@ -93,10 +93,17 @@ type AvatarProps = {
   user: string;
   className?: string;
   teamRoles?: TeamRole[];
+  isAssessment?: boolean;
 };
 
-export const Avatar = ({ user, className, teamRoles }: AvatarProps) => {
+export const Avatar = ({
+  user,
+  className,
+  teamRoles,
+  isAssessment
+}: AvatarProps) => {
   const { t: collaboratorsT } = useTranslation('collaborators');
+  const { t: discussionT } = useTranslation('discussions');
 
   const modelLeadFirst = teamRoles && [
     ...teamRoles.filter((role: TeamRole) => role === TeamRole.MODEL_LEAD),
@@ -109,9 +116,19 @@ export const Avatar = ({ user, className, teamRoles }: AvatarProps) => {
         teamRoles ? 'flex-align-start' : 'flex-align-center'
       }`}
     >
-      <AvatarCircle user={user} className="margin-right-1" />
+      <AvatarCircle
+        user={user}
+        className="margin-right-1"
+        isAssessment={isAssessment}
+      />
       <div className="margin-y-0">
-        <p className="margin-y-0">{user}</p>
+        {isAssessment ? (
+          <span>
+            {discussionT('assessment')} | {user}
+          </span>
+        ) : (
+          <p className="margin-y-0">{user}</p>
+        )}
         {teamRoles && (
           <p className="font-body-2xs margin-y-0">
             {modelLeadFirst!
