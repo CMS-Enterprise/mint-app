@@ -7,7 +7,7 @@ import {
 } from 'gql/gen/types/GetModelPlanDiscussions';
 
 import AssessmentIcon from 'components/shared/AssessmentIcon';
-import IconInitial from 'components/shared/IconInitial';
+import { Avatar } from 'components/shared/Avatar';
 import { getTimeElapsed } from 'utils/date';
 
 import './index.scss';
@@ -15,13 +15,11 @@ import './index.scss';
 type DiscussionUserInfoProps = {
   connected?: boolean;
   discussionTopic: DiscussionType | ReplyType;
-  index?: number;
 };
 
 const DiscussionUserInfo = ({
   connected,
-  discussionTopic,
-  index
+  discussionTopic
 }: DiscussionUserInfoProps) => {
   const { t: discussionT } = useTranslation('discussions');
   return (
@@ -36,10 +34,9 @@ const DiscussionUserInfo = ({
             </span>
           </div>
         ) : (
-          <IconInitial
+          <Avatar
             className="margin-bottom-05"
             user={discussionTopic.createdByUserAccount.commonName}
-            index={index ?? 0}
           />
         )}
         {discussionTopic.userRole && (

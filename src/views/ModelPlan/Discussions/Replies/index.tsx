@@ -74,7 +74,6 @@ const Replies = ({
                 <Fragment key={reply.id}>
                   <DiscussionUserInfo
                     discussionTopic={reply}
-                    index={index}
                     connected={index !== replies.length - 1 && hasReplies}
                   />
                   <div
