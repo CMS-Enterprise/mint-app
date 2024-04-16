@@ -43,7 +43,9 @@ WITH PrimaryContacts AS (
     )
 )
 UPDATE possible_operational_solution_contact
-SET is_primary = TRUE
+SET is_primary = TRUE,
+    modified_by = '00000001-0001-0001-0001-000000000001',
+    modified_dts = now()
 FROM PrimaryContacts
 WHERE possible_operational_solution_contact.id = PrimaryContacts.contact_id;
 
