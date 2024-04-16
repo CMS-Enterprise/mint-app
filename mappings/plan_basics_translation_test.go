@@ -14,7 +14,22 @@ func TestPlanBasicsTranslation(t *testing.T) {
 
 	assert.NoError(t, err)
 	assert.NotNil(t, translation)
-	//TODO: (ChChCh Changes!) Need to assert that each field actually has the value, if it doesn't map up, it will show just 0 values
+
+	tMap, err := translation.ToMap()
+	assert.NoError(t, err)
+	assert.NotNil(t, tMap)
+
+}
+
+func TestPlanBasicsTranslationVerifyFieldsArePopulated(t *testing.T) {
+	translation, err := PlanBasicsTranslation()
+	assert.NoError(t, err)
+	assert.NotNil(t, translation)
+
+	assert.NoError(t, err)
+	assert.NotNil(t, translation)
+
+	assertTranslationFields(t, translation)
 
 }
 
