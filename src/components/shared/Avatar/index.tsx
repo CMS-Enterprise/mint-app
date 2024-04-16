@@ -45,7 +45,7 @@ export const AvatarCircle = ({
   };
 
   // Gets a color from the palette based on a username
-  const getAvatarColorsFromUsername = (username: string): string => {
+  const avatarColors = (username: string): string => {
     // Calculate the hash value of the username
     const hashValue: number = hashString(username);
     // Map the hash value to an index in the palette array
@@ -54,13 +54,12 @@ export const AvatarCircle = ({
     return palette[index];
   };
 
+  const sharedClassnames =
+    'display-flex flex-align-center flex-justify-center minw-4 circle-4';
+
   if (isAssessment) {
     return (
-      <div
-        className={`display-flex flex-align-center flex-justify-center minw-4 circle-4 bg-primary ${
-          className ?? ''
-        }`}
-      >
+      <div className={`${sharedClassnames} bg-primary ${className ?? ''}`}>
         <Icon.Star className="text-white" size={3} />
       </div>
     );
@@ -69,9 +68,7 @@ export const AvatarCircle = ({
   if (user === 'MINT') {
     return (
       <div
-        className={`display-flex flex-align-center flex-justify-center minw-4 circle-4 bg-mint-cool-50v ${
-          className ?? ''
-        }`}
+        className={`${sharedClassnames} bg-mint-cool-50v ${className ?? ''}`}
       >
         <Icon.Eco className="text-white" size={3} />
       </div>
@@ -80,9 +77,7 @@ export const AvatarCircle = ({
 
   return (
     <div
-      className={`display-flex flex-align-center flex-justify-center minw-4 circle-4 ${
-        className ?? ''
-      } ${getAvatarColorsFromUsername(user)} `}
+      className={`${sharedClassnames} ${avatarColors(user)} ${className ?? ''}`}
     >
       {getUserInitials(user)}
     </div>
@@ -122,13 +117,10 @@ export const Avatar = ({
         isAssessment={isAssessment}
       />
       <div className="margin-y-0">
-        {isAssessment ? (
-          <span>
-            {discussionT('assessment')} | {user}
-          </span>
-        ) : (
-          <p className="margin-y-0">{user}</p>
-        )}
+        <span>
+          {isAssessment && `${discussionT('assessment')} | `}
+          {user}
+        </span>
         {teamRoles && (
           <p className="font-body-2xs margin-y-0">
             {modelLeadFirst!
