@@ -9,7 +9,7 @@ type HelpBoxProps = {
 };
 
 const HelpBox = ({ className }: HelpBoxProps) => {
-  const { t } = useTranslation('itSolutions');
+  const { t } = useTranslation('opSolutionsMisc');
 
   return (
     <div

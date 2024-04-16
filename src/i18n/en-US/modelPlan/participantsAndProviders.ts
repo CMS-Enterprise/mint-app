@@ -924,7 +924,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
 };
 
 export const participantsAndProvidersMisc: Record<string, string> = {
-  heading: 'Participants and Providers',
+  heading: 'Participants and providers',
   clearanceHeading: 'Review participants and providers',
   breadcrumb: 'Participants and providers',
   participantsDifferenceHeading:

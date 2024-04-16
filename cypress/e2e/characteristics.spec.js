@@ -272,6 +272,6 @@ describe('The Model Plan General Characteristics Form', () => {
       );
     });
 
-    cy.get('h1.mint-h1').contains('Participants and Providers');
+    cy.get('h1.mint-h1').contains('Participants and providers');
   });
 });
