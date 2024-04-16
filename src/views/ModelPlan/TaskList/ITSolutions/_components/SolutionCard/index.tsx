@@ -66,6 +66,10 @@ const SolutionCard = ({
 
   const solutionMap = findSolutionByKey(solution.key, helpSolutions);
 
+  const primaryContact = solutionMap?.pointsOfContact?.find(
+    contact => contact.isPrimary
+  );
+
   const detailRoute = solutionMap?.route
     ? `${initLocation}${location.search}${
         location.search ? '&' : '?'
@@ -147,24 +151,22 @@ const SolutionCard = ({
               </>
             )}
 
-            {solutionMap?.pointsOfContact?.[0].name ? (
+            {primaryContact ? (
               <Grid
                 tablet={{ col: 6 }}
                 className={classNames({ 'margin-bottom-2': solution.name })}
               >
                 <p className="text-bold margin-bottom-0">{t('contact')}</p>
 
-                <p className="margin-y-0">
-                  {solutionMap?.pointsOfContact[0].name}
-                </p>
+                <p className="margin-y-0">{primaryContact.name}</p>
 
                 <Link
                   aria-label={h('contactInfo.sendAnEmail')}
                   className="line-height-body-5 display-flex flex-align-center"
-                  href={`mailto:${solutionMap?.pointsOfContact[0].email}`}
+                  href={`mailto:${primaryContact.email}`}
                   target="_blank"
                 >
-                  <div>{solutionMap?.pointsOfContact[0].email}</div>
+                  <div>{primaryContact.email}</div>
                   <Icon.MailOutline className="margin-left-05 text-tbottom" />
                 </Link>
               </Grid>

@@ -10,6 +10,7 @@ export default gql(/* GraphQL */ `
         name
         email
         isTeam
+        isPrimary
         role
       }
     }
