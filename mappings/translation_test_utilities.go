@@ -214,11 +214,14 @@ func assertTFieldWithParent(t *testing.T, field reflect.StructField, translation
 func assertTFieldWithChildren(t *testing.T, field reflect.StructField, translation models.ITranslationField) {
 
 	// Changes: (Translations)  Implement this logic! We should expand the interface to get children as needed as well
-	// parent, hasOptions := translation.GetParent()
-	// assert.True(t, hasOptions)
+	children, hasChildren := translation.GetChildren()
+	assert.True(t, hasChildren)
 
-	// assert.NotZero(t, parent, "field %s. Doesn't have parent", field.Name)
-	// // Changes: (Translations) ensure that the parent is correct too? should we run through the test like above? Recursive?
+	assert.NotZero(t, children, "field %s. Doesn't have children", field.Name)
+
+	count := len(children)
+	assert.GreaterOrEqual(t, count, 1, "field %s. Doesn't have any children defined", field.Name)
+	// // Changes: (Translations) ensure that the children are defined correctly too? should we run through the test like above? Recursive?
 
 }
 

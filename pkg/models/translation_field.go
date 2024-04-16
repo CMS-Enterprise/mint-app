@@ -35,6 +35,7 @@ type TranslationField struct {
 	TranslationFieldBase
 	translationNoOptionRelation
 	translationNoParentRelation
+	translationNoChildRelation
 }
 type TranslationFieldBase struct {
 	GqlField         string              `json:"gqlField"`
@@ -70,6 +71,7 @@ type TranslationFieldWithOptions struct {
 	TranslationFieldBase
 	translationOptionRelation
 	translationNoParentRelation
+	translationNoChildRelation
 }
 
 // ITranslationField defines the signature every translation is expected to have
@@ -81,6 +83,9 @@ type ITranslationField interface {
 
 	HasParent() bool
 	GetParent() (ITranslationParent, bool)
+
+	HasChildren() bool
+	GetChildren() (map[string]interface{}, bool)
 }
 
 //Changes: (Translations) Define the Translation Parent better
@@ -100,11 +105,23 @@ func (tpr translationNoParentRelation) GetParent() (ITranslationParent, bool) {
 	return nil, tpr.HasParent()
 }
 
+// translationNoChildRelation can be embedded for translations that don't have children
+type translationNoChildRelation struct {
+}
+
+func (tcr translationNoChildRelation) HasChildren() bool {
+	return false
+}
+func (tcr translationNoChildRelation) GetChildren() (map[string]interface{}, bool) {
+	return nil, tcr.HasChildren()
+}
+
 // TranslationFieldWithParent Represents a TranslationField that has a parent
 type TranslationFieldWithParent struct {
 	TranslationFieldBase
 	translationOptionRelation
 	translationParentRelation
+	translationNoChildRelation
 }
 
 // translationOptionRelation is struct that is mean to be embedded in other Translation types to expose options, and functionality of options
@@ -150,6 +167,13 @@ type translationChildRelation struct {
 	ChildRelation map[string]interface{} `json:"childRelation"`
 }
 
+func (tcr translationChildRelation) HasChildren() bool {
+	return true
+}
+func (tcr translationChildRelation) GetChildren() (map[string]interface{}, bool) {
+	return tcr.ChildRelation, tcr.HasChildren()
+}
+
 // translationParentRelation is struct that is mean to be embedded in other Translation types to expose functionality for translations that have a Parent
 type translationParentRelation struct {
 	ParentRelation TranslationField `json:"parentRelation"`
@@ -176,6 +200,7 @@ type TranslationFieldWithOptionsAndParent struct {
 	TranslationFieldBase
 	translationOptionRelation
 	translationParentRelationWithOptionsAndChildren
+	translationNoChildRelation
 }
 
 // TranslationFieldWithParentAndChildren is a translation field that has a Parent and Children
