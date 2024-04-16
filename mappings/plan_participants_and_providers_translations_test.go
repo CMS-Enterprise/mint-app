@@ -75,7 +75,6 @@ func assertTranslationFieldData(t *testing.T, field reflect.StructField, value r
 // assertTranslationStructField asserts that there required translation details are populated based on the type of struct for each field.
 func assertTranslationStructField(t *testing.T, field reflect.StructField, value reflect.Value) {
 	fieldType := field.Type
-	fmt.Printf("%s", fieldType.Name())
 
 	switch fieldType.Name() {
 	case "TranslationField":
@@ -85,14 +84,19 @@ func assertTranslationStructField(t *testing.T, field reflect.StructField, value
 		assertTranslationFieldWithOptions(t, field, value)
 
 	case "TranslationFieldWithParent":
+		assertTranslationFieldWithParent(t, field, value)
 
 	case "TranslationFieldWithOptionsAndChildren":
+		assertTranslationFieldWithOptionsAndChildren(t, field, value)
 
 	case "TranslationFieldWithOptionsAndParent":
+		assertTranslationFieldWithOptionsAndParent(t, field, value)
 
 	case "TranslationFieldWithParentAndChildren":
+		assertTranslationFieldWithParentAndChildren(t, field, value)
 
 	default:
+		t.Error("translation type is undefined for", field, value)
 
 	}
 
@@ -114,6 +118,49 @@ func assertTranslationFieldWithOptions(t *testing.T, field reflect.StructField, 
 	assertTFieldBase(t, field, tField.TranslationFieldBase)
 
 	assertTFieldOptions(t, field, tField)
+
+}
+func assertTranslationFieldWithParent(t *testing.T, field reflect.StructField, value reflect.Value) {
+	tField, ok := value.Interface().(models.TranslationFieldWithParent)
+	assert.True(t, ok, "the value is not of type %T, it is type %T", tField, value)
+
+	assertTFieldBase(t, field, tField.TranslationFieldBase)
+
+	assertTFieldWithParent(t, field, tField)
+
+}
+
+func assertTranslationFieldWithOptionsAndChildren(t *testing.T, field reflect.StructField, value reflect.Value) {
+	tField, ok := value.Interface().(models.TranslationFieldWithOptionsAndChildren)
+	assert.True(t, ok, "the value is not of type %T, it is type %T", tField, value)
+
+	assertTFieldBase(t, field, tField.TranslationFieldBase)
+
+	assertTFieldOptions(t, field, tField)
+
+	assertTFieldWithChildren(t, field, tField)
+
+}
+
+func assertTranslationFieldWithOptionsAndParent(t *testing.T, field reflect.StructField, value reflect.Value) {
+	tField, ok := value.Interface().(models.TranslationFieldWithOptionsAndParent)
+	assert.True(t, ok, "the value is not of type %T, it is type %T", tField, value)
+
+	assertTFieldBase(t, field, tField.TranslationFieldBase)
+
+	assertTFieldOptions(t, field, tField)
+	assertTFieldWithParent(t, field, tField)
+
+}
+
+func assertTranslationFieldWithParentAndChildren(t *testing.T, field reflect.StructField, value reflect.Value) {
+	tField, ok := value.Interface().(models.TranslationFieldWithOptionsAndParent)
+	assert.True(t, ok, "the value is not of type %T, it is type %T", tField, value)
+
+	assertTFieldBase(t, field, tField.TranslationFieldBase)
+
+	assertTFieldWithParent(t, field, tField)
+	assertTFieldWithChildren(t, field, tField)
 
 }
 
@@ -164,6 +211,29 @@ func assertTFieldOptions(t *testing.T, field reflect.StructField, translation mo
 
 }
 
+// assertTranslationFieldWithParent asserts that a translation with Parent has parent information populated
+func assertTFieldWithParent(t *testing.T, field reflect.StructField, translation models.ITranslationField) {
+	parent, hasParent := translation.GetParent()
+	assert.True(t, hasParent)
+
+	assert.NotZero(t, parent, "field %s. Doesn't have parent", field.Name)
+	// Changes: (Translations) ensure that the parent is correct too? should we run through the test like above? Recursive?
+
+}
+
+// assertTFieldWithChildren asserts that a translation with Children has child information populated
+func assertTFieldWithChildren(t *testing.T, field reflect.StructField, translation models.ITranslationField) {
+
+	// Changes: (Translations)  Implement this logic! We should expand the interface to get children as needed as well
+	// parent, hasOptions := translation.GetParent()
+	// assert.True(t, hasOptions)
+
+	// assert.NotZero(t, parent, "field %s. Doesn't have parent", field.Name)
+	// // Changes: (Translations) ensure that the parent is correct too? should we run through the test like above? Recursive?
+
+}
+
+// assertStringPointerNilOrNotEmpty requires a non empty string if a string pointer is not nil
 func assertStringPointerNilOrNotEmpty(t *testing.T, value *string, field reflect.StructField) {
 	if value == nil {
 		return

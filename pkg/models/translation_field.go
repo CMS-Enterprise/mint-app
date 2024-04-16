@@ -34,6 +34,7 @@ const (
 type TranslationField struct {
 	TranslationFieldBase
 	translationNoOptionRelation
+	translationNoParentRelation
 }
 type TranslationFieldBase struct {
 	GqlField         string              `json:"gqlField"`
@@ -64,37 +65,12 @@ func (tfb TranslationFieldBase) GetLabel() string {
 
 }
 
-// // HasOptions specifies if a translation field has options or not
-// func (tf TranslationField) HasOptions() bool {
-// 	return false
-// }
-
-// // GetOptions returns options for a translation. It re
-// func (tf TranslationField) GetOptions() (map[string]interface{}, bool) {
-// 	return nil, tf.HasOptions()
-// }
-
 // TranslationFieldWithOptions Represents a TranslationField that has options
 type TranslationFieldWithOptions struct {
 	TranslationFieldBase
 	translationOptionRelation
-	// Options map[string]interface{} `json:"options"`
-	// AllowMultipleSelections bool              `json:"allowMultipleSelections,omitempty"`
+	translationNoParentRelation
 }
-
-// // GetLabel implements the GetLabel function of the ITranslationField interface
-// func (tfo TranslationFieldWithOptions) GetLabel() string {
-// 	return tfo.TranslationField.GetLabel()
-// }
-
-// // HasOptions specifies if a translation field has options or not
-// func (tfo TranslationFieldWithOptions) HasOptions() bool {
-// 	return true
-// }
-// // GetOptions returns options for a translation
-// func (tfo TranslationFieldWithOptions) GetOptions() (map[string]interface{}, bool) {
-// 	return tfo.Options, tfo.HasOptions()
-// }
 
 // ITranslationField defines the signature every translation is expected to have
 type ITranslationField interface {
@@ -102,15 +78,33 @@ type ITranslationField interface {
 	HasOptions() bool
 	// Returns options if a translationField has options
 	GetOptions() (map[string]interface{}, bool)
+
+	HasParent() bool
+	GetParent() (ITranslationParent, bool)
+}
+
+//Changes: (Translations) Define the Translation Parent better
+
+// ITranslationParent is the shared interface for translations that have some sort of parent
+type ITranslationParent interface {
+}
+
+// translationNoParentRelation can be embedded for translations that don't have a parent
+type translationNoParentRelation struct {
+}
+
+func (tpr translationNoParentRelation) HasParent() bool {
+	return false
+}
+func (tpr translationNoParentRelation) GetParent() (ITranslationParent, bool) {
+	return nil, tpr.HasParent()
 }
 
 // TranslationFieldWithParent Represents a TranslationField that has a parent
 type TranslationFieldWithParent struct {
-	TranslationField
+	TranslationFieldBase
 	translationOptionRelation
 	translationParentRelation
-	// ParentRelation TranslationField `json:"parentRelation"`
-	// Options        map[string]interface{} `json:"options"`
 }
 
 // translationOptionRelation is struct that is mean to be embedded in other Translation types to expose options, and functionality of options
@@ -144,12 +138,11 @@ func (tor translationNoOptionRelation) GetOptions() (map[string]interface{}, boo
 
 // TranslationFieldWithOptionsAndChildren Represents a TranslationField that has options and Children
 type TranslationFieldWithOptionsAndChildren struct {
-	TranslationField
+	TranslationFieldBase
 	translationOptionRelation
 	// Changes: (Translations) Determine how to use child relation
 	translationChildRelation
-	// ChildRelation map[string]interface{} `json:"childRelation"`
-	// Options       map[string]interface{} `json:"options"`
+	translationNoParentRelation
 }
 
 // translationChildRelation is struct that is mean to be embedded in other Translation types to expose functionality for translations that have a Child relationships
@@ -162,6 +155,16 @@ type translationParentRelation struct {
 	ParentRelation TranslationField `json:"parentRelation"`
 }
 
+// HasParent returns if the translation has a parent, and satisfies the ITranslation interface
+func (tpr translationParentRelation) HasParent() bool {
+	return true
+}
+
+// GetParent returns the parent of a translation
+func (tpr translationParentRelation) GetParent() (ITranslationParent, bool) {
+	return tpr.ParentRelation, tpr.HasParent()
+}
+
 // translationParentRelation is struct that is mean to be embedded in other Translation types to expose functionality for translations that have a Parent
 type translationParentRelationWithOptionsAndChildren struct {
 	// Changes: (Structure) Figure out if we can make the parent relation structure match better? For now, making a separate implementation
@@ -170,15 +173,35 @@ type translationParentRelationWithOptionsAndChildren struct {
 
 // TranslationFieldWithOptionsAndParent is a translation field that has Options and a Parent
 type TranslationFieldWithOptionsAndParent struct {
-	TranslationField
+	TranslationFieldBase
 	translationOptionRelation
 	translationParentRelationWithOptionsAndChildren
 }
 
 // TranslationFieldWithParentAndChildren is a translation field that has a Parent and Children
 type TranslationFieldWithParentAndChildren struct {
-	TranslationField
+	TranslationFieldBase
 	translationOptionRelation
 	translationParentRelationWithOptionsAndChildren
 	translationChildRelation
+}
+
+// HasParent returns if the translation has a parent, and satisfies the ITranslation interface
+func (tpr TranslationFieldWithParentAndChildren) HasParent() bool {
+	return true
+}
+
+// GetParent returns the parent of a translation
+func (tpr TranslationFieldWithParentAndChildren) GetParent() (ITranslationParent, bool) {
+	return tpr.ParentRelation, tpr.HasParent()
+}
+
+// HasParent returns if the translation has a parent, and satisfies the ITranslation interface
+func (tpr TranslationFieldWithOptionsAndParent) HasParent() bool {
+	return true
+}
+
+// GetParent returns the parent of a translation
+func (tpr TranslationFieldWithOptionsAndParent) GetParent() (ITranslationParent, bool) {
+	return tpr.ParentRelation, tpr.HasParent()
 }
