@@ -108,7 +108,7 @@ exports[`Notification Page > matches snapshot 1`] = `
                     class="display-flex"
                   >
                     <div
-                      class="display-flex flex-align-center flex-justify-center minw-4 circle-4  bg-blue-10 "
+                      class="display-flex flex-align-center flex-justify-center minw-4 circle-4 bg-blue-10 "
                     >
                       MD
                     </div>
@@ -199,7 +199,7 @@ exports[`Notification Page > matches snapshot 1`] = `
                     class="display-flex"
                   >
                     <div
-                      class="display-flex flex-align-center flex-justify-center minw-4 circle-4  bg-blue-10 "
+                      class="display-flex flex-align-center flex-justify-center minw-4 circle-4 bg-blue-10 "
                     >
                       MD
                     </div>

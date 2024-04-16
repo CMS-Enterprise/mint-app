@@ -226,18 +226,16 @@ exports[`Collaborator/Team Member page w/table > matches snapshot 1`] = `
                       class="display-flex  flex-align-center"
                     >
                       <div
-                        class="display-flex flex-align-center flex-justify-center minw-4 circle-4 margin-right-1 bg-blue-10 "
+                        class="display-flex flex-align-center flex-justify-center minw-4 circle-4 bg-blue-10 margin-right-1"
                       >
                         JD
                       </div>
                       <div
                         class="margin-y-0"
                       >
-                        <p
-                          class="margin-y-0"
-                        >
+                        <span>
                           John Doe
-                        </p>
+                        </span>
                       </div>
                     </div>
                   </td>
