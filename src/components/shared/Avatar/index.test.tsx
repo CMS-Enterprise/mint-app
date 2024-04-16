@@ -1,16 +1,16 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { render } from '@testing-library/react';
+import { TeamRole } from 'gql/gen/graphql';
 
-import {
-  // Avatar,
-  AvatarCircle
-} from './index';
+import { Avatar, AvatarCircle } from './index';
 
 describe('The Avatar Circle component', () => {
   it('renders Basic variant', () => {
-    const { getByTestId } = render(<AvatarCircle user="Steve Rogers" />);
+    const { getByText, getByTestId } = render(
+      <AvatarCircle user="Steve Rogers" />
+    );
 
-    expect(screen.getByText('SR')).toBeInTheDocument();
+    expect(getByText('SR')).toBeInTheDocument();
     expect(getByTestId('avatar--basic')).toBeInTheDocument();
   });
 
@@ -30,5 +30,27 @@ describe('The Avatar Circle component', () => {
 });
 
 describe('The Avatar component', () => {
-  // TODO:
+  it('renders without errors', () => {
+    const { getByText } = render(
+      <Avatar user="Steve Rogers" teamRoles={[TeamRole.MODEL_LEAD]} />
+    );
+
+    expect(getByText('SR')).toBeInTheDocument();
+    expect(getByText('Steve Rogers')).toBeInTheDocument();
+    expect(getByText('Model Lead')).toBeInTheDocument();
+  });
+
+  it('renders Assessment variant', () => {
+    const { getByText, getByTestId } = render(
+      <Avatar
+        user="Steve Rogers"
+        teamRoles={[TeamRole.MODEL_LEAD]}
+        isAssessment
+      />
+    );
+
+    expect(getByTestId('avatar--assessment')).toBeInTheDocument();
+    expect(getByText('Mint Team', { exact: false })).toBeInTheDocument();
+    expect(getByText('Model Lead')).toBeInTheDocument();
+  });
 });
