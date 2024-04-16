@@ -101,7 +101,7 @@ describe('The Model Plan Prepare for Clearance Form', () => {
       'be.checked'
     );
 
-    // Participants and Providers Clearance Check
+    // Participants and providers Clearance Check
 
     cy.get('[data-testid="clearance-participantsAndProviders"]').click();
 

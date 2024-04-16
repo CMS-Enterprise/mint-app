@@ -13,7 +13,7 @@ import OperationalNeedsTable from 'views/ModelPlan/TaskList/ITSolutions/Home/ope
 import { NotFoundPartial } from 'views/NotFound';
 
 const ReadOnlyOperationalNeeds = ({ modelID }: { modelID: string }) => {
-  const { t } = useTranslation('itSolutions');
+  const { t } = useTranslation('opSolutionsMisc');
 
   const { data, loading, error } = useQuery<GetOperationalNeedsType>(
     GetOperationalNeeds,

@@ -11,19 +11,19 @@ type AskAQuestionType = {
 };
 
 const AskAQuestion = ({ modelID, renderTextFor }: AskAQuestionType) => {
-  const { t } = useTranslation('discussionsMisc');
-  const { t: o } = useTranslation('itSolutions');
+  const { t: discussionsMiscT } = useTranslation('discussionsMisc');
+  const { t: opSolutionsMiscT } = useTranslation('opSolutionsMisc');
   const [isDiscussionOpen, setIsDiscussionOpen] = useState(false);
 
   const renderText = (text: string | undefined) => {
     switch (text) {
       case 'need':
-        return o('notSureWhatToDoNext');
+        return opSolutionsMiscT('notSureWhatToDoNext');
       case 'status':
-        return o('helpTiming');
+        return opSolutionsMiscT('helpTiming');
       case 'solution':
       default:
-        return o('helpChoosing');
+        return opSolutionsMiscT('helpChoosing');
     }
   };
 
@@ -52,7 +52,7 @@ const AskAQuestion = ({ modelID, renderTextFor }: AskAQuestionType) => {
             unstyled
             onClick={() => setIsDiscussionOpen(true)}
           >
-            {t('askAQuestionLink')}
+            {discussionsMiscT('askAQuestionLink')}
           </Button>
         </div>
       </div>

@@ -21,6 +21,7 @@ import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import RequiredAsterisk from 'components/shared/RequiredAsterisk';
 import useMessage from 'hooks/useMessage';
+import usePlanTranslation from 'hooks/usePlanTranslation';
 import CreateOperationalSolution from 'queries/ITSolutions/CreateOperationalSolution';
 import GetOperationalSolution from 'queries/ITSolutions/GetOperationalSolution';
 import {
@@ -42,7 +43,6 @@ import {
   OpSolutionStatus
 } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
-import { translateOperationalSolutionKey } from 'utils/modelPlan';
 import { ModelInfoContext } from 'views/ModelInfoWrapper';
 import NotFound from 'views/NotFound';
 
@@ -88,8 +88,11 @@ const AddCustomSolution = () => {
     'selectedSolution'
   ) as OperationalSolutionKey;
 
-  const { t } = useTranslation('itSolutions');
+  const { t } = useTranslation('opSolutionsMisc');
+  const { t: solutionsT } = useTranslation('solutions');
   const { t: h } = useTranslation('draftModelPlan');
+
+  const { key: keyConfig } = usePlanTranslation('solutions');
 
   // State management for mutation errors
   const [mutationError, setMutationError] = useState<boolean>(false);
@@ -298,9 +301,7 @@ const AddCustomSolution = () => {
                           {selectedSolution && (
                             <h3 className="margin-top-6 margin-bottom-0">
                               {t('selectedSectionHeading')}{' '}
-                              {translateOperationalSolutionKey(
-                                selectedSolution
-                              )}
+                              {keyConfig.options[selectedSolution]}
                             </h3>
                           )}
                           <Fieldset disabled={!!error || loading}>
@@ -311,7 +312,7 @@ const AddCustomSolution = () => {
                                 className="margin-top-3"
                               >
                                 <Label htmlFor="it-solution-custom-name-other">
-                                  {t('solutionName')}
+                                  {solutionsT('nameOther.label')}
                                   <RequiredAsterisk />
                                 </Label>
 
@@ -336,7 +337,7 @@ const AddCustomSolution = () => {
                               >
                                 <Label htmlFor="it-solution-other-header">
                                   {/* Other Header */}
-                                  {t('solutionName')}
+                                  {solutionsT('otherHeader.label')}
                                   <RequiredAsterisk />
                                 </Label>
 
@@ -365,7 +366,7 @@ const AddCustomSolution = () => {
                               </Label>
 
                               <p className="margin-bottom-1">
-                                {t('solutionPOCInfo')}
+                                {solutionsT('pocName.label')}
                               </p>
 
                               <FieldErrorMsg>
@@ -391,7 +392,7 @@ const AddCustomSolution = () => {
                                 htmlFor="it-solution-custom-poc-email"
                                 className="text-normal"
                               >
-                                {t('solutionEmailInfo')}
+                                {solutionsT('pocEmail.label')}
                               </Label>
 
                               <FieldErrorMsg>

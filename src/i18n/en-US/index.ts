@@ -1,8 +1,5 @@
-import documents from './draftModelPlan/documents';
 import draftModelPlan from './draftModelPlan/draftModelPlan';
-import itSolutions from './draftModelPlan/itSolutions';
 import prepareForClearance from './draftModelPlan/prepareForClearance';
-import subtasks from './draftModelPlan/subtasks';
 import getAccess from './helpAndKnowledge/Articles/getAccess';
 import highLevelProjectPlans from './helpAndKnowledge/Articles/highLevelProjectPlans';
 import modelPlanOverview from './helpAndKnowledge/Articles/modelPlanOverview';
@@ -20,21 +17,26 @@ import { collaborators, collaboratorsMisc } from './modelPlan/collaborators';
 import crs from './modelPlan/crs';
 import crtdlsMisc from './modelPlan/crtdlsMisc';
 import { discussions, discussionsMisc } from './modelPlan/discussions';
+import { documents, documentsMisc } from './modelPlan/documents';
 import {
   generalCharacteristics,
   generalCharacteristicsMisc
 } from './modelPlan/generalCharacteristics';
 import miscellaneous from './modelPlan/miscellaneous';
 import { modelPlan, modelPlanMisc } from './modelPlan/modelPlan';
+import operationalNeeds from './modelPlan/operationalNeeds';
+import operationalSolutionSubtasks from './modelPlan/operationalSolutionSubtasks';
 import {
   opsEvalAndLearning,
   opsEvalAndLearningMisc
 } from './modelPlan/opsEvalAndLearning';
+import opSolutionsMisc from './modelPlan/opSolutionsMisc';
 import {
   participantsAndProviders,
   participantsAndProvidersMisc
 } from './modelPlan/participantsAndProviders';
 import { payments, paymentsMisc } from './modelPlan/payments';
+import solutions from './modelPlan/solutions';
 import tdls from './modelPlan/tdls';
 import filterView from './readOnly/filterView';
 import generalReadOnly from './readOnly/generalReadOnly';
@@ -63,7 +65,6 @@ const enUS = {
   accessibilityStatement,
   auth,
   cookies,
-  documents,
   draftModelPlan,
   error,
   filterView,
@@ -74,7 +75,6 @@ const enUS = {
   header,
   helpAndKnowledge,
   home,
-  itSolutions,
   landing,
   plan,
   modelPlanOverview,
@@ -97,6 +97,12 @@ const enUS = {
   opsEvalAndLearningMisc,
   payments,
   paymentsMisc,
+  operationalNeeds,
+  solutions,
+  operationalSolutionSubtasks,
+  opSolutionsMisc,
+  documents,
+  documentsMisc,
   collaborators,
   collaboratorsMisc,
   discussions,
@@ -120,7 +126,6 @@ const enUS = {
   twoPageMeeting,
   utilizingSolutions,
   // End Help and Knowledge Center Articles
-  subtasks,
   tableAndPagination,
   termsAndConditions,
   externalLinkModal
