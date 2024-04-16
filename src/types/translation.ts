@@ -841,6 +841,23 @@ export type TranslationDiscussions = {
   content: TranslationFieldProperties;
 };
 
+// CRs
+export type TranslationCRs = {
+  idNumber: TranslationFieldProperties;
+  dateInitiated: TranslationFieldProperties;
+  dateImplemented: TranslationFieldProperties;
+  title: TranslationFieldProperties;
+  note: TranslationFieldProperties;
+};
+
+// TDLs
+export type TranslationTDLs = {
+  idNumber: TranslationFieldProperties;
+  dateInitiated: TranslationFieldProperties;
+  title: TranslationFieldProperties;
+  note: TranslationFieldProperties;
+};
+
 export type TranslationPlan = {
   modelPlan: TranslationModelPlan;
   basics: TranslationBasics;
@@ -851,6 +868,8 @@ export type TranslationPlan = {
   payments: TranslationPayments;
   collaborators: TranslationCollaborators;
   discussions: TranslationDiscussions;
+  crs: TranslationCRs;
+  tdls: TranslationTDLs;
 };
 
 export type TranslationPlanSection =
@@ -871,5 +890,7 @@ export enum PlanSection {
   OPS_EVAL_AND_LEARNING = 'opsEvalAndLearning',
   PAYMENTS = 'payments',
   COLLABORATORS = 'collaborators',
-  DISCUSSIONS = 'discussions'
+  DISCUSSIONS = 'discussions',
+  CRS = 'crs',
+  TDLS = 'tdls'
 }
