@@ -2732,7 +2732,7 @@ export type PlanPaymentsTranslation = {
   payRecipients: TranslationFieldWithOptions;
   payRecipientsNote: TranslationField;
   payRecipientsOtherSpecification: TranslationField;
-  payType: TranslationFieldWithParentAndChildren;
+  payType: TranslationFieldWithOptionsAndChildren;
   payTypeNote: TranslationField;
   paymentCalculationOwner: TranslationFieldWithParent;
   paymentDemandRecoupmentFrequency: TranslationFieldWithOptions;
