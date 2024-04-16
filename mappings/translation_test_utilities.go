@@ -159,10 +159,10 @@ func assertTFieldBase(t *testing.T, field reflect.StructField, base models.Trans
 	// assert.NotNil(t, base)
 	assert.NotZero(t, base, "issue for field %s", field.Name)
 
-	assert.NotZero(t, base.GqlField)
-	assert.NotZero(t, base.GoField)
-	assert.NotZero(t, base.DbField)
-	assert.NotZero(t, base.Label)
+	assert.NotZero(t, base.GqlField, "issue for field %s", field.Name)
+	assert.NotZero(t, base.GoField, "issue for field %s", field.Name)
+	assert.NotZero(t, base.DbField, "issue for field %s", field.Name)
+	assert.NotZero(t, base.Label, "issue for field %s", field.Name)
 
 	// Changes: (Translations), assert
 	// assert.NotZero(t, base.ReadOnlyLabel)
