@@ -143,7 +143,7 @@ func assertTranslationFieldWithOptionsAndParent(t *testing.T, field reflect.Stru
 }
 
 func assertTranslationFieldWithParentAndChildren(t *testing.T, field reflect.StructField, value reflect.Value) {
-	tField, ok := value.Interface().(models.TranslationFieldWithOptionsAndParent)
+	tField, ok := value.Interface().(models.TranslationFieldWithParentAndChildren)
 	assert.True(t, ok, "the value is not of type %T, it is type %T", tField, value)
 
 	assertTFieldBase(t, field, tField.TranslationFieldBase)
