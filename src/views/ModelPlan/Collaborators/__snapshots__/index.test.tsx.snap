@@ -227,6 +227,7 @@ exports[`Collaborator/Team Member page w/table > matches snapshot 1`] = `
                     >
                       <div
                         class="display-flex flex-align-center flex-justify-center minw-4 circle-4 bg-blue-10 margin-right-1"
+                        data-testid="avatar--basic"
                       >
                         JD
                       </div>
