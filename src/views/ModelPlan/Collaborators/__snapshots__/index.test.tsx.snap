@@ -222,11 +222,11 @@ exports[`Collaborator/Team Member page w/table > matches snapshot 1`] = `
                     role="cell"
                     style="white-space: normal;"
                   >
-                    <li
-                      class="display-flex flex-align-center"
+                    <div
+                      class="display-flex  flex-align-center"
                     >
                       <div
-                        class="display-flex flex-align-center flex-justify-center circle-4 margin-right-1 bg-accent-cool-lighter"
+                        class="display-flex flex-align-center flex-justify-center minw-4 circle-4 margin-right-1 bg-blue-10 "
                       >
                         JD
                       </div>
@@ -238,11 +238,8 @@ exports[`Collaborator/Team Member page w/table > matches snapshot 1`] = `
                         >
                           John Doe
                         </p>
-                        <p
-                          class="font-body-2xs margin-y-0"
-                        />
                       </div>
-                    </li>
+                    </div>
                   </td>
                   <td
                     role="cell"
