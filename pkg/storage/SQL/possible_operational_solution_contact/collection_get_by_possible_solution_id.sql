@@ -12,6 +12,7 @@ SELECT
     posc.name,
     posc.email,
     posc.role,
+    posc.is_primary,
     posc.created_by,
     posc.created_dts,
     posc.modified_by,

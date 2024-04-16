@@ -2369,6 +2369,7 @@ export type PossibleOperationalSolution = {
   modifiedDts?: Maybe<Scalars['Time']['output']>;
   name: Scalars['String']['output'];
   pointsOfContact: Array<PossibleOperationalSolutionContact>;
+  primaryContact?: Maybe<PossibleOperationalSolutionContact>;
   treatAsOther: Scalars['Boolean']['output'];
 };
 
@@ -2380,6 +2381,7 @@ export type PossibleOperationalSolutionContact = {
   createdDts: Scalars['Time']['output'];
   email: Scalars['String']['output'];
   id: Scalars['UUID']['output'];
+  isPrimary?: Maybe<Scalars['Boolean']['output']>;
   isTeam: Scalars['Boolean']['output'];
   modifiedBy?: Maybe<Scalars['UUID']['output']>;
   modifiedByUserAccount?: Maybe<UserAccount>;

@@ -9,6 +9,7 @@ type PossibleOperationalSolutionContact {
   email: String!
   isTeam: Boolean!
   role: String
+  isPrimary: Boolean
 
 
   createdBy: UUID!
