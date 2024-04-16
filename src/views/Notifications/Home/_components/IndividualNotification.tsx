@@ -40,7 +40,7 @@ const IndividualNotification = ({
     actorUserAccount: { commonName }
   }
 }: IndividualNotificationProps) => {
-  const { t: discussionT } = useTranslation('discussions');
+  const { t: discussionT } = useTranslation('discussionsMisc');
 
   const [isExpanded, setIsExpanded] = useState(false);
 

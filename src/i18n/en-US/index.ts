@@ -1,5 +1,4 @@
 import crtdl from './draftModelPlan/crtdl';
-import discussions from './draftModelPlan/discussions';
 import documents from './draftModelPlan/documents';
 import draftModelPlan from './draftModelPlan/draftModelPlan';
 import itSolutions from './draftModelPlan/itSolutions';
@@ -19,6 +18,7 @@ import helpAndKnowledge from './helpAndKnowledge/helpAndKnowledge';
 import { basics, basicsMisc } from './modelPlan/basics';
 import { beneficiaries, beneficiariesMisc } from './modelPlan/beneficiaries';
 import { collaborators, collaboratorsMisc } from './modelPlan/collaborators';
+import { discussions, discussionsMisc } from './modelPlan/discussions';
 import {
   generalCharacteristics,
   generalCharacteristicsMisc
@@ -62,7 +62,6 @@ const enUS = {
   auth,
   cookies,
   crtdl,
-  discussions,
   documents,
   draftModelPlan,
   error,
@@ -99,6 +98,8 @@ const enUS = {
   paymentsMisc,
   collaborators,
   collaboratorsMisc,
+  discussions,
+  discussionsMisc,
   miscellaneous,
   // End new translation
   prepareForClearance,

@@ -20,6 +20,7 @@ import {
   DataFullTimeOrIncrementalType,
   DataStartsType,
   DataToSendParticipantsType,
+  DiscussionUserRole,
   EvaluationApproachType,
   FrequencyType,
   FundingSource,
@@ -833,6 +834,13 @@ export type TranslationCollaborators = {
   username: TranslationFieldProperties;
 };
 
+// Discussions
+export type TranslationDiscussions = {
+  userRole: TranslationFieldPropertiesWithOptions<DiscussionUserRole>;
+  userRoleDescription: TranslationFieldProperties;
+  content: TranslationFieldProperties;
+};
+
 export type TranslationPlan = {
   modelPlan: TranslationModelPlan;
   basics: TranslationBasics;
@@ -842,6 +850,7 @@ export type TranslationPlan = {
   opsEvalAndLearning: TranslationOpsEvalAndLearning;
   payments: TranslationPayments;
   collaborators: TranslationCollaborators;
+  discussions: TranslationDiscussions;
 };
 
 export type TranslationPlanSection =
@@ -861,5 +870,6 @@ export enum PlanSection {
   BENEFICIARIES = 'beneficiaries',
   OPS_EVAL_AND_LEARNING = 'opsEvalAndLearning',
   PAYMENTS = 'payments',
-  COLLABORATORS = 'collaborators'
+  COLLABORATORS = 'collaborators',
+  DISCUSSIONS = 'discussions'
 }

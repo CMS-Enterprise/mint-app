@@ -11,7 +11,7 @@ type AskAQuestionType = {
 };
 
 const AskAQuestion = ({ modelID, renderTextFor }: AskAQuestionType) => {
-  const { t } = useTranslation('discussions');
+  const { t } = useTranslation('discussionsMisc');
   const { t: o } = useTranslation('itSolutions');
   const [isDiscussionOpen, setIsDiscussionOpen] = useState(false);
 

@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Button, Icon } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import {
-  GetModelPlanDiscussions_modelPlan_discussions as DiscussionType,
+  GetModelPlanDiscussions_modelPlan_discussions as discussionsMiscType,
   GetModelPlanDiscussions_modelPlan_discussions_replies as ReplyType
 } from 'gql/gen/types/GetModelPlanDiscussions';
 import { DateTime } from 'luxon';
@@ -14,11 +14,11 @@ import { getDaysElapsed } from 'utils/date';
 import DiscussionUserInfo from './_components/DiscussionUserInfo';
 
 type SingleDiscussionProps = {
-  discussion: DiscussionType | ReplyType;
+  discussion: discussionsMiscType | ReplyType;
   index: number;
   connected?: boolean;
   setDiscussionType: (a: 'question' | 'reply' | 'discussion') => void;
-  setReply: (discussion: DiscussionType | ReplyType) => void;
+  setReply: (discussion: discussionsMiscType | ReplyType) => void;
   setIsDiscussionOpen?: (value: boolean) => void;
   setDiscussionStatusMessage: (value: string) => void;
   replies: ReplyType[];
@@ -34,7 +34,7 @@ const SingleDiscussion = ({
   setDiscussionStatusMessage,
   replies
 }: SingleDiscussionProps) => {
-  const { t: discussionT } = useTranslation('discussions');
+  const { t: discussionsMiscT } = useTranslation('discussionsMisc');
 
   const latestDate = [...replies].reduce(
     (pre: any, cur: any) => (Date.parse(pre) > Date.parse(cur) ? pre : cur),
@@ -79,12 +79,12 @@ const SingleDiscussion = ({
             }}
           >
             {replies.length === 0
-              ? discussionT('reply')
-              : discussionT('replies', { count: replies.length })}
+              ? discussionsMiscT('reply')
+              : discussionsMiscT('replies', { count: replies.length })}
           </Button>
           {replies.length > 0 && (
             <p className="margin-y-0 text-base">
-              {discussionT('lastReply', {
+              {discussionsMiscT('lastReply', {
                 date: daysLastUpdated,
                 time: timeLastUpdated
               })}
