@@ -49,9 +49,9 @@ type TranslationFieldBase struct {
 	IsNote           bool                `json:"isNote"`
 	IsOtherType      bool                `json:"isOtherType"`
 	// DB field name for the parent field, used to be able to grab the parent translation
-	OtherParentField string `json:"otherParentField"`
+	OtherParentField *string `json:"otherParentField"`
 	// Label for fields that reference more than one parent - Ex: Notes - 'Note for Model Basics'
-	ParentReferencesLabel string `json:"parentReferencesLabel"`
+	ParentReferencesLabel *string `json:"parentReferencesLabel"`
 }
 
 // GetLabel has logic to prioritize the translated label to be returned for a specific field. It prioritizes the Read only Label, a

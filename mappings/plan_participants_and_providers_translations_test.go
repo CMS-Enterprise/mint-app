@@ -66,57 +66,62 @@ func assertTranslationFieldData(t *testing.T, field reflect.StructField, value r
 	case reflect.Struct:
 		// fmt.Printf("found struct for field %s \r\n", field.Name)
 		// fmt.Printf("%s \r\n", field.Type)
-		assertTranslationStructField(t, field.Type, value)
+		assertTranslationStructField(t, field, value)
 
 	}
 
 }
 
-func assertTranslationStructField(t *testing.T, fieldType reflect.Type, value reflect.Value) {
+// assertTranslationStructField asserts that there required translation details are populated based on the type of struct for each field.
+func assertTranslationStructField(t *testing.T, field reflect.StructField, value reflect.Value) {
+	fieldType := field.Type
 	fmt.Printf("%s", fieldType.Name())
 
 	switch fieldType.Name() {
 	case "TranslationField":
-		fmt.Printf("found %s, /r/n ", fieldType)
-		assertTranslationField(t, value)
+		assertTranslationField(t, field, value)
 
 	case "TranslationFieldWithOptions":
-		fmt.Printf("found %s, /r/n ", fieldType)
+		assertTranslationFieldWithOptions(t, field, value)
 
 	case "TranslationFieldWithParent":
 
-		fmt.Printf("found %s, /r/n ", fieldType)
-
 	case "TranslationFieldWithOptionsAndChildren":
-		fmt.Printf("found %s, /r/n ", fieldType)
 
 	case "TranslationFieldWithOptionsAndParent":
-		fmt.Printf("found %s, /r/n ", fieldType)
 
 	case "TranslationFieldWithParentAndChildren":
-		fmt.Printf("found %s, /r/n ", fieldType)
 
 	default:
-		fmt.Printf("found %s, /r/n ", fieldType)
 
 	}
 
 }
 
-func assertTranslationField(t *testing.T, value reflect.Value) {
+func assertTranslationField(t *testing.T, field reflect.StructField, value reflect.Value) {
 	tField, ok := value.Interface().(models.TranslationField)
 	assert.True(t, ok, "the value is not of type %T, it is type %T", tField, value)
 
-	assertTFieldBase(t, tField.TranslationFieldBase)
+	assertTFieldBase(t, field, tField.TranslationFieldBase)
 	// for
 
 }
 
+func assertTranslationFieldWithOptions(t *testing.T, field reflect.StructField, value reflect.Value) {
+	tField, ok := value.Interface().(models.TranslationFieldWithOptions)
+	assert.True(t, ok, "the value is not of type %T, it is type %T", tField, value)
+
+	assertTFieldBase(t, field, tField.TranslationFieldBase)
+
+	assertTFieldOptions(t, field, tField)
+
+}
+
 // assertTFieldBase asserts that all fields of a translation are filled out appropriately when they are expected
-func assertTFieldBase(t *testing.T, base models.TranslationFieldBase) {
+func assertTFieldBase(t *testing.T, field reflect.StructField, base models.TranslationFieldBase) {
 
 	// assert.NotNil(t, base)
-	assert.NotZero(t, base)
+	assert.NotZero(t, base, "issue for field %s", field.Name)
 
 	assert.NotZero(t, base.GqlField)
 	assert.NotZero(t, base.GoField)
@@ -124,18 +129,46 @@ func assertTFieldBase(t *testing.T, base models.TranslationFieldBase) {
 	assert.NotZero(t, base.Label)
 
 	// Changes: (Translations), assert
-	assert.NotZero(t, base.ReadOnlyLabel)
-	assert.NotZero(t, base.SubLabel)
-	assert.NotZero(t, base.MultiSelectLabel)
-	assert.NotZero(t, base.IsArray)
+	// assert.NotZero(t, base.ReadOnlyLabel)
+	// assert.NotZero(t, base.SubLabel)
+	// assert.NotZero(t, base.MultiSelectLabel)
+	assertStringPointerNilOrNotEmpty(t, base.ReadOnlyLabel, field)
+	assertStringPointerNilOrNotEmpty(t, base.SubLabel, field)
+	assertStringPointerNilOrNotEmpty(t, base.MultiSelectLabel, field)
+
+	// assert.NotZero(t, base.IsArray)
+
 	assert.NotZero(t, base.DataType)
-	assert.NotZero(t, base.FormType)
+	assert.NotZero(t, base.FormType, "issue for field %s. Value: %s", field.Name)
 
 	// Changes: (Translations) how should we assert bools here? False is the NotZero state... so  we might not be able to assert anything about bools that aren't pointers
 	// assert.NotZero(t, base.IsNote)
 	// assert.NotZero(t, base.IsOtherType)
 
-	assert.NotZero(t, base.OtherParentField)
-	assert.NotZero(t, base.ParentReferencesLabel)
+	assertStringPointerNilOrNotEmpty(t, base.OtherParentField, field)
+	// assert.NotZero(t, base.OtherParentField, "issue for field %s", field.Name)
+	// assert.NotZero(t, base.ParentReferencesLabel, "issue for field %s", field.Name)
+	assertStringPointerNilOrNotEmpty(t, base.ParentReferencesLabel, field)
+
+}
+
+// assertTFieldOptions asserts that a translation has options when it is supposed to
+func assertTFieldOptions(t *testing.T, field reflect.StructField, translation models.ITranslationField) {
+	options, hasOptions := translation.GetOptions()
+	assert.True(t, hasOptions)
+
+	assert.NotZero(t, options, "field %s. Doesn't have options", field.Name)
+
+	count := len(options)
+	assert.GreaterOrEqual(t, count, 1, "field %s. Doesn't have options. There are %i options.", field.Name, count)
+
+}
+
+func assertStringPointerNilOrNotEmpty(t *testing.T, value *string, field reflect.StructField) {
+	if value == nil {
+		return
+	}
+
+	assert.NotEqualValues(t, "", *value, "field %s is an empty string, a value was expected", field.Name)
 
 }
