@@ -59,7 +59,10 @@ export const AvatarCircle = ({
 
   if (isAssessment) {
     return (
-      <div className={`${sharedClassnames} bg-primary ${className ?? ''}`}>
+      <div
+        className={`${sharedClassnames} bg-primary ${className ?? ''}`}
+        data-testid="avatar--assessment"
+      >
         <Icon.Star className="text-white" size={3} />
       </div>
     );
@@ -69,6 +72,7 @@ export const AvatarCircle = ({
     return (
       <div
         className={`${sharedClassnames} bg-mint-cool-50v ${className ?? ''}`}
+        data-testid="avatar--mint-admin"
       >
         <Icon.Eco className="text-white" size={3} />
       </div>
@@ -78,6 +82,7 @@ export const AvatarCircle = ({
   return (
     <div
       className={`${sharedClassnames} ${avatarColors(user)} ${className ?? ''}`}
+      data-testid="avatar--basic"
     >
       {getUserInitials(user)}
     </div>
