@@ -65,31 +65,61 @@ func translateChangeSet(
 	audits []*models.AuditChange,
 ) ([]*models.TranslatedAuditWithTranslatedFields, error) {
 
-	// planChanges, err := humanizeModelPlanAudits(ctx, store, plan, audits)
-	// if err != nil {
-	// 	return nil, err
-	// }
-
-	// partsProvidersChanges := lo.Filter(audits, func(m *models.AuditChange, index int) bool {
-	// 	return m.TableName == "plan_participants_and_providers"
-	// })
-
-	// partsAndProviderChanges, err := genericAuditTranslation(ctx, store, plan, partsProvidersChanges)
-	// if err != nil {
-	// 	return nil, err
-	// }
-	basicsAudits := lo.Filter(audits, func(m *models.AuditChange, index int) bool {
-		return m.TableName == "plan_basics"
+	// Group audits by tables
+	groupedAudits := lo.GroupBy[*models.AuditChange, string](audits, func(m *models.AuditChange) string {
+		return m.TableName
 	})
+	planAudits := groupedAudits["model_plan"]
+	partsProvidersAudits := groupedAudits["plan_participants_and_providers"]
+	basicsAudits := groupedAudits["plan_basics"]
+	paymentsAudits := groupedAudits["plan_payments"]
+	opsEvalAndLearningAudits := groupedAudits["plan_ops_eval_and_learning"]
+	generalCharacteristicsAudits := groupedAudits["plan_general_characteristics"]
+	collaboratorAudits := groupedAudits["plan_collaborator"]
+	beneficiariesAudits := groupedAudits["plan_beneficiaries"]
 
-	basicsChanges, err := genericAuditTranslation(ctx, store, plan, basicsAudits)
+	// Translate all audits
+	planChangesTranslated, err := genericAuditTranslation(ctx, store, plan, planAudits)
+	if err != nil {
+		return nil, err
+	}
+	partsAndProviderChangesTranslated, err := genericAuditTranslation(ctx, store, plan, partsProvidersAudits)
+	if err != nil {
+		return nil, err
+	}
+	basicsChangesTranslated, err := genericAuditTranslation(ctx, store, plan, basicsAudits)
+	if err != nil {
+		return nil, err
+	}
+	paymentsChangesTranslated, err := genericAuditTranslation(ctx, store, plan, paymentsAudits)
+	if err != nil {
+		return nil, err
+	}
+	opsEvalAndLearningChangesTranslated, err := genericAuditTranslation(ctx, store, plan, opsEvalAndLearningAudits)
+	if err != nil {
+		return nil, err
+	}
+	generalCharacteristicsChangesTranslated, err := genericAuditTranslation(ctx, store, plan, generalCharacteristicsAudits)
+	if err != nil {
+		return nil, err
+	}
+	collaboratorChangesTranslated, err := genericAuditTranslation(ctx, store, plan, collaboratorAudits)
+	if err != nil {
+		return nil, err
+	}
+	beneficiariesChangesTranslated, err := genericAuditTranslation(ctx, store, plan, beneficiariesAudits)
 	if err != nil {
 		return nil, err
 	}
 
-	// combinedChanges := append(planChanges, partsAndProviderChanges...)
-	// combinedChanges := partsAndProviderChanges
-	combinedChanges := basicsChanges
+	// Combine all translated changes
+	combinedChanges := append(planChangesTranslated, basicsChangesTranslated...)
+	combinedChanges = append(combinedChanges, partsAndProviderChangesTranslated...)
+	combinedChanges = append(combinedChanges, paymentsChangesTranslated...)
+	combinedChanges = append(combinedChanges, opsEvalAndLearningChangesTranslated...)
+	combinedChanges = append(combinedChanges, generalCharacteristicsChangesTranslated...)
+	combinedChanges = append(combinedChanges, collaboratorChangesTranslated...)
+	combinedChanges = append(combinedChanges, beneficiariesChangesTranslated...)
 
 	return combinedChanges, nil
 

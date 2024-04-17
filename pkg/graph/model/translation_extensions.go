@@ -74,3 +74,13 @@ func (tpp *PlanParticipantsAndProvidersTranslation) TableName() string {
 func (tpp *PlanParticipantsAndProvidersTranslation) ToMap() (map[string]models.ITranslationField, error) {
 	return models.StructToTranslationMap(*tpp)
 }
+
+// TableName returns the table name for this translation, satisfying the Translation interface
+func (tpp *ModelPlanTranslation) TableName() string {
+	return "model_plan"
+}
+
+// ToMap translates this translation to a map, satisfying the Translation interface
+func (tpp *ModelPlanTranslation) ToMap() (map[string]models.ITranslationField, error) {
+	return models.StructToTranslationMap(*tpp)
+}
