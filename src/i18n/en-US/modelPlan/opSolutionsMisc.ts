@@ -1,4 +1,4 @@
-const itSolutions = {
+const opSolutionsMisc = {
   heading: 'Operational solutions and implementation status tracker',
   headingReadOnly: 'Operational solutions',
   breadcrumb: 'Operational solutions tracker',
@@ -82,14 +82,14 @@ const itSolutions = {
       'This model has not specified they will use the following solution(s):'
   },
   status: {
-    notAnswered: 'Not answered',
-    notNeeded: 'Not needed',
-    notStarted: 'Not started',
-    onboarding: 'Onboarding',
-    backlog: 'Backlog',
-    inProgress: 'In progress',
-    completed: 'Completed',
-    atRisk: 'At risk'
+    NOT_ANSWERED: 'Not answered',
+    NOT_NEEDED: 'Not needed',
+    NOT_STARTED: 'Not started',
+    ONBOARDING: 'Onboarding',
+    BACKLOG: 'Backlog',
+    IN_PROGRESS: 'In progress',
+    COMPLETED: 'Completed',
+    AT_RISK: 'At risk'
   },
 
   warningRedirect:
@@ -173,15 +173,6 @@ const itSolutions = {
   notSpecified: 'not specified',
   updateStatusAndTiming: 'Update status and timing',
   updateDetails: 'Update solution implementation details',
-  subtasks: {
-    header: 'Subtasks',
-    todo: 'To do',
-    inProgress: 'In progress',
-    done: 'Done',
-    addSubtasks: 'Add subtasks',
-    manageSubtasks: 'Manage subtasks',
-    noSubtasks: 'No subtasks added yet'
-  },
   documents: 'Documents',
   links: {
     linkDocuments: 'Connect existing documents',
@@ -204,7 +195,6 @@ const itSolutions = {
     'Describe the operational need you’re solving or additional workstream you’re tracking.',
   noDuplicates:
     'Make sure you aren’t duplicating an operational need that’s already a part of the tracker.',
-  customOperationalNeedName: 'What operational need are you solving?',
   dontAddandReturnToTracker: 'Don’t add and return to tracker',
   saveWithoutAdding: 'Save without adding a solution',
   editNeed: 'Edit this operational need',
@@ -243,6 +233,49 @@ const itSolutions = {
     interalStaff: 'Internal staff',
     otherNewProcess: 'Other'
   },
-  otherNewProcess: 'Other new process'
+  otherNewProcess: 'Other new process',
+  subtasks: {
+    header: 'Subtasks',
+    itSolutionsTrackerBreadcrumb: 'Operational solutions tracker',
+    solutionDetails: 'Solution details',
+    todo: 'To do',
+    inProgress: 'In progress',
+    done: 'Done',
+    addSubtask: 'Add subtask',
+    addAnotherSubtask: 'Add another subtask',
+    addSubtasks: 'Add subtasks',
+    manageSubtasks: 'Manage subtasks',
+    noSubtasks: 'No subtasks added yet',
+    updateSubtasks: 'Update subtasks',
+    addSubtaskInfo:
+      'Add important subtasks to stay organized throughout the implementation process.',
+    manageSubtaskInfo:
+      'Track the status of your subtasks throughout the implementation process to stay organized.',
+    subtaskName: 'Subtask name',
+    statusQuestion: 'What is the status of this subtask?',
+    returnToDetails: 'Don’t add subtask and return to solution details',
+    returnToPreviousPage: 'Don’t add subtask and return to previous page',
+    successMessage: 'Success! Your subtasks have been added.',
+    successfulUpdateMessage: 'Success! Your subtasks have been updated.',
+    removeSubtask: 'Remove this subtask',
+    removeSubtaskSuccess: 'Success! {{-subTaskName}} has been removed.',
+    removeSubtaskError:
+      'Sorry, we encountered a problem removing {{-subTaskName}}. Please try again.',
+    removeModal: {
+      header: 'Confirm you want to remove {{-subTaskName}}.',
+      warning: 'You will not be able to undo this action.',
+      removeSubtask: 'Remove subtask',
+      keepSubtask: 'Keep subtask'
+    },
+    status: {
+      header: 'Subtasks',
+      todo: 'To do',
+      inProgress: 'In progress',
+      done: 'Done',
+      addSubtasks: 'Add subtasks',
+      manageSubtasks: 'Manage subtasks',
+      noSubtasks: 'No subtasks added yet'
+    }
+  }
 };
-export default itSolutions;
+export default opSolutionsMisc;

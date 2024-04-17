@@ -5,10 +5,9 @@ import { Button, Grid } from '@trussworks/react-uswds';
 import { useMarkNotificationAsReadMutation } from 'gql/gen/graphql';
 import { GetNotifications_currentUser_notifications_notifications_activity as NotificationActivityType } from 'gql/gen/types/GetNotifications';
 
-import { arrayOfColors } from 'components/shared/IconInitial';
+import { AvatarCircle } from 'components/shared/Avatar';
 import MentionTextArea from 'components/shared/MentionTextArea';
 import { getTimeElapsed } from 'utils/date';
-import { getUserInitials } from 'utils/modelPlan';
 
 import {
   ActivityCTA,
@@ -40,7 +39,7 @@ const IndividualNotification = ({
     actorUserAccount: { commonName }
   }
 }: IndividualNotificationProps) => {
-  const { t: discussionT } = useTranslation('discussions');
+  const { t: discussionT } = useTranslation('discussionsMisc');
 
   const [isExpanded, setIsExpanded] = useState(false);
 
@@ -87,13 +86,7 @@ const IndividualNotification = ({
           <Grid col="fill">
             <div className="display-flex">
               {/* Circle of Name */}
-              <div
-                className={`display-flex flex-align-center flex-justify-center minw-4 circle-4 ${
-                  arrayOfColors[index % arrayOfColors.length]
-                }`}
-              >
-                {getUserInitials(name)}
-              </div>
+              <AvatarCircle user={name} />
 
               <div className="margin-top-05 padding-left-1">
                 <p className="line-height-sans-4 margin-bottom-1 margin-top-0 ">
@@ -104,10 +97,10 @@ const IndividualNotification = ({
                   !isSharedActivity(metaData) &&
                   !isAddingCollaborator(metaData) && (
                     <MentionTextArea
-                      className="notification__content text-base-darker"
+                      className="notification__content text-base-darker margin-bottom-1"
                       id={`mention-${metaData.discussionID}`}
                       editable={false}
-                      initialContent={`“${metaData.content}”`}
+                      initialContent={metaData.content}
                     />
                   )}
                 {isSharedActivity(metaData) && metaData.optionalMessage && (

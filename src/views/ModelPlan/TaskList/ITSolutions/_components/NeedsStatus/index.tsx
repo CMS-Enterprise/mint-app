@@ -1,8 +1,8 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import Tag from 'components/shared/Tag';
 import { OpSolutionStatus } from 'types/graphql-global-types';
-import { translateOpNeedsStatusType } from 'utils/modelPlan';
 
 export enum OperationalNeedStatus {
   NOT_ANSWERED = 'NOT_ANSWERED',
@@ -18,7 +18,10 @@ const OperationalNeedsStatusTag = ({
 }: {
   status: OperationalNeedsSolutionsStatus;
 }) => {
-  const tagText = translateOpNeedsStatusType(status);
+  const { t: opSolutionsMiscT } = useTranslation('opSolutionsMisc');
+
+  const tagText = opSolutionsMiscT(`status.${status}`);
+
   switch (status) {
     case OperationalNeedStatus.NOT_ANSWERED:
     case OperationalNeedStatus.NOT_NEEDED:

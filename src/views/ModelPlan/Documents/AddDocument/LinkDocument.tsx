@@ -2,7 +2,7 @@ import React, { useContext, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
-import { Button, Fieldset, Label, TextInput } from '@trussworks/react-uswds';
+import { Button, Label, TextInput } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
 import LinkNewPlanDocument from 'gql/apolloGQL/Documents/LinkNewPlanDocument';
 
@@ -16,13 +16,13 @@ import RequiredAsterisk from 'components/shared/RequiredAsterisk';
 import TextAreaField from 'components/shared/TextAreaField';
 import TextField from 'components/shared/TextField';
 import useMessage from 'hooks/useMessage';
+import usePlanTranslation from 'hooks/usePlanTranslation';
 import CreateDocumentSolutionLinks from 'queries/ITSolutions/CreateDocumentSolutionLinks';
 import { CreateDocumentSolutionLinksVariables } from 'queries/ITSolutions/types/CreateDocumentSolutionLinks';
 import { LinkingDocumentFormTypes } from 'types/files';
 import { DocumentType } from 'types/graphql-global-types';
 import { getKeys } from 'types/translation';
 import flattenErrors from 'utils/flattenErrors';
-import { sortOtherEnum, translateDocumentType } from 'utils/modelPlan';
 import { DocumentLinkValidationSchema } from 'validations/documentUploadSchema';
 import { ModelInfoContext } from 'views/ModelInfoWrapper';
 
@@ -33,10 +33,16 @@ const LinkDocument = ({
   solutionDetailsLink?: string;
   solutionID?: string;
 }) => {
+  const { t: documentsT } = useTranslation('documents');
+  const { t: documentsMiscT } = useTranslation('documentsMisc');
+
+  const {
+    documentType: documentTypeConfig,
+    restricted: restrictedConfig
+  } = usePlanTranslation('documents');
+
   const { modelID } = useParams<{ modelID: string }>();
   const history = useHistory();
-  const { t } = useTranslation('documents');
-  const { t: h } = useTranslation('draftModelPlan');
 
   const { showMessageOnNextPage } = useMessage();
   const formikRef = useRef<FormikProps<LinkingDocumentFormTypes>>(null);
@@ -52,7 +58,7 @@ const LinkDocument = ({
     showMessageOnNextPage(
       <Alert type="success" slim className="margin-y-4" aria-live="assertive">
         <span className="mandatory-fields-alert__text">
-          {t(message, {
+          {documentsMiscT(message, {
             documentName: fileName,
             modelName
           })}
@@ -137,7 +143,7 @@ const LinkDocument = ({
     <div>
       {mutationError && (
         <Alert type="error" slim>
-          {t('documentLinkError', { fileName: fileNameError })}
+          {documentsMiscT('documentLinkError', { fileName: fileNameError })}
         </Alert>
       )}
 
@@ -172,7 +178,7 @@ const LinkDocument = ({
                 <ErrorAlert
                   testId="document-upload-errors"
                   classNames="margin-bottom-4 margin-top-4"
-                  heading={t('uploadError.heading')}
+                  heading={documentsMiscT('uploadError.heading')}
                 >
                   {Object.keys(flatErrors).map(key => {
                     return (
@@ -189,7 +195,7 @@ const LinkDocument = ({
                 <Form onSubmit={e => handleSubmit(e)}>
                   <FieldGroup scrollElement="url" error={!!flatErrors.url}>
                     <Label htmlFor="FileUpload-LinkDocument">
-                      {t('linkDocument.linkLabel')}
+                      {documentsT('url.label')}
                       <RequiredAsterisk />
                     </Label>
 
@@ -198,7 +204,7 @@ const LinkDocument = ({
                       hint
                       className="text-normal text-base margin-y-1"
                     >
-                      {t('linkDocument.linkHelpText')}
+                      {documentsT('url.sublabel')}
                     </Label>
 
                     <FieldErrorMsg>{flatErrors.url}</FieldErrorMsg>
@@ -209,9 +215,10 @@ const LinkDocument = ({
                       name="url"
                     />
                   </FieldGroup>
+
                   <FieldGroup scrollElement="name" error={!!flatErrors.name}>
                     <Label htmlFor="FileUpload-LinkFileName">
-                      {t('linkDocument.fileNameLabel')}
+                      {documentsT('name.label')}
                       <RequiredAsterisk />
                     </Label>
 
@@ -220,7 +227,7 @@ const LinkDocument = ({
                       hint
                       className="text-normal text-base margin-y-1"
                     >
-                      {t('linkDocument.fileNameHelpText')}
+                      {documentsT('name.sublabel')}
                     </Label>
 
                     <FieldErrorMsg>{flatErrors.name}</FieldErrorMsg>
@@ -239,32 +246,28 @@ const LinkDocument = ({
                   >
                     <fieldset className="usa-fieldset margin-top-4">
                       <legend className="usa-label">
-                        {t('whatType')}
+                        {documentsMiscT('whatType')}
                         <RequiredAsterisk />
                       </legend>
                       <FieldErrorMsg>{flatErrors.documentType}</FieldErrorMsg>
 
-                      {getKeys(DocumentType)
-                        .sort(sortOtherEnum)
-                        .map(documentType => {
-                          return (
-                            <Field
-                              key={`FileUpload-${documentType}`}
-                              as={RadioField}
-                              checked={values.documentType === documentType}
-                              id={`FileUpload-${documentType}`}
-                              name="documentType"
-                              label={translateDocumentType(
-                                documentType as DocumentType
-                              )}
-                              onChange={() => {
-                                setFieldValue('documentType', documentType);
-                                setFieldValue('otherTypeDescription', '');
-                              }}
-                              value={documentType}
-                            />
-                          );
-                        })}
+                      {getKeys(documentTypeConfig.options).map(documentType => {
+                        return (
+                          <Field
+                            key={`FileUpload-${documentType}`}
+                            as={RadioField}
+                            checked={values.documentType === documentType}
+                            id={`FileUpload-${documentType}`}
+                            name="documentType"
+                            label={documentTypeConfig.options[documentType]}
+                            onChange={() => {
+                              setFieldValue('documentType', documentType);
+                              setFieldValue('otherTypeDescription', '');
+                            }}
+                            value={documentType}
+                          />
+                        );
+                      })}
                       {values.documentType === DocumentType.OTHER && (
                         <div className="margin-left-4 margin-bottom-1">
                           <FieldGroup
@@ -275,12 +278,14 @@ const LinkDocument = ({
                               htmlFor="FileUpload-OtherType"
                               className="margin-bottom-1"
                             >
-                              {t('documentKind')}
+                              {documentsT('otherTypeDescription.label')}
                               <RequiredAsterisk />
                             </Label>
+
                             <FieldErrorMsg>
                               {flatErrors.otherTypeDescription}
                             </FieldErrorMsg>
+
                             <Field
                               as={TextField}
                               error={!!flatErrors.otherTypeDescription}
@@ -302,33 +307,29 @@ const LinkDocument = ({
                       htmlFor="document-upload-restricted-yes"
                       className="maxw-none"
                     >
-                      {t('costQuestion')}
+                      {documentsT('restricted.label')}
                       <RequiredAsterisk />
                     </Label>
 
                     <p className="margin-0 line-height-body-4">
-                      {t('costInfo')}
+                      {documentsT('restricted.sublabel')}
                     </p>
 
                     <FieldErrorMsg>{flatErrors.restricted}</FieldErrorMsg>
-                    <Fieldset>
-                      <BooleanRadio
-                        field="restricted"
-                        id="document-upload-restricted"
-                        setFieldValue={setFieldValue}
-                        value={values.restricted}
-                        options={{
-                          true: h('yes'),
-                          false: h('no')
-                        }}
-                      />
-                    </Fieldset>
+
+                    <BooleanRadio
+                      field="restricted"
+                      id="document-upload-restricted"
+                      value={values.restricted}
+                      setFieldValue={setFieldValue}
+                      options={restrictedConfig.options}
+                    />
 
                     {values.restricted !== null && (
                       <Alert type="warning" slim>
                         {values.restricted
-                          ? t('costWarningAssessment')
-                          : t('costWarningAll')}
+                          ? documentsMiscT('costWarningAssessment')
+                          : documentsMiscT('costWarningAll')}
                       </Alert>
                     )}
                   </FieldGroup>
@@ -342,8 +343,9 @@ const LinkDocument = ({
                       htmlFor="ModelPlanDocument-optionalNotes"
                       className="line-height-body-2"
                     >
-                      {t('optionalNotes')}
+                      {documentsT('optionalNotes.label')}
                     </Label>
+
                     <Field
                       as={TextAreaField}
                       id="ModelPlanDocument-optionalNotes"
@@ -362,7 +364,7 @@ const LinkDocument = ({
                       className="margin-bottom-4"
                     >
                       <span className="mandatory-fields-alert__text">
-                        {t('safetyScan')}
+                        {documentsMiscT('safetyScan')}
                       </span>
                     </Alert>
                     <Button
@@ -379,7 +381,7 @@ const LinkDocument = ({
                       }
                       data-testid="link-document"
                     >
-                      {t('submitButton')}
+                      {documentsMiscT('submitButton')}
                     </Button>
                   </div>
                 </Form>

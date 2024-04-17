@@ -14,9 +14,9 @@ import Divider from 'components/shared/Divider';
 import Spinner from 'components/Spinner';
 import useHelpSolution from 'hooks/useHelpSolutions';
 import useModalSolutionState from 'hooks/useModalSolutionState';
+import usePlanTranslation from 'hooks/usePlanTranslation';
 import { GetOperationalNeed_operationalNeed_solutions as GetOperationalNeedSolutionsType } from 'queries/ITSolutions/types/GetOperationalNeed';
 import { OperationalSolutionKey } from 'types/graphql-global-types';
-import { translateOperationalSolutionKey } from 'utils/modelPlan';
 import SolutionDetailsModal from 'views/HelpAndKnowledge/SolutionsHelp/SolutionDetails/Modal';
 
 import { findSolutionByKey } from '../CheckboxCard';
@@ -52,8 +52,10 @@ const SolutionCard = ({
 
   const [initLocation] = useState<string>(location.pathname);
 
-  const { t } = useTranslation('itSolutions');
+  const { t } = useTranslation('opSolutionsMisc');
   const { t: h } = useTranslation('generalReadOnly');
+
+  const { key: keyConfig } = usePlanTranslation('solutions');
 
   const {
     prevPathname,
@@ -104,7 +106,7 @@ const SolutionCard = ({
                       {solution.otherHeader}
                     </h3>
                     <h5 className="text-normal margin-top-0 margin-bottom-2">
-                      {translateOperationalSolutionKey(solution.key)}
+                      {keyConfig.options[solution.key]}
                     </h5>
                   </>
                 ) : (

@@ -19,7 +19,7 @@ const ITSolutionsWarning = ({
   id,
   onClick
 }: ITSolutionsWarningType) => {
-  const { t } = useTranslation('itSolutions');
+  const { t } = useTranslation('opSolutionsMisc');
 
   const flags = useFlags();
 

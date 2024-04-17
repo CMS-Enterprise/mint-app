@@ -72,7 +72,9 @@ const initialFormValues: CRTDLFormType = {
 
 const AddCRTDL = () => {
   const { t: h } = useTranslation('draftModelPlan');
-  const { t } = useTranslation('crtdl');
+  const { t: crsT } = useTranslation('crs');
+  const { t: tdlsT } = useTranslation('tdls');
+  const { t } = useTranslation('crtdlsMisc');
 
   const { modelID } = useParams<{ modelID: string }>();
   const { modelName } = useContext(ModelInfoContext);
@@ -366,6 +368,7 @@ const AddCRTDL = () => {
                           >
                             {t('crButton')}
                           </Button>
+
                           <Button
                             type="button"
                             outline={crtdlFormType !== 'tdl'}
@@ -382,14 +385,16 @@ const AddCRTDL = () => {
                             error={!!flatErrors.idNumber}
                           >
                             <Label htmlFor="cr-tdl-id-number">
-                              {t('idNumber')}
+                              {crtdlFormType === 'cr'
+                                ? crsT('idNumber.label')
+                                : tdlsT('idNumber.label')}
                               <RequiredAsterisk />
                             </Label>
 
                             <div className="usa-hint margin-top-1">
-                              {t('idNumberInfo', {
-                                type: crtdlFormType?.toUpperCase()
-                              })}
+                              {crtdlFormType === 'cr'
+                                ? crsT('idNumber.sublabel')
+                                : tdlsT('idNumber.sublabel')}
                             </div>
 
                             <FieldErrorMsg>{flatErrors.idNumber}</FieldErrorMsg>
@@ -410,7 +415,9 @@ const AddCRTDL = () => {
                             error={!!flatErrors.title}
                           >
                             <Label htmlFor="cr-tdl-title">
-                              {t(`title.${crtdlFormType}`)}
+                              {crtdlFormType === 'cr'
+                                ? crsT('title.label')
+                                : tdlsT('title.label')}
                               <RequiredAsterisk />
                             </Label>
 
@@ -434,12 +441,16 @@ const AddCRTDL = () => {
                                 htmlFor="cr-tdl-date-initiated"
                                 className="text-bold"
                               >
-                                {t('dateInitiated')}
+                                {crtdlFormType === 'cr'
+                                  ? crsT('dateInitiated.label')
+                                  : tdlsT('dateInitiated.label')}
                                 <RequiredAsterisk />
                               </Label>
 
                               <div className="usa-hint margin-top-1">
-                                {h('datePlaceholder')}
+                                {crtdlFormType === 'cr'
+                                  ? crsT('dateInitiated.sublabel')
+                                  : tdlsT('dateInitiated.sublabel')}
                               </div>
 
                               <FieldErrorMsg>
@@ -470,12 +481,12 @@ const AddCRTDL = () => {
                           {crtdlFormType === 'cr' && (
                             <Fieldset>
                               <Label htmlFor="cr-tdl-title">
-                                {t('dateImplemented')}
+                                {crsT('dateImplemented.label')}
                                 <RequiredAsterisk />
                               </Label>
 
                               <div className="usa-hint margin-top-0">
-                                {t('dateImplementedInfo')}
+                                {crsT('dateImplemented.sublabel')}
                               </div>
 
                               <DateInputGroup className="display-flex flex-wrap margin-top-neg-1">
@@ -486,6 +497,7 @@ const AddCRTDL = () => {
                                   >
                                     {t('dateMonth')}
                                   </Label>
+
                                   <Field
                                     as={Select}
                                     id="date-implemented-month"
@@ -498,6 +510,7 @@ const AddCRTDL = () => {
                                     >
                                       {t('dateSelect')}
                                     </option>
+
                                     {dateMonths.map((month, index) => (
                                       <option value={index} key={month}>
                                         {month}
@@ -526,12 +539,16 @@ const AddCRTDL = () => {
                             scrollElement="note"
                             error={!!flatErrors.note}
                           >
-                            <Label htmlFor="cr-tdl-note">{t('notes')}</Label>
+                            <Label htmlFor="cr-tdl-note">
+                              {crtdlFormType === 'cr'
+                                ? crsT('note.label')
+                                : tdlsT('note.label')}
+                            </Label>
 
                             <div className="usa-hint margin-top-1">
-                              {t('notesInfo', {
-                                type: crtdlFormType?.toUpperCase()
-                              })}
+                              {crtdlFormType === 'cr'
+                                ? crsT('note.sublabel')
+                                : tdlsT('note.sublabel')}
                             </div>
 
                             <FieldErrorMsg>{flatErrors.note}</FieldErrorMsg>

@@ -20,6 +20,8 @@ import {
   DataFullTimeOrIncrementalType,
   DataStartsType,
   DataToSendParticipantsType,
+  DiscussionUserRole,
+  DocumentType,
   EvaluationApproachType,
   FrequencyType,
   FundingSource,
@@ -35,6 +37,10 @@ import {
   ModelViewFilter,
   MonitoringFileType,
   NonClaimsBasedPayType,
+  OperationalNeedKey,
+  OperationalSolutionKey,
+  OperationalSolutionSubtaskStatus,
+  OpSolutionStatus,
   OverlapType,
   ParticipantCommunicationType,
   ParticipantRequireFinancialGuaranteeType,
@@ -57,6 +63,7 @@ import {
   SelectionMethodType,
   StakeholdersType,
   StatesAndTerritories,
+  TaskListSection,
   TaskStatus,
   TeamRole,
   TranslationField,
@@ -144,16 +151,12 @@ type OptionsWithChildRelation<
   C extends keyof C | string | void = void
 > = TranslationOptions<T> & ChildRelation<T, C>;
 
-/*
-  Apply/combine ParentRelation and TranslationFieldProperties to TranslationFieldPropertiesWithParent
-*/
+//  Apply/combine ParentRelation and TranslationFieldProperties to TranslationFieldPropertiesWithParent
 export type TranslationFieldPropertiesWithParent<
   T extends keyof T | string
 > = TranslationFieldProperties & ParentRelation<T>;
 
-/*
-  Apply/combine OptionsWithChildRelation and TranslationFieldProperties to TranslationFieldPropertiesWithOptions
-*/
+// Apply/combine OptionsWithChildRelation and TranslationFieldProperties to TranslationFieldPropertiesWithOptions
 export type TranslationFieldPropertiesWithOptions<
   T extends keyof T | string
 > = TranslationFieldProperties & TranslationOptions<T>;
@@ -188,9 +191,7 @@ export type TranslationFieldPropertiesWithParentAndChildren<
   TranslationFieldPropertiesWithOptionsAndChildren<T> &
   ParentRelation<T>;
 
-/*
-  Union type for all translation types
-*/
+// Union type for all translation types
 export type TranslationConfigType<
   T extends keyof T | string,
   C extends keyof C | string | void = void
@@ -202,9 +203,7 @@ export type TranslationConfigType<
   | TranslationFieldPropertiesWithOptionsAndParent<T, C>
   | TranslationFieldPropertiesWithParentAndChildren<T, C>;
 
-/*
-  Type guard to check if config is of type TranslationFieldProperties
-*/
+// Type guard to check if config is of type TranslationFieldProperties
 export const isTranslationFieldProperties = <
   T extends keyof T | string,
   C extends keyof C | string | void = void
@@ -214,9 +213,7 @@ export const isTranslationFieldProperties = <
   return !Object.hasOwn(config, 'options');
 };
 
-/*
-  Type guard to check if config is of type TranslationFieldPropertiesWithParent
-*/
+// Type guard to check if config is of type TranslationFieldPropertiesWithParent
 export const isTranslationFieldPropertiesWithParent = <
   T extends keyof T | string,
   C extends keyof C | string | void = void
@@ -226,9 +223,7 @@ export const isTranslationFieldPropertiesWithParent = <
   return Object.hasOwn(config, 'parentRelation');
 };
 
-/*
-  Type guard to check if config is of type TranslationFieldPropertiesWithOptions
-*/
+// Type guard to check if config is of type TranslationFieldPropertiesWithOptions
 export const isTranslationFieldPropertiesWithOptions = <
   T extends keyof T | string,
   C extends keyof C | string | void = void
@@ -238,9 +233,7 @@ export const isTranslationFieldPropertiesWithOptions = <
   return Object.hasOwn(config, 'options');
 };
 
-/*
-  Type guard to check if config is of type TranslationFieldPropertiesWithOptionsAndChildren
-*/
+// Type guard to check if config is of type TranslationFieldPropertiesWithOptionsAndChildren
 export const isTranslationFieldPropertiesWithOptionsAndChildren = <
   T extends keyof T | string,
   C extends keyof C | string | void = void
@@ -250,9 +243,7 @@ export const isTranslationFieldPropertiesWithOptionsAndChildren = <
   return Object.hasOwn(config, 'childRelation');
 };
 
-/*
-  Type guard to check if config is of type TranslationFieldPropertiesWithOptionsAndParent
-*/
+// Type guard to check if config is of type TranslationFieldPropertiesWithOptionsAndParent
 export const isTranslationFieldPropertiesWithOptionsAndParent = <
   T extends keyof T | string,
   C extends keyof C | string | void = void
@@ -264,9 +255,7 @@ export const isTranslationFieldPropertiesWithOptionsAndParent = <
   );
 };
 
-/*
-  Type guard to check if config is of type isTranslationFieldPropertiesWithParentAndChildren
-*/
+// Type guard to check if config is of type isTranslationFieldPropertiesWithParentAndChildren
 export const isTranslationFieldPropertiesWithParentAndChildren = <
   T extends keyof T | string,
   C extends keyof C | string | void = void
@@ -279,9 +268,7 @@ export const isTranslationFieldPropertiesWithParentAndChildren = <
   );
 };
 
-/*
-  Model Plan
-*/
+// Model Plan
 export type TranslationModelPlan = {
   modelName: TranslationFieldProperties;
   previousName: TranslationFieldProperties;
@@ -291,9 +278,7 @@ export type TranslationModelPlan = {
   status: TranslationFieldPropertiesWithOptions<ModelStatus>;
 };
 
-/*
-  Basics
-*/
+// Basics
 export type TranslationBasicsForm = {
   // Model Plan
   amsModelID: TranslationFieldProperties;
@@ -330,15 +315,15 @@ type TranslationBasicsGQL = Omit<
   '__typename'
 >;
 
-// Merged keys from graphql gen with FE form types
-// Create a tighter connection between BE/FE translation types
+/* 
+  Merged keys from graphql gen with FE form types
+  Create a tighter connection between BE/FE translation types
+*/
 export type TranslationBasics = {
   [K in keyof TranslationBasicsGQL]: TranslationBasicsForm[K]; // FE form type
 };
 
-/* 
-  General Characteristics
-*/
+// General Characteristics
 export type TranslationGeneralCharacteristicsForm = {
   isNewModel: TranslationFieldPropertiesWithOptionsAndChildren<Bool>;
   existingModel: TranslationFieldPropertiesWithParent<Bool>;
@@ -436,15 +421,15 @@ type TranslationGeneralCharacteristicsGQL = Omit<
   '__typename'
 >;
 
-// Merged keys from graphql gen with FE form types
-// Create a tighter connection between BE/FE translation types
+/* 
+  Merged keys from graphql gen with FE form types
+  Create a tighter connection between BE/FE translation types
+*/
 export type TranslationGeneralCharacteristics = {
   [K in keyof TranslationGeneralCharacteristicsGQL]: TranslationGeneralCharacteristicsForm[K]; // FE form type
 };
 
-/* 
-  Participants and Providers
-*/
+// Participants and Providers
 export type TranslationParticipantsAndProvidersForm = {
   participants: TranslationFieldPropertiesWithOptions<ParticipantsType>;
   medicareProviderType: TranslationFieldProperties;
@@ -534,15 +519,15 @@ type TranslationPlanParticipantsAndProvidersGQL = Omit<
   '__typename'
 >;
 
-// Merged keys from graphql gen with FE form types
-// Create a tighter connection between BE/FE translation types
+/* 
+  Merged keys from graphql gen with FE form types
+  Create a tighter connection between BE/FE translation types
+*/
 export type TranslationParticipantsAndProviders = {
   [K in keyof TranslationPlanParticipantsAndProvidersGQL]: TranslationParticipantsAndProvidersForm[K]; // FE form type
 };
 
-/* 
-  Beneficiaries
-*/
+// Beneficiaries
 export type TranslationBeneficiariesForm = {
   beneficiaries: TranslationFieldPropertiesWithOptions<BeneficiariesType>;
   diseaseSpecificGroup: TranslationFieldProperties;
@@ -584,15 +569,15 @@ type TranslationBeneficiariesGQL = Omit<
   '__typename'
 >;
 
-// Merged keys from graphql gen with FE form types
-// Create a tighter connection between BE/FE translation types
+/* 
+  Merged keys from graphql gen with FE form types
+  Create a tighter connection between BE/FE translation types
+*/
 export type TranslationBeneficiaries = {
   [K in keyof TranslationBeneficiariesGQL]: TranslationBeneficiariesForm[K]; // FE form type
 };
 
-/* 
-  Operations Evaluation and Learning
-*/
+// Operations Evaluation and Learning
 export type TranslationOpsEvalAndLearningForm = {
   stakeholders: TranslationFieldPropertiesWithOptions<StakeholdersType>;
   stakeholdersOther: TranslationFieldProperties;
@@ -742,15 +727,15 @@ type TranslationOpsEvalAndLearningGQL = Omit<
   '__typename'
 >;
 
-// Merged keys from graphql gen with FE form types
-// Create a tighter connection between BE/FE translation types
+/* 
+  Merged keys from graphql gen with FE form types
+  Create a tighter connection between BE/FE translation types
+*/
 export type TranslationOpsEvalAndLearning = {
   [K in keyof TranslationOpsEvalAndLearningGQL]: TranslationOpsEvalAndLearningForm[K]; // FE form type
 };
 
-/* 
-  Payments
-*/
+// Payments
 export type TranslationPaymentsForm = {
   fundingSource: TranslationFieldPropertiesWithOptions<FundingSource>;
   fundingSourceMedicareAInfo: TranslationFieldProperties;
@@ -878,15 +863,15 @@ type TranslationPaymentsGQL = Omit<
   '__typename'
 >;
 
-// Merged keys from graphql gen with FE form types
-// Create a tighter connection between BE/FE translation types
+/* 
+  Merged keys from graphql gen with FE form types
+  Create a tighter connection between BE/FE translation types
+*/
 export type TranslationPayments = {
   [K in keyof TranslationPaymentsGQL]: TranslationPaymentsForm[K]; // FE form type
 };
 
-/* 
-  Collaborators
-*/
+// Collaborators
 export type TranslationCollaboratorsForm = {
   teamRoles: TranslationFieldPropertiesWithOptions<TeamRole>;
   username: TranslationFieldProperties;
@@ -897,10 +882,76 @@ type TranslationCollaboratorGQL = Omit<
   '__typename'
 >;
 
-// Merged keys from graphql gen with FE form types
-// Create a tighter connection between BE/FE translation types
+/* 
+  Merged keys from graphql gen with FE form types
+  Create a tighter connection between BE/FE translation types
+*/
 export type TranslationCollaborators = {
   [K in keyof TranslationCollaboratorGQL]: TranslationCollaboratorsForm[K]; // FE form type
+};
+
+// Discussions
+export type TranslationDiscussions = {
+  userRole: TranslationFieldPropertiesWithOptions<DiscussionUserRole>;
+  userRoleDescription: TranslationFieldProperties;
+  content: TranslationFieldProperties;
+};
+
+// CRs
+export type TranslationCRs = {
+  idNumber: TranslationFieldProperties;
+  dateInitiated: TranslationFieldProperties;
+  dateImplemented: TranslationFieldProperties;
+  title: TranslationFieldProperties;
+  note: TranslationFieldProperties;
+};
+
+// TDLs
+export type TranslationTDLs = {
+  idNumber: TranslationFieldProperties;
+  dateInitiated: TranslationFieldProperties;
+  title: TranslationFieldProperties;
+  note: TranslationFieldProperties;
+};
+
+// Documents
+export type TranslationDocuments = {
+  isLink: TranslationFieldPropertiesWithOptions<Bool>;
+  url: TranslationFieldProperties;
+  name: TranslationFieldProperties;
+  restricted: TranslationFieldPropertiesWithOptions<Bool>;
+  documentType: TranslationFieldPropertiesWithOptions<DocumentType>;
+  optionalNotes: TranslationFieldProperties;
+  otherTypeDescription: TranslationFieldProperties;
+};
+
+// Operational Need
+export type TranslationOperationalNeeds = {
+  name: TranslationFieldProperties;
+  nameOther: TranslationFieldProperties;
+  key: TranslationFieldPropertiesWithOptions<OperationalNeedKey>;
+  needed: TranslationFieldPropertiesWithOptions<Bool>;
+  section: TranslationFieldPropertiesWithOptions<TaskListSection>;
+};
+
+// Operational Solution
+export type TranslationOperationalSolutions = {
+  name: TranslationFieldProperties;
+  nameOther: TranslationFieldProperties;
+  key: TranslationFieldPropertiesWithOptions<OperationalSolutionKey>;
+  otherHeader: TranslationFieldProperties;
+  mustStartDts: TranslationFieldProperties;
+  mustFinishDts: TranslationFieldProperties;
+  pocName: TranslationFieldProperties;
+  pocEmail: TranslationFieldProperties;
+  needed: TranslationFieldPropertiesWithOptions<Bool>;
+  status: TranslationFieldPropertiesWithOptions<OpSolutionStatus>;
+};
+
+// Operational Solution Subtasks
+export type TranslationOperationalSolutionSubtasks = {
+  name: TranslationFieldProperties;
+  status: TranslationFieldPropertiesWithOptions<OperationalSolutionSubtaskStatus>;
 };
 
 export type TranslationPlan = {
@@ -912,6 +963,13 @@ export type TranslationPlan = {
   opsEvalAndLearning: TranslationOpsEvalAndLearning;
   payments: TranslationPayments;
   collaborators: TranslationCollaborators;
+  discussions: TranslationDiscussions;
+  crs: TranslationCRs;
+  tdls: TranslationTDLs;
+  documents: TranslationDocuments;
+  operationalNeeds: TranslationOperationalNeeds;
+  solutions: TranslationOperationalSolutions;
+  operationalSolutionSubtasks: TranslationOperationalSolutionSubtasks;
 };
 
 export type TranslationPlanSection =
@@ -931,5 +989,12 @@ export enum PlanSection {
   BENEFICIARIES = 'beneficiaries',
   OPS_EVAL_AND_LEARNING = 'opsEvalAndLearning',
   PAYMENTS = 'payments',
-  COLLABORATORS = 'collaborators'
+  COLLABORATORS = 'collaborators',
+  DISCUSSIONS = 'discussions',
+  CRS = 'crs',
+  TDLS = 'tdls',
+  DOCUMENTS = 'documents',
+  OPERATIONAL_NEEDS = 'operationalNeeds',
+  OPERATIONAL_SOLUTIONS = 'solutions',
+  OPERATIONAL_SOLUTION_SUBTASKS = 'operationalSolutionSubtasks'
 }
