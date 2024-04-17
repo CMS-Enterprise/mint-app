@@ -3402,6 +3402,13 @@ export type GetOperationalSolutionQueryVariables = Exact<{
 
 export type GetOperationalSolutionQuery = { __typename: 'Query', operationalSolution: { __typename: 'OperationalSolution', id: UUID, key?: OperationalSolutionKey | null, needed?: boolean | null, name?: string | null, nameOther?: string | null, pocName?: string | null, pocEmail?: string | null, status: OpSolutionStatus, isOther: boolean, isCommonSolution: boolean, otherHeader?: string | null, mustFinishDts?: Time | null, mustStartDts?: Time | null, documents: Array<{ __typename: 'PlanDocument', id: UUID, virusScanned: boolean, virusClean: boolean, fileName: string, fileType: string, downloadUrl?: string | null, restricted: boolean, documentType: DocumentType, createdDts: Time, optionalNotes?: string | null, otherType?: string | null, numLinkedSolutions: number, isLink: boolean, url?: string | null }>, operationalSolutionSubtasks: Array<{ __typename: 'OperationalSolutionSubtask', id: UUID, name: string, status: OperationalSolutionSubtaskStatus }> } };
 
+export type GetOperationalSolutionSubtasksQueryVariables = Exact<{
+  id: Scalars['UUID']['input'];
+}>;
+
+
+export type GetOperationalSolutionSubtasksQuery = { __typename: 'Query', operationalSolution: { __typename: 'OperationalSolution', id: UUID, operationalSolutionSubtasks: Array<{ __typename: 'OperationalSolutionSubtask', id: UUID, solutionID: UUID, name: string, status: OperationalSolutionSubtaskStatus }> } };
+
 export type GetExistingModelPlansQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -6523,6 +6530,52 @@ export type GetOperationalSolutionQueryHookResult = ReturnType<typeof useGetOper
 export type GetOperationalSolutionLazyQueryHookResult = ReturnType<typeof useGetOperationalSolutionLazyQuery>;
 export type GetOperationalSolutionSuspenseQueryHookResult = ReturnType<typeof useGetOperationalSolutionSuspenseQuery>;
 export type GetOperationalSolutionQueryResult = Apollo.QueryResult<GetOperationalSolutionQuery, GetOperationalSolutionQueryVariables>;
+export const GetOperationalSolutionSubtasksDocument = gql`
+    query GetOperationalSolutionSubtasks($id: UUID!) {
+  operationalSolution(id: $id) {
+    id
+    operationalSolutionSubtasks {
+      id
+      solutionID
+      name
+      status
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetOperationalSolutionSubtasksQuery__
+ *
+ * To run a query within a React component, call `useGetOperationalSolutionSubtasksQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetOperationalSolutionSubtasksQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetOperationalSolutionSubtasksQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetOperationalSolutionSubtasksQuery(baseOptions: Apollo.QueryHookOptions<GetOperationalSolutionSubtasksQuery, GetOperationalSolutionSubtasksQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetOperationalSolutionSubtasksQuery, GetOperationalSolutionSubtasksQueryVariables>(GetOperationalSolutionSubtasksDocument, options);
+      }
+export function useGetOperationalSolutionSubtasksLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetOperationalSolutionSubtasksQuery, GetOperationalSolutionSubtasksQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetOperationalSolutionSubtasksQuery, GetOperationalSolutionSubtasksQueryVariables>(GetOperationalSolutionSubtasksDocument, options);
+        }
+export function useGetOperationalSolutionSubtasksSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetOperationalSolutionSubtasksQuery, GetOperationalSolutionSubtasksQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetOperationalSolutionSubtasksQuery, GetOperationalSolutionSubtasksQueryVariables>(GetOperationalSolutionSubtasksDocument, options);
+        }
+export type GetOperationalSolutionSubtasksQueryHookResult = ReturnType<typeof useGetOperationalSolutionSubtasksQuery>;
+export type GetOperationalSolutionSubtasksLazyQueryHookResult = ReturnType<typeof useGetOperationalSolutionSubtasksLazyQuery>;
+export type GetOperationalSolutionSubtasksSuspenseQueryHookResult = ReturnType<typeof useGetOperationalSolutionSubtasksSuspenseQuery>;
+export type GetOperationalSolutionSubtasksQueryResult = Apollo.QueryResult<GetOperationalSolutionSubtasksQuery, GetOperationalSolutionSubtasksQueryVariables>;
 export const GetExistingModelPlansDocument = gql`
     query GetExistingModelPlans {
   existingModelCollection {
