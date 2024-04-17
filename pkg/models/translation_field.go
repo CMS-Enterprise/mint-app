@@ -37,6 +37,10 @@ type TranslationField struct {
 	translationNoParentRelation
 	translationNoChildRelation
 }
+
+// isTranslationParent fulfills the ITranslationParent interface
+func (tf TranslationField) isTranslationParent() {}
+
 type TranslationFieldBase struct {
 	GqlField         string              `json:"gqlField"`
 	GoField          string              `json:"goField"`
@@ -93,6 +97,7 @@ type ITranslationField interface {
 
 // ITranslationParent is the shared interface for translations that have some sort of parent
 type ITranslationParent interface {
+	isTranslationParent()
 }
 
 // translationNoParentRelation can be embedded for translations that don't have a parent
@@ -163,6 +168,9 @@ type TranslationFieldWithOptionsAndChildren struct {
 	translationNoParentRelation
 }
 
+// isTranslationParent fulfills the ITranslationParent interface
+func (tf TranslationFieldWithOptionsAndChildren) isTranslationParent() {}
+
 // translationChildRelation is struct that is mean to be embedded in other Translation types to expose functionality for translations that have a Child relationships
 type translationChildRelation struct {
 	ChildRelation map[string][]TranslationField `json:"childRelation"`
@@ -174,8 +182,6 @@ func (tcr translationChildRelation) HasChildren() bool {
 	return true
 }
 func (tcr translationChildRelation) GetChildren() (map[string][]TranslationField, bool) {
-	// Changes: (Translations) Determine if we can use a strongly typed child relation
-	// return nil, tcr.HasChildren()
 	return tcr.ChildRelation, tcr.HasChildren()
 }
 
