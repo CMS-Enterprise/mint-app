@@ -12,7 +12,11 @@ import {
   TextInput
 } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
-import { useGetOperationalNeedQuery } from 'gql/gen/graphql';
+import {
+  useGetOperationalNeedQuery,
+  useUpdateCustomOperationalNeedMutation
+} from 'gql/gen/graphql';
+import { UpdateCustomOperationalNeed_addOrUpdateCustomOperationalNeed as FormTypes } from 'gql/gen/types/UpdateCustomOperationalNeed';
 
 import Breadcrumbs from 'components/Breadcrumbs';
 import PageHeading from 'components/PageHeading';
@@ -22,13 +26,7 @@ import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import RequiredAsterisk from 'components/shared/RequiredAsterisk';
 import useMessage from 'hooks/useMessage';
-import {
-  UpdateCustomOperationalNeed as MutationType,
-  UpdateCustomOperationalNeed_addOrUpdateCustomOperationalNeed as FormTypes,
-  UpdateCustomOperationalNeedVariables
-} from 'queries/ITSolutions/types/UpdateCustomOperationalNeed';
 import { UpdateCustomOperationalNeedByIdVariables } from 'queries/ITSolutions/types/UpdateCustomOperationalNeedById';
-import UpdateCustomOperationalNeed from 'queries/ITSolutions/UpdateCustomOperationalNeed';
 import UpdateCustomOperationalNeedById from 'queries/ITSolutions/UpdateCustomOperationalNeedById';
 import flattenErrors from 'utils/flattenErrors';
 import { ModelInfoContext } from 'views/ModelInfoWrapper';
@@ -61,10 +59,7 @@ const AddOrUpdateOperationalNeed = () => {
     skip: !operationalNeedID
   });
 
-  const [addCustomOperationalNeed] = useMutation<
-    MutationType,
-    UpdateCustomOperationalNeedVariables
-  >(UpdateCustomOperationalNeed);
+  const [addCustomOperationalNeed] = useUpdateCustomOperationalNeedMutation();
 
   const [
     updateNeedByID
