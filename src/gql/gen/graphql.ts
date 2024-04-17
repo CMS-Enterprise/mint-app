@@ -3423,6 +3423,15 @@ export type UpdateCustomOperationalNeedMutationVariables = Exact<{
 
 export type UpdateCustomOperationalNeedMutation = { __typename: 'Mutation', addOrUpdateCustomOperationalNeed: { __typename: 'OperationalNeed', id: UUID, nameOther?: string | null, needed?: boolean | null, key?: OperationalNeedKey | null } };
 
+export type UpdateCustomOperationalNeedByIdMutationVariables = Exact<{
+  id: Scalars['UUID']['input'];
+  customNeedType: Scalars['String']['input'];
+  needed: Scalars['Boolean']['input'];
+}>;
+
+
+export type UpdateCustomOperationalNeedByIdMutation = { __typename: 'Mutation', updateCustomOperationalNeedByID: { __typename: 'OperationalNeed', id: UUID, nameOther?: string | null, needed?: boolean | null, key?: OperationalNeedKey | null } };
+
 export type GetExistingModelPlansQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -6673,6 +6682,48 @@ export function useUpdateCustomOperationalNeedMutation(baseOptions?: Apollo.Muta
 export type UpdateCustomOperationalNeedMutationHookResult = ReturnType<typeof useUpdateCustomOperationalNeedMutation>;
 export type UpdateCustomOperationalNeedMutationResult = Apollo.MutationResult<UpdateCustomOperationalNeedMutation>;
 export type UpdateCustomOperationalNeedMutationOptions = Apollo.BaseMutationOptions<UpdateCustomOperationalNeedMutation, UpdateCustomOperationalNeedMutationVariables>;
+export const UpdateCustomOperationalNeedByIdDocument = gql`
+    mutation UpdateCustomOperationalNeedById($id: UUID!, $customNeedType: String!, $needed: Boolean!) {
+  updateCustomOperationalNeedByID(
+    id: $id
+    customNeedType: $customNeedType
+    needed: $needed
+  ) {
+    id
+    nameOther
+    needed
+    key
+  }
+}
+    `;
+export type UpdateCustomOperationalNeedByIdMutationFn = Apollo.MutationFunction<UpdateCustomOperationalNeedByIdMutation, UpdateCustomOperationalNeedByIdMutationVariables>;
+
+/**
+ * __useUpdateCustomOperationalNeedByIdMutation__
+ *
+ * To run a mutation, you first call `useUpdateCustomOperationalNeedByIdMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateCustomOperationalNeedByIdMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateCustomOperationalNeedByIdMutation, { data, loading, error }] = useUpdateCustomOperationalNeedByIdMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      customNeedType: // value for 'customNeedType'
+ *      needed: // value for 'needed'
+ *   },
+ * });
+ */
+export function useUpdateCustomOperationalNeedByIdMutation(baseOptions?: Apollo.MutationHookOptions<UpdateCustomOperationalNeedByIdMutation, UpdateCustomOperationalNeedByIdMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateCustomOperationalNeedByIdMutation, UpdateCustomOperationalNeedByIdMutationVariables>(UpdateCustomOperationalNeedByIdDocument, options);
+      }
+export type UpdateCustomOperationalNeedByIdMutationHookResult = ReturnType<typeof useUpdateCustomOperationalNeedByIdMutation>;
+export type UpdateCustomOperationalNeedByIdMutationResult = Apollo.MutationResult<UpdateCustomOperationalNeedByIdMutation>;
+export type UpdateCustomOperationalNeedByIdMutationOptions = Apollo.BaseMutationOptions<UpdateCustomOperationalNeedByIdMutation, UpdateCustomOperationalNeedByIdMutationVariables>;
 export const GetExistingModelPlansDocument = gql`
     query GetExistingModelPlans {
   existingModelCollection {

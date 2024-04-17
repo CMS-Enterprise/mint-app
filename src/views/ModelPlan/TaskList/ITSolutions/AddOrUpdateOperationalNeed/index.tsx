@@ -1,7 +1,6 @@
 import React, { useContext, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';
-import { useMutation } from '@apollo/client';
 import {
   Alert,
   Button,
@@ -14,6 +13,7 @@ import {
 import { Field, Form, Formik, FormikProps } from 'formik';
 import {
   useGetOperationalNeedQuery,
+  useUpdateCustomOperationalNeedByIdMutation,
   useUpdateCustomOperationalNeedMutation
 } from 'gql/gen/graphql';
 import { UpdateCustomOperationalNeed_addOrUpdateCustomOperationalNeed as FormTypes } from 'gql/gen/types/UpdateCustomOperationalNeed';
@@ -26,8 +26,6 @@ import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import RequiredAsterisk from 'components/shared/RequiredAsterisk';
 import useMessage from 'hooks/useMessage';
-import { UpdateCustomOperationalNeedByIdVariables } from 'queries/ITSolutions/types/UpdateCustomOperationalNeedById';
-import UpdateCustomOperationalNeedById from 'queries/ITSolutions/UpdateCustomOperationalNeedById';
 import flattenErrors from 'utils/flattenErrors';
 import { ModelInfoContext } from 'views/ModelInfoWrapper';
 
@@ -61,11 +59,7 @@ const AddOrUpdateOperationalNeed = () => {
 
   const [addCustomOperationalNeed] = useUpdateCustomOperationalNeedMutation();
 
-  const [
-    updateNeedByID
-  ] = useMutation<UpdateCustomOperationalNeedByIdVariables>(
-    UpdateCustomOperationalNeedById
-  );
+  const [updateNeedByID] = useUpdateCustomOperationalNeedByIdMutation();
 
   const handleFormSubmit = (
     formikValues: CustomOperationalNeedFormType,
