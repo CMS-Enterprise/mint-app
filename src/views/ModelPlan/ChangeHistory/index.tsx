@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import { GridContainer, Icon, SummaryBox } from '@trussworks/react-uswds';
 import classNames from 'classnames';
+import { useTranslatedAuditCollectionQuery } from 'gql/gen/graphql';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import PageHeading from 'components/PageHeading';
@@ -14,6 +15,14 @@ const ChangeHistory = () => {
   const { modelID } = useParams<{
     modelID: string;
   }>();
+
+  const { data, loading, error } = useTranslatedAuditCollectionQuery({
+    variables: {
+      modelPlanID: modelID
+    }
+  });
+
+  console.log(data);
 
   const isMobile = useCheckResponsiveScreen('tablet', 'smaller');
   const isTablet = useCheckResponsiveScreen('tablet', 'smaller');
