@@ -9,8 +9,10 @@ import { useHistory, useLocation, useParams } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 import { Button, Fieldset, Grid, Icon } from '@trussworks/react-uswds';
 import { Form, Formik, FormikProps } from 'formik';
-import { useGetOperationalNeedQuery } from 'gql/gen/graphql';
-import { GetOperationalNeed_operationalNeed as GetOperationalNeedOperationalNeedType } from 'gql/gen/types/GetOperationalNeed';
+import {
+  GetOperationalNeedQuery,
+  useGetOperationalNeedQuery
+} from 'gql/gen/graphql';
 
 import Breadcrumbs from 'components/Breadcrumbs';
 import PageHeading from 'components/PageHeading';
@@ -31,9 +33,11 @@ import NeedQuestionAndAnswer from '../_components/NeedQuestionAndAnswer';
 
 import Solution from './_components/Solution';
 
+type OperationalNeedType = GetOperationalNeedQuery['operationalNeed'];
+
 // Passing in operationalNeed to Formik instead of array of solutions
 // Fomik does not take an array structure
-export const initialValues: GetOperationalNeedOperationalNeedType = {
+export const initialValues: OperationalNeedType = {
   __typename: 'OperationalNeed',
   id: '',
   modelPlanID: '',
@@ -68,9 +72,7 @@ const SolutionImplementation = () => {
   // State management for mutation errors
   const [mutationError, setMutationError] = useState<boolean>(false);
 
-  const formikRef = useRef<FormikProps<GetOperationalNeedOperationalNeedType>>(
-    null
-  );
+  const formikRef = useRef<FormikProps<OperationalNeedType>>(null);
 
   const { modelName } = useContext(ModelInfoContext);
 
@@ -89,7 +91,7 @@ const SolutionImplementation = () => {
 
   // Cycles and updates all solutions on a need
   const handleFormSubmit = async (
-    formikValues: GetOperationalNeedOperationalNeedType,
+    formikValues: OperationalNeedType,
     redirect?: 'back' | null,
     dontAdd?: boolean // False if user selects 'Don’t add solutions and return to tracker'
   ) => {
@@ -200,7 +202,7 @@ const SolutionImplementation = () => {
     return t('dontAdd');
   };
 
-  const handleCancelClick = (values: GetOperationalNeedOperationalNeedType) => {
+  const handleCancelClick = (values: OperationalNeedType) => {
     if (!!solutionId && fromSolutionDetails) {
       return history.goBack();
     }
@@ -296,9 +298,7 @@ const SolutionImplementation = () => {
               enableReinitialize
               innerRef={formikRef}
             >
-              {(
-                formikProps: FormikProps<GetOperationalNeedOperationalNeedType>
-              ) => {
+              {(formikProps: FormikProps<OperationalNeedType>) => {
                 const { errors, setErrors, handleSubmit, values } = formikProps;
 
                 const flatErrors = flattenErrors(errors);

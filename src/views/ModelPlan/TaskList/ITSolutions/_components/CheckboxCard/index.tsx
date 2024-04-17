@@ -16,7 +16,7 @@ import {
 } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import { Field } from 'formik';
-import { GetOperationalNeed_operationalNeed_solutions as GetOperationalNeedSolutionsType } from 'gql/gen/types/GetOperationalNeed';
+import { GetOperationalNeedQuery } from 'gql/gen/graphql';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import Spinner from 'components/Spinner';
@@ -28,6 +28,8 @@ import SolutionDetailsModal from 'views/HelpAndKnowledge/SolutionsHelp/SolutionD
 import { HelpSolutionType } from 'views/HelpAndKnowledge/SolutionsHelp/solutionsMap';
 
 import './index.scss';
+
+type GetOperationalNeedSolutionsType = GetOperationalNeedQuery['operationalNeed']['solutions'][0];
 
 type CheckboxCardProps = {
   className?: string;
@@ -60,7 +62,7 @@ const CheckboxCard = ({
     selectedSolution,
     renderModal,
     loading: modalLoading
-  } = useModalSolutionState(solution.key);
+  } = useModalSolutionState(solution.key!);
 
   const { helpSolutions, loading } = useHelpSolution();
 
@@ -69,7 +71,7 @@ const CheckboxCard = ({
     ? `it-solutions-${solution?.nameOther?.toLowerCase().replaceAll(' ', '-')}`
     : `it-solutions-${solution?.key?.toLowerCase().replace('_', '-')}`;
 
-  const solutionMap = findSolutionByKey(solution.key, helpSolutions);
+  const solutionMap = findSolutionByKey(solution.key!, helpSolutions);
 
   const detailRoute = solutionMap?.route
     ? `${initLocation}${location.search}${

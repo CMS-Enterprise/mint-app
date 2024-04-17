@@ -15,11 +15,10 @@ import {
   Icon
 } from '@trussworks/react-uswds';
 import { Form, Formik, FormikProps } from 'formik';
-import { useGetOperationalNeedQuery } from 'gql/gen/graphql';
 import {
-  GetOperationalNeed_operationalNeed as GetOperationalNeedOperationalNeedType,
-  GetOperationalNeed_operationalNeed_solutions as GetOperationalNeedSolutionsType
-} from 'gql/gen/types/GetOperationalNeed';
+  GetOperationalNeedQuery,
+  useGetOperationalNeedQuery
+} from 'gql/gen/graphql';
 import { partition } from 'lodash';
 
 import Breadcrumbs from 'components/Breadcrumbs';
@@ -47,6 +46,9 @@ import NotFound from 'views/NotFound';
 import CheckboxCard from '../_components/CheckboxCard';
 import ITSolutionsSidebar from '../_components/ITSolutionSidebar';
 import NeedQuestionAndAnswer from '../_components/NeedQuestionAndAnswer';
+
+type GetOperationalNeedOperationalNeedType = GetOperationalNeedQuery['operationalNeed'];
+type GetOperationalNeedSolutionsType = GetOperationalNeedQuery['operationalNeed']['solutions'][0];
 
 // Passing in operationalNeed to Formik instead of array of solutions
 // Fomik does not take an array structure

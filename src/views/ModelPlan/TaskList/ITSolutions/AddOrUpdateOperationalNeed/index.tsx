@@ -12,10 +12,7 @@ import {
   TextInput
 } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
-import {
-  useGetOperationalNeedQuery,
-  useGetOperationalNeedsQuery
-} from 'gql/gen/graphql';
+import { useGetOperationalNeedQuery } from 'gql/gen/graphql';
 
 import Breadcrumbs from 'components/Breadcrumbs';
 import PageHeading from 'components/PageHeading';
