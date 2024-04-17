@@ -6,7 +6,7 @@ Links to views for updating solutions, adding subtasks, and documents
 import React, { useContext, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';
-import { useMutation, useQuery } from '@apollo/client';
+import { useQuery } from '@apollo/client';
 import {
   Breadcrumb,
   BreadcrumbBar,
@@ -14,6 +14,7 @@ import {
   Button,
   Grid
 } from '@trussworks/react-uswds';
+import { useDeleteDocumentSolutionLinkMutation } from 'gql/gen/graphql';
 
 import AskAQuestion from 'components/AskAQuestion';
 import UswdsReactLink from 'components/LinkWrapper';
@@ -23,9 +24,7 @@ import Alert from 'components/shared/Alert';
 import Expire from 'components/shared/Expire';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import useMessage from 'hooks/useMessage';
-import DeleteDocumentSolutionLinks from 'queries/ITSolutions/DeleteDocumentSolutionLink';
 import GetOperationalSolution from 'queries/ITSolutions/GetOperationalSolution';
-import { DeleteDocumentSolutionLinkVariables } from 'queries/ITSolutions/types/DeleteDocumentSolutionLink';
 import {
   GetOperationalSolution as GetOperationalSolutionType,
   GetOperationalSolution_operationalSolution as GetOperationalSolutionOperationalSolutionType,
@@ -79,9 +78,7 @@ const SolutionDetails = () => {
 
   const subtasks = data?.operationalSolution.operationalSolutionSubtasks || [];
 
-  const [deleteSolutionLink] = useMutation<DeleteDocumentSolutionLinkVariables>(
-    DeleteDocumentSolutionLinks
-  );
+  const [deleteSolutionLink] = useDeleteDocumentSolutionLinkMutation();
 
   const handleDocumentUnlink = (linkToRemove: string, documentName: string) => {
     deleteSolutionLink({

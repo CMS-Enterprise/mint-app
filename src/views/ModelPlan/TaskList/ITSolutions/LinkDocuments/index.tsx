@@ -5,9 +5,12 @@ View for linking and unlinking existing model plan documents for operational nee
 import React, { useContext, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';
-import { useMutation, useQuery } from '@apollo/client';
+import { useQuery } from '@apollo/client';
 import { Button, Grid, Icon } from '@trussworks/react-uswds';
-import { useCreateDocumentSolutionLinksMutation } from 'gql/gen/graphql';
+import {
+  useCreateDocumentSolutionLinksMutation,
+  useDeleteDocumentSolutionLinkMutation
+} from 'gql/gen/graphql';
 import { GetOperationalNeed_operationalNeed as GetOperationalNeedOperationalNeedType } from 'gql/gen/types/GetOperationalNeed';
 import { isEqual } from 'lodash';
 
@@ -18,9 +21,7 @@ import PageLoading from 'components/PageLoading';
 import Alert from 'components/shared/Alert';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import useMessage from 'hooks/useMessage';
-import DeleteDocumentSolutionLinks from 'queries/ITSolutions/DeleteDocumentSolutionLink';
 import GetOperationalSolution from 'queries/ITSolutions/GetOperationalSolution';
-import { DeleteDocumentSolutionLinkVariables } from 'queries/ITSolutions/types/DeleteDocumentSolutionLink';
 import {
   GetOperationalSolution as GetOperationalSolutionType,
   GetOperationalSolution_operationalSolution as GetOperationalSolutionOperationalSolutionType,
@@ -100,9 +101,7 @@ const LinkDocuments = () => {
 
   const [createSolutionLinks] = useCreateDocumentSolutionLinksMutation();
 
-  const [deleteSolutionLink] = useMutation<DeleteDocumentSolutionLinkVariables>(
-    DeleteDocumentSolutionLinks
-  );
+  const [deleteSolutionLink] = useDeleteDocumentSolutionLinkMutation();
 
   // Checks which documents need to be linked/unlinked and calls/handles mutations
   const handleDocumentLink = async () => {

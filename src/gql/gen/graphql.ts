@@ -3327,6 +3327,14 @@ export type CreateOperationalSolutionSubtasksMutationVariables = Exact<{
 
 export type CreateOperationalSolutionSubtasksMutation = { __typename: 'Mutation', createOperationalSolutionSubtasks?: Array<{ __typename: 'OperationalSolutionSubtask', name: string, status: OperationalSolutionSubtaskStatus }> | null };
 
+export type DeleteDocumentSolutionLinkMutationVariables = Exact<{
+  solutionID: Scalars['UUID']['input'];
+  documentIDs: Array<Scalars['UUID']['input']> | Scalars['UUID']['input'];
+}>;
+
+
+export type DeleteDocumentSolutionLinkMutation = { __typename: 'Mutation', removePlanDocumentSolutionLinks: boolean };
+
 export type GetOperationalNeedQueryVariables = Exact<{
   id: Scalars['UUID']['input'];
   includeNotNeeded?: InputMaybe<Scalars['Boolean']['input']>;
@@ -6124,6 +6132,41 @@ export function useCreateOperationalSolutionSubtasksMutation(baseOptions?: Apoll
 export type CreateOperationalSolutionSubtasksMutationHookResult = ReturnType<typeof useCreateOperationalSolutionSubtasksMutation>;
 export type CreateOperationalSolutionSubtasksMutationResult = Apollo.MutationResult<CreateOperationalSolutionSubtasksMutation>;
 export type CreateOperationalSolutionSubtasksMutationOptions = Apollo.BaseMutationOptions<CreateOperationalSolutionSubtasksMutation, CreateOperationalSolutionSubtasksMutationVariables>;
+export const DeleteDocumentSolutionLinkDocument = gql`
+    mutation DeleteDocumentSolutionLink($solutionID: UUID!, $documentIDs: [UUID!]!) {
+  removePlanDocumentSolutionLinks(
+    solutionID: $solutionID
+    documentIDs: $documentIDs
+  )
+}
+    `;
+export type DeleteDocumentSolutionLinkMutationFn = Apollo.MutationFunction<DeleteDocumentSolutionLinkMutation, DeleteDocumentSolutionLinkMutationVariables>;
+
+/**
+ * __useDeleteDocumentSolutionLinkMutation__
+ *
+ * To run a mutation, you first call `useDeleteDocumentSolutionLinkMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteDocumentSolutionLinkMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteDocumentSolutionLinkMutation, { data, loading, error }] = useDeleteDocumentSolutionLinkMutation({
+ *   variables: {
+ *      solutionID: // value for 'solutionID'
+ *      documentIDs: // value for 'documentIDs'
+ *   },
+ * });
+ */
+export function useDeleteDocumentSolutionLinkMutation(baseOptions?: Apollo.MutationHookOptions<DeleteDocumentSolutionLinkMutation, DeleteDocumentSolutionLinkMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteDocumentSolutionLinkMutation, DeleteDocumentSolutionLinkMutationVariables>(DeleteDocumentSolutionLinkDocument, options);
+      }
+export type DeleteDocumentSolutionLinkMutationHookResult = ReturnType<typeof useDeleteDocumentSolutionLinkMutation>;
+export type DeleteDocumentSolutionLinkMutationResult = Apollo.MutationResult<DeleteDocumentSolutionLinkMutation>;
+export type DeleteDocumentSolutionLinkMutationOptions = Apollo.BaseMutationOptions<DeleteDocumentSolutionLinkMutation, DeleteDocumentSolutionLinkMutationVariables>;
 export const GetOperationalNeedDocument = gql`
     query GetOperationalNeed($id: UUID!, $includeNotNeeded: Boolean = true) {
   operationalNeed(id: $id) {
