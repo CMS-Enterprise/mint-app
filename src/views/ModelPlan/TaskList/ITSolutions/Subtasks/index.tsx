@@ -12,6 +12,8 @@ import {
   TextInput
 } from '@trussworks/react-uswds';
 import { Field, FieldArray, Form, Formik, FormikProps } from 'formik';
+import { useCreateOperationalSolutionSubtasksMutation } from 'gql/gen/graphql';
+import { CreateOperationalSolutionSubtasks_createOperationalSolutionSubtasks as CreateType } from 'gql/gen/types/CreateOperationalSolutionSubtasks';
 
 import Breadcrumbs from 'components/Breadcrumbs';
 import Modal from 'components/Modal';
@@ -23,14 +25,8 @@ import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import RequiredAsterisk from 'components/shared/RequiredAsterisk';
 import useMessage from 'hooks/useMessage';
-import CreateOperationalSolutionSubtasks from 'queries/ITSolutions/CreateOperationalSolutionSubtasks';
 import DeleteOperationalSolutionSubtasks from 'queries/ITSolutions/DeleteOperationalSolutionSubtasks';
 import GetOperationalSolution from 'queries/ITSolutions/GetOperationalSolution';
-import {
-  CreateOperationalSolutionSubtasks as CreateSubTasksType,
-  CreateOperationalSolutionSubtasks_createOperationalSolutionSubtasks as CreateType,
-  CreateOperationalSolutionSubtasksVariables
-} from 'queries/ITSolutions/types/CreateOperationalSolutionSubtasks';
 import { DeleteOperationalSolutionSubtaskVariables } from 'queries/ITSolutions/types/DeleteOperationalSolutionSubtask';
 import {
   GetOperationalSolution as GetOperationalSolutionType,
@@ -113,10 +109,7 @@ const Subtasks = ({
           ]
   };
 
-  const [create] = useMutation<
-    CreateSubTasksType,
-    CreateOperationalSolutionSubtasksVariables
-  >(CreateOperationalSolutionSubtasks);
+  const [create] = useCreateOperationalSolutionSubtasksMutation();
 
   const [update] = useMutation<UpdateOperationalSolutionSubtasksVariables>(
     UpdateOperationalSolutionSubtasks
