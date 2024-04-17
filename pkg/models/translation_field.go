@@ -58,6 +58,8 @@ type TranslationFieldBase struct {
 	OtherParentField *string `json:"otherParentField"`
 	// Label for fields that reference more than one parent - Ex: Notes - 'Note for Model Basics'
 	ParentReferencesLabel *string `json:"parentReferencesLabel"`
+	// Labels specifically for export/change history.  Takes priority over all other labels
+	ExportLabel *string `json:"exportLabel"`
 }
 
 // GetLabel has logic to prioritize the translated label to be returned for a specific field. It prioritizes the Read only Label, a
