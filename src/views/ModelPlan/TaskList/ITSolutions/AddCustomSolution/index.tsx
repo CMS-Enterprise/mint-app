@@ -1,7 +1,6 @@
 import React, { useContext, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
-import { useMutation } from '@apollo/client';
 import {
   Button,
   Fieldset,
@@ -14,7 +13,8 @@ import { Field, Form, Formik, FormikProps } from 'formik';
 import {
   GetOperationalSolutionQuery,
   useCreateOperationalSolutionMutation,
-  useGetOperationalSolutionQuery
+  useGetOperationalSolutionQuery,
+  useUpdateOperationalSolutionMutation
 } from 'gql/gen/graphql';
 
 import Breadcrumbs from 'components/Breadcrumbs';
@@ -26,11 +26,6 @@ import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import RequiredAsterisk from 'components/shared/RequiredAsterisk';
 import useMessage from 'hooks/useMessage';
-import {
-  UpdateOperationalSolution as UpdateOperationalSolutionType,
-  UpdateOperationalSolutionVariables
-} from 'queries/ITSolutions/types/UpdateOperationalSolution';
-import UpdateOperationalSolution from 'queries/ITSolutions/UpdateOperationalSolution';
 import {
   OperationalSolutionKey,
   OpSolutionStatus
@@ -110,10 +105,7 @@ const AddCustomSolution = () => {
 
   const [createSolution] = useCreateOperationalSolutionMutation();
 
-  const [updateSolution] = useMutation<
-    UpdateOperationalSolutionType,
-    UpdateOperationalSolutionVariables
-  >(UpdateOperationalSolution);
+  const [updateSolution] = useUpdateOperationalSolutionMutation();
 
   const handleFormSubmit = async (
     formikValues: CustomOperationalSolutionFormType

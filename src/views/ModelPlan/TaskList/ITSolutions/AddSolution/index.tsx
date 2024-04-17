@@ -7,7 +7,6 @@ Queries and displays SolutionCard component when a custom solution/operationalSo
 import React, { useContext, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
-import { useMutation } from '@apollo/client';
 import {
   Breadcrumb,
   BreadcrumbBar,
@@ -23,7 +22,8 @@ import { Form, Formik, FormikProps } from 'formik';
 import {
   useCreateOperationalSolutionMutation,
   useGetOperationalSolutionQuery,
-  useGetPossibleOperationalSolutionsQuery
+  useGetPossibleOperationalSolutionsQuery,
+  useUpdateOperationalSolutionMutation
 } from 'gql/gen/graphql';
 import { GetOperationalSolution_operationalSolution as GetOperationalSolutionOperationalSolutionType } from 'gql/gen/types/GetOperationalSolution';
 
@@ -35,8 +35,6 @@ import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import RequiredAsterisk from 'components/shared/RequiredAsterisk';
-import { UpdateOperationalSolutionVariables } from 'queries/ITSolutions/types/UpdateOperationalSolution';
-import UpdateOperationalSolution from 'queries/ITSolutions/UpdateOperationalSolution';
 import {
   OperationalSolutionKey,
   OpSolutionStatus
@@ -112,11 +110,7 @@ const AddSolution = () => {
 
   const [createSolution] = useCreateOperationalSolutionMutation();
 
-  const [
-    updateCustomSolution
-  ] = useMutation<UpdateOperationalSolutionVariables>(
-    UpdateOperationalSolution
-  );
+  const [updateCustomSolution] = useUpdateOperationalSolutionMutation();
 
   const treatAsOtherSolutions = [
     OperationalSolutionKey.CONTRACTOR,

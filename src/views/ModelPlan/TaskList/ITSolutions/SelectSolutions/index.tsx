@@ -6,7 +6,6 @@ Displays relevant operational need question and answers
 import React, { useContext, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
-import { useMutation } from '@apollo/client';
 import {
   Button,
   CardGroup,
@@ -18,7 +17,8 @@ import { Form, Formik, FormikProps } from 'formik';
 import {
   GetOperationalNeedQuery,
   useCreateOperationalSolutionMutation,
-  useGetOperationalNeedQuery
+  useGetOperationalNeedQuery,
+  useUpdateOperationalSolutionMutation
 } from 'gql/gen/graphql';
 import { partition } from 'lodash';
 
@@ -29,11 +29,6 @@ import Alert from 'components/shared/Alert';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import useMessage from 'hooks/useMessage';
-import {
-  UpdateOperationalSolution as UpdateOperationalSolutionType,
-  UpdateOperationalSolutionVariables
-} from 'queries/ITSolutions/types/UpdateOperationalSolution';
-import UpdateOperationalSolution from 'queries/ITSolutions/UpdateOperationalSolution';
 import { OperationalNeedKey } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
 import { ModelInfoContext } from 'views/ModelInfoWrapper';
@@ -108,10 +103,7 @@ const SelectSolutions = () => {
 
   const [createSolution] = useCreateOperationalSolutionMutation();
 
-  const [updateSolution] = useMutation<
-    UpdateOperationalSolutionType,
-    UpdateOperationalSolutionVariables
-  >(UpdateOperationalSolution);
+  const [updateSolution] = useUpdateOperationalSolutionMutation();
 
   // Cycles and updates all solutions on a need
   const handleFormSubmit = async (
