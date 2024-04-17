@@ -113,7 +113,7 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     gqlField: 'resemblesExistingModelOtherSelected',
     goField: 'ResemblesExistingModelOtherSelected',
     dbField: 'resembles_existing_model_other_selected',
-    label: '',
+    label: 'unused', // Changes: (Translations) Revisit this. This label is not used on the FE, or BE, but an empty string is not allowed on the type
     dataType: TranslationDataType.BOOLEAN,
     formType: TranslationFormType.RADIO,
     isOtherType: true,
@@ -199,7 +199,7 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     gqlField: 'participationInModelPreconditionOtherSelected',
     goField: 'ParticipationInModelPreconditionOtherSelected',
     dbField: 'participation_in_model_precondition_other_selected',
-    label: '',
+    label: 'unused', // Changes: (Translations) Revisit this. This label is not used on the FE, or BE, but an empty string is not allowed on the type
     dataType: TranslationDataType.BOOLEAN,
     formType: TranslationFormType.RADIO,
     isOtherType: true,
