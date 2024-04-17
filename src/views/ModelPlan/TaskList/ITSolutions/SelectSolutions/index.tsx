@@ -17,6 +17,7 @@ import {
 import { Form, Formik, FormikProps } from 'formik';
 import {
   GetOperationalNeedQuery,
+  useCreateOperationalSolutionMutation,
   useGetOperationalNeedQuery
 } from 'gql/gen/graphql';
 import { partition } from 'lodash';
@@ -28,11 +29,6 @@ import Alert from 'components/shared/Alert';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import useMessage from 'hooks/useMessage';
-import CreateOperationalSolution from 'queries/ITSolutions/CreateOperationalSolution';
-import {
-  CreateOperationalSolution as CreateOperationalSolutionType,
-  CreateOperationalSolutionVariables
-} from 'queries/ITSolutions/types/CreateOperationalSolution';
 import {
   UpdateOperationalSolution as UpdateOperationalSolutionType,
   UpdateOperationalSolutionVariables
@@ -110,10 +106,7 @@ const SelectSolutions = () => {
 
   const operationalNeed = data?.operationalNeed || initialValues;
 
-  const [createSolution] = useMutation<
-    CreateOperationalSolutionType,
-    CreateOperationalSolutionVariables
-  >(CreateOperationalSolution);
+  const [createSolution] = useCreateOperationalSolutionMutation();
 
   const [updateSolution] = useMutation<
     UpdateOperationalSolutionType,

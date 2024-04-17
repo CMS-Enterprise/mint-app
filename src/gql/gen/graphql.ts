@@ -3310,6 +3310,15 @@ export type CreateDocumentSolutionLinksMutationVariables = Exact<{
 
 export type CreateDocumentSolutionLinksMutation = { __typename: 'Mutation', createPlanDocumentSolutionLinks?: Array<{ __typename: 'PlanDocumentSolutionLink', id: UUID }> | null };
 
+export type CreateOperationalSolutionMutationVariables = Exact<{
+  operationalNeedID: Scalars['UUID']['input'];
+  solutionType?: InputMaybe<OperationalSolutionKey>;
+  changes: OperationalSolutionChanges;
+}>;
+
+
+export type CreateOperationalSolutionMutation = { __typename: 'Mutation', createOperationalSolution: { __typename: 'OperationalSolution', id: UUID, nameOther?: string | null, needed?: boolean | null, key?: OperationalSolutionKey | null } };
+
 export type GetOperationalNeedQueryVariables = Exact<{
   id: Scalars['UUID']['input'];
   includeNotNeeded?: InputMaybe<Scalars['Boolean']['input']>;
@@ -6030,6 +6039,48 @@ export function useCreateDocumentSolutionLinksMutation(baseOptions?: Apollo.Muta
 export type CreateDocumentSolutionLinksMutationHookResult = ReturnType<typeof useCreateDocumentSolutionLinksMutation>;
 export type CreateDocumentSolutionLinksMutationResult = Apollo.MutationResult<CreateDocumentSolutionLinksMutation>;
 export type CreateDocumentSolutionLinksMutationOptions = Apollo.BaseMutationOptions<CreateDocumentSolutionLinksMutation, CreateDocumentSolutionLinksMutationVariables>;
+export const CreateOperationalSolutionDocument = gql`
+    mutation CreateOperationalSolution($operationalNeedID: UUID!, $solutionType: OperationalSolutionKey, $changes: OperationalSolutionChanges!) {
+  createOperationalSolution(
+    operationalNeedID: $operationalNeedID
+    solutionType: $solutionType
+    changes: $changes
+  ) {
+    id
+    nameOther
+    needed
+    key
+  }
+}
+    `;
+export type CreateOperationalSolutionMutationFn = Apollo.MutationFunction<CreateOperationalSolutionMutation, CreateOperationalSolutionMutationVariables>;
+
+/**
+ * __useCreateOperationalSolutionMutation__
+ *
+ * To run a mutation, you first call `useCreateOperationalSolutionMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateOperationalSolutionMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createOperationalSolutionMutation, { data, loading, error }] = useCreateOperationalSolutionMutation({
+ *   variables: {
+ *      operationalNeedID: // value for 'operationalNeedID'
+ *      solutionType: // value for 'solutionType'
+ *      changes: // value for 'changes'
+ *   },
+ * });
+ */
+export function useCreateOperationalSolutionMutation(baseOptions?: Apollo.MutationHookOptions<CreateOperationalSolutionMutation, CreateOperationalSolutionMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateOperationalSolutionMutation, CreateOperationalSolutionMutationVariables>(CreateOperationalSolutionDocument, options);
+      }
+export type CreateOperationalSolutionMutationHookResult = ReturnType<typeof useCreateOperationalSolutionMutation>;
+export type CreateOperationalSolutionMutationResult = Apollo.MutationResult<CreateOperationalSolutionMutation>;
+export type CreateOperationalSolutionMutationOptions = Apollo.BaseMutationOptions<CreateOperationalSolutionMutation, CreateOperationalSolutionMutationVariables>;
 export const GetOperationalNeedDocument = gql`
     query GetOperationalNeed($id: UUID!, $includeNotNeeded: Boolean = true) {
   operationalNeed(id: $id) {

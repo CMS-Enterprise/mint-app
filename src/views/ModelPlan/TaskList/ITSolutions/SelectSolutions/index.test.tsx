@@ -6,7 +6,10 @@ import {
   waitFor,
   waitForElementToBeRemoved
 } from '@testing-library/react';
-import { GetOperationalNeedDocument } from 'gql/gen/graphql';
+import {
+  CreateOperationalSolutionDocument,
+  GetOperationalNeedDocument
+} from 'gql/gen/graphql';
 import { GetOperationalNeed_operationalNeed as GetOperationalNeedType } from 'gql/gen/types/GetOperationalNeed';
 
 import {
@@ -14,7 +17,6 @@ import {
   possibleSolutionsMock
 } from 'data/mock/solutions';
 import { MessageProvider } from 'hooks/useMessage';
-import CreateOperationalSolution from 'queries/ITSolutions/CreateOperationalSolution';
 import {
   OperationalNeedKey,
   OperationalSolutionKey,
@@ -72,7 +74,7 @@ const mocks = [
   },
   {
     request: {
-      query: CreateOperationalSolution,
+      query: CreateOperationalSolutionDocument,
       variables: {
         operationalNeedID,
         solutionType: 'RMADA',

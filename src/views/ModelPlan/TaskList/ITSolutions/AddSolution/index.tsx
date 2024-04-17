@@ -20,6 +20,7 @@ import {
   Label
 } from '@trussworks/react-uswds';
 import { Form, Formik, FormikProps } from 'formik';
+import { useCreateOperationalSolutionMutation } from 'gql/gen/graphql';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import PageHeading from 'components/PageHeading';
@@ -29,10 +30,8 @@ import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import RequiredAsterisk from 'components/shared/RequiredAsterisk';
-import CreateOperationalSolution from 'queries/ITSolutions/CreateOperationalSolution';
 import GetOperationalSolution from 'queries/ITSolutions/GetOperationalSolution';
 import GetPossibleOperationalSolutions from 'queries/ITSolutions/GetPossibleOperationalSolutions';
-import { CreateOperationalSolutionVariables } from 'queries/ITSolutions/types/CreateOperationalSolution';
 import {
   GetOperationalSolution as GetOperationalSolutionType,
   GetOperationalSolution_operationalSolution as GetOperationalSolutionOperationalSolutionType,
@@ -55,7 +54,7 @@ import NeedQuestionAndAnswer from '../_components/NeedQuestionAndAnswer';
 import SolutionCard from '../_components/SolutionCard';
 
 type OperationalSolutionFormType = {
-  key: OperationalSolutionKey | string;
+  key?: OperationalSolutionKey;
 };
 
 const AddSolution = () => {
@@ -118,12 +117,12 @@ const AddSolution = () => {
 
   // Initial/default formik value
   const additionalSolution: OperationalSolutionFormType = {
-    key: operationalSolutionID ? OperationalSolutionKey.OTHER_NEW_PROCESS : ''
+    key: operationalSolutionID
+      ? OperationalSolutionKey.OTHER_NEW_PROCESS
+      : undefined
   };
 
-  const [createSolution] = useMutation<CreateOperationalSolutionVariables>(
-    CreateOperationalSolution
-  );
+  const [createSolution] = useCreateOperationalSolutionMutation();
 
   const [
     updateCustomSolution

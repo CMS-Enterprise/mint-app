@@ -11,6 +11,7 @@ import {
   TextInput
 } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
+import { useCreateOperationalSolutionMutation } from 'gql/gen/graphql';
 
 import Breadcrumbs from 'components/Breadcrumbs';
 import PageHeading from 'components/PageHeading';
@@ -21,12 +22,7 @@ import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import RequiredAsterisk from 'components/shared/RequiredAsterisk';
 import useMessage from 'hooks/useMessage';
-import CreateOperationalSolution from 'queries/ITSolutions/CreateOperationalSolution';
 import GetOperationalSolution from 'queries/ITSolutions/GetOperationalSolution';
-import {
-  CreateOperationalSolution as CreateOperationalSolutionType,
-  CreateOperationalSolutionVariables
-} from 'queries/ITSolutions/types/CreateOperationalSolution';
 import {
   GetOperationalSolution as GetOperationalSolutionType,
   GetOperationalSolution_operationalSolution as GetOperationalSolutionOperationalSolutionType,
@@ -115,10 +111,7 @@ const AddCustomSolution = () => {
 
   const customOperationalSolution = data?.operationalSolution || initialValues;
 
-  const [createSolution] = useMutation<
-    CreateOperationalSolutionType,
-    CreateOperationalSolutionVariables
-  >(CreateOperationalSolution);
+  const [createSolution] = useCreateOperationalSolutionMutation();
 
   const [updateSolution] = useMutation<
     UpdateOperationalSolutionType,
