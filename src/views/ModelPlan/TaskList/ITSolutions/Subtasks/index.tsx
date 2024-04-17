@@ -12,7 +12,10 @@ import {
   TextInput
 } from '@trussworks/react-uswds';
 import { Field, FieldArray, Form, Formik, FormikProps } from 'formik';
-import { useCreateOperationalSolutionSubtasksMutation } from 'gql/gen/graphql';
+import {
+  useCreateOperationalSolutionSubtasksMutation,
+  useDeleteOperationalSolutionSubtaskMutation
+} from 'gql/gen/graphql';
 import { CreateOperationalSolutionSubtasks_createOperationalSolutionSubtasks as CreateType } from 'gql/gen/types/CreateOperationalSolutionSubtasks';
 
 import Breadcrumbs from 'components/Breadcrumbs';
@@ -25,9 +28,7 @@ import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import RequiredAsterisk from 'components/shared/RequiredAsterisk';
 import useMessage from 'hooks/useMessage';
-import DeleteOperationalSolutionSubtasks from 'queries/ITSolutions/DeleteOperationalSolutionSubtasks';
 import GetOperationalSolution from 'queries/ITSolutions/GetOperationalSolution';
-import { DeleteOperationalSolutionSubtaskVariables } from 'queries/ITSolutions/types/DeleteOperationalSolutionSubtask';
 import {
   GetOperationalSolution as GetOperationalSolutionType,
   GetOperationalSolution_operationalSolution_operationalSolutionSubtasks as UpdateType,
@@ -115,11 +116,7 @@ const Subtasks = ({
     UpdateOperationalSolutionSubtasks
   );
 
-  const [
-    removeSubtask
-  ] = useMutation<DeleteOperationalSolutionSubtaskVariables>(
-    DeleteOperationalSolutionSubtasks
-  );
+  const [removeSubtask] = useDeleteOperationalSolutionSubtaskMutation();
 
   const handleDelete = (name: string, id: string) => {
     removeSubtask({
