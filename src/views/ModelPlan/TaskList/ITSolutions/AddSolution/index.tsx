@@ -7,7 +7,7 @@ Queries and displays SolutionCard component when a custom solution/operationalSo
 import React, { useContext, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
-import { useMutation, useQuery } from '@apollo/client';
+import { useMutation } from '@apollo/client';
 import {
   Breadcrumb,
   BreadcrumbBar,
@@ -22,7 +22,8 @@ import {
 import { Form, Formik, FormikProps } from 'formik';
 import {
   useCreateOperationalSolutionMutation,
-  useGetOperationalSolutionQuery
+  useGetOperationalSolutionQuery,
+  useGetPossibleOperationalSolutionsQuery
 } from 'gql/gen/graphql';
 import { GetOperationalSolution_operationalSolution as GetOperationalSolutionOperationalSolutionType } from 'gql/gen/types/GetOperationalSolution';
 
@@ -34,8 +35,6 @@ import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import RequiredAsterisk from 'components/shared/RequiredAsterisk';
-import GetPossibleOperationalSolutions from 'queries/ITSolutions/GetPossibleOperationalSolutions';
-import { GetPossibleOperationalSolutions as GetPossibleOperationalSolutionsType } from 'queries/ITSolutions/types/GetPossibleOperationalSolutions';
 import { UpdateOperationalSolutionVariables } from 'queries/ITSolutions/types/UpdateOperationalSolution';
 import UpdateOperationalSolution from 'queries/ITSolutions/UpdateOperationalSolution';
 import {
@@ -77,13 +76,7 @@ const AddSolution = () => {
   // State management for mutation errors
   const [mutationError, setMutationError] = useState<boolean>(false);
 
-  const {
-    data,
-    loading,
-    error
-  } = useQuery<GetPossibleOperationalSolutionsType>(
-    GetPossibleOperationalSolutions
-  );
+  const { data, loading, error } = useGetPossibleOperationalSolutionsQuery();
 
   const possibleOperationalSolutions = data?.possibleOperationalSolutions || [];
 

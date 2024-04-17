@@ -3409,6 +3409,11 @@ export type GetOperationalSolutionSubtasksQueryVariables = Exact<{
 
 export type GetOperationalSolutionSubtasksQuery = { __typename: 'Query', operationalSolution: { __typename: 'OperationalSolution', id: UUID, operationalSolutionSubtasks: Array<{ __typename: 'OperationalSolutionSubtask', id: UUID, solutionID: UUID, name: string, status: OperationalSolutionSubtaskStatus }> } };
 
+export type GetPossibleOperationalSolutionsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetPossibleOperationalSolutionsQuery = { __typename: 'Query', possibleOperationalSolutions: Array<{ __typename: 'PossibleOperationalSolution', id: number, name: string, key: OperationalSolutionKey }> };
+
 export type GetExistingModelPlansQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -6576,6 +6581,47 @@ export type GetOperationalSolutionSubtasksQueryHookResult = ReturnType<typeof us
 export type GetOperationalSolutionSubtasksLazyQueryHookResult = ReturnType<typeof useGetOperationalSolutionSubtasksLazyQuery>;
 export type GetOperationalSolutionSubtasksSuspenseQueryHookResult = ReturnType<typeof useGetOperationalSolutionSubtasksSuspenseQuery>;
 export type GetOperationalSolutionSubtasksQueryResult = Apollo.QueryResult<GetOperationalSolutionSubtasksQuery, GetOperationalSolutionSubtasksQueryVariables>;
+export const GetPossibleOperationalSolutionsDocument = gql`
+    query GetPossibleOperationalSolutions {
+  possibleOperationalSolutions {
+    id
+    name
+    key
+  }
+}
+    `;
+
+/**
+ * __useGetPossibleOperationalSolutionsQuery__
+ *
+ * To run a query within a React component, call `useGetPossibleOperationalSolutionsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetPossibleOperationalSolutionsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetPossibleOperationalSolutionsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetPossibleOperationalSolutionsQuery(baseOptions?: Apollo.QueryHookOptions<GetPossibleOperationalSolutionsQuery, GetPossibleOperationalSolutionsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetPossibleOperationalSolutionsQuery, GetPossibleOperationalSolutionsQueryVariables>(GetPossibleOperationalSolutionsDocument, options);
+      }
+export function useGetPossibleOperationalSolutionsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetPossibleOperationalSolutionsQuery, GetPossibleOperationalSolutionsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetPossibleOperationalSolutionsQuery, GetPossibleOperationalSolutionsQueryVariables>(GetPossibleOperationalSolutionsDocument, options);
+        }
+export function useGetPossibleOperationalSolutionsSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetPossibleOperationalSolutionsQuery, GetPossibleOperationalSolutionsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetPossibleOperationalSolutionsQuery, GetPossibleOperationalSolutionsQueryVariables>(GetPossibleOperationalSolutionsDocument, options);
+        }
+export type GetPossibleOperationalSolutionsQueryHookResult = ReturnType<typeof useGetPossibleOperationalSolutionsQuery>;
+export type GetPossibleOperationalSolutionsLazyQueryHookResult = ReturnType<typeof useGetPossibleOperationalSolutionsLazyQuery>;
+export type GetPossibleOperationalSolutionsSuspenseQueryHookResult = ReturnType<typeof useGetPossibleOperationalSolutionsSuspenseQuery>;
+export type GetPossibleOperationalSolutionsQueryResult = Apollo.QueryResult<GetPossibleOperationalSolutionsQuery, GetPossibleOperationalSolutionsQueryVariables>;
 export const GetExistingModelPlansDocument = gql`
     query GetExistingModelPlans {
   existingModelCollection {

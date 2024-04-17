@@ -8,10 +8,12 @@ import {
   waitForElementToBeRemoved
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { GetOperationalSolutionDocument } from 'gql/gen/graphql';
+import {
+  GetOperationalSolutionDocument,
+  GetPossibleOperationalSolutionsDocument
+} from 'gql/gen/graphql';
 
 import { needQuestionAndAnswerMock } from 'data/mock/solutions';
-import GetPossibleOperationalSolutions from 'queries/ITSolutions/GetPossibleOperationalSolutions';
 import { OpSolutionStatus } from 'types/graphql-global-types';
 
 import AddSolution from '.';
@@ -64,7 +66,7 @@ const operationalSolution = {
 const mocks = [
   {
     request: {
-      query: GetPossibleOperationalSolutions
+      query: GetPossibleOperationalSolutionsDocument
     },
     result: {
       data: {
