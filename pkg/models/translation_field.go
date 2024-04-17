@@ -85,7 +85,8 @@ type ITranslationField interface {
 	GetParent() (ITranslationParent, bool)
 
 	HasChildren() bool
-	GetChildren() (map[string]interface{}, bool)
+	GetChildren() (map[string][]TranslationField, bool)
+	//Changes: (Translations) Note, the children could be other types (Eg with options, or with parent), but this allows us to have a typed deserialization
 }
 
 //Changes: (Translations) Define the Translation Parent better
@@ -112,7 +113,7 @@ type translationNoChildRelation struct {
 func (tcr translationNoChildRelation) HasChildren() bool {
 	return false
 }
-func (tcr translationNoChildRelation) GetChildren() (map[string]interface{}, bool) {
+func (tcr translationNoChildRelation) GetChildren() (map[string][]TranslationField, bool) {
 	return nil, tcr.HasChildren()
 }
 
@@ -164,13 +165,17 @@ type TranslationFieldWithOptionsAndChildren struct {
 
 // translationChildRelation is struct that is mean to be embedded in other Translation types to expose functionality for translations that have a Child relationships
 type translationChildRelation struct {
-	ChildRelation map[string]interface{} `json:"childRelation"`
+	ChildRelation map[string][]TranslationField `json:"childRelation"`
+	// Changes: (Translations) The child relation is a map of child questions connected to options
+	// Example key is yes, so the children are other translation fields
 }
 
 func (tcr translationChildRelation) HasChildren() bool {
 	return true
 }
-func (tcr translationChildRelation) GetChildren() (map[string]interface{}, bool) {
+func (tcr translationChildRelation) GetChildren() (map[string][]TranslationField, bool) {
+	// Changes: (Translations) Determine if we can use a strongly typed child relation
+	// return nil, tcr.HasChildren()
 	return tcr.ChildRelation, tcr.HasChildren()
 }
 
