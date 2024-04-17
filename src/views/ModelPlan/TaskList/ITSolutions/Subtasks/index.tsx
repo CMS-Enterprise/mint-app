@@ -1,7 +1,6 @@
 import React, { useContext, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
-import { useMutation } from '@apollo/client';
 import {
   Button,
   Fieldset,
@@ -15,7 +14,8 @@ import { Field, FieldArray, Form, Formik, FormikProps } from 'formik';
 import {
   useCreateOperationalSolutionSubtasksMutation,
   useDeleteOperationalSolutionSubtaskMutation,
-  useGetOperationalSolutionQuery
+  useGetOperationalSolutionQuery,
+  useUpdateOperationalSolutionSubtasksMutation
 } from 'gql/gen/graphql';
 import { CreateOperationalSolutionSubtasks_createOperationalSolutionSubtasks as CreateType } from 'gql/gen/types/CreateOperationalSolutionSubtasks';
 import { GetOperationalSolution_operationalSolution_operationalSolutionSubtasks as UpdateType } from 'gql/gen/types/GetOperationalSolution';
@@ -30,8 +30,6 @@ import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import RequiredAsterisk from 'components/shared/RequiredAsterisk';
 import useMessage from 'hooks/useMessage';
-import { UpdateOperationalSolutionSubtasksVariables } from 'queries/ITSolutions/types/UpdateOperationalSolutionSubtasks';
-import UpdateOperationalSolutionSubtasks from 'queries/ITSolutions/UpdateOperationalSolutionSubtasks';
 import { OperationalSolutionSubtaskStatus } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
 import { translateSubtasks } from 'utils/modelPlan';
@@ -110,9 +108,7 @@ const Subtasks = ({
 
   const [create] = useCreateOperationalSolutionSubtasksMutation();
 
-  const [update] = useMutation<UpdateOperationalSolutionSubtasksVariables>(
-    UpdateOperationalSolutionSubtasks
-  );
+  const [update] = useUpdateOperationalSolutionSubtasksMutation();
 
   const [removeSubtask] = useDeleteOperationalSolutionSubtaskMutation();
 

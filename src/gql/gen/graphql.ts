@@ -3440,6 +3440,13 @@ export type UpdateOperationalSolutionMutationVariables = Exact<{
 
 export type UpdateOperationalSolutionMutation = { __typename: 'Mutation', updateOperationalSolution: { __typename: 'OperationalSolution', id: UUID, nameOther?: string | null, needed?: boolean | null, key?: OperationalSolutionKey | null } };
 
+export type UpdateOperationalSolutionSubtasksMutationVariables = Exact<{
+  inputs: Array<UpdateOperationalSolutionSubtaskInput> | UpdateOperationalSolutionSubtaskInput;
+}>;
+
+
+export type UpdateOperationalSolutionSubtasksMutation = { __typename: 'Mutation', updateOperationalSolutionSubtasks?: Array<{ __typename: 'OperationalSolutionSubtask', id: UUID, solutionID: UUID, name: string, status: OperationalSolutionSubtaskStatus }> | null };
+
 export type GetExistingModelPlansQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -6769,6 +6776,42 @@ export function useUpdateOperationalSolutionMutation(baseOptions?: Apollo.Mutati
 export type UpdateOperationalSolutionMutationHookResult = ReturnType<typeof useUpdateOperationalSolutionMutation>;
 export type UpdateOperationalSolutionMutationResult = Apollo.MutationResult<UpdateOperationalSolutionMutation>;
 export type UpdateOperationalSolutionMutationOptions = Apollo.BaseMutationOptions<UpdateOperationalSolutionMutation, UpdateOperationalSolutionMutationVariables>;
+export const UpdateOperationalSolutionSubtasksDocument = gql`
+    mutation UpdateOperationalSolutionSubtasks($inputs: [UpdateOperationalSolutionSubtaskInput!]!) {
+  updateOperationalSolutionSubtasks(inputs: $inputs) {
+    id
+    solutionID
+    name
+    status
+  }
+}
+    `;
+export type UpdateOperationalSolutionSubtasksMutationFn = Apollo.MutationFunction<UpdateOperationalSolutionSubtasksMutation, UpdateOperationalSolutionSubtasksMutationVariables>;
+
+/**
+ * __useUpdateOperationalSolutionSubtasksMutation__
+ *
+ * To run a mutation, you first call `useUpdateOperationalSolutionSubtasksMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateOperationalSolutionSubtasksMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateOperationalSolutionSubtasksMutation, { data, loading, error }] = useUpdateOperationalSolutionSubtasksMutation({
+ *   variables: {
+ *      inputs: // value for 'inputs'
+ *   },
+ * });
+ */
+export function useUpdateOperationalSolutionSubtasksMutation(baseOptions?: Apollo.MutationHookOptions<UpdateOperationalSolutionSubtasksMutation, UpdateOperationalSolutionSubtasksMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateOperationalSolutionSubtasksMutation, UpdateOperationalSolutionSubtasksMutationVariables>(UpdateOperationalSolutionSubtasksDocument, options);
+      }
+export type UpdateOperationalSolutionSubtasksMutationHookResult = ReturnType<typeof useUpdateOperationalSolutionSubtasksMutation>;
+export type UpdateOperationalSolutionSubtasksMutationResult = Apollo.MutationResult<UpdateOperationalSolutionSubtasksMutation>;
+export type UpdateOperationalSolutionSubtasksMutationOptions = Apollo.BaseMutationOptions<UpdateOperationalSolutionSubtasksMutation, UpdateOperationalSolutionSubtasksMutationVariables>;
 export const GetExistingModelPlansDocument = gql`
     query GetExistingModelPlans {
   existingModelCollection {
