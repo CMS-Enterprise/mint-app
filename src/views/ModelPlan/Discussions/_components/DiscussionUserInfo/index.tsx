@@ -20,7 +20,7 @@ const DiscussionUserInfo = ({
   connected,
   discussionTopic
 }: DiscussionUserInfoProps) => {
-  const { t: discussionT } = useTranslation('discussions');
+  const { t: discussionsMiscT } = useTranslation('discussionsMisc');
   return (
     <div className="discussion-user-info display-flex flex-wrap flex-justify">
       <div>
@@ -38,15 +38,15 @@ const DiscussionUserInfo = ({
             <p className="margin-y-0 padding-bottom-1 text-base position-relative">
               {discussionTopic.userRole === DiscussionUserRole.NONE_OF_THE_ABOVE
                 ? discussionTopic.userRoleDescription
-                : discussionT(`userRole.${discussionTopic.userRole}`)}
+                : discussionsMiscT(`userRole.${discussionTopic.userRole}`)}
             </p>
           </div>
         )}
       </div>
       <span className="text-base margin-top-05">
         {getTimeElapsed(discussionTopic.createdDts)
-          ? getTimeElapsed(discussionTopic.createdDts) + discussionT('ago')
-          : discussionT('justNow')}
+          ? getTimeElapsed(discussionTopic.createdDts) + discussionsMiscT('ago')
+          : discussionsMiscT('justNow')}
       </span>
     </div>
   );

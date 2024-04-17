@@ -1,5 +1,3 @@
-import crtdl from './draftModelPlan/crtdl';
-import discussions from './draftModelPlan/discussions';
 import draftModelPlan from './draftModelPlan/draftModelPlan';
 import prepareForClearance from './draftModelPlan/prepareForClearance';
 import getAccess from './helpAndKnowledge/Articles/getAccess';
@@ -16,6 +14,9 @@ import helpAndKnowledge from './helpAndKnowledge/helpAndKnowledge';
 import { basics, basicsMisc } from './modelPlan/basics';
 import { beneficiaries, beneficiariesMisc } from './modelPlan/beneficiaries';
 import { collaborators, collaboratorsMisc } from './modelPlan/collaborators';
+import crs from './modelPlan/crs';
+import crtdlsMisc from './modelPlan/crtdlsMisc';
+import { discussions, discussionsMisc } from './modelPlan/discussions';
 import { documents, documentsMisc } from './modelPlan/documents';
 import {
   generalCharacteristics,
@@ -36,6 +37,7 @@ import {
 } from './modelPlan/participantsAndProviders';
 import { payments, paymentsMisc } from './modelPlan/payments';
 import solutions from './modelPlan/solutions';
+import tdls from './modelPlan/tdls';
 import filterView from './readOnly/filterView';
 import generalReadOnly from './readOnly/generalReadOnly';
 import modelSummary from './readOnly/modelSummary';
@@ -63,8 +65,6 @@ const enUS = {
   accessibilityStatement,
   auth,
   cookies,
-  crtdl,
-  discussions,
   draftModelPlan,
   error,
   filterView,
@@ -105,6 +105,11 @@ const enUS = {
   documentsMisc,
   collaborators,
   collaboratorsMisc,
+  discussions,
+  discussionsMisc,
+  crs,
+  tdls,
+  crtdlsMisc,
   miscellaneous,
   // End new translation
   prepareForClearance,

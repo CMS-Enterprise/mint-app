@@ -103,12 +103,14 @@ export const Avatar = ({
   isAssessment
 }: AvatarProps) => {
   const { t: collaboratorsT } = useTranslation('collaborators');
-  const { t: discussionT } = useTranslation('discussions');
+  const { t: discussionsMiscT } = useTranslation('discussionsMisc');
 
-  const modelLeadFirst = teamRoles && [
-    ...teamRoles.filter((role: TeamRole) => role === TeamRole.MODEL_LEAD),
-    ...teamRoles.filter((role: TeamRole) => role !== TeamRole.MODEL_LEAD)
-  ];
+  const modelLeadFirst = teamRoles
+    ? [
+        ...teamRoles.filter((role: TeamRole) => role === TeamRole.MODEL_LEAD),
+        ...teamRoles.filter((role: TeamRole) => role !== TeamRole.MODEL_LEAD)
+      ]
+    : [];
 
   return (
     <div
@@ -123,12 +125,12 @@ export const Avatar = ({
       />
       <div className="margin-y-0">
         <span>
-          {isAssessment && `${discussionT('assessment')} | `}
+          {isAssessment && `${discussionsMiscT('assessment')} | `}
           {user}
         </span>
         {teamRoles && (
           <p className="font-body-2xs margin-y-0">
-            {modelLeadFirst!
+            {modelLeadFirst
               .map(role => {
                 return collaboratorsT(`teamRoles.options.${role}`);
               })

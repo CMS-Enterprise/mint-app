@@ -11,7 +11,7 @@ type AskAQuestionType = {
 };
 
 const AskAQuestion = ({ modelID, renderTextFor }: AskAQuestionType) => {
-  const { t } = useTranslation('discussions');
+  const { t: discussionsMiscT } = useTranslation('discussionsMisc');
   const { t: opSolutionsMiscT } = useTranslation('opSolutionsMisc');
   const [isDiscussionOpen, setIsDiscussionOpen] = useState(false);
 
@@ -52,7 +52,7 @@ const AskAQuestion = ({ modelID, renderTextFor }: AskAQuestionType) => {
             unstyled
             onClick={() => setIsDiscussionOpen(true)}
           >
-            {t('askAQuestionLink')}
+            {discussionsMiscT('askAQuestionLink')}
           </Button>
         </div>
       </div>

@@ -20,6 +20,7 @@ import {
   DataFullTimeOrIncrementalType,
   DataStartsType,
   DataToSendParticipantsType,
+  DiscussionUserRole,
   DocumentType,
   EvaluationApproachType,
   FrequencyType,
@@ -806,6 +807,30 @@ export type TranslationCollaborators = {
   username: TranslationFieldProperties;
 };
 
+// Discussions
+export type TranslationDiscussions = {
+  userRole: TranslationFieldPropertiesWithOptions<DiscussionUserRole>;
+  userRoleDescription: TranslationFieldProperties;
+  content: TranslationFieldProperties;
+};
+
+// CRs
+export type TranslationCRs = {
+  idNumber: TranslationFieldProperties;
+  dateInitiated: TranslationFieldProperties;
+  dateImplemented: TranslationFieldProperties;
+  title: TranslationFieldProperties;
+  note: TranslationFieldProperties;
+};
+
+// TDLs
+export type TranslationTDLs = {
+  idNumber: TranslationFieldProperties;
+  dateInitiated: TranslationFieldProperties;
+  title: TranslationFieldProperties;
+  note: TranslationFieldProperties;
+};
+
 // Documents
 export type TranslationDocuments = {
   isLink: TranslationFieldPropertiesWithOptions<Bool>;
@@ -855,6 +880,9 @@ export type TranslationPlan = {
   opsEvalAndLearning: TranslationOpsEvalAndLearning;
   payments: TranslationPayments;
   collaborators: TranslationCollaborators;
+  discussions: TranslationDiscussions;
+  crs: TranslationCRs;
+  tdls: TranslationTDLs;
   documents: TranslationDocuments;
   operationalNeeds: TranslationOperationalNeeds;
   solutions: TranslationOperationalSolutions;
@@ -879,6 +907,9 @@ export enum PlanSection {
   OPS_EVAL_AND_LEARNING = 'opsEvalAndLearning',
   PAYMENTS = 'payments',
   COLLABORATORS = 'collaborators',
+  DISCUSSIONS = 'discussions',
+  CRS = 'crs',
+  TDLS = 'tdls',
   DOCUMENTS = 'documents',
   OPERATIONAL_NEEDS = 'operationalNeeds',
   OPERATIONAL_SOLUTIONS = 'solutions',
