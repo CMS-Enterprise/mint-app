@@ -1,7 +1,7 @@
 import React, { useContext, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
-import { useMutation, useQuery } from '@apollo/client';
+import { useMutation } from '@apollo/client';
 import {
   Button,
   Fieldset,
@@ -11,7 +11,11 @@ import {
   TextInput
 } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
-import { useCreateOperationalSolutionMutation } from 'gql/gen/graphql';
+import {
+  GetOperationalSolutionQuery,
+  useCreateOperationalSolutionMutation,
+  useGetOperationalSolutionQuery
+} from 'gql/gen/graphql';
 
 import Breadcrumbs from 'components/Breadcrumbs';
 import PageHeading from 'components/PageHeading';
@@ -22,12 +26,6 @@ import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import RequiredAsterisk from 'components/shared/RequiredAsterisk';
 import useMessage from 'hooks/useMessage';
-import GetOperationalSolution from 'queries/ITSolutions/GetOperationalSolution';
-import {
-  GetOperationalSolution as GetOperationalSolutionType,
-  GetOperationalSolution_operationalSolution as GetOperationalSolutionOperationalSolutionType,
-  GetOperationalSolutionVariables
-} from 'queries/ITSolutions/types/GetOperationalSolution';
 import {
   UpdateOperationalSolution as UpdateOperationalSolutionType,
   UpdateOperationalSolutionVariables
@@ -45,8 +43,10 @@ import NotFound from 'views/NotFound';
 import ITSolutionsSidebar from '../_components/ITSolutionSidebar';
 import NeedQuestionAndAnswer from '../_components/NeedQuestionAndAnswer';
 
+type OperationalSolutionType = GetOperationalSolutionQuery['operationalSolution'];
+
 type CustomOperationalSolutionFormType = Omit<
-  GetOperationalSolutionOperationalSolutionType,
+  OperationalSolutionType,
   | '__typename'
   | 'id'
   | 'key'
@@ -98,10 +98,7 @@ const AddCustomSolution = () => {
 
   const { showMessageOnNextPage } = useMessage();
 
-  const { data, loading, error } = useQuery<
-    GetOperationalSolutionType,
-    GetOperationalSolutionVariables
-  >(GetOperationalSolution, {
+  const { data, loading, error } = useGetOperationalSolutionQuery({
     variables: {
       // Query will be skipped if not present, need to default to string to appease ts
       id: operationalSolutionID || ''

@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Button, Grid, GridContainer } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import {
+  GetOperationalSolutionQuery,
   useGetOperationalNeedAnswerQuery,
   useGetOperationalNeedQuery
 } from 'gql/gen/graphql';
@@ -12,7 +13,6 @@ import { GetOperationalNeedAnswer_modelPlan as GetOperationalNeedAnswerModelPlan
 import UswdsReactLink from 'components/LinkWrapper';
 import Spinner from 'components/Spinner';
 import operationalNeedMap, { NeedMap } from 'data/operationalNeedMap';
-import { GetOperationalSolution_operationalSolution as GetOperationalSolutionType } from 'queries/ITSolutions/types/GetOperationalSolution';
 
 import OperationalNeedRemovalModal from '../OperationalNeedRemovalModal';
 import SolutionCard from '../SolutionCard';
@@ -71,12 +71,14 @@ export const initialValues: GetOperationalNeedOperationalNeedType = {
   solutions: []
 };
 
+type OperationalSolutionType = GetOperationalSolutionQuery['operationalSolution'];
+
 type NeedQuestionAndAnswerProps = {
   className?: string;
   operationalNeedID: string;
   modelID: string;
   expanded?: boolean;
-  solution?: GetOperationalSolutionType; // Solution passed as prop if want to render a SolutionCard beneath the need question
+  solution?: OperationalSolutionType; // Solution passed as prop if want to render a SolutionCard beneath the need question
   isRenderingOnSolutionsDetails?: boolean;
   renderSolutionCardLinks?: boolean;
 };

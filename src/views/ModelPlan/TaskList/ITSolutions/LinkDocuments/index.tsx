@@ -5,13 +5,14 @@ View for linking and unlinking existing model plan documents for operational nee
 import React, { useContext, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';
-import { useQuery } from '@apollo/client';
 import { Button, Grid, Icon } from '@trussworks/react-uswds';
 import {
   useCreateDocumentSolutionLinksMutation,
-  useDeleteDocumentSolutionLinkMutation
+  useDeleteDocumentSolutionLinkMutation,
+  useGetOperationalSolutionQuery
 } from 'gql/gen/graphql';
 import { GetOperationalNeed_operationalNeed as GetOperationalNeedOperationalNeedType } from 'gql/gen/types/GetOperationalNeed';
+import { GetOperationalSolution_operationalSolution as GetOperationalSolutionOperationalSolutionType } from 'gql/gen/types/GetOperationalSolution';
 import { isEqual } from 'lodash';
 
 import Breadcrumbs from 'components/Breadcrumbs';
@@ -21,12 +22,6 @@ import PageLoading from 'components/PageLoading';
 import Alert from 'components/shared/Alert';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import useMessage from 'hooks/useMessage';
-import GetOperationalSolution from 'queries/ITSolutions/GetOperationalSolution';
-import {
-  GetOperationalSolution as GetOperationalSolutionType,
-  GetOperationalSolution_operationalSolution as GetOperationalSolutionOperationalSolutionType,
-  GetOperationalSolutionVariables
-} from 'queries/ITSolutions/types/GetOperationalSolution';
 import { OperationalNeedKey } from 'types/graphql-global-types';
 import { ModelInfoContext } from 'views/ModelInfoWrapper';
 import PlanDocumentsTable from 'views/ModelPlan/Documents/table';
@@ -74,10 +69,7 @@ const LinkDocuments = () => {
   // State management for mutation errors
   const [mutationError, setMutationError] = useState<boolean>(false);
 
-  const { data, loading, error } = useQuery<
-    GetOperationalSolutionType,
-    GetOperationalSolutionVariables
-  >(GetOperationalSolution, {
+  const { data, loading, error } = useGetOperationalSolutionQuery({
     variables: {
       id: operationalSolutionID
     }

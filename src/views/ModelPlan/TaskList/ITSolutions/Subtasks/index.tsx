@@ -1,7 +1,7 @@
 import React, { useContext, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
-import { useMutation, useQuery } from '@apollo/client';
+import { useMutation } from '@apollo/client';
 import {
   Button,
   Fieldset,
@@ -14,9 +14,11 @@ import {
 import { Field, FieldArray, Form, Formik, FormikProps } from 'formik';
 import {
   useCreateOperationalSolutionSubtasksMutation,
-  useDeleteOperationalSolutionSubtaskMutation
+  useDeleteOperationalSolutionSubtaskMutation,
+  useGetOperationalSolutionQuery
 } from 'gql/gen/graphql';
 import { CreateOperationalSolutionSubtasks_createOperationalSolutionSubtasks as CreateType } from 'gql/gen/types/CreateOperationalSolutionSubtasks';
+import { GetOperationalSolution_operationalSolution_operationalSolutionSubtasks as UpdateType } from 'gql/gen/types/GetOperationalSolution';
 
 import Breadcrumbs from 'components/Breadcrumbs';
 import Modal from 'components/Modal';
@@ -28,12 +30,6 @@ import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import RequiredAsterisk from 'components/shared/RequiredAsterisk';
 import useMessage from 'hooks/useMessage';
-import GetOperationalSolution from 'queries/ITSolutions/GetOperationalSolution';
-import {
-  GetOperationalSolution as GetOperationalSolutionType,
-  GetOperationalSolution_operationalSolution_operationalSolutionSubtasks as UpdateType,
-  GetOperationalSolutionVariables
-} from 'queries/ITSolutions/types/GetOperationalSolution';
 import { UpdateOperationalSolutionSubtasksVariables } from 'queries/ITSolutions/types/UpdateOperationalSolutionSubtasks';
 import UpdateOperationalSolutionSubtasks from 'queries/ITSolutions/UpdateOperationalSolutionSubtasks';
 import { OperationalSolutionSubtaskStatus } from 'types/graphql-global-types';
@@ -83,10 +79,12 @@ const Subtasks = ({
   const [inputName, setInputName] = useState('');
   const [inputId, setInputId] = useState('');
 
-  const { data: solutionData, loading, error, refetch } = useQuery<
-    GetOperationalSolutionType,
-    GetOperationalSolutionVariables
-  >(GetOperationalSolution, {
+  const {
+    data: solutionData,
+    loading,
+    error,
+    refetch
+  } = useGetOperationalSolutionQuery({
     variables: {
       id: operationalSolutionID
     }

@@ -8,9 +8,9 @@ import {
   waitForElementToBeRemoved
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { GetOperationalSolutionDocument } from 'gql/gen/graphql';
 
 import { needQuestionAndAnswerMock } from 'data/mock/solutions';
-import GetOperationalSolution from 'queries/ITSolutions/GetOperationalSolution';
 import GetPossibleOperationalSolutions from 'queries/ITSolutions/GetPossibleOperationalSolutions';
 import { OpSolutionStatus } from 'types/graphql-global-types';
 
@@ -74,7 +74,7 @@ const mocks = [
   },
   {
     request: {
-      query: GetOperationalSolution,
+      query: GetOperationalSolutionDocument,
       variables: {
         id: operationalSolutionID
       }

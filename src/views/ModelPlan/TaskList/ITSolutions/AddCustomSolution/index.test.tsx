@@ -7,10 +7,10 @@ import {
   waitFor,
   waitForElementToBeRemoved
 } from '@testing-library/react';
+import { GetOperationalSolutionDocument } from 'gql/gen/graphql';
 
 import { needQuestionAndAnswerMock } from 'data/mock/solutions';
 import { MessageProvider } from 'hooks/useMessage';
-import GetOperationalSolution from 'queries/ITSolutions/GetOperationalSolution';
 import { OpSolutionStatus } from 'types/graphql-global-types';
 import setup from 'utils/testing/setup';
 
@@ -24,7 +24,7 @@ const returnMockedData = (results: boolean) => {
   return [
     {
       request: {
-        query: GetOperationalSolution,
+        query: GetOperationalSolutionDocument,
         variables: {
           id: operationalSolutionID
         }

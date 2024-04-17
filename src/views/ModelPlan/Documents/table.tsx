@@ -21,6 +21,7 @@ import {
   useDeleteModelPlanDocumentMutation,
   useGetModelPlanDocumentsQuery
 } from 'gql/gen/graphql';
+import { GetOperationalSolution_operationalSolution_documents as SolutionDocumentType } from 'gql/gen/types/GetOperationalSolution';
 import { useFlags } from 'launchdarkly-react-client-sdk';
 
 import Modal from 'components/Modal';
@@ -28,7 +29,6 @@ import PageHeading from 'components/PageHeading';
 import PageLoading from 'components/PageLoading';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import ExternalLinkModal from 'components/shared/ExternalLinkModal';
-import { GetOperationalSolution_operationalSolution_documents as SolutionDocumentType } from 'queries/ITSolutions/types/GetOperationalSolution';
 import { formatDateLocal } from 'utils/date';
 import downloadFile from 'utils/downloadFile';
 import globalFilterCellText from 'utils/globalFilterCellText';
