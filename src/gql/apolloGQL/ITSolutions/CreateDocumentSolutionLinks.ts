@@ -1,6 +1,6 @@
 import { gql } from '@apollo/client';
 
-export default gql`
+export default gql(/* GraphQL */ `
   mutation CreateDocumentSolutionLinks(
     $solutionID: UUID!
     $documentIDs: [UUID!]!
@@ -12,4 +12,4 @@ export default gql`
       id
     }
   }
-`;
+`);

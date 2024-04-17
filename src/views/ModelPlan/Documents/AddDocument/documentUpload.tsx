@@ -1,10 +1,12 @@
 import React, { useContext, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';
-import { useMutation } from '@apollo/client';
 import { Button, Fieldset, Label, Radio } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
-import { useUploadNewPlanDocumentMutation } from 'gql/gen/graphql';
+import {
+  useCreateDocumentSolutionLinksMutation,
+  useUploadNewPlanDocumentMutation
+} from 'gql/gen/graphql';
 
 import FileUpload from 'components/FileUpload';
 import Alert from 'components/shared/Alert';
@@ -16,8 +18,6 @@ import RequiredAsterisk from 'components/shared/RequiredAsterisk';
 import TextAreaField from 'components/shared/TextAreaField';
 import TextField from 'components/shared/TextField';
 import useMessage from 'hooks/useMessage';
-import CreateDocumentSolutionLinks from 'queries/ITSolutions/CreateDocumentSolutionLinks';
-import { CreateDocumentSolutionLinksVariables } from 'queries/ITSolutions/types/CreateDocumentSolutionLinks';
 import { FileUploadForm, LinkingDocumentFormTypes } from 'types/files';
 import { DocumentType } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
@@ -59,11 +59,7 @@ const DocumentUpload = ({
       </Alert>
     );
 
-  const [
-    createSolutionLinks
-  ] = useMutation<CreateDocumentSolutionLinksVariables>(
-    CreateDocumentSolutionLinks
-  );
+  const [createSolutionLinks] = useCreateDocumentSolutionLinksMutation();
 
   // Uploads the document to s3 bucket and create document on BE
   const onSubmit = (values: FileUploadForm | LinkingDocumentFormTypes) => {

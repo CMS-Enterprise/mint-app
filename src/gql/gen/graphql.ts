@@ -3302,6 +3302,14 @@ export type UpdatePlanGeneralCharacteristicsMutationVariables = Exact<{
 
 export type UpdatePlanGeneralCharacteristicsMutation = { __typename: 'Mutation', updatePlanGeneralCharacteristics: { __typename: 'PlanGeneralCharacteristics', id: UUID } };
 
+export type CreateDocumentSolutionLinksMutationVariables = Exact<{
+  solutionID: Scalars['UUID']['input'];
+  documentIDs: Array<Scalars['UUID']['input']> | Scalars['UUID']['input'];
+}>;
+
+
+export type CreateDocumentSolutionLinksMutation = { __typename: 'Mutation', createPlanDocumentSolutionLinks?: Array<{ __typename: 'PlanDocumentSolutionLink', id: UUID }> | null };
+
 export type GetOperationalNeedQueryVariables = Exact<{
   id: Scalars['UUID']['input'];
   includeNotNeeded?: InputMaybe<Scalars['Boolean']['input']>;
@@ -5985,6 +5993,43 @@ export function useUpdatePlanGeneralCharacteristicsMutation(baseOptions?: Apollo
 export type UpdatePlanGeneralCharacteristicsMutationHookResult = ReturnType<typeof useUpdatePlanGeneralCharacteristicsMutation>;
 export type UpdatePlanGeneralCharacteristicsMutationResult = Apollo.MutationResult<UpdatePlanGeneralCharacteristicsMutation>;
 export type UpdatePlanGeneralCharacteristicsMutationOptions = Apollo.BaseMutationOptions<UpdatePlanGeneralCharacteristicsMutation, UpdatePlanGeneralCharacteristicsMutationVariables>;
+export const CreateDocumentSolutionLinksDocument = gql`
+    mutation CreateDocumentSolutionLinks($solutionID: UUID!, $documentIDs: [UUID!]!) {
+  createPlanDocumentSolutionLinks(
+    solutionID: $solutionID
+    documentIDs: $documentIDs
+  ) {
+    id
+  }
+}
+    `;
+export type CreateDocumentSolutionLinksMutationFn = Apollo.MutationFunction<CreateDocumentSolutionLinksMutation, CreateDocumentSolutionLinksMutationVariables>;
+
+/**
+ * __useCreateDocumentSolutionLinksMutation__
+ *
+ * To run a mutation, you first call `useCreateDocumentSolutionLinksMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateDocumentSolutionLinksMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createDocumentSolutionLinksMutation, { data, loading, error }] = useCreateDocumentSolutionLinksMutation({
+ *   variables: {
+ *      solutionID: // value for 'solutionID'
+ *      documentIDs: // value for 'documentIDs'
+ *   },
+ * });
+ */
+export function useCreateDocumentSolutionLinksMutation(baseOptions?: Apollo.MutationHookOptions<CreateDocumentSolutionLinksMutation, CreateDocumentSolutionLinksMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateDocumentSolutionLinksMutation, CreateDocumentSolutionLinksMutationVariables>(CreateDocumentSolutionLinksDocument, options);
+      }
+export type CreateDocumentSolutionLinksMutationHookResult = ReturnType<typeof useCreateDocumentSolutionLinksMutation>;
+export type CreateDocumentSolutionLinksMutationResult = Apollo.MutationResult<CreateDocumentSolutionLinksMutation>;
+export type CreateDocumentSolutionLinksMutationOptions = Apollo.BaseMutationOptions<CreateDocumentSolutionLinksMutation, CreateDocumentSolutionLinksMutationVariables>;
 export const GetOperationalNeedDocument = gql`
     query GetOperationalNeed($id: UUID!, $includeNotNeeded: Boolean = true) {
   operationalNeed(id: $id) {

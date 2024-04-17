@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
 import { Button, Grid, Icon } from '@trussworks/react-uswds';
+import { useCreateDocumentSolutionLinksMutation } from 'gql/gen/graphql';
 import { GetOperationalNeed_operationalNeed as GetOperationalNeedOperationalNeedType } from 'gql/gen/types/GetOperationalNeed';
 import { isEqual } from 'lodash';
 
@@ -17,10 +18,8 @@ import PageLoading from 'components/PageLoading';
 import Alert from 'components/shared/Alert';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import useMessage from 'hooks/useMessage';
-import CreateDocumentSolutionLinks from 'queries/ITSolutions/CreateDocumentSolutionLinks';
 import DeleteDocumentSolutionLinks from 'queries/ITSolutions/DeleteDocumentSolutionLink';
 import GetOperationalSolution from 'queries/ITSolutions/GetOperationalSolution';
-import { CreateDocumentSolutionLinksVariables } from 'queries/ITSolutions/types/CreateDocumentSolutionLinks';
 import { DeleteDocumentSolutionLinkVariables } from 'queries/ITSolutions/types/DeleteDocumentSolutionLink';
 import {
   GetOperationalSolution as GetOperationalSolutionType,
@@ -99,11 +98,7 @@ const LinkDocuments = () => {
     setLinkedDocsInit(linkedDocsFiltered);
   }, [solution]);
 
-  const [
-    createSolutionLinks
-  ] = useMutation<CreateDocumentSolutionLinksVariables>(
-    CreateDocumentSolutionLinks
-  );
+  const [createSolutionLinks] = useCreateDocumentSolutionLinksMutation();
 
   const [deleteSolutionLink] = useMutation<DeleteDocumentSolutionLinkVariables>(
     DeleteDocumentSolutionLinks
