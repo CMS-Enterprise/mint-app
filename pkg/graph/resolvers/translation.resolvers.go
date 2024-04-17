@@ -13,7 +13,6 @@ import (
 
 // ChildRelation is the resolver for the childRelation field.
 func (r *translationFieldWithOptionsAndChildrenResolver) ChildRelation(ctx context.Context, obj *models.TranslationFieldWithOptionsAndChildren) (map[string]interface{}, error) {
-
 	// Changes: (Translations) We don't actually use this, but leaving it here for safety
 	resultMap := make(map[string]interface{})
 	for key, value := range obj.ChildRelation {
