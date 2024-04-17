@@ -90,11 +90,11 @@
 }
 
 .mint-cool-vivid {
-  color: $mint-cool-vivid !important;
+  color: $mint-cool-50v !important;
 }
 
 .bg-mint-cool-vivid {
-  background-color: $mint-cool-vivid !important
+  background-color: $mint-cool-50v !important
 }
 
 .mint-cool-5 {
@@ -135,4 +135,32 @@
 
 .bg-gray-2 {
   background-color: $gray-2 !important;
+}
+
+.text-uswds-disabled {
+  color: $gray-50;
+}
+
+.bg-red-cool-10 {
+  background-color: $red-cool-10;
+}
+
+.bg-mint-cool-50v {
+  background-color: $mint-cool-50v;
+}
+
+.bg-blue-10 {
+  background-color: $blue-10;
+}
+
+.bg-orange-warm-10 {
+  background-color: $orange-warm-10;
+}
+
+.bg-yellow-5 {
+  background-color: $yellow-5;
+}
+
+.bg-green-5 {
+  background-color: $green-5;
 }

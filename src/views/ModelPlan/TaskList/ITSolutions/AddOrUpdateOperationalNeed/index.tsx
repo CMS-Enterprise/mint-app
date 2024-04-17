@@ -45,15 +45,21 @@ type CustomOperationalNeedFormType = Omit<
 > & { nameOther: string };
 
 const AddOrUpdateOperationalNeed = () => {
-  const { t } = useTranslation('itSolutions');
+  const { t } = useTranslation('opSolutionsMisc');
+  const { t: operationalNeedsT } = useTranslation('operationalNeeds');
   const { t: h } = useTranslation('draftModelPlan');
+
   const { modelID, operationalNeedID } = useParams<{
     modelID: string;
     operationalNeedID: string;
   }>();
+
   const history = useHistory();
+
   const { message, showMessageOnNextPage } = useMessage();
+
   const { modelName } = useContext(ModelInfoContext);
+
   const formikRef = useRef<FormikProps<CustomOperationalNeedFormType>>(null);
 
   const isUpdating = !!operationalNeedID;
@@ -242,7 +248,7 @@ const AddOrUpdateOperationalNeed = () => {
                           error={!!flatErrors.nameOther}
                         >
                           <Label htmlFor="it-solution-custom-name-other">
-                            {t('customOperationalNeedName')}
+                            {operationalNeedsT('nameOther.label')}
                             <RequiredAsterisk />
                           </Label>
 

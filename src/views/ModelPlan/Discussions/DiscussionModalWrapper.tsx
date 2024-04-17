@@ -17,7 +17,7 @@ const DiscussionModalWrapper = ({
   closeModal,
   children
 }: DiscussionModalWrapperProps) => {
-  const { t } = useTranslation('discussions');
+  const { t: discussionsMiscT } = useTranslation('discussionsMisc');
 
   const handleOpenModal = () => {
     noScroll.on();
@@ -35,7 +35,7 @@ const DiscussionModalWrapper = ({
       onAfterClose={noScroll.off}
       onRequestClose={closeModal}
       shouldCloseOnOverlayClick
-      contentLabel={t('ariaLabel')}
+      contentLabel={discussionsMiscT('ariaLabel')}
       appElement={document.getElementById('root')! as HTMLElement}
     >
       <div data-testid="discussion-modal">
@@ -49,7 +49,7 @@ const DiscussionModalWrapper = ({
           >
             <Icon.Close size={4} className="text-base" />
           </button>
-          <h4 className="margin-0">{t('modalHeading')}</h4>
+          <h4 className="margin-0">{discussionsMiscT('modalHeading')}</h4>
         </div>
         <GridContainer className="padding-y-6">
           <Grid desktop={{ col: 12 }}>{children}</Grid>

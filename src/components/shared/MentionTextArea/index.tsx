@@ -78,7 +78,7 @@ const MentionTextArea = ({
   initialContent?: any;
   className?: string;
 }) => {
-  const { t } = useTranslation('discussions');
+  const { t } = useTranslation('discussionsMisc');
 
   const [tagAlert, setTagAlert] = useState<boolean>(false);
 
