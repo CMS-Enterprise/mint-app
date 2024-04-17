@@ -71,7 +71,24 @@ func (tfb TranslationFieldBase) GetLabel(translationDictionary map[string]ITrans
 			b. Use Other ParentField to get the parent translation if needed
 
 	*/
+	// Changes: (Translations) Update this to look and see if we should return that it is a note in this function? Or do it in the calling function?
+	// We could alternatively return multiple strings, one is the label, one is the note precursor or something?
+	if tfb.IsNote || tfb.IsOtherType {
+		if tfb.ParentReferencesLabel != nil {
+			return *tfb.ParentReferencesLabel
+		}
+		if tfb.OtherParentField != nil {
+			// Attempt to get the parent field, and it's label (with recursion?) If not, fall through to the other labels.
+			parent, ok := translationDictionary[*tfb.OtherParentField]
+			if ok {
+				return parent.GetLabel(translationDictionary)
+				// Changes: (Translations) verify that this is ok, we are opening ourselves up to recursion using this method call...
+			}
+		}
 
+	}
+
+	// Changes: (Translations) Verify the priority for labels? Read only sometimes has language that isn't correct for this.
 	if tfb.ReadOnlyLabel != nil {
 		return *tfb.ReadOnlyLabel
 	}
