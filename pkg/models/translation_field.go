@@ -61,7 +61,17 @@ type TranslationFieldBase struct {
 }
 
 // GetLabel has logic to prioritize the translated label to be returned for a specific field. It prioritizes the Read only Label, a
-func (tfb TranslationFieldBase) GetLabel() string {
+func (tfb TranslationFieldBase) GetLabel(translationDictionary map[string]ITranslationField) string {
+	/*
+		1. Favor Export Label --> ReadOnlyLabel --> Label
+
+		2. Any IsOther, or IsNote Translation
+			a. Prioritize ParentReferencesLabel
+				i.
+			b. Use Other ParentField to get the parent translation if needed
+
+	*/
+
 	if tfb.ReadOnlyLabel != nil {
 		return *tfb.ReadOnlyLabel
 	}
@@ -80,7 +90,7 @@ type TranslationFieldWithOptions struct {
 
 // ITranslationField defines the signature every translation is expected to have
 type ITranslationField interface {
-	GetLabel() string
+	GetLabel(translationDictionary map[string]ITranslationField) string
 	HasOptions() bool
 	// Returns options if a translationField has options
 	GetOptions() (map[string]interface{}, bool)

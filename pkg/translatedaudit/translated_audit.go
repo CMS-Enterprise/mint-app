@@ -201,7 +201,7 @@ func translateField(fieldName string, field models.AuditField, audit *models.Aud
 	translationInterface := translationMap[fieldName]
 	if translationInterface != nil {
 
-		translatedLabel = translationInterface.GetLabel()
+		translatedLabel = translationInterface.GetLabel(translationMap)
 		options, hasOptions := translationInterface.GetOptions()
 		if hasOptions {
 			translatedOld = translateValue(field.Old, options)
