@@ -6,8 +6,7 @@ import {
   GetModelPlanDiscussions_modelPlan_discussions_replies as ReplyType
 } from 'gql/gen/types/GetModelPlanDiscussions';
 
-import AssessmentIcon from 'components/shared/AssessmentIcon';
-import IconInitial from 'components/shared/IconInitial';
+import { Avatar } from 'components/shared/Avatar';
 import { getTimeElapsed } from 'utils/date';
 
 import './index.scss';
@@ -15,33 +14,21 @@ import './index.scss';
 type DiscussionUserInfoProps = {
   connected?: boolean;
   discussionTopic: DiscussionType | ReplyType;
-  index?: number;
 };
 
 const DiscussionUserInfo = ({
   connected,
-  discussionTopic,
-  index
+  discussionTopic
 }: DiscussionUserInfoProps) => {
   const { t: discussionT } = useTranslation('discussions');
   return (
     <div className="discussion-user-info display-flex flex-wrap flex-justify">
       <div>
-        {discussionTopic.isAssessment ? (
-          <div className="display-flex flex-align-center margin-bottom-05">
-            <AssessmentIcon size={3} />{' '}
-            <span>
-              {discussionT('assessment')} |{' '}
-              {discussionTopic.createdByUserAccount.commonName}
-            </span>
-          </div>
-        ) : (
-          <IconInitial
-            className="margin-bottom-05"
-            user={discussionTopic.createdByUserAccount.commonName}
-            index={index ?? 0}
-          />
-        )}
+        <Avatar
+          className="margin-bottom-05"
+          user={discussionTopic.createdByUserAccount.commonName}
+          isAssessment={discussionTopic.isAssessment}
+        />
         {discussionTopic.userRole && (
           <div
             className={`dui__userRole ${

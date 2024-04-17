@@ -5,10 +5,9 @@ import { Button, Grid } from '@trussworks/react-uswds';
 import { useMarkNotificationAsReadMutation } from 'gql/gen/graphql';
 import { GetNotifications_currentUser_notifications_notifications_activity as NotificationActivityType } from 'gql/gen/types/GetNotifications';
 
-import { arrayOfColors } from 'components/shared/IconInitial';
+import { AvatarCircle } from 'components/shared/Avatar';
 import MentionTextArea from 'components/shared/MentionTextArea';
 import { getTimeElapsed } from 'utils/date';
-import { getUserInitials } from 'utils/modelPlan';
 
 import {
   ActivityCTA,
@@ -87,13 +86,7 @@ const IndividualNotification = ({
           <Grid col="fill">
             <div className="display-flex">
               {/* Circle of Name */}
-              <div
-                className={`display-flex flex-align-center flex-justify-center minw-4 circle-4 ${
-                  arrayOfColors[index % arrayOfColors.length]
-                }`}
-              >
-                {getUserInitials(name)}
-              </div>
+              <AvatarCircle user={name} />
 
               <div className="margin-top-05 padding-left-1">
                 <p className="line-height-sans-4 margin-bottom-1 margin-top-0 ">
