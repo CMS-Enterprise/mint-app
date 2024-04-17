@@ -5,6 +5,7 @@ export type Flags = {
   helpScoutEnabled: boolean;
   feedbackEnabled: boolean;
   notificationsEnabled: boolean;
+  changeHistoryEnabled: boolean;
 };
 
 export type FlagsState = {
