@@ -9,7 +9,6 @@ import {
   isTranslationFieldProperties,
   isTranslationFieldPropertiesWithOptions,
   isTranslationFieldPropertiesWithOptionsAndChildren,
-  isTranslationFieldPropertiesWithParent,
   isTranslationFieldPropertiesWithParentAndChildren,
   TranslationConfigType,
   TranslationFieldPropertiesWithOptions
