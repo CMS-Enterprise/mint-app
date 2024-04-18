@@ -7,7 +7,6 @@ Link to each task list section and checks if task list sections are locked
 import React, { useContext, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';
-import { MutationFunction } from '@apollo/client';
 import {
   Breadcrumb,
   BreadcrumbBar,
@@ -18,6 +17,13 @@ import {
   Icon
 } from '@trussworks/react-uswds';
 import {
+  TaskStatusInput,
+  UpdateClearanceBasicsMutationFn,
+  UpdateClearanceBeneficiariesMutationFn,
+  UpdateClearanceCharacteristicsMutationFn,
+  UpdateClearanceOpsEvalAndLearningMutationFn,
+  UpdateClearanceParticipantsAndProvidersMutationFn,
+  UpdateClearancePaymentsMutationFn,
   useGetClearanceStatusesQuery,
   useUpdateClearanceBasicsMutation,
   useUpdateClearanceBeneficiariesMutation,
@@ -57,13 +63,18 @@ type ClearanceReviewProps = {
   modelID: string;
 };
 
-type ClearanceParamProps = {
-  section: string;
-  sectionID: string;
+type MutationObjectType = {
+  basics: UpdateClearanceBasicsMutationFn;
+  characteristics: UpdateClearanceCharacteristicsMutationFn;
+  'participants-and-providers': UpdateClearanceParticipantsAndProvidersMutationFn;
+  beneficiaries: UpdateClearanceBeneficiariesMutationFn;
+  'ops-eval-and-learning': UpdateClearanceOpsEvalAndLearningMutationFn;
+  payment: UpdateClearancePaymentsMutationFn;
 };
 
-type MutationObjectType = {
-  [key: string]: MutationFunction;
+type ClearanceParamProps = {
+  section: keyof MutationObjectType;
+  sectionID: string;
 };
 
 type RouteMapType = {
@@ -168,11 +179,11 @@ export const ClearanceReview = ({ modelID }: ClearanceReviewProps) => {
     payment: updatePayments
   };
 
-  const handleFormSubmit = (taskSection: string) => {
+  const handleFormSubmit = (taskSection: keyof MutationObjectType) => {
     clearanceMutations[taskSection]({
       variables: {
         id: sectionID,
-        changes: { status: TaskStatus.READY_FOR_CLEARANCE }
+        changes: { status: TaskStatusInput.READY_FOR_CLEARANCE }
       }
     })
       .then(response => {
