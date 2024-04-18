@@ -33,6 +33,12 @@ const ChangeHistory = () => {
   const isMobile = useCheckResponsiveScreen('tablet', 'smaller');
   const isTablet = useCheckResponsiveScreen('tablet', 'smaller');
 
+  const changes = [...(data?.translatedAuditCollection || [])];
+
+  const changesSortedByDate = changes?.sort((a, b) =>
+    b.date.localeCompare(a.date)
+  );
+
   return (
     <MainContent>
       <SummaryBox
@@ -66,8 +72,8 @@ const ChangeHistory = () => {
       </SummaryBox>
 
       <GridContainer className="padding-y-4">
-        {data?.translatedAuditCollection?.map(changeRecord => (
-          <ChangeRecord changeRecord={changeRecord} />
+        {changesSortedByDate.map(changeRecord => (
+          <ChangeRecord changeRecord={changeRecord} key={changeRecord.id} />
         ))}
       </GridContainer>
     </MainContent>

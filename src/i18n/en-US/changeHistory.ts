@@ -11,8 +11,18 @@ const changeHistory = {
     plan_participants_and_providers: 'Participants and providers',
     plan_beneficiaries: 'Beneficiaries',
     plan_general_characteristics: 'General characteristics',
-    plan_basics: 'Model basics'
-  }
+    plan_basics: 'Model basics',
+    model_plan: 'Model plan',
+    plan_collaborator: 'Model team'
+  },
+  showDetails: 'Show details',
+  hideDetails: 'Hide details',
+  changeType: {
+    ANSWERED: 'answered',
+    REMOVED: 'removed',
+    UPDATED: 'updated'
+  },
+  previousAnswer: 'Previous answer'
 };
 
 export default changeHistory;
