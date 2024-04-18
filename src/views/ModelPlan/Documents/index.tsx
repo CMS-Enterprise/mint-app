@@ -26,7 +26,7 @@ type DocumentStatusType = 'success' | 'error';
 
 export const DocumentsContent = () => {
   const { t: h } = useTranslation('draftModelPlan');
-  const { t } = useTranslation('documents');
+  const { t } = useTranslation('documentsMisc');
   const { modelID } = useParams<{ modelID: string }>();
   const { message } = useMessage();
   const [documentMessage, setDocumentMessage] = useState('');

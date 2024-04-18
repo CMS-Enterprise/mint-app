@@ -13,7 +13,7 @@ import { NotFoundPartial } from 'views/NotFound';
 type OperationalNeedsType = GetOperationalNeedsQuery['modelPlan']['operationalNeeds'][0];
 
 const ReadOnlyOperationalNeeds = ({ modelID }: { modelID: string }) => {
-  const { t } = useTranslation('itSolutions');
+  const { t } = useTranslation('opSolutionsMisc');
 
   const { data, loading, error } = useGetOperationalNeedsQuery({
     variables: {

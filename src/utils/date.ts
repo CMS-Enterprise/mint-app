@@ -37,9 +37,7 @@ export const getTimeElapsed = (discussionCreated: string) => {
       // Only show parent most level of time, rather than all increments
       if (dateString === '') {
         dateString += `${floatTime} ${
-          timePassed[time as keyof typeof getTimeElapsed] !== 1
-            ? time
-            : time.slice(0, -1) // If singular, remove last letter 's's from time string
+          floatTime !== 1 ? time : time.slice(0, -1) // If singular, remove last letter 's's from time string
         } `;
       }
     }

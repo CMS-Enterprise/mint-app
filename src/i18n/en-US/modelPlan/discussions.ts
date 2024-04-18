@@ -1,4 +1,49 @@
-const discussions = {
+import { TranslationDiscussions } from 'types/translation';
+
+export const discussions: TranslationDiscussions = {
+  userRole: {
+    gqlField: 'userRole',
+    goField: 'UserRole',
+    dbField: 'user_role',
+    label: 'Your role',
+    sublabel: 'This will display with your name to help others identify you.',
+    dataType: 'enum',
+    formType: 'select',
+    options: {
+      CMS_SYSTEM_SERVICE_TEAM: 'CMS System/Service Team',
+      IT_ARCHITECT: 'IT Architect',
+      LEADERSHIP: 'Leadership',
+      MEDICARE_ADMINISTRATIVE_CONTRACTOR: 'Medicare Administrative Contractor',
+      MINT_TEAM: 'MINT Team',
+      MODEL_IT_LEAD: 'Model IT Lead',
+      MODEL_TEAM: 'Model Team',
+      SHARED_SYSTEM_MAINTAINER: 'Shared System Maintainer',
+      NONE_OF_THE_ABOVE: 'None of the above'
+    }
+  },
+  userRoleDescription: {
+    gqlField: 'userRoleDescription',
+    goField: 'UserRoleDescription',
+    dbField: 'user_role_description',
+    label: 'Enter a short description for your role',
+    dataType: 'string',
+    formType: 'text'
+  },
+  content: {
+    gqlField: 'content',
+    goField: 'content',
+    dbField: 'content',
+    label: 'Type your question or discussion topic',
+    sublabel:
+      'To tag a solution team or individual, type "@" and begin typing the name. Then, select the team or individual from the list you wish to notify.',
+    dataType: 'string',
+    formType: 'textarea'
+  }
+};
+
+type NestedTranslation = Record<string, string>;
+
+export const discussionsMisc: Record<string, string | NestedTranslation> = {
   heading: 'Discussions',
   modalHeading: 'Model discussions',
   discussionBanner: {
@@ -12,7 +57,6 @@ const discussions = {
   allFieldsRequired: 'All fields marked with <s>*</s> are required.',
   noDiscussions: 'There are no discussions yet. ',
   askAQuestionLink: 'Start a discussion',
-  typeQuestion: 'Type your question or discussion topic',
   reply: 'Reply',
   replies: '{{count}} reply',
   replies_plural: '{{count}} replies',
@@ -59,10 +103,7 @@ const discussions = {
   viewFewerReplies: 'View fewer replies',
   alreadyAnswered:
     '“{{-question}}” has already been answered. You can view it in the answered questions below.',
-  role: 'Your role',
-  roleInfo: 'This will display with your name to help others identify you.',
   select: 'Select',
-  enterDescription: 'Enter a short description for your role',
   userRole: {
     CMS_SYSTEM_SERVICE_TEAM: 'CMS System/Service Team',
     IT_ARCHITECT: 'IT Architect',
@@ -90,8 +131,6 @@ const discussions = {
   },
   showReplies: 'Show replies',
   hideReplies: 'Hide replies',
-  tagHint:
-    'To tag a solution team or individual, type "@" and begin typing the name. Then, select the team or individual from the list you wish to notify.',
   tagAlert:
     'When you save your discussion, the selected team(s) and individual(s) will be notified via email.',
   noResults:

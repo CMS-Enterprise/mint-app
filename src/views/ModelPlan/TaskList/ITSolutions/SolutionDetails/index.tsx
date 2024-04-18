@@ -42,9 +42,9 @@ const SolutionDetails = () => {
     operationalSolutionID: string;
   }>();
 
-  const { t } = useTranslation('itSolutions');
+  const { t } = useTranslation('opSolutionsMisc');
   const { t: h } = useTranslation('draftModelPlan');
-  const { t: documentsT } = useTranslation('documents');
+  const { t: documentsT } = useTranslation('documentsMisc');
 
   const isDesktop = useCheckResponsiveScreen('tablet', 'larger');
 

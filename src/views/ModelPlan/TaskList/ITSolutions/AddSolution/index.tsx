@@ -58,8 +58,10 @@ const AddSolution = () => {
     operationalNeedID: string;
     operationalSolutionID?: string;
   }>();
-  const { t } = useTranslation('itSolutions');
+  const { t } = useTranslation('opSolutionsMisc');
+  const { t: solutionsT } = useTranslation('solutions');
   const { t: h } = useTranslation('draftModelPlan');
+
   const formikRef = useRef<FormikProps<OperationalSolutionFormType>>(null);
 
   const history = useHistory();
@@ -295,18 +297,17 @@ const AddSolution = () => {
                             className="margin-top-0 margin-bottom-5"
                           >
                             <Label htmlFor="it-solutions-key">
-                              {t('howWillYouSolve')}
+                              {solutionsT('key.label')}
                               <RequiredAsterisk />
                             </Label>
 
                             <p className="text-base margin-y-1 line-height-body-4">
-                              {t('howWillYouSolveInfo')}
+                              {solutionsT('key.sublabel')}
                             </p>
 
                             <FieldErrorMsg>{flatErrors.key}</FieldErrorMsg>
 
                             <ComboBox
-                              data-test-id="plan-characteristics-existing-model"
                               id="it-solutions-key"
                               name="key"
                               inputProps={{

@@ -64,7 +64,7 @@ export function findChangedSolution(
 }
 
 const SelectSolutions = () => {
-  const { t } = useTranslation('itSolutions');
+  const { t } = useTranslation('opSolutionsMisc');
   const { t: h } = useTranslation('draftModelPlan');
   const { modelID, operationalNeedID } = useParams<{
     modelID: string;

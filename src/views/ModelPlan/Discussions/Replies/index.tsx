@@ -15,7 +15,7 @@ const Replies = ({
   originalDiscussion: DiscussionType;
   discussionReplyID?: string | null | undefined;
 }) => {
-  const { t: discussionsT } = useTranslation('discussions');
+  const { t: discussionsMiscT } = useTranslation('discussionsMisc');
 
   const [areRepliesShowing, setAreRepliesShowing] = useState<boolean>(true);
 
@@ -33,14 +33,14 @@ const Replies = ({
         <p className="margin-y-0 text-bold">
           {hasReplies ? (
             <>
-              {discussionsT('replies', {
+              {discussionsMiscT('replies', {
                 count: replies.length
               })}
             </>
           ) : (
             <p className="margin-top-0">
               {/*  https://github.com/i18next/i18next/issues/1220#issuecomment-654161038 */}
-              {discussionsT('replies', { count: 0, context: '0' })}
+              {discussionsMiscT('replies', { count: 0, context: '0' })}
             </p>
           )}
         </p>
@@ -54,12 +54,12 @@ const Replies = ({
           >
             {areRepliesShowing ? (
               <div className="display-flex flex-align-center">
-                {discussionsT('hideReplies')}
+                {discussionsMiscT('hideReplies')}
                 <Icon.ExpandLess className="margin-left-1" />
               </div>
             ) : (
               <div className="display-flex flex-align-center">
-                {discussionsT('showReplies')}
+                {discussionsMiscT('showReplies')}
                 <Icon.ExpandMore className="margin-left-1" />
               </div>
             )}
@@ -74,7 +74,6 @@ const Replies = ({
                 <Fragment key={reply.id}>
                   <DiscussionUserInfo
                     discussionTopic={reply}
-                    index={index}
                     connected={index !== replies.length - 1 && hasReplies}
                   />
                   <div
@@ -103,8 +102,8 @@ const Replies = ({
                 onClick={() => setIsAccordionExpanded(!isAccordionExpanded)}
               >
                 {isAccordionExpanded
-                  ? discussionsT('viewFewerReplies')
-                  : discussionsT('viewMoreReplies')}
+                  ? discussionsMiscT('viewFewerReplies')
+                  : discussionsMiscT('viewMoreReplies')}
               </Button>
             </SectionWrapper>
           )}

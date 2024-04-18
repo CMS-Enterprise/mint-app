@@ -28,7 +28,7 @@ const scrollIntoView = () => {
 };
 
 const MentionList = forwardRef((props: any, ref) => {
-  const { t } = useTranslation('discussions');
+  const { t } = useTranslation('discussionsMisc');
 
   const [selectedIndex, setSelectedIndex] = useState(0);
 

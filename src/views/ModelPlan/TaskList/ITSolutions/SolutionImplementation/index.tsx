@@ -62,7 +62,7 @@ const SolutionImplementation = () => {
 
   const history = useHistory();
 
-  const { t } = useTranslation('itSolutions');
+  const { t } = useTranslation('opSolutionsMisc');
   const { t: h } = useTranslation('draftModelPlan');
 
   const { showMessageOnNextPage, message } = useMessage();

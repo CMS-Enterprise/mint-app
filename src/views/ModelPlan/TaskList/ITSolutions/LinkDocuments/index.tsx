@@ -51,7 +51,7 @@ const LinkDocuments = () => {
   const history = useHistory();
   const { showMessageOnNextPage } = useMessage();
 
-  const { t } = useTranslation('documents');
+  const { t } = useTranslation('documentsMisc');
   const { t: h } = useTranslation('draftModelPlan');
 
   const isDesktop = useCheckResponsiveScreen('tablet', 'larger');

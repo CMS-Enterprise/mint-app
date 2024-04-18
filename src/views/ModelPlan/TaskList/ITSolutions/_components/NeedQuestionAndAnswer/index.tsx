@@ -92,7 +92,7 @@ const NeedQuestionAndAnswer = ({
   isRenderingOnSolutionsDetails = false,
   renderSolutionCardLinks = true
 }: NeedQuestionAndAnswerProps) => {
-  const { t } = useTranslation('itSolutions');
+  const { t } = useTranslation('opSolutionsMisc');
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   // Fetch operational need answer to question

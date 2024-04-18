@@ -22,8 +22,8 @@ import UswdsReactLink from 'components/LinkWrapper';
 import Spinner from 'components/Spinner';
 import useHelpSolution from 'hooks/useHelpSolutions';
 import useModalSolutionState from 'hooks/useModalSolutionState';
+import usePlanTranslation from 'hooks/usePlanTranslation';
 import { OperationalSolutionKey } from 'types/graphql-global-types';
-import { translateOperationalSolutionKey } from 'utils/modelPlan';
 import SolutionDetailsModal from 'views/HelpAndKnowledge/SolutionsHelp/SolutionDetails/Modal';
 import { HelpSolutionType } from 'views/HelpAndKnowledge/SolutionsHelp/solutionsMap';
 
@@ -44,8 +44,11 @@ const CheckboxCard = ({
   solution,
   index
 }: CheckboxCardProps) => {
-  const { t } = useTranslation('itSolutions');
+  const { t } = useTranslation('opSolutionsMisc');
   const { t: h } = useTranslation('generalReadOnly');
+
+  const { key: keyConfig } = usePlanTranslation('solutions');
+
   const { modelID, operationalNeedID } = useParams<{
     modelID: string;
     operationalNeedID: string;
@@ -194,7 +197,7 @@ const CheckboxCard = ({
                     <h5 className="text-normal margin-top-0 margin-bottom-2">
                       {solution.key === OperationalSolutionKey.OTHER_NEW_PROCESS
                         ? t('otherNewProcess')
-                        : translateOperationalSolutionKey(solution.key)}
+                        : keyConfig.options[solution.key]}
                     </h5>
                   </>
                 ) : (

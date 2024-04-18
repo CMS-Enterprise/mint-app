@@ -22,7 +22,7 @@ const ITSolutionsSidebar = ({
   operationalNeed,
   helpfulLinks = true
 }: ITSolutionsSidebarTypes) => {
-  const { t } = useTranslation('itSolutions');
+  const { t } = useTranslation('opSolutionsMisc');
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (

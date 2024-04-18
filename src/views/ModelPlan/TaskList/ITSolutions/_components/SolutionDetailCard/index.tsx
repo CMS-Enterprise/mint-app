@@ -39,7 +39,7 @@ const SolutionDetailCard = ({
   className,
   isUpdatingStatus = false
 }: SolutionDetailCardProps) => {
-  const { t } = useTranslation('itSolutions');
+  const { t } = useTranslation('opSolutionsMisc');
 
   const history = useHistory();
 

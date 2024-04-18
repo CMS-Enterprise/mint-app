@@ -121,7 +121,7 @@ export const ClearanceReview = ({ modelID }: ClearanceReviewProps) => {
 
   const { t } = useTranslation('draftModelPlan');
   const { t: p } = useTranslation('prepareForClearance');
-  const { t: i } = useTranslation('itSolutions');
+  const { t: i } = useTranslation('opSolutionsMisc');
   const history = useHistory();
 
   // Subscription locks context for task list
