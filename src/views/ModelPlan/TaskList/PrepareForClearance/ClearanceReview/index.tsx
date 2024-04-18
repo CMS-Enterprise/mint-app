@@ -7,7 +7,7 @@ Link to each task list section and checks if task list sections are locked
 import React, { useContext, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';
-import { MutationFunction, useMutation } from '@apollo/client';
+import { MutationFunction } from '@apollo/client';
 import {
   Breadcrumb,
   BreadcrumbBar,
@@ -17,7 +17,15 @@ import {
   GridContainer,
   Icon
 } from '@trussworks/react-uswds';
-import { useGetClearanceStatusesQuery } from 'gql/gen/graphql';
+import {
+  useGetClearanceStatusesQuery,
+  useUpdateClearanceBasicsMutation,
+  useUpdateClearanceBeneficiariesMutation,
+  useUpdateClearanceCharacteristicsMutation,
+  useUpdateClearanceOpsEvalAndLearningMutation,
+  useUpdateClearanceParticipantsAndProvidersMutation,
+  useUpdateClearancePaymentsMutation
+} from 'gql/gen/graphql';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
@@ -25,18 +33,6 @@ import Modal from 'components/Modal';
 import PageHeading from 'components/PageHeading';
 import PageLoading from 'components/PageLoading';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
-import { UpdateClearanceBasics as UpdateClearanceBasicsType } from 'queries/PrepareForClearance/types/UpdateClearanceBasics';
-import { UpdateClearanceBeneficiaries as UpdateClearanceBeneficiariesType } from 'queries/PrepareForClearance/types/UpdateClearanceBeneficiaries';
-import { UpdateClearanceCharacteristics as UpdateClearanceCharacteristicsType } from 'queries/PrepareForClearance/types/UpdateClearanceCharacteristics';
-import { UpdateClearanceOpsEvalAndLearning as UpdateClearanceOpsEvalAndLearningType } from 'queries/PrepareForClearance/types/UpdateClearanceOpsEvalAndLearning';
-import { UpdateClearanceParticipantsAndProviders as UpdateClearanceParticipantsAndProvidersType } from 'queries/PrepareForClearance/types/UpdateClearanceParticipantsAndProviders';
-import { UpdateClearancePayments as UpdateClearancePaymentsType } from 'queries/PrepareForClearance/types/UpdateClearancePayments';
-import UpdateClearanceBasics from 'queries/PrepareForClearance/UpdateClearanceBasics';
-import UpdateClearanceBeneficiaries from 'queries/PrepareForClearance/UpdateClearanceBeneficiaries';
-import UpdateClearanceCharacteristics from 'queries/PrepareForClearance/UpdateClearanceCharacteristics';
-import UpdateClearanceOpsEvalAndLearning from 'queries/PrepareForClearance/UpdateClearanceOpsEvalAndLearning';
-import UpdateClearanceParticipantsAndProviders from 'queries/PrepareForClearance/UpdateClearanceParticipantsAndProviders';
-import UpdateClearancePayments from 'queries/PrepareForClearance/UpdateClearancePayments';
 import {
   PrepareForClearanceStatus,
   TaskStatus
@@ -146,35 +142,21 @@ export const ClearanceReview = ({ modelID }: ClearanceReviewProps) => {
       modelPlanSection as keyof ClearanceStatusesModelPlanFormType
     ].status === TaskStatus.READY_FOR_CLEARANCE;
 
-  const [updateBasics] = useMutation<UpdateClearanceBasicsType>(
-    UpdateClearanceBasics
-  );
+  const [updateBasics] = useUpdateClearanceBasicsMutation();
 
-  const [
-    updateCharacteristics
-  ] = useMutation<UpdateClearanceCharacteristicsType>(
-    UpdateClearanceCharacteristics
-  );
+  const [updateCharacteristics] = useUpdateClearanceCharacteristicsMutation();
 
   const [
     updateParticipantsAndProviders
-  ] = useMutation<UpdateClearanceParticipantsAndProvidersType>(
-    UpdateClearanceParticipantsAndProviders
-  );
+  ] = useUpdateClearanceParticipantsAndProvidersMutation();
 
-  const [updateBeneficiaries] = useMutation<UpdateClearanceBeneficiariesType>(
-    UpdateClearanceBeneficiaries
-  );
+  const [updateBeneficiaries] = useUpdateClearanceBeneficiariesMutation();
 
   const [
     updateOpsEvalAndLearning
-  ] = useMutation<UpdateClearanceOpsEvalAndLearningType>(
-    UpdateClearanceOpsEvalAndLearning
-  );
+  ] = useUpdateClearanceOpsEvalAndLearningMutation();
 
-  const [updatePayments] = useMutation<UpdateClearancePaymentsType>(
-    UpdateClearancePayments
-  );
+  const [updatePayments] = useUpdateClearancePaymentsMutation();
 
   // Object to dynamically call each task list mutation within handleFormSubmit
   const clearanceMutations: MutationObjectType = {

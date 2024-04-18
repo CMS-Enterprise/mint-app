@@ -3793,6 +3793,72 @@ export type GetClearanceStatusesQueryVariables = Exact<{
 
 export type GetClearanceStatusesQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, basics: { __typename: 'PlanBasics', id: UUID, readyForClearanceDts?: Time | null, status: TaskStatus, readyForClearanceByUserAccount?: { __typename: 'UserAccount', id: UUID, commonName: string } | null }, generalCharacteristics: { __typename: 'PlanGeneralCharacteristics', id: UUID, readyForClearanceDts?: Time | null, status: TaskStatus, readyForClearanceByUserAccount?: { __typename: 'UserAccount', id: UUID, commonName: string } | null }, participantsAndProviders: { __typename: 'PlanParticipantsAndProviders', id: UUID, readyForClearanceDts?: Time | null, status: TaskStatus, readyForClearanceByUserAccount?: { __typename: 'UserAccount', id: UUID, commonName: string } | null }, beneficiaries: { __typename: 'PlanBeneficiaries', id: UUID, readyForClearanceDts?: Time | null, status: TaskStatus, readyForClearanceByUserAccount?: { __typename: 'UserAccount', id: UUID, commonName: string } | null }, opsEvalAndLearning: { __typename: 'PlanOpsEvalAndLearning', id: UUID, readyForClearanceDts?: Time | null, status: TaskStatus, readyForClearanceByUserAccount?: { __typename: 'UserAccount', id: UUID, commonName: string } | null }, payments: { __typename: 'PlanPayments', id: UUID, readyForClearanceDts?: Time | null, status: TaskStatus, readyForClearanceByUserAccount?: { __typename: 'UserAccount', id: UUID, commonName: string } | null }, prepareForClearance: { __typename: 'PrepareForClearance', status: PrepareForClearanceStatus } } };
 
+export type UpdateClearanceBasicsMutationVariables = Exact<{
+  id: Scalars['UUID']['input'];
+  changes: PlanBasicsChanges;
+}>;
+
+
+export type UpdateClearanceBasicsMutation = { __typename: 'Mutation', updatePlanBasics: { __typename: 'PlanBasics', readyForClearanceDts?: Time | null, status: TaskStatus, readyForClearanceByUserAccount?: { __typename: 'UserAccount', id: UUID, commonName: string } | null } };
+
+export type UpdateClearanceBeneficiariesMutationVariables = Exact<{
+  id: Scalars['UUID']['input'];
+  changes: PlanBeneficiariesChanges;
+}>;
+
+
+export type UpdateClearanceBeneficiariesMutation = { __typename: 'Mutation', updatePlanBeneficiaries: { __typename: 'PlanBeneficiaries', readyForClearanceDts?: Time | null, status: TaskStatus, readyForClearanceByUserAccount?: { __typename: 'UserAccount', id: UUID, commonName: string } | null } };
+
+export type UpdateClearanceCharacteristicsMutationVariables = Exact<{
+  id: Scalars['UUID']['input'];
+  changes: PlanGeneralCharacteristicsChanges;
+}>;
+
+
+export type UpdateClearanceCharacteristicsMutation = { __typename: 'Mutation', updatePlanGeneralCharacteristics: { __typename: 'PlanGeneralCharacteristics', readyForClearanceDts?: Time | null, status: TaskStatus, readyForClearanceByUserAccount?: { __typename: 'UserAccount', id: UUID, commonName: string } | null } };
+
+export type UpdateClearanceOpsEvalAndLearningMutationVariables = Exact<{
+  id: Scalars['UUID']['input'];
+  changes: PlanOpsEvalAndLearningChanges;
+}>;
+
+
+export type UpdateClearanceOpsEvalAndLearningMutation = { __typename: 'Mutation', updatePlanOpsEvalAndLearning: { __typename: 'PlanOpsEvalAndLearning', readyForClearanceDts?: Time | null, status: TaskStatus, readyForClearanceByUserAccount?: { __typename: 'UserAccount', id: UUID, commonName: string } | null } };
+
+export type UpdateClearanceParticipantsAndProvidersMutationVariables = Exact<{
+  id: Scalars['UUID']['input'];
+  changes: PlanParticipantsAndProvidersChanges;
+}>;
+
+
+export type UpdateClearanceParticipantsAndProvidersMutation = { __typename: 'Mutation', updatePlanParticipantsAndProviders: { __typename: 'PlanParticipantsAndProviders', readyForClearanceDts?: Time | null, status: TaskStatus, readyForClearanceByUserAccount?: { __typename: 'UserAccount', id: UUID, commonName: string } | null } };
+
+export type UpdateClearancePaymentsMutationVariables = Exact<{
+  id: Scalars['UUID']['input'];
+  changes: PlanPaymentsChanges;
+}>;
+
+
+export type UpdateClearancePaymentsMutation = { __typename: 'Mutation', updatePlanPayments: { __typename: 'PlanPayments', readyForClearanceDts?: Time | null, status: TaskStatus, readyForClearanceByUserAccount?: { __typename: 'UserAccount', id: UUID, commonName: string } | null } };
+
+export type UpdatePrepareForClearanceMutationVariables = Exact<{
+  basicsID: Scalars['UUID']['input'];
+  basicsChanges: PlanBasicsChanges;
+  characteristicsID: Scalars['UUID']['input'];
+  characteristicsChanges: PlanGeneralCharacteristicsChanges;
+  participantsAndProvidersID: Scalars['UUID']['input'];
+  participantsAndProvidersChanges: PlanParticipantsAndProvidersChanges;
+  beneficiariesID: Scalars['UUID']['input'];
+  benficiariesChanges: PlanBeneficiariesChanges;
+  opsEvalAndLearningID: Scalars['UUID']['input'];
+  opsEvalAndLearningChanges: PlanOpsEvalAndLearningChanges;
+  paymentsID: Scalars['UUID']['input'];
+  paymentsChanges: PlanPaymentsChanges;
+}>;
+
+
+export type UpdatePrepareForClearanceMutation = { __typename: 'Mutation', updatePlanBasics: { __typename: 'PlanBasics', readyForClearanceDts?: Time | null, status: TaskStatus, readyForClearanceByUserAccount?: { __typename: 'UserAccount', id: UUID, commonName: string } | null }, updatePlanGeneralCharacteristics: { __typename: 'PlanGeneralCharacteristics', readyForClearanceDts?: Time | null, status: TaskStatus, readyForClearanceByUserAccount?: { __typename: 'UserAccount', id: UUID, commonName: string } | null }, updatePlanParticipantsAndProviders: { __typename: 'PlanParticipantsAndProviders', readyForClearanceDts?: Time | null, status: TaskStatus, readyForClearanceByUserAccount?: { __typename: 'UserAccount', id: UUID, commonName: string } | null }, updatePlanBeneficiaries: { __typename: 'PlanBeneficiaries', readyForClearanceDts?: Time | null, status: TaskStatus, readyForClearanceByUserAccount?: { __typename: 'UserAccount', id: UUID, commonName: string } | null }, updatePlanOpsEvalAndLearning: { __typename: 'PlanOpsEvalAndLearning', readyForClearanceDts?: Time | null, status: TaskStatus, readyForClearanceByUserAccount?: { __typename: 'UserAccount', id: UUID, commonName: string } | null }, updatePlanPayments: { __typename: 'PlanPayments', readyForClearanceDts?: Time | null, status: TaskStatus, readyForClearanceByUserAccount?: { __typename: 'UserAccount', id: UUID, commonName: string } | null } };
+
 export type GetModelSummaryQueryVariables = Exact<{
   id: Scalars['UUID']['input'];
 }>;
@@ -10771,6 +10837,338 @@ export type GetClearanceStatusesQueryHookResult = ReturnType<typeof useGetCleara
 export type GetClearanceStatusesLazyQueryHookResult = ReturnType<typeof useGetClearanceStatusesLazyQuery>;
 export type GetClearanceStatusesSuspenseQueryHookResult = ReturnType<typeof useGetClearanceStatusesSuspenseQuery>;
 export type GetClearanceStatusesQueryResult = Apollo.QueryResult<GetClearanceStatusesQuery, GetClearanceStatusesQueryVariables>;
+export const UpdateClearanceBasicsDocument = gql`
+    mutation UpdateClearanceBasics($id: UUID!, $changes: PlanBasicsChanges!) {
+  updatePlanBasics(id: $id, changes: $changes) {
+    readyForClearanceByUserAccount {
+      id
+      commonName
+    }
+    readyForClearanceDts
+    status
+  }
+}
+    `;
+export type UpdateClearanceBasicsMutationFn = Apollo.MutationFunction<UpdateClearanceBasicsMutation, UpdateClearanceBasicsMutationVariables>;
+
+/**
+ * __useUpdateClearanceBasicsMutation__
+ *
+ * To run a mutation, you first call `useUpdateClearanceBasicsMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateClearanceBasicsMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateClearanceBasicsMutation, { data, loading, error }] = useUpdateClearanceBasicsMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      changes: // value for 'changes'
+ *   },
+ * });
+ */
+export function useUpdateClearanceBasicsMutation(baseOptions?: Apollo.MutationHookOptions<UpdateClearanceBasicsMutation, UpdateClearanceBasicsMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateClearanceBasicsMutation, UpdateClearanceBasicsMutationVariables>(UpdateClearanceBasicsDocument, options);
+      }
+export type UpdateClearanceBasicsMutationHookResult = ReturnType<typeof useUpdateClearanceBasicsMutation>;
+export type UpdateClearanceBasicsMutationResult = Apollo.MutationResult<UpdateClearanceBasicsMutation>;
+export type UpdateClearanceBasicsMutationOptions = Apollo.BaseMutationOptions<UpdateClearanceBasicsMutation, UpdateClearanceBasicsMutationVariables>;
+export const UpdateClearanceBeneficiariesDocument = gql`
+    mutation UpdateClearanceBeneficiaries($id: UUID!, $changes: PlanBeneficiariesChanges!) {
+  updatePlanBeneficiaries(id: $id, changes: $changes) {
+    readyForClearanceByUserAccount {
+      id
+      commonName
+    }
+    readyForClearanceDts
+    status
+  }
+}
+    `;
+export type UpdateClearanceBeneficiariesMutationFn = Apollo.MutationFunction<UpdateClearanceBeneficiariesMutation, UpdateClearanceBeneficiariesMutationVariables>;
+
+/**
+ * __useUpdateClearanceBeneficiariesMutation__
+ *
+ * To run a mutation, you first call `useUpdateClearanceBeneficiariesMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateClearanceBeneficiariesMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateClearanceBeneficiariesMutation, { data, loading, error }] = useUpdateClearanceBeneficiariesMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      changes: // value for 'changes'
+ *   },
+ * });
+ */
+export function useUpdateClearanceBeneficiariesMutation(baseOptions?: Apollo.MutationHookOptions<UpdateClearanceBeneficiariesMutation, UpdateClearanceBeneficiariesMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateClearanceBeneficiariesMutation, UpdateClearanceBeneficiariesMutationVariables>(UpdateClearanceBeneficiariesDocument, options);
+      }
+export type UpdateClearanceBeneficiariesMutationHookResult = ReturnType<typeof useUpdateClearanceBeneficiariesMutation>;
+export type UpdateClearanceBeneficiariesMutationResult = Apollo.MutationResult<UpdateClearanceBeneficiariesMutation>;
+export type UpdateClearanceBeneficiariesMutationOptions = Apollo.BaseMutationOptions<UpdateClearanceBeneficiariesMutation, UpdateClearanceBeneficiariesMutationVariables>;
+export const UpdateClearanceCharacteristicsDocument = gql`
+    mutation UpdateClearanceCharacteristics($id: UUID!, $changes: PlanGeneralCharacteristicsChanges!) {
+  updatePlanGeneralCharacteristics(id: $id, changes: $changes) {
+    readyForClearanceByUserAccount {
+      id
+      commonName
+    }
+    readyForClearanceDts
+    status
+  }
+}
+    `;
+export type UpdateClearanceCharacteristicsMutationFn = Apollo.MutationFunction<UpdateClearanceCharacteristicsMutation, UpdateClearanceCharacteristicsMutationVariables>;
+
+/**
+ * __useUpdateClearanceCharacteristicsMutation__
+ *
+ * To run a mutation, you first call `useUpdateClearanceCharacteristicsMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateClearanceCharacteristicsMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateClearanceCharacteristicsMutation, { data, loading, error }] = useUpdateClearanceCharacteristicsMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      changes: // value for 'changes'
+ *   },
+ * });
+ */
+export function useUpdateClearanceCharacteristicsMutation(baseOptions?: Apollo.MutationHookOptions<UpdateClearanceCharacteristicsMutation, UpdateClearanceCharacteristicsMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateClearanceCharacteristicsMutation, UpdateClearanceCharacteristicsMutationVariables>(UpdateClearanceCharacteristicsDocument, options);
+      }
+export type UpdateClearanceCharacteristicsMutationHookResult = ReturnType<typeof useUpdateClearanceCharacteristicsMutation>;
+export type UpdateClearanceCharacteristicsMutationResult = Apollo.MutationResult<UpdateClearanceCharacteristicsMutation>;
+export type UpdateClearanceCharacteristicsMutationOptions = Apollo.BaseMutationOptions<UpdateClearanceCharacteristicsMutation, UpdateClearanceCharacteristicsMutationVariables>;
+export const UpdateClearanceOpsEvalAndLearningDocument = gql`
+    mutation UpdateClearanceOpsEvalAndLearning($id: UUID!, $changes: PlanOpsEvalAndLearningChanges!) {
+  updatePlanOpsEvalAndLearning(id: $id, changes: $changes) {
+    readyForClearanceByUserAccount {
+      id
+      commonName
+    }
+    readyForClearanceDts
+    status
+  }
+}
+    `;
+export type UpdateClearanceOpsEvalAndLearningMutationFn = Apollo.MutationFunction<UpdateClearanceOpsEvalAndLearningMutation, UpdateClearanceOpsEvalAndLearningMutationVariables>;
+
+/**
+ * __useUpdateClearanceOpsEvalAndLearningMutation__
+ *
+ * To run a mutation, you first call `useUpdateClearanceOpsEvalAndLearningMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateClearanceOpsEvalAndLearningMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateClearanceOpsEvalAndLearningMutation, { data, loading, error }] = useUpdateClearanceOpsEvalAndLearningMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      changes: // value for 'changes'
+ *   },
+ * });
+ */
+export function useUpdateClearanceOpsEvalAndLearningMutation(baseOptions?: Apollo.MutationHookOptions<UpdateClearanceOpsEvalAndLearningMutation, UpdateClearanceOpsEvalAndLearningMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateClearanceOpsEvalAndLearningMutation, UpdateClearanceOpsEvalAndLearningMutationVariables>(UpdateClearanceOpsEvalAndLearningDocument, options);
+      }
+export type UpdateClearanceOpsEvalAndLearningMutationHookResult = ReturnType<typeof useUpdateClearanceOpsEvalAndLearningMutation>;
+export type UpdateClearanceOpsEvalAndLearningMutationResult = Apollo.MutationResult<UpdateClearanceOpsEvalAndLearningMutation>;
+export type UpdateClearanceOpsEvalAndLearningMutationOptions = Apollo.BaseMutationOptions<UpdateClearanceOpsEvalAndLearningMutation, UpdateClearanceOpsEvalAndLearningMutationVariables>;
+export const UpdateClearanceParticipantsAndProvidersDocument = gql`
+    mutation UpdateClearanceParticipantsAndProviders($id: UUID!, $changes: PlanParticipantsAndProvidersChanges!) {
+  updatePlanParticipantsAndProviders(id: $id, changes: $changes) {
+    readyForClearanceByUserAccount {
+      id
+      commonName
+    }
+    readyForClearanceDts
+    status
+  }
+}
+    `;
+export type UpdateClearanceParticipantsAndProvidersMutationFn = Apollo.MutationFunction<UpdateClearanceParticipantsAndProvidersMutation, UpdateClearanceParticipantsAndProvidersMutationVariables>;
+
+/**
+ * __useUpdateClearanceParticipantsAndProvidersMutation__
+ *
+ * To run a mutation, you first call `useUpdateClearanceParticipantsAndProvidersMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateClearanceParticipantsAndProvidersMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateClearanceParticipantsAndProvidersMutation, { data, loading, error }] = useUpdateClearanceParticipantsAndProvidersMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      changes: // value for 'changes'
+ *   },
+ * });
+ */
+export function useUpdateClearanceParticipantsAndProvidersMutation(baseOptions?: Apollo.MutationHookOptions<UpdateClearanceParticipantsAndProvidersMutation, UpdateClearanceParticipantsAndProvidersMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateClearanceParticipantsAndProvidersMutation, UpdateClearanceParticipantsAndProvidersMutationVariables>(UpdateClearanceParticipantsAndProvidersDocument, options);
+      }
+export type UpdateClearanceParticipantsAndProvidersMutationHookResult = ReturnType<typeof useUpdateClearanceParticipantsAndProvidersMutation>;
+export type UpdateClearanceParticipantsAndProvidersMutationResult = Apollo.MutationResult<UpdateClearanceParticipantsAndProvidersMutation>;
+export type UpdateClearanceParticipantsAndProvidersMutationOptions = Apollo.BaseMutationOptions<UpdateClearanceParticipantsAndProvidersMutation, UpdateClearanceParticipantsAndProvidersMutationVariables>;
+export const UpdateClearancePaymentsDocument = gql`
+    mutation UpdateClearancePayments($id: UUID!, $changes: PlanPaymentsChanges!) {
+  updatePlanPayments(id: $id, changes: $changes) {
+    readyForClearanceByUserAccount {
+      id
+      commonName
+    }
+    readyForClearanceDts
+    status
+  }
+}
+    `;
+export type UpdateClearancePaymentsMutationFn = Apollo.MutationFunction<UpdateClearancePaymentsMutation, UpdateClearancePaymentsMutationVariables>;
+
+/**
+ * __useUpdateClearancePaymentsMutation__
+ *
+ * To run a mutation, you first call `useUpdateClearancePaymentsMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateClearancePaymentsMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateClearancePaymentsMutation, { data, loading, error }] = useUpdateClearancePaymentsMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      changes: // value for 'changes'
+ *   },
+ * });
+ */
+export function useUpdateClearancePaymentsMutation(baseOptions?: Apollo.MutationHookOptions<UpdateClearancePaymentsMutation, UpdateClearancePaymentsMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateClearancePaymentsMutation, UpdateClearancePaymentsMutationVariables>(UpdateClearancePaymentsDocument, options);
+      }
+export type UpdateClearancePaymentsMutationHookResult = ReturnType<typeof useUpdateClearancePaymentsMutation>;
+export type UpdateClearancePaymentsMutationResult = Apollo.MutationResult<UpdateClearancePaymentsMutation>;
+export type UpdateClearancePaymentsMutationOptions = Apollo.BaseMutationOptions<UpdateClearancePaymentsMutation, UpdateClearancePaymentsMutationVariables>;
+export const UpdatePrepareForClearanceDocument = gql`
+    mutation UpdatePrepareForClearance($basicsID: UUID!, $basicsChanges: PlanBasicsChanges!, $characteristicsID: UUID!, $characteristicsChanges: PlanGeneralCharacteristicsChanges!, $participantsAndProvidersID: UUID!, $participantsAndProvidersChanges: PlanParticipantsAndProvidersChanges!, $beneficiariesID: UUID!, $benficiariesChanges: PlanBeneficiariesChanges!, $opsEvalAndLearningID: UUID!, $opsEvalAndLearningChanges: PlanOpsEvalAndLearningChanges!, $paymentsID: UUID!, $paymentsChanges: PlanPaymentsChanges!) {
+  updatePlanBasics(id: $basicsID, changes: $basicsChanges) {
+    readyForClearanceByUserAccount {
+      id
+      commonName
+    }
+    readyForClearanceDts
+    status
+  }
+  updatePlanGeneralCharacteristics(
+    id: $characteristicsID
+    changes: $characteristicsChanges
+  ) {
+    readyForClearanceByUserAccount {
+      id
+      commonName
+    }
+    readyForClearanceDts
+    status
+  }
+  updatePlanParticipantsAndProviders(
+    id: $participantsAndProvidersID
+    changes: $participantsAndProvidersChanges
+  ) {
+    readyForClearanceByUserAccount {
+      id
+      commonName
+    }
+    readyForClearanceDts
+    status
+  }
+  updatePlanBeneficiaries(id: $beneficiariesID, changes: $benficiariesChanges) {
+    readyForClearanceByUserAccount {
+      id
+      commonName
+    }
+    readyForClearanceDts
+    status
+  }
+  updatePlanOpsEvalAndLearning(
+    id: $opsEvalAndLearningID
+    changes: $opsEvalAndLearningChanges
+  ) {
+    readyForClearanceByUserAccount {
+      id
+      commonName
+    }
+    readyForClearanceDts
+    status
+  }
+  updatePlanPayments(id: $paymentsID, changes: $paymentsChanges) {
+    readyForClearanceByUserAccount {
+      id
+      commonName
+    }
+    readyForClearanceDts
+    status
+  }
+}
+    `;
+export type UpdatePrepareForClearanceMutationFn = Apollo.MutationFunction<UpdatePrepareForClearanceMutation, UpdatePrepareForClearanceMutationVariables>;
+
+/**
+ * __useUpdatePrepareForClearanceMutation__
+ *
+ * To run a mutation, you first call `useUpdatePrepareForClearanceMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdatePrepareForClearanceMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updatePrepareForClearanceMutation, { data, loading, error }] = useUpdatePrepareForClearanceMutation({
+ *   variables: {
+ *      basicsID: // value for 'basicsID'
+ *      basicsChanges: // value for 'basicsChanges'
+ *      characteristicsID: // value for 'characteristicsID'
+ *      characteristicsChanges: // value for 'characteristicsChanges'
+ *      participantsAndProvidersID: // value for 'participantsAndProvidersID'
+ *      participantsAndProvidersChanges: // value for 'participantsAndProvidersChanges'
+ *      beneficiariesID: // value for 'beneficiariesID'
+ *      benficiariesChanges: // value for 'benficiariesChanges'
+ *      opsEvalAndLearningID: // value for 'opsEvalAndLearningID'
+ *      opsEvalAndLearningChanges: // value for 'opsEvalAndLearningChanges'
+ *      paymentsID: // value for 'paymentsID'
+ *      paymentsChanges: // value for 'paymentsChanges'
+ *   },
+ * });
+ */
+export function useUpdatePrepareForClearanceMutation(baseOptions?: Apollo.MutationHookOptions<UpdatePrepareForClearanceMutation, UpdatePrepareForClearanceMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdatePrepareForClearanceMutation, UpdatePrepareForClearanceMutationVariables>(UpdatePrepareForClearanceDocument, options);
+      }
+export type UpdatePrepareForClearanceMutationHookResult = ReturnType<typeof useUpdatePrepareForClearanceMutation>;
+export type UpdatePrepareForClearanceMutationResult = Apollo.MutationResult<UpdatePrepareForClearanceMutation>;
+export type UpdatePrepareForClearanceMutationOptions = Apollo.BaseMutationOptions<UpdatePrepareForClearanceMutation, UpdatePrepareForClearanceMutationVariables>;
 export const GetModelSummaryDocument = gql`
     query GetModelSummary($id: UUID!) {
   modelPlan(id: $id) {

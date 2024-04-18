@@ -1,6 +1,6 @@
 import { gql } from '@apollo/client';
 
-export default gql`
+export default gql(/* GraphQL */ `
   mutation UpdateClearancePayments($id: UUID!, $changes: PlanPaymentsChanges!) {
     updatePlanPayments(id: $id, changes: $changes) {
       readyForClearanceByUserAccount {
@@ -11,4 +11,4 @@ export default gql`
       status
     }
   }
-`;
+`);

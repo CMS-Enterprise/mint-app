@@ -6,7 +6,6 @@ Each checkbox modifies the 'status' on its respective task list sections
 import React, { Fragment, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useHistory } from 'react-router-dom';
-import { useMutation } from '@apollo/client';
 import {
   Breadcrumb,
   BreadcrumbBar,
@@ -18,7 +17,10 @@ import {
 } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import { Field, Form, Formik, FormikProps } from 'formik';
-import { useGetClearanceStatusesQuery } from 'gql/gen/graphql';
+import {
+  useGetClearanceStatusesQuery,
+  useUpdatePrepareForClearanceMutation
+} from 'gql/gen/graphql';
 import { GetClearanceStatuses as GetClearanceStatusesType } from 'gql/gen/types/GetClearanceStatuses';
 
 import UswdsReactLink from 'components/LinkWrapper';
@@ -27,8 +29,6 @@ import CheckboxField from 'components/shared/CheckboxField';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
-import { UpdatePrepareForClearanceVariables } from 'queries/PrepareForClearance/types/UpdatePrepareForClearance';
-import UpdatePrepareForClearance from 'queries/PrepareForClearance/UpdatePrepareForClearance';
 import {
   PrepareForClearanceStatus,
   TaskStatus
@@ -107,11 +107,7 @@ const PrepareForClearanceCheckList = ({
 
   const modelPlan = data?.modelPlan || initialPrepareForClearanceValues;
 
-  const [
-    updatePrepareForClearance
-  ] = useMutation<UpdatePrepareForClearanceVariables>(
-    UpdatePrepareForClearance
-  );
+  const [updatePrepareForClearance] = useUpdatePrepareForClearanceMutation();
 
   const handleFormSubmit = (
     formikValues: ClearanceStatusesModelPlanFormType
