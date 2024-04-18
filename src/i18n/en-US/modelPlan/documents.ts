@@ -1,4 +1,93 @@
-const documents = {
+import { TranslationDocuments } from 'types/translation';
+
+import {
+  TranslationDataType,
+  TranslationFormType
+} from '../../../gql/gen/graphql';
+
+export const documents: TranslationDocuments = {
+  isLink: {
+    gqlField: 'isLink',
+    goField: 'IsLink',
+    dbField: 'is_link',
+    label: '',
+    dataType: TranslationDataType.BOOLEAN,
+    formType: TranslationFormType.RADIO,
+    options: {
+      true: 'Link to document',
+      false: 'Upload document'
+    }
+  },
+  url: {
+    gqlField: 'url',
+    goField: 'url',
+    dbField: 'url',
+    label: 'Link',
+    sublabel:
+      'Paste the link for your document. Make sure it includes http:// or https://.',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXT
+  },
+  name: {
+    gqlField: 'name',
+    goField: 'name',
+    dbField: 'name',
+    label: 'File name',
+    sublabel: 'Enter a name for your document.',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXT
+  },
+  documentType: {
+    gqlField: 'documentType',
+    goField: 'documentType',
+    dbField: 'document_type',
+    label: 'What type of document are you uploading?',
+    dataType: TranslationDataType.ENUM,
+    formType: TranslationFormType.RADIO,
+    options: {
+      CONCEPT_PAPER: 'Concept Paper',
+      DESIGN_PARAMETERS_MEMO: 'Design Parameter Memo',
+      ICIP_DRAFT: 'ICIP Draft',
+      MARKET_RESEARCH: 'Market Research',
+      OFFICE_OF_THE_ADMINISTRATOR_PRESENTATION:
+        'Office of the Administrator Presentation',
+      POLICY_PAPER: 'Policy Paper',
+      OTHER: 'Other'
+    }
+  },
+  otherTypeDescription: {
+    gqlField: 'otherTypeDescription',
+    goField: 'OtherTypeDescription',
+    dbField: 'other_type_description',
+    label: 'What kind of document is this?',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXT
+  },
+  restricted: {
+    gqlField: 'restricted',
+    goField: 'restricted',
+    dbField: 'restricted',
+    label: 'Does this document contain cost information?',
+    sublabel:
+      'Cost information would include any content relating to budget, funding, cost, or other monetary considerations.',
+    dataType: TranslationDataType.BOOLEAN,
+    formType: TranslationFormType.RADIO,
+    options: {
+      true: 'Yes',
+      false: 'No'
+    }
+  },
+  optionalNotes: {
+    gqlField: 'optionalNotes',
+    goField: 'OptionalNotes',
+    dbField: 'optional_notes',
+    label: 'Optional notes about the document',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXTAREA
+  }
+};
+
+export const documentsMisc = {
   heading: 'Documents',
   subheading: 'for <1>{{modelName}}</1>',
   breadcrumb: 'Model Plan task list',

@@ -13,4 +13,20 @@ func TestParticipantsAndProvidersTranslation(t *testing.T) {
 	assert.NoError(t, err)
 	assert.NotNil(t, translation)
 
+	tMap, err := translation.ToMap()
+	assert.NoError(t, err)
+	assert.NotNil(t, tMap)
+
+}
+
+func TestParticipantsAndProvidersTranslationVerifyFieldsArePopulated(t *testing.T) {
+	translation, err := ParticipantsAndProvidersTranslation()
+	assert.NoError(t, err)
+	assert.NotNil(t, translation)
+
+	assert.NoError(t, err)
+	assert.NotNil(t, translation)
+
+	assertTranslationFields(t, translation)
+
 }

@@ -19,8 +19,22 @@
     }
 
     &.notification__content {
-      .ProseMirror {
-        display: flex;
+      p {
+        quotes: "“" "”";
+
+        &:first-child::before {
+          content: open-quote;
+        }
+
+        &:last-child::after {
+          content: close-quote;
+        }
+
+        span.react-renderer.node-mention {
+          & ~ .ProseMirror-trailingBreak {
+            display: none;
+          }
+        }
       }
     }
   }

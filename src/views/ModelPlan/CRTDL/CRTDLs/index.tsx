@@ -26,7 +26,7 @@ type CRTDLStatusType = 'success' | 'error';
 
 export const CRTDLs = () => {
   const { t: h } = useTranslation('draftModelPlan');
-  const { t } = useTranslation('crtdl');
+  const { t } = useTranslation('crtdlsMisc');
   const { modelID } = useParams<{ modelID: string }>();
   const { message } = useMessage();
   const [crtdlMessage, setCRTDLMessage] = useState('');

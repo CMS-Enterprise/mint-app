@@ -18,6 +18,8 @@ describe('exportTranslation Util', () => {
       goField: 'ModelCategory',
       dbField: 'model_category',
       label: 'Primary model category',
+      dataType: 'ENUM',
+      formType: 'RADIO',
       options: {
         ACCOUNTABLE_CARE: 'Accountable Care',
         DISEASE_SPECIFIC_AND_EPISODIC: 'Disease-Specific & Episode-Based',
@@ -40,6 +42,8 @@ describe('exportTranslation Util', () => {
         goField: 'ModelCategory',
         dbField: 'model_category',
         label: 'Primary model category',
+        dataType: 'ENUM',
+        formType: 'RADIO',
         options: {
           ACCOUNTABLE_CARE: 'Accountable Care',
           DISEASE_SPECIFIC_AND_EPISODIC: 'Disease-Specific & Episode-Based',
@@ -57,6 +61,8 @@ describe('exportTranslation Util', () => {
         label: 'Additional model categories',
         sublabel:
           'If your model doesn’t fall into any additional categories, you can skip this.',
+        dataType: 'STRING',
+        formType: 'CHECKBOX',
         options: {
           ACCOUNTABLE_CARE: 'Accountable Care',
           DISEASE_SPECIFIC_AND_EPISODIC: 'Disease-Specific & Episode-Based',
@@ -71,19 +77,25 @@ describe('exportTranslation Util', () => {
         gqlField: 'amsModelID',
         goField: 'AmsModelID',
         dbField: 'ams_model_ID',
-        label: 'Model ID'
+        label: 'Model ID',
+        dataType: 'STRING',
+        formType: 'TEXTAREA'
       },
       demoCode: {
         gqlField: 'demoCode',
         goField: 'DemoCode',
         dbField: 'demo_code',
-        label: 'Demo code(s)'
+        label: 'Demo code(s)',
+        dataType: 'STRING',
+        formType: 'TEXTAREA'
       },
       cmsCenters: {
         gqlField: 'cmsCenters',
         goField: 'CMSCenters',
         dbField: 'cms_centers',
         label: 'CMS component',
+        dataType: 'ENUM',
+        formType: 'CHECKBOX',
         options: {
           CMMI: 'Center for Medicare and Medicaid Innovation (CMMI)',
           CENTER_FOR_CLINICAL_STANDARDS_AND_QUALITY:
@@ -103,6 +115,8 @@ describe('exportTranslation Util', () => {
         label: 'CMMI Group',
         sublabel:
           'You only need to select the CMMI group if CMMI is selected as the main CMS component.',
+        dataType: 'ENUM',
+        formType: 'CHECKBOX',
         options: {
           PATIENT_CARE_MODELS_GROUP: 'Patient Care Models Group (PCMG)',
           POLICY_AND_PROGRAMS_GROUP: 'Policy and Programs Group (PPG)',
@@ -117,6 +131,8 @@ describe('exportTranslation Util', () => {
         goField: 'ModelType',
         dbField: 'model_type',
         label: 'Model Type',
+        dataType: 'ENUM',
+        formType: 'CHECKBOX',
         options: {
           VOLUNTARY: 'Voluntary',
           MANDATORY_NATIONAL: 'Mandatory national',
@@ -129,6 +145,8 @@ describe('exportTranslation Util', () => {
         goField: 'ModelTypeOther',
         dbField: 'model_type_other',
         label: 'Please specify',
+        dataType: 'STRING',
+        formType: 'TEXTAREA',
         isOtherType: true,
         otherParentField: 'model_type'
       },
@@ -136,7 +154,9 @@ describe('exportTranslation Util', () => {
         gqlField: 'problem',
         goField: 'Problem',
         dbField: 'problem',
-        label: 'Problem statement'
+        label: 'Problem statement',
+        dataType: 'STRING',
+        formType: 'TEXTAREA'
       },
       goal: {
         gqlField: 'goal',
@@ -144,13 +164,17 @@ describe('exportTranslation Util', () => {
         dbField: 'goal',
         label: 'Goal',
         sublabel:
-          'Please include the high level goal of the program and a description of the project.'
+          'Please include the high level goal of the program and a description of the project.',
+        dataType: 'STRING',
+        formType: 'TEXTAREA'
       },
       testInterventions: {
         gqlField: 'testInterventions',
         goField: 'TestInterventions',
         dbField: 'test_interventions',
-        label: 'Test Interventions'
+        label: 'Test Interventions',
+        dataType: 'STRING',
+        formType: 'TEXTAREA'
       },
       note: {
         gqlField: 'note',
@@ -158,55 +182,73 @@ describe('exportTranslation Util', () => {
         dbField: 'note',
         label: 'Notes',
         isNote: true,
-        parentReferencesLabel: 'Model basics'
+        parentReferencesLabel: 'Model basics',
+        dataType: 'STRING',
+        formType: 'TEXTAREA'
       },
       completeICIP: {
         gqlField: 'completeICIP',
         goField: 'CompleteICIP',
         dbField: 'complete_icip',
-        label: 'Complete ICIP'
+        label: 'Complete ICIP',
+        dataType: 'DATE',
+        formType: 'DATEPICKER'
       },
       clearanceStarts: {
         gqlField: 'clearanceStarts',
         goField: 'ClearanceStarts',
         dbField: 'clearance_starts',
-        label: 'Clearance start date'
+        label: 'Clearance start date',
+        dataType: 'DATE',
+        formType: 'DATEPICKER'
       },
       clearanceEnds: {
         gqlField: 'clearanceEnds',
         goField: 'ClearanceEnds',
         dbField: 'clearance_ends',
-        label: 'Clearance end date'
+        label: 'Clearance end date',
+        dataType: 'DATE',
+        formType: 'DATEPICKER'
       },
       announced: {
         gqlField: 'announced',
         goField: 'Announced',
         dbField: 'announced',
-        label: 'Announce model'
+        label: 'Announce model',
+        dataType: 'DATE',
+        formType: 'DATEPICKER'
       },
       applicationsStart: {
         gqlField: 'applicationsStart',
         goField: 'ApplicationsStart',
         dbField: 'applications_starts',
-        label: 'Application start date'
+        label: 'Application start date',
+        dataType: 'DATE',
+        formType: 'DATEPICKER'
       },
       applicationsEnd: {
         gqlField: 'applicationsEnd',
         goField: 'ApplicationsEnd',
         dbField: 'applications_ends',
-        label: 'Application end date'
+        label: 'Application end date',
+        dataType: 'DATE',
+        formType: 'DATEPICKER'
       },
       performancePeriodStarts: {
         gqlField: 'performancePeriodStarts',
         goField: 'PerformancePeriodStarts',
         dbField: 'performance_period_starts',
-        label: 'Performance start date'
+        label: 'Performance start date',
+        dataType: 'DATE',
+        formType: 'DATEPICKER'
       },
       performancePeriodEnds: {
         gqlField: 'performancePeriodEnds',
         goField: 'PerformancePeriodEnds',
         dbField: 'performance_period_ends',
-        label: 'Performance end date'
+        label: 'Performance end date',
+        dataType: 'DATE',
+        formType: 'DATEPICKER'
       },
       highLevelNote: {
         gqlField: 'highLevelNote',
@@ -214,13 +256,17 @@ describe('exportTranslation Util', () => {
         dbField: 'high_level_note',
         label: 'Notes',
         isNote: true,
-        parentReferencesLabel: 'Timeline'
+        parentReferencesLabel: 'Timeline',
+        dataType: 'STRING',
+        formType: 'TEXTAREA'
       },
       wrapUpEnds: {
         gqlField: 'wrapUpEnds',
         goField: 'WrapUpEnds',
         dbField: 'wrap_up_ends',
-        label: 'Model wrap-up end date'
+        label: 'Model wrap-up end date',
+        dataType: 'DATE',
+        formType: 'DATEPICKER'
       },
       phasedIn: {
         gqlField: 'phasedIn',
@@ -230,6 +276,8 @@ describe('exportTranslation Util', () => {
           'If timelines are tight, might there be pieces of the model that can be phased in over time?',
         sublabel:
           'That is, the basic model would start at the earliest possible date but additional facets could be phased in at a later quarter.',
+        dataType: 'BOOLEAN',
+        formType: 'RADIO',
         options: {
           true: 'Yes',
           false: 'No'
@@ -241,13 +289,17 @@ describe('exportTranslation Util', () => {
         dbField: 'phased_in_note',
         label: 'Notes',
         isNote: true,
-        otherParentField: 'phased_in'
+        otherParentField: 'phased_in',
+        dataType: 'STRING',
+        formType: 'TEXTAREA'
       },
       status: {
         gqlField: 'status',
         goField: 'Status',
         dbField: 'status',
         label: 'Model Plan status',
+        dataType: 'ENUM',
+        formType: 'CHECKBOX',
         options: {
           READY: 'Ready',
           IN_PROGRESS: 'In progress',

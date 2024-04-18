@@ -4,6 +4,8 @@
     "goField": "Stakeholders",
     "dbField": "stakeholders",
     "label": "What stakeholders do you plan to communicate with?",
+    "dataType": "ENUM",
+    "formType": "MULTISELECT",
     "multiSelectLabel": "Selected stakeholders",
     "options": {
       "BENEFICIARIES": "Beneficiaries",
@@ -20,6 +22,8 @@
     "goField": "StakeholdersOther",
     "dbField": "stakeholders_other",
     "label": "Please describe the other stakeholders you plan to communicate with.",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
     "isOtherType": true
   },
   "stakeholdersNote": {
@@ -28,13 +32,17 @@
     "dbField": "stakeholders_note",
     "label": "Notes",
     "isNote": true,
-    "otherParentField": "stakeholders"
+    "otherParentField": "stakeholders",
+    "dataType": "STRING",
+    "formType": "TEXTAREA"
   },
   "helpdeskUse": {
     "gqlField": "helpdeskUse",
     "goField": "HelpdeskUse",
     "dbField": "helpdesk_use",
     "label": "Do you plan to use a helpdesk?",
+    "dataType": "BOOLEAN",
+    "formType": "RADIO",
     "options": {
       "true": "Yes",
       "false": "No"
@@ -46,13 +54,17 @@
     "dbField": "helpdesk_use_note",
     "label": "Notes",
     "isNote": true,
-    "otherParentField": "helpdesk_use"
+    "otherParentField": "helpdesk_use",
+    "dataType": "STRING",
+    "formType": "TEXTAREA"
   },
   "contractorSupport": {
     "gqlField": "contractorSupport",
     "goField": "ContractorSupport",
     "dbField": "contractor_support",
     "label": "What contractors will support your model?",
+    "dataType": "ENUM",
+    "formType": "CHECKBOX",
     "options": {
       "ONE": "One contractor to support implementation",
       "MULTIPLE": "May have separate contractors for different implementation functions",
@@ -66,7 +78,9 @@
           "goField": "ContractorSupportHow",
           "dbField": "contractor_support_how",
           "label": "In what capacity will they support your model?",
-          "sublabel": "(implementation, data analysis, quality, etc.)"
+          "sublabel": "(implementation, data analysis, quality, etc.)",
+          "dataType": "STRING",
+          "formType": "TEXTAREA"
         }
       ],
       "MULTIPLE": [
@@ -75,7 +89,9 @@
           "goField": "ContractorSupportHow",
           "dbField": "contractor_support_how",
           "label": "In what capacity will they support your model?",
-          "sublabel": "(implementation, data analysis, quality, etc.)"
+          "sublabel": "(implementation, data analysis, quality, etc.)",
+          "dataType": "STRING",
+          "formType": "TEXTAREA"
         }
       ],
       "OTHER": [
@@ -84,7 +100,9 @@
           "goField": "ContractorSupportHow",
           "dbField": "contractor_support_how",
           "label": "In what capacity will they support your model?",
-          "sublabel": "(implementation, data analysis, quality, etc.)"
+          "sublabel": "(implementation, data analysis, quality, etc.)",
+          "dataType": "STRING",
+          "formType": "TEXTAREA"
         }
       ]
     }
@@ -94,6 +112,8 @@
     "goField": "ContractorSupportOther",
     "dbField": "contractor_support_other",
     "label": "Please specify",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
     "isOtherType": true,
     "otherParentField": "contractor_support"
   },
@@ -103,11 +123,15 @@
     "dbField": "contractor_support_how",
     "label": "In what capacity will they support your model?",
     "sublabel": "(implementation, data analysis, quality, etc.)",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
     "parentRelation": {
       "gqlField": "contractorSupport",
       "goField": "ContractorSupport",
       "dbField": "contractor_support",
       "label": "What contractors will support your model?",
+      "dataType": "ENUM",
+      "formType": "CHECKBOX",
       "options": {
         "ONE": "One contractor to support implementation",
         "MULTIPLE": "May have separate contractors for different implementation functions",
@@ -122,7 +146,9 @@
     "dbField": "contractor_support_note",
     "label": "Notes",
     "isNote": true,
-    "otherParentField": "contractor_support"
+    "otherParentField": "contractor_support",
+    "dataType": "STRING",
+    "formType": "TEXTAREA"
   },
   "iddocSupport": {
     "gqlField": "iddocSupport",
@@ -130,6 +156,8 @@
     "dbField": "iddoc_support",
     "label": "Are you planning to use IDDOC support?",
     "sublabel": "IDDOC is commonly known as ACO-OS (Accountable Care Organization Operating System). They can provide support for design, development, operations, and maintenance.",
+    "dataType": "BOOLEAN",
+    "formType": "RADIO",
     "options": {
       "true": "Yes",
       "false": "No"
@@ -141,6 +169,8 @@
           "goField": "TechnicalContactsIdentified",
           "dbField": "technical_contacts_identified",
           "label": "Are technical contacts identified?",
+          "dataType": "BOOLEAN",
+          "formType": "RADIO",
           "options": {
             "true": "Yes",
             "false": "No"
@@ -152,6 +182,8 @@
           "dbField": "capture_participant_info",
           "label": "Will you collect participant information?",
           "sublabel": "This means the participant record for a model would be included in the ACO-OS Entity File.",
+          "dataType": "BOOLEAN",
+          "formType": "RADIO",
           "options": {
             "true": "Yes",
             "false": "No"
@@ -161,31 +193,41 @@
           "gqlField": "icdOwner",
           "goField": "IcdOwner",
           "dbField": "icd_owner",
-          "label": "ICD owner"
+          "label": "ICD owner",
+          "dataType": "STRING",
+          "formType": "TEXT"
         },
         {
           "gqlField": "draftIcdDueDate",
           "goField": "DraftIcdDueDate",
           "dbField": "draft_icd_due_date",
-          "label": "Draft ICD required by"
+          "label": "Draft ICD required by",
+          "dataType": "DATE",
+          "formType": "DATEPICKER"
         },
         {
           "gqlField": "uatNeeds",
           "goField": "UatNeeds",
           "dbField": "uat_needs",
-          "label": "User Acceptance Testing (UAT) – test data needs"
+          "label": "User Acceptance Testing (UAT) – test data needs",
+          "dataType": "STRING",
+          "formType": "TEXTAREA"
         },
         {
           "gqlField": "stcNeeds",
           "goField": "StcNeeds",
           "dbField": "stc_needs",
-          "label": "STC – test data needs"
+          "label": "STC – test data needs",
+          "dataType": "STRING",
+          "formType": "TEXTAREA"
         },
         {
           "gqlField": "testingTimelines",
           "goField": "TestingTimelines",
           "dbField": "testing_timelines",
-          "label": "Define the testing timelines"
+          "label": "Define the testing timelines",
+          "dataType": "STRING",
+          "formType": "TEXTAREA"
         },
         {
           "gqlField": "dataMonitoringFileTypes",
@@ -193,6 +235,8 @@
           "dbField": "data_monitoring_file_types",
           "label": "What types of files? Select all that apply.",
           "readonlyLabel": "What types of files?",
+          "dataType": "ENUM",
+          "formType": "CHECKBOX",
           "options": {
             "BENEFICIARY": "Beneficiary",
             "PROVIDER": "Provider",
@@ -205,19 +249,25 @@
           "gqlField": "dataResponseType",
           "goField": "DataResponseType",
           "dbField": "data_response_type",
-          "label": "What types of responses?"
+          "label": "What types of responses?",
+          "dataType": "STRING",
+          "formType": "TEXTAREA"
         },
         {
           "gqlField": "dataResponseFileFrequency",
           "goField": "DataResponseFileFrequency",
           "dbField": "data_response_file_frequency",
-          "label": "Frequency of files?"
+          "label": "Frequency of files?",
+          "dataType": "STRING",
+          "formType": "TEXT"
         },
         {
           "gqlField": "dataFullTimeOrIncremental",
           "goField": "DataFullTimeOrIncremental",
           "dbField": "data_full_time_or_incremental",
           "label": "Full time or incremental?",
+          "dataType": "BOOLEAN",
+          "formType": "RADIO",
           "options": {
             "FULL_TIME": "Full time",
             "INCREMENTAL": "Incremental"
@@ -228,6 +278,8 @@
           "goField": "EftSetUp",
           "dbField": "eft_set_up",
           "label": "Are Electronic File Transfer (EFT) and connectivity set up?",
+          "dataType": "BOOLEAN",
+          "formType": "RADIO",
           "options": {
             "true": "Yes",
             "false": "No"
@@ -238,6 +290,8 @@
           "goField": "UnsolicitedAdjustmentsIncluded",
           "dbField": "unsolicited_adjustments_included",
           "label": "Will unsolicited adjustments be included?",
+          "dataType": "BOOLEAN",
+          "formType": "RADIO",
           "options": {
             "true": "Yes",
             "false": "No"
@@ -248,6 +302,8 @@
           "goField": "DataFlowDiagramsNeeded",
           "dbField": "data_flow_diagrams_needed",
           "label": "Are data flow diagrams needed?",
+          "dataType": "BOOLEAN",
+          "formType": "RADIO",
           "options": {
             "true": "Yes",
             "false": "No"
@@ -259,6 +315,8 @@
           "dbField": "produce_benefit_enhancement_files",
           "label": "Will you produce Benefit Enhancement Files?",
           "sublabel": "This means we would use these files for Participating and Preferred Providers.",
+          "dataType": "BOOLEAN",
+          "formType": "RADIO",
           "options": {
             "true": "Yes",
             "false": "No"
@@ -268,7 +326,9 @@
           "gqlField": "fileNamingConventions",
           "goField": "FileNamingConventions",
           "dbField": "file_naming_conventions",
-          "label": "File naming conventions"
+          "label": "File naming conventions",
+          "dataType": "STRING",
+          "formType": "TEXT"
         }
       ]
     }
@@ -279,13 +339,17 @@
     "dbField": "iddoc_support_note",
     "label": "Notes",
     "isNote": true,
-    "otherParentField": "iddoc_support"
+    "otherParentField": "iddoc_support",
+    "dataType": "STRING",
+    "formType": "TEXTAREA"
   },
   "technicalContactsIdentified": {
     "gqlField": "technicalContactsIdentified",
     "goField": "TechnicalContactsIdentified",
     "dbField": "technical_contacts_identified",
     "label": "Are technical contacts identified?",
+    "dataType": "BOOLEAN",
+    "formType": "RADIO",
     "options": {
       "true": "Yes",
       "false": "No"
@@ -296,6 +360,8 @@
       "dbField": "iddoc_support",
       "label": "Are you planning to use IDDOC support?",
       "sublabel": "IDDOC is commonly known as ACO-OS (Accountable Care Organization Operating System). They can provide support for design, development, operations, and maintenance.",
+      "dataType": "BOOLEAN",
+      "formType": "RADIO",
       "options": {
         "true": "Yes",
         "false": "No"
@@ -307,6 +373,8 @@
     "goField": "TechnicalContactsIdentifiedDetail",
     "dbField": "technical_contacts_identified_detail",
     "label": "Please specify",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
     "isOtherType": true,
     "otherParentField": "technical_contacts_identified"
   },
@@ -316,7 +384,9 @@
     "dbField": "technical_contacts_identified_note",
     "label": "Notes",
     "isNote": true,
-    "otherParentField": "technical_contacts_identified"
+    "otherParentField": "technical_contacts_identified",
+    "dataType": "STRING",
+    "formType": "TEXTAREA"
   },
   "captureParticipantInfo": {
     "gqlField": "captureParticipantInfo",
@@ -324,6 +394,8 @@
     "dbField": "capture_participant_info",
     "label": "Will you collect participant information?",
     "sublabel": "This means the participant record for a model would be included in the ACO-OS Entity File.",
+    "dataType": "BOOLEAN",
+    "formType": "RADIO",
     "options": {
       "true": "Yes",
       "false": "No"
@@ -334,6 +406,8 @@
       "dbField": "iddoc_support",
       "label": "Are you planning to use IDDOC support?",
       "sublabel": "IDDOC is commonly known as ACO-OS (Accountable Care Organization Operating System). They can provide support for design, development, operations, and maintenance.",
+      "dataType": "BOOLEAN",
+      "formType": "RADIO",
       "options": {
         "true": "Yes",
         "false": "No"
@@ -346,19 +420,25 @@
     "dbField": "capture_participant_info_note",
     "label": "Notes",
     "isNote": true,
-    "otherParentField": "capture_participant_info"
+    "otherParentField": "capture_participant_info",
+    "dataType": "STRING",
+    "formType": "TEXTAREA"
   },
   "icdOwner": {
     "gqlField": "icdOwner",
     "goField": "IcdOwner",
     "dbField": "icd_owner",
     "label": "ICD owner",
+    "dataType": "STRING",
+    "formType": "TEXT",
     "parentRelation": {
       "gqlField": "iddocSupport",
       "goField": "IddocSupport",
       "dbField": "iddoc_support",
       "label": "Are you planning to use IDDOC support?",
       "sublabel": "IDDOC is commonly known as ACO-OS (Accountable Care Organization Operating System). They can provide support for design, development, operations, and maintenance.",
+      "dataType": "BOOLEAN",
+      "formType": "RADIO",
       "options": {
         "true": "Yes",
         "false": "No"
@@ -370,12 +450,16 @@
     "goField": "DraftIcdDueDate",
     "dbField": "draft_icd_due_date",
     "label": "Draft ICD required by",
+    "dataType": "DATE",
+    "formType": "DATEPICKER",
     "parentRelation": {
       "gqlField": "iddocSupport",
       "goField": "IddocSupport",
       "dbField": "iddoc_support",
       "label": "Are you planning to use IDDOC support?",
       "sublabel": "IDDOC is commonly known as ACO-OS (Accountable Care Organization Operating System). They can provide support for design, development, operations, and maintenance.",
+      "dataType": "BOOLEAN",
+      "formType": "RADIO",
       "options": {
         "true": "Yes",
         "false": "No"
@@ -389,12 +473,16 @@
     "label": "Notes",
     "isNote": true,
     "parentReferencesLabel": "Interface Control Document (IDC) questions",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
     "parentRelation": {
       "gqlField": "iddocSupport",
       "goField": "IddocSupport",
       "dbField": "iddoc_support",
       "label": "Are you planning to use IDDOC support?",
       "sublabel": "IDDOC is commonly known as ACO-OS (Accountable Care Organization Operating System). They can provide support for design, development, operations, and maintenance.",
+      "dataType": "BOOLEAN",
+      "formType": "RADIO",
       "options": {
         "true": "Yes",
         "false": "No"
@@ -406,12 +494,16 @@
     "goField": "UatNeeds",
     "dbField": "uat_needs",
     "label": "User Acceptance Testing (UAT) – test data needs",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
     "parentRelation": {
       "gqlField": "iddocSupport",
       "goField": "IddocSupport",
       "dbField": "iddoc_support",
       "label": "Are you planning to use IDDOC support?",
       "sublabel": "IDDOC is commonly known as ACO-OS (Accountable Care Organization Operating System). They can provide support for design, development, operations, and maintenance.",
+      "dataType": "BOOLEAN",
+      "formType": "RADIO",
       "options": {
         "true": "Yes",
         "false": "No"
@@ -423,12 +515,16 @@
     "goField": "StcNeeds",
     "dbField": "stc_needs",
     "label": "STC – test data needs",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
     "parentRelation": {
       "gqlField": "iddocSupport",
       "goField": "IddocSupport",
       "dbField": "iddoc_support",
       "label": "Are you planning to use IDDOC support?",
       "sublabel": "IDDOC is commonly known as ACO-OS (Accountable Care Organization Operating System). They can provide support for design, development, operations, and maintenance.",
+      "dataType": "BOOLEAN",
+      "formType": "RADIO",
       "options": {
         "true": "Yes",
         "false": "No"
@@ -440,12 +536,16 @@
     "goField": "TestingTimelines",
     "dbField": "testing_timelines",
     "label": "Define the testing timelines",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
     "parentRelation": {
       "gqlField": "iddocSupport",
       "goField": "IddocSupport",
       "dbField": "iddoc_support",
       "label": "Are you planning to use IDDOC support?",
       "sublabel": "IDDOC is commonly known as ACO-OS (Accountable Care Organization Operating System). They can provide support for design, development, operations, and maintenance.",
+      "dataType": "BOOLEAN",
+      "formType": "RADIO",
       "options": {
         "true": "Yes",
         "false": "No"
@@ -458,7 +558,9 @@
     "dbField": "testing_note",
     "label": "Notes",
     "isNote": true,
-    "parentReferencesLabel": "Testing questions"
+    "parentReferencesLabel": "Testing questions",
+    "dataType": "STRING",
+    "formType": "TEXTAREA"
   },
   "dataMonitoringFileTypes": {
     "gqlField": "dataMonitoringFileTypes",
@@ -466,6 +568,8 @@
     "dbField": "data_monitoring_file_types",
     "label": "What types of files? Select all that apply.",
     "readonlyLabel": "What types of files?",
+    "dataType": "ENUM",
+    "formType": "CHECKBOX",
     "options": {
       "BENEFICIARY": "Beneficiary",
       "PROVIDER": "Provider",
@@ -479,6 +583,8 @@
       "dbField": "iddoc_support",
       "label": "Are you planning to use IDDOC support?",
       "sublabel": "IDDOC is commonly known as ACO-OS (Accountable Care Organization Operating System). They can provide support for design, development, operations, and maintenance.",
+      "dataType": "BOOLEAN",
+      "formType": "RADIO",
       "options": {
         "true": "Yes",
         "false": "No"
@@ -490,6 +596,8 @@
     "goField": "DataMonitoringFileOther",
     "dbField": "data_monitoring_file_other",
     "label": "What types of responses?",
+    "dataType": "STRING",
+    "formType": "TEXT",
     "isOtherType": true,
     "otherParentField": "data_monitoring_file_types"
   },
@@ -498,12 +606,16 @@
     "goField": "DataResponseType",
     "dbField": "data_response_type",
     "label": "What types of responses?",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
     "parentRelation": {
       "gqlField": "iddocSupport",
       "goField": "IddocSupport",
       "dbField": "iddoc_support",
       "label": "Are you planning to use IDDOC support?",
       "sublabel": "IDDOC is commonly known as ACO-OS (Accountable Care Organization Operating System). They can provide support for design, development, operations, and maintenance.",
+      "dataType": "BOOLEAN",
+      "formType": "RADIO",
       "options": {
         "true": "Yes",
         "false": "No"
@@ -515,12 +627,16 @@
     "goField": "DataResponseFileFrequency",
     "dbField": "data_response_file_frequency",
     "label": "Frequency of files?",
+    "dataType": "STRING",
+    "formType": "TEXT",
     "parentRelation": {
       "gqlField": "iddocSupport",
       "goField": "IddocSupport",
       "dbField": "iddoc_support",
       "label": "Are you planning to use IDDOC support?",
       "sublabel": "IDDOC is commonly known as ACO-OS (Accountable Care Organization Operating System). They can provide support for design, development, operations, and maintenance.",
+      "dataType": "BOOLEAN",
+      "formType": "RADIO",
       "options": {
         "true": "Yes",
         "false": "No"
@@ -532,6 +648,8 @@
     "goField": "DataFullTimeOrIncremental",
     "dbField": "data_full_time_or_incremental",
     "label": "Full time or incremental?",
+    "dataType": "BOOLEAN",
+    "formType": "RADIO",
     "options": {
       "FULL_TIME": "Full time",
       "INCREMENTAL": "Incremental"
@@ -542,6 +660,8 @@
       "dbField": "iddoc_support",
       "label": "Are you planning to use IDDOC support?",
       "sublabel": "IDDOC is commonly known as ACO-OS (Accountable Care Organization Operating System). They can provide support for design, development, operations, and maintenance.",
+      "dataType": "BOOLEAN",
+      "formType": "RADIO",
       "options": {
         "true": "Yes",
         "false": "No"
@@ -553,6 +673,8 @@
     "goField": "EftSetUp",
     "dbField": "eft_set_up",
     "label": "Are Electronic File Transfer (EFT) and connectivity set up?",
+    "dataType": "BOOLEAN",
+    "formType": "RADIO",
     "options": {
       "true": "Yes",
       "false": "No"
@@ -563,6 +685,8 @@
       "dbField": "iddoc_support",
       "label": "Are you planning to use IDDOC support?",
       "sublabel": "IDDOC is commonly known as ACO-OS (Accountable Care Organization Operating System). They can provide support for design, development, operations, and maintenance.",
+      "dataType": "BOOLEAN",
+      "formType": "RADIO",
       "options": {
         "true": "Yes",
         "false": "No"
@@ -574,6 +698,8 @@
     "goField": "UnsolicitedAdjustmentsIncluded",
     "dbField": "unsolicited_adjustments_included",
     "label": "Will unsolicited adjustments be included?",
+    "dataType": "BOOLEAN",
+    "formType": "RADIO",
     "options": {
       "true": "Yes",
       "false": "No"
@@ -584,6 +710,8 @@
       "dbField": "iddoc_support",
       "label": "Are you planning to use IDDOC support?",
       "sublabel": "IDDOC is commonly known as ACO-OS (Accountable Care Organization Operating System). They can provide support for design, development, operations, and maintenance.",
+      "dataType": "BOOLEAN",
+      "formType": "RADIO",
       "options": {
         "true": "Yes",
         "false": "No"
@@ -595,6 +723,8 @@
     "goField": "DataFlowDiagramsNeeded",
     "dbField": "data_flow_diagrams_needed",
     "label": "Are data flow diagrams needed?",
+    "dataType": "BOOLEAN",
+    "formType": "RADIO",
     "options": {
       "true": "Yes",
       "false": "No"
@@ -605,6 +735,8 @@
       "dbField": "iddoc_support",
       "label": "Are you planning to use IDDOC support?",
       "sublabel": "IDDOC is commonly known as ACO-OS (Accountable Care Organization Operating System). They can provide support for design, development, operations, and maintenance.",
+      "dataType": "BOOLEAN",
+      "formType": "RADIO",
       "options": {
         "true": "Yes",
         "false": "No"
@@ -617,6 +749,8 @@
     "dbField": "produce_benefit_enhancement_files",
     "label": "Will you produce Benefit Enhancement Files?",
     "sublabel": "This means we would use these files for Participating and Preferred Providers.",
+    "dataType": "BOOLEAN",
+    "formType": "RADIO",
     "options": {
       "true": "Yes",
       "false": "No"
@@ -627,6 +761,8 @@
       "dbField": "iddoc_support",
       "label": "Are you planning to use IDDOC support?",
       "sublabel": "IDDOC is commonly known as ACO-OS (Accountable Care Organization Operating System). They can provide support for design, development, operations, and maintenance.",
+      "dataType": "BOOLEAN",
+      "formType": "RADIO",
       "options": {
         "true": "Yes",
         "false": "No"
@@ -638,12 +774,16 @@
     "goField": "FileNamingConventions",
     "dbField": "file_naming_conventions",
     "label": "File naming conventions",
+    "dataType": "STRING",
+    "formType": "TEXT",
     "parentRelation": {
       "gqlField": "iddocSupport",
       "goField": "IddocSupport",
       "dbField": "iddoc_support",
       "label": "Are you planning to use IDDOC support?",
       "sublabel": "IDDOC is commonly known as ACO-OS (Accountable Care Organization Operating System). They can provide support for design, development, operations, and maintenance.",
+      "dataType": "BOOLEAN",
+      "formType": "RADIO",
       "options": {
         "true": "Yes",
         "false": "No"
@@ -656,13 +796,17 @@
     "dbField": "data_monitoring_note",
     "label": "Notes",
     "isNote": true,
-    "parentReferencesLabel": "Data monitoring questions"
+    "parentReferencesLabel": "Data monitoring questions",
+    "dataType": "STRING",
+    "formType": "TEXTAREA"
   },
   "benchmarkForPerformance": {
     "gqlField": "benchmarkForPerformance",
     "goField": "BenchmarkForPerformance",
     "dbField": "benchmark_for_performance",
     "label": "Will you establish a benchmark to capture performance?",
+    "dataType": "ENUM",
+    "formType": "RADIO",
     "options": {
       "YES_RECONCILE": "Yes, and we will reconcile actual performance against it",
       "YES_NO_RECONCILE": "Yes, but we will not reconcile actual performance against it",
@@ -675,13 +819,17 @@
     "dbField": "benchmark_for_performance_note",
     "label": "Notes",
     "isNote": true,
-    "otherParentField": "benchmark_for_performance"
+    "otherParentField": "benchmark_for_performance",
+    "dataType": "STRING",
+    "formType": "TEXTAREA"
   },
   "computePerformanceScores": {
     "gqlField": "computePerformanceScores",
     "goField": "ComputePerformanceScores",
     "dbField": "compute_performance_scores",
     "label": "Will you compute performance scores?",
+    "dataType": "BOOLEAN",
+    "formType": "RADIO",
     "options": {
       "true": "Yes",
       "false": "No"
@@ -693,7 +841,9 @@
     "dbField": "compute_performance_scores_note",
     "label": "Notes",
     "isNote": true,
-    "otherParentField": "compute_performance_scores"
+    "otherParentField": "compute_performance_scores",
+    "dataType": "STRING",
+    "formType": "TEXTAREA"
   },
   "riskAdjustPerformance": {
     "gqlField": "riskAdjustPerformance",
@@ -701,6 +851,8 @@
     "dbField": "risk_adjust_performance",
     "label": "Performance Scores",
     "readonlyLabel": "Will you make risk adjustments to performance scores?",
+    "dataType": "BOOLEAN",
+    "formType": "RADIO",
     "options": {
       "true": "Yes",
       "false": "No"
@@ -712,6 +864,8 @@
     "dbField": "risk_adjust_feedback",
     "label": "Feedback Results",
     "readonlyLabel": "Will you make risk adjustments to feedback results?",
+    "dataType": "BOOLEAN",
+    "formType": "RADIO",
     "options": {
       "true": "Yes",
       "false": "No"
@@ -723,6 +877,8 @@
     "dbField": "risk_adjust_payments",
     "label": "Payments",
     "readonlyLabel": "Will you make risk adjustments to payments?",
+    "dataType": "BOOLEAN",
+    "formType": "RADIO",
     "options": {
       "true": "Yes",
       "false": "No"
@@ -734,6 +890,8 @@
     "dbField": "risk_adjust_other",
     "label": "Others",
     "readonlyLabel": "Will you make risk adjustments to others?",
+    "dataType": "BOOLEAN",
+    "formType": "RADIO",
     "options": {
       "true": "Yes",
       "false": "No"
@@ -745,7 +903,9 @@
     "dbField": "risk_adjust_note",
     "label": "Notes",
     "isNote": true,
-    "parentReferencesLabel": "Risk adjustment questions"
+    "parentReferencesLabel": "Risk adjustment questions",
+    "dataType": "STRING",
+    "formType": "TEXTAREA"
   },
   "appealPerformance": {
     "gqlField": "appealPerformance",
@@ -753,6 +913,8 @@
     "dbField": "appeal_performance",
     "label": "Performance Scores",
     "readonlyLabel": "Will participants be able to appeal performance scores?",
+    "dataType": "BOOLEAN",
+    "formType": "RADIO",
     "options": {
       "true": "Yes",
       "false": "No"
@@ -764,6 +926,8 @@
     "dbField": "appeal_feedback",
     "label": "Feedback Results",
     "readonlyLabel": "Will participants be able to appeal feedback results?",
+    "dataType": "BOOLEAN",
+    "formType": "RADIO",
     "options": {
       "true": "Yes",
       "false": "No"
@@ -775,6 +939,8 @@
     "dbField": "appeal_payments",
     "label": "Payments",
     "readonlyLabel": "Will participants be able to appeal payments?",
+    "dataType": "BOOLEAN",
+    "formType": "RADIO",
     "options": {
       "true": "Yes",
       "false": "No"
@@ -786,6 +952,8 @@
     "dbField": "appeal_other",
     "label": "Others",
     "readonlyLabel": "Will participants be able to appeal others?",
+    "dataType": "BOOLEAN",
+    "formType": "RADIO",
     "options": {
       "true": "Yes",
       "false": "No"
@@ -797,7 +965,9 @@
     "dbField": "appeal_note",
     "label": "Notes",
     "isNote": true,
-    "parentReferencesLabel": "Participant appeal questions"
+    "parentReferencesLabel": "Participant appeal questions",
+    "dataType": "STRING",
+    "formType": "TEXTAREA"
   },
   "evaluationApproaches": {
     "gqlField": "evaluationApproaches",
@@ -805,6 +975,8 @@
     "dbField": "evaluation_approaches",
     "label": "What type of evaluation approach are you considering? Select all that apply.",
     "readonlyLabel": "What type of evaluation approach are you considering?",
+    "dataType": "ENUM",
+    "formType": "CHECKBOX",
     "options": {
       "COMPARISON_MATCH": "Identify a comparison/match group",
       "CONTROL_INTERVENTION": "Establish control and intervention groups",
@@ -818,6 +990,8 @@
     "goField": "EvaluationApproachOther",
     "dbField": "evaluation_approach_other",
     "label": "Please describe the other evaluation approach you are considering.",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
     "isOtherType": true
   },
   "evalutaionApproachNote": {
@@ -826,7 +1000,9 @@
     "dbField": "evalutaion_approach_note",
     "label": "Notes",
     "isNote": true,
-    "otherParentField": "evaluation_approaches"
+    "otherParentField": "evaluation_approaches",
+    "dataType": "STRING",
+    "formType": "TEXTAREA"
   },
   "ccmInvolvment": {
     "gqlField": "ccmInvolvment",
@@ -834,6 +1010,8 @@
     "dbField": "ccm_involvment",
     "label": "Is Chronic Conditions Warehouse (CCW) involved in the model?",
     "sublabel": "If you select either yes option, there will be additional questions to answer.",
+    "dataType": "ENUM",
+    "formType": "CHECKBOX",
     "options": {
       "YES_EVALUATION": "Yes, for evaluation",
       "YES__IMPLEMENTATION": "Yes, for implementation",
@@ -847,6 +1025,8 @@
           "goField": "SendFilesBetweenCcw",
           "dbField": "send_files_between_ccw",
           "label": "Will you need to send files between the CCW and other applications?",
+          "dataType": "BOOLEAN",
+          "formType": "RADIO",
           "options": {
             "true": "Yes",
             "false": "No"
@@ -858,6 +1038,8 @@
           "dbField": "app_to_send_files_to_known",
           "label": "Do you know which applications will be on the other sides of the file transfers?",
           "readonlyLabel": "Do you know which applications will be on the other sides of the file transfers? If so, please specify.",
+          "dataType": "BOOLEAN",
+          "formType": "RADIO",
           "options": {
             "true": "Yes",
             "false": "No"
@@ -868,6 +1050,8 @@
           "goField": "UseCcwForFileDistribiutionToParticipants",
           "dbField": "use_ccw_for_file_distribiution_to_participants",
           "label": "Will you use the CCW to distribute files to and from model participants?",
+          "dataType": "BOOLEAN",
+          "formType": "RADIO",
           "options": {
             "true": "Yes",
             "false": "No"
@@ -880,6 +1064,8 @@
           "goField": "SendFilesBetweenCcw",
           "dbField": "send_files_between_ccw",
           "label": "Will you need to send files between the CCW and other applications?",
+          "dataType": "BOOLEAN",
+          "formType": "RADIO",
           "options": {
             "true": "Yes",
             "false": "No"
@@ -891,6 +1077,8 @@
           "dbField": "app_to_send_files_to_known",
           "label": "Do you know which applications will be on the other sides of the file transfers?",
           "readonlyLabel": "Do you know which applications will be on the other sides of the file transfers? If so, please specify.",
+          "dataType": "BOOLEAN",
+          "formType": "RADIO",
           "options": {
             "true": "Yes",
             "false": "No"
@@ -901,6 +1089,8 @@
           "goField": "UseCcwForFileDistribiutionToParticipants",
           "dbField": "use_ccw_for_file_distribiution_to_participants",
           "label": "Will you use the CCW to distribute files to and from model participants?",
+          "dataType": "BOOLEAN",
+          "formType": "RADIO",
           "options": {
             "true": "Yes",
             "false": "No"
@@ -914,6 +1104,8 @@
     "goField": "CcmInvolvmentOther",
     "dbField": "ccm_involvment_other",
     "label": "Please specify",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
     "isOtherType": true,
     "otherParentField": "ccm_involvment"
   },
@@ -923,7 +1115,9 @@
     "dbField": "ccm_involvment_note",
     "label": "Notes",
     "isNote": true,
-    "otherParentField": "ccm_involvment"
+    "otherParentField": "ccm_involvment",
+    "dataType": "STRING",
+    "formType": "TEXTAREA"
   },
   "dataNeededForMonitoring": {
     "gqlField": "dataNeededForMonitoring",
@@ -932,6 +1126,8 @@
     "label": "What data do you need to monitor the model? Select all that apply.",
     "readonlyLabel": "What data do you need to monitor the model?",
     "sublabel": "If you select quality claims-based measures or quality reported measures, there will be additional questions to answer.",
+    "dataType": "ENUM",
+    "formType": "MULTISELECT",
     "multiSelectLabel": "Selected data",
     "options": {
       "SITE_VISITS": "Site visits",
@@ -954,6 +1150,8 @@
           "goField": "DevelopNewQualityMeasures",
           "dbField": "develop_new_quality_measures",
           "label": "Do you plan to develop a new validated quality measure for your model?",
+          "dataType": "BOOLEAN",
+          "formType": "RADIO",
           "options": {
             "true": "Yes",
             "false": "No"
@@ -964,6 +1162,8 @@
           "goField": "QualityPerformanceImpactsPayment",
           "dbField": "quality_performance_impacts_payment",
           "label": "Does quality performance impact payment?",
+          "dataType": "BOOLEAN",
+          "formType": "RADIO",
           "options": {
             "YES": "Yes",
             "NO": "No",
@@ -977,6 +1177,8 @@
           "goField": "DevelopNewQualityMeasures",
           "dbField": "develop_new_quality_measures",
           "label": "Do you plan to develop a new validated quality measure for your model?",
+          "dataType": "BOOLEAN",
+          "formType": "RADIO",
           "options": {
             "true": "Yes",
             "false": "No"
@@ -987,6 +1189,8 @@
           "goField": "QualityPerformanceImpactsPayment",
           "dbField": "quality_performance_impacts_payment",
           "label": "Does quality performance impact payment?",
+          "dataType": "BOOLEAN",
+          "formType": "RADIO",
           "options": {
             "YES": "Yes",
             "NO": "No",
@@ -1001,6 +1205,8 @@
     "goField": "DataNeededForMonitoringOther",
     "dbField": "data_needed_for_monitoring_other",
     "label": "What other data do you need to monitor?",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
     "isOtherType": true
   },
   "dataNeededForMonitoringNote": {
@@ -1009,7 +1215,9 @@
     "dbField": "data_needed_for_monitoring_note",
     "label": "Notes",
     "isNote": true,
-    "otherParentField": "data_needed_for_monitoring"
+    "otherParentField": "data_needed_for_monitoring",
+    "dataType": "STRING",
+    "formType": "TEXTAREA"
   },
   "dataToSendParticicipants": {
     "gqlField": "dataToSendParticicipants",
@@ -1017,6 +1225,8 @@
     "dbField": "data_to_send_particicipants",
     "label": "What data will you send to participants? Select all that apply.",
     "readonlyLabel": "What data will you send to participants?",
+    "dataType": "ENUM",
+    "formType": "MULTISELECT",
     "options": {
       "BASELINE_HISTORICAL_DATA": "Baseline/historical data",
       "CLAIMS_LEVEL_DATA": "Claims-level data",
@@ -1032,6 +1242,8 @@
     "goField": "DataToSendParticicipantsOther",
     "dbField": "data_to_send_particicipants_other",
     "label": "What other data do you need to send?",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
     "isOtherType": true,
     "otherParentField": "data_to_send_particicipants"
   },
@@ -1041,13 +1253,17 @@
     "dbField": "data_to_send_particicipants_note",
     "label": "Notes",
     "isNote": true,
-    "otherParentField": "data_to_send_particicipants"
+    "otherParentField": "data_to_send_particicipants",
+    "dataType": "STRING",
+    "formType": "TEXTAREA"
   },
   "shareCclfData": {
     "gqlField": "shareCclfData",
     "goField": "ShareCclfData",
     "dbField": "share_cclf_data",
     "label": "Does the model require that identifiable Claim and Claim Line Feed (CCLFs) data need to be shared with participants?",
+    "dataType": "BOOLEAN",
+    "formType": "RADIO",
     "options": {
       "true": "Yes",
       "false": "No"
@@ -1059,13 +1275,17 @@
     "dbField": "share_cclf_data_note",
     "label": "Notes",
     "isNote": true,
-    "otherParentField": "share_cclf_data"
+    "otherParentField": "share_cclf_data",
+    "dataType": "STRING",
+    "formType": "TEXTAREA"
   },
   "sendFilesBetweenCcw": {
     "gqlField": "sendFilesBetweenCcw",
     "goField": "SendFilesBetweenCcw",
     "dbField": "send_files_between_ccw",
     "label": "Will you need to send files between the CCW and other applications?",
+    "dataType": "BOOLEAN",
+    "formType": "RADIO",
     "options": {
       "true": "Yes",
       "false": "No"
@@ -1076,6 +1296,8 @@
       "dbField": "ccm_involvment",
       "label": "Is Chronic Conditions Warehouse (CCW) involved in the model?",
       "sublabel": "If you select either yes option, there will be additional questions to answer.",
+      "dataType": "ENUM",
+      "formType": "CHECKBOX",
       "options": {
         "YES_EVALUATION": "Yes, for evaluation",
         "YES__IMPLEMENTATION": "Yes, for implementation",
@@ -1090,7 +1312,9 @@
     "dbField": "send_files_between_ccw_note",
     "label": "Notes",
     "isNote": true,
-    "otherParentField": "send_files_between_ccw"
+    "otherParentField": "send_files_between_ccw",
+    "dataType": "STRING",
+    "formType": "TEXTAREA"
   },
   "appToSendFilesToKnown": {
     "gqlField": "appToSendFilesToKnown",
@@ -1098,6 +1322,8 @@
     "dbField": "app_to_send_files_to_known",
     "label": "Do you know which applications will be on the other sides of the file transfers?",
     "readonlyLabel": "Do you know which applications will be on the other sides of the file transfers? If so, please specify.",
+    "dataType": "BOOLEAN",
+    "formType": "RADIO",
     "options": {
       "true": "Yes",
       "false": "No"
@@ -1108,6 +1334,8 @@
       "dbField": "ccm_involvment",
       "label": "Is Chronic Conditions Warehouse (CCW) involved in the model?",
       "sublabel": "If you select either yes option, there will be additional questions to answer.",
+      "dataType": "ENUM",
+      "formType": "CHECKBOX",
       "options": {
         "YES_EVALUATION": "Yes, for evaluation",
         "YES__IMPLEMENTATION": "Yes, for implementation",
@@ -1121,6 +1349,8 @@
     "goField": "AppToSendFilesToWhich",
     "dbField": "app_to_send_files_to_which",
     "label": "Please specify",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
     "isOtherType": true,
     "otherParentField": "app_to_send_files_to_which"
   },
@@ -1130,13 +1360,17 @@
     "dbField": "app_to_send_files_to_note",
     "label": "Notes",
     "isNote": true,
-    "otherParentField": "app_to_send_files_to_known"
+    "otherParentField": "app_to_send_files_to_known",
+    "dataType": "STRING",
+    "formType": "TEXTAREA"
   },
   "useCcwForFileDistribiutionToParticipants": {
     "gqlField": "useCcwForFileDistribiutionToParticipants",
     "goField": "UseCcwForFileDistribiutionToParticipants",
     "dbField": "use_ccw_for_file_distribiution_to_participants",
     "label": "Will you use the CCW to distribute files to and from model participants?",
+    "dataType": "BOOLEAN",
+    "formType": "RADIO",
     "options": {
       "true": "Yes",
       "false": "No"
@@ -1147,6 +1381,8 @@
       "dbField": "ccm_involvment",
       "label": "Is Chronic Conditions Warehouse (CCW) involved in the model?",
       "sublabel": "If you select either yes option, there will be additional questions to answer.",
+      "dataType": "ENUM",
+      "formType": "CHECKBOX",
       "options": {
         "YES_EVALUATION": "Yes, for evaluation",
         "YES__IMPLEMENTATION": "Yes, for implementation",
@@ -1161,13 +1397,17 @@
     "dbField": "use_ccw_for_file_distribiution_to_participants_note",
     "label": "Notes",
     "isNote": true,
-    "otherParentField": "use_ccw_for_file_distribiution_to_participants"
+    "otherParentField": "use_ccw_for_file_distribiution_to_participants",
+    "dataType": "STRING",
+    "formType": "TEXTAREA"
   },
   "developNewQualityMeasures": {
     "gqlField": "developNewQualityMeasures",
     "goField": "DevelopNewQualityMeasures",
     "dbField": "develop_new_quality_measures",
     "label": "Do you plan to develop a new validated quality measure for your model?",
+    "dataType": "BOOLEAN",
+    "formType": "RADIO",
     "options": {
       "true": "Yes",
       "false": "No"
@@ -1179,6 +1419,8 @@
       "label": "What data do you need to monitor the model? Select all that apply.",
       "readonlyLabel": "What data do you need to monitor the model?",
       "sublabel": "If you select quality claims-based measures or quality reported measures, there will be additional questions to answer.",
+      "dataType": "ENUM",
+      "formType": "MULTISELECT",
       "multiSelectLabel": "Selected data",
       "options": {
         "SITE_VISITS": "Site visits",
@@ -1202,13 +1444,17 @@
     "dbField": "develop_new_quality_measures_note",
     "label": "Notes",
     "isNote": true,
-    "otherParentField": "develop_new_quality_measures"
+    "otherParentField": "develop_new_quality_measures",
+    "dataType": "STRING",
+    "formType": "TEXTAREA"
   },
   "qualityPerformanceImpactsPayment": {
     "gqlField": "qualityPerformanceImpactsPayment",
     "goField": "QualityPerformanceImpactsPayment",
     "dbField": "quality_performance_impacts_payment",
     "label": "Does quality performance impact payment?",
+    "dataType": "BOOLEAN",
+    "formType": "RADIO",
     "options": {
       "YES": "Yes",
       "NO": "No",
@@ -1221,6 +1467,8 @@
       "label": "What data do you need to monitor the model? Select all that apply.",
       "readonlyLabel": "What data do you need to monitor the model?",
       "sublabel": "If you select quality claims-based measures or quality reported measures, there will be additional questions to answer.",
+      "dataType": "ENUM",
+      "formType": "MULTISELECT",
       "multiSelectLabel": "Selected data",
       "options": {
         "SITE_VISITS": "Site visits",
@@ -1243,6 +1491,8 @@
     "goField": "QualityPerformanceImpactsPaymentOther",
     "dbField": "quality_performance_impacts_payment_other",
     "label": "Please specify",
+    "dataType": "STRING",
+    "formType": "TEXT",
     "isOtherType": true,
     "otherParentField": "quality_performance_impacts_payment"
   },
@@ -1252,7 +1502,9 @@
     "dbField": "quality_performance_impacts_payment_note",
     "label": "Notes",
     "isNote": true,
-    "otherParentField": "quality_performance_impacts_payment"
+    "otherParentField": "quality_performance_impacts_payment",
+    "dataType": "STRING",
+    "formType": "TEXT"
   },
   "dataSharingStarts": {
     "gqlField": "dataSharingStarts",
@@ -1260,6 +1512,8 @@
     "dbField": "data_sharing_starts",
     "label": "Data sharing starts",
     "sublabel": "If using ACO-OS support, SSM request to begin analysis at least 1 year before implementation",
+    "dataType": "ENUM",
+    "formType": "SELECT",
     "options": {
       "DURING_APPLICATION_PERIOD": "During application period",
       "SHORTLY_BEFORE_THE_START_DATE": "Shortly before the start date",
@@ -1276,6 +1530,8 @@
     "goField": "DataSharingStartsOther",
     "dbField": "data_sharing_starts_other",
     "label": "Please specify",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
     "isOtherType": true,
     "otherParentField": "data_sharing_starts"
   },
@@ -1284,6 +1540,8 @@
     "goField": "DataSharingFrequency",
     "dbField": "data_sharing_frequency",
     "label": "How often do you anticipate sharing data?",
+    "dataType": "ENUM",
+    "formType": "CHECKBOX",
     "options": {
       "ANNUALLY": "Annually",
       "SEMIANNUALLY": "Semi-annually",
@@ -1298,6 +1556,8 @@
     "goField": "DataSharingFrequencyContinually",
     "dbField": "data_sharing_frequency_continually",
     "label": "Please specify",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
     "isOtherType": true,
     "otherParentField": "data_sharing_frequency"
   },
@@ -1306,6 +1566,8 @@
     "goField": "DataSharingFrequencyOther",
     "dbField": "data_sharing_frequency_other",
     "label": "Please specify",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
     "isOtherType": true,
     "otherParentField": "data_sharing_frequency"
   },
@@ -1315,13 +1577,17 @@
     "dbField": "data_sharing_starts_note",
     "label": "Notes",
     "isNote": true,
-    "parentReferencesLabel": "Data sharing timing and frequency questions"
+    "parentReferencesLabel": "Data sharing timing and frequency questions",
+    "dataType": "STRING",
+    "formType": "TEXTAREA"
   },
   "dataCollectionStarts": {
     "gqlField": "dataCollectionStarts",
     "goField": "DataCollectionStarts",
     "dbField": "data_collection_starts",
     "label": "Data collection starts",
+    "dataType": "ENUM",
+    "formType": "SELECT",
     "options": {
       "DURING_APPLICATION_PERIOD": "During application period",
       "SHORTLY_BEFORE_THE_START_DATE": "Shortly before the start date",
@@ -1338,6 +1604,8 @@
     "goField": "DataCollectionStartsOther",
     "dbField": "data_collection_starts_other",
     "label": "Please specify",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
     "isOtherType": true,
     "otherParentField": "data_collection_starts"
   },
@@ -1346,6 +1614,8 @@
     "goField": "DataCollectionFrequency",
     "dbField": "data_collection_frequency",
     "label": "How often do you anticipate collecting data?",
+    "dataType": "ENUM",
+    "formType": "CHECKBOX",
     "options": {
       "ANNUALLY": "Annually",
       "SEMIANNUALLY": "Semi-annually",
@@ -1360,6 +1630,8 @@
     "goField": "DataCollectionFrequencyContinually",
     "dbField": "data_collection_frequency_continually",
     "label": "Please specify",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
     "isOtherType": true,
     "otherParentField": "data_collection_frequency"
   },
@@ -1368,6 +1640,8 @@
     "goField": "DataCollectionFrequencyOther",
     "dbField": "data_collection_frequency_other",
     "label": "Please specify",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
     "isOtherType": true,
     "otherParentField": "data_collection_frequency"
   },
@@ -1377,13 +1651,17 @@
     "dbField": "data_collection_frequency_note",
     "label": "Notes",
     "isNote": true,
-    "parentReferencesLabel": "Data collection timing and frequency questions"
+    "parentReferencesLabel": "Data collection timing and frequency questions",
+    "dataType": "STRING",
+    "formType": "TEXTAREA"
   },
   "qualityReportingStarts": {
     "gqlField": "qualityReportingStarts",
     "goField": "QualityReportingStarts",
     "dbField": "quality_reporting_starts",
     "label": "Quality reporting starts",
+    "dataType": "ENUM",
+    "formType": "SELECT",
     "options": {
       "DURING_APPLICATION_PERIOD": "During application period",
       "SHORTLY_BEFORE_THE_START_DATE": "Shortly before the start date",
@@ -1400,6 +1678,8 @@
     "goField": "QualityReportingStartsOther",
     "dbField": "quality_reporting_starts_other",
     "label": "Please specify",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
     "isOtherType": true,
     "otherParentField": "quality_reporting_starts"
   },
@@ -1409,13 +1689,17 @@
     "dbField": "quality_reporting_starts_note",
     "label": "Notes",
     "isNote": true,
-    "parentReferencesLabel": "Quality reporting timing and frequency questions"
+    "parentReferencesLabel": "Quality reporting timing and frequency questions",
+    "dataType": "STRING",
+    "formType": "TEXTAREA"
   },
   "qualityReportingFrequency": {
     "gqlField": "qualityReportingFrequency",
     "goField": "QualityReportingFrequency",
     "dbField": "quality_reporting_frequency",
     "label": "How frequently does quality reporting happen?",
+    "dataType": "ENUM",
+    "formType": "CHECKBOX",
     "options": {
       "ANNUALLY": "Annually",
       "SEMIANNUALLY": "Semi-annually",
@@ -1430,6 +1714,8 @@
     "goField": "QualityReportingFrequencyContinually",
     "dbField": "quality_reporting_frequency_continually",
     "label": "Please specify",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
     "isOtherType": true,
     "otherParentField": "quality_reporting_frequency"
   },
@@ -1438,6 +1724,8 @@
     "goField": "QualityReportingFrequencyOther",
     "dbField": "quality_reporting_frequency_other",
     "label": "Please specify",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
     "isOtherType": true,
     "otherParentField": "quality_reporting_frequency"
   },
@@ -1446,6 +1734,8 @@
     "goField": "ModelLearningSystems",
     "dbField": "model_learning_systems",
     "label": "Will the model have a learning strategy?",
+    "dataType": "ENUM",
+    "formType": "CHECKBOX",
     "options": {
       "LEARNING_CONTRACTOR": "We plan to have a learning contractor (cross-model or individual)",
       "IT_PLATFORM_CONNECT": "We plan to use an IT platform (Connect)",
@@ -1460,6 +1750,8 @@
     "goField": "ModelLearningSystemsOther",
     "dbField": "model_learning_systems_other",
     "label": "Please specify",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
     "isOtherType": true,
     "otherParentField": "model_learning_systems"
   },
@@ -1469,20 +1761,26 @@
     "dbField": "model_learning_systems_note",
     "label": "Notes",
     "isNote": true,
-    "otherParentField": "model_learning_systems"
+    "otherParentField": "model_learning_systems",
+    "dataType": "STRING",
+    "formType": "TEXTAREA"
   },
   "anticipatedChallenges": {
     "gqlField": "anticipatedChallenges",
     "goField": "AnticipatedChallenges",
     "dbField": "anticipated_challenges",
     "label": "What challenges do you anticipate during Model design and implementation?",
-    "sublabel": "Please list and known ’unknowns,’ that is, are there policy decisions that you are aware of that are still pending or are subject to change? If so, please list to the best of your ability."
+    "sublabel": "Please list and known ’unknowns,’ that is, are there policy decisions that you are aware of that are still pending or are subject to change? If so, please list to the best of your ability.",
+    "dataType": "STRING",
+    "formType": "TEXTAREA"
   },
   "status": {
     "gqlField": "status",
     "goField": "Status",
     "dbField": "status",
     "label": "Model Plan status",
+    "dataType": "ENUM",
+    "formType": "CHECKBOX",
     "options": {
       "READY": "Ready",
       "IN_PROGRESS": "In progress",

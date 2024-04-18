@@ -15,7 +15,7 @@ const ReadOnlyCRTDLs = ({
   modelID: string;
   isHelpArticle?: boolean;
 }) => {
-  const { t } = useTranslation('crtdl');
+  const { t } = useTranslation('crtdlsMisc');
   const [crtdlMessage, setCRTDLMessage] = useState('');
   const [crtdlStatus, setCRTDLStatus] = useState<CRTDLStatusType>('error');
 

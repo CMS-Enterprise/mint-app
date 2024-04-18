@@ -26,7 +26,7 @@ const FormatDiscussion = ({
   setIsDiscussionOpen,
   setDiscussionStatusMessage
 }: FormatDiscussionProps) => {
-  const { t } = useTranslation('discussions');
+  const { t: discussionsMiscT } = useTranslation('discussionsMisc');
 
   const [isAccordionExpanded, setIsAccordionExpanded] = useState(false);
   const discussionsContentList = isAccordionExpanded
@@ -59,7 +59,7 @@ const FormatDiscussion = ({
                     className="usa-button usa-button--unstyled"
                     onClick={() => setIsAccordionExpanded(!isAccordionExpanded)}
                   >
-                    {t('viewMoreQuestions')}
+                    {discussionsMiscT('viewMoreQuestions')}
                   </Button>
                 </SectionWrapper>
               )}

@@ -57,6 +57,10 @@ type TranslationField {
   Label for fields that reference more than one parent - Ex: Notes - 'Note for Model Basics'
   """
   parentReferencesLabel: String
+  """
+  Labels specifically for export/change history.  Takes priority over all other labels
+  """
+  exportLabel: String
 }
 
 """
@@ -86,6 +90,10 @@ type TranslationFieldWithOptions {
   Label for fields that reference more than one parent - Ex: Notes - 'Note for Model Basics'
   """
   parentReferencesLabel: String
+  """
+  Labels specifically for export/change history.  Takes priority over all other labels
+  """
+  exportLabel: String
   options: Map!
 }
 
@@ -116,6 +124,10 @@ type TranslationFieldWithParent {
   Label for fields that reference more than one parent - Ex: Notes - 'Note for Model Basics'
   """
   parentReferencesLabel: String
+  """
+  Labels specifically for export/change history.  Takes priority over all other labels
+  """
+  exportLabel: String
   parentRelation: TranslationField!
 }
 
@@ -146,6 +158,10 @@ type TranslationFieldWithOptionsAndChildren {
   Label for fields that reference more than one parent - Ex: Notes - 'Note for Model Basics'
   """
   parentReferencesLabel: String
+  """
+  Labels specifically for export/change history.  Takes priority over all other labels
+  """
+  exportLabel: String
   options: Map!
   childRelation: Map!
 }
@@ -177,6 +193,10 @@ type TranslationFieldWithOptionsAndParent {
   Label for fields that reference more than one parent - Ex: Notes - 'Note for Model Basics'
   """
   parentReferencesLabel: String
+  """
+  Labels specifically for export/change history.  Takes priority over all other labels
+  """
+  exportLabel: String
   options: Map!
   parentRelation: TranslationFieldWithOptionsAndChildren!
 }
@@ -208,6 +228,10 @@ type TranslationFieldWithParentAndChildren {
   Label for fields that reference more than one parent - Ex: Notes - 'Note for Model Basics'
   """
   parentReferencesLabel: String
+  """
+  Labels specifically for export/change history.  Takes priority over all other labels
+  """
+  exportLabel: String
   options: Map!
   parentRelation: TranslationFieldWithOptionsAndChildren!
   childRelation: Map!

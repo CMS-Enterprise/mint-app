@@ -2465,7 +2465,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
               <h2
                 class="margin-top-0 margin-bottom-4"
               >
-                Participants and Providers
+                Participants and providers
               </h2>
               <div>
                 <div
@@ -11564,7 +11564,7 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
               <h2
                 class="margin-top-0 margin-bottom-4"
               >
-                Participants and Providers
+                Participants and providers
               </h2>
               <div>
                 <div

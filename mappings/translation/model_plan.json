@@ -3,33 +3,43 @@
     "gqlField": "modelName",
     "goField": "ModelName",
     "dbField": "model_name",
-    "label": "Model name"
+    "label": "Model name",
+    "dataType": "STRING",
+    "formType": "TEXT"
   },
   "previousName": {
     "gqlField": "previousName",
     "goField": "PreviousName",
     "dbField": "previous_name",
-    "label": "Previous names"
+    "label": "Previous names",
+    "dataType": "STRING",
+    "formType": "TEXT"
   },
   "nameHistory": {
     "gqlField": "nameHistory",
     "goField": "NameHistory",
     "dbField": "name_history",
     "label": "Previous names",
-    "isArray": true
+    "dataType": "STRING",
+    "isArray": true,
+    "formType": "TEXT"
   },
   "abbreviation": {
     "gqlField": "abbreviation",
     "goField": "Abbreviation",
     "dbField": "abbreviation",
     "label": "Short name",
-    "sublabel": "The abbreviation, acronym, or other common name used for the model."
+    "sublabel": "The abbreviation, acronym, or other common name used for the model.",
+    "dataType": "STRING",
+    "formType": "TEXT"
   },
   "archived": {
     "gqlField": "archived",
     "goField": "Archived",
     "dbField": "archived",
     "label": "Archived",
+    "dataType": "BOOLEAN",
+    "formType": "RADIO",
     "options": {
       "true": "Yes",
       "false": "No"
@@ -40,6 +50,8 @@
     "goField": "Status",
     "dbField": "status",
     "label": "What is the status of your Model Plan?",
+    "dataType": "ENUM",
+    "formType": "SELECT",
     "options": {
       "PLAN_DRAFT": "Draft Model Plan",
       "PLAN_COMPLETE": "Model Plan complete",

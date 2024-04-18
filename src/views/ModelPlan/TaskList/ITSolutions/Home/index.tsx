@@ -23,7 +23,7 @@ import OperationalNeedsTable from './operationalNeedsTable';
 
 const ITSolutionsHome = () => {
   const { modelID } = useParams<{ modelID: string }>();
-  const { t } = useTranslation('itSolutions');
+  const { t } = useTranslation('opSolutionsMisc');
   const { t: h } = useTranslation('draftModelPlan');
 
   const { message } = useMessage();

@@ -29,7 +29,7 @@ const OperationalNeedRemovalModal = ({
   id,
   nameOther
 }: OperationalNeedRemovalModalTypes) => {
-  const { t } = useTranslation('itSolutions');
+  const { t } = useTranslation('opSolutionsMisc');
   const [removeNeed] = useMutation<
     MutationType,
     UpdateCustomOperationalNeedByIdVariables

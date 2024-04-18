@@ -3,13 +3,17 @@
     "gqlField": "username",
     "goField": "Username",
     "dbField": "user_account.username",
-    "label": "Team member name"
+    "label": "Team member name",
+    "dataType": "STRING",
+    "formType": "SELECT"
   },
   "teamRoles": {
     "gqlField": "teamRoles",
     "goField": "TeamRoles",
     "dbField": "team_roles",
     "label": "Team member role(s)",
+    "dataType": "ENUM",
+    "formType": "SELECT",
     "options": {
       "CM_FFS_COUNTERPART": "CM FFS counterpart",
       "COR": "Contracting Officer's Representative (COR)",

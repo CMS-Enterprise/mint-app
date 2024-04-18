@@ -16,7 +16,7 @@ type PlanPaymentsTranslation {
   payRecipients: TranslationFieldWithOptions! @goTag(key: "db", value: "pay_recipients")
   payRecipientsOtherSpecification: TranslationField! @goTag(key: "db", value: "pay_recipients_other_specification")
   payRecipientsNote: TranslationField! @goTag(key: "db", value: "pay_recipients_note")
-  payType: TranslationFieldWithParentAndChildren! @goTag(key: "db", value: "pay_type")
+  payType: TranslationFieldWithOptionsAndChildren! @goTag(key: "db", value: "pay_type")
   payTypeNote: TranslationField! @goTag(key: "db", value: "pay_type_note")
 
   # Page 2

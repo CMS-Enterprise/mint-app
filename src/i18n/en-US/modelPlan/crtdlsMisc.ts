@@ -1,4 +1,4 @@
-const crtdl = {
+const crtdlsMisc = {
   heading: 'FFS CRs and TDLs',
   subheading: 'for <1>{{modelName}}</1>',
   breadcrumb: 'Model Plan task list',
@@ -95,4 +95,4 @@ const crtdl = {
   required2: ' are required.'
 };
 
-export default crtdl;
+export default crtdlsMisc;

@@ -74,6 +74,7 @@ func init() {
 	rootCmd.AddCommand(analyzeAuditCommand)
 	rootCmd.AddCommand(translateAuditsCommand)
 	rootCmd.AddCommand(cleanCmd)
+	rootCmd.AddCommand(translationExportCmd)
 
 }
 
