@@ -7,7 +7,7 @@ Link to each task list section and checks if task list sections are locked
 import React, { useContext, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';
-import { MutationFunction, useMutation, useQuery } from '@apollo/client';
+import { MutationFunction, useMutation } from '@apollo/client';
 import {
   Breadcrumb,
   BreadcrumbBar,
@@ -17,6 +17,7 @@ import {
   GridContainer,
   Icon
 } from '@trussworks/react-uswds';
+import { useGetClearanceStatusesQuery } from 'gql/gen/graphql';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
@@ -24,11 +25,6 @@ import Modal from 'components/Modal';
 import PageHeading from 'components/PageHeading';
 import PageLoading from 'components/PageLoading';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
-import GetClearanceStatuses from 'queries/PrepareForClearance/GetClearanceStatuses';
-import {
-  GetClearanceStatuses as GetClearanceStatusesType,
-  GetClearanceStatusesVariables
-} from 'queries/PrepareForClearance/types/GetClearanceStatuses';
 import { UpdateClearanceBasics as UpdateClearanceBasicsType } from 'queries/PrepareForClearance/types/UpdateClearanceBasics';
 import { UpdateClearanceBeneficiaries as UpdateClearanceBeneficiariesType } from 'queries/PrepareForClearance/types/UpdateClearanceBeneficiaries';
 import { UpdateClearanceCharacteristics as UpdateClearanceCharacteristicsType } from 'queries/PrepareForClearance/types/UpdateClearanceCharacteristics';
@@ -133,10 +129,7 @@ export const ClearanceReview = ({ modelID }: ClearanceReviewProps) => {
     returnObjects: true
   });
 
-  const { data, loading, error } = useQuery<
-    GetClearanceStatusesType,
-    GetClearanceStatusesVariables
-  >(GetClearanceStatuses, {
+  const { data, loading, error } = useGetClearanceStatusesQuery({
     variables: {
       id: modelID
     }

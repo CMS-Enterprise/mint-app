@@ -3786,6 +3786,13 @@ export type UpdatePaymentsMutationVariables = Exact<{
 
 export type UpdatePaymentsMutation = { __typename: 'Mutation', updatePlanPayments: { __typename: 'PlanPayments', id: UUID } };
 
+export type GetClearanceStatusesQueryVariables = Exact<{
+  id: Scalars['UUID']['input'];
+}>;
+
+
+export type GetClearanceStatusesQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, basics: { __typename: 'PlanBasics', id: UUID, readyForClearanceDts?: Time | null, status: TaskStatus, readyForClearanceByUserAccount?: { __typename: 'UserAccount', id: UUID, commonName: string } | null }, generalCharacteristics: { __typename: 'PlanGeneralCharacteristics', id: UUID, readyForClearanceDts?: Time | null, status: TaskStatus, readyForClearanceByUserAccount?: { __typename: 'UserAccount', id: UUID, commonName: string } | null }, participantsAndProviders: { __typename: 'PlanParticipantsAndProviders', id: UUID, readyForClearanceDts?: Time | null, status: TaskStatus, readyForClearanceByUserAccount?: { __typename: 'UserAccount', id: UUID, commonName: string } | null }, beneficiaries: { __typename: 'PlanBeneficiaries', id: UUID, readyForClearanceDts?: Time | null, status: TaskStatus, readyForClearanceByUserAccount?: { __typename: 'UserAccount', id: UUID, commonName: string } | null }, opsEvalAndLearning: { __typename: 'PlanOpsEvalAndLearning', id: UUID, readyForClearanceDts?: Time | null, status: TaskStatus, readyForClearanceByUserAccount?: { __typename: 'UserAccount', id: UUID, commonName: string } | null }, payments: { __typename: 'PlanPayments', id: UUID, readyForClearanceDts?: Time | null, status: TaskStatus, readyForClearanceByUserAccount?: { __typename: 'UserAccount', id: UUID, commonName: string } | null }, prepareForClearance: { __typename: 'PrepareForClearance', status: PrepareForClearanceStatus } } };
+
 export type GetModelSummaryQueryVariables = Exact<{
   id: Scalars['UUID']['input'];
 }>;
@@ -10667,6 +10674,103 @@ export function useUpdatePaymentsMutation(baseOptions?: Apollo.MutationHookOptio
 export type UpdatePaymentsMutationHookResult = ReturnType<typeof useUpdatePaymentsMutation>;
 export type UpdatePaymentsMutationResult = Apollo.MutationResult<UpdatePaymentsMutation>;
 export type UpdatePaymentsMutationOptions = Apollo.BaseMutationOptions<UpdatePaymentsMutation, UpdatePaymentsMutationVariables>;
+export const GetClearanceStatusesDocument = gql`
+    query GetClearanceStatuses($id: UUID!) {
+  modelPlan(id: $id) {
+    id
+    basics {
+      id
+      readyForClearanceByUserAccount {
+        id
+        commonName
+      }
+      readyForClearanceDts
+      status
+    }
+    generalCharacteristics {
+      id
+      readyForClearanceByUserAccount {
+        id
+        commonName
+      }
+      readyForClearanceDts
+      status
+    }
+    participantsAndProviders {
+      id
+      readyForClearanceByUserAccount {
+        id
+        commonName
+      }
+      readyForClearanceDts
+      status
+    }
+    beneficiaries {
+      id
+      readyForClearanceByUserAccount {
+        id
+        commonName
+      }
+      readyForClearanceDts
+      status
+    }
+    opsEvalAndLearning {
+      id
+      readyForClearanceByUserAccount {
+        id
+        commonName
+      }
+      readyForClearanceDts
+      status
+    }
+    payments {
+      id
+      readyForClearanceByUserAccount {
+        id
+        commonName
+      }
+      readyForClearanceDts
+      status
+    }
+    prepareForClearance {
+      status
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetClearanceStatusesQuery__
+ *
+ * To run a query within a React component, call `useGetClearanceStatusesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetClearanceStatusesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetClearanceStatusesQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetClearanceStatusesQuery(baseOptions: Apollo.QueryHookOptions<GetClearanceStatusesQuery, GetClearanceStatusesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetClearanceStatusesQuery, GetClearanceStatusesQueryVariables>(GetClearanceStatusesDocument, options);
+      }
+export function useGetClearanceStatusesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetClearanceStatusesQuery, GetClearanceStatusesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetClearanceStatusesQuery, GetClearanceStatusesQueryVariables>(GetClearanceStatusesDocument, options);
+        }
+export function useGetClearanceStatusesSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetClearanceStatusesQuery, GetClearanceStatusesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetClearanceStatusesQuery, GetClearanceStatusesQueryVariables>(GetClearanceStatusesDocument, options);
+        }
+export type GetClearanceStatusesQueryHookResult = ReturnType<typeof useGetClearanceStatusesQuery>;
+export type GetClearanceStatusesLazyQueryHookResult = ReturnType<typeof useGetClearanceStatusesLazyQuery>;
+export type GetClearanceStatusesSuspenseQueryHookResult = ReturnType<typeof useGetClearanceStatusesSuspenseQuery>;
+export type GetClearanceStatusesQueryResult = Apollo.QueryResult<GetClearanceStatusesQuery, GetClearanceStatusesQueryVariables>;
 export const GetModelSummaryDocument = gql`
     query GetModelSummary($id: UUID!) {
   modelPlan(id: $id) {
