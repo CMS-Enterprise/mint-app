@@ -18,6 +18,7 @@ import {
 import classNames from 'classnames';
 import { Field, Form, Formik, FormikProps } from 'formik';
 import {
+  TaskStatusInput,
   useGetClearanceStatusesQuery,
   useUpdatePrepareForClearanceMutation
 } from 'gql/gen/graphql';
@@ -74,8 +75,20 @@ export const initialPrepareForClearanceValues: ClearanceStatusesModelPlanFormTyp
 };
 
 // Function to convert any statuses that are READY, as it's not allowed in mutation
-const convertReadyStatus = (status: TaskStatus): TaskStatus =>
-  status === TaskStatus.READY ? TaskStatus.IN_PROGRESS : status;
+const convertReadyStatus = (status: TaskStatus): TaskStatusInput => {
+  switch (status) {
+    case TaskStatus.IN_PROGRESS:
+      return TaskStatusInput.IN_PROGRESS;
+    case TaskStatus.READY_FOR_CLEARANCE:
+      return TaskStatusInput.READY_FOR_CLEARANCE;
+    case TaskStatus.READY_FOR_REVIEW:
+      return TaskStatusInput.READY_FOR_REVIEW;
+    // Handle other cases by converting
+    case TaskStatus.READY:
+    default:
+      return TaskStatusInput.IN_PROGRESS;
+  }
+};
 
 type PrepareForClearanceCheckListProps = {
   modelID: string;
