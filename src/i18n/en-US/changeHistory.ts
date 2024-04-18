@@ -1,6 +1,18 @@
 const changeHistory = {
   heading: 'Change history',
-  back: 'Back to the task list'
+  subheading: 'for {{modelName}}',
+  back: 'Back to the task list',
+  change: 'made {{count}} change in {{section}} on {{date}} at {{time}}',
+  change_plural:
+    'made {{count}} changes in {{section}} on {{date}} at {{time}}',
+  sections: {
+    plan_payments: 'Payments',
+    plan_ops_eval_and_learning: 'Operations, evaluation, and learning',
+    plan_participants_and_providers: 'Participants and providers',
+    plan_beneficiaries: 'Beneficiaries',
+    plan_general_characteristics: 'General characteristics',
+    plan_basics: 'Model basics'
+  }
 };
 
 export default changeHistory;
