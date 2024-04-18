@@ -718,6 +718,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     dataType: 'enum',
     formType: 'checkbox',
     hideRelatedQuestionAlert: true,
+    disconnectedLabel: `questionNotApplicableCCW`,
     options: {
       YES_EVALUATION: 'Yes, for evaluation',
       YES__IMPLEMENTATION: 'Yes, for implementation',
@@ -769,6 +770,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     readonlyLabel: 'What data do you need to monitor the model?',
     sublabel:
       'If you select quality claims-based measures or quality reported measures, there will be additional questions to answer.',
+    disconnectedLabel: `questionNotApplicableQuality`,
     dataType: 'enum',
     formType: 'multiSelect',
     multiSelectLabel: 'Selected data',

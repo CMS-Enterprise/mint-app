@@ -13,6 +13,7 @@ import {
   TranslationConfigType,
   TranslationFieldPropertiesWithOptions
 } from 'types/translation';
+import { formatDateUtc } from 'utils/date';
 
 import { filterGroupKey } from '../FilterView/BodyContent/_filterGroupMapping';
 
@@ -164,7 +165,7 @@ const RenderReadonlyValue = <
     !isTranslationFieldPropertiesWithOptions(config) &&
     !config.isArray
   ) {
-    return <SingleValue value={value} />;
+    return <SingleValue value={value} isDate={config.dataType === 'date'} />;
   }
 
   // Renders a single value with options (radio)
@@ -205,13 +206,25 @@ export const NoAddtionalInfo = ({ other }: { other?: boolean }) => {
 };
 
 export const SingleValue = ({
-  value
+  value,
+  isDate
 }: {
   value: string | null | undefined;
+  isDate: boolean;
 }) => {
+  const formattedValue = () => {
+    if (isEmpty(value)) {
+      return <NoAddtionalInfo />;
+    }
+    if (isDate && value) {
+      return formatDateUtc(value, 'MM/dd/yyyy');
+    }
+    return value;
+  };
+
   return (
     <div className="margin-y-0 font-body-md line-height-sans-4 text-pre-line">
-      {!isEmpty(value) ? value : <NoAddtionalInfo />}
+      {formattedValue()}
     </div>
   );
 };
@@ -428,7 +441,7 @@ export const RelatedUnneededQuestions = <
     <>
       <Alert type="info" noIcon className="margin-bottom-3">
         {isTranslationFieldPropertiesWithOptionsAndChildren(config) &&
-        config.disconnectedChildren
+        (config.disconnectedChildren || config.disconnectedLabel)
           ? // Render a disconnected translations text
             readOnlyT(disconnectedLabel, {
               count: relatedConditions.length,
