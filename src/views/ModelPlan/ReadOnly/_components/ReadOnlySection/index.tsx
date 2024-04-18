@@ -25,6 +25,7 @@ import {
   getFilterGroupInfo,
   getRelatedUneededQuestions,
   isEmpty,
+  isHiddenByGrandParentCondition,
   isHiddenByParentCondition
 } from './util';
 
@@ -68,16 +69,11 @@ const ReadOnlySection = <
     return null;
   }
 
-  if (isHiddenByParentCondition(config, values)) {
+  if (
+    isHiddenByParentCondition(config, values) ||
+    isHiddenByGrandParentCondition(config, values)
+  ) {
     return null;
-  }
-
-  // Checks if config is both a parent and a child.  Hide children if grandparent hides the parent
-  if (isTranslationFieldPropertiesWithParentAndChildren(config)) {
-    const parent = config.parentRelation();
-    if (isHiddenByParentCondition(parent, values)) {
-      return null;
-    }
   }
 
   const heading = config.readonlyLabel || config.label;
