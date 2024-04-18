@@ -9,6 +9,8 @@ import {
   isTranslationFieldProperties,
   isTranslationFieldPropertiesWithOptions,
   isTranslationFieldPropertiesWithOptionsAndChildren,
+  isTranslationFieldPropertiesWithParent,
+  isTranslationFieldPropertiesWithParentAndChildren,
   TranslationConfigType,
   TranslationFieldPropertiesWithOptions
 } from 'types/translation';
@@ -68,6 +70,14 @@ const ReadOnlySection = <
 
   if (isHiddenByParentCondition(config, values)) {
     return null;
+  }
+
+  // Checks if config is both a parent and a child.  Hide children if grandparent hides the parent
+  if (isTranslationFieldPropertiesWithParentAndChildren(config)) {
+    const parent = config.parentRelation();
+    if (isHiddenByParentCondition(parent, values)) {
+      return null;
+    }
   }
 
   const heading = config.readonlyLabel || config.label;
@@ -372,6 +382,7 @@ export const RelatedUnneededQuestions = <
   id,
   config,
   value,
+  values,
   valuesToCheck,
   childrenToCheck,
   hideAlert
@@ -379,15 +390,29 @@ export const RelatedUnneededQuestions = <
   id: string;
   config: TranslationConfigType<T, C>;
   value: any;
+  values?: any;
   valuesToCheck?: T[]; // If only want to check unneeded children for a specific value of the parent
   childrenToCheck?: (string | undefined)[];
   hideAlert?: boolean;
 }) => {
   const { t: readOnlyT } = useTranslation('generalReadOnly');
 
-  const relatedConditions = isTranslationFieldPropertiesWithOptions(config)
+  let relatedConditions = isTranslationFieldPropertiesWithOptions(config)
     ? getRelatedUneededQuestions(config, value, valuesToCheck, childrenToCheck)
     : [];
+
+  // If config is parent and child, check if is hidden by parent, and then get all the child questions
+  if (
+    isTranslationFieldPropertiesWithParentAndChildren(config) &&
+    isHiddenByParentCondition(config, values)
+  ) {
+    relatedConditions = getRelatedUneededQuestions(
+      config,
+      [],
+      valuesToCheck,
+      childrenToCheck
+    );
+  }
 
   if (!relatedConditions?.length || hideAlert) {
     return null;
