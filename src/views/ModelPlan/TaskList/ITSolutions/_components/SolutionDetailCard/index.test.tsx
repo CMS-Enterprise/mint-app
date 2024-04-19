@@ -6,13 +6,13 @@ import {
   waitFor,
   waitForElementToBeRemoved
 } from '@testing-library/react';
+import { GetOperationalSolution_operationalSolution as GetOperationalSolutionType } from 'gql/gen/types/GetOperationalSolution';
 
 import {
   needQuestionAndAnswerMock,
   possibleSolutionsMock
 } from 'data/mock/solutions';
 import { MessageProvider } from 'hooks/useMessage';
-import { GetOperationalSolution_operationalSolution as GetOperationalSolutionType } from 'queries/ITSolutions/types/GetOperationalSolution';
 import {
   OperationalSolutionKey,
   OpSolutionStatus

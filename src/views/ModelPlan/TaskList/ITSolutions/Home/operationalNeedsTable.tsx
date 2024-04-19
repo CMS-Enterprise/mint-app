@@ -17,10 +17,13 @@ import {
   useSortBy,
   useTable
 } from 'react-table';
-import { useQuery } from '@apollo/client';
 import { Icon, Table as UswdsTable } from '@trussworks/react-uswds';
 import classNames from 'classnames';
-import { OperationalSolutionKey } from 'gql/gen/graphql';
+import {
+  OperationalSolutionKey,
+  useGetOperationalNeedsQuery
+} from 'gql/gen/graphql';
+import { GetOperationalNeeds_modelPlan_operationalNeeds as GetOperationalNeedsOperationalNeedsType } from 'gql/gen/types/GetOperationalNeeds';
 import i18next from 'i18next';
 import { useFlags } from 'launchdarkly-react-client-sdk';
 
@@ -32,12 +35,6 @@ import GlobalClientFilter from 'components/TableFilter';
 import TablePagination from 'components/TablePagination';
 import TableResults from 'components/TableResults';
 import operationalNeedMap from 'data/operationalNeedMap';
-import GetOperationalNeeds from 'queries/ITSolutions/GetOperationalNeeds';
-import {
-  GetOperationalNeeds as GetOperationalNeedsType,
-  GetOperationalNeeds_modelPlan_operationalNeeds as GetOperationalNeedsOperationalNeedsType,
-  GetOperationalNeedsVariables
-} from 'queries/ITSolutions/types/GetOperationalNeeds';
 import { formatDateUtc } from 'utils/date';
 import globalFilterCellText from 'utils/globalFilterCellText';
 import {
@@ -89,10 +86,7 @@ const OperationalNeedsTable = ({
   const { t: subtasksT } = useTranslation('operationalSolutionSubtasks');
   const { t: opSolutionsMiscT } = useTranslation('opSolutionsMisc');
 
-  const { data, loading, error } = useQuery<
-    GetOperationalNeedsType,
-    GetOperationalNeedsVariables
-  >(GetOperationalNeeds, {
+  const { data, loading, error } = useGetOperationalNeedsQuery({
     variables: {
       id: modelID
     }

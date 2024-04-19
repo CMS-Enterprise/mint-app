@@ -1,7 +1,6 @@
 import React, { useContext, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
-import { useMutation, useQuery } from '@apollo/client';
 import {
   Button,
   Fieldset,
@@ -11,6 +10,12 @@ import {
   TextInput
 } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
+import {
+  GetOperationalSolutionQuery,
+  useCreateOperationalSolutionMutation,
+  useGetOperationalSolutionQuery,
+  useUpdateOperationalSolutionMutation
+} from 'gql/gen/graphql';
 
 import Breadcrumbs from 'components/Breadcrumbs';
 import PageHeading from 'components/PageHeading';
@@ -22,22 +27,6 @@ import FieldGroup from 'components/shared/FieldGroup';
 import RequiredAsterisk from 'components/shared/RequiredAsterisk';
 import useMessage from 'hooks/useMessage';
 import usePlanTranslation from 'hooks/usePlanTranslation';
-import CreateOperationalSolution from 'queries/ITSolutions/CreateOperationalSolution';
-import GetOperationalSolution from 'queries/ITSolutions/GetOperationalSolution';
-import {
-  CreateOperationalSolution as CreateOperationalSolutionType,
-  CreateOperationalSolutionVariables
-} from 'queries/ITSolutions/types/CreateOperationalSolution';
-import {
-  GetOperationalSolution as GetOperationalSolutionType,
-  GetOperationalSolution_operationalSolution as GetOperationalSolutionOperationalSolutionType,
-  GetOperationalSolutionVariables
-} from 'queries/ITSolutions/types/GetOperationalSolution';
-import {
-  UpdateOperationalSolution as UpdateOperationalSolutionType,
-  UpdateOperationalSolutionVariables
-} from 'queries/ITSolutions/types/UpdateOperationalSolution';
-import UpdateOperationalSolution from 'queries/ITSolutions/UpdateOperationalSolution';
 import {
   OperationalSolutionKey,
   OpSolutionStatus
@@ -49,8 +38,10 @@ import NotFound from 'views/NotFound';
 import ITSolutionsSidebar from '../_components/ITSolutionSidebar';
 import NeedQuestionAndAnswer from '../_components/NeedQuestionAndAnswer';
 
+type OperationalSolutionType = GetOperationalSolutionQuery['operationalSolution'];
+
 type CustomOperationalSolutionFormType = Omit<
-  GetOperationalSolutionOperationalSolutionType,
+  OperationalSolutionType,
   | '__typename'
   | 'id'
   | 'key'
@@ -105,10 +96,7 @@ const AddCustomSolution = () => {
 
   const { showMessageOnNextPage } = useMessage();
 
-  const { data, loading, error } = useQuery<
-    GetOperationalSolutionType,
-    GetOperationalSolutionVariables
-  >(GetOperationalSolution, {
+  const { data, loading, error } = useGetOperationalSolutionQuery({
     variables: {
       // Query will be skipped if not present, need to default to string to appease ts
       id: operationalSolutionID || ''
@@ -118,15 +106,9 @@ const AddCustomSolution = () => {
 
   const customOperationalSolution = data?.operationalSolution || initialValues;
 
-  const [createSolution] = useMutation<
-    CreateOperationalSolutionType,
-    CreateOperationalSolutionVariables
-  >(CreateOperationalSolution);
+  const [createSolution] = useCreateOperationalSolutionMutation();
 
-  const [updateSolution] = useMutation<
-    UpdateOperationalSolutionType,
-    UpdateOperationalSolutionVariables
-  >(UpdateOperationalSolution);
+  const [updateSolution] = useUpdateOperationalSolutionMutation();
 
   const handleFormSubmit = async (
     formikValues: CustomOperationalSolutionFormType

@@ -9,19 +9,21 @@ import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import { Button, Grid } from '@trussworks/react-uswds';
 import classNames from 'classnames';
+import { GetOperationalSolutionQuery } from 'gql/gen/graphql';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import Divider from 'components/shared/Divider';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
-import { GetOperationalSolution_operationalSolution as GetOperationalSolutionType } from 'queries/ITSolutions/types/GetOperationalSolution';
 import { formatDateUtc } from 'utils/date';
 
 import NeedQuestionAndAnswer from '../NeedQuestionAndAnswer';
 import OperationalNeedsStatusTag from '../NeedsStatus';
 import SolutionCard from '../SolutionCard';
 
+type OperationalSolutionType = GetOperationalSolutionQuery['operationalSolution'];
+
 type SolutionDetailCardProps = {
-  solution: GetOperationalSolutionType;
+  solution: OperationalSolutionType;
   operationalNeedID: string;
   operationalSolutionID: string;
   modelID: string;

@@ -7,7 +7,6 @@ Link to each task list section and checks if task list sections are locked
 import React, { useContext, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';
-import { MutationFunction, useMutation, useQuery } from '@apollo/client';
 import {
   Breadcrumb,
   BreadcrumbBar,
@@ -17,6 +16,22 @@ import {
   GridContainer,
   Icon
 } from '@trussworks/react-uswds';
+import {
+  TaskStatusInput,
+  UpdateClearanceBasicsMutationFn,
+  UpdateClearanceBeneficiariesMutationFn,
+  UpdateClearanceCharacteristicsMutationFn,
+  UpdateClearanceOpsEvalAndLearningMutationFn,
+  UpdateClearanceParticipantsAndProvidersMutationFn,
+  UpdateClearancePaymentsMutationFn,
+  useGetClearanceStatusesQuery,
+  useUpdateClearanceBasicsMutation,
+  useUpdateClearanceBeneficiariesMutation,
+  useUpdateClearanceCharacteristicsMutation,
+  useUpdateClearanceOpsEvalAndLearningMutation,
+  useUpdateClearanceParticipantsAndProvidersMutation,
+  useUpdateClearancePaymentsMutation
+} from 'gql/gen/graphql';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
@@ -24,23 +39,6 @@ import Modal from 'components/Modal';
 import PageHeading from 'components/PageHeading';
 import PageLoading from 'components/PageLoading';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
-import GetClearanceStatuses from 'queries/PrepareForClearance/GetClearanceStatuses';
-import {
-  GetClearanceStatuses as GetClearanceStatusesType,
-  GetClearanceStatusesVariables
-} from 'queries/PrepareForClearance/types/GetClearanceStatuses';
-import { UpdateClearanceBasics as UpdateClearanceBasicsType } from 'queries/PrepareForClearance/types/UpdateClearanceBasics';
-import { UpdateClearanceBeneficiaries as UpdateClearanceBeneficiariesType } from 'queries/PrepareForClearance/types/UpdateClearanceBeneficiaries';
-import { UpdateClearanceCharacteristics as UpdateClearanceCharacteristicsType } from 'queries/PrepareForClearance/types/UpdateClearanceCharacteristics';
-import { UpdateClearanceOpsEvalAndLearning as UpdateClearanceOpsEvalAndLearningType } from 'queries/PrepareForClearance/types/UpdateClearanceOpsEvalAndLearning';
-import { UpdateClearanceParticipantsAndProviders as UpdateClearanceParticipantsAndProvidersType } from 'queries/PrepareForClearance/types/UpdateClearanceParticipantsAndProviders';
-import { UpdateClearancePayments as UpdateClearancePaymentsType } from 'queries/PrepareForClearance/types/UpdateClearancePayments';
-import UpdateClearanceBasics from 'queries/PrepareForClearance/UpdateClearanceBasics';
-import UpdateClearanceBeneficiaries from 'queries/PrepareForClearance/UpdateClearanceBeneficiaries';
-import UpdateClearanceCharacteristics from 'queries/PrepareForClearance/UpdateClearanceCharacteristics';
-import UpdateClearanceOpsEvalAndLearning from 'queries/PrepareForClearance/UpdateClearanceOpsEvalAndLearning';
-import UpdateClearanceParticipantsAndProviders from 'queries/PrepareForClearance/UpdateClearanceParticipantsAndProviders';
-import UpdateClearancePayments from 'queries/PrepareForClearance/UpdateClearancePayments';
 import {
   PrepareForClearanceStatus,
   TaskStatus
@@ -65,13 +63,18 @@ type ClearanceReviewProps = {
   modelID: string;
 };
 
-type ClearanceParamProps = {
-  section: string;
-  sectionID: string;
+type MutationObjectType = {
+  basics: UpdateClearanceBasicsMutationFn;
+  characteristics: UpdateClearanceCharacteristicsMutationFn;
+  'participants-and-providers': UpdateClearanceParticipantsAndProvidersMutationFn;
+  beneficiaries: UpdateClearanceBeneficiariesMutationFn;
+  'ops-eval-and-learning': UpdateClearanceOpsEvalAndLearningMutationFn;
+  payment: UpdateClearancePaymentsMutationFn;
 };
 
-type MutationObjectType = {
-  [key: string]: MutationFunction;
+type ClearanceParamProps = {
+  section: keyof MutationObjectType;
+  sectionID: string;
 };
 
 type RouteMapType = {
@@ -133,10 +136,7 @@ export const ClearanceReview = ({ modelID }: ClearanceReviewProps) => {
     returnObjects: true
   });
 
-  const { data, loading, error } = useQuery<
-    GetClearanceStatusesType,
-    GetClearanceStatusesVariables
-  >(GetClearanceStatuses, {
+  const { data, loading, error } = useGetClearanceStatusesQuery({
     variables: {
       id: modelID
     }
@@ -153,35 +153,21 @@ export const ClearanceReview = ({ modelID }: ClearanceReviewProps) => {
       modelPlanSection as keyof ClearanceStatusesModelPlanFormType
     ].status === TaskStatus.READY_FOR_CLEARANCE;
 
-  const [updateBasics] = useMutation<UpdateClearanceBasicsType>(
-    UpdateClearanceBasics
-  );
+  const [updateBasics] = useUpdateClearanceBasicsMutation();
 
-  const [
-    updateCharacteristics
-  ] = useMutation<UpdateClearanceCharacteristicsType>(
-    UpdateClearanceCharacteristics
-  );
+  const [updateCharacteristics] = useUpdateClearanceCharacteristicsMutation();
 
   const [
     updateParticipantsAndProviders
-  ] = useMutation<UpdateClearanceParticipantsAndProvidersType>(
-    UpdateClearanceParticipantsAndProviders
-  );
+  ] = useUpdateClearanceParticipantsAndProvidersMutation();
 
-  const [updateBeneficiaries] = useMutation<UpdateClearanceBeneficiariesType>(
-    UpdateClearanceBeneficiaries
-  );
+  const [updateBeneficiaries] = useUpdateClearanceBeneficiariesMutation();
 
   const [
     updateOpsEvalAndLearning
-  ] = useMutation<UpdateClearanceOpsEvalAndLearningType>(
-    UpdateClearanceOpsEvalAndLearning
-  );
+  ] = useUpdateClearanceOpsEvalAndLearningMutation();
 
-  const [updatePayments] = useMutation<UpdateClearancePaymentsType>(
-    UpdateClearancePayments
-  );
+  const [updatePayments] = useUpdateClearancePaymentsMutation();
 
   // Object to dynamically call each task list mutation within handleFormSubmit
   const clearanceMutations: MutationObjectType = {
@@ -193,11 +179,11 @@ export const ClearanceReview = ({ modelID }: ClearanceReviewProps) => {
     payment: updatePayments
   };
 
-  const handleFormSubmit = (taskSection: string) => {
+  const handleFormSubmit = (taskSection: keyof MutationObjectType) => {
     clearanceMutations[taskSection]({
       variables: {
         id: sectionID,
-        changes: { status: TaskStatus.READY_FOR_CLEARANCE }
+        changes: { status: TaskStatusInput.READY_FOR_CLEARANCE }
       }
     })
       .then(response => {

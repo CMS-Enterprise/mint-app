@@ -1,6 +1,6 @@
 import { gql } from '@apollo/client';
 
-export default gql`
+export default gql(/* GraphQL */ `
   query GetOperationalNeedAnswer(
     $id: UUID!
     $generalCharacteristics: Boolean!
@@ -77,4 +77,4 @@ export default gql`
       }
     }
   }
-`;
+`);

@@ -7,7 +7,6 @@ Queries and displays SolutionCard component when a custom solution/operationalSo
 import React, { useContext, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
-import { useMutation, useQuery } from '@apollo/client';
 import {
   Breadcrumb,
   BreadcrumbBar,
@@ -20,6 +19,13 @@ import {
   Label
 } from '@trussworks/react-uswds';
 import { Form, Formik, FormikProps } from 'formik';
+import {
+  useCreateOperationalSolutionMutation,
+  useGetOperationalSolutionQuery,
+  useGetPossibleOperationalSolutionsQuery,
+  useUpdateOperationalSolutionMutation
+} from 'gql/gen/graphql';
+import { GetOperationalSolution_operationalSolution as GetOperationalSolutionOperationalSolutionType } from 'gql/gen/types/GetOperationalSolution';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import PageHeading from 'components/PageHeading';
@@ -29,18 +35,6 @@ import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import RequiredAsterisk from 'components/shared/RequiredAsterisk';
-import CreateOperationalSolution from 'queries/ITSolutions/CreateOperationalSolution';
-import GetOperationalSolution from 'queries/ITSolutions/GetOperationalSolution';
-import GetPossibleOperationalSolutions from 'queries/ITSolutions/GetPossibleOperationalSolutions';
-import { CreateOperationalSolutionVariables } from 'queries/ITSolutions/types/CreateOperationalSolution';
-import {
-  GetOperationalSolution as GetOperationalSolutionType,
-  GetOperationalSolution_operationalSolution as GetOperationalSolutionOperationalSolutionType,
-  GetOperationalSolutionVariables
-} from 'queries/ITSolutions/types/GetOperationalSolution';
-import { GetPossibleOperationalSolutions as GetPossibleOperationalSolutionsType } from 'queries/ITSolutions/types/GetPossibleOperationalSolutions';
-import { UpdateOperationalSolutionVariables } from 'queries/ITSolutions/types/UpdateOperationalSolution';
-import UpdateOperationalSolution from 'queries/ITSolutions/UpdateOperationalSolution';
 import {
   OperationalSolutionKey,
   OpSolutionStatus
@@ -55,7 +49,7 @@ import NeedQuestionAndAnswer from '../_components/NeedQuestionAndAnswer';
 import SolutionCard from '../_components/SolutionCard';
 
 type OperationalSolutionFormType = {
-  key: OperationalSolutionKey | string;
+  key?: OperationalSolutionKey;
 };
 
 const AddSolution = () => {
@@ -82,20 +76,11 @@ const AddSolution = () => {
   // State management for mutation errors
   const [mutationError, setMutationError] = useState<boolean>(false);
 
-  const {
-    data,
-    loading,
-    error
-  } = useQuery<GetPossibleOperationalSolutionsType>(
-    GetPossibleOperationalSolutions
-  );
+  const { data, loading, error } = useGetPossibleOperationalSolutionsQuery();
 
   const possibleOperationalSolutions = data?.possibleOperationalSolutions || [];
 
-  const { data: customData } = useQuery<
-    GetOperationalSolutionType,
-    GetOperationalSolutionVariables
-  >(GetOperationalSolution, {
+  const { data: customData } = useGetOperationalSolutionQuery({
     variables: {
       // Query will be skipped if not present, need to default to string to appease ts
       id: operationalSolutionID || ''
@@ -120,18 +105,14 @@ const AddSolution = () => {
 
   // Initial/default formik value
   const additionalSolution: OperationalSolutionFormType = {
-    key: operationalSolutionID ? OperationalSolutionKey.OTHER_NEW_PROCESS : ''
+    key: operationalSolutionID
+      ? OperationalSolutionKey.OTHER_NEW_PROCESS
+      : undefined
   };
 
-  const [createSolution] = useMutation<CreateOperationalSolutionVariables>(
-    CreateOperationalSolution
-  );
+  const [createSolution] = useCreateOperationalSolutionMutation();
 
-  const [
-    updateCustomSolution
-  ] = useMutation<UpdateOperationalSolutionVariables>(
-    UpdateOperationalSolution
-  );
+  const [updateCustomSolution] = useUpdateOperationalSolutionMutation();
 
   const treatAsOtherSolutions = [
     OperationalSolutionKey.CONTRACTOR,

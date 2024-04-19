@@ -37,6 +37,7 @@ import {
   GetAllPaymentsQuery,
   GetModelCollaboratorsDocument,
   GetModelSummaryDocument,
+  GetOperationalNeedsDocument,
   KeyCharacteristic,
   ModelCategory,
   ModelLearningSystemType,
@@ -71,9 +72,7 @@ import {
 } from 'gql/gen/graphql';
 import { GetModelCollaborators_modelPlan_collaborators as GetModelCollaboratorsType } from 'gql/gen/types/GetModelCollaborators';
 import { GetModelSummary_modelPlan as GetModelSummaryTypes } from 'gql/gen/types/GetModelSummary';
-
-import GetOperationalNeeds from 'queries/ITSolutions/GetOperationalNeeds';
-import { GetOperationalNeeds as GetOperationalNeedsType } from 'queries/ITSolutions/types/GetOperationalNeeds';
+import { GetOperationalNeeds as GetOperationalNeedsType } from 'gql/gen/types/GetOperationalNeeds';
 
 export const modelID: string = 'f11eb129-2c80-4080-9440-439cbe1a286f';
 
@@ -820,7 +819,7 @@ const opNeedsData: GetOperationalNeedsType = {
 export const operationalNeedsMock = [
   {
     request: {
-      query: GetOperationalNeeds,
+      query: GetOperationalNeedsDocument,
       variables: { id: modelID }
     },
     result: {

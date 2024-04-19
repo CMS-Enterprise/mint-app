@@ -1,6 +1,6 @@
 import { gql } from '@apollo/client';
 
-export default gql`
+export default gql(/* GraphQL */ `
   mutation UpdatePrepareForClearance(
     $basicsID: UUID!
     $basicsChanges: PlanBasicsChanges!
@@ -76,4 +76,4 @@ export default gql`
       status
     }
   }
-`;
+`);

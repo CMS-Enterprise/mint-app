@@ -1,6 +1,6 @@
 import { gql } from '@apollo/client';
 
-export default gql`
+export default gql(/* GraphQL */ `
   mutation CreateOperationalSolutionSubtasks(
     $solutionID: UUID!
     $inputs: [CreateOperationalSolutionSubtaskInput!]!
@@ -13,4 +13,4 @@ export default gql`
       status
     }
   }
-`;
+`);

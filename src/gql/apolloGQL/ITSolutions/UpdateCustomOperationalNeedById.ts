@@ -1,13 +1,13 @@
 import { gql } from '@apollo/client';
 
-export default gql`
-  mutation UpdateCustomOperationalNeed(
-    $modelPlanID: UUID!
+export default gql(/* GraphQL */ `
+  mutation UpdateCustomOperationalNeedById(
+    $id: UUID!
     $customNeedType: String!
     $needed: Boolean!
   ) {
-    addOrUpdateCustomOperationalNeed(
-      modelPlanID: $modelPlanID
+    updateCustomOperationalNeedByID(
+      id: $id
       customNeedType: $customNeedType
       needed: $needed
     ) {
@@ -17,4 +17,4 @@ export default gql`
       key
     }
   }
-`;
+`);

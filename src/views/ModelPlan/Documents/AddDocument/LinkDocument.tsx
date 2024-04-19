@@ -5,6 +5,7 @@ import { useMutation } from '@apollo/client';
 import { Button, Label, TextInput } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
 import LinkNewPlanDocument from 'gql/apolloGQL/Documents/LinkNewPlanDocument';
+import { useCreateDocumentSolutionLinksMutation } from 'gql/gen/graphql';
 
 import BooleanRadio from 'components/BooleanRadioForm';
 import Alert from 'components/shared/Alert';
@@ -17,8 +18,6 @@ import TextAreaField from 'components/shared/TextAreaField';
 import TextField from 'components/shared/TextField';
 import useMessage from 'hooks/useMessage';
 import usePlanTranslation from 'hooks/usePlanTranslation';
-import CreateDocumentSolutionLinks from 'queries/ITSolutions/CreateDocumentSolutionLinks';
-import { CreateDocumentSolutionLinksVariables } from 'queries/ITSolutions/types/CreateDocumentSolutionLinks';
 import { LinkingDocumentFormTypes } from 'types/files';
 import { DocumentType } from 'types/graphql-global-types';
 import { getKeys } from 'types/translation';
@@ -66,11 +65,7 @@ const LinkDocument = ({
       </Alert>
     );
 
-  const [
-    createSolutionLinks
-  ] = useMutation<CreateDocumentSolutionLinksVariables>(
-    CreateDocumentSolutionLinks
-  );
+  const [createSolutionLinks] = useCreateDocumentSolutionLinksMutation();
 
   // Uploads the document to s3 bucket and create document on BE
   const onSubmit = ({

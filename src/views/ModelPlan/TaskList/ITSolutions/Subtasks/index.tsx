@@ -1,7 +1,6 @@
 import React, { useContext, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
-import { useMutation, useQuery } from '@apollo/client';
 import {
   Button,
   Fieldset,
@@ -12,6 +11,14 @@ import {
   TextInput
 } from '@trussworks/react-uswds';
 import { Field, FieldArray, Form, Formik, FormikProps } from 'formik';
+import {
+  useCreateOperationalSolutionSubtasksMutation,
+  useDeleteOperationalSolutionSubtaskMutation,
+  useGetOperationalSolutionQuery,
+  useUpdateOperationalSolutionSubtasksMutation
+} from 'gql/gen/graphql';
+import { CreateOperationalSolutionSubtasks_createOperationalSolutionSubtasks as CreateType } from 'gql/gen/types/CreateOperationalSolutionSubtasks';
+import { GetOperationalSolution_operationalSolution_operationalSolutionSubtasks as UpdateType } from 'gql/gen/types/GetOperationalSolution';
 
 import Breadcrumbs from 'components/Breadcrumbs';
 import Modal from 'components/Modal';
@@ -24,22 +31,6 @@ import FieldGroup from 'components/shared/FieldGroup';
 import RequiredAsterisk from 'components/shared/RequiredAsterisk';
 import useMessage from 'hooks/useMessage';
 import usePlanTranslation from 'hooks/usePlanTranslation';
-import CreateOperationalSolutionSubtasks from 'queries/ITSolutions/CreateOperationalSolutionSubtasks';
-import DeleteOperationalSolutionSubtasks from 'queries/ITSolutions/DeleteOperationalSolutionSubtasks';
-import GetOperationalSolution from 'queries/ITSolutions/GetOperationalSolution';
-import {
-  CreateOperationalSolutionSubtasks as CreateSubTasksType,
-  CreateOperationalSolutionSubtasks_createOperationalSolutionSubtasks as CreateType,
-  CreateOperationalSolutionSubtasksVariables
-} from 'queries/ITSolutions/types/CreateOperationalSolutionSubtasks';
-import { DeleteOperationalSolutionSubtaskVariables } from 'queries/ITSolutions/types/DeleteOperationalSolutionSubtask';
-import {
-  GetOperationalSolution as GetOperationalSolutionType,
-  GetOperationalSolution_operationalSolution_operationalSolutionSubtasks as UpdateType,
-  GetOperationalSolutionVariables
-} from 'queries/ITSolutions/types/GetOperationalSolution';
-import { UpdateOperationalSolutionSubtasksVariables } from 'queries/ITSolutions/types/UpdateOperationalSolutionSubtasks';
-import UpdateOperationalSolutionSubtasks from 'queries/ITSolutions/UpdateOperationalSolutionSubtasks';
 import { OperationalSolutionSubtaskStatus } from 'types/graphql-global-types';
 import { getKeys } from 'types/translation';
 import flattenErrors from 'utils/flattenErrors';
@@ -92,10 +83,12 @@ const Subtasks = ({
   const [inputName, setInputName] = useState('');
   const [inputId, setInputId] = useState('');
 
-  const { data: solutionData, loading, error, refetch } = useQuery<
-    GetOperationalSolutionType,
-    GetOperationalSolutionVariables
-  >(GetOperationalSolution, {
+  const {
+    data: solutionData,
+    loading,
+    error,
+    refetch
+  } = useGetOperationalSolutionQuery({
     variables: {
       id: operationalSolutionID
     }
@@ -119,20 +112,11 @@ const Subtasks = ({
           ]
   };
 
-  const [create] = useMutation<
-    CreateSubTasksType,
-    CreateOperationalSolutionSubtasksVariables
-  >(CreateOperationalSolutionSubtasks);
+  const [create] = useCreateOperationalSolutionSubtasksMutation();
 
-  const [update] = useMutation<UpdateOperationalSolutionSubtasksVariables>(
-    UpdateOperationalSolutionSubtasks
-  );
+  const [update] = useUpdateOperationalSolutionSubtasksMutation();
 
-  const [
-    removeSubtask
-  ] = useMutation<DeleteOperationalSolutionSubtaskVariables>(
-    DeleteOperationalSolutionSubtasks
-  );
+  const [removeSubtask] = useDeleteOperationalSolutionSubtaskMutation();
 
   const handleDelete = (name: string, id: string) => {
     removeSubtask({

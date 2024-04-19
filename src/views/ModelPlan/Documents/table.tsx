@@ -8,7 +8,6 @@ import React, {
 import { useTranslation } from 'react-i18next';
 import { RootStateOrAny, useSelector } from 'react-redux';
 import { useFilters, usePagination, useSortBy, useTable } from 'react-table';
-import { useQuery } from '@apollo/client';
 import {
   Alert,
   Button,
@@ -19,8 +18,11 @@ import {
 import classNames from 'classnames';
 import {
   DocumentType,
-  useDeleteModelPlanDocumentMutation
+  GetModelPlanDocumentsQuery,
+  useDeleteModelPlanDocumentMutation,
+  useGetModelPlanDocumentsQuery
 } from 'gql/gen/graphql';
+import { GetOperationalSolution_operationalSolution_documents as SolutionDocumentType } from 'gql/gen/types/GetOperationalSolution';
 import { useFlags } from 'launchdarkly-react-client-sdk';
 
 import Modal from 'components/Modal';
@@ -29,13 +31,6 @@ import PageLoading from 'components/PageLoading';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import ExternalLinkModal from 'components/shared/ExternalLinkModal';
 import usePlanTranslation from 'hooks/usePlanTranslation';
-import GetModelPlanDocuments from 'queries/Documents/GetModelPlanDocuments';
-import {
-  GetModelPlanDocuments as GetModelPlanDocumentsType,
-  GetModelPlanDocuments_modelPlan_documents as GetDocumentType,
-  GetModelPlanDocumentsVariables
-} from 'queries/Documents/types/GetModelPlanDocuments';
-import { GetOperationalSolution_operationalSolution_documents as SolutionDocumentType } from 'queries/ITSolutions/types/GetOperationalSolution';
 import { formatDateLocal } from 'utils/date';
 import downloadFile from 'utils/downloadFile';
 import globalFilterCellText from 'utils/globalFilterCellText';
@@ -61,6 +56,7 @@ type PlanDocumentsTableProps = {
   className?: string;
 };
 
+type GetDocumentType = GetModelPlanDocumentsQuery['modelPlan']['documents'][0];
 type DocumentStatusType = 'success' | 'error';
 
 const PlanDocumentsTable = ({
@@ -74,10 +70,12 @@ const PlanDocumentsTable = ({
   className
 }: PlanDocumentsTableProps) => {
   const { t } = useTranslation('documentsMisc');
-  const { error, loading, data, refetch: refetchDocuments } = useQuery<
-    GetModelPlanDocumentsType,
-    GetModelPlanDocumentsVariables
-  >(GetModelPlanDocuments, {
+  const {
+    error,
+    loading,
+    data,
+    refetch: refetchDocuments
+  } = useGetModelPlanDocumentsQuery({
     variables: {
       id: modelID
     },
