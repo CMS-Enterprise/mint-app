@@ -48,7 +48,7 @@ export const discussionsMisc: Record<string, string | NestedTranslation> = {
   modalHeading: 'Model discussions',
   discussionBanner: {
     discussion: ' discussion',
-    discussion_plural: ' discussions'
+    discussion_other: ' discussions'
   },
   discussionPanelHeading: 'Start a discussion',
   discussionPanelReply: 'Discussion',
@@ -59,7 +59,7 @@ export const discussionsMisc: Record<string, string | NestedTranslation> = {
   askAQuestionLink: 'Start a discussion',
   reply: 'Reply',
   replies: '{{count}} reply',
-  replies_plural: '{{count}} replies',
+  replies_other: '{{count}} replies',
   replies_0: 'No replies',
   typeReply: 'Type your reply',
   save: 'Save discussion',
@@ -68,9 +68,9 @@ export const discussionsMisc: Record<string, string | NestedTranslation> = {
   useLinkAbove:
     'There are no new discussion topics. Start a discussion and it will appear here.',
   newDiscussionTopics: '{{count}} new discussion topic',
-  newDiscussionTopics_plural: '{{count}} new discussion topics',
+  newDiscussionTopics_other: '{{count}} new discussion topics',
   discussionWithCount: '{{count}} discussion',
-  discussionWithCount_plural: '{{count}} discussions',
+  discussionWithCount_other: '{{count}} discussions',
   answered: 'answered question',
   viewDiscussions: 'View discussions',
   success: 'Success! Your discussion topic has been added.',
