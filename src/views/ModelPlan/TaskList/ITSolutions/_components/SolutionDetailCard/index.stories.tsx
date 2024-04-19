@@ -1,10 +1,10 @@
 import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { Meta } from '@storybook/react';
+import { GetOperationalSolution_operationalSolution as GetOperationalSolutionType } from 'gql/gen/types/GetOperationalSolution';
 
 import { needQuestionAndAnswerMock } from 'data/mock/solutions';
 import { MessageProvider } from 'hooks/useMessage';
-import { GetOperationalSolution_operationalSolution as GetOperationalSolutionType } from 'queries/ITSolutions/types/GetOperationalSolution';
 import {
   OperationalSolutionKey,
   OpSolutionStatus

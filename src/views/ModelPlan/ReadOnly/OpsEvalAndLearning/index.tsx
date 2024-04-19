@@ -184,6 +184,95 @@ const ReadOnlyOpsEvalAndLearning = ({
     filteredView
   );
 
+  const renderContent = () => {
+    if (!filteredView) {
+      return (
+        <>
+          {/* First few sections of Ops data that can be automated */}
+          <ReadOnlyBody
+            data={allOpsEvalAndLearningData}
+            config={opsEvalAndLearningConfigOne}
+            filteredView={filteredView}
+          />
+
+          {/* CCWAndQuality */}
+          <div
+            className={`${
+              filteredView
+                ? ''
+                : 'margin-top-4 padding-top-4 border-top-1px border-base-light'
+            }`}
+          >
+            {!filteredView && (
+              <h3 className="margin-top-0">
+                {opsEvalAndLearningMiscT('ccwSpecificReadonly')}
+              </h3>
+            )}
+
+            <RelatedUnneededQuestions
+              id="quality-questions"
+              config={opsEvalAndLearningConfig.ccmInvolvment}
+              value={allOpsEvalAndLearningData.ccmInvolvment}
+              childrenToCheck={
+                filteredView ? claimsFilterGroupFields : undefined
+              }
+            />
+
+            <ReadOnlyBody
+              data={allOpsEvalAndLearningData}
+              config={ccwConfig}
+              filteredView={filteredView}
+            />
+          </div>
+
+          {/* Quality */}
+          <div
+            className={`${
+              filteredView
+                ? ''
+                : 'margin-top-4 padding-top-4 border-top-1px border-base-light'
+            }`}
+          >
+            {!filteredView && (
+              <h3 className="margin-top-0">
+                {opsEvalAndLearningMiscT('qualityReadonly')}
+              </h3>
+            )}
+
+            <RelatedUnneededQuestions
+              id="data-needed-for-monitoring-questions"
+              config={opsEvalAndLearningConfig.dataNeededForMonitoring}
+              value={allOpsEvalAndLearningData.dataNeededForMonitoring}
+              childrenToCheck={
+                filteredView ? qualityFilterGroupFields : undefined
+              }
+            />
+
+            <ReadOnlyBody
+              data={allOpsEvalAndLearningData}
+              config={qualityConfig}
+              filteredView={filteredView}
+            />
+          </div>
+
+          {/* Last sections of Ops data that can be automated */}
+          <ReadOnlyBody
+            data={allOpsEvalAndLearningData}
+            config={opsEvalAndLearningConfigTwo}
+            filteredView={filteredView}
+          />
+        </>
+      );
+    }
+    return (
+      <ReadOnlyBody
+        data={allOpsEvalAndLearningData}
+        config={opsEvalAndLearningConfig}
+        filteredView={filteredView}
+      />
+    );
+  };
+
   return (
     <div
       className="read-only-model-plan--ops-eval-and-learning"
@@ -207,89 +296,7 @@ const ReadOnlyOpsEvalAndLearning = ({
         </p>
       )}
 
-      {loading && !data ? (
-        <PageLoading />
-      ) : (
-        <>
-          {/* First few sections of Ops data that can be automated */}
-          <ReadOnlyBody
-            data={allOpsEvalAndLearningData}
-            config={opsEvalAndLearningConfigOne}
-            filteredView={filteredView}
-          />
-
-          {/* CCWAndQuality */}
-          {(!filteredView || claimsFilterGroupFields.length > 0) && (
-            <div
-              className={`${
-                filteredView
-                  ? ''
-                  : 'margin-top-4 padding-top-4 border-top-1px border-base-light'
-              }`}
-            >
-              {!filteredView && (
-                <h3 className="margin-top-0">
-                  {opsEvalAndLearningMiscT('ccwSpecificReadonly')}
-                </h3>
-              )}
-
-              <RelatedUnneededQuestions
-                id="quality-questions"
-                config={opsEvalAndLearningConfig.ccmInvolvment}
-                value={allOpsEvalAndLearningData.ccmInvolvment}
-                childrenToCheck={
-                  filteredView ? claimsFilterGroupFields : undefined
-                }
-              />
-
-              <ReadOnlyBody
-                data={allOpsEvalAndLearningData}
-                config={ccwConfig}
-                filteredView={filteredView}
-              />
-            </div>
-          )}
-
-          {/* Quality */}
-          {(!filteredView || qualityFilterGroupFields.length > 0) && (
-            <div
-              className={`${
-                filteredView
-                  ? ''
-                  : 'margin-top-4 padding-top-4 border-top-1px border-base-light'
-              }`}
-            >
-              {!filteredView && (
-                <h3 className="margin-top-0">
-                  {opsEvalAndLearningMiscT('qualityReadonly')}
-                </h3>
-              )}
-
-              <RelatedUnneededQuestions
-                id="data-needed-for-monitoring-questions"
-                config={opsEvalAndLearningConfig.dataNeededForMonitoring}
-                value={allOpsEvalAndLearningData.dataNeededForMonitoring}
-                childrenToCheck={
-                  filteredView ? qualityFilterGroupFields : undefined
-                }
-              />
-
-              <ReadOnlyBody
-                data={allOpsEvalAndLearningData}
-                config={qualityConfig}
-                filteredView={filteredView}
-              />
-            </div>
-          )}
-
-          {/* Last sections of Ops data that can be automated */}
-          <ReadOnlyBody
-            data={allOpsEvalAndLearningData}
-            config={opsEvalAndLearningConfigTwo}
-            filteredView={filteredView}
-          />
-        </>
-      )}
+      {loading && !data ? <PageLoading /> : renderContent()}
     </div>
   );
 };

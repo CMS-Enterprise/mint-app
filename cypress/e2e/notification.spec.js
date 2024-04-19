@@ -79,7 +79,7 @@ describe('Notification Center', () => {
       .should('not.exist');
 
     // Mark all as read
-    cy.contains('button', 'Mark all as read').click();
+    cy.contains('button', 'Mark all').click();
 
     // No more red dots
     cy.get('[data-testid="navmenu__notifications--noNotification"').should(

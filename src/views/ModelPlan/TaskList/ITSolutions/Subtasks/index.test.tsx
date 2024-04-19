@@ -8,13 +8,13 @@ import {
   within
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { GetOperationalSolutionDocument } from 'gql/gen/graphql';
 
 import {
   needQuestionAndAnswerMock,
   possibleSolutionsMock
 } from 'data/mock/solutions';
 import { MessageProvider } from 'hooks/useMessage';
-import GetOperationalSolution from 'queries/ITSolutions/GetOperationalSolution';
 import {
   OperationalSolutionSubtaskStatus,
   OpSolutionStatus
@@ -30,7 +30,7 @@ const operationalSolutionID = '786f6717-f718-4657-8df9-58ec9bca5c1c';
 const mockData = [
   {
     request: {
-      query: GetOperationalSolution,
+      query: GetOperationalSolutionDocument,
       variables: {
         id: operationalSolutionID
       }

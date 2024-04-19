@@ -1,8 +1,8 @@
 import React from 'react';
+import { GetOperationalNeeds_modelPlan_operationalNeeds as GetOperationalNeedsOperationalNeedsType } from 'gql/gen/types/GetOperationalNeeds';
 import i18next from 'i18next';
 
 import UswdsReactLink from 'components/LinkWrapper';
-import { GetOperationalNeeds_modelPlan_operationalNeeds as GetOperationalNeedsOperationalNeedsType } from 'queries/ITSolutions/types/GetOperationalNeeds';
 import {
   OperationalNeedKey,
   OpSolutionStatus
@@ -81,7 +81,7 @@ describe('Operational Solutions Util', () => {
           }
         }}
       >
-        {i18next.t('itSolutions:itSolutionsTable.changePlanAnswer')}
+        {i18next.t('opSolutionsMisc:itSolutionsTable.changePlanAnswer')}
       </UswdsReactLink>
     );
 
@@ -97,12 +97,12 @@ describe('Operational Solutions Util', () => {
           to={`/models/${modelID}/task-list/it-solutions/${operationalNeed.needID}/solution-implementation-details/${operationalNeed.id}`}
           className="margin-right-2"
         >
-          {i18next.t('itSolutions:itSolutionsTable.updateStatus')}
+          {i18next.t('opSolutionsMisc:itSolutionsTable.updateStatus')}
         </UswdsReactLink>
         <UswdsReactLink
           to={`/models/${modelID}/task-list/it-solutions/${operationalNeed.needID}/${operationalNeed.id}/solution-details`}
         >
-          {i18next.t('itSolutions:itSolutionsTable.viewDetails')}
+          {i18next.t('opSolutionsMisc:itSolutionsTable.viewDetails')}
         </UswdsReactLink>
       </>
     );
@@ -122,7 +122,7 @@ describe('Operational Solutions Util', () => {
           }
         }}
       >
-        {i18next.t('itSolutions:itSolutionsTable.changeAnswer')}
+        {i18next.t('opSolutionsMisc:itSolutionsTable.changeAnswer')}
       </UswdsReactLink>
     );
   });

@@ -3191,12 +3191,26 @@ export type GetModelPlanDocumentQueryVariables = Exact<{
 
 export type GetModelPlanDocumentQuery = { __typename: 'Query', planDocument: { __typename: 'PlanDocument', id: UUID, modelPlanID: UUID, fileType: string, bucket: string, fileKey: string, virusScanned: boolean, virusClean: boolean, fileName: string, fileSize: number, restricted: boolean, documentType: DocumentType, otherType?: string | null, createdDts: Time } };
 
+export type GetModelPlanDocumentsQueryVariables = Exact<{
+  id: Scalars['UUID']['input'];
+}>;
+
+
+export type GetModelPlanDocumentsQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, isCollaborator: boolean, documents: Array<{ __typename: 'PlanDocument', id: UUID, virusScanned: boolean, virusClean: boolean, fileName: string, fileType: string, downloadUrl?: string | null, restricted: boolean, documentType: DocumentType, createdDts: Time, optionalNotes?: string | null, otherType?: string | null, numLinkedSolutions: number, isLink: boolean, url?: string | null }> } };
+
 export type LinkNewPlanDocumentMutationVariables = Exact<{
   input: PlanDocumentLinkInput;
 }>;
 
 
 export type LinkNewPlanDocumentMutation = { __typename: 'Mutation', linkNewPlanDocument: { __typename: 'PlanDocument', id: UUID } };
+
+export type UploadNewPlanDocumentMutationVariables = Exact<{
+  input: PlanDocumentInput;
+}>;
+
+
+export type UploadNewPlanDocumentMutation = { __typename: 'Mutation', uploadNewPlanDocument: { __typename: 'PlanDocument', id: UUID } };
 
 export type AddPlanFavoriteMutationVariables = Exact<{
   modelPlanID: Scalars['UUID']['input'];
@@ -3287,6 +3301,151 @@ export type UpdatePlanGeneralCharacteristicsMutationVariables = Exact<{
 
 
 export type UpdatePlanGeneralCharacteristicsMutation = { __typename: 'Mutation', updatePlanGeneralCharacteristics: { __typename: 'PlanGeneralCharacteristics', id: UUID } };
+
+export type CreateDocumentSolutionLinksMutationVariables = Exact<{
+  solutionID: Scalars['UUID']['input'];
+  documentIDs: Array<Scalars['UUID']['input']> | Scalars['UUID']['input'];
+}>;
+
+
+export type CreateDocumentSolutionLinksMutation = { __typename: 'Mutation', createPlanDocumentSolutionLinks?: Array<{ __typename: 'PlanDocumentSolutionLink', id: UUID }> | null };
+
+export type CreateOperationalSolutionMutationVariables = Exact<{
+  operationalNeedID: Scalars['UUID']['input'];
+  solutionType?: InputMaybe<OperationalSolutionKey>;
+  changes: OperationalSolutionChanges;
+}>;
+
+
+export type CreateOperationalSolutionMutation = { __typename: 'Mutation', createOperationalSolution: { __typename: 'OperationalSolution', id: UUID, nameOther?: string | null, needed?: boolean | null, key?: OperationalSolutionKey | null } };
+
+export type CreateOperationalSolutionSubtasksMutationVariables = Exact<{
+  solutionID: Scalars['UUID']['input'];
+  inputs: Array<CreateOperationalSolutionSubtaskInput> | CreateOperationalSolutionSubtaskInput;
+}>;
+
+
+export type CreateOperationalSolutionSubtasksMutation = { __typename: 'Mutation', createOperationalSolutionSubtasks?: Array<{ __typename: 'OperationalSolutionSubtask', name: string, status: OperationalSolutionSubtaskStatus }> | null };
+
+export type DeleteDocumentSolutionLinkMutationVariables = Exact<{
+  solutionID: Scalars['UUID']['input'];
+  documentIDs: Array<Scalars['UUID']['input']> | Scalars['UUID']['input'];
+}>;
+
+
+export type DeleteDocumentSolutionLinkMutation = { __typename: 'Mutation', removePlanDocumentSolutionLinks: boolean };
+
+export type DeleteOperationalSolutionSubtaskMutationVariables = Exact<{
+  id: Scalars['UUID']['input'];
+}>;
+
+
+export type DeleteOperationalSolutionSubtaskMutation = { __typename: 'Mutation', deleteOperationalSolutionSubtask: number };
+
+export type GetOperationalNeedQueryVariables = Exact<{
+  id: Scalars['UUID']['input'];
+  includeNotNeeded?: InputMaybe<Scalars['Boolean']['input']>;
+}>;
+
+
+export type GetOperationalNeedQuery = { __typename: 'Query', operationalNeed: { __typename: 'OperationalNeed', id: UUID, modelPlanID: UUID, name?: string | null, key?: OperationalNeedKey | null, nameOther?: string | null, needed?: boolean | null, solutions: Array<{ __typename: 'OperationalSolution', id: UUID, name?: string | null, key?: OperationalSolutionKey | null, pocName?: string | null, pocEmail?: string | null, needed?: boolean | null, nameOther?: string | null, isOther: boolean, isCommonSolution: boolean, otherHeader?: string | null, mustStartDts?: Time | null, mustFinishDts?: Time | null, status: OpSolutionStatus }> } };
+
+export type GetOperationalNeedAnswerQueryVariables = Exact<{
+  id: Scalars['UUID']['input'];
+  generalCharacteristics: Scalars['Boolean']['input'];
+  participantsAndProviders: Scalars['Boolean']['input'];
+  beneficiaries: Scalars['Boolean']['input'];
+  opsEvalAndLearning: Scalars['Boolean']['input'];
+  payments: Scalars['Boolean']['input'];
+  managePartCDEnrollment: Scalars['Boolean']['input'];
+  collectPlanBids: Scalars['Boolean']['input'];
+  planContractUpdated: Scalars['Boolean']['input'];
+  agreementTypes: Scalars['Boolean']['input'];
+  recruitmentMethod: Scalars['Boolean']['input'];
+  selectionMethod: Scalars['Boolean']['input'];
+  communicationMethod: Scalars['Boolean']['input'];
+  providerOverlap: Scalars['Boolean']['input'];
+  participantsIds: Scalars['Boolean']['input'];
+  beneficiaryOverlap: Scalars['Boolean']['input'];
+  helpdeskUse: Scalars['Boolean']['input'];
+  iddocSupport: Scalars['Boolean']['input'];
+  benchmarkForPerformance: Scalars['Boolean']['input'];
+  appealPerformance: Scalars['Boolean']['input'];
+  appealFeedback: Scalars['Boolean']['input'];
+  appealPayments: Scalars['Boolean']['input'];
+  appealOther: Scalars['Boolean']['input'];
+  evaluationApproaches: Scalars['Boolean']['input'];
+  dataNeededForMonitoring: Scalars['Boolean']['input'];
+  dataToSendParticicipants: Scalars['Boolean']['input'];
+  modelLearningSystems: Scalars['Boolean']['input'];
+  developNewQualityMeasures: Scalars['Boolean']['input'];
+  payType: Scalars['Boolean']['input'];
+  shouldAnyProvidersExcludedFFSSystems: Scalars['Boolean']['input'];
+  nonClaimsPayments: Scalars['Boolean']['input'];
+  willRecoverPayments: Scalars['Boolean']['input'];
+}>;
+
+
+export type GetOperationalNeedAnswerQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, generalCharacteristics?: { __typename: 'PlanGeneralCharacteristics', managePartCDEnrollment?: boolean | null, collectPlanBids?: boolean | null, planContractUpdated?: boolean | null, agreementTypes?: Array<AgreementType> }, participantsAndProviders?: { __typename: 'PlanParticipantsAndProviders', recruitmentMethod?: RecruitmentType | null, selectionMethod?: Array<ParticipantSelectionType>, communicationMethod?: Array<ParticipantCommunicationType>, providerOverlap?: OverlapType | null, participantsIds?: Array<ParticipantsIdType> }, beneficiaries?: { __typename: 'PlanBeneficiaries', beneficiaryOverlap?: OverlapType | null }, opsEvalAndLearning?: { __typename: 'PlanOpsEvalAndLearning', helpdeskUse?: boolean | null, iddocSupport?: boolean | null, benchmarkForPerformance?: BenchmarkForPerformanceType | null, appealPerformance?: boolean | null, appealFeedback?: boolean | null, appealPayments?: boolean | null, appealOther?: boolean | null, evaluationApproaches?: Array<EvaluationApproachType>, dataNeededForMonitoring?: Array<DataForMonitoringType>, dataToSendParticicipants?: Array<DataToSendParticipantsType>, modelLearningSystems?: Array<ModelLearningSystemType>, developNewQualityMeasures?: boolean | null }, payments?: { __typename: 'PlanPayments', payType?: Array<PayType>, shouldAnyProvidersExcludedFFSSystems?: boolean | null, nonClaimsPayments?: Array<NonClaimsBasedPayType>, willRecoverPayments?: boolean | null } } };
+
+export type GetOperationalNeedsQueryVariables = Exact<{
+  id: Scalars['UUID']['input'];
+}>;
+
+
+export type GetOperationalNeedsQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, isCollaborator: boolean, operationalNeeds: Array<{ __typename: 'OperationalNeed', id: UUID, modelPlanID: UUID, name?: string | null, key?: OperationalNeedKey | null, nameOther?: string | null, needed?: boolean | null, modifiedDts?: Time | null, solutions: Array<{ __typename: 'OperationalSolution', id: UUID, status: OpSolutionStatus, name?: string | null, mustStartDts?: Time | null, mustFinishDts?: Time | null, needed?: boolean | null, nameOther?: string | null, key?: OperationalSolutionKey | null, otherHeader?: string | null, pocEmail?: string | null, pocName?: string | null, createdBy: UUID, createdDts: Time, operationalSolutionSubtasks: Array<{ __typename: 'OperationalSolutionSubtask', id: UUID }> }> }> } };
+
+export type GetOperationalSolutionQueryVariables = Exact<{
+  id: Scalars['UUID']['input'];
+}>;
+
+
+export type GetOperationalSolutionQuery = { __typename: 'Query', operationalSolution: { __typename: 'OperationalSolution', id: UUID, key?: OperationalSolutionKey | null, needed?: boolean | null, name?: string | null, nameOther?: string | null, pocName?: string | null, pocEmail?: string | null, status: OpSolutionStatus, isOther: boolean, isCommonSolution: boolean, otherHeader?: string | null, mustFinishDts?: Time | null, mustStartDts?: Time | null, documents: Array<{ __typename: 'PlanDocument', id: UUID, virusScanned: boolean, virusClean: boolean, fileName: string, fileType: string, downloadUrl?: string | null, restricted: boolean, documentType: DocumentType, createdDts: Time, optionalNotes?: string | null, otherType?: string | null, numLinkedSolutions: number, isLink: boolean, url?: string | null }>, operationalSolutionSubtasks: Array<{ __typename: 'OperationalSolutionSubtask', id: UUID, name: string, status: OperationalSolutionSubtaskStatus }> } };
+
+export type GetOperationalSolutionSubtasksQueryVariables = Exact<{
+  id: Scalars['UUID']['input'];
+}>;
+
+
+export type GetOperationalSolutionSubtasksQuery = { __typename: 'Query', operationalSolution: { __typename: 'OperationalSolution', id: UUID, operationalSolutionSubtasks: Array<{ __typename: 'OperationalSolutionSubtask', id: UUID, solutionID: UUID, name: string, status: OperationalSolutionSubtaskStatus }> } };
+
+export type GetPossibleOperationalSolutionsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetPossibleOperationalSolutionsQuery = { __typename: 'Query', possibleOperationalSolutions: Array<{ __typename: 'PossibleOperationalSolution', id: number, name: string, key: OperationalSolutionKey }> };
+
+export type UpdateCustomOperationalNeedMutationVariables = Exact<{
+  modelPlanID: Scalars['UUID']['input'];
+  customNeedType: Scalars['String']['input'];
+  needed: Scalars['Boolean']['input'];
+}>;
+
+
+export type UpdateCustomOperationalNeedMutation = { __typename: 'Mutation', addOrUpdateCustomOperationalNeed: { __typename: 'OperationalNeed', id: UUID, nameOther?: string | null, needed?: boolean | null, key?: OperationalNeedKey | null } };
+
+export type UpdateCustomOperationalNeedByIdMutationVariables = Exact<{
+  id: Scalars['UUID']['input'];
+  customNeedType: Scalars['String']['input'];
+  needed: Scalars['Boolean']['input'];
+}>;
+
+
+export type UpdateCustomOperationalNeedByIdMutation = { __typename: 'Mutation', updateCustomOperationalNeedByID: { __typename: 'OperationalNeed', id: UUID, nameOther?: string | null, needed?: boolean | null, key?: OperationalNeedKey | null } };
+
+export type UpdateOperationalSolutionMutationVariables = Exact<{
+  id: Scalars['UUID']['input'];
+  changes: OperationalSolutionChanges;
+}>;
+
+
+export type UpdateOperationalSolutionMutation = { __typename: 'Mutation', updateOperationalSolution: { __typename: 'OperationalSolution', id: UUID, nameOther?: string | null, needed?: boolean | null, key?: OperationalSolutionKey | null } };
+
+export type UpdateOperationalSolutionSubtasksMutationVariables = Exact<{
+  inputs: Array<UpdateOperationalSolutionSubtaskInput> | UpdateOperationalSolutionSubtaskInput;
+}>;
+
+
+export type UpdateOperationalSolutionSubtasksMutation = { __typename: 'Mutation', updateOperationalSolutionSubtasks?: Array<{ __typename: 'OperationalSolutionSubtask', id: UUID, solutionID: UUID, name: string, status: OperationalSolutionSubtaskStatus }> | null };
 
 export type GetExistingModelPlansQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -3626,6 +3785,79 @@ export type UpdatePaymentsMutationVariables = Exact<{
 
 
 export type UpdatePaymentsMutation = { __typename: 'Mutation', updatePlanPayments: { __typename: 'PlanPayments', id: UUID } };
+
+export type GetClearanceStatusesQueryVariables = Exact<{
+  id: Scalars['UUID']['input'];
+}>;
+
+
+export type GetClearanceStatusesQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, basics: { __typename: 'PlanBasics', id: UUID, readyForClearanceDts?: Time | null, status: TaskStatus, readyForClearanceByUserAccount?: { __typename: 'UserAccount', id: UUID, commonName: string } | null }, generalCharacteristics: { __typename: 'PlanGeneralCharacteristics', id: UUID, readyForClearanceDts?: Time | null, status: TaskStatus, readyForClearanceByUserAccount?: { __typename: 'UserAccount', id: UUID, commonName: string } | null }, participantsAndProviders: { __typename: 'PlanParticipantsAndProviders', id: UUID, readyForClearanceDts?: Time | null, status: TaskStatus, readyForClearanceByUserAccount?: { __typename: 'UserAccount', id: UUID, commonName: string } | null }, beneficiaries: { __typename: 'PlanBeneficiaries', id: UUID, readyForClearanceDts?: Time | null, status: TaskStatus, readyForClearanceByUserAccount?: { __typename: 'UserAccount', id: UUID, commonName: string } | null }, opsEvalAndLearning: { __typename: 'PlanOpsEvalAndLearning', id: UUID, readyForClearanceDts?: Time | null, status: TaskStatus, readyForClearanceByUserAccount?: { __typename: 'UserAccount', id: UUID, commonName: string } | null }, payments: { __typename: 'PlanPayments', id: UUID, readyForClearanceDts?: Time | null, status: TaskStatus, readyForClearanceByUserAccount?: { __typename: 'UserAccount', id: UUID, commonName: string } | null }, prepareForClearance: { __typename: 'PrepareForClearance', status: PrepareForClearanceStatus } } };
+
+export type UpdateClearanceBasicsMutationVariables = Exact<{
+  id: Scalars['UUID']['input'];
+  changes: PlanBasicsChanges;
+}>;
+
+
+export type UpdateClearanceBasicsMutation = { __typename: 'Mutation', updatePlanBasics: { __typename: 'PlanBasics', readyForClearanceDts?: Time | null, status: TaskStatus, readyForClearanceByUserAccount?: { __typename: 'UserAccount', id: UUID, commonName: string } | null } };
+
+export type UpdateClearanceBeneficiariesMutationVariables = Exact<{
+  id: Scalars['UUID']['input'];
+  changes: PlanBeneficiariesChanges;
+}>;
+
+
+export type UpdateClearanceBeneficiariesMutation = { __typename: 'Mutation', updatePlanBeneficiaries: { __typename: 'PlanBeneficiaries', readyForClearanceDts?: Time | null, status: TaskStatus, readyForClearanceByUserAccount?: { __typename: 'UserAccount', id: UUID, commonName: string } | null } };
+
+export type UpdateClearanceCharacteristicsMutationVariables = Exact<{
+  id: Scalars['UUID']['input'];
+  changes: PlanGeneralCharacteristicsChanges;
+}>;
+
+
+export type UpdateClearanceCharacteristicsMutation = { __typename: 'Mutation', updatePlanGeneralCharacteristics: { __typename: 'PlanGeneralCharacteristics', readyForClearanceDts?: Time | null, status: TaskStatus, readyForClearanceByUserAccount?: { __typename: 'UserAccount', id: UUID, commonName: string } | null } };
+
+export type UpdateClearanceOpsEvalAndLearningMutationVariables = Exact<{
+  id: Scalars['UUID']['input'];
+  changes: PlanOpsEvalAndLearningChanges;
+}>;
+
+
+export type UpdateClearanceOpsEvalAndLearningMutation = { __typename: 'Mutation', updatePlanOpsEvalAndLearning: { __typename: 'PlanOpsEvalAndLearning', readyForClearanceDts?: Time | null, status: TaskStatus, readyForClearanceByUserAccount?: { __typename: 'UserAccount', id: UUID, commonName: string } | null } };
+
+export type UpdateClearanceParticipantsAndProvidersMutationVariables = Exact<{
+  id: Scalars['UUID']['input'];
+  changes: PlanParticipantsAndProvidersChanges;
+}>;
+
+
+export type UpdateClearanceParticipantsAndProvidersMutation = { __typename: 'Mutation', updatePlanParticipantsAndProviders: { __typename: 'PlanParticipantsAndProviders', readyForClearanceDts?: Time | null, status: TaskStatus, readyForClearanceByUserAccount?: { __typename: 'UserAccount', id: UUID, commonName: string } | null } };
+
+export type UpdateClearancePaymentsMutationVariables = Exact<{
+  id: Scalars['UUID']['input'];
+  changes: PlanPaymentsChanges;
+}>;
+
+
+export type UpdateClearancePaymentsMutation = { __typename: 'Mutation', updatePlanPayments: { __typename: 'PlanPayments', readyForClearanceDts?: Time | null, status: TaskStatus, readyForClearanceByUserAccount?: { __typename: 'UserAccount', id: UUID, commonName: string } | null } };
+
+export type UpdatePrepareForClearanceMutationVariables = Exact<{
+  basicsID: Scalars['UUID']['input'];
+  basicsChanges: PlanBasicsChanges;
+  characteristicsID: Scalars['UUID']['input'];
+  characteristicsChanges: PlanGeneralCharacteristicsChanges;
+  participantsAndProvidersID: Scalars['UUID']['input'];
+  participantsAndProvidersChanges: PlanParticipantsAndProvidersChanges;
+  beneficiariesID: Scalars['UUID']['input'];
+  benficiariesChanges: PlanBeneficiariesChanges;
+  opsEvalAndLearningID: Scalars['UUID']['input'];
+  opsEvalAndLearningChanges: PlanOpsEvalAndLearningChanges;
+  paymentsID: Scalars['UUID']['input'];
+  paymentsChanges: PlanPaymentsChanges;
+}>;
+
+
+export type UpdatePrepareForClearanceMutation = { __typename: 'Mutation', updatePlanBasics: { __typename: 'PlanBasics', readyForClearanceDts?: Time | null, status: TaskStatus, readyForClearanceByUserAccount?: { __typename: 'UserAccount', id: UUID, commonName: string } | null }, updatePlanGeneralCharacteristics: { __typename: 'PlanGeneralCharacteristics', readyForClearanceDts?: Time | null, status: TaskStatus, readyForClearanceByUserAccount?: { __typename: 'UserAccount', id: UUID, commonName: string } | null }, updatePlanParticipantsAndProviders: { __typename: 'PlanParticipantsAndProviders', readyForClearanceDts?: Time | null, status: TaskStatus, readyForClearanceByUserAccount?: { __typename: 'UserAccount', id: UUID, commonName: string } | null }, updatePlanBeneficiaries: { __typename: 'PlanBeneficiaries', readyForClearanceDts?: Time | null, status: TaskStatus, readyForClearanceByUserAccount?: { __typename: 'UserAccount', id: UUID, commonName: string } | null }, updatePlanOpsEvalAndLearning: { __typename: 'PlanOpsEvalAndLearning', readyForClearanceDts?: Time | null, status: TaskStatus, readyForClearanceByUserAccount?: { __typename: 'UserAccount', id: UUID, commonName: string } | null }, updatePlanPayments: { __typename: 'PlanPayments', readyForClearanceDts?: Time | null, status: TaskStatus, readyForClearanceByUserAccount?: { __typename: 'UserAccount', id: UUID, commonName: string } | null } };
 
 export type GetModelSummaryQueryVariables = Exact<{
   id: Scalars['UUID']['input'];
@@ -5148,6 +5380,63 @@ export type GetModelPlanDocumentQueryHookResult = ReturnType<typeof useGetModelP
 export type GetModelPlanDocumentLazyQueryHookResult = ReturnType<typeof useGetModelPlanDocumentLazyQuery>;
 export type GetModelPlanDocumentSuspenseQueryHookResult = ReturnType<typeof useGetModelPlanDocumentSuspenseQuery>;
 export type GetModelPlanDocumentQueryResult = Apollo.QueryResult<GetModelPlanDocumentQuery, GetModelPlanDocumentQueryVariables>;
+export const GetModelPlanDocumentsDocument = gql`
+    query GetModelPlanDocuments($id: UUID!) {
+  modelPlan(id: $id) {
+    id
+    isCollaborator
+    documents {
+      id
+      virusScanned
+      virusClean
+      fileName
+      fileType
+      downloadUrl
+      restricted
+      documentType
+      createdDts
+      optionalNotes
+      otherType
+      numLinkedSolutions
+      isLink
+      url
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetModelPlanDocumentsQuery__
+ *
+ * To run a query within a React component, call `useGetModelPlanDocumentsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetModelPlanDocumentsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetModelPlanDocumentsQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetModelPlanDocumentsQuery(baseOptions: Apollo.QueryHookOptions<GetModelPlanDocumentsQuery, GetModelPlanDocumentsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetModelPlanDocumentsQuery, GetModelPlanDocumentsQueryVariables>(GetModelPlanDocumentsDocument, options);
+      }
+export function useGetModelPlanDocumentsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetModelPlanDocumentsQuery, GetModelPlanDocumentsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetModelPlanDocumentsQuery, GetModelPlanDocumentsQueryVariables>(GetModelPlanDocumentsDocument, options);
+        }
+export function useGetModelPlanDocumentsSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetModelPlanDocumentsQuery, GetModelPlanDocumentsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetModelPlanDocumentsQuery, GetModelPlanDocumentsQueryVariables>(GetModelPlanDocumentsDocument, options);
+        }
+export type GetModelPlanDocumentsQueryHookResult = ReturnType<typeof useGetModelPlanDocumentsQuery>;
+export type GetModelPlanDocumentsLazyQueryHookResult = ReturnType<typeof useGetModelPlanDocumentsLazyQuery>;
+export type GetModelPlanDocumentsSuspenseQueryHookResult = ReturnType<typeof useGetModelPlanDocumentsSuspenseQuery>;
+export type GetModelPlanDocumentsQueryResult = Apollo.QueryResult<GetModelPlanDocumentsQuery, GetModelPlanDocumentsQueryVariables>;
 export const LinkNewPlanDocumentDocument = gql`
     mutation LinkNewPlanDocument($input: PlanDocumentLinkInput!) {
   linkNewPlanDocument(input: $input) {
@@ -5181,6 +5470,39 @@ export function useLinkNewPlanDocumentMutation(baseOptions?: Apollo.MutationHook
 export type LinkNewPlanDocumentMutationHookResult = ReturnType<typeof useLinkNewPlanDocumentMutation>;
 export type LinkNewPlanDocumentMutationResult = Apollo.MutationResult<LinkNewPlanDocumentMutation>;
 export type LinkNewPlanDocumentMutationOptions = Apollo.BaseMutationOptions<LinkNewPlanDocumentMutation, LinkNewPlanDocumentMutationVariables>;
+export const UploadNewPlanDocumentDocument = gql`
+    mutation UploadNewPlanDocument($input: PlanDocumentInput!) {
+  uploadNewPlanDocument(input: $input) {
+    id
+  }
+}
+    `;
+export type UploadNewPlanDocumentMutationFn = Apollo.MutationFunction<UploadNewPlanDocumentMutation, UploadNewPlanDocumentMutationVariables>;
+
+/**
+ * __useUploadNewPlanDocumentMutation__
+ *
+ * To run a mutation, you first call `useUploadNewPlanDocumentMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUploadNewPlanDocumentMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [uploadNewPlanDocumentMutation, { data, loading, error }] = useUploadNewPlanDocumentMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useUploadNewPlanDocumentMutation(baseOptions?: Apollo.MutationHookOptions<UploadNewPlanDocumentMutation, UploadNewPlanDocumentMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UploadNewPlanDocumentMutation, UploadNewPlanDocumentMutationVariables>(UploadNewPlanDocumentDocument, options);
+      }
+export type UploadNewPlanDocumentMutationHookResult = ReturnType<typeof useUploadNewPlanDocumentMutation>;
+export type UploadNewPlanDocumentMutationResult = Apollo.MutationResult<UploadNewPlanDocumentMutation>;
+export type UploadNewPlanDocumentMutationOptions = Apollo.BaseMutationOptions<UploadNewPlanDocumentMutation, UploadNewPlanDocumentMutationVariables>;
 export const AddPlanFavoriteDocument = gql`
     mutation AddPlanFavorite($modelPlanID: UUID!) {
   addPlanFavorite(modelPlanID: $modelPlanID) {
@@ -5828,6 +6150,741 @@ export function useUpdatePlanGeneralCharacteristicsMutation(baseOptions?: Apollo
 export type UpdatePlanGeneralCharacteristicsMutationHookResult = ReturnType<typeof useUpdatePlanGeneralCharacteristicsMutation>;
 export type UpdatePlanGeneralCharacteristicsMutationResult = Apollo.MutationResult<UpdatePlanGeneralCharacteristicsMutation>;
 export type UpdatePlanGeneralCharacteristicsMutationOptions = Apollo.BaseMutationOptions<UpdatePlanGeneralCharacteristicsMutation, UpdatePlanGeneralCharacteristicsMutationVariables>;
+export const CreateDocumentSolutionLinksDocument = gql`
+    mutation CreateDocumentSolutionLinks($solutionID: UUID!, $documentIDs: [UUID!]!) {
+  createPlanDocumentSolutionLinks(
+    solutionID: $solutionID
+    documentIDs: $documentIDs
+  ) {
+    id
+  }
+}
+    `;
+export type CreateDocumentSolutionLinksMutationFn = Apollo.MutationFunction<CreateDocumentSolutionLinksMutation, CreateDocumentSolutionLinksMutationVariables>;
+
+/**
+ * __useCreateDocumentSolutionLinksMutation__
+ *
+ * To run a mutation, you first call `useCreateDocumentSolutionLinksMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateDocumentSolutionLinksMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createDocumentSolutionLinksMutation, { data, loading, error }] = useCreateDocumentSolutionLinksMutation({
+ *   variables: {
+ *      solutionID: // value for 'solutionID'
+ *      documentIDs: // value for 'documentIDs'
+ *   },
+ * });
+ */
+export function useCreateDocumentSolutionLinksMutation(baseOptions?: Apollo.MutationHookOptions<CreateDocumentSolutionLinksMutation, CreateDocumentSolutionLinksMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateDocumentSolutionLinksMutation, CreateDocumentSolutionLinksMutationVariables>(CreateDocumentSolutionLinksDocument, options);
+      }
+export type CreateDocumentSolutionLinksMutationHookResult = ReturnType<typeof useCreateDocumentSolutionLinksMutation>;
+export type CreateDocumentSolutionLinksMutationResult = Apollo.MutationResult<CreateDocumentSolutionLinksMutation>;
+export type CreateDocumentSolutionLinksMutationOptions = Apollo.BaseMutationOptions<CreateDocumentSolutionLinksMutation, CreateDocumentSolutionLinksMutationVariables>;
+export const CreateOperationalSolutionDocument = gql`
+    mutation CreateOperationalSolution($operationalNeedID: UUID!, $solutionType: OperationalSolutionKey, $changes: OperationalSolutionChanges!) {
+  createOperationalSolution(
+    operationalNeedID: $operationalNeedID
+    solutionType: $solutionType
+    changes: $changes
+  ) {
+    id
+    nameOther
+    needed
+    key
+  }
+}
+    `;
+export type CreateOperationalSolutionMutationFn = Apollo.MutationFunction<CreateOperationalSolutionMutation, CreateOperationalSolutionMutationVariables>;
+
+/**
+ * __useCreateOperationalSolutionMutation__
+ *
+ * To run a mutation, you first call `useCreateOperationalSolutionMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateOperationalSolutionMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createOperationalSolutionMutation, { data, loading, error }] = useCreateOperationalSolutionMutation({
+ *   variables: {
+ *      operationalNeedID: // value for 'operationalNeedID'
+ *      solutionType: // value for 'solutionType'
+ *      changes: // value for 'changes'
+ *   },
+ * });
+ */
+export function useCreateOperationalSolutionMutation(baseOptions?: Apollo.MutationHookOptions<CreateOperationalSolutionMutation, CreateOperationalSolutionMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateOperationalSolutionMutation, CreateOperationalSolutionMutationVariables>(CreateOperationalSolutionDocument, options);
+      }
+export type CreateOperationalSolutionMutationHookResult = ReturnType<typeof useCreateOperationalSolutionMutation>;
+export type CreateOperationalSolutionMutationResult = Apollo.MutationResult<CreateOperationalSolutionMutation>;
+export type CreateOperationalSolutionMutationOptions = Apollo.BaseMutationOptions<CreateOperationalSolutionMutation, CreateOperationalSolutionMutationVariables>;
+export const CreateOperationalSolutionSubtasksDocument = gql`
+    mutation CreateOperationalSolutionSubtasks($solutionID: UUID!, $inputs: [CreateOperationalSolutionSubtaskInput!]!) {
+  createOperationalSolutionSubtasks(solutionID: $solutionID, inputs: $inputs) {
+    name
+    status
+  }
+}
+    `;
+export type CreateOperationalSolutionSubtasksMutationFn = Apollo.MutationFunction<CreateOperationalSolutionSubtasksMutation, CreateOperationalSolutionSubtasksMutationVariables>;
+
+/**
+ * __useCreateOperationalSolutionSubtasksMutation__
+ *
+ * To run a mutation, you first call `useCreateOperationalSolutionSubtasksMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateOperationalSolutionSubtasksMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createOperationalSolutionSubtasksMutation, { data, loading, error }] = useCreateOperationalSolutionSubtasksMutation({
+ *   variables: {
+ *      solutionID: // value for 'solutionID'
+ *      inputs: // value for 'inputs'
+ *   },
+ * });
+ */
+export function useCreateOperationalSolutionSubtasksMutation(baseOptions?: Apollo.MutationHookOptions<CreateOperationalSolutionSubtasksMutation, CreateOperationalSolutionSubtasksMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateOperationalSolutionSubtasksMutation, CreateOperationalSolutionSubtasksMutationVariables>(CreateOperationalSolutionSubtasksDocument, options);
+      }
+export type CreateOperationalSolutionSubtasksMutationHookResult = ReturnType<typeof useCreateOperationalSolutionSubtasksMutation>;
+export type CreateOperationalSolutionSubtasksMutationResult = Apollo.MutationResult<CreateOperationalSolutionSubtasksMutation>;
+export type CreateOperationalSolutionSubtasksMutationOptions = Apollo.BaseMutationOptions<CreateOperationalSolutionSubtasksMutation, CreateOperationalSolutionSubtasksMutationVariables>;
+export const DeleteDocumentSolutionLinkDocument = gql`
+    mutation DeleteDocumentSolutionLink($solutionID: UUID!, $documentIDs: [UUID!]!) {
+  removePlanDocumentSolutionLinks(
+    solutionID: $solutionID
+    documentIDs: $documentIDs
+  )
+}
+    `;
+export type DeleteDocumentSolutionLinkMutationFn = Apollo.MutationFunction<DeleteDocumentSolutionLinkMutation, DeleteDocumentSolutionLinkMutationVariables>;
+
+/**
+ * __useDeleteDocumentSolutionLinkMutation__
+ *
+ * To run a mutation, you first call `useDeleteDocumentSolutionLinkMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteDocumentSolutionLinkMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteDocumentSolutionLinkMutation, { data, loading, error }] = useDeleteDocumentSolutionLinkMutation({
+ *   variables: {
+ *      solutionID: // value for 'solutionID'
+ *      documentIDs: // value for 'documentIDs'
+ *   },
+ * });
+ */
+export function useDeleteDocumentSolutionLinkMutation(baseOptions?: Apollo.MutationHookOptions<DeleteDocumentSolutionLinkMutation, DeleteDocumentSolutionLinkMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteDocumentSolutionLinkMutation, DeleteDocumentSolutionLinkMutationVariables>(DeleteDocumentSolutionLinkDocument, options);
+      }
+export type DeleteDocumentSolutionLinkMutationHookResult = ReturnType<typeof useDeleteDocumentSolutionLinkMutation>;
+export type DeleteDocumentSolutionLinkMutationResult = Apollo.MutationResult<DeleteDocumentSolutionLinkMutation>;
+export type DeleteDocumentSolutionLinkMutationOptions = Apollo.BaseMutationOptions<DeleteDocumentSolutionLinkMutation, DeleteDocumentSolutionLinkMutationVariables>;
+export const DeleteOperationalSolutionSubtaskDocument = gql`
+    mutation DeleteOperationalSolutionSubtask($id: UUID!) {
+  deleteOperationalSolutionSubtask(id: $id)
+}
+    `;
+export type DeleteOperationalSolutionSubtaskMutationFn = Apollo.MutationFunction<DeleteOperationalSolutionSubtaskMutation, DeleteOperationalSolutionSubtaskMutationVariables>;
+
+/**
+ * __useDeleteOperationalSolutionSubtaskMutation__
+ *
+ * To run a mutation, you first call `useDeleteOperationalSolutionSubtaskMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteOperationalSolutionSubtaskMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteOperationalSolutionSubtaskMutation, { data, loading, error }] = useDeleteOperationalSolutionSubtaskMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useDeleteOperationalSolutionSubtaskMutation(baseOptions?: Apollo.MutationHookOptions<DeleteOperationalSolutionSubtaskMutation, DeleteOperationalSolutionSubtaskMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteOperationalSolutionSubtaskMutation, DeleteOperationalSolutionSubtaskMutationVariables>(DeleteOperationalSolutionSubtaskDocument, options);
+      }
+export type DeleteOperationalSolutionSubtaskMutationHookResult = ReturnType<typeof useDeleteOperationalSolutionSubtaskMutation>;
+export type DeleteOperationalSolutionSubtaskMutationResult = Apollo.MutationResult<DeleteOperationalSolutionSubtaskMutation>;
+export type DeleteOperationalSolutionSubtaskMutationOptions = Apollo.BaseMutationOptions<DeleteOperationalSolutionSubtaskMutation, DeleteOperationalSolutionSubtaskMutationVariables>;
+export const GetOperationalNeedDocument = gql`
+    query GetOperationalNeed($id: UUID!, $includeNotNeeded: Boolean = true) {
+  operationalNeed(id: $id) {
+    id
+    modelPlanID
+    name
+    key
+    nameOther
+    needed
+    solutions(includeNotNeeded: $includeNotNeeded) {
+      id
+      name
+      key
+      pocName
+      pocEmail
+      needed
+      nameOther
+      isOther
+      isCommonSolution
+      otherHeader
+      mustStartDts
+      mustFinishDts
+      status
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetOperationalNeedQuery__
+ *
+ * To run a query within a React component, call `useGetOperationalNeedQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetOperationalNeedQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetOperationalNeedQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *      includeNotNeeded: // value for 'includeNotNeeded'
+ *   },
+ * });
+ */
+export function useGetOperationalNeedQuery(baseOptions: Apollo.QueryHookOptions<GetOperationalNeedQuery, GetOperationalNeedQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetOperationalNeedQuery, GetOperationalNeedQueryVariables>(GetOperationalNeedDocument, options);
+      }
+export function useGetOperationalNeedLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetOperationalNeedQuery, GetOperationalNeedQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetOperationalNeedQuery, GetOperationalNeedQueryVariables>(GetOperationalNeedDocument, options);
+        }
+export function useGetOperationalNeedSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetOperationalNeedQuery, GetOperationalNeedQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetOperationalNeedQuery, GetOperationalNeedQueryVariables>(GetOperationalNeedDocument, options);
+        }
+export type GetOperationalNeedQueryHookResult = ReturnType<typeof useGetOperationalNeedQuery>;
+export type GetOperationalNeedLazyQueryHookResult = ReturnType<typeof useGetOperationalNeedLazyQuery>;
+export type GetOperationalNeedSuspenseQueryHookResult = ReturnType<typeof useGetOperationalNeedSuspenseQuery>;
+export type GetOperationalNeedQueryResult = Apollo.QueryResult<GetOperationalNeedQuery, GetOperationalNeedQueryVariables>;
+export const GetOperationalNeedAnswerDocument = gql`
+    query GetOperationalNeedAnswer($id: UUID!, $generalCharacteristics: Boolean!, $participantsAndProviders: Boolean!, $beneficiaries: Boolean!, $opsEvalAndLearning: Boolean!, $payments: Boolean!, $managePartCDEnrollment: Boolean!, $collectPlanBids: Boolean!, $planContractUpdated: Boolean!, $agreementTypes: Boolean!, $recruitmentMethod: Boolean!, $selectionMethod: Boolean!, $communicationMethod: Boolean!, $providerOverlap: Boolean!, $participantsIds: Boolean!, $beneficiaryOverlap: Boolean!, $helpdeskUse: Boolean!, $iddocSupport: Boolean!, $benchmarkForPerformance: Boolean!, $appealPerformance: Boolean!, $appealFeedback: Boolean!, $appealPayments: Boolean!, $appealOther: Boolean!, $evaluationApproaches: Boolean!, $dataNeededForMonitoring: Boolean!, $dataToSendParticicipants: Boolean!, $modelLearningSystems: Boolean!, $developNewQualityMeasures: Boolean!, $payType: Boolean!, $shouldAnyProvidersExcludedFFSSystems: Boolean!, $nonClaimsPayments: Boolean!, $willRecoverPayments: Boolean!) {
+  modelPlan(id: $id) {
+    id
+    modelName
+    generalCharacteristics @include(if: $generalCharacteristics) {
+      managePartCDEnrollment @include(if: $managePartCDEnrollment)
+      collectPlanBids @include(if: $collectPlanBids)
+      planContractUpdated @include(if: $planContractUpdated)
+      agreementTypes @include(if: $agreementTypes)
+    }
+    participantsAndProviders @include(if: $participantsAndProviders) {
+      recruitmentMethod @include(if: $recruitmentMethod)
+      selectionMethod @include(if: $selectionMethod)
+      communicationMethod @include(if: $communicationMethod)
+      providerOverlap @include(if: $providerOverlap)
+      participantsIds @include(if: $participantsIds)
+    }
+    beneficiaries @include(if: $beneficiaries) {
+      beneficiaryOverlap @include(if: $beneficiaryOverlap)
+    }
+    opsEvalAndLearning @include(if: $opsEvalAndLearning) {
+      helpdeskUse @include(if: $helpdeskUse)
+      iddocSupport @include(if: $iddocSupport)
+      benchmarkForPerformance @include(if: $benchmarkForPerformance)
+      appealPerformance @include(if: $appealPerformance)
+      appealFeedback @include(if: $appealFeedback)
+      appealPayments @include(if: $appealPayments)
+      appealOther @include(if: $appealOther)
+      evaluationApproaches @include(if: $evaluationApproaches)
+      dataNeededForMonitoring @include(if: $dataNeededForMonitoring)
+      dataToSendParticicipants @include(if: $dataToSendParticicipants)
+      modelLearningSystems @include(if: $modelLearningSystems)
+      developNewQualityMeasures @include(if: $developNewQualityMeasures)
+    }
+    payments @include(if: $payments) {
+      payType @include(if: $payType)
+      shouldAnyProvidersExcludedFFSSystems @include(if: $shouldAnyProvidersExcludedFFSSystems)
+      nonClaimsPayments @include(if: $nonClaimsPayments)
+      willRecoverPayments @include(if: $willRecoverPayments)
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetOperationalNeedAnswerQuery__
+ *
+ * To run a query within a React component, call `useGetOperationalNeedAnswerQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetOperationalNeedAnswerQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetOperationalNeedAnswerQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *      generalCharacteristics: // value for 'generalCharacteristics'
+ *      participantsAndProviders: // value for 'participantsAndProviders'
+ *      beneficiaries: // value for 'beneficiaries'
+ *      opsEvalAndLearning: // value for 'opsEvalAndLearning'
+ *      payments: // value for 'payments'
+ *      managePartCDEnrollment: // value for 'managePartCDEnrollment'
+ *      collectPlanBids: // value for 'collectPlanBids'
+ *      planContractUpdated: // value for 'planContractUpdated'
+ *      agreementTypes: // value for 'agreementTypes'
+ *      recruitmentMethod: // value for 'recruitmentMethod'
+ *      selectionMethod: // value for 'selectionMethod'
+ *      communicationMethod: // value for 'communicationMethod'
+ *      providerOverlap: // value for 'providerOverlap'
+ *      participantsIds: // value for 'participantsIds'
+ *      beneficiaryOverlap: // value for 'beneficiaryOverlap'
+ *      helpdeskUse: // value for 'helpdeskUse'
+ *      iddocSupport: // value for 'iddocSupport'
+ *      benchmarkForPerformance: // value for 'benchmarkForPerformance'
+ *      appealPerformance: // value for 'appealPerformance'
+ *      appealFeedback: // value for 'appealFeedback'
+ *      appealPayments: // value for 'appealPayments'
+ *      appealOther: // value for 'appealOther'
+ *      evaluationApproaches: // value for 'evaluationApproaches'
+ *      dataNeededForMonitoring: // value for 'dataNeededForMonitoring'
+ *      dataToSendParticicipants: // value for 'dataToSendParticicipants'
+ *      modelLearningSystems: // value for 'modelLearningSystems'
+ *      developNewQualityMeasures: // value for 'developNewQualityMeasures'
+ *      payType: // value for 'payType'
+ *      shouldAnyProvidersExcludedFFSSystems: // value for 'shouldAnyProvidersExcludedFFSSystems'
+ *      nonClaimsPayments: // value for 'nonClaimsPayments'
+ *      willRecoverPayments: // value for 'willRecoverPayments'
+ *   },
+ * });
+ */
+export function useGetOperationalNeedAnswerQuery(baseOptions: Apollo.QueryHookOptions<GetOperationalNeedAnswerQuery, GetOperationalNeedAnswerQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetOperationalNeedAnswerQuery, GetOperationalNeedAnswerQueryVariables>(GetOperationalNeedAnswerDocument, options);
+      }
+export function useGetOperationalNeedAnswerLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetOperationalNeedAnswerQuery, GetOperationalNeedAnswerQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetOperationalNeedAnswerQuery, GetOperationalNeedAnswerQueryVariables>(GetOperationalNeedAnswerDocument, options);
+        }
+export function useGetOperationalNeedAnswerSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetOperationalNeedAnswerQuery, GetOperationalNeedAnswerQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetOperationalNeedAnswerQuery, GetOperationalNeedAnswerQueryVariables>(GetOperationalNeedAnswerDocument, options);
+        }
+export type GetOperationalNeedAnswerQueryHookResult = ReturnType<typeof useGetOperationalNeedAnswerQuery>;
+export type GetOperationalNeedAnswerLazyQueryHookResult = ReturnType<typeof useGetOperationalNeedAnswerLazyQuery>;
+export type GetOperationalNeedAnswerSuspenseQueryHookResult = ReturnType<typeof useGetOperationalNeedAnswerSuspenseQuery>;
+export type GetOperationalNeedAnswerQueryResult = Apollo.QueryResult<GetOperationalNeedAnswerQuery, GetOperationalNeedAnswerQueryVariables>;
+export const GetOperationalNeedsDocument = gql`
+    query GetOperationalNeeds($id: UUID!) {
+  modelPlan(id: $id) {
+    id
+    modelName
+    isCollaborator
+    operationalNeeds {
+      id
+      modelPlanID
+      name
+      key
+      nameOther
+      needed
+      modifiedDts
+      solutions {
+        id
+        status
+        name
+        mustStartDts
+        mustFinishDts
+        needed
+        nameOther
+        key
+        otherHeader
+        operationalSolutionSubtasks {
+          id
+        }
+        pocEmail
+        pocName
+        createdBy
+        createdDts
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetOperationalNeedsQuery__
+ *
+ * To run a query within a React component, call `useGetOperationalNeedsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetOperationalNeedsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetOperationalNeedsQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetOperationalNeedsQuery(baseOptions: Apollo.QueryHookOptions<GetOperationalNeedsQuery, GetOperationalNeedsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetOperationalNeedsQuery, GetOperationalNeedsQueryVariables>(GetOperationalNeedsDocument, options);
+      }
+export function useGetOperationalNeedsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetOperationalNeedsQuery, GetOperationalNeedsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetOperationalNeedsQuery, GetOperationalNeedsQueryVariables>(GetOperationalNeedsDocument, options);
+        }
+export function useGetOperationalNeedsSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetOperationalNeedsQuery, GetOperationalNeedsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetOperationalNeedsQuery, GetOperationalNeedsQueryVariables>(GetOperationalNeedsDocument, options);
+        }
+export type GetOperationalNeedsQueryHookResult = ReturnType<typeof useGetOperationalNeedsQuery>;
+export type GetOperationalNeedsLazyQueryHookResult = ReturnType<typeof useGetOperationalNeedsLazyQuery>;
+export type GetOperationalNeedsSuspenseQueryHookResult = ReturnType<typeof useGetOperationalNeedsSuspenseQuery>;
+export type GetOperationalNeedsQueryResult = Apollo.QueryResult<GetOperationalNeedsQuery, GetOperationalNeedsQueryVariables>;
+export const GetOperationalSolutionDocument = gql`
+    query GetOperationalSolution($id: UUID!) {
+  operationalSolution(id: $id) {
+    id
+    key
+    needed
+    name
+    nameOther
+    pocName
+    pocEmail
+    status
+    isOther
+    isCommonSolution
+    otherHeader
+    mustFinishDts
+    mustStartDts
+    documents {
+      id
+      virusScanned
+      virusClean
+      fileName
+      fileType
+      downloadUrl
+      restricted
+      documentType
+      createdDts
+      optionalNotes
+      otherType
+      numLinkedSolutions
+      isLink
+      url
+    }
+    operationalSolutionSubtasks {
+      id
+      name
+      status
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetOperationalSolutionQuery__
+ *
+ * To run a query within a React component, call `useGetOperationalSolutionQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetOperationalSolutionQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetOperationalSolutionQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetOperationalSolutionQuery(baseOptions: Apollo.QueryHookOptions<GetOperationalSolutionQuery, GetOperationalSolutionQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetOperationalSolutionQuery, GetOperationalSolutionQueryVariables>(GetOperationalSolutionDocument, options);
+      }
+export function useGetOperationalSolutionLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetOperationalSolutionQuery, GetOperationalSolutionQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetOperationalSolutionQuery, GetOperationalSolutionQueryVariables>(GetOperationalSolutionDocument, options);
+        }
+export function useGetOperationalSolutionSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetOperationalSolutionQuery, GetOperationalSolutionQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetOperationalSolutionQuery, GetOperationalSolutionQueryVariables>(GetOperationalSolutionDocument, options);
+        }
+export type GetOperationalSolutionQueryHookResult = ReturnType<typeof useGetOperationalSolutionQuery>;
+export type GetOperationalSolutionLazyQueryHookResult = ReturnType<typeof useGetOperationalSolutionLazyQuery>;
+export type GetOperationalSolutionSuspenseQueryHookResult = ReturnType<typeof useGetOperationalSolutionSuspenseQuery>;
+export type GetOperationalSolutionQueryResult = Apollo.QueryResult<GetOperationalSolutionQuery, GetOperationalSolutionQueryVariables>;
+export const GetOperationalSolutionSubtasksDocument = gql`
+    query GetOperationalSolutionSubtasks($id: UUID!) {
+  operationalSolution(id: $id) {
+    id
+    operationalSolutionSubtasks {
+      id
+      solutionID
+      name
+      status
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetOperationalSolutionSubtasksQuery__
+ *
+ * To run a query within a React component, call `useGetOperationalSolutionSubtasksQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetOperationalSolutionSubtasksQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetOperationalSolutionSubtasksQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetOperationalSolutionSubtasksQuery(baseOptions: Apollo.QueryHookOptions<GetOperationalSolutionSubtasksQuery, GetOperationalSolutionSubtasksQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetOperationalSolutionSubtasksQuery, GetOperationalSolutionSubtasksQueryVariables>(GetOperationalSolutionSubtasksDocument, options);
+      }
+export function useGetOperationalSolutionSubtasksLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetOperationalSolutionSubtasksQuery, GetOperationalSolutionSubtasksQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetOperationalSolutionSubtasksQuery, GetOperationalSolutionSubtasksQueryVariables>(GetOperationalSolutionSubtasksDocument, options);
+        }
+export function useGetOperationalSolutionSubtasksSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetOperationalSolutionSubtasksQuery, GetOperationalSolutionSubtasksQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetOperationalSolutionSubtasksQuery, GetOperationalSolutionSubtasksQueryVariables>(GetOperationalSolutionSubtasksDocument, options);
+        }
+export type GetOperationalSolutionSubtasksQueryHookResult = ReturnType<typeof useGetOperationalSolutionSubtasksQuery>;
+export type GetOperationalSolutionSubtasksLazyQueryHookResult = ReturnType<typeof useGetOperationalSolutionSubtasksLazyQuery>;
+export type GetOperationalSolutionSubtasksSuspenseQueryHookResult = ReturnType<typeof useGetOperationalSolutionSubtasksSuspenseQuery>;
+export type GetOperationalSolutionSubtasksQueryResult = Apollo.QueryResult<GetOperationalSolutionSubtasksQuery, GetOperationalSolutionSubtasksQueryVariables>;
+export const GetPossibleOperationalSolutionsDocument = gql`
+    query GetPossibleOperationalSolutions {
+  possibleOperationalSolutions {
+    id
+    name
+    key
+  }
+}
+    `;
+
+/**
+ * __useGetPossibleOperationalSolutionsQuery__
+ *
+ * To run a query within a React component, call `useGetPossibleOperationalSolutionsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetPossibleOperationalSolutionsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetPossibleOperationalSolutionsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetPossibleOperationalSolutionsQuery(baseOptions?: Apollo.QueryHookOptions<GetPossibleOperationalSolutionsQuery, GetPossibleOperationalSolutionsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetPossibleOperationalSolutionsQuery, GetPossibleOperationalSolutionsQueryVariables>(GetPossibleOperationalSolutionsDocument, options);
+      }
+export function useGetPossibleOperationalSolutionsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetPossibleOperationalSolutionsQuery, GetPossibleOperationalSolutionsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetPossibleOperationalSolutionsQuery, GetPossibleOperationalSolutionsQueryVariables>(GetPossibleOperationalSolutionsDocument, options);
+        }
+export function useGetPossibleOperationalSolutionsSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetPossibleOperationalSolutionsQuery, GetPossibleOperationalSolutionsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetPossibleOperationalSolutionsQuery, GetPossibleOperationalSolutionsQueryVariables>(GetPossibleOperationalSolutionsDocument, options);
+        }
+export type GetPossibleOperationalSolutionsQueryHookResult = ReturnType<typeof useGetPossibleOperationalSolutionsQuery>;
+export type GetPossibleOperationalSolutionsLazyQueryHookResult = ReturnType<typeof useGetPossibleOperationalSolutionsLazyQuery>;
+export type GetPossibleOperationalSolutionsSuspenseQueryHookResult = ReturnType<typeof useGetPossibleOperationalSolutionsSuspenseQuery>;
+export type GetPossibleOperationalSolutionsQueryResult = Apollo.QueryResult<GetPossibleOperationalSolutionsQuery, GetPossibleOperationalSolutionsQueryVariables>;
+export const UpdateCustomOperationalNeedDocument = gql`
+    mutation UpdateCustomOperationalNeed($modelPlanID: UUID!, $customNeedType: String!, $needed: Boolean!) {
+  addOrUpdateCustomOperationalNeed(
+    modelPlanID: $modelPlanID
+    customNeedType: $customNeedType
+    needed: $needed
+  ) {
+    id
+    nameOther
+    needed
+    key
+  }
+}
+    `;
+export type UpdateCustomOperationalNeedMutationFn = Apollo.MutationFunction<UpdateCustomOperationalNeedMutation, UpdateCustomOperationalNeedMutationVariables>;
+
+/**
+ * __useUpdateCustomOperationalNeedMutation__
+ *
+ * To run a mutation, you first call `useUpdateCustomOperationalNeedMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateCustomOperationalNeedMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateCustomOperationalNeedMutation, { data, loading, error }] = useUpdateCustomOperationalNeedMutation({
+ *   variables: {
+ *      modelPlanID: // value for 'modelPlanID'
+ *      customNeedType: // value for 'customNeedType'
+ *      needed: // value for 'needed'
+ *   },
+ * });
+ */
+export function useUpdateCustomOperationalNeedMutation(baseOptions?: Apollo.MutationHookOptions<UpdateCustomOperationalNeedMutation, UpdateCustomOperationalNeedMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateCustomOperationalNeedMutation, UpdateCustomOperationalNeedMutationVariables>(UpdateCustomOperationalNeedDocument, options);
+      }
+export type UpdateCustomOperationalNeedMutationHookResult = ReturnType<typeof useUpdateCustomOperationalNeedMutation>;
+export type UpdateCustomOperationalNeedMutationResult = Apollo.MutationResult<UpdateCustomOperationalNeedMutation>;
+export type UpdateCustomOperationalNeedMutationOptions = Apollo.BaseMutationOptions<UpdateCustomOperationalNeedMutation, UpdateCustomOperationalNeedMutationVariables>;
+export const UpdateCustomOperationalNeedByIdDocument = gql`
+    mutation UpdateCustomOperationalNeedById($id: UUID!, $customNeedType: String!, $needed: Boolean!) {
+  updateCustomOperationalNeedByID(
+    id: $id
+    customNeedType: $customNeedType
+    needed: $needed
+  ) {
+    id
+    nameOther
+    needed
+    key
+  }
+}
+    `;
+export type UpdateCustomOperationalNeedByIdMutationFn = Apollo.MutationFunction<UpdateCustomOperationalNeedByIdMutation, UpdateCustomOperationalNeedByIdMutationVariables>;
+
+/**
+ * __useUpdateCustomOperationalNeedByIdMutation__
+ *
+ * To run a mutation, you first call `useUpdateCustomOperationalNeedByIdMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateCustomOperationalNeedByIdMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateCustomOperationalNeedByIdMutation, { data, loading, error }] = useUpdateCustomOperationalNeedByIdMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      customNeedType: // value for 'customNeedType'
+ *      needed: // value for 'needed'
+ *   },
+ * });
+ */
+export function useUpdateCustomOperationalNeedByIdMutation(baseOptions?: Apollo.MutationHookOptions<UpdateCustomOperationalNeedByIdMutation, UpdateCustomOperationalNeedByIdMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateCustomOperationalNeedByIdMutation, UpdateCustomOperationalNeedByIdMutationVariables>(UpdateCustomOperationalNeedByIdDocument, options);
+      }
+export type UpdateCustomOperationalNeedByIdMutationHookResult = ReturnType<typeof useUpdateCustomOperationalNeedByIdMutation>;
+export type UpdateCustomOperationalNeedByIdMutationResult = Apollo.MutationResult<UpdateCustomOperationalNeedByIdMutation>;
+export type UpdateCustomOperationalNeedByIdMutationOptions = Apollo.BaseMutationOptions<UpdateCustomOperationalNeedByIdMutation, UpdateCustomOperationalNeedByIdMutationVariables>;
+export const UpdateOperationalSolutionDocument = gql`
+    mutation UpdateOperationalSolution($id: UUID!, $changes: OperationalSolutionChanges!) {
+  updateOperationalSolution(id: $id, changes: $changes) {
+    id
+    nameOther
+    needed
+    key
+  }
+}
+    `;
+export type UpdateOperationalSolutionMutationFn = Apollo.MutationFunction<UpdateOperationalSolutionMutation, UpdateOperationalSolutionMutationVariables>;
+
+/**
+ * __useUpdateOperationalSolutionMutation__
+ *
+ * To run a mutation, you first call `useUpdateOperationalSolutionMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateOperationalSolutionMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateOperationalSolutionMutation, { data, loading, error }] = useUpdateOperationalSolutionMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      changes: // value for 'changes'
+ *   },
+ * });
+ */
+export function useUpdateOperationalSolutionMutation(baseOptions?: Apollo.MutationHookOptions<UpdateOperationalSolutionMutation, UpdateOperationalSolutionMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateOperationalSolutionMutation, UpdateOperationalSolutionMutationVariables>(UpdateOperationalSolutionDocument, options);
+      }
+export type UpdateOperationalSolutionMutationHookResult = ReturnType<typeof useUpdateOperationalSolutionMutation>;
+export type UpdateOperationalSolutionMutationResult = Apollo.MutationResult<UpdateOperationalSolutionMutation>;
+export type UpdateOperationalSolutionMutationOptions = Apollo.BaseMutationOptions<UpdateOperationalSolutionMutation, UpdateOperationalSolutionMutationVariables>;
+export const UpdateOperationalSolutionSubtasksDocument = gql`
+    mutation UpdateOperationalSolutionSubtasks($inputs: [UpdateOperationalSolutionSubtaskInput!]!) {
+  updateOperationalSolutionSubtasks(inputs: $inputs) {
+    id
+    solutionID
+    name
+    status
+  }
+}
+    `;
+export type UpdateOperationalSolutionSubtasksMutationFn = Apollo.MutationFunction<UpdateOperationalSolutionSubtasksMutation, UpdateOperationalSolutionSubtasksMutationVariables>;
+
+/**
+ * __useUpdateOperationalSolutionSubtasksMutation__
+ *
+ * To run a mutation, you first call `useUpdateOperationalSolutionSubtasksMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateOperationalSolutionSubtasksMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateOperationalSolutionSubtasksMutation, { data, loading, error }] = useUpdateOperationalSolutionSubtasksMutation({
+ *   variables: {
+ *      inputs: // value for 'inputs'
+ *   },
+ * });
+ */
+export function useUpdateOperationalSolutionSubtasksMutation(baseOptions?: Apollo.MutationHookOptions<UpdateOperationalSolutionSubtasksMutation, UpdateOperationalSolutionSubtasksMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateOperationalSolutionSubtasksMutation, UpdateOperationalSolutionSubtasksMutationVariables>(UpdateOperationalSolutionSubtasksDocument, options);
+      }
+export type UpdateOperationalSolutionSubtasksMutationHookResult = ReturnType<typeof useUpdateOperationalSolutionSubtasksMutation>;
+export type UpdateOperationalSolutionSubtasksMutationResult = Apollo.MutationResult<UpdateOperationalSolutionSubtasksMutation>;
+export type UpdateOperationalSolutionSubtasksMutationOptions = Apollo.BaseMutationOptions<UpdateOperationalSolutionSubtasksMutation, UpdateOperationalSolutionSubtasksMutationVariables>;
 export const GetExistingModelPlansDocument = gql`
     query GetExistingModelPlans {
   existingModelCollection {
@@ -9683,6 +10740,435 @@ export function useUpdatePaymentsMutation(baseOptions?: Apollo.MutationHookOptio
 export type UpdatePaymentsMutationHookResult = ReturnType<typeof useUpdatePaymentsMutation>;
 export type UpdatePaymentsMutationResult = Apollo.MutationResult<UpdatePaymentsMutation>;
 export type UpdatePaymentsMutationOptions = Apollo.BaseMutationOptions<UpdatePaymentsMutation, UpdatePaymentsMutationVariables>;
+export const GetClearanceStatusesDocument = gql`
+    query GetClearanceStatuses($id: UUID!) {
+  modelPlan(id: $id) {
+    id
+    basics {
+      id
+      readyForClearanceByUserAccount {
+        id
+        commonName
+      }
+      readyForClearanceDts
+      status
+    }
+    generalCharacteristics {
+      id
+      readyForClearanceByUserAccount {
+        id
+        commonName
+      }
+      readyForClearanceDts
+      status
+    }
+    participantsAndProviders {
+      id
+      readyForClearanceByUserAccount {
+        id
+        commonName
+      }
+      readyForClearanceDts
+      status
+    }
+    beneficiaries {
+      id
+      readyForClearanceByUserAccount {
+        id
+        commonName
+      }
+      readyForClearanceDts
+      status
+    }
+    opsEvalAndLearning {
+      id
+      readyForClearanceByUserAccount {
+        id
+        commonName
+      }
+      readyForClearanceDts
+      status
+    }
+    payments {
+      id
+      readyForClearanceByUserAccount {
+        id
+        commonName
+      }
+      readyForClearanceDts
+      status
+    }
+    prepareForClearance {
+      status
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetClearanceStatusesQuery__
+ *
+ * To run a query within a React component, call `useGetClearanceStatusesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetClearanceStatusesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetClearanceStatusesQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetClearanceStatusesQuery(baseOptions: Apollo.QueryHookOptions<GetClearanceStatusesQuery, GetClearanceStatusesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetClearanceStatusesQuery, GetClearanceStatusesQueryVariables>(GetClearanceStatusesDocument, options);
+      }
+export function useGetClearanceStatusesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetClearanceStatusesQuery, GetClearanceStatusesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetClearanceStatusesQuery, GetClearanceStatusesQueryVariables>(GetClearanceStatusesDocument, options);
+        }
+export function useGetClearanceStatusesSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetClearanceStatusesQuery, GetClearanceStatusesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetClearanceStatusesQuery, GetClearanceStatusesQueryVariables>(GetClearanceStatusesDocument, options);
+        }
+export type GetClearanceStatusesQueryHookResult = ReturnType<typeof useGetClearanceStatusesQuery>;
+export type GetClearanceStatusesLazyQueryHookResult = ReturnType<typeof useGetClearanceStatusesLazyQuery>;
+export type GetClearanceStatusesSuspenseQueryHookResult = ReturnType<typeof useGetClearanceStatusesSuspenseQuery>;
+export type GetClearanceStatusesQueryResult = Apollo.QueryResult<GetClearanceStatusesQuery, GetClearanceStatusesQueryVariables>;
+export const UpdateClearanceBasicsDocument = gql`
+    mutation UpdateClearanceBasics($id: UUID!, $changes: PlanBasicsChanges!) {
+  updatePlanBasics(id: $id, changes: $changes) {
+    readyForClearanceByUserAccount {
+      id
+      commonName
+    }
+    readyForClearanceDts
+    status
+  }
+}
+    `;
+export type UpdateClearanceBasicsMutationFn = Apollo.MutationFunction<UpdateClearanceBasicsMutation, UpdateClearanceBasicsMutationVariables>;
+
+/**
+ * __useUpdateClearanceBasicsMutation__
+ *
+ * To run a mutation, you first call `useUpdateClearanceBasicsMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateClearanceBasicsMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateClearanceBasicsMutation, { data, loading, error }] = useUpdateClearanceBasicsMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      changes: // value for 'changes'
+ *   },
+ * });
+ */
+export function useUpdateClearanceBasicsMutation(baseOptions?: Apollo.MutationHookOptions<UpdateClearanceBasicsMutation, UpdateClearanceBasicsMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateClearanceBasicsMutation, UpdateClearanceBasicsMutationVariables>(UpdateClearanceBasicsDocument, options);
+      }
+export type UpdateClearanceBasicsMutationHookResult = ReturnType<typeof useUpdateClearanceBasicsMutation>;
+export type UpdateClearanceBasicsMutationResult = Apollo.MutationResult<UpdateClearanceBasicsMutation>;
+export type UpdateClearanceBasicsMutationOptions = Apollo.BaseMutationOptions<UpdateClearanceBasicsMutation, UpdateClearanceBasicsMutationVariables>;
+export const UpdateClearanceBeneficiariesDocument = gql`
+    mutation UpdateClearanceBeneficiaries($id: UUID!, $changes: PlanBeneficiariesChanges!) {
+  updatePlanBeneficiaries(id: $id, changes: $changes) {
+    readyForClearanceByUserAccount {
+      id
+      commonName
+    }
+    readyForClearanceDts
+    status
+  }
+}
+    `;
+export type UpdateClearanceBeneficiariesMutationFn = Apollo.MutationFunction<UpdateClearanceBeneficiariesMutation, UpdateClearanceBeneficiariesMutationVariables>;
+
+/**
+ * __useUpdateClearanceBeneficiariesMutation__
+ *
+ * To run a mutation, you first call `useUpdateClearanceBeneficiariesMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateClearanceBeneficiariesMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateClearanceBeneficiariesMutation, { data, loading, error }] = useUpdateClearanceBeneficiariesMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      changes: // value for 'changes'
+ *   },
+ * });
+ */
+export function useUpdateClearanceBeneficiariesMutation(baseOptions?: Apollo.MutationHookOptions<UpdateClearanceBeneficiariesMutation, UpdateClearanceBeneficiariesMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateClearanceBeneficiariesMutation, UpdateClearanceBeneficiariesMutationVariables>(UpdateClearanceBeneficiariesDocument, options);
+      }
+export type UpdateClearanceBeneficiariesMutationHookResult = ReturnType<typeof useUpdateClearanceBeneficiariesMutation>;
+export type UpdateClearanceBeneficiariesMutationResult = Apollo.MutationResult<UpdateClearanceBeneficiariesMutation>;
+export type UpdateClearanceBeneficiariesMutationOptions = Apollo.BaseMutationOptions<UpdateClearanceBeneficiariesMutation, UpdateClearanceBeneficiariesMutationVariables>;
+export const UpdateClearanceCharacteristicsDocument = gql`
+    mutation UpdateClearanceCharacteristics($id: UUID!, $changes: PlanGeneralCharacteristicsChanges!) {
+  updatePlanGeneralCharacteristics(id: $id, changes: $changes) {
+    readyForClearanceByUserAccount {
+      id
+      commonName
+    }
+    readyForClearanceDts
+    status
+  }
+}
+    `;
+export type UpdateClearanceCharacteristicsMutationFn = Apollo.MutationFunction<UpdateClearanceCharacteristicsMutation, UpdateClearanceCharacteristicsMutationVariables>;
+
+/**
+ * __useUpdateClearanceCharacteristicsMutation__
+ *
+ * To run a mutation, you first call `useUpdateClearanceCharacteristicsMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateClearanceCharacteristicsMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateClearanceCharacteristicsMutation, { data, loading, error }] = useUpdateClearanceCharacteristicsMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      changes: // value for 'changes'
+ *   },
+ * });
+ */
+export function useUpdateClearanceCharacteristicsMutation(baseOptions?: Apollo.MutationHookOptions<UpdateClearanceCharacteristicsMutation, UpdateClearanceCharacteristicsMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateClearanceCharacteristicsMutation, UpdateClearanceCharacteristicsMutationVariables>(UpdateClearanceCharacteristicsDocument, options);
+      }
+export type UpdateClearanceCharacteristicsMutationHookResult = ReturnType<typeof useUpdateClearanceCharacteristicsMutation>;
+export type UpdateClearanceCharacteristicsMutationResult = Apollo.MutationResult<UpdateClearanceCharacteristicsMutation>;
+export type UpdateClearanceCharacteristicsMutationOptions = Apollo.BaseMutationOptions<UpdateClearanceCharacteristicsMutation, UpdateClearanceCharacteristicsMutationVariables>;
+export const UpdateClearanceOpsEvalAndLearningDocument = gql`
+    mutation UpdateClearanceOpsEvalAndLearning($id: UUID!, $changes: PlanOpsEvalAndLearningChanges!) {
+  updatePlanOpsEvalAndLearning(id: $id, changes: $changes) {
+    readyForClearanceByUserAccount {
+      id
+      commonName
+    }
+    readyForClearanceDts
+    status
+  }
+}
+    `;
+export type UpdateClearanceOpsEvalAndLearningMutationFn = Apollo.MutationFunction<UpdateClearanceOpsEvalAndLearningMutation, UpdateClearanceOpsEvalAndLearningMutationVariables>;
+
+/**
+ * __useUpdateClearanceOpsEvalAndLearningMutation__
+ *
+ * To run a mutation, you first call `useUpdateClearanceOpsEvalAndLearningMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateClearanceOpsEvalAndLearningMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateClearanceOpsEvalAndLearningMutation, { data, loading, error }] = useUpdateClearanceOpsEvalAndLearningMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      changes: // value for 'changes'
+ *   },
+ * });
+ */
+export function useUpdateClearanceOpsEvalAndLearningMutation(baseOptions?: Apollo.MutationHookOptions<UpdateClearanceOpsEvalAndLearningMutation, UpdateClearanceOpsEvalAndLearningMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateClearanceOpsEvalAndLearningMutation, UpdateClearanceOpsEvalAndLearningMutationVariables>(UpdateClearanceOpsEvalAndLearningDocument, options);
+      }
+export type UpdateClearanceOpsEvalAndLearningMutationHookResult = ReturnType<typeof useUpdateClearanceOpsEvalAndLearningMutation>;
+export type UpdateClearanceOpsEvalAndLearningMutationResult = Apollo.MutationResult<UpdateClearanceOpsEvalAndLearningMutation>;
+export type UpdateClearanceOpsEvalAndLearningMutationOptions = Apollo.BaseMutationOptions<UpdateClearanceOpsEvalAndLearningMutation, UpdateClearanceOpsEvalAndLearningMutationVariables>;
+export const UpdateClearanceParticipantsAndProvidersDocument = gql`
+    mutation UpdateClearanceParticipantsAndProviders($id: UUID!, $changes: PlanParticipantsAndProvidersChanges!) {
+  updatePlanParticipantsAndProviders(id: $id, changes: $changes) {
+    readyForClearanceByUserAccount {
+      id
+      commonName
+    }
+    readyForClearanceDts
+    status
+  }
+}
+    `;
+export type UpdateClearanceParticipantsAndProvidersMutationFn = Apollo.MutationFunction<UpdateClearanceParticipantsAndProvidersMutation, UpdateClearanceParticipantsAndProvidersMutationVariables>;
+
+/**
+ * __useUpdateClearanceParticipantsAndProvidersMutation__
+ *
+ * To run a mutation, you first call `useUpdateClearanceParticipantsAndProvidersMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateClearanceParticipantsAndProvidersMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateClearanceParticipantsAndProvidersMutation, { data, loading, error }] = useUpdateClearanceParticipantsAndProvidersMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      changes: // value for 'changes'
+ *   },
+ * });
+ */
+export function useUpdateClearanceParticipantsAndProvidersMutation(baseOptions?: Apollo.MutationHookOptions<UpdateClearanceParticipantsAndProvidersMutation, UpdateClearanceParticipantsAndProvidersMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateClearanceParticipantsAndProvidersMutation, UpdateClearanceParticipantsAndProvidersMutationVariables>(UpdateClearanceParticipantsAndProvidersDocument, options);
+      }
+export type UpdateClearanceParticipantsAndProvidersMutationHookResult = ReturnType<typeof useUpdateClearanceParticipantsAndProvidersMutation>;
+export type UpdateClearanceParticipantsAndProvidersMutationResult = Apollo.MutationResult<UpdateClearanceParticipantsAndProvidersMutation>;
+export type UpdateClearanceParticipantsAndProvidersMutationOptions = Apollo.BaseMutationOptions<UpdateClearanceParticipantsAndProvidersMutation, UpdateClearanceParticipantsAndProvidersMutationVariables>;
+export const UpdateClearancePaymentsDocument = gql`
+    mutation UpdateClearancePayments($id: UUID!, $changes: PlanPaymentsChanges!) {
+  updatePlanPayments(id: $id, changes: $changes) {
+    readyForClearanceByUserAccount {
+      id
+      commonName
+    }
+    readyForClearanceDts
+    status
+  }
+}
+    `;
+export type UpdateClearancePaymentsMutationFn = Apollo.MutationFunction<UpdateClearancePaymentsMutation, UpdateClearancePaymentsMutationVariables>;
+
+/**
+ * __useUpdateClearancePaymentsMutation__
+ *
+ * To run a mutation, you first call `useUpdateClearancePaymentsMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateClearancePaymentsMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateClearancePaymentsMutation, { data, loading, error }] = useUpdateClearancePaymentsMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      changes: // value for 'changes'
+ *   },
+ * });
+ */
+export function useUpdateClearancePaymentsMutation(baseOptions?: Apollo.MutationHookOptions<UpdateClearancePaymentsMutation, UpdateClearancePaymentsMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateClearancePaymentsMutation, UpdateClearancePaymentsMutationVariables>(UpdateClearancePaymentsDocument, options);
+      }
+export type UpdateClearancePaymentsMutationHookResult = ReturnType<typeof useUpdateClearancePaymentsMutation>;
+export type UpdateClearancePaymentsMutationResult = Apollo.MutationResult<UpdateClearancePaymentsMutation>;
+export type UpdateClearancePaymentsMutationOptions = Apollo.BaseMutationOptions<UpdateClearancePaymentsMutation, UpdateClearancePaymentsMutationVariables>;
+export const UpdatePrepareForClearanceDocument = gql`
+    mutation UpdatePrepareForClearance($basicsID: UUID!, $basicsChanges: PlanBasicsChanges!, $characteristicsID: UUID!, $characteristicsChanges: PlanGeneralCharacteristicsChanges!, $participantsAndProvidersID: UUID!, $participantsAndProvidersChanges: PlanParticipantsAndProvidersChanges!, $beneficiariesID: UUID!, $benficiariesChanges: PlanBeneficiariesChanges!, $opsEvalAndLearningID: UUID!, $opsEvalAndLearningChanges: PlanOpsEvalAndLearningChanges!, $paymentsID: UUID!, $paymentsChanges: PlanPaymentsChanges!) {
+  updatePlanBasics(id: $basicsID, changes: $basicsChanges) {
+    readyForClearanceByUserAccount {
+      id
+      commonName
+    }
+    readyForClearanceDts
+    status
+  }
+  updatePlanGeneralCharacteristics(
+    id: $characteristicsID
+    changes: $characteristicsChanges
+  ) {
+    readyForClearanceByUserAccount {
+      id
+      commonName
+    }
+    readyForClearanceDts
+    status
+  }
+  updatePlanParticipantsAndProviders(
+    id: $participantsAndProvidersID
+    changes: $participantsAndProvidersChanges
+  ) {
+    readyForClearanceByUserAccount {
+      id
+      commonName
+    }
+    readyForClearanceDts
+    status
+  }
+  updatePlanBeneficiaries(id: $beneficiariesID, changes: $benficiariesChanges) {
+    readyForClearanceByUserAccount {
+      id
+      commonName
+    }
+    readyForClearanceDts
+    status
+  }
+  updatePlanOpsEvalAndLearning(
+    id: $opsEvalAndLearningID
+    changes: $opsEvalAndLearningChanges
+  ) {
+    readyForClearanceByUserAccount {
+      id
+      commonName
+    }
+    readyForClearanceDts
+    status
+  }
+  updatePlanPayments(id: $paymentsID, changes: $paymentsChanges) {
+    readyForClearanceByUserAccount {
+      id
+      commonName
+    }
+    readyForClearanceDts
+    status
+  }
+}
+    `;
+export type UpdatePrepareForClearanceMutationFn = Apollo.MutationFunction<UpdatePrepareForClearanceMutation, UpdatePrepareForClearanceMutationVariables>;
+
+/**
+ * __useUpdatePrepareForClearanceMutation__
+ *
+ * To run a mutation, you first call `useUpdatePrepareForClearanceMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdatePrepareForClearanceMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updatePrepareForClearanceMutation, { data, loading, error }] = useUpdatePrepareForClearanceMutation({
+ *   variables: {
+ *      basicsID: // value for 'basicsID'
+ *      basicsChanges: // value for 'basicsChanges'
+ *      characteristicsID: // value for 'characteristicsID'
+ *      characteristicsChanges: // value for 'characteristicsChanges'
+ *      participantsAndProvidersID: // value for 'participantsAndProvidersID'
+ *      participantsAndProvidersChanges: // value for 'participantsAndProvidersChanges'
+ *      beneficiariesID: // value for 'beneficiariesID'
+ *      benficiariesChanges: // value for 'benficiariesChanges'
+ *      opsEvalAndLearningID: // value for 'opsEvalAndLearningID'
+ *      opsEvalAndLearningChanges: // value for 'opsEvalAndLearningChanges'
+ *      paymentsID: // value for 'paymentsID'
+ *      paymentsChanges: // value for 'paymentsChanges'
+ *   },
+ * });
+ */
+export function useUpdatePrepareForClearanceMutation(baseOptions?: Apollo.MutationHookOptions<UpdatePrepareForClearanceMutation, UpdatePrepareForClearanceMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdatePrepareForClearanceMutation, UpdatePrepareForClearanceMutationVariables>(UpdatePrepareForClearanceDocument, options);
+      }
+export type UpdatePrepareForClearanceMutationHookResult = ReturnType<typeof useUpdatePrepareForClearanceMutation>;
+export type UpdatePrepareForClearanceMutationResult = Apollo.MutationResult<UpdatePrepareForClearanceMutation>;
+export type UpdatePrepareForClearanceMutationOptions = Apollo.BaseMutationOptions<UpdatePrepareForClearanceMutation, UpdatePrepareForClearanceMutationVariables>;
 export const GetModelSummaryDocument = gql`
     query GetModelSummary($id: UUID!) {
   modelPlan(id: $id) {

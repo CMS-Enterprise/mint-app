@@ -19,7 +19,7 @@ import LinkDocument from './LinkDocument';
 
 const AddDocument = () => {
   const { t: h } = useTranslation('draftModelPlan');
-  const { t } = useTranslation('documents');
+  const { t } = useTranslation('documentsMisc');
   const { modelID } = useParams<{ modelID: string }>();
 
   const [formState, setFormState] = useState<'upload' | 'link'>('upload');

@@ -34,7 +34,7 @@ const SubtaskColumns = ({
   subtasks,
   status
 }: SubtaskColumnsProps): JSX.Element => {
-  const { t } = useTranslation('itSolutions');
+  const { t } = useTranslation('opSolutionsMisc');
 
   return (
     <Grid
@@ -43,7 +43,7 @@ const SubtaskColumns = ({
     >
       <div className="border-bottom">
         <p className="text-bold padding-x-1 margin-y-105">
-          {t(`subtasks.${status}`)}
+          {t(`subtasks.status.${status}`)}
         </p>
       </div>
 
@@ -51,7 +51,7 @@ const SubtaskColumns = ({
         {subtasks.length === 0 &&
         columnTypes[status] === OperationalSolutionSubtaskStatus.TODO ? (
           <div className="padding-x-1 margin-y-105">
-            {t('subtasks.noSubtasks')}
+            {t('subtasks.status.noSubtasks')}
           </div>
         ) : (
           <>
@@ -92,7 +92,7 @@ export const SubtaskLinks = ({
   className?: string;
   subtasks: SubtaskType[];
 }) => {
-  const { t } = useTranslation('itSolutions');
+  const { t } = useTranslation('opSolutionsMisc');
   const { modelID, operationalNeedID, operationalSolutionID } = useParams<{
     modelID: string;
     operationalNeedID: string;
@@ -124,7 +124,7 @@ export const SubtaskLinks = ({
               );
             }}
           >
-            {t(`subtasks.${link}`)}
+            {t(`subtasks.status.${link}`)}
           </Button>
         );
       })}
@@ -138,11 +138,11 @@ type SubtasksProps = {
 };
 
 const SubtasksTable = ({ subtasks, className }: SubtasksProps) => {
-  const { t } = useTranslation('itSolutions');
+  const { t } = useTranslation('opSolutionsMisc');
 
   return (
     <div className={classNames(className)}>
-      <h3 className="margin-top-0">{t('subtasks.header')}</h3>
+      <h3 className="margin-top-0">{t('subtasks.status.header')}</h3>
       <SubtaskLinks
         className="margin-top-2 margin-bottom-3"
         subtasks={subtasks}

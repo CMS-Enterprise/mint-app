@@ -1,12 +1,12 @@
-describe('The Model Plan Participants and Providers Form', () => {
+describe('The Model Plan Participants and providers Form', () => {
   beforeEach(() => {
     cy.localLogin({ name: 'MINT', role: 'MINT_USER_NONPROD' });
   });
 
-  it('completes a Model Plan Participants and Providers', () => {
+  it('completes a Model Plan Participants and providers', () => {
     cy.clickPlanTableByName('Empty Plan');
 
-    // Clicks the Participants and Providers tasklist item
+    // Clicks the Participants and providers tasklist item
     cy.get('[data-testid="participants-and-providers"]').click();
 
     // Page - /participants-and-providers

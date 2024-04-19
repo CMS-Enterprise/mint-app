@@ -44,7 +44,6 @@
     "@types/sinon": "^10.0.16",
     "@types/text-encoding": "^0.0.39",
     "@uswds/uswds": "^3.4.1",
-    "apollo": "^2.34",
     "apollo-upload-client": "^17.0.0",
     "axios": "^1.6.8",
     "classnames": "^2.5.1",
@@ -101,7 +100,7 @@
     "lint:fix": "eslint --fix '**/*.{ts,tsx}'",
     "cypress:open": "cypress open",
     "cypress:run": "DEBUG=cypress:server:util:process_profiler cypress run",
-    "generate": "graphql-codegen && apollo client:codegen --passthroughCustomScalars --target typescript  --tagName=gql --addTypename --globalTypesFile=src/types/graphql-global-types.ts types",
+    "generate": "graphql-codegen  --passthroughCustomScalars --target typescript  --tagName=gql --addTypename --globalTypesFile=src/types/graphql-global-types.ts types",
     "storybook": "storybook dev -p 6006 -s public",
     "build-storybook": "storybook build -s public",
     "codegen": "graphql-codegen --config codegen.ts"

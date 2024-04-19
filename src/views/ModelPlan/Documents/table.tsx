@@ -8,7 +8,6 @@ import React, {
 import { useTranslation } from 'react-i18next';
 import { RootStateOrAny, useSelector } from 'react-redux';
 import { useFilters, usePagination, useSortBy, useTable } from 'react-table';
-import { useQuery } from '@apollo/client';
 import {
   Alert,
   Button,
@@ -17,7 +16,13 @@ import {
   Table as UswdsTable
 } from '@trussworks/react-uswds';
 import classNames from 'classnames';
-import { useDeleteModelPlanDocumentMutation } from 'gql/gen/graphql';
+import {
+  DocumentType,
+  GetModelPlanDocumentsQuery,
+  useDeleteModelPlanDocumentMutation,
+  useGetModelPlanDocumentsQuery
+} from 'gql/gen/graphql';
+import { GetOperationalSolution_operationalSolution_documents as SolutionDocumentType } from 'gql/gen/types/GetOperationalSolution';
 import { useFlags } from 'launchdarkly-react-client-sdk';
 
 import Modal from 'components/Modal';
@@ -25,17 +30,10 @@ import PageHeading from 'components/PageHeading';
 import PageLoading from 'components/PageLoading';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import ExternalLinkModal from 'components/shared/ExternalLinkModal';
-import GetModelPlanDocuments from 'queries/Documents/GetModelPlanDocuments';
-import {
-  GetModelPlanDocuments as GetModelPlanDocumentsType,
-  GetModelPlanDocuments_modelPlan_documents as DocumentType,
-  GetModelPlanDocumentsVariables
-} from 'queries/Documents/types/GetModelPlanDocuments';
-import { GetOperationalSolution_operationalSolution_documents as SolutionDocumentType } from 'queries/ITSolutions/types/GetOperationalSolution';
+import usePlanTranslation from 'hooks/usePlanTranslation';
 import { formatDateLocal } from 'utils/date';
 import downloadFile from 'utils/downloadFile';
 import globalFilterCellText from 'utils/globalFilterCellText';
-import { translateDocumentType } from 'utils/modelPlan';
 import {
   currentTableSortDescription,
   getColumnSortStatus,
@@ -58,6 +56,7 @@ type PlanDocumentsTableProps = {
   className?: string;
 };
 
+type GetDocumentType = GetModelPlanDocumentsQuery['modelPlan']['documents'][0];
 type DocumentStatusType = 'success' | 'error';
 
 const PlanDocumentsTable = ({
@@ -70,11 +69,13 @@ const PlanDocumentsTable = ({
   setLinkedDocs,
   className
 }: PlanDocumentsTableProps) => {
-  const { t } = useTranslation('documents');
-  const { error, loading, data, refetch: refetchDocuments } = useQuery<
-    GetModelPlanDocumentsType,
-    GetModelPlanDocumentsVariables
-  >(GetModelPlanDocuments, {
+  const { t } = useTranslation('documentsMisc');
+  const {
+    error,
+    loading,
+    data,
+    refetch: refetchDocuments
+  } = useGetModelPlanDocumentsQuery({
     variables: {
       id: modelID
     },
@@ -83,7 +84,7 @@ const PlanDocumentsTable = ({
 
   const flags = useFlags();
 
-  const documents = data?.modelPlan?.documents || ([] as DocumentType[]);
+  const documents = data?.modelPlan?.documents || ([] as GetDocumentType[]);
   const isCollaborator = data?.modelPlan?.isCollaborator;
   const { groups } = useSelector((state: RootStateOrAny) => state.auth);
   const hasEditAccess: boolean =
@@ -142,7 +143,7 @@ const findDocIDAndRemoveOrInsert = (
 };
 
 type TableProps = {
-  data: DocumentType[] | SolutionDocumentType[];
+  data: GetDocumentType[] | SolutionDocumentType[];
   hiddenColumns?: string[];
   refetch: () => any | undefined;
   setDocumentMessage: (value: string) => void;
@@ -164,12 +165,14 @@ export const Table = ({
   handleDocumentUnlink,
   hasEditAccess
 }: TableProps) => {
-  const { t } = useTranslation('documents');
+  const { t } = useTranslation('documentsMisc');
+  const { documentType: documentTypeConfig } = usePlanTranslation('documents');
+
   const [isModalOpen, setModalOpen] = useState(false);
   const [isExternalLinkModalOpen, setExternalLinkModalOpen] = useState(false);
   const [externalLinkUrl, setExternalLinkUrl] = useState('');
-  const [fileToRemove, setFileToRemove] = useState<DocumentType>(
-    {} as DocumentType
+  const [fileToRemove, setFileToRemove] = useState<GetDocumentType>(
+    {} as GetDocumentType
   );
 
   const { modelName } = useContext(ModelInfoContext);
@@ -177,7 +180,7 @@ export const Table = ({
   const [mutate] = useDeleteModelPlanDocumentMutation();
 
   const handleDelete = useMemo(() => {
-    return (file: DocumentType) => {
+    return (file: GetDocumentType) => {
       mutate({
         variables: {
           id: file.id
@@ -216,7 +219,7 @@ export const Table = ({
   }, [mutate, setDocumentMessage, t, modelName, setDocumentStatus, refetch]);
 
   const handleDownload = useMemo(() => {
-    return (file: DocumentType) => {
+    return (file: GetDocumentType) => {
       if (!file.fileName || !file.fileType) return;
       downloadFile({
         fileType: file.fileType,
@@ -365,9 +368,9 @@ export const Table = ({
       {
         Header: t('documentTable.type'),
         accessor: 'documentType',
-        Cell: ({ row, value }: any) => {
-          if (value !== 'OTHER') {
-            return translateDocumentType(value);
+        Cell: ({ row, value }: { row: any; value: DocumentType }) => {
+          if (value !== DocumentType.OTHER) {
+            return documentTypeConfig.options[value];
           }
           return row.original.otherType;
         }
@@ -450,7 +453,14 @@ export const Table = ({
     ];
 
     return documentColumns;
-  }, [t, handleDownload, hasEditAccess, linkedDocs, setLinkedDocs]);
+  }, [
+    t,
+    handleDownload,
+    hasEditAccess,
+    linkedDocs,
+    setLinkedDocs,
+    documentTypeConfig.options
+  ]);
 
   const {
     getTableProps,

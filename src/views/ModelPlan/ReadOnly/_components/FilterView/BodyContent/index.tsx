@@ -63,7 +63,7 @@ const BodyContent = ({
   filteredView: typeof filterGroups[number];
 }) => {
   const { t } = useTranslation('filterView');
-  const { t: opSolutionsT } = useTranslation('itSolutions');
+  const { t: opSolutionsMiscT } = useTranslation('opSolutionsMisc');
 
   const filterMappings = usePlanTranslation();
 
@@ -106,7 +106,9 @@ const BodyContent = ({
       {filteredGroupSolutions[filteredView] && (
         <div>
           <Divider className="margin-top-8" />
-          <h2 className="margin-top-5">{opSolutionsT('headingReadOnly')}</h2>
+          <h2 className="margin-top-5">
+            {opSolutionsMiscT('headingReadOnly')}
+          </h2>
           <OperationalNeedsTable
             className="margin-bottom-5"
             modelID={modelID}
@@ -114,8 +116,8 @@ const BodyContent = ({
             readOnly
             hideGlobalFilter
             hiddenColumns={[
-              opSolutionsT('itSolutionsTable.subtasks'),
-              opSolutionsT('itSolutionsTable.actions')
+              opSolutionsMiscT('itSolutionsTable.subtasks'),
+              opSolutionsMiscT('itSolutionsTable.actions')
             ]}
             filterSolutions={filteredGroupSolutions[filteredView]}
           />

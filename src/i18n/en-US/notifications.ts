@@ -2,7 +2,7 @@ const notifications = {
   breadcrumb: 'Notifications',
   index: {
     heading: 'Notifications',
-    markAllAsRead: 'Mark all as read',
+    markAllAsRead: 'Mark all ({{-number}}) as read',
     notificationSettings: 'Notification settings',
     infoBanner: {
       emptyState:
@@ -89,6 +89,7 @@ const notifications = {
     },
     save: 'Save',
     dontUpdate: 'Don’t update and return to previous page',
+    success: 'Success! Your notification settings have been updated.',
     error:
       'An error occurred while saving your notification settings. Please try again.'
   }

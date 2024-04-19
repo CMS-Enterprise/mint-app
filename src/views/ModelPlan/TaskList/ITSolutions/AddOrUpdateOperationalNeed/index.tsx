@@ -1,7 +1,6 @@
 import React, { useContext, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';
-import { useMutation, useQuery } from '@apollo/client';
 import {
   Alert,
   Button,
@@ -12,6 +11,12 @@ import {
   TextInput
 } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
+import {
+  useGetOperationalNeedQuery,
+  useUpdateCustomOperationalNeedByIdMutation,
+  useUpdateCustomOperationalNeedMutation
+} from 'gql/gen/graphql';
+import { UpdateCustomOperationalNeed_addOrUpdateCustomOperationalNeed as FormTypes } from 'gql/gen/types/UpdateCustomOperationalNeed';
 
 import Breadcrumbs from 'components/Breadcrumbs';
 import PageHeading from 'components/PageHeading';
@@ -21,19 +26,6 @@ import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import RequiredAsterisk from 'components/shared/RequiredAsterisk';
 import useMessage from 'hooks/useMessage';
-import GetOperationalNeed from 'queries/ITSolutions/GetOperationalNeed';
-import {
-  GetOperationalNeed as GetOperationalNeedType,
-  GetOperationalNeedVariables
-} from 'queries/ITSolutions/types/GetOperationalNeed';
-import {
-  UpdateCustomOperationalNeed as MutationType,
-  UpdateCustomOperationalNeed_addOrUpdateCustomOperationalNeed as FormTypes,
-  UpdateCustomOperationalNeedVariables
-} from 'queries/ITSolutions/types/UpdateCustomOperationalNeed';
-import { UpdateCustomOperationalNeedByIdVariables } from 'queries/ITSolutions/types/UpdateCustomOperationalNeedById';
-import UpdateCustomOperationalNeed from 'queries/ITSolutions/UpdateCustomOperationalNeed';
-import UpdateCustomOperationalNeedById from 'queries/ITSolutions/UpdateCustomOperationalNeedById';
 import flattenErrors from 'utils/flattenErrors';
 import { ModelInfoContext } from 'views/ModelInfoWrapper';
 
@@ -45,39 +37,35 @@ type CustomOperationalNeedFormType = Omit<
 > & { nameOther: string };
 
 const AddOrUpdateOperationalNeed = () => {
-  const { t } = useTranslation('itSolutions');
+  const { t } = useTranslation('opSolutionsMisc');
+  const { t: operationalNeedsT } = useTranslation('operationalNeeds');
   const { t: h } = useTranslation('draftModelPlan');
+
   const { modelID, operationalNeedID } = useParams<{
     modelID: string;
     operationalNeedID: string;
   }>();
+
   const history = useHistory();
+
   const { message, showMessageOnNextPage } = useMessage();
+
   const { modelName } = useContext(ModelInfoContext);
+
   const formikRef = useRef<FormikProps<CustomOperationalNeedFormType>>(null);
 
   const isUpdating = !!operationalNeedID;
 
-  const { data, loading, error } = useQuery<
-    GetOperationalNeedType,
-    GetOperationalNeedVariables
-  >(GetOperationalNeed, {
+  const { data, loading, error } = useGetOperationalNeedQuery({
     variables: {
       id: operationalNeedID
     },
     skip: !operationalNeedID
   });
 
-  const [addCustomOperationalNeed] = useMutation<
-    MutationType,
-    UpdateCustomOperationalNeedVariables
-  >(UpdateCustomOperationalNeed);
+  const [addCustomOperationalNeed] = useUpdateCustomOperationalNeedMutation();
 
-  const [
-    updateNeedByID
-  ] = useMutation<UpdateCustomOperationalNeedByIdVariables>(
-    UpdateCustomOperationalNeedById
-  );
+  const [updateNeedByID] = useUpdateCustomOperationalNeedByIdMutation();
 
   const handleFormSubmit = (
     formikValues: CustomOperationalNeedFormType,
@@ -242,7 +230,7 @@ const AddOrUpdateOperationalNeed = () => {
                           error={!!flatErrors.nameOther}
                         >
                           <Label htmlFor="it-solution-custom-name-other">
-                            {t('customOperationalNeedName')}
+                            {operationalNeedsT('nameOther.label')}
                             <RequiredAsterisk />
                           </Label>
 

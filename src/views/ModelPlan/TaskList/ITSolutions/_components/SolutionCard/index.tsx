@@ -8,24 +8,30 @@ import { useTranslation } from 'react-i18next';
 import { useLocation, useParams } from 'react-router-dom';
 import { Card, CardGroup, Grid, Icon, Link } from '@trussworks/react-uswds';
 import classNames from 'classnames';
+import { GetOperationalSolutionQuery } from 'gql/gen/graphql';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import Divider from 'components/shared/Divider';
 import Spinner from 'components/Spinner';
 import useHelpSolution from 'hooks/useHelpSolutions';
 import useModalSolutionState from 'hooks/useModalSolutionState';
-import { GetOperationalNeed_operationalNeed_solutions as GetOperationalNeedSolutionsType } from 'queries/ITSolutions/types/GetOperationalNeed';
+import usePlanTranslation from 'hooks/usePlanTranslation';
 import { OperationalSolutionKey } from 'types/graphql-global-types';
-import { translateOperationalSolutionKey } from 'utils/modelPlan';
 import SolutionDetailsModal from 'views/HelpAndKnowledge/SolutionsHelp/SolutionDetails/Modal';
 
 import { findSolutionByKey } from '../CheckboxCard';
 
 import './index.scss';
 
+type OperationalNeedSolutionsType = GetOperationalSolutionQuery['operationalSolution'];
+
 export type SolutionCardType = Omit<
-  GetOperationalNeedSolutionsType,
-  'mustStartDts' | 'mustFinishDts' | 'status'
+  OperationalNeedSolutionsType,
+  | 'mustStartDts'
+  | 'mustFinishDts'
+  | 'status'
+  | 'operationalSolutionSubtasks'
+  | 'documents'
 >;
 
 type SolutionCardProps = {
@@ -52,19 +58,21 @@ const SolutionCard = ({
 
   const [initLocation] = useState<string>(location.pathname);
 
-  const { t } = useTranslation('itSolutions');
+  const { t } = useTranslation('opSolutionsMisc');
   const { t: h } = useTranslation('generalReadOnly');
+
+  const { key: keyConfig } = usePlanTranslation('solutions');
 
   const {
     prevPathname,
     selectedSolution,
     renderModal,
     loading: modalLoading
-  } = useModalSolutionState(solution.key);
+  } = useModalSolutionState(solution.key!);
 
   const { helpSolutions, loading } = useHelpSolution();
 
-  const solutionMap = findSolutionByKey(solution.key, helpSolutions);
+  const solutionMap = findSolutionByKey(solution.key!, helpSolutions);
 
   const detailRoute = solutionMap?.route
     ? `${initLocation}${location.search}${
@@ -104,7 +112,7 @@ const SolutionCard = ({
                       {solution.otherHeader}
                     </h3>
                     <h5 className="text-normal margin-top-0 margin-bottom-2">
-                      {translateOperationalSolutionKey(solution.key)}
+                      {keyConfig.options[solution.key]}
                     </h5>
                   </>
                 ) : (

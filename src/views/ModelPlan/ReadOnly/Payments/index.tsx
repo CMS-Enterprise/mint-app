@@ -258,6 +258,7 @@ const ReadOnlyPayments = ({
                 id="cost-sharing-questions"
                 config={paymentsConfig.payClaims}
                 value={allPaymentData.payClaims}
+                values={allPaymentData}
                 childrenToCheck={
                   filteredView ? beneficiaryFilterGroupFields : undefined
                 }

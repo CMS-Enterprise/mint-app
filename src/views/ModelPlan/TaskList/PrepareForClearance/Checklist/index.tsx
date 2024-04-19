@@ -6,7 +6,6 @@ Each checkbox modifies the 'status' on its respective task list sections
 import React, { Fragment, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useHistory } from 'react-router-dom';
-import { useMutation, useQuery } from '@apollo/client';
 import {
   Breadcrumb,
   BreadcrumbBar,
@@ -18,6 +17,12 @@ import {
 } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import { Field, Form, Formik, FormikProps } from 'formik';
+import {
+  TaskStatusInput,
+  useGetClearanceStatusesQuery,
+  useUpdatePrepareForClearanceMutation
+} from 'gql/gen/graphql';
+import { GetClearanceStatuses as GetClearanceStatusesType } from 'gql/gen/types/GetClearanceStatuses';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import PageHeading from 'components/PageHeading';
@@ -25,13 +30,6 @@ import CheckboxField from 'components/shared/CheckboxField';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
-import GetClearanceStatuses from 'queries/PrepareForClearance/GetClearanceStatuses';
-import {
-  GetClearanceStatuses as GetClearanceStatusesType,
-  GetClearanceStatusesVariables
-} from 'queries/PrepareForClearance/types/GetClearanceStatuses';
-import { UpdatePrepareForClearanceVariables } from 'queries/PrepareForClearance/types/UpdatePrepareForClearance';
-import UpdatePrepareForClearance from 'queries/PrepareForClearance/UpdatePrepareForClearance';
 import {
   PrepareForClearanceStatus,
   TaskStatus
@@ -43,8 +41,8 @@ import { NotFoundPartial } from 'views/NotFound';
 // Initial form values and types for each task-list clearance checkbox
 interface ClearanceFormValues {
   id: string;
-  readyForClearanceByUserAccount: { commonName: string } | null;
-  readyForClearanceDts: string | null;
+  readyForClearanceByUserAccount?: { commonName: string } | null;
+  readyForClearanceDts?: string | null;
   status: TaskStatus;
 }
 
@@ -77,8 +75,20 @@ export const initialPrepareForClearanceValues: ClearanceStatusesModelPlanFormTyp
 };
 
 // Function to convert any statuses that are READY, as it's not allowed in mutation
-const convertReadyStatus = (status: TaskStatus): TaskStatus =>
-  status === TaskStatus.READY ? TaskStatus.IN_PROGRESS : status;
+const convertReadyStatus = (status: TaskStatus): TaskStatusInput => {
+  switch (status) {
+    case TaskStatus.IN_PROGRESS:
+      return TaskStatusInput.IN_PROGRESS;
+    case TaskStatus.READY_FOR_CLEARANCE:
+      return TaskStatusInput.READY_FOR_CLEARANCE;
+    case TaskStatus.READY_FOR_REVIEW:
+      return TaskStatusInput.READY_FOR_REVIEW;
+    // Handle other cases by converting
+    case TaskStatus.READY:
+    default:
+      return TaskStatusInput.IN_PROGRESS;
+  }
+};
 
 type PrepareForClearanceCheckListProps = {
   modelID: string;
@@ -102,10 +112,7 @@ const PrepareForClearanceCheckList = ({
     null
   );
 
-  const { data, loading, error } = useQuery<
-    GetClearanceStatusesType,
-    GetClearanceStatusesVariables
-  >(GetClearanceStatuses, {
+  const { data, loading, error } = useGetClearanceStatusesQuery({
     variables: {
       id: modelID
     }
@@ -113,11 +120,7 @@ const PrepareForClearanceCheckList = ({
 
   const modelPlan = data?.modelPlan || initialPrepareForClearanceValues;
 
-  const [
-    updatePrepareForClearance
-  ] = useMutation<UpdatePrepareForClearanceVariables>(
-    UpdatePrepareForClearance
-  );
+  const [updatePrepareForClearance] = useUpdatePrepareForClearanceMutation();
 
   const handleFormSubmit = (
     formikValues: ClearanceStatusesModelPlanFormType

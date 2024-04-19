@@ -1,18 +1,22 @@
 import React from 'react';
+import { GetOperationalNeedsQuery } from 'gql/gen/graphql';
+// import {
+//   // GetOperationalNeeds_modelPlan_operationalNeeds as GetOperationalNeedsOperationalNeedsType,
+//   GetOperationalNeeds_modelPlan_operationalNeeds_solutions as GetOperationalNeedsSolutionsType
+// } from 'gql/gen/types/GetOperationalNeeds';
 import i18next from 'i18next';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import operationalNeedMap from 'data/operationalNeedMap';
-import {
-  GetOperationalNeeds_modelPlan_operationalNeeds as GetOperationalNeedsOperationalNeedsType,
-  GetOperationalNeeds_modelPlan_operationalNeeds_solutions as GetOperationalNeedsSolutionsType
-} from 'queries/ITSolutions/types/GetOperationalNeeds';
 import {
   OperationalNeedKey,
   OpSolutionStatus
 } from 'types/graphql-global-types';
 
 import { OperationalNeedStatus } from './_components/NeedsStatus';
+
+type GetOperationalNeedsOperationalNeedsType = GetOperationalNeedsQuery['modelPlan']['operationalNeeds'][0];
+type GetOperationalNeedsSolutionsType = GetOperationalNeedsQuery['modelPlan']['operationalNeeds'][0]['solutions'][0];
 
 // Utility function for getting a list of operational needs that are not answered/needed
 export const filterPossibleNeeds = (
@@ -70,9 +74,9 @@ const formatSolutionsFromNeed = (
 
 // Utility to populate an empty solution from an operational need
 const emptySolution = (
-  needName: string | null,
+  needName: string | null | undefined,
   needID: string,
-  key: OperationalNeedKey | null
+  key?: OperationalNeedKey | null
 ) => {
   return {
     __typename: 'OperationalSolution',
@@ -117,12 +121,12 @@ export const returnActionLinks = (
         to={`/models/${modelID}/task-list/it-solutions/${operationalNeed.needID}/solution-implementation-details/${operationalNeed.id}`}
         className={`margin-right-2${readOnly ? ' display-block' : ''}`}
       >
-        {i18next.t('itSolutions:itSolutionsTable.updateStatus')}
+        {i18next.t('opSolutionsMisc:itSolutionsTable.updateStatus')}
       </UswdsReactLink>
       <UswdsReactLink
         to={`/models/${modelID}/task-list/it-solutions/${operationalNeed.needID}/${operationalNeed.id}/solution-details`}
       >
-        {i18next.t('itSolutions:itSolutionsTable.viewDetails')}
+        {i18next.t('opSolutionsMisc:itSolutionsTable.viewDetails')}
       </UswdsReactLink>
     </>
   );
@@ -137,7 +141,7 @@ export const returnActionLinks = (
       <UswdsReactLink
         to={`/models/${modelID}/task-list/it-solutions/update-need/${operationalNeed.id}`}
       >
-        {i18next.t('itSolutions:itSolutionsTable.updateNeed')}
+        {i18next.t('opSolutionsMisc:itSolutionsTable.updateNeed')}
       </UswdsReactLink>
     );
   }
@@ -166,7 +170,7 @@ export const returnActionLinks = (
             state: { scrollElement: operationalNeedObj.fieldName.toString() }
           }}
         >
-          {i18next.t('itSolutions:itSolutionsTable.changePlanAnswer')}
+          {i18next.t('opSolutionsMisc:itSolutionsTable.changePlanAnswer')}
         </UswdsReactLink>
       );
     case OperationalNeedStatus.NOT_NEEDED:
@@ -177,7 +181,7 @@ export const returnActionLinks = (
             state: { scrollElement: operationalNeedObj.fieldName.toString() }
           }}
         >
-          {i18next.t('itSolutions:itSolutionsTable.changeAnswer')}
+          {i18next.t('opSolutionsMisc:itSolutionsTable.changeAnswer')}
         </UswdsReactLink>
       ) : (
         <></>
@@ -195,7 +199,7 @@ export const returnActionLinks = (
             }
           }}
         >
-          {i18next.t('itSolutions:itSolutionsTable.answer')}
+          {i18next.t('opSolutionsMisc:itSolutionsTable.answer')}
         </UswdsReactLink>
       ) : (
         <></>
@@ -216,15 +220,15 @@ export const returnActionText = (
     case OpSolutionStatus.IN_PROGRESS:
     case OpSolutionStatus.ONBOARDING:
       return (
-        i18next.t('itSolutions:itSolutionsTable.updateStatus') +
-        i18next.t('itSolutions:itSolutionsTable.viewDetails')
+        i18next.t('opSolutionsMisc:itSolutionsTable.updateStatus') +
+        i18next.t('opSolutionsMisc:itSolutionsTable.viewDetails')
       );
     case OpSolutionStatus.NOT_STARTED:
-      return i18next.t('itSolutions:itSolutionsTable.changePlanAnswer');
+      return i18next.t('opSolutionsMisc:itSolutionsTable.changePlanAnswer');
     case OperationalNeedStatus.NOT_NEEDED:
-      return i18next.t('itSolutions:itSolutionsTable.changeAnswer');
+      return i18next.t('opSolutionsMisc:itSolutionsTable.changeAnswer');
     case OperationalNeedStatus.NOT_ANSWERED:
-      return i18next.t('itSolutions:itSolutionsTable.answer');
+      return i18next.t('opSolutionsMisc:itSolutionsTable.answer');
     default:
       return '';
   }
