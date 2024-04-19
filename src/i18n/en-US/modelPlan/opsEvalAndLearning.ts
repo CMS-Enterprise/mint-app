@@ -58,7 +58,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
       true: 'Yes',
       false: 'No'
     },
-    filterGroups: [ModelViewFilter.CBOSC]
+    filterGroups: [ModelViewFilter.CBOSC, ModelViewFilter.IPC]
   },
   helpdeskUseNote: {
     gqlField: 'helpdeskUseNote',
@@ -67,7 +67,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     label: 'Notes',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: [ModelViewFilter.CBOSC]
+    filterGroups: [ModelViewFilter.CBOSC, ModelViewFilter.IPC]
   },
   contractorSupport: {
     gqlField: 'contractorSupport',
@@ -175,7 +175,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
         () => opsEvalAndLearning.fileNamingConventions
       ]
     },
-    filterGroups: [ModelViewFilter.IDDOC]
+    filterGroups: [ModelViewFilter.IDDOC, ModelViewFilter.IPC]
   },
   iddocSupportNote: {
     gqlField: 'iddocSupportNote',
@@ -184,7 +184,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     label: 'Notes',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: [ModelViewFilter.IDDOC]
+    filterGroups: [ModelViewFilter.IDDOC, ModelViewFilter.IPC]
   },
   technicalContactsIdentified: {
     gqlField: 'technicalContactsIdentified',
@@ -546,7 +546,8 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     adjacentPositioning: {
       position: 'right',
       adjacentField: 'riskAdjustPerformance'
-    }
+    },
+    filterGroups: [ModelViewFilter.CMMI]
   },
   riskAdjustPayments: {
     gqlField: 'riskAdjustPayments',
@@ -581,7 +582,8 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     adjacentPositioning: {
       position: 'right',
       adjacentField: 'riskAdjustPayments'
-    }
+    },
+    filterGroups: [ModelViewFilter.CMMI]
   },
   riskAdjustNote: {
     gqlField: 'riskAdjustNote',
@@ -716,6 +718,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     dataType: 'enum',
     formType: 'checkbox',
     hideRelatedQuestionAlert: true,
+    disconnectedLabel: `questionNotApplicableCCW`,
     options: {
       YES_EVALUATION: 'Yes, for evaluation',
       YES__IMPLEMENTATION: 'Yes, for implementation',
@@ -767,6 +770,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     readonlyLabel: 'What data do you need to monitor the model?',
     sublabel:
       'If you select quality claims-based measures or quality reported measures, there will be additional questions to answer.',
+    disconnectedLabel: `questionNotApplicableQuality`,
     dataType: 'enum',
     formType: 'multiSelect',
     multiSelectLabel: 'Selected data',
