@@ -1,0 +1,7 @@
+"""
+The current user's Launch Darkly key
+"""
+type LaunchDarklySettings {
+  userKey: String!
+  signedHash: String!
+}

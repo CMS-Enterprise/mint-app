@@ -1,12 +1,12 @@
-describe('The Model Plan Participants and Providers Form', () => {
+describe('The Model Plan Participants and providers Form', () => {
   beforeEach(() => {
     cy.localLogin({ name: 'MINT', role: 'MINT_USER_NONPROD' });
   });
 
-  it('completes a Model Plan Participants and Providers', () => {
+  it('completes a Model Plan Participants and providers', () => {
     cy.clickPlanTableByName('Empty Plan');
 
-    // Clicks the Participants and Providers tasklist item
+    // Clicks the Participants and providers tasklist item
     cy.get('[data-testid="participants-and-providers"]').click();
 
     // Page - /participants-and-providers
@@ -165,6 +165,20 @@ describe('The Model Plan Participants and Providers Form', () => {
     cy.contains('button', 'Next').click();
 
     // Page - /participants-and-providers/coordination
+
+    cy.get(
+      '#participants-and-providers-participant-require-financial-guarantee-true'
+    )
+      .should('not.be.disabled')
+      .check({ force: true })
+      .should('be.checked');
+
+    cy.get(
+      '#participants-and-providers-participant-require-financial-guarantee-type-SURETY_BOND'
+    )
+      .should('not.be.disabled')
+      .check({ force: true })
+      .should('be.checked');
 
     cy.get('#participants-and-providers-coordniate-work-true')
       .should('not.be.disabled')

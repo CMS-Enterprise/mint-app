@@ -1,0 +1,266 @@
+enum FundingSource {
+  PATIENT_PROTECTION_AFFORDABLE_CARE_ACT
+  MEDICARE_PART_A_HI_TRUST_FUND
+  MEDICARE_PART_B_SMI_TRUST_FUND
+  OTHER
+}
+
+enum PayRecipient {
+  PROVIDERS
+  BENEFICIARIES
+  PARTICIPANTS
+  STATES
+  OTHER
+}
+
+enum PayType {
+  CLAIMS_BASED_PAYMENTS
+  NON_CLAIMS_BASED_PAYMENTS
+  GRANTS
+}
+
+enum ClaimsBasedPayType {
+  ADJUSTMENTS_TO_FFS_PAYMENTS
+  CARE_MANAGEMENT_HOME_VISITS
+  REDUCTIONS_TO_BENEFICIARY_COST_SHARING
+  SNF_CLAIMS_WITHOUT_3DAY_HOSPITAL_ADMISSIONS
+  TELEHEALTH_SERVICES_NOT_TRADITIONAL_MEDICARE
+  SERVICES_NOT_COVERED_THROUGH_TRADITIONAL_MEDICARE
+  PAYMENTS_FOR_POST_DISCHARGE_HOME_VISITS
+  OTHER
+}
+
+enum NonClaimsBasedPayType {
+  ADVANCED_PAYMENT
+  BUNDLED_EPISODE_OF_CARE
+  CAPITATION_POPULATION_BASED_FULL
+  CAPITATION_POPULATION_BASED_PARTIAL
+  CARE_COORDINATION_MANAGEMENT_FEE
+  GLOBAL_BUDGET
+  INCENTIVE_PAYMENT
+  MAPD_SHARED_SAVINGS
+  SHARED_SAVINGS
+  OTHER
+}
+
+enum ComplexityCalculationLevelType {
+  LOW
+  MIDDLE
+  HIGH
+}
+
+"""
+PlanPayments is the task list section that deals with information regarding Payments
+"""
+type PlanPayments {
+  id: UUID!
+  modelPlanID: UUID!
+
+  # Page 1
+  fundingSource:                      [FundingSource!]!
+  fundingSourceMedicareAInfo:         String
+  fundingSourceMedicareBInfo:         String
+  fundingSourceOther:                 String
+  fundingSourceNote:                  String
+  fundingSourceR:                     [FundingSource!]!
+  fundingSourceRMedicareAInfo:        String
+  fundingSourceRMedicareBInfo:        String
+  fundingSourceROther:                String
+  fundingSourceRNote:                 String
+  payRecipients:                      [PayRecipient!]!
+  payRecipientsOtherSpecification:    String
+  payRecipientsNote:                  String
+  payType:                            [PayType!]!
+  payTypeNote:                        String
+
+  # Page 2
+  payClaims:                                      [ClaimsBasedPayType!]!
+  payClaimsOther:                                 String
+  payClaimsNote:                                  String
+  shouldAnyProvidersExcludedFFSSystems:           Boolean
+  shouldAnyProviderExcludedFFSSystemsNote:        String
+  changesMedicarePhysicianFeeSchedule:            Boolean
+  changesMedicarePhysicianFeeScheduleNote:        String
+  affectsMedicareSecondaryPayerClaims:            Boolean
+  affectsMedicareSecondaryPayerClaimsHow:         String
+  affectsMedicareSecondaryPayerClaimsNote:        String
+  payModelDifferentiation:                        String
+
+  # Page 3
+  creatingDependenciesBetweenServices:     Boolean
+  creatingDependenciesBetweenServicesNote: String
+  needsClaimsDataCollection:               Boolean
+  needsClaimsDataCollectionNote:           String
+  providingThirdPartyFile:                 Boolean
+  isContractorAwareTestDataRequirements:   Boolean
+
+  # Page 4
+  beneficiaryCostSharingLevelAndHandling:          String
+  waiveBeneficiaryCostSharingForAnyServices:       Boolean
+  waiveBeneficiaryCostSharingServiceSpecification: String
+  waiverOnlyAppliesPartOfPayment:                  Boolean
+  waiveBeneficiaryCostSharingNote:                 String
+
+  # Page 5
+  nonClaimsPayments:                               [NonClaimsBasedPayType!]!
+  nonClaimsPaymentOther:                           String
+  nonClaimsPaymentsNote:                           String
+  paymentCalculationOwner:                         String
+  numberPaymentsPerPayCycle:                       String
+  numberPaymentsPerPayCycleNote:                   String
+  sharedSystemsInvolvedAdditionalClaimPayment:     Boolean
+  sharedSystemsInvolvedAdditionalClaimPaymentNote: String
+  planningToUseInnovationPaymentContractor:        Boolean
+  planningToUseInnovationPaymentContractorNote:    String
+
+  # Page 6
+  expectedCalculationComplexityLevel:                ComplexityCalculationLevelType
+  expectedCalculationComplexityLevelNote:            String
+  claimsProcessingPrecedence:                        Boolean
+  claimsProcessingPrecedenceOther:                   String
+  claimsProcessingPrecedenceNote:                    String
+  canParticipantsSelectBetweenPaymentMechanisms:     Boolean
+  canParticipantsSelectBetweenPaymentMechanismsHow:  String
+  canParticipantsSelectBetweenPaymentMechanismsNote: String
+  anticipatedPaymentFrequency:                       [FrequencyType!]!
+  anticipatedPaymentFrequencyContinually:            String
+  anticipatedPaymentFrequencyOther:                  String
+  anticipatedPaymentFrequencyNote:                   String
+
+  # Page 7
+  willRecoverPayments:                               Boolean
+  willRecoverPaymentsNote:                           String
+  anticipateReconcilingPaymentsRetrospectively:      Boolean
+  anticipateReconcilingPaymentsRetrospectivelyNote:  String
+  paymentReconciliationFrequency:                    [FrequencyType!]!
+  paymentReconciliationFrequencyContinually:         String
+  paymentReconciliationFrequencyOther:               String
+  paymentReconciliationFrequencyNote:                String
+  paymentDemandRecoupmentFrequency:                  [FrequencyType!]!
+  paymentDemandRecoupmentFrequencyContinually:       String
+  paymentDemandRecoupmentFrequencyOther:             String
+  paymentDemandRecoupmentFrequencyNote:              String
+  paymentStartDate:                                  Time
+  paymentStartDateNote:                              String
+
+  # Meta
+
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
+
+  readyForReviewBy: UUID
+  readyForReviewByUserAccount: UserAccount
+  readyForReviewDts: Time
+  readyForClearanceBy: UUID
+  readyForClearanceByUserAccount: UserAccount
+  readyForClearanceDts: Time
+
+  status:      TaskStatus!
+}
+
+input PlanPaymentsChanges @goModel(model: "map[string]interface{}") {
+  # Page 1
+  fundingSource:                      [FundingSource!] #Combine these
+  fundingSourceMedicareAInfo:         String
+  fundingSourceMedicareBInfo:         String
+  # fundingSourceTrustFundType:         [TrustFundType!]
+  fundingSourceOther:                 String
+  fundingSourceNote:                  String
+  fundingSourceR:                     [FundingSource!]
+  fundingSourceRMedicareAInfo:        String
+  fundingSourceRMedicareBInfo:        String
+  # fundingSourceRTrustFundType:        [TrustFundType!]
+  fundingSourceROther:                String
+  fundingSourceRNote:                 String
+  payRecipients:                      [PayRecipient!]
+  payRecipientsOtherSpecification:    String
+  payRecipientsNote:                  String
+  payType:                            [PayType!]
+  payTypeNote:                        String
+
+  # Page 2
+  payClaims:                                      [ClaimsBasedPayType!]
+  payClaimsOther:                                 String
+  payClaimsNote:                                  String
+  shouldAnyProvidersExcludedFFSSystems:           Boolean
+  shouldAnyProviderExcludedFFSSystemsNote:        String
+  changesMedicarePhysicianFeeSchedule:            Boolean
+  changesMedicarePhysicianFeeScheduleNote:        String
+  affectsMedicareSecondaryPayerClaims:            Boolean
+  affectsMedicareSecondaryPayerClaimsHow:         String
+  affectsMedicareSecondaryPayerClaimsNote:        String
+  payModelDifferentiation:                        String
+
+  # Page 3
+  creatingDependenciesBetweenServices:     Boolean
+  creatingDependenciesBetweenServicesNote: String
+  needsClaimsDataCollection:               Boolean
+  needsClaimsDataCollectionNote:           String
+  providingThirdPartyFile:                 Boolean
+  isContractorAwareTestDataRequirements:   Boolean
+
+  # Page 4
+  beneficiaryCostSharingLevelAndHandling:          String
+  waiveBeneficiaryCostSharingForAnyServices:       Boolean
+  waiveBeneficiaryCostSharingServiceSpecification: String
+  waiverOnlyAppliesPartOfPayment:                  Boolean
+  waiveBeneficiaryCostSharingNote:                 String
+
+  # Page 5
+  nonClaimsPayments:                               [NonClaimsBasedPayType!]
+  nonClaimsPaymentOther:                           String
+  nonClaimsPaymentsNote:                           String
+  paymentCalculationOwner:                         String
+  numberPaymentsPerPayCycle:                       String
+  numberPaymentsPerPayCycleNote:                  String
+  sharedSystemsInvolvedAdditionalClaimPayment:     Boolean
+  sharedSystemsInvolvedAdditionalClaimPaymentNote: String
+  planningToUseInnovationPaymentContractor:        Boolean
+  planningToUseInnovationPaymentContractorNote:    String
+
+  # Page 6
+  expectedCalculationComplexityLevel:                       ComplexityCalculationLevelType
+  expectedCalculationComplexityLevelNote:                   String
+  claimsProcessingPrecedence:                               Boolean
+  claimsProcessingPrecedenceOther:                          String
+  claimsProcessingPrecedenceNote:                           String
+  canParticipantsSelectBetweenPaymentMechanisms:            Boolean
+  canParticipantsSelectBetweenPaymentMechanismsHow:         String
+  canParticipantsSelectBetweenPaymentMechanismsNote:        String
+  anticipatedPaymentFrequency:                              [FrequencyType!]
+  anticipatedPaymentFrequencyContinually:                   String
+  anticipatedPaymentFrequencyOther:                         String
+  anticipatedPaymentFrequencyNote:                         String
+
+  # Page 7
+  willRecoverPayments:                               Boolean
+  willRecoverPaymentsNote:                          String
+  anticipateReconcilingPaymentsRetrospectively:      Boolean
+  anticipateReconcilingPaymentsRetrospectivelyNote: String
+  paymentReconciliationFrequency:                    [FrequencyType!]
+  paymentReconciliationFrequencyContinually:         String
+  paymentReconciliationFrequencyOther:               String
+  paymentReconciliationFrequencyNote:                String
+  paymentDemandRecoupmentFrequency:                    [FrequencyType!]
+  paymentDemandRecoupmentFrequencyContinually:         String
+  paymentDemandRecoupmentFrequencyOther:               String
+  paymentDemandRecoupmentFrequencyNote:                String
+  paymentStartDate:                                  Time
+  paymentStartDateNote:                             String
+
+  status: TaskStatusInput
+}
+
+extend type Query {
+  planPayments(id: UUID!): PlanPayments!
+  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+}
+
+extend type Mutation {
+  updatePlanPayments(id: UUID!, changes: PlanPaymentsChanges!): PlanPayments!
+  @hasRole(role: MINT_USER)
+}

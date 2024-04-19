@@ -8,15 +8,13 @@
 import React, { useContext } from 'react';
 import { RootStateOrAny, useSelector } from 'react-redux';
 import { Redirect, useHistory } from 'react-router-dom';
-import { useMutation } from '@apollo/client';
+import {
+  useLockTaskListSectionMutation,
+  useUnlockTaskListSectionMutation
+} from 'gql/gen/graphql';
+import { TaskListSubscription_onLockTaskListSectionContext_lockStatus as LockSectionType } from 'gql/gen/types/TaskListSubscription';
 
-import LockTaskListSection from 'queries/TaskListSubscription/LockTaskListSection';
-import { LockTaskListSectionVariables } from 'queries/TaskListSubscription/types/LockTaskListSection';
-import { TaskListSubscription_onLockTaskListSectionContext_lockStatus as LockSectionType } from 'queries/TaskListSubscription/types/TaskListSubscription';
-import { UnlockTaskListSectionVariables } from 'queries/TaskListSubscription/types/UnlockTaskListSection';
-import UnlockTackListSection from 'queries/TaskListSubscription/UnlockTackListSection';
 import { TaskListSection } from 'types/graphql-global-types';
-// import { wait as waitBeforeUnload } from 'utils/general';
 import { isUUID } from 'utils/modelPlan';
 import { RouterContext } from 'views/RouterContext';
 import { SubscriptionContext } from 'views/SubscriptionWrapper';
@@ -101,12 +99,12 @@ const SubscriptionHandler = ({ children }: SubscriptionHandlerProps) => {
   const [
     addLock,
     { loading: addLockLoading }
-  ] = useMutation<LockTaskListSectionVariables>(LockTaskListSection);
+  ] = useLockTaskListSectionMutation();
 
   const [
     removeLock,
     { loading: removeLockLoading }
-  ] = useMutation<UnlockTaskListSectionVariables>(UnlockTackListSection);
+  ] = useUnlockTaskListSectionMutation();
 
   let lockState: LockStatus;
 

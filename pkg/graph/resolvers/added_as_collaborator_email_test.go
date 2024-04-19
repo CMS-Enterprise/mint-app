@@ -1,8 +1,6 @@
 package resolvers
 
 import (
-	"context"
-
 	"github.com/golang/mock/gomock"
 
 	"github.com/cmsgov/mint-app/pkg/email"
@@ -60,8 +58,8 @@ func (s *ResolverSuite) TestAddedAsCollaboratorEmail() {
 		Return(emailServiceConfig).
 		AnyTimes()
 
-	_, _, err := CreatePlanCollaborator(
-		context.Background(),
+	_, _, err := PlanCollaboratorCreate(
+		s.testConfigs.Context,
 		s.testConfigs.Store,
 		s.testConfigs.Store,
 		s.testConfigs.Logger,
@@ -72,6 +70,7 @@ func (s *ResolverSuite) TestAddedAsCollaboratorEmail() {
 		s.testConfigs.Principal,
 		false,
 		userhelpers.GetUserInfoAccountInfoWrapperFunc(s.stubFetchUserInfo),
+		true,
 	)
 	s.NoError(err)
 	mockController.Finish()

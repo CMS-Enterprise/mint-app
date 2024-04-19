@@ -1,0 +1,89 @@
+enum DocumentType {
+  CONCEPT_PAPER,
+  POLICY_PAPER,
+  ICIP_DRAFT,
+  MARKET_RESEARCH,
+  DESIGN_PARAMETERS_MEMO,
+  OFFICE_OF_THE_ADMINISTRATOR_PRESENTATION,
+  OTHER
+}
+
+"""
+PlanDocument represents a document on a plan
+"""
+type PlanDocument {
+  id: UUID!
+  modelPlanID: UUID!
+
+  """
+  If isLink = true, then this is a URL to a linked document, not an uploaded document
+  """
+  isLink: Boolean!
+  """
+  URL is the link that must be provided if this is a link instead of an uploaded document
+  """
+  url: String
+
+  fileType: String!
+  bucket: String!
+  fileKey: String!
+  virusScanned: Boolean!
+  virusClean: Boolean!
+  restricted: Boolean!
+  fileName: String!
+  fileSize: Int!
+  documentType: DocumentType!
+  otherType: String
+  optionalNotes: String
+  downloadUrl: String
+  deletedAt: Time
+  numLinkedSolutions: Int!
+
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
+}
+
+"""
+PlanDocumentInput
+"""
+input PlanDocumentInput {
+  modelPlanID: UUID!
+  fileData: Upload!
+  documentType: DocumentType!
+  restricted: Boolean!
+  otherTypeDescription: String
+  optionalNotes: String
+}
+
+"""
+PlanDocumentLinkInput
+"""
+input PlanDocumentLinkInput {
+  modelPlanID: UUID!
+  url: String!
+  name: String!
+  documentType: DocumentType!
+  restricted: Boolean!
+  otherTypeDescription: String
+  optionalNotes: String
+}
+
+extend type Query {
+  planDocument(id: UUID!): PlanDocument!
+  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+}
+
+extend type Mutation {
+  uploadNewPlanDocument(input: PlanDocumentInput!): PlanDocument!
+  @hasRole(role: MINT_USER)
+
+  linkNewPlanDocument(input: PlanDocumentLinkInput!): PlanDocument!
+  @hasRole(role: MINT_USER)
+
+  deletePlanDocument(id: UUID!): Int!
+  @hasRole(role: MINT_USER)
+}

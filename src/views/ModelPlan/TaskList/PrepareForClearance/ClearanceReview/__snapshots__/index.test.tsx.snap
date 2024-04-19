@@ -106,11 +106,15 @@ exports[`ClearanceReview component > matches snapshot 1`] = `
               <div
                 class="read-only-section read-only-section--who-are-the-beneficiaries-of-this-model margin-bottom-3"
               >
-                <p
-                  class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                <div
+                  class="display-flex flex-align-center"
                 >
-                  Who are the beneficiaries of this model?
-                </p>
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    Who are the beneficiaries of this model?
+                  </p>
+                </div>
                 <ul
                   class="margin-y-0 padding-left-3"
                 >
@@ -152,11 +156,15 @@ exports[`ClearanceReview component > matches snapshot 1`] = `
               <div
                 class="read-only-section read-only-section--notes margin-bottom-3"
               >
-                <p
-                  class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                <div
+                  class="display-flex flex-align-center"
                 >
-                  Notes
-                </p>
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    Notes
+                  </p>
+                </div>
                 <div
                   class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
                 >
@@ -175,11 +183,15 @@ exports[`ClearanceReview component > matches snapshot 1`] = `
               <div
                 class="read-only-section read-only-section--should-dually-eligible-beneficiaries-be-treated-differently-than-non-dually-eligibles--how-so margin-bottom-3"
               >
-                <p
-                  class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                <div
+                  class="display-flex flex-align-center"
                 >
-                  Should dually-eligible beneficiaries be treated differently than non-dually eligibles? How so?
-                </p>
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    Should dually-eligible beneficiaries be treated differently than non-dually eligibles? How so?
+                  </p>
+                </div>
                 <div
                   class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
                 >
@@ -206,11 +218,15 @@ exports[`ClearanceReview component > matches snapshot 1`] = `
               <div
                 class="read-only-section read-only-section--notes margin-bottom-3"
               >
-                <p
-                  class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                <div
+                  class="display-flex flex-align-center"
                 >
-                  Notes
-                </p>
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    Notes
+                  </p>
+                </div>
                 <div
                   class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
                 >
@@ -229,11 +245,15 @@ exports[`ClearanceReview component > matches snapshot 1`] = `
               <div
                 class="read-only-section read-only-section--should-beneficiaries-with-certain-characteristics-or-enrollments-be-excluded--how-so--what-are-the-exclusionary-criteria margin-bottom-3"
               >
-                <p
-                  class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                <div
+                  class="display-flex flex-align-center"
                 >
-                  Should beneficiaries with certain characteristics or enrollments be excluded? How so, what are the exclusionary criteria?
-                </p>
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    Should beneficiaries with certain characteristics or enrollments be excluded? How so, what are the exclusionary criteria?
+                  </p>
+                </div>
                 <div
                   class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
                 >
@@ -255,11 +275,15 @@ exports[`ClearanceReview component > matches snapshot 1`] = `
               <div
                 class="read-only-section read-only-section--notes margin-bottom-3"
               >
-                <p
-                  class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                <div
+                  class="display-flex flex-align-center"
                 >
-                  Notes
-                </p>
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    Notes
+                  </p>
+                </div>
                 <div
                   class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
                 >
@@ -286,11 +310,15 @@ exports[`ClearanceReview component > matches snapshot 1`] = `
                   <div
                     class="read-only-section read-only-section--how-many-people-do-you-think-will-be-impacted-by-this-model margin-bottom-3"
                   >
-                    <p
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                    <div
+                      class="display-flex flex-align-center"
                     >
-                      How many people do you think will be impacted by this model?
-                    </p>
+                      <p
+                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                      >
+                        How many people do you think will be impacted by this model?
+                      </p>
+                    </div>
                     <div
                       class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
                     >
@@ -310,11 +338,15 @@ exports[`ClearanceReview component > matches snapshot 1`] = `
                   <div
                     class="read-only-section read-only-section--what-is-your-level-of-confidence-on-this-estimate margin-bottom-3"
                   >
-                    <p
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                    <div
+                      class="display-flex flex-align-center"
                     >
-                      What is your level of confidence on this estimate?
-                    </p>
+                      <p
+                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                      >
+                        What is your level of confidence on this estimate?
+                      </p>
+                    </div>
                     <div
                       class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
                     >
@@ -338,11 +370,15 @@ exports[`ClearanceReview component > matches snapshot 1`] = `
               <div
                 class="read-only-section read-only-section--notes margin-bottom-3"
               >
-                <p
-                  class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                <div
+                  class="display-flex flex-align-center"
                 >
-                  Notes
-                </p>
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    Notes
+                  </p>
+                </div>
                 <div
                   class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
                 >
@@ -361,11 +397,15 @@ exports[`ClearanceReview component > matches snapshot 1`] = `
               <div
                 class="read-only-section read-only-section--how-will-you-choose-beneficiaries margin-bottom-3"
               >
-                <p
-                  class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                <div
+                  class="display-flex flex-align-center"
                 >
-                  How will you choose beneficiaries?
-                </p>
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    How will you choose beneficiaries?
+                  </p>
+                </div>
                 <ul
                   class="margin-y-0 padding-left-3"
                 >
@@ -392,11 +432,15 @@ exports[`ClearanceReview component > matches snapshot 1`] = `
               <div
                 class="read-only-section read-only-section--notes margin-bottom-3"
               >
-                <p
-                  class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                <div
+                  class="display-flex flex-align-center"
                 >
-                  Notes
-                </p>
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    Notes
+                  </p>
+                </div>
                 <div
                   class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
                 >
@@ -415,11 +459,15 @@ exports[`ClearanceReview component > matches snapshot 1`] = `
               <div
                 class="read-only-section read-only-section--how-frequently-are-beneficiaries-added margin-bottom-3"
               >
-                <p
-                  class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                <div
+                  class="display-flex flex-align-center"
                 >
-                  How frequently are beneficiaries added?
-                </p>
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    How frequently are beneficiaries added?
+                  </p>
+                </div>
                 <ul
                   class="margin-y-0 padding-left-3"
                 >
@@ -455,11 +503,15 @@ exports[`ClearanceReview component > matches snapshot 1`] = `
               <div
                 class="read-only-section read-only-section--notes margin-bottom-3"
               >
-                <p
-                  class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                <div
+                  class="display-flex flex-align-center"
                 >
-                  Notes
-                </p>
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    Notes
+                  </p>
+                </div>
                 <div
                   class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
                 >
@@ -478,11 +530,15 @@ exports[`ClearanceReview component > matches snapshot 1`] = `
               <div
                 class="read-only-section read-only-section--how-frequently-are-beneficiaries-removed margin-bottom-3"
               >
-                <p
-                  class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                <div
+                  class="display-flex flex-align-center"
                 >
-                  How frequently are beneficiaries removed?
-                </p>
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    How frequently are beneficiaries removed?
+                  </p>
+                </div>
                 <ul
                   class="margin-y-0 padding-left-3"
                 >
@@ -518,11 +574,15 @@ exports[`ClearanceReview component > matches snapshot 1`] = `
               <div
                 class="read-only-section read-only-section--notes margin-bottom-3"
               >
-                <p
-                  class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                <div
+                  class="display-flex flex-align-center"
                 >
-                  Notes
-                </p>
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    Notes
+                  </p>
+                </div>
                 <div
                   class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
                 >
@@ -541,11 +601,15 @@ exports[`ClearanceReview component > matches snapshot 1`] = `
               <div
                 class="read-only-section read-only-section--will-the-beneficiaries-overlap-with-other-models margin-bottom-3"
               >
-                <p
-                  class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                <div
+                  class="display-flex flex-align-center"
                 >
-                  Will the beneficiaries overlap with other models?
-                </p>
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    Will the beneficiaries overlap with other models?
+                  </p>
+                </div>
                 <div
                   class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
                 >
@@ -564,11 +628,15 @@ exports[`ClearanceReview component > matches snapshot 1`] = `
               <div
                 class="read-only-section read-only-section--notes margin-bottom-3"
               >
-                <p
-                  class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                <div
+                  class="display-flex flex-align-center"
                 >
-                  Notes
-                </p>
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    Notes
+                  </p>
+                </div>
                 <div
                   class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
                 >
@@ -587,11 +655,15 @@ exports[`ClearanceReview component > matches snapshot 1`] = `
               <div
                 class="read-only-section read-only-section--are-there-precedence-rules-between-this-model-and-other-model-s margin-bottom-3"
               >
-                <p
-                  class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                <div
+                  class="display-flex flex-align-center"
                 >
-                  Are there precedence rules between this model and other model(s)?
-                </p>
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    Are there precedence rules between this model and other model(s)?
+                  </p>
+                </div>
                 <ul
                   class="margin-y-0 padding-left-3"
                 >
@@ -627,11 +699,15 @@ exports[`ClearanceReview component > matches snapshot 1`] = `
               <div
                 class="read-only-section read-only-section--notes margin-bottom-3"
               >
-                <p
-                  class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                <div
+                  class="display-flex flex-align-center"
                 >
-                  Notes
-                </p>
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    Notes
+                  </p>
+                </div>
                 <div
                   class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
                 >

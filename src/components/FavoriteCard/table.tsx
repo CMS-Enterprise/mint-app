@@ -1,9 +1,9 @@
 import React, { useMemo } from 'react';
 import { Row, useFlexLayout, usePagination, useTable } from 'react-table';
 import { CardGroup, Table as UswdsTable } from '@trussworks/react-uswds';
+import { GetFavorites_modelPlanCollection as FavoritesModelType } from 'gql/gen/types/GetFavorites';
 
 import TablePagination from 'components/TablePagination';
-import { GetFavorites_modelPlanCollection as FavoritesModelType } from 'queries/types/GetFavorites';
 import { UpdateFavoriteProps } from 'views/ModelPlan/ModelPlanOverview';
 
 import FavoriteCard from '.';

@@ -1,0 +1,35 @@
+"""
+PlanDiscussion represents plan discussion
+"""
+type PlanDiscussion  {
+  id: UUID!
+  modelPlanID: UUID!
+  content: TaggedContent
+  userRole: DiscussionUserRole
+  userRoleDescription: String
+  replies: [DiscussionReply!]!
+  isAssessment: Boolean!
+
+
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
+}
+
+"""
+PlanDiscussionCreateInput represents the necessary fields to create a plan discussion
+"""
+input PlanDiscussionCreateInput {
+  modelPlanID: UUID!
+  content: TaggedHTML!
+  userRole: DiscussionUserRole
+  userRoleDescription: String
+}
+
+extend type Mutation {
+  createPlanDiscussion(input: PlanDiscussionCreateInput!): PlanDiscussion!
+  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+}

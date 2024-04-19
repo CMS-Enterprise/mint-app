@@ -22,7 +22,12 @@ import {
   SummaryBoxHeading
 } from '@trussworks/react-uswds';
 import classNames from 'classnames';
-import { GetCrtdLsQuery } from 'gql/gen/graphql';
+import {
+  GetCrtdLsQuery,
+  GetModelPlanQuery,
+  useGetModelPlanQuery
+} from 'gql/gen/graphql';
+import { TaskListSubscription_onLockTaskListSectionContext_lockStatus as LockSectionType } from 'gql/gen/types/TaskListSubscription';
 import { useFlags } from 'launchdarkly-react-client-sdk';
 
 import UswdsReactLink from 'components/LinkWrapper';
@@ -32,24 +37,6 @@ import PageLoading from 'components/PageLoading';
 import Alert from 'components/shared/Alert';
 import Divider from 'components/shared/Divider';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
-import useCacheQuery from 'hooks/useCacheQuery';
-import GetModelPlan from 'queries/GetModelPlan';
-import { TaskListSubscription_onLockTaskListSectionContext_lockStatus as LockSectionType } from 'queries/TaskListSubscription/types/TaskListSubscription';
-import {
-  GetModelPlan as GetModelPlanType,
-  GetModelPlan_modelPlan as GetModelPlanTypes,
-  GetModelPlan_modelPlan_basics as BasicsType,
-  GetModelPlan_modelPlan_beneficiaries as BeneficiariesType,
-  GetModelPlan_modelPlan_discussions as DiscussionType,
-  GetModelPlan_modelPlan_documents as DocumentType,
-  GetModelPlan_modelPlan_generalCharacteristics as GeneralCharacteristicsType,
-  GetModelPlan_modelPlan_operationalNeeds as OperationalNeedsType,
-  GetModelPlan_modelPlan_opsEvalAndLearning as OpsEvalAndLearningType,
-  GetModelPlan_modelPlan_participantsAndProviders as ParticipantsAndProvidersType,
-  GetModelPlan_modelPlan_payments as PaymentsType,
-  GetModelPlan_modelPlan_prepareForClearance as PrepareForClearanceType,
-  GetModelPlanVariables
-} from 'queries/types/GetModelPlan';
 import { TaskListSection, TaskStatus } from 'types/graphql-global-types';
 import { formatDateLocal } from 'utils/date';
 import { isAssessment } from 'utils/user';
@@ -66,12 +53,24 @@ import TaskListStatus from './_components/TaskListStatus';
 
 import './index.scss';
 
+type GetModelPlanTypes = GetModelPlanQuery['modelPlan'];
+type BasicsType = GetModelPlanQuery['modelPlan']['basics'];
+type OperationalNeedsType = GetModelPlanQuery['modelPlan']['operationalNeeds'][0];
+type DiscussionType = GetModelPlanQuery['modelPlan']['discussions'][0];
+type BeneficiariesType = GetModelPlanQuery['modelPlan']['beneficiaries'];
+type GeneralCharacteristicsType = GetModelPlanQuery['modelPlan']['generalCharacteristics'];
+type OpsEvalAndLearningType = GetModelPlanQuery['modelPlan']['opsEvalAndLearning'];
+type ParticipantsAndProvidersType = GetModelPlanQuery['modelPlan']['participantsAndProviders'];
+type PaymentsType = GetModelPlanQuery['modelPlan']['payments'];
+type PrepareForClearanceType = GetModelPlanQuery['modelPlan']['prepareForClearance'];
+type DocumentType = GetModelPlanQuery['modelPlan']['documents'][0];
+
 type CRTDLType =
   | GetCrtdLsQuery['modelPlan']['crs'][0]
   | GetCrtdLsQuery['modelPlan']['tdls'][0];
 
 type ITSolutionsType = {
-  modifiedDts: string | null;
+  modifiedDts: string | null | undefined;
   status: TaskStatus;
 };
 
@@ -145,10 +144,7 @@ const TaskList = () => {
 
   const { taskListSectionLocks } = useContext(SubscriptionContext);
 
-  const { data, loading, error } = useCacheQuery<
-    GetModelPlanType,
-    GetModelPlanVariables
-  >(GetModelPlan, {
+  const { data, loading, error } = useGetModelPlanQuery({
     variables: {
       id: modelID
     }
@@ -403,7 +399,7 @@ const DicussionBanner = ({
   discussions,
   setIsDiscussionOpen
 }: DiscussionBannerType) => {
-  const { t: d } = useTranslation('discussions');
+  const { t: d } = useTranslation('discussionsMisc');
 
   return (
     <SummaryBox className="bg-primary-lighter border-0 radius-0 padding-2">

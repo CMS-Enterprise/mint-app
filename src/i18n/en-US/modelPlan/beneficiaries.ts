@@ -93,6 +93,7 @@ export const beneficiaries: TranslationBeneficiaries = {
     dataType: 'string',
     formType: 'textarea',
     isOtherType: true,
+    otherParentField: 'treatDualElligibleDifferent',
     filterGroups: [ModelViewFilter.IDDOC, ModelViewFilter.PBG]
   },
   treatDualElligibleDifferentNote: {
@@ -132,6 +133,7 @@ export const beneficiaries: TranslationBeneficiaries = {
     dataType: 'string',
     formType: 'textarea',
     isOtherType: true,
+    otherParentField: 'excludeCertainCharacteristics',
     filterGroups: [ModelViewFilter.IDDOC, ModelViewFilter.PBG]
   },
   excludeCertainCharacteristicsNote: {
@@ -254,6 +256,7 @@ export const beneficiaries: TranslationBeneficiaries = {
     dataType: 'string',
     formType: 'text',
     isOtherType: true,
+    otherParentField: 'beneficiarySelectionFrequency',
     filterGroups: [ModelViewFilter.CMMI]
   },
   beneficiarySelectionFrequencyOther: {
@@ -264,6 +267,7 @@ export const beneficiaries: TranslationBeneficiaries = {
     dataType: 'string',
     formType: 'text',
     isOtherType: true,
+    otherParentField: 'beneficiarySelectionFrequency',
     filterGroups: [ModelViewFilter.CMMI]
   },
   beneficiarySelectionFrequencyNote: {
@@ -300,6 +304,7 @@ export const beneficiaries: TranslationBeneficiaries = {
     dataType: 'string',
     formType: 'text',
     isOtherType: true,
+    otherParentField: 'beneficiaryRemovalFrequency',
     filterGroups: [ModelViewFilter.CMMI]
   },
   beneficiaryRemovalFrequencyOther: {
@@ -310,6 +315,7 @@ export const beneficiaries: TranslationBeneficiaries = {
     dataType: 'string',
     formType: 'text',
     isOtherType: true,
+    otherParentField: 'beneficiaryRemovalFrequency',
     filterGroups: [ModelViewFilter.CMMI]
   },
   beneficiaryRemovalFrequencyNote: {
@@ -372,6 +378,7 @@ export const beneficiaries: TranslationBeneficiaries = {
     dataType: 'string',
     formType: 'textarea',
     isOtherType: true,
+    otherParentField: 'precedenceRules',
     filterGroups: [ModelViewFilter.MDM, ModelViewFilter.OACT]
   },
   precedenceRulesNo: {
@@ -382,6 +389,7 @@ export const beneficiaries: TranslationBeneficiaries = {
     dataType: 'string',
     formType: 'textarea',
     isOtherType: true,
+    otherParentField: 'precedenceRules',
     filterGroups: [ModelViewFilter.MDM, ModelViewFilter.OACT]
   },
   precedenceRulesNote: {

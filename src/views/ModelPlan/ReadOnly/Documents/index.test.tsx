@@ -3,11 +3,11 @@ import { Provider } from 'react-redux';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
+import { GetModelPlanDocumentsDocument } from 'gql/gen/graphql';
 import configureMockStore from 'redux-mock-store';
 
 import { ASSESSMENT } from 'constants/jobCodes';
 import { MessageProvider } from 'hooks/useMessage';
-import GetModelPlanDocuments from 'queries/Documents/GetModelPlanDocuments';
 import { DocumentType } from 'types/graphql-global-types';
 
 import ReadOnlyDocuments from './index';
@@ -17,7 +17,7 @@ const modelID = 'f11eb129-2c80-4080-9440-439cbe1a286f';
 const mocks = [
   {
     request: {
-      query: GetModelPlanDocuments,
+      query: GetModelPlanDocumentsDocument,
       variables: { id: modelID }
     },
     result: {

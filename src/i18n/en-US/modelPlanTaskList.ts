@@ -11,7 +11,7 @@ const modelPlanTaskList = {
     heading: 'Documents',
     copy: 'There are no documents added.',
     document: 'document',
-    document_plural: 'documents',
+    document_other: 'documents',
     cta: 'Add a document',
     viewAll: 'View all model documents',
     addAnother: 'Add a document'

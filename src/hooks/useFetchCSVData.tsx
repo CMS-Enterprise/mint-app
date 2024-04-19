@@ -4,23 +4,19 @@ Then processes the data into CSV format as well as initiates a download
 */
 
 import { useCallback, useState } from 'react';
-import { FetchResult, useLazyQuery } from '@apollo/client';
 import { Parser } from '@json2csv/plainjs';
 import { unwind } from '@json2csv/transforms';
+import {
+  GetAllModelDataQuery,
+  GetAllModelDataQueryHookResult,
+  GetAllSingleModelDataQuery,
+  GetAllSingleModelDataQueryHookResult,
+  useGetAllModelDataLazyQuery,
+  useGetAllSingleModelDataLazyQuery
+} from 'gql/gen/graphql';
 import i18next from 'i18next';
 
 import usePlanTranslation from 'hooks/usePlanTranslation';
-import GetAllModelPlans from 'queries/GetAllModelData';
-import GetAllSingleModelPlan from 'queries/GetAllSingleModelPlan';
-import {
-  GetAllModelData as GetAllModelDataType,
-  GetAllModelData_modelPlanCollection as AllModelDataType
-} from 'queries/types/GetAllModelData';
-import {
-  GetAllSingleModelData,
-  GetAllSingleModelData_modelPlan as SingleModelPlanType,
-  GetAllSingleModelDataVariables
-} from 'queries/types/GetAllSingleModelData';
 import { getKeys } from 'types/translation';
 import { formatDateLocal, formatDateUtc } from 'utils/date';
 import { csvFields, fieldsToUnwind } from 'utils/export/CsvData';
@@ -29,6 +25,9 @@ import {
   filterGroupKey
 } from 'views/ModelPlan/ReadOnly/_components/FilterView/BodyContent/_filterGroupMapping';
 import { isHiddenByParentCondition } from 'views/ModelPlan/ReadOnly/_components/ReadOnlySection/util';
+
+type AllModelDataType = GetAllModelDataQuery['modelPlanCollection'][0];
+type SingleModelPlanType = GetAllSingleModelDataQuery['modelPlan'];
 
 interface CSVModelPlanType extends AllModelDataType, SingleModelPlanType {}
 
@@ -68,9 +67,9 @@ export const headerFormatter = (dataField: string, allPlanTranslation: any) => {
   }
   // Generic translation for Ready for review fields
   else if (fieldName === 'readyForReviewByUserAccount.commonName') {
-    translation = i18next.t<string>('modelPlanMisc:readyForReviewBy');
+    translation = i18next.t('modelPlanMisc:readyForReviewBy');
   } else if (fieldName === 'readyForReviewDts') {
-    translation = i18next.t<string>('modelPlanMisc:readyForReviewAt');
+    translation = i18next.t('modelPlanMisc:readyForReviewAt');
   }
   // If no translation, format using hardcoded label in csvFields
   else {
@@ -79,9 +78,7 @@ export const headerFormatter = (dataField: string, allPlanTranslation: any) => {
 
   // Append Task list section to status headers so differentiate values
   if (fieldName === 'status' && section !== 'modelPlan') {
-    translation = `${i18next.t<string>(
-      `${section}Misc:heading`
-    )}: ${translation}`;
+    translation = `${i18next.t(`${section}Misc:heading`)}: ${translation}`;
   }
 
   // js2on@csv does not like commas in the header, and instead parses them into a new column, offsetting data
@@ -149,7 +146,7 @@ export const dataFormatter = (
 
     // If parent is an array - ex: Collaborators, Discussions etc
     else if (parentKey && unwindSections.includes(parentKey)) {
-      mappedObj[key] = i18next.t<string>(
+      mappedObj[key] = i18next.t(
         `${parentKey}:${key}.options.${transformObj[key]}`
       );
     }
@@ -163,9 +160,7 @@ export const dataFormatter = (
 
       // TODO: Remove once/if discussion translations work has been completed - can use parentKey and unwindSections once translations are implemented
     } else if (key === 'userRole') {
-      mappedObj[key] = i18next.t<string>(
-        `discussions:userRole.${transformObj[key]}`
-      );
+      mappedObj[key] = i18next.t(`discussions:userRole.${transformObj[key]}`);
     }
 
     // If the value is a nested task list item - Basics, Payments, etc - apply it to the current value
@@ -256,7 +251,10 @@ export const removedUnneededData = (
 
       if (
         allPlanTranslation[section][fieldName] &&
-        isHiddenByParentCondition(allPlanTranslation[section][fieldName], data)
+        isHiddenByParentCondition(
+          allPlanTranslation[section][fieldName],
+          data[section]
+        )
       ) {
         return false;
       }
@@ -327,34 +325,30 @@ const csvFormatter = (
 type UseFetchCSVData = {
   fetchSingleData: (
     input: string
-  ) => Promise<FetchResult<GetAllSingleModelData>>;
-  fetchAllData: () => Promise<FetchResult<GetAllModelDataType>>;
+  ) => Promise<GetAllSingleModelDataQueryHookResult>;
+  fetchAllData: () => Promise<GetAllModelDataQueryHookResult>;
   setFilteredGroup: (filteredGroup?: FilterGroup) => void;
 };
 
 const useFetchCSVData = (): UseFetchCSVData => {
   const [filteredGroup, setFilteredGroup] = useState<FilterGroup | undefined>();
+  const allPlanTranslation = usePlanTranslation();
 
   // Get data for a single model plan
-  const [fetchSingleData] = useLazyQuery<
-    GetAllSingleModelData,
-    GetAllSingleModelDataVariables
-  >(GetAllSingleModelPlan, {
+  const [fetchSingleData] = useGetAllSingleModelDataLazyQuery({
     onCompleted: data => {
       csvFormatter(
-        data?.modelPlan ? [data?.modelPlan] : [],
+        data.modelPlan ? [data.modelPlan] : [],
         allPlanTranslation,
         filteredGroup
       );
     }
   });
 
-  const allPlanTranslation = usePlanTranslation();
-
   // Get data for all model plans
-  const [fetchAllData] = useLazyQuery<GetAllModelDataType>(GetAllModelPlans, {
+  const [fetchAllData] = useGetAllModelDataLazyQuery({
     onCompleted: data => {
-      csvFormatter(data?.modelPlanCollection || [], allPlanTranslation);
+      csvFormatter(data.modelPlanCollection || [], allPlanTranslation);
     }
   });
 

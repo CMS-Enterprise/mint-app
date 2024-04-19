@@ -4,6 +4,7 @@ import { MockedProvider } from '@apollo/client/testing';
 import { act, render, screen, waitFor } from '@testing-library/react';
 import { GetNotificationsDocument } from 'gql/gen/graphql';
 
+import { MessageProvider } from 'hooks/useMessage';
 import setup from 'utils/testing/setup';
 
 import NotificationsHome from '.';
@@ -25,6 +26,7 @@ const notificationsMock = [
                 isRead: false,
                 inAppSent: true,
                 emailSent: true,
+                createdDts: '2022-03-27T18:09:03.015689Z',
                 activity: {
                   activityType: 'TAGGED_IN_DISCUSSION',
                   entityID: '279ba41b-232a-49b2-9607-a3951d301218',
@@ -51,6 +53,7 @@ const notificationsMock = [
                 isRead: false,
                 inAppSent: true,
                 emailSent: true,
+                createdDts: '2022-03-27T18:09:03.015689Z',
                 activity: {
                   activityType: 'TAGGED_IN_DISCUSSION',
                   entityID: 'ccf6830b-5c20-4394-84d6-78e0c9f31ec5',
@@ -86,7 +89,9 @@ describe('Notification Page', () => {
         <MemoryRouter initialEntries={[`/notifications`]}>
           <MockedProvider mocks={notificationsMock} addTypename={false}>
             <Route path="/notifications">
-              <NotificationsHome />
+              <MessageProvider>
+                <NotificationsHome />
+              </MessageProvider>
             </Route>
           </MockedProvider>
         </MemoryRouter>
@@ -105,7 +110,9 @@ describe('Notification Page', () => {
       <MemoryRouter initialEntries={[`/notifications`]}>
         <MockedProvider mocks={notificationsMock} addTypename={false}>
           <Route path="/notifications">
-            <NotificationsHome />
+            <MessageProvider>
+              <NotificationsHome />
+            </MessageProvider>
           </Route>
         </MockedProvider>
       </MemoryRouter>

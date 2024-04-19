@@ -1,0 +1,15 @@
+"""
+Represents a person response from the Okta API
+"""
+type UserInfo {
+  firstName: String!
+  lastName: String!
+  displayName: String!
+  email: String!
+  username: String!
+}
+
+extend type Query {
+  searchOktaUsers(searchTerm: String!): [UserInfo!]!
+  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+}

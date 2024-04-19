@@ -2,17 +2,17 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { DatePicker, Fieldset, Label, Radio } from '@trussworks/react-uswds';
 import { Field, FormikProps } from 'formik';
+import {
+  GetOperationalNeedQuery,
+  GetOperationalSolutionQuery
+} from 'gql/gen/graphql';
+import { GetOperationalNeed_operationalNeed_solutions as OpertionalNeedSolutionTypes } from 'gql/gen/types/GetOperationalNeed';
 
 import Divider from 'components/shared/Divider';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
-import {
-  GetOperationalNeed_operationalNeed as OperationNeedType,
-  GetOperationalNeed_operationalNeed_solutions as OpertionalNeedSolutionTypes
-} from 'queries/ITSolutions/types/GetOperationalNeed';
-import { GetOperationalSolution_operationalSolution as GetOperationalSolutionType } from 'queries/ITSolutions/types/GetOperationalSolution';
-import { OpSolutionStatus } from 'types/graphql-global-types';
-import { translateOpNeedsStatusType } from 'utils/modelPlan';
+import usePlanTranslation from 'hooks/usePlanTranslation';
+import { getKeys } from 'types/translation';
 
 import ImplementationStatuses from '../../_components/ImplementationStatus';
 import SolutionCard from '../../_components/SolutionCard';
@@ -21,6 +21,9 @@ import SolutionDetailCard from '../../_components/SolutionDetailCard';
 type flatErrorsType = {
   [key: string]: string;
 };
+
+type OperationNeedType = GetOperationalNeedQuery['operationalNeed'];
+type GetOperationalSolutionType = GetOperationalSolutionQuery['operationalSolution'];
 
 type SolutionTypes = {
   solution: OpertionalNeedSolutionTypes;
@@ -47,8 +50,10 @@ const Solution = ({
   modelID,
   formikProps
 }: SolutionTypes) => {
-  const { t } = useTranslation('itSolutions');
+  const { t } = useTranslation('opSolutionsMisc');
   const { t: h } = useTranslation('draftModelPlan');
+
+  const { status: statusConfig } = usePlanTranslation('solutions');
 
   const { errors, setFieldError, setFieldValue, values } = formikProps;
 
@@ -166,20 +171,13 @@ const Solution = ({
             <FieldErrorMsg>{flatErrors.status}</FieldErrorMsg>
 
             <Fieldset>
-              {[
-                OpSolutionStatus.NOT_STARTED,
-                OpSolutionStatus.ONBOARDING,
-                OpSolutionStatus.BACKLOG,
-                OpSolutionStatus.IN_PROGRESS,
-                OpSolutionStatus.COMPLETED,
-                OpSolutionStatus.AT_RISK
-              ].map(key => (
+              {getKeys(statusConfig.options).map(key => (
                 <Field
                   as={Radio}
                   key={key}
                   id={`solution-status-${identifier}-${key}`}
                   name={`solutions[${index}].status`}
-                  label={translateOpNeedsStatusType(key)}
+                  label={statusConfig.options[key]}
                   value={key}
                   checked={values.solutions[index]?.status === key}
                   onChange={() => {

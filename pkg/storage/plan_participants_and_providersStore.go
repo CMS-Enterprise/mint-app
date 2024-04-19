@@ -90,12 +90,14 @@ func (s *Store) PlanParticipantsAndProvidersUpdate(
 	}
 	defer stmt.Close()
 
-	err = stmt.Get(gc, gc)
+	ret := models.PlanParticipantsAndProviders{}
+
+	err = stmt.Get(&ret, gc)
 	if err != nil {
 		return nil, genericmodel.HandleModelQueryError(logger, err, gc)
 	}
 
-	return gc, nil
+	return &ret, nil
 }
 
 // PlanParticipantsAndProvidersGetByID returns the plan providers_and_participants for a given id

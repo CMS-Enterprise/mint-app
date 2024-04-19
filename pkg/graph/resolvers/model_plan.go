@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"strings"
 
+	"github.com/cmsgov/mint-app/pkg/notifications"
+
 	"github.com/google/uuid"
 	"github.com/jmoiron/sqlx"
 	"go.uber.org/zap"
@@ -110,7 +112,7 @@ func ModelPlanCreate(
 		}
 
 		// Create an initial collaborator for the plan
-		_, _, err = CreatePlanCollaborator(
+		_, _, err = PlanCollaboratorCreate(
 			ctx,
 			tx,
 			store,
@@ -126,6 +128,7 @@ func ModelPlanCreate(
 			principal,
 			false,
 			getAccountInformation,
+			false,
 		)
 		if err != nil {
 			return nil, err
@@ -319,9 +322,10 @@ func ModelPlanShare(
 		return false, err
 	}
 
-	receiverEmails := make([]string, len(usernames))
+	receiverEmails := make([]string, 0)
+	receiverIDs := make([]uuid.UUID, 0)
 
-	for i, username := range usernames {
+	for _, username := range usernames {
 		collabAccount, err := userhelpers.GetOrCreateUserAccount(
 			ctx,
 			store,
@@ -335,7 +339,22 @@ func ModelPlanShare(
 			return false, fmt.Errorf("failed to get or create user account: %w", err)
 		}
 
-		receiverEmails[i] = collabAccount.Email
+		userPrefs, err := loaders.UserNotificationPreferencesGetByUserID(ctx, collabAccount.ID)
+		if err != nil {
+			return false, fmt.Errorf("failed to get user notification preferences: %w", err)
+		}
+
+		receiverIDs = append(receiverIDs, collabAccount.ID)
+
+		if userPrefs.ModelPlanShared.SendEmail() {
+			receiverEmails = append(receiverEmails, collabAccount.Email)
+		}
+	}
+
+	// Send notification to all the users
+	_, err = notifications.ActivityModelPlanSharedCreate(ctx, store, principal.Account().ID, receiverIDs, modelPlanID, optionalMessage, loaders.UserNotificationPreferencesGetByUserID)
+	if err != nil {
+		return false, fmt.Errorf("failed to create activity: %w", err)
 	}
 
 	// Get client address
@@ -417,9 +436,11 @@ func ModelPlanShare(
 	}
 
 	// Send email
-	err = emailService.Send(addressBook.DefaultSender, receiverEmails, nil, emailSubject, "text/html", emailBody)
-	if err != nil {
-		return false, fmt.Errorf("failed to send email: %w", err)
+	if len(receiverEmails) > 0 {
+		err = emailService.Send(addressBook.DefaultSender, receiverEmails, nil, emailSubject, "text/html", emailBody)
+		if err != nil {
+			return false, fmt.Errorf("failed to send email: %w", err)
+		}
 	}
 
 	return true, nil

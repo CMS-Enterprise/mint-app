@@ -46,7 +46,7 @@ exports[`Model Plan Coordination > matches snapshot 1`] = `
     class="mint-h1 margin-top-4 margin-bottom-2"
     tabindex="-1"
   >
-    Participants and Providers
+    Participants and providers
   </h1>
   <p
     class="margin-top-0 margin-bottom-1 font-body-lg"
@@ -97,6 +97,225 @@ exports[`Model Plan Coordination > matches snapshot 1`] = `
       class="usa-fieldset"
       data-testid="fieldset"
     >
+      <div
+        class="usa-form-group"
+        data-scroll="participantRequireFinancialGuarantee"
+      >
+        <div
+          class="display-flex flex-align-center"
+        >
+          <label
+            class="usa-label"
+            data-testid="label"
+            for="participants-and-providers-participant-require-financial-guarantee"
+          >
+            Are participants required to retain a financial guarantee?
+          </label>
+          <span
+            class="usa-tooltip"
+            data-testid="tooltipWrapper"
+          >
+            <div
+              aria-describedby="tooltip-550000"
+              class="usa-tooltip__trigger mint-no-print margin-left-1"
+              data-testid="triggerElement"
+              position="right"
+              tabindex="0"
+              title=""
+            >
+              <svg
+                class="usa-icon text-base-light"
+                focusable="false"
+                height="1em"
+                role="img"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
+                />
+              </svg>
+            </div>
+            <span
+              aria-hidden="true"
+              class="usa-tooltip__body"
+              data-testid="tooltipBody"
+              id="tooltip-550000"
+              role="tooltip"
+              title="Financial guarantees are commitments made by one party, typically a financial institution or a company, to assume responsibility for the payment of a debt or the performance of an obligation if the debtor or obligor fails to fulfill their obligations."
+            >
+              Financial guarantees are commitments made by one party, typically a financial institution or a company, to assume responsibility for the payment of a debt or the performance of an obligation if the debtor or obligor fails to fulfill their obligations.
+            </span>
+          </span>
+        </div>
+        <p
+          class="text-base margin-0 line-height-body-3"
+        >
+          Note: Remember to include financial guarantee requirements when drafting your Participation Agreement.
+        </p>
+        <fieldset
+          class="usa-fieldset"
+          data-testid="fieldset"
+        >
+          <div
+            class="usa-radio"
+            data-testid="radio"
+          >
+            <input
+              class="usa-radio__input"
+              data-testid="participants-and-providers-participant-require-financial-guarantee-true"
+              id="participants-and-providers-participant-require-financial-guarantee-true"
+              name="participantRequireFinancialGuarantee"
+              type="radio"
+              value="TRUE"
+            />
+            <label
+              class="usa-radio__label"
+              for="participants-and-providers-participant-require-financial-guarantee-true"
+            >
+              Yes
+            </label>
+          </div>
+          <div
+            class="usa-radio"
+            data-testid="radio"
+          >
+            <input
+              class="usa-radio__input"
+              data-testid="participants-and-providers-participant-require-financial-guarantee-false"
+              id="participants-and-providers-participant-require-financial-guarantee-false"
+              name="participantRequireFinancialGuarantee"
+              type="radio"
+              value="FALSE"
+            />
+            <label
+              class="usa-radio__label"
+              for="participants-and-providers-participant-require-financial-guarantee-false"
+            >
+              No
+            </label>
+          </div>
+        </fieldset>
+        <div
+          class="usa-form-group"
+          data-scroll="participantRequireFinancialGuaranteeType"
+        >
+          <label
+            class="usa-label text-normal margin-top-4"
+            data-testid="label"
+            for="participants-and-providers-participant-require-financial-guarantee-type"
+          >
+            If so, are there any limitations on the type?
+          </label>
+          <div
+            class="mint-checkbox usa-checkbox"
+          >
+            <input
+              class="usa-checkbox__input"
+              id="participants-and-providers-participant-require-financial-guarantee-type-SURETY_BOND"
+              name="participantRequireFinancialGuaranteeType"
+              type="checkbox"
+              value="SURETY_BOND"
+            />
+            <label
+              class="usa-checkbox__label"
+              for="participants-and-providers-participant-require-financial-guarantee-type-SURETY_BOND"
+            >
+              Surety Bond
+            </label>
+            <p
+              class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+            />
+          </div>
+          <div
+            class="mint-checkbox usa-checkbox"
+          >
+            <input
+              class="usa-checkbox__input"
+              id="participants-and-providers-participant-require-financial-guarantee-type-LETTER_OF_CREDIT"
+              name="participantRequireFinancialGuaranteeType"
+              type="checkbox"
+              value="LETTER_OF_CREDIT"
+            />
+            <label
+              class="usa-checkbox__label"
+              for="participants-and-providers-participant-require-financial-guarantee-type-LETTER_OF_CREDIT"
+            >
+              Letter of Credit
+            </label>
+            <p
+              class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+            />
+          </div>
+          <div
+            class="mint-checkbox usa-checkbox"
+          >
+            <input
+              checked=""
+              class="usa-checkbox__input"
+              id="participants-and-providers-participant-require-financial-guarantee-type-ESCROW"
+              name="participantRequireFinancialGuaranteeType"
+              type="checkbox"
+              value="ESCROW"
+            />
+            <label
+              class="usa-checkbox__label"
+              for="participants-and-providers-participant-require-financial-guarantee-type-ESCROW"
+            >
+              Escrow
+            </label>
+            <p
+              class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+            />
+          </div>
+          <div
+            class="mint-checkbox usa-checkbox"
+          >
+            <input
+              class="usa-checkbox__input"
+              id="participants-and-providers-participant-require-financial-guarantee-type-OTHER"
+              name="participantRequireFinancialGuaranteeType"
+              type="checkbox"
+              value="OTHER"
+            />
+            <label
+              class="usa-checkbox__label"
+              for="participants-and-providers-participant-require-financial-guarantee-type-OTHER"
+            >
+              Other
+            </label>
+            <p
+              class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+            />
+          </div>
+        </div>
+        <div
+          class="margin-top-3 margin-bottom-6"
+        >
+          <button
+            class="usa-button usa-button usa-button--unstyled"
+            data-testid="add-note-toggle"
+            type="button"
+          >
+            <svg
+              aria-hidden="true"
+              class="usa-icon margin-right-1"
+              focusable="false"
+              height="1em"
+              role="img"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+              />
+            </svg>
+            Add an additional note
+          </button>
+        </div>
+      </div>
       <div
         class="usa-form-group margin-bottom-8"
         data-scroll="coordinateWork"
@@ -157,7 +376,7 @@ exports[`Model Plan Coordination > matches snapshot 1`] = `
           </div>
         </fieldset>
         <div
-          class="margin-top-4 margin-bottom-8"
+          class="margin-top-3 margin-bottom-6"
         >
           <button
             class="usa-button usa-button usa-button--unstyled"
@@ -237,7 +456,7 @@ exports[`Model Plan Coordination > matches snapshot 1`] = `
           </div>
         </fieldset>
         <div
-          class="margin-top-4 margin-bottom-8"
+          class="margin-top-3 margin-bottom-6"
         >
           <button
             class="usa-button usa-button usa-button--unstyled"
@@ -422,7 +641,7 @@ exports[`Model Plan Coordination > matches snapshot 1`] = `
           />
         </div>
         <div
-          class="margin-top-4 margin-bottom-8"
+          class="margin-top-3 margin-bottom-6"
         >
           <button
             class="usa-button usa-button usa-button--unstyled"

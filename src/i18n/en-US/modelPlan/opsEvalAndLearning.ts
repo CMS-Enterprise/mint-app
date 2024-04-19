@@ -58,7 +58,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
       true: 'Yes',
       false: 'No'
     },
-    filterGroups: [ModelViewFilter.CBOSC]
+    filterGroups: [ModelViewFilter.CBOSC, ModelViewFilter.IPC]
   },
   helpdeskUseNote: {
     gqlField: 'helpdeskUseNote',
@@ -67,7 +67,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     label: 'Notes',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: [ModelViewFilter.CBOSC]
+    filterGroups: [ModelViewFilter.CBOSC, ModelViewFilter.IPC]
   },
   contractorSupport: {
     gqlField: 'contractorSupport',
@@ -105,6 +105,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     dataType: 'string',
     formType: 'textarea',
     isOtherType: true,
+    otherParentField: 'contractorSupport',
     filterGroups: [
       ModelViewFilter.CBOSC,
       ModelViewFilter.IDDOC,
@@ -174,7 +175,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
         () => opsEvalAndLearning.fileNamingConventions
       ]
     },
-    filterGroups: [ModelViewFilter.IDDOC]
+    filterGroups: [ModelViewFilter.IDDOC, ModelViewFilter.IPC]
   },
   iddocSupportNote: {
     gqlField: 'iddocSupportNote',
@@ -183,7 +184,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     label: 'Notes',
     dataType: 'string',
     formType: 'textarea',
-    filterGroups: [ModelViewFilter.IDDOC]
+    filterGroups: [ModelViewFilter.IDDOC, ModelViewFilter.IPC]
   },
   technicalContactsIdentified: {
     gqlField: 'technicalContactsIdentified',
@@ -210,6 +211,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     dataType: 'string',
     formType: 'textarea',
     isOtherType: true,
+    otherParentField: 'technicalContactsIdentified',
     filterGroups: [ModelViewFilter.IDDOC]
   },
   technicalContactsIdentifiedNote: {
@@ -350,6 +352,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     dataType: 'string',
     formType: 'text',
     isOtherType: true,
+    otherParentField: 'dataMonitoringFileTypes',
     filterGroups: [ModelViewFilter.IDDOC]
   },
   dataResponseType: {
@@ -543,7 +546,8 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     adjacentPositioning: {
       position: 'right',
       adjacentField: 'riskAdjustPerformance'
-    }
+    },
+    filterGroups: [ModelViewFilter.CMMI]
   },
   riskAdjustPayments: {
     gqlField: 'riskAdjustPayments',
@@ -578,7 +582,8 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     adjacentPositioning: {
       position: 'right',
       adjacentField: 'riskAdjustPayments'
-    }
+    },
+    filterGroups: [ModelViewFilter.CMMI]
   },
   riskAdjustNote: {
     gqlField: 'riskAdjustNote',
@@ -713,6 +718,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     dataType: 'enum',
     formType: 'checkbox',
     hideRelatedQuestionAlert: true,
+    disconnectedLabel: `questionNotApplicableCCW`,
     options: {
       YES_EVALUATION: 'Yes, for evaluation',
       YES__IMPLEMENTATION: 'Yes, for implementation',
@@ -744,6 +750,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     dataType: 'string',
     formType: 'textarea',
     isOtherType: true,
+    otherParentField: 'ccmInvolvment',
     filterGroups: [ModelViewFilter.CCW]
   },
   ccmInvolvmentNote: {
@@ -763,6 +770,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     readonlyLabel: 'What data do you need to monitor the model?',
     sublabel:
       'If you select quality claims-based measures or quality reported measures, there will be additional questions to answer.',
+    disconnectedLabel: `questionNotApplicableQuality`,
     dataType: 'enum',
     formType: 'multiSelect',
     multiSelectLabel: 'Selected data',
@@ -845,6 +853,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     dataType: 'string',
     formType: 'textarea',
     isOtherType: true,
+    otherParentField: 'dataToSendParticicipants',
     filterGroups: [ModelViewFilter.CMMI]
   },
   dataToSendParticicipantsNote: {
@@ -931,6 +940,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     dataType: 'string',
     formType: 'textarea',
     isOtherType: true,
+    otherParentField: 'appToSendFilesToWhich',
     filterGroups: [ModelViewFilter.CCW]
   },
   appToSendFilesToNote: {
@@ -1016,6 +1026,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     dataType: 'string',
     formType: 'text',
     isOtherType: true,
+    otherParentField: 'qualityPerformanceImpactsPayment',
     filterGroups: [ModelViewFilter.CMMI]
   },
   qualityPerformanceImpactsPaymentNote: {
@@ -1064,6 +1075,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     dataType: 'string',
     formType: 'textarea',
     isOtherType: true,
+    otherParentField: 'dataSharingStarts',
     filterGroups: [ModelViewFilter.IDDOC]
   },
   dataSharingFrequency: {
@@ -1088,6 +1100,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     dataType: 'string',
     formType: 'textarea',
     isOtherType: true,
+    otherParentField: 'dataSharingFrequency',
     filterGroups: [ModelViewFilter.CMMI, ModelViewFilter.IDDOC]
   },
   dataSharingFrequencyOther: {
@@ -1098,6 +1111,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     dataType: 'string',
     formType: 'textarea',
     isOtherType: true,
+    otherParentField: 'dataSharingFrequency',
     filterGroups: [ModelViewFilter.CMMI, ModelViewFilter.IDDOC]
   },
   dataSharingStartsNote: {
@@ -1141,6 +1155,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     dataType: 'string',
     formType: 'textarea',
     isOtherType: true,
+    otherParentField: 'dataCollectionStarts',
     filterGroups: [ModelViewFilter.IDDOC]
   },
   dataCollectionFrequency: {
@@ -1165,6 +1180,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     dataType: 'string',
     formType: 'textarea',
     isOtherType: true,
+    otherParentField: 'dataCollectionFrequency',
     filterGroups: [ModelViewFilter.CMMI]
   },
   dataCollectionFrequencyOther: {
@@ -1175,6 +1191,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     dataType: 'string',
     formType: 'textarea',
     isOtherType: true,
+    otherParentField: 'dataCollectionFrequency',
     filterGroups: [ModelViewFilter.CMMI]
   },
   dataCollectionFrequencyNote: {
@@ -1206,7 +1223,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
       OTHER: 'Other'
     },
     optionsRelatedInfo: {
-      OTHER: ''
+      OTHER: 'qualityReportingStartsOther'
     }
   },
   qualityReportingStartsOther: {
@@ -1216,7 +1233,8 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     label: 'Please specify',
     dataType: 'string',
     formType: 'textarea',
-    isOtherType: true
+    isOtherType: true,
+    otherParentField: 'qualityReportingStarts'
   },
   qualityReportingStartsNote: {
     gqlField: 'qualityReportingStartsNote',
@@ -1246,7 +1264,8 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     label: 'Please specify',
     dataType: 'string',
     formType: 'textarea',
-    isOtherType: true
+    isOtherType: true,
+    otherParentField: 'qualityReportingFrequency'
   },
   qualityReportingFrequencyOther: {
     gqlField: 'qualityReportingFrequencyOther',
@@ -1255,7 +1274,8 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     label: 'Please specify',
     dataType: 'string',
     formType: 'textarea',
-    isOtherType: true
+    isOtherType: true,
+    otherParentField: 'qualityReportingFrequency'
   },
   modelLearningSystems: {
     gqlField: 'modelLearningSystems',
@@ -1286,7 +1306,8 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     label: 'Please specify',
     dataType: 'string',
     formType: 'textarea',
-    isOtherType: true
+    isOtherType: true,
+    otherParentField: 'modelLearningSystems'
   },
   modelLearningSystemsNote: {
     gqlField: 'modelLearningSystemsNote',

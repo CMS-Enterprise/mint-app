@@ -25,8 +25,9 @@ import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import MentionTextArea from 'components/shared/MentionTextArea';
 import RequiredAsterisk from 'components/shared/RequiredAsterisk';
+import usePlanTranslation from 'hooks/usePlanTranslation';
+import { getKeys } from 'types/translation';
 import flattenErrors from 'utils/flattenErrors';
-import { sortOtherEnum } from 'utils/modelPlan';
 
 import DiscussionUserInfo from './_components/DiscussionUserInfo';
 import Replies from './Replies';
@@ -57,8 +58,11 @@ const QuestionAndReply = ({
   setDiscussionStatusMessage,
   setInitQuestion
 }: QuestionAndReplyProps) => {
-  const { t } = useTranslation('discussions');
+  const { t: discussionsT } = useTranslation('discussions');
+  const { t: discussionsMiscT } = useTranslation('discussionsMisc');
   const { t: h } = useTranslation('draftModelPlan');
+
+  const { userRole: userRoleConfig } = usePlanTranslation('discussions');
 
   const history = useHistory();
 
@@ -79,16 +83,16 @@ const QuestionAndReply = ({
         className="margin-top-0 margin-bottom-3 line-height-sans-2"
       >
         {renderType === 'question'
-          ? t('discussionPanelHeading')
-          : t('discussionPanelReply')}
+          ? discussionsMiscT('discussionPanelHeading')
+          : discussionsMiscT('discussionPanelReply')}
       </PageHeading>
 
       {renderType === 'question' && (
         <>
-          <p className="margin-bottom-2">{t('description')}</p>
+          <p className="margin-bottom-2">{discussionsMiscT('description')}</p>
           <p className="margin-bottom-5">
             <Trans
-              i18nKey={t('allFieldsRequired')}
+              i18nKey={discussionsMiscT('allFieldsRequired')}
               components={{
                 s: <span className="text-secondary-dark" />
               }}
@@ -121,12 +125,12 @@ const QuestionAndReply = ({
             headingLevel="h2"
             className="margin-top-4 margin-bottom-1 line-height-sans-2"
           >
-            {t('reply')}
+            {discussionsMiscT('reply')}
           </PageHeading>
 
           <p className="margin-top-0 margin-bottom-3">
             <Trans
-              i18nKey={t('allFieldsRequired')}
+              i18nKey={discussionsMiscT('allFieldsRequired')}
               components={{
                 s: <span className="text-secondary-dark" />
               }}
@@ -191,11 +195,13 @@ const QuestionAndReply = ({
                     className="margin-top-0"
                   >
                     <Label htmlFor="user-role">
-                      {t('role')}
+                      {discussionsT('userRole.label')}
                       <RequiredAsterisk />
                     </Label>
 
-                    <p className="text-base margin-top-0">{t('roleInfo')}</p>
+                    <p className="text-base margin-top-0">
+                      {discussionsT('userRole.sublabel')}
+                    </p>
 
                     <FieldErrorMsg>{flatErrors.userRole}</FieldErrorMsg>
 
@@ -210,17 +216,16 @@ const QuestionAndReply = ({
                       }}
                     >
                       <option key="default-select" disabled value="">
-                        {`-${t('select')}-`}
+                        {`-${discussionsMiscT('select')}-`}
                       </option>
-                      {Object.keys(DiscussionUserRole)
-                        .sort(sortOtherEnum)
-                        .map(role => {
-                          return (
-                            <option key={role} value={role}>
-                              {t(`userRole.${role}`)}
-                            </option>
-                          );
-                        })}
+
+                      {getKeys(userRoleConfig.options).map(role => {
+                        return (
+                          <option key={role} value={role}>
+                            {userRoleConfig.options[role]}
+                          </option>
+                        );
+                      })}
                     </Field>
 
                     {values.userRole ===
@@ -230,12 +235,14 @@ const QuestionAndReply = ({
                           htmlFor="user-role-description"
                           className="text-normal"
                         >
-                          {t('enterDescription')}
+                          {discussionsT('userRoleDescription.label')}
                           <RequiredAsterisk />
                         </Label>
+
                         <FieldErrorMsg>
                           {flatErrors.userRoleDescription}
                         </FieldErrorMsg>
+
                         <Field
                           as={TextInput}
                           value={values.userRoleDescription || ''}
@@ -255,12 +262,14 @@ const QuestionAndReply = ({
                       className="text-normal margin-bottom-1"
                     >
                       {renderType === 'question'
-                        ? t('typeQuestion')
-                        : t('typeReply')}
+                        ? discussionsT('content.label')
+                        : discussionsMiscT('typeReply')}
                       <RequiredAsterisk />
                     </Label>
 
-                    <p className="margin-top-0 text-base">{t('tagHint')}</p>
+                    <p className="margin-top-0 text-base">
+                      {discussionsT('content.sublabel')}
+                    </p>
 
                     <FieldErrorMsg>{flatErrors.content}</FieldErrorMsg>
 
@@ -313,7 +322,9 @@ const QuestionAndReply = ({
                       }
                       onClick={() => setErrors({})}
                     >
-                      {renderType === 'question' ? t('save') : t('saveReply')}
+                      {renderType === 'question'
+                        ? discussionsMiscT('save')
+                        : discussionsMiscT('saveReply')}
                     </Button>
                   </div>
                 </Fieldset>

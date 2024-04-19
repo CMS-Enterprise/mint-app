@@ -5,16 +5,17 @@ import { Button, Grid } from '@trussworks/react-uswds';
 import { useMarkNotificationAsReadMutation } from 'gql/gen/graphql';
 import { GetNotifications_currentUser_notifications_notifications_activity as NotificationActivityType } from 'gql/gen/types/GetNotifications';
 
-import { arrayOfColors } from 'components/shared/IconInitial';
+import { AvatarCircle } from 'components/shared/Avatar';
 import MentionTextArea from 'components/shared/MentionTextArea';
-import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import { getTimeElapsed } from 'utils/date';
-import { getUserInitials } from 'utils/modelPlan';
 
 import {
   ActivityCTA,
   activityText,
+  isAddingCollaborator,
   isDailyDigest,
+  isNewDiscussionReply,
+  isSharedActivity,
   isTaggedInDiscussion,
   isTaggedInDiscussionReply
 } from './_utils';
@@ -38,52 +39,27 @@ const IndividualNotification = ({
     actorUserAccount: { commonName }
   }
 }: IndividualNotificationProps) => {
-  const { t: discussionT } = useTranslation('discussions');
+  const { t: discussionT } = useTranslation('discussionsMisc');
 
   const [isExpanded, setIsExpanded] = useState(false);
 
   const history = useHistory();
-  const isMobile = useCheckResponsiveScreen('mobile');
 
   const [markAsRead] = useMarkNotificationAsReadMutation();
 
-  const handleMarkAsReadAndViewDiscussion = (
-    notificationID: string,
-    modelPlanID: string,
-    discussionID: string
-  ) => {
+  const handleMarkAsRead = (action: () => void) => {
     if (!isRead) {
       markAsRead({
         variables: {
-          notificationID
+          notificationID: id
         }
       }).then(response => {
         if (!response?.errors) {
-          history.push(
-            `/models/${modelPlanID}/read-only/discussions?discussionID=${discussionID}`
-          );
+          action();
         }
       });
     } else {
-      history.push(
-        `/models/${modelPlanID}/read-only/discussions?discussionID=${discussionID}`
-      );
-    }
-  };
-
-  const handleMarkAsReadAndToggleDailyDigest = (notificationID: string) => {
-    if (!isRead) {
-      markAsRead({
-        variables: {
-          notificationID
-        }
-      }).then(response => {
-        if (!response?.errors) {
-          setIsExpanded(!isExpanded);
-        }
-      });
-    } else {
-      setIsExpanded(!isExpanded);
+      action();
     }
   };
 
@@ -110,29 +86,28 @@ const IndividualNotification = ({
           <Grid col="fill">
             <div className="display-flex">
               {/* Circle of Name */}
-              <div
-                className={`display-flex flex-align-center flex-justify-center minw-4 circle-4 ${
-                  arrayOfColors[index % arrayOfColors.length]
-                }`}
-              >
-                {getUserInitials(name)}
-              </div>
+              <AvatarCircle user={name} />
 
-              <div className="margin-top-05">
-                <p className="line-height-sans-4 margin-left-1 margin-bottom-1 margin-top-0 ">
+              <div className="margin-top-05 padding-left-1">
+                <p className="line-height-sans-4 margin-bottom-1 margin-top-0 ">
                   <strong>{name}</strong>
                   {activityText(metaData)}
                 </p>
-                {!isMobile &&
-                  (isTaggedInDiscussion(metaData) ||
-                    isTaggedInDiscussionReply(metaData)) && (
+                {!isDailyDigest(metaData) &&
+                  !isSharedActivity(metaData) &&
+                  !isAddingCollaborator(metaData) && (
                     <MentionTextArea
-                      className="notification__content text-base-darker"
+                      className="notification__content text-base-darker margin-bottom-1"
                       id={`mention-${metaData.discussionID}`}
                       editable={false}
-                      initialContent={`“${metaData.content}”`}
+                      initialContent={metaData.content}
                     />
                   )}
+                {isSharedActivity(metaData) && metaData.optionalMessage && (
+                  <p className="margin-bottom-1 margin-top-0 text-base-darker">
+                    “{metaData.optionalMessage}”
+                  </p>
+                )}
 
                 <Button
                   type="button"
@@ -141,16 +116,31 @@ const IndividualNotification = ({
                   onClick={() => {
                     if (
                       isTaggedInDiscussion(metaData) ||
-                      isTaggedInDiscussionReply(metaData)
+                      isTaggedInDiscussionReply(metaData) ||
+                      isNewDiscussionReply(metaData)
                     ) {
-                      handleMarkAsReadAndViewDiscussion(
-                        id,
-                        metaData.modelPlanID,
-                        metaData.discussionID
+                      handleMarkAsRead(() =>
+                        history.push(
+                          `/models/${metaData.modelPlanID}/read-only/discussions?discussionID=${metaData.discussionID}`
+                        )
                       );
                     }
                     if (isDailyDigest(metaData)) {
-                      handleMarkAsReadAndToggleDailyDigest(id);
+                      handleMarkAsRead(() => setIsExpanded(!isExpanded));
+                    }
+                    if (isAddingCollaborator(metaData)) {
+                      handleMarkAsRead(() => {
+                        history.push(
+                          `/models/${metaData.modelPlanID}/task-list`
+                        );
+                      });
+                    }
+                    if (isSharedActivity(metaData)) {
+                      handleMarkAsRead(() => {
+                        history.push(
+                          `/models/${metaData.modelPlanID}/read-only`
+                        );
+                      });
                     }
                   }}
                 >

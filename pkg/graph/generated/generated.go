@@ -42,6 +42,7 @@ type Config struct {
 
 type ResolverRoot interface {
 	Activity() ActivityResolver
+	AddedAsCollaboratorMeta() AddedAsCollaboratorMetaResolver
 	AnalyzedModelLeadInfo() AnalyzedModelLeadInfoResolver
 	AuditChange() AuditChangeResolver
 	CurrentUser() CurrentUserResolver
@@ -50,7 +51,9 @@ type ResolverRoot interface {
 	ExistingModelLink() ExistingModelLinkResolver
 	ExistingModelLinks() ExistingModelLinksResolver
 	ModelPlan() ModelPlanResolver
+	ModelPlanSharedActivityMeta() ModelPlanSharedActivityMetaResolver
 	Mutation() MutationResolver
+	NewDiscussionRepliedActivityMeta() NewDiscussionRepliedActivityMetaResolver
 	OperationalNeed() OperationalNeedResolver
 	OperationalSolution() OperationalSolutionResolver
 	PlanBasics() PlanBasicsResolver
@@ -93,6 +96,15 @@ type ComplexityRoot struct {
 		ModifiedBy            func(childComplexity int) int
 		ModifiedByUserAccount func(childComplexity int) int
 		ModifiedDts           func(childComplexity int) int
+	}
+
+	AddedAsCollaboratorMeta struct {
+		Collaborator   func(childComplexity int) int
+		CollaboratorID func(childComplexity int) int
+		ModelPlan      func(childComplexity int) int
+		ModelPlanID    func(childComplexity int) int
+		Type           func(childComplexity int) int
+		Version        func(childComplexity int) int
 	}
 
 	AnalyzedAudit struct {
@@ -280,6 +292,14 @@ type ComplexityRoot struct {
 		Tdls                     func(childComplexity int) int
 	}
 
+	ModelPlanSharedActivityMeta struct {
+		ModelPlan       func(childComplexity int) int
+		ModelPlanID     func(childComplexity int) int
+		OptionalMessage func(childComplexity int) int
+		Type            func(childComplexity int) int
+		Version         func(childComplexity int) int
+	}
+
 	Mutation struct {
 		AddOrUpdateCustomOperationalNeed   func(childComplexity int, modelPlanID uuid.UUID, customNeedType string, needed bool) int
 		AddPlanFavorite                    func(childComplexity int, modelPlanID uuid.UUID) int
@@ -330,6 +350,18 @@ type ComplexityRoot struct {
 	NDAInfo struct {
 		Agreed    func(childComplexity int) int
 		AgreedDts func(childComplexity int) int
+	}
+
+	NewDiscussionRepliedActivityMeta struct {
+		Content      func(childComplexity int) int
+		Discussion   func(childComplexity int) int
+		DiscussionID func(childComplexity int) int
+		ModelPlan    func(childComplexity int) int
+		ModelPlanID  func(childComplexity int) int
+		Reply        func(childComplexity int) int
+		ReplyID      func(childComplexity int) int
+		Type         func(childComplexity int) int
+		Version      func(childComplexity int) int
 	}
 
 	OperationalNeed struct {
@@ -779,81 +811,85 @@ type ComplexityRoot struct {
 	}
 
 	PlanParticipantsAndProviders struct {
-		CommunicationMethod                    func(childComplexity int) int
-		CommunicationMethodOther               func(childComplexity int) int
-		CommunicationNote                      func(childComplexity int) int
-		ConfidenceNote                         func(childComplexity int) int
-		CoordinateWork                         func(childComplexity int) int
-		CoordinateWorkNote                     func(childComplexity int) int
-		CreatedBy                              func(childComplexity int) int
-		CreatedByUserAccount                   func(childComplexity int) int
-		CreatedDts                             func(childComplexity int) int
-		EstimateConfidence                     func(childComplexity int) int
-		ExpectedNumberOfParticipants           func(childComplexity int) int
-		GainsharePayments                      func(childComplexity int) int
-		GainsharePaymentsEligibility           func(childComplexity int) int
-		GainsharePaymentsEligibilityOther      func(childComplexity int) int
-		GainsharePaymentsNote                  func(childComplexity int) int
-		GainsharePaymentsTrack                 func(childComplexity int) int
-		ID                                     func(childComplexity int) int
-		MedicareProviderType                   func(childComplexity int) int
-		ModelApplicationLevel                  func(childComplexity int) int
-		ModelPlanID                            func(childComplexity int) int
-		ModifiedBy                             func(childComplexity int) int
-		ModifiedByUserAccount                  func(childComplexity int) int
-		ModifiedDts                            func(childComplexity int) int
-		ParticipantAddedFrequency              func(childComplexity int) int
-		ParticipantAddedFrequencyContinually   func(childComplexity int) int
-		ParticipantAddedFrequencyNote          func(childComplexity int) int
-		ParticipantAddedFrequencyOther         func(childComplexity int) int
-		ParticipantRemovedFrequency            func(childComplexity int) int
-		ParticipantRemovedFrequencyContinually func(childComplexity int) int
-		ParticipantRemovedFrequencyNote        func(childComplexity int) int
-		ParticipantRemovedFrequencyOther       func(childComplexity int) int
-		Participants                           func(childComplexity int) int
-		ParticipantsCurrentlyInModels          func(childComplexity int) int
-		ParticipantsCurrentlyInModelsNote      func(childComplexity int) int
-		ParticipantsIDSNote                    func(childComplexity int) int
-		ParticipantsIds                        func(childComplexity int) int
-		ParticipantsIdsOther                   func(childComplexity int) int
-		ParticipantsNote                       func(childComplexity int) int
-		ParticipantsOther                      func(childComplexity int) int
-		ProviderAddMethod                      func(childComplexity int) int
-		ProviderAddMethodNote                  func(childComplexity int) int
-		ProviderAddMethodOther                 func(childComplexity int) int
-		ProviderAdditionFrequency              func(childComplexity int) int
-		ProviderAdditionFrequencyContinually   func(childComplexity int) int
-		ProviderAdditionFrequencyNote          func(childComplexity int) int
-		ProviderAdditionFrequencyOther         func(childComplexity int) int
-		ProviderLeaveMethod                    func(childComplexity int) int
-		ProviderLeaveMethodNote                func(childComplexity int) int
-		ProviderLeaveMethodOther               func(childComplexity int) int
-		ProviderOverlap                        func(childComplexity int) int
-		ProviderOverlapHierarchy               func(childComplexity int) int
-		ProviderOverlapNote                    func(childComplexity int) int
-		ProviderRemovalFrequency               func(childComplexity int) int
-		ProviderRemovalFrequencyContinually    func(childComplexity int) int
-		ProviderRemovalFrequencyNote           func(childComplexity int) int
-		ProviderRemovalFrequencyOther          func(childComplexity int) int
-		ReadyForClearanceBy                    func(childComplexity int) int
-		ReadyForClearanceByUserAccount         func(childComplexity int) int
-		ReadyForClearanceDts                   func(childComplexity int) int
-		ReadyForReviewBy                       func(childComplexity int) int
-		ReadyForReviewByUserAccount            func(childComplexity int) int
-		ReadyForReviewDts                      func(childComplexity int) int
-		RecruitmentMethod                      func(childComplexity int) int
-		RecruitmentNote                        func(childComplexity int) int
-		RecruitmentOther                       func(childComplexity int) int
-		RiskNote                               func(childComplexity int) int
-		RiskOther                              func(childComplexity int) int
-		RiskType                               func(childComplexity int) int
-		SelectionMethod                        func(childComplexity int) int
-		SelectionNote                          func(childComplexity int) int
-		SelectionOther                         func(childComplexity int) int
-		StatesEngagement                       func(childComplexity int) int
-		Status                                 func(childComplexity int) int
-		WillRiskChange                         func(childComplexity int) int
-		WillRiskChangeNote                     func(childComplexity int) int
+		CommunicationMethod                       func(childComplexity int) int
+		CommunicationMethodOther                  func(childComplexity int) int
+		CommunicationNote                         func(childComplexity int) int
+		ConfidenceNote                            func(childComplexity int) int
+		CoordinateWork                            func(childComplexity int) int
+		CoordinateWorkNote                        func(childComplexity int) int
+		CreatedBy                                 func(childComplexity int) int
+		CreatedByUserAccount                      func(childComplexity int) int
+		CreatedDts                                func(childComplexity int) int
+		EstimateConfidence                        func(childComplexity int) int
+		ExpectedNumberOfParticipants              func(childComplexity int) int
+		GainsharePayments                         func(childComplexity int) int
+		GainsharePaymentsEligibility              func(childComplexity int) int
+		GainsharePaymentsEligibilityOther         func(childComplexity int) int
+		GainsharePaymentsNote                     func(childComplexity int) int
+		GainsharePaymentsTrack                    func(childComplexity int) int
+		ID                                        func(childComplexity int) int
+		MedicareProviderType                      func(childComplexity int) int
+		ModelApplicationLevel                     func(childComplexity int) int
+		ModelPlanID                               func(childComplexity int) int
+		ModifiedBy                                func(childComplexity int) int
+		ModifiedByUserAccount                     func(childComplexity int) int
+		ModifiedDts                               func(childComplexity int) int
+		ParticipantAddedFrequency                 func(childComplexity int) int
+		ParticipantAddedFrequencyContinually      func(childComplexity int) int
+		ParticipantAddedFrequencyNote             func(childComplexity int) int
+		ParticipantAddedFrequencyOther            func(childComplexity int) int
+		ParticipantRemovedFrequency               func(childComplexity int) int
+		ParticipantRemovedFrequencyContinually    func(childComplexity int) int
+		ParticipantRemovedFrequencyNote           func(childComplexity int) int
+		ParticipantRemovedFrequencyOther          func(childComplexity int) int
+		ParticipantRequireFinancialGuarantee      func(childComplexity int) int
+		ParticipantRequireFinancialGuaranteeNote  func(childComplexity int) int
+		ParticipantRequireFinancialGuaranteeOther func(childComplexity int) int
+		ParticipantRequireFinancialGuaranteeType  func(childComplexity int) int
+		Participants                              func(childComplexity int) int
+		ParticipantsCurrentlyInModels             func(childComplexity int) int
+		ParticipantsCurrentlyInModelsNote         func(childComplexity int) int
+		ParticipantsIDSNote                       func(childComplexity int) int
+		ParticipantsIds                           func(childComplexity int) int
+		ParticipantsIdsOther                      func(childComplexity int) int
+		ParticipantsNote                          func(childComplexity int) int
+		ParticipantsOther                         func(childComplexity int) int
+		ProviderAddMethod                         func(childComplexity int) int
+		ProviderAddMethodNote                     func(childComplexity int) int
+		ProviderAddMethodOther                    func(childComplexity int) int
+		ProviderAdditionFrequency                 func(childComplexity int) int
+		ProviderAdditionFrequencyContinually      func(childComplexity int) int
+		ProviderAdditionFrequencyNote             func(childComplexity int) int
+		ProviderAdditionFrequencyOther            func(childComplexity int) int
+		ProviderLeaveMethod                       func(childComplexity int) int
+		ProviderLeaveMethodNote                   func(childComplexity int) int
+		ProviderLeaveMethodOther                  func(childComplexity int) int
+		ProviderOverlap                           func(childComplexity int) int
+		ProviderOverlapHierarchy                  func(childComplexity int) int
+		ProviderOverlapNote                       func(childComplexity int) int
+		ProviderRemovalFrequency                  func(childComplexity int) int
+		ProviderRemovalFrequencyContinually       func(childComplexity int) int
+		ProviderRemovalFrequencyNote              func(childComplexity int) int
+		ProviderRemovalFrequencyOther             func(childComplexity int) int
+		ReadyForClearanceBy                       func(childComplexity int) int
+		ReadyForClearanceByUserAccount            func(childComplexity int) int
+		ReadyForClearanceDts                      func(childComplexity int) int
+		ReadyForReviewBy                          func(childComplexity int) int
+		ReadyForReviewByUserAccount               func(childComplexity int) int
+		ReadyForReviewDts                         func(childComplexity int) int
+		RecruitmentMethod                         func(childComplexity int) int
+		RecruitmentNote                           func(childComplexity int) int
+		RecruitmentOther                          func(childComplexity int) int
+		RiskNote                                  func(childComplexity int) int
+		RiskOther                                 func(childComplexity int) int
+		RiskType                                  func(childComplexity int) int
+		SelectionMethod                           func(childComplexity int) int
+		SelectionNote                             func(childComplexity int) int
+		SelectionOther                            func(childComplexity int) int
+		StatesEngagement                          func(childComplexity int) int
+		Status                                    func(childComplexity int) int
+		WillRiskChange                            func(childComplexity int) int
+		WillRiskChangeNote                        func(childComplexity int) int
 	}
 
 	PlanPayments struct {
@@ -1162,6 +1198,11 @@ type ComplexityRoot struct {
 type ActivityResolver interface {
 	ActorUserAccount(ctx context.Context, obj *models.Activity) (*authentication.UserAccount, error)
 }
+type AddedAsCollaboratorMetaResolver interface {
+	ModelPlan(ctx context.Context, obj *models.AddedAsCollaboratorMeta) (*models.ModelPlan, error)
+
+	Collaborator(ctx context.Context, obj *models.AddedAsCollaboratorMeta) (*models.PlanCollaborator, error)
+}
 type AnalyzedModelLeadInfoResolver interface {
 	UserAccount(ctx context.Context, obj *models.AnalyzedModelLeadInfo) (*authentication.UserAccount, error)
 }
@@ -1205,51 +1246,61 @@ type ModelPlanResolver interface {
 	NameHistory(ctx context.Context, obj *models.ModelPlan, sort models.SortDirection) ([]string, error)
 	OperationalNeeds(ctx context.Context, obj *models.ModelPlan) ([]*models.OperationalNeed, error)
 }
+type ModelPlanSharedActivityMetaResolver interface {
+	ModelPlan(ctx context.Context, obj *models.ModelPlanSharedActivityMeta) (*models.ModelPlan, error)
+}
 type MutationResolver interface {
-	CreatePlanCollaborator(ctx context.Context, input model.PlanCollaboratorCreateInput) (*models.PlanCollaborator, error)
-	UpdatePlanCollaborator(ctx context.Context, id uuid.UUID, newRoles []models.TeamRole) (*models.PlanCollaborator, error)
-	DeletePlanCollaborator(ctx context.Context, id uuid.UUID) (*models.PlanCollaborator, error)
-	UploadNewPlanDocument(ctx context.Context, input model.PlanDocumentInput) (*models.PlanDocument, error)
-	LinkNewPlanDocument(ctx context.Context, input model.PlanDocumentLinkInput) (*models.PlanDocument, error)
-	DeletePlanDocument(ctx context.Context, id uuid.UUID) (int, error)
-	CreatePlanDiscussion(ctx context.Context, input model.PlanDiscussionCreateInput) (*models.PlanDiscussion, error)
 	CreateDiscussionReply(ctx context.Context, input model.DiscussionReplyCreateInput) (*models.DiscussionReply, error)
-	LockTaskListSection(ctx context.Context, modelPlanID uuid.UUID, section models.TaskListSection) (bool, error)
-	UnlockTaskListSection(ctx context.Context, modelPlanID uuid.UUID, section models.TaskListSection) (bool, error)
-	UnlockAllTaskListSections(ctx context.Context, modelPlanID uuid.UUID) ([]*model.TaskListSectionLockStatus, error)
-	UpdatePlanPayments(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanPayments, error)
+	UpdateExistingModelLinks(ctx context.Context, modelPlanID uuid.UUID, fieldName models.ExisitingModelLinkFieldType, existingModelIDs []int, currentModelPlanIDs []uuid.UUID) (*models.ExistingModelLinks, error)
+	CreateModelPlan(ctx context.Context, modelName string) (*models.ModelPlan, error)
+	UpdateModelPlan(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.ModelPlan, error)
+	ShareModelPlan(ctx context.Context, modelPlanID uuid.UUID, viewFilter *models.ModelViewFilter, usernames []string, optionalMessage *string) (bool, error)
 	AgreeToNda(ctx context.Context, agree bool) (*model.NDAInfo, error)
-	AddPlanFavorite(ctx context.Context, modelPlanID uuid.UUID) (*models.PlanFavorite, error)
-	DeletePlanFavorite(ctx context.Context, modelPlanID uuid.UUID) (*models.PlanFavorite, error)
-	CreatePlanCr(ctx context.Context, input model.PlanCRCreateInput) (*models.PlanCR, error)
-	CreatePlanTdl(ctx context.Context, input model.PlanTDLCreateInput) (*models.PlanTDL, error)
-	UpdatePlanCr(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanCR, error)
-	UpdatePlanTdl(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanTDL, error)
-	DeletePlanCr(ctx context.Context, id uuid.UUID) (*models.PlanCR, error)
-	DeletePlanTdl(ctx context.Context, id uuid.UUID) (*models.PlanTDL, error)
 	AddOrUpdateCustomOperationalNeed(ctx context.Context, modelPlanID uuid.UUID, customNeedType string, needed bool) (*models.OperationalNeed, error)
 	UpdateCustomOperationalNeedByID(ctx context.Context, id uuid.UUID, customNeedType *string, needed bool) (*models.OperationalNeed, error)
 	CreateOperationalSolution(ctx context.Context, operationalNeedID uuid.UUID, solutionType *models.OperationalSolutionKey, changes map[string]interface{}) (*models.OperationalSolution, error)
 	UpdateOperationalSolution(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.OperationalSolution, error)
-	CreatePlanDocumentSolutionLinks(ctx context.Context, solutionID uuid.UUID, documentIDs []uuid.UUID) ([]*models.PlanDocumentSolutionLink, error)
-	RemovePlanDocumentSolutionLinks(ctx context.Context, solutionID uuid.UUID, documentIDs []uuid.UUID) (bool, error)
 	CreateOperationalSolutionSubtasks(ctx context.Context, solutionID uuid.UUID, inputs []*model.CreateOperationalSolutionSubtaskInput) ([]*models.OperationalSolutionSubtask, error)
 	UpdateOperationalSolutionSubtasks(ctx context.Context, inputs []*model.UpdateOperationalSolutionSubtaskInput) ([]*models.OperationalSolutionSubtask, error)
 	DeleteOperationalSolutionSubtask(ctx context.Context, id uuid.UUID) (int, error)
-	UpdateExistingModelLinks(ctx context.Context, modelPlanID uuid.UUID, fieldName models.ExisitingModelLinkFieldType, existingModelIDs []int, currentModelPlanIDs []uuid.UUID) (*models.ExistingModelLinks, error)
-	ReportAProblem(ctx context.Context, input model.ReportAProblemInput) (bool, error)
-	SendFeedbackEmail(ctx context.Context, input model.SendFeedbackEmailInput) (bool, error)
-	CreateModelPlan(ctx context.Context, modelName string) (*models.ModelPlan, error)
-	UpdateModelPlan(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.ModelPlan, error)
-	ShareModelPlan(ctx context.Context, modelPlanID uuid.UUID, viewFilter *models.ModelViewFilter, usernames []string, optionalMessage *string) (bool, error)
 	UpdatePlanBasics(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanBasics, error)
 	UpdatePlanBeneficiaries(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanBeneficiaries, error)
+	CreatePlanCollaborator(ctx context.Context, input model.PlanCollaboratorCreateInput) (*models.PlanCollaborator, error)
+	UpdatePlanCollaborator(ctx context.Context, id uuid.UUID, newRoles []models.TeamRole) (*models.PlanCollaborator, error)
+	DeletePlanCollaborator(ctx context.Context, id uuid.UUID) (*models.PlanCollaborator, error)
+	CreatePlanCr(ctx context.Context, input model.PlanCRCreateInput) (*models.PlanCR, error)
+	UpdatePlanCr(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanCR, error)
+	DeletePlanCr(ctx context.Context, id uuid.UUID) (*models.PlanCR, error)
+	CreatePlanDiscussion(ctx context.Context, input model.PlanDiscussionCreateInput) (*models.PlanDiscussion, error)
+	UploadNewPlanDocument(ctx context.Context, input model.PlanDocumentInput) (*models.PlanDocument, error)
+	LinkNewPlanDocument(ctx context.Context, input model.PlanDocumentLinkInput) (*models.PlanDocument, error)
+	DeletePlanDocument(ctx context.Context, id uuid.UUID) (int, error)
+	CreatePlanDocumentSolutionLinks(ctx context.Context, solutionID uuid.UUID, documentIDs []uuid.UUID) ([]*models.PlanDocumentSolutionLink, error)
+	RemovePlanDocumentSolutionLinks(ctx context.Context, solutionID uuid.UUID, documentIDs []uuid.UUID) (bool, error)
+	AddPlanFavorite(ctx context.Context, modelPlanID uuid.UUID) (*models.PlanFavorite, error)
+	DeletePlanFavorite(ctx context.Context, modelPlanID uuid.UUID) (*models.PlanFavorite, error)
 	UpdatePlanGeneralCharacteristics(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanGeneralCharacteristics, error)
 	UpdatePlanOpsEvalAndLearning(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanOpsEvalAndLearning, error)
 	UpdatePlanParticipantsAndProviders(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanParticipantsAndProviders, error)
+	UpdatePlanPayments(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanPayments, error)
+	CreatePlanTdl(ctx context.Context, input model.PlanTDLCreateInput) (*models.PlanTDL, error)
+	UpdatePlanTdl(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanTDL, error)
+	DeletePlanTdl(ctx context.Context, id uuid.UUID) (*models.PlanTDL, error)
+	ReportAProblem(ctx context.Context, input model.ReportAProblemInput) (bool, error)
+	SendFeedbackEmail(ctx context.Context, input model.SendFeedbackEmailInput) (bool, error)
+	LockTaskListSection(ctx context.Context, modelPlanID uuid.UUID, section models.TaskListSection) (bool, error)
+	UnlockTaskListSection(ctx context.Context, modelPlanID uuid.UUID, section models.TaskListSection) (bool, error)
+	UnlockAllTaskListSections(ctx context.Context, modelPlanID uuid.UUID) ([]*model.TaskListSectionLockStatus, error)
 	MarkNotificationAsRead(ctx context.Context, notificationID uuid.UUID) (*models.UserNotification, error)
 	MarkAllNotificationsAsRead(ctx context.Context) ([]*models.UserNotification, error)
 	UpdateUserNotificationPreferences(ctx context.Context, changes map[string]interface{}) (*models.UserNotificationPreferences, error)
+}
+type NewDiscussionRepliedActivityMetaResolver interface {
+	ModelPlan(ctx context.Context, obj *models.NewDiscussionRepliedActivityMeta) (*models.ModelPlan, error)
+
+	Discussion(ctx context.Context, obj *models.NewDiscussionRepliedActivityMeta) (*models.PlanDiscussion, error)
+
+	Reply(ctx context.Context, obj *models.NewDiscussionRepliedActivityMeta) (*models.DiscussionReply, error)
 }
 type OperationalNeedResolver interface {
 	Solutions(ctx context.Context, obj *models.OperationalNeed, includeNotNeeded bool) ([]*models.OperationalSolution, error)
@@ -1357,6 +1408,8 @@ type PlanParticipantsAndProvidersResolver interface {
 
 	RiskType(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]models.ParticipantRiskType, error)
 
+	ParticipantRequireFinancialGuaranteeType(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]model.ParticipantRequireFinancialGuaranteeType, error)
+
 	GainsharePaymentsEligibility(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]model.GainshareArrangementEligibility, error)
 
 	ParticipantsIds(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]model.ParticipantsIDType, error)
@@ -1396,28 +1449,28 @@ type PossibleOperationalSolutionResolver interface {
 	PointsOfContact(ctx context.Context, obj *models.PossibleOperationalSolution) ([]*models.PossibleOperationalSolutionContact, error)
 }
 type QueryResolver interface {
-	PlanDocument(ctx context.Context, id uuid.UUID) (*models.PlanDocument, error)
-	ExistingModelCollection(ctx context.Context) ([]*models.ExistingModel, error)
-	SearchOktaUsers(ctx context.Context, searchTerm string) ([]*models.UserInfo, error)
-	PlanCollaboratorByID(ctx context.Context, id uuid.UUID) (*models.PlanCollaborator, error)
-	TaskListSectionLocks(ctx context.Context, modelPlanID uuid.UUID) ([]*model.TaskListSectionLockStatus, error)
-	PlanPayments(ctx context.Context, id uuid.UUID) (*models.PlanPayments, error)
-	NdaInfo(ctx context.Context) (*model.NDAInfo, error)
-	PlanCr(ctx context.Context, id uuid.UUID) (*models.PlanCR, error)
-	PlanTdl(ctx context.Context, id uuid.UUID) (*models.PlanTDL, error)
-	OperationalSolutions(ctx context.Context, operationalNeedID uuid.UUID, includeNotNeeded bool) ([]*models.OperationalSolution, error)
-	OperationalSolution(ctx context.Context, id uuid.UUID) (*models.OperationalSolution, error)
-	OperationalNeed(ctx context.Context, id uuid.UUID) (*models.OperationalNeed, error)
-	AuditChanges(ctx context.Context, tableName string, primaryKey uuid.UUID) ([]*models.AuditChange, error)
-	PossibleOperationalNeeds(ctx context.Context) ([]*models.PossibleOperationalNeed, error)
-	PossibleOperationalSolutions(ctx context.Context) ([]*models.PossibleOperationalSolution, error)
-	UserAccount(ctx context.Context, username string) (*authentication.UserAccount, error)
-	ExistingModelLink(ctx context.Context, id uuid.UUID) (*models.ExistingModelLink, error)
-	MostRecentDiscussionRoleSelection(ctx context.Context) (*models.DiscussionRoleSelection, error)
 	AnalyzedAudits(ctx context.Context, dateAnalyzed time.Time) ([]*models.AnalyzedAudit, error)
+	AuditChanges(ctx context.Context, tableName string, primaryKey uuid.UUID) ([]*models.AuditChange, error)
 	CurrentUser(ctx context.Context) (*models.CurrentUser, error)
+	MostRecentDiscussionRoleSelection(ctx context.Context) (*models.DiscussionRoleSelection, error)
+	ExistingModelCollection(ctx context.Context) ([]*models.ExistingModel, error)
+	ExistingModelLink(ctx context.Context, id uuid.UUID) (*models.ExistingModelLink, error)
 	ModelPlan(ctx context.Context, id uuid.UUID) (*models.ModelPlan, error)
 	ModelPlanCollection(ctx context.Context, filter model.ModelPlanFilter) ([]*models.ModelPlan, error)
+	NdaInfo(ctx context.Context) (*model.NDAInfo, error)
+	OperationalNeed(ctx context.Context, id uuid.UUID) (*models.OperationalNeed, error)
+	OperationalSolutions(ctx context.Context, operationalNeedID uuid.UUID, includeNotNeeded bool) ([]*models.OperationalSolution, error)
+	OperationalSolution(ctx context.Context, id uuid.UUID) (*models.OperationalSolution, error)
+	PlanCollaboratorByID(ctx context.Context, id uuid.UUID) (*models.PlanCollaborator, error)
+	PlanCr(ctx context.Context, id uuid.UUID) (*models.PlanCR, error)
+	PlanDocument(ctx context.Context, id uuid.UUID) (*models.PlanDocument, error)
+	PlanPayments(ctx context.Context, id uuid.UUID) (*models.PlanPayments, error)
+	PlanTdl(ctx context.Context, id uuid.UUID) (*models.PlanTDL, error)
+	PossibleOperationalNeeds(ctx context.Context) ([]*models.PossibleOperationalNeed, error)
+	PossibleOperationalSolutions(ctx context.Context) ([]*models.PossibleOperationalSolution, error)
+	TaskListSectionLocks(ctx context.Context, modelPlanID uuid.UUID) ([]*model.TaskListSectionLockStatus, error)
+	UserAccount(ctx context.Context, username string) (*authentication.UserAccount, error)
+	SearchOktaUsers(ctx context.Context, searchTerm string) ([]*models.UserInfo, error)
 }
 type SubscriptionResolver interface {
 	OnTaskListSectionLocksChanged(ctx context.Context, modelPlanID uuid.UUID) (<-chan *model.TaskListSectionLockStatusChanged, error)
@@ -1551,6 +1604,48 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Activity.ModifiedDts(childComplexity), true
+
+	case "AddedAsCollaboratorMeta.collaborator":
+		if e.complexity.AddedAsCollaboratorMeta.Collaborator == nil {
+			break
+		}
+
+		return e.complexity.AddedAsCollaboratorMeta.Collaborator(childComplexity), true
+
+	case "AddedAsCollaboratorMeta.collaboratorID":
+		if e.complexity.AddedAsCollaboratorMeta.CollaboratorID == nil {
+			break
+		}
+
+		return e.complexity.AddedAsCollaboratorMeta.CollaboratorID(childComplexity), true
+
+	case "AddedAsCollaboratorMeta.modelPlan":
+		if e.complexity.AddedAsCollaboratorMeta.ModelPlan == nil {
+			break
+		}
+
+		return e.complexity.AddedAsCollaboratorMeta.ModelPlan(childComplexity), true
+
+	case "AddedAsCollaboratorMeta.modelPlanID":
+		if e.complexity.AddedAsCollaboratorMeta.ModelPlanID == nil {
+			break
+		}
+
+		return e.complexity.AddedAsCollaboratorMeta.ModelPlanID(childComplexity), true
+
+	case "AddedAsCollaboratorMeta.type":
+		if e.complexity.AddedAsCollaboratorMeta.Type == nil {
+			break
+		}
+
+		return e.complexity.AddedAsCollaboratorMeta.Type(childComplexity), true
+
+	case "AddedAsCollaboratorMeta.version":
+		if e.complexity.AddedAsCollaboratorMeta.Version == nil {
+			break
+		}
+
+		return e.complexity.AddedAsCollaboratorMeta.Version(childComplexity), true
 
 	case "AnalyzedAudit.changes":
 		if e.complexity.AnalyzedAudit.Changes == nil {
@@ -2453,6 +2548,41 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.ModelPlan.Tdls(childComplexity), true
 
+	case "ModelPlanSharedActivityMeta.modelPlan":
+		if e.complexity.ModelPlanSharedActivityMeta.ModelPlan == nil {
+			break
+		}
+
+		return e.complexity.ModelPlanSharedActivityMeta.ModelPlan(childComplexity), true
+
+	case "ModelPlanSharedActivityMeta.modelPlanID":
+		if e.complexity.ModelPlanSharedActivityMeta.ModelPlanID == nil {
+			break
+		}
+
+		return e.complexity.ModelPlanSharedActivityMeta.ModelPlanID(childComplexity), true
+
+	case "ModelPlanSharedActivityMeta.optionalMessage":
+		if e.complexity.ModelPlanSharedActivityMeta.OptionalMessage == nil {
+			break
+		}
+
+		return e.complexity.ModelPlanSharedActivityMeta.OptionalMessage(childComplexity), true
+
+	case "ModelPlanSharedActivityMeta.type":
+		if e.complexity.ModelPlanSharedActivityMeta.Type == nil {
+			break
+		}
+
+		return e.complexity.ModelPlanSharedActivityMeta.Type(childComplexity), true
+
+	case "ModelPlanSharedActivityMeta.version":
+		if e.complexity.ModelPlanSharedActivityMeta.Version == nil {
+			break
+		}
+
+		return e.complexity.ModelPlanSharedActivityMeta.Version(childComplexity), true
+
 	case "Mutation.addOrUpdateCustomOperationalNeed":
 		if e.complexity.Mutation.AddOrUpdateCustomOperationalNeed == nil {
 			break
@@ -2989,6 +3119,69 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.NDAInfo.AgreedDts(childComplexity), true
+
+	case "NewDiscussionRepliedActivityMeta.content":
+		if e.complexity.NewDiscussionRepliedActivityMeta.Content == nil {
+			break
+		}
+
+		return e.complexity.NewDiscussionRepliedActivityMeta.Content(childComplexity), true
+
+	case "NewDiscussionRepliedActivityMeta.discussion":
+		if e.complexity.NewDiscussionRepliedActivityMeta.Discussion == nil {
+			break
+		}
+
+		return e.complexity.NewDiscussionRepliedActivityMeta.Discussion(childComplexity), true
+
+	case "NewDiscussionRepliedActivityMeta.discussionID":
+		if e.complexity.NewDiscussionRepliedActivityMeta.DiscussionID == nil {
+			break
+		}
+
+		return e.complexity.NewDiscussionRepliedActivityMeta.DiscussionID(childComplexity), true
+
+	case "NewDiscussionRepliedActivityMeta.modelPlan":
+		if e.complexity.NewDiscussionRepliedActivityMeta.ModelPlan == nil {
+			break
+		}
+
+		return e.complexity.NewDiscussionRepliedActivityMeta.ModelPlan(childComplexity), true
+
+	case "NewDiscussionRepliedActivityMeta.modelPlanID":
+		if e.complexity.NewDiscussionRepliedActivityMeta.ModelPlanID == nil {
+			break
+		}
+
+		return e.complexity.NewDiscussionRepliedActivityMeta.ModelPlanID(childComplexity), true
+
+	case "NewDiscussionRepliedActivityMeta.reply":
+		if e.complexity.NewDiscussionRepliedActivityMeta.Reply == nil {
+			break
+		}
+
+		return e.complexity.NewDiscussionRepliedActivityMeta.Reply(childComplexity), true
+
+	case "NewDiscussionRepliedActivityMeta.replyID":
+		if e.complexity.NewDiscussionRepliedActivityMeta.ReplyID == nil {
+			break
+		}
+
+		return e.complexity.NewDiscussionRepliedActivityMeta.ReplyID(childComplexity), true
+
+	case "NewDiscussionRepliedActivityMeta.type":
+		if e.complexity.NewDiscussionRepliedActivityMeta.Type == nil {
+			break
+		}
+
+		return e.complexity.NewDiscussionRepliedActivityMeta.Type(childComplexity), true
+
+	case "NewDiscussionRepliedActivityMeta.version":
+		if e.complexity.NewDiscussionRepliedActivityMeta.Version == nil {
+			break
+		}
+
+		return e.complexity.NewDiscussionRepliedActivityMeta.Version(childComplexity), true
 
 	case "OperationalNeed.createdBy":
 		if e.complexity.OperationalNeed.CreatedBy == nil {
@@ -6061,6 +6254,34 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.PlanParticipantsAndProviders.ParticipantRemovedFrequencyOther(childComplexity), true
 
+	case "PlanParticipantsAndProviders.participantRequireFinancialGuarantee":
+		if e.complexity.PlanParticipantsAndProviders.ParticipantRequireFinancialGuarantee == nil {
+			break
+		}
+
+		return e.complexity.PlanParticipantsAndProviders.ParticipantRequireFinancialGuarantee(childComplexity), true
+
+	case "PlanParticipantsAndProviders.participantRequireFinancialGuaranteeNote":
+		if e.complexity.PlanParticipantsAndProviders.ParticipantRequireFinancialGuaranteeNote == nil {
+			break
+		}
+
+		return e.complexity.PlanParticipantsAndProviders.ParticipantRequireFinancialGuaranteeNote(childComplexity), true
+
+	case "PlanParticipantsAndProviders.participantRequireFinancialGuaranteeOther":
+		if e.complexity.PlanParticipantsAndProviders.ParticipantRequireFinancialGuaranteeOther == nil {
+			break
+		}
+
+		return e.complexity.PlanParticipantsAndProviders.ParticipantRequireFinancialGuaranteeOther(childComplexity), true
+
+	case "PlanParticipantsAndProviders.participantRequireFinancialGuaranteeType":
+		if e.complexity.PlanParticipantsAndProviders.ParticipantRequireFinancialGuaranteeType == nil {
+			break
+		}
+
+		return e.complexity.PlanParticipantsAndProviders.ParticipantRequireFinancialGuaranteeType(childComplexity), true
+
 	case "PlanParticipantsAndProviders.participants":
 		if e.complexity.PlanParticipantsAndProviders.Participants == nil {
 			break
@@ -8308,1248 +8529,14 @@ func (ec *executionContext) introspectType(name string) (*introspection.Type, er
 
 var sources = []*ast.Source{
 	{Name: "../schema/schema.graphql", Input: `"""
-The current user's Launch Darkly key
-"""
-type LaunchDarklySettings {
-  userKey: String!
-  signedHash: String!
-}
-
-type OperationalNeed {
-    id: UUID!
-    modelPlanID: UUID!
-
-    needed: Boolean # if null, it has not been answered
-    solutions(includeNotNeeded: Boolean! = false): [OperationalSolution!]!
-
-    key: OperationalNeedKey
-    name: String
-    nameOther: String
-    section: TaskListSection
-
-    createdBy: UUID!
-    createdByUserAccount: UserAccount!
-    createdDts: Time!
-    modifiedBy: UUID
-    modifiedByUserAccount: UserAccount
-    modifiedDts: Time
-}
-
-type PossibleOperationalNeed {
-    id: Int!
-    possibleSolutions: [PossibleOperationalSolution!]!
-    name: String!
-    key: OperationalNeedKey!
-    section: TaskListSection
-
-    createdBy: UUID!
-    createdByUserAccount: UserAccount!
-    createdDts: Time!
-    modifiedBy: UUID
-    modifiedByUserAccount: UserAccount
-    modifiedDts: Time
-}
-type PossibleOperationalSolution {
-    id: Int!
-    name: String!
-    key: OperationalSolutionKey!
-    treatAsOther: Boolean!
-    pointsOfContact: [PossibleOperationalSolutionContact!]!
-    filterView: ModelViewFilter
-
-    createdBy: UUID!
-    createdByUserAccount: UserAccount!
-    createdDts: Time!
-    modifiedBy: UUID
-    modifiedByUserAccount: UserAccount
-    modifiedDts: Time
-}
-
-"""
-PossibleOperationalSolutionContact represents a contact for a possible operational solution
-"""
-type PossibleOperationalSolutionContact {
-  id: UUID!
-  possibleOperationalSolutionID: Int!
-
-  name: String!
-  email: String!
-  isTeam: Boolean!
-  role: String
-
-
-  createdBy: UUID!
-  createdByUserAccount: UserAccount!
-  createdDts: Time!
-  modifiedBy: UUID
-  modifiedByUserAccount: UserAccount
-  modifiedDts: Time
-}
-
-"""
-PlanCollaborator represents a collaborator on a plan
-"""
-type PlanCollaborator {
-  id: UUID!
-  modelPlanID: UUID!
-  userID: UUID!
-  userAccount: UserAccount!
-  teamRoles: [TeamRole!]!
-  createdBy: UUID!
-  createdByUserAccount: UserAccount!
-  createdDts: Time!
-  modifiedBy: UUID
-  modifiedByUserAccount: UserAccount
-  modifiedDts: Time
-}
-"""
-ExistingModel represents a model that already exists outside of the scope of MINT
-"""
-type ExistingModel {
-  id: Int
-  modelName: String!
-  stage: String!
-  numberOfParticipants: String
-  category: String
-  authority: String
-  description: String
-  numberOfBeneficiariesImpacted: Int
-  numberOfPhysiciansImpacted: Int
-  dateBegan: Time
-  dateEnded: Time
-  states: String
-  keywords: String
-  url: String
-  displayModelSummary: Boolean
-
-  createdBy: UUID!
-  createdByUserAccount: UserAccount!
-  createdDts: Time!
-  modifiedBy: UUID
-  modifiedByUserAccount: UserAccount
-  modifiedDts: Time
-}
-"""
-LinkedExistingModel is a union type that returns either an Existing Model, or a Model plan from the database
-"""
-union LinkedExistingModel =  ExistingModel | ModelPlan
-
-
-type ExistingModelLinks {
-  links: [ExistingModelLink!]!
-  fieldName: ExisitingModelLinkFieldType!
-  modelPlanID: UUID!
-  names: [String!]!
-}
-
-type ExistingModelLink {
-  id: UUID
-  modelPlanID: UUID!
-  existingModelID: Int
-  currentModelPlanID: UUID
-  fieldName: ExisitingModelLinkFieldType!
-  model: LinkedExistingModel!
-
-  createdBy: UUID!
-  createdByUserAccount: UserAccount!
-  createdDts: Time!
-  modifiedBy: UUID
-  modifiedByUserAccount: UserAccount
-  modifiedDts: Time
-}
-
-type TaskListSectionLockStatusChanged {
-  changeType: ChangeType!
-  lockStatus: TaskListSectionLockStatus!
-  actionType: ActionType!
-}
-
-type TaskListSectionLockStatus {
-  modelPlanID: UUID!
-  section: TaskListSection!
-  lockedByUserAccount: UserAccount!
-  isAssessment: Boolean!
-}
-
-"""
-PlanCollaboratorCreateInput represents the data required to create a collaborator on a plan
-"""
-input PlanCollaboratorCreateInput {
-  modelPlanID: UUID!
-  userName: String!
-  teamRoles: [TeamRole!]!
-}
-
-"""
-PlanDocument represents a document on a plan
-"""
-type PlanDocument {
-  id: UUID!
-  modelPlanID: UUID!
-
-  """
-  If isLink = true, then this is a URL to a linked document, not an uploaded document
-  """
-  isLink: Boolean!
-  """
-  URL is the link that must be provided if this is a link instead of an uploaded document
-  """
-  url: String
-
-
-
-  fileType: String!
-  bucket: String!
-  fileKey: String!
-  virusScanned: Boolean!
-  virusClean: Boolean!
-  restricted: Boolean!
-  fileName: String!
-  fileSize: Int!
-  documentType: DocumentType!
-  otherType: String
-  optionalNotes: String
-  downloadUrl: String
-  deletedAt: Time
-  numLinkedSolutions: Int!
-
-  createdBy: UUID!
-  createdByUserAccount: UserAccount!
-  createdDts: Time!
-  modifiedBy: UUID
-  modifiedByUserAccount: UserAccount
-  modifiedDts: Time
-}
-
-
-"""
-PlanDocumentInput
-"""
-input PlanDocumentInput {
-  modelPlanID: UUID!
-  fileData: Upload!
-  documentType: DocumentType!
-  restricted: Boolean!
-  otherTypeDescription: String
-  optionalNotes: String
-}
-
-"""
-PlanDocumentLinkInput
-"""
-input PlanDocumentLinkInput {
-  modelPlanID: UUID!
-  url: String!
-  name: String!
-  documentType: DocumentType!
-  restricted: Boolean!
-  otherTypeDescription: String
-  optionalNotes: String
-}
-
-"""
-Represents a person response from the Okta API
-"""
-type UserInfo {
-  firstName: String!
-  lastName: String!
-  displayName: String!
-  email: String!
-  username: String!
-}
-
-
-"""
-TaggedEntity is the actual object represented by a tag in the data base.
-"""
-union TaggedEntity =  UserAccount | PossibleOperationalSolution
-
-"""
-TaggedContent represents content that has a tag in it. It is composed of the raw tag text, as well as the array of possible tags
-"""
-type TaggedContent {
-  """
-  RawContent is HTML. It is sanitized on the backend
-  """
-  rawContent: String!
-  tags: [Tag!]!
-}
-
-"""
-Tag represents an entity tagged in the database
-"""
-type Tag {
-  id: UUID!
-  tagType: TagType!
-  taggedField: String!
-  taggedContentTable: String!
-  taggedContentID: UUID!
-  entityUUID: UUID
-  entityIntID: Int
-
-  entity: TaggedEntity
-
-  createdBy: UUID!
-  createdByUserAccount: UserAccount!
-  createdDts: Time!
-  modifiedBy: UUID
-  modifiedByUserAccount: UserAccount
-  modifiedDts: Time
-}
-
-enum TagType {
-    USER_ACCOUNT
-    POSSIBLE_SOLUTION
-}
-
-"""
-PlanDiscussion represents plan discussion
-"""
-type PlanDiscussion  {
-	id: UUID!
-	modelPlanID: UUID!
-	content: TaggedContent
-  userRole: DiscussionUserRole
-  userRoleDescription: String
-  replies: [DiscussionReply!]!
-  isAssessment: Boolean!
-
-
-  createdBy: UUID!
-  createdByUserAccount: UserAccount!
-  createdDts: Time!
-  modifiedBy: UUID
-  modifiedByUserAccount: UserAccount
-  modifiedDts: Time
-}
-
-"""
-PlanDiscussionCreateInput represents the necessary fields to create a plan discussion
-"""
-input PlanDiscussionCreateInput {
-  modelPlanID: UUID!
-  content: TaggedHTML!
-  userRole: DiscussionUserRole
-  userRoleDescription: String
-}
-
-
-"""
-DiscussionReply represents a discussion reply
-"""
-type DiscussionReply  {
-	id: UUID!
-	discussionID: UUID!
-	content: TaggedContent
-  userRole: DiscussionUserRole
-  userRoleDescription: String
-  isAssessment: Boolean!
-
-  createdBy: UUID!
-  createdByUserAccount: UserAccount!
-  createdDts: Time!
-  modifiedBy: UUID
-  modifiedByUserAccount: UserAccount
-  modifiedDts: Time
-}
-
-"""
-DiscussionReplyCreateInput represents the necessary fields to create a discussion reply
-"""
-input DiscussionReplyCreateInput {
-  discussionID: UUID!
-  content: TaggedHTML!
-  userRole: DiscussionUserRole
-  userRoleDescription: String
-}
-
-"""
-PlanPayments is the task list section that deals with information regarding Payments
-"""
-type PlanPayments {
-  id: UUID!
-  modelPlanID: UUID!
-
-  # Page 1
-  fundingSource:                      [FundingSource!]!
-  fundingSourceMedicareAInfo:         String
-  fundingSourceMedicareBInfo:         String
-  fundingSourceOther:                 String
-  fundingSourceNote:                  String
-  fundingSourceR:                     [FundingSource!]!
-  fundingSourceRMedicareAInfo:        String
-  fundingSourceRMedicareBInfo:        String
-  fundingSourceROther:                String
-  fundingSourceRNote:                 String
-  payRecipients:                      [PayRecipient!]!
-  payRecipientsOtherSpecification:    String
-  payRecipientsNote:                  String
-  payType:                            [PayType!]!
-  payTypeNote:                        String
-
-  # Page 2
-  payClaims:                                      [ClaimsBasedPayType!]!
-  payClaimsOther:                                 String
-  payClaimsNote:                                  String
-  shouldAnyProvidersExcludedFFSSystems:           Boolean
-  shouldAnyProviderExcludedFFSSystemsNote:        String
-  changesMedicarePhysicianFeeSchedule:            Boolean
-  changesMedicarePhysicianFeeScheduleNote:        String
-  affectsMedicareSecondaryPayerClaims:            Boolean
-  affectsMedicareSecondaryPayerClaimsHow:         String
-  affectsMedicareSecondaryPayerClaimsNote:        String
-  payModelDifferentiation:                        String
-
-  # Page 3
-  creatingDependenciesBetweenServices:     Boolean
-  creatingDependenciesBetweenServicesNote: String
-  needsClaimsDataCollection:               Boolean
-  needsClaimsDataCollectionNote:           String
-  providingThirdPartyFile:                 Boolean
-  isContractorAwareTestDataRequirements:   Boolean
-
-  # Page 4
-  beneficiaryCostSharingLevelAndHandling:          String
-  waiveBeneficiaryCostSharingForAnyServices:       Boolean
-  waiveBeneficiaryCostSharingServiceSpecification: String
-  waiverOnlyAppliesPartOfPayment:                  Boolean
-  waiveBeneficiaryCostSharingNote:                 String
-
-  # Page 5
-  nonClaimsPayments:                               [NonClaimsBasedPayType!]!
-  nonClaimsPaymentOther:                           String
-  nonClaimsPaymentsNote:                           String
-  paymentCalculationOwner:                         String
-  numberPaymentsPerPayCycle:                       String
-  numberPaymentsPerPayCycleNote:                   String
-  sharedSystemsInvolvedAdditionalClaimPayment:     Boolean
-  sharedSystemsInvolvedAdditionalClaimPaymentNote: String
-  planningToUseInnovationPaymentContractor:        Boolean
-  planningToUseInnovationPaymentContractorNote:    String
-
-  # Page 6
-  expectedCalculationComplexityLevel:                ComplexityCalculationLevelType
-  expectedCalculationComplexityLevelNote:            String
-  claimsProcessingPrecedence:                        Boolean
-  claimsProcessingPrecedenceOther:                   String
-  claimsProcessingPrecedenceNote:                    String
-  canParticipantsSelectBetweenPaymentMechanisms:     Boolean
-  canParticipantsSelectBetweenPaymentMechanismsHow:  String
-  canParticipantsSelectBetweenPaymentMechanismsNote: String
-  anticipatedPaymentFrequency:                       [FrequencyType!]!
-  anticipatedPaymentFrequencyContinually:            String
-  anticipatedPaymentFrequencyOther:                  String
-  anticipatedPaymentFrequencyNote:                   String
-
-  # Page 7
-  willRecoverPayments:                               Boolean
-  willRecoverPaymentsNote:                           String
-  anticipateReconcilingPaymentsRetrospectively:      Boolean
-  anticipateReconcilingPaymentsRetrospectivelyNote:  String
-  paymentReconciliationFrequency:                    [FrequencyType!]!
-  paymentReconciliationFrequencyContinually:         String
-  paymentReconciliationFrequencyOther:               String
-  paymentReconciliationFrequencyNote:                String
-  paymentDemandRecoupmentFrequency:                  [FrequencyType!]!
-  paymentDemandRecoupmentFrequencyContinually:       String
-  paymentDemandRecoupmentFrequencyOther:             String
-  paymentDemandRecoupmentFrequencyNote:              String
-  paymentStartDate:                                  Time
-  paymentStartDateNote:                              String
-
-  # Meta
-
-  createdBy: UUID!
-  createdByUserAccount: UserAccount!
-  createdDts: Time!
-  modifiedBy: UUID
-  modifiedByUserAccount: UserAccount
-  modifiedDts: Time
-
-  readyForReviewBy: UUID
-  readyForReviewByUserAccount: UserAccount
-  readyForReviewDts: Time
-  readyForClearanceBy: UUID
-  readyForClearanceByUserAccount: UserAccount
-  readyForClearanceDts: Time
-
-  status:      TaskStatus!
-}
-
-input PlanPaymentsChanges @goModel(model: "map[string]interface{}") {
-  # Page 1
-  fundingSource:                      [FundingSource!] #Combine these
-  fundingSourceMedicareAInfo:         String
-  fundingSourceMedicareBInfo:         String
-  # fundingSourceTrustFundType:         [TrustFundType!]
-  fundingSourceOther:                 String
-  fundingSourceNote:                  String
-  fundingSourceR:                     [FundingSource!]
-  fundingSourceRMedicareAInfo:        String
-  fundingSourceRMedicareBInfo:        String
-  # fundingSourceRTrustFundType:        [TrustFundType!]
-  fundingSourceROther:                String
-  fundingSourceRNote:                 String
-  payRecipients:                      [PayRecipient!]
-  payRecipientsOtherSpecification:    String
-  payRecipientsNote:                  String
-  payType:                            [PayType!]
-  payTypeNote:                        String
-
-  # Page 2
-  payClaims:                                      [ClaimsBasedPayType!]
-  payClaimsOther:                                 String
-  payClaimsNote:                                  String
-  shouldAnyProvidersExcludedFFSSystems:           Boolean
-  shouldAnyProviderExcludedFFSSystemsNote:        String
-  changesMedicarePhysicianFeeSchedule:            Boolean
-  changesMedicarePhysicianFeeScheduleNote:        String
-  affectsMedicareSecondaryPayerClaims:            Boolean
-  affectsMedicareSecondaryPayerClaimsHow:         String
-  affectsMedicareSecondaryPayerClaimsNote:        String
-  payModelDifferentiation:                        String
-
-  # Page 3
-  creatingDependenciesBetweenServices:     Boolean
-  creatingDependenciesBetweenServicesNote: String
-  needsClaimsDataCollection:               Boolean
-  needsClaimsDataCollectionNote:           String
-  providingThirdPartyFile:                 Boolean
-  isContractorAwareTestDataRequirements:   Boolean
-
-  # Page 4
-  beneficiaryCostSharingLevelAndHandling:          String
-  waiveBeneficiaryCostSharingForAnyServices:       Boolean
-  waiveBeneficiaryCostSharingServiceSpecification: String
-  waiverOnlyAppliesPartOfPayment:                  Boolean
-  waiveBeneficiaryCostSharingNote:                 String
-
-  # Page 5
-  nonClaimsPayments:                               [NonClaimsBasedPayType!]
-  nonClaimsPaymentOther:                           String
-  nonClaimsPaymentsNote:                           String
-  paymentCalculationOwner:                         String
-  numberPaymentsPerPayCycle:                       String
-  numberPaymentsPerPayCycleNote:                  String
-  sharedSystemsInvolvedAdditionalClaimPayment:     Boolean
-  sharedSystemsInvolvedAdditionalClaimPaymentNote: String
-  planningToUseInnovationPaymentContractor:        Boolean
-  planningToUseInnovationPaymentContractorNote:    String
-
-  # Page 6
-  expectedCalculationComplexityLevel:                       ComplexityCalculationLevelType
-  expectedCalculationComplexityLevelNote:                   String
-  claimsProcessingPrecedence:                               Boolean
-  claimsProcessingPrecedenceOther:                          String
-  claimsProcessingPrecedenceNote:                           String
-  canParticipantsSelectBetweenPaymentMechanisms:            Boolean
-  canParticipantsSelectBetweenPaymentMechanismsHow:         String
-  canParticipantsSelectBetweenPaymentMechanismsNote:        String
-  anticipatedPaymentFrequency:                              [FrequencyType!]
-  anticipatedPaymentFrequencyContinually:                   String
-  anticipatedPaymentFrequencyOther:                         String
-  anticipatedPaymentFrequencyNote:                         String
-
-  # Page 7
-  willRecoverPayments:                               Boolean
-  willRecoverPaymentsNote:                          String
-  anticipateReconcilingPaymentsRetrospectively:      Boolean
-  anticipateReconcilingPaymentsRetrospectivelyNote: String
-  paymentReconciliationFrequency:                    [FrequencyType!]
-  paymentReconciliationFrequencyContinually:         String
-  paymentReconciliationFrequencyOther:               String
-  paymentReconciliationFrequencyNote:                String
-  paymentDemandRecoupmentFrequency:                    [FrequencyType!]
-  paymentDemandRecoupmentFrequencyContinually:         String
-  paymentDemandRecoupmentFrequencyOther:               String
-  paymentDemandRecoupmentFrequencyNote:                String
-  paymentStartDate:                                  Time
-  paymentStartDateNote:                             String
-
-  status: TaskStatusInput
-}
-
-"""
-NDAInfo represents whether a user has agreed to an NDA or not. If agreed to previously, there will be a datestamp visible
-"""
-type NDAInfo {
-  agreed: Boolean!
-  agreedDts: Time
-}
-
-input ReportAProblemInput {
-  isAnonymousSubmission: Boolean!
-  allowContact: Boolean
-  section: ReportAProblemSection
-  sectionOther: String
-  whatDoing: String
-  whatWentWrong: String
-  severity: ReportAProblemSeverity
-  severityOther: String
-}
-
-enum ExisitingModelLinkFieldType {
-  GEN_CHAR_RESEMBLES_EXISTING_MODEL_WHICH
-  GEN_CHAR_PARTICIPATION_EXISTING_MODEL_WHICH
-}
-
-enum ReportAProblemSection {
-  READ_VIEW
-  TASK_LIST
-  IT_SOLUTIONS
-  HELP_CENTER
-  OTHER
-}
-
-enum ReportAProblemSeverity {
-  PREVENTED_TASK
-  DELAYED_TASK
-  MINOR
-  OTHER
-}
-
-type PlanFavorite {
-    id: UUID!
-    modelPlanID: UUID!
-    userID: UUID!
-    userAccount: UserAccount!
-
-    createdBy: UUID!
-    createdByUserAccount: UserAccount!
-    createdDts: Time!
-    modifiedBy: UUID
-    modifiedByUserAccount: UserAccount
-    modifiedDts: Time
-
-}
-
-type PlanCR {
-    id: UUID!
-    modelPlanID: UUID!
-
-    idNumber: String!
-    dateInitiated: Time!
-    dateImplemented: Time # Required in the API, but can be nullable for historical entries before we migrated CRs and TDLs as different types
-    title: String!
-    note: String
-
-    createdBy: UUID!
-    createdByUserAccount: UserAccount!
-    createdDts: Time!
-    modifiedBy: UUID
-    modifiedByUserAccount: UserAccount
-    modifiedDts: Time
-}
-
-type PlanTDL {
-    id: UUID!
-    modelPlanID: UUID!
-
-    idNumber: String!
-    dateInitiated: Time!
-    title: String!
-    note: String
-
-    createdBy: UUID!
-    createdByUserAccount: UserAccount!
-    createdDts: Time!
-    modifiedBy: UUID
-    modifiedByUserAccount: UserAccount
-    modifiedDts: Time
-}
-
-input PlanCRCreateInput {
-    modelPlanID: UUID!
-
-    idNumber: String!
-    dateInitiated: Time!
-    dateImplemented: Time!
-    title: String!
-    note: String
-}
-
-input PlanCRChanges @goModel(model: "map[string]interface{}") {
-    idNumber: String
-    dateInitiated: Time
-    dateImplemented: Time
-    title: String
-    note: String
-}
-
-input PlanTDLCreateInput {
-    modelPlanID: UUID!
-
-    idNumber: String!
-    dateInitiated: Time!
-    title: String!
-    note: String
-}
-
-input PlanTDLChanges @goModel(model: "map[string]interface{}") {
-    idNumber: String
-    dateInitiated: Time
-    title: String
-    note: String
-}
-
-type PrepareForClearance {
-  status: PrepareForClearanceStatus!
-  latestClearanceDts: Time
-}
-
-type AuditChange {
-  id: Int!
-  primaryKey: UUID!
-  foreignKey: UUID
-  tableName: String!
-  action: String!
-  fields: Map!
-  modifiedBy: UUID
-  modifiedByUserAccount: UserAccount
-  modifiedDts: Time
-}
-
-
-type OperationalSolution {
-    id: UUID!
-    operationalNeedID: UUID!
-
-    solutionType: Int
-    needed: Boolean # if null, it has not been selectd
-    name: String
-    key: OperationalSolutionKey
-    nameOther: String
-
-    pocName: String
-    pocEmail: String
-    mustStartDts: Time
-    mustFinishDts: Time
-    isOther: Boolean!
-    isCommonSolution: Boolean!
-    otherHeader: String
-    status: OpSolutionStatus!
-
-    documents: [PlanDocument!]!
-    operationalSolutionSubtasks: [OperationalSolutionSubtask!]!
-
-    createdBy: UUID!
-    createdByUserAccount: UserAccount!
-    createdDts: Time!
-    modifiedBy: UUID
-    modifiedByUserAccount: UserAccount
-    modifiedDts: Time
-}
-
-input OperationalSolutionChanges @goModel(model: "map[string]interface{}"){
-    needed: Boolean
-    nameOther: String # Only valid for when solution type is null
-
-    pocName: String
-    pocEmail: String
-    mustStartDts: Time
-    mustFinishDts: Time
-    otherHeader: String
-    status: OpSolutionStatus
-}
-
-type PlanDocumentSolutionLink {
-id: UUID!
-solutionID: UUID!
-documentID: UUID!
-
-createdBy: UUID!
-createdByUserAccount: UserAccount!
-createdDts: Time!
-modifiedBy: UUID
-modifiedByUserAccount: UserAccount
-modifiedDts: Time
-}
-
-input CreateOperationalSolutionSubtaskInput {
-  name: String!
-  status: OperationalSolutionSubtaskStatus!
-}
-
-input UpdateOperationalSolutionSubtaskInput {
-  id: UUID!
-  changes: UpdateOperationalSolutionSubtaskChangesInput!
-}
-
-input UpdateOperationalSolutionSubtaskChangesInput @goModel(model: "map[string]interface{}") {
-  name: String!
-  status: OperationalSolutionSubtaskStatus!
-}
-
-type OperationalSolutionSubtask {
-  id: UUID!
-  solutionID: UUID!
-  name: String!
-  status: OperationalSolutionSubtaskStatus!
-
-  createdBy: UUID!
-  createdByUserAccount: UserAccount!
-  createdDts: Time!
-  modifiedBy: UUID
-  modifiedByUserAccount: UserAccount
-  modifiedDts: Time
-}
-
-type DiscussionRoleSelection {
-  userRole: DiscussionUserRole!
-  userRoleDescription: String
-}
-"""
-The inputs to the user feedback form
-"""
-input SendFeedbackEmailInput {
-  isAnonymousSubmission: Boolean!
-  allowContact: Boolean
-  cmsRole: String
-  mintUsedFor: [MintUses!]
-  mintUsedForOther: String
-  systemEasyToUse: EaseOfUse
-  systemEasyToUseOther: String
-  howSatisfied: SatisfactionLevel
-  howCanWeImprove: String
-}
-
-enum EaseOfUse {
-  AGREE
-  DISAGREE
-  UNSURE
-}
-
-enum MintUses {
-  VIEW_MODEL
-  EDIT_MODEL
-  SHARE_MODEL
-  TRACK_SOLUTIONS
-  CONTRIBUTE_DISCUSSIONS
-  VIEW_HELP
-  OTHER
-}
-enum SatisfactionLevel {
-  VERY_SATISFIED
-  SATISFIED
-  NEUTRAL
-  DISSATISFIED
-  VERY_DISSATISFIED
-}
-
-
-"""
 Query definition for the schema
 """
-type Query {
-  planDocument(id: UUID!): PlanDocument!
-  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
-  existingModelCollection: [ExistingModel!]!
-  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
-  searchOktaUsers(searchTerm: String!): [UserInfo!]!
-  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
-  planCollaboratorByID(id: UUID!): PlanCollaborator!
-  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
-  taskListSectionLocks(modelPlanID: UUID!): [TaskListSectionLockStatus!]!
-  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
-  planPayments(id: UUID!): PlanPayments!
-  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
-  ndaInfo: NDAInfo!
-  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
-  planCR(id: UUID!): PlanCR!
-  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
-  planTDL(id: UUID!): PlanTDL!
-  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
-  operationalSolutions(operationalNeedID: UUID!, includeNotNeeded: Boolean! = false): [OperationalSolution!]!
-  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
-  operationalSolution(id: UUID!): OperationalSolution!
-  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
-  operationalNeed(id: UUID!): OperationalNeed!
-  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
-  auditChanges(tableName: String!, primaryKey: UUID!): [AuditChange!]!
-  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
-  possibleOperationalNeeds: [PossibleOperationalNeed!]!
-  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
-  possibleOperationalSolutions: [PossibleOperationalSolution!]!
-  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
-  userAccount(username: String!): UserAccount!
-  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
-  existingModelLink(id: UUID!): ExistingModelLink!
-  @hasAnyRole(roles:[MINT_USER, MINT_MAC])
-  mostRecentDiscussionRoleSelection: DiscussionRoleSelection
-  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
-}
+type Query
 
 """
 Mutations definition for the schema
 """
-type Mutation {
-createPlanCollaborator(input: PlanCollaboratorCreateInput!): PlanCollaborator!
-@hasRole(role: MINT_USER)
-
-updatePlanCollaborator(id: UUID!, newRoles: [TeamRole!]!): PlanCollaborator!
-@hasRole(role: MINT_USER)
-
-deletePlanCollaborator(id: UUID!): PlanCollaborator!
-@hasRole(role: MINT_USER)
-
-uploadNewPlanDocument(input: PlanDocumentInput!): PlanDocument!
-@hasRole(role: MINT_USER)
-
-linkNewPlanDocument(input: PlanDocumentLinkInput!): PlanDocument!
-@hasRole(role: MINT_USER)
-
-deletePlanDocument(id: UUID!): Int!
-@hasRole(role: MINT_USER)
-
-createPlanDiscussion(input: PlanDiscussionCreateInput!): PlanDiscussion!
-@hasAnyRole(roles: [MINT_USER, MINT_MAC])
-
-createDiscussionReply(input: DiscussionReplyCreateInput!): DiscussionReply!
-@hasAnyRole(roles: [MINT_USER, MINT_MAC])
-
-lockTaskListSection(modelPlanID: UUID!, section: TaskListSection!): Boolean!
-@hasRole(role: MINT_USER)
-
-unlockTaskListSection(modelPlanID: UUID!, section: TaskListSection!): Boolean!
-@hasRole(role: MINT_USER)
-
-unlockAllTaskListSections(modelPlanID: UUID!): [TaskListSectionLockStatus!]!
-@hasRole(role: MINT_ASSESSMENT)
-
-updatePlanPayments(id: UUID!, changes: PlanPaymentsChanges!): PlanPayments!
-@hasRole(role: MINT_USER)
-
-agreeToNDA(agree: Boolean! = true): NDAInfo!
-@hasAnyRole(roles: [MINT_USER, MINT_MAC])
-
-addPlanFavorite(modelPlanID: UUID!): PlanFavorite!
-@hasAnyRole(roles: [MINT_USER, MINT_MAC])
-
-deletePlanFavorite(modelPlanID: UUID!): PlanFavorite!
-@hasAnyRole(roles: [MINT_USER, MINT_MAC])
-
-createPlanCR(input: PlanCRCreateInput!): PlanCR!
-@hasRole(role: MINT_USER)
-
-createPlanTDL(input: PlanTDLCreateInput!): PlanTDL!
-@hasRole(role: MINT_USER)
-
-updatePlanCR(id: UUID!, changes: PlanCRChanges!): PlanCR!
-@hasRole(role: MINT_USER)
-
-updatePlanTDL(id: UUID!, changes: PlanTDLChanges!): PlanTDL!
-@hasRole(role: MINT_USER)
-
-deletePlanCR(id: UUID!): PlanCR!
-@hasRole(role: MINT_USER)
-
-deletePlanTDL(id: UUID!): PlanTDL!
-@hasRole(role: MINT_USER)
-
-addOrUpdateCustomOperationalNeed(modelPlanID: UUID!, customNeedType: String! needed: Boolean!): OperationalNeed!
-@hasRole(role: MINT_USER)
-
-updateCustomOperationalNeedByID(id: UUID!, customNeedType: String needed: Boolean!): OperationalNeed!
-@hasRole(role: MINT_USER)
-
-createOperationalSolution(operationalNeedID: UUID!, solutionType: OperationalSolutionKey, changes: OperationalSolutionChanges!): OperationalSolution!
-@hasRole(role: MINT_USER)
-
-updateOperationalSolution(id: UUID!, changes: OperationalSolutionChanges!): OperationalSolution!
-@hasRole(role: MINT_USER)
-
-createPlanDocumentSolutionLinks(solutionID: UUID!, documentIDs: [UUID!]!): [PlanDocumentSolutionLink!]
-@hasRole(role: MINT_USER)
-
-removePlanDocumentSolutionLinks(solutionID: UUID!, documentIDs: [UUID!]!): Boolean!
-@hasRole(role: MINT_USER)
-
-createOperationalSolutionSubtasks(solutionID: UUID!, inputs: [CreateOperationalSolutionSubtaskInput!]!): [OperationalSolutionSubtask!]
-@hasRole(role: MINT_USER)
-
-updateOperationalSolutionSubtasks(inputs: [UpdateOperationalSolutionSubtaskInput!]!): [OperationalSolutionSubtask!]
-@hasRole(role: MINT_USER)
-
-deleteOperationalSolutionSubtask(id: UUID!): Int!
-@hasRole(role: MINT_USER)
-
-"""
-This will update linked existing models, and relatede model plans for given model plan and fieldName.
-The fieldName allows it so you can create links for multiple sections of the model plan
-"""
-updateExistingModelLinks(modelPlanID: UUID!,fieldName: ExisitingModelLinkFieldType!,  existingModelIDs: [Int!],currentModelPlanIDs: [UUID!]): ExistingModelLinks!
-@hasRole(role: MINT_USER)
-
-reportAProblem(input: ReportAProblemInput!): Boolean!
-@hasAnyRole(roles: [MINT_USER, MINT_MAC])
-"""
-This mutation sends feedback about the MINT product to the MINT team
-"""
-sendFeedbackEmail(input: SendFeedbackEmailInput!): Boolean!
-
-
-}
-
-type Subscription {
-  onTaskListSectionLocksChanged(modelPlanID: UUID!): TaskListSectionLockStatusChanged!
-  @hasRole(role: MINT_USER)
-
-  onLockTaskListSectionContext(modelPlanID: UUID!): TaskListSectionLockStatusChanged!
-  @hasRole(role: MINT_USER)
-}
-
-enum ChangeType {
-  ADDED
-  UPDATED
-  REMOVED
-}
-
-enum PrepareForClearanceStatus {
-  CANNOT_START
-  READY
-  IN_PROGRESS
-  READY_FOR_CLEARANCE
-}
-
-enum TaskStatusInput {
-  IN_PROGRESS
-  READY_FOR_REVIEW
-  READY_FOR_CLEARANCE
-}
-
-enum TaskListSection {
-  BASICS,
-  GENERAL_CHARACTERISTICS,
-  PARTICIPANTS_AND_PROVIDERS,
-  BENEFICIARIES,
-  OPERATIONS_EVALUATION_AND_LEARNING,
-  PAYMENT,
-  PREPARE_FOR_CLEARANCE
-}
-
-enum TeamRole {
-  MODEL_LEAD
-  MODEL_TEAM
-  LEADERSHIP
-  LEARNING
-  EVALUATION
-  IT_LEAD
-  QUALITY
-  OACT
-  PAYMENT
-  CM_FFS_COUNTERPART
-  COR
-}
-
-enum DocumentType {
-  CONCEPT_PAPER,
-  POLICY_PAPER,
-  ICIP_DRAFT,
-  MARKET_RESEARCH,
-  DESIGN_PARAMETERS_MEMO,
-  OFFICE_OF_THE_ADMINISTRATOR_PRESENTATION,
-  OTHER
-}
-
-enum FundingSource {
-  PATIENT_PROTECTION_AFFORDABLE_CARE_ACT
-  MEDICARE_PART_A_HI_TRUST_FUND
-  MEDICARE_PART_B_SMI_TRUST_FUND
-  OTHER
-}
-
-enum PayRecipient {
-  PROVIDERS
-  BENEFICIARIES
-  PARTICIPANTS
-  STATES
-  OTHER
-}
-
-enum PayType {
-  CLAIMS_BASED_PAYMENTS
-  NON_CLAIMS_BASED_PAYMENTS
-  GRANTS
-}
-
-enum ClaimsBasedPayType {
-  ADJUSTMENTS_TO_FFS_PAYMENTS
-  CARE_MANAGEMENT_HOME_VISITS
-  REDUCTIONS_TO_BENEFICIARY_COST_SHARING
-  SNF_CLAIMS_WITHOUT_3DAY_HOSPITAL_ADMISSIONS
-  TELEHEALTH_SERVICES_NOT_TRADITIONAL_MEDICARE
-  SERVICES_NOT_COVERED_THROUGH_TRADITIONAL_MEDICARE
-  PAYMENTS_FOR_POST_DISCHARGE_HOME_VISITS
-  OTHER
-}
-
-enum NonClaimsBasedPayType {
-  ADVANCED_PAYMENT
-  BUNDLED_EPISODE_OF_CARE
-  CAPITATION_POPULATION_BASED_FULL
-  CAPITATION_POPULATION_BASED_PARTIAL
-  CARE_COORDINATION_MANAGEMENT_FEE
-  GLOBAL_BUDGET
-  INCENTIVE_PAYMENT
-  MAPD_SHARED_SAVINGS
-  SHARED_SAVINGS
-  OTHER
-}
-
-enum ComplexityCalculationLevelType {
-  LOW
-  MIDDLE
-  HIGH
-}
-
-enum OpSolutionStatus {
-  NOT_STARTED
-  ONBOARDING
-  BACKLOG
-  IN_PROGRESS
-  COMPLETED
-  AT_RISK
-}
-
-enum OperationalNeedKey{
-  MANAGE_CD
-  REV_COL_BIDS
-  UPDATE_CONTRACT
-  RECRUIT_PARTICIPANTS
-  REV_SCORE_APP
-  APP_SUPPORT_CON
-  COMM_W_PART
-  MANAGE_PROV_OVERLAP
-  MANAGE_BEN_OVERLAP
-  HELPDESK_SUPPORT
-  IDDOC_SUPPORT
-  ESTABLISH_BENCH
-  PROCESS_PART_APPEALS
-  ACQUIRE_AN_EVAL_CONT
-  DATA_TO_MONITOR
-  DATA_TO_SUPPORT_EVAL
-  CLAIMS_BASED_MEASURES
-  QUALITY_PERFORMANCE_SCORES
-  SEND_REPDATA_TO_PART
-  ACQUIRE_A_LEARN_CONT
-  PART_TO_PART_COLLAB
-  EDUCATE_BENEF
-  ADJUST_FFS_CLAIMS
-  MANAGE_FFS_EXCL_PAYMENTS
-  MAKE_NON_CLAIMS_BASED_PAYMENTS
-  COMPUTE_SHARED_SAVINGS_PAYMENT
-  RECOVER_PAYMENTS
-  SIGN_PARTICIPATION_AGREEMENTS
-  VET_PROVIDERS_FOR_PROGRAM_INTEGRITY
-  UTILIZE_QUALITY_MEASURES_DEVELOPMENT_CONTRACTOR
-  IT_PLATFORM_FOR_LEARNING
-}
-
-enum OperationalSolutionKey{
-  INNOVATION
-  ACO_OS
-  APPS
-  CDX
-  CCW
-  CMS_BOX
-  CMS_QUALTRICS
-  CBOSC
-  CONTRACTOR
-  CPI_VETTING
-  CROSS_MODEL_CONTRACT
-  EFT
-  EXISTING_CMS_DATA_AND_PROCESS
-  EDFR
-  GOVDELIVERY
-  GS
-  HDR
-  HPMS
-  HIGLAS
-  IPC
-  IDR
-  INTERNAL_STAFF
-  LDG
-  LV
-  MDM
-  MARX
-  OTHER_NEW_PROCESS
-  OUTLOOK_MAILBOX
-  QV
-  RMADA
-  ARS
-  CONNECT
-  LOI
-  POST_PORTAL
-  RFA
-  SHARED_SYSTEMS
-  BCDA
-  ISP
-  MIDS
-}
-
-enum OperationalSolutionSubtaskStatus {
-  TODO,
-  IN_PROGRESS,
-  DONE
-}
-
-type UserAccount {
-	id: UUID!
-	username: String!
-	isEUAID: Boolean
-	commonName: String!
-	locale: String!
-	email: String!
-	givenName: String!
-	familyName: String!
-	zoneInfo: String!
-	hasLoggedIn: Boolean
-}
-
-
-"""
-A user role associated with a job code
-"""
-enum Role {
-  """
-  A basic MINT user
-  """
-  MINT_USER
-
-  """
-  A MINT assessment team user
-  """
-  MINT_ASSESSMENT
-
-  """
-  A MINT MAC user
-  """
-  MINT_MAC
-}
-
-enum ActionType {
-  """
-  A normal flow action
-  """
-  NORMAL
-
-  """
-  An administrative action
-  """
-  ADMIN
-}
-
-enum DiscussionUserRole {
-  CMS_SYSTEM_SERVICE_TEAM,
-  IT_ARCHITECT,
-  LEADERSHIP,
-  MEDICARE_ADMINISTRATIVE_CONTRACTOR,
-  MINT_TEAM,
-  MODEL_IT_LEAD,
-  MODEL_TEAM,
-  SHARED_SYSTEM_MAINTAINER,
-  NONE_OF_THE_ABOVE,
-}`, BuiltIn: false},
+type Mutation`, BuiltIn: false},
 	{Name: "../schema/types/activity.graphql", Input: `"""
 ActivityType represents the possible activities that happen in application that might result in a notification
 """
@@ -9565,7 +8552,16 @@ enum ActivityType {
 """
 ActivityMetaData is a type that represents all the data that can be captured in an Activity
 """
-union ActivityMetaData = TaggedInPlanDiscussionActivityMeta  | TaggedInDiscussionReplyActivityMeta | DailyDigestCompleteActivityMeta
+union ActivityMetaData = TaggedInPlanDiscussionActivityMeta  | TaggedInDiscussionReplyActivityMeta | DailyDigestCompleteActivityMeta | NewDiscussionRepliedActivityMeta | AddedAsCollaboratorMeta | ModelPlanSharedActivityMeta
+
+type AddedAsCollaboratorMeta {
+  version: Int!
+  type: ActivityType!
+  modelPlanID: UUID!
+  modelPlan: ModelPlan!
+  collaboratorID: UUID!
+  collaborator: PlanCollaborator!
+}
 
 type TaggedInPlanDiscussionActivityMeta {
   version: Int!
@@ -9589,6 +8585,25 @@ type TaggedInDiscussionReplyActivityMeta {
   content: String!
 }
 
+type ModelPlanSharedActivityMeta {
+  version: Int!
+  type: ActivityType!
+  modelPlanID: UUID!
+  modelPlan: ModelPlan!
+  optionalMessage: String
+}
+
+type NewDiscussionRepliedActivityMeta {
+  version: Int!
+  type: ActivityType!
+  modelPlanID: UUID!
+  modelPlan: ModelPlan!
+  discussionID: UUID!
+  discussion: PlanDiscussion!
+  replyID: UUID!
+  reply: DiscussionReply!
+  content: String!
+}
 type DailyDigestCompleteActivityMeta {
   version: Int!
   type: ActivityType!
@@ -9695,6 +8710,22 @@ extend type Query {
     @hasAnyRole(roles: [MINT_USER, MINT_MAC])
 }
 `, BuiltIn: false},
+	{Name: "../schema/types/audit_change.graphql", Input: `type AuditChange {
+  id: Int!
+  primaryKey: UUID!
+  foreignKey: UUID
+  tableName: String!
+  action: String!
+  fields: Map!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
+}
+
+extend type Query {
+  auditChanges(tableName: String!, primaryKey: UUID!): [AuditChange!]!
+  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+}`, BuiltIn: false},
 	{Name: "../schema/types/current_user.graphql", Input: `"""
 The current user of the application
 """
@@ -9717,6 +8748,133 @@ directive @goModel(
   model: String
   models: [String!]
 ) on OBJECT | INPUT_OBJECT | SCALAR | ENUM | INTERFACE | UNION`, BuiltIn: false},
+	{Name: "../schema/types/discussion_reply.graphql", Input: `"""
+DiscussionReply represents a discussion reply
+"""
+type DiscussionReply  {
+  id: UUID!
+  discussionID: UUID!
+  content: TaggedContent
+  userRole: DiscussionUserRole
+  userRoleDescription: String
+  isAssessment: Boolean!
+
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
+}
+
+"""
+DiscussionReplyCreateInput represents the necessary fields to create a discussion reply
+"""
+input DiscussionReplyCreateInput {
+  discussionID: UUID!
+  content: TaggedHTML!
+  userRole: DiscussionUserRole
+  userRoleDescription: String
+}
+
+extend type Mutation {
+  createDiscussionReply(input: DiscussionReplyCreateInput!): DiscussionReply!
+  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+}`, BuiltIn: false},
+	{Name: "../schema/types/discussion_role_selection.graphql", Input: `type DiscussionRoleSelection {
+  userRole: DiscussionUserRole!
+  userRoleDescription: String
+}
+
+extend type Query {
+  mostRecentDiscussionRoleSelection: DiscussionRoleSelection
+  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+}`, BuiltIn: false},
+	{Name: "../schema/types/existing_model.graphql", Input: `"""
+ExistingModel represents a model that already exists outside of the scope of MINT
+"""
+type ExistingModel {
+  id: Int
+  modelName: String!
+  stage: String!
+  numberOfParticipants: String
+  category: String
+  authority: String
+  description: String
+  numberOfBeneficiariesImpacted: Int
+  numberOfPhysiciansImpacted: Int
+  dateBegan: Time
+  dateEnded: Time
+  states: String
+  keywords: String
+  url: String
+  displayModelSummary: Boolean
+
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
+}
+
+extend type Query {
+  existingModelCollection: [ExistingModel!]!
+  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+}`, BuiltIn: false},
+	{Name: "../schema/types/existing_model_link.graphql", Input: `enum ExisitingModelLinkFieldType {
+  GEN_CHAR_RESEMBLES_EXISTING_MODEL_WHICH
+  GEN_CHAR_PARTICIPATION_EXISTING_MODEL_WHICH
+}
+
+"""
+LinkedExistingModel is a union type that returns either an Existing Model, or a Model plan from the database
+"""
+union LinkedExistingModel =  ExistingModel | ModelPlan
+
+type ExistingModelLinks {
+  links: [ExistingModelLink!]!
+  fieldName: ExisitingModelLinkFieldType!
+  modelPlanID: UUID!
+  names: [String!]!
+}
+
+type ExistingModelLink {
+  id: UUID
+  modelPlanID: UUID!
+  existingModelID: Int
+  currentModelPlanID: UUID
+  fieldName: ExisitingModelLinkFieldType!
+  model: LinkedExistingModel!
+
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
+}
+
+extend type Query {
+  existingModelLink(id: UUID!): ExistingModelLink!
+  @hasAnyRole(roles:[MINT_USER, MINT_MAC])
+}
+
+extend type Mutation {
+  """
+  This will update linked existing models, and relatede model plans for given model plan and fieldName.
+  The fieldName allows it so you can create links for multiple sections of the model plan
+  """
+  updateExistingModelLinks(modelPlanID: UUID!,fieldName: ExisitingModelLinkFieldType!,  existingModelIDs: [Int!],currentModelPlanIDs: [UUID!]): ExistingModelLinks!
+  @hasRole(role: MINT_USER)
+}`, BuiltIn: false},
+	{Name: "../schema/types/launch_darkly_settings.graphql", Input: `"""
+The current user's Launch Darkly key
+"""
+type LaunchDarklySettings {
+  userKey: String!
+  signedHash: String!
+}`, BuiltIn: false},
 	{Name: "../schema/types/model_plan.graphql", Input: `enum ModelPlanFilter {
   INCLUDE_ALL,
   COLLAB_ONLY,
@@ -9818,6 +8976,166 @@ extend type Mutation {
   @hasRole(role: MINT_USER)
 
   shareModelPlan(modelPlanID: UUID!, viewFilter: ModelViewFilter, usernames: [String!]!, optionalMessage: String): Boolean!
+  @hasRole(role: MINT_USER)
+}`, BuiltIn: false},
+	{Name: "../schema/types/nda_info.graphql", Input: `"""
+NDAInfo represents whether a user has agreed to an NDA or not. If agreed to previously, there will be a datestamp visible
+"""
+type NDAInfo {
+  agreed: Boolean!
+  agreedDts: Time
+}
+
+extend type Query {
+  ndaInfo: NDAInfo!
+  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+}
+
+extend type Mutation {
+  agreeToNDA(agree: Boolean! = true): NDAInfo!
+  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+}`, BuiltIn: false},
+	{Name: "../schema/types/operational_need.graphql", Input: `type OperationalNeed {
+  id: UUID!
+  modelPlanID: UUID!
+
+  needed: Boolean # if null, it has not been answered
+  solutions(includeNotNeeded: Boolean! = false): [OperationalSolution!]!
+
+  key: OperationalNeedKey
+  name: String
+  nameOther: String
+  section: TaskListSection
+
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
+}
+
+extend type Query {
+  operationalNeed(id: UUID!): OperationalNeed!
+  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+}
+
+extend type Mutation {
+  addOrUpdateCustomOperationalNeed(modelPlanID: UUID!, customNeedType: String! needed: Boolean!): OperationalNeed!
+  @hasRole(role: MINT_USER)
+
+  updateCustomOperationalNeedByID(id: UUID!, customNeedType: String needed: Boolean!): OperationalNeed!
+  @hasRole(role: MINT_USER)
+}`, BuiltIn: false},
+	{Name: "../schema/types/operational_solution.graphql", Input: `enum OpSolutionStatus {
+  NOT_STARTED
+  ONBOARDING
+  BACKLOG
+  IN_PROGRESS
+  COMPLETED
+  AT_RISK
+}
+
+type OperationalSolution {
+  id: UUID!
+  operationalNeedID: UUID!
+
+  solutionType: Int
+  needed: Boolean # if null, it has not been selectd
+  name: String
+  key: OperationalSolutionKey
+  nameOther: String
+
+  pocName: String
+  pocEmail: String
+  mustStartDts: Time
+  mustFinishDts: Time
+  isOther: Boolean!
+  isCommonSolution: Boolean!
+  otherHeader: String
+  status: OpSolutionStatus!
+
+  documents: [PlanDocument!]!
+  operationalSolutionSubtasks: [OperationalSolutionSubtask!]!
+
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
+}
+
+input OperationalSolutionChanges @goModel(model: "map[string]interface{}"){
+  needed: Boolean
+  nameOther: String # Only valid for when solution type is null
+
+  pocName: String
+  pocEmail: String
+  mustStartDts: Time
+  mustFinishDts: Time
+  otherHeader: String
+  status: OpSolutionStatus
+}
+
+extend type Query {
+  operationalSolutions(operationalNeedID: UUID!, includeNotNeeded: Boolean! = false): [OperationalSolution!]!
+  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+
+  operationalSolution(id: UUID!): OperationalSolution!
+  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+}
+
+extend type Mutation {
+  createOperationalSolution(operationalNeedID: UUID!, solutionType: OperationalSolutionKey, changes: OperationalSolutionChanges!): OperationalSolution!
+  @hasRole(role: MINT_USER)
+
+  updateOperationalSolution(id: UUID!, changes: OperationalSolutionChanges!): OperationalSolution!
+  @hasRole(role: MINT_USER)
+}`, BuiltIn: false},
+	{Name: "../schema/types/operational_solution_subtask.graphql", Input: `enum OperationalSolutionSubtaskStatus {
+  TODO,
+  IN_PROGRESS,
+  DONE
+}
+
+input CreateOperationalSolutionSubtaskInput {
+  name: String!
+  status: OperationalSolutionSubtaskStatus!
+}
+
+input UpdateOperationalSolutionSubtaskInput {
+  id: UUID!
+  changes: UpdateOperationalSolutionSubtaskChangesInput!
+}
+
+input UpdateOperationalSolutionSubtaskChangesInput @goModel(model: "map[string]interface{}") {
+  name: String!
+  status: OperationalSolutionSubtaskStatus!
+}
+
+type OperationalSolutionSubtask {
+  id: UUID!
+  solutionID: UUID!
+  name: String!
+  status: OperationalSolutionSubtaskStatus!
+
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
+}
+
+extend type Mutation {
+  createOperationalSolutionSubtasks(solutionID: UUID!, inputs: [CreateOperationalSolutionSubtaskInput!]!): [OperationalSolutionSubtask!]
+  @hasRole(role: MINT_USER)
+
+  updateOperationalSolutionSubtasks(inputs: [UpdateOperationalSolutionSubtaskInput!]!): [OperationalSolutionSubtask!]
+  @hasRole(role: MINT_USER)
+
+  deleteOperationalSolutionSubtask(id: UUID!): Int!
   @hasRole(role: MINT_USER)
 }`, BuiltIn: false},
 	{Name: "../schema/types/plan_basics.graphql", Input: `"""
@@ -10085,6 +9403,277 @@ input PlanBeneficiariesChanges @goModel(model: "map[string]interface{}") {
 extend type Mutation {
   updatePlanBeneficiaries(id: UUID!, changes: PlanBeneficiariesChanges!): PlanBeneficiaries!
   @hasRole(role: MINT_USER)
+}`, BuiltIn: false},
+	{Name: "../schema/types/plan_collaborator.graphql", Input: `enum TeamRole {
+  MODEL_LEAD
+  MODEL_TEAM
+  LEADERSHIP
+  LEARNING
+  EVALUATION
+  IT_LEAD
+  QUALITY
+  OACT
+  PAYMENT
+  CM_FFS_COUNTERPART
+  COR
+}
+
+"""
+PlanCollaborator represents a collaborator on a plan
+"""
+type PlanCollaborator {
+  id: UUID!
+  modelPlanID: UUID!
+  userID: UUID!
+  userAccount: UserAccount!
+  teamRoles: [TeamRole!]!
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
+}
+
+"""
+PlanCollaboratorCreateInput represents the data required to create a collaborator on a plan
+"""
+input PlanCollaboratorCreateInput {
+  modelPlanID: UUID!
+  userName: String!
+  teamRoles: [TeamRole!]!
+}
+
+extend type Query {
+  planCollaboratorByID(id: UUID!): PlanCollaborator!
+  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+}
+
+extend type Mutation {
+  createPlanCollaborator(input: PlanCollaboratorCreateInput!): PlanCollaborator!
+  @hasRole(role: MINT_USER)
+
+  updatePlanCollaborator(id: UUID!, newRoles: [TeamRole!]!): PlanCollaborator!
+  @hasRole(role: MINT_USER)
+
+  deletePlanCollaborator(id: UUID!): PlanCollaborator!
+  @hasRole(role: MINT_USER)
+}`, BuiltIn: false},
+	{Name: "../schema/types/plan_cr.graphql", Input: `type PlanCR {
+  id: UUID!
+  modelPlanID: UUID!
+
+  idNumber: String!
+  dateInitiated: Time!
+  dateImplemented: Time # Required in the API, but can be nullable for historical entries before we migrated CRs and TDLs as different types
+  title: String!
+  note: String
+
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
+}
+
+input PlanCRCreateInput {
+  modelPlanID: UUID!
+
+  idNumber: String!
+  dateInitiated: Time!
+  dateImplemented: Time!
+  title: String!
+  note: String
+}
+
+input PlanCRChanges @goModel(model: "map[string]interface{}") {
+  idNumber: String
+  dateInitiated: Time
+  dateImplemented: Time
+  title: String
+  note: String
+}
+
+extend type Query {
+  planCR(id: UUID!): PlanCR!
+  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+}
+
+extend type Mutation {
+  createPlanCR(input: PlanCRCreateInput!): PlanCR!
+  @hasRole(role: MINT_USER)
+
+  updatePlanCR(id: UUID!, changes: PlanCRChanges!): PlanCR!
+  @hasRole(role: MINT_USER)
+
+  deletePlanCR(id: UUID!): PlanCR!
+  @hasRole(role: MINT_USER)
+}`, BuiltIn: false},
+	{Name: "../schema/types/plan_discussion.graphql", Input: `"""
+PlanDiscussion represents plan discussion
+"""
+type PlanDiscussion  {
+  id: UUID!
+  modelPlanID: UUID!
+  content: TaggedContent
+  userRole: DiscussionUserRole
+  userRoleDescription: String
+  replies: [DiscussionReply!]!
+  isAssessment: Boolean!
+
+
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
+}
+
+"""
+PlanDiscussionCreateInput represents the necessary fields to create a plan discussion
+"""
+input PlanDiscussionCreateInput {
+  modelPlanID: UUID!
+  content: TaggedHTML!
+  userRole: DiscussionUserRole
+  userRoleDescription: String
+}
+
+extend type Mutation {
+  createPlanDiscussion(input: PlanDiscussionCreateInput!): PlanDiscussion!
+  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+}`, BuiltIn: false},
+	{Name: "../schema/types/plan_document.graphql", Input: `enum DocumentType {
+  CONCEPT_PAPER,
+  POLICY_PAPER,
+  ICIP_DRAFT,
+  MARKET_RESEARCH,
+  DESIGN_PARAMETERS_MEMO,
+  OFFICE_OF_THE_ADMINISTRATOR_PRESENTATION,
+  OTHER
+}
+
+"""
+PlanDocument represents a document on a plan
+"""
+type PlanDocument {
+  id: UUID!
+  modelPlanID: UUID!
+
+  """
+  If isLink = true, then this is a URL to a linked document, not an uploaded document
+  """
+  isLink: Boolean!
+  """
+  URL is the link that must be provided if this is a link instead of an uploaded document
+  """
+  url: String
+
+  fileType: String!
+  bucket: String!
+  fileKey: String!
+  virusScanned: Boolean!
+  virusClean: Boolean!
+  restricted: Boolean!
+  fileName: String!
+  fileSize: Int!
+  documentType: DocumentType!
+  otherType: String
+  optionalNotes: String
+  downloadUrl: String
+  deletedAt: Time
+  numLinkedSolutions: Int!
+
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
+}
+
+"""
+PlanDocumentInput
+"""
+input PlanDocumentInput {
+  modelPlanID: UUID!
+  fileData: Upload!
+  documentType: DocumentType!
+  restricted: Boolean!
+  otherTypeDescription: String
+  optionalNotes: String
+}
+
+"""
+PlanDocumentLinkInput
+"""
+input PlanDocumentLinkInput {
+  modelPlanID: UUID!
+  url: String!
+  name: String!
+  documentType: DocumentType!
+  restricted: Boolean!
+  otherTypeDescription: String
+  optionalNotes: String
+}
+
+extend type Query {
+  planDocument(id: UUID!): PlanDocument!
+  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+}
+
+extend type Mutation {
+  uploadNewPlanDocument(input: PlanDocumentInput!): PlanDocument!
+  @hasRole(role: MINT_USER)
+
+  linkNewPlanDocument(input: PlanDocumentLinkInput!): PlanDocument!
+  @hasRole(role: MINT_USER)
+
+  deletePlanDocument(id: UUID!): Int!
+  @hasRole(role: MINT_USER)
+}`, BuiltIn: false},
+	{Name: "../schema/types/plan_document_solution_link.graphql", Input: `type PlanDocumentSolutionLink {
+  id: UUID!
+  solutionID: UUID!
+  documentID: UUID!
+
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
+}
+
+extend type Mutation {
+  createPlanDocumentSolutionLinks(solutionID: UUID!, documentIDs: [UUID!]!): [PlanDocumentSolutionLink!]
+  @hasRole(role: MINT_USER)
+
+  removePlanDocumentSolutionLinks(solutionID: UUID!, documentIDs: [UUID!]!): Boolean!
+  @hasRole(role: MINT_USER)
+}`, BuiltIn: false},
+	{Name: "../schema/types/plan_favorite.graphql", Input: `type PlanFavorite {
+  id: UUID!
+  modelPlanID: UUID!
+  userID: UUID!
+  userAccount: UserAccount!
+
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
+}
+
+extend type Mutation {
+  addPlanFavorite(modelPlanID: UUID!): PlanFavorite!
+  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+
+  deletePlanFavorite(modelPlanID: UUID!): PlanFavorite!
+  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
 }`, BuiltIn: false},
 	{Name: "../schema/types/plan_general_characteristics.graphql", Input: `enum AgencyOrStateHelpType {
   YES_STATE
@@ -10910,6 +10499,13 @@ enum ProviderLeaveType {
   NOT_APPLICABLE
 }
 
+enum ParticipantRequireFinancialGuaranteeType {
+  SURETY_BOND,
+  LETTER_OF_CREDIT,
+  ESCROW,
+  OTHER
+}
+
 """
 PlanParticipantsAndProviders is the task list section that deals with information regarding all Providers and Participants
 """
@@ -10957,6 +10553,10 @@ type PlanParticipantsAndProviders {
   willRiskChangeNote:    String
 
   #Page 4
+  participantRequireFinancialGuarantee: Boolean
+  participantRequireFinancialGuaranteeType: [ParticipantRequireFinancialGuaranteeType!]!
+  participantRequireFinancialGuaranteeOther: String
+  participantRequireFinancialGuaranteeNote: String
   coordinateWork:          Boolean
   coordinateWorkNote:      String
   gainsharePayments:       Boolean
@@ -11052,6 +10652,10 @@ input PlanParticipantsAndProvidersChanges @goModel(model: "map[string]interface{
   willRiskChangeNote:    String
 
   #Page 4
+  participantRequireFinancialGuarantee: Boolean
+  participantRequireFinancialGuaranteeType: [ParticipantRequireFinancialGuaranteeType!]
+  participantRequireFinancialGuaranteeOther: String
+  participantRequireFinancialGuaranteeNote: String
   coordinateWork:          Boolean
   coordinateWorkNote:      String
   gainsharePayments:       Boolean
@@ -11089,6 +10693,420 @@ extend type Mutation {
   updatePlanParticipantsAndProviders(id: UUID!, changes: PlanParticipantsAndProvidersChanges!): PlanParticipantsAndProviders!
   @hasRole(role: MINT_USER)
 }`, BuiltIn: false},
+	{Name: "../schema/types/plan_payments.graphql", Input: `enum FundingSource {
+  PATIENT_PROTECTION_AFFORDABLE_CARE_ACT
+  MEDICARE_PART_A_HI_TRUST_FUND
+  MEDICARE_PART_B_SMI_TRUST_FUND
+  OTHER
+}
+
+enum PayRecipient {
+  PROVIDERS
+  BENEFICIARIES
+  PARTICIPANTS
+  STATES
+  OTHER
+}
+
+enum PayType {
+  CLAIMS_BASED_PAYMENTS
+  NON_CLAIMS_BASED_PAYMENTS
+  GRANTS
+}
+
+enum ClaimsBasedPayType {
+  ADJUSTMENTS_TO_FFS_PAYMENTS
+  CARE_MANAGEMENT_HOME_VISITS
+  REDUCTIONS_TO_BENEFICIARY_COST_SHARING
+  SNF_CLAIMS_WITHOUT_3DAY_HOSPITAL_ADMISSIONS
+  TELEHEALTH_SERVICES_NOT_TRADITIONAL_MEDICARE
+  SERVICES_NOT_COVERED_THROUGH_TRADITIONAL_MEDICARE
+  PAYMENTS_FOR_POST_DISCHARGE_HOME_VISITS
+  OTHER
+}
+
+enum NonClaimsBasedPayType {
+  ADVANCED_PAYMENT
+  BUNDLED_EPISODE_OF_CARE
+  CAPITATION_POPULATION_BASED_FULL
+  CAPITATION_POPULATION_BASED_PARTIAL
+  CARE_COORDINATION_MANAGEMENT_FEE
+  GLOBAL_BUDGET
+  INCENTIVE_PAYMENT
+  MAPD_SHARED_SAVINGS
+  SHARED_SAVINGS
+  OTHER
+}
+
+enum ComplexityCalculationLevelType {
+  LOW
+  MIDDLE
+  HIGH
+}
+
+"""
+PlanPayments is the task list section that deals with information regarding Payments
+"""
+type PlanPayments {
+  id: UUID!
+  modelPlanID: UUID!
+
+  # Page 1
+  fundingSource:                      [FundingSource!]!
+  fundingSourceMedicareAInfo:         String
+  fundingSourceMedicareBInfo:         String
+  fundingSourceOther:                 String
+  fundingSourceNote:                  String
+  fundingSourceR:                     [FundingSource!]!
+  fundingSourceRMedicareAInfo:        String
+  fundingSourceRMedicareBInfo:        String
+  fundingSourceROther:                String
+  fundingSourceRNote:                 String
+  payRecipients:                      [PayRecipient!]!
+  payRecipientsOtherSpecification:    String
+  payRecipientsNote:                  String
+  payType:                            [PayType!]!
+  payTypeNote:                        String
+
+  # Page 2
+  payClaims:                                      [ClaimsBasedPayType!]!
+  payClaimsOther:                                 String
+  payClaimsNote:                                  String
+  shouldAnyProvidersExcludedFFSSystems:           Boolean
+  shouldAnyProviderExcludedFFSSystemsNote:        String
+  changesMedicarePhysicianFeeSchedule:            Boolean
+  changesMedicarePhysicianFeeScheduleNote:        String
+  affectsMedicareSecondaryPayerClaims:            Boolean
+  affectsMedicareSecondaryPayerClaimsHow:         String
+  affectsMedicareSecondaryPayerClaimsNote:        String
+  payModelDifferentiation:                        String
+
+  # Page 3
+  creatingDependenciesBetweenServices:     Boolean
+  creatingDependenciesBetweenServicesNote: String
+  needsClaimsDataCollection:               Boolean
+  needsClaimsDataCollectionNote:           String
+  providingThirdPartyFile:                 Boolean
+  isContractorAwareTestDataRequirements:   Boolean
+
+  # Page 4
+  beneficiaryCostSharingLevelAndHandling:          String
+  waiveBeneficiaryCostSharingForAnyServices:       Boolean
+  waiveBeneficiaryCostSharingServiceSpecification: String
+  waiverOnlyAppliesPartOfPayment:                  Boolean
+  waiveBeneficiaryCostSharingNote:                 String
+
+  # Page 5
+  nonClaimsPayments:                               [NonClaimsBasedPayType!]!
+  nonClaimsPaymentOther:                           String
+  nonClaimsPaymentsNote:                           String
+  paymentCalculationOwner:                         String
+  numberPaymentsPerPayCycle:                       String
+  numberPaymentsPerPayCycleNote:                   String
+  sharedSystemsInvolvedAdditionalClaimPayment:     Boolean
+  sharedSystemsInvolvedAdditionalClaimPaymentNote: String
+  planningToUseInnovationPaymentContractor:        Boolean
+  planningToUseInnovationPaymentContractorNote:    String
+
+  # Page 6
+  expectedCalculationComplexityLevel:                ComplexityCalculationLevelType
+  expectedCalculationComplexityLevelNote:            String
+  claimsProcessingPrecedence:                        Boolean
+  claimsProcessingPrecedenceOther:                   String
+  claimsProcessingPrecedenceNote:                    String
+  canParticipantsSelectBetweenPaymentMechanisms:     Boolean
+  canParticipantsSelectBetweenPaymentMechanismsHow:  String
+  canParticipantsSelectBetweenPaymentMechanismsNote: String
+  anticipatedPaymentFrequency:                       [FrequencyType!]!
+  anticipatedPaymentFrequencyContinually:            String
+  anticipatedPaymentFrequencyOther:                  String
+  anticipatedPaymentFrequencyNote:                   String
+
+  # Page 7
+  willRecoverPayments:                               Boolean
+  willRecoverPaymentsNote:                           String
+  anticipateReconcilingPaymentsRetrospectively:      Boolean
+  anticipateReconcilingPaymentsRetrospectivelyNote:  String
+  paymentReconciliationFrequency:                    [FrequencyType!]!
+  paymentReconciliationFrequencyContinually:         String
+  paymentReconciliationFrequencyOther:               String
+  paymentReconciliationFrequencyNote:                String
+  paymentDemandRecoupmentFrequency:                  [FrequencyType!]!
+  paymentDemandRecoupmentFrequencyContinually:       String
+  paymentDemandRecoupmentFrequencyOther:             String
+  paymentDemandRecoupmentFrequencyNote:              String
+  paymentStartDate:                                  Time
+  paymentStartDateNote:                              String
+
+  # Meta
+
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
+
+  readyForReviewBy: UUID
+  readyForReviewByUserAccount: UserAccount
+  readyForReviewDts: Time
+  readyForClearanceBy: UUID
+  readyForClearanceByUserAccount: UserAccount
+  readyForClearanceDts: Time
+
+  status:      TaskStatus!
+}
+
+input PlanPaymentsChanges @goModel(model: "map[string]interface{}") {
+  # Page 1
+  fundingSource:                      [FundingSource!] #Combine these
+  fundingSourceMedicareAInfo:         String
+  fundingSourceMedicareBInfo:         String
+  # fundingSourceTrustFundType:         [TrustFundType!]
+  fundingSourceOther:                 String
+  fundingSourceNote:                  String
+  fundingSourceR:                     [FundingSource!]
+  fundingSourceRMedicareAInfo:        String
+  fundingSourceRMedicareBInfo:        String
+  # fundingSourceRTrustFundType:        [TrustFundType!]
+  fundingSourceROther:                String
+  fundingSourceRNote:                 String
+  payRecipients:                      [PayRecipient!]
+  payRecipientsOtherSpecification:    String
+  payRecipientsNote:                  String
+  payType:                            [PayType!]
+  payTypeNote:                        String
+
+  # Page 2
+  payClaims:                                      [ClaimsBasedPayType!]
+  payClaimsOther:                                 String
+  payClaimsNote:                                  String
+  shouldAnyProvidersExcludedFFSSystems:           Boolean
+  shouldAnyProviderExcludedFFSSystemsNote:        String
+  changesMedicarePhysicianFeeSchedule:            Boolean
+  changesMedicarePhysicianFeeScheduleNote:        String
+  affectsMedicareSecondaryPayerClaims:            Boolean
+  affectsMedicareSecondaryPayerClaimsHow:         String
+  affectsMedicareSecondaryPayerClaimsNote:        String
+  payModelDifferentiation:                        String
+
+  # Page 3
+  creatingDependenciesBetweenServices:     Boolean
+  creatingDependenciesBetweenServicesNote: String
+  needsClaimsDataCollection:               Boolean
+  needsClaimsDataCollectionNote:           String
+  providingThirdPartyFile:                 Boolean
+  isContractorAwareTestDataRequirements:   Boolean
+
+  # Page 4
+  beneficiaryCostSharingLevelAndHandling:          String
+  waiveBeneficiaryCostSharingForAnyServices:       Boolean
+  waiveBeneficiaryCostSharingServiceSpecification: String
+  waiverOnlyAppliesPartOfPayment:                  Boolean
+  waiveBeneficiaryCostSharingNote:                 String
+
+  # Page 5
+  nonClaimsPayments:                               [NonClaimsBasedPayType!]
+  nonClaimsPaymentOther:                           String
+  nonClaimsPaymentsNote:                           String
+  paymentCalculationOwner:                         String
+  numberPaymentsPerPayCycle:                       String
+  numberPaymentsPerPayCycleNote:                  String
+  sharedSystemsInvolvedAdditionalClaimPayment:     Boolean
+  sharedSystemsInvolvedAdditionalClaimPaymentNote: String
+  planningToUseInnovationPaymentContractor:        Boolean
+  planningToUseInnovationPaymentContractorNote:    String
+
+  # Page 6
+  expectedCalculationComplexityLevel:                       ComplexityCalculationLevelType
+  expectedCalculationComplexityLevelNote:                   String
+  claimsProcessingPrecedence:                               Boolean
+  claimsProcessingPrecedenceOther:                          String
+  claimsProcessingPrecedenceNote:                           String
+  canParticipantsSelectBetweenPaymentMechanisms:            Boolean
+  canParticipantsSelectBetweenPaymentMechanismsHow:         String
+  canParticipantsSelectBetweenPaymentMechanismsNote:        String
+  anticipatedPaymentFrequency:                              [FrequencyType!]
+  anticipatedPaymentFrequencyContinually:                   String
+  anticipatedPaymentFrequencyOther:                         String
+  anticipatedPaymentFrequencyNote:                         String
+
+  # Page 7
+  willRecoverPayments:                               Boolean
+  willRecoverPaymentsNote:                          String
+  anticipateReconcilingPaymentsRetrospectively:      Boolean
+  anticipateReconcilingPaymentsRetrospectivelyNote: String
+  paymentReconciliationFrequency:                    [FrequencyType!]
+  paymentReconciliationFrequencyContinually:         String
+  paymentReconciliationFrequencyOther:               String
+  paymentReconciliationFrequencyNote:                String
+  paymentDemandRecoupmentFrequency:                    [FrequencyType!]
+  paymentDemandRecoupmentFrequencyContinually:         String
+  paymentDemandRecoupmentFrequencyOther:               String
+  paymentDemandRecoupmentFrequencyNote:                String
+  paymentStartDate:                                  Time
+  paymentStartDateNote:                             String
+
+  status: TaskStatusInput
+}
+
+extend type Query {
+  planPayments(id: UUID!): PlanPayments!
+  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+}
+
+extend type Mutation {
+  updatePlanPayments(id: UUID!, changes: PlanPaymentsChanges!): PlanPayments!
+  @hasRole(role: MINT_USER)
+}`, BuiltIn: false},
+	{Name: "../schema/types/plan_tdl.graphql", Input: `type PlanTDL {
+  id: UUID!
+  modelPlanID: UUID!
+
+  idNumber: String!
+  dateInitiated: Time!
+  title: String!
+  note: String
+
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
+}
+
+input PlanTDLCreateInput {
+  modelPlanID: UUID!
+
+  idNumber: String!
+  dateInitiated: Time!
+  title: String!
+  note: String
+}
+
+input PlanTDLChanges @goModel(model: "map[string]interface{}") {
+  idNumber: String
+  dateInitiated: Time
+  title: String
+  note: String
+}
+
+extend type Query {
+  planTDL(id: UUID!): PlanTDL!
+  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+}
+
+extend type Mutation {
+  createPlanTDL(input: PlanTDLCreateInput!): PlanTDL!
+  @hasRole(role: MINT_USER)
+
+  updatePlanTDL(id: UUID!, changes: PlanTDLChanges!): PlanTDL!
+  @hasRole(role: MINT_USER)
+
+  deletePlanTDL(id: UUID!): PlanTDL!
+  @hasRole(role: MINT_USER)
+}`, BuiltIn: false},
+	{Name: "../schema/types/possible_operational_need.graphql", Input: `type PossibleOperationalNeed {
+  id: Int!
+  possibleSolutions: [PossibleOperationalSolution!]!
+  name: String!
+  key: OperationalNeedKey!
+  section: TaskListSection
+
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
+}
+
+extend type Query {
+  possibleOperationalNeeds: [PossibleOperationalNeed!]!
+  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+}`, BuiltIn: false},
+	{Name: "../schema/types/possible_operational_solution.graphql", Input: `type PossibleOperationalSolution {
+  id: Int!
+  name: String!
+  key: OperationalSolutionKey!
+  treatAsOther: Boolean!
+  pointsOfContact: [PossibleOperationalSolutionContact!]!
+  filterView: ModelViewFilter
+
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
+}
+
+extend type Query {
+  possibleOperationalSolutions: [PossibleOperationalSolution!]!
+  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+}`, BuiltIn: false},
+	{Name: "../schema/types/possible_operational_solution_contact.graphql", Input: `"""
+PossibleOperationalSolutionContact represents a contact for a possible operational solution
+"""
+type PossibleOperationalSolutionContact {
+  id: UUID!
+  possibleOperationalSolutionID: Int!
+
+  name: String!
+  email: String!
+  isTeam: Boolean!
+  role: String
+
+
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
+}`, BuiltIn: false},
+	{Name: "../schema/types/prepare_for_clearance.graphql", Input: `enum PrepareForClearanceStatus {
+  CANNOT_START
+  READY
+  IN_PROGRESS
+  READY_FOR_CLEARANCE
+}
+
+type PrepareForClearance {
+  status: PrepareForClearanceStatus!
+  latestClearanceDts: Time
+}`, BuiltIn: false},
+	{Name: "../schema/types/report_a_problem.graphql", Input: `enum ReportAProblemSection {
+  READ_VIEW
+  TASK_LIST
+  IT_SOLUTIONS
+  HELP_CENTER
+  OTHER
+}
+
+enum ReportAProblemSeverity {
+  PREVENTED_TASK
+  DELAYED_TASK
+  MINOR
+  OTHER
+}
+
+input ReportAProblemInput {
+  isAnonymousSubmission: Boolean!
+  allowContact: Boolean
+  section: ReportAProblemSection
+  sectionOther: String
+  whatDoing: String
+  whatWentWrong: String
+  severity: ReportAProblemSeverity
+  severityOther: String
+}
+
+extend type Mutation {
+  reportAProblem(input: ReportAProblemInput!): Boolean!
+  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+}`, BuiltIn: false},
 	{Name: "../schema/types/scalars.graphql", Input: `"""
 UUIDs are represented using 36 ASCII characters, for example B0511859-ADE6-4A67-8969-16EC280C0E1A
 """
@@ -11114,6 +11132,51 @@ https://gqlgen.com/reference/file-upload/
 Represents a multipart file upload
 """
 scalar Upload`, BuiltIn: false},
+	{Name: "../schema/types/send_feedback_email.graphql", Input: `enum MintUses {
+  VIEW_MODEL
+  EDIT_MODEL
+  SHARE_MODEL
+  TRACK_SOLUTIONS
+  CONTRIBUTE_DISCUSSIONS
+  VIEW_HELP
+  OTHER
+}
+
+enum EaseOfUse {
+  AGREE
+  DISAGREE
+  UNSURE
+}
+
+enum SatisfactionLevel {
+  VERY_SATISFIED
+  SATISFIED
+  NEUTRAL
+  DISSATISFIED
+  VERY_DISSATISFIED
+}
+
+"""
+The inputs to the user feedback form
+"""
+input SendFeedbackEmailInput {
+  isAnonymousSubmission: Boolean!
+  allowContact: Boolean
+  cmsRole: String
+  mintUsedFor: [MintUses!]
+  mintUsedForOther: String
+  systemEasyToUse: EaseOfUse
+  systemEasyToUseOther: String
+  howSatisfied: SatisfactionLevel
+  howCanWeImprove: String
+}
+
+extend type Mutation {
+  """
+  This mutation sends feedback about the MINT product to the MINT team
+  """
+  sendFeedbackEmail(input: SendFeedbackEmailInput!): Boolean!
+}`, BuiltIn: false},
 	{Name: "../schema/types/shared_enums.graphql", Input: `enum FrequencyType {
   ANNUALLY
   SEMIANNUALLY
@@ -11148,7 +11211,258 @@ enum ConfidenceType {
   FAIRLY
   COMPLETELY
 }
-`, BuiltIn: false},
+
+enum TaskStatusInput {
+  IN_PROGRESS
+  READY_FOR_REVIEW
+  READY_FOR_CLEARANCE
+}
+
+enum TaskListSection {
+  BASICS,
+  GENERAL_CHARACTERISTICS,
+  PARTICIPANTS_AND_PROVIDERS,
+  BENEFICIARIES,
+  OPERATIONS_EVALUATION_AND_LEARNING,
+  PAYMENT,
+  PREPARE_FOR_CLEARANCE
+}
+
+enum OperationalNeedKey{
+  MANAGE_CD
+  REV_COL_BIDS
+  UPDATE_CONTRACT
+  RECRUIT_PARTICIPANTS
+  REV_SCORE_APP
+  APP_SUPPORT_CON
+  COMM_W_PART
+  MANAGE_PROV_OVERLAP
+  MANAGE_BEN_OVERLAP
+  HELPDESK_SUPPORT
+  IDDOC_SUPPORT
+  ESTABLISH_BENCH
+  PROCESS_PART_APPEALS
+  ACQUIRE_AN_EVAL_CONT
+  DATA_TO_MONITOR
+  DATA_TO_SUPPORT_EVAL
+  CLAIMS_BASED_MEASURES
+  QUALITY_PERFORMANCE_SCORES
+  SEND_REPDATA_TO_PART
+  ACQUIRE_A_LEARN_CONT
+  PART_TO_PART_COLLAB
+  EDUCATE_BENEF
+  ADJUST_FFS_CLAIMS
+  MANAGE_FFS_EXCL_PAYMENTS
+  MAKE_NON_CLAIMS_BASED_PAYMENTS
+  COMPUTE_SHARED_SAVINGS_PAYMENT
+  RECOVER_PAYMENTS
+  SIGN_PARTICIPATION_AGREEMENTS
+  VET_PROVIDERS_FOR_PROGRAM_INTEGRITY
+  UTILIZE_QUALITY_MEASURES_DEVELOPMENT_CONTRACTOR
+  IT_PLATFORM_FOR_LEARNING
+}
+
+enum DiscussionUserRole {
+  CMS_SYSTEM_SERVICE_TEAM,
+  IT_ARCHITECT,
+  LEADERSHIP,
+  MEDICARE_ADMINISTRATIVE_CONTRACTOR,
+  MINT_TEAM,
+  MODEL_IT_LEAD,
+  MODEL_TEAM,
+  SHARED_SYSTEM_MAINTAINER,
+  NONE_OF_THE_ABOVE,
+}
+
+enum OperationalSolutionKey{
+  INNOVATION
+  ACO_OS
+  APPS
+  CDX
+  CCW
+  CMS_BOX
+  CMS_QUALTRICS
+  CBOSC
+  CONTRACTOR
+  CPI_VETTING
+  CROSS_MODEL_CONTRACT
+  EFT
+  EXISTING_CMS_DATA_AND_PROCESS
+  EDFR
+  GOVDELIVERY
+  GS
+  HDR
+  HPMS
+  HIGLAS
+  IPC
+  IDR
+  INTERNAL_STAFF
+  LDG
+  LV
+  MDM
+  MARX
+  OTHER_NEW_PROCESS
+  OUTLOOK_MAILBOX
+  QV
+  RMADA
+  ARS
+  CONNECT
+  LOI
+  POST_PORTAL
+  RFA
+  SHARED_SYSTEMS
+  BCDA
+  ISP
+  MIDS
+}
+
+"""
+A user role associated with a job code
+"""
+enum Role {
+  """
+  A basic MINT user
+  """
+  MINT_USER
+
+  """
+  A MINT assessment team user
+  """
+  MINT_ASSESSMENT
+
+  """
+  A MINT MAC user
+  """
+  MINT_MAC
+}`, BuiltIn: false},
+	{Name: "../schema/types/tag.graphql", Input: `enum TagType {
+  USER_ACCOUNT
+  POSSIBLE_SOLUTION
+}
+
+"""
+TaggedEntity is the actual object represented by a tag in the data base.
+"""
+union TaggedEntity =  UserAccount | PossibleOperationalSolution
+
+"""
+TaggedContent represents content that has a tag in it. It is composed of the raw tag text, as well as the array of possible tags
+"""
+type TaggedContent {
+  """
+  RawContent is HTML. It is sanitized on the backend
+  """
+  rawContent: String!
+  tags: [Tag!]!
+}
+
+"""
+Tag represents an entity tagged in the database
+"""
+type Tag {
+  id: UUID!
+  tagType: TagType!
+  taggedField: String!
+  taggedContentTable: String!
+  taggedContentID: UUID!
+  entityUUID: UUID
+  entityIntID: Int
+
+  entity: TaggedEntity
+
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
+}`, BuiltIn: false},
+	{Name: "../schema/types/task_list_section_locks.graphql", Input: `enum ChangeType {
+  ADDED
+  UPDATED
+  REMOVED
+}
+
+enum ActionType {
+  """
+  A normal flow action
+  """
+  NORMAL
+
+  """
+  An administrative action
+  """
+  ADMIN
+}
+
+type TaskListSectionLockStatusChanged {
+  changeType: ChangeType!
+  lockStatus: TaskListSectionLockStatus!
+  actionType: ActionType!
+}
+
+type TaskListSectionLockStatus {
+  modelPlanID: UUID!
+  section: TaskListSection!
+  lockedByUserAccount: UserAccount!
+  isAssessment: Boolean!
+}
+
+extend type Query {
+  taskListSectionLocks(modelPlanID: UUID!): [TaskListSectionLockStatus!]!
+  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+}
+
+extend type Mutation {
+  lockTaskListSection(modelPlanID: UUID!, section: TaskListSection!): Boolean!
+  @hasRole(role: MINT_USER)
+
+  unlockTaskListSection(modelPlanID: UUID!, section: TaskListSection!): Boolean!
+  @hasRole(role: MINT_USER)
+
+  unlockAllTaskListSections(modelPlanID: UUID!): [TaskListSectionLockStatus!]!
+  @hasRole(role: MINT_ASSESSMENT)
+}
+
+type Subscription {
+  onTaskListSectionLocksChanged(modelPlanID: UUID!): TaskListSectionLockStatusChanged!
+  @hasRole(role: MINT_USER)
+
+  onLockTaskListSectionContext(modelPlanID: UUID!): TaskListSectionLockStatusChanged!
+  @hasRole(role: MINT_USER)
+}`, BuiltIn: false},
+	{Name: "../schema/types/user_account.graphql", Input: `type UserAccount {
+  id: UUID!
+  username: String!
+  isEUAID: Boolean
+  commonName: String!
+  locale: String!
+  email: String!
+  givenName: String!
+  familyName: String!
+  zoneInfo: String!
+  hasLoggedIn: Boolean
+}
+
+extend type Query {
+  userAccount(username: String!): UserAccount!
+  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+}`, BuiltIn: false},
+	{Name: "../schema/types/user_info.graphql", Input: `"""
+Represents a person response from the Okta API
+"""
+type UserInfo {
+  firstName: String!
+  lastName: String!
+  displayName: String!
+  email: String!
+  username: String!
+}
+
+extend type Query {
+  searchOktaUsers(searchTerm: String!): [UserInfo!]!
+  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+}`, BuiltIn: false},
 	{Name: "../schema/types/user_notification.graphql", Input: `
 """
 UserNotification represents a notification about a specific Activity
@@ -13152,6 +13466,350 @@ func (ec *executionContext) fieldContext_Activity_modifiedDts(ctx context.Contex
 		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return nil, errors.New("field of type Time does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _AddedAsCollaboratorMeta_version(ctx context.Context, field graphql.CollectedField, obj *models.AddedAsCollaboratorMeta) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_AddedAsCollaboratorMeta_version(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Version, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(int)
+	fc.Result = res
+	return ec.marshalNInt2int(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_AddedAsCollaboratorMeta_version(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "AddedAsCollaboratorMeta",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Int does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _AddedAsCollaboratorMeta_type(ctx context.Context, field graphql.CollectedField, obj *models.AddedAsCollaboratorMeta) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_AddedAsCollaboratorMeta_type(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Type, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(models.ActivityType)
+	fc.Result = res
+	return ec.marshalNActivityType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐActivityType(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_AddedAsCollaboratorMeta_type(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "AddedAsCollaboratorMeta",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type ActivityType does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _AddedAsCollaboratorMeta_modelPlanID(ctx context.Context, field graphql.CollectedField, obj *models.AddedAsCollaboratorMeta) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_AddedAsCollaboratorMeta_modelPlanID(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ModelPlanID, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(uuid.UUID)
+	fc.Result = res
+	return ec.marshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_AddedAsCollaboratorMeta_modelPlanID(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "AddedAsCollaboratorMeta",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type UUID does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _AddedAsCollaboratorMeta_modelPlan(ctx context.Context, field graphql.CollectedField, obj *models.AddedAsCollaboratorMeta) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_AddedAsCollaboratorMeta_modelPlan(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.AddedAsCollaboratorMeta().ModelPlan(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*models.ModelPlan)
+	fc.Result = res
+	return ec.marshalNModelPlan2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐModelPlan(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_AddedAsCollaboratorMeta_modelPlan(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "AddedAsCollaboratorMeta",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_ModelPlan_id(ctx, field)
+			case "modelName":
+				return ec.fieldContext_ModelPlan_modelName(ctx, field)
+			case "abbreviation":
+				return ec.fieldContext_ModelPlan_abbreviation(ctx, field)
+			case "archived":
+				return ec.fieldContext_ModelPlan_archived(ctx, field)
+			case "createdBy":
+				return ec.fieldContext_ModelPlan_createdBy(ctx, field)
+			case "createdByUserAccount":
+				return ec.fieldContext_ModelPlan_createdByUserAccount(ctx, field)
+			case "createdDts":
+				return ec.fieldContext_ModelPlan_createdDts(ctx, field)
+			case "modifiedBy":
+				return ec.fieldContext_ModelPlan_modifiedBy(ctx, field)
+			case "modifiedByUserAccount":
+				return ec.fieldContext_ModelPlan_modifiedByUserAccount(ctx, field)
+			case "modifiedDts":
+				return ec.fieldContext_ModelPlan_modifiedDts(ctx, field)
+			case "basics":
+				return ec.fieldContext_ModelPlan_basics(ctx, field)
+			case "generalCharacteristics":
+				return ec.fieldContext_ModelPlan_generalCharacteristics(ctx, field)
+			case "participantsAndProviders":
+				return ec.fieldContext_ModelPlan_participantsAndProviders(ctx, field)
+			case "beneficiaries":
+				return ec.fieldContext_ModelPlan_beneficiaries(ctx, field)
+			case "opsEvalAndLearning":
+				return ec.fieldContext_ModelPlan_opsEvalAndLearning(ctx, field)
+			case "collaborators":
+				return ec.fieldContext_ModelPlan_collaborators(ctx, field)
+			case "documents":
+				return ec.fieldContext_ModelPlan_documents(ctx, field)
+			case "discussions":
+				return ec.fieldContext_ModelPlan_discussions(ctx, field)
+			case "payments":
+				return ec.fieldContext_ModelPlan_payments(ctx, field)
+			case "status":
+				return ec.fieldContext_ModelPlan_status(ctx, field)
+			case "isFavorite":
+				return ec.fieldContext_ModelPlan_isFavorite(ctx, field)
+			case "isCollaborator":
+				return ec.fieldContext_ModelPlan_isCollaborator(ctx, field)
+			case "crs":
+				return ec.fieldContext_ModelPlan_crs(ctx, field)
+			case "tdls":
+				return ec.fieldContext_ModelPlan_tdls(ctx, field)
+			case "prepareForClearance":
+				return ec.fieldContext_ModelPlan_prepareForClearance(ctx, field)
+			case "nameHistory":
+				return ec.fieldContext_ModelPlan_nameHistory(ctx, field)
+			case "operationalNeeds":
+				return ec.fieldContext_ModelPlan_operationalNeeds(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type ModelPlan", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _AddedAsCollaboratorMeta_collaboratorID(ctx context.Context, field graphql.CollectedField, obj *models.AddedAsCollaboratorMeta) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_AddedAsCollaboratorMeta_collaboratorID(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.CollaboratorID, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(uuid.UUID)
+	fc.Result = res
+	return ec.marshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_AddedAsCollaboratorMeta_collaboratorID(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "AddedAsCollaboratorMeta",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type UUID does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _AddedAsCollaboratorMeta_collaborator(ctx context.Context, field graphql.CollectedField, obj *models.AddedAsCollaboratorMeta) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_AddedAsCollaboratorMeta_collaborator(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.AddedAsCollaboratorMeta().Collaborator(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*models.PlanCollaborator)
+	fc.Result = res
+	return ec.marshalNPlanCollaborator2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanCollaborator(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_AddedAsCollaboratorMeta_collaborator(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "AddedAsCollaboratorMeta",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_PlanCollaborator_id(ctx, field)
+			case "modelPlanID":
+				return ec.fieldContext_PlanCollaborator_modelPlanID(ctx, field)
+			case "userID":
+				return ec.fieldContext_PlanCollaborator_userID(ctx, field)
+			case "userAccount":
+				return ec.fieldContext_PlanCollaborator_userAccount(ctx, field)
+			case "teamRoles":
+				return ec.fieldContext_PlanCollaborator_teamRoles(ctx, field)
+			case "createdBy":
+				return ec.fieldContext_PlanCollaborator_createdBy(ctx, field)
+			case "createdByUserAccount":
+				return ec.fieldContext_PlanCollaborator_createdByUserAccount(ctx, field)
+			case "createdDts":
+				return ec.fieldContext_PlanCollaborator_createdDts(ctx, field)
+			case "modifiedBy":
+				return ec.fieldContext_PlanCollaborator_modifiedBy(ctx, field)
+			case "modifiedByUserAccount":
+				return ec.fieldContext_PlanCollaborator_modifiedByUserAccount(ctx, field)
+			case "modifiedDts":
+				return ec.fieldContext_PlanCollaborator_modifiedDts(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type PlanCollaborator", field.Name)
 		},
 	}
 	return fc, nil
@@ -18775,6 +19433,14 @@ func (ec *executionContext) fieldContext_ModelPlan_participantsAndProviders(ctx 
 				return ec.fieldContext_PlanParticipantsAndProviders_willRiskChange(ctx, field)
 			case "willRiskChangeNote":
 				return ec.fieldContext_PlanParticipantsAndProviders_willRiskChangeNote(ctx, field)
+			case "participantRequireFinancialGuarantee":
+				return ec.fieldContext_PlanParticipantsAndProviders_participantRequireFinancialGuarantee(ctx, field)
+			case "participantRequireFinancialGuaranteeType":
+				return ec.fieldContext_PlanParticipantsAndProviders_participantRequireFinancialGuaranteeType(ctx, field)
+			case "participantRequireFinancialGuaranteeOther":
+				return ec.fieldContext_PlanParticipantsAndProviders_participantRequireFinancialGuaranteeOther(ctx, field)
+			case "participantRequireFinancialGuaranteeNote":
+				return ec.fieldContext_PlanParticipantsAndProviders_participantRequireFinancialGuaranteeNote(ctx, field)
 			case "coordinateWork":
 				return ec.fieldContext_PlanParticipantsAndProviders_coordinateWork(ctx, field)
 			case "coordinateWorkNote":
@@ -20175,8 +20841,8 @@ func (ec *executionContext) fieldContext_ModelPlan_operationalNeeds(ctx context.
 	return fc, nil
 }
 
-func (ec *executionContext) _Mutation_createPlanCollaborator(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Mutation_createPlanCollaborator(ctx, field)
+func (ec *executionContext) _ModelPlanSharedActivityMeta_version(ctx context.Context, field graphql.CollectedField, obj *models.ModelPlanSharedActivityMeta) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_ModelPlanSharedActivityMeta_version(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -20188,599 +20854,8 @@ func (ec *executionContext) _Mutation_createPlanCollaborator(ctx context.Context
 		}
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		directive0 := func(rctx context.Context) (interface{}, error) {
-			ctx = rctx // use context from middleware stack in children
-			return ec.resolvers.Mutation().CreatePlanCollaborator(rctx, fc.Args["input"].(model.PlanCollaboratorCreateInput))
-		}
-		directive1 := func(ctx context.Context) (interface{}, error) {
-			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
-			if err != nil {
-				return nil, err
-			}
-			if ec.directives.HasRole == nil {
-				return nil, errors.New("directive hasRole is not implemented")
-			}
-			return ec.directives.HasRole(ctx, nil, directive0, role)
-		}
-
-		tmp, err := directive1(rctx)
-		if err != nil {
-			return nil, graphql.ErrorOnPath(ctx, err)
-		}
-		if tmp == nil {
-			return nil, nil
-		}
-		if data, ok := tmp.(*models.PlanCollaborator); ok {
-			return data, nil
-		}
-		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/cmsgov/mint-app/pkg/models.PlanCollaborator`, tmp)
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(*models.PlanCollaborator)
-	fc.Result = res
-	return ec.marshalNPlanCollaborator2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanCollaborator(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_Mutation_createPlanCollaborator(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "Mutation",
-		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			switch field.Name {
-			case "id":
-				return ec.fieldContext_PlanCollaborator_id(ctx, field)
-			case "modelPlanID":
-				return ec.fieldContext_PlanCollaborator_modelPlanID(ctx, field)
-			case "userID":
-				return ec.fieldContext_PlanCollaborator_userID(ctx, field)
-			case "userAccount":
-				return ec.fieldContext_PlanCollaborator_userAccount(ctx, field)
-			case "teamRoles":
-				return ec.fieldContext_PlanCollaborator_teamRoles(ctx, field)
-			case "createdBy":
-				return ec.fieldContext_PlanCollaborator_createdBy(ctx, field)
-			case "createdByUserAccount":
-				return ec.fieldContext_PlanCollaborator_createdByUserAccount(ctx, field)
-			case "createdDts":
-				return ec.fieldContext_PlanCollaborator_createdDts(ctx, field)
-			case "modifiedBy":
-				return ec.fieldContext_PlanCollaborator_modifiedBy(ctx, field)
-			case "modifiedByUserAccount":
-				return ec.fieldContext_PlanCollaborator_modifiedByUserAccount(ctx, field)
-			case "modifiedDts":
-				return ec.fieldContext_PlanCollaborator_modifiedDts(ctx, field)
-			}
-			return nil, fmt.Errorf("no field named %q was found under type PlanCollaborator", field.Name)
-		},
-	}
-	defer func() {
-		if r := recover(); r != nil {
-			err = ec.Recover(ctx, r)
-			ec.Error(ctx, err)
-		}
-	}()
-	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Mutation_createPlanCollaborator_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
-		ec.Error(ctx, err)
-		return fc, err
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _Mutation_updatePlanCollaborator(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Mutation_updatePlanCollaborator(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		directive0 := func(rctx context.Context) (interface{}, error) {
-			ctx = rctx // use context from middleware stack in children
-			return ec.resolvers.Mutation().UpdatePlanCollaborator(rctx, fc.Args["id"].(uuid.UUID), fc.Args["newRoles"].([]models.TeamRole))
-		}
-		directive1 := func(ctx context.Context) (interface{}, error) {
-			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
-			if err != nil {
-				return nil, err
-			}
-			if ec.directives.HasRole == nil {
-				return nil, errors.New("directive hasRole is not implemented")
-			}
-			return ec.directives.HasRole(ctx, nil, directive0, role)
-		}
-
-		tmp, err := directive1(rctx)
-		if err != nil {
-			return nil, graphql.ErrorOnPath(ctx, err)
-		}
-		if tmp == nil {
-			return nil, nil
-		}
-		if data, ok := tmp.(*models.PlanCollaborator); ok {
-			return data, nil
-		}
-		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/cmsgov/mint-app/pkg/models.PlanCollaborator`, tmp)
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(*models.PlanCollaborator)
-	fc.Result = res
-	return ec.marshalNPlanCollaborator2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanCollaborator(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_Mutation_updatePlanCollaborator(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "Mutation",
-		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			switch field.Name {
-			case "id":
-				return ec.fieldContext_PlanCollaborator_id(ctx, field)
-			case "modelPlanID":
-				return ec.fieldContext_PlanCollaborator_modelPlanID(ctx, field)
-			case "userID":
-				return ec.fieldContext_PlanCollaborator_userID(ctx, field)
-			case "userAccount":
-				return ec.fieldContext_PlanCollaborator_userAccount(ctx, field)
-			case "teamRoles":
-				return ec.fieldContext_PlanCollaborator_teamRoles(ctx, field)
-			case "createdBy":
-				return ec.fieldContext_PlanCollaborator_createdBy(ctx, field)
-			case "createdByUserAccount":
-				return ec.fieldContext_PlanCollaborator_createdByUserAccount(ctx, field)
-			case "createdDts":
-				return ec.fieldContext_PlanCollaborator_createdDts(ctx, field)
-			case "modifiedBy":
-				return ec.fieldContext_PlanCollaborator_modifiedBy(ctx, field)
-			case "modifiedByUserAccount":
-				return ec.fieldContext_PlanCollaborator_modifiedByUserAccount(ctx, field)
-			case "modifiedDts":
-				return ec.fieldContext_PlanCollaborator_modifiedDts(ctx, field)
-			}
-			return nil, fmt.Errorf("no field named %q was found under type PlanCollaborator", field.Name)
-		},
-	}
-	defer func() {
-		if r := recover(); r != nil {
-			err = ec.Recover(ctx, r)
-			ec.Error(ctx, err)
-		}
-	}()
-	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Mutation_updatePlanCollaborator_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
-		ec.Error(ctx, err)
-		return fc, err
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _Mutation_deletePlanCollaborator(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Mutation_deletePlanCollaborator(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		directive0 := func(rctx context.Context) (interface{}, error) {
-			ctx = rctx // use context from middleware stack in children
-			return ec.resolvers.Mutation().DeletePlanCollaborator(rctx, fc.Args["id"].(uuid.UUID))
-		}
-		directive1 := func(ctx context.Context) (interface{}, error) {
-			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
-			if err != nil {
-				return nil, err
-			}
-			if ec.directives.HasRole == nil {
-				return nil, errors.New("directive hasRole is not implemented")
-			}
-			return ec.directives.HasRole(ctx, nil, directive0, role)
-		}
-
-		tmp, err := directive1(rctx)
-		if err != nil {
-			return nil, graphql.ErrorOnPath(ctx, err)
-		}
-		if tmp == nil {
-			return nil, nil
-		}
-		if data, ok := tmp.(*models.PlanCollaborator); ok {
-			return data, nil
-		}
-		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/cmsgov/mint-app/pkg/models.PlanCollaborator`, tmp)
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(*models.PlanCollaborator)
-	fc.Result = res
-	return ec.marshalNPlanCollaborator2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanCollaborator(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_Mutation_deletePlanCollaborator(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "Mutation",
-		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			switch field.Name {
-			case "id":
-				return ec.fieldContext_PlanCollaborator_id(ctx, field)
-			case "modelPlanID":
-				return ec.fieldContext_PlanCollaborator_modelPlanID(ctx, field)
-			case "userID":
-				return ec.fieldContext_PlanCollaborator_userID(ctx, field)
-			case "userAccount":
-				return ec.fieldContext_PlanCollaborator_userAccount(ctx, field)
-			case "teamRoles":
-				return ec.fieldContext_PlanCollaborator_teamRoles(ctx, field)
-			case "createdBy":
-				return ec.fieldContext_PlanCollaborator_createdBy(ctx, field)
-			case "createdByUserAccount":
-				return ec.fieldContext_PlanCollaborator_createdByUserAccount(ctx, field)
-			case "createdDts":
-				return ec.fieldContext_PlanCollaborator_createdDts(ctx, field)
-			case "modifiedBy":
-				return ec.fieldContext_PlanCollaborator_modifiedBy(ctx, field)
-			case "modifiedByUserAccount":
-				return ec.fieldContext_PlanCollaborator_modifiedByUserAccount(ctx, field)
-			case "modifiedDts":
-				return ec.fieldContext_PlanCollaborator_modifiedDts(ctx, field)
-			}
-			return nil, fmt.Errorf("no field named %q was found under type PlanCollaborator", field.Name)
-		},
-	}
-	defer func() {
-		if r := recover(); r != nil {
-			err = ec.Recover(ctx, r)
-			ec.Error(ctx, err)
-		}
-	}()
-	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Mutation_deletePlanCollaborator_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
-		ec.Error(ctx, err)
-		return fc, err
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _Mutation_uploadNewPlanDocument(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Mutation_uploadNewPlanDocument(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		directive0 := func(rctx context.Context) (interface{}, error) {
-			ctx = rctx // use context from middleware stack in children
-			return ec.resolvers.Mutation().UploadNewPlanDocument(rctx, fc.Args["input"].(model.PlanDocumentInput))
-		}
-		directive1 := func(ctx context.Context) (interface{}, error) {
-			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
-			if err != nil {
-				return nil, err
-			}
-			if ec.directives.HasRole == nil {
-				return nil, errors.New("directive hasRole is not implemented")
-			}
-			return ec.directives.HasRole(ctx, nil, directive0, role)
-		}
-
-		tmp, err := directive1(rctx)
-		if err != nil {
-			return nil, graphql.ErrorOnPath(ctx, err)
-		}
-		if tmp == nil {
-			return nil, nil
-		}
-		if data, ok := tmp.(*models.PlanDocument); ok {
-			return data, nil
-		}
-		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/cmsgov/mint-app/pkg/models.PlanDocument`, tmp)
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(*models.PlanDocument)
-	fc.Result = res
-	return ec.marshalNPlanDocument2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanDocument(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_Mutation_uploadNewPlanDocument(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "Mutation",
-		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			switch field.Name {
-			case "id":
-				return ec.fieldContext_PlanDocument_id(ctx, field)
-			case "modelPlanID":
-				return ec.fieldContext_PlanDocument_modelPlanID(ctx, field)
-			case "isLink":
-				return ec.fieldContext_PlanDocument_isLink(ctx, field)
-			case "url":
-				return ec.fieldContext_PlanDocument_url(ctx, field)
-			case "fileType":
-				return ec.fieldContext_PlanDocument_fileType(ctx, field)
-			case "bucket":
-				return ec.fieldContext_PlanDocument_bucket(ctx, field)
-			case "fileKey":
-				return ec.fieldContext_PlanDocument_fileKey(ctx, field)
-			case "virusScanned":
-				return ec.fieldContext_PlanDocument_virusScanned(ctx, field)
-			case "virusClean":
-				return ec.fieldContext_PlanDocument_virusClean(ctx, field)
-			case "restricted":
-				return ec.fieldContext_PlanDocument_restricted(ctx, field)
-			case "fileName":
-				return ec.fieldContext_PlanDocument_fileName(ctx, field)
-			case "fileSize":
-				return ec.fieldContext_PlanDocument_fileSize(ctx, field)
-			case "documentType":
-				return ec.fieldContext_PlanDocument_documentType(ctx, field)
-			case "otherType":
-				return ec.fieldContext_PlanDocument_otherType(ctx, field)
-			case "optionalNotes":
-				return ec.fieldContext_PlanDocument_optionalNotes(ctx, field)
-			case "downloadUrl":
-				return ec.fieldContext_PlanDocument_downloadUrl(ctx, field)
-			case "deletedAt":
-				return ec.fieldContext_PlanDocument_deletedAt(ctx, field)
-			case "numLinkedSolutions":
-				return ec.fieldContext_PlanDocument_numLinkedSolutions(ctx, field)
-			case "createdBy":
-				return ec.fieldContext_PlanDocument_createdBy(ctx, field)
-			case "createdByUserAccount":
-				return ec.fieldContext_PlanDocument_createdByUserAccount(ctx, field)
-			case "createdDts":
-				return ec.fieldContext_PlanDocument_createdDts(ctx, field)
-			case "modifiedBy":
-				return ec.fieldContext_PlanDocument_modifiedBy(ctx, field)
-			case "modifiedByUserAccount":
-				return ec.fieldContext_PlanDocument_modifiedByUserAccount(ctx, field)
-			case "modifiedDts":
-				return ec.fieldContext_PlanDocument_modifiedDts(ctx, field)
-			}
-			return nil, fmt.Errorf("no field named %q was found under type PlanDocument", field.Name)
-		},
-	}
-	defer func() {
-		if r := recover(); r != nil {
-			err = ec.Recover(ctx, r)
-			ec.Error(ctx, err)
-		}
-	}()
-	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Mutation_uploadNewPlanDocument_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
-		ec.Error(ctx, err)
-		return fc, err
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _Mutation_linkNewPlanDocument(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Mutation_linkNewPlanDocument(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		directive0 := func(rctx context.Context) (interface{}, error) {
-			ctx = rctx // use context from middleware stack in children
-			return ec.resolvers.Mutation().LinkNewPlanDocument(rctx, fc.Args["input"].(model.PlanDocumentLinkInput))
-		}
-		directive1 := func(ctx context.Context) (interface{}, error) {
-			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
-			if err != nil {
-				return nil, err
-			}
-			if ec.directives.HasRole == nil {
-				return nil, errors.New("directive hasRole is not implemented")
-			}
-			return ec.directives.HasRole(ctx, nil, directive0, role)
-		}
-
-		tmp, err := directive1(rctx)
-		if err != nil {
-			return nil, graphql.ErrorOnPath(ctx, err)
-		}
-		if tmp == nil {
-			return nil, nil
-		}
-		if data, ok := tmp.(*models.PlanDocument); ok {
-			return data, nil
-		}
-		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/cmsgov/mint-app/pkg/models.PlanDocument`, tmp)
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(*models.PlanDocument)
-	fc.Result = res
-	return ec.marshalNPlanDocument2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanDocument(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_Mutation_linkNewPlanDocument(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "Mutation",
-		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			switch field.Name {
-			case "id":
-				return ec.fieldContext_PlanDocument_id(ctx, field)
-			case "modelPlanID":
-				return ec.fieldContext_PlanDocument_modelPlanID(ctx, field)
-			case "isLink":
-				return ec.fieldContext_PlanDocument_isLink(ctx, field)
-			case "url":
-				return ec.fieldContext_PlanDocument_url(ctx, field)
-			case "fileType":
-				return ec.fieldContext_PlanDocument_fileType(ctx, field)
-			case "bucket":
-				return ec.fieldContext_PlanDocument_bucket(ctx, field)
-			case "fileKey":
-				return ec.fieldContext_PlanDocument_fileKey(ctx, field)
-			case "virusScanned":
-				return ec.fieldContext_PlanDocument_virusScanned(ctx, field)
-			case "virusClean":
-				return ec.fieldContext_PlanDocument_virusClean(ctx, field)
-			case "restricted":
-				return ec.fieldContext_PlanDocument_restricted(ctx, field)
-			case "fileName":
-				return ec.fieldContext_PlanDocument_fileName(ctx, field)
-			case "fileSize":
-				return ec.fieldContext_PlanDocument_fileSize(ctx, field)
-			case "documentType":
-				return ec.fieldContext_PlanDocument_documentType(ctx, field)
-			case "otherType":
-				return ec.fieldContext_PlanDocument_otherType(ctx, field)
-			case "optionalNotes":
-				return ec.fieldContext_PlanDocument_optionalNotes(ctx, field)
-			case "downloadUrl":
-				return ec.fieldContext_PlanDocument_downloadUrl(ctx, field)
-			case "deletedAt":
-				return ec.fieldContext_PlanDocument_deletedAt(ctx, field)
-			case "numLinkedSolutions":
-				return ec.fieldContext_PlanDocument_numLinkedSolutions(ctx, field)
-			case "createdBy":
-				return ec.fieldContext_PlanDocument_createdBy(ctx, field)
-			case "createdByUserAccount":
-				return ec.fieldContext_PlanDocument_createdByUserAccount(ctx, field)
-			case "createdDts":
-				return ec.fieldContext_PlanDocument_createdDts(ctx, field)
-			case "modifiedBy":
-				return ec.fieldContext_PlanDocument_modifiedBy(ctx, field)
-			case "modifiedByUserAccount":
-				return ec.fieldContext_PlanDocument_modifiedByUserAccount(ctx, field)
-			case "modifiedDts":
-				return ec.fieldContext_PlanDocument_modifiedDts(ctx, field)
-			}
-			return nil, fmt.Errorf("no field named %q was found under type PlanDocument", field.Name)
-		},
-	}
-	defer func() {
-		if r := recover(); r != nil {
-			err = ec.Recover(ctx, r)
-			ec.Error(ctx, err)
-		}
-	}()
-	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Mutation_linkNewPlanDocument_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
-		ec.Error(ctx, err)
-		return fc, err
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _Mutation_deletePlanDocument(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Mutation_deletePlanDocument(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		directive0 := func(rctx context.Context) (interface{}, error) {
-			ctx = rctx // use context from middleware stack in children
-			return ec.resolvers.Mutation().DeletePlanDocument(rctx, fc.Args["id"].(uuid.UUID))
-		}
-		directive1 := func(ctx context.Context) (interface{}, error) {
-			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
-			if err != nil {
-				return nil, err
-			}
-			if ec.directives.HasRole == nil {
-				return nil, errors.New("directive hasRole is not implemented")
-			}
-			return ec.directives.HasRole(ctx, nil, directive0, role)
-		}
-
-		tmp, err := directive1(rctx)
-		if err != nil {
-			return nil, graphql.ErrorOnPath(ctx, err)
-		}
-		if tmp == nil {
-			return nil, nil
-		}
-		if data, ok := tmp.(int); ok {
-			return data, nil
-		}
-		return nil, fmt.Errorf(`unexpected type %T from directive, should be int`, tmp)
+		ctx = rctx // use context from middleware stack in children
+		return obj.Version, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -20797,32 +20872,21 @@ func (ec *executionContext) _Mutation_deletePlanDocument(ctx context.Context, fi
 	return ec.marshalNInt2int(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_Mutation_deletePlanDocument(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_ModelPlanSharedActivityMeta_version(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
-		Object:     "Mutation",
+		Object:     "ModelPlanSharedActivityMeta",
 		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
+		IsMethod:   false,
+		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return nil, errors.New("field of type Int does not have child fields")
 		},
 	}
-	defer func() {
-		if r := recover(); r != nil {
-			err = ec.Recover(ctx, r)
-			ec.Error(ctx, err)
-		}
-	}()
-	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Mutation_deletePlanDocument_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
-		ec.Error(ctx, err)
-		return fc, err
-	}
 	return fc, nil
 }
 
-func (ec *executionContext) _Mutation_createPlanDiscussion(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Mutation_createPlanDiscussion(ctx, field)
+func (ec *executionContext) _ModelPlanSharedActivityMeta_type(ctx context.Context, field graphql.CollectedField, obj *models.ModelPlanSharedActivityMeta) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_ModelPlanSharedActivityMeta_type(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -20834,32 +20898,8 @@ func (ec *executionContext) _Mutation_createPlanDiscussion(ctx context.Context, 
 		}
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		directive0 := func(rctx context.Context) (interface{}, error) {
-			ctx = rctx // use context from middleware stack in children
-			return ec.resolvers.Mutation().CreatePlanDiscussion(rctx, fc.Args["input"].(model.PlanDiscussionCreateInput))
-		}
-		directive1 := func(ctx context.Context) (interface{}, error) {
-			roles, err := ec.unmarshalNRole2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRoleᚄ(ctx, []interface{}{"MINT_USER", "MINT_MAC"})
-			if err != nil {
-				return nil, err
-			}
-			if ec.directives.HasAnyRole == nil {
-				return nil, errors.New("directive hasAnyRole is not implemented")
-			}
-			return ec.directives.HasAnyRole(ctx, nil, directive0, roles)
-		}
-
-		tmp, err := directive1(rctx)
-		if err != nil {
-			return nil, graphql.ErrorOnPath(ctx, err)
-		}
-		if tmp == nil {
-			return nil, nil
-		}
-		if data, ok := tmp.(*models.PlanDiscussion); ok {
-			return data, nil
-		}
-		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/cmsgov/mint-app/pkg/models.PlanDiscussion`, tmp)
+		ctx = rctx // use context from middleware stack in children
+		return obj.Type, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -20871,59 +20911,205 @@ func (ec *executionContext) _Mutation_createPlanDiscussion(ctx context.Context, 
 		}
 		return graphql.Null
 	}
-	res := resTmp.(*models.PlanDiscussion)
+	res := resTmp.(models.ActivityType)
 	fc.Result = res
-	return ec.marshalNPlanDiscussion2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanDiscussion(ctx, field.Selections, res)
+	return ec.marshalNActivityType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐActivityType(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_Mutation_createPlanDiscussion(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_ModelPlanSharedActivityMeta_type(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
-		Object:     "Mutation",
+		Object:     "ModelPlanSharedActivityMeta",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type ActivityType does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _ModelPlanSharedActivityMeta_modelPlanID(ctx context.Context, field graphql.CollectedField, obj *models.ModelPlanSharedActivityMeta) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_ModelPlanSharedActivityMeta_modelPlanID(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ModelPlanID, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(uuid.UUID)
+	fc.Result = res
+	return ec.marshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_ModelPlanSharedActivityMeta_modelPlanID(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "ModelPlanSharedActivityMeta",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type UUID does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _ModelPlanSharedActivityMeta_modelPlan(ctx context.Context, field graphql.CollectedField, obj *models.ModelPlanSharedActivityMeta) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_ModelPlanSharedActivityMeta_modelPlan(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.ModelPlanSharedActivityMeta().ModelPlan(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*models.ModelPlan)
+	fc.Result = res
+	return ec.marshalNModelPlan2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐModelPlan(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_ModelPlanSharedActivityMeta_modelPlan(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "ModelPlanSharedActivityMeta",
 		Field:      field,
 		IsMethod:   true,
 		IsResolver: true,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			switch field.Name {
 			case "id":
-				return ec.fieldContext_PlanDiscussion_id(ctx, field)
-			case "modelPlanID":
-				return ec.fieldContext_PlanDiscussion_modelPlanID(ctx, field)
-			case "content":
-				return ec.fieldContext_PlanDiscussion_content(ctx, field)
-			case "userRole":
-				return ec.fieldContext_PlanDiscussion_userRole(ctx, field)
-			case "userRoleDescription":
-				return ec.fieldContext_PlanDiscussion_userRoleDescription(ctx, field)
-			case "replies":
-				return ec.fieldContext_PlanDiscussion_replies(ctx, field)
-			case "isAssessment":
-				return ec.fieldContext_PlanDiscussion_isAssessment(ctx, field)
+				return ec.fieldContext_ModelPlan_id(ctx, field)
+			case "modelName":
+				return ec.fieldContext_ModelPlan_modelName(ctx, field)
+			case "abbreviation":
+				return ec.fieldContext_ModelPlan_abbreviation(ctx, field)
+			case "archived":
+				return ec.fieldContext_ModelPlan_archived(ctx, field)
 			case "createdBy":
-				return ec.fieldContext_PlanDiscussion_createdBy(ctx, field)
+				return ec.fieldContext_ModelPlan_createdBy(ctx, field)
 			case "createdByUserAccount":
-				return ec.fieldContext_PlanDiscussion_createdByUserAccount(ctx, field)
+				return ec.fieldContext_ModelPlan_createdByUserAccount(ctx, field)
 			case "createdDts":
-				return ec.fieldContext_PlanDiscussion_createdDts(ctx, field)
+				return ec.fieldContext_ModelPlan_createdDts(ctx, field)
 			case "modifiedBy":
-				return ec.fieldContext_PlanDiscussion_modifiedBy(ctx, field)
+				return ec.fieldContext_ModelPlan_modifiedBy(ctx, field)
 			case "modifiedByUserAccount":
-				return ec.fieldContext_PlanDiscussion_modifiedByUserAccount(ctx, field)
+				return ec.fieldContext_ModelPlan_modifiedByUserAccount(ctx, field)
 			case "modifiedDts":
-				return ec.fieldContext_PlanDiscussion_modifiedDts(ctx, field)
+				return ec.fieldContext_ModelPlan_modifiedDts(ctx, field)
+			case "basics":
+				return ec.fieldContext_ModelPlan_basics(ctx, field)
+			case "generalCharacteristics":
+				return ec.fieldContext_ModelPlan_generalCharacteristics(ctx, field)
+			case "participantsAndProviders":
+				return ec.fieldContext_ModelPlan_participantsAndProviders(ctx, field)
+			case "beneficiaries":
+				return ec.fieldContext_ModelPlan_beneficiaries(ctx, field)
+			case "opsEvalAndLearning":
+				return ec.fieldContext_ModelPlan_opsEvalAndLearning(ctx, field)
+			case "collaborators":
+				return ec.fieldContext_ModelPlan_collaborators(ctx, field)
+			case "documents":
+				return ec.fieldContext_ModelPlan_documents(ctx, field)
+			case "discussions":
+				return ec.fieldContext_ModelPlan_discussions(ctx, field)
+			case "payments":
+				return ec.fieldContext_ModelPlan_payments(ctx, field)
+			case "status":
+				return ec.fieldContext_ModelPlan_status(ctx, field)
+			case "isFavorite":
+				return ec.fieldContext_ModelPlan_isFavorite(ctx, field)
+			case "isCollaborator":
+				return ec.fieldContext_ModelPlan_isCollaborator(ctx, field)
+			case "crs":
+				return ec.fieldContext_ModelPlan_crs(ctx, field)
+			case "tdls":
+				return ec.fieldContext_ModelPlan_tdls(ctx, field)
+			case "prepareForClearance":
+				return ec.fieldContext_ModelPlan_prepareForClearance(ctx, field)
+			case "nameHistory":
+				return ec.fieldContext_ModelPlan_nameHistory(ctx, field)
+			case "operationalNeeds":
+				return ec.fieldContext_ModelPlan_operationalNeeds(ctx, field)
 			}
-			return nil, fmt.Errorf("no field named %q was found under type PlanDiscussion", field.Name)
+			return nil, fmt.Errorf("no field named %q was found under type ModelPlan", field.Name)
 		},
 	}
+	return fc, nil
+}
+
+func (ec *executionContext) _ModelPlanSharedActivityMeta_optionalMessage(ctx context.Context, field graphql.CollectedField, obj *models.ModelPlanSharedActivityMeta) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_ModelPlanSharedActivityMeta_optionalMessage(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
 	defer func() {
 		if r := recover(); r != nil {
-			err = ec.Recover(ctx, r)
-			ec.Error(ctx, err)
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
 		}
 	}()
-	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Mutation_createPlanDiscussion_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.OptionalMessage, nil
+	})
+	if err != nil {
 		ec.Error(ctx, err)
-		return fc, err
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_ModelPlanSharedActivityMeta_optionalMessage(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "ModelPlanSharedActivityMeta",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
 	}
 	return fc, nil
 }
@@ -21033,8 +21219,8 @@ func (ec *executionContext) fieldContext_Mutation_createDiscussionReply(ctx cont
 	return fc, nil
 }
 
-func (ec *executionContext) _Mutation_lockTaskListSection(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Mutation_lockTaskListSection(ctx, field)
+func (ec *executionContext) _Mutation_updateExistingModelLinks(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Mutation_updateExistingModelLinks(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -21048,7 +21234,7 @@ func (ec *executionContext) _Mutation_lockTaskListSection(ctx context.Context, f
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		directive0 := func(rctx context.Context) (interface{}, error) {
 			ctx = rctx // use context from middleware stack in children
-			return ec.resolvers.Mutation().LockTaskListSection(rctx, fc.Args["modelPlanID"].(uuid.UUID), fc.Args["section"].(models.TaskListSection))
+			return ec.resolvers.Mutation().UpdateExistingModelLinks(rctx, fc.Args["modelPlanID"].(uuid.UUID), fc.Args["fieldName"].(models.ExisitingModelLinkFieldType), fc.Args["existingModelIDs"].([]int), fc.Args["currentModelPlanIDs"].([]uuid.UUID))
 		}
 		directive1 := func(ctx context.Context) (interface{}, error) {
 			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
@@ -21068,10 +21254,10 @@ func (ec *executionContext) _Mutation_lockTaskListSection(ctx context.Context, f
 		if tmp == nil {
 			return nil, nil
 		}
-		if data, ok := tmp.(bool); ok {
+		if data, ok := tmp.(*models.ExistingModelLinks); ok {
 			return data, nil
 		}
-		return nil, fmt.Errorf(`unexpected type %T from directive, should be bool`, tmp)
+		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/cmsgov/mint-app/pkg/models.ExistingModelLinks`, tmp)
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -21083,170 +21269,12 @@ func (ec *executionContext) _Mutation_lockTaskListSection(ctx context.Context, f
 		}
 		return graphql.Null
 	}
-	res := resTmp.(bool)
+	res := resTmp.(*models.ExistingModelLinks)
 	fc.Result = res
-	return ec.marshalNBoolean2bool(ctx, field.Selections, res)
+	return ec.marshalNExistingModelLinks2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐExistingModelLinks(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_Mutation_lockTaskListSection(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "Mutation",
-		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type Boolean does not have child fields")
-		},
-	}
-	defer func() {
-		if r := recover(); r != nil {
-			err = ec.Recover(ctx, r)
-			ec.Error(ctx, err)
-		}
-	}()
-	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Mutation_lockTaskListSection_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
-		ec.Error(ctx, err)
-		return fc, err
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _Mutation_unlockTaskListSection(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Mutation_unlockTaskListSection(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		directive0 := func(rctx context.Context) (interface{}, error) {
-			ctx = rctx // use context from middleware stack in children
-			return ec.resolvers.Mutation().UnlockTaskListSection(rctx, fc.Args["modelPlanID"].(uuid.UUID), fc.Args["section"].(models.TaskListSection))
-		}
-		directive1 := func(ctx context.Context) (interface{}, error) {
-			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
-			if err != nil {
-				return nil, err
-			}
-			if ec.directives.HasRole == nil {
-				return nil, errors.New("directive hasRole is not implemented")
-			}
-			return ec.directives.HasRole(ctx, nil, directive0, role)
-		}
-
-		tmp, err := directive1(rctx)
-		if err != nil {
-			return nil, graphql.ErrorOnPath(ctx, err)
-		}
-		if tmp == nil {
-			return nil, nil
-		}
-		if data, ok := tmp.(bool); ok {
-			return data, nil
-		}
-		return nil, fmt.Errorf(`unexpected type %T from directive, should be bool`, tmp)
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(bool)
-	fc.Result = res
-	return ec.marshalNBoolean2bool(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_Mutation_unlockTaskListSection(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "Mutation",
-		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type Boolean does not have child fields")
-		},
-	}
-	defer func() {
-		if r := recover(); r != nil {
-			err = ec.Recover(ctx, r)
-			ec.Error(ctx, err)
-		}
-	}()
-	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Mutation_unlockTaskListSection_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
-		ec.Error(ctx, err)
-		return fc, err
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _Mutation_unlockAllTaskListSections(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Mutation_unlockAllTaskListSections(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		directive0 := func(rctx context.Context) (interface{}, error) {
-			ctx = rctx // use context from middleware stack in children
-			return ec.resolvers.Mutation().UnlockAllTaskListSections(rctx, fc.Args["modelPlanID"].(uuid.UUID))
-		}
-		directive1 := func(ctx context.Context) (interface{}, error) {
-			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_ASSESSMENT")
-			if err != nil {
-				return nil, err
-			}
-			if ec.directives.HasRole == nil {
-				return nil, errors.New("directive hasRole is not implemented")
-			}
-			return ec.directives.HasRole(ctx, nil, directive0, role)
-		}
-
-		tmp, err := directive1(rctx)
-		if err != nil {
-			return nil, graphql.ErrorOnPath(ctx, err)
-		}
-		if tmp == nil {
-			return nil, nil
-		}
-		if data, ok := tmp.([]*model.TaskListSectionLockStatus); ok {
-			return data, nil
-		}
-		return nil, fmt.Errorf(`unexpected type %T from directive, should be []*github.com/cmsgov/mint-app/pkg/graph/model.TaskListSectionLockStatus`, tmp)
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.([]*model.TaskListSectionLockStatus)
-	fc.Result = res
-	return ec.marshalNTaskListSectionLockStatus2ᚕᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTaskListSectionLockStatusᚄ(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_Mutation_unlockAllTaskListSections(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_Mutation_updateExistingModelLinks(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "Mutation",
 		Field:      field,
@@ -21254,16 +21282,16 @@ func (ec *executionContext) fieldContext_Mutation_unlockAllTaskListSections(ctx 
 		IsResolver: true,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			switch field.Name {
+			case "links":
+				return ec.fieldContext_ExistingModelLinks_links(ctx, field)
+			case "fieldName":
+				return ec.fieldContext_ExistingModelLinks_fieldName(ctx, field)
 			case "modelPlanID":
-				return ec.fieldContext_TaskListSectionLockStatus_modelPlanID(ctx, field)
-			case "section":
-				return ec.fieldContext_TaskListSectionLockStatus_section(ctx, field)
-			case "lockedByUserAccount":
-				return ec.fieldContext_TaskListSectionLockStatus_lockedByUserAccount(ctx, field)
-			case "isAssessment":
-				return ec.fieldContext_TaskListSectionLockStatus_isAssessment(ctx, field)
+				return ec.fieldContext_ExistingModelLinks_modelPlanID(ctx, field)
+			case "names":
+				return ec.fieldContext_ExistingModelLinks_names(ctx, field)
 			}
-			return nil, fmt.Errorf("no field named %q was found under type TaskListSectionLockStatus", field.Name)
+			return nil, fmt.Errorf("no field named %q was found under type ExistingModelLinks", field.Name)
 		},
 	}
 	defer func() {
@@ -21273,15 +21301,15 @@ func (ec *executionContext) fieldContext_Mutation_unlockAllTaskListSections(ctx 
 		}
 	}()
 	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Mutation_unlockAllTaskListSections_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+	if fc.Args, err = ec.field_Mutation_updateExistingModelLinks_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
 		ec.Error(ctx, err)
 		return fc, err
 	}
 	return fc, nil
 }
 
-func (ec *executionContext) _Mutation_updatePlanPayments(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Mutation_updatePlanPayments(ctx, field)
+func (ec *executionContext) _Mutation_createModelPlan(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Mutation_createModelPlan(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -21295,7 +21323,7 @@ func (ec *executionContext) _Mutation_updatePlanPayments(ctx context.Context, fi
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		directive0 := func(rctx context.Context) (interface{}, error) {
 			ctx = rctx // use context from middleware stack in children
-			return ec.resolvers.Mutation().UpdatePlanPayments(rctx, fc.Args["id"].(uuid.UUID), fc.Args["changes"].(map[string]interface{}))
+			return ec.resolvers.Mutation().CreateModelPlan(rctx, fc.Args["modelName"].(string))
 		}
 		directive1 := func(ctx context.Context) (interface{}, error) {
 			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
@@ -21315,10 +21343,10 @@ func (ec *executionContext) _Mutation_updatePlanPayments(ctx context.Context, fi
 		if tmp == nil {
 			return nil, nil
 		}
-		if data, ok := tmp.(*models.PlanPayments); ok {
+		if data, ok := tmp.(*models.ModelPlan); ok {
 			return data, nil
 		}
-		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/cmsgov/mint-app/pkg/models.PlanPayments`, tmp)
+		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/cmsgov/mint-app/pkg/models.ModelPlan`, tmp)
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -21330,12 +21358,12 @@ func (ec *executionContext) _Mutation_updatePlanPayments(ctx context.Context, fi
 		}
 		return graphql.Null
 	}
-	res := resTmp.(*models.PlanPayments)
+	res := resTmp.(*models.ModelPlan)
 	fc.Result = res
-	return ec.marshalNPlanPayments2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanPayments(ctx, field.Selections, res)
+	return ec.marshalNModelPlan2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐModelPlan(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_Mutation_updatePlanPayments(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_Mutation_createModelPlan(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "Mutation",
 		Field:      field,
@@ -21344,183 +21372,61 @@ func (ec *executionContext) fieldContext_Mutation_updatePlanPayments(ctx context
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			switch field.Name {
 			case "id":
-				return ec.fieldContext_PlanPayments_id(ctx, field)
-			case "modelPlanID":
-				return ec.fieldContext_PlanPayments_modelPlanID(ctx, field)
-			case "fundingSource":
-				return ec.fieldContext_PlanPayments_fundingSource(ctx, field)
-			case "fundingSourceMedicareAInfo":
-				return ec.fieldContext_PlanPayments_fundingSourceMedicareAInfo(ctx, field)
-			case "fundingSourceMedicareBInfo":
-				return ec.fieldContext_PlanPayments_fundingSourceMedicareBInfo(ctx, field)
-			case "fundingSourceOther":
-				return ec.fieldContext_PlanPayments_fundingSourceOther(ctx, field)
-			case "fundingSourceNote":
-				return ec.fieldContext_PlanPayments_fundingSourceNote(ctx, field)
-			case "fundingSourceR":
-				return ec.fieldContext_PlanPayments_fundingSourceR(ctx, field)
-			case "fundingSourceRMedicareAInfo":
-				return ec.fieldContext_PlanPayments_fundingSourceRMedicareAInfo(ctx, field)
-			case "fundingSourceRMedicareBInfo":
-				return ec.fieldContext_PlanPayments_fundingSourceRMedicareBInfo(ctx, field)
-			case "fundingSourceROther":
-				return ec.fieldContext_PlanPayments_fundingSourceROther(ctx, field)
-			case "fundingSourceRNote":
-				return ec.fieldContext_PlanPayments_fundingSourceRNote(ctx, field)
-			case "payRecipients":
-				return ec.fieldContext_PlanPayments_payRecipients(ctx, field)
-			case "payRecipientsOtherSpecification":
-				return ec.fieldContext_PlanPayments_payRecipientsOtherSpecification(ctx, field)
-			case "payRecipientsNote":
-				return ec.fieldContext_PlanPayments_payRecipientsNote(ctx, field)
-			case "payType":
-				return ec.fieldContext_PlanPayments_payType(ctx, field)
-			case "payTypeNote":
-				return ec.fieldContext_PlanPayments_payTypeNote(ctx, field)
-			case "payClaims":
-				return ec.fieldContext_PlanPayments_payClaims(ctx, field)
-			case "payClaimsOther":
-				return ec.fieldContext_PlanPayments_payClaimsOther(ctx, field)
-			case "payClaimsNote":
-				return ec.fieldContext_PlanPayments_payClaimsNote(ctx, field)
-			case "shouldAnyProvidersExcludedFFSSystems":
-				return ec.fieldContext_PlanPayments_shouldAnyProvidersExcludedFFSSystems(ctx, field)
-			case "shouldAnyProviderExcludedFFSSystemsNote":
-				return ec.fieldContext_PlanPayments_shouldAnyProviderExcludedFFSSystemsNote(ctx, field)
-			case "changesMedicarePhysicianFeeSchedule":
-				return ec.fieldContext_PlanPayments_changesMedicarePhysicianFeeSchedule(ctx, field)
-			case "changesMedicarePhysicianFeeScheduleNote":
-				return ec.fieldContext_PlanPayments_changesMedicarePhysicianFeeScheduleNote(ctx, field)
-			case "affectsMedicareSecondaryPayerClaims":
-				return ec.fieldContext_PlanPayments_affectsMedicareSecondaryPayerClaims(ctx, field)
-			case "affectsMedicareSecondaryPayerClaimsHow":
-				return ec.fieldContext_PlanPayments_affectsMedicareSecondaryPayerClaimsHow(ctx, field)
-			case "affectsMedicareSecondaryPayerClaimsNote":
-				return ec.fieldContext_PlanPayments_affectsMedicareSecondaryPayerClaimsNote(ctx, field)
-			case "payModelDifferentiation":
-				return ec.fieldContext_PlanPayments_payModelDifferentiation(ctx, field)
-			case "creatingDependenciesBetweenServices":
-				return ec.fieldContext_PlanPayments_creatingDependenciesBetweenServices(ctx, field)
-			case "creatingDependenciesBetweenServicesNote":
-				return ec.fieldContext_PlanPayments_creatingDependenciesBetweenServicesNote(ctx, field)
-			case "needsClaimsDataCollection":
-				return ec.fieldContext_PlanPayments_needsClaimsDataCollection(ctx, field)
-			case "needsClaimsDataCollectionNote":
-				return ec.fieldContext_PlanPayments_needsClaimsDataCollectionNote(ctx, field)
-			case "providingThirdPartyFile":
-				return ec.fieldContext_PlanPayments_providingThirdPartyFile(ctx, field)
-			case "isContractorAwareTestDataRequirements":
-				return ec.fieldContext_PlanPayments_isContractorAwareTestDataRequirements(ctx, field)
-			case "beneficiaryCostSharingLevelAndHandling":
-				return ec.fieldContext_PlanPayments_beneficiaryCostSharingLevelAndHandling(ctx, field)
-			case "waiveBeneficiaryCostSharingForAnyServices":
-				return ec.fieldContext_PlanPayments_waiveBeneficiaryCostSharingForAnyServices(ctx, field)
-			case "waiveBeneficiaryCostSharingServiceSpecification":
-				return ec.fieldContext_PlanPayments_waiveBeneficiaryCostSharingServiceSpecification(ctx, field)
-			case "waiverOnlyAppliesPartOfPayment":
-				return ec.fieldContext_PlanPayments_waiverOnlyAppliesPartOfPayment(ctx, field)
-			case "waiveBeneficiaryCostSharingNote":
-				return ec.fieldContext_PlanPayments_waiveBeneficiaryCostSharingNote(ctx, field)
-			case "nonClaimsPayments":
-				return ec.fieldContext_PlanPayments_nonClaimsPayments(ctx, field)
-			case "nonClaimsPaymentOther":
-				return ec.fieldContext_PlanPayments_nonClaimsPaymentOther(ctx, field)
-			case "nonClaimsPaymentsNote":
-				return ec.fieldContext_PlanPayments_nonClaimsPaymentsNote(ctx, field)
-			case "paymentCalculationOwner":
-				return ec.fieldContext_PlanPayments_paymentCalculationOwner(ctx, field)
-			case "numberPaymentsPerPayCycle":
-				return ec.fieldContext_PlanPayments_numberPaymentsPerPayCycle(ctx, field)
-			case "numberPaymentsPerPayCycleNote":
-				return ec.fieldContext_PlanPayments_numberPaymentsPerPayCycleNote(ctx, field)
-			case "sharedSystemsInvolvedAdditionalClaimPayment":
-				return ec.fieldContext_PlanPayments_sharedSystemsInvolvedAdditionalClaimPayment(ctx, field)
-			case "sharedSystemsInvolvedAdditionalClaimPaymentNote":
-				return ec.fieldContext_PlanPayments_sharedSystemsInvolvedAdditionalClaimPaymentNote(ctx, field)
-			case "planningToUseInnovationPaymentContractor":
-				return ec.fieldContext_PlanPayments_planningToUseInnovationPaymentContractor(ctx, field)
-			case "planningToUseInnovationPaymentContractorNote":
-				return ec.fieldContext_PlanPayments_planningToUseInnovationPaymentContractorNote(ctx, field)
-			case "expectedCalculationComplexityLevel":
-				return ec.fieldContext_PlanPayments_expectedCalculationComplexityLevel(ctx, field)
-			case "expectedCalculationComplexityLevelNote":
-				return ec.fieldContext_PlanPayments_expectedCalculationComplexityLevelNote(ctx, field)
-			case "claimsProcessingPrecedence":
-				return ec.fieldContext_PlanPayments_claimsProcessingPrecedence(ctx, field)
-			case "claimsProcessingPrecedenceOther":
-				return ec.fieldContext_PlanPayments_claimsProcessingPrecedenceOther(ctx, field)
-			case "claimsProcessingPrecedenceNote":
-				return ec.fieldContext_PlanPayments_claimsProcessingPrecedenceNote(ctx, field)
-			case "canParticipantsSelectBetweenPaymentMechanisms":
-				return ec.fieldContext_PlanPayments_canParticipantsSelectBetweenPaymentMechanisms(ctx, field)
-			case "canParticipantsSelectBetweenPaymentMechanismsHow":
-				return ec.fieldContext_PlanPayments_canParticipantsSelectBetweenPaymentMechanismsHow(ctx, field)
-			case "canParticipantsSelectBetweenPaymentMechanismsNote":
-				return ec.fieldContext_PlanPayments_canParticipantsSelectBetweenPaymentMechanismsNote(ctx, field)
-			case "anticipatedPaymentFrequency":
-				return ec.fieldContext_PlanPayments_anticipatedPaymentFrequency(ctx, field)
-			case "anticipatedPaymentFrequencyContinually":
-				return ec.fieldContext_PlanPayments_anticipatedPaymentFrequencyContinually(ctx, field)
-			case "anticipatedPaymentFrequencyOther":
-				return ec.fieldContext_PlanPayments_anticipatedPaymentFrequencyOther(ctx, field)
-			case "anticipatedPaymentFrequencyNote":
-				return ec.fieldContext_PlanPayments_anticipatedPaymentFrequencyNote(ctx, field)
-			case "willRecoverPayments":
-				return ec.fieldContext_PlanPayments_willRecoverPayments(ctx, field)
-			case "willRecoverPaymentsNote":
-				return ec.fieldContext_PlanPayments_willRecoverPaymentsNote(ctx, field)
-			case "anticipateReconcilingPaymentsRetrospectively":
-				return ec.fieldContext_PlanPayments_anticipateReconcilingPaymentsRetrospectively(ctx, field)
-			case "anticipateReconcilingPaymentsRetrospectivelyNote":
-				return ec.fieldContext_PlanPayments_anticipateReconcilingPaymentsRetrospectivelyNote(ctx, field)
-			case "paymentReconciliationFrequency":
-				return ec.fieldContext_PlanPayments_paymentReconciliationFrequency(ctx, field)
-			case "paymentReconciliationFrequencyContinually":
-				return ec.fieldContext_PlanPayments_paymentReconciliationFrequencyContinually(ctx, field)
-			case "paymentReconciliationFrequencyOther":
-				return ec.fieldContext_PlanPayments_paymentReconciliationFrequencyOther(ctx, field)
-			case "paymentReconciliationFrequencyNote":
-				return ec.fieldContext_PlanPayments_paymentReconciliationFrequencyNote(ctx, field)
-			case "paymentDemandRecoupmentFrequency":
-				return ec.fieldContext_PlanPayments_paymentDemandRecoupmentFrequency(ctx, field)
-			case "paymentDemandRecoupmentFrequencyContinually":
-				return ec.fieldContext_PlanPayments_paymentDemandRecoupmentFrequencyContinually(ctx, field)
-			case "paymentDemandRecoupmentFrequencyOther":
-				return ec.fieldContext_PlanPayments_paymentDemandRecoupmentFrequencyOther(ctx, field)
-			case "paymentDemandRecoupmentFrequencyNote":
-				return ec.fieldContext_PlanPayments_paymentDemandRecoupmentFrequencyNote(ctx, field)
-			case "paymentStartDate":
-				return ec.fieldContext_PlanPayments_paymentStartDate(ctx, field)
-			case "paymentStartDateNote":
-				return ec.fieldContext_PlanPayments_paymentStartDateNote(ctx, field)
+				return ec.fieldContext_ModelPlan_id(ctx, field)
+			case "modelName":
+				return ec.fieldContext_ModelPlan_modelName(ctx, field)
+			case "abbreviation":
+				return ec.fieldContext_ModelPlan_abbreviation(ctx, field)
+			case "archived":
+				return ec.fieldContext_ModelPlan_archived(ctx, field)
 			case "createdBy":
-				return ec.fieldContext_PlanPayments_createdBy(ctx, field)
+				return ec.fieldContext_ModelPlan_createdBy(ctx, field)
 			case "createdByUserAccount":
-				return ec.fieldContext_PlanPayments_createdByUserAccount(ctx, field)
+				return ec.fieldContext_ModelPlan_createdByUserAccount(ctx, field)
 			case "createdDts":
-				return ec.fieldContext_PlanPayments_createdDts(ctx, field)
+				return ec.fieldContext_ModelPlan_createdDts(ctx, field)
 			case "modifiedBy":
-				return ec.fieldContext_PlanPayments_modifiedBy(ctx, field)
+				return ec.fieldContext_ModelPlan_modifiedBy(ctx, field)
 			case "modifiedByUserAccount":
-				return ec.fieldContext_PlanPayments_modifiedByUserAccount(ctx, field)
+				return ec.fieldContext_ModelPlan_modifiedByUserAccount(ctx, field)
 			case "modifiedDts":
-				return ec.fieldContext_PlanPayments_modifiedDts(ctx, field)
-			case "readyForReviewBy":
-				return ec.fieldContext_PlanPayments_readyForReviewBy(ctx, field)
-			case "readyForReviewByUserAccount":
-				return ec.fieldContext_PlanPayments_readyForReviewByUserAccount(ctx, field)
-			case "readyForReviewDts":
-				return ec.fieldContext_PlanPayments_readyForReviewDts(ctx, field)
-			case "readyForClearanceBy":
-				return ec.fieldContext_PlanPayments_readyForClearanceBy(ctx, field)
-			case "readyForClearanceByUserAccount":
-				return ec.fieldContext_PlanPayments_readyForClearanceByUserAccount(ctx, field)
-			case "readyForClearanceDts":
-				return ec.fieldContext_PlanPayments_readyForClearanceDts(ctx, field)
+				return ec.fieldContext_ModelPlan_modifiedDts(ctx, field)
+			case "basics":
+				return ec.fieldContext_ModelPlan_basics(ctx, field)
+			case "generalCharacteristics":
+				return ec.fieldContext_ModelPlan_generalCharacteristics(ctx, field)
+			case "participantsAndProviders":
+				return ec.fieldContext_ModelPlan_participantsAndProviders(ctx, field)
+			case "beneficiaries":
+				return ec.fieldContext_ModelPlan_beneficiaries(ctx, field)
+			case "opsEvalAndLearning":
+				return ec.fieldContext_ModelPlan_opsEvalAndLearning(ctx, field)
+			case "collaborators":
+				return ec.fieldContext_ModelPlan_collaborators(ctx, field)
+			case "documents":
+				return ec.fieldContext_ModelPlan_documents(ctx, field)
+			case "discussions":
+				return ec.fieldContext_ModelPlan_discussions(ctx, field)
+			case "payments":
+				return ec.fieldContext_ModelPlan_payments(ctx, field)
 			case "status":
-				return ec.fieldContext_PlanPayments_status(ctx, field)
+				return ec.fieldContext_ModelPlan_status(ctx, field)
+			case "isFavorite":
+				return ec.fieldContext_ModelPlan_isFavorite(ctx, field)
+			case "isCollaborator":
+				return ec.fieldContext_ModelPlan_isCollaborator(ctx, field)
+			case "crs":
+				return ec.fieldContext_ModelPlan_crs(ctx, field)
+			case "tdls":
+				return ec.fieldContext_ModelPlan_tdls(ctx, field)
+			case "prepareForClearance":
+				return ec.fieldContext_ModelPlan_prepareForClearance(ctx, field)
+			case "nameHistory":
+				return ec.fieldContext_ModelPlan_nameHistory(ctx, field)
+			case "operationalNeeds":
+				return ec.fieldContext_ModelPlan_operationalNeeds(ctx, field)
 			}
-			return nil, fmt.Errorf("no field named %q was found under type PlanPayments", field.Name)
+			return nil, fmt.Errorf("no field named %q was found under type ModelPlan", field.Name)
 		},
 	}
 	defer func() {
@@ -21530,7 +21436,221 @@ func (ec *executionContext) fieldContext_Mutation_updatePlanPayments(ctx context
 		}
 	}()
 	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Mutation_updatePlanPayments_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+	if fc.Args, err = ec.field_Mutation_createModelPlan_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Mutation_updateModelPlan(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Mutation_updateModelPlan(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		directive0 := func(rctx context.Context) (interface{}, error) {
+			ctx = rctx // use context from middleware stack in children
+			return ec.resolvers.Mutation().UpdateModelPlan(rctx, fc.Args["id"].(uuid.UUID), fc.Args["changes"].(map[string]interface{}))
+		}
+		directive1 := func(ctx context.Context) (interface{}, error) {
+			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
+			if err != nil {
+				return nil, err
+			}
+			if ec.directives.HasRole == nil {
+				return nil, errors.New("directive hasRole is not implemented")
+			}
+			return ec.directives.HasRole(ctx, nil, directive0, role)
+		}
+
+		tmp, err := directive1(rctx)
+		if err != nil {
+			return nil, graphql.ErrorOnPath(ctx, err)
+		}
+		if tmp == nil {
+			return nil, nil
+		}
+		if data, ok := tmp.(*models.ModelPlan); ok {
+			return data, nil
+		}
+		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/cmsgov/mint-app/pkg/models.ModelPlan`, tmp)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*models.ModelPlan)
+	fc.Result = res
+	return ec.marshalNModelPlan2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐModelPlan(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Mutation_updateModelPlan(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Mutation",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_ModelPlan_id(ctx, field)
+			case "modelName":
+				return ec.fieldContext_ModelPlan_modelName(ctx, field)
+			case "abbreviation":
+				return ec.fieldContext_ModelPlan_abbreviation(ctx, field)
+			case "archived":
+				return ec.fieldContext_ModelPlan_archived(ctx, field)
+			case "createdBy":
+				return ec.fieldContext_ModelPlan_createdBy(ctx, field)
+			case "createdByUserAccount":
+				return ec.fieldContext_ModelPlan_createdByUserAccount(ctx, field)
+			case "createdDts":
+				return ec.fieldContext_ModelPlan_createdDts(ctx, field)
+			case "modifiedBy":
+				return ec.fieldContext_ModelPlan_modifiedBy(ctx, field)
+			case "modifiedByUserAccount":
+				return ec.fieldContext_ModelPlan_modifiedByUserAccount(ctx, field)
+			case "modifiedDts":
+				return ec.fieldContext_ModelPlan_modifiedDts(ctx, field)
+			case "basics":
+				return ec.fieldContext_ModelPlan_basics(ctx, field)
+			case "generalCharacteristics":
+				return ec.fieldContext_ModelPlan_generalCharacteristics(ctx, field)
+			case "participantsAndProviders":
+				return ec.fieldContext_ModelPlan_participantsAndProviders(ctx, field)
+			case "beneficiaries":
+				return ec.fieldContext_ModelPlan_beneficiaries(ctx, field)
+			case "opsEvalAndLearning":
+				return ec.fieldContext_ModelPlan_opsEvalAndLearning(ctx, field)
+			case "collaborators":
+				return ec.fieldContext_ModelPlan_collaborators(ctx, field)
+			case "documents":
+				return ec.fieldContext_ModelPlan_documents(ctx, field)
+			case "discussions":
+				return ec.fieldContext_ModelPlan_discussions(ctx, field)
+			case "payments":
+				return ec.fieldContext_ModelPlan_payments(ctx, field)
+			case "status":
+				return ec.fieldContext_ModelPlan_status(ctx, field)
+			case "isFavorite":
+				return ec.fieldContext_ModelPlan_isFavorite(ctx, field)
+			case "isCollaborator":
+				return ec.fieldContext_ModelPlan_isCollaborator(ctx, field)
+			case "crs":
+				return ec.fieldContext_ModelPlan_crs(ctx, field)
+			case "tdls":
+				return ec.fieldContext_ModelPlan_tdls(ctx, field)
+			case "prepareForClearance":
+				return ec.fieldContext_ModelPlan_prepareForClearance(ctx, field)
+			case "nameHistory":
+				return ec.fieldContext_ModelPlan_nameHistory(ctx, field)
+			case "operationalNeeds":
+				return ec.fieldContext_ModelPlan_operationalNeeds(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type ModelPlan", field.Name)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Mutation_updateModelPlan_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Mutation_shareModelPlan(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Mutation_shareModelPlan(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		directive0 := func(rctx context.Context) (interface{}, error) {
+			ctx = rctx // use context from middleware stack in children
+			return ec.resolvers.Mutation().ShareModelPlan(rctx, fc.Args["modelPlanID"].(uuid.UUID), fc.Args["viewFilter"].(*models.ModelViewFilter), fc.Args["usernames"].([]string), fc.Args["optionalMessage"].(*string))
+		}
+		directive1 := func(ctx context.Context) (interface{}, error) {
+			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
+			if err != nil {
+				return nil, err
+			}
+			if ec.directives.HasRole == nil {
+				return nil, errors.New("directive hasRole is not implemented")
+			}
+			return ec.directives.HasRole(ctx, nil, directive0, role)
+		}
+
+		tmp, err := directive1(rctx)
+		if err != nil {
+			return nil, graphql.ErrorOnPath(ctx, err)
+		}
+		if tmp == nil {
+			return nil, nil
+		}
+		if data, ok := tmp.(bool); ok {
+			return data, nil
+		}
+		return nil, fmt.Errorf(`unexpected type %T from directive, should be bool`, tmp)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(bool)
+	fc.Result = res
+	return ec.marshalNBoolean2bool(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Mutation_shareModelPlan(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Mutation",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Boolean does not have child fields")
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Mutation_shareModelPlan_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
 		ec.Error(ctx, err)
 		return fc, err
 	}
@@ -21616,844 +21736,6 @@ func (ec *executionContext) fieldContext_Mutation_agreeToNDA(ctx context.Context
 	}()
 	ctx = graphql.WithFieldContext(ctx, fc)
 	if fc.Args, err = ec.field_Mutation_agreeToNDA_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
-		ec.Error(ctx, err)
-		return fc, err
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _Mutation_addPlanFavorite(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Mutation_addPlanFavorite(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		directive0 := func(rctx context.Context) (interface{}, error) {
-			ctx = rctx // use context from middleware stack in children
-			return ec.resolvers.Mutation().AddPlanFavorite(rctx, fc.Args["modelPlanID"].(uuid.UUID))
-		}
-		directive1 := func(ctx context.Context) (interface{}, error) {
-			roles, err := ec.unmarshalNRole2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRoleᚄ(ctx, []interface{}{"MINT_USER", "MINT_MAC"})
-			if err != nil {
-				return nil, err
-			}
-			if ec.directives.HasAnyRole == nil {
-				return nil, errors.New("directive hasAnyRole is not implemented")
-			}
-			return ec.directives.HasAnyRole(ctx, nil, directive0, roles)
-		}
-
-		tmp, err := directive1(rctx)
-		if err != nil {
-			return nil, graphql.ErrorOnPath(ctx, err)
-		}
-		if tmp == nil {
-			return nil, nil
-		}
-		if data, ok := tmp.(*models.PlanFavorite); ok {
-			return data, nil
-		}
-		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/cmsgov/mint-app/pkg/models.PlanFavorite`, tmp)
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(*models.PlanFavorite)
-	fc.Result = res
-	return ec.marshalNPlanFavorite2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanFavorite(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_Mutation_addPlanFavorite(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "Mutation",
-		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			switch field.Name {
-			case "id":
-				return ec.fieldContext_PlanFavorite_id(ctx, field)
-			case "modelPlanID":
-				return ec.fieldContext_PlanFavorite_modelPlanID(ctx, field)
-			case "userID":
-				return ec.fieldContext_PlanFavorite_userID(ctx, field)
-			case "userAccount":
-				return ec.fieldContext_PlanFavorite_userAccount(ctx, field)
-			case "createdBy":
-				return ec.fieldContext_PlanFavorite_createdBy(ctx, field)
-			case "createdByUserAccount":
-				return ec.fieldContext_PlanFavorite_createdByUserAccount(ctx, field)
-			case "createdDts":
-				return ec.fieldContext_PlanFavorite_createdDts(ctx, field)
-			case "modifiedBy":
-				return ec.fieldContext_PlanFavorite_modifiedBy(ctx, field)
-			case "modifiedByUserAccount":
-				return ec.fieldContext_PlanFavorite_modifiedByUserAccount(ctx, field)
-			case "modifiedDts":
-				return ec.fieldContext_PlanFavorite_modifiedDts(ctx, field)
-			}
-			return nil, fmt.Errorf("no field named %q was found under type PlanFavorite", field.Name)
-		},
-	}
-	defer func() {
-		if r := recover(); r != nil {
-			err = ec.Recover(ctx, r)
-			ec.Error(ctx, err)
-		}
-	}()
-	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Mutation_addPlanFavorite_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
-		ec.Error(ctx, err)
-		return fc, err
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _Mutation_deletePlanFavorite(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Mutation_deletePlanFavorite(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		directive0 := func(rctx context.Context) (interface{}, error) {
-			ctx = rctx // use context from middleware stack in children
-			return ec.resolvers.Mutation().DeletePlanFavorite(rctx, fc.Args["modelPlanID"].(uuid.UUID))
-		}
-		directive1 := func(ctx context.Context) (interface{}, error) {
-			roles, err := ec.unmarshalNRole2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRoleᚄ(ctx, []interface{}{"MINT_USER", "MINT_MAC"})
-			if err != nil {
-				return nil, err
-			}
-			if ec.directives.HasAnyRole == nil {
-				return nil, errors.New("directive hasAnyRole is not implemented")
-			}
-			return ec.directives.HasAnyRole(ctx, nil, directive0, roles)
-		}
-
-		tmp, err := directive1(rctx)
-		if err != nil {
-			return nil, graphql.ErrorOnPath(ctx, err)
-		}
-		if tmp == nil {
-			return nil, nil
-		}
-		if data, ok := tmp.(*models.PlanFavorite); ok {
-			return data, nil
-		}
-		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/cmsgov/mint-app/pkg/models.PlanFavorite`, tmp)
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(*models.PlanFavorite)
-	fc.Result = res
-	return ec.marshalNPlanFavorite2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanFavorite(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_Mutation_deletePlanFavorite(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "Mutation",
-		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			switch field.Name {
-			case "id":
-				return ec.fieldContext_PlanFavorite_id(ctx, field)
-			case "modelPlanID":
-				return ec.fieldContext_PlanFavorite_modelPlanID(ctx, field)
-			case "userID":
-				return ec.fieldContext_PlanFavorite_userID(ctx, field)
-			case "userAccount":
-				return ec.fieldContext_PlanFavorite_userAccount(ctx, field)
-			case "createdBy":
-				return ec.fieldContext_PlanFavorite_createdBy(ctx, field)
-			case "createdByUserAccount":
-				return ec.fieldContext_PlanFavorite_createdByUserAccount(ctx, field)
-			case "createdDts":
-				return ec.fieldContext_PlanFavorite_createdDts(ctx, field)
-			case "modifiedBy":
-				return ec.fieldContext_PlanFavorite_modifiedBy(ctx, field)
-			case "modifiedByUserAccount":
-				return ec.fieldContext_PlanFavorite_modifiedByUserAccount(ctx, field)
-			case "modifiedDts":
-				return ec.fieldContext_PlanFavorite_modifiedDts(ctx, field)
-			}
-			return nil, fmt.Errorf("no field named %q was found under type PlanFavorite", field.Name)
-		},
-	}
-	defer func() {
-		if r := recover(); r != nil {
-			err = ec.Recover(ctx, r)
-			ec.Error(ctx, err)
-		}
-	}()
-	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Mutation_deletePlanFavorite_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
-		ec.Error(ctx, err)
-		return fc, err
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _Mutation_createPlanCR(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Mutation_createPlanCR(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		directive0 := func(rctx context.Context) (interface{}, error) {
-			ctx = rctx // use context from middleware stack in children
-			return ec.resolvers.Mutation().CreatePlanCr(rctx, fc.Args["input"].(model.PlanCRCreateInput))
-		}
-		directive1 := func(ctx context.Context) (interface{}, error) {
-			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
-			if err != nil {
-				return nil, err
-			}
-			if ec.directives.HasRole == nil {
-				return nil, errors.New("directive hasRole is not implemented")
-			}
-			return ec.directives.HasRole(ctx, nil, directive0, role)
-		}
-
-		tmp, err := directive1(rctx)
-		if err != nil {
-			return nil, graphql.ErrorOnPath(ctx, err)
-		}
-		if tmp == nil {
-			return nil, nil
-		}
-		if data, ok := tmp.(*models.PlanCR); ok {
-			return data, nil
-		}
-		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/cmsgov/mint-app/pkg/models.PlanCR`, tmp)
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(*models.PlanCR)
-	fc.Result = res
-	return ec.marshalNPlanCR2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanCR(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_Mutation_createPlanCR(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "Mutation",
-		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			switch field.Name {
-			case "id":
-				return ec.fieldContext_PlanCR_id(ctx, field)
-			case "modelPlanID":
-				return ec.fieldContext_PlanCR_modelPlanID(ctx, field)
-			case "idNumber":
-				return ec.fieldContext_PlanCR_idNumber(ctx, field)
-			case "dateInitiated":
-				return ec.fieldContext_PlanCR_dateInitiated(ctx, field)
-			case "dateImplemented":
-				return ec.fieldContext_PlanCR_dateImplemented(ctx, field)
-			case "title":
-				return ec.fieldContext_PlanCR_title(ctx, field)
-			case "note":
-				return ec.fieldContext_PlanCR_note(ctx, field)
-			case "createdBy":
-				return ec.fieldContext_PlanCR_createdBy(ctx, field)
-			case "createdByUserAccount":
-				return ec.fieldContext_PlanCR_createdByUserAccount(ctx, field)
-			case "createdDts":
-				return ec.fieldContext_PlanCR_createdDts(ctx, field)
-			case "modifiedBy":
-				return ec.fieldContext_PlanCR_modifiedBy(ctx, field)
-			case "modifiedByUserAccount":
-				return ec.fieldContext_PlanCR_modifiedByUserAccount(ctx, field)
-			case "modifiedDts":
-				return ec.fieldContext_PlanCR_modifiedDts(ctx, field)
-			}
-			return nil, fmt.Errorf("no field named %q was found under type PlanCR", field.Name)
-		},
-	}
-	defer func() {
-		if r := recover(); r != nil {
-			err = ec.Recover(ctx, r)
-			ec.Error(ctx, err)
-		}
-	}()
-	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Mutation_createPlanCR_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
-		ec.Error(ctx, err)
-		return fc, err
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _Mutation_createPlanTDL(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Mutation_createPlanTDL(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		directive0 := func(rctx context.Context) (interface{}, error) {
-			ctx = rctx // use context from middleware stack in children
-			return ec.resolvers.Mutation().CreatePlanTdl(rctx, fc.Args["input"].(model.PlanTDLCreateInput))
-		}
-		directive1 := func(ctx context.Context) (interface{}, error) {
-			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
-			if err != nil {
-				return nil, err
-			}
-			if ec.directives.HasRole == nil {
-				return nil, errors.New("directive hasRole is not implemented")
-			}
-			return ec.directives.HasRole(ctx, nil, directive0, role)
-		}
-
-		tmp, err := directive1(rctx)
-		if err != nil {
-			return nil, graphql.ErrorOnPath(ctx, err)
-		}
-		if tmp == nil {
-			return nil, nil
-		}
-		if data, ok := tmp.(*models.PlanTDL); ok {
-			return data, nil
-		}
-		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/cmsgov/mint-app/pkg/models.PlanTDL`, tmp)
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(*models.PlanTDL)
-	fc.Result = res
-	return ec.marshalNPlanTDL2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanTDL(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_Mutation_createPlanTDL(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "Mutation",
-		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			switch field.Name {
-			case "id":
-				return ec.fieldContext_PlanTDL_id(ctx, field)
-			case "modelPlanID":
-				return ec.fieldContext_PlanTDL_modelPlanID(ctx, field)
-			case "idNumber":
-				return ec.fieldContext_PlanTDL_idNumber(ctx, field)
-			case "dateInitiated":
-				return ec.fieldContext_PlanTDL_dateInitiated(ctx, field)
-			case "title":
-				return ec.fieldContext_PlanTDL_title(ctx, field)
-			case "note":
-				return ec.fieldContext_PlanTDL_note(ctx, field)
-			case "createdBy":
-				return ec.fieldContext_PlanTDL_createdBy(ctx, field)
-			case "createdByUserAccount":
-				return ec.fieldContext_PlanTDL_createdByUserAccount(ctx, field)
-			case "createdDts":
-				return ec.fieldContext_PlanTDL_createdDts(ctx, field)
-			case "modifiedBy":
-				return ec.fieldContext_PlanTDL_modifiedBy(ctx, field)
-			case "modifiedByUserAccount":
-				return ec.fieldContext_PlanTDL_modifiedByUserAccount(ctx, field)
-			case "modifiedDts":
-				return ec.fieldContext_PlanTDL_modifiedDts(ctx, field)
-			}
-			return nil, fmt.Errorf("no field named %q was found under type PlanTDL", field.Name)
-		},
-	}
-	defer func() {
-		if r := recover(); r != nil {
-			err = ec.Recover(ctx, r)
-			ec.Error(ctx, err)
-		}
-	}()
-	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Mutation_createPlanTDL_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
-		ec.Error(ctx, err)
-		return fc, err
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _Mutation_updatePlanCR(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Mutation_updatePlanCR(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		directive0 := func(rctx context.Context) (interface{}, error) {
-			ctx = rctx // use context from middleware stack in children
-			return ec.resolvers.Mutation().UpdatePlanCr(rctx, fc.Args["id"].(uuid.UUID), fc.Args["changes"].(map[string]interface{}))
-		}
-		directive1 := func(ctx context.Context) (interface{}, error) {
-			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
-			if err != nil {
-				return nil, err
-			}
-			if ec.directives.HasRole == nil {
-				return nil, errors.New("directive hasRole is not implemented")
-			}
-			return ec.directives.HasRole(ctx, nil, directive0, role)
-		}
-
-		tmp, err := directive1(rctx)
-		if err != nil {
-			return nil, graphql.ErrorOnPath(ctx, err)
-		}
-		if tmp == nil {
-			return nil, nil
-		}
-		if data, ok := tmp.(*models.PlanCR); ok {
-			return data, nil
-		}
-		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/cmsgov/mint-app/pkg/models.PlanCR`, tmp)
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(*models.PlanCR)
-	fc.Result = res
-	return ec.marshalNPlanCR2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanCR(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_Mutation_updatePlanCR(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "Mutation",
-		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			switch field.Name {
-			case "id":
-				return ec.fieldContext_PlanCR_id(ctx, field)
-			case "modelPlanID":
-				return ec.fieldContext_PlanCR_modelPlanID(ctx, field)
-			case "idNumber":
-				return ec.fieldContext_PlanCR_idNumber(ctx, field)
-			case "dateInitiated":
-				return ec.fieldContext_PlanCR_dateInitiated(ctx, field)
-			case "dateImplemented":
-				return ec.fieldContext_PlanCR_dateImplemented(ctx, field)
-			case "title":
-				return ec.fieldContext_PlanCR_title(ctx, field)
-			case "note":
-				return ec.fieldContext_PlanCR_note(ctx, field)
-			case "createdBy":
-				return ec.fieldContext_PlanCR_createdBy(ctx, field)
-			case "createdByUserAccount":
-				return ec.fieldContext_PlanCR_createdByUserAccount(ctx, field)
-			case "createdDts":
-				return ec.fieldContext_PlanCR_createdDts(ctx, field)
-			case "modifiedBy":
-				return ec.fieldContext_PlanCR_modifiedBy(ctx, field)
-			case "modifiedByUserAccount":
-				return ec.fieldContext_PlanCR_modifiedByUserAccount(ctx, field)
-			case "modifiedDts":
-				return ec.fieldContext_PlanCR_modifiedDts(ctx, field)
-			}
-			return nil, fmt.Errorf("no field named %q was found under type PlanCR", field.Name)
-		},
-	}
-	defer func() {
-		if r := recover(); r != nil {
-			err = ec.Recover(ctx, r)
-			ec.Error(ctx, err)
-		}
-	}()
-	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Mutation_updatePlanCR_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
-		ec.Error(ctx, err)
-		return fc, err
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _Mutation_updatePlanTDL(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Mutation_updatePlanTDL(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		directive0 := func(rctx context.Context) (interface{}, error) {
-			ctx = rctx // use context from middleware stack in children
-			return ec.resolvers.Mutation().UpdatePlanTdl(rctx, fc.Args["id"].(uuid.UUID), fc.Args["changes"].(map[string]interface{}))
-		}
-		directive1 := func(ctx context.Context) (interface{}, error) {
-			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
-			if err != nil {
-				return nil, err
-			}
-			if ec.directives.HasRole == nil {
-				return nil, errors.New("directive hasRole is not implemented")
-			}
-			return ec.directives.HasRole(ctx, nil, directive0, role)
-		}
-
-		tmp, err := directive1(rctx)
-		if err != nil {
-			return nil, graphql.ErrorOnPath(ctx, err)
-		}
-		if tmp == nil {
-			return nil, nil
-		}
-		if data, ok := tmp.(*models.PlanTDL); ok {
-			return data, nil
-		}
-		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/cmsgov/mint-app/pkg/models.PlanTDL`, tmp)
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(*models.PlanTDL)
-	fc.Result = res
-	return ec.marshalNPlanTDL2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanTDL(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_Mutation_updatePlanTDL(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "Mutation",
-		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			switch field.Name {
-			case "id":
-				return ec.fieldContext_PlanTDL_id(ctx, field)
-			case "modelPlanID":
-				return ec.fieldContext_PlanTDL_modelPlanID(ctx, field)
-			case "idNumber":
-				return ec.fieldContext_PlanTDL_idNumber(ctx, field)
-			case "dateInitiated":
-				return ec.fieldContext_PlanTDL_dateInitiated(ctx, field)
-			case "title":
-				return ec.fieldContext_PlanTDL_title(ctx, field)
-			case "note":
-				return ec.fieldContext_PlanTDL_note(ctx, field)
-			case "createdBy":
-				return ec.fieldContext_PlanTDL_createdBy(ctx, field)
-			case "createdByUserAccount":
-				return ec.fieldContext_PlanTDL_createdByUserAccount(ctx, field)
-			case "createdDts":
-				return ec.fieldContext_PlanTDL_createdDts(ctx, field)
-			case "modifiedBy":
-				return ec.fieldContext_PlanTDL_modifiedBy(ctx, field)
-			case "modifiedByUserAccount":
-				return ec.fieldContext_PlanTDL_modifiedByUserAccount(ctx, field)
-			case "modifiedDts":
-				return ec.fieldContext_PlanTDL_modifiedDts(ctx, field)
-			}
-			return nil, fmt.Errorf("no field named %q was found under type PlanTDL", field.Name)
-		},
-	}
-	defer func() {
-		if r := recover(); r != nil {
-			err = ec.Recover(ctx, r)
-			ec.Error(ctx, err)
-		}
-	}()
-	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Mutation_updatePlanTDL_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
-		ec.Error(ctx, err)
-		return fc, err
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _Mutation_deletePlanCR(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Mutation_deletePlanCR(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		directive0 := func(rctx context.Context) (interface{}, error) {
-			ctx = rctx // use context from middleware stack in children
-			return ec.resolvers.Mutation().DeletePlanCr(rctx, fc.Args["id"].(uuid.UUID))
-		}
-		directive1 := func(ctx context.Context) (interface{}, error) {
-			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
-			if err != nil {
-				return nil, err
-			}
-			if ec.directives.HasRole == nil {
-				return nil, errors.New("directive hasRole is not implemented")
-			}
-			return ec.directives.HasRole(ctx, nil, directive0, role)
-		}
-
-		tmp, err := directive1(rctx)
-		if err != nil {
-			return nil, graphql.ErrorOnPath(ctx, err)
-		}
-		if tmp == nil {
-			return nil, nil
-		}
-		if data, ok := tmp.(*models.PlanCR); ok {
-			return data, nil
-		}
-		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/cmsgov/mint-app/pkg/models.PlanCR`, tmp)
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(*models.PlanCR)
-	fc.Result = res
-	return ec.marshalNPlanCR2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanCR(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_Mutation_deletePlanCR(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "Mutation",
-		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			switch field.Name {
-			case "id":
-				return ec.fieldContext_PlanCR_id(ctx, field)
-			case "modelPlanID":
-				return ec.fieldContext_PlanCR_modelPlanID(ctx, field)
-			case "idNumber":
-				return ec.fieldContext_PlanCR_idNumber(ctx, field)
-			case "dateInitiated":
-				return ec.fieldContext_PlanCR_dateInitiated(ctx, field)
-			case "dateImplemented":
-				return ec.fieldContext_PlanCR_dateImplemented(ctx, field)
-			case "title":
-				return ec.fieldContext_PlanCR_title(ctx, field)
-			case "note":
-				return ec.fieldContext_PlanCR_note(ctx, field)
-			case "createdBy":
-				return ec.fieldContext_PlanCR_createdBy(ctx, field)
-			case "createdByUserAccount":
-				return ec.fieldContext_PlanCR_createdByUserAccount(ctx, field)
-			case "createdDts":
-				return ec.fieldContext_PlanCR_createdDts(ctx, field)
-			case "modifiedBy":
-				return ec.fieldContext_PlanCR_modifiedBy(ctx, field)
-			case "modifiedByUserAccount":
-				return ec.fieldContext_PlanCR_modifiedByUserAccount(ctx, field)
-			case "modifiedDts":
-				return ec.fieldContext_PlanCR_modifiedDts(ctx, field)
-			}
-			return nil, fmt.Errorf("no field named %q was found under type PlanCR", field.Name)
-		},
-	}
-	defer func() {
-		if r := recover(); r != nil {
-			err = ec.Recover(ctx, r)
-			ec.Error(ctx, err)
-		}
-	}()
-	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Mutation_deletePlanCR_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
-		ec.Error(ctx, err)
-		return fc, err
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _Mutation_deletePlanTDL(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Mutation_deletePlanTDL(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		directive0 := func(rctx context.Context) (interface{}, error) {
-			ctx = rctx // use context from middleware stack in children
-			return ec.resolvers.Mutation().DeletePlanTdl(rctx, fc.Args["id"].(uuid.UUID))
-		}
-		directive1 := func(ctx context.Context) (interface{}, error) {
-			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
-			if err != nil {
-				return nil, err
-			}
-			if ec.directives.HasRole == nil {
-				return nil, errors.New("directive hasRole is not implemented")
-			}
-			return ec.directives.HasRole(ctx, nil, directive0, role)
-		}
-
-		tmp, err := directive1(rctx)
-		if err != nil {
-			return nil, graphql.ErrorOnPath(ctx, err)
-		}
-		if tmp == nil {
-			return nil, nil
-		}
-		if data, ok := tmp.(*models.PlanTDL); ok {
-			return data, nil
-		}
-		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/cmsgov/mint-app/pkg/models.PlanTDL`, tmp)
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(*models.PlanTDL)
-	fc.Result = res
-	return ec.marshalNPlanTDL2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanTDL(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_Mutation_deletePlanTDL(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "Mutation",
-		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			switch field.Name {
-			case "id":
-				return ec.fieldContext_PlanTDL_id(ctx, field)
-			case "modelPlanID":
-				return ec.fieldContext_PlanTDL_modelPlanID(ctx, field)
-			case "idNumber":
-				return ec.fieldContext_PlanTDL_idNumber(ctx, field)
-			case "dateInitiated":
-				return ec.fieldContext_PlanTDL_dateInitiated(ctx, field)
-			case "title":
-				return ec.fieldContext_PlanTDL_title(ctx, field)
-			case "note":
-				return ec.fieldContext_PlanTDL_note(ctx, field)
-			case "createdBy":
-				return ec.fieldContext_PlanTDL_createdBy(ctx, field)
-			case "createdByUserAccount":
-				return ec.fieldContext_PlanTDL_createdByUserAccount(ctx, field)
-			case "createdDts":
-				return ec.fieldContext_PlanTDL_createdDts(ctx, field)
-			case "modifiedBy":
-				return ec.fieldContext_PlanTDL_modifiedBy(ctx, field)
-			case "modifiedByUserAccount":
-				return ec.fieldContext_PlanTDL_modifiedByUserAccount(ctx, field)
-			case "modifiedDts":
-				return ec.fieldContext_PlanTDL_modifiedDts(ctx, field)
-			}
-			return nil, fmt.Errorf("no field named %q was found under type PlanTDL", field.Name)
-		},
-	}
-	defer func() {
-		if r := recover(); r != nil {
-			err = ec.Recover(ctx, r)
-			ec.Error(ctx, err)
-		}
-	}()
-	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Mutation_deletePlanTDL_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
 		ec.Error(ctx, err)
 		return fc, err
 	}
@@ -22932,181 +22214,6 @@ func (ec *executionContext) fieldContext_Mutation_updateOperationalSolution(ctx 
 	return fc, nil
 }
 
-func (ec *executionContext) _Mutation_createPlanDocumentSolutionLinks(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Mutation_createPlanDocumentSolutionLinks(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		directive0 := func(rctx context.Context) (interface{}, error) {
-			ctx = rctx // use context from middleware stack in children
-			return ec.resolvers.Mutation().CreatePlanDocumentSolutionLinks(rctx, fc.Args["solutionID"].(uuid.UUID), fc.Args["documentIDs"].([]uuid.UUID))
-		}
-		directive1 := func(ctx context.Context) (interface{}, error) {
-			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
-			if err != nil {
-				return nil, err
-			}
-			if ec.directives.HasRole == nil {
-				return nil, errors.New("directive hasRole is not implemented")
-			}
-			return ec.directives.HasRole(ctx, nil, directive0, role)
-		}
-
-		tmp, err := directive1(rctx)
-		if err != nil {
-			return nil, graphql.ErrorOnPath(ctx, err)
-		}
-		if tmp == nil {
-			return nil, nil
-		}
-		if data, ok := tmp.([]*models.PlanDocumentSolutionLink); ok {
-			return data, nil
-		}
-		return nil, fmt.Errorf(`unexpected type %T from directive, should be []*github.com/cmsgov/mint-app/pkg/models.PlanDocumentSolutionLink`, tmp)
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		return graphql.Null
-	}
-	res := resTmp.([]*models.PlanDocumentSolutionLink)
-	fc.Result = res
-	return ec.marshalOPlanDocumentSolutionLink2ᚕᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanDocumentSolutionLinkᚄ(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_Mutation_createPlanDocumentSolutionLinks(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "Mutation",
-		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			switch field.Name {
-			case "id":
-				return ec.fieldContext_PlanDocumentSolutionLink_id(ctx, field)
-			case "solutionID":
-				return ec.fieldContext_PlanDocumentSolutionLink_solutionID(ctx, field)
-			case "documentID":
-				return ec.fieldContext_PlanDocumentSolutionLink_documentID(ctx, field)
-			case "createdBy":
-				return ec.fieldContext_PlanDocumentSolutionLink_createdBy(ctx, field)
-			case "createdByUserAccount":
-				return ec.fieldContext_PlanDocumentSolutionLink_createdByUserAccount(ctx, field)
-			case "createdDts":
-				return ec.fieldContext_PlanDocumentSolutionLink_createdDts(ctx, field)
-			case "modifiedBy":
-				return ec.fieldContext_PlanDocumentSolutionLink_modifiedBy(ctx, field)
-			case "modifiedByUserAccount":
-				return ec.fieldContext_PlanDocumentSolutionLink_modifiedByUserAccount(ctx, field)
-			case "modifiedDts":
-				return ec.fieldContext_PlanDocumentSolutionLink_modifiedDts(ctx, field)
-			}
-			return nil, fmt.Errorf("no field named %q was found under type PlanDocumentSolutionLink", field.Name)
-		},
-	}
-	defer func() {
-		if r := recover(); r != nil {
-			err = ec.Recover(ctx, r)
-			ec.Error(ctx, err)
-		}
-	}()
-	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Mutation_createPlanDocumentSolutionLinks_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
-		ec.Error(ctx, err)
-		return fc, err
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _Mutation_removePlanDocumentSolutionLinks(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Mutation_removePlanDocumentSolutionLinks(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		directive0 := func(rctx context.Context) (interface{}, error) {
-			ctx = rctx // use context from middleware stack in children
-			return ec.resolvers.Mutation().RemovePlanDocumentSolutionLinks(rctx, fc.Args["solutionID"].(uuid.UUID), fc.Args["documentIDs"].([]uuid.UUID))
-		}
-		directive1 := func(ctx context.Context) (interface{}, error) {
-			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
-			if err != nil {
-				return nil, err
-			}
-			if ec.directives.HasRole == nil {
-				return nil, errors.New("directive hasRole is not implemented")
-			}
-			return ec.directives.HasRole(ctx, nil, directive0, role)
-		}
-
-		tmp, err := directive1(rctx)
-		if err != nil {
-			return nil, graphql.ErrorOnPath(ctx, err)
-		}
-		if tmp == nil {
-			return nil, nil
-		}
-		if data, ok := tmp.(bool); ok {
-			return data, nil
-		}
-		return nil, fmt.Errorf(`unexpected type %T from directive, should be bool`, tmp)
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(bool)
-	fc.Result = res
-	return ec.marshalNBoolean2bool(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_Mutation_removePlanDocumentSolutionLinks(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "Mutation",
-		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type Boolean does not have child fields")
-		},
-	}
-	defer func() {
-		if r := recover(); r != nil {
-			err = ec.Recover(ctx, r)
-			ec.Error(ctx, err)
-		}
-	}()
-	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Mutation_removePlanDocumentSolutionLinks_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
-		ec.Error(ctx, err)
-		return fc, err
-	}
-	return fc, nil
-}
-
 func (ec *executionContext) _Mutation_createOperationalSolutionSubtasks(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_Mutation_createOperationalSolutionSubtasks(ctx, field)
 	if err != nil {
@@ -23376,578 +22483,6 @@ func (ec *executionContext) fieldContext_Mutation_deleteOperationalSolutionSubta
 	}()
 	ctx = graphql.WithFieldContext(ctx, fc)
 	if fc.Args, err = ec.field_Mutation_deleteOperationalSolutionSubtask_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
-		ec.Error(ctx, err)
-		return fc, err
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _Mutation_updateExistingModelLinks(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Mutation_updateExistingModelLinks(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		directive0 := func(rctx context.Context) (interface{}, error) {
-			ctx = rctx // use context from middleware stack in children
-			return ec.resolvers.Mutation().UpdateExistingModelLinks(rctx, fc.Args["modelPlanID"].(uuid.UUID), fc.Args["fieldName"].(models.ExisitingModelLinkFieldType), fc.Args["existingModelIDs"].([]int), fc.Args["currentModelPlanIDs"].([]uuid.UUID))
-		}
-		directive1 := func(ctx context.Context) (interface{}, error) {
-			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
-			if err != nil {
-				return nil, err
-			}
-			if ec.directives.HasRole == nil {
-				return nil, errors.New("directive hasRole is not implemented")
-			}
-			return ec.directives.HasRole(ctx, nil, directive0, role)
-		}
-
-		tmp, err := directive1(rctx)
-		if err != nil {
-			return nil, graphql.ErrorOnPath(ctx, err)
-		}
-		if tmp == nil {
-			return nil, nil
-		}
-		if data, ok := tmp.(*models.ExistingModelLinks); ok {
-			return data, nil
-		}
-		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/cmsgov/mint-app/pkg/models.ExistingModelLinks`, tmp)
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(*models.ExistingModelLinks)
-	fc.Result = res
-	return ec.marshalNExistingModelLinks2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐExistingModelLinks(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_Mutation_updateExistingModelLinks(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "Mutation",
-		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			switch field.Name {
-			case "links":
-				return ec.fieldContext_ExistingModelLinks_links(ctx, field)
-			case "fieldName":
-				return ec.fieldContext_ExistingModelLinks_fieldName(ctx, field)
-			case "modelPlanID":
-				return ec.fieldContext_ExistingModelLinks_modelPlanID(ctx, field)
-			case "names":
-				return ec.fieldContext_ExistingModelLinks_names(ctx, field)
-			}
-			return nil, fmt.Errorf("no field named %q was found under type ExistingModelLinks", field.Name)
-		},
-	}
-	defer func() {
-		if r := recover(); r != nil {
-			err = ec.Recover(ctx, r)
-			ec.Error(ctx, err)
-		}
-	}()
-	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Mutation_updateExistingModelLinks_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
-		ec.Error(ctx, err)
-		return fc, err
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _Mutation_reportAProblem(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Mutation_reportAProblem(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		directive0 := func(rctx context.Context) (interface{}, error) {
-			ctx = rctx // use context from middleware stack in children
-			return ec.resolvers.Mutation().ReportAProblem(rctx, fc.Args["input"].(model.ReportAProblemInput))
-		}
-		directive1 := func(ctx context.Context) (interface{}, error) {
-			roles, err := ec.unmarshalNRole2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRoleᚄ(ctx, []interface{}{"MINT_USER", "MINT_MAC"})
-			if err != nil {
-				return nil, err
-			}
-			if ec.directives.HasAnyRole == nil {
-				return nil, errors.New("directive hasAnyRole is not implemented")
-			}
-			return ec.directives.HasAnyRole(ctx, nil, directive0, roles)
-		}
-
-		tmp, err := directive1(rctx)
-		if err != nil {
-			return nil, graphql.ErrorOnPath(ctx, err)
-		}
-		if tmp == nil {
-			return nil, nil
-		}
-		if data, ok := tmp.(bool); ok {
-			return data, nil
-		}
-		return nil, fmt.Errorf(`unexpected type %T from directive, should be bool`, tmp)
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(bool)
-	fc.Result = res
-	return ec.marshalNBoolean2bool(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_Mutation_reportAProblem(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "Mutation",
-		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type Boolean does not have child fields")
-		},
-	}
-	defer func() {
-		if r := recover(); r != nil {
-			err = ec.Recover(ctx, r)
-			ec.Error(ctx, err)
-		}
-	}()
-	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Mutation_reportAProblem_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
-		ec.Error(ctx, err)
-		return fc, err
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _Mutation_sendFeedbackEmail(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Mutation_sendFeedbackEmail(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Mutation().SendFeedbackEmail(rctx, fc.Args["input"].(model.SendFeedbackEmailInput))
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(bool)
-	fc.Result = res
-	return ec.marshalNBoolean2bool(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_Mutation_sendFeedbackEmail(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "Mutation",
-		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type Boolean does not have child fields")
-		},
-	}
-	defer func() {
-		if r := recover(); r != nil {
-			err = ec.Recover(ctx, r)
-			ec.Error(ctx, err)
-		}
-	}()
-	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Mutation_sendFeedbackEmail_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
-		ec.Error(ctx, err)
-		return fc, err
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _Mutation_createModelPlan(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Mutation_createModelPlan(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		directive0 := func(rctx context.Context) (interface{}, error) {
-			ctx = rctx // use context from middleware stack in children
-			return ec.resolvers.Mutation().CreateModelPlan(rctx, fc.Args["modelName"].(string))
-		}
-		directive1 := func(ctx context.Context) (interface{}, error) {
-			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
-			if err != nil {
-				return nil, err
-			}
-			if ec.directives.HasRole == nil {
-				return nil, errors.New("directive hasRole is not implemented")
-			}
-			return ec.directives.HasRole(ctx, nil, directive0, role)
-		}
-
-		tmp, err := directive1(rctx)
-		if err != nil {
-			return nil, graphql.ErrorOnPath(ctx, err)
-		}
-		if tmp == nil {
-			return nil, nil
-		}
-		if data, ok := tmp.(*models.ModelPlan); ok {
-			return data, nil
-		}
-		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/cmsgov/mint-app/pkg/models.ModelPlan`, tmp)
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(*models.ModelPlan)
-	fc.Result = res
-	return ec.marshalNModelPlan2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐModelPlan(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_Mutation_createModelPlan(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "Mutation",
-		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			switch field.Name {
-			case "id":
-				return ec.fieldContext_ModelPlan_id(ctx, field)
-			case "modelName":
-				return ec.fieldContext_ModelPlan_modelName(ctx, field)
-			case "abbreviation":
-				return ec.fieldContext_ModelPlan_abbreviation(ctx, field)
-			case "archived":
-				return ec.fieldContext_ModelPlan_archived(ctx, field)
-			case "createdBy":
-				return ec.fieldContext_ModelPlan_createdBy(ctx, field)
-			case "createdByUserAccount":
-				return ec.fieldContext_ModelPlan_createdByUserAccount(ctx, field)
-			case "createdDts":
-				return ec.fieldContext_ModelPlan_createdDts(ctx, field)
-			case "modifiedBy":
-				return ec.fieldContext_ModelPlan_modifiedBy(ctx, field)
-			case "modifiedByUserAccount":
-				return ec.fieldContext_ModelPlan_modifiedByUserAccount(ctx, field)
-			case "modifiedDts":
-				return ec.fieldContext_ModelPlan_modifiedDts(ctx, field)
-			case "basics":
-				return ec.fieldContext_ModelPlan_basics(ctx, field)
-			case "generalCharacteristics":
-				return ec.fieldContext_ModelPlan_generalCharacteristics(ctx, field)
-			case "participantsAndProviders":
-				return ec.fieldContext_ModelPlan_participantsAndProviders(ctx, field)
-			case "beneficiaries":
-				return ec.fieldContext_ModelPlan_beneficiaries(ctx, field)
-			case "opsEvalAndLearning":
-				return ec.fieldContext_ModelPlan_opsEvalAndLearning(ctx, field)
-			case "collaborators":
-				return ec.fieldContext_ModelPlan_collaborators(ctx, field)
-			case "documents":
-				return ec.fieldContext_ModelPlan_documents(ctx, field)
-			case "discussions":
-				return ec.fieldContext_ModelPlan_discussions(ctx, field)
-			case "payments":
-				return ec.fieldContext_ModelPlan_payments(ctx, field)
-			case "status":
-				return ec.fieldContext_ModelPlan_status(ctx, field)
-			case "isFavorite":
-				return ec.fieldContext_ModelPlan_isFavorite(ctx, field)
-			case "isCollaborator":
-				return ec.fieldContext_ModelPlan_isCollaborator(ctx, field)
-			case "crs":
-				return ec.fieldContext_ModelPlan_crs(ctx, field)
-			case "tdls":
-				return ec.fieldContext_ModelPlan_tdls(ctx, field)
-			case "prepareForClearance":
-				return ec.fieldContext_ModelPlan_prepareForClearance(ctx, field)
-			case "nameHistory":
-				return ec.fieldContext_ModelPlan_nameHistory(ctx, field)
-			case "operationalNeeds":
-				return ec.fieldContext_ModelPlan_operationalNeeds(ctx, field)
-			}
-			return nil, fmt.Errorf("no field named %q was found under type ModelPlan", field.Name)
-		},
-	}
-	defer func() {
-		if r := recover(); r != nil {
-			err = ec.Recover(ctx, r)
-			ec.Error(ctx, err)
-		}
-	}()
-	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Mutation_createModelPlan_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
-		ec.Error(ctx, err)
-		return fc, err
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _Mutation_updateModelPlan(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Mutation_updateModelPlan(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		directive0 := func(rctx context.Context) (interface{}, error) {
-			ctx = rctx // use context from middleware stack in children
-			return ec.resolvers.Mutation().UpdateModelPlan(rctx, fc.Args["id"].(uuid.UUID), fc.Args["changes"].(map[string]interface{}))
-		}
-		directive1 := func(ctx context.Context) (interface{}, error) {
-			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
-			if err != nil {
-				return nil, err
-			}
-			if ec.directives.HasRole == nil {
-				return nil, errors.New("directive hasRole is not implemented")
-			}
-			return ec.directives.HasRole(ctx, nil, directive0, role)
-		}
-
-		tmp, err := directive1(rctx)
-		if err != nil {
-			return nil, graphql.ErrorOnPath(ctx, err)
-		}
-		if tmp == nil {
-			return nil, nil
-		}
-		if data, ok := tmp.(*models.ModelPlan); ok {
-			return data, nil
-		}
-		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/cmsgov/mint-app/pkg/models.ModelPlan`, tmp)
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(*models.ModelPlan)
-	fc.Result = res
-	return ec.marshalNModelPlan2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐModelPlan(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_Mutation_updateModelPlan(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "Mutation",
-		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			switch field.Name {
-			case "id":
-				return ec.fieldContext_ModelPlan_id(ctx, field)
-			case "modelName":
-				return ec.fieldContext_ModelPlan_modelName(ctx, field)
-			case "abbreviation":
-				return ec.fieldContext_ModelPlan_abbreviation(ctx, field)
-			case "archived":
-				return ec.fieldContext_ModelPlan_archived(ctx, field)
-			case "createdBy":
-				return ec.fieldContext_ModelPlan_createdBy(ctx, field)
-			case "createdByUserAccount":
-				return ec.fieldContext_ModelPlan_createdByUserAccount(ctx, field)
-			case "createdDts":
-				return ec.fieldContext_ModelPlan_createdDts(ctx, field)
-			case "modifiedBy":
-				return ec.fieldContext_ModelPlan_modifiedBy(ctx, field)
-			case "modifiedByUserAccount":
-				return ec.fieldContext_ModelPlan_modifiedByUserAccount(ctx, field)
-			case "modifiedDts":
-				return ec.fieldContext_ModelPlan_modifiedDts(ctx, field)
-			case "basics":
-				return ec.fieldContext_ModelPlan_basics(ctx, field)
-			case "generalCharacteristics":
-				return ec.fieldContext_ModelPlan_generalCharacteristics(ctx, field)
-			case "participantsAndProviders":
-				return ec.fieldContext_ModelPlan_participantsAndProviders(ctx, field)
-			case "beneficiaries":
-				return ec.fieldContext_ModelPlan_beneficiaries(ctx, field)
-			case "opsEvalAndLearning":
-				return ec.fieldContext_ModelPlan_opsEvalAndLearning(ctx, field)
-			case "collaborators":
-				return ec.fieldContext_ModelPlan_collaborators(ctx, field)
-			case "documents":
-				return ec.fieldContext_ModelPlan_documents(ctx, field)
-			case "discussions":
-				return ec.fieldContext_ModelPlan_discussions(ctx, field)
-			case "payments":
-				return ec.fieldContext_ModelPlan_payments(ctx, field)
-			case "status":
-				return ec.fieldContext_ModelPlan_status(ctx, field)
-			case "isFavorite":
-				return ec.fieldContext_ModelPlan_isFavorite(ctx, field)
-			case "isCollaborator":
-				return ec.fieldContext_ModelPlan_isCollaborator(ctx, field)
-			case "crs":
-				return ec.fieldContext_ModelPlan_crs(ctx, field)
-			case "tdls":
-				return ec.fieldContext_ModelPlan_tdls(ctx, field)
-			case "prepareForClearance":
-				return ec.fieldContext_ModelPlan_prepareForClearance(ctx, field)
-			case "nameHistory":
-				return ec.fieldContext_ModelPlan_nameHistory(ctx, field)
-			case "operationalNeeds":
-				return ec.fieldContext_ModelPlan_operationalNeeds(ctx, field)
-			}
-			return nil, fmt.Errorf("no field named %q was found under type ModelPlan", field.Name)
-		},
-	}
-	defer func() {
-		if r := recover(); r != nil {
-			err = ec.Recover(ctx, r)
-			ec.Error(ctx, err)
-		}
-	}()
-	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Mutation_updateModelPlan_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
-		ec.Error(ctx, err)
-		return fc, err
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _Mutation_shareModelPlan(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Mutation_shareModelPlan(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		directive0 := func(rctx context.Context) (interface{}, error) {
-			ctx = rctx // use context from middleware stack in children
-			return ec.resolvers.Mutation().ShareModelPlan(rctx, fc.Args["modelPlanID"].(uuid.UUID), fc.Args["viewFilter"].(*models.ModelViewFilter), fc.Args["usernames"].([]string), fc.Args["optionalMessage"].(*string))
-		}
-		directive1 := func(ctx context.Context) (interface{}, error) {
-			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
-			if err != nil {
-				return nil, err
-			}
-			if ec.directives.HasRole == nil {
-				return nil, errors.New("directive hasRole is not implemented")
-			}
-			return ec.directives.HasRole(ctx, nil, directive0, role)
-		}
-
-		tmp, err := directive1(rctx)
-		if err != nil {
-			return nil, graphql.ErrorOnPath(ctx, err)
-		}
-		if tmp == nil {
-			return nil, nil
-		}
-		if data, ok := tmp.(bool); ok {
-			return data, nil
-		}
-		return nil, fmt.Errorf(`unexpected type %T from directive, should be bool`, tmp)
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(bool)
-	fc.Result = res
-	return ec.marshalNBoolean2bool(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_Mutation_shareModelPlan(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "Mutation",
-		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type Boolean does not have child fields")
-		},
-	}
-	defer func() {
-		if r := recover(); r != nil {
-			err = ec.Recover(ctx, r)
-			ec.Error(ctx, err)
-		}
-	}()
-	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Mutation_shareModelPlan_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
 		ec.Error(ctx, err)
 		return fc, err
 	}
@@ -24278,6 +22813,1457 @@ func (ec *executionContext) fieldContext_Mutation_updatePlanBeneficiaries(ctx co
 	}()
 	ctx = graphql.WithFieldContext(ctx, fc)
 	if fc.Args, err = ec.field_Mutation_updatePlanBeneficiaries_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Mutation_createPlanCollaborator(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Mutation_createPlanCollaborator(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		directive0 := func(rctx context.Context) (interface{}, error) {
+			ctx = rctx // use context from middleware stack in children
+			return ec.resolvers.Mutation().CreatePlanCollaborator(rctx, fc.Args["input"].(model.PlanCollaboratorCreateInput))
+		}
+		directive1 := func(ctx context.Context) (interface{}, error) {
+			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
+			if err != nil {
+				return nil, err
+			}
+			if ec.directives.HasRole == nil {
+				return nil, errors.New("directive hasRole is not implemented")
+			}
+			return ec.directives.HasRole(ctx, nil, directive0, role)
+		}
+
+		tmp, err := directive1(rctx)
+		if err != nil {
+			return nil, graphql.ErrorOnPath(ctx, err)
+		}
+		if tmp == nil {
+			return nil, nil
+		}
+		if data, ok := tmp.(*models.PlanCollaborator); ok {
+			return data, nil
+		}
+		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/cmsgov/mint-app/pkg/models.PlanCollaborator`, tmp)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*models.PlanCollaborator)
+	fc.Result = res
+	return ec.marshalNPlanCollaborator2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanCollaborator(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Mutation_createPlanCollaborator(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Mutation",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_PlanCollaborator_id(ctx, field)
+			case "modelPlanID":
+				return ec.fieldContext_PlanCollaborator_modelPlanID(ctx, field)
+			case "userID":
+				return ec.fieldContext_PlanCollaborator_userID(ctx, field)
+			case "userAccount":
+				return ec.fieldContext_PlanCollaborator_userAccount(ctx, field)
+			case "teamRoles":
+				return ec.fieldContext_PlanCollaborator_teamRoles(ctx, field)
+			case "createdBy":
+				return ec.fieldContext_PlanCollaborator_createdBy(ctx, field)
+			case "createdByUserAccount":
+				return ec.fieldContext_PlanCollaborator_createdByUserAccount(ctx, field)
+			case "createdDts":
+				return ec.fieldContext_PlanCollaborator_createdDts(ctx, field)
+			case "modifiedBy":
+				return ec.fieldContext_PlanCollaborator_modifiedBy(ctx, field)
+			case "modifiedByUserAccount":
+				return ec.fieldContext_PlanCollaborator_modifiedByUserAccount(ctx, field)
+			case "modifiedDts":
+				return ec.fieldContext_PlanCollaborator_modifiedDts(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type PlanCollaborator", field.Name)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Mutation_createPlanCollaborator_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Mutation_updatePlanCollaborator(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Mutation_updatePlanCollaborator(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		directive0 := func(rctx context.Context) (interface{}, error) {
+			ctx = rctx // use context from middleware stack in children
+			return ec.resolvers.Mutation().UpdatePlanCollaborator(rctx, fc.Args["id"].(uuid.UUID), fc.Args["newRoles"].([]models.TeamRole))
+		}
+		directive1 := func(ctx context.Context) (interface{}, error) {
+			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
+			if err != nil {
+				return nil, err
+			}
+			if ec.directives.HasRole == nil {
+				return nil, errors.New("directive hasRole is not implemented")
+			}
+			return ec.directives.HasRole(ctx, nil, directive0, role)
+		}
+
+		tmp, err := directive1(rctx)
+		if err != nil {
+			return nil, graphql.ErrorOnPath(ctx, err)
+		}
+		if tmp == nil {
+			return nil, nil
+		}
+		if data, ok := tmp.(*models.PlanCollaborator); ok {
+			return data, nil
+		}
+		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/cmsgov/mint-app/pkg/models.PlanCollaborator`, tmp)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*models.PlanCollaborator)
+	fc.Result = res
+	return ec.marshalNPlanCollaborator2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanCollaborator(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Mutation_updatePlanCollaborator(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Mutation",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_PlanCollaborator_id(ctx, field)
+			case "modelPlanID":
+				return ec.fieldContext_PlanCollaborator_modelPlanID(ctx, field)
+			case "userID":
+				return ec.fieldContext_PlanCollaborator_userID(ctx, field)
+			case "userAccount":
+				return ec.fieldContext_PlanCollaborator_userAccount(ctx, field)
+			case "teamRoles":
+				return ec.fieldContext_PlanCollaborator_teamRoles(ctx, field)
+			case "createdBy":
+				return ec.fieldContext_PlanCollaborator_createdBy(ctx, field)
+			case "createdByUserAccount":
+				return ec.fieldContext_PlanCollaborator_createdByUserAccount(ctx, field)
+			case "createdDts":
+				return ec.fieldContext_PlanCollaborator_createdDts(ctx, field)
+			case "modifiedBy":
+				return ec.fieldContext_PlanCollaborator_modifiedBy(ctx, field)
+			case "modifiedByUserAccount":
+				return ec.fieldContext_PlanCollaborator_modifiedByUserAccount(ctx, field)
+			case "modifiedDts":
+				return ec.fieldContext_PlanCollaborator_modifiedDts(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type PlanCollaborator", field.Name)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Mutation_updatePlanCollaborator_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Mutation_deletePlanCollaborator(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Mutation_deletePlanCollaborator(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		directive0 := func(rctx context.Context) (interface{}, error) {
+			ctx = rctx // use context from middleware stack in children
+			return ec.resolvers.Mutation().DeletePlanCollaborator(rctx, fc.Args["id"].(uuid.UUID))
+		}
+		directive1 := func(ctx context.Context) (interface{}, error) {
+			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
+			if err != nil {
+				return nil, err
+			}
+			if ec.directives.HasRole == nil {
+				return nil, errors.New("directive hasRole is not implemented")
+			}
+			return ec.directives.HasRole(ctx, nil, directive0, role)
+		}
+
+		tmp, err := directive1(rctx)
+		if err != nil {
+			return nil, graphql.ErrorOnPath(ctx, err)
+		}
+		if tmp == nil {
+			return nil, nil
+		}
+		if data, ok := tmp.(*models.PlanCollaborator); ok {
+			return data, nil
+		}
+		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/cmsgov/mint-app/pkg/models.PlanCollaborator`, tmp)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*models.PlanCollaborator)
+	fc.Result = res
+	return ec.marshalNPlanCollaborator2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanCollaborator(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Mutation_deletePlanCollaborator(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Mutation",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_PlanCollaborator_id(ctx, field)
+			case "modelPlanID":
+				return ec.fieldContext_PlanCollaborator_modelPlanID(ctx, field)
+			case "userID":
+				return ec.fieldContext_PlanCollaborator_userID(ctx, field)
+			case "userAccount":
+				return ec.fieldContext_PlanCollaborator_userAccount(ctx, field)
+			case "teamRoles":
+				return ec.fieldContext_PlanCollaborator_teamRoles(ctx, field)
+			case "createdBy":
+				return ec.fieldContext_PlanCollaborator_createdBy(ctx, field)
+			case "createdByUserAccount":
+				return ec.fieldContext_PlanCollaborator_createdByUserAccount(ctx, field)
+			case "createdDts":
+				return ec.fieldContext_PlanCollaborator_createdDts(ctx, field)
+			case "modifiedBy":
+				return ec.fieldContext_PlanCollaborator_modifiedBy(ctx, field)
+			case "modifiedByUserAccount":
+				return ec.fieldContext_PlanCollaborator_modifiedByUserAccount(ctx, field)
+			case "modifiedDts":
+				return ec.fieldContext_PlanCollaborator_modifiedDts(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type PlanCollaborator", field.Name)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Mutation_deletePlanCollaborator_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Mutation_createPlanCR(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Mutation_createPlanCR(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		directive0 := func(rctx context.Context) (interface{}, error) {
+			ctx = rctx // use context from middleware stack in children
+			return ec.resolvers.Mutation().CreatePlanCr(rctx, fc.Args["input"].(model.PlanCRCreateInput))
+		}
+		directive1 := func(ctx context.Context) (interface{}, error) {
+			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
+			if err != nil {
+				return nil, err
+			}
+			if ec.directives.HasRole == nil {
+				return nil, errors.New("directive hasRole is not implemented")
+			}
+			return ec.directives.HasRole(ctx, nil, directive0, role)
+		}
+
+		tmp, err := directive1(rctx)
+		if err != nil {
+			return nil, graphql.ErrorOnPath(ctx, err)
+		}
+		if tmp == nil {
+			return nil, nil
+		}
+		if data, ok := tmp.(*models.PlanCR); ok {
+			return data, nil
+		}
+		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/cmsgov/mint-app/pkg/models.PlanCR`, tmp)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*models.PlanCR)
+	fc.Result = res
+	return ec.marshalNPlanCR2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanCR(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Mutation_createPlanCR(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Mutation",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_PlanCR_id(ctx, field)
+			case "modelPlanID":
+				return ec.fieldContext_PlanCR_modelPlanID(ctx, field)
+			case "idNumber":
+				return ec.fieldContext_PlanCR_idNumber(ctx, field)
+			case "dateInitiated":
+				return ec.fieldContext_PlanCR_dateInitiated(ctx, field)
+			case "dateImplemented":
+				return ec.fieldContext_PlanCR_dateImplemented(ctx, field)
+			case "title":
+				return ec.fieldContext_PlanCR_title(ctx, field)
+			case "note":
+				return ec.fieldContext_PlanCR_note(ctx, field)
+			case "createdBy":
+				return ec.fieldContext_PlanCR_createdBy(ctx, field)
+			case "createdByUserAccount":
+				return ec.fieldContext_PlanCR_createdByUserAccount(ctx, field)
+			case "createdDts":
+				return ec.fieldContext_PlanCR_createdDts(ctx, field)
+			case "modifiedBy":
+				return ec.fieldContext_PlanCR_modifiedBy(ctx, field)
+			case "modifiedByUserAccount":
+				return ec.fieldContext_PlanCR_modifiedByUserAccount(ctx, field)
+			case "modifiedDts":
+				return ec.fieldContext_PlanCR_modifiedDts(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type PlanCR", field.Name)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Mutation_createPlanCR_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Mutation_updatePlanCR(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Mutation_updatePlanCR(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		directive0 := func(rctx context.Context) (interface{}, error) {
+			ctx = rctx // use context from middleware stack in children
+			return ec.resolvers.Mutation().UpdatePlanCr(rctx, fc.Args["id"].(uuid.UUID), fc.Args["changes"].(map[string]interface{}))
+		}
+		directive1 := func(ctx context.Context) (interface{}, error) {
+			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
+			if err != nil {
+				return nil, err
+			}
+			if ec.directives.HasRole == nil {
+				return nil, errors.New("directive hasRole is not implemented")
+			}
+			return ec.directives.HasRole(ctx, nil, directive0, role)
+		}
+
+		tmp, err := directive1(rctx)
+		if err != nil {
+			return nil, graphql.ErrorOnPath(ctx, err)
+		}
+		if tmp == nil {
+			return nil, nil
+		}
+		if data, ok := tmp.(*models.PlanCR); ok {
+			return data, nil
+		}
+		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/cmsgov/mint-app/pkg/models.PlanCR`, tmp)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*models.PlanCR)
+	fc.Result = res
+	return ec.marshalNPlanCR2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanCR(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Mutation_updatePlanCR(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Mutation",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_PlanCR_id(ctx, field)
+			case "modelPlanID":
+				return ec.fieldContext_PlanCR_modelPlanID(ctx, field)
+			case "idNumber":
+				return ec.fieldContext_PlanCR_idNumber(ctx, field)
+			case "dateInitiated":
+				return ec.fieldContext_PlanCR_dateInitiated(ctx, field)
+			case "dateImplemented":
+				return ec.fieldContext_PlanCR_dateImplemented(ctx, field)
+			case "title":
+				return ec.fieldContext_PlanCR_title(ctx, field)
+			case "note":
+				return ec.fieldContext_PlanCR_note(ctx, field)
+			case "createdBy":
+				return ec.fieldContext_PlanCR_createdBy(ctx, field)
+			case "createdByUserAccount":
+				return ec.fieldContext_PlanCR_createdByUserAccount(ctx, field)
+			case "createdDts":
+				return ec.fieldContext_PlanCR_createdDts(ctx, field)
+			case "modifiedBy":
+				return ec.fieldContext_PlanCR_modifiedBy(ctx, field)
+			case "modifiedByUserAccount":
+				return ec.fieldContext_PlanCR_modifiedByUserAccount(ctx, field)
+			case "modifiedDts":
+				return ec.fieldContext_PlanCR_modifiedDts(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type PlanCR", field.Name)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Mutation_updatePlanCR_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Mutation_deletePlanCR(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Mutation_deletePlanCR(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		directive0 := func(rctx context.Context) (interface{}, error) {
+			ctx = rctx // use context from middleware stack in children
+			return ec.resolvers.Mutation().DeletePlanCr(rctx, fc.Args["id"].(uuid.UUID))
+		}
+		directive1 := func(ctx context.Context) (interface{}, error) {
+			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
+			if err != nil {
+				return nil, err
+			}
+			if ec.directives.HasRole == nil {
+				return nil, errors.New("directive hasRole is not implemented")
+			}
+			return ec.directives.HasRole(ctx, nil, directive0, role)
+		}
+
+		tmp, err := directive1(rctx)
+		if err != nil {
+			return nil, graphql.ErrorOnPath(ctx, err)
+		}
+		if tmp == nil {
+			return nil, nil
+		}
+		if data, ok := tmp.(*models.PlanCR); ok {
+			return data, nil
+		}
+		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/cmsgov/mint-app/pkg/models.PlanCR`, tmp)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*models.PlanCR)
+	fc.Result = res
+	return ec.marshalNPlanCR2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanCR(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Mutation_deletePlanCR(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Mutation",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_PlanCR_id(ctx, field)
+			case "modelPlanID":
+				return ec.fieldContext_PlanCR_modelPlanID(ctx, field)
+			case "idNumber":
+				return ec.fieldContext_PlanCR_idNumber(ctx, field)
+			case "dateInitiated":
+				return ec.fieldContext_PlanCR_dateInitiated(ctx, field)
+			case "dateImplemented":
+				return ec.fieldContext_PlanCR_dateImplemented(ctx, field)
+			case "title":
+				return ec.fieldContext_PlanCR_title(ctx, field)
+			case "note":
+				return ec.fieldContext_PlanCR_note(ctx, field)
+			case "createdBy":
+				return ec.fieldContext_PlanCR_createdBy(ctx, field)
+			case "createdByUserAccount":
+				return ec.fieldContext_PlanCR_createdByUserAccount(ctx, field)
+			case "createdDts":
+				return ec.fieldContext_PlanCR_createdDts(ctx, field)
+			case "modifiedBy":
+				return ec.fieldContext_PlanCR_modifiedBy(ctx, field)
+			case "modifiedByUserAccount":
+				return ec.fieldContext_PlanCR_modifiedByUserAccount(ctx, field)
+			case "modifiedDts":
+				return ec.fieldContext_PlanCR_modifiedDts(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type PlanCR", field.Name)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Mutation_deletePlanCR_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Mutation_createPlanDiscussion(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Mutation_createPlanDiscussion(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		directive0 := func(rctx context.Context) (interface{}, error) {
+			ctx = rctx // use context from middleware stack in children
+			return ec.resolvers.Mutation().CreatePlanDiscussion(rctx, fc.Args["input"].(model.PlanDiscussionCreateInput))
+		}
+		directive1 := func(ctx context.Context) (interface{}, error) {
+			roles, err := ec.unmarshalNRole2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRoleᚄ(ctx, []interface{}{"MINT_USER", "MINT_MAC"})
+			if err != nil {
+				return nil, err
+			}
+			if ec.directives.HasAnyRole == nil {
+				return nil, errors.New("directive hasAnyRole is not implemented")
+			}
+			return ec.directives.HasAnyRole(ctx, nil, directive0, roles)
+		}
+
+		tmp, err := directive1(rctx)
+		if err != nil {
+			return nil, graphql.ErrorOnPath(ctx, err)
+		}
+		if tmp == nil {
+			return nil, nil
+		}
+		if data, ok := tmp.(*models.PlanDiscussion); ok {
+			return data, nil
+		}
+		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/cmsgov/mint-app/pkg/models.PlanDiscussion`, tmp)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*models.PlanDiscussion)
+	fc.Result = res
+	return ec.marshalNPlanDiscussion2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanDiscussion(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Mutation_createPlanDiscussion(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Mutation",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_PlanDiscussion_id(ctx, field)
+			case "modelPlanID":
+				return ec.fieldContext_PlanDiscussion_modelPlanID(ctx, field)
+			case "content":
+				return ec.fieldContext_PlanDiscussion_content(ctx, field)
+			case "userRole":
+				return ec.fieldContext_PlanDiscussion_userRole(ctx, field)
+			case "userRoleDescription":
+				return ec.fieldContext_PlanDiscussion_userRoleDescription(ctx, field)
+			case "replies":
+				return ec.fieldContext_PlanDiscussion_replies(ctx, field)
+			case "isAssessment":
+				return ec.fieldContext_PlanDiscussion_isAssessment(ctx, field)
+			case "createdBy":
+				return ec.fieldContext_PlanDiscussion_createdBy(ctx, field)
+			case "createdByUserAccount":
+				return ec.fieldContext_PlanDiscussion_createdByUserAccount(ctx, field)
+			case "createdDts":
+				return ec.fieldContext_PlanDiscussion_createdDts(ctx, field)
+			case "modifiedBy":
+				return ec.fieldContext_PlanDiscussion_modifiedBy(ctx, field)
+			case "modifiedByUserAccount":
+				return ec.fieldContext_PlanDiscussion_modifiedByUserAccount(ctx, field)
+			case "modifiedDts":
+				return ec.fieldContext_PlanDiscussion_modifiedDts(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type PlanDiscussion", field.Name)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Mutation_createPlanDiscussion_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Mutation_uploadNewPlanDocument(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Mutation_uploadNewPlanDocument(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		directive0 := func(rctx context.Context) (interface{}, error) {
+			ctx = rctx // use context from middleware stack in children
+			return ec.resolvers.Mutation().UploadNewPlanDocument(rctx, fc.Args["input"].(model.PlanDocumentInput))
+		}
+		directive1 := func(ctx context.Context) (interface{}, error) {
+			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
+			if err != nil {
+				return nil, err
+			}
+			if ec.directives.HasRole == nil {
+				return nil, errors.New("directive hasRole is not implemented")
+			}
+			return ec.directives.HasRole(ctx, nil, directive0, role)
+		}
+
+		tmp, err := directive1(rctx)
+		if err != nil {
+			return nil, graphql.ErrorOnPath(ctx, err)
+		}
+		if tmp == nil {
+			return nil, nil
+		}
+		if data, ok := tmp.(*models.PlanDocument); ok {
+			return data, nil
+		}
+		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/cmsgov/mint-app/pkg/models.PlanDocument`, tmp)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*models.PlanDocument)
+	fc.Result = res
+	return ec.marshalNPlanDocument2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanDocument(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Mutation_uploadNewPlanDocument(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Mutation",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_PlanDocument_id(ctx, field)
+			case "modelPlanID":
+				return ec.fieldContext_PlanDocument_modelPlanID(ctx, field)
+			case "isLink":
+				return ec.fieldContext_PlanDocument_isLink(ctx, field)
+			case "url":
+				return ec.fieldContext_PlanDocument_url(ctx, field)
+			case "fileType":
+				return ec.fieldContext_PlanDocument_fileType(ctx, field)
+			case "bucket":
+				return ec.fieldContext_PlanDocument_bucket(ctx, field)
+			case "fileKey":
+				return ec.fieldContext_PlanDocument_fileKey(ctx, field)
+			case "virusScanned":
+				return ec.fieldContext_PlanDocument_virusScanned(ctx, field)
+			case "virusClean":
+				return ec.fieldContext_PlanDocument_virusClean(ctx, field)
+			case "restricted":
+				return ec.fieldContext_PlanDocument_restricted(ctx, field)
+			case "fileName":
+				return ec.fieldContext_PlanDocument_fileName(ctx, field)
+			case "fileSize":
+				return ec.fieldContext_PlanDocument_fileSize(ctx, field)
+			case "documentType":
+				return ec.fieldContext_PlanDocument_documentType(ctx, field)
+			case "otherType":
+				return ec.fieldContext_PlanDocument_otherType(ctx, field)
+			case "optionalNotes":
+				return ec.fieldContext_PlanDocument_optionalNotes(ctx, field)
+			case "downloadUrl":
+				return ec.fieldContext_PlanDocument_downloadUrl(ctx, field)
+			case "deletedAt":
+				return ec.fieldContext_PlanDocument_deletedAt(ctx, field)
+			case "numLinkedSolutions":
+				return ec.fieldContext_PlanDocument_numLinkedSolutions(ctx, field)
+			case "createdBy":
+				return ec.fieldContext_PlanDocument_createdBy(ctx, field)
+			case "createdByUserAccount":
+				return ec.fieldContext_PlanDocument_createdByUserAccount(ctx, field)
+			case "createdDts":
+				return ec.fieldContext_PlanDocument_createdDts(ctx, field)
+			case "modifiedBy":
+				return ec.fieldContext_PlanDocument_modifiedBy(ctx, field)
+			case "modifiedByUserAccount":
+				return ec.fieldContext_PlanDocument_modifiedByUserAccount(ctx, field)
+			case "modifiedDts":
+				return ec.fieldContext_PlanDocument_modifiedDts(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type PlanDocument", field.Name)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Mutation_uploadNewPlanDocument_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Mutation_linkNewPlanDocument(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Mutation_linkNewPlanDocument(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		directive0 := func(rctx context.Context) (interface{}, error) {
+			ctx = rctx // use context from middleware stack in children
+			return ec.resolvers.Mutation().LinkNewPlanDocument(rctx, fc.Args["input"].(model.PlanDocumentLinkInput))
+		}
+		directive1 := func(ctx context.Context) (interface{}, error) {
+			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
+			if err != nil {
+				return nil, err
+			}
+			if ec.directives.HasRole == nil {
+				return nil, errors.New("directive hasRole is not implemented")
+			}
+			return ec.directives.HasRole(ctx, nil, directive0, role)
+		}
+
+		tmp, err := directive1(rctx)
+		if err != nil {
+			return nil, graphql.ErrorOnPath(ctx, err)
+		}
+		if tmp == nil {
+			return nil, nil
+		}
+		if data, ok := tmp.(*models.PlanDocument); ok {
+			return data, nil
+		}
+		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/cmsgov/mint-app/pkg/models.PlanDocument`, tmp)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*models.PlanDocument)
+	fc.Result = res
+	return ec.marshalNPlanDocument2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanDocument(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Mutation_linkNewPlanDocument(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Mutation",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_PlanDocument_id(ctx, field)
+			case "modelPlanID":
+				return ec.fieldContext_PlanDocument_modelPlanID(ctx, field)
+			case "isLink":
+				return ec.fieldContext_PlanDocument_isLink(ctx, field)
+			case "url":
+				return ec.fieldContext_PlanDocument_url(ctx, field)
+			case "fileType":
+				return ec.fieldContext_PlanDocument_fileType(ctx, field)
+			case "bucket":
+				return ec.fieldContext_PlanDocument_bucket(ctx, field)
+			case "fileKey":
+				return ec.fieldContext_PlanDocument_fileKey(ctx, field)
+			case "virusScanned":
+				return ec.fieldContext_PlanDocument_virusScanned(ctx, field)
+			case "virusClean":
+				return ec.fieldContext_PlanDocument_virusClean(ctx, field)
+			case "restricted":
+				return ec.fieldContext_PlanDocument_restricted(ctx, field)
+			case "fileName":
+				return ec.fieldContext_PlanDocument_fileName(ctx, field)
+			case "fileSize":
+				return ec.fieldContext_PlanDocument_fileSize(ctx, field)
+			case "documentType":
+				return ec.fieldContext_PlanDocument_documentType(ctx, field)
+			case "otherType":
+				return ec.fieldContext_PlanDocument_otherType(ctx, field)
+			case "optionalNotes":
+				return ec.fieldContext_PlanDocument_optionalNotes(ctx, field)
+			case "downloadUrl":
+				return ec.fieldContext_PlanDocument_downloadUrl(ctx, field)
+			case "deletedAt":
+				return ec.fieldContext_PlanDocument_deletedAt(ctx, field)
+			case "numLinkedSolutions":
+				return ec.fieldContext_PlanDocument_numLinkedSolutions(ctx, field)
+			case "createdBy":
+				return ec.fieldContext_PlanDocument_createdBy(ctx, field)
+			case "createdByUserAccount":
+				return ec.fieldContext_PlanDocument_createdByUserAccount(ctx, field)
+			case "createdDts":
+				return ec.fieldContext_PlanDocument_createdDts(ctx, field)
+			case "modifiedBy":
+				return ec.fieldContext_PlanDocument_modifiedBy(ctx, field)
+			case "modifiedByUserAccount":
+				return ec.fieldContext_PlanDocument_modifiedByUserAccount(ctx, field)
+			case "modifiedDts":
+				return ec.fieldContext_PlanDocument_modifiedDts(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type PlanDocument", field.Name)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Mutation_linkNewPlanDocument_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Mutation_deletePlanDocument(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Mutation_deletePlanDocument(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		directive0 := func(rctx context.Context) (interface{}, error) {
+			ctx = rctx // use context from middleware stack in children
+			return ec.resolvers.Mutation().DeletePlanDocument(rctx, fc.Args["id"].(uuid.UUID))
+		}
+		directive1 := func(ctx context.Context) (interface{}, error) {
+			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
+			if err != nil {
+				return nil, err
+			}
+			if ec.directives.HasRole == nil {
+				return nil, errors.New("directive hasRole is not implemented")
+			}
+			return ec.directives.HasRole(ctx, nil, directive0, role)
+		}
+
+		tmp, err := directive1(rctx)
+		if err != nil {
+			return nil, graphql.ErrorOnPath(ctx, err)
+		}
+		if tmp == nil {
+			return nil, nil
+		}
+		if data, ok := tmp.(int); ok {
+			return data, nil
+		}
+		return nil, fmt.Errorf(`unexpected type %T from directive, should be int`, tmp)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(int)
+	fc.Result = res
+	return ec.marshalNInt2int(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Mutation_deletePlanDocument(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Mutation",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Int does not have child fields")
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Mutation_deletePlanDocument_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Mutation_createPlanDocumentSolutionLinks(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Mutation_createPlanDocumentSolutionLinks(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		directive0 := func(rctx context.Context) (interface{}, error) {
+			ctx = rctx // use context from middleware stack in children
+			return ec.resolvers.Mutation().CreatePlanDocumentSolutionLinks(rctx, fc.Args["solutionID"].(uuid.UUID), fc.Args["documentIDs"].([]uuid.UUID))
+		}
+		directive1 := func(ctx context.Context) (interface{}, error) {
+			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
+			if err != nil {
+				return nil, err
+			}
+			if ec.directives.HasRole == nil {
+				return nil, errors.New("directive hasRole is not implemented")
+			}
+			return ec.directives.HasRole(ctx, nil, directive0, role)
+		}
+
+		tmp, err := directive1(rctx)
+		if err != nil {
+			return nil, graphql.ErrorOnPath(ctx, err)
+		}
+		if tmp == nil {
+			return nil, nil
+		}
+		if data, ok := tmp.([]*models.PlanDocumentSolutionLink); ok {
+			return data, nil
+		}
+		return nil, fmt.Errorf(`unexpected type %T from directive, should be []*github.com/cmsgov/mint-app/pkg/models.PlanDocumentSolutionLink`, tmp)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.([]*models.PlanDocumentSolutionLink)
+	fc.Result = res
+	return ec.marshalOPlanDocumentSolutionLink2ᚕᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanDocumentSolutionLinkᚄ(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Mutation_createPlanDocumentSolutionLinks(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Mutation",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_PlanDocumentSolutionLink_id(ctx, field)
+			case "solutionID":
+				return ec.fieldContext_PlanDocumentSolutionLink_solutionID(ctx, field)
+			case "documentID":
+				return ec.fieldContext_PlanDocumentSolutionLink_documentID(ctx, field)
+			case "createdBy":
+				return ec.fieldContext_PlanDocumentSolutionLink_createdBy(ctx, field)
+			case "createdByUserAccount":
+				return ec.fieldContext_PlanDocumentSolutionLink_createdByUserAccount(ctx, field)
+			case "createdDts":
+				return ec.fieldContext_PlanDocumentSolutionLink_createdDts(ctx, field)
+			case "modifiedBy":
+				return ec.fieldContext_PlanDocumentSolutionLink_modifiedBy(ctx, field)
+			case "modifiedByUserAccount":
+				return ec.fieldContext_PlanDocumentSolutionLink_modifiedByUserAccount(ctx, field)
+			case "modifiedDts":
+				return ec.fieldContext_PlanDocumentSolutionLink_modifiedDts(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type PlanDocumentSolutionLink", field.Name)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Mutation_createPlanDocumentSolutionLinks_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Mutation_removePlanDocumentSolutionLinks(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Mutation_removePlanDocumentSolutionLinks(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		directive0 := func(rctx context.Context) (interface{}, error) {
+			ctx = rctx // use context from middleware stack in children
+			return ec.resolvers.Mutation().RemovePlanDocumentSolutionLinks(rctx, fc.Args["solutionID"].(uuid.UUID), fc.Args["documentIDs"].([]uuid.UUID))
+		}
+		directive1 := func(ctx context.Context) (interface{}, error) {
+			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
+			if err != nil {
+				return nil, err
+			}
+			if ec.directives.HasRole == nil {
+				return nil, errors.New("directive hasRole is not implemented")
+			}
+			return ec.directives.HasRole(ctx, nil, directive0, role)
+		}
+
+		tmp, err := directive1(rctx)
+		if err != nil {
+			return nil, graphql.ErrorOnPath(ctx, err)
+		}
+		if tmp == nil {
+			return nil, nil
+		}
+		if data, ok := tmp.(bool); ok {
+			return data, nil
+		}
+		return nil, fmt.Errorf(`unexpected type %T from directive, should be bool`, tmp)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(bool)
+	fc.Result = res
+	return ec.marshalNBoolean2bool(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Mutation_removePlanDocumentSolutionLinks(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Mutation",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Boolean does not have child fields")
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Mutation_removePlanDocumentSolutionLinks_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Mutation_addPlanFavorite(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Mutation_addPlanFavorite(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		directive0 := func(rctx context.Context) (interface{}, error) {
+			ctx = rctx // use context from middleware stack in children
+			return ec.resolvers.Mutation().AddPlanFavorite(rctx, fc.Args["modelPlanID"].(uuid.UUID))
+		}
+		directive1 := func(ctx context.Context) (interface{}, error) {
+			roles, err := ec.unmarshalNRole2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRoleᚄ(ctx, []interface{}{"MINT_USER", "MINT_MAC"})
+			if err != nil {
+				return nil, err
+			}
+			if ec.directives.HasAnyRole == nil {
+				return nil, errors.New("directive hasAnyRole is not implemented")
+			}
+			return ec.directives.HasAnyRole(ctx, nil, directive0, roles)
+		}
+
+		tmp, err := directive1(rctx)
+		if err != nil {
+			return nil, graphql.ErrorOnPath(ctx, err)
+		}
+		if tmp == nil {
+			return nil, nil
+		}
+		if data, ok := tmp.(*models.PlanFavorite); ok {
+			return data, nil
+		}
+		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/cmsgov/mint-app/pkg/models.PlanFavorite`, tmp)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*models.PlanFavorite)
+	fc.Result = res
+	return ec.marshalNPlanFavorite2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanFavorite(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Mutation_addPlanFavorite(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Mutation",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_PlanFavorite_id(ctx, field)
+			case "modelPlanID":
+				return ec.fieldContext_PlanFavorite_modelPlanID(ctx, field)
+			case "userID":
+				return ec.fieldContext_PlanFavorite_userID(ctx, field)
+			case "userAccount":
+				return ec.fieldContext_PlanFavorite_userAccount(ctx, field)
+			case "createdBy":
+				return ec.fieldContext_PlanFavorite_createdBy(ctx, field)
+			case "createdByUserAccount":
+				return ec.fieldContext_PlanFavorite_createdByUserAccount(ctx, field)
+			case "createdDts":
+				return ec.fieldContext_PlanFavorite_createdDts(ctx, field)
+			case "modifiedBy":
+				return ec.fieldContext_PlanFavorite_modifiedBy(ctx, field)
+			case "modifiedByUserAccount":
+				return ec.fieldContext_PlanFavorite_modifiedByUserAccount(ctx, field)
+			case "modifiedDts":
+				return ec.fieldContext_PlanFavorite_modifiedDts(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type PlanFavorite", field.Name)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Mutation_addPlanFavorite_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Mutation_deletePlanFavorite(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Mutation_deletePlanFavorite(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		directive0 := func(rctx context.Context) (interface{}, error) {
+			ctx = rctx // use context from middleware stack in children
+			return ec.resolvers.Mutation().DeletePlanFavorite(rctx, fc.Args["modelPlanID"].(uuid.UUID))
+		}
+		directive1 := func(ctx context.Context) (interface{}, error) {
+			roles, err := ec.unmarshalNRole2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRoleᚄ(ctx, []interface{}{"MINT_USER", "MINT_MAC"})
+			if err != nil {
+				return nil, err
+			}
+			if ec.directives.HasAnyRole == nil {
+				return nil, errors.New("directive hasAnyRole is not implemented")
+			}
+			return ec.directives.HasAnyRole(ctx, nil, directive0, roles)
+		}
+
+		tmp, err := directive1(rctx)
+		if err != nil {
+			return nil, graphql.ErrorOnPath(ctx, err)
+		}
+		if tmp == nil {
+			return nil, nil
+		}
+		if data, ok := tmp.(*models.PlanFavorite); ok {
+			return data, nil
+		}
+		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/cmsgov/mint-app/pkg/models.PlanFavorite`, tmp)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*models.PlanFavorite)
+	fc.Result = res
+	return ec.marshalNPlanFavorite2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanFavorite(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Mutation_deletePlanFavorite(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Mutation",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_PlanFavorite_id(ctx, field)
+			case "modelPlanID":
+				return ec.fieldContext_PlanFavorite_modelPlanID(ctx, field)
+			case "userID":
+				return ec.fieldContext_PlanFavorite_userID(ctx, field)
+			case "userAccount":
+				return ec.fieldContext_PlanFavorite_userAccount(ctx, field)
+			case "createdBy":
+				return ec.fieldContext_PlanFavorite_createdBy(ctx, field)
+			case "createdByUserAccount":
+				return ec.fieldContext_PlanFavorite_createdByUserAccount(ctx, field)
+			case "createdDts":
+				return ec.fieldContext_PlanFavorite_createdDts(ctx, field)
+			case "modifiedBy":
+				return ec.fieldContext_PlanFavorite_modifiedBy(ctx, field)
+			case "modifiedByUserAccount":
+				return ec.fieldContext_PlanFavorite_modifiedByUserAccount(ctx, field)
+			case "modifiedDts":
+				return ec.fieldContext_PlanFavorite_modifiedDts(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type PlanFavorite", field.Name)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Mutation_deletePlanFavorite_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
 		ec.Error(ctx, err)
 		return fc, err
 	}
@@ -24971,6 +24957,14 @@ func (ec *executionContext) fieldContext_Mutation_updatePlanParticipantsAndProvi
 				return ec.fieldContext_PlanParticipantsAndProviders_willRiskChange(ctx, field)
 			case "willRiskChangeNote":
 				return ec.fieldContext_PlanParticipantsAndProviders_willRiskChangeNote(ctx, field)
+			case "participantRequireFinancialGuarantee":
+				return ec.fieldContext_PlanParticipantsAndProviders_participantRequireFinancialGuarantee(ctx, field)
+			case "participantRequireFinancialGuaranteeType":
+				return ec.fieldContext_PlanParticipantsAndProviders_participantRequireFinancialGuaranteeType(ctx, field)
+			case "participantRequireFinancialGuaranteeOther":
+				return ec.fieldContext_PlanParticipantsAndProviders_participantRequireFinancialGuaranteeOther(ctx, field)
+			case "participantRequireFinancialGuaranteeNote":
+				return ec.fieldContext_PlanParticipantsAndProviders_participantRequireFinancialGuaranteeNote(ctx, field)
 			case "coordinateWork":
 				return ec.fieldContext_PlanParticipantsAndProviders_coordinateWork(ctx, field)
 			case "coordinateWorkNote":
@@ -25063,6 +25057,959 @@ func (ec *executionContext) fieldContext_Mutation_updatePlanParticipantsAndProvi
 	}()
 	ctx = graphql.WithFieldContext(ctx, fc)
 	if fc.Args, err = ec.field_Mutation_updatePlanParticipantsAndProviders_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Mutation_updatePlanPayments(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Mutation_updatePlanPayments(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		directive0 := func(rctx context.Context) (interface{}, error) {
+			ctx = rctx // use context from middleware stack in children
+			return ec.resolvers.Mutation().UpdatePlanPayments(rctx, fc.Args["id"].(uuid.UUID), fc.Args["changes"].(map[string]interface{}))
+		}
+		directive1 := func(ctx context.Context) (interface{}, error) {
+			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
+			if err != nil {
+				return nil, err
+			}
+			if ec.directives.HasRole == nil {
+				return nil, errors.New("directive hasRole is not implemented")
+			}
+			return ec.directives.HasRole(ctx, nil, directive0, role)
+		}
+
+		tmp, err := directive1(rctx)
+		if err != nil {
+			return nil, graphql.ErrorOnPath(ctx, err)
+		}
+		if tmp == nil {
+			return nil, nil
+		}
+		if data, ok := tmp.(*models.PlanPayments); ok {
+			return data, nil
+		}
+		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/cmsgov/mint-app/pkg/models.PlanPayments`, tmp)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*models.PlanPayments)
+	fc.Result = res
+	return ec.marshalNPlanPayments2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanPayments(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Mutation_updatePlanPayments(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Mutation",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_PlanPayments_id(ctx, field)
+			case "modelPlanID":
+				return ec.fieldContext_PlanPayments_modelPlanID(ctx, field)
+			case "fundingSource":
+				return ec.fieldContext_PlanPayments_fundingSource(ctx, field)
+			case "fundingSourceMedicareAInfo":
+				return ec.fieldContext_PlanPayments_fundingSourceMedicareAInfo(ctx, field)
+			case "fundingSourceMedicareBInfo":
+				return ec.fieldContext_PlanPayments_fundingSourceMedicareBInfo(ctx, field)
+			case "fundingSourceOther":
+				return ec.fieldContext_PlanPayments_fundingSourceOther(ctx, field)
+			case "fundingSourceNote":
+				return ec.fieldContext_PlanPayments_fundingSourceNote(ctx, field)
+			case "fundingSourceR":
+				return ec.fieldContext_PlanPayments_fundingSourceR(ctx, field)
+			case "fundingSourceRMedicareAInfo":
+				return ec.fieldContext_PlanPayments_fundingSourceRMedicareAInfo(ctx, field)
+			case "fundingSourceRMedicareBInfo":
+				return ec.fieldContext_PlanPayments_fundingSourceRMedicareBInfo(ctx, field)
+			case "fundingSourceROther":
+				return ec.fieldContext_PlanPayments_fundingSourceROther(ctx, field)
+			case "fundingSourceRNote":
+				return ec.fieldContext_PlanPayments_fundingSourceRNote(ctx, field)
+			case "payRecipients":
+				return ec.fieldContext_PlanPayments_payRecipients(ctx, field)
+			case "payRecipientsOtherSpecification":
+				return ec.fieldContext_PlanPayments_payRecipientsOtherSpecification(ctx, field)
+			case "payRecipientsNote":
+				return ec.fieldContext_PlanPayments_payRecipientsNote(ctx, field)
+			case "payType":
+				return ec.fieldContext_PlanPayments_payType(ctx, field)
+			case "payTypeNote":
+				return ec.fieldContext_PlanPayments_payTypeNote(ctx, field)
+			case "payClaims":
+				return ec.fieldContext_PlanPayments_payClaims(ctx, field)
+			case "payClaimsOther":
+				return ec.fieldContext_PlanPayments_payClaimsOther(ctx, field)
+			case "payClaimsNote":
+				return ec.fieldContext_PlanPayments_payClaimsNote(ctx, field)
+			case "shouldAnyProvidersExcludedFFSSystems":
+				return ec.fieldContext_PlanPayments_shouldAnyProvidersExcludedFFSSystems(ctx, field)
+			case "shouldAnyProviderExcludedFFSSystemsNote":
+				return ec.fieldContext_PlanPayments_shouldAnyProviderExcludedFFSSystemsNote(ctx, field)
+			case "changesMedicarePhysicianFeeSchedule":
+				return ec.fieldContext_PlanPayments_changesMedicarePhysicianFeeSchedule(ctx, field)
+			case "changesMedicarePhysicianFeeScheduleNote":
+				return ec.fieldContext_PlanPayments_changesMedicarePhysicianFeeScheduleNote(ctx, field)
+			case "affectsMedicareSecondaryPayerClaims":
+				return ec.fieldContext_PlanPayments_affectsMedicareSecondaryPayerClaims(ctx, field)
+			case "affectsMedicareSecondaryPayerClaimsHow":
+				return ec.fieldContext_PlanPayments_affectsMedicareSecondaryPayerClaimsHow(ctx, field)
+			case "affectsMedicareSecondaryPayerClaimsNote":
+				return ec.fieldContext_PlanPayments_affectsMedicareSecondaryPayerClaimsNote(ctx, field)
+			case "payModelDifferentiation":
+				return ec.fieldContext_PlanPayments_payModelDifferentiation(ctx, field)
+			case "creatingDependenciesBetweenServices":
+				return ec.fieldContext_PlanPayments_creatingDependenciesBetweenServices(ctx, field)
+			case "creatingDependenciesBetweenServicesNote":
+				return ec.fieldContext_PlanPayments_creatingDependenciesBetweenServicesNote(ctx, field)
+			case "needsClaimsDataCollection":
+				return ec.fieldContext_PlanPayments_needsClaimsDataCollection(ctx, field)
+			case "needsClaimsDataCollectionNote":
+				return ec.fieldContext_PlanPayments_needsClaimsDataCollectionNote(ctx, field)
+			case "providingThirdPartyFile":
+				return ec.fieldContext_PlanPayments_providingThirdPartyFile(ctx, field)
+			case "isContractorAwareTestDataRequirements":
+				return ec.fieldContext_PlanPayments_isContractorAwareTestDataRequirements(ctx, field)
+			case "beneficiaryCostSharingLevelAndHandling":
+				return ec.fieldContext_PlanPayments_beneficiaryCostSharingLevelAndHandling(ctx, field)
+			case "waiveBeneficiaryCostSharingForAnyServices":
+				return ec.fieldContext_PlanPayments_waiveBeneficiaryCostSharingForAnyServices(ctx, field)
+			case "waiveBeneficiaryCostSharingServiceSpecification":
+				return ec.fieldContext_PlanPayments_waiveBeneficiaryCostSharingServiceSpecification(ctx, field)
+			case "waiverOnlyAppliesPartOfPayment":
+				return ec.fieldContext_PlanPayments_waiverOnlyAppliesPartOfPayment(ctx, field)
+			case "waiveBeneficiaryCostSharingNote":
+				return ec.fieldContext_PlanPayments_waiveBeneficiaryCostSharingNote(ctx, field)
+			case "nonClaimsPayments":
+				return ec.fieldContext_PlanPayments_nonClaimsPayments(ctx, field)
+			case "nonClaimsPaymentOther":
+				return ec.fieldContext_PlanPayments_nonClaimsPaymentOther(ctx, field)
+			case "nonClaimsPaymentsNote":
+				return ec.fieldContext_PlanPayments_nonClaimsPaymentsNote(ctx, field)
+			case "paymentCalculationOwner":
+				return ec.fieldContext_PlanPayments_paymentCalculationOwner(ctx, field)
+			case "numberPaymentsPerPayCycle":
+				return ec.fieldContext_PlanPayments_numberPaymentsPerPayCycle(ctx, field)
+			case "numberPaymentsPerPayCycleNote":
+				return ec.fieldContext_PlanPayments_numberPaymentsPerPayCycleNote(ctx, field)
+			case "sharedSystemsInvolvedAdditionalClaimPayment":
+				return ec.fieldContext_PlanPayments_sharedSystemsInvolvedAdditionalClaimPayment(ctx, field)
+			case "sharedSystemsInvolvedAdditionalClaimPaymentNote":
+				return ec.fieldContext_PlanPayments_sharedSystemsInvolvedAdditionalClaimPaymentNote(ctx, field)
+			case "planningToUseInnovationPaymentContractor":
+				return ec.fieldContext_PlanPayments_planningToUseInnovationPaymentContractor(ctx, field)
+			case "planningToUseInnovationPaymentContractorNote":
+				return ec.fieldContext_PlanPayments_planningToUseInnovationPaymentContractorNote(ctx, field)
+			case "expectedCalculationComplexityLevel":
+				return ec.fieldContext_PlanPayments_expectedCalculationComplexityLevel(ctx, field)
+			case "expectedCalculationComplexityLevelNote":
+				return ec.fieldContext_PlanPayments_expectedCalculationComplexityLevelNote(ctx, field)
+			case "claimsProcessingPrecedence":
+				return ec.fieldContext_PlanPayments_claimsProcessingPrecedence(ctx, field)
+			case "claimsProcessingPrecedenceOther":
+				return ec.fieldContext_PlanPayments_claimsProcessingPrecedenceOther(ctx, field)
+			case "claimsProcessingPrecedenceNote":
+				return ec.fieldContext_PlanPayments_claimsProcessingPrecedenceNote(ctx, field)
+			case "canParticipantsSelectBetweenPaymentMechanisms":
+				return ec.fieldContext_PlanPayments_canParticipantsSelectBetweenPaymentMechanisms(ctx, field)
+			case "canParticipantsSelectBetweenPaymentMechanismsHow":
+				return ec.fieldContext_PlanPayments_canParticipantsSelectBetweenPaymentMechanismsHow(ctx, field)
+			case "canParticipantsSelectBetweenPaymentMechanismsNote":
+				return ec.fieldContext_PlanPayments_canParticipantsSelectBetweenPaymentMechanismsNote(ctx, field)
+			case "anticipatedPaymentFrequency":
+				return ec.fieldContext_PlanPayments_anticipatedPaymentFrequency(ctx, field)
+			case "anticipatedPaymentFrequencyContinually":
+				return ec.fieldContext_PlanPayments_anticipatedPaymentFrequencyContinually(ctx, field)
+			case "anticipatedPaymentFrequencyOther":
+				return ec.fieldContext_PlanPayments_anticipatedPaymentFrequencyOther(ctx, field)
+			case "anticipatedPaymentFrequencyNote":
+				return ec.fieldContext_PlanPayments_anticipatedPaymentFrequencyNote(ctx, field)
+			case "willRecoverPayments":
+				return ec.fieldContext_PlanPayments_willRecoverPayments(ctx, field)
+			case "willRecoverPaymentsNote":
+				return ec.fieldContext_PlanPayments_willRecoverPaymentsNote(ctx, field)
+			case "anticipateReconcilingPaymentsRetrospectively":
+				return ec.fieldContext_PlanPayments_anticipateReconcilingPaymentsRetrospectively(ctx, field)
+			case "anticipateReconcilingPaymentsRetrospectivelyNote":
+				return ec.fieldContext_PlanPayments_anticipateReconcilingPaymentsRetrospectivelyNote(ctx, field)
+			case "paymentReconciliationFrequency":
+				return ec.fieldContext_PlanPayments_paymentReconciliationFrequency(ctx, field)
+			case "paymentReconciliationFrequencyContinually":
+				return ec.fieldContext_PlanPayments_paymentReconciliationFrequencyContinually(ctx, field)
+			case "paymentReconciliationFrequencyOther":
+				return ec.fieldContext_PlanPayments_paymentReconciliationFrequencyOther(ctx, field)
+			case "paymentReconciliationFrequencyNote":
+				return ec.fieldContext_PlanPayments_paymentReconciliationFrequencyNote(ctx, field)
+			case "paymentDemandRecoupmentFrequency":
+				return ec.fieldContext_PlanPayments_paymentDemandRecoupmentFrequency(ctx, field)
+			case "paymentDemandRecoupmentFrequencyContinually":
+				return ec.fieldContext_PlanPayments_paymentDemandRecoupmentFrequencyContinually(ctx, field)
+			case "paymentDemandRecoupmentFrequencyOther":
+				return ec.fieldContext_PlanPayments_paymentDemandRecoupmentFrequencyOther(ctx, field)
+			case "paymentDemandRecoupmentFrequencyNote":
+				return ec.fieldContext_PlanPayments_paymentDemandRecoupmentFrequencyNote(ctx, field)
+			case "paymentStartDate":
+				return ec.fieldContext_PlanPayments_paymentStartDate(ctx, field)
+			case "paymentStartDateNote":
+				return ec.fieldContext_PlanPayments_paymentStartDateNote(ctx, field)
+			case "createdBy":
+				return ec.fieldContext_PlanPayments_createdBy(ctx, field)
+			case "createdByUserAccount":
+				return ec.fieldContext_PlanPayments_createdByUserAccount(ctx, field)
+			case "createdDts":
+				return ec.fieldContext_PlanPayments_createdDts(ctx, field)
+			case "modifiedBy":
+				return ec.fieldContext_PlanPayments_modifiedBy(ctx, field)
+			case "modifiedByUserAccount":
+				return ec.fieldContext_PlanPayments_modifiedByUserAccount(ctx, field)
+			case "modifiedDts":
+				return ec.fieldContext_PlanPayments_modifiedDts(ctx, field)
+			case "readyForReviewBy":
+				return ec.fieldContext_PlanPayments_readyForReviewBy(ctx, field)
+			case "readyForReviewByUserAccount":
+				return ec.fieldContext_PlanPayments_readyForReviewByUserAccount(ctx, field)
+			case "readyForReviewDts":
+				return ec.fieldContext_PlanPayments_readyForReviewDts(ctx, field)
+			case "readyForClearanceBy":
+				return ec.fieldContext_PlanPayments_readyForClearanceBy(ctx, field)
+			case "readyForClearanceByUserAccount":
+				return ec.fieldContext_PlanPayments_readyForClearanceByUserAccount(ctx, field)
+			case "readyForClearanceDts":
+				return ec.fieldContext_PlanPayments_readyForClearanceDts(ctx, field)
+			case "status":
+				return ec.fieldContext_PlanPayments_status(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type PlanPayments", field.Name)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Mutation_updatePlanPayments_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Mutation_createPlanTDL(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Mutation_createPlanTDL(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		directive0 := func(rctx context.Context) (interface{}, error) {
+			ctx = rctx // use context from middleware stack in children
+			return ec.resolvers.Mutation().CreatePlanTdl(rctx, fc.Args["input"].(model.PlanTDLCreateInput))
+		}
+		directive1 := func(ctx context.Context) (interface{}, error) {
+			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
+			if err != nil {
+				return nil, err
+			}
+			if ec.directives.HasRole == nil {
+				return nil, errors.New("directive hasRole is not implemented")
+			}
+			return ec.directives.HasRole(ctx, nil, directive0, role)
+		}
+
+		tmp, err := directive1(rctx)
+		if err != nil {
+			return nil, graphql.ErrorOnPath(ctx, err)
+		}
+		if tmp == nil {
+			return nil, nil
+		}
+		if data, ok := tmp.(*models.PlanTDL); ok {
+			return data, nil
+		}
+		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/cmsgov/mint-app/pkg/models.PlanTDL`, tmp)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*models.PlanTDL)
+	fc.Result = res
+	return ec.marshalNPlanTDL2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanTDL(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Mutation_createPlanTDL(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Mutation",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_PlanTDL_id(ctx, field)
+			case "modelPlanID":
+				return ec.fieldContext_PlanTDL_modelPlanID(ctx, field)
+			case "idNumber":
+				return ec.fieldContext_PlanTDL_idNumber(ctx, field)
+			case "dateInitiated":
+				return ec.fieldContext_PlanTDL_dateInitiated(ctx, field)
+			case "title":
+				return ec.fieldContext_PlanTDL_title(ctx, field)
+			case "note":
+				return ec.fieldContext_PlanTDL_note(ctx, field)
+			case "createdBy":
+				return ec.fieldContext_PlanTDL_createdBy(ctx, field)
+			case "createdByUserAccount":
+				return ec.fieldContext_PlanTDL_createdByUserAccount(ctx, field)
+			case "createdDts":
+				return ec.fieldContext_PlanTDL_createdDts(ctx, field)
+			case "modifiedBy":
+				return ec.fieldContext_PlanTDL_modifiedBy(ctx, field)
+			case "modifiedByUserAccount":
+				return ec.fieldContext_PlanTDL_modifiedByUserAccount(ctx, field)
+			case "modifiedDts":
+				return ec.fieldContext_PlanTDL_modifiedDts(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type PlanTDL", field.Name)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Mutation_createPlanTDL_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Mutation_updatePlanTDL(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Mutation_updatePlanTDL(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		directive0 := func(rctx context.Context) (interface{}, error) {
+			ctx = rctx // use context from middleware stack in children
+			return ec.resolvers.Mutation().UpdatePlanTdl(rctx, fc.Args["id"].(uuid.UUID), fc.Args["changes"].(map[string]interface{}))
+		}
+		directive1 := func(ctx context.Context) (interface{}, error) {
+			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
+			if err != nil {
+				return nil, err
+			}
+			if ec.directives.HasRole == nil {
+				return nil, errors.New("directive hasRole is not implemented")
+			}
+			return ec.directives.HasRole(ctx, nil, directive0, role)
+		}
+
+		tmp, err := directive1(rctx)
+		if err != nil {
+			return nil, graphql.ErrorOnPath(ctx, err)
+		}
+		if tmp == nil {
+			return nil, nil
+		}
+		if data, ok := tmp.(*models.PlanTDL); ok {
+			return data, nil
+		}
+		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/cmsgov/mint-app/pkg/models.PlanTDL`, tmp)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*models.PlanTDL)
+	fc.Result = res
+	return ec.marshalNPlanTDL2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanTDL(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Mutation_updatePlanTDL(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Mutation",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_PlanTDL_id(ctx, field)
+			case "modelPlanID":
+				return ec.fieldContext_PlanTDL_modelPlanID(ctx, field)
+			case "idNumber":
+				return ec.fieldContext_PlanTDL_idNumber(ctx, field)
+			case "dateInitiated":
+				return ec.fieldContext_PlanTDL_dateInitiated(ctx, field)
+			case "title":
+				return ec.fieldContext_PlanTDL_title(ctx, field)
+			case "note":
+				return ec.fieldContext_PlanTDL_note(ctx, field)
+			case "createdBy":
+				return ec.fieldContext_PlanTDL_createdBy(ctx, field)
+			case "createdByUserAccount":
+				return ec.fieldContext_PlanTDL_createdByUserAccount(ctx, field)
+			case "createdDts":
+				return ec.fieldContext_PlanTDL_createdDts(ctx, field)
+			case "modifiedBy":
+				return ec.fieldContext_PlanTDL_modifiedBy(ctx, field)
+			case "modifiedByUserAccount":
+				return ec.fieldContext_PlanTDL_modifiedByUserAccount(ctx, field)
+			case "modifiedDts":
+				return ec.fieldContext_PlanTDL_modifiedDts(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type PlanTDL", field.Name)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Mutation_updatePlanTDL_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Mutation_deletePlanTDL(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Mutation_deletePlanTDL(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		directive0 := func(rctx context.Context) (interface{}, error) {
+			ctx = rctx // use context from middleware stack in children
+			return ec.resolvers.Mutation().DeletePlanTdl(rctx, fc.Args["id"].(uuid.UUID))
+		}
+		directive1 := func(ctx context.Context) (interface{}, error) {
+			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
+			if err != nil {
+				return nil, err
+			}
+			if ec.directives.HasRole == nil {
+				return nil, errors.New("directive hasRole is not implemented")
+			}
+			return ec.directives.HasRole(ctx, nil, directive0, role)
+		}
+
+		tmp, err := directive1(rctx)
+		if err != nil {
+			return nil, graphql.ErrorOnPath(ctx, err)
+		}
+		if tmp == nil {
+			return nil, nil
+		}
+		if data, ok := tmp.(*models.PlanTDL); ok {
+			return data, nil
+		}
+		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/cmsgov/mint-app/pkg/models.PlanTDL`, tmp)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*models.PlanTDL)
+	fc.Result = res
+	return ec.marshalNPlanTDL2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanTDL(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Mutation_deletePlanTDL(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Mutation",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_PlanTDL_id(ctx, field)
+			case "modelPlanID":
+				return ec.fieldContext_PlanTDL_modelPlanID(ctx, field)
+			case "idNumber":
+				return ec.fieldContext_PlanTDL_idNumber(ctx, field)
+			case "dateInitiated":
+				return ec.fieldContext_PlanTDL_dateInitiated(ctx, field)
+			case "title":
+				return ec.fieldContext_PlanTDL_title(ctx, field)
+			case "note":
+				return ec.fieldContext_PlanTDL_note(ctx, field)
+			case "createdBy":
+				return ec.fieldContext_PlanTDL_createdBy(ctx, field)
+			case "createdByUserAccount":
+				return ec.fieldContext_PlanTDL_createdByUserAccount(ctx, field)
+			case "createdDts":
+				return ec.fieldContext_PlanTDL_createdDts(ctx, field)
+			case "modifiedBy":
+				return ec.fieldContext_PlanTDL_modifiedBy(ctx, field)
+			case "modifiedByUserAccount":
+				return ec.fieldContext_PlanTDL_modifiedByUserAccount(ctx, field)
+			case "modifiedDts":
+				return ec.fieldContext_PlanTDL_modifiedDts(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type PlanTDL", field.Name)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Mutation_deletePlanTDL_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Mutation_reportAProblem(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Mutation_reportAProblem(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		directive0 := func(rctx context.Context) (interface{}, error) {
+			ctx = rctx // use context from middleware stack in children
+			return ec.resolvers.Mutation().ReportAProblem(rctx, fc.Args["input"].(model.ReportAProblemInput))
+		}
+		directive1 := func(ctx context.Context) (interface{}, error) {
+			roles, err := ec.unmarshalNRole2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRoleᚄ(ctx, []interface{}{"MINT_USER", "MINT_MAC"})
+			if err != nil {
+				return nil, err
+			}
+			if ec.directives.HasAnyRole == nil {
+				return nil, errors.New("directive hasAnyRole is not implemented")
+			}
+			return ec.directives.HasAnyRole(ctx, nil, directive0, roles)
+		}
+
+		tmp, err := directive1(rctx)
+		if err != nil {
+			return nil, graphql.ErrorOnPath(ctx, err)
+		}
+		if tmp == nil {
+			return nil, nil
+		}
+		if data, ok := tmp.(bool); ok {
+			return data, nil
+		}
+		return nil, fmt.Errorf(`unexpected type %T from directive, should be bool`, tmp)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(bool)
+	fc.Result = res
+	return ec.marshalNBoolean2bool(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Mutation_reportAProblem(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Mutation",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Boolean does not have child fields")
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Mutation_reportAProblem_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Mutation_sendFeedbackEmail(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Mutation_sendFeedbackEmail(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Mutation().SendFeedbackEmail(rctx, fc.Args["input"].(model.SendFeedbackEmailInput))
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(bool)
+	fc.Result = res
+	return ec.marshalNBoolean2bool(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Mutation_sendFeedbackEmail(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Mutation",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Boolean does not have child fields")
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Mutation_sendFeedbackEmail_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Mutation_lockTaskListSection(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Mutation_lockTaskListSection(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		directive0 := func(rctx context.Context) (interface{}, error) {
+			ctx = rctx // use context from middleware stack in children
+			return ec.resolvers.Mutation().LockTaskListSection(rctx, fc.Args["modelPlanID"].(uuid.UUID), fc.Args["section"].(models.TaskListSection))
+		}
+		directive1 := func(ctx context.Context) (interface{}, error) {
+			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
+			if err != nil {
+				return nil, err
+			}
+			if ec.directives.HasRole == nil {
+				return nil, errors.New("directive hasRole is not implemented")
+			}
+			return ec.directives.HasRole(ctx, nil, directive0, role)
+		}
+
+		tmp, err := directive1(rctx)
+		if err != nil {
+			return nil, graphql.ErrorOnPath(ctx, err)
+		}
+		if tmp == nil {
+			return nil, nil
+		}
+		if data, ok := tmp.(bool); ok {
+			return data, nil
+		}
+		return nil, fmt.Errorf(`unexpected type %T from directive, should be bool`, tmp)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(bool)
+	fc.Result = res
+	return ec.marshalNBoolean2bool(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Mutation_lockTaskListSection(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Mutation",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Boolean does not have child fields")
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Mutation_lockTaskListSection_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Mutation_unlockTaskListSection(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Mutation_unlockTaskListSection(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		directive0 := func(rctx context.Context) (interface{}, error) {
+			ctx = rctx // use context from middleware stack in children
+			return ec.resolvers.Mutation().UnlockTaskListSection(rctx, fc.Args["modelPlanID"].(uuid.UUID), fc.Args["section"].(models.TaskListSection))
+		}
+		directive1 := func(ctx context.Context) (interface{}, error) {
+			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
+			if err != nil {
+				return nil, err
+			}
+			if ec.directives.HasRole == nil {
+				return nil, errors.New("directive hasRole is not implemented")
+			}
+			return ec.directives.HasRole(ctx, nil, directive0, role)
+		}
+
+		tmp, err := directive1(rctx)
+		if err != nil {
+			return nil, graphql.ErrorOnPath(ctx, err)
+		}
+		if tmp == nil {
+			return nil, nil
+		}
+		if data, ok := tmp.(bool); ok {
+			return data, nil
+		}
+		return nil, fmt.Errorf(`unexpected type %T from directive, should be bool`, tmp)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(bool)
+	fc.Result = res
+	return ec.marshalNBoolean2bool(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Mutation_unlockTaskListSection(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Mutation",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Boolean does not have child fields")
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Mutation_unlockTaskListSection_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Mutation_unlockAllTaskListSections(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Mutation_unlockAllTaskListSections(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		directive0 := func(rctx context.Context) (interface{}, error) {
+			ctx = rctx // use context from middleware stack in children
+			return ec.resolvers.Mutation().UnlockAllTaskListSections(rctx, fc.Args["modelPlanID"].(uuid.UUID))
+		}
+		directive1 := func(ctx context.Context) (interface{}, error) {
+			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_ASSESSMENT")
+			if err != nil {
+				return nil, err
+			}
+			if ec.directives.HasRole == nil {
+				return nil, errors.New("directive hasRole is not implemented")
+			}
+			return ec.directives.HasRole(ctx, nil, directive0, role)
+		}
+
+		tmp, err := directive1(rctx)
+		if err != nil {
+			return nil, graphql.ErrorOnPath(ctx, err)
+		}
+		if tmp == nil {
+			return nil, nil
+		}
+		if data, ok := tmp.([]*model.TaskListSectionLockStatus); ok {
+			return data, nil
+		}
+		return nil, fmt.Errorf(`unexpected type %T from directive, should be []*github.com/cmsgov/mint-app/pkg/graph/model.TaskListSectionLockStatus`, tmp)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.([]*model.TaskListSectionLockStatus)
+	fc.Result = res
+	return ec.marshalNTaskListSectionLockStatus2ᚕᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTaskListSectionLockStatusᚄ(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Mutation_unlockAllTaskListSections(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Mutation",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "modelPlanID":
+				return ec.fieldContext_TaskListSectionLockStatus_modelPlanID(ctx, field)
+			case "section":
+				return ec.fieldContext_TaskListSectionLockStatus_section(ctx, field)
+			case "lockedByUserAccount":
+				return ec.fieldContext_TaskListSectionLockStatus_lockedByUserAccount(ctx, field)
+			case "isAssessment":
+				return ec.fieldContext_TaskListSectionLockStatus_isAssessment(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type TaskListSectionLockStatus", field.Name)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Mutation_unlockAllTaskListSections_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
 		ec.Error(ctx, err)
 		return fc, err
 	}
@@ -25389,6 +26336,512 @@ func (ec *executionContext) fieldContext_NDAInfo_agreedDts(ctx context.Context, 
 		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return nil, errors.New("field of type Time does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _NewDiscussionRepliedActivityMeta_version(ctx context.Context, field graphql.CollectedField, obj *models.NewDiscussionRepliedActivityMeta) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_NewDiscussionRepliedActivityMeta_version(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Version, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(int)
+	fc.Result = res
+	return ec.marshalNInt2int(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_NewDiscussionRepliedActivityMeta_version(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "NewDiscussionRepliedActivityMeta",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Int does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _NewDiscussionRepliedActivityMeta_type(ctx context.Context, field graphql.CollectedField, obj *models.NewDiscussionRepliedActivityMeta) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_NewDiscussionRepliedActivityMeta_type(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Type, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(models.ActivityType)
+	fc.Result = res
+	return ec.marshalNActivityType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐActivityType(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_NewDiscussionRepliedActivityMeta_type(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "NewDiscussionRepliedActivityMeta",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type ActivityType does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _NewDiscussionRepliedActivityMeta_modelPlanID(ctx context.Context, field graphql.CollectedField, obj *models.NewDiscussionRepliedActivityMeta) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_NewDiscussionRepliedActivityMeta_modelPlanID(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ModelPlanID, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(uuid.UUID)
+	fc.Result = res
+	return ec.marshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_NewDiscussionRepliedActivityMeta_modelPlanID(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "NewDiscussionRepliedActivityMeta",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type UUID does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _NewDiscussionRepliedActivityMeta_modelPlan(ctx context.Context, field graphql.CollectedField, obj *models.NewDiscussionRepliedActivityMeta) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_NewDiscussionRepliedActivityMeta_modelPlan(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.NewDiscussionRepliedActivityMeta().ModelPlan(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*models.ModelPlan)
+	fc.Result = res
+	return ec.marshalNModelPlan2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐModelPlan(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_NewDiscussionRepliedActivityMeta_modelPlan(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "NewDiscussionRepliedActivityMeta",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_ModelPlan_id(ctx, field)
+			case "modelName":
+				return ec.fieldContext_ModelPlan_modelName(ctx, field)
+			case "abbreviation":
+				return ec.fieldContext_ModelPlan_abbreviation(ctx, field)
+			case "archived":
+				return ec.fieldContext_ModelPlan_archived(ctx, field)
+			case "createdBy":
+				return ec.fieldContext_ModelPlan_createdBy(ctx, field)
+			case "createdByUserAccount":
+				return ec.fieldContext_ModelPlan_createdByUserAccount(ctx, field)
+			case "createdDts":
+				return ec.fieldContext_ModelPlan_createdDts(ctx, field)
+			case "modifiedBy":
+				return ec.fieldContext_ModelPlan_modifiedBy(ctx, field)
+			case "modifiedByUserAccount":
+				return ec.fieldContext_ModelPlan_modifiedByUserAccount(ctx, field)
+			case "modifiedDts":
+				return ec.fieldContext_ModelPlan_modifiedDts(ctx, field)
+			case "basics":
+				return ec.fieldContext_ModelPlan_basics(ctx, field)
+			case "generalCharacteristics":
+				return ec.fieldContext_ModelPlan_generalCharacteristics(ctx, field)
+			case "participantsAndProviders":
+				return ec.fieldContext_ModelPlan_participantsAndProviders(ctx, field)
+			case "beneficiaries":
+				return ec.fieldContext_ModelPlan_beneficiaries(ctx, field)
+			case "opsEvalAndLearning":
+				return ec.fieldContext_ModelPlan_opsEvalAndLearning(ctx, field)
+			case "collaborators":
+				return ec.fieldContext_ModelPlan_collaborators(ctx, field)
+			case "documents":
+				return ec.fieldContext_ModelPlan_documents(ctx, field)
+			case "discussions":
+				return ec.fieldContext_ModelPlan_discussions(ctx, field)
+			case "payments":
+				return ec.fieldContext_ModelPlan_payments(ctx, field)
+			case "status":
+				return ec.fieldContext_ModelPlan_status(ctx, field)
+			case "isFavorite":
+				return ec.fieldContext_ModelPlan_isFavorite(ctx, field)
+			case "isCollaborator":
+				return ec.fieldContext_ModelPlan_isCollaborator(ctx, field)
+			case "crs":
+				return ec.fieldContext_ModelPlan_crs(ctx, field)
+			case "tdls":
+				return ec.fieldContext_ModelPlan_tdls(ctx, field)
+			case "prepareForClearance":
+				return ec.fieldContext_ModelPlan_prepareForClearance(ctx, field)
+			case "nameHistory":
+				return ec.fieldContext_ModelPlan_nameHistory(ctx, field)
+			case "operationalNeeds":
+				return ec.fieldContext_ModelPlan_operationalNeeds(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type ModelPlan", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _NewDiscussionRepliedActivityMeta_discussionID(ctx context.Context, field graphql.CollectedField, obj *models.NewDiscussionRepliedActivityMeta) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_NewDiscussionRepliedActivityMeta_discussionID(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.DiscussionID, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(uuid.UUID)
+	fc.Result = res
+	return ec.marshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_NewDiscussionRepliedActivityMeta_discussionID(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "NewDiscussionRepliedActivityMeta",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type UUID does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _NewDiscussionRepliedActivityMeta_discussion(ctx context.Context, field graphql.CollectedField, obj *models.NewDiscussionRepliedActivityMeta) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_NewDiscussionRepliedActivityMeta_discussion(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.NewDiscussionRepliedActivityMeta().Discussion(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*models.PlanDiscussion)
+	fc.Result = res
+	return ec.marshalNPlanDiscussion2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanDiscussion(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_NewDiscussionRepliedActivityMeta_discussion(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "NewDiscussionRepliedActivityMeta",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_PlanDiscussion_id(ctx, field)
+			case "modelPlanID":
+				return ec.fieldContext_PlanDiscussion_modelPlanID(ctx, field)
+			case "content":
+				return ec.fieldContext_PlanDiscussion_content(ctx, field)
+			case "userRole":
+				return ec.fieldContext_PlanDiscussion_userRole(ctx, field)
+			case "userRoleDescription":
+				return ec.fieldContext_PlanDiscussion_userRoleDescription(ctx, field)
+			case "replies":
+				return ec.fieldContext_PlanDiscussion_replies(ctx, field)
+			case "isAssessment":
+				return ec.fieldContext_PlanDiscussion_isAssessment(ctx, field)
+			case "createdBy":
+				return ec.fieldContext_PlanDiscussion_createdBy(ctx, field)
+			case "createdByUserAccount":
+				return ec.fieldContext_PlanDiscussion_createdByUserAccount(ctx, field)
+			case "createdDts":
+				return ec.fieldContext_PlanDiscussion_createdDts(ctx, field)
+			case "modifiedBy":
+				return ec.fieldContext_PlanDiscussion_modifiedBy(ctx, field)
+			case "modifiedByUserAccount":
+				return ec.fieldContext_PlanDiscussion_modifiedByUserAccount(ctx, field)
+			case "modifiedDts":
+				return ec.fieldContext_PlanDiscussion_modifiedDts(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type PlanDiscussion", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _NewDiscussionRepliedActivityMeta_replyID(ctx context.Context, field graphql.CollectedField, obj *models.NewDiscussionRepliedActivityMeta) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_NewDiscussionRepliedActivityMeta_replyID(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ReplyID, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(uuid.UUID)
+	fc.Result = res
+	return ec.marshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_NewDiscussionRepliedActivityMeta_replyID(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "NewDiscussionRepliedActivityMeta",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type UUID does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _NewDiscussionRepliedActivityMeta_reply(ctx context.Context, field graphql.CollectedField, obj *models.NewDiscussionRepliedActivityMeta) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_NewDiscussionRepliedActivityMeta_reply(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.NewDiscussionRepliedActivityMeta().Reply(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*models.DiscussionReply)
+	fc.Result = res
+	return ec.marshalNDiscussionReply2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐDiscussionReply(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_NewDiscussionRepliedActivityMeta_reply(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "NewDiscussionRepliedActivityMeta",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_DiscussionReply_id(ctx, field)
+			case "discussionID":
+				return ec.fieldContext_DiscussionReply_discussionID(ctx, field)
+			case "content":
+				return ec.fieldContext_DiscussionReply_content(ctx, field)
+			case "userRole":
+				return ec.fieldContext_DiscussionReply_userRole(ctx, field)
+			case "userRoleDescription":
+				return ec.fieldContext_DiscussionReply_userRoleDescription(ctx, field)
+			case "isAssessment":
+				return ec.fieldContext_DiscussionReply_isAssessment(ctx, field)
+			case "createdBy":
+				return ec.fieldContext_DiscussionReply_createdBy(ctx, field)
+			case "createdByUserAccount":
+				return ec.fieldContext_DiscussionReply_createdByUserAccount(ctx, field)
+			case "createdDts":
+				return ec.fieldContext_DiscussionReply_createdDts(ctx, field)
+			case "modifiedBy":
+				return ec.fieldContext_DiscussionReply_modifiedBy(ctx, field)
+			case "modifiedByUserAccount":
+				return ec.fieldContext_DiscussionReply_modifiedByUserAccount(ctx, field)
+			case "modifiedDts":
+				return ec.fieldContext_DiscussionReply_modifiedDts(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type DiscussionReply", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _NewDiscussionRepliedActivityMeta_content(ctx context.Context, field graphql.CollectedField, obj *models.NewDiscussionRepliedActivityMeta) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_NewDiscussionRepliedActivityMeta_content(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Content, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalNString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_NewDiscussionRepliedActivityMeta_content(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "NewDiscussionRepliedActivityMeta",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
 		},
 	}
 	return fc, nil
@@ -45002,6 +46455,173 @@ func (ec *executionContext) fieldContext_PlanParticipantsAndProviders_willRiskCh
 	return fc, nil
 }
 
+func (ec *executionContext) _PlanParticipantsAndProviders_participantRequireFinancialGuarantee(ctx context.Context, field graphql.CollectedField, obj *models.PlanParticipantsAndProviders) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanParticipantsAndProviders_participantRequireFinancialGuarantee(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ParticipantRequireFinancialGuarantee, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*bool)
+	fc.Result = res
+	return ec.marshalOBoolean2ᚖbool(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanParticipantsAndProviders_participantRequireFinancialGuarantee(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanParticipantsAndProviders",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Boolean does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanParticipantsAndProviders_participantRequireFinancialGuaranteeType(ctx context.Context, field graphql.CollectedField, obj *models.PlanParticipantsAndProviders) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanParticipantsAndProviders_participantRequireFinancialGuaranteeType(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.PlanParticipantsAndProviders().ParticipantRequireFinancialGuaranteeType(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.([]model.ParticipantRequireFinancialGuaranteeType)
+	fc.Result = res
+	return ec.marshalNParticipantRequireFinancialGuaranteeType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐParticipantRequireFinancialGuaranteeTypeᚄ(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanParticipantsAndProviders_participantRequireFinancialGuaranteeType(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanParticipantsAndProviders",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type ParticipantRequireFinancialGuaranteeType does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanParticipantsAndProviders_participantRequireFinancialGuaranteeOther(ctx context.Context, field graphql.CollectedField, obj *models.PlanParticipantsAndProviders) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanParticipantsAndProviders_participantRequireFinancialGuaranteeOther(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ParticipantRequireFinancialGuaranteeOther, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanParticipantsAndProviders_participantRequireFinancialGuaranteeOther(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanParticipantsAndProviders",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanParticipantsAndProviders_participantRequireFinancialGuaranteeNote(ctx context.Context, field graphql.CollectedField, obj *models.PlanParticipantsAndProviders) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanParticipantsAndProviders_participantRequireFinancialGuaranteeNote(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ParticipantRequireFinancialGuaranteeNote, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanParticipantsAndProviders_participantRequireFinancialGuaranteeNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanParticipantsAndProviders",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
 func (ec *executionContext) _PlanParticipantsAndProviders_coordinateWork(ctx context.Context, field graphql.CollectedField, obj *models.PlanParticipantsAndProviders) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_PlanParticipantsAndProviders_coordinateWork(ctx, field)
 	if err != nil {
@@ -52834,8 +54454,8 @@ func (ec *executionContext) fieldContext_PrepareForClearance_latestClearanceDts(
 	return fc, nil
 }
 
-func (ec *executionContext) _Query_planDocument(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Query_planDocument(ctx, field)
+func (ec *executionContext) _Query_analyzedAudits(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Query_analyzedAudits(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -52849,7 +54469,7 @@ func (ec *executionContext) _Query_planDocument(ctx context.Context, field graph
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		directive0 := func(rctx context.Context) (interface{}, error) {
 			ctx = rctx // use context from middleware stack in children
-			return ec.resolvers.Query().PlanDocument(rctx, fc.Args["id"].(uuid.UUID))
+			return ec.resolvers.Query().AnalyzedAudits(rctx, fc.Args["dateAnalyzed"].(time.Time))
 		}
 		directive1 := func(ctx context.Context) (interface{}, error) {
 			roles, err := ec.unmarshalNRole2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRoleᚄ(ctx, []interface{}{"MINT_USER", "MINT_MAC"})
@@ -52869,10 +54489,10 @@ func (ec *executionContext) _Query_planDocument(ctx context.Context, field graph
 		if tmp == nil {
 			return nil, nil
 		}
-		if data, ok := tmp.(*models.PlanDocument); ok {
+		if data, ok := tmp.([]*models.AnalyzedAudit); ok {
 			return data, nil
 		}
-		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/cmsgov/mint-app/pkg/models.PlanDocument`, tmp)
+		return nil, fmt.Errorf(`unexpected type %T from directive, should be []*github.com/cmsgov/mint-app/pkg/models.AnalyzedAudit`, tmp)
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -52884,12 +54504,12 @@ func (ec *executionContext) _Query_planDocument(ctx context.Context, field graph
 		}
 		return graphql.Null
 	}
-	res := resTmp.(*models.PlanDocument)
+	res := resTmp.([]*models.AnalyzedAudit)
 	fc.Result = res
-	return ec.marshalNPlanDocument2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanDocument(ctx, field.Selections, res)
+	return ec.marshalNAnalyzedAudit2ᚕᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐAnalyzedAuditᚄ(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_Query_planDocument(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_Query_analyzedAudits(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "Query",
 		Field:      field,
@@ -52898,55 +54518,29 @@ func (ec *executionContext) fieldContext_Query_planDocument(ctx context.Context,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			switch field.Name {
 			case "id":
-				return ec.fieldContext_PlanDocument_id(ctx, field)
+				return ec.fieldContext_AnalyzedAudit_id(ctx, field)
 			case "modelPlanID":
-				return ec.fieldContext_PlanDocument_modelPlanID(ctx, field)
-			case "isLink":
-				return ec.fieldContext_PlanDocument_isLink(ctx, field)
-			case "url":
-				return ec.fieldContext_PlanDocument_url(ctx, field)
-			case "fileType":
-				return ec.fieldContext_PlanDocument_fileType(ctx, field)
-			case "bucket":
-				return ec.fieldContext_PlanDocument_bucket(ctx, field)
-			case "fileKey":
-				return ec.fieldContext_PlanDocument_fileKey(ctx, field)
-			case "virusScanned":
-				return ec.fieldContext_PlanDocument_virusScanned(ctx, field)
-			case "virusClean":
-				return ec.fieldContext_PlanDocument_virusClean(ctx, field)
-			case "restricted":
-				return ec.fieldContext_PlanDocument_restricted(ctx, field)
-			case "fileName":
-				return ec.fieldContext_PlanDocument_fileName(ctx, field)
-			case "fileSize":
-				return ec.fieldContext_PlanDocument_fileSize(ctx, field)
-			case "documentType":
-				return ec.fieldContext_PlanDocument_documentType(ctx, field)
-			case "otherType":
-				return ec.fieldContext_PlanDocument_otherType(ctx, field)
-			case "optionalNotes":
-				return ec.fieldContext_PlanDocument_optionalNotes(ctx, field)
-			case "downloadUrl":
-				return ec.fieldContext_PlanDocument_downloadUrl(ctx, field)
-			case "deletedAt":
-				return ec.fieldContext_PlanDocument_deletedAt(ctx, field)
-			case "numLinkedSolutions":
-				return ec.fieldContext_PlanDocument_numLinkedSolutions(ctx, field)
+				return ec.fieldContext_AnalyzedAudit_modelPlanID(ctx, field)
+			case "modelName":
+				return ec.fieldContext_AnalyzedAudit_modelName(ctx, field)
+			case "date":
+				return ec.fieldContext_AnalyzedAudit_date(ctx, field)
+			case "changes":
+				return ec.fieldContext_AnalyzedAudit_changes(ctx, field)
 			case "createdBy":
-				return ec.fieldContext_PlanDocument_createdBy(ctx, field)
+				return ec.fieldContext_AnalyzedAudit_createdBy(ctx, field)
 			case "createdByUserAccount":
-				return ec.fieldContext_PlanDocument_createdByUserAccount(ctx, field)
+				return ec.fieldContext_AnalyzedAudit_createdByUserAccount(ctx, field)
 			case "createdDts":
-				return ec.fieldContext_PlanDocument_createdDts(ctx, field)
+				return ec.fieldContext_AnalyzedAudit_createdDts(ctx, field)
 			case "modifiedBy":
-				return ec.fieldContext_PlanDocument_modifiedBy(ctx, field)
+				return ec.fieldContext_AnalyzedAudit_modifiedBy(ctx, field)
 			case "modifiedByUserAccount":
-				return ec.fieldContext_PlanDocument_modifiedByUserAccount(ctx, field)
+				return ec.fieldContext_AnalyzedAudit_modifiedByUserAccount(ctx, field)
 			case "modifiedDts":
-				return ec.fieldContext_PlanDocument_modifiedDts(ctx, field)
+				return ec.fieldContext_AnalyzedAudit_modifiedDts(ctx, field)
 			}
-			return nil, fmt.Errorf("no field named %q was found under type PlanDocument", field.Name)
+			return nil, fmt.Errorf("no field named %q was found under type AnalyzedAudit", field.Name)
 		},
 	}
 	defer func() {
@@ -52956,9 +54550,233 @@ func (ec *executionContext) fieldContext_Query_planDocument(ctx context.Context,
 		}
 	}()
 	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Query_planDocument_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+	if fc.Args, err = ec.field_Query_analyzedAudits_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
 		ec.Error(ctx, err)
 		return fc, err
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Query_auditChanges(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Query_auditChanges(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		directive0 := func(rctx context.Context) (interface{}, error) {
+			ctx = rctx // use context from middleware stack in children
+			return ec.resolvers.Query().AuditChanges(rctx, fc.Args["tableName"].(string), fc.Args["primaryKey"].(uuid.UUID))
+		}
+		directive1 := func(ctx context.Context) (interface{}, error) {
+			roles, err := ec.unmarshalNRole2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRoleᚄ(ctx, []interface{}{"MINT_USER", "MINT_MAC"})
+			if err != nil {
+				return nil, err
+			}
+			if ec.directives.HasAnyRole == nil {
+				return nil, errors.New("directive hasAnyRole is not implemented")
+			}
+			return ec.directives.HasAnyRole(ctx, nil, directive0, roles)
+		}
+
+		tmp, err := directive1(rctx)
+		if err != nil {
+			return nil, graphql.ErrorOnPath(ctx, err)
+		}
+		if tmp == nil {
+			return nil, nil
+		}
+		if data, ok := tmp.([]*models.AuditChange); ok {
+			return data, nil
+		}
+		return nil, fmt.Errorf(`unexpected type %T from directive, should be []*github.com/cmsgov/mint-app/pkg/models.AuditChange`, tmp)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.([]*models.AuditChange)
+	fc.Result = res
+	return ec.marshalNAuditChange2ᚕᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐAuditChangeᚄ(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Query_auditChanges(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Query",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_AuditChange_id(ctx, field)
+			case "primaryKey":
+				return ec.fieldContext_AuditChange_primaryKey(ctx, field)
+			case "foreignKey":
+				return ec.fieldContext_AuditChange_foreignKey(ctx, field)
+			case "tableName":
+				return ec.fieldContext_AuditChange_tableName(ctx, field)
+			case "action":
+				return ec.fieldContext_AuditChange_action(ctx, field)
+			case "fields":
+				return ec.fieldContext_AuditChange_fields(ctx, field)
+			case "modifiedBy":
+				return ec.fieldContext_AuditChange_modifiedBy(ctx, field)
+			case "modifiedByUserAccount":
+				return ec.fieldContext_AuditChange_modifiedByUserAccount(ctx, field)
+			case "modifiedDts":
+				return ec.fieldContext_AuditChange_modifiedDts(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type AuditChange", field.Name)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Query_auditChanges_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Query_currentUser(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Query_currentUser(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Query().CurrentUser(rctx)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*models.CurrentUser)
+	fc.Result = res
+	return ec.marshalNCurrentUser2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐCurrentUser(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Query_currentUser(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Query",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "launchDarkly":
+				return ec.fieldContext_CurrentUser_launchDarkly(ctx, field)
+			case "account":
+				return ec.fieldContext_CurrentUser_account(ctx, field)
+			case "notifications":
+				return ec.fieldContext_CurrentUser_notifications(ctx, field)
+			case "notificationPreferences":
+				return ec.fieldContext_CurrentUser_notificationPreferences(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type CurrentUser", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Query_mostRecentDiscussionRoleSelection(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Query_mostRecentDiscussionRoleSelection(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		directive0 := func(rctx context.Context) (interface{}, error) {
+			ctx = rctx // use context from middleware stack in children
+			return ec.resolvers.Query().MostRecentDiscussionRoleSelection(rctx)
+		}
+		directive1 := func(ctx context.Context) (interface{}, error) {
+			roles, err := ec.unmarshalNRole2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRoleᚄ(ctx, []interface{}{"MINT_USER", "MINT_MAC"})
+			if err != nil {
+				return nil, err
+			}
+			if ec.directives.HasAnyRole == nil {
+				return nil, errors.New("directive hasAnyRole is not implemented")
+			}
+			return ec.directives.HasAnyRole(ctx, nil, directive0, roles)
+		}
+
+		tmp, err := directive1(rctx)
+		if err != nil {
+			return nil, graphql.ErrorOnPath(ctx, err)
+		}
+		if tmp == nil {
+			return nil, nil
+		}
+		if data, ok := tmp.(*models.DiscussionRoleSelection); ok {
+			return data, nil
+		}
+		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/cmsgov/mint-app/pkg/models.DiscussionRoleSelection`, tmp)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*models.DiscussionRoleSelection)
+	fc.Result = res
+	return ec.marshalODiscussionRoleSelection2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐDiscussionRoleSelection(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Query_mostRecentDiscussionRoleSelection(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Query",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "userRole":
+				return ec.fieldContext_DiscussionRoleSelection_userRole(ctx, field)
+			case "userRoleDescription":
+				return ec.fieldContext_DiscussionRoleSelection_userRoleDescription(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type DiscussionRoleSelection", field.Name)
+		},
 	}
 	return fc, nil
 }
@@ -53075,1581 +54893,6 @@ func (ec *executionContext) fieldContext_Query_existingModelCollection(ctx conte
 	return fc, nil
 }
 
-func (ec *executionContext) _Query_searchOktaUsers(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Query_searchOktaUsers(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		directive0 := func(rctx context.Context) (interface{}, error) {
-			ctx = rctx // use context from middleware stack in children
-			return ec.resolvers.Query().SearchOktaUsers(rctx, fc.Args["searchTerm"].(string))
-		}
-		directive1 := func(ctx context.Context) (interface{}, error) {
-			roles, err := ec.unmarshalNRole2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRoleᚄ(ctx, []interface{}{"MINT_USER", "MINT_MAC"})
-			if err != nil {
-				return nil, err
-			}
-			if ec.directives.HasAnyRole == nil {
-				return nil, errors.New("directive hasAnyRole is not implemented")
-			}
-			return ec.directives.HasAnyRole(ctx, nil, directive0, roles)
-		}
-
-		tmp, err := directive1(rctx)
-		if err != nil {
-			return nil, graphql.ErrorOnPath(ctx, err)
-		}
-		if tmp == nil {
-			return nil, nil
-		}
-		if data, ok := tmp.([]*models.UserInfo); ok {
-			return data, nil
-		}
-		return nil, fmt.Errorf(`unexpected type %T from directive, should be []*github.com/cmsgov/mint-app/pkg/models.UserInfo`, tmp)
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.([]*models.UserInfo)
-	fc.Result = res
-	return ec.marshalNUserInfo2ᚕᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐUserInfoᚄ(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_Query_searchOktaUsers(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "Query",
-		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			switch field.Name {
-			case "firstName":
-				return ec.fieldContext_UserInfo_firstName(ctx, field)
-			case "lastName":
-				return ec.fieldContext_UserInfo_lastName(ctx, field)
-			case "displayName":
-				return ec.fieldContext_UserInfo_displayName(ctx, field)
-			case "email":
-				return ec.fieldContext_UserInfo_email(ctx, field)
-			case "username":
-				return ec.fieldContext_UserInfo_username(ctx, field)
-			}
-			return nil, fmt.Errorf("no field named %q was found under type UserInfo", field.Name)
-		},
-	}
-	defer func() {
-		if r := recover(); r != nil {
-			err = ec.Recover(ctx, r)
-			ec.Error(ctx, err)
-		}
-	}()
-	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Query_searchOktaUsers_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
-		ec.Error(ctx, err)
-		return fc, err
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _Query_planCollaboratorByID(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Query_planCollaboratorByID(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		directive0 := func(rctx context.Context) (interface{}, error) {
-			ctx = rctx // use context from middleware stack in children
-			return ec.resolvers.Query().PlanCollaboratorByID(rctx, fc.Args["id"].(uuid.UUID))
-		}
-		directive1 := func(ctx context.Context) (interface{}, error) {
-			roles, err := ec.unmarshalNRole2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRoleᚄ(ctx, []interface{}{"MINT_USER", "MINT_MAC"})
-			if err != nil {
-				return nil, err
-			}
-			if ec.directives.HasAnyRole == nil {
-				return nil, errors.New("directive hasAnyRole is not implemented")
-			}
-			return ec.directives.HasAnyRole(ctx, nil, directive0, roles)
-		}
-
-		tmp, err := directive1(rctx)
-		if err != nil {
-			return nil, graphql.ErrorOnPath(ctx, err)
-		}
-		if tmp == nil {
-			return nil, nil
-		}
-		if data, ok := tmp.(*models.PlanCollaborator); ok {
-			return data, nil
-		}
-		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/cmsgov/mint-app/pkg/models.PlanCollaborator`, tmp)
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(*models.PlanCollaborator)
-	fc.Result = res
-	return ec.marshalNPlanCollaborator2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanCollaborator(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_Query_planCollaboratorByID(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "Query",
-		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			switch field.Name {
-			case "id":
-				return ec.fieldContext_PlanCollaborator_id(ctx, field)
-			case "modelPlanID":
-				return ec.fieldContext_PlanCollaborator_modelPlanID(ctx, field)
-			case "userID":
-				return ec.fieldContext_PlanCollaborator_userID(ctx, field)
-			case "userAccount":
-				return ec.fieldContext_PlanCollaborator_userAccount(ctx, field)
-			case "teamRoles":
-				return ec.fieldContext_PlanCollaborator_teamRoles(ctx, field)
-			case "createdBy":
-				return ec.fieldContext_PlanCollaborator_createdBy(ctx, field)
-			case "createdByUserAccount":
-				return ec.fieldContext_PlanCollaborator_createdByUserAccount(ctx, field)
-			case "createdDts":
-				return ec.fieldContext_PlanCollaborator_createdDts(ctx, field)
-			case "modifiedBy":
-				return ec.fieldContext_PlanCollaborator_modifiedBy(ctx, field)
-			case "modifiedByUserAccount":
-				return ec.fieldContext_PlanCollaborator_modifiedByUserAccount(ctx, field)
-			case "modifiedDts":
-				return ec.fieldContext_PlanCollaborator_modifiedDts(ctx, field)
-			}
-			return nil, fmt.Errorf("no field named %q was found under type PlanCollaborator", field.Name)
-		},
-	}
-	defer func() {
-		if r := recover(); r != nil {
-			err = ec.Recover(ctx, r)
-			ec.Error(ctx, err)
-		}
-	}()
-	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Query_planCollaboratorByID_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
-		ec.Error(ctx, err)
-		return fc, err
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _Query_taskListSectionLocks(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Query_taskListSectionLocks(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		directive0 := func(rctx context.Context) (interface{}, error) {
-			ctx = rctx // use context from middleware stack in children
-			return ec.resolvers.Query().TaskListSectionLocks(rctx, fc.Args["modelPlanID"].(uuid.UUID))
-		}
-		directive1 := func(ctx context.Context) (interface{}, error) {
-			roles, err := ec.unmarshalNRole2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRoleᚄ(ctx, []interface{}{"MINT_USER", "MINT_MAC"})
-			if err != nil {
-				return nil, err
-			}
-			if ec.directives.HasAnyRole == nil {
-				return nil, errors.New("directive hasAnyRole is not implemented")
-			}
-			return ec.directives.HasAnyRole(ctx, nil, directive0, roles)
-		}
-
-		tmp, err := directive1(rctx)
-		if err != nil {
-			return nil, graphql.ErrorOnPath(ctx, err)
-		}
-		if tmp == nil {
-			return nil, nil
-		}
-		if data, ok := tmp.([]*model.TaskListSectionLockStatus); ok {
-			return data, nil
-		}
-		return nil, fmt.Errorf(`unexpected type %T from directive, should be []*github.com/cmsgov/mint-app/pkg/graph/model.TaskListSectionLockStatus`, tmp)
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.([]*model.TaskListSectionLockStatus)
-	fc.Result = res
-	return ec.marshalNTaskListSectionLockStatus2ᚕᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTaskListSectionLockStatusᚄ(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_Query_taskListSectionLocks(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "Query",
-		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			switch field.Name {
-			case "modelPlanID":
-				return ec.fieldContext_TaskListSectionLockStatus_modelPlanID(ctx, field)
-			case "section":
-				return ec.fieldContext_TaskListSectionLockStatus_section(ctx, field)
-			case "lockedByUserAccount":
-				return ec.fieldContext_TaskListSectionLockStatus_lockedByUserAccount(ctx, field)
-			case "isAssessment":
-				return ec.fieldContext_TaskListSectionLockStatus_isAssessment(ctx, field)
-			}
-			return nil, fmt.Errorf("no field named %q was found under type TaskListSectionLockStatus", field.Name)
-		},
-	}
-	defer func() {
-		if r := recover(); r != nil {
-			err = ec.Recover(ctx, r)
-			ec.Error(ctx, err)
-		}
-	}()
-	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Query_taskListSectionLocks_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
-		ec.Error(ctx, err)
-		return fc, err
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _Query_planPayments(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Query_planPayments(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		directive0 := func(rctx context.Context) (interface{}, error) {
-			ctx = rctx // use context from middleware stack in children
-			return ec.resolvers.Query().PlanPayments(rctx, fc.Args["id"].(uuid.UUID))
-		}
-		directive1 := func(ctx context.Context) (interface{}, error) {
-			roles, err := ec.unmarshalNRole2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRoleᚄ(ctx, []interface{}{"MINT_USER", "MINT_MAC"})
-			if err != nil {
-				return nil, err
-			}
-			if ec.directives.HasAnyRole == nil {
-				return nil, errors.New("directive hasAnyRole is not implemented")
-			}
-			return ec.directives.HasAnyRole(ctx, nil, directive0, roles)
-		}
-
-		tmp, err := directive1(rctx)
-		if err != nil {
-			return nil, graphql.ErrorOnPath(ctx, err)
-		}
-		if tmp == nil {
-			return nil, nil
-		}
-		if data, ok := tmp.(*models.PlanPayments); ok {
-			return data, nil
-		}
-		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/cmsgov/mint-app/pkg/models.PlanPayments`, tmp)
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(*models.PlanPayments)
-	fc.Result = res
-	return ec.marshalNPlanPayments2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanPayments(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_Query_planPayments(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "Query",
-		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			switch field.Name {
-			case "id":
-				return ec.fieldContext_PlanPayments_id(ctx, field)
-			case "modelPlanID":
-				return ec.fieldContext_PlanPayments_modelPlanID(ctx, field)
-			case "fundingSource":
-				return ec.fieldContext_PlanPayments_fundingSource(ctx, field)
-			case "fundingSourceMedicareAInfo":
-				return ec.fieldContext_PlanPayments_fundingSourceMedicareAInfo(ctx, field)
-			case "fundingSourceMedicareBInfo":
-				return ec.fieldContext_PlanPayments_fundingSourceMedicareBInfo(ctx, field)
-			case "fundingSourceOther":
-				return ec.fieldContext_PlanPayments_fundingSourceOther(ctx, field)
-			case "fundingSourceNote":
-				return ec.fieldContext_PlanPayments_fundingSourceNote(ctx, field)
-			case "fundingSourceR":
-				return ec.fieldContext_PlanPayments_fundingSourceR(ctx, field)
-			case "fundingSourceRMedicareAInfo":
-				return ec.fieldContext_PlanPayments_fundingSourceRMedicareAInfo(ctx, field)
-			case "fundingSourceRMedicareBInfo":
-				return ec.fieldContext_PlanPayments_fundingSourceRMedicareBInfo(ctx, field)
-			case "fundingSourceROther":
-				return ec.fieldContext_PlanPayments_fundingSourceROther(ctx, field)
-			case "fundingSourceRNote":
-				return ec.fieldContext_PlanPayments_fundingSourceRNote(ctx, field)
-			case "payRecipients":
-				return ec.fieldContext_PlanPayments_payRecipients(ctx, field)
-			case "payRecipientsOtherSpecification":
-				return ec.fieldContext_PlanPayments_payRecipientsOtherSpecification(ctx, field)
-			case "payRecipientsNote":
-				return ec.fieldContext_PlanPayments_payRecipientsNote(ctx, field)
-			case "payType":
-				return ec.fieldContext_PlanPayments_payType(ctx, field)
-			case "payTypeNote":
-				return ec.fieldContext_PlanPayments_payTypeNote(ctx, field)
-			case "payClaims":
-				return ec.fieldContext_PlanPayments_payClaims(ctx, field)
-			case "payClaimsOther":
-				return ec.fieldContext_PlanPayments_payClaimsOther(ctx, field)
-			case "payClaimsNote":
-				return ec.fieldContext_PlanPayments_payClaimsNote(ctx, field)
-			case "shouldAnyProvidersExcludedFFSSystems":
-				return ec.fieldContext_PlanPayments_shouldAnyProvidersExcludedFFSSystems(ctx, field)
-			case "shouldAnyProviderExcludedFFSSystemsNote":
-				return ec.fieldContext_PlanPayments_shouldAnyProviderExcludedFFSSystemsNote(ctx, field)
-			case "changesMedicarePhysicianFeeSchedule":
-				return ec.fieldContext_PlanPayments_changesMedicarePhysicianFeeSchedule(ctx, field)
-			case "changesMedicarePhysicianFeeScheduleNote":
-				return ec.fieldContext_PlanPayments_changesMedicarePhysicianFeeScheduleNote(ctx, field)
-			case "affectsMedicareSecondaryPayerClaims":
-				return ec.fieldContext_PlanPayments_affectsMedicareSecondaryPayerClaims(ctx, field)
-			case "affectsMedicareSecondaryPayerClaimsHow":
-				return ec.fieldContext_PlanPayments_affectsMedicareSecondaryPayerClaimsHow(ctx, field)
-			case "affectsMedicareSecondaryPayerClaimsNote":
-				return ec.fieldContext_PlanPayments_affectsMedicareSecondaryPayerClaimsNote(ctx, field)
-			case "payModelDifferentiation":
-				return ec.fieldContext_PlanPayments_payModelDifferentiation(ctx, field)
-			case "creatingDependenciesBetweenServices":
-				return ec.fieldContext_PlanPayments_creatingDependenciesBetweenServices(ctx, field)
-			case "creatingDependenciesBetweenServicesNote":
-				return ec.fieldContext_PlanPayments_creatingDependenciesBetweenServicesNote(ctx, field)
-			case "needsClaimsDataCollection":
-				return ec.fieldContext_PlanPayments_needsClaimsDataCollection(ctx, field)
-			case "needsClaimsDataCollectionNote":
-				return ec.fieldContext_PlanPayments_needsClaimsDataCollectionNote(ctx, field)
-			case "providingThirdPartyFile":
-				return ec.fieldContext_PlanPayments_providingThirdPartyFile(ctx, field)
-			case "isContractorAwareTestDataRequirements":
-				return ec.fieldContext_PlanPayments_isContractorAwareTestDataRequirements(ctx, field)
-			case "beneficiaryCostSharingLevelAndHandling":
-				return ec.fieldContext_PlanPayments_beneficiaryCostSharingLevelAndHandling(ctx, field)
-			case "waiveBeneficiaryCostSharingForAnyServices":
-				return ec.fieldContext_PlanPayments_waiveBeneficiaryCostSharingForAnyServices(ctx, field)
-			case "waiveBeneficiaryCostSharingServiceSpecification":
-				return ec.fieldContext_PlanPayments_waiveBeneficiaryCostSharingServiceSpecification(ctx, field)
-			case "waiverOnlyAppliesPartOfPayment":
-				return ec.fieldContext_PlanPayments_waiverOnlyAppliesPartOfPayment(ctx, field)
-			case "waiveBeneficiaryCostSharingNote":
-				return ec.fieldContext_PlanPayments_waiveBeneficiaryCostSharingNote(ctx, field)
-			case "nonClaimsPayments":
-				return ec.fieldContext_PlanPayments_nonClaimsPayments(ctx, field)
-			case "nonClaimsPaymentOther":
-				return ec.fieldContext_PlanPayments_nonClaimsPaymentOther(ctx, field)
-			case "nonClaimsPaymentsNote":
-				return ec.fieldContext_PlanPayments_nonClaimsPaymentsNote(ctx, field)
-			case "paymentCalculationOwner":
-				return ec.fieldContext_PlanPayments_paymentCalculationOwner(ctx, field)
-			case "numberPaymentsPerPayCycle":
-				return ec.fieldContext_PlanPayments_numberPaymentsPerPayCycle(ctx, field)
-			case "numberPaymentsPerPayCycleNote":
-				return ec.fieldContext_PlanPayments_numberPaymentsPerPayCycleNote(ctx, field)
-			case "sharedSystemsInvolvedAdditionalClaimPayment":
-				return ec.fieldContext_PlanPayments_sharedSystemsInvolvedAdditionalClaimPayment(ctx, field)
-			case "sharedSystemsInvolvedAdditionalClaimPaymentNote":
-				return ec.fieldContext_PlanPayments_sharedSystemsInvolvedAdditionalClaimPaymentNote(ctx, field)
-			case "planningToUseInnovationPaymentContractor":
-				return ec.fieldContext_PlanPayments_planningToUseInnovationPaymentContractor(ctx, field)
-			case "planningToUseInnovationPaymentContractorNote":
-				return ec.fieldContext_PlanPayments_planningToUseInnovationPaymentContractorNote(ctx, field)
-			case "expectedCalculationComplexityLevel":
-				return ec.fieldContext_PlanPayments_expectedCalculationComplexityLevel(ctx, field)
-			case "expectedCalculationComplexityLevelNote":
-				return ec.fieldContext_PlanPayments_expectedCalculationComplexityLevelNote(ctx, field)
-			case "claimsProcessingPrecedence":
-				return ec.fieldContext_PlanPayments_claimsProcessingPrecedence(ctx, field)
-			case "claimsProcessingPrecedenceOther":
-				return ec.fieldContext_PlanPayments_claimsProcessingPrecedenceOther(ctx, field)
-			case "claimsProcessingPrecedenceNote":
-				return ec.fieldContext_PlanPayments_claimsProcessingPrecedenceNote(ctx, field)
-			case "canParticipantsSelectBetweenPaymentMechanisms":
-				return ec.fieldContext_PlanPayments_canParticipantsSelectBetweenPaymentMechanisms(ctx, field)
-			case "canParticipantsSelectBetweenPaymentMechanismsHow":
-				return ec.fieldContext_PlanPayments_canParticipantsSelectBetweenPaymentMechanismsHow(ctx, field)
-			case "canParticipantsSelectBetweenPaymentMechanismsNote":
-				return ec.fieldContext_PlanPayments_canParticipantsSelectBetweenPaymentMechanismsNote(ctx, field)
-			case "anticipatedPaymentFrequency":
-				return ec.fieldContext_PlanPayments_anticipatedPaymentFrequency(ctx, field)
-			case "anticipatedPaymentFrequencyContinually":
-				return ec.fieldContext_PlanPayments_anticipatedPaymentFrequencyContinually(ctx, field)
-			case "anticipatedPaymentFrequencyOther":
-				return ec.fieldContext_PlanPayments_anticipatedPaymentFrequencyOther(ctx, field)
-			case "anticipatedPaymentFrequencyNote":
-				return ec.fieldContext_PlanPayments_anticipatedPaymentFrequencyNote(ctx, field)
-			case "willRecoverPayments":
-				return ec.fieldContext_PlanPayments_willRecoverPayments(ctx, field)
-			case "willRecoverPaymentsNote":
-				return ec.fieldContext_PlanPayments_willRecoverPaymentsNote(ctx, field)
-			case "anticipateReconcilingPaymentsRetrospectively":
-				return ec.fieldContext_PlanPayments_anticipateReconcilingPaymentsRetrospectively(ctx, field)
-			case "anticipateReconcilingPaymentsRetrospectivelyNote":
-				return ec.fieldContext_PlanPayments_anticipateReconcilingPaymentsRetrospectivelyNote(ctx, field)
-			case "paymentReconciliationFrequency":
-				return ec.fieldContext_PlanPayments_paymentReconciliationFrequency(ctx, field)
-			case "paymentReconciliationFrequencyContinually":
-				return ec.fieldContext_PlanPayments_paymentReconciliationFrequencyContinually(ctx, field)
-			case "paymentReconciliationFrequencyOther":
-				return ec.fieldContext_PlanPayments_paymentReconciliationFrequencyOther(ctx, field)
-			case "paymentReconciliationFrequencyNote":
-				return ec.fieldContext_PlanPayments_paymentReconciliationFrequencyNote(ctx, field)
-			case "paymentDemandRecoupmentFrequency":
-				return ec.fieldContext_PlanPayments_paymentDemandRecoupmentFrequency(ctx, field)
-			case "paymentDemandRecoupmentFrequencyContinually":
-				return ec.fieldContext_PlanPayments_paymentDemandRecoupmentFrequencyContinually(ctx, field)
-			case "paymentDemandRecoupmentFrequencyOther":
-				return ec.fieldContext_PlanPayments_paymentDemandRecoupmentFrequencyOther(ctx, field)
-			case "paymentDemandRecoupmentFrequencyNote":
-				return ec.fieldContext_PlanPayments_paymentDemandRecoupmentFrequencyNote(ctx, field)
-			case "paymentStartDate":
-				return ec.fieldContext_PlanPayments_paymentStartDate(ctx, field)
-			case "paymentStartDateNote":
-				return ec.fieldContext_PlanPayments_paymentStartDateNote(ctx, field)
-			case "createdBy":
-				return ec.fieldContext_PlanPayments_createdBy(ctx, field)
-			case "createdByUserAccount":
-				return ec.fieldContext_PlanPayments_createdByUserAccount(ctx, field)
-			case "createdDts":
-				return ec.fieldContext_PlanPayments_createdDts(ctx, field)
-			case "modifiedBy":
-				return ec.fieldContext_PlanPayments_modifiedBy(ctx, field)
-			case "modifiedByUserAccount":
-				return ec.fieldContext_PlanPayments_modifiedByUserAccount(ctx, field)
-			case "modifiedDts":
-				return ec.fieldContext_PlanPayments_modifiedDts(ctx, field)
-			case "readyForReviewBy":
-				return ec.fieldContext_PlanPayments_readyForReviewBy(ctx, field)
-			case "readyForReviewByUserAccount":
-				return ec.fieldContext_PlanPayments_readyForReviewByUserAccount(ctx, field)
-			case "readyForReviewDts":
-				return ec.fieldContext_PlanPayments_readyForReviewDts(ctx, field)
-			case "readyForClearanceBy":
-				return ec.fieldContext_PlanPayments_readyForClearanceBy(ctx, field)
-			case "readyForClearanceByUserAccount":
-				return ec.fieldContext_PlanPayments_readyForClearanceByUserAccount(ctx, field)
-			case "readyForClearanceDts":
-				return ec.fieldContext_PlanPayments_readyForClearanceDts(ctx, field)
-			case "status":
-				return ec.fieldContext_PlanPayments_status(ctx, field)
-			}
-			return nil, fmt.Errorf("no field named %q was found under type PlanPayments", field.Name)
-		},
-	}
-	defer func() {
-		if r := recover(); r != nil {
-			err = ec.Recover(ctx, r)
-			ec.Error(ctx, err)
-		}
-	}()
-	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Query_planPayments_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
-		ec.Error(ctx, err)
-		return fc, err
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _Query_ndaInfo(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Query_ndaInfo(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		directive0 := func(rctx context.Context) (interface{}, error) {
-			ctx = rctx // use context from middleware stack in children
-			return ec.resolvers.Query().NdaInfo(rctx)
-		}
-		directive1 := func(ctx context.Context) (interface{}, error) {
-			roles, err := ec.unmarshalNRole2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRoleᚄ(ctx, []interface{}{"MINT_USER", "MINT_MAC"})
-			if err != nil {
-				return nil, err
-			}
-			if ec.directives.HasAnyRole == nil {
-				return nil, errors.New("directive hasAnyRole is not implemented")
-			}
-			return ec.directives.HasAnyRole(ctx, nil, directive0, roles)
-		}
-
-		tmp, err := directive1(rctx)
-		if err != nil {
-			return nil, graphql.ErrorOnPath(ctx, err)
-		}
-		if tmp == nil {
-			return nil, nil
-		}
-		if data, ok := tmp.(*model.NDAInfo); ok {
-			return data, nil
-		}
-		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/cmsgov/mint-app/pkg/graph/model.NDAInfo`, tmp)
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(*model.NDAInfo)
-	fc.Result = res
-	return ec.marshalNNDAInfo2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐNDAInfo(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_Query_ndaInfo(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "Query",
-		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			switch field.Name {
-			case "agreed":
-				return ec.fieldContext_NDAInfo_agreed(ctx, field)
-			case "agreedDts":
-				return ec.fieldContext_NDAInfo_agreedDts(ctx, field)
-			}
-			return nil, fmt.Errorf("no field named %q was found under type NDAInfo", field.Name)
-		},
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _Query_planCR(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Query_planCR(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		directive0 := func(rctx context.Context) (interface{}, error) {
-			ctx = rctx // use context from middleware stack in children
-			return ec.resolvers.Query().PlanCr(rctx, fc.Args["id"].(uuid.UUID))
-		}
-		directive1 := func(ctx context.Context) (interface{}, error) {
-			roles, err := ec.unmarshalNRole2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRoleᚄ(ctx, []interface{}{"MINT_USER", "MINT_MAC"})
-			if err != nil {
-				return nil, err
-			}
-			if ec.directives.HasAnyRole == nil {
-				return nil, errors.New("directive hasAnyRole is not implemented")
-			}
-			return ec.directives.HasAnyRole(ctx, nil, directive0, roles)
-		}
-
-		tmp, err := directive1(rctx)
-		if err != nil {
-			return nil, graphql.ErrorOnPath(ctx, err)
-		}
-		if tmp == nil {
-			return nil, nil
-		}
-		if data, ok := tmp.(*models.PlanCR); ok {
-			return data, nil
-		}
-		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/cmsgov/mint-app/pkg/models.PlanCR`, tmp)
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(*models.PlanCR)
-	fc.Result = res
-	return ec.marshalNPlanCR2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanCR(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_Query_planCR(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "Query",
-		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			switch field.Name {
-			case "id":
-				return ec.fieldContext_PlanCR_id(ctx, field)
-			case "modelPlanID":
-				return ec.fieldContext_PlanCR_modelPlanID(ctx, field)
-			case "idNumber":
-				return ec.fieldContext_PlanCR_idNumber(ctx, field)
-			case "dateInitiated":
-				return ec.fieldContext_PlanCR_dateInitiated(ctx, field)
-			case "dateImplemented":
-				return ec.fieldContext_PlanCR_dateImplemented(ctx, field)
-			case "title":
-				return ec.fieldContext_PlanCR_title(ctx, field)
-			case "note":
-				return ec.fieldContext_PlanCR_note(ctx, field)
-			case "createdBy":
-				return ec.fieldContext_PlanCR_createdBy(ctx, field)
-			case "createdByUserAccount":
-				return ec.fieldContext_PlanCR_createdByUserAccount(ctx, field)
-			case "createdDts":
-				return ec.fieldContext_PlanCR_createdDts(ctx, field)
-			case "modifiedBy":
-				return ec.fieldContext_PlanCR_modifiedBy(ctx, field)
-			case "modifiedByUserAccount":
-				return ec.fieldContext_PlanCR_modifiedByUserAccount(ctx, field)
-			case "modifiedDts":
-				return ec.fieldContext_PlanCR_modifiedDts(ctx, field)
-			}
-			return nil, fmt.Errorf("no field named %q was found under type PlanCR", field.Name)
-		},
-	}
-	defer func() {
-		if r := recover(); r != nil {
-			err = ec.Recover(ctx, r)
-			ec.Error(ctx, err)
-		}
-	}()
-	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Query_planCR_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
-		ec.Error(ctx, err)
-		return fc, err
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _Query_planTDL(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Query_planTDL(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		directive0 := func(rctx context.Context) (interface{}, error) {
-			ctx = rctx // use context from middleware stack in children
-			return ec.resolvers.Query().PlanTdl(rctx, fc.Args["id"].(uuid.UUID))
-		}
-		directive1 := func(ctx context.Context) (interface{}, error) {
-			roles, err := ec.unmarshalNRole2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRoleᚄ(ctx, []interface{}{"MINT_USER", "MINT_MAC"})
-			if err != nil {
-				return nil, err
-			}
-			if ec.directives.HasAnyRole == nil {
-				return nil, errors.New("directive hasAnyRole is not implemented")
-			}
-			return ec.directives.HasAnyRole(ctx, nil, directive0, roles)
-		}
-
-		tmp, err := directive1(rctx)
-		if err != nil {
-			return nil, graphql.ErrorOnPath(ctx, err)
-		}
-		if tmp == nil {
-			return nil, nil
-		}
-		if data, ok := tmp.(*models.PlanTDL); ok {
-			return data, nil
-		}
-		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/cmsgov/mint-app/pkg/models.PlanTDL`, tmp)
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(*models.PlanTDL)
-	fc.Result = res
-	return ec.marshalNPlanTDL2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanTDL(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_Query_planTDL(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "Query",
-		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			switch field.Name {
-			case "id":
-				return ec.fieldContext_PlanTDL_id(ctx, field)
-			case "modelPlanID":
-				return ec.fieldContext_PlanTDL_modelPlanID(ctx, field)
-			case "idNumber":
-				return ec.fieldContext_PlanTDL_idNumber(ctx, field)
-			case "dateInitiated":
-				return ec.fieldContext_PlanTDL_dateInitiated(ctx, field)
-			case "title":
-				return ec.fieldContext_PlanTDL_title(ctx, field)
-			case "note":
-				return ec.fieldContext_PlanTDL_note(ctx, field)
-			case "createdBy":
-				return ec.fieldContext_PlanTDL_createdBy(ctx, field)
-			case "createdByUserAccount":
-				return ec.fieldContext_PlanTDL_createdByUserAccount(ctx, field)
-			case "createdDts":
-				return ec.fieldContext_PlanTDL_createdDts(ctx, field)
-			case "modifiedBy":
-				return ec.fieldContext_PlanTDL_modifiedBy(ctx, field)
-			case "modifiedByUserAccount":
-				return ec.fieldContext_PlanTDL_modifiedByUserAccount(ctx, field)
-			case "modifiedDts":
-				return ec.fieldContext_PlanTDL_modifiedDts(ctx, field)
-			}
-			return nil, fmt.Errorf("no field named %q was found under type PlanTDL", field.Name)
-		},
-	}
-	defer func() {
-		if r := recover(); r != nil {
-			err = ec.Recover(ctx, r)
-			ec.Error(ctx, err)
-		}
-	}()
-	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Query_planTDL_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
-		ec.Error(ctx, err)
-		return fc, err
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _Query_operationalSolutions(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Query_operationalSolutions(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		directive0 := func(rctx context.Context) (interface{}, error) {
-			ctx = rctx // use context from middleware stack in children
-			return ec.resolvers.Query().OperationalSolutions(rctx, fc.Args["operationalNeedID"].(uuid.UUID), fc.Args["includeNotNeeded"].(bool))
-		}
-		directive1 := func(ctx context.Context) (interface{}, error) {
-			roles, err := ec.unmarshalNRole2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRoleᚄ(ctx, []interface{}{"MINT_USER", "MINT_MAC"})
-			if err != nil {
-				return nil, err
-			}
-			if ec.directives.HasAnyRole == nil {
-				return nil, errors.New("directive hasAnyRole is not implemented")
-			}
-			return ec.directives.HasAnyRole(ctx, nil, directive0, roles)
-		}
-
-		tmp, err := directive1(rctx)
-		if err != nil {
-			return nil, graphql.ErrorOnPath(ctx, err)
-		}
-		if tmp == nil {
-			return nil, nil
-		}
-		if data, ok := tmp.([]*models.OperationalSolution); ok {
-			return data, nil
-		}
-		return nil, fmt.Errorf(`unexpected type %T from directive, should be []*github.com/cmsgov/mint-app/pkg/models.OperationalSolution`, tmp)
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.([]*models.OperationalSolution)
-	fc.Result = res
-	return ec.marshalNOperationalSolution2ᚕᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐOperationalSolutionᚄ(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_Query_operationalSolutions(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "Query",
-		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			switch field.Name {
-			case "id":
-				return ec.fieldContext_OperationalSolution_id(ctx, field)
-			case "operationalNeedID":
-				return ec.fieldContext_OperationalSolution_operationalNeedID(ctx, field)
-			case "solutionType":
-				return ec.fieldContext_OperationalSolution_solutionType(ctx, field)
-			case "needed":
-				return ec.fieldContext_OperationalSolution_needed(ctx, field)
-			case "name":
-				return ec.fieldContext_OperationalSolution_name(ctx, field)
-			case "key":
-				return ec.fieldContext_OperationalSolution_key(ctx, field)
-			case "nameOther":
-				return ec.fieldContext_OperationalSolution_nameOther(ctx, field)
-			case "pocName":
-				return ec.fieldContext_OperationalSolution_pocName(ctx, field)
-			case "pocEmail":
-				return ec.fieldContext_OperationalSolution_pocEmail(ctx, field)
-			case "mustStartDts":
-				return ec.fieldContext_OperationalSolution_mustStartDts(ctx, field)
-			case "mustFinishDts":
-				return ec.fieldContext_OperationalSolution_mustFinishDts(ctx, field)
-			case "isOther":
-				return ec.fieldContext_OperationalSolution_isOther(ctx, field)
-			case "isCommonSolution":
-				return ec.fieldContext_OperationalSolution_isCommonSolution(ctx, field)
-			case "otherHeader":
-				return ec.fieldContext_OperationalSolution_otherHeader(ctx, field)
-			case "status":
-				return ec.fieldContext_OperationalSolution_status(ctx, field)
-			case "documents":
-				return ec.fieldContext_OperationalSolution_documents(ctx, field)
-			case "operationalSolutionSubtasks":
-				return ec.fieldContext_OperationalSolution_operationalSolutionSubtasks(ctx, field)
-			case "createdBy":
-				return ec.fieldContext_OperationalSolution_createdBy(ctx, field)
-			case "createdByUserAccount":
-				return ec.fieldContext_OperationalSolution_createdByUserAccount(ctx, field)
-			case "createdDts":
-				return ec.fieldContext_OperationalSolution_createdDts(ctx, field)
-			case "modifiedBy":
-				return ec.fieldContext_OperationalSolution_modifiedBy(ctx, field)
-			case "modifiedByUserAccount":
-				return ec.fieldContext_OperationalSolution_modifiedByUserAccount(ctx, field)
-			case "modifiedDts":
-				return ec.fieldContext_OperationalSolution_modifiedDts(ctx, field)
-			}
-			return nil, fmt.Errorf("no field named %q was found under type OperationalSolution", field.Name)
-		},
-	}
-	defer func() {
-		if r := recover(); r != nil {
-			err = ec.Recover(ctx, r)
-			ec.Error(ctx, err)
-		}
-	}()
-	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Query_operationalSolutions_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
-		ec.Error(ctx, err)
-		return fc, err
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _Query_operationalSolution(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Query_operationalSolution(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		directive0 := func(rctx context.Context) (interface{}, error) {
-			ctx = rctx // use context from middleware stack in children
-			return ec.resolvers.Query().OperationalSolution(rctx, fc.Args["id"].(uuid.UUID))
-		}
-		directive1 := func(ctx context.Context) (interface{}, error) {
-			roles, err := ec.unmarshalNRole2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRoleᚄ(ctx, []interface{}{"MINT_USER", "MINT_MAC"})
-			if err != nil {
-				return nil, err
-			}
-			if ec.directives.HasAnyRole == nil {
-				return nil, errors.New("directive hasAnyRole is not implemented")
-			}
-			return ec.directives.HasAnyRole(ctx, nil, directive0, roles)
-		}
-
-		tmp, err := directive1(rctx)
-		if err != nil {
-			return nil, graphql.ErrorOnPath(ctx, err)
-		}
-		if tmp == nil {
-			return nil, nil
-		}
-		if data, ok := tmp.(*models.OperationalSolution); ok {
-			return data, nil
-		}
-		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/cmsgov/mint-app/pkg/models.OperationalSolution`, tmp)
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(*models.OperationalSolution)
-	fc.Result = res
-	return ec.marshalNOperationalSolution2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐOperationalSolution(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_Query_operationalSolution(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "Query",
-		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			switch field.Name {
-			case "id":
-				return ec.fieldContext_OperationalSolution_id(ctx, field)
-			case "operationalNeedID":
-				return ec.fieldContext_OperationalSolution_operationalNeedID(ctx, field)
-			case "solutionType":
-				return ec.fieldContext_OperationalSolution_solutionType(ctx, field)
-			case "needed":
-				return ec.fieldContext_OperationalSolution_needed(ctx, field)
-			case "name":
-				return ec.fieldContext_OperationalSolution_name(ctx, field)
-			case "key":
-				return ec.fieldContext_OperationalSolution_key(ctx, field)
-			case "nameOther":
-				return ec.fieldContext_OperationalSolution_nameOther(ctx, field)
-			case "pocName":
-				return ec.fieldContext_OperationalSolution_pocName(ctx, field)
-			case "pocEmail":
-				return ec.fieldContext_OperationalSolution_pocEmail(ctx, field)
-			case "mustStartDts":
-				return ec.fieldContext_OperationalSolution_mustStartDts(ctx, field)
-			case "mustFinishDts":
-				return ec.fieldContext_OperationalSolution_mustFinishDts(ctx, field)
-			case "isOther":
-				return ec.fieldContext_OperationalSolution_isOther(ctx, field)
-			case "isCommonSolution":
-				return ec.fieldContext_OperationalSolution_isCommonSolution(ctx, field)
-			case "otherHeader":
-				return ec.fieldContext_OperationalSolution_otherHeader(ctx, field)
-			case "status":
-				return ec.fieldContext_OperationalSolution_status(ctx, field)
-			case "documents":
-				return ec.fieldContext_OperationalSolution_documents(ctx, field)
-			case "operationalSolutionSubtasks":
-				return ec.fieldContext_OperationalSolution_operationalSolutionSubtasks(ctx, field)
-			case "createdBy":
-				return ec.fieldContext_OperationalSolution_createdBy(ctx, field)
-			case "createdByUserAccount":
-				return ec.fieldContext_OperationalSolution_createdByUserAccount(ctx, field)
-			case "createdDts":
-				return ec.fieldContext_OperationalSolution_createdDts(ctx, field)
-			case "modifiedBy":
-				return ec.fieldContext_OperationalSolution_modifiedBy(ctx, field)
-			case "modifiedByUserAccount":
-				return ec.fieldContext_OperationalSolution_modifiedByUserAccount(ctx, field)
-			case "modifiedDts":
-				return ec.fieldContext_OperationalSolution_modifiedDts(ctx, field)
-			}
-			return nil, fmt.Errorf("no field named %q was found under type OperationalSolution", field.Name)
-		},
-	}
-	defer func() {
-		if r := recover(); r != nil {
-			err = ec.Recover(ctx, r)
-			ec.Error(ctx, err)
-		}
-	}()
-	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Query_operationalSolution_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
-		ec.Error(ctx, err)
-		return fc, err
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _Query_operationalNeed(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Query_operationalNeed(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		directive0 := func(rctx context.Context) (interface{}, error) {
-			ctx = rctx // use context from middleware stack in children
-			return ec.resolvers.Query().OperationalNeed(rctx, fc.Args["id"].(uuid.UUID))
-		}
-		directive1 := func(ctx context.Context) (interface{}, error) {
-			roles, err := ec.unmarshalNRole2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRoleᚄ(ctx, []interface{}{"MINT_USER", "MINT_MAC"})
-			if err != nil {
-				return nil, err
-			}
-			if ec.directives.HasAnyRole == nil {
-				return nil, errors.New("directive hasAnyRole is not implemented")
-			}
-			return ec.directives.HasAnyRole(ctx, nil, directive0, roles)
-		}
-
-		tmp, err := directive1(rctx)
-		if err != nil {
-			return nil, graphql.ErrorOnPath(ctx, err)
-		}
-		if tmp == nil {
-			return nil, nil
-		}
-		if data, ok := tmp.(*models.OperationalNeed); ok {
-			return data, nil
-		}
-		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/cmsgov/mint-app/pkg/models.OperationalNeed`, tmp)
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(*models.OperationalNeed)
-	fc.Result = res
-	return ec.marshalNOperationalNeed2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐOperationalNeed(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_Query_operationalNeed(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "Query",
-		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			switch field.Name {
-			case "id":
-				return ec.fieldContext_OperationalNeed_id(ctx, field)
-			case "modelPlanID":
-				return ec.fieldContext_OperationalNeed_modelPlanID(ctx, field)
-			case "needed":
-				return ec.fieldContext_OperationalNeed_needed(ctx, field)
-			case "solutions":
-				return ec.fieldContext_OperationalNeed_solutions(ctx, field)
-			case "key":
-				return ec.fieldContext_OperationalNeed_key(ctx, field)
-			case "name":
-				return ec.fieldContext_OperationalNeed_name(ctx, field)
-			case "nameOther":
-				return ec.fieldContext_OperationalNeed_nameOther(ctx, field)
-			case "section":
-				return ec.fieldContext_OperationalNeed_section(ctx, field)
-			case "createdBy":
-				return ec.fieldContext_OperationalNeed_createdBy(ctx, field)
-			case "createdByUserAccount":
-				return ec.fieldContext_OperationalNeed_createdByUserAccount(ctx, field)
-			case "createdDts":
-				return ec.fieldContext_OperationalNeed_createdDts(ctx, field)
-			case "modifiedBy":
-				return ec.fieldContext_OperationalNeed_modifiedBy(ctx, field)
-			case "modifiedByUserAccount":
-				return ec.fieldContext_OperationalNeed_modifiedByUserAccount(ctx, field)
-			case "modifiedDts":
-				return ec.fieldContext_OperationalNeed_modifiedDts(ctx, field)
-			}
-			return nil, fmt.Errorf("no field named %q was found under type OperationalNeed", field.Name)
-		},
-	}
-	defer func() {
-		if r := recover(); r != nil {
-			err = ec.Recover(ctx, r)
-			ec.Error(ctx, err)
-		}
-	}()
-	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Query_operationalNeed_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
-		ec.Error(ctx, err)
-		return fc, err
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _Query_auditChanges(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Query_auditChanges(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		directive0 := func(rctx context.Context) (interface{}, error) {
-			ctx = rctx // use context from middleware stack in children
-			return ec.resolvers.Query().AuditChanges(rctx, fc.Args["tableName"].(string), fc.Args["primaryKey"].(uuid.UUID))
-		}
-		directive1 := func(ctx context.Context) (interface{}, error) {
-			roles, err := ec.unmarshalNRole2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRoleᚄ(ctx, []interface{}{"MINT_USER", "MINT_MAC"})
-			if err != nil {
-				return nil, err
-			}
-			if ec.directives.HasAnyRole == nil {
-				return nil, errors.New("directive hasAnyRole is not implemented")
-			}
-			return ec.directives.HasAnyRole(ctx, nil, directive0, roles)
-		}
-
-		tmp, err := directive1(rctx)
-		if err != nil {
-			return nil, graphql.ErrorOnPath(ctx, err)
-		}
-		if tmp == nil {
-			return nil, nil
-		}
-		if data, ok := tmp.([]*models.AuditChange); ok {
-			return data, nil
-		}
-		return nil, fmt.Errorf(`unexpected type %T from directive, should be []*github.com/cmsgov/mint-app/pkg/models.AuditChange`, tmp)
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.([]*models.AuditChange)
-	fc.Result = res
-	return ec.marshalNAuditChange2ᚕᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐAuditChangeᚄ(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_Query_auditChanges(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "Query",
-		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			switch field.Name {
-			case "id":
-				return ec.fieldContext_AuditChange_id(ctx, field)
-			case "primaryKey":
-				return ec.fieldContext_AuditChange_primaryKey(ctx, field)
-			case "foreignKey":
-				return ec.fieldContext_AuditChange_foreignKey(ctx, field)
-			case "tableName":
-				return ec.fieldContext_AuditChange_tableName(ctx, field)
-			case "action":
-				return ec.fieldContext_AuditChange_action(ctx, field)
-			case "fields":
-				return ec.fieldContext_AuditChange_fields(ctx, field)
-			case "modifiedBy":
-				return ec.fieldContext_AuditChange_modifiedBy(ctx, field)
-			case "modifiedByUserAccount":
-				return ec.fieldContext_AuditChange_modifiedByUserAccount(ctx, field)
-			case "modifiedDts":
-				return ec.fieldContext_AuditChange_modifiedDts(ctx, field)
-			}
-			return nil, fmt.Errorf("no field named %q was found under type AuditChange", field.Name)
-		},
-	}
-	defer func() {
-		if r := recover(); r != nil {
-			err = ec.Recover(ctx, r)
-			ec.Error(ctx, err)
-		}
-	}()
-	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Query_auditChanges_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
-		ec.Error(ctx, err)
-		return fc, err
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _Query_possibleOperationalNeeds(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Query_possibleOperationalNeeds(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		directive0 := func(rctx context.Context) (interface{}, error) {
-			ctx = rctx // use context from middleware stack in children
-			return ec.resolvers.Query().PossibleOperationalNeeds(rctx)
-		}
-		directive1 := func(ctx context.Context) (interface{}, error) {
-			roles, err := ec.unmarshalNRole2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRoleᚄ(ctx, []interface{}{"MINT_USER", "MINT_MAC"})
-			if err != nil {
-				return nil, err
-			}
-			if ec.directives.HasAnyRole == nil {
-				return nil, errors.New("directive hasAnyRole is not implemented")
-			}
-			return ec.directives.HasAnyRole(ctx, nil, directive0, roles)
-		}
-
-		tmp, err := directive1(rctx)
-		if err != nil {
-			return nil, graphql.ErrorOnPath(ctx, err)
-		}
-		if tmp == nil {
-			return nil, nil
-		}
-		if data, ok := tmp.([]*models.PossibleOperationalNeed); ok {
-			return data, nil
-		}
-		return nil, fmt.Errorf(`unexpected type %T from directive, should be []*github.com/cmsgov/mint-app/pkg/models.PossibleOperationalNeed`, tmp)
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.([]*models.PossibleOperationalNeed)
-	fc.Result = res
-	return ec.marshalNPossibleOperationalNeed2ᚕᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPossibleOperationalNeedᚄ(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_Query_possibleOperationalNeeds(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "Query",
-		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			switch field.Name {
-			case "id":
-				return ec.fieldContext_PossibleOperationalNeed_id(ctx, field)
-			case "possibleSolutions":
-				return ec.fieldContext_PossibleOperationalNeed_possibleSolutions(ctx, field)
-			case "name":
-				return ec.fieldContext_PossibleOperationalNeed_name(ctx, field)
-			case "key":
-				return ec.fieldContext_PossibleOperationalNeed_key(ctx, field)
-			case "section":
-				return ec.fieldContext_PossibleOperationalNeed_section(ctx, field)
-			case "createdBy":
-				return ec.fieldContext_PossibleOperationalNeed_createdBy(ctx, field)
-			case "createdByUserAccount":
-				return ec.fieldContext_PossibleOperationalNeed_createdByUserAccount(ctx, field)
-			case "createdDts":
-				return ec.fieldContext_PossibleOperationalNeed_createdDts(ctx, field)
-			case "modifiedBy":
-				return ec.fieldContext_PossibleOperationalNeed_modifiedBy(ctx, field)
-			case "modifiedByUserAccount":
-				return ec.fieldContext_PossibleOperationalNeed_modifiedByUserAccount(ctx, field)
-			case "modifiedDts":
-				return ec.fieldContext_PossibleOperationalNeed_modifiedDts(ctx, field)
-			}
-			return nil, fmt.Errorf("no field named %q was found under type PossibleOperationalNeed", field.Name)
-		},
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _Query_possibleOperationalSolutions(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Query_possibleOperationalSolutions(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		directive0 := func(rctx context.Context) (interface{}, error) {
-			ctx = rctx // use context from middleware stack in children
-			return ec.resolvers.Query().PossibleOperationalSolutions(rctx)
-		}
-		directive1 := func(ctx context.Context) (interface{}, error) {
-			roles, err := ec.unmarshalNRole2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRoleᚄ(ctx, []interface{}{"MINT_USER", "MINT_MAC"})
-			if err != nil {
-				return nil, err
-			}
-			if ec.directives.HasAnyRole == nil {
-				return nil, errors.New("directive hasAnyRole is not implemented")
-			}
-			return ec.directives.HasAnyRole(ctx, nil, directive0, roles)
-		}
-
-		tmp, err := directive1(rctx)
-		if err != nil {
-			return nil, graphql.ErrorOnPath(ctx, err)
-		}
-		if tmp == nil {
-			return nil, nil
-		}
-		if data, ok := tmp.([]*models.PossibleOperationalSolution); ok {
-			return data, nil
-		}
-		return nil, fmt.Errorf(`unexpected type %T from directive, should be []*github.com/cmsgov/mint-app/pkg/models.PossibleOperationalSolution`, tmp)
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.([]*models.PossibleOperationalSolution)
-	fc.Result = res
-	return ec.marshalNPossibleOperationalSolution2ᚕᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPossibleOperationalSolutionᚄ(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_Query_possibleOperationalSolutions(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "Query",
-		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			switch field.Name {
-			case "id":
-				return ec.fieldContext_PossibleOperationalSolution_id(ctx, field)
-			case "name":
-				return ec.fieldContext_PossibleOperationalSolution_name(ctx, field)
-			case "key":
-				return ec.fieldContext_PossibleOperationalSolution_key(ctx, field)
-			case "treatAsOther":
-				return ec.fieldContext_PossibleOperationalSolution_treatAsOther(ctx, field)
-			case "pointsOfContact":
-				return ec.fieldContext_PossibleOperationalSolution_pointsOfContact(ctx, field)
-			case "filterView":
-				return ec.fieldContext_PossibleOperationalSolution_filterView(ctx, field)
-			case "createdBy":
-				return ec.fieldContext_PossibleOperationalSolution_createdBy(ctx, field)
-			case "createdByUserAccount":
-				return ec.fieldContext_PossibleOperationalSolution_createdByUserAccount(ctx, field)
-			case "createdDts":
-				return ec.fieldContext_PossibleOperationalSolution_createdDts(ctx, field)
-			case "modifiedBy":
-				return ec.fieldContext_PossibleOperationalSolution_modifiedBy(ctx, field)
-			case "modifiedByUserAccount":
-				return ec.fieldContext_PossibleOperationalSolution_modifiedByUserAccount(ctx, field)
-			case "modifiedDts":
-				return ec.fieldContext_PossibleOperationalSolution_modifiedDts(ctx, field)
-			}
-			return nil, fmt.Errorf("no field named %q was found under type PossibleOperationalSolution", field.Name)
-		},
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _Query_userAccount(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Query_userAccount(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		directive0 := func(rctx context.Context) (interface{}, error) {
-			ctx = rctx // use context from middleware stack in children
-			return ec.resolvers.Query().UserAccount(rctx, fc.Args["username"].(string))
-		}
-		directive1 := func(ctx context.Context) (interface{}, error) {
-			roles, err := ec.unmarshalNRole2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRoleᚄ(ctx, []interface{}{"MINT_USER", "MINT_MAC"})
-			if err != nil {
-				return nil, err
-			}
-			if ec.directives.HasAnyRole == nil {
-				return nil, errors.New("directive hasAnyRole is not implemented")
-			}
-			return ec.directives.HasAnyRole(ctx, nil, directive0, roles)
-		}
-
-		tmp, err := directive1(rctx)
-		if err != nil {
-			return nil, graphql.ErrorOnPath(ctx, err)
-		}
-		if tmp == nil {
-			return nil, nil
-		}
-		if data, ok := tmp.(*authentication.UserAccount); ok {
-			return data, nil
-		}
-		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/cmsgov/mint-app/pkg/authentication.UserAccount`, tmp)
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(*authentication.UserAccount)
-	fc.Result = res
-	return ec.marshalNUserAccount2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋauthenticationᚐUserAccount(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_Query_userAccount(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "Query",
-		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			switch field.Name {
-			case "id":
-				return ec.fieldContext_UserAccount_id(ctx, field)
-			case "username":
-				return ec.fieldContext_UserAccount_username(ctx, field)
-			case "isEUAID":
-				return ec.fieldContext_UserAccount_isEUAID(ctx, field)
-			case "commonName":
-				return ec.fieldContext_UserAccount_commonName(ctx, field)
-			case "locale":
-				return ec.fieldContext_UserAccount_locale(ctx, field)
-			case "email":
-				return ec.fieldContext_UserAccount_email(ctx, field)
-			case "givenName":
-				return ec.fieldContext_UserAccount_givenName(ctx, field)
-			case "familyName":
-				return ec.fieldContext_UserAccount_familyName(ctx, field)
-			case "zoneInfo":
-				return ec.fieldContext_UserAccount_zoneInfo(ctx, field)
-			case "hasLoggedIn":
-				return ec.fieldContext_UserAccount_hasLoggedIn(ctx, field)
-			}
-			return nil, fmt.Errorf("no field named %q was found under type UserAccount", field.Name)
-		},
-	}
-	defer func() {
-		if r := recover(); r != nil {
-			err = ec.Recover(ctx, r)
-			ec.Error(ctx, err)
-		}
-	}()
-	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Query_userAccount_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
-		ec.Error(ctx, err)
-		return fc, err
-	}
-	return fc, nil
-}
-
 func (ec *executionContext) _Query_existingModelLink(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_Query_existingModelLink(ctx, field)
 	if err != nil {
@@ -54751,234 +54994,6 @@ func (ec *executionContext) fieldContext_Query_existingModelLink(ctx context.Con
 	if fc.Args, err = ec.field_Query_existingModelLink_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
 		ec.Error(ctx, err)
 		return fc, err
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _Query_mostRecentDiscussionRoleSelection(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Query_mostRecentDiscussionRoleSelection(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		directive0 := func(rctx context.Context) (interface{}, error) {
-			ctx = rctx // use context from middleware stack in children
-			return ec.resolvers.Query().MostRecentDiscussionRoleSelection(rctx)
-		}
-		directive1 := func(ctx context.Context) (interface{}, error) {
-			roles, err := ec.unmarshalNRole2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRoleᚄ(ctx, []interface{}{"MINT_USER", "MINT_MAC"})
-			if err != nil {
-				return nil, err
-			}
-			if ec.directives.HasAnyRole == nil {
-				return nil, errors.New("directive hasAnyRole is not implemented")
-			}
-			return ec.directives.HasAnyRole(ctx, nil, directive0, roles)
-		}
-
-		tmp, err := directive1(rctx)
-		if err != nil {
-			return nil, graphql.ErrorOnPath(ctx, err)
-		}
-		if tmp == nil {
-			return nil, nil
-		}
-		if data, ok := tmp.(*models.DiscussionRoleSelection); ok {
-			return data, nil
-		}
-		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/cmsgov/mint-app/pkg/models.DiscussionRoleSelection`, tmp)
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		return graphql.Null
-	}
-	res := resTmp.(*models.DiscussionRoleSelection)
-	fc.Result = res
-	return ec.marshalODiscussionRoleSelection2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐDiscussionRoleSelection(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_Query_mostRecentDiscussionRoleSelection(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "Query",
-		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			switch field.Name {
-			case "userRole":
-				return ec.fieldContext_DiscussionRoleSelection_userRole(ctx, field)
-			case "userRoleDescription":
-				return ec.fieldContext_DiscussionRoleSelection_userRoleDescription(ctx, field)
-			}
-			return nil, fmt.Errorf("no field named %q was found under type DiscussionRoleSelection", field.Name)
-		},
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _Query_analyzedAudits(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Query_analyzedAudits(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		directive0 := func(rctx context.Context) (interface{}, error) {
-			ctx = rctx // use context from middleware stack in children
-			return ec.resolvers.Query().AnalyzedAudits(rctx, fc.Args["dateAnalyzed"].(time.Time))
-		}
-		directive1 := func(ctx context.Context) (interface{}, error) {
-			roles, err := ec.unmarshalNRole2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRoleᚄ(ctx, []interface{}{"MINT_USER", "MINT_MAC"})
-			if err != nil {
-				return nil, err
-			}
-			if ec.directives.HasAnyRole == nil {
-				return nil, errors.New("directive hasAnyRole is not implemented")
-			}
-			return ec.directives.HasAnyRole(ctx, nil, directive0, roles)
-		}
-
-		tmp, err := directive1(rctx)
-		if err != nil {
-			return nil, graphql.ErrorOnPath(ctx, err)
-		}
-		if tmp == nil {
-			return nil, nil
-		}
-		if data, ok := tmp.([]*models.AnalyzedAudit); ok {
-			return data, nil
-		}
-		return nil, fmt.Errorf(`unexpected type %T from directive, should be []*github.com/cmsgov/mint-app/pkg/models.AnalyzedAudit`, tmp)
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.([]*models.AnalyzedAudit)
-	fc.Result = res
-	return ec.marshalNAnalyzedAudit2ᚕᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐAnalyzedAuditᚄ(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_Query_analyzedAudits(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "Query",
-		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			switch field.Name {
-			case "id":
-				return ec.fieldContext_AnalyzedAudit_id(ctx, field)
-			case "modelPlanID":
-				return ec.fieldContext_AnalyzedAudit_modelPlanID(ctx, field)
-			case "modelName":
-				return ec.fieldContext_AnalyzedAudit_modelName(ctx, field)
-			case "date":
-				return ec.fieldContext_AnalyzedAudit_date(ctx, field)
-			case "changes":
-				return ec.fieldContext_AnalyzedAudit_changes(ctx, field)
-			case "createdBy":
-				return ec.fieldContext_AnalyzedAudit_createdBy(ctx, field)
-			case "createdByUserAccount":
-				return ec.fieldContext_AnalyzedAudit_createdByUserAccount(ctx, field)
-			case "createdDts":
-				return ec.fieldContext_AnalyzedAudit_createdDts(ctx, field)
-			case "modifiedBy":
-				return ec.fieldContext_AnalyzedAudit_modifiedBy(ctx, field)
-			case "modifiedByUserAccount":
-				return ec.fieldContext_AnalyzedAudit_modifiedByUserAccount(ctx, field)
-			case "modifiedDts":
-				return ec.fieldContext_AnalyzedAudit_modifiedDts(ctx, field)
-			}
-			return nil, fmt.Errorf("no field named %q was found under type AnalyzedAudit", field.Name)
-		},
-	}
-	defer func() {
-		if r := recover(); r != nil {
-			err = ec.Recover(ctx, r)
-			ec.Error(ctx, err)
-		}
-	}()
-	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Query_analyzedAudits_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
-		ec.Error(ctx, err)
-		return fc, err
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _Query_currentUser(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Query_currentUser(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Query().CurrentUser(rctx)
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(*models.CurrentUser)
-	fc.Result = res
-	return ec.marshalNCurrentUser2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐCurrentUser(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_Query_currentUser(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "Query",
-		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			switch field.Name {
-			case "launchDarkly":
-				return ec.fieldContext_CurrentUser_launchDarkly(ctx, field)
-			case "account":
-				return ec.fieldContext_CurrentUser_account(ctx, field)
-			case "notifications":
-				return ec.fieldContext_CurrentUser_notifications(ctx, field)
-			case "notificationPreferences":
-				return ec.fieldContext_CurrentUser_notificationPreferences(ctx, field)
-			}
-			return nil, fmt.Errorf("no field named %q was found under type CurrentUser", field.Name)
-		},
 	}
 	return fc, nil
 }
@@ -55247,6 +55262,1611 @@ func (ec *executionContext) fieldContext_Query_modelPlanCollection(ctx context.C
 	}()
 	ctx = graphql.WithFieldContext(ctx, fc)
 	if fc.Args, err = ec.field_Query_modelPlanCollection_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Query_ndaInfo(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Query_ndaInfo(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		directive0 := func(rctx context.Context) (interface{}, error) {
+			ctx = rctx // use context from middleware stack in children
+			return ec.resolvers.Query().NdaInfo(rctx)
+		}
+		directive1 := func(ctx context.Context) (interface{}, error) {
+			roles, err := ec.unmarshalNRole2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRoleᚄ(ctx, []interface{}{"MINT_USER", "MINT_MAC"})
+			if err != nil {
+				return nil, err
+			}
+			if ec.directives.HasAnyRole == nil {
+				return nil, errors.New("directive hasAnyRole is not implemented")
+			}
+			return ec.directives.HasAnyRole(ctx, nil, directive0, roles)
+		}
+
+		tmp, err := directive1(rctx)
+		if err != nil {
+			return nil, graphql.ErrorOnPath(ctx, err)
+		}
+		if tmp == nil {
+			return nil, nil
+		}
+		if data, ok := tmp.(*model.NDAInfo); ok {
+			return data, nil
+		}
+		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/cmsgov/mint-app/pkg/graph/model.NDAInfo`, tmp)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*model.NDAInfo)
+	fc.Result = res
+	return ec.marshalNNDAInfo2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐNDAInfo(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Query_ndaInfo(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Query",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "agreed":
+				return ec.fieldContext_NDAInfo_agreed(ctx, field)
+			case "agreedDts":
+				return ec.fieldContext_NDAInfo_agreedDts(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type NDAInfo", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Query_operationalNeed(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Query_operationalNeed(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		directive0 := func(rctx context.Context) (interface{}, error) {
+			ctx = rctx // use context from middleware stack in children
+			return ec.resolvers.Query().OperationalNeed(rctx, fc.Args["id"].(uuid.UUID))
+		}
+		directive1 := func(ctx context.Context) (interface{}, error) {
+			roles, err := ec.unmarshalNRole2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRoleᚄ(ctx, []interface{}{"MINT_USER", "MINT_MAC"})
+			if err != nil {
+				return nil, err
+			}
+			if ec.directives.HasAnyRole == nil {
+				return nil, errors.New("directive hasAnyRole is not implemented")
+			}
+			return ec.directives.HasAnyRole(ctx, nil, directive0, roles)
+		}
+
+		tmp, err := directive1(rctx)
+		if err != nil {
+			return nil, graphql.ErrorOnPath(ctx, err)
+		}
+		if tmp == nil {
+			return nil, nil
+		}
+		if data, ok := tmp.(*models.OperationalNeed); ok {
+			return data, nil
+		}
+		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/cmsgov/mint-app/pkg/models.OperationalNeed`, tmp)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*models.OperationalNeed)
+	fc.Result = res
+	return ec.marshalNOperationalNeed2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐOperationalNeed(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Query_operationalNeed(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Query",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_OperationalNeed_id(ctx, field)
+			case "modelPlanID":
+				return ec.fieldContext_OperationalNeed_modelPlanID(ctx, field)
+			case "needed":
+				return ec.fieldContext_OperationalNeed_needed(ctx, field)
+			case "solutions":
+				return ec.fieldContext_OperationalNeed_solutions(ctx, field)
+			case "key":
+				return ec.fieldContext_OperationalNeed_key(ctx, field)
+			case "name":
+				return ec.fieldContext_OperationalNeed_name(ctx, field)
+			case "nameOther":
+				return ec.fieldContext_OperationalNeed_nameOther(ctx, field)
+			case "section":
+				return ec.fieldContext_OperationalNeed_section(ctx, field)
+			case "createdBy":
+				return ec.fieldContext_OperationalNeed_createdBy(ctx, field)
+			case "createdByUserAccount":
+				return ec.fieldContext_OperationalNeed_createdByUserAccount(ctx, field)
+			case "createdDts":
+				return ec.fieldContext_OperationalNeed_createdDts(ctx, field)
+			case "modifiedBy":
+				return ec.fieldContext_OperationalNeed_modifiedBy(ctx, field)
+			case "modifiedByUserAccount":
+				return ec.fieldContext_OperationalNeed_modifiedByUserAccount(ctx, field)
+			case "modifiedDts":
+				return ec.fieldContext_OperationalNeed_modifiedDts(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type OperationalNeed", field.Name)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Query_operationalNeed_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Query_operationalSolutions(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Query_operationalSolutions(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		directive0 := func(rctx context.Context) (interface{}, error) {
+			ctx = rctx // use context from middleware stack in children
+			return ec.resolvers.Query().OperationalSolutions(rctx, fc.Args["operationalNeedID"].(uuid.UUID), fc.Args["includeNotNeeded"].(bool))
+		}
+		directive1 := func(ctx context.Context) (interface{}, error) {
+			roles, err := ec.unmarshalNRole2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRoleᚄ(ctx, []interface{}{"MINT_USER", "MINT_MAC"})
+			if err != nil {
+				return nil, err
+			}
+			if ec.directives.HasAnyRole == nil {
+				return nil, errors.New("directive hasAnyRole is not implemented")
+			}
+			return ec.directives.HasAnyRole(ctx, nil, directive0, roles)
+		}
+
+		tmp, err := directive1(rctx)
+		if err != nil {
+			return nil, graphql.ErrorOnPath(ctx, err)
+		}
+		if tmp == nil {
+			return nil, nil
+		}
+		if data, ok := tmp.([]*models.OperationalSolution); ok {
+			return data, nil
+		}
+		return nil, fmt.Errorf(`unexpected type %T from directive, should be []*github.com/cmsgov/mint-app/pkg/models.OperationalSolution`, tmp)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.([]*models.OperationalSolution)
+	fc.Result = res
+	return ec.marshalNOperationalSolution2ᚕᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐOperationalSolutionᚄ(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Query_operationalSolutions(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Query",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_OperationalSolution_id(ctx, field)
+			case "operationalNeedID":
+				return ec.fieldContext_OperationalSolution_operationalNeedID(ctx, field)
+			case "solutionType":
+				return ec.fieldContext_OperationalSolution_solutionType(ctx, field)
+			case "needed":
+				return ec.fieldContext_OperationalSolution_needed(ctx, field)
+			case "name":
+				return ec.fieldContext_OperationalSolution_name(ctx, field)
+			case "key":
+				return ec.fieldContext_OperationalSolution_key(ctx, field)
+			case "nameOther":
+				return ec.fieldContext_OperationalSolution_nameOther(ctx, field)
+			case "pocName":
+				return ec.fieldContext_OperationalSolution_pocName(ctx, field)
+			case "pocEmail":
+				return ec.fieldContext_OperationalSolution_pocEmail(ctx, field)
+			case "mustStartDts":
+				return ec.fieldContext_OperationalSolution_mustStartDts(ctx, field)
+			case "mustFinishDts":
+				return ec.fieldContext_OperationalSolution_mustFinishDts(ctx, field)
+			case "isOther":
+				return ec.fieldContext_OperationalSolution_isOther(ctx, field)
+			case "isCommonSolution":
+				return ec.fieldContext_OperationalSolution_isCommonSolution(ctx, field)
+			case "otherHeader":
+				return ec.fieldContext_OperationalSolution_otherHeader(ctx, field)
+			case "status":
+				return ec.fieldContext_OperationalSolution_status(ctx, field)
+			case "documents":
+				return ec.fieldContext_OperationalSolution_documents(ctx, field)
+			case "operationalSolutionSubtasks":
+				return ec.fieldContext_OperationalSolution_operationalSolutionSubtasks(ctx, field)
+			case "createdBy":
+				return ec.fieldContext_OperationalSolution_createdBy(ctx, field)
+			case "createdByUserAccount":
+				return ec.fieldContext_OperationalSolution_createdByUserAccount(ctx, field)
+			case "createdDts":
+				return ec.fieldContext_OperationalSolution_createdDts(ctx, field)
+			case "modifiedBy":
+				return ec.fieldContext_OperationalSolution_modifiedBy(ctx, field)
+			case "modifiedByUserAccount":
+				return ec.fieldContext_OperationalSolution_modifiedByUserAccount(ctx, field)
+			case "modifiedDts":
+				return ec.fieldContext_OperationalSolution_modifiedDts(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type OperationalSolution", field.Name)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Query_operationalSolutions_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Query_operationalSolution(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Query_operationalSolution(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		directive0 := func(rctx context.Context) (interface{}, error) {
+			ctx = rctx // use context from middleware stack in children
+			return ec.resolvers.Query().OperationalSolution(rctx, fc.Args["id"].(uuid.UUID))
+		}
+		directive1 := func(ctx context.Context) (interface{}, error) {
+			roles, err := ec.unmarshalNRole2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRoleᚄ(ctx, []interface{}{"MINT_USER", "MINT_MAC"})
+			if err != nil {
+				return nil, err
+			}
+			if ec.directives.HasAnyRole == nil {
+				return nil, errors.New("directive hasAnyRole is not implemented")
+			}
+			return ec.directives.HasAnyRole(ctx, nil, directive0, roles)
+		}
+
+		tmp, err := directive1(rctx)
+		if err != nil {
+			return nil, graphql.ErrorOnPath(ctx, err)
+		}
+		if tmp == nil {
+			return nil, nil
+		}
+		if data, ok := tmp.(*models.OperationalSolution); ok {
+			return data, nil
+		}
+		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/cmsgov/mint-app/pkg/models.OperationalSolution`, tmp)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*models.OperationalSolution)
+	fc.Result = res
+	return ec.marshalNOperationalSolution2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐOperationalSolution(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Query_operationalSolution(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Query",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_OperationalSolution_id(ctx, field)
+			case "operationalNeedID":
+				return ec.fieldContext_OperationalSolution_operationalNeedID(ctx, field)
+			case "solutionType":
+				return ec.fieldContext_OperationalSolution_solutionType(ctx, field)
+			case "needed":
+				return ec.fieldContext_OperationalSolution_needed(ctx, field)
+			case "name":
+				return ec.fieldContext_OperationalSolution_name(ctx, field)
+			case "key":
+				return ec.fieldContext_OperationalSolution_key(ctx, field)
+			case "nameOther":
+				return ec.fieldContext_OperationalSolution_nameOther(ctx, field)
+			case "pocName":
+				return ec.fieldContext_OperationalSolution_pocName(ctx, field)
+			case "pocEmail":
+				return ec.fieldContext_OperationalSolution_pocEmail(ctx, field)
+			case "mustStartDts":
+				return ec.fieldContext_OperationalSolution_mustStartDts(ctx, field)
+			case "mustFinishDts":
+				return ec.fieldContext_OperationalSolution_mustFinishDts(ctx, field)
+			case "isOther":
+				return ec.fieldContext_OperationalSolution_isOther(ctx, field)
+			case "isCommonSolution":
+				return ec.fieldContext_OperationalSolution_isCommonSolution(ctx, field)
+			case "otherHeader":
+				return ec.fieldContext_OperationalSolution_otherHeader(ctx, field)
+			case "status":
+				return ec.fieldContext_OperationalSolution_status(ctx, field)
+			case "documents":
+				return ec.fieldContext_OperationalSolution_documents(ctx, field)
+			case "operationalSolutionSubtasks":
+				return ec.fieldContext_OperationalSolution_operationalSolutionSubtasks(ctx, field)
+			case "createdBy":
+				return ec.fieldContext_OperationalSolution_createdBy(ctx, field)
+			case "createdByUserAccount":
+				return ec.fieldContext_OperationalSolution_createdByUserAccount(ctx, field)
+			case "createdDts":
+				return ec.fieldContext_OperationalSolution_createdDts(ctx, field)
+			case "modifiedBy":
+				return ec.fieldContext_OperationalSolution_modifiedBy(ctx, field)
+			case "modifiedByUserAccount":
+				return ec.fieldContext_OperationalSolution_modifiedByUserAccount(ctx, field)
+			case "modifiedDts":
+				return ec.fieldContext_OperationalSolution_modifiedDts(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type OperationalSolution", field.Name)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Query_operationalSolution_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Query_planCollaboratorByID(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Query_planCollaboratorByID(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		directive0 := func(rctx context.Context) (interface{}, error) {
+			ctx = rctx // use context from middleware stack in children
+			return ec.resolvers.Query().PlanCollaboratorByID(rctx, fc.Args["id"].(uuid.UUID))
+		}
+		directive1 := func(ctx context.Context) (interface{}, error) {
+			roles, err := ec.unmarshalNRole2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRoleᚄ(ctx, []interface{}{"MINT_USER", "MINT_MAC"})
+			if err != nil {
+				return nil, err
+			}
+			if ec.directives.HasAnyRole == nil {
+				return nil, errors.New("directive hasAnyRole is not implemented")
+			}
+			return ec.directives.HasAnyRole(ctx, nil, directive0, roles)
+		}
+
+		tmp, err := directive1(rctx)
+		if err != nil {
+			return nil, graphql.ErrorOnPath(ctx, err)
+		}
+		if tmp == nil {
+			return nil, nil
+		}
+		if data, ok := tmp.(*models.PlanCollaborator); ok {
+			return data, nil
+		}
+		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/cmsgov/mint-app/pkg/models.PlanCollaborator`, tmp)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*models.PlanCollaborator)
+	fc.Result = res
+	return ec.marshalNPlanCollaborator2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanCollaborator(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Query_planCollaboratorByID(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Query",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_PlanCollaborator_id(ctx, field)
+			case "modelPlanID":
+				return ec.fieldContext_PlanCollaborator_modelPlanID(ctx, field)
+			case "userID":
+				return ec.fieldContext_PlanCollaborator_userID(ctx, field)
+			case "userAccount":
+				return ec.fieldContext_PlanCollaborator_userAccount(ctx, field)
+			case "teamRoles":
+				return ec.fieldContext_PlanCollaborator_teamRoles(ctx, field)
+			case "createdBy":
+				return ec.fieldContext_PlanCollaborator_createdBy(ctx, field)
+			case "createdByUserAccount":
+				return ec.fieldContext_PlanCollaborator_createdByUserAccount(ctx, field)
+			case "createdDts":
+				return ec.fieldContext_PlanCollaborator_createdDts(ctx, field)
+			case "modifiedBy":
+				return ec.fieldContext_PlanCollaborator_modifiedBy(ctx, field)
+			case "modifiedByUserAccount":
+				return ec.fieldContext_PlanCollaborator_modifiedByUserAccount(ctx, field)
+			case "modifiedDts":
+				return ec.fieldContext_PlanCollaborator_modifiedDts(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type PlanCollaborator", field.Name)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Query_planCollaboratorByID_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Query_planCR(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Query_planCR(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		directive0 := func(rctx context.Context) (interface{}, error) {
+			ctx = rctx // use context from middleware stack in children
+			return ec.resolvers.Query().PlanCr(rctx, fc.Args["id"].(uuid.UUID))
+		}
+		directive1 := func(ctx context.Context) (interface{}, error) {
+			roles, err := ec.unmarshalNRole2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRoleᚄ(ctx, []interface{}{"MINT_USER", "MINT_MAC"})
+			if err != nil {
+				return nil, err
+			}
+			if ec.directives.HasAnyRole == nil {
+				return nil, errors.New("directive hasAnyRole is not implemented")
+			}
+			return ec.directives.HasAnyRole(ctx, nil, directive0, roles)
+		}
+
+		tmp, err := directive1(rctx)
+		if err != nil {
+			return nil, graphql.ErrorOnPath(ctx, err)
+		}
+		if tmp == nil {
+			return nil, nil
+		}
+		if data, ok := tmp.(*models.PlanCR); ok {
+			return data, nil
+		}
+		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/cmsgov/mint-app/pkg/models.PlanCR`, tmp)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*models.PlanCR)
+	fc.Result = res
+	return ec.marshalNPlanCR2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanCR(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Query_planCR(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Query",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_PlanCR_id(ctx, field)
+			case "modelPlanID":
+				return ec.fieldContext_PlanCR_modelPlanID(ctx, field)
+			case "idNumber":
+				return ec.fieldContext_PlanCR_idNumber(ctx, field)
+			case "dateInitiated":
+				return ec.fieldContext_PlanCR_dateInitiated(ctx, field)
+			case "dateImplemented":
+				return ec.fieldContext_PlanCR_dateImplemented(ctx, field)
+			case "title":
+				return ec.fieldContext_PlanCR_title(ctx, field)
+			case "note":
+				return ec.fieldContext_PlanCR_note(ctx, field)
+			case "createdBy":
+				return ec.fieldContext_PlanCR_createdBy(ctx, field)
+			case "createdByUserAccount":
+				return ec.fieldContext_PlanCR_createdByUserAccount(ctx, field)
+			case "createdDts":
+				return ec.fieldContext_PlanCR_createdDts(ctx, field)
+			case "modifiedBy":
+				return ec.fieldContext_PlanCR_modifiedBy(ctx, field)
+			case "modifiedByUserAccount":
+				return ec.fieldContext_PlanCR_modifiedByUserAccount(ctx, field)
+			case "modifiedDts":
+				return ec.fieldContext_PlanCR_modifiedDts(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type PlanCR", field.Name)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Query_planCR_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Query_planDocument(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Query_planDocument(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		directive0 := func(rctx context.Context) (interface{}, error) {
+			ctx = rctx // use context from middleware stack in children
+			return ec.resolvers.Query().PlanDocument(rctx, fc.Args["id"].(uuid.UUID))
+		}
+		directive1 := func(ctx context.Context) (interface{}, error) {
+			roles, err := ec.unmarshalNRole2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRoleᚄ(ctx, []interface{}{"MINT_USER", "MINT_MAC"})
+			if err != nil {
+				return nil, err
+			}
+			if ec.directives.HasAnyRole == nil {
+				return nil, errors.New("directive hasAnyRole is not implemented")
+			}
+			return ec.directives.HasAnyRole(ctx, nil, directive0, roles)
+		}
+
+		tmp, err := directive1(rctx)
+		if err != nil {
+			return nil, graphql.ErrorOnPath(ctx, err)
+		}
+		if tmp == nil {
+			return nil, nil
+		}
+		if data, ok := tmp.(*models.PlanDocument); ok {
+			return data, nil
+		}
+		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/cmsgov/mint-app/pkg/models.PlanDocument`, tmp)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*models.PlanDocument)
+	fc.Result = res
+	return ec.marshalNPlanDocument2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanDocument(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Query_planDocument(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Query",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_PlanDocument_id(ctx, field)
+			case "modelPlanID":
+				return ec.fieldContext_PlanDocument_modelPlanID(ctx, field)
+			case "isLink":
+				return ec.fieldContext_PlanDocument_isLink(ctx, field)
+			case "url":
+				return ec.fieldContext_PlanDocument_url(ctx, field)
+			case "fileType":
+				return ec.fieldContext_PlanDocument_fileType(ctx, field)
+			case "bucket":
+				return ec.fieldContext_PlanDocument_bucket(ctx, field)
+			case "fileKey":
+				return ec.fieldContext_PlanDocument_fileKey(ctx, field)
+			case "virusScanned":
+				return ec.fieldContext_PlanDocument_virusScanned(ctx, field)
+			case "virusClean":
+				return ec.fieldContext_PlanDocument_virusClean(ctx, field)
+			case "restricted":
+				return ec.fieldContext_PlanDocument_restricted(ctx, field)
+			case "fileName":
+				return ec.fieldContext_PlanDocument_fileName(ctx, field)
+			case "fileSize":
+				return ec.fieldContext_PlanDocument_fileSize(ctx, field)
+			case "documentType":
+				return ec.fieldContext_PlanDocument_documentType(ctx, field)
+			case "otherType":
+				return ec.fieldContext_PlanDocument_otherType(ctx, field)
+			case "optionalNotes":
+				return ec.fieldContext_PlanDocument_optionalNotes(ctx, field)
+			case "downloadUrl":
+				return ec.fieldContext_PlanDocument_downloadUrl(ctx, field)
+			case "deletedAt":
+				return ec.fieldContext_PlanDocument_deletedAt(ctx, field)
+			case "numLinkedSolutions":
+				return ec.fieldContext_PlanDocument_numLinkedSolutions(ctx, field)
+			case "createdBy":
+				return ec.fieldContext_PlanDocument_createdBy(ctx, field)
+			case "createdByUserAccount":
+				return ec.fieldContext_PlanDocument_createdByUserAccount(ctx, field)
+			case "createdDts":
+				return ec.fieldContext_PlanDocument_createdDts(ctx, field)
+			case "modifiedBy":
+				return ec.fieldContext_PlanDocument_modifiedBy(ctx, field)
+			case "modifiedByUserAccount":
+				return ec.fieldContext_PlanDocument_modifiedByUserAccount(ctx, field)
+			case "modifiedDts":
+				return ec.fieldContext_PlanDocument_modifiedDts(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type PlanDocument", field.Name)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Query_planDocument_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Query_planPayments(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Query_planPayments(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		directive0 := func(rctx context.Context) (interface{}, error) {
+			ctx = rctx // use context from middleware stack in children
+			return ec.resolvers.Query().PlanPayments(rctx, fc.Args["id"].(uuid.UUID))
+		}
+		directive1 := func(ctx context.Context) (interface{}, error) {
+			roles, err := ec.unmarshalNRole2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRoleᚄ(ctx, []interface{}{"MINT_USER", "MINT_MAC"})
+			if err != nil {
+				return nil, err
+			}
+			if ec.directives.HasAnyRole == nil {
+				return nil, errors.New("directive hasAnyRole is not implemented")
+			}
+			return ec.directives.HasAnyRole(ctx, nil, directive0, roles)
+		}
+
+		tmp, err := directive1(rctx)
+		if err != nil {
+			return nil, graphql.ErrorOnPath(ctx, err)
+		}
+		if tmp == nil {
+			return nil, nil
+		}
+		if data, ok := tmp.(*models.PlanPayments); ok {
+			return data, nil
+		}
+		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/cmsgov/mint-app/pkg/models.PlanPayments`, tmp)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*models.PlanPayments)
+	fc.Result = res
+	return ec.marshalNPlanPayments2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanPayments(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Query_planPayments(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Query",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_PlanPayments_id(ctx, field)
+			case "modelPlanID":
+				return ec.fieldContext_PlanPayments_modelPlanID(ctx, field)
+			case "fundingSource":
+				return ec.fieldContext_PlanPayments_fundingSource(ctx, field)
+			case "fundingSourceMedicareAInfo":
+				return ec.fieldContext_PlanPayments_fundingSourceMedicareAInfo(ctx, field)
+			case "fundingSourceMedicareBInfo":
+				return ec.fieldContext_PlanPayments_fundingSourceMedicareBInfo(ctx, field)
+			case "fundingSourceOther":
+				return ec.fieldContext_PlanPayments_fundingSourceOther(ctx, field)
+			case "fundingSourceNote":
+				return ec.fieldContext_PlanPayments_fundingSourceNote(ctx, field)
+			case "fundingSourceR":
+				return ec.fieldContext_PlanPayments_fundingSourceR(ctx, field)
+			case "fundingSourceRMedicareAInfo":
+				return ec.fieldContext_PlanPayments_fundingSourceRMedicareAInfo(ctx, field)
+			case "fundingSourceRMedicareBInfo":
+				return ec.fieldContext_PlanPayments_fundingSourceRMedicareBInfo(ctx, field)
+			case "fundingSourceROther":
+				return ec.fieldContext_PlanPayments_fundingSourceROther(ctx, field)
+			case "fundingSourceRNote":
+				return ec.fieldContext_PlanPayments_fundingSourceRNote(ctx, field)
+			case "payRecipients":
+				return ec.fieldContext_PlanPayments_payRecipients(ctx, field)
+			case "payRecipientsOtherSpecification":
+				return ec.fieldContext_PlanPayments_payRecipientsOtherSpecification(ctx, field)
+			case "payRecipientsNote":
+				return ec.fieldContext_PlanPayments_payRecipientsNote(ctx, field)
+			case "payType":
+				return ec.fieldContext_PlanPayments_payType(ctx, field)
+			case "payTypeNote":
+				return ec.fieldContext_PlanPayments_payTypeNote(ctx, field)
+			case "payClaims":
+				return ec.fieldContext_PlanPayments_payClaims(ctx, field)
+			case "payClaimsOther":
+				return ec.fieldContext_PlanPayments_payClaimsOther(ctx, field)
+			case "payClaimsNote":
+				return ec.fieldContext_PlanPayments_payClaimsNote(ctx, field)
+			case "shouldAnyProvidersExcludedFFSSystems":
+				return ec.fieldContext_PlanPayments_shouldAnyProvidersExcludedFFSSystems(ctx, field)
+			case "shouldAnyProviderExcludedFFSSystemsNote":
+				return ec.fieldContext_PlanPayments_shouldAnyProviderExcludedFFSSystemsNote(ctx, field)
+			case "changesMedicarePhysicianFeeSchedule":
+				return ec.fieldContext_PlanPayments_changesMedicarePhysicianFeeSchedule(ctx, field)
+			case "changesMedicarePhysicianFeeScheduleNote":
+				return ec.fieldContext_PlanPayments_changesMedicarePhysicianFeeScheduleNote(ctx, field)
+			case "affectsMedicareSecondaryPayerClaims":
+				return ec.fieldContext_PlanPayments_affectsMedicareSecondaryPayerClaims(ctx, field)
+			case "affectsMedicareSecondaryPayerClaimsHow":
+				return ec.fieldContext_PlanPayments_affectsMedicareSecondaryPayerClaimsHow(ctx, field)
+			case "affectsMedicareSecondaryPayerClaimsNote":
+				return ec.fieldContext_PlanPayments_affectsMedicareSecondaryPayerClaimsNote(ctx, field)
+			case "payModelDifferentiation":
+				return ec.fieldContext_PlanPayments_payModelDifferentiation(ctx, field)
+			case "creatingDependenciesBetweenServices":
+				return ec.fieldContext_PlanPayments_creatingDependenciesBetweenServices(ctx, field)
+			case "creatingDependenciesBetweenServicesNote":
+				return ec.fieldContext_PlanPayments_creatingDependenciesBetweenServicesNote(ctx, field)
+			case "needsClaimsDataCollection":
+				return ec.fieldContext_PlanPayments_needsClaimsDataCollection(ctx, field)
+			case "needsClaimsDataCollectionNote":
+				return ec.fieldContext_PlanPayments_needsClaimsDataCollectionNote(ctx, field)
+			case "providingThirdPartyFile":
+				return ec.fieldContext_PlanPayments_providingThirdPartyFile(ctx, field)
+			case "isContractorAwareTestDataRequirements":
+				return ec.fieldContext_PlanPayments_isContractorAwareTestDataRequirements(ctx, field)
+			case "beneficiaryCostSharingLevelAndHandling":
+				return ec.fieldContext_PlanPayments_beneficiaryCostSharingLevelAndHandling(ctx, field)
+			case "waiveBeneficiaryCostSharingForAnyServices":
+				return ec.fieldContext_PlanPayments_waiveBeneficiaryCostSharingForAnyServices(ctx, field)
+			case "waiveBeneficiaryCostSharingServiceSpecification":
+				return ec.fieldContext_PlanPayments_waiveBeneficiaryCostSharingServiceSpecification(ctx, field)
+			case "waiverOnlyAppliesPartOfPayment":
+				return ec.fieldContext_PlanPayments_waiverOnlyAppliesPartOfPayment(ctx, field)
+			case "waiveBeneficiaryCostSharingNote":
+				return ec.fieldContext_PlanPayments_waiveBeneficiaryCostSharingNote(ctx, field)
+			case "nonClaimsPayments":
+				return ec.fieldContext_PlanPayments_nonClaimsPayments(ctx, field)
+			case "nonClaimsPaymentOther":
+				return ec.fieldContext_PlanPayments_nonClaimsPaymentOther(ctx, field)
+			case "nonClaimsPaymentsNote":
+				return ec.fieldContext_PlanPayments_nonClaimsPaymentsNote(ctx, field)
+			case "paymentCalculationOwner":
+				return ec.fieldContext_PlanPayments_paymentCalculationOwner(ctx, field)
+			case "numberPaymentsPerPayCycle":
+				return ec.fieldContext_PlanPayments_numberPaymentsPerPayCycle(ctx, field)
+			case "numberPaymentsPerPayCycleNote":
+				return ec.fieldContext_PlanPayments_numberPaymentsPerPayCycleNote(ctx, field)
+			case "sharedSystemsInvolvedAdditionalClaimPayment":
+				return ec.fieldContext_PlanPayments_sharedSystemsInvolvedAdditionalClaimPayment(ctx, field)
+			case "sharedSystemsInvolvedAdditionalClaimPaymentNote":
+				return ec.fieldContext_PlanPayments_sharedSystemsInvolvedAdditionalClaimPaymentNote(ctx, field)
+			case "planningToUseInnovationPaymentContractor":
+				return ec.fieldContext_PlanPayments_planningToUseInnovationPaymentContractor(ctx, field)
+			case "planningToUseInnovationPaymentContractorNote":
+				return ec.fieldContext_PlanPayments_planningToUseInnovationPaymentContractorNote(ctx, field)
+			case "expectedCalculationComplexityLevel":
+				return ec.fieldContext_PlanPayments_expectedCalculationComplexityLevel(ctx, field)
+			case "expectedCalculationComplexityLevelNote":
+				return ec.fieldContext_PlanPayments_expectedCalculationComplexityLevelNote(ctx, field)
+			case "claimsProcessingPrecedence":
+				return ec.fieldContext_PlanPayments_claimsProcessingPrecedence(ctx, field)
+			case "claimsProcessingPrecedenceOther":
+				return ec.fieldContext_PlanPayments_claimsProcessingPrecedenceOther(ctx, field)
+			case "claimsProcessingPrecedenceNote":
+				return ec.fieldContext_PlanPayments_claimsProcessingPrecedenceNote(ctx, field)
+			case "canParticipantsSelectBetweenPaymentMechanisms":
+				return ec.fieldContext_PlanPayments_canParticipantsSelectBetweenPaymentMechanisms(ctx, field)
+			case "canParticipantsSelectBetweenPaymentMechanismsHow":
+				return ec.fieldContext_PlanPayments_canParticipantsSelectBetweenPaymentMechanismsHow(ctx, field)
+			case "canParticipantsSelectBetweenPaymentMechanismsNote":
+				return ec.fieldContext_PlanPayments_canParticipantsSelectBetweenPaymentMechanismsNote(ctx, field)
+			case "anticipatedPaymentFrequency":
+				return ec.fieldContext_PlanPayments_anticipatedPaymentFrequency(ctx, field)
+			case "anticipatedPaymentFrequencyContinually":
+				return ec.fieldContext_PlanPayments_anticipatedPaymentFrequencyContinually(ctx, field)
+			case "anticipatedPaymentFrequencyOther":
+				return ec.fieldContext_PlanPayments_anticipatedPaymentFrequencyOther(ctx, field)
+			case "anticipatedPaymentFrequencyNote":
+				return ec.fieldContext_PlanPayments_anticipatedPaymentFrequencyNote(ctx, field)
+			case "willRecoverPayments":
+				return ec.fieldContext_PlanPayments_willRecoverPayments(ctx, field)
+			case "willRecoverPaymentsNote":
+				return ec.fieldContext_PlanPayments_willRecoverPaymentsNote(ctx, field)
+			case "anticipateReconcilingPaymentsRetrospectively":
+				return ec.fieldContext_PlanPayments_anticipateReconcilingPaymentsRetrospectively(ctx, field)
+			case "anticipateReconcilingPaymentsRetrospectivelyNote":
+				return ec.fieldContext_PlanPayments_anticipateReconcilingPaymentsRetrospectivelyNote(ctx, field)
+			case "paymentReconciliationFrequency":
+				return ec.fieldContext_PlanPayments_paymentReconciliationFrequency(ctx, field)
+			case "paymentReconciliationFrequencyContinually":
+				return ec.fieldContext_PlanPayments_paymentReconciliationFrequencyContinually(ctx, field)
+			case "paymentReconciliationFrequencyOther":
+				return ec.fieldContext_PlanPayments_paymentReconciliationFrequencyOther(ctx, field)
+			case "paymentReconciliationFrequencyNote":
+				return ec.fieldContext_PlanPayments_paymentReconciliationFrequencyNote(ctx, field)
+			case "paymentDemandRecoupmentFrequency":
+				return ec.fieldContext_PlanPayments_paymentDemandRecoupmentFrequency(ctx, field)
+			case "paymentDemandRecoupmentFrequencyContinually":
+				return ec.fieldContext_PlanPayments_paymentDemandRecoupmentFrequencyContinually(ctx, field)
+			case "paymentDemandRecoupmentFrequencyOther":
+				return ec.fieldContext_PlanPayments_paymentDemandRecoupmentFrequencyOther(ctx, field)
+			case "paymentDemandRecoupmentFrequencyNote":
+				return ec.fieldContext_PlanPayments_paymentDemandRecoupmentFrequencyNote(ctx, field)
+			case "paymentStartDate":
+				return ec.fieldContext_PlanPayments_paymentStartDate(ctx, field)
+			case "paymentStartDateNote":
+				return ec.fieldContext_PlanPayments_paymentStartDateNote(ctx, field)
+			case "createdBy":
+				return ec.fieldContext_PlanPayments_createdBy(ctx, field)
+			case "createdByUserAccount":
+				return ec.fieldContext_PlanPayments_createdByUserAccount(ctx, field)
+			case "createdDts":
+				return ec.fieldContext_PlanPayments_createdDts(ctx, field)
+			case "modifiedBy":
+				return ec.fieldContext_PlanPayments_modifiedBy(ctx, field)
+			case "modifiedByUserAccount":
+				return ec.fieldContext_PlanPayments_modifiedByUserAccount(ctx, field)
+			case "modifiedDts":
+				return ec.fieldContext_PlanPayments_modifiedDts(ctx, field)
+			case "readyForReviewBy":
+				return ec.fieldContext_PlanPayments_readyForReviewBy(ctx, field)
+			case "readyForReviewByUserAccount":
+				return ec.fieldContext_PlanPayments_readyForReviewByUserAccount(ctx, field)
+			case "readyForReviewDts":
+				return ec.fieldContext_PlanPayments_readyForReviewDts(ctx, field)
+			case "readyForClearanceBy":
+				return ec.fieldContext_PlanPayments_readyForClearanceBy(ctx, field)
+			case "readyForClearanceByUserAccount":
+				return ec.fieldContext_PlanPayments_readyForClearanceByUserAccount(ctx, field)
+			case "readyForClearanceDts":
+				return ec.fieldContext_PlanPayments_readyForClearanceDts(ctx, field)
+			case "status":
+				return ec.fieldContext_PlanPayments_status(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type PlanPayments", field.Name)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Query_planPayments_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Query_planTDL(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Query_planTDL(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		directive0 := func(rctx context.Context) (interface{}, error) {
+			ctx = rctx // use context from middleware stack in children
+			return ec.resolvers.Query().PlanTdl(rctx, fc.Args["id"].(uuid.UUID))
+		}
+		directive1 := func(ctx context.Context) (interface{}, error) {
+			roles, err := ec.unmarshalNRole2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRoleᚄ(ctx, []interface{}{"MINT_USER", "MINT_MAC"})
+			if err != nil {
+				return nil, err
+			}
+			if ec.directives.HasAnyRole == nil {
+				return nil, errors.New("directive hasAnyRole is not implemented")
+			}
+			return ec.directives.HasAnyRole(ctx, nil, directive0, roles)
+		}
+
+		tmp, err := directive1(rctx)
+		if err != nil {
+			return nil, graphql.ErrorOnPath(ctx, err)
+		}
+		if tmp == nil {
+			return nil, nil
+		}
+		if data, ok := tmp.(*models.PlanTDL); ok {
+			return data, nil
+		}
+		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/cmsgov/mint-app/pkg/models.PlanTDL`, tmp)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*models.PlanTDL)
+	fc.Result = res
+	return ec.marshalNPlanTDL2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanTDL(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Query_planTDL(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Query",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_PlanTDL_id(ctx, field)
+			case "modelPlanID":
+				return ec.fieldContext_PlanTDL_modelPlanID(ctx, field)
+			case "idNumber":
+				return ec.fieldContext_PlanTDL_idNumber(ctx, field)
+			case "dateInitiated":
+				return ec.fieldContext_PlanTDL_dateInitiated(ctx, field)
+			case "title":
+				return ec.fieldContext_PlanTDL_title(ctx, field)
+			case "note":
+				return ec.fieldContext_PlanTDL_note(ctx, field)
+			case "createdBy":
+				return ec.fieldContext_PlanTDL_createdBy(ctx, field)
+			case "createdByUserAccount":
+				return ec.fieldContext_PlanTDL_createdByUserAccount(ctx, field)
+			case "createdDts":
+				return ec.fieldContext_PlanTDL_createdDts(ctx, field)
+			case "modifiedBy":
+				return ec.fieldContext_PlanTDL_modifiedBy(ctx, field)
+			case "modifiedByUserAccount":
+				return ec.fieldContext_PlanTDL_modifiedByUserAccount(ctx, field)
+			case "modifiedDts":
+				return ec.fieldContext_PlanTDL_modifiedDts(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type PlanTDL", field.Name)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Query_planTDL_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Query_possibleOperationalNeeds(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Query_possibleOperationalNeeds(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		directive0 := func(rctx context.Context) (interface{}, error) {
+			ctx = rctx // use context from middleware stack in children
+			return ec.resolvers.Query().PossibleOperationalNeeds(rctx)
+		}
+		directive1 := func(ctx context.Context) (interface{}, error) {
+			roles, err := ec.unmarshalNRole2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRoleᚄ(ctx, []interface{}{"MINT_USER", "MINT_MAC"})
+			if err != nil {
+				return nil, err
+			}
+			if ec.directives.HasAnyRole == nil {
+				return nil, errors.New("directive hasAnyRole is not implemented")
+			}
+			return ec.directives.HasAnyRole(ctx, nil, directive0, roles)
+		}
+
+		tmp, err := directive1(rctx)
+		if err != nil {
+			return nil, graphql.ErrorOnPath(ctx, err)
+		}
+		if tmp == nil {
+			return nil, nil
+		}
+		if data, ok := tmp.([]*models.PossibleOperationalNeed); ok {
+			return data, nil
+		}
+		return nil, fmt.Errorf(`unexpected type %T from directive, should be []*github.com/cmsgov/mint-app/pkg/models.PossibleOperationalNeed`, tmp)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.([]*models.PossibleOperationalNeed)
+	fc.Result = res
+	return ec.marshalNPossibleOperationalNeed2ᚕᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPossibleOperationalNeedᚄ(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Query_possibleOperationalNeeds(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Query",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_PossibleOperationalNeed_id(ctx, field)
+			case "possibleSolutions":
+				return ec.fieldContext_PossibleOperationalNeed_possibleSolutions(ctx, field)
+			case "name":
+				return ec.fieldContext_PossibleOperationalNeed_name(ctx, field)
+			case "key":
+				return ec.fieldContext_PossibleOperationalNeed_key(ctx, field)
+			case "section":
+				return ec.fieldContext_PossibleOperationalNeed_section(ctx, field)
+			case "createdBy":
+				return ec.fieldContext_PossibleOperationalNeed_createdBy(ctx, field)
+			case "createdByUserAccount":
+				return ec.fieldContext_PossibleOperationalNeed_createdByUserAccount(ctx, field)
+			case "createdDts":
+				return ec.fieldContext_PossibleOperationalNeed_createdDts(ctx, field)
+			case "modifiedBy":
+				return ec.fieldContext_PossibleOperationalNeed_modifiedBy(ctx, field)
+			case "modifiedByUserAccount":
+				return ec.fieldContext_PossibleOperationalNeed_modifiedByUserAccount(ctx, field)
+			case "modifiedDts":
+				return ec.fieldContext_PossibleOperationalNeed_modifiedDts(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type PossibleOperationalNeed", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Query_possibleOperationalSolutions(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Query_possibleOperationalSolutions(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		directive0 := func(rctx context.Context) (interface{}, error) {
+			ctx = rctx // use context from middleware stack in children
+			return ec.resolvers.Query().PossibleOperationalSolutions(rctx)
+		}
+		directive1 := func(ctx context.Context) (interface{}, error) {
+			roles, err := ec.unmarshalNRole2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRoleᚄ(ctx, []interface{}{"MINT_USER", "MINT_MAC"})
+			if err != nil {
+				return nil, err
+			}
+			if ec.directives.HasAnyRole == nil {
+				return nil, errors.New("directive hasAnyRole is not implemented")
+			}
+			return ec.directives.HasAnyRole(ctx, nil, directive0, roles)
+		}
+
+		tmp, err := directive1(rctx)
+		if err != nil {
+			return nil, graphql.ErrorOnPath(ctx, err)
+		}
+		if tmp == nil {
+			return nil, nil
+		}
+		if data, ok := tmp.([]*models.PossibleOperationalSolution); ok {
+			return data, nil
+		}
+		return nil, fmt.Errorf(`unexpected type %T from directive, should be []*github.com/cmsgov/mint-app/pkg/models.PossibleOperationalSolution`, tmp)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.([]*models.PossibleOperationalSolution)
+	fc.Result = res
+	return ec.marshalNPossibleOperationalSolution2ᚕᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPossibleOperationalSolutionᚄ(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Query_possibleOperationalSolutions(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Query",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_PossibleOperationalSolution_id(ctx, field)
+			case "name":
+				return ec.fieldContext_PossibleOperationalSolution_name(ctx, field)
+			case "key":
+				return ec.fieldContext_PossibleOperationalSolution_key(ctx, field)
+			case "treatAsOther":
+				return ec.fieldContext_PossibleOperationalSolution_treatAsOther(ctx, field)
+			case "pointsOfContact":
+				return ec.fieldContext_PossibleOperationalSolution_pointsOfContact(ctx, field)
+			case "filterView":
+				return ec.fieldContext_PossibleOperationalSolution_filterView(ctx, field)
+			case "createdBy":
+				return ec.fieldContext_PossibleOperationalSolution_createdBy(ctx, field)
+			case "createdByUserAccount":
+				return ec.fieldContext_PossibleOperationalSolution_createdByUserAccount(ctx, field)
+			case "createdDts":
+				return ec.fieldContext_PossibleOperationalSolution_createdDts(ctx, field)
+			case "modifiedBy":
+				return ec.fieldContext_PossibleOperationalSolution_modifiedBy(ctx, field)
+			case "modifiedByUserAccount":
+				return ec.fieldContext_PossibleOperationalSolution_modifiedByUserAccount(ctx, field)
+			case "modifiedDts":
+				return ec.fieldContext_PossibleOperationalSolution_modifiedDts(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type PossibleOperationalSolution", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Query_taskListSectionLocks(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Query_taskListSectionLocks(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		directive0 := func(rctx context.Context) (interface{}, error) {
+			ctx = rctx // use context from middleware stack in children
+			return ec.resolvers.Query().TaskListSectionLocks(rctx, fc.Args["modelPlanID"].(uuid.UUID))
+		}
+		directive1 := func(ctx context.Context) (interface{}, error) {
+			roles, err := ec.unmarshalNRole2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRoleᚄ(ctx, []interface{}{"MINT_USER", "MINT_MAC"})
+			if err != nil {
+				return nil, err
+			}
+			if ec.directives.HasAnyRole == nil {
+				return nil, errors.New("directive hasAnyRole is not implemented")
+			}
+			return ec.directives.HasAnyRole(ctx, nil, directive0, roles)
+		}
+
+		tmp, err := directive1(rctx)
+		if err != nil {
+			return nil, graphql.ErrorOnPath(ctx, err)
+		}
+		if tmp == nil {
+			return nil, nil
+		}
+		if data, ok := tmp.([]*model.TaskListSectionLockStatus); ok {
+			return data, nil
+		}
+		return nil, fmt.Errorf(`unexpected type %T from directive, should be []*github.com/cmsgov/mint-app/pkg/graph/model.TaskListSectionLockStatus`, tmp)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.([]*model.TaskListSectionLockStatus)
+	fc.Result = res
+	return ec.marshalNTaskListSectionLockStatus2ᚕᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTaskListSectionLockStatusᚄ(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Query_taskListSectionLocks(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Query",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "modelPlanID":
+				return ec.fieldContext_TaskListSectionLockStatus_modelPlanID(ctx, field)
+			case "section":
+				return ec.fieldContext_TaskListSectionLockStatus_section(ctx, field)
+			case "lockedByUserAccount":
+				return ec.fieldContext_TaskListSectionLockStatus_lockedByUserAccount(ctx, field)
+			case "isAssessment":
+				return ec.fieldContext_TaskListSectionLockStatus_isAssessment(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type TaskListSectionLockStatus", field.Name)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Query_taskListSectionLocks_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Query_userAccount(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Query_userAccount(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		directive0 := func(rctx context.Context) (interface{}, error) {
+			ctx = rctx // use context from middleware stack in children
+			return ec.resolvers.Query().UserAccount(rctx, fc.Args["username"].(string))
+		}
+		directive1 := func(ctx context.Context) (interface{}, error) {
+			roles, err := ec.unmarshalNRole2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRoleᚄ(ctx, []interface{}{"MINT_USER", "MINT_MAC"})
+			if err != nil {
+				return nil, err
+			}
+			if ec.directives.HasAnyRole == nil {
+				return nil, errors.New("directive hasAnyRole is not implemented")
+			}
+			return ec.directives.HasAnyRole(ctx, nil, directive0, roles)
+		}
+
+		tmp, err := directive1(rctx)
+		if err != nil {
+			return nil, graphql.ErrorOnPath(ctx, err)
+		}
+		if tmp == nil {
+			return nil, nil
+		}
+		if data, ok := tmp.(*authentication.UserAccount); ok {
+			return data, nil
+		}
+		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/cmsgov/mint-app/pkg/authentication.UserAccount`, tmp)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*authentication.UserAccount)
+	fc.Result = res
+	return ec.marshalNUserAccount2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋauthenticationᚐUserAccount(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Query_userAccount(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Query",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_UserAccount_id(ctx, field)
+			case "username":
+				return ec.fieldContext_UserAccount_username(ctx, field)
+			case "isEUAID":
+				return ec.fieldContext_UserAccount_isEUAID(ctx, field)
+			case "commonName":
+				return ec.fieldContext_UserAccount_commonName(ctx, field)
+			case "locale":
+				return ec.fieldContext_UserAccount_locale(ctx, field)
+			case "email":
+				return ec.fieldContext_UserAccount_email(ctx, field)
+			case "givenName":
+				return ec.fieldContext_UserAccount_givenName(ctx, field)
+			case "familyName":
+				return ec.fieldContext_UserAccount_familyName(ctx, field)
+			case "zoneInfo":
+				return ec.fieldContext_UserAccount_zoneInfo(ctx, field)
+			case "hasLoggedIn":
+				return ec.fieldContext_UserAccount_hasLoggedIn(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type UserAccount", field.Name)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Query_userAccount_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Query_searchOktaUsers(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Query_searchOktaUsers(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		directive0 := func(rctx context.Context) (interface{}, error) {
+			ctx = rctx // use context from middleware stack in children
+			return ec.resolvers.Query().SearchOktaUsers(rctx, fc.Args["searchTerm"].(string))
+		}
+		directive1 := func(ctx context.Context) (interface{}, error) {
+			roles, err := ec.unmarshalNRole2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRoleᚄ(ctx, []interface{}{"MINT_USER", "MINT_MAC"})
+			if err != nil {
+				return nil, err
+			}
+			if ec.directives.HasAnyRole == nil {
+				return nil, errors.New("directive hasAnyRole is not implemented")
+			}
+			return ec.directives.HasAnyRole(ctx, nil, directive0, roles)
+		}
+
+		tmp, err := directive1(rctx)
+		if err != nil {
+			return nil, graphql.ErrorOnPath(ctx, err)
+		}
+		if tmp == nil {
+			return nil, nil
+		}
+		if data, ok := tmp.([]*models.UserInfo); ok {
+			return data, nil
+		}
+		return nil, fmt.Errorf(`unexpected type %T from directive, should be []*github.com/cmsgov/mint-app/pkg/models.UserInfo`, tmp)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.([]*models.UserInfo)
+	fc.Result = res
+	return ec.marshalNUserInfo2ᚕᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐUserInfoᚄ(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Query_searchOktaUsers(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Query",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "firstName":
+				return ec.fieldContext_UserInfo_firstName(ctx, field)
+			case "lastName":
+				return ec.fieldContext_UserInfo_lastName(ctx, field)
+			case "displayName":
+				return ec.fieldContext_UserInfo_displayName(ctx, field)
+			case "email":
+				return ec.fieldContext_UserInfo_email(ctx, field)
+			case "username":
+				return ec.fieldContext_UserInfo_username(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type UserInfo", field.Name)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Query_searchOktaUsers_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
 		ec.Error(ctx, err)
 		return fc, err
 	}
@@ -62228,6 +63848,21 @@ func (ec *executionContext) _ActivityMetaData(ctx context.Context, sel ast.Selec
 			return graphql.Null
 		}
 		return ec._DailyDigestCompleteActivityMeta(ctx, sel, obj)
+	case *models.NewDiscussionRepliedActivityMeta:
+		if obj == nil {
+			return graphql.Null
+		}
+		return ec._NewDiscussionRepliedActivityMeta(ctx, sel, obj)
+	case *models.AddedAsCollaboratorMeta:
+		if obj == nil {
+			return graphql.Null
+		}
+		return ec._AddedAsCollaboratorMeta(ctx, sel, obj)
+	case *models.ModelPlanSharedActivityMeta:
+		if obj == nil {
+			return graphql.Null
+		}
+		return ec._ModelPlanSharedActivityMeta(ctx, sel, obj)
 	default:
 		panic(fmt.Errorf("unexpected type %T", obj))
 	}
@@ -62438,6 +64073,132 @@ func (ec *executionContext) _Activity(ctx context.Context, sel ast.SelectionSet,
 			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
 		case "modifiedDts":
 			out.Values[i] = ec._Activity_modifiedDts(ctx, field, obj)
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch(ctx)
+	if out.Invalids > 0 {
+		return graphql.Null
+	}
+
+	atomic.AddInt32(&ec.deferred, int32(len(deferred)))
+
+	for label, dfs := range deferred {
+		ec.processDeferredGroup(graphql.DeferredGroup{
+			Label:    label,
+			Path:     graphql.GetPath(ctx),
+			FieldSet: dfs,
+			Context:  ctx,
+		})
+	}
+
+	return out
+}
+
+var addedAsCollaboratorMetaImplementors = []string{"AddedAsCollaboratorMeta", "ActivityMetaData"}
+
+func (ec *executionContext) _AddedAsCollaboratorMeta(ctx context.Context, sel ast.SelectionSet, obj *models.AddedAsCollaboratorMeta) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, addedAsCollaboratorMetaImplementors)
+
+	out := graphql.NewFieldSet(fields)
+	deferred := make(map[string]*graphql.FieldSet)
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("AddedAsCollaboratorMeta")
+		case "version":
+			out.Values[i] = ec._AddedAsCollaboratorMeta_version(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "type":
+			out.Values[i] = ec._AddedAsCollaboratorMeta_type(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "modelPlanID":
+			out.Values[i] = ec._AddedAsCollaboratorMeta_modelPlanID(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "modelPlan":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._AddedAsCollaboratorMeta_modelPlan(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
+				return res
+			}
+
+			if field.Deferrable != nil {
+				dfs, ok := deferred[field.Deferrable.Label]
+				di := 0
+				if ok {
+					dfs.AddField(field)
+					di = len(dfs.Values) - 1
+				} else {
+					dfs = graphql.NewFieldSet([]graphql.CollectedField{field})
+					deferred[field.Deferrable.Label] = dfs
+				}
+				dfs.Concurrently(di, func(ctx context.Context) graphql.Marshaler {
+					return innerFunc(ctx, dfs)
+				})
+
+				// don't run the out.Concurrently() call below
+				out.Values[i] = graphql.Null
+				continue
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+		case "collaboratorID":
+			out.Values[i] = ec._AddedAsCollaboratorMeta_collaboratorID(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "collaborator":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._AddedAsCollaboratorMeta_collaborator(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
+				return res
+			}
+
+			if field.Deferrable != nil {
+				dfs, ok := deferred[field.Deferrable.Label]
+				di := 0
+				if ok {
+					dfs.AddField(field)
+					di = len(dfs.Values) - 1
+				} else {
+					dfs = graphql.NewFieldSet([]graphql.CollectedField{field})
+					deferred[field.Deferrable.Label] = dfs
+				}
+				dfs.Concurrently(di, func(ctx context.Context) graphql.Marshaler {
+					return innerFunc(ctx, dfs)
+				})
+
+				// don't run the out.Concurrently() call below
+				out.Values[i] = graphql.Null
+				continue
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
 		default:
 			panic("unknown field " + strconv.Quote(field.Name))
 		}
@@ -64741,6 +66502,93 @@ func (ec *executionContext) _ModelPlan(ctx context.Context, sel ast.SelectionSet
 	return out
 }
 
+var modelPlanSharedActivityMetaImplementors = []string{"ModelPlanSharedActivityMeta", "ActivityMetaData"}
+
+func (ec *executionContext) _ModelPlanSharedActivityMeta(ctx context.Context, sel ast.SelectionSet, obj *models.ModelPlanSharedActivityMeta) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, modelPlanSharedActivityMetaImplementors)
+
+	out := graphql.NewFieldSet(fields)
+	deferred := make(map[string]*graphql.FieldSet)
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("ModelPlanSharedActivityMeta")
+		case "version":
+			out.Values[i] = ec._ModelPlanSharedActivityMeta_version(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "type":
+			out.Values[i] = ec._ModelPlanSharedActivityMeta_type(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "modelPlanID":
+			out.Values[i] = ec._ModelPlanSharedActivityMeta_modelPlanID(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "modelPlan":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._ModelPlanSharedActivityMeta_modelPlan(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
+				return res
+			}
+
+			if field.Deferrable != nil {
+				dfs, ok := deferred[field.Deferrable.Label]
+				di := 0
+				if ok {
+					dfs.AddField(field)
+					di = len(dfs.Values) - 1
+				} else {
+					dfs = graphql.NewFieldSet([]graphql.CollectedField{field})
+					deferred[field.Deferrable.Label] = dfs
+				}
+				dfs.Concurrently(di, func(ctx context.Context) graphql.Marshaler {
+					return innerFunc(ctx, dfs)
+				})
+
+				// don't run the out.Concurrently() call below
+				out.Values[i] = graphql.Null
+				continue
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+		case "optionalMessage":
+			out.Values[i] = ec._ModelPlanSharedActivityMeta_optionalMessage(ctx, field, obj)
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch(ctx)
+	if out.Invalids > 0 {
+		return graphql.Null
+	}
+
+	atomic.AddInt32(&ec.deferred, int32(len(deferred)))
+
+	for label, dfs := range deferred {
+		ec.processDeferredGroup(graphql.DeferredGroup{
+			Label:    label,
+			Path:     graphql.GetPath(ctx),
+			FieldSet: dfs,
+			Context:  ctx,
+		})
+	}
+
+	return out
+}
+
 var mutationImplementors = []string{"Mutation"}
 
 func (ec *executionContext) _Mutation(ctx context.Context, sel ast.SelectionSet) graphql.Marshaler {
@@ -64760,55 +66608,6 @@ func (ec *executionContext) _Mutation(ctx context.Context, sel ast.SelectionSet)
 		switch field.Name {
 		case "__typename":
 			out.Values[i] = graphql.MarshalString("Mutation")
-		case "createPlanCollaborator":
-			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
-				return ec._Mutation_createPlanCollaborator(ctx, field)
-			})
-			if out.Values[i] == graphql.Null {
-				out.Invalids++
-			}
-		case "updatePlanCollaborator":
-			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
-				return ec._Mutation_updatePlanCollaborator(ctx, field)
-			})
-			if out.Values[i] == graphql.Null {
-				out.Invalids++
-			}
-		case "deletePlanCollaborator":
-			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
-				return ec._Mutation_deletePlanCollaborator(ctx, field)
-			})
-			if out.Values[i] == graphql.Null {
-				out.Invalids++
-			}
-		case "uploadNewPlanDocument":
-			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
-				return ec._Mutation_uploadNewPlanDocument(ctx, field)
-			})
-			if out.Values[i] == graphql.Null {
-				out.Invalids++
-			}
-		case "linkNewPlanDocument":
-			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
-				return ec._Mutation_linkNewPlanDocument(ctx, field)
-			})
-			if out.Values[i] == graphql.Null {
-				out.Invalids++
-			}
-		case "deletePlanDocument":
-			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
-				return ec._Mutation_deletePlanDocument(ctx, field)
-			})
-			if out.Values[i] == graphql.Null {
-				out.Invalids++
-			}
-		case "createPlanDiscussion":
-			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
-				return ec._Mutation_createPlanDiscussion(ctx, field)
-			})
-			if out.Values[i] == graphql.Null {
-				out.Invalids++
-			}
 		case "createDiscussionReply":
 			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
 				return ec._Mutation_createDiscussionReply(ctx, field)
@@ -64816,30 +66615,30 @@ func (ec *executionContext) _Mutation(ctx context.Context, sel ast.SelectionSet)
 			if out.Values[i] == graphql.Null {
 				out.Invalids++
 			}
-		case "lockTaskListSection":
+		case "updateExistingModelLinks":
 			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
-				return ec._Mutation_lockTaskListSection(ctx, field)
+				return ec._Mutation_updateExistingModelLinks(ctx, field)
 			})
 			if out.Values[i] == graphql.Null {
 				out.Invalids++
 			}
-		case "unlockTaskListSection":
+		case "createModelPlan":
 			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
-				return ec._Mutation_unlockTaskListSection(ctx, field)
+				return ec._Mutation_createModelPlan(ctx, field)
 			})
 			if out.Values[i] == graphql.Null {
 				out.Invalids++
 			}
-		case "unlockAllTaskListSections":
+		case "updateModelPlan":
 			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
-				return ec._Mutation_unlockAllTaskListSections(ctx, field)
+				return ec._Mutation_updateModelPlan(ctx, field)
 			})
 			if out.Values[i] == graphql.Null {
 				out.Invalids++
 			}
-		case "updatePlanPayments":
+		case "shareModelPlan":
 			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
-				return ec._Mutation_updatePlanPayments(ctx, field)
+				return ec._Mutation_shareModelPlan(ctx, field)
 			})
 			if out.Values[i] == graphql.Null {
 				out.Invalids++
@@ -64847,62 +66646,6 @@ func (ec *executionContext) _Mutation(ctx context.Context, sel ast.SelectionSet)
 		case "agreeToNDA":
 			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
 				return ec._Mutation_agreeToNDA(ctx, field)
-			})
-			if out.Values[i] == graphql.Null {
-				out.Invalids++
-			}
-		case "addPlanFavorite":
-			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
-				return ec._Mutation_addPlanFavorite(ctx, field)
-			})
-			if out.Values[i] == graphql.Null {
-				out.Invalids++
-			}
-		case "deletePlanFavorite":
-			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
-				return ec._Mutation_deletePlanFavorite(ctx, field)
-			})
-			if out.Values[i] == graphql.Null {
-				out.Invalids++
-			}
-		case "createPlanCR":
-			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
-				return ec._Mutation_createPlanCR(ctx, field)
-			})
-			if out.Values[i] == graphql.Null {
-				out.Invalids++
-			}
-		case "createPlanTDL":
-			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
-				return ec._Mutation_createPlanTDL(ctx, field)
-			})
-			if out.Values[i] == graphql.Null {
-				out.Invalids++
-			}
-		case "updatePlanCR":
-			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
-				return ec._Mutation_updatePlanCR(ctx, field)
-			})
-			if out.Values[i] == graphql.Null {
-				out.Invalids++
-			}
-		case "updatePlanTDL":
-			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
-				return ec._Mutation_updatePlanTDL(ctx, field)
-			})
-			if out.Values[i] == graphql.Null {
-				out.Invalids++
-			}
-		case "deletePlanCR":
-			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
-				return ec._Mutation_deletePlanCR(ctx, field)
-			})
-			if out.Values[i] == graphql.Null {
-				out.Invalids++
-			}
-		case "deletePlanTDL":
-			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
-				return ec._Mutation_deletePlanTDL(ctx, field)
 			})
 			if out.Values[i] == graphql.Null {
 				out.Invalids++
@@ -64935,17 +66678,6 @@ func (ec *executionContext) _Mutation(ctx context.Context, sel ast.SelectionSet)
 			if out.Values[i] == graphql.Null {
 				out.Invalids++
 			}
-		case "createPlanDocumentSolutionLinks":
-			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
-				return ec._Mutation_createPlanDocumentSolutionLinks(ctx, field)
-			})
-		case "removePlanDocumentSolutionLinks":
-			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
-				return ec._Mutation_removePlanDocumentSolutionLinks(ctx, field)
-			})
-			if out.Values[i] == graphql.Null {
-				out.Invalids++
-			}
 		case "createOperationalSolutionSubtasks":
 			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
 				return ec._Mutation_createOperationalSolutionSubtasks(ctx, field)
@@ -64961,48 +66693,6 @@ func (ec *executionContext) _Mutation(ctx context.Context, sel ast.SelectionSet)
 			if out.Values[i] == graphql.Null {
 				out.Invalids++
 			}
-		case "updateExistingModelLinks":
-			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
-				return ec._Mutation_updateExistingModelLinks(ctx, field)
-			})
-			if out.Values[i] == graphql.Null {
-				out.Invalids++
-			}
-		case "reportAProblem":
-			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
-				return ec._Mutation_reportAProblem(ctx, field)
-			})
-			if out.Values[i] == graphql.Null {
-				out.Invalids++
-			}
-		case "sendFeedbackEmail":
-			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
-				return ec._Mutation_sendFeedbackEmail(ctx, field)
-			})
-			if out.Values[i] == graphql.Null {
-				out.Invalids++
-			}
-		case "createModelPlan":
-			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
-				return ec._Mutation_createModelPlan(ctx, field)
-			})
-			if out.Values[i] == graphql.Null {
-				out.Invalids++
-			}
-		case "updateModelPlan":
-			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
-				return ec._Mutation_updateModelPlan(ctx, field)
-			})
-			if out.Values[i] == graphql.Null {
-				out.Invalids++
-			}
-		case "shareModelPlan":
-			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
-				return ec._Mutation_shareModelPlan(ctx, field)
-			})
-			if out.Values[i] == graphql.Null {
-				out.Invalids++
-			}
 		case "updatePlanBasics":
 			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
 				return ec._Mutation_updatePlanBasics(ctx, field)
@@ -65013,6 +66703,101 @@ func (ec *executionContext) _Mutation(ctx context.Context, sel ast.SelectionSet)
 		case "updatePlanBeneficiaries":
 			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
 				return ec._Mutation_updatePlanBeneficiaries(ctx, field)
+			})
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "createPlanCollaborator":
+			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
+				return ec._Mutation_createPlanCollaborator(ctx, field)
+			})
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "updatePlanCollaborator":
+			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
+				return ec._Mutation_updatePlanCollaborator(ctx, field)
+			})
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "deletePlanCollaborator":
+			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
+				return ec._Mutation_deletePlanCollaborator(ctx, field)
+			})
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "createPlanCR":
+			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
+				return ec._Mutation_createPlanCR(ctx, field)
+			})
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "updatePlanCR":
+			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
+				return ec._Mutation_updatePlanCR(ctx, field)
+			})
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "deletePlanCR":
+			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
+				return ec._Mutation_deletePlanCR(ctx, field)
+			})
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "createPlanDiscussion":
+			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
+				return ec._Mutation_createPlanDiscussion(ctx, field)
+			})
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "uploadNewPlanDocument":
+			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
+				return ec._Mutation_uploadNewPlanDocument(ctx, field)
+			})
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "linkNewPlanDocument":
+			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
+				return ec._Mutation_linkNewPlanDocument(ctx, field)
+			})
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "deletePlanDocument":
+			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
+				return ec._Mutation_deletePlanDocument(ctx, field)
+			})
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "createPlanDocumentSolutionLinks":
+			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
+				return ec._Mutation_createPlanDocumentSolutionLinks(ctx, field)
+			})
+		case "removePlanDocumentSolutionLinks":
+			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
+				return ec._Mutation_removePlanDocumentSolutionLinks(ctx, field)
+			})
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "addPlanFavorite":
+			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
+				return ec._Mutation_addPlanFavorite(ctx, field)
+			})
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "deletePlanFavorite":
+			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
+				return ec._Mutation_deletePlanFavorite(ctx, field)
 			})
 			if out.Values[i] == graphql.Null {
 				out.Invalids++
@@ -65034,6 +66819,69 @@ func (ec *executionContext) _Mutation(ctx context.Context, sel ast.SelectionSet)
 		case "updatePlanParticipantsAndProviders":
 			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
 				return ec._Mutation_updatePlanParticipantsAndProviders(ctx, field)
+			})
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "updatePlanPayments":
+			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
+				return ec._Mutation_updatePlanPayments(ctx, field)
+			})
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "createPlanTDL":
+			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
+				return ec._Mutation_createPlanTDL(ctx, field)
+			})
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "updatePlanTDL":
+			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
+				return ec._Mutation_updatePlanTDL(ctx, field)
+			})
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "deletePlanTDL":
+			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
+				return ec._Mutation_deletePlanTDL(ctx, field)
+			})
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "reportAProblem":
+			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
+				return ec._Mutation_reportAProblem(ctx, field)
+			})
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "sendFeedbackEmail":
+			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
+				return ec._Mutation_sendFeedbackEmail(ctx, field)
+			})
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "lockTaskListSection":
+			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
+				return ec._Mutation_lockTaskListSection(ctx, field)
+			})
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "unlockTaskListSection":
+			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
+				return ec._Mutation_unlockTaskListSection(ctx, field)
+			})
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "unlockAllTaskListSections":
+			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
+				return ec._Mutation_unlockAllTaskListSections(ctx, field)
 			})
 			if out.Values[i] == graphql.Null {
 				out.Invalids++
@@ -65100,6 +66948,178 @@ func (ec *executionContext) _NDAInfo(ctx context.Context, sel ast.SelectionSet, 
 			}
 		case "agreedDts":
 			out.Values[i] = ec._NDAInfo_agreedDts(ctx, field, obj)
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch(ctx)
+	if out.Invalids > 0 {
+		return graphql.Null
+	}
+
+	atomic.AddInt32(&ec.deferred, int32(len(deferred)))
+
+	for label, dfs := range deferred {
+		ec.processDeferredGroup(graphql.DeferredGroup{
+			Label:    label,
+			Path:     graphql.GetPath(ctx),
+			FieldSet: dfs,
+			Context:  ctx,
+		})
+	}
+
+	return out
+}
+
+var newDiscussionRepliedActivityMetaImplementors = []string{"NewDiscussionRepliedActivityMeta", "ActivityMetaData"}
+
+func (ec *executionContext) _NewDiscussionRepliedActivityMeta(ctx context.Context, sel ast.SelectionSet, obj *models.NewDiscussionRepliedActivityMeta) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, newDiscussionRepliedActivityMetaImplementors)
+
+	out := graphql.NewFieldSet(fields)
+	deferred := make(map[string]*graphql.FieldSet)
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("NewDiscussionRepliedActivityMeta")
+		case "version":
+			out.Values[i] = ec._NewDiscussionRepliedActivityMeta_version(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "type":
+			out.Values[i] = ec._NewDiscussionRepliedActivityMeta_type(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "modelPlanID":
+			out.Values[i] = ec._NewDiscussionRepliedActivityMeta_modelPlanID(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "modelPlan":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._NewDiscussionRepliedActivityMeta_modelPlan(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
+				return res
+			}
+
+			if field.Deferrable != nil {
+				dfs, ok := deferred[field.Deferrable.Label]
+				di := 0
+				if ok {
+					dfs.AddField(field)
+					di = len(dfs.Values) - 1
+				} else {
+					dfs = graphql.NewFieldSet([]graphql.CollectedField{field})
+					deferred[field.Deferrable.Label] = dfs
+				}
+				dfs.Concurrently(di, func(ctx context.Context) graphql.Marshaler {
+					return innerFunc(ctx, dfs)
+				})
+
+				// don't run the out.Concurrently() call below
+				out.Values[i] = graphql.Null
+				continue
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+		case "discussionID":
+			out.Values[i] = ec._NewDiscussionRepliedActivityMeta_discussionID(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "discussion":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._NewDiscussionRepliedActivityMeta_discussion(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
+				return res
+			}
+
+			if field.Deferrable != nil {
+				dfs, ok := deferred[field.Deferrable.Label]
+				di := 0
+				if ok {
+					dfs.AddField(field)
+					di = len(dfs.Values) - 1
+				} else {
+					dfs = graphql.NewFieldSet([]graphql.CollectedField{field})
+					deferred[field.Deferrable.Label] = dfs
+				}
+				dfs.Concurrently(di, func(ctx context.Context) graphql.Marshaler {
+					return innerFunc(ctx, dfs)
+				})
+
+				// don't run the out.Concurrently() call below
+				out.Values[i] = graphql.Null
+				continue
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+		case "replyID":
+			out.Values[i] = ec._NewDiscussionRepliedActivityMeta_replyID(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "reply":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._NewDiscussionRepliedActivityMeta_reply(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
+				return res
+			}
+
+			if field.Deferrable != nil {
+				dfs, ok := deferred[field.Deferrable.Label]
+				di := 0
+				if ok {
+					dfs.AddField(field)
+					di = len(dfs.Values) - 1
+				} else {
+					dfs = graphql.NewFieldSet([]graphql.CollectedField{field})
+					deferred[field.Deferrable.Label] = dfs
+				}
+				dfs.Concurrently(di, func(ctx context.Context) graphql.Marshaler {
+					return innerFunc(ctx, dfs)
+				})
+
+				// don't run the out.Concurrently() call below
+				out.Values[i] = graphql.Null
+				continue
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+		case "content":
+			out.Values[i] = ec._NewDiscussionRepliedActivityMeta_content(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
 		default:
 			panic("unknown field " + strconv.Quote(field.Name))
 		}
@@ -69599,6 +71619,48 @@ func (ec *executionContext) _PlanParticipantsAndProviders(ctx context.Context, s
 			out.Values[i] = ec._PlanParticipantsAndProviders_willRiskChange(ctx, field, obj)
 		case "willRiskChangeNote":
 			out.Values[i] = ec._PlanParticipantsAndProviders_willRiskChangeNote(ctx, field, obj)
+		case "participantRequireFinancialGuarantee":
+			out.Values[i] = ec._PlanParticipantsAndProviders_participantRequireFinancialGuarantee(ctx, field, obj)
+		case "participantRequireFinancialGuaranteeType":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._PlanParticipantsAndProviders_participantRequireFinancialGuaranteeType(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
+				return res
+			}
+
+			if field.Deferrable != nil {
+				dfs, ok := deferred[field.Deferrable.Label]
+				di := 0
+				if ok {
+					dfs.AddField(field)
+					di = len(dfs.Values) - 1
+				} else {
+					dfs = graphql.NewFieldSet([]graphql.CollectedField{field})
+					deferred[field.Deferrable.Label] = dfs
+				}
+				dfs.Concurrently(di, func(ctx context.Context) graphql.Marshaler {
+					return innerFunc(ctx, dfs)
+				})
+
+				// don't run the out.Concurrently() call below
+				out.Values[i] = graphql.Null
+				continue
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+		case "participantRequireFinancialGuaranteeOther":
+			out.Values[i] = ec._PlanParticipantsAndProviders_participantRequireFinancialGuaranteeOther(ctx, field, obj)
+		case "participantRequireFinancialGuaranteeNote":
+			out.Values[i] = ec._PlanParticipantsAndProviders_participantRequireFinancialGuaranteeNote(ctx, field, obj)
 		case "coordinateWork":
 			out.Values[i] = ec._PlanParticipantsAndProviders_coordinateWork(ctx, field, obj)
 		case "coordinateWorkNote":
@@ -71424,7 +73486,7 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 		switch field.Name {
 		case "__typename":
 			out.Values[i] = graphql.MarshalString("Query")
-		case "planDocument":
+		case "analyzedAudits":
 			field := field
 
 			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
@@ -71433,10 +73495,73 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 						ec.Error(ctx, ec.Recover(ctx, r))
 					}
 				}()
-				res = ec._Query_planDocument(ctx, field)
+				res = ec._Query_analyzedAudits(ctx, field)
 				if res == graphql.Null {
 					atomic.AddUint32(&fs.Invalids, 1)
 				}
+				return res
+			}
+
+			rrm := func(ctx context.Context) graphql.Marshaler {
+				return ec.OperationContext.RootResolverMiddleware(ctx,
+					func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return rrm(innerCtx) })
+		case "auditChanges":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Query_auditChanges(ctx, field)
+				if res == graphql.Null {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
+				return res
+			}
+
+			rrm := func(ctx context.Context) graphql.Marshaler {
+				return ec.OperationContext.RootResolverMiddleware(ctx,
+					func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return rrm(innerCtx) })
+		case "currentUser":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Query_currentUser(ctx, field)
+				if res == graphql.Null {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
+				return res
+			}
+
+			rrm := func(ctx context.Context) graphql.Marshaler {
+				return ec.OperationContext.RootResolverMiddleware(ctx,
+					func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return rrm(innerCtx) })
+		case "mostRecentDiscussionRoleSelection":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Query_mostRecentDiscussionRoleSelection(ctx, field)
 				return res
 			}
 
@@ -71468,7 +73593,7 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 			}
 
 			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return rrm(innerCtx) })
-		case "searchOktaUsers":
+		case "existingModelLink":
 			field := field
 
 			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
@@ -71477,7 +73602,7 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 						ec.Error(ctx, ec.Recover(ctx, r))
 					}
 				}()
-				res = ec._Query_searchOktaUsers(ctx, field)
+				res = ec._Query_existingModelLink(ctx, field)
 				if res == graphql.Null {
 					atomic.AddUint32(&fs.Invalids, 1)
 				}
@@ -71490,7 +73615,7 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 			}
 
 			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return rrm(innerCtx) })
-		case "planCollaboratorByID":
+		case "modelPlan":
 			field := field
 
 			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
@@ -71499,7 +73624,7 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 						ec.Error(ctx, ec.Recover(ctx, r))
 					}
 				}()
-				res = ec._Query_planCollaboratorByID(ctx, field)
+				res = ec._Query_modelPlan(ctx, field)
 				if res == graphql.Null {
 					atomic.AddUint32(&fs.Invalids, 1)
 				}
@@ -71512,7 +73637,7 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 			}
 
 			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return rrm(innerCtx) })
-		case "taskListSectionLocks":
+		case "modelPlanCollection":
 			field := field
 
 			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
@@ -71521,29 +73646,7 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 						ec.Error(ctx, ec.Recover(ctx, r))
 					}
 				}()
-				res = ec._Query_taskListSectionLocks(ctx, field)
-				if res == graphql.Null {
-					atomic.AddUint32(&fs.Invalids, 1)
-				}
-				return res
-			}
-
-			rrm := func(ctx context.Context) graphql.Marshaler {
-				return ec.OperationContext.RootResolverMiddleware(ctx,
-					func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
-			}
-
-			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return rrm(innerCtx) })
-		case "planPayments":
-			field := field
-
-			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
-				defer func() {
-					if r := recover(); r != nil {
-						ec.Error(ctx, ec.Recover(ctx, r))
-					}
-				}()
-				res = ec._Query_planPayments(ctx, field)
+				res = ec._Query_modelPlanCollection(ctx, field)
 				if res == graphql.Null {
 					atomic.AddUint32(&fs.Invalids, 1)
 				}
@@ -71578,7 +73681,7 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 			}
 
 			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return rrm(innerCtx) })
-		case "planCR":
+		case "operationalNeed":
 			field := field
 
 			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
@@ -71587,29 +73690,7 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 						ec.Error(ctx, ec.Recover(ctx, r))
 					}
 				}()
-				res = ec._Query_planCR(ctx, field)
-				if res == graphql.Null {
-					atomic.AddUint32(&fs.Invalids, 1)
-				}
-				return res
-			}
-
-			rrm := func(ctx context.Context) graphql.Marshaler {
-				return ec.OperationContext.RootResolverMiddleware(ctx,
-					func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
-			}
-
-			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return rrm(innerCtx) })
-		case "planTDL":
-			field := field
-
-			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
-				defer func() {
-					if r := recover(); r != nil {
-						ec.Error(ctx, ec.Recover(ctx, r))
-					}
-				}()
-				res = ec._Query_planTDL(ctx, field)
+				res = ec._Query_operationalNeed(ctx, field)
 				if res == graphql.Null {
 					atomic.AddUint32(&fs.Invalids, 1)
 				}
@@ -71666,7 +73747,7 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 			}
 
 			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return rrm(innerCtx) })
-		case "operationalNeed":
+		case "planCollaboratorByID":
 			field := field
 
 			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
@@ -71675,7 +73756,7 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 						ec.Error(ctx, ec.Recover(ctx, r))
 					}
 				}()
-				res = ec._Query_operationalNeed(ctx, field)
+				res = ec._Query_planCollaboratorByID(ctx, field)
 				if res == graphql.Null {
 					atomic.AddUint32(&fs.Invalids, 1)
 				}
@@ -71688,7 +73769,7 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 			}
 
 			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return rrm(innerCtx) })
-		case "auditChanges":
+		case "planCR":
 			field := field
 
 			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
@@ -71697,7 +73778,73 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 						ec.Error(ctx, ec.Recover(ctx, r))
 					}
 				}()
-				res = ec._Query_auditChanges(ctx, field)
+				res = ec._Query_planCR(ctx, field)
+				if res == graphql.Null {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
+				return res
+			}
+
+			rrm := func(ctx context.Context) graphql.Marshaler {
+				return ec.OperationContext.RootResolverMiddleware(ctx,
+					func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return rrm(innerCtx) })
+		case "planDocument":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Query_planDocument(ctx, field)
+				if res == graphql.Null {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
+				return res
+			}
+
+			rrm := func(ctx context.Context) graphql.Marshaler {
+				return ec.OperationContext.RootResolverMiddleware(ctx,
+					func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return rrm(innerCtx) })
+		case "planPayments":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Query_planPayments(ctx, field)
+				if res == graphql.Null {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
+				return res
+			}
+
+			rrm := func(ctx context.Context) graphql.Marshaler {
+				return ec.OperationContext.RootResolverMiddleware(ctx,
+					func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return rrm(innerCtx) })
+		case "planTDL":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Query_planTDL(ctx, field)
 				if res == graphql.Null {
 					atomic.AddUint32(&fs.Invalids, 1)
 				}
@@ -71754,6 +73901,28 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 			}
 
 			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return rrm(innerCtx) })
+		case "taskListSectionLocks":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Query_taskListSectionLocks(ctx, field)
+				if res == graphql.Null {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
+				return res
+			}
+
+			rrm := func(ctx context.Context) graphql.Marshaler {
+				return ec.OperationContext.RootResolverMiddleware(ctx,
+					func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return rrm(innerCtx) })
 		case "userAccount":
 			field := field
 
@@ -71776,7 +73945,7 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 			}
 
 			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return rrm(innerCtx) })
-		case "existingModelLink":
+		case "searchOktaUsers":
 			field := field
 
 			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
@@ -71785,114 +73954,7 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 						ec.Error(ctx, ec.Recover(ctx, r))
 					}
 				}()
-				res = ec._Query_existingModelLink(ctx, field)
-				if res == graphql.Null {
-					atomic.AddUint32(&fs.Invalids, 1)
-				}
-				return res
-			}
-
-			rrm := func(ctx context.Context) graphql.Marshaler {
-				return ec.OperationContext.RootResolverMiddleware(ctx,
-					func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
-			}
-
-			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return rrm(innerCtx) })
-		case "mostRecentDiscussionRoleSelection":
-			field := field
-
-			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
-				defer func() {
-					if r := recover(); r != nil {
-						ec.Error(ctx, ec.Recover(ctx, r))
-					}
-				}()
-				res = ec._Query_mostRecentDiscussionRoleSelection(ctx, field)
-				return res
-			}
-
-			rrm := func(ctx context.Context) graphql.Marshaler {
-				return ec.OperationContext.RootResolverMiddleware(ctx,
-					func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
-			}
-
-			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return rrm(innerCtx) })
-		case "analyzedAudits":
-			field := field
-
-			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
-				defer func() {
-					if r := recover(); r != nil {
-						ec.Error(ctx, ec.Recover(ctx, r))
-					}
-				}()
-				res = ec._Query_analyzedAudits(ctx, field)
-				if res == graphql.Null {
-					atomic.AddUint32(&fs.Invalids, 1)
-				}
-				return res
-			}
-
-			rrm := func(ctx context.Context) graphql.Marshaler {
-				return ec.OperationContext.RootResolverMiddleware(ctx,
-					func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
-			}
-
-			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return rrm(innerCtx) })
-		case "currentUser":
-			field := field
-
-			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
-				defer func() {
-					if r := recover(); r != nil {
-						ec.Error(ctx, ec.Recover(ctx, r))
-					}
-				}()
-				res = ec._Query_currentUser(ctx, field)
-				if res == graphql.Null {
-					atomic.AddUint32(&fs.Invalids, 1)
-				}
-				return res
-			}
-
-			rrm := func(ctx context.Context) graphql.Marshaler {
-				return ec.OperationContext.RootResolverMiddleware(ctx,
-					func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
-			}
-
-			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return rrm(innerCtx) })
-		case "modelPlan":
-			field := field
-
-			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
-				defer func() {
-					if r := recover(); r != nil {
-						ec.Error(ctx, ec.Recover(ctx, r))
-					}
-				}()
-				res = ec._Query_modelPlan(ctx, field)
-				if res == graphql.Null {
-					atomic.AddUint32(&fs.Invalids, 1)
-				}
-				return res
-			}
-
-			rrm := func(ctx context.Context) graphql.Marshaler {
-				return ec.OperationContext.RootResolverMiddleware(ctx,
-					func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
-			}
-
-			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return rrm(innerCtx) })
-		case "modelPlanCollection":
-			field := field
-
-			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
-				defer func() {
-					if r := recover(); r != nil {
-						ec.Error(ctx, ec.Recover(ctx, r))
-					}
-				}()
-				res = ec._Query_modelPlanCollection(ctx, field)
+				res = ec._Query_searchOktaUsers(ctx, field)
 				if res == graphql.Null {
 					atomic.AddUint32(&fs.Invalids, 1)
 				}
@@ -76458,6 +78520,77 @@ func (ec *executionContext) marshalNParticipantCommunicationType2ᚕgithubᚗcom
 				defer wg.Done()
 			}
 			ret[i] = ec.marshalNParticipantCommunicationType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐParticipantCommunicationType(ctx, sel, v[i])
+		}
+		if isLen1 {
+			f(i)
+		} else {
+			go f(i)
+		}
+
+	}
+	wg.Wait()
+
+	for _, e := range ret {
+		if e == graphql.Null {
+			return graphql.Null
+		}
+	}
+
+	return ret
+}
+
+func (ec *executionContext) unmarshalNParticipantRequireFinancialGuaranteeType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐParticipantRequireFinancialGuaranteeType(ctx context.Context, v interface{}) (model.ParticipantRequireFinancialGuaranteeType, error) {
+	var res model.ParticipantRequireFinancialGuaranteeType
+	err := res.UnmarshalGQL(v)
+	return res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalNParticipantRequireFinancialGuaranteeType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐParticipantRequireFinancialGuaranteeType(ctx context.Context, sel ast.SelectionSet, v model.ParticipantRequireFinancialGuaranteeType) graphql.Marshaler {
+	return v
+}
+
+func (ec *executionContext) unmarshalNParticipantRequireFinancialGuaranteeType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐParticipantRequireFinancialGuaranteeTypeᚄ(ctx context.Context, v interface{}) ([]model.ParticipantRequireFinancialGuaranteeType, error) {
+	var vSlice []interface{}
+	if v != nil {
+		vSlice = graphql.CoerceList(v)
+	}
+	var err error
+	res := make([]model.ParticipantRequireFinancialGuaranteeType, len(vSlice))
+	for i := range vSlice {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithIndex(i))
+		res[i], err = ec.unmarshalNParticipantRequireFinancialGuaranteeType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐParticipantRequireFinancialGuaranteeType(ctx, vSlice[i])
+		if err != nil {
+			return nil, err
+		}
+	}
+	return res, nil
+}
+
+func (ec *executionContext) marshalNParticipantRequireFinancialGuaranteeType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐParticipantRequireFinancialGuaranteeTypeᚄ(ctx context.Context, sel ast.SelectionSet, v []model.ParticipantRequireFinancialGuaranteeType) graphql.Marshaler {
+	ret := make(graphql.Array, len(v))
+	var wg sync.WaitGroup
+	isLen1 := len(v) == 1
+	if !isLen1 {
+		wg.Add(len(v))
+	}
+	for i := range v {
+		i := i
+		fc := &graphql.FieldContext{
+			Index:  &i,
+			Result: &v[i],
+		}
+		ctx := graphql.WithFieldContext(ctx, fc)
+		f := func(i int) {
+			defer func() {
+				if r := recover(); r != nil {
+					ec.Error(ctx, ec.Recover(ctx, r))
+					ret = nil
+				}
+			}()
+			if !isLen1 {
+				defer wg.Done()
+			}
+			ret[i] = ec.marshalNParticipantRequireFinancialGuaranteeType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐParticipantRequireFinancialGuaranteeType(ctx, sel, v[i])
 		}
 		if isLen1 {
 			f(i)
@@ -81344,6 +83477,73 @@ func (ec *executionContext) marshalOParticipantCommunicationType2ᚕgithubᚗcom
 				defer wg.Done()
 			}
 			ret[i] = ec.marshalNParticipantCommunicationType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐParticipantCommunicationType(ctx, sel, v[i])
+		}
+		if isLen1 {
+			f(i)
+		} else {
+			go f(i)
+		}
+
+	}
+	wg.Wait()
+
+	for _, e := range ret {
+		if e == graphql.Null {
+			return graphql.Null
+		}
+	}
+
+	return ret
+}
+
+func (ec *executionContext) unmarshalOParticipantRequireFinancialGuaranteeType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐParticipantRequireFinancialGuaranteeTypeᚄ(ctx context.Context, v interface{}) ([]model.ParticipantRequireFinancialGuaranteeType, error) {
+	if v == nil {
+		return nil, nil
+	}
+	var vSlice []interface{}
+	if v != nil {
+		vSlice = graphql.CoerceList(v)
+	}
+	var err error
+	res := make([]model.ParticipantRequireFinancialGuaranteeType, len(vSlice))
+	for i := range vSlice {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithIndex(i))
+		res[i], err = ec.unmarshalNParticipantRequireFinancialGuaranteeType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐParticipantRequireFinancialGuaranteeType(ctx, vSlice[i])
+		if err != nil {
+			return nil, err
+		}
+	}
+	return res, nil
+}
+
+func (ec *executionContext) marshalOParticipantRequireFinancialGuaranteeType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐParticipantRequireFinancialGuaranteeTypeᚄ(ctx context.Context, sel ast.SelectionSet, v []model.ParticipantRequireFinancialGuaranteeType) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	ret := make(graphql.Array, len(v))
+	var wg sync.WaitGroup
+	isLen1 := len(v) == 1
+	if !isLen1 {
+		wg.Add(len(v))
+	}
+	for i := range v {
+		i := i
+		fc := &graphql.FieldContext{
+			Index:  &i,
+			Result: &v[i],
+		}
+		ctx := graphql.WithFieldContext(ctx, fc)
+		f := func(i int) {
+			defer func() {
+				if r := recover(); r != nil {
+					ec.Error(ctx, ec.Recover(ctx, r))
+					ret = nil
+				}
+			}()
+			if !isLen1 {
+				defer wg.Done()
+			}
+			ret[i] = ec.marshalNParticipantRequireFinancialGuaranteeType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐParticipantRequireFinancialGuaranteeType(ctx, sel, v[i])
 		}
 		if isLen1 {
 			f(i)

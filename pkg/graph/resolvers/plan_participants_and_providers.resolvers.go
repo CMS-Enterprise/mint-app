@@ -55,6 +55,12 @@ func (r *planParticipantsAndProvidersResolver) RiskType(ctx context.Context, obj
 	return models.ConvertEnums[models.ParticipantRiskType](obj.RiskType), nil
 }
 
+// ParticipantRequireFinancialGuaranteeType is the resolver for the participantRequireFinancialGuaranteeType field.
+func (r *planParticipantsAndProvidersResolver) ParticipantRequireFinancialGuaranteeType(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]model.ParticipantRequireFinancialGuaranteeType, error) {
+	guaranteeTypes := models.ConvertEnums[model.ParticipantRequireFinancialGuaranteeType](obj.ParticipantRequireFinancialGuaranteeType)
+	return guaranteeTypes, nil
+}
+
 // GainsharePaymentsEligibility is the resolver for the gainsharePaymentsEligibility field.
 func (r *planParticipantsAndProvidersResolver) GainsharePaymentsEligibility(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]model.GainshareArrangementEligibility, error) {
 	gainshareArrangementEligibilities := models.ConvertEnums[model.GainshareArrangementEligibility](obj.GainsharePaymentsEligibility)

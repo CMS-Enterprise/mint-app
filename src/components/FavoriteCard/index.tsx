@@ -2,10 +2,10 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button, Card, Grid, Icon, Tag } from '@trussworks/react-uswds';
 import classnames from 'classnames';
+import { GetFavorites_modelPlanCollection as FavoritesModelType } from 'gql/gen/types/GetFavorites';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import Divider from 'components/shared/Divider';
-import { GetFavorites_modelPlanCollection as FavoritesModelType } from 'queries/types/GetFavorites';
 import { TeamRole } from 'types/graphql-global-types';
 import { formatDateUtc } from 'utils/date';
 import { UpdateFavoriteProps } from 'views/ModelPlan/ModelPlanOverview';

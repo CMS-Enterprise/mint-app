@@ -1,0 +1,51 @@
+type PlanCR {
+  id: UUID!
+  modelPlanID: UUID!
+
+  idNumber: String!
+  dateInitiated: Time!
+  dateImplemented: Time # Required in the API, but can be nullable for historical entries before we migrated CRs and TDLs as different types
+  title: String!
+  note: String
+
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
+}
+
+input PlanCRCreateInput {
+  modelPlanID: UUID!
+
+  idNumber: String!
+  dateInitiated: Time!
+  dateImplemented: Time!
+  title: String!
+  note: String
+}
+
+input PlanCRChanges @goModel(model: "map[string]interface{}") {
+  idNumber: String
+  dateInitiated: Time
+  dateImplemented: Time
+  title: String
+  note: String
+}
+
+extend type Query {
+  planCR(id: UUID!): PlanCR!
+  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+}
+
+extend type Mutation {
+  createPlanCR(input: PlanCRCreateInput!): PlanCR!
+  @hasRole(role: MINT_USER)
+
+  updatePlanCR(id: UUID!, changes: PlanCRChanges!): PlanCR!
+  @hasRole(role: MINT_USER)
+
+  deletePlanCR(id: UUID!): PlanCR!
+  @hasRole(role: MINT_USER)
+}

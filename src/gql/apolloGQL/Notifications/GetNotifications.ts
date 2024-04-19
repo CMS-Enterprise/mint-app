@@ -21,6 +21,17 @@ export default gql(/* GraphQL */ `
             }
             metaData {
               __typename
+              ... on NewDiscussionRepliedActivityMeta {
+                version
+                type
+                discussionID
+                replyID
+                modelPlanID
+                modelPlan {
+                  modelName
+                }
+                content
+              }
               ... on TaggedInPlanDiscussionActivityMeta {
                 version
                 type
@@ -30,6 +41,14 @@ export default gql(/* GraphQL */ `
                 }
                 discussionID
                 content
+              }
+              ... on AddedAsCollaboratorMeta {
+                version
+                type
+                modelPlanID
+                modelPlan {
+                  modelName
+                }
               }
               ... on TaggedInDiscussionReplyActivityMeta {
                 version
@@ -41,6 +60,15 @@ export default gql(/* GraphQL */ `
                 discussionID
                 replyID
                 content
+              }
+              ... on ModelPlanSharedActivityMeta {
+                version
+                type
+                modelPlanID
+                modelPlan {
+                  modelName
+                }
+                optionalMessage
               }
               ... on DailyDigestCompleteActivityMeta {
                 version

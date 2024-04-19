@@ -86,6 +86,7 @@ func parseRawActivityMetaData(activityType models.ActivityType, rawMetaDataJSON 
 			return nil, err
 		}
 		return &meta, nil
+
 	case models.ActivityTaggedInDiscussionReply:
 		// Deserialize the raw JSON into TaggedInDiscussionReplyActivityMeta
 		meta := models.TaggedInDiscussionReplyActivityMeta{}
@@ -94,6 +95,7 @@ func parseRawActivityMetaData(activityType models.ActivityType, rawMetaDataJSON 
 			return nil, err
 		}
 		return &meta, nil
+
 	case models.ActivityDigest:
 		// Deserialize the raw JSON into TaggedInDiscussionReplyActivityMeta
 		meta := models.DailyDigestCompleteActivityMeta{}
@@ -102,7 +104,29 @@ func parseRawActivityMetaData(activityType models.ActivityType, rawMetaDataJSON 
 		}
 		return &meta, nil
 
-	// Add cases for other ActivityTypes as needed
+	case models.ActivityNewDiscussionReply:
+		// Deserialize the raw JSON into NewDiscussionReplyActivityMeta
+		meta := models.NewDiscussionRepliedActivityMeta{}
+		if err := json.Unmarshal(rawData, &meta); err != nil {
+			return nil, err
+		}
+		return &meta, nil
+	case models.ActivityAddedAsCollaborator:
+		// Deserialize the raw JSON into AddedAsCollaboratorMeta
+		meta := models.AddedAsCollaboratorMeta{}
+		if err := json.Unmarshal(rawData, &meta); err != nil {
+
+			return nil, err
+		}
+		return &meta, nil
+
+	case models.ActivityModelPlanShared:
+		// Deserialize the raw JSON into ModelPlanSharedActivityMeta
+		meta := models.ModelPlanSharedActivityMeta{}
+		if err := json.Unmarshal(rawData, &meta); err != nil {
+			return nil, err
+		}
+		return &meta, nil
 
 	default:
 		// Return a default implementation or handle unsupported types

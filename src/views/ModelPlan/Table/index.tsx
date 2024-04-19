@@ -11,10 +11,17 @@ import {
   useSortBy,
   useTable
 } from 'react-table';
-import { useQuery } from '@apollo/client';
 import { Button, Icon, Table as UswdsTable } from '@trussworks/react-uswds';
 import classNames from 'classnames';
-import { GetCrtdLsQuery, TeamRole } from 'gql/gen/graphql';
+import {
+  GetCrtdLsQuery,
+  TeamRole,
+  useGetModelPlansQuery
+} from 'gql/gen/graphql';
+import {
+  GetModelPlans_modelPlanCollection as AllModelPlansType,
+  GetModelPlans_modelPlanCollection_collaborators as CollaboratorsType
+} from 'gql/gen/types/GetModelPlans';
 import i18next from 'i18next';
 
 import UswdsReactLink from 'components/LinkWrapper';
@@ -23,12 +30,6 @@ import Alert from 'components/shared/Alert';
 import GlobalClientFilter from 'components/TableFilter';
 import TablePagination from 'components/TablePagination';
 import TableResults from 'components/TableResults';
-import GetAllModelPlans from 'queries/GetModelPlans';
-import {
-  GetModelPlans as GetAllModelPlansType,
-  GetModelPlans_modelPlanCollection as AllModelPlansType,
-  GetModelPlans_modelPlanCollection_collaborators as CollaboratorsType
-} from 'queries/types/GetModelPlans';
 import {
   KeyCharacteristic,
   ModelCategory,
@@ -91,15 +92,12 @@ const ModelPlansTable = ({
     queryType = ModelPlanFilter.WITH_CR_TDLS;
   }
 
-  const { data: modelPlans, loading, error } = useQuery<GetAllModelPlansType>(
-    GetAllModelPlans,
-    {
-      variables: {
-        filter: queryType,
-        isMAC: type !== 'home'
-      }
+  const { data: modelPlans, loading, error } = useGetModelPlansQuery({
+    variables: {
+      filter: queryType,
+      isMAC: type !== 'home'
     }
-  );
+  });
 
   const data = useMemo(() => {
     const queryData = (modelPlans?.modelPlanCollection ??
@@ -181,7 +179,7 @@ const ModelPlansTable = ({
       },
       modelName: {
         id: 'modelName',
-        Header: homeT<string>('requestsTable.headers.name'),
+        Header: homeT('requestsTable.headers.name'),
         accessor: 'modelName',
         Cell: ({ row, value }: any) => {
           const filteredNameHistory: string[] = row.original.nameHistory?.slice(
@@ -205,17 +203,17 @@ const ModelPlansTable = ({
       },
       abbreviation: {
         id: 'abbreviation',
-        Header: homeT<string>('requestsTable.headers.abbreviation'),
+        Header: homeT('requestsTable.headers.abbreviation'),
         accessor: 'abbreviation'
       },
       amsModelID: {
         id: 'amsModelID',
-        Header: homeT<string>('requestsTable.headers.amsModelID'),
+        Header: homeT('requestsTable.headers.amsModelID'),
         accessor: 'basics.amsModelID'
       },
       modelCategory: {
         id: 'modelCategory',
-        Header: homeT<string>('requestsTable.headers.category'),
+        Header: homeT('requestsTable.headers.category'),
         accessor: 'basics.modelCategory',
         Cell: ({ row, value }: any) => {
           const additionalModelCategory =
@@ -223,30 +221,30 @@ const ModelPlansTable = ({
 
           // Handle no value with an early return
           if (!value) {
-            return <div>{homeT<string>('requestsTable.tbd')}</div>;
+            return <div>{homeT('requestsTable.tbd')}</div>;
           }
 
           if (additionalModelCategory.length !== 0) {
             const newArray = additionalModelCategory.map(
               (group: ModelCategory) => {
-                return i18next.t<string>(
+                return i18next.t(
                   `basics:additionalModelCategories.options.${group}`
                 );
               }
             );
 
-            return `${i18next.t<string>(
+            return `${i18next.t(
               `basics:modelCategory.options.${value}`
             )}, ${newArray.join(', ')}`;
           }
-          return i18next.t<string>(`basics:modelCategory.options.${value}`);
+          return i18next.t(`basics:modelCategory.options.${value}`);
         }
       },
       status: {
         id: 'status',
-        Header: homeT<string>('requestsTable.headers.status'),
+        Header: homeT('requestsTable.headers.status'),
         accessor: ({ status }: any) => {
-          return i18next.t<string>(`modelPlan:status.options.${status}`);
+          return i18next.t(`modelPlan:status.options.${status}`);
         },
         Cell: ({ value }: any) => {
           return value;
@@ -254,7 +252,7 @@ const ModelPlansTable = ({
       },
       clearanceDate: {
         id: 'clearanceDate',
-        Header: homeT<string>('requestsTable.headers.clearanceDate'),
+        Header: homeT('requestsTable.headers.clearanceDate'),
         accessor: ({ basics: { clearanceStarts } }: any) => {
           if (clearanceStarts) {
             return formatDateUtc(clearanceStarts, 'MM/dd/yyyy');
@@ -263,14 +261,14 @@ const ModelPlansTable = ({
         },
         Cell: ({ value }: { value: string }) => {
           if (!value) {
-            return <div>{homeT<string>('requestsTable.tbd')}</div>;
+            return <div>{homeT('requestsTable.tbd')}</div>;
           }
           return value;
         }
       },
       startDate: {
         id: 'startDate',
-        Header: homeT<string>('requestsTable.headers.startDate'),
+        Header: homeT('requestsTable.headers.startDate'),
         accessor: ({ basics: { performancePeriodStarts } }: any) => {
           if (performancePeriodStarts) {
             return formatDateUtc(performancePeriodStarts, 'MM/dd/yyyy');
@@ -279,14 +277,14 @@ const ModelPlansTable = ({
         },
         Cell: ({ value }: any) => {
           if (!value) {
-            return <div>{homeT<string>('requestsTable.tbd')}</div>;
+            return <div>{homeT('requestsTable.tbd')}</div>;
           }
           return value;
         }
       },
       recentActivity: {
         id: 'recentActivity',
-        Header: homeT<string>('requestsTable.headers.recentActivity'),
+        Header: homeT('requestsTable.headers.recentActivity'),
         accessor: 'modifiedDts',
         Cell: ({ row, value }: any) => {
           const { discussions } = row.original;
@@ -303,7 +301,7 @@ const ModelPlansTable = ({
                 <div className="display-flex flex-align-center text-bold">
                   <Icon.Comment className="text-primary margin-right-05" />{' '}
                   {discussions.length}{' '}
-                  {i18next.t('discussions:discussionBanner.discussion', {
+                  {i18next.t('discussionsMisc:discussionBanner.discussion', {
                     count: discussions.length
                   })}
                 </div>
@@ -314,7 +312,7 @@ const ModelPlansTable = ({
       },
       paymentDate: {
         id: 'paymentDate',
-        Header: homeT<string>('requestsTable.headers.paymentDate'),
+        Header: homeT('requestsTable.headers.paymentDate'),
         accessor: ({ payments: { paymentStartDate } }: any) => {
           if (paymentStartDate) {
             return formatDateUtc(paymentStartDate, 'MM/dd/yyyy');
@@ -323,20 +321,20 @@ const ModelPlansTable = ({
         },
         Cell: ({ value }: { value: string | null }) => {
           if (!value) {
-            return <div>{homeT<string>('requestsTable.tbd')}</div>;
+            return <div>{homeT('requestsTable.tbd')}</div>;
           }
           return value;
         }
       },
       keyCharacteristics: {
         id: 'keyCharacteristics',
-        Header: homeT<string>('requestsTable.headers.keyCharacteristics'),
+        Header: homeT('requestsTable.headers.keyCharacteristics'),
         accessor: 'generalCharacteristics.keyCharacteristics',
         Cell: ({ value }: { value: KeyCharacteristic[] }) => {
           if (value) {
             return value
               .map(characteristics => {
-                return i18next.t<string>(
+                return i18next.t(
                   `generalCharacteristics:keyCharacteristics.options.${characteristics}`
                 );
               })
@@ -347,16 +345,16 @@ const ModelPlansTable = ({
       },
       demoCode: {
         id: 'demoCode',
-        Header: homeT<string>('requestsTable.headers.demoCode'),
+        Header: homeT('requestsTable.headers.demoCode'),
         accessor: 'basics.demoCode'
       },
       crTdls: {
         id: 'crTdls',
-        Header: homeT<string>('requestsTable.headers.crTDLs'),
+        Header: homeT('requestsTable.headers.crTDLs'),
         accessor: 'crTdls',
         Cell: ({ value }: { value: CRTDLType[] }) => {
           if (!value || value.length === 0) {
-            return <div>{homeT<string>('requestsTable.tbd')}</div>;
+            return <div>{homeT('requestsTable.tbd')}</div>;
           }
           const crtdlIDs = value
             .map((crtdl: CRTDLType) => crtdl.idNumber)
@@ -366,7 +364,7 @@ const ModelPlansTable = ({
       },
       modelPoc: {
         id: 'modelPoc',
-        Header: homeT<string>('requestsTable.headers.modelPoc'),
+        Header: homeT('requestsTable.headers.modelPoc'),
         accessor: 'collaborators',
         Cell: ({ value }: any) => {
           if (value) {
@@ -456,13 +454,13 @@ const ModelPlansTable = ({
   }
 
   if (error) {
-    return <Alert type="error">{homeT<string>('fetchError')}</Alert>;
+    return <Alert type="error">{homeT('fetchError')}</Alert>;
   }
 
   if (data.length === 0) {
     return (
-      <Alert type="info" heading={homeT<string>('requestsTable.empty.heading')}>
-        {homeT<string>('requestsTable.empty.body')}
+      <Alert type="info" heading={homeT('requestsTable.empty.heading')}>
+        {homeT('requestsTable.empty.body')}
       </Alert>
     );
   }
@@ -500,8 +498,8 @@ const ModelPlansTable = ({
         {!userModels && (
           <GlobalClientFilter
             setGlobalFilter={setGlobalFilter}
-            tableID={homeT<string>('requestsTable.id')}
-            tableName={homeT<string>('requestsTable.title')}
+            tableID={homeT('requestsTable.id')}
+            tableName={homeT('requestsTable.title')}
             className="margin-bottom-4"
           />
         )}
@@ -526,7 +524,7 @@ const ModelPlansTable = ({
 
       <UswdsTable {...getTableProps()} fullWidth scrollable>
         <caption className="usa-sr-only">
-          {homeT<string>('requestsTable.caption')}
+          {homeT('requestsTable.caption')}
         </caption>
 
         <thead>
@@ -611,11 +609,11 @@ const ModelPlansTable = ({
         <Alert
           type="warning"
           aria-live="polite"
-          heading={homeT<string>('allModels.noResults.heading', {
+          heading={homeT('allModels.noResults.heading', {
             searchTerm: state.globalFilter
           })}
         >
-          {homeT<string>('allModels.noResults.subheading')}
+          {homeT('allModels.noResults.subheading')}
         </Alert>
       )}
 

@@ -1,0 +1,20 @@
+type PossibleOperationalSolution {
+  id: Int!
+  name: String!
+  key: OperationalSolutionKey!
+  treatAsOther: Boolean!
+  pointsOfContact: [PossibleOperationalSolutionContact!]!
+  filterView: ModelViewFilter
+
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
+}
+
+extend type Query {
+  possibleOperationalSolutions: [PossibleOperationalSolution!]!
+  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+}

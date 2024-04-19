@@ -48,7 +48,8 @@ describe('Notification Center', () => {
 
     cy.contains('button', 'Save discussion').click();
 
-    cy.visit('/notifications');
+    cy.get('[data-testid="close-discussions"]').click();
+    cy.get('[data-testid="navmenu__notification"]').first().click();
 
     // Actual Notification Test
     cy.get('[data-testid="navmenu__notification"]')
@@ -67,7 +68,9 @@ describe('Notification Center', () => {
       .find('button', 'View Discussion')
       .click();
 
-    cy.visit('/notifications');
+    // Navigate to Notification page (faster than cy.visit)
+    cy.get('[data-testid="close-discussions"]').click();
+    cy.get('[data-testid="navmenu__notification"]').first().click();
 
     // Check to see first entry should no longer have red dot
     cy.get('[data-testid="individual-notification"]')
@@ -76,13 +79,37 @@ describe('Notification Center', () => {
       .should('not.exist');
 
     // Mark all as read
-    cy.contains('button', 'Mark all as read').click();
+    cy.contains('button', 'Mark all').click();
 
     // No more red dots
     cy.get('[data-testid="navmenu__notifications--noNotification"').should(
       'exist'
     );
     cy.get('[data-testid="notification-red-dot"]').should('have.length', 0);
+  });
+
+  it('navigates to see Daily Digest notification', () => {
+    cy.localLogin({ name: 'MINT', role: 'MINT_ASSESSMENT_NONPROD' });
+    cy.visit('/notifications');
+
+    cy.get('[data-testid="individual-notification"]')
+      .first()
+      .find('[data-testid="notification-red-dot"]')
+      .should('exist');
+    cy.contains('button', 'View digest').click();
+
+    cy.get('[data-testid="notification--daily-digest"').should('exist');
+
+    cy.contains('h3', 'Empty Plan').siblings('a').click();
+
+    cy.location().should(loc => {
+      expect(loc.pathname).to.match(/models\/.{36}\/read-only\/model-basics/);
+    });
+  });
+
+  it('navigates to see Notification Settings', () => {
+    cy.localLogin({ name: 'MINT', role: 'MINT_ASSESSMENT_NONPROD' });
+    cy.visit('/notifications');
 
     // Notification Settings Test
     cy.contains('a', 'Notification settings').click();
@@ -107,22 +134,111 @@ describe('Notification Center', () => {
     );
   });
 
-  it('navigates to see Daily Digest notification', () => {
-    cy.localLogin({ name: 'MINT', role: 'MINT_ASSESSMENT_NONPROD' });
-    cy.visit('/notifications');
+  it('testing New Discussion Reply Notification', () => {
+    cy.localLogin({ name: 'JTTC', role: 'MINT_ASSESSMENT_NONPROD' });
+    cy.clickPlanTableByName('Empty Plan');
+
+    // Create a discussion to start things off
+    cy.contains('button', 'Start a discussion').click();
+
+    cy.contains('h1', 'Start a discussion');
+
+    cy.contains('button', 'Save discussion').should('be.disabled');
+
+    cy.get('#user-role').should('not.be.disabled');
+
+    cy.get('#user-role').select('None of the above');
+
+    cy.get('#user-role-description')
+      .type('Designer')
+      .should('have.value', 'Designer');
+
+    cy.get('#mention-editor').type('@ana');
+    cy.get('#JTTC').contains('Anabelle Jerde (JTTC)').click();
+    cy.get('#mention-editor').type('First Notification');
+    cy.get('#mention-editor').should(
+      'have.text',
+      '@Anabelle Jerde (JTTC) First Notification'
+    );
+
+    cy.contains('button', 'Save discussion').click();
+
+    // New Discussion Reply test
+    cy.contains('button', 'Reply').click();
+
+    cy.contains('label', 'Type your reply');
+
+    cy.get('#mention-editor').type(
+      'Triggering new discussion reply notification'
+    );
+
+    cy.contains('button', 'Save reply').click();
+
+    cy.get('[data-testid="close-discussions"]').click();
+    cy.get('[data-testid="navmenu__notification"]').first().click();
+
+    cy.get('[data-testid="navmenu__notifications--yesNotification"').should(
+      'exist'
+    );
+
+    cy.get('[data-testid="individual-notification"]').should('have.length', 2);
+
+    cy.get('[data-testid="individual-notification"]')
+      .first()
+      .find('button', 'View Discussion')
+      .click();
+
+    cy.get('[data-testid="close-discussions"]').click();
+    cy.get('[data-testid="navmenu__notification"]').first().click();
 
     cy.get('[data-testid="individual-notification"]')
       .first()
       .find('[data-testid="notification-red-dot"]')
-      .should('exist');
-    cy.contains('button', 'View digest').click();
+      .should('not.exist');
+  });
 
-    cy.get('[data-testid="notification--daily-digest"').should('exist');
+  it('testing Adding Collaborator Notification', () => {
+    cy.localLogin({ name: 'MINT', role: 'MINT_ASSESSMENT_NONPROD' });
+    cy.clickPlanTableByName('Empty Plan');
 
-    cy.contains('h3', 'Empty Plan').siblings('a').click();
+    // Add SF13 as a collaborator
+    cy.get('a[href*="/collaborators?view=manage"]').click();
 
-    cy.location().should(loc => {
-      expect(loc.pathname).to.match(/models\/.{36}\/read-only\/model-basics/);
+    cy.contains('a', 'Add team member').click();
+
+    cy.get('#react-select-model-team-cedar-contact-input')
+      .click()
+      .type('Jer', { delay: 100 });
+
+    cy.get('#react-select-model-team-cedar-contact-option-0')
+      .contains('Jerry Seinfeld, SF13')
+      .click();
+
+    cy.get('#collaborator-role').within(() => {
+      cy.get("input[type='text']").click().type('evalu{downArrow}{enter}');
     });
+
+    cy.clickOutside();
+
+    cy.get('[data-testid="multiselect-tag--Evaluation"]')
+      .first()
+      .contains('Evaluation');
+
+    cy.contains('button', 'Add team member').click();
+
+    cy.logout();
+
+    // Login as SF13
+    cy.localLogin({ name: 'SF13', role: 'MINT_USER_NONPROD' });
+
+    cy.get('[data-testid="navmenu__notification"]').first().click();
+
+    cy.get('[data-testid="individual-notification"]').contains(
+      'MINT Doe added you to the team for Empty Plan.'
+    );
+
+    cy.contains('button', 'Start collaborating').click();
+
+    cy.url().should('include', '/task-list');
   });
 });

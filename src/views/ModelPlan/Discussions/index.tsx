@@ -1,12 +1,12 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useLocation } from 'react-router-dom';
-import { useMutation } from '@apollo/client';
 import { Accordion, Button, Grid, Icon } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import {
   DiscussionUserRole,
   useCreateModelPlanDiscussionMutation,
+  useCreateModelPlanReplyMutation,
   useGetModelPlanDiscussionsQuery
 } from 'gql/gen/graphql';
 import {
@@ -18,8 +18,6 @@ import PageHeading from 'components/PageHeading';
 import PageLoading from 'components/PageLoading';
 import Alert from 'components/shared/Alert';
 import Expire from 'components/shared/Expire';
-import CreateModelPlanReply from 'queries/CreateModelPlanReply';
-import { CreateModelPlanReply as CreateModelPlanReplyType } from 'queries/types/CreateModelPlanReply';
 import { PlanDiscussionCreateInput } from 'types/graphql-global-types';
 
 import DiscussionModalWrapper from './DiscussionModalWrapper';
@@ -46,7 +44,7 @@ const Discussions = ({
   askAQuestion,
   readOnly
 }: DiscussionsProps) => {
-  const { t } = useTranslation('discussions');
+  const { t: discussionsMiscT } = useTranslation('discussionsMisc');
 
   // Used to replace query params after reply has been asnwered from linked email
   const location = useLocation();
@@ -68,9 +66,7 @@ const Discussions = ({
 
   const [createQuestion] = useCreateModelPlanDiscussionMutation();
 
-  const [createReply] = useMutation<CreateModelPlanReplyType>(
-    CreateModelPlanReply
-  );
+  const [createReply] = useCreateModelPlanReplyMutation();
 
   const createDiscussionMethods = {
     question: createQuestion,
@@ -176,14 +172,18 @@ const Discussions = ({
           }
           setDiscussionStatus('success');
           setDiscussionStatusMessage(
-            discussionType === 'question' ? t('success') : t('successReply')
+            discussionType === 'question'
+              ? discussionsMiscT('success')
+              : discussionsMiscT('successReply')
           );
         }
       })
       .catch(() => {
         setDiscussionStatus('error');
         setDiscussionStatusMessage(
-          discussionType === 'question' ? t('error') : t('errorReply')
+          discussionType === 'question'
+            ? discussionsMiscT('error')
+            : discussionsMiscT('errorReply')
         );
       });
   };
@@ -212,10 +212,10 @@ const Discussions = ({
               title: (
                 <strong>
                   {hasReplies
-                    ? t('discussionWithCount', {
+                    ? discussionsMiscT('discussionWithCount', {
                         count: discussionContent.length
                       })
-                    : t('newDiscussionTopics', {
+                    : discussionsMiscT('newDiscussionTopics', {
                         count: discussionContent.length
                       })}
                 </strong>
@@ -237,7 +237,9 @@ const Discussions = ({
         />
         {discussionContent.length === 0 && (
           <Alert className="margin-bottom-2" type="info">
-            {hasReplies ? t('noAnswered') : t('noUanswered')}
+            {hasReplies
+              ? discussionsMiscT('noAnswered')
+              : discussionsMiscT('noUanswered')}
           </Alert>
         )}
       </>
@@ -248,7 +250,7 @@ const Discussions = ({
     if (discussions.length === 0) {
       return (
         <Alert className="margin-bottom-2" type="info">
-          {t('useLinkAbove')}
+          {discussionsMiscT('useLinkAbove')}
         </Alert>
       );
     }
@@ -298,7 +300,7 @@ const Discussions = ({
           headingLevel={readOnly ? 'h2' : 'h1'}
           className="margin-top-0 line-height-sans-2 margin-bottom-1"
         >
-          {t('heading')}
+          {discussionsMiscT('heading')}
         </PageHeading>
 
         <div className="display-flex margin-bottom-4">
@@ -317,7 +319,7 @@ const Discussions = ({
               }
             }}
           >
-            {t('askAQuestionLink')}
+            {discussionsMiscT('askAQuestionLink')}
           </Button>
         </div>
 
@@ -326,7 +328,7 @@ const Discussions = ({
         {/* Render error if failed to fetch discussions */}
         {error ? (
           <Alert type="error" className="margin-bottom-4">
-            {t('errorFetch')}
+            {discussionsMiscT('errorFetch')}
           </Alert>
         ) : (
           renderDiscussionContent()

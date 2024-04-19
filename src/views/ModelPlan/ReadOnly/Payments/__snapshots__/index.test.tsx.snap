@@ -35,11 +35,15 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
         <div
           class="read-only-section read-only-section--what-will-be-the-funding-source-for-payments margin-bottom-3"
         >
-          <p
-            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+          <div
+            class="display-flex flex-align-center"
           >
-            What will be the funding source for payments?
-          </p>
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              What will be the funding source for payments?
+            </p>
+          </div>
           <ul
             class="margin-y-0 padding-left-3"
           >
@@ -63,11 +67,15 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
         <div
           class="read-only-section read-only-section--notes margin-bottom-3"
         >
-          <p
-            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+          <div
+            class="display-flex flex-align-center"
           >
-            Notes
-          </p>
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Notes
+            </p>
+          </div>
           <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
           >
@@ -86,11 +94,15 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
         <div
           class="read-only-section read-only-section--what-is-the-funding-source-for-reconciliation-or-other-expenditures margin-bottom-3"
         >
-          <p
-            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+          <div
+            class="display-flex flex-align-center"
           >
-            What is the funding source for reconciliation or other expenditures?
-          </p>
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              What is the funding source for reconciliation or other expenditures?
+            </p>
+          </div>
           <ul
             class="margin-y-0 padding-left-3"
           >
@@ -114,11 +126,15 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
         <div
           class="read-only-section read-only-section--notes margin-bottom-3"
         >
-          <p
-            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+          <div
+            class="display-flex flex-align-center"
           >
-            Notes
-          </p>
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Notes
+            </p>
+          </div>
           <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
           >
@@ -137,11 +153,15 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
         <div
           class="read-only-section read-only-section--who-will-you-pay margin-bottom-3"
         >
-          <p
-            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+          <div
+            class="display-flex flex-align-center"
           >
-            Who will you pay?
-          </p>
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Who will you pay?
+            </p>
+          </div>
           <ul
             class="margin-y-0 padding-left-3"
           >
@@ -165,11 +185,15 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
         <div
           class="read-only-section read-only-section--please-specify-who-you-will-pay margin-bottom-3"
         >
-          <p
-            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+          <div
+            class="display-flex flex-align-center"
           >
-            Please specify who you will pay.
-          </p>
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Please specify who you will pay.
+            </p>
+          </div>
           <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
           >
@@ -188,11 +212,15 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
         <div
           class="read-only-section read-only-section--notes margin-bottom-3"
         >
-          <p
-            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+          <div
+            class="display-flex flex-align-center"
           >
-            Notes
-          </p>
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Notes
+            </p>
+          </div>
           <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
           >
@@ -211,11 +239,15 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
         <div
           class="read-only-section read-only-section--what-will-you-pay margin-bottom-3"
         >
-          <p
-            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+          <div
+            class="display-flex flex-align-center"
           >
-            What will you pay?
-          </p>
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              What will you pay?
+            </p>
+          </div>
           <ul
             class="margin-y-0 padding-left-3"
           >
@@ -239,11 +271,15 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
         <div
           class="read-only-section read-only-section--notes margin-bottom-3"
         >
-          <p
-            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+          <div
+            class="display-flex flex-align-center"
           >
-            Notes
-          </p>
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Notes
+            </p>
+          </div>
           <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
           >
@@ -270,11 +306,15 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
           <div
             class="read-only-section read-only-section--select-which-claims-based-payments-will-you-pay margin-bottom-3"
           >
-            <p
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            <div
+              class="display-flex flex-align-center"
             >
-              Select which claims-based payments will you pay.
-            </p>
+              <p
+                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+              >
+                Select which claims-based payments will you pay.
+              </p>
+            </div>
             <ul
               class="margin-y-0 padding-left-3"
             >
@@ -301,11 +341,15 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
           <div
             class="read-only-section read-only-section--notes margin-bottom-3"
           >
-            <p
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            <div
+              class="display-flex flex-align-center"
             >
-              Notes
-            </p>
+              <p
+                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+              >
+                Notes
+              </p>
+            </div>
             <div
               class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
             >
@@ -324,11 +368,15 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
           <div
             class="read-only-section read-only-section--should-any-model-providers-be-excluded-from-existing-fee-for-service-payment-systems margin-bottom-3"
           >
-            <p
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            <div
+              class="display-flex flex-align-center"
             >
-              Should any model providers be excluded from existing Fee-for-Service payment systems?
-            </p>
+              <p
+                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+              >
+                Should any model providers be excluded from existing Fee-for-Service payment systems?
+              </p>
+            </div>
             <div
               class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
             >
@@ -347,11 +395,15 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
           <div
             class="read-only-section read-only-section--notes margin-bottom-3"
           >
-            <p
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            <div
+              class="display-flex flex-align-center"
             >
-              Notes
-            </p>
+              <p
+                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+              >
+                Notes
+              </p>
+            </div>
             <div
               class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
             >
@@ -370,11 +422,15 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
           <div
             class="read-only-section read-only-section--will-the-model-change-the-medicare-physician-fee-schedule margin-bottom-3"
           >
-            <p
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            <div
+              class="display-flex flex-align-center"
             >
-              Will the model change the Medicare Physician Fee Schedule?
-            </p>
+              <p
+                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+              >
+                Will the model change the Medicare Physician Fee Schedule?
+              </p>
+            </div>
             <div
               class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
             >
@@ -393,11 +449,15 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
           <div
             class="read-only-section read-only-section--notes margin-bottom-3"
           >
-            <p
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            <div
+              class="display-flex flex-align-center"
             >
-              Notes
-            </p>
+              <p
+                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+              >
+                Notes
+              </p>
+            </div>
             <div
               class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
             >
@@ -416,11 +476,15 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
           <div
             class="read-only-section read-only-section--does-the-model-affect-medicare-secondary-payer-claims--how-so margin-bottom-3"
           >
-            <p
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            <div
+              class="display-flex flex-align-center"
             >
-              Does the model affect Medicare Secondary Payer claims? How so?
-            </p>
+              <p
+                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+              >
+                Does the model affect Medicare Secondary Payer claims? How so?
+              </p>
+            </div>
             <div
               class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
             >
@@ -447,11 +511,15 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
           <div
             class="read-only-section read-only-section--notes margin-bottom-3"
           >
-            <p
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            <div
+              class="display-flex flex-align-center"
             >
-              Notes
-            </p>
+              <p
+                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+              >
+                Notes
+              </p>
+            </div>
             <div
               class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
             >
@@ -470,11 +538,15 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
           <div
             class="read-only-section read-only-section--how-does-the-model-differ-from-current-policy--especially-in-terms-of-payment-rates-and-periodicity-of-payment margin-bottom-3"
           >
-            <p
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            <div
+              class="display-flex flex-align-center"
             >
-              How does the model differ from current policy, especially in terms of payment rates and periodicity of payment?
-            </p>
+              <p
+                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+              >
+                How does the model differ from current policy, especially in terms of payment rates and periodicity of payment?
+              </p>
+            </div>
             <div
               class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
             >
@@ -493,11 +565,15 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
           <div
             class="read-only-section read-only-section--are-you-anticipating-creating-dependencies-between-services margin-bottom-3"
           >
-            <p
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            <div
+              class="display-flex flex-align-center"
             >
-              Are you anticipating creating dependencies between services?
-            </p>
+              <p
+                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+              >
+                Are you anticipating creating dependencies between services?
+              </p>
+            </div>
             <div
               class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
             >
@@ -516,11 +592,15 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
           <div
             class="read-only-section read-only-section--notes margin-bottom-3"
           >
-            <p
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            <div
+              class="display-flex flex-align-center"
             >
-              Notes
-            </p>
+              <p
+                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+              >
+                Notes
+              </p>
+            </div>
             <div
               class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
             >
@@ -539,11 +619,15 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
           <div
             class="read-only-section read-only-section--will-any-additional-data-need-to-be-collected-for-claims margin-bottom-3"
           >
-            <p
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            <div
+              class="display-flex flex-align-center"
             >
-              Will any additional data need to be collected for claims?
-            </p>
+              <p
+                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+              >
+                Will any additional data need to be collected for claims?
+              </p>
+            </div>
             <div
               class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
             >
@@ -562,11 +646,15 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
           <div
             class="read-only-section read-only-section--notes margin-bottom-3"
           >
-            <p
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            <div
+              class="display-flex flex-align-center"
             >
-              Notes
-            </p>
+              <p
+                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+              >
+                Notes
+              </p>
+            </div>
             <div
               class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
             >
@@ -585,11 +673,15 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
           <div
             class="read-only-section read-only-section--will-your-contractor-be-providing-data--a-third-party-file--that-will-be-used-in-claims-processing margin-bottom-3"
           >
-            <p
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            <div
+              class="display-flex flex-align-center"
             >
-              Will your contractor be providing data (a Third Party File) that will be used in claims processing?
-            </p>
+              <p
+                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+              >
+                Will your contractor be providing data (a Third Party File) that will be used in claims processing?
+              </p>
+            </div>
             <div
               class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
             >
@@ -608,11 +700,15 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
           <div
             class="read-only-section read-only-section--is-your-contractor-aware-that-test-data-will-be-needed--and-when-that-test-data-must-be-available margin-bottom-3"
           >
-            <p
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            <div
+              class="display-flex flex-align-center"
             >
-              Is your contractor aware that test data will be needed, and when that test data must be available?
-            </p>
+              <p
+                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+              >
+                Is your contractor aware that test data will be needed, and when that test data must be available?
+              </p>
+            </div>
             <div
               class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
             >
@@ -694,11 +790,15 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
           <div
             class="read-only-section read-only-section--notes margin-bottom-3"
           >
-            <p
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            <div
+              class="display-flex flex-align-center"
             >
-              Notes
-            </p>
+              <p
+                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+              >
+                Notes
+              </p>
+            </div>
             <div
               class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
             >
@@ -771,11 +871,15 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
           <div
             class="read-only-section read-only-section--notes margin-bottom-3"
           >
-            <p
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            <div
+              class="display-flex flex-align-center"
             >
-              Notes
-            </p>
+              <p
+                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+              >
+                Notes
+              </p>
+            </div>
             <div
               class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
             >
@@ -803,11 +907,15 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
           <div
             class="read-only-section read-only-section--notes margin-bottom-3"
           >
-            <p
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            <div
+              class="display-flex flex-align-center"
             >
-              Notes
-            </p>
+              <p
+                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+              >
+                Notes
+              </p>
+            </div>
             <div
               class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
             >
@@ -829,11 +937,15 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
           <div
             class="read-only-section read-only-section--notes margin-bottom-3"
           >
-            <p
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            <div
+              class="display-flex flex-align-center"
             >
-              Notes
-            </p>
+              <p
+                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+              >
+                Notes
+              </p>
+            </div>
             <div
               class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
             >
@@ -855,11 +967,15 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
           <div
             class="read-only-section read-only-section--notes margin-bottom-3"
           >
-            <p
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            <div
+              class="display-flex flex-align-center"
             >
-              Notes
-            </p>
+              <p
+                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+              >
+                Notes
+              </p>
+            </div>
             <div
               class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
             >
@@ -879,11 +995,15 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
         <div
           class="read-only-section read-only-section--what-level-of-complexity-do-you-expect-calculations-to-be margin-bottom-3"
         >
-          <p
-            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+          <div
+            class="display-flex flex-align-center"
           >
-            What level of complexity do you expect calculations to be?
-          </p>
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              What level of complexity do you expect calculations to be?
+            </p>
+          </div>
           <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
           >
@@ -902,11 +1022,15 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
         <div
           class="read-only-section read-only-section--notes margin-bottom-3"
         >
-          <p
-            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+          <div
+            class="display-flex flex-align-center"
           >
-            Notes
-          </p>
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Notes
+            </p>
+          </div>
           <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
           >
@@ -925,11 +1049,15 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
         <div
           class="read-only-section read-only-section--are-there-any-business-requirement-s--that-address-claims-processing-precedence-order-with-the-other-model-s---if-so--please-specify margin-bottom-3"
         >
-          <p
-            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+          <div
+            class="display-flex flex-align-center"
           >
-            Are there any business requirement(s) that address claims processing precedence order with the other model(s)? If so, please specify.
-          </p>
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Are there any business requirement(s) that address claims processing precedence order with the other model(s)? If so, please specify.
+            </p>
+          </div>
           <em
             class="text-base"
           >
@@ -951,11 +1079,15 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
         <div
           class="read-only-section read-only-section--notes margin-bottom-3"
         >
-          <p
-            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+          <div
+            class="display-flex flex-align-center"
           >
-            Notes
-          </p>
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Notes
+            </p>
+          </div>
           <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
           >
@@ -974,11 +1106,15 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
         <div
           class="read-only-section read-only-section--will-participants-be-allowed-to-select-between-multiple-payment-mechanisms--if-so--please-describe margin-bottom-3"
         >
-          <p
-            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+          <div
+            class="display-flex flex-align-center"
           >
-            Will participants be allowed to select between multiple payment mechanisms? If so, please describe.
-          </p>
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Will participants be allowed to select between multiple payment mechanisms? If so, please describe.
+            </p>
+          </div>
           <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
           >
@@ -1005,11 +1141,15 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
         <div
           class="read-only-section read-only-section--notes margin-bottom-3"
         >
-          <p
-            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+          <div
+            class="display-flex flex-align-center"
           >
-            Notes
-          </p>
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Notes
+            </p>
+          </div>
           <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
           >
@@ -1028,11 +1168,15 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
         <div
           class="read-only-section read-only-section--how-often-do-you-anticipate-making-payments margin-bottom-3"
         >
-          <p
-            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+          <div
+            class="display-flex flex-align-center"
           >
-            How often do you anticipate making payments?
-          </p>
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              How often do you anticipate making payments?
+            </p>
+          </div>
           <ul
             class="margin-y-0 padding-left-3"
           >
@@ -1056,11 +1200,15 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
         <div
           class="read-only-section read-only-section--notes margin-bottom-3"
         >
-          <p
-            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+          <div
+            class="display-flex flex-align-center"
           >
-            Notes
-          </p>
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Notes
+            </p>
+          </div>
           <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
           >
@@ -1079,11 +1227,15 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
         <div
           class="read-only-section read-only-section--will-you-recover-the-payments margin-bottom-3"
         >
-          <p
-            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+          <div
+            class="display-flex flex-align-center"
           >
-            Will you recover the payments?
-          </p>
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Will you recover the payments?
+            </p>
+          </div>
           <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
           >
@@ -1102,11 +1254,15 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
         <div
           class="read-only-section read-only-section--notes margin-bottom-3"
         >
-          <p
-            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+          <div
+            class="display-flex flex-align-center"
           >
-            Notes
-          </p>
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Notes
+            </p>
+          </div>
           <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
           >
@@ -1125,11 +1281,15 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
         <div
           class="read-only-section read-only-section--do-you-anticipate-reconciling-payments-retrospectively margin-bottom-3"
         >
-          <p
-            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+          <div
+            class="display-flex flex-align-center"
           >
-            Do you anticipate reconciling payments retrospectively?
-          </p>
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Do you anticipate reconciling payments retrospectively?
+            </p>
+          </div>
           <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
           >
@@ -1148,11 +1308,15 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
         <div
           class="read-only-section read-only-section--notes margin-bottom-3"
         >
-          <p
-            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+          <div
+            class="display-flex flex-align-center"
           >
-            Notes
-          </p>
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Notes
+            </p>
+          </div>
           <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
           >
@@ -1171,11 +1335,15 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
         <div
           class="read-only-section read-only-section--how-often-are-payments-reconciled margin-bottom-3"
         >
-          <p
-            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+          <div
+            class="display-flex flex-align-center"
           >
-            How often are payments reconciled?
-          </p>
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              How often are payments reconciled?
+            </p>
+          </div>
           <ul
             class="margin-y-0 padding-left-3"
           >
@@ -1205,11 +1373,15 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
         <div
           class="read-only-section read-only-section--notes margin-bottom-3"
         >
-          <p
-            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+          <div
+            class="display-flex flex-align-center"
           >
-            Notes
-          </p>
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Notes
+            </p>
+          </div>
           <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
           >
@@ -1228,11 +1400,15 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
         <div
           class="read-only-section read-only-section--how-frequently-do-you-anticipate-making-demands-recoupments margin-bottom-3"
         >
-          <p
-            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+          <div
+            class="display-flex flex-align-center"
           >
-            How frequently do you anticipate making demands/recoupments?
-          </p>
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              How frequently do you anticipate making demands/recoupments?
+            </p>
+          </div>
           <ul
             class="margin-y-0 padding-left-3"
           >
@@ -1262,11 +1438,15 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
         <div
           class="read-only-section read-only-section--notes margin-bottom-3"
         >
-          <p
-            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+          <div
+            class="display-flex flex-align-center"
           >
-            Notes
-          </p>
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Notes
+            </p>
+          </div>
           <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
           >
@@ -1285,15 +1465,19 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
         <div
           class="read-only-section read-only-section--when-will-payments-start margin-bottom-3"
         >
-          <p
-            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+          <div
+            class="display-flex flex-align-center"
           >
-            When will payments start?
-          </p>
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              When will payments start?
+            </p>
+          </div>
           <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
           >
-            2022-06-03T19:32:24.412662Z
+            06/03/2022
           </div>
         </div>
       </div>
@@ -1308,11 +1492,15 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
         <div
           class="read-only-section read-only-section--notes margin-bottom-3"
         >
-          <p
-            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+          <div
+            class="display-flex flex-align-center"
           >
-            Notes
-          </p>
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Notes
+            </p>
+          </div>
           <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
           >
