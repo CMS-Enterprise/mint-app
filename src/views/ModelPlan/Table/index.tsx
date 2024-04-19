@@ -301,7 +301,7 @@ const ModelPlansTable = ({
                 <div className="display-flex flex-align-center text-bold">
                   <Icon.Comment className="text-primary margin-right-05" />{' '}
                   {discussions.length}{' '}
-                  {i18next.t('discussions:discussionBanner.discussion', {
+                  {i18next.t('discussionsMisc:discussionBanner.discussion', {
                     count: discussions.length
                   })}
                 </div>
