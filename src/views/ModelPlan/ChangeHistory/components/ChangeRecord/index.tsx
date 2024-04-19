@@ -59,7 +59,7 @@ const ChangeRecord = ({ changeRecord }: ChangeRecordProps) => {
       >
         <div className="margin-bottom-neg-1">
           {changeRecord.translatedFields.map(change => (
-            <div className="margin-bottom-2 margin-top-neg-1">
+            <div className="margin-bottom-2 margin-top-neg-1" key={change.id}>
               <div className="display-flex">
                 <span className="text-bold margin-right-05">
                   {change.fieldNameTranslated}

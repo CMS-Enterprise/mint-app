@@ -8,6 +8,7 @@ import { useTranslatedAuditCollectionQuery } from 'gql/gen/graphql';
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
+import PageLoading from 'components/PageLoading';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import { ModelInfoContext } from 'views/ModelInfoWrapper';
 
@@ -72,9 +73,15 @@ const ChangeHistory = () => {
       </SummaryBox>
 
       <GridContainer className="padding-y-4">
-        {changesSortedByDate.map(changeRecord => (
-          <ChangeRecord changeRecord={changeRecord} key={changeRecord.id} />
-        ))}
+        {loading ? (
+          <PageLoading />
+        ) : (
+          <>
+            {changesSortedByDate.map(changeRecord => (
+              <ChangeRecord changeRecord={changeRecord} key={changeRecord.id} />
+            ))}
+          </>
+        )}
       </GridContainer>
     </MainContent>
   );
