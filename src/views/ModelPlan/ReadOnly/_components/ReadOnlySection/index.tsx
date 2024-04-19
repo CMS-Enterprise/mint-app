@@ -463,7 +463,10 @@ export const RelatedUnneededQuestions = <
       >
         <ul className="margin-y-0">
           {relatedConditions.map(question => (
-            <li key={question} className="text-bold margin-bottom-1">
+            <li
+              key={question}
+              className="text-bold margin-bottom-1 line-height-sans-4"
+            >
               {question}
             </li>
           ))}
