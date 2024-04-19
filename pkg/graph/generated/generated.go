@@ -10960,7 +10960,7 @@ type PossibleOperationalSolutionContact {
   email: String!
   isTeam: Boolean!
   role: String
-  isPrimary: Boolean
+  isPrimary: Boolean!
 
 
   createdBy: UUID!
@@ -53541,11 +53541,14 @@ func (ec *executionContext) _PossibleOperationalSolutionContact_isPrimary(ctx co
 		return graphql.Null
 	}
 	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
 		return graphql.Null
 	}
-	res := resTmp.(*bool)
+	res := resTmp.(bool)
 	fc.Result = res
-	return ec.marshalOBoolean2ᚖbool(ctx, field.Selections, res)
+	return ec.marshalNBoolean2bool(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PossibleOperationalSolutionContact_isPrimary(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -72675,6 +72678,9 @@ func (ec *executionContext) _PossibleOperationalSolutionContact(ctx context.Cont
 			out.Values[i] = ec._PossibleOperationalSolutionContact_role(ctx, field, obj)
 		case "isPrimary":
 			out.Values[i] = ec._PossibleOperationalSolutionContact_isPrimary(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
 		case "createdBy":
 			out.Values[i] = ec._PossibleOperationalSolutionContact_createdBy(ctx, field, obj)
 			if out.Values[i] == graphql.Null {

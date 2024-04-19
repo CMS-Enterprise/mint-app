@@ -1,5 +1,5 @@
 ALTER TABLE possible_operational_solution_contact
-  ADD COLUMN is_primary BOOLEAN DEFAULT NULL;
+  ADD COLUMN is_primary BOOLEAN NOT NULL DEFAULT FALSE;
 
 WITH PrimaryContacts AS (
   SELECT poc.id AS contact_id
@@ -49,6 +49,31 @@ SET is_primary = TRUE,
 FROM PrimaryContacts
 WHERE possible_operational_solution_contact.id = PrimaryContacts.contact_id;
 
+
+-- Partial Unique Index ensuring only one contact is set at a time
 CREATE UNIQUE INDEX idx_unique_primary_contact_per_solution
   ON possible_operational_solution_contact (possible_operational_solution_id)
   WHERE is_primary = TRUE;
+
+
+-- Trigger Constraint ensuring a primary contact is always set for possible operational solutions
+CREATE OR REPLACE FUNCTION ensure_primary_contact()
+  RETURNS TRIGGER AS $$
+BEGIN
+  -- Check if there is at least one primary contact for the solution
+  IF NOT EXISTS (
+    SELECT 1
+    FROM possible_operational_solution_contact
+    WHERE possible_operational_solution_id = OLD.possible_operational_solution_id
+      AND is_primary = TRUE
+  ) THEN
+    RAISE EXCEPTION 'At least one primary contact must be assigned for each operational solution.';
+  END IF;
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER trg_ensure_primary_contact
+  AFTER UPDATE OR DELETE ON possible_operational_solution_contact
+  FOR EACH ROW
+EXECUTE FUNCTION ensure_primary_contact();
