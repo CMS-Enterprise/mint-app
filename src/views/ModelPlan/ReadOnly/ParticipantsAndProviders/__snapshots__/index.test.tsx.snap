@@ -12,7 +12,7 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
       <h2
         class="margin-top-0 margin-bottom-4"
       >
-        Participants and Providers
+        Participants and providers
       </h2>
       <div>
         <div
@@ -35,11 +35,15 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
         <div
           class="read-only-section read-only-section--who-are-the-participants margin-bottom-3"
         >
-          <p
-            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+          <div
+            class="display-flex flex-align-center"
           >
-            Who are the participants?
-          </p>
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Who are the participants?
+            </p>
+          </div>
           <ul
             class="margin-y-0 padding-left-3"
           >
@@ -102,11 +106,15 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
         <div
           class="read-only-section read-only-section--notes margin-bottom-3"
         >
-          <p
-            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+          <div
+            class="display-flex flex-align-center"
           >
-            Notes
-          </p>
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Notes
+            </p>
+          </div>
           <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
           >
@@ -125,11 +133,15 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
         <div
           class="read-only-section read-only-section--are-the-participants-in-cmmi-models-now margin-bottom-3"
         >
-          <p
-            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+          <div
+            class="display-flex flex-align-center"
           >
-            Are the participants in CMMI models now?
-          </p>
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Are the participants in CMMI models now?
+            </p>
+          </div>
           <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
           >
@@ -148,11 +160,15 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
         <div
           class="read-only-section read-only-section--notes margin-bottom-3"
         >
-          <p
-            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+          <div
+            class="display-flex flex-align-center"
           >
-            Notes
-          </p>
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Notes
+            </p>
+          </div>
           <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
           >
@@ -171,11 +187,15 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
         <div
           class="read-only-section read-only-section--at-what-level-will-the-model-apply margin-bottom-3"
         >
-          <p
-            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+          <div
+            class="display-flex flex-align-center"
           >
-            At what level will the model apply?
-          </p>
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              At what level will the model apply?
+            </p>
+          </div>
           <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
           >
@@ -202,11 +222,15 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
             <div
               class="read-only-section read-only-section--how-many-participants-do-you-expect margin-bottom-3"
             >
-              <p
-                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+              <div
+                class="display-flex flex-align-center"
               >
-                How many participants do you expect?
-              </p>
+                <p
+                  class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                >
+                  How many participants do you expect?
+                </p>
+              </div>
               <div
                 class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
               >
@@ -226,11 +250,15 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
             <div
               class="read-only-section read-only-section--what-is-your-level-of-confidence-on-this-estimate margin-bottom-3"
             >
-              <p
-                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+              <div
+                class="display-flex flex-align-center"
               >
-                What is your level of confidence on this estimate?
-              </p>
+                <p
+                  class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                >
+                  What is your level of confidence on this estimate?
+                </p>
+              </div>
               <div
                 class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
               >
@@ -254,11 +282,15 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
         <div
           class="read-only-section read-only-section--notes margin-bottom-3"
         >
-          <p
-            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+          <div
+            class="display-flex flex-align-center"
           >
-            Notes
-          </p>
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Notes
+            </p>
+          </div>
           <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
           >
@@ -277,11 +309,15 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
         <div
           class="read-only-section read-only-section--how-will-you-recruit-the-participants margin-bottom-3"
         >
-          <p
-            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+          <div
+            class="display-flex flex-align-center"
           >
-            How will you recruit the participants?
-          </p>
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              How will you recruit the participants?
+            </p>
+          </div>
           <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
           >
@@ -303,11 +339,15 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
         <div
           class="read-only-section read-only-section--notes margin-bottom-3"
         >
-          <p
-            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+          <div
+            class="display-flex flex-align-center"
           >
-            Notes
-          </p>
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Notes
+            </p>
+          </div>
           <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
           >
@@ -326,11 +366,15 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
         <div
           class="read-only-section read-only-section--how-will-you-select-participants margin-bottom-3"
         >
-          <p
-            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+          <div
+            class="display-flex flex-align-center"
           >
-            How will you select participants?
-          </p>
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              How will you select participants?
+            </p>
+          </div>
           <ul
             class="margin-y-0 padding-left-3"
           >
@@ -363,11 +407,15 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
         <div
           class="read-only-section read-only-section--notes margin-bottom-3"
         >
-          <p
-            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+          <div
+            class="display-flex flex-align-center"
           >
-            Notes
-          </p>
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Notes
+            </p>
+          </div>
           <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
           >
@@ -386,11 +434,15 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
         <div
           class="read-only-section read-only-section--how-frequently-are-participants-added margin-bottom-3"
         >
-          <p
-            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+          <div
+            class="display-flex flex-align-center"
           >
-            How frequently are participants added?
-          </p>
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              How frequently are participants added?
+            </p>
+          </div>
           <ul
             class="margin-y-0 padding-left-3"
           >
@@ -426,11 +478,15 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
         <div
           class="read-only-section read-only-section--notes margin-bottom-3"
         >
-          <p
-            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+          <div
+            class="display-flex flex-align-center"
           >
-            Notes
-          </p>
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Notes
+            </p>
+          </div>
           <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
           >
@@ -449,11 +505,15 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
         <div
           class="read-only-section read-only-section--how-frequently-are-participants-removed margin-bottom-3"
         >
-          <p
-            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+          <div
+            class="display-flex flex-align-center"
           >
-            How frequently are participants removed?
-          </p>
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              How frequently are participants removed?
+            </p>
+          </div>
           <ul
             class="margin-y-0 padding-left-3"
           >
@@ -489,11 +549,15 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
         <div
           class="read-only-section read-only-section--notes margin-bottom-3"
         >
-          <p
-            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+          <div
+            class="display-flex flex-align-center"
           >
-            Notes
-          </p>
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Notes
+            </p>
+          </div>
           <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
           >
@@ -512,11 +576,15 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
         <div
           class="read-only-section read-only-section--how-will-you-communicate-with-participants margin-bottom-3"
         >
-          <p
-            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+          <div
+            class="display-flex flex-align-center"
           >
-            How will you communicate with participants?
-          </p>
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              How will you communicate with participants?
+            </p>
+          </div>
           <ul
             class="margin-y-0 padding-left-3"
           >
@@ -549,11 +617,15 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
         <div
           class="read-only-section read-only-section--notes margin-bottom-3"
         >
-          <p
-            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+          <div
+            class="display-flex flex-align-center"
           >
-            Notes
-          </p>
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Notes
+            </p>
+          </div>
           <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
           >
@@ -572,11 +644,15 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
         <div
           class="read-only-section read-only-section--what-type-of-risk-will-the-participant-assume margin-bottom-3"
         >
-          <p
-            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+          <div
+            class="display-flex flex-align-center"
           >
-            What type of risk will the participant assume?
-          </p>
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              What type of risk will the participant assume?
+            </p>
+          </div>
           <ul
             class="margin-y-0 padding-left-3"
           >
@@ -603,11 +679,15 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
         <div
           class="read-only-section read-only-section--notes margin-bottom-3"
         >
-          <p
-            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+          <div
+            class="display-flex flex-align-center"
           >
-            Notes
-          </p>
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Notes
+            </p>
+          </div>
           <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
           >
@@ -626,11 +706,15 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
         <div
           class="read-only-section read-only-section--will-the-risk-arrangement-change-as-the-model-progresses margin-bottom-3"
         >
-          <p
-            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+          <div
+            class="display-flex flex-align-center"
           >
-            Will the risk arrangement change as the model progresses?
-          </p>
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Will the risk arrangement change as the model progresses?
+            </p>
+          </div>
           <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
           >
@@ -649,11 +733,15 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
         <div
           class="read-only-section read-only-section--notes margin-bottom-3"
         >
-          <p
-            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+          <div
+            class="display-flex flex-align-center"
           >
-            Notes
-          </p>
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Notes
+            </p>
+          </div>
           <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
           >
@@ -670,13 +758,136 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
         data-testid="grid"
       >
         <div
+          class="read-only-section read-only-section--are-participants-required-to-retain-a-financial-guarantee--if-so--are-there-any-limitations-on-the-type margin-bottom-3"
+        >
+          <div
+            class="display-flex flex-align-center"
+          >
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Are participants required to retain a financial guarantee? If so, are there any limitations on the type?
+            </p>
+            <span
+              class="usa-tooltip"
+              data-testid="tooltipWrapper"
+            >
+              <div
+                aria-describedby="tooltip-550000"
+                class="usa-tooltip__trigger mint-no-print margin-left-1"
+                data-testid="triggerElement"
+                position="right"
+                tabindex="0"
+                title=""
+              >
+                <svg
+                  class="usa-icon text-base-light"
+                  focusable="false"
+                  height="1em"
+                  role="img"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
+                  />
+                </svg>
+              </div>
+              <span
+                aria-hidden="true"
+                class="usa-tooltip__body"
+                data-testid="tooltipBody"
+                id="tooltip-550000"
+                role="tooltip"
+                title="Financial guarantees are commitments made by one party, typically a financial institution or a company, to assume responsibility for the payment of a debt or the performance of an obligation if the debtor or obligor fails to fulfill their obligations."
+              >
+                Financial guarantees are commitments made by one party, typically a financial institution or a company, to assume responsibility for the payment of a debt or the performance of an obligation if the debtor or obligor fails to fulfill their obligations.
+              </span>
+            </span>
+          </div>
+          <div
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+          >
+            Yes
+            <ul
+              class="margin-y-0 padding-left-3"
+            >
+              <li
+                class="font-sans-md line-height-sans-4"
+              >
+                Escrow
+              </li>
+              <ul />
+              <li
+                class="font-sans-md line-height-sans-4"
+              >
+                Other
+              </li>
+              <ul>
+                <li
+                  class="font-sans-md line-height-sans-4"
+                >
+                  Other Type
+                </li>
+              </ul>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class=""
+    />
+    <div
+      class=""
+    />
+    <div
+      class=""
+    >
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--notes margin-bottom-3"
+        >
+          <div
+            class="display-flex flex-align-center"
+          >
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Notes
+            </p>
+          </div>
+          <div
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+          >
+            Notes
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class=""
+    >
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
           class="read-only-section read-only-section--will-the-participants-coordinate-the-work-of-others margin-bottom-3"
         >
-          <p
-            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+          <div
+            class="display-flex flex-align-center"
           >
-            Will the participants coordinate the work of others?
-          </p>
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Will the participants coordinate the work of others?
+            </p>
+          </div>
           <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
           >
@@ -695,11 +906,15 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
         <div
           class="read-only-section read-only-section--notes margin-bottom-3"
         >
-          <p
-            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+          <div
+            class="display-flex flex-align-center"
           >
-            Notes
-          </p>
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Notes
+            </p>
+          </div>
           <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
           >
@@ -726,11 +941,15 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
             <div
               class="read-only-section read-only-section--will-there-be-gainsharing-payments margin-bottom-3"
             >
-              <p
-                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+              <div
+                class="display-flex flex-align-center"
               >
-                Will there be gainsharing payments?
-              </p>
+                <p
+                  class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                >
+                  Will there be gainsharing payments?
+                </p>
+              </div>
               <div
                 class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
               >
@@ -750,11 +969,15 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
             <div
               class="read-only-section read-only-section--will-you-track-gainsharing-payments margin-bottom-3"
             >
-              <p
-                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+              <div
+                class="display-flex flex-align-center"
               >
-                Will you track gainsharing payments?
-              </p>
+                <p
+                  class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                >
+                  Will you track gainsharing payments?
+                </p>
+              </div>
               <div
                 class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
               >
@@ -778,11 +1001,15 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
         <div
           class="read-only-section read-only-section--are-providers-eligible-to-participate-in-gainsharing-arrangements margin-bottom-3"
         >
-          <p
-            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+          <div
+            class="display-flex flex-align-center"
           >
-            Are providers eligible to participate in gainsharing arrangements?
-          </p>
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Are providers eligible to participate in gainsharing arrangements?
+            </p>
+          </div>
           <ul
             class="margin-y-0 padding-left-3"
           >
@@ -815,11 +1042,15 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
         <div
           class="read-only-section read-only-section--notes margin-bottom-3"
         >
-          <p
-            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+          <div
+            class="display-flex flex-align-center"
           >
-            Notes
-          </p>
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Notes
+            </p>
+          </div>
           <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
           >
@@ -838,11 +1069,15 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
         <div
           class="read-only-section read-only-section--will-you-collect-participant-ids margin-bottom-3"
         >
-          <p
-            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+          <div
+            class="display-flex flex-align-center"
           >
-            Will you collect participant IDs?
-          </p>
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Will you collect participant IDs?
+            </p>
+          </div>
           <ul
             class="margin-y-0 padding-left-3"
           >
@@ -869,11 +1104,15 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
         <div
           class="read-only-section read-only-section--notes margin-bottom-3"
         >
-          <p
-            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+          <div
+            class="display-flex flex-align-center"
           >
-            Notes
-          </p>
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Notes
+            </p>
+          </div>
           <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
           >
@@ -892,11 +1131,15 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
         <div
           class="read-only-section read-only-section--how-frequently-are-providers-added margin-bottom-3"
         >
-          <p
-            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+          <div
+            class="display-flex flex-align-center"
           >
-            How frequently are providers added?
-          </p>
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              How frequently are providers added?
+            </p>
+          </div>
           <ul
             class="margin-y-0 padding-left-3"
           >
@@ -932,11 +1175,15 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
         <div
           class="read-only-section read-only-section--notes margin-bottom-3"
         >
-          <p
-            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+          <div
+            class="display-flex flex-align-center"
           >
-            Notes
-          </p>
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Notes
+            </p>
+          </div>
           <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
           >
@@ -955,11 +1202,15 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
         <div
           class="read-only-section read-only-section--how-will-you-decide-to-add-providers margin-bottom-3"
         >
-          <p
-            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+          <div
+            class="display-flex flex-align-center"
           >
-            How will you decide to add providers?
-          </p>
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              How will you decide to add providers?
+            </p>
+          </div>
           <ul
             class="margin-y-0 padding-left-3"
           >
@@ -986,11 +1237,15 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
         <div
           class="read-only-section read-only-section--notes margin-bottom-3"
         >
-          <p
-            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+          <div
+            class="display-flex flex-align-center"
           >
-            Notes
-          </p>
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Notes
+            </p>
+          </div>
           <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
           >
@@ -1009,11 +1264,15 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
         <div
           class="read-only-section read-only-section--can-providers-leave-the-model margin-bottom-3"
         >
-          <p
-            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+          <div
+            class="display-flex flex-align-center"
           >
-            Can providers leave the model?
-          </p>
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Can providers leave the model?
+            </p>
+          </div>
           <ul
             class="margin-y-0 padding-left-3"
           >
@@ -1040,11 +1299,15 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
         <div
           class="read-only-section read-only-section--notes margin-bottom-3"
         >
-          <p
-            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+          <div
+            class="display-flex flex-align-center"
           >
-            Notes
-          </p>
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Notes
+            </p>
+          </div>
           <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
           >
@@ -1063,11 +1326,15 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
         <div
           class="read-only-section read-only-section--how-frequently-are-providers-removed margin-bottom-3"
         >
-          <p
-            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+          <div
+            class="display-flex flex-align-center"
           >
-            How frequently are providers removed?
-          </p>
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              How frequently are providers removed?
+            </p>
+          </div>
           <ul
             class="margin-y-0 padding-left-3"
           >
@@ -1103,11 +1370,15 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
         <div
           class="read-only-section read-only-section--notes margin-bottom-3"
         >
-          <p
-            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+          <div
+            class="display-flex flex-align-center"
           >
-            Notes
-          </p>
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Notes
+            </p>
+          </div>
           <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
           >
@@ -1126,11 +1397,15 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
         <div
           class="read-only-section read-only-section--will-the-providers-overlap-with-other-models margin-bottom-3"
         >
-          <p
-            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+          <div
+            class="display-flex flex-align-center"
           >
-            Will the providers overlap with other models?
-          </p>
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Will the providers overlap with other models?
+            </p>
+          </div>
           <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
           >
@@ -1194,11 +1469,15 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
         <div
           class="read-only-section read-only-section--notes margin-bottom-3"
         >
-          <p
-            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+          <div
+            class="display-flex flex-align-center"
           >
-            Notes
-          </p>
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Notes
+            </p>
+          </div>
           <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
           >

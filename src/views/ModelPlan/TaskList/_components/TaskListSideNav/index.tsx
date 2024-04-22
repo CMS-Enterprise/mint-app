@@ -12,7 +12,7 @@ import UswdsReactLink from 'components/LinkWrapper';
 import Modal from 'components/Modal';
 import PageHeading from 'components/PageHeading';
 import Alert from 'components/shared/Alert';
-import IconInitial from 'components/shared/IconInitial';
+import { Avatar } from 'components/shared/Avatar';
 import ShareExportModal from 'components/ShareExport';
 import useMessage from 'hooks/useMessage';
 import { collaboratorsOrderedByModelLeads } from 'utils/modelPlan';
@@ -199,15 +199,15 @@ const TaskListSideNav = ({
           <div className="sidenav-actions__teamList">
             <ul className="usa-list usa-list--unstyled">
               {collaboratorsOrderedByModelLeads(collaborators).map(
-                (collaborator, index) => {
+                collaborator => {
                   return (
-                    <IconInitial
-                      className="margin-bottom-1"
-                      key={collaborator.userAccount.username}
-                      user={collaborator.userAccount.commonName}
-                      index={index}
-                      teamRoles={collaborator.teamRoles}
-                    />
+                    <li key={collaborator.userAccount.username}>
+                      <Avatar
+                        className="margin-bottom-1"
+                        user={collaborator.userAccount.commonName}
+                        teamRoles={collaborator.teamRoles}
+                      />
+                    </li>
                   );
                 }
               )}

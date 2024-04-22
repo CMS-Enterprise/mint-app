@@ -247,7 +247,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     gqlField: 'selectionMethod',
     goField: 'SelectionMethod',
     dbField: 'selection_method',
-    label: 'How will you select participants? Select all that appy.',
+    label: 'How will you select participants? Select all that apply.',
     readonlyLabel: 'How will you select participants?',
     multiSelectLabel: 'Selected participants',
     dataType: 'enum',
@@ -487,6 +487,67 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     dataType: 'string',
     formType: 'textarea'
   },
+  participantRequireFinancialGuarantee: {
+    gqlField: 'participantRequireFinancialGuarantee',
+    goField: 'ParticipantRequireFinancialGuarantee',
+    dbField: 'participant_require_financial_guarantee',
+    label: 'Are participants required to retain a financial guarantee?',
+    sublabel:
+      'Note: Remember to include financial guarantee requirements when drafting your Participation Agreement.',
+    questionTooltip:
+      'Financial guarantees are commitments made by one party, typically a financial institution or a company, to assume responsibility for the payment of a debt or the performance of an obligation if the debtor or obligor fails to fulfill their obligations.',
+    readonlyLabel:
+      'Are participants required to retain a financial guarantee? If so, are there any limitations on the type?',
+    dataType: 'boolean',
+    formType: 'radio',
+    isPageStart: true,
+    options: {
+      true: 'Yes',
+      false: 'No'
+    },
+    optionsRelatedInfo: {
+      true: 'participantRequireFinancialGuaranteeType'
+    },
+    filterGroups: [ModelViewFilter.IPC]
+  },
+  participantRequireFinancialGuaranteeType: {
+    gqlField: 'participantRequireFinancialGuaranteeType',
+    goField: 'ParticipantRequireFinancialGuaranteeType',
+    dbField: 'participant_require_financial_guarantee_type',
+    label: 'If so, are there any limitations on the type?',
+    dataType: 'enum',
+    formType: 'checkbox',
+    options: {
+      SURETY_BOND: 'Surety Bond',
+      LETTER_OF_CREDIT: 'Letter of Credit',
+      ESCROW: 'Escrow',
+      OTHER: 'Other'
+    },
+    optionsRelatedInfo: {
+      OTHER: 'participantRequireFinancialGuaranteeOther'
+    },
+    isOtherType: true,
+    filterGroups: [ModelViewFilter.IPC]
+  },
+  participantRequireFinancialGuaranteeOther: {
+    gqlField: 'participantRequireFinancialGuaranteeOther',
+    goField: 'ParticipantRequireFinancialGuaranteeOther',
+    dbField: 'participant_require_financial_guarantee_other',
+    label: 'Please specify',
+    dataType: 'string',
+    formType: 'text',
+    isOtherType: true,
+    filterGroups: [ModelViewFilter.IPC]
+  },
+  participantRequireFinancialGuaranteeNote: {
+    gqlField: 'participantRequireFinancialGuaranteeNote',
+    goField: 'ParticipantRequireFinancialGuaranteeNote',
+    dbField: 'participant_require_financial_guarantee_note',
+    label: 'Notes',
+    dataType: 'string',
+    formType: 'textarea',
+    filterGroups: [ModelViewFilter.IPC]
+  },
   coordinateWork: {
     gqlField: 'coordinateWork',
     goField: 'CoordinateWork',
@@ -498,8 +559,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     options: {
       true: 'Yes',
       false: 'No'
-    },
-    isPageStart: true
+    }
   },
   coordinateWorkNote: {
     gqlField: 'coordinateWorkNote',
@@ -864,7 +924,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
 };
 
 export const participantsAndProvidersMisc: Record<string, string> = {
-  heading: 'Participants and Providers',
+  heading: 'Participants and providers',
   clearanceHeading: 'Review participants and providers',
   breadcrumb: 'Participants and providers',
   participantsDifferenceHeading:

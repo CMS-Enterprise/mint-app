@@ -8,10 +8,10 @@ import {
   waitFor,
   waitForElementToBeRemoved
 } from '@testing-library/react';
+import { GetClearanceStatusesDocument } from 'gql/gen/graphql';
 import Sinon from 'sinon';
 
 import { benficiaryMocks } from 'data/mock/readonly';
-import GetClearanceStatuses from 'queries/PrepareForClearance/GetClearanceStatuses';
 import {
   PrepareForClearanceStatus,
   TaskStatus
@@ -33,7 +33,7 @@ clearanceMockData.beneficiaries.id = beneficiaryID;
 const clearanceMock = [
   {
     request: {
-      query: GetClearanceStatuses,
+      query: GetClearanceStatusesDocument,
       variables: { id: modelID }
     },
     result: {

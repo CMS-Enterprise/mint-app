@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { ParticipantsType, ConfidenceType, RecruitmentType, ParticipantSelectionType, FrequencyType, ParticipantCommunicationType, ParticipantRiskType, GainshareArrangementEligibility, ParticipantsIDType, ProviderAddType, ProviderLeaveType, OverlapType, TaskStatus } from "./../../../types/graphql-global-types";
+import { ParticipantsType, ConfidenceType, RecruitmentType, ParticipantSelectionType, FrequencyType, ParticipantCommunicationType, ParticipantRiskType, ParticipantRequireFinancialGuaranteeType, GainshareArrangementEligibility, ParticipantsIDType, ProviderAddType, ProviderLeaveType, OverlapType, TaskStatus } from "./../../../types/graphql-global-types";
 
 // ====================================================
 // GraphQL query operation: GetAllParticipantsAndProviders
@@ -45,6 +45,10 @@ export interface GetAllParticipantsAndProviders_modelPlan_participantsAndProvide
   riskNote: string | null;
   willRiskChange: boolean | null;
   willRiskChangeNote: string | null;
+  participantRequireFinancialGuarantee: boolean | null;
+  participantRequireFinancialGuaranteeType: ParticipantRequireFinancialGuaranteeType[];
+  participantRequireFinancialGuaranteeOther: string | null;
+  participantRequireFinancialGuaranteeNote: string | null;
   coordinateWork: boolean | null;
   coordinateWorkNote: string | null;
   gainsharePayments: boolean | null;

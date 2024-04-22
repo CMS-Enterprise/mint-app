@@ -14,7 +14,7 @@ const ReadOnlyDocuments = ({
   modelID: string;
   isHelpArticle?: boolean;
 }) => {
-  const { t } = useTranslation('documents');
+  const { t } = useTranslation('documentsMisc');
 
   const [documentMessage, setDocumentMessage] = useState('');
   const [documentStatus, setDocumentStatus] = useState<DocumentStatusType>(

@@ -1332,6 +1332,51 @@ func (e ParticipantCommunicationType) MarshalGQL(w io.Writer) {
 	fmt.Fprint(w, strconv.Quote(e.String()))
 }
 
+type ParticipantRequireFinancialGuaranteeType string
+
+const (
+	ParticipantRequireFinancialGuaranteeTypeSuretyBond     ParticipantRequireFinancialGuaranteeType = "SURETY_BOND"
+	ParticipantRequireFinancialGuaranteeTypeLetterOfCredit ParticipantRequireFinancialGuaranteeType = "LETTER_OF_CREDIT"
+	ParticipantRequireFinancialGuaranteeTypeEscrow         ParticipantRequireFinancialGuaranteeType = "ESCROW"
+	ParticipantRequireFinancialGuaranteeTypeOther          ParticipantRequireFinancialGuaranteeType = "OTHER"
+)
+
+var AllParticipantRequireFinancialGuaranteeType = []ParticipantRequireFinancialGuaranteeType{
+	ParticipantRequireFinancialGuaranteeTypeSuretyBond,
+	ParticipantRequireFinancialGuaranteeTypeLetterOfCredit,
+	ParticipantRequireFinancialGuaranteeTypeEscrow,
+	ParticipantRequireFinancialGuaranteeTypeOther,
+}
+
+func (e ParticipantRequireFinancialGuaranteeType) IsValid() bool {
+	switch e {
+	case ParticipantRequireFinancialGuaranteeTypeSuretyBond, ParticipantRequireFinancialGuaranteeTypeLetterOfCredit, ParticipantRequireFinancialGuaranteeTypeEscrow, ParticipantRequireFinancialGuaranteeTypeOther:
+		return true
+	}
+	return false
+}
+
+func (e ParticipantRequireFinancialGuaranteeType) String() string {
+	return string(e)
+}
+
+func (e *ParticipantRequireFinancialGuaranteeType) UnmarshalGQL(v interface{}) error {
+	str, ok := v.(string)
+	if !ok {
+		return fmt.Errorf("enums must be strings")
+	}
+
+	*e = ParticipantRequireFinancialGuaranteeType(str)
+	if !e.IsValid() {
+		return fmt.Errorf("%s is not a valid ParticipantRequireFinancialGuaranteeType", str)
+	}
+	return nil
+}
+
+func (e ParticipantRequireFinancialGuaranteeType) MarshalGQL(w io.Writer) {
+	fmt.Fprint(w, strconv.Quote(e.String()))
+}
+
 type ParticipantSelectionType string
 
 const (

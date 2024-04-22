@@ -9,7 +9,7 @@ import (
 type UserNotification struct {
 	baseStruct
 	// The id of the user this notification is for
-	UserID uuid.UUID `json:"userID" db:"user_id"`
+	userIDRelation
 	// The if of the entity this notification is about
 	ActivityID uuid.UUID `json:"activityID" db:"activity_id"`
 	IsRead     bool      `json:"isRead" db:"is_read"`
@@ -27,11 +27,12 @@ func NewUserNotification(
 	emailNotification bool,
 ) *UserNotification {
 	return &UserNotification{
-		baseStruct: NewBaseStruct(userID),
-		ActivityID: activityID,
-		IsRead:     !inAppNotification, // set to read if user doesn't want notifications
-		InAppSent:  inAppNotification,  // set to archived if user doesn't want notifications
-		EmailSent:  emailNotification,  // set that an email should be sent for this
+		baseStruct:     NewBaseStruct(userID),
+		userIDRelation: NewUserIDRelation(userID),
+		ActivityID:     activityID,
+		IsRead:         !inAppNotification, // set to read if user doesn't want notifications
+		InAppSent:      inAppNotification,  // set to archived if user doesn't want notifications
+		EmailSent:      emailNotification,  // set that an email should be sent for this
 	}
 }
 

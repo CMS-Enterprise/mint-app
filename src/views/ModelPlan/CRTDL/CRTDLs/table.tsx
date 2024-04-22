@@ -59,7 +59,7 @@ const CRTDLTable = ({
   setCRTDLStatus,
   isHelpArticle
 }: CRTDLTableProps) => {
-  const { t } = useTranslation('crtdl');
+  const { t } = useTranslation('crtdlsMisc');
   const { error, loading, data, refetch: refetchCRTDLs } = useGetCrtdLsQuery({
     variables: {
       id: modelID
@@ -157,7 +157,7 @@ const Table = ({
   readOnly,
   hasEditAccess
 }: TableProps) => {
-  const { t } = useTranslation('crtdl');
+  const { t } = useTranslation('crtdlsMisc');
   const [isModalOpen, setModalOpen] = useState(false);
   const [crtdlToRemove, setCRTDLToRemove] = useState<GetCRsType | GetTDLsType>(
     {} as GetCRsType | GetTDLsType

@@ -28,7 +28,7 @@ const FileUpload = (props: FileUploadProps) => {
     onBlur,
     inputProps
   } = props;
-  const { t } = useTranslation('documents');
+  const { t } = useTranslation('documentsMisc');
   const [file, setFile] = useState<File>();
   const [error, setError] = useState(false);
   const fileInputWrapper = classnames(

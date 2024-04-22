@@ -2,14 +2,14 @@ import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { act, render, waitFor } from '@testing-library/react';
+import { GetOperationalNeedDocument } from 'gql/gen/graphql';
+import { GetOperationalNeed_operationalNeed as GetOperationalNeedType } from 'gql/gen/types/GetOperationalNeed';
 
 import {
   needQuestionAndAnswerMock,
   possibleSolutionsMock
 } from 'data/mock/solutions';
 import { MessageProvider } from 'hooks/useMessage';
-import GetOperationalNeed from 'queries/ITSolutions/GetOperationalNeed';
-import { GetOperationalNeed_operationalNeed as GetOperationalNeedType } from 'queries/ITSolutions/types/GetOperationalNeed';
 import {
   OperationalNeedKey,
   OperationalSolutionKey,
@@ -53,7 +53,7 @@ const operationalNeed: GetOperationalNeedType = {
 const mocks = [
   {
     request: {
-      query: GetOperationalNeed,
+      query: GetOperationalNeedDocument,
       variables: {
         id: operationalNeedID,
         includeNotNeeded: false

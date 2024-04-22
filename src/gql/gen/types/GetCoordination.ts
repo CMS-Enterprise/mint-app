@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { GainshareArrangementEligibility, ParticipantsIDType } from "./../../../types/graphql-global-types";
+import { ParticipantRequireFinancialGuaranteeType, GainshareArrangementEligibility, ParticipantsIDType } from "./../../../types/graphql-global-types";
 
 // ====================================================
 // GraphQL query operation: GetCoordination
@@ -12,6 +12,10 @@ import { GainshareArrangementEligibility, ParticipantsIDType } from "./../../../
 export interface GetCoordination_modelPlan_participantsAndProviders {
   __typename: "PlanParticipantsAndProviders";
   id: UUID;
+  participantRequireFinancialGuarantee: boolean | null;
+  participantRequireFinancialGuaranteeType: ParticipantRequireFinancialGuaranteeType[];
+  participantRequireFinancialGuaranteeOther: string | null;
+  participantRequireFinancialGuaranteeNote: string | null;
   coordinateWork: boolean | null;
   coordinateWorkNote: string | null;
   gainsharePayments: boolean | null;

@@ -22,7 +22,7 @@ const ReadOnlyBody = ({
       {/* Map through all the translation config questions */}
       {getKeys(config)
         .filter(field => field !== 'status') // Don't render status(in progress/ready for review, etc) field
-        .map((field, index) => (
+        .map(field => (
           <div
             key={field}
             className={classNames({
@@ -44,7 +44,7 @@ const ReadOnlyBody = ({
             {/* Checks if questions have config to be displayed side by side */}
             {config[field]?.adjacentPositioning ? (
               <>
-                {/* Presence of adjacentPositioning will render in a SideBySideReadOnlySection component 
+                {/* Presence of adjacentPositioning will render in a SideBySideReadOnlySection component
                     Config position of 'left' will render and condtionally render the following component where adjacentPositioning.adjacentField is the reference */}
                 {config[field]?.adjacentPositioning?.position === 'left' && (
                   <SideBySideReadOnlySection>
@@ -56,7 +56,7 @@ const ReadOnlyBody = ({
                     />
 
                     {/* Checks if second question is condtional on the previous question before rendering
-                        References the string/key (ex: 'estimateConfidence') of adjacentPositioning.adjacentField 
+                        References the string/key (ex: 'estimateConfidence') of adjacentPositioning.adjacentField
                     */}
                     {!isHiddenByParentCondition(
                       config[

@@ -2,8 +2,8 @@ import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { act, render, screen, waitFor } from '@testing-library/react';
+import { GetClearanceStatusesDocument } from 'gql/gen/graphql';
 
-import GetClearanceStatuses from 'queries/PrepareForClearance/GetClearanceStatuses';
 import {
   PrepareForClearanceStatus,
   TaskStatus
@@ -26,7 +26,7 @@ const readyForClearanceDts = '2022-10-24T19:32:24.412662Z';
 const clearanceMock = [
   {
     request: {
-      query: GetClearanceStatuses,
+      query: GetClearanceStatusesDocument,
       variables: { id: modelID }
     },
     result: {

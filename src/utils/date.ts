@@ -15,8 +15,16 @@ export const formatDateLocal = (date: string, format: DateFormat) =>
  * Typically used for dates from user input, where utc timezone needs to be set
  * explicitly in order to match timezoneless dates within a iso string correctly.
  */
-export const formatDateUtc = (date: string, format: DateFormat) =>
-  DateTime.fromISO(date, { zone: 'UTC' }).toFormat(format);
+export const formatDateUtc = (
+  date: string | null,
+  format: DateFormat
+): string => {
+  if (date) {
+    const parsedDate = DateTime.fromISO(date, { zone: 'UTC' }).toFormat(format);
+    if (parsedDate !== 'Invalid DateTime') return parsedDate;
+  }
+  return '';
+};
 
 export const getTimeElapsed = (discussionCreated: string) => {
   const now = DateTime.local();
@@ -37,9 +45,7 @@ export const getTimeElapsed = (discussionCreated: string) => {
       // Only show parent most level of time, rather than all increments
       if (dateString === '') {
         dateString += `${floatTime} ${
-          timePassed[time as keyof typeof getTimeElapsed] !== 1
-            ? time
-            : time.slice(0, -1) // If singular, remove last letter 's's from time string
+          floatTime !== 1 ? time : time.slice(0, -1) // If singular, remove last letter 's's from time string
         } `;
       }
     }

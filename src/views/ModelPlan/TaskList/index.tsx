@@ -399,7 +399,7 @@ const DicussionBanner = ({
   discussions,
   setIsDiscussionOpen
 }: DiscussionBannerType) => {
-  const { t: d } = useTranslation('discussions');
+  const { t: d } = useTranslation('discussionsMisc');
 
   return (
     <SummaryBox className="bg-primary-lighter border-0 radius-0 padding-2">

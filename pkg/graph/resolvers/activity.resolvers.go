@@ -19,6 +19,16 @@ func (r *activityResolver) ActorUserAccount(ctx context.Context, obj *models.Act
 	return UserAccountGetByIDLOADER(ctx, obj.ActorID)
 }
 
+// ModelPlan is the resolver for the modelPlan field.
+func (r *addedAsCollaboratorMetaResolver) ModelPlan(ctx context.Context, obj *models.AddedAsCollaboratorMeta) (*models.ModelPlan, error) {
+	return ModelPlanGetByIDLOADER(ctx, obj.ModelPlanID)
+}
+
+// Collaborator is the resolver for the collaborator field.
+func (r *addedAsCollaboratorMetaResolver) Collaborator(ctx context.Context, obj *models.AddedAsCollaboratorMeta) (*models.PlanCollaborator, error) {
+	return PlanCollaboratorGetByID(ctx, obj.CollaboratorID)
+}
+
 // AnalyzedAudits is the resolver for the analyzedAudits field.
 func (r *dailyDigestCompleteActivityMetaResolver) AnalyzedAudits(ctx context.Context, obj *models.DailyDigestCompleteActivityMeta) ([]*models.AnalyzedAudit, error) {
 	return loaders.AnalyzedAuditGetByModelPlanIDsAndDate(ctx, obj.ModelPlanIDs, obj.Date)
@@ -77,6 +87,11 @@ func (r *taggedInPlanDiscussionActivityMetaResolver) Discussion(ctx context.Cont
 // Activity returns generated.ActivityResolver implementation.
 func (r *Resolver) Activity() generated.ActivityResolver { return &activityResolver{r} }
 
+// AddedAsCollaboratorMeta returns generated.AddedAsCollaboratorMetaResolver implementation.
+func (r *Resolver) AddedAsCollaboratorMeta() generated.AddedAsCollaboratorMetaResolver {
+	return &addedAsCollaboratorMetaResolver{r}
+}
+
 // DailyDigestCompleteActivityMeta returns generated.DailyDigestCompleteActivityMetaResolver implementation.
 func (r *Resolver) DailyDigestCompleteActivityMeta() generated.DailyDigestCompleteActivityMetaResolver {
 	return &dailyDigestCompleteActivityMetaResolver{r}
@@ -103,6 +118,7 @@ func (r *Resolver) TaggedInPlanDiscussionActivityMeta() generated.TaggedInPlanDi
 }
 
 type activityResolver struct{ *Resolver }
+type addedAsCollaboratorMetaResolver struct{ *Resolver }
 type dailyDigestCompleteActivityMetaResolver struct{ *Resolver }
 type modelPlanSharedActivityMetaResolver struct{ *Resolver }
 type newDiscussionRepliedActivityMetaResolver struct{ *Resolver }
