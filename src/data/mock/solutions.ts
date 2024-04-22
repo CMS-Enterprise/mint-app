@@ -20,7 +20,8 @@ export const pointsOfContact = [
     name: 'John Mint',
     email: 'john.mint@oddball.io',
     isTeam: false,
-    role: 'Project lead'
+    role: 'Project lead',
+    isPrimary: true
   }
 ];
 
@@ -49,7 +50,8 @@ export const possibleSolutionsMock = [
                 name: '4Inn/Aco',
                 email: '4inn.mint@oddball.io',
                 isTeam: true,
-                role: ''
+                role: '',
+                isPrimary: true
               }
             ]
           },
@@ -64,7 +66,8 @@ export const possibleSolutionsMock = [
                 name: 'Brandon Bee',
                 email: 'bee.mint@oddball.io',
                 isTeam: false,
-                role: 'CMMI Government Task Lead'
+                role: 'CMMI Government Task Lead',
+                isPrimary: true
               }
             ]
           },
@@ -79,7 +82,8 @@ export const possibleSolutionsMock = [
                 name: 'Alicia Thomas',
                 email: 'at.mint@oddball.io',
                 isTeam: false,
-                role: 'Beneficiary Listening Session Point of Contact'
+                role: 'Beneficiary Listening Session Point of Contact',
+                isPrimary: true
               }
             ]
           }

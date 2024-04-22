@@ -79,9 +79,17 @@ export const GenericPointsOfContact = ({
 }) => {
   const { t } = useTranslation('helpAndKnowledge');
 
+  const pointsOfContactSorted = [
+    ...(solution?.pointsOfContact || [])
+  ].sort((a, b) => a.name.localeCompare(b.name));
+
   return (
     <div>
-      {solution.pointsOfContact?.map(contact => (
+      {/* Sort to have primary first in array */}
+      {[
+        ...(pointsOfContactSorted.filter(x => x.isPrimary) || []),
+        ...(pointsOfContactSorted.filter(x => !x.isPrimary) || [])
+      ].map(contact => (
         <PointOfContactCard pointOfContact={contact} key={contact.name} />
       ))}
 

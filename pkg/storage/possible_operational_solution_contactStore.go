@@ -1,7 +1,12 @@
 package storage
 
 import (
+	"database/sql"
 	_ "embed"
+	"errors"
+	"fmt"
+
+	"github.com/cmsgov/mint-app/pkg/sqlutils"
 
 	"go.uber.org/zap"
 
@@ -10,6 +15,9 @@ import (
 
 //go:embed SQL/possible_operational_solution_contact/collection_get_by_possible_solution_id.sql
 var possibleOperationalSolutionContactsGetByPossibleSolutionIDLOADERSQL string
+
+//go:embed SQL/possible_operational_solution_contact/get_primary_contact_by_possible_solution_id.sql
+var getPrimaryContactByPossibleSolutionID string
 
 // PossibleOperationalSolutionContactsGetByPossibleSolutionIDLOADER returns
 // Solution contacts that match the paramTable JSON
@@ -37,5 +45,42 @@ func (s *Store) PossibleOperationalSolutionContactsGetByPossibleSolutionIDLOADER
 	}
 
 	return contacts, nil
+}
 
+// PossibleOperationalSolutionPrimaryContactGetByPossibleSolutionID returns the
+// primary contact associated with a possible operational solution
+func (s *Store) PossibleOperationalSolutionPrimaryContactGetByPossibleSolutionID(
+	np sqlutils.NamedPreparer,
+	logger *zap.Logger,
+	possibleSolutionID int,
+) (*models.PossibleOperationalSolutionContact, error) {
+
+	contact := models.PossibleOperationalSolutionContact{}
+	stmt, err := np.PrepareNamed(getPrimaryContactByPossibleSolutionID)
+	if err != nil {
+		return nil, fmt.Errorf("failed to prepare SQL statement: %w", err)
+	}
+	defer stmt.Close()
+
+	arg := map[string]interface{}{"possible_operational_solution_id": possibleSolutionID}
+
+	err = stmt.Get(&contact, arg)
+
+	if err != nil {
+		if errors.Is(err, sql.ErrNoRows) {
+			logger.Warn("No primary contact for possible operational solution",
+				zap.Int("possibleSolutionID", possibleSolutionID))
+			return nil, nil
+		}
+
+		logger.Error(
+			"failed to fetch primary contact for possible operational solution",
+			zap.Error(err),
+			zap.Int("possibleSolutionID", possibleSolutionID),
+		)
+
+		return nil, fmt.Errorf("failed to fetch primary contact for possible operational solution: %w", err)
+	}
+
+	return &contact, nil
 }
