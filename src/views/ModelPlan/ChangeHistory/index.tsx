@@ -2,15 +2,14 @@ import React, { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import { GridContainer, Icon, SummaryBox } from '@trussworks/react-uswds';
-import classNames from 'classnames';
 import { useTranslatedAuditCollectionQuery } from 'gql/gen/graphql';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 import PageLoading from 'components/PageLoading';
-import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import { ModelInfoContext } from 'views/ModelInfoWrapper';
+import NotFound from 'views/NotFound';
 
 import ChangeRecord from './components/ChangeRecord';
 
@@ -29,16 +28,15 @@ const ChangeHistory = () => {
     }
   });
 
-  console.log(data);
-
-  const isMobile = useCheckResponsiveScreen('tablet', 'smaller');
-  const isTablet = useCheckResponsiveScreen('tablet', 'smaller');
-
   const changes = [...(data?.translatedAuditCollection || [])];
 
   const changesSortedByDate = changes?.sort((a, b) =>
     b.date.localeCompare(a.date)
   );
+
+  if (error) {
+    return <NotFound />;
+  }
 
   return (
     <MainContent>
