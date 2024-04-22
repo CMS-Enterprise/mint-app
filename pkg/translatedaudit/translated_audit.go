@@ -173,7 +173,7 @@ func genericAuditTranslation(ctx context.Context, store *storage.Store, plan *mo
 		translatedAudit.TranslatedAudit = change
 
 		for fieldName, field := range audit.Fields {
-
+			//  Changes: (Translations) consider removing plan from the function
 			transField, err := translateField(fieldName, field, audit, actorAccount, operation, plan, translationMap)
 			if err != nil {
 				fmt.Printf("issue translating field (%s) for plan %s ", fieldName, plan.ModelName)
@@ -194,9 +194,11 @@ func translateField(fieldName string, field models.AuditField, audit *models.Aud
 	// Set default values in case of missing translation
 	// Changes: (Translations) We should handle a nil / empty case what should we do in that case?
 	translatedLabel := fieldName
-	translatedOld := field.Old
-	translatedNew := field.New
-	changeType := getChangeType(field.Old, field.New)
+	old := field.Old
+	new := field.New
+	translatedOld := old
+	translatedNew := new
+	changeType := getChangeType(old, new)
 	var formType *models.TranslationFormType
 	var dataType *models.TranslationDataType
 	// Changes: (Translations) We need to distinguish if the answer is for an other / note field. The label in that case is really the parent's label or the specific text for that type.
@@ -211,21 +213,28 @@ func translateField(fieldName string, field models.AuditField, audit *models.Aud
 		tData := translationInterface.GetDataType()
 		formType = &tForm
 		dataType = &tData
+
+		if tData == models.TDTBoolean { // clean t or f to true or false
+			old = sanitizeAuditBoolValue(old)
+			new = sanitizeAuditBoolValue(new)
+
+		}
+
 		options, hasOptions := translationInterface.GetOptions()
 		if hasOptions {
-			translatedOld = translateValue(field.Old, options)
-			translatedNew = translateValue(field.New, options)
+			translatedOld = translateValue(old, options)
+			translatedNew = translateValue(new, options)
 		} else {
-			translatedOld = field.Old
-			translatedNew = field.New
+			translatedOld = old
+			translatedNew = new
 		}
 	}
 	translatedField := models.NewTranslatedAuditField(constants.GetSystemAccountUUID(),
 		fieldName,
 		translatedLabel,
-		field.Old,
+		old,
 		translatedOld,
-		field.New,
+		new,
 		translatedNew,
 		dataType,
 		formType,
@@ -388,4 +397,16 @@ func saveTranslatedAuditAndFields(tp sqlutils.TransactionPreparer, translatedAud
 
 	}
 	return retTranslatedAuditsWithFields, nil
+}
+
+// sanitizeAuditBoolValue sanitizes raw audit data and does some preliminary translation data, ex translating a t or f character to true or false
+func sanitizeAuditBoolValue(value interface{}) interface{} {
+	if value == "t" {
+		return true
+	}
+	if value == "f" {
+		return false
+	}
+	return value
+
 }
