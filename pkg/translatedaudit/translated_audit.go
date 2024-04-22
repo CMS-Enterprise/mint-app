@@ -197,6 +197,8 @@ func translateField(fieldName string, field models.AuditField, audit *models.Aud
 	translatedOld := field.Old
 	translatedNew := field.New
 	changeType := getChangeType(field.Old, field.New)
+	// Changes: (Translations) We need to distinguish if the answer is for an other / note field. The label in that case is really the parent's label or the specific text for that type.
+	// Changes: (Translations) Handle if the change made a question not necessary //Changes: (Structure) How should we structure this? Field MetaData? Or base level implementation information?
 
 	translationInterface := translationMap[fieldName]
 	if translationInterface != nil {
@@ -275,6 +277,8 @@ func translateValue(value interface{}, options map[string]interface{}) interface
 	}
 	// str, isString := value.(string)
 	if isString {
+		// Changes: (Translations) Revisit this issue here, we need the value to be stringified properly. Or provide a column type that is string or string array
+
 		return translateValueSingle(str, options)
 	}
 	// Changes: (Translations)  Should we handle the case where we can't translate it more?
