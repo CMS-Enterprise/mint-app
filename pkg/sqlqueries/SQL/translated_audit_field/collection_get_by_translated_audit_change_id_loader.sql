@@ -12,6 +12,8 @@ SELECT
     TAF.change_type,
     TAF.field_name,
     TAF.field_name_translated,
+    TAF.data_type,
+    TAF.form_type,
     TAF.old,
     TAF.old_translated,
     TAF.new,

@@ -60,12 +60,45 @@ CREATE TYPE AUDIT_FIELD_CHANGE_TYPE AS ENUM (
     'ANSWERED', 'UPDATED', 'REMOVED'
 );
 
+COMMENT ON TYPE AUDIT_FIELD_CHANGE_TYPE IS 'An interpretation of what action happened on a database operation';
 
+
+
+CREATE TYPE  TRANSLATION_DATA_TYPE AS ENUM (
+    'STRING',
+    'NUMBER',
+    'BOOLEAN',
+    'DATE',
+    'ENUM',
+    'OBJECT'
+);
+COMMENT ON TYPE TRANSLATION_DATA_TYPE IS 'Represents the data type of the translation field';
+
+
+CREATE TYPE TRANSLATION_FORM_TYPE AS ENUM (
+    'TEXT',
+    'TEXTAREA',
+    'NUMBER',
+    'BOOLEAN',
+    'RADIO',
+    'CHECKBOX',
+    'SELECT',
+    'MULTISELECT',
+    'DATEPICKER',
+    'RANGEINPUT'
+);
+
+COMMENT ON TYPE TRANSLATION_DATA_TYPE IS 'Represents the FORM type of the translation field';
+
+-- Changes: (Structure) Double check the data and form type columns. Can they ever be null? Eg what happens when we don't find a translation? Should we make a new type, or make it nullable?
+-- Currently allowing them to be null if a translation is not found
 CREATE TABLE translated_audit_field (
     id UUID PRIMARY KEY,
     translated_audit_id UUID NOT NULL REFERENCES translated_audit(id), --foreign key to translated_audit table
 
     change_type AUDIT_FIELD_CHANGE_TYPE NOT NULL,
+    data_type TRANSLATION_DATA_TYPE,
+    form_type TRANSLATION_FORM_TYPE,
 
     field_name ZERO_STRING NOT NULL,
     field_name_translated ZERO_STRING NOT NULL,

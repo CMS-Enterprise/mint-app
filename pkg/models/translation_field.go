@@ -115,6 +115,16 @@ func (tfb TranslationFieldBase) GetLabel(translationDictionary map[string]ITrans
 
 }
 
+// GetFormType returns the form type of a translation
+func (tfb TranslationFieldBase) GetFormType() TranslationFormType {
+	return tfb.FormType
+}
+
+// GetDataType returns the data type of a translation
+func (tfb TranslationFieldBase) GetDataType() TranslationDataType {
+	return tfb.DataType
+}
+
 // TranslationFieldWithOptions Represents a TranslationField that has options
 type TranslationFieldWithOptions struct {
 	TranslationFieldBase
@@ -132,6 +142,9 @@ type ITranslationField interface {
 
 	HasParent() bool
 	GetParent() (ITranslationParent, bool)
+
+	GetFormType() TranslationFormType
+	GetDataType() TranslationDataType
 
 	HasChildren() bool
 	GetChildren() (map[string][]TranslationField, bool)

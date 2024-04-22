@@ -197,6 +197,8 @@ func translateField(fieldName string, field models.AuditField, audit *models.Aud
 	translatedOld := field.Old
 	translatedNew := field.New
 	changeType := getChangeType(field.Old, field.New)
+	var formType *models.TranslationFormType
+	var dataType *models.TranslationDataType
 	// Changes: (Translations) We need to distinguish if the answer is for an other / note field. The label in that case is really the parent's label or the specific text for that type.
 	// Changes: (Translations) Handle if the change made a question not necessary //Changes: (Structure) How should we structure this? Field MetaData? Or base level implementation information?
 
@@ -204,6 +206,11 @@ func translateField(fieldName string, field models.AuditField, audit *models.Aud
 	if translationInterface != nil {
 
 		translatedLabel = translationInterface.GetLabel(translationMap)
+
+		tForm := translationInterface.GetFormType()
+		tData := translationInterface.GetDataType()
+		formType = &tForm
+		dataType = &tData
 		options, hasOptions := translationInterface.GetOptions()
 		if hasOptions {
 			translatedOld = translateValue(field.Old, options)
@@ -220,6 +227,8 @@ func translateField(fieldName string, field models.AuditField, audit *models.Aud
 		translatedOld,
 		field.New,
 		translatedNew,
+		dataType,
+		formType,
 	)
 	translatedField.ChangeType = changeType
 

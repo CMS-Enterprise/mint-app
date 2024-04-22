@@ -4,6 +4,8 @@ SELECT
     change_type,
     field_name,
     field_name_translated,
+    data_type,
+    form_type,
     old,
     old_translated,
     new,

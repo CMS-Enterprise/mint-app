@@ -34,6 +34,9 @@ type TranslatedAuditField struct {
 	FieldName           string `json:"fieldName" db:"field_name"`
 	FieldNameTranslated string `json:"fieldNameTranslated" db:"field_name_translated"`
 
+	DataType *TranslationDataType `json:"dataType" db:"data_type"`
+	FormType *TranslationFormType `json:"formType" db:"form_type"`
+
 	Old           interface{} `json:"old" db:"old"`
 	OldTranslated interface{} `json:"oldTranslated" db:"old_translated"`
 	New           interface{} `json:"new" db:"new"`
@@ -55,6 +58,8 @@ func NewTranslatedAuditField(
 	oldTranslated interface{},
 	new interface{},
 	newTranslated interface{},
+	dataType *TranslationDataType,
+	formType *TranslationFormType,
 ) TranslatedAuditField {
 	version := 0
 	genericMeta := NewTranslatedAuditFieldMetaBaseStruct(version)
@@ -70,6 +75,9 @@ func NewTranslatedAuditField(
 		OldTranslated:       oldTranslated,
 		New:                 new,
 		NewTranslated:       newTranslated,
+
+		DataType: dataType,
+		FormType: formType,
 
 		MetaData: &genericMeta,
 	}
