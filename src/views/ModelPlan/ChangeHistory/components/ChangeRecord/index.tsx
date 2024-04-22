@@ -9,7 +9,7 @@ import { formatDateUtc, formatTime } from 'utils/date';
 
 import './index.scss';
 
-type ChangeRecordType = NonNullable<
+export type ChangeRecordType = NonNullable<
   TranslatedAuditCollectionQuery['translatedAuditCollection']
 >[0];
 
@@ -48,7 +48,7 @@ const SingleChange = ({ change }: SingleChangeProps) => {
 };
 
 // Replaces curly braces with square brackets and attempts to parse the value as JSON.  This may change as BE may be able to returned a parsed array
-const parseArray = (value: string) => {
+export const parseArray = (value: string) => {
   const formattedString = value.replace(/{/g, '[').replace(/}/g, ']');
 
   try {
@@ -118,7 +118,7 @@ const ChangeRecord = ({ changeRecord }: ChangeRecordProps) => {
       >
         <div className="margin-bottom-neg-1">
           {changeRecord.translatedFields.map(change => (
-            <SingleChange change={change} />
+            <SingleChange change={change} key={change.id} />
           ))}
         </div>
       </CollapsableLink>
