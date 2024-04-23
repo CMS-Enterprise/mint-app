@@ -19,6 +19,7 @@ func TranslatedAuditFieldCollectionGetByTranslatedAuditID(ctx context.Context, t
 
 	for _, change := range translatedChangeCollection {
 		err2 := change.ParseMetaData()
+		// Changes: (Serialization) consider calling this in the loader since we already loop in that call?
 
 		if err2 != nil {
 			return nil, fmt.Errorf("issue parsing raw meta data for translated change %s. Error : %w", change.ID, err2)

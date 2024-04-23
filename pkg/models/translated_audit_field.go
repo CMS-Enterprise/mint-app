@@ -2,6 +2,7 @@ package models
 
 import (
 	"database/sql/driver"
+	"fmt"
 
 	"github.com/google/uuid"
 )
@@ -37,6 +38,7 @@ type TranslatedAuditField struct {
 	DataType *TranslationDataType `json:"dataType" db:"data_type"`
 	FormType *TranslationFormType `json:"formType" db:"form_type"`
 
+	// Changes: (Structure) Can we use a union generic type for these values instead of interface?
 	Old           interface{} `json:"old" db:"old"`
 	OldTranslated interface{} `json:"oldTranslated" db:"old_translated"`
 	New           interface{} `json:"new" db:"new"`
@@ -87,9 +89,9 @@ func NewTranslatedAuditField(
 // ParseMetaData parses raw MetaData into Typed meta data per the provided struct
 func (taf *TranslatedAuditField) ParseMetaData() error {
 
-	// Ticket (Meta) figure out if we need meta data here or not.
+	// Changes (Meta) figure out if we need meta data here or not.
 	metaDataType := "generic"
-	// Ticket (Meta) revisit how we determine what to parse here
+	// Changes (Meta) revisit how we determine what to parse here
 
 	meta, err := parseRawTranslatedAuditFieldMetaData(metaDataType, taf.MetaDataRaw)
 	if err != nil {
@@ -97,5 +99,74 @@ func (taf *TranslatedAuditField) ParseMetaData() error {
 	}
 
 	taf.MetaData = meta
+
+	// if taf.FormType != nil {
+	// 	// Changes (Serialization) Determine where this should be parsed, this doesn't seem quite right...
+	// 	// Also, update so we handle for edge cases, status in task list sections, and ready for review
+	// 	if *taf.FormType == TFTMultiselect || *taf.FormType == TFTCheckbox {
+	// 		// _ = taf.ParseStringArray()
+	// 		// Changes (Serialization) this doesn't work, revisit the solution for the representation of this later (perhaps with regex like when translated? Or marshal it directly?)
+	// 	}
+	// }
 	return nil
+}
+
+// ParseStringArray converts values that should be viewed as an array to an array
+func (taf *TranslatedAuditField) ParseStringArray() error {
+	// Changes (Serialization) HANDLE IF ANY OF THESE ARE NULL! DON'T BLOCK PROCESSING THE OTHER ONES AND RETURN EARLY
+	if taf.Old != nil {
+		oldArray, err := parseInterfaceToArray(taf.Old)
+		if err == nil {
+			taf.Old = oldArray
+		}
+
+	}
+
+	if taf.OldTranslated != nil {
+		oldTranslatedArray, err := parseInterfaceToArray(taf.OldTranslated)
+		if err == nil {
+			taf.OldTranslated = oldTranslatedArray
+		}
+
+	}
+
+	if taf.New != nil {
+		newArray, err := parseInterfaceToArray(taf.New)
+		if err == nil {
+			taf.New = newArray
+		}
+
+	}
+
+	if taf.NewTranslated != nil {
+		newTranslatedArray, err := parseInterfaceToArray(taf.NewTranslated)
+		if err == nil {
+			taf.NewTranslated = newTranslatedArray
+		}
+	}
+
+	return nil
+
+}
+
+// parseInterfaceToArray attempts to parse an interface object to a string array. It will return nil if it isn't an array
+func parseInterfaceToArray(value interface{}) ([]string, error) {
+	stringSlice, ok := value.([]interface{})
+	if !ok {
+
+		return nil, fmt.Errorf("error: Could not assert interface to []interface{}")
+	}
+
+	// Convert []interface{} to []string
+	var stringArray []string
+	for _, v := range stringSlice {
+		if str, ok := v.(string); ok {
+			stringArray = append(stringArray, str)
+		} else {
+
+			return nil, fmt.Errorf("error: Element in slice is not a string")
+		}
+	}
+	return stringArray, nil
+
 }

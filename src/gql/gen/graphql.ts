@@ -3312,10 +3312,10 @@ export type TranslatedAuditField = {
   createdBy: Scalars['UUID']['output'];
   createdByUserAccount: UserAccount;
   createdDts: Scalars['Time']['output'];
-  dataType: TranslationDataType;
+  dataType?: Maybe<TranslationDataType>;
   fieldName: Scalars['String']['output'];
   fieldNameTranslated: Scalars['String']['output'];
-  formType: TranslationFormType;
+  formType?: Maybe<TranslationFormType>;
   id: Scalars['UUID']['output'];
   metaData: TranslatedAuditFieldMetaData;
   modifiedBy?: Maybe<Scalars['UUID']['output']>;

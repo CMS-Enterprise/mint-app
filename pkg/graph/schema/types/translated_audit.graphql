@@ -65,8 +65,8 @@ type TranslatedAuditField {
     """
     changeType: AuditFieldChangeType! 
 
-    dataType: TranslationDataType!
-    formType: TranslationFormType!
+    dataType: TranslationDataType
+    formType: TranslationFormType
 
     fieldName: String!
     fieldNameTranslated: String!
