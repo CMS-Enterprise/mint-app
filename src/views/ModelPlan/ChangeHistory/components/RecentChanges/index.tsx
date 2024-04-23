@@ -64,11 +64,11 @@ const RecentChanges = ({ modelID }: { modelID: string }) => {
     }
   });
 
-  const changes = [...(data?.translatedAuditCollection || [])].slice(0, 3);
+  const changes = [...(data?.translatedAuditCollection || [])];
 
-  const changesSortedByDate = changes?.sort((a, b) =>
-    b.date.localeCompare(a.date)
-  );
+  const changesSortedByDate = changes
+    ?.sort((a, b) => b.date.localeCompare(a.date))
+    .slice(0, 3);
 
   return (
     <div className="margin-bottom-6">
