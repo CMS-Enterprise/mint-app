@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "979dd179-0c09-4dcf-9adc-2fe20358ace5",
+		"_postman_id": "12156539-0c12-430a-a4c6-2ff44cb8ca68",
 		"name": "MINT",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "20435042"
@@ -1698,6 +1698,39 @@
 					"response": []
 				},
 				{
+					"name": "PossibleOperationalSolutionSetPrimaryPointOfContact",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation SetPrimaryPointOfContact{\n    setPrimaryPointOfContact (possibleOperationalSolutionId: 1, pointOfContactId: \"7f6163d2-c8d5-4349-95af-565cbdf1c45a\")\n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "OperationSolutionsGetByOperationalNeedID",
 					"event": [
 						{
@@ -1738,7 +1771,8 @@
 								"exec": [
 									""
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"packages": {}
 							}
 						}
 					],
@@ -1748,7 +1782,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "query PossibleOperationalSolution{\n  \n  possibleOperationalSolutions{\n        id\n        name\n        key  \n        createdByUserAccount \n        {\n            commonName\n        }   \n        modifiedByUserAccount\n        {\n            commonName\n        }         \n    \n  }\n}\n",
+								"query": "query PossibleOperationalSolution{\n  \n  possibleOperationalSolutions{\n        id\n        name\n        key  \n        primaryPointOfContact {\n            id\n            possibleOperationalSolutionID\n            name\n            email\n            isTeam\n            role\n        }\n        createdByUserAccount \n        {\n            commonName\n        }   \n        modifiedByUserAccount\n        {\n            commonName\n        }         \n    \n  }\n}\n",
 								"variables": ""
 							}
 						},

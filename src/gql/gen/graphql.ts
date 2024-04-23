@@ -2394,6 +2394,7 @@ export type PossibleOperationalSolution = {
   modifiedDts?: Maybe<Scalars['Time']['output']>;
   name: Scalars['String']['output'];
   pointsOfContact: Array<PossibleOperationalSolutionContact>;
+  primaryContact?: Maybe<PossibleOperationalSolutionContact>;
   treatAsOther: Scalars['Boolean']['output'];
 };
 
@@ -2405,6 +2406,7 @@ export type PossibleOperationalSolutionContact = {
   createdDts: Scalars['Time']['output'];
   email: Scalars['String']['output'];
   id: Scalars['UUID']['output'];
+  isPrimary: Scalars['Boolean']['output'];
   isTeam: Scalars['Boolean']['output'];
   modifiedBy?: Maybe<Scalars['UUID']['output']>;
   modifiedByUserAccount?: Maybe<UserAccount>;
@@ -3879,7 +3881,7 @@ export type CreateShareModelPlanMutation = { __typename: 'Mutation', shareModelP
 export type GetPossibleSolutionsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetPossibleSolutionsQuery = { __typename: 'Query', possibleOperationalSolutions: Array<{ __typename: 'PossibleOperationalSolution', id: number, key: OperationalSolutionKey, pointsOfContact: Array<{ __typename: 'PossibleOperationalSolutionContact', id: UUID, name: string, email: string, isTeam: boolean, role?: string | null }> }> };
+export type GetPossibleSolutionsQuery = { __typename: 'Query', possibleOperationalSolutions: Array<{ __typename: 'PossibleOperationalSolution', id: number, key: OperationalSolutionKey, pointsOfContact: Array<{ __typename: 'PossibleOperationalSolutionContact', id: UUID, name: string, email: string, isTeam: boolean, isPrimary?: boolean | null, role?: string | null }> }> };
 
 export type GetTaskListSubscriptionsQueryVariables = Exact<{
   modelPlanID: Scalars['UUID']['input'];
@@ -11289,6 +11291,7 @@ export const GetPossibleSolutionsDocument = gql`
       name
       email
       isTeam
+      isPrimary
       role
     }
   }
