@@ -35,6 +35,9 @@ import {
   GetAllParticipantsAndProvidersQuery,
   GetAllPaymentsDocument,
   GetAllPaymentsQuery,
+  GetModelCollaboratorsDocument,
+  GetModelSummaryDocument,
+  GetOperationalNeedsDocument,
   KeyCharacteristic,
   ModelCategory,
   ModelLearningSystemType,
@@ -47,6 +50,7 @@ import {
   OpSolutionStatus,
   OverlapType,
   ParticipantCommunicationType,
+  ParticipantRequireFinancialGuaranteeType,
   ParticipantRiskType,
   ParticipantSelectionType,
   ParticipantsIdType,
@@ -66,13 +70,9 @@ import {
   YesNoOtherType,
   YesNoType
 } from 'gql/gen/graphql';
-
-import GetModelPlanCollaborators from 'queries/Collaborators/GetModelCollaborators';
-import { GetModelCollaborators_modelPlan_collaborators as GetModelCollaboratorsType } from 'queries/Collaborators/types/GetModelCollaborators';
-import GetOperationalNeeds from 'queries/ITSolutions/GetOperationalNeeds';
-import { GetOperationalNeeds as GetOperationalNeedsType } from 'queries/ITSolutions/types/GetOperationalNeeds';
-import GetModelSummary from 'queries/ReadOnly/GetModelSummary';
-import { GetModelSummary_modelPlan as GetModelSummaryTypes } from 'queries/ReadOnly/types/GetModelSummary';
+import { GetModelCollaborators_modelPlan_collaborators as GetModelCollaboratorsType } from 'gql/gen/types/GetModelCollaborators';
+import { GetModelSummary_modelPlan as GetModelSummaryTypes } from 'gql/gen/types/GetModelSummary';
+import { GetOperationalNeeds as GetOperationalNeedsType } from 'gql/gen/types/GetOperationalNeeds';
 
 export const modelID: string = 'f11eb129-2c80-4080-9440-439cbe1a286f';
 
@@ -303,6 +303,13 @@ const participantsAndProvidersData: GetAllParticipantsTypes = {
   riskNote: 'Note risk',
   willRiskChange: true,
   willRiskChangeNote: 'My risk change ntoe',
+  participantRequireFinancialGuarantee: true,
+  participantRequireFinancialGuaranteeType: [
+    ParticipantRequireFinancialGuaranteeType.ESCROW,
+    ParticipantRequireFinancialGuaranteeType.OTHER
+  ],
+  participantRequireFinancialGuaranteeOther: 'Other Type',
+  participantRequireFinancialGuaranteeNote: 'Notes',
   coordinateWork: true,
   coordinateWorkNote: 'Coornidate work note',
   gainsharePayments: true,
@@ -704,7 +711,7 @@ const summaryData: GetModelSummaryTypes = {
 export const summaryMock = [
   {
     request: {
-      query: GetModelSummary,
+      query: GetModelSummaryDocument,
       variables: { id: modelID }
     },
     result: {
@@ -753,7 +760,7 @@ const collaboratorsData: GetModelCollaboratorsType[] = [
 export const collaboratorsMocks = [
   {
     request: {
-      query: GetModelPlanCollaborators,
+      query: GetModelCollaboratorsDocument,
       variables: { id: modelID }
     },
     result: {
@@ -812,7 +819,7 @@ const opNeedsData: GetOperationalNeedsType = {
 export const operationalNeedsMock = [
   {
     request: {
-      query: GetOperationalNeeds,
+      query: GetOperationalNeedsDocument,
       variables: { id: modelID }
     },
     result: {

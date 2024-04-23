@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useParams } from 'react-router-dom';
-import { useQuery } from '@apollo/client';
 import {
   Breadcrumb,
   BreadcrumbBar,
@@ -11,6 +10,8 @@ import {
   Icon,
   Link as TrussLink
 } from '@trussworks/react-uswds';
+import { useGetModelPlanBaseQuery } from 'gql/gen/graphql';
+import { GetModelPlanBase_modelPlan as ModelPlanType } from 'gql/gen/types/GetModelPlanBase';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
@@ -18,12 +19,6 @@ import PageHeading from 'components/PageHeading';
 import Alert from 'components/shared/Alert';
 import Expire from 'components/shared/Expire';
 import useMessage from 'hooks/useMessage';
-import GetModelPlanBase from 'queries/GetModelPlanBase';
-import {
-  GetModelPlanBase as GetModelPlanBaseType,
-  GetModelPlanBase_modelPlan as ModelPlanType,
-  GetModelPlanBaseVariables
-} from 'queries/types/GetModelPlanBase';
 
 import PlanCRTDLsTable from './table';
 
@@ -31,20 +26,17 @@ type CRTDLStatusType = 'success' | 'error';
 
 export const CRTDLs = () => {
   const { t: h } = useTranslation('draftModelPlan');
-  const { t } = useTranslation('crtdl');
+  const { t } = useTranslation('crtdlsMisc');
   const { modelID } = useParams<{ modelID: string }>();
   const { message } = useMessage();
   const [crtdlMessage, setCRTDLMessage] = useState('');
   const [crtdlStatus, setCRTDLStatus] = useState<CRTDLStatusType>('error');
 
-  const { data } = useQuery<GetModelPlanBaseType, GetModelPlanBaseVariables>(
-    GetModelPlanBase,
-    {
-      variables: {
-        id: modelID
-      }
+  const { data } = useGetModelPlanBaseQuery({
+    variables: {
+      id: modelID
     }
-  );
+  });
 
   const modelPlan = data?.modelPlan || ({} as ModelPlanType);
 

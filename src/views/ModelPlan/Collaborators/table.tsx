@@ -4,10 +4,10 @@ import { useLocation, useParams } from 'react-router-dom';
 import { useSortBy, useTable } from 'react-table';
 import { Table as UswdsTable } from '@trussworks/react-uswds';
 import { TeamRole } from 'gql/gen/graphql';
+import { GetModelCollaborators_modelPlan_collaborators as CollaboratorType } from 'gql/gen/types/GetModelCollaborators';
 
 import UswdsReactLink from 'components/LinkWrapper';
-import IconInitial from 'components/shared/IconInitial';
-import { GetModelCollaborators_modelPlan_collaborators as CollaboratorType } from 'queries/Collaborators/types/GetModelCollaborators';
+import { Avatar } from 'components/shared/Avatar';
 import { formatDateLocal } from 'utils/date';
 import {
   currentTableSortDescription,
@@ -45,8 +45,8 @@ const CollaboratorsTable = ({
       {
         Header: collaboratorsMiscT('table.name'),
         accessor: 'userAccount.commonName',
-        Cell: ({ row, value }: any) => {
-          return <IconInitial user={value} index={row.index} />;
+        Cell: ({ value }: any) => {
+          return <Avatar user={value} />;
         }
       },
       {

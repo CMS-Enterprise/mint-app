@@ -101,7 +101,8 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     label: 'Please specify',
     dataType: 'string',
     formType: 'text',
-    isOtherType: true
+    isOtherType: true,
+    otherParentField: 'resemblesExistingModel'
   },
   // Not rendered in any form/ui
   resemblesExistingModelOtherSelected: {
@@ -164,7 +165,8 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     label: 'Please specify',
     dataType: 'string',
     formType: 'text',
-    isOtherType: true
+    isOtherType: true,
+    otherParentField: 'participationInModelPrecondition'
   },
   participationInModelPreconditionWhich: {
     gqlField: 'participationInModelPreconditionWhich',
@@ -207,7 +209,8 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     label: 'Please specify other',
     dataType: 'string',
     formType: 'text',
-    isOtherType: true
+    isOtherType: true,
+    otherParentField: 'participationInModelPreconditionWhich'
   },
   participationInModelPreconditionWhyHow: {
     gqlField: 'participationInModelPreconditionWhyHow',
@@ -253,6 +256,7 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     dataType: 'string',
     formType: 'textarea',
     isOtherType: true,
+    otherParentField: 'hasComponentsOrTracks',
     filterGroups: [ModelViewFilter.IPC]
   },
   hasComponentsOrTracksNote: {
@@ -293,7 +297,8 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     label: 'Please specify',
     dataType: 'string',
     formType: 'textarea',
-    isOtherType: true
+    isOtherType: true,
+    otherParentField: 'agencyOrStateHelp'
   },
   agencyOrStateHelpNote: {
     gqlField: 'agencyOrStateHelpNote',
@@ -482,7 +487,8 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     label: 'How so?',
     dataType: 'string',
     formType: 'textarea',
-    isOtherType: true
+    isOtherType: true,
+    otherParentField: 'careCoordinationInvolved'
   },
   careCoordinationInvolvedNote: {
     gqlField: 'careCoordinationInvolvedNote',
@@ -515,7 +521,8 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     label: 'How so?',
     dataType: 'string',
     formType: 'textarea',
-    isOtherType: true
+    isOtherType: true,
+    otherParentField: 'additionalServicesInvolved'
   },
   additionalServicesInvolvedNote: {
     gqlField: 'additionalServicesInvolvedNote',
@@ -548,7 +555,8 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     label: 'How so?',
     dataType: 'string',
     formType: 'textarea',
-    isOtherType: true
+    isOtherType: true,
+    otherParentField: 'communityPartnersInvolved'
   },
   communityPartnersInvolvedNote: {
     gqlField: 'communityPartnersInvolvedNote',
@@ -754,6 +762,7 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     dataType: 'string',
     formType: 'text',
     isOtherType: true,
+    otherParentField: 'geographiesTargetedTypes',
     filterGroups: [ModelViewFilter.IDDOC, ModelViewFilter.PBG]
   },
   geographiesTargetedAppliedTo: {
@@ -848,6 +857,7 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     dataType: 'string',
     formType: 'text',
     isOtherType: true,
+    otherParentField: 'agreementTypes',
     filterGroups: [ModelViewFilter.CMMI]
   },
   multiplePatricipationAgreementsNeeded: {
@@ -939,6 +949,7 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     dataType: 'string',
     formType: 'textarea',
     isOtherType: true,
+    otherParentField: 'authorityAllowances',
     filterGroups: [ModelViewFilter.CMMI]
   },
   authorityAllowancesNote: {

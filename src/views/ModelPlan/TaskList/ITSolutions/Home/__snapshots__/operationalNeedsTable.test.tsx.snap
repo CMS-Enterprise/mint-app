@@ -91,7 +91,7 @@ exports[`Operational Solutions Home > matches snapshot 1`] = `
                 title="Toggle SortBy"
                 type="button"
               >
-                Operational needs
+                Operational need
                 <svg
                   class="usa-icon margin-left-05 position-absolute"
                   data-testid="caret--up"
@@ -122,7 +122,7 @@ exports[`Operational Solutions Home > matches snapshot 1`] = `
                 title="Toggle SortBy"
                 type="button"
               >
-                Model Plan section
+                	Model Plan section
                 <svg
                   class="usa-icon margin-left-05 position-absolute"
                   data-testid="caret--sort"
@@ -220,7 +220,7 @@ exports[`Operational Solutions Home > matches snapshot 1`] = `
               role="cell"
               style="padding-left: 0px; white-space: normal; max-width: 275px; border-bottom: 1px solid black;"
             >
-              Participants and Providers
+              Participants and providers
             </td>
             <td
               class=""
@@ -254,7 +254,7 @@ exports[`Operational Solutions Home > matches snapshot 1`] = `
       aria-live="polite"
       class="usa-sr-only usa-table__announcement-region"
     >
-      Requests table sorted by Operational needs ascending
+      Requests table sorted by Operational need ascending
     </div>
   </div>
 </DocumentFragment>

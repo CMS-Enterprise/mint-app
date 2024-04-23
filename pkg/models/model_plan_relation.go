@@ -23,3 +23,6 @@ func NewModelPlanRelation(modelPlanID uuid.UUID) modelPlanRelation {
 func (m modelPlanRelation) GetModelPlanID() uuid.UUID {
 	return m.ModelPlanID
 }
+
+// Future Enhancement: Consider adding a ModelPlan() method like we do for user accounts etc to return a ModelPlan for any relation.
+// This would remove the need to implement it in the resolvers

@@ -3,12 +3,11 @@ import { Provider } from 'react-redux';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, waitFor } from '@testing-library/react';
-import { GetCrtdLsDocument } from 'gql/gen/graphql';
+import { GetCrtdLsDocument, GetModelPlanBaseDocument } from 'gql/gen/graphql';
 import configureMockStore from 'redux-mock-store';
 
 import { ASSESSMENT } from 'constants/jobCodes';
 import { MessageProvider } from 'hooks/useMessage';
-import GetModelPlanBase from 'queries/GetModelPlanBase';
 import { TaskStatus } from 'types/graphql-global-types';
 
 import CRTDL from '..';
@@ -18,7 +17,7 @@ const modelID = 'f11eb129-2c80-4080-9440-439cbe1a286f';
 const mocks = [
   {
     request: {
-      query: GetModelPlanBase,
+      query: GetModelPlanBaseDocument,
       variables: { id: modelID }
     },
     result: {

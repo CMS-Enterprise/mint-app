@@ -17,10 +17,13 @@ import {
   useSortBy,
   useTable
 } from 'react-table';
-import { useQuery } from '@apollo/client';
 import { Icon, Table as UswdsTable } from '@trussworks/react-uswds';
 import classNames from 'classnames';
-import { OperationalSolutionKey } from 'gql/gen/graphql';
+import {
+  OperationalSolutionKey,
+  useGetOperationalNeedsQuery
+} from 'gql/gen/graphql';
+import { GetOperationalNeeds_modelPlan_operationalNeeds as GetOperationalNeedsOperationalNeedsType } from 'gql/gen/types/GetOperationalNeeds';
 import i18next from 'i18next';
 import { useFlags } from 'launchdarkly-react-client-sdk';
 
@@ -32,12 +35,6 @@ import GlobalClientFilter from 'components/TableFilter';
 import TablePagination from 'components/TablePagination';
 import TableResults from 'components/TableResults';
 import operationalNeedMap from 'data/operationalNeedMap';
-import GetOperationalNeeds from 'queries/ITSolutions/GetOperationalNeeds';
-import {
-  GetOperationalNeeds as GetOperationalNeedsType,
-  GetOperationalNeeds_modelPlan_operationalNeeds as GetOperationalNeedsOperationalNeedsType,
-  GetOperationalNeedsVariables
-} from 'queries/ITSolutions/types/GetOperationalNeeds';
 import { formatDateUtc } from 'utils/date';
 import globalFilterCellText from 'utils/globalFilterCellText';
 import {
@@ -84,12 +81,12 @@ const OperationalNeedsTable = ({
   filterSolutions,
   className
 }: OperationalNeedsTableProps) => {
-  const { t } = useTranslation('itSolutions');
+  const { t: operationalNeedsT } = useTranslation('operationalNeeds');
+  const { t: solutionsT } = useTranslation('solutions');
+  const { t: subtasksT } = useTranslation('operationalSolutionSubtasks');
+  const { t: opSolutionsMiscT } = useTranslation('opSolutionsMisc');
 
-  const { data, loading, error } = useQuery<
-    GetOperationalNeedsType,
-    GetOperationalNeedsVariables
-  >(GetOperationalNeeds, {
+  const { data, loading, error } = useGetOperationalNeedsQuery({
     variables: {
       id: modelID
     }
@@ -132,14 +129,14 @@ const OperationalNeedsTable = ({
   const needsColumns = useMemo<Column<any>[]>(() => {
     return [
       {
-        Header: t<string>('itSolutionsTable.need'),
+        Header: operationalNeedsT<string>('name.label'),
         accessor: 'needName'
       },
       {
-        Header: t<string>('itSolutionsTable.solution'),
+        Header: solutionsT<string>('name.label'),
         accessor: ({ name, nameOther, otherHeader }: any) => {
           if (!name && !nameOther) {
-            return t('itSolutionsTable.selectSolution');
+            return opSolutionsMiscT('itSolutionsTable.selectSolution');
           }
           // Resturn custom name if exists, otherwise return standard solution name plus custom name if exists
           let solutionName = nameOther || name;
@@ -157,9 +154,13 @@ const OperationalNeedsTable = ({
           GetOperationalNeedsTableType,
           OperationalNeedsSolutionsStatus
         >): JSX.Element | string => {
-          if (value === t('itSolutionsTable.selectSolution')) {
+          if (value === opSolutionsMiscT('itSolutionsTable.selectSolution')) {
             if (!hasEditAccess) {
-              return <span>{t('itSolutionsTable.noSolutionSelected')}</span>;
+              return (
+                <span>
+                  {opSolutionsMiscT('itSolutionsTable.noSolutionSelected')}
+                </span>
+              );
             }
             const selectSolutionHref =
               row.original.key !== null
@@ -179,7 +180,7 @@ const OperationalNeedsTable = ({
         }
       },
       {
-        Header: t<string>('itSolutionsTable.finishBy'),
+        Header: solutionsT<string>('mustFinishDts.label'),
         accessor: ({ mustFinishDts }: any) => {
           if (mustFinishDts) {
             return formatDateUtc(mustFinishDts, 'MM/dd/yyyy');
@@ -188,7 +189,7 @@ const OperationalNeedsTable = ({
         }
       },
       {
-        Header: t<string>('itSolutionsTable.subtasks'),
+        Header: subtasksT<string>('name.exportLabel'),
         accessor: 'operationalSolutionSubtasks',
         Cell: ({
           row,
@@ -204,7 +205,7 @@ const OperationalNeedsTable = ({
         }
       },
       {
-        Header: t<string>('itSolutionsTable.status'),
+        Header: solutionsT<string>('status.exportLabel'),
         accessor: 'status',
         Cell: ({
           row,
@@ -217,7 +218,7 @@ const OperationalNeedsTable = ({
         }
       },
       {
-        Header: t<string>('itSolutionsTable.actions'),
+        Header: opSolutionsMiscT<string>('itSolutionsTable.actions'),
         accessor: ({ status }: CellProps<GetOperationalNeedsTableType>) => {
           return returnActionText(status);
         },
@@ -233,16 +234,24 @@ const OperationalNeedsTable = ({
         }
       }
     ];
-  }, [t, modelID, readOnly, hasEditAccess]);
+  }, [
+    opSolutionsMiscT,
+    operationalNeedsT,
+    solutionsT,
+    subtasksT,
+    modelID,
+    readOnly,
+    hasEditAccess
+  ]);
 
   const possibleNeedsColumns = useMemo<Column<any>[]>(() => {
     return [
       {
-        Header: t<string>('itSolutionsTable.need'),
+        Header: operationalNeedsT<string>('name.label'),
         accessor: 'name'
       },
       {
-        Header: t<string>('itSolutionsTable.section'),
+        Header: operationalNeedsT<string>('section.label'),
         accessor: 'section',
         Cell: ({
           row,
@@ -260,7 +269,7 @@ const OperationalNeedsTable = ({
         }
       },
       {
-        Header: t<string>('itSolutionsTable.status'),
+        Header: operationalNeedsT<string>('needed.label'),
         accessor: 'status',
         Cell: ({
           row,
@@ -273,7 +282,7 @@ const OperationalNeedsTable = ({
         }
       },
       {
-        Header: t<string>('itSolutionsTable.actions'),
+        Header: opSolutionsMiscT<string>('itSolutionsTable.actions'),
         Cell: ({
           row
         }: CellProps<GetOperationalNeedsTableType>): JSX.Element => {
@@ -281,7 +290,7 @@ const OperationalNeedsTable = ({
         }
       }
     ];
-  }, [t, modelID]);
+  }, [opSolutionsMiscT, operationalNeedsT, modelID]);
 
   // Swap the solution and need positions if readonly filter view
   if (filterSolutions) {
@@ -352,11 +361,11 @@ const OperationalNeedsTable = ({
       <ErrorAlert
         testId="formik-validation-errors"
         classNames="margin-top-3"
-        heading={t('itSolutionsTable.error.heading')}
+        heading={opSolutionsMiscT('itSolutionsTable.error.heading')}
       >
         <ErrorAlertMessage
           errorKey="error-it-solutions"
-          message={t('itSolutionsTable.error.body')}
+          message={opSolutionsMiscT('itSolutionsTable.error.body')}
         />
       </ErrorAlert>
     );
@@ -373,10 +382,13 @@ const OperationalNeedsTable = ({
 
   if (readOnly && operationalNeeds.length === 0) {
     return (
-      <Alert heading={t('itSolutionsTable.noNeedsReadonly')} type="info">
+      <Alert
+        heading={opSolutionsMiscT('itSolutionsTable.noNeedsReadonly')}
+        type="info"
+      >
         {readOnly
-          ? t('itSolutionsTable.noNeedsReadonlyEditInfo')
-          : t('itSolutionsTable.noNeedsReadonlyInfo')}
+          ? opSolutionsMiscT('itSolutionsTable.noNeedsReadonlyEditInfo')
+          : opSolutionsMiscT('itSolutionsTable.noNeedsReadonlyInfo')}
       </Alert>
     );
   }
@@ -390,8 +402,8 @@ const OperationalNeedsTable = ({
         <div className="mint-header__basic">
           <GlobalClientFilter
             setGlobalFilter={setGlobalFilter}
-            tableID={t('itSolutionsTable.id')}
-            tableName={t('itSolutionsTable.title')}
+            tableID={opSolutionsMiscT('itSolutionsTable.id')}
+            tableName={opSolutionsMiscT('itSolutionsTable.title')}
             className="margin-bottom-4 width-mobile-lg maxw-full"
           />
         </div>
@@ -528,8 +540,11 @@ const OperationalNeedsTable = ({
       </div>
 
       {operationalNeeds.length === 0 && (
-        <Alert heading={t('itSolutionsTable.noNeeds')} type="info">
-          {t('itSolutionsTable.noNeedsInfo')}
+        <Alert
+          heading={opSolutionsMiscT('itSolutionsTable.noNeeds')}
+          type="info"
+        >
+          {opSolutionsMiscT('itSolutionsTable.noNeedsInfo')}
         </Alert>
       )}
 
@@ -550,7 +565,7 @@ export const FilterViewSolutionsAlert = ({
   filterSolutions: OperationalSolutionKey[];
   operationalNeeds: any[];
 }) => {
-  const { t } = useTranslation('itSolutions');
+  const { t: opSolutionsMiscT } = useTranslation('opSolutionsMisc');
 
   const unusedSolutions = filterSolutions.filter(
     solution => !operationalNeeds.find((need: any) => need.key === solution)
@@ -560,7 +575,7 @@ export const FilterViewSolutionsAlert = ({
 
   return (
     <Alert noIcon type="info" validation>
-      {t('itSolutionsTable.unusedSolutionsAlert')}
+      {opSolutionsMiscT('itSolutionsTable.unusedSolutionsAlert')}
       <ul className="margin-top-1 margin-bottom-0">
         {helpSolutions
           .filter(solution => unusedSolutions.includes(solution.enum))

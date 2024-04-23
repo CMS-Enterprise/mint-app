@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useLazyQuery } from '@apollo/client';
 import Mention from '@tiptap/extension-mention';
 import {
   EditorContent,
@@ -10,12 +9,10 @@ import {
 } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import classNames from 'classnames';
-import { TagType } from 'gql/gen/graphql';
+import { TagType, useSearchOktaUsersLazyQuery } from 'gql/gen/graphql';
 import { sortBy } from 'lodash';
 
 import Alert from 'components/shared/Alert';
-import SearchOktaUsers from 'queries/SearchOktaUsers';
-import { SearchOktaUsers as SearchOktaUsersType } from 'queries/types/SearchOktaUsers';
 
 import suggestion from './suggestion';
 import { formatedSolutionMentions, getMentions } from './util';
@@ -81,13 +78,11 @@ const MentionTextArea = ({
   initialContent?: any;
   className?: string;
 }) => {
-  const { t } = useTranslation('discussions');
+  const { t } = useTranslation('discussionsMisc');
 
   const [tagAlert, setTagAlert] = useState<boolean>(false);
 
-  const [getUsersLazyQuery] = useLazyQuery<SearchOktaUsersType>(
-    SearchOktaUsers
-  );
+  const [getUsersLazyQuery] = useSearchOktaUsersLazyQuery();
 
   const fetchUsers = ({ query }: { query: string }) => {
     // If "@" trigger is typed without a following query, return on the solution contacts

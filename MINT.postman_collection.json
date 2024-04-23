@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "32329f70-986e-430d-8a0b-4509ca71dab1",
+		"_postman_id": "12156539-0c12-430a-a4c6-2ff44cb8ca68",
 		"name": "MINT",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "20320964"
+		"_exporter_id": "20435042"
 	},
 	"item": [
 		{
@@ -277,8 +277,8 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation updatePlanParticipantsAndProviders ($id: UUID!, $changes: PlanParticipantsAndProvidersChanges!) {\n    updatePlanParticipantsAndProviders (id: $id, changes: $changes) {\n        id\n        modelPlanID\n        participants\n        medicareProviderType\n        statesEngagement\n        participantsOther\n        participantsNote\n        participantsCurrentlyInModels\n        participantsCurrentlyInModelsNote\n        modelApplicationLevel\n        expectedNumberOfParticipants\n        estimateConfidence\n        confidenceNote\n        recruitmentMethod\n        recruitmentOther\n        recruitmentNote\n        selectionMethod\n        selectionOther\n        selectionNote\n        participantAddedFrequency\n        participantAddedFrequencyContinually\n        participantAddedFrequencyOther\n        participantAddedFrequencyNote\n        participantRemovedFrequency\n        participantRemovedFrequencyContinually\n        participantRemovedFrequencyOther\n        participantRemovedFrequencyNote\n        communicationMethod\n        communicationMethodOther\n        communicationNote\n        riskType\n        riskOther\n        riskNote\n        willRiskChange\n        willRiskChangeNote\n        coordinateWork\n        coordinateWorkNote\n        gainsharePayments\n        gainsharePaymentsTrack\n        gainsharePaymentsEligibility\n        gainsharePaymentsEligibilityOther\n        gainsharePaymentsNote\n        participantsIds\n        participantsIdsOther\n        participantsIDSNote\n        providerAdditionFrequency\n        providerAdditionFrequencyOther\n        providerAdditionFrequencyNote\n        providerAddMethod\n        providerAddMethodOther\n        providerAddMethodNote\n        providerLeaveMethod\n        providerLeaveMethodOther\n        providerLeaveMethodNote\n        providerOverlap\n        providerOverlapHierarchy\n        providerOverlapNote\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n        readyForReviewBy\n        readyForReviewDts\n        readyForClearanceBy\n        readyForClearanceDts\n        \n        createdByUserAccount \n        {\n            commonName\n        }   \n        modifiedByUserAccount\n        {\n            commonName\n        }     \n        readyForReviewByUserAccount \n        {\n            commonName\n        }\n        readyForClearanceByUserAccount \n        {\n            commonName\n        }\n\n\n        status\n    }\n}",
-								"variables": "{\n  \"id\": \"{{participantsAndProvidersID}}\",\n  \"changes\": {\n    \"participants\": [\n      \"\"\n    ],\n    \"medicareProviderType\": \"\",\n    \"statesEngagement\": \"\",\n    \"participantsOther\": \"\",\n    \"participantsNote\": \"\",\n    \"participantsCurrentlyInModels\": true,\n    \"participantsCurrentlyInModelsNote\": \"\",\n    \"modelApplicationLevel\": \"\",\n    \"expectedNumberOfParticipants\": 0,\n    \"estimateConfidence\": \"\",\n    \"confidenceNote\": \"\",\n    \"recruitmentMethod\": \"\",\n    \"recruitmentOther\": \"\",\n    \"recruitmentNote\": \"\",\n    \"selectionMethod\": [\n      \"\"\n    ],\n    \"selectionOther\": \"\",\n    \"selectionNote\": \"\",\n    \"participantAddedFrequency\": [\n        \"\"\n    ],\n    \"participantAddedFrequencyContinually\": \"\",\n    \"participantAddedFrequencyOther\": \"\",\n    \"participantAddedFrequencyNote\": \"\",\n    \"participantRemovedFrequency\": [\n        \"\"\n    ],    \n    \"participantRemovedFrequencyContinually\": \"\",\n    \"participantRemovedFrequencyOther\": \"\",\n    \"participantRemovedFrequencyNote\": \"\",\n    \"communicationMethod\": [\n      \"\"\n    ],\n    \"communicationMethodOther\": \"\",\n    \"communicationNote\": \"\",\n    \"riskType\": [\n        \"OTHER\"\n    ],\n    \"riskOther\": \"\",\n    \"riskNote\": \"\",\n    \"willRiskChange\": true,\n    \"willRiskChangeNote\": \"\",\n    \"coordinateWork\": true,\n    \"coordinateWorkNote\": \"\",\n    \"gainsharePayments\": true,\n    \"gainsharePaymentsTrack\": true,\n    \"gainsharePaymentsNote\": \"\",\n    \"gainsharePaymentsEligibility\": [\"\"],\n    \"gainsharePaymentsEligibilityOther\": \"\",\n    \"participantsIds\": [\n      \"\"\n    ],\n    \"participantsIdsOther\": \"\",\n    \"participantsIDSNote\": \"\",\n    \"providerAdditionFrequency\": \"\",\n    \"providerAdditionFrequencyOther\": \"\",\n    \"providerAdditionFrequencyNote\": \"\",\n    \"providerAddMethod\": [\n      \"\"\n    ],\n    \"providerAddMethodOther\": \"\",\n    \"providerAddMethodNote\": \"\",\n    \"providerLeaveMethod\": [\n      \"\"\n    ],\n    \"providerLeaveMethodOther\": \"\",\n    \"providerLeaveMethodNote\": \"\",\n    \"providerOverlap\": \"\",\n    \"providerOverlapHierarchy\": \"\",\n    \"providerOverlapNote\": \"\",\n    \"status\": \"\"\n  }\n}"
+								"query": "mutation updatePlanParticipantsAndProviders {\n    updatePlanParticipantsAndProviders (id: \"{{participantsAndProvidersID}}\",changes:{\n     #Page 1\n    participants: [MEDICARE_PROVIDERS]\n    medicareProviderType:   \"Provider Type\"\n    statesEngagement:   \"Very good engagement\"\n    participantsOther:   \"Other Participant\"\n    participantsNote:   \"Participants Note\"\n    participantsCurrentlyInModels:   true\n    participantsCurrentlyInModelsNote: \"participants currently in model note\"\n    modelApplicationLevel:   \"model application level\"\n\n    #Page 2\n    expectedNumberOfParticipants: 50\n    estimateConfidence:   SLIGHTLY\n    confidenceNote:   \"Confidence note here\"\n    recruitmentMethod:   OTHER\n    recruitmentOther:   \" recruitment Other\"\n    recruitmentNote:   \" recruitment Note \"\n    selectionMethod: [BASIC_CRITERIA, OTHER]\n    selectionOther:   \" selectionOther \"\n    selectionNote:   \" selection Note\"\n\n    #Page 3\n    participantAddedFrequency: [ANNUALLY, OTHER,CONTINUALLY]\n    participantAddedFrequencyContinually:   \"participantAddedFrequencyContinually\"\n    participantAddedFrequencyOther:   \"participantAddedFrequencyOther\"\n    participantAddedFrequencyNote:   \"participantAddedFrequencyNote\"\n    participantRemovedFrequency: [ANNUALLY, OTHER,CONTINUALLY]\n    participantRemovedFrequencyContinually:   \"participantRemovedFrequencyContinually\"\n    participantRemovedFrequencyOther:   \"participantRemovedFrequencyOther\"\n    participantRemovedFrequencyNote:   \"participantRemovedFrequencyNote\"\n    communicationMethod: [MASS_EMAIL, OTHER]\n    communicationMethodOther:   \"communicationMethodOther\"\n    communicationNote:   \"communicationNote\"\n    riskType: [TWO_SIDED, OTHER]\n    riskOther:   \"riskOther\"\n    riskNote:   \"riskNote\"\n    willRiskChange:   true\n    willRiskChangeNote:   \"willRiskChangeNote\"\n\n    #Page 4\n    participantRequireFinancialGuarantee: true\n    participantRequireFinancialGuaranteeType: [SURETY_BOND,LETTER_OF_CREDIT,ESCROW,OTHER]\n    participantRequireFinancialGuaranteeOther: \"participantRequireFinancialGuaranteeOther\"\n    participantRequireFinancialGuaranteeNote: \"participantRequireFinancialGuaranteeNote\"\n    coordinateWork:   true\n    coordinateWorkNote:   \"coordinateWorkNote\"\n    gainsharePayments:   true\n    gainsharePaymentsTrack: true\n    gainsharePaymentsNote:   \"gainsharePaymentsNote\"\n    gainsharePaymentsEligibility: [ALL_PROVIDERS, OTHER]\n    gainsharePaymentsEligibilityOther: \"gainsharePaymentsEligibilityOther\"\n    participantsIds: [TINS, OTHER]\n    participantsIdsOther:   \"participantsIdsOther\"\n    participantsIDSNote:   \"participantsIDSNote\"\n\n    #Page 5\n    providerAdditionFrequency: [  ANNUALLY,  SEMIANNUALLY,  QUARTERLY,  MONTHLY,  CONTINUALLY,  OTHER]\n    providerAdditionFrequencyContinually: \"providerAdditionFrequencyContinually\"\n    providerAdditionFrequencyOther: \"providerAdditionFrequencyOther\"\n    providerAdditionFrequencyNote:  \"providerAdditionFrequencyNote\"\n    providerAddMethod: [PROSPECTIVELY,OTHER]\n    providerAddMethodOther:   \"providerAddMethodOther\"\n    providerAddMethodNote:   \"providerAddMethodNote\"\n    providerLeaveMethod: [VOLUNTARILY_WITHOUT_IMPLICATIONS, OTHER]\n    providerLeaveMethodOther:   \"providerLeaveMethodOther\"\n    providerLeaveMethodNote:   \"providerLeaveMethodNote\"\n    providerRemovalFrequency: [  ANNUALLY,  SEMIANNUALLY,  QUARTERLY,  MONTHLY,  CONTINUALLY,  OTHER]\n    providerRemovalFrequencyContinually: \"providerRemovalFrequencyContinually\"\n    providerRemovalFrequencyOther:  \"providerRemovalFrequencyOther\"\n    providerRemovalFrequencyNote:   \"providerRemovalFrequencyNote\"\n    providerOverlap:   YES_NEED_POLICIES\n    providerOverlapHierarchy:   \"providerOverlapHierarchy\"\n    providerOverlapNote:   \"providerOverlapNote\"\n\n    status: READY_FOR_REVIEW\n    })      \n    {\n    id\n    modelPlanID\n\n    #Page 1\n    participants\n    medicareProviderType\n    statesEngagement\n    participantsOther\n    participantsNote\n    participantsCurrentlyInModels\n    participantsCurrentlyInModelsNote\n    modelApplicationLevel\n\n    #Page 2\n    expectedNumberOfParticipants\n    estimateConfidence\n    confidenceNote\n    recruitmentMethod\n    recruitmentOther\n    recruitmentNote\n    selectionMethod\n    selectionOther\n    selectionNote\n\n    #Page 3\n    participantAddedFrequency\n    participantAddedFrequencyContinually\n    participantAddedFrequencyOther\n    participantAddedFrequencyNote\n    participantRemovedFrequency\n    participantRemovedFrequencyContinually\n    participantRemovedFrequencyOther\n    participantRemovedFrequencyNote\n    communicationMethod\n    communicationMethodOther\n    communicationNote\n    riskType\n    riskOther\n    riskNote\n    willRiskChange\n    willRiskChangeNote\n\n    #Page 4\n    participantRequireFinancialGuarantee\n    participantRequireFinancialGuaranteeType\n    participantRequireFinancialGuaranteeOther\n    participantRequireFinancialGuaranteeNote\n    coordinateWork\n    coordinateWorkNote\n    gainsharePayments\n    gainsharePaymentsTrack\n    gainsharePaymentsNote\n    gainsharePaymentsEligibility\n    gainsharePaymentsEligibilityOther\n    participantsIds\n    participantsIdsOther\n    participantsIDSNote\n\n    #Page 5\n    providerAdditionFrequency\n    providerAdditionFrequencyContinually\n    providerAdditionFrequencyOther\n    providerAdditionFrequencyNote\n    providerAddMethod\n    providerAddMethodOther\n    providerAddMethodNote\n    providerLeaveMethod\n    providerLeaveMethodOther\n    providerLeaveMethodNote\n    providerRemovalFrequency\n    providerRemovalFrequencyContinually\n    providerRemovalFrequencyOther\n    providerRemovalFrequencyNote\n    providerOverlap\n    providerOverlapHierarchy\n    providerOverlapNote\n\n\n    createdBy\n\n    createdDts\n    modifiedBy\n\n    modifiedDts\n\n    readyForReviewBy\n    readyForReviewDts\n    readyForClearanceBy\n    readyForClearanceDts\n\n    status\n        \n    createdByUserAccount \n    {\n        commonName\n    }   \n    modifiedByUserAccount\n    {\n        commonName\n    }     \n    readyForReviewByUserAccount \n    {\n        commonName\n    }\n    readyForClearanceByUserAccount \n    {\n        commonName\n    }\n\n\n\n    }\n}",
+								"variables": ""
 							}
 						},
 						"url": {
@@ -1698,6 +1698,39 @@
 					"response": []
 				},
 				{
+					"name": "PossibleOperationalSolutionSetPrimaryPointOfContact",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation SetPrimaryPointOfContact{\n    setPrimaryPointOfContact (possibleOperationalSolutionId: 1, pointOfContactId: \"7f6163d2-c8d5-4349-95af-565cbdf1c45a\")\n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "OperationSolutionsGetByOperationalNeedID",
 					"event": [
 						{
@@ -1738,7 +1771,8 @@
 								"exec": [
 									""
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"packages": {}
 							}
 						}
 					],
@@ -1748,7 +1782,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "query PossibleOperationalSolution{\n  \n  possibleOperationalSolutions{\n        id\n        name\n        key  \n        createdByUserAccount \n        {\n            commonName\n        }   \n        modifiedByUserAccount\n        {\n            commonName\n        }         \n    \n  }\n}\n",
+								"query": "query PossibleOperationalSolution{\n  \n  possibleOperationalSolutions{\n        id\n        name\n        key  \n        primaryPointOfContact {\n            id\n            possibleOperationalSolutionID\n            name\n            email\n            isTeam\n            role\n        }\n        createdByUserAccount \n        {\n            commonName\n        }   \n        modifiedByUserAccount\n        {\n            commonName\n        }         \n    \n  }\n}\n",
 								"variables": ""
 							}
 						},
@@ -2089,7 +2123,8 @@
 									"//     pm.collectionVariables.set(\"operationalSolutionSubtaskID\"+i, subtaskID);",
 									"// }"
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"packages": {}
 							}
 						}
 					],
@@ -2099,7 +2134,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "query currentUser {\n  currentUser {\n    notifications {\n      numUnreadNotifications\n      notifications {\n        __typename\n        id\n        isRead\n        inAppSent\n        emailSent\n        activity {\n          activityType\n          entityID\n          actorID\n                    metaData {\n            __typename\n            ... on TaggedInPlanDiscussionActivityMeta{\n                version\n                type\n                modelPlanID\n                modelPlan{\n                    modelName\n                }      \n                discussionID\n                content\n            }\n            ... on TaggedInDiscussionReplyActivityMeta {\n                version\n                type\n                modelPlanID\n                modelPlan{\n                    modelName\n                }                  \n                discussionID\n                replyID\n                content\n            }\n          }\n          createdByUserAccount {\n            commonName\n          }\n        }\n        createdByUserAccount {\n          commonName\n        }\n      }\n    }\n  }\n}\n",
+								"query": "query currentUser {\n  currentUser {\n    account{\n        username\n        commonName\n    }\n    notifications {\n      numUnreadNotifications\n      notifications {\n        __typename\n        id\n        isRead\n        inAppSent\n        emailSent\n        activity {\n          activityType\n          entityID\n          actorID\n            metaData {\n            __typename\n            ... on AddedAsCollaboratorMeta {\n                version\n                type\n                modelPlanID\n                modelPlan{\n                    modelName\n                }\n                collaboratorID\n                collaborator {\n                    teamRoles\n                    userAccount{\n                        commonName                        \n                    }\n                }  \n            }\n            ... on TaggedInPlanDiscussionActivityMeta{\n                version\n                type\n                modelPlanID\n                modelPlan{\n                    modelName\n                }      \n                discussionID\n                content\n            }\n            ... on TaggedInDiscussionReplyActivityMeta {\n                version\n                type\n                modelPlanID\n                modelPlan{\n                    modelName\n                }                  \n                discussionID\n                replyID\n                content\n            }\n            ... on ModelPlanSharedActivityMeta {\n                version\n                type\n                modelPlanID\n                modelPlan{\n                    modelName\n                }\n                optionalMessage\n            }\n            ... on NewDiscussionRepliedActivityMeta {\n                version\n                type\n                discussionID\n                replyID\n                content\n            } \n            ... on DailyDigestCompleteActivityMeta{\n                version\n                type\n                modelPlanIDs\n                date\n                analyzedAudits{\n                       id\n                        modelPlanID\n                        modelName\n                        date\n                        changes{\n                            modelPlan{\n                                oldName\n                                statusChanges\n                            }\n                            documents{\n                                count\n                            }\n                            crTdls{\n                                activity\n                            }\n                            planSections{\n                                updated\n                                readyForReview\n                                readyForClearance\n                            }\n                            modelLeads{\n                                added{\n                                    id\n                                    commonName\n                                    # userAccount{\n                                    #     id\n                                    #     email\n                                    # }\n                                }\n                            }\n                            planDiscussions{\n                                activity\n                            }\n                        }\n\n                }\n\n            }            \n          }\n          createdByUserAccount {\n            commonName\n          }\n        }\n        createdByUserAccount {\n          commonName\n        }\n      }\n    }\n  }\n}\n",
 								"variables": ""
 							}
 						},

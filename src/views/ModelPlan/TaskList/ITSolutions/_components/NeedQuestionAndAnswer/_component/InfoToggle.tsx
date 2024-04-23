@@ -26,7 +26,7 @@ const InfoToggle = ({
   needConfig,
   modelID
 }: InfoToggleTypes) => {
-  const { t } = useTranslation('itSolutions');
+  const { t } = useTranslation('opSolutionsMisc');
 
   // Toggle the collapsed state of operational need question/answer
   const [infoToggle, setInfoToggle] = useState<boolean>(false);

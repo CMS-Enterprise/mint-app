@@ -1,8 +1,6 @@
 package worker
 
 import (
-	"context"
-	"strings"
 	"time"
 
 	"github.com/cmsgov/mint-app/pkg/email"
@@ -14,101 +12,8 @@ import (
 
 	"github.com/cmsgov/mint-app/pkg/models"
 	"github.com/cmsgov/mint-app/pkg/shared/oddmail"
+	"github.com/cmsgov/mint-app/pkg/storage"
 )
-
-func (suite *WorkerSuite) TestDigestEmail() {
-
-	// Setup email
-	mockController := gomock.NewController(suite.T())
-	mockEmailService := oddmail.NewMockEmailService(mockController)
-
-	addressBook := email.AddressBook{
-		DefaultSender: "unit-test-execution@mint.cms.gov",
-	}
-
-	emailServiceConfig := &oddmail.GoSimpleMailServiceConfig{
-		ClientAddress: "http://localhost:3005",
-	}
-
-	mockEmailService.
-		EXPECT().
-		GetConfig().
-		Return(emailServiceConfig).
-		AnyTimes()
-
-	worker := &Worker{
-		Store:                suite.testConfigs.Store,
-		Logger:               suite.testConfigs.Logger,
-		EmailService:         mockEmailService,
-		EmailTemplateService: suite.testConfigs.EmailTemplateService,
-		AddressBook:          addressBook,
-	}
-
-	mp := suite.createModelPlan("Test Plan")
-	collaborator := suite.createPlanCollaborator(
-		mp,
-		"MINT",
-		"Test User",
-		[]models.TeamRole{models.TeamRoleModelLead},
-		"testuser@email.com",
-	)
-	collaboratorAccount, err := suite.testConfigs.Store.UserAccountGetByID(suite.testConfigs.Store, collaborator.UserID)
-	suite.NoError(err)
-
-	var analyzedAudits []*models.AnalyzedAudit
-	modelNameChange := "Old Name"
-	modelStatusChange := []string{"OMB_ASRF_CLEARANCE"}
-	documentCount := 2
-	crTdlAvtivity := true
-	updatedSections := []string{"plan_payments", "plan_ops_eval_and_learning"}
-	reviewSections := []string{"plan_payments", "plan_ops_eval_and_learning"}
-	clearanceSections := []string{"plan_participants_and_providers", "plan_general_characteristics", "plan_basics"}
-	addedLead := []models.AnalyzedModelLeadInfo{{CommonName: "New Lead"}}
-	dicussionActivity := true
-
-	auditChange := *suite.createAnalyzedAuditChange(modelNameChange, modelStatusChange, documentCount,
-		crTdlAvtivity, updatedSections, reviewSections, clearanceSections, addedLead, dicussionActivity)
-
-	analyzedAudit := suite.createAnalyzedAudit(mp, time.Now().UTC(), auditChange)
-
-	// Test getDailyDigestAnalyzedAudits
-	analyzedAudits, err = getDigestAnalyzedAudits(collaborator.UserID, time.Now().UTC(), worker.Store, worker.Logger)
-	suite.Equal(analyzedAudit.ID, analyzedAudits[0].ID)
-	suite.NoError(err)
-
-	// Test generateDailyDigestEmail email to check content
-	humanized := analyzedAudits[0].Changes.HumanizedSubset(5)
-	emailSubject, emailBody, err := generateDigestEmail(analyzedAudits, worker.EmailTemplateService, worker.EmailService)
-	suite.NoError(err)
-	suite.NotNil(emailSubject)
-	suite.NotNil(emailBody)
-	suite.EqualValues("Updates on the models you're following", emailSubject)
-
-	// Check if email contains model name
-	suite.True(strings.Contains(emailBody, mp.ModelName))
-	// Check if email contains humanized sentences
-	lo.ForEach(humanized, func(h string, _ int) {
-		h = strings.Replace(h, "+", "&#43;", -1)
-		suite.True(strings.Contains(emailBody, h))
-	})
-
-	// Test DailyDigestEmailJob / sending email
-	mockEmailService.
-		EXPECT().
-		Send(
-			gomock.Any(),
-			gomock.Eq([]string{collaboratorAccount.Email}),
-			gomock.Any(),
-			gomock.Eq(emailSubject),
-			gomock.Any(),
-			gomock.Eq(emailBody),
-		).MinTimes(1).MaxTimes(1)
-
-	err = worker.DigestEmailJob(context.Background(), time.Now().UTC().Format("2006-01-02"), collaborator.UserID.String()) // pass user id as string because that is how it is returned from Faktory
-
-	suite.NoError(err)
-	mockController.Finish()
-}
 
 // Faktory integration tests
 func (suite *WorkerSuite) TestDigestEmailBatchJobIntegration() {
@@ -127,21 +32,21 @@ func (suite *WorkerSuite) TestDigestEmailBatchJobIntegration() {
 		[]models.TeamRole{models.TeamRoleModelLead},
 		"testuser@email.com",
 	)
-	emails := []string{collaborator.UserID.String(), suite.testConfigs.Principal.Account().ID.String()} //TODO verify that his is correct
+	emails := []string{collaborator.UserID.String(), suite.testConfigs.Principal.Account().ID.String()}
 	// SHOULD EMAIL CREATOR OF PLAN AND COLLABORATOR
 
 	modelNameChange := "Old Name"
 	modelStatusChange := []string{"OMB_ASRF_CLEARANCE"}
 	documentCount := 2
-	crTdlAvtivity := true
+	crTdlActivity := true
 	updatedSections := []string{"plan_payments", "plan_ops_eval_and_learning"}
 	reviewSections := []string{"plan_payments", "plan_ops_eval_and_learning"}
 	clearanceSections := []string{"plan_participants_and_providers", "plan_general_characteristics", "plan_basics"}
 	addedLead := []models.AnalyzedModelLeadInfo{{CommonName: "New Lead", ID: collaborator.ID}}
-	dicussionActivity := true
+	discussionActivity := true
 
 	auditChange := *suite.createAnalyzedAuditChange(modelNameChange, modelStatusChange, documentCount,
-		crTdlAvtivity, updatedSections, reviewSections, clearanceSections, addedLead, dicussionActivity)
+		crTdlActivity, updatedSections, reviewSections, clearanceSections, addedLead, discussionActivity)
 
 	suite.createAnalyzedAudit(mp, time.Now().UTC(), auditChange)
 
@@ -162,7 +67,7 @@ func (suite *WorkerSuite) TestDigestEmailBatchJobIntegration() {
 		suite.NoError(err2)
 		suite.True(queueSize[emailQueue] == 3)
 
-		// Check jobs arguments equal are corrrect userID and  date
+		// Check jobs arguments equal are correct userID and  date
 		job1, err2 := cl.Fetch(emailQueue)
 		suite.NoError(err2)
 
@@ -213,6 +118,8 @@ func (suite *WorkerSuite) TestDigestEmailBatchJobIntegration() {
 	suite.NoError(err)
 }
 
+// TestDigestEmailJobIntegration ensures the Digest email job works as expected with Faktory.
+// It is not responsible for testing the code called by the job, but simply to make sure it runs with faktory without an error.
 func (suite *WorkerSuite) TestDigestEmailJobIntegration() {
 	// Setup email
 	mockController := gomock.NewController(suite.T())
@@ -241,8 +148,7 @@ func (suite *WorkerSuite) TestDigestEmailJobIntegration() {
 	}
 
 	date := time.Now().UTC().Format("2006-01-02")
-	// Create Plan
-	// 	date := time.Now().UTC().Format("2006-01-02")
+
 	//Create Plans
 	mp := suite.createModelPlan("Test Plan")
 	collaborator := suite.createPlanCollaborator(
@@ -252,21 +158,21 @@ func (suite *WorkerSuite) TestDigestEmailJobIntegration() {
 		[]models.TeamRole{models.TeamRoleModelLead},
 		"testuser@email.com",
 	)
-	collaboratorAccount, err := suite.testConfigs.Store.UserAccountGetByID(suite.testConfigs.Store, collaborator.UserID)
+	collaboratorAccount, err := storage.UserAccountGetByID(suite.testConfigs.Store, collaborator.UserID)
 	suite.NoError(err)
 
 	modelNameChange := "Old Name"
 	modelStatusChange := []string{"OMB_ASRF_CLEARANCE"}
 	documentCount := 2
-	crTdlAvtivity := true
+	crTdlActivity := true
 	updatedSections := []string{"plan_payments", "plan_ops_eval_and_learning"}
 	reviewSections := []string{"plan_payments", "plan_ops_eval_and_learning"}
 	clearanceSections := []string{"plan_participants_and_providers", "plan_general_characteristics", "plan_basics"}
 	addedLead := []models.AnalyzedModelLeadInfo{{CommonName: "New Lead", ID: collaborator.ID}}
-	dicussionActivity := true
+	discussionActivity := true
 
 	auditChange := *suite.createAnalyzedAuditChange(modelNameChange, modelStatusChange, documentCount,
-		crTdlAvtivity, updatedSections, reviewSections, clearanceSections, addedLead, dicussionActivity)
+		crTdlActivity, updatedSections, reviewSections, clearanceSections, addedLead, discussionActivity)
 
 	suite.createAnalyzedAudit(mp, time.Now().UTC(), auditChange)
 
@@ -286,7 +192,7 @@ func (suite *WorkerSuite) TestDigestEmailJobIntegration() {
 		suite.NoError(err2)
 		suite.True(queues[emailQueue] == 1)
 
-		// Check jobs arguments equal are corrrect userID and date
+		// Check jobs arguments equal are correct userID and date
 		job1, err2 := cl.Fetch(emailQueue)
 
 		suite.NoError(err2)

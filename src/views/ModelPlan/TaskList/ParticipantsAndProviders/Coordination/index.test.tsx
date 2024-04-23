@@ -6,8 +6,10 @@ import {
   GainshareArrangementEligibility,
   GetCoordinationDocument,
   GetCoordinationQuery,
+  ParticipantRequireFinancialGuaranteeType,
   ParticipantsIdType
 } from 'gql/gen/graphql';
+import Sinon from 'sinon';
 
 import Coordination from './index';
 
@@ -16,6 +18,13 @@ type GetCoordinationType = GetCoordinationQuery['modelPlan']['participantsAndPro
 const coordinationMockData: GetCoordinationType = {
   __typename: 'PlanParticipantsAndProviders',
   id: '123',
+  participantRequireFinancialGuarantee: true,
+  participantRequireFinancialGuaranteeType: [
+    ParticipantRequireFinancialGuaranteeType.ESCROW
+  ],
+  participantRequireFinancialGuaranteeOther:
+    'participantRequireFinancialGuaranteeOther',
+  participantRequireFinancialGuaranteeNote: '',
   coordinateWork: null,
   coordinateWorkNote: '',
   gainsharePayments: null,
@@ -54,6 +63,9 @@ const coordinationMock = [
 ];
 
 describe('Model Plan Coordination', () => {
+  // Stubing Math.random that occurs in Truss Tooltip component for deterministic output
+  Sinon.stub(Math, 'random').returns(0.5);
+
   it('renders without errors', async () => {
     render(
       <MemoryRouter

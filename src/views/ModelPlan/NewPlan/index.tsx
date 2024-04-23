@@ -1,7 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, Route, Switch, useHistory } from 'react-router-dom';
-import { useMutation } from '@apollo/client';
 import {
   Breadcrumb,
   BreadcrumbBar,
@@ -13,6 +12,7 @@ import {
   TextInput
 } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
+import { useCreateModelPlanMutation } from 'gql/gen/graphql';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
@@ -21,7 +21,6 @@ import Alert from 'components/shared/Alert';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
-import CreateDraftModelPlan from 'queries/CreateModelPlan';
 import flattenErrors from 'utils/flattenErrors';
 import NewModelPlanValidationSchema from 'validations/newModelPlan';
 import NotFound from 'views/NotFound';
@@ -31,7 +30,7 @@ const NewPlanContent = () => {
   const { t: modelPlanMiscT } = useTranslation('modelPlanMisc');
 
   const history = useHistory();
-  const [mutate] = useMutation(CreateDraftModelPlan);
+  const [mutate] = useCreateModelPlanMutation();
 
   const handleCreateDraftModelPlan = (formikValues: { modelName: string }) => {
     const { modelName } = formikValues;
@@ -40,8 +39,8 @@ const NewPlanContent = () => {
         modelName
       }
     }).then(response => {
-      if (!response?.errors) {
-        const { id } = response?.data?.createModelPlan;
+      if (!response.errors && response.data) {
+        const { id } = response.data.createModelPlan;
         history.push(`/models/${id}/collaborators?view=add`);
       }
     });

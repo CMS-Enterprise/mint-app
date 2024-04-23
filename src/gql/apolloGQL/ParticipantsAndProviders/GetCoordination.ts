@@ -7,6 +7,10 @@ export default gql(/* GraphQL */ `
       modelName
       participantsAndProviders {
         id
+        participantRequireFinancialGuarantee
+        participantRequireFinancialGuaranteeType
+        participantRequireFinancialGuaranteeOther
+        participantRequireFinancialGuaranteeNote
         coordinateWork
         coordinateWorkNote
         gainsharePayments

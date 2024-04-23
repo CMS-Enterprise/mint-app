@@ -16,13 +16,6 @@ enum ParticipantsType {
   OTHER
 }
 
-enum ConfidenceType {
-  NOT_AT_ALL
-  SLIGHTLY
-  FAIRLY
-  COMPLETELY
-}
-
 enum RecruitmentType {
   LOI
   APPLICATION_COLLECTION_TOOL
@@ -91,10 +84,11 @@ enum ProviderLeaveType {
   NOT_APPLICABLE
 }
 
-enum OverlapType {
-  YES_NEED_POLICIES
-  YES_NO_ISSUES
-  NO
+enum ParticipantRequireFinancialGuaranteeType {
+  SURETY_BOND,
+  LETTER_OF_CREDIT,
+  ESCROW,
+  OTHER
 }
 
 """
@@ -144,6 +138,10 @@ type PlanParticipantsAndProviders {
   willRiskChangeNote:    String
 
   #Page 4
+  participantRequireFinancialGuarantee: Boolean
+  participantRequireFinancialGuaranteeType: [ParticipantRequireFinancialGuaranteeType!]!
+  participantRequireFinancialGuaranteeOther: String
+  participantRequireFinancialGuaranteeNote: String
   coordinateWork:          Boolean
   coordinateWorkNote:      String
   gainsharePayments:       Boolean
@@ -239,6 +237,10 @@ input PlanParticipantsAndProvidersChanges @goModel(model: "map[string]interface{
   willRiskChangeNote:    String
 
   #Page 4
+  participantRequireFinancialGuarantee: Boolean
+  participantRequireFinancialGuaranteeType: [ParticipantRequireFinancialGuaranteeType!]
+  participantRequireFinancialGuaranteeOther: String
+  participantRequireFinancialGuaranteeNote: String
   coordinateWork:          Boolean
   coordinateWorkNote:      String
   gainsharePayments:       Boolean

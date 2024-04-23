@@ -11,7 +11,9 @@ type DataLoaders struct {
 	BeneficiariesLoader                   *WrappedDataLoader
 	OperationsEvaluationAndLearningLoader *WrappedDataLoader
 	PaymentLoader                         *WrappedDataLoader
-	PlanCollaboratorLoader                *WrappedDataLoader
+	PlanCollaboratorByModelPlanLoader     *WrappedDataLoader
+
+	PlanCollaboratorByIDLoader *WrappedDataLoader
 
 	DiscussionLoader      *WrappedDataLoader
 	DiscussionReplyLoader *WrappedDataLoader
@@ -30,6 +32,8 @@ type DataLoaders struct {
 
 	ActivityLoader                    *WrappedDataLoader
 	UserNotificationPreferencesLoader *WrappedDataLoader
+
+	AnalyzedAuditLoader *WrappedDataLoader
 }
 
 // NewDataLoaders instantiates data loaders for the middleware
@@ -45,7 +49,9 @@ func NewDataLoaders(store *storage.Store) *DataLoaders {
 	loaders.BeneficiariesLoader = newWrappedDataLoader(loaders.GetPlanBeneficiariesByModelPlanID)
 	loaders.OperationsEvaluationAndLearningLoader = newWrappedDataLoader(loaders.GetPlanOpsEvalAndLearningByModelPlanID)
 	loaders.PaymentLoader = newWrappedDataLoader(loaders.GetPlanPaymentsByModelPlanID)
-	loaders.PlanCollaboratorLoader = newWrappedDataLoader(loaders.GetPlanCollaboratorByModelPlanID)
+	loaders.PlanCollaboratorByModelPlanLoader = newWrappedDataLoader(loaders.GetPlanCollaboratorByModelPlanID)
+
+	loaders.PlanCollaboratorByIDLoader = newWrappedDataLoader(loaders.getPlanCollaboratorByIDBatch)
 
 	loaders.DiscussionLoader = newWrappedDataLoader(loaders.GetPlanDiscussionByModelPlanID)
 	loaders.DiscussionReplyLoader = newWrappedDataLoader(loaders.GetDiscussionReplyByModelPlanID)
@@ -64,6 +70,8 @@ func NewDataLoaders(store *storage.Store) *DataLoaders {
 
 	loaders.ActivityLoader = newWrappedDataLoader(loaders.activityGetByIDLoaderBatch)
 	loaders.UserNotificationPreferencesLoader = newWrappedDataLoader(loaders.userNotificationPreferencesGetByUserIDBatch)
+
+	loaders.AnalyzedAuditLoader = newWrappedDataLoader(loaders.analyzedAuditGetByModelPlanIDAndDateBatch)
 
 	return loaders
 }

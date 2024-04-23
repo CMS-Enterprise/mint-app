@@ -1,0 +1,30 @@
+enum ReportAProblemSection {
+  READ_VIEW
+  TASK_LIST
+  IT_SOLUTIONS
+  HELP_CENTER
+  OTHER
+}
+
+enum ReportAProblemSeverity {
+  PREVENTED_TASK
+  DELAYED_TASK
+  MINOR
+  OTHER
+}
+
+input ReportAProblemInput {
+  isAnonymousSubmission: Boolean!
+  allowContact: Boolean
+  section: ReportAProblemSection
+  sectionOther: String
+  whatDoing: String
+  whatWentWrong: String
+  severity: ReportAProblemSeverity
+  severityOther: String
+}
+
+extend type Mutation {
+  reportAProblem(input: ReportAProblemInput!): Boolean!
+  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+}

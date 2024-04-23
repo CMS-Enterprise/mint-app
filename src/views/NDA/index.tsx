@@ -2,14 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
-import { useMutation } from '@apollo/client';
 import { Button, Checkbox, Grid, GridContainer } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
+import { useUpdateNdaMutation } from 'gql/gen/graphql';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import Alert from 'components/shared/Alert';
-import UpdateNDA from 'queries/NDA/UpdateNDA';
 import { setUser } from 'reducers/authReducer';
 import { formatDateLocal } from 'utils/date';
 
@@ -31,7 +30,7 @@ const NDA = () => {
     (state: RootStateOrAny) => state.auth
   );
 
-  const [signNDA] = useMutation(UpdateNDA);
+  const [signNDA] = useUpdateNdaMutation();
 
   useEffect(() => {
     if (locationState?.nextState) setOriginalRoute(locationState?.nextState);

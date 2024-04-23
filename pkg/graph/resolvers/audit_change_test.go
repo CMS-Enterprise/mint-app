@@ -1,6 +1,6 @@
 package resolvers
 
-// AuditChangeCollectionByIDAndTable returns changes based on tablename and primary key
+// AuditChangeCollectionByIDAndTable returns changes based on table name and primary key
 func (suite *ResolverSuite) TestAuditChangeCollectionByIDAndTable() {
 
 	modelNames := [4]string{"Plan For Audit0", "Plan For Audit1", "Plan For Audit2", "Plan For Audit3"}
@@ -11,7 +11,6 @@ func (suite *ResolverSuite) TestAuditChangeCollectionByIDAndTable() {
 	suite.Len(auditChanges, 1)
 
 	for i := 1; i < len(modelNames); i++ {
-		//TODO loop through each change and update the name each time. Verify the change count and that the cahnge record matches as expected. //We could also test get model name through this, or put it in model plan test
 		changes := map[string]interface{}{
 			"modelName": modelNames[i],
 		}

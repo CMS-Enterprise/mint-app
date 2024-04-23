@@ -45,7 +45,7 @@ func (suite *ResolverSuite) stubFetchUserInfo(ctx context.Context, username stri
 
 func (suite *ResolverSuite) createModelPlan(planName string) *models.ModelPlan {
 	mp, err := ModelPlanCreate(
-		context.Background(),
+		suite.testConfigs.Context,
 		suite.testConfigs.Logger,
 		nil,
 		nil,
@@ -155,8 +155,8 @@ func (suite *ResolverSuite) createPlanCollaborator(mp *models.ModelPlan, userNam
 		).
 		AnyTimes()
 
-	collaborator, _, err := CreatePlanCollaborator(
-		context.Background(),
+	collaborator, _, err := PlanCollaboratorCreate(
+		suite.testConfigs.Context,
 		suite.testConfigs.Store,
 		suite.testConfigs.Store,
 		suite.testConfigs.Logger,
@@ -167,6 +167,7 @@ func (suite *ResolverSuite) createPlanCollaborator(mp *models.ModelPlan, userNam
 		suite.testConfigs.Principal,
 		false,
 		userhelpers.GetUserInfoAccountInfoWrapperFunc(suite.stubFetchUserInfo),
+		true,
 	)
 	suite.NoError(err)
 	return collaborator
@@ -281,6 +282,78 @@ func (suite *ResolverSuite) convertOperationalSubtasksToUpdateInputs(
 		)
 	}
 	return updateInputs
+}
+
+func (suite *ResolverSuite) createAnalyzedAuditChange(modelNameChange string,
+	modelStatusChanges []string,
+	documentCount int,
+	crTdlActivity bool,
+	updatedSections []string,
+	reviewSections []string,
+	clearanceSections []string,
+	addedLeads []models.AnalyzedModelLeadInfo, discussionActivity bool) *models.AnalyzedAuditChange {
+
+	auditChange := models.AnalyzedAuditChange{
+		ModelPlan: &models.AnalyzedModelPlan{
+			OldName:       modelNameChange,
+			StatusChanges: modelStatusChanges,
+		},
+		Documents: &models.AnalyzedDocuments{
+			Count: documentCount,
+		},
+		CrTdls: &models.AnalyzedCrTdls{
+			Activity: crTdlActivity,
+		},
+		PlanSections: &models.AnalyzedPlanSections{
+			Updated:           updatedSections,
+			ReadyForReview:    reviewSections,
+			ReadyForClearance: clearanceSections,
+		},
+		ModelLeads: &models.AnalyzedModelLeads{
+			Added: addedLeads,
+		},
+		PlanDiscussions: &models.AnalyzedPlanDiscussions{
+			Activity: discussionActivity,
+		},
+	}
+
+	return &auditChange
+}
+
+// createAnalyzedAudit is a helper function to just store an analyzed audit to the DB, without using a resolver
+func (suite *ResolverSuite) createAnalyzedAudit(mp *models.ModelPlan, date time.Time, changes models.AnalyzedAuditChange) *models.AnalyzedAudit {
+	principal := getTestPrincipal(suite.testConfigs.Store, "TEST")
+	newAnalyzedAudit, err := models.NewAnalyzedAudit(principal.UserAccount.ID, mp.ID, mp.ModelName, date, changes)
+	suite.NoError(err)
+
+	analyzedAudit, err := suite.testConfigs.Store.AnalyzedAuditCreate(suite.testConfigs.Logger, newAnalyzedAudit)
+	suite.NoError(err)
+
+	return analyzedAudit
+}
+
+func (suite *ResolverSuite) createDefaultTestAnalyzedAudit(mp *models.ModelPlan, date time.Time, callbacks ...func(*models.AnalyzedAuditChange)) *models.AnalyzedAudit {
+	modelNameChange := "Old Name"
+	modelStatusChange := []string{"OMB_ASRF_CLEARANCE"}
+	documentCount := 2
+	crTdlActivity := true
+	updatedSections := []string{"plan_payments", "plan_ops_eval_and_learning"}
+	reviewSections := []string{"plan_payments", "plan_ops_eval_and_learning"}
+	clearanceSections := []string{"plan_participants_and_providers", "plan_general_characteristics", "plan_basics"}
+	addedLead := []models.AnalyzedModelLeadInfo{{CommonName: "New Lead"}}
+	discussionActivity := true
+
+	auditChange := suite.createAnalyzedAuditChange(modelNameChange, modelStatusChange, documentCount,
+		crTdlActivity, updatedSections, reviewSections, clearanceSections, addedLead, discussionActivity)
+
+	for _, cb := range callbacks {
+		cb(auditChange)
+
+	}
+	suite.NotNil(auditChange)
+
+	return suite.createAnalyzedAudit(mp, date, *auditChange)
+
 }
 
 // TestResolverSuite runs the resolver test suite

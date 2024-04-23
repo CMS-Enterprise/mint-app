@@ -62,6 +62,7 @@ func ActivityGetByIDLoaderThunk(_ context.Context, np sqlutils.NamedPreparer, pa
 
 // parseRawActivityMetaData conditionally parses meta data from JSON to a specific meta data type
 func parseRawActivityMetaData(activityType models.ActivityType, rawMetaDataJSON interface{}) (models.ActivityMetaData, error) {
+	//Future Enhancement: can this be genericized instead of switching on activity type?
 
 	var rawData []byte
 
@@ -85,6 +86,7 @@ func parseRawActivityMetaData(activityType models.ActivityType, rawMetaDataJSON 
 			return nil, err
 		}
 		return &meta, nil
+
 	case models.ActivityTaggedInDiscussionReply:
 		// Deserialize the raw JSON into TaggedInDiscussionReplyActivityMeta
 		meta := models.TaggedInDiscussionReplyActivityMeta{}
@@ -94,7 +96,37 @@ func parseRawActivityMetaData(activityType models.ActivityType, rawMetaDataJSON 
 		}
 		return &meta, nil
 
-	// Add cases for other ActivityTypes as needed
+	case models.ActivityDigest:
+		// Deserialize the raw JSON into TaggedInDiscussionReplyActivityMeta
+		meta := models.DailyDigestCompleteActivityMeta{}
+		if err := json.Unmarshal(rawData, &meta); err != nil {
+			return nil, err
+		}
+		return &meta, nil
+
+	case models.ActivityNewDiscussionReply:
+		// Deserialize the raw JSON into NewDiscussionReplyActivityMeta
+		meta := models.NewDiscussionRepliedActivityMeta{}
+		if err := json.Unmarshal(rawData, &meta); err != nil {
+			return nil, err
+		}
+		return &meta, nil
+	case models.ActivityAddedAsCollaborator:
+		// Deserialize the raw JSON into AddedAsCollaboratorMeta
+		meta := models.AddedAsCollaboratorMeta{}
+		if err := json.Unmarshal(rawData, &meta); err != nil {
+
+			return nil, err
+		}
+		return &meta, nil
+
+	case models.ActivityModelPlanShared:
+		// Deserialize the raw JSON into ModelPlanSharedActivityMeta
+		meta := models.ModelPlanSharedActivityMeta{}
+		if err := json.Unmarshal(rawData, &meta); err != nil {
+			return nil, err
+		}
+		return &meta, nil
 
 	default:
 		// Return a default implementation or handle unsupported types

@@ -8,12 +8,12 @@ import {
   waitFor,
   waitForElementToBeRemoved
 } from '@testing-library/react';
+import { GetModelCollaboratorsDocument } from 'gql/gen/graphql';
+import { GetModelCollaborators_modelPlan as GetModelPlanType } from 'gql/gen/types/GetModelCollaborators';
 import configureMockStore from 'redux-mock-store';
 
 import { ASSESSMENT } from 'constants/jobCodes';
 import { MessageProvider } from 'hooks/useMessage';
-import GetModelPlanCollaborators from 'queries/Collaborators/GetModelCollaborators';
-import { GetModelCollaborators_modelPlan as GetModelPlanCollaboratorsType } from 'queries/Collaborators/types/GetModelCollaborators';
 import { TeamRole } from 'types/graphql-global-types';
 
 import { CollaboratorsContent } from './index';
@@ -27,7 +27,7 @@ const mockAuthReducer = {
 const mockStore = configureMockStore();
 const store = mockStore({ auth: mockAuthReducer });
 
-const mockCollaborator: GetModelPlanCollaboratorsType = {
+const mockCollaborator: GetModelPlanType = {
   __typename: 'ModelPlan',
   id: '123',
   modelName: 'My Model',
@@ -53,7 +53,7 @@ const mockCollaborator: GetModelPlanCollaboratorsType = {
 const mocks = [
   {
     request: {
-      query: GetModelPlanCollaborators,
+      query: GetModelCollaboratorsDocument,
       variables: { id: 'f11eb129-2c80-4080-9440-439cbe1a286f' }
     },
     result: {

@@ -1,0 +1,33 @@
+"""
+DiscussionReply represents a discussion reply
+"""
+type DiscussionReply  {
+  id: UUID!
+  discussionID: UUID!
+  content: TaggedContent
+  userRole: DiscussionUserRole
+  userRoleDescription: String
+  isAssessment: Boolean!
+
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
+}
+
+"""
+DiscussionReplyCreateInput represents the necessary fields to create a discussion reply
+"""
+input DiscussionReplyCreateInput {
+  discussionID: UUID!
+  content: TaggedHTML!
+  userRole: DiscussionUserRole
+  userRoleDescription: String
+}
+
+extend type Mutation {
+  createDiscussionReply(input: DiscussionReplyCreateInput!): DiscussionReply!
+  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+}

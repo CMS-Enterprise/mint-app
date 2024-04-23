@@ -123,7 +123,10 @@ func extractChangedDates(changes map[string]interface{}, existing *models.PlanBa
 }
 
 func sanitizeZeroDate(date *time.Time) *time.Time {
-	if date == nil || (date != nil && date.IsZero()) {
+	if date == nil {
+		return nil
+	}
+	if date.IsZero() {
 		return nil
 	}
 

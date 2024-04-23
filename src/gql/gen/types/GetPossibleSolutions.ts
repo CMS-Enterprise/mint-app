@@ -15,6 +15,7 @@ export interface GetPossibleSolutions_possibleOperationalSolutions_pointsOfConta
   name: string;
   email: string;
   isTeam: boolean;
+  isPrimary: boolean | null;
   role: string | null;
 }
 

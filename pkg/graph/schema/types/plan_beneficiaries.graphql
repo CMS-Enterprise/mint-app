@@ -1,0 +1,139 @@
+enum BeneficiariesType {
+  MEDICARE_FFS
+  MEDICARE_ADVANTAGE
+  MEDICARE_PART_D
+  MEDICAID
+  DUALLY_ELIGIBLE
+  DISEASE_SPECIFIC
+  UNDERSERVED
+  OTHER
+  NA
+}
+
+enum TriStateAnswer {
+  YES
+  NO
+  TBD
+}
+
+enum SelectionMethodType {
+  HISTORICAL
+  PROSPECTIVE
+  RETROSPECTIVE
+  VOLUNTARY
+  PROVIDER_SIGN_UP
+  OTHER
+  NA
+}
+
+enum YesNoType {
+  YES,
+  NO
+}
+
+"""
+Plan Beneficiaries represents the the beneficiaries section of the task list
+"""
+
+type PlanBeneficiaries {
+  id: UUID!
+  modelPlanID: UUID!
+
+  #Page 1
+  beneficiaries: [BeneficiariesType!]!
+  beneficiariesOther: String
+  beneficiariesNote: String
+  diseaseSpecificGroup: String
+  treatDualElligibleDifferent: TriStateAnswer
+  treatDualElligibleDifferentHow: String
+  treatDualElligibleDifferentNote: String
+  excludeCertainCharacteristics: TriStateAnswer
+  excludeCertainCharacteristicsCriteria: String
+  excludeCertainCharacteristicsNote: String
+
+  #Page 2
+  numberPeopleImpacted: Int
+  estimateConfidence: ConfidenceType
+  confidenceNote: String
+  beneficiarySelectionMethod: [SelectionMethodType!]!
+  beneficiarySelectionOther: String
+  beneficiarySelectionNote: String
+
+  #Page 3
+  beneficiarySelectionFrequency: [FrequencyType!]!
+  beneficiarySelectionFrequencyContinually: String
+  beneficiarySelectionFrequencyOther: String
+  beneficiarySelectionFrequencyNote: String
+  beneficiaryRemovalFrequency: [FrequencyType!]!
+  beneficiaryRemovalFrequencyContinually: String
+  beneficiaryRemovalFrequencyOther: String
+  beneficiaryRemovalFrequencyNote: String
+  beneficiaryOverlap: OverlapType
+  beneficiaryOverlapNote: String
+  precedenceRules: [YesNoType!]!
+  precedenceRulesYes: String
+  precedenceRulesNo: String
+  precedenceRulesNote: String
+
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
+
+  readyForReviewBy: UUID
+  readyForReviewByUserAccount: UserAccount
+  readyForReviewDts: Time
+  readyForClearanceBy: UUID
+  readyForClearanceByUserAccount: UserAccount
+  readyForClearanceDts: Time
+
+  status: TaskStatus!
+}
+
+input PlanBeneficiariesChanges @goModel(model: "map[string]interface{}") {
+
+  #Page 1
+  beneficiaries: [BeneficiariesType!]
+  beneficiariesOther: String
+  beneficiariesNote: String
+  diseaseSpecificGroup: String
+  treatDualElligibleDifferent: TriStateAnswer
+  treatDualElligibleDifferentHow: String
+  treatDualElligibleDifferentNote: String
+  excludeCertainCharacteristics: TriStateAnswer
+  excludeCertainCharacteristicsCriteria: String
+  excludeCertainCharacteristicsNote: String
+
+  #Page 2
+  numberPeopleImpacted: Int
+  estimateConfidence: ConfidenceType
+  confidenceNote: String
+  beneficiarySelectionMethod: [SelectionMethodType!]
+  beneficiarySelectionOther: String
+  beneficiarySelectionNote: String
+
+  #Page 3
+  beneficiarySelectionFrequency: [FrequencyType!]
+  beneficiarySelectionFrequencyContinually: String
+  beneficiarySelectionFrequencyOther: String
+  beneficiarySelectionFrequencyNote: String
+  beneficiaryRemovalFrequency: [FrequencyType!]
+  beneficiaryRemovalFrequencyContinually: String
+  beneficiaryRemovalFrequencyOther: String
+  beneficiaryRemovalFrequencyNote: String
+  beneficiaryOverlap: OverlapType
+  beneficiaryOverlapNote: String
+  precedenceRules: [YesNoType!]
+  precedenceRulesYes: String
+  precedenceRulesNo: String
+  precedenceRulesNote: String
+
+  status: TaskStatusInput
+}
+
+extend type Mutation {
+  updatePlanBeneficiaries(id: UUID!, changes: PlanBeneficiariesChanges!): PlanBeneficiaries!
+  @hasRole(role: MINT_USER)
+}

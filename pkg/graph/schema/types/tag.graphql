@@ -1,0 +1,42 @@
+enum TagType {
+  USER_ACCOUNT
+  POSSIBLE_SOLUTION
+}
+
+"""
+TaggedEntity is the actual object represented by a tag in the data base.
+"""
+union TaggedEntity =  UserAccount | PossibleOperationalSolution
+
+"""
+TaggedContent represents content that has a tag in it. It is composed of the raw tag text, as well as the array of possible tags
+"""
+type TaggedContent {
+  """
+  RawContent is HTML. It is sanitized on the backend
+  """
+  rawContent: String!
+  tags: [Tag!]!
+}
+
+"""
+Tag represents an entity tagged in the database
+"""
+type Tag {
+  id: UUID!
+  tagType: TagType!
+  taggedField: String!
+  taggedContentTable: String!
+  taggedContentID: UUID!
+  entityUUID: UUID
+  entityIntID: Int
+
+  entity: TaggedEntity
+
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
+}

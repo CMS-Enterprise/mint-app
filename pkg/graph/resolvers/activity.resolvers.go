@@ -11,11 +11,49 @@ import (
 	"github.com/cmsgov/mint-app/pkg/authentication"
 	"github.com/cmsgov/mint-app/pkg/graph/generated"
 	"github.com/cmsgov/mint-app/pkg/models"
+	"github.com/cmsgov/mint-app/pkg/storage/loaders"
 )
 
 // ActorUserAccount is the resolver for the actorUserAccount field.
 func (r *activityResolver) ActorUserAccount(ctx context.Context, obj *models.Activity) (*authentication.UserAccount, error) {
 	return UserAccountGetByIDLOADER(ctx, obj.ActorID)
+}
+
+// ModelPlan is the resolver for the modelPlan field.
+func (r *addedAsCollaboratorMetaResolver) ModelPlan(ctx context.Context, obj *models.AddedAsCollaboratorMeta) (*models.ModelPlan, error) {
+	return ModelPlanGetByIDLOADER(ctx, obj.ModelPlanID)
+}
+
+// Collaborator is the resolver for the collaborator field.
+func (r *addedAsCollaboratorMetaResolver) Collaborator(ctx context.Context, obj *models.AddedAsCollaboratorMeta) (*models.PlanCollaborator, error) {
+	return PlanCollaboratorGetByID(ctx, obj.CollaboratorID)
+}
+
+// AnalyzedAudits is the resolver for the analyzedAudits field.
+func (r *dailyDigestCompleteActivityMetaResolver) AnalyzedAudits(ctx context.Context, obj *models.DailyDigestCompleteActivityMeta) ([]*models.AnalyzedAudit, error) {
+	return loaders.AnalyzedAuditGetByModelPlanIDsAndDate(ctx, obj.ModelPlanIDs, obj.Date)
+}
+
+// ModelPlan is the resolver for the modelPlan field.
+func (r *modelPlanSharedActivityMetaResolver) ModelPlan(ctx context.Context, obj *models.ModelPlanSharedActivityMeta) (*models.ModelPlan, error) {
+	return ModelPlanGetByIDLOADER(ctx, obj.ModelPlanID)
+}
+
+// ModelPlan is the resolver for the modelPlan field.
+func (r *newDiscussionRepliedActivityMetaResolver) ModelPlan(ctx context.Context, obj *models.NewDiscussionRepliedActivityMeta) (*models.ModelPlan, error) {
+	return ModelPlanGetByIDLOADER(ctx, obj.ModelPlanID)
+}
+
+// Discussion is the resolver for the discussion field.
+func (r *newDiscussionRepliedActivityMetaResolver) Discussion(ctx context.Context, obj *models.NewDiscussionRepliedActivityMeta) (*models.PlanDiscussion, error) {
+	logger := appcontext.ZLogger(ctx)
+	return PlanDiscussionGetByID(ctx, r.store, logger, obj.DiscussionID)
+}
+
+// Reply is the resolver for the reply field.
+func (r *newDiscussionRepliedActivityMetaResolver) Reply(ctx context.Context, obj *models.NewDiscussionRepliedActivityMeta) (*models.DiscussionReply, error) {
+	logger := appcontext.ZLogger(ctx)
+	return DiscussionReplyGetByID(ctx, r.store, logger, obj.ReplyID)
 }
 
 // ModelPlan is the resolver for the modelPlan field.
@@ -49,6 +87,26 @@ func (r *taggedInPlanDiscussionActivityMetaResolver) Discussion(ctx context.Cont
 // Activity returns generated.ActivityResolver implementation.
 func (r *Resolver) Activity() generated.ActivityResolver { return &activityResolver{r} }
 
+// AddedAsCollaboratorMeta returns generated.AddedAsCollaboratorMetaResolver implementation.
+func (r *Resolver) AddedAsCollaboratorMeta() generated.AddedAsCollaboratorMetaResolver {
+	return &addedAsCollaboratorMetaResolver{r}
+}
+
+// DailyDigestCompleteActivityMeta returns generated.DailyDigestCompleteActivityMetaResolver implementation.
+func (r *Resolver) DailyDigestCompleteActivityMeta() generated.DailyDigestCompleteActivityMetaResolver {
+	return &dailyDigestCompleteActivityMetaResolver{r}
+}
+
+// ModelPlanSharedActivityMeta returns generated.ModelPlanSharedActivityMetaResolver implementation.
+func (r *Resolver) ModelPlanSharedActivityMeta() generated.ModelPlanSharedActivityMetaResolver {
+	return &modelPlanSharedActivityMetaResolver{r}
+}
+
+// NewDiscussionRepliedActivityMeta returns generated.NewDiscussionRepliedActivityMetaResolver implementation.
+func (r *Resolver) NewDiscussionRepliedActivityMeta() generated.NewDiscussionRepliedActivityMetaResolver {
+	return &newDiscussionRepliedActivityMetaResolver{r}
+}
+
 // TaggedInDiscussionReplyActivityMeta returns generated.TaggedInDiscussionReplyActivityMetaResolver implementation.
 func (r *Resolver) TaggedInDiscussionReplyActivityMeta() generated.TaggedInDiscussionReplyActivityMetaResolver {
 	return &taggedInDiscussionReplyActivityMetaResolver{r}
@@ -60,5 +118,9 @@ func (r *Resolver) TaggedInPlanDiscussionActivityMeta() generated.TaggedInPlanDi
 }
 
 type activityResolver struct{ *Resolver }
+type addedAsCollaboratorMetaResolver struct{ *Resolver }
+type dailyDigestCompleteActivityMetaResolver struct{ *Resolver }
+type modelPlanSharedActivityMetaResolver struct{ *Resolver }
+type newDiscussionRepliedActivityMetaResolver struct{ *Resolver }
 type taggedInDiscussionReplyActivityMetaResolver struct{ *Resolver }
 type taggedInPlanDiscussionActivityMetaResolver struct{ *Resolver }

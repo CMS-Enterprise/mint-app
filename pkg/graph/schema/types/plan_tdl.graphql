@@ -1,0 +1,48 @@
+type PlanTDL {
+  id: UUID!
+  modelPlanID: UUID!
+
+  idNumber: String!
+  dateInitiated: Time!
+  title: String!
+  note: String
+
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
+}
+
+input PlanTDLCreateInput {
+  modelPlanID: UUID!
+
+  idNumber: String!
+  dateInitiated: Time!
+  title: String!
+  note: String
+}
+
+input PlanTDLChanges @goModel(model: "map[string]interface{}") {
+  idNumber: String
+  dateInitiated: Time
+  title: String
+  note: String
+}
+
+extend type Query {
+  planTDL(id: UUID!): PlanTDL!
+  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+}
+
+extend type Mutation {
+  createPlanTDL(input: PlanTDLCreateInput!): PlanTDL!
+  @hasRole(role: MINT_USER)
+
+  updatePlanTDL(id: UUID!, changes: PlanTDLChanges!): PlanTDL!
+  @hasRole(role: MINT_USER)
+
+  deletePlanTDL(id: UUID!): PlanTDL!
+  @hasRole(role: MINT_USER)
+}

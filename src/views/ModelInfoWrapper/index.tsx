@@ -5,16 +5,19 @@ Alleviates prop drilling and over querying
 
 import React, { createContext, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
-import { useQuery } from '@apollo/client';
+import {
+  GetModelPlanBaseQuery,
+  useGetModelPlanBaseQuery
+} from 'gql/gen/graphql';
 
-import GetModelPlanBase from 'queries/GetModelPlanBase';
-import { GetModelPlanBase_modelPlan as GetModelPlanBaseModelPlan } from 'queries/types/GetModelPlanBase';
 import { ModelStatus } from 'types/graphql-global-types';
 import { isUUID } from 'utils/modelPlan';
 
 type ModelInfoWrapperProps = {
   children: React.ReactNode;
 };
+
+type GetModelPlanBaseModelPlan = GetModelPlanBaseQuery['modelPlan'];
 
 // Create the model Info context - can be used anywhere in a model plan
 export const ModelInfoContext = createContext<GetModelPlanBaseModelPlan>({
@@ -32,7 +35,7 @@ const ModelInfoWrapper = ({ children }: ModelInfoWrapperProps) => {
   const validModelID: boolean = isUUID(modelID);
 
   // Fetches model plan info on change of valid modelID
-  const { data } = useQuery(GetModelPlanBase, {
+  const { data } = useGetModelPlanBaseQuery({
     variables: {
       id: modelID
     },

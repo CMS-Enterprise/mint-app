@@ -1,20 +1,25 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
-import { Button, Grid, Icon } from '@trussworks/react-uswds';
+import { Button, Grid } from '@trussworks/react-uswds';
 import { useMarkNotificationAsReadMutation } from 'gql/gen/graphql';
-import {
-  GetNotifications_currentUser_notifications_notifications_activity as NotificationActivityType,
-  GetNotifications_currentUser_notifications_notifications_activity_metaData_ActivityMetaBaseStruct as BaseStructActivityType,
-  GetNotifications_currentUser_notifications_notifications_activity_metaData_TaggedInDiscussionReplyActivityMeta as TaggedInDiscussionReplyActivityType,
-  GetNotifications_currentUser_notifications_notifications_activity_metaData_TaggedInPlanDiscussionActivityMeta as TaggedInDiscussionActivityType
-} from 'gql/gen/types/GetNotifications';
+import { GetNotifications_currentUser_notifications_notifications_activity as NotificationActivityType } from 'gql/gen/types/GetNotifications';
 
-import { arrayOfColors } from 'components/shared/IconInitial';
+import { AvatarCircle } from 'components/shared/Avatar';
 import MentionTextArea from 'components/shared/MentionTextArea';
-import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import { getTimeElapsed } from 'utils/date';
-import { getUserInitials } from 'utils/modelPlan';
+
+import {
+  ActivityCTA,
+  activityText,
+  isAddingCollaborator,
+  isDailyDigest,
+  isNewDiscussionReply,
+  isSharedActivity,
+  isTaggedInDiscussion,
+  isTaggedInDiscussionReply
+} from './_utils';
+import DailyDigest from './DailyDigest';
 
 export type IndividualNotificationProps = {
   index?: number;
@@ -34,52 +39,32 @@ const IndividualNotification = ({
     actorUserAccount: { commonName }
   }
 }: IndividualNotificationProps) => {
-  const { t: notificationsT } = useTranslation('notifications');
-  const { t: discussionT } = useTranslation('discussions');
+  const { t: discussionT } = useTranslation('discussionsMisc');
+
+  const [isExpanded, setIsExpanded] = useState(false);
 
   const history = useHistory();
-  const isMobile = useCheckResponsiveScreen('mobile');
 
   const [markAsRead] = useMarkNotificationAsReadMutation();
 
-  const handleMarkAsRead = (
-    notificationID: string,
-    modelPlanID: string,
-    discussionID: string
-  ) => {
-    markAsRead({
-      variables: {
-        notificationID
-      }
-    }).then(response => {
-      if (!response?.errors) {
-        history.push(
-          `/models/${modelPlanID}/read-only/discussions?discussionID=${discussionID}`
-        );
-      }
-    });
+  const handleMarkAsRead = (action: () => void) => {
+    if (!isRead) {
+      markAsRead({
+        variables: {
+          notificationID: id
+        }
+      }).then(response => {
+        if (!response?.errors) {
+          action();
+        }
+      });
+    } else {
+      action();
+    }
   };
 
-  // Type guard to check union type
-  const isTaggedInDiscussion = (
-    data:
-      | TaggedInDiscussionReplyActivityType
-      | TaggedInDiscussionActivityType
-      | BaseStructActivityType
-  ): data is TaggedInDiscussionActivityType => {
-    /* eslint no-underscore-dangle: 0 */
-    return data.__typename === 'TaggedInPlanDiscussionActivityMeta';
-  };
-
-  const isTaggedInDiscussionReply = (
-    data:
-      | TaggedInDiscussionReplyActivityType
-      | TaggedInDiscussionActivityType
-      | BaseStructActivityType
-  ): data is TaggedInDiscussionReplyActivityType => {
-    /* eslint no-underscore-dangle: 0 */
-    return data.__typename === 'TaggedInDiscussionReplyActivityMeta';
-  };
+  // Mint System Account -> MINT
+  const name = commonName === 'Mint System Account' ? 'MINT' : commonName;
 
   return (
     <Grid row data-testid="individual-notification">
@@ -101,91 +86,67 @@ const IndividualNotification = ({
           <Grid col="fill">
             <div className="display-flex">
               {/* Circle of Name */}
-              <div
-                className={`display-flex flex-align-center flex-justify-center minw-4 circle-4 ${
-                  arrayOfColors[index % arrayOfColors.length]
-                }`}
-              >
-                {getUserInitials(commonName)}
+              <AvatarCircle user={name} />
+
+              <div className="margin-top-05 padding-left-1">
+                <p className="line-height-sans-4 margin-bottom-1 margin-top-0 ">
+                  <strong>{name}</strong>
+                  {activityText(metaData)}
+                </p>
+                {!isDailyDigest(metaData) &&
+                  !isSharedActivity(metaData) &&
+                  !isAddingCollaborator(metaData) && (
+                    <MentionTextArea
+                      className="notification__content text-base-darker margin-bottom-1"
+                      id={`mention-${metaData.discussionID}`}
+                      editable={false}
+                      initialContent={metaData.content}
+                    />
+                  )}
+                {isSharedActivity(metaData) && metaData.optionalMessage && (
+                  <p className="margin-bottom-1 margin-top-0 text-base-darker">
+                    “{metaData.optionalMessage}”
+                  </p>
+                )}
+
+                <Button
+                  type="button"
+                  unstyled
+                  className="display-flex flex-align-center"
+                  onClick={() => {
+                    if (
+                      isTaggedInDiscussion(metaData) ||
+                      isTaggedInDiscussionReply(metaData) ||
+                      isNewDiscussionReply(metaData)
+                    ) {
+                      handleMarkAsRead(() =>
+                        history.push(
+                          `/models/${metaData.modelPlanID}/read-only/discussions?discussionID=${metaData.discussionID}`
+                        )
+                      );
+                    }
+                    if (isDailyDigest(metaData)) {
+                      handleMarkAsRead(() => setIsExpanded(!isExpanded));
+                    }
+                    if (isAddingCollaborator(metaData)) {
+                      handleMarkAsRead(() => {
+                        history.push(
+                          `/models/${metaData.modelPlanID}/task-list`
+                        );
+                      });
+                    }
+                    if (isSharedActivity(metaData)) {
+                      handleMarkAsRead(() => {
+                        history.push(
+                          `/models/${metaData.modelPlanID}/read-only`
+                        );
+                      });
+                    }
+                  }}
+                >
+                  <ActivityCTA data={metaData} isExpanded={isExpanded} />
+                </Button>
               </div>
-              {isTaggedInDiscussion(metaData) && (
-                <div className="margin-top-05">
-                  <p className="line-height-sans-4 margin-left-1 margin-bottom-1 margin-top-0 ">
-                    <strong>{commonName}</strong>
-                    {notificationsT(
-                      'index.activityType.taggedInDiscussion.text',
-                      {
-                        modelName: metaData.modelPlan.modelName
-                      }
-                    )}
-                  </p>
-                  {!isMobile && (
-                    <MentionTextArea
-                      className="notification__content text-base-darker"
-                      id={`mention-${metaData.discussionID}`}
-                      editable={false}
-                      initialContent={`“${metaData.content}”`}
-                    />
-                  )}
-
-                  <Button
-                    type="button"
-                    unstyled
-                    className="display-flex flex-align-center"
-                    onClick={() => {
-                      handleMarkAsRead(
-                        id,
-                        metaData.modelPlanID,
-                        metaData.discussionID
-                      );
-                    }}
-                  >
-                    {notificationsT(
-                      'index.activityType.taggedInDiscussion.cta'
-                    )}
-                    <Icon.ArrowForward className="margin-left-1" aria-hidden />
-                  </Button>
-                </div>
-              )}
-              {isTaggedInDiscussionReply(metaData) && (
-                <div className="margin-top-05">
-                  <p className="line-height-sans-4 margin-left-1 margin-bottom-1 margin-top-0 ">
-                    <strong>{commonName}</strong>
-                    {notificationsT(
-                      'index.activityType.taggedInDiscussionReply.text',
-                      {
-                        modelName: metaData.modelPlan.modelName
-                      }
-                    )}
-                  </p>
-                  {!isMobile && (
-                    <MentionTextArea
-                      className="notification__content text-base-darker"
-                      id={`mention-${metaData.discussionID}`}
-                      editable={false}
-                      initialContent={`“${metaData.content}”`}
-                    />
-                  )}
-
-                  <Button
-                    type="button"
-                    unstyled
-                    className="display-flex flex-align-center"
-                    onClick={() => {
-                      handleMarkAsRead(
-                        id,
-                        metaData.modelPlanID,
-                        metaData.discussionID
-                      );
-                    }}
-                  >
-                    {notificationsT(
-                      'index.activityType.taggedInDiscussionReply.cta'
-                    )}
-                    <Icon.ArrowForward className="margin-left-1" aria-hidden />
-                  </Button>
-                </div>
-              )}
             </div>
           </Grid>
           <Grid col="auto">
@@ -197,6 +158,7 @@ const IndividualNotification = ({
           </Grid>
         </Grid>
       </Grid>
+      {isExpanded && isDailyDigest(metaData) && <DailyDigest {...metaData} />}
     </Grid>
   );
 };

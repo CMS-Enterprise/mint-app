@@ -102,6 +102,7 @@ const CollapsableLink = ({
           id={id}
           className={classNames(
             labelPosition === 'top' ? 'padding-bottom-0' : '',
+            isPrintPDF ? 'padding-top-0' : '',
             styleLeftBar
               ? 'mint-collapsable-link__content'
               : 'mint-collapsable-link__content-no-bar'

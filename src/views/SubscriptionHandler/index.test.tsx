@@ -1,4 +1,5 @@
-import { TaskListSubscription_onLockTaskListSectionContext_lockStatus as LockSectionType } from 'queries/TaskListSubscription/types/TaskListSubscription';
+import { TaskListSubscription_onLockTaskListSectionContext_lockStatus as LockSectionType } from 'gql/gen/types/TaskListSubscription';
+
 import { TaskListSection } from 'types/graphql-global-types';
 
 import { findLockedSection, LockStatus } from '.';

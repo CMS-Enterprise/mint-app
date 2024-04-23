@@ -2,9 +2,9 @@ import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render } from '@testing-library/react';
+import { GetModelPlan_modelPlan as GetModelPlanType } from 'gql/gen/types/GetModelPlan';
 
 import { MessageProvider } from 'hooks/useMessage';
-import { GetModelPlan_modelPlan as GetModelPlanType } from 'queries/types/GetModelPlan';
 
 import TaskListSideNav from './index';
 

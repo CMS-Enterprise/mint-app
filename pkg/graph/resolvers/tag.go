@@ -113,7 +113,7 @@ func processUserAccountHTMLMention(ctx context.Context, store *storage.Store, me
 	}
 	isMacUser := false
 	taggedUserAccount, err := userhelpers.GetOrCreateUserAccount(ctx, store, store, mention.EntityRaw, false, isMacUser, getAccountInformation)
-	if err != nil || taggedUserAccount == nil {
+	if err != nil {
 		return fmt.Errorf("unable to get tagged user account reference. error : %w", err)
 	}
 	if taggedUserAccount == nil {

@@ -23,6 +23,11 @@ type AnalyzedAudit struct {
 	Changes   AnalyzedAuditChange `json:"changes" db:"changes"`
 }
 
+// UTCDate returns the date fields formatted to show only the date, and in UTC format
+func (aa *AnalyzedAudit) UTCDate() string {
+	return aa.Date.UTC().Format("2006-01-02")
+}
+
 // NewAnalyzedAudit returns a new AnalyzedAudit object
 func NewAnalyzedAudit(createdBy uuid.UUID, modelPlanID uuid.UUID, modelName string, date time.Time, changes AnalyzedAuditChange) (*AnalyzedAudit, error) {
 	return &AnalyzedAudit{

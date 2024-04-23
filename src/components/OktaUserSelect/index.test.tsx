@@ -1,7 +1,7 @@
 import React from 'react';
 import { MockedProvider } from '@apollo/client/testing';
+import { SearchOktaUsersDocument } from 'gql/gen/graphql';
 
-import SearchOktaUsers from 'queries/SearchOktaUsers';
 import setup from 'utils/testing/setup';
 
 import OktaUserSelect from './index';
@@ -10,7 +10,7 @@ describe('OktaUserSelect', () => {
   // Cedar contacts query mock
   const oktaUsersQuery = {
     request: {
-      query: SearchOktaUsers,
+      query: SearchOktaUsersDocument,
       variables: {
         searchTerm: 'Adeline'
       }

@@ -1,18 +1,14 @@
-import { useMutation } from '@apollo/client';
-
-import AddPlanFavorite from 'queries/Favorite/AddPlanFavorite';
-import DeletePlanFavorite from 'queries/Favorite/DeletePlanFavorite';
-import { AddPlanFavoriteVariables } from 'queries/Favorite/types/AddPlanFavorite';
-import { DeletePlanFavoriteVariables } from 'queries/Favorite/types/DeletePlanFavorite';
+import {
+  useAddPlanFavoriteMutation,
+  useDeletePlanFavoriteMutation
+} from 'gql/gen/graphql';
 
 // Custom hook to house the multiple mutations needed for toggling favorites
 
 export default function useFavoritePlan() {
-  const [addMutate] = useMutation<AddPlanFavoriteVariables>(AddPlanFavorite);
+  const [addMutate] = useAddPlanFavoriteMutation();
 
-  const [removeMutate] = useMutation<DeletePlanFavoriteVariables>(
-    DeletePlanFavorite
-  );
+  const [removeMutate] = useDeletePlanFavoriteMutation();
 
   const favoriteMutations = {
     removeFavorite: removeMutate,

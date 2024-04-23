@@ -7,11 +7,13 @@
 
 import React, { createContext, useEffect, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
-import { useLazyQuery } from '@apollo/client';
+import {
+  TaskListSubscriptionDocument,
+  TaskListSubscriptionSubscription,
+  useGetTaskListSubscriptionsLazyQuery
+} from 'gql/gen/graphql';
+import { TaskListSubscription_onLockTaskListSectionContext_lockStatus as LockSectionType } from 'gql/gen/types/TaskListSubscription';
 
-import GetTaskListSubscriptions from 'queries/TaskListSubscription/GetTaskListSubscriptions';
-import SubscribeToTaskList from 'queries/TaskListSubscription/SubscribeToTaskList';
-import { TaskListSubscription_onLockTaskListSectionContext_lockStatus as LockSectionType } from 'queries/TaskListSubscription/types/TaskListSubscription';
 import { ChangeType } from 'types/graphql-global-types';
 import { isUUID } from 'utils/modelPlan';
 
@@ -89,32 +91,37 @@ const SubscriptionWrapper = ({ children }: SubscriptionWrapperProps) => {
   });
 
   // useLazyQuery hook to init query and create subscription in the presence of a new model plan id
-  const [getTaskListLocks, { data, subscribeToMore }] = useLazyQuery(
-    GetTaskListSubscriptions
-  );
+  const [
+    getTaskListLocks,
+    { data: subData, subscribeToMore }
+  ] = useGetTaskListSubscriptionsLazyQuery();
 
   useEffect(() => {
     if (validModelID && subscribeToMore && taskList) {
       // useLazyQuery hook to fetch existing subscription data on new modelID
       getTaskListLocks({ variables: { modelPlanID: modelID } });
 
-      if (data) {
+      if (subData) {
         // Sets the initial lock statuses once useLazyQuery data is fetched
-        subscriptionContextData.current = { ...data, loading: false };
+        subscriptionContextData.current = { ...subData, loading: false };
       }
 
       if (!subscribed.current) {
         // Subscription initiator and message update method
         subscribed.current = subscribeToMore({
-          document: SubscribeToTaskList,
+          document: TaskListSubscriptionDocument,
           variables: {
             modelPlanID: modelID
           },
-          updateQuery: (prev, { subscriptionData }) => {
-            if (!subscriptionData.data) return prev;
+          updateQuery: (
+            prev,
+            {
+              subscriptionData: { data }
+            }: { subscriptionData: { data: TaskListSubscriptionSubscription } }
+          ) => {
+            if (!data) return prev;
 
-            const lockChange =
-              subscriptionData.data.onLockTaskListSectionContext;
+            const lockChange = data.onLockTaskListSectionContext;
 
             const updatedSubscriptionContext =
               lockChange.changeType === ChangeType.REMOVED
@@ -152,7 +159,7 @@ const SubscriptionWrapper = ({ children }: SubscriptionWrapperProps) => {
     modelID,
     taskList,
     validModelID,
-    data,
+    subData,
     getTaskListLocks,
     subscribeToMore,
     subscribed

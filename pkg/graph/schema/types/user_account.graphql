@@ -1,0 +1,17 @@
+type UserAccount {
+  id: UUID!
+  username: String!
+  isEUAID: Boolean
+  commonName: String!
+  locale: String!
+  email: String!
+  givenName: String!
+  familyName: String!
+  zoneInfo: String!
+  hasLoggedIn: Boolean
+}
+
+extend type Query {
+  userAccount(username: String!): UserAccount!
+  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+}

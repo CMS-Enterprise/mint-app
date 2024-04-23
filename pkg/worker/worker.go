@@ -15,7 +15,7 @@ type Worker struct {
 	Store                *storage.Store
 	Logger               *zap.Logger
 	EmailService         oddmail.EmailService
-	EmailTemplateService email.TemplateServiceImpl
+	EmailTemplateService email.TemplateServiceImpl //TODO: this should probably be the interface
 	AddressBook          email.AddressBook
 	Connections          int
 	ProcessJobs          bool
@@ -57,6 +57,15 @@ func (w *Worker) Work() {
 	mgr.Register("DigestEmailBatchJobSuccess", w.DigestEmailBatchJobSuccess)
 	mgr.Register("DigestEmailJob", w.DigestEmailJob)
 	mgr.Register("AggregatedDigestEmailJob", w.AggregatedDigestEmailJob)
+
+	/**********************
+	* //Future Enhancement
+	* Consider providing workers with dataloaders, and potentially a shared context. As these run separate go routines for each worker,
+	***********************
+	*dataLoaders := loaders.NewDataLoaders(w.Store)
+	*ctx := loaders.CTXWithLoaders(context.Background(), dataLoaders)
+	*err := mgr.RunWithContext(ctx)
+	******************************/
 
 	err := mgr.Run()
 	if err != nil {

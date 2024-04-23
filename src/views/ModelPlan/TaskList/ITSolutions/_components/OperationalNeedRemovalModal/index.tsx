@@ -1,18 +1,13 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
-import { useMutation } from '@apollo/client';
 import { Button } from '@trussworks/react-uswds';
+import { useUpdateCustomOperationalNeedByIdMutation } from 'gql/gen/graphql';
 
 import Modal from 'components/Modal';
 import PageHeading from 'components/PageHeading';
 import Alert from 'components/shared/Alert';
 import useMessage from 'hooks/useMessage';
-import {
-  UpdateCustomOperationalNeedById as MutationType,
-  UpdateCustomOperationalNeedByIdVariables
-} from 'queries/ITSolutions/types/UpdateCustomOperationalNeedById';
-import UpdateCustomOperationalNeedById from 'queries/ITSolutions/UpdateCustomOperationalNeedById';
 
 type OperationalNeedRemovalModalTypes = {
   isModalOpen: boolean;
@@ -29,11 +24,8 @@ const OperationalNeedRemovalModal = ({
   id,
   nameOther
 }: OperationalNeedRemovalModalTypes) => {
-  const { t } = useTranslation('itSolutions');
-  const [removeNeed] = useMutation<
-    MutationType,
-    UpdateCustomOperationalNeedByIdVariables
-  >(UpdateCustomOperationalNeedById);
+  const { t } = useTranslation('opSolutionsMisc');
+  const [removeNeed] = useUpdateCustomOperationalNeedByIdMutation();
 
   const history = useHistory();
   const { showMessage, showMessageOnNextPage } = useMessage();

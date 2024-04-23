@@ -13,6 +13,7 @@ import (
 
 	"github.com/cmsgov/mint-app/pkg/graph/resolvers"
 	"github.com/cmsgov/mint-app/pkg/models"
+	"github.com/cmsgov/mint-app/pkg/storage"
 )
 
 func (suite *WorkerSuite) TestAnalyzedAuditJob() {
@@ -46,7 +47,7 @@ func (suite *WorkerSuite) TestAnalyzedAuditJob() {
 		[]models.TeamRole{models.TeamRoleModelLead},
 		"test@email.com",
 	)
-	modelLeadAccount, err := suite.testConfigs.Store.UserAccountGetByID(suite.testConfigs.Store, modelLead.UserID)
+	modelLeadAccount, err := storage.UserAccountGetByID(suite.testConfigs.Store, modelLead.UserID)
 
 	suite.NoError(err)
 	collaborator := suite.createPlanCollaborator(
@@ -56,7 +57,7 @@ func (suite *WorkerSuite) TestAnalyzedAuditJob() {
 		[]models.TeamRole{models.TeamRoleModelTeam},
 		"test@email.com",
 	)
-	collaboratorAccount, err := suite.testConfigs.Store.UserAccountGetByID(suite.testConfigs.Store, collaborator.UserID)
+	collaboratorAccount, err := storage.UserAccountGetByID(suite.testConfigs.Store, collaborator.UserID)
 
 	suite.NoError(err)
 

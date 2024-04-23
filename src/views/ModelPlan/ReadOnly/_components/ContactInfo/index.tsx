@@ -1,14 +1,10 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { useQuery } from '@apollo/client';
 import { Icon, Link } from '@trussworks/react-uswds';
+import { useGetModelCollaboratorsQuery } from 'gql/gen/graphql';
+import { GetModelCollaborators_modelPlan_collaborators as GetCollaboratorsType } from 'gql/gen/types/GetModelCollaborators';
 
 import UswdsReactLink from 'components/LinkWrapper';
-import GetModelPlanCollaborators from 'queries/Collaborators/GetModelCollaborators';
-import {
-  GetModelCollaborators,
-  GetModelCollaborators_modelPlan_collaborators as GetCollaboratorsType
-} from 'queries/Collaborators/types/GetModelCollaborators';
 import { TeamRole } from 'types/graphql-global-types';
 
 const ContactInfo = ({
@@ -20,7 +16,7 @@ const ContactInfo = ({
 }) => {
   const { t: h } = useTranslation('generalReadOnly');
 
-  const { data } = useQuery<GetModelCollaborators>(GetModelPlanCollaborators, {
+  const { data } = useGetModelCollaboratorsQuery({
     variables: {
       id: modelID
     }

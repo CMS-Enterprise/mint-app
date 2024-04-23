@@ -382,16 +382,20 @@ namespace :db do
     operational_need,
     existing_model_link,
     model_plan,
-    audit.change,
     user_notification,
-    user_notification_preferences,
-    activity"
+    activity,
+    audit.change"
 
     puts "Cleaning database..."
     `echo "TRUNCATE #{tableList}" | psql`
 
     #remove all non system accounts
     systemAccounts =  "( 'UNKNOWN_USER','MINT_SYSTEM')"
+
+    # remove preferences
+    `echo "DELETE FROM user_notification_preferences WHERE user_id IN ( SELECT id FROM user_account WHERE username NOT IN #{systemAccounts} )" | psql`
+
+    # remove accounts
     `echo "DELETE FROM user_account WHERE username NOT IN #{systemAccounts}" | psql`
 
   end
