@@ -27,6 +27,7 @@ declare global {
   type Upload = File;
   type HTML = string;
   type TaggedHTML = HTML;
+  type Any = any;
 
   interface Window {
     Cypress: any;

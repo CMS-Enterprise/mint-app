@@ -29,6 +29,7 @@ import Home from 'views/Home';
 import Login from 'views/Login';
 import ModelAccessWrapper from 'views/ModelAccessWrapper';
 import ModelInfoWrapper from 'views/ModelInfoWrapper';
+import ChangeHistory from 'views/ModelPlan/ChangeHistory';
 import Collaborators from 'views/ModelPlan/Collaborators';
 import CRTDL from 'views/ModelPlan/CRTDL';
 import Documents from 'views/ModelPlan/Documents';
@@ -180,6 +181,13 @@ const AppRoutes = () => {
 
       {flags.notificationsEnabled && (
         <SecureRoute path="/notifications" component={Notifications} />
+      )}
+
+      {flags.changeHistoryEnabled && (
+        <SecureRoute
+          path="/models/:modelID/change-history"
+          component={ChangeHistory}
+        />
       )}
 
       <SecureRoute path="/help-and-knowledge" component={HelpAndKnowledge} />

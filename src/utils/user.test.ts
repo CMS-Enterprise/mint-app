@@ -44,7 +44,8 @@ describe('user', () => {
             hideGroupView: true,
             helpScoutEnabled: false,
             feedbackEnabled: false,
-            notificationsEnabled: false
+            notificationsEnabled: false,
+            changeHistoryEnabled: false
           })
         ).toBe(false);
       });

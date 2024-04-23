@@ -45,6 +45,12 @@ export enum AlternativePaymentModelType {
   REGULAR = "REGULAR",
 }
 
+export enum AuditFieldChangeType {
+  ANSWERED = "ANSWERED",
+  REMOVED = "REMOVED",
+  UPDATED = "UPDATED",
+}
+
 export enum AuthorityAllowance {
   ACA = "ACA",
   CONGRESSIONALLY_MANDATED = "CONGRESSIONALLY_MANDATED",
@@ -170,6 +176,13 @@ export enum DataToSendParticipantsType {
   OTHER_MIPS_DATA = "OTHER_MIPS_DATA",
   PARTICIPANT_LEVEL_DATA = "PARTICIPANT_LEVEL_DATA",
   PROVIDER_LEVEL_DATA = "PROVIDER_LEVEL_DATA",
+}
+
+export enum DatabaseOperation {
+  DELETE = "DELETE",
+  INSERT = "INSERT",
+  TRUNCATE = "TRUNCATE",
+  UPDATE = "UPDATE",
 }
 
 export enum DiscussionUserRole {

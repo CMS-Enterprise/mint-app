@@ -44,6 +44,7 @@ import modelSummary from './readOnly/modelSummary';
 import readOnlyModelPlan from './readOnly/readOnlyModelPlan';
 import accessibilityStatement from './accessibilityStatement';
 import auth from './auth';
+import changeHistory from './changeHistory';
 import cookies from './cookies';
 import error from './error';
 import externalLinkModal from './externalLinkModal';
@@ -65,6 +66,7 @@ const enUS = {
   accessibilityStatement,
   auth,
   cookies,
+  changeHistory,
   draftModelPlan,
   error,
   filterView,
