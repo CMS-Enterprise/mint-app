@@ -75,7 +75,9 @@ const RecentChanges = ({ modelID }: { modelID: string }) => {
       <h3 className="margin-bottom-1">{t('recentChanges')}</h3>
 
       {loading ? (
-        <Spinner />
+        <div className="padding-y-4 padding-left-10">
+          <Spinner />
+        </div>
       ) : (
         <>
           {changesSortedByDate.map(changeRecord => (
