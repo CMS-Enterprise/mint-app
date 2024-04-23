@@ -15,7 +15,8 @@ export const discussions: TranslationDiscussions = {
       LEADERSHIP: 'Leadership',
       MEDICARE_ADMINISTRATIVE_CONTRACTOR: 'Medicare Administrative Contractor',
       MINT_TEAM: 'MINT Team',
-      MODEL_IT_LEAD: 'Model IT Lead',
+      IT_LEAD: 'IT Lead',
+      MODEL_LEAD: 'Model Lead',
       MODEL_TEAM: 'Model Team',
       SHARED_SYSTEM_MAINTAINER: 'Shared System Maintainer',
       NONE_OF_THE_ABOVE: 'None of the above'
@@ -110,7 +111,8 @@ export const discussionsMisc: Record<string, string | NestedTranslation> = {
     LEADERSHIP: 'Leadership',
     MEDICARE_ADMINISTRATIVE_CONTRACTOR: 'Medicare Administrative Contractor',
     MINT_TEAM: 'MINT Team',
-    MODEL_IT_LEAD: 'Model IT Lead',
+    IT_LEAD: 'IT Lead',
+    MODEL_LEAD: 'Model Lead',
     MODEL_TEAM: 'Model Team',
     SHARED_SYSTEM_MAINTAINER: 'Shared System Maintainer',
     NONE_OF_THE_ABOVE: 'None of the above'
