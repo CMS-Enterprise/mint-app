@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import { Card } from '@trussworks/react-uswds';
-import { TranslatedAuditCollectionQuery } from 'gql/gen/graphql';
+import { GetChangeHistoryQuery } from 'gql/gen/graphql';
 
-import { Avatar } from 'components/shared/Avatar';
+import { AvatarCircle } from 'components/shared/Avatar';
 import CollapsableLink from 'components/shared/CollapsableLink';
 import { formatDateUtc, formatTime } from 'utils/date';
 
 import './index.scss';
 
 export type ChangeRecordType = NonNullable<
-  TranslatedAuditCollectionQuery['translatedAuditCollection']
+  GetChangeHistoryQuery['translatedAuditCollection']
 >[0];
 
 type ChangeRecordProps = {
@@ -84,18 +84,25 @@ const ChangeRecord = ({ changeRecord }: ChangeRecordProps) => {
   return (
     <Card className="change-record">
       <div className="display-flex flex-align-center">
-        <Avatar
+        <AvatarCircle
           user={changeRecord.actorName}
-          bold
-          className="margin-right-05"
+          className="margin-right-1"
         />
         <span>
-          {t('change', {
-            count: changeRecord.translatedFields.length,
-            section: t(`sections.${changeRecord.tableName}`),
-            date: formatDateUtc(changeRecord.date, 'MMMM d, yyyy'),
-            time: formatTime(changeRecord.date)
-          })}
+          <span className="text-bold">{changeRecord.actorName} </span>
+          <Trans
+            i18nKey="changeHistory:change"
+            count={changeRecord.translatedFields.length}
+            values={{
+              count: changeRecord.translatedFields.length,
+              section: t(`sections.${changeRecord.tableName}`),
+              date: formatDateUtc(changeRecord.date, 'MMMM d, yyyy'),
+              time: formatTime(changeRecord.date)
+            }}
+            components={{
+              datetime: <span />
+            }}
+          />
         </span>
       </div>
 

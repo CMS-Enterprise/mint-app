@@ -7,10 +7,7 @@ import ChangeRecord, { ChangeRecordType, parseArray } from './index';
 describe('ChangeRecord', () => {
   const mockChangeRecord: ChangeRecordType = {
     id: 'e9e1129d-2317-4acd-8d2b-7ca37b37f802',
-    modelName: 'test',
-    tableID: 2,
     tableName: 'plan_basics',
-    primaryKey: '69378be4-0766-489a-9dbe-941425b6ef5d',
     date: '2024-04-22T13:55:13.725192Z',
     action: DatabaseOperation.INSERT,
     translatedFields: [
@@ -30,14 +27,7 @@ describe('ChangeRecord', () => {
         __typename: 'TranslatedAuditField'
       }
     ],
-    actorID: '072e76aa-709d-4021-9480-16966b04f6c1',
     actorName: 'MINT Doe',
-    changeID: 7,
-    metaData: {
-      version: 0,
-      tableName: 'plan_basics',
-      __typename: 'TranslatedAuditMetaBaseStruct'
-    },
     __typename: 'TranslatedAudit'
   };
 

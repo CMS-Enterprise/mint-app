@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import { GridContainer, Icon, SummaryBox } from '@trussworks/react-uswds';
-import { useTranslatedAuditCollectionQuery } from 'gql/gen/graphql';
+import { useGetChangeHistoryQuery } from 'gql/gen/graphql';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
@@ -22,7 +22,7 @@ const ChangeHistory = () => {
 
   const { modelName } = useContext(ModelInfoContext);
 
-  const { data, loading, error } = useTranslatedAuditCollectionQuery({
+  const { data, loading, error } = useGetChangeHistoryQuery({
     variables: {
       modelPlanID: modelID
     }
