@@ -5,6 +5,7 @@ import (
 	"fmt"
 
 	"github.com/google/uuid"
+	"github.com/lib/pq"
 )
 
 // TranslatedAuditFieldMetaData is an interface that all Humanized meta data structs must implement
@@ -24,6 +25,13 @@ const (
 	AFCRemoved  AuditFieldChangeType = "REMOVED"
 )
 
+type TranslationQuestionType string
+
+const (
+	TFTOther TranslationQuestionType = "OTHER"
+	TFTNote  TranslationQuestionType = "NOTE"
+)
+
 // TranslatedAuditField is a structure that shows fields that have been changed by a database action in a human readable format
 type TranslatedAuditField struct {
 	baseStruct
@@ -32,8 +40,11 @@ type TranslatedAuditField struct {
 
 	ChangeType AuditFieldChangeType `json:"changeType" db:"change_type"`
 
-	FieldName           string `json:"fieldName" db:"field_name"`
-	FieldNameTranslated string `json:"fieldNameTranslated" db:"field_name_translated"`
+	FieldName              string                   `json:"fieldName" db:"field_name"`
+	FieldNameTranslated    string                   `json:"fieldNameTranslated" db:"field_name_translated"`
+	ReferenceLabel         *string                  `json:"referenceLabel" db:"reference_label"`
+	QuestionType           *TranslationQuestionType `json:"questionType" db:"question_type"`
+	NotApplicableQuestions pq.StringArray           `json:"notApplicableQuestions" db:"not_applicable_questions"`
 
 	DataType *TranslationDataType `json:"dataType" db:"data_type"`
 	FormType *TranslationFormType `json:"formType" db:"form_type"`

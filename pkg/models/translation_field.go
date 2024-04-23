@@ -62,7 +62,7 @@ type TranslationFieldBase struct {
 	ExportLabel *string `json:"exportLabel"`
 }
 
-// GetLabel has logic to prioritize the translated label to be returned for a specific field. It prioritizes the Read only Label, a
+// GetLabel has logic to prioritize the translated label to be returned for a specific field. It prioritizes the Export only Label, then the parent label, then label
 func (tfb TranslationFieldBase) GetLabel(translationDictionary map[string]ITranslationField) string {
 	/*
 		1. Favor Export Label --> ReadOnlyLabel --> Label

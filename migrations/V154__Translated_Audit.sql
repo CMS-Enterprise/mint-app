@@ -88,10 +88,17 @@ CREATE TYPE TRANSLATION_FORM_TYPE AS ENUM (
     'RANGEINPUT'
 );
 
+CREATE TYPE TRANSLATION_QUESTION_TYPE AS ENUM (
+    'OTHER',
+    'NOTE'
+);
+
 COMMENT ON TYPE TRANSLATION_DATA_TYPE IS 'Represents the FORM type of the translation field';
 
 -- Changes: (Structure) Double check the data and form type columns. Can they ever be null? Eg what happens when we don't find a translation? Should we make a new type, or make it nullable?
 -- Currently allowing them to be null if a translation is not found
+
+-- Changes: (Structure) potentially make question_type not be nullable, so we always have to provide it?
 CREATE TABLE translated_audit_field (
     id UUID PRIMARY KEY,
     translated_audit_id UUID NOT NULL REFERENCES translated_audit(id), --foreign key to translated_audit table
@@ -102,6 +109,13 @@ CREATE TABLE translated_audit_field (
 
     field_name ZERO_STRING NOT NULL,
     field_name_translated ZERO_STRING NOT NULL,
+    
+    reference_label ZERO_STRING, --nullable, useful for "note" and "other" columns
+    question_type TRANSLATION_QUESTION_TYPE, -- note or other
+    not_applicable_questions ZERO_STRING[], -- note or other
+
+
+
     old ZERO_STRING,
     old_translated ZERO_STRING, 
     new ZERO_STRING,
