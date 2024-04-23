@@ -8,6 +8,7 @@ import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 import PageLoading from 'components/PageLoading';
+import Alert from 'components/shared/Alert';
 import { ModelInfoContext } from 'views/ModelInfoWrapper';
 import NotFound from 'views/NotFound';
 
@@ -67,6 +68,10 @@ const ChangeHistory = () => {
               modelName
             })}
           </span>
+
+          <div className="bg-white-opacity-50 margin-top-4 padding-y-1 padding-x-2">
+            {t('changesSinceRelease')}
+          </div>
         </GridContainer>
       </SummaryBox>
 
@@ -75,6 +80,12 @@ const ChangeHistory = () => {
           <PageLoading />
         ) : (
           <>
+            {changesSortedByDate.length === 0 && (
+              <Alert type="info" slim className="margin-bottom-2">
+                {t('noChanges')}
+              </Alert>
+            )}
+
             {changesSortedByDate.map(changeRecord => (
               <ChangeRecord changeRecord={changeRecord} key={changeRecord.id} />
             ))}

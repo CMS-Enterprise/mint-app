@@ -7,6 +7,7 @@ import {
 } from 'gql/gen/graphql';
 
 import UswdsReactLink from 'components/LinkWrapper';
+import Alert from 'components/shared/Alert';
 import { AvatarCircle } from 'components/shared/Avatar';
 import Spinner from 'components/Spinner';
 import { formatDateUtc, formatTime } from 'utils/date';
@@ -80,6 +81,12 @@ const RecentChanges = ({ modelID }: { modelID: string }) => {
         </div>
       ) : (
         <>
+          {changesSortedByDate.length === 0 && (
+            <Alert type="info" slim className="margin-bottom-2">
+              {t('noChanges')}
+            </Alert>
+          )}
+
           {changesSortedByDate.map(changeRecord => (
             <MiniChangeRecord
               changeRecord={changeRecord}
