@@ -99,12 +99,7 @@ describe('SubscriptionWrapper functions', () => {
             id: '00000001-0001-0001-0001-000000000001',
             username: 'MINT',
             commonName: 'MINT Doe',
-            __typename: 'UserAccount',
-            email: 'mint@doe.oddball.io',
-            familyName: 'Doe',
-            givenName: 'MINT',
-            locale: 'en',
-            zoneInfo: 'America/New_York'
+            __typename: 'UserAccount'
           },
           isAssessment: false
         }
@@ -146,12 +141,7 @@ describe('SubscriptionWrapper functions', () => {
             id: '00000000-0000-0000-0000-000000000000',
             username: 'ABCD',
             commonName: 'ABCD Doe',
-            __typename: 'UserAccount',
-            email: 'mint@doe.oddball.io',
-            familyName: 'Doe',
-            givenName: 'MINT',
-            locale: 'en',
-            zoneInfo: 'America/New_York'
+            __typename: 'UserAccount'
           },
           isAssessment: false
         }

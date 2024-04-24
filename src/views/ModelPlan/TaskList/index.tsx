@@ -25,8 +25,8 @@ import classNames from 'classnames';
 import {
   GetCrtdLsQuery,
   GetModelPlanQuery,
+  GetTaskListSubscriptionsQuery,
   TaskListSection,
-  TaskListSectionLockStatus,
   TaskStatus,
   useGetModelPlanQuery
 } from 'gql/gen/graphql';
@@ -53,6 +53,8 @@ import TaskListSideNav from './_components/TaskListSideNav';
 import TaskListStatus from './_components/TaskListStatus';
 
 import './index.scss';
+
+type TaskListSectionLockStatus = GetTaskListSubscriptionsQuery['taskListSectionLocks'][0];
 
 type GetModelPlanTypes = GetModelPlanQuery['modelPlan'];
 type BasicsType = GetModelPlanQuery['modelPlan']['basics'];

@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import ReactPaginate from 'react-paginate';
 import { Alert, Button, Grid, GridContainer } from '@trussworks/react-uswds';
 import {
-  GetNotificationsQuery,
+  Activity,
   useGetNotificationsQuery,
   useUpdateAllNotificationsAsReadMutation
 } from 'gql/gen/graphql';
@@ -18,8 +18,6 @@ import useMessage from 'hooks/useMessage';
 import { NotFoundPartial } from 'views/NotFound';
 
 import IndividualNotification from './_components/IndividualNotification';
-
-type NotificationActivityType = GetNotificationsQuery['currentUser']['notifications']['notifications'][0]['activity'];
 
 const NotificationsHome = () => {
   const [pageOffset, setPageOffset] = useState(0);
@@ -131,7 +129,7 @@ const NotificationsHome = () => {
               currentNotifications?.map((notification, index) => (
                 <IndividualNotification
                   {...notification}
-                  activity={notification.activity as NotificationActivityType}
+                  activity={notification.activity as Activity}
                   key={notification.id}
                   index={index}
                 />
