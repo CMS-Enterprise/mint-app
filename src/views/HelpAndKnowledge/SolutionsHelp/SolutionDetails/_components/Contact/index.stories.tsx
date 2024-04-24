@@ -12,7 +12,8 @@ const contact: SolutionContactType = {
   name: 'Aliza Kim',
   email: 'aliza.kim@cms.hhs.gov',
   isTeam: false,
-  role: 'Project Lead'
+  role: 'Project Lead',
+  isPrimary: true
 };
 
 export default {
