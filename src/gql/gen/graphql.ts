@@ -3881,7 +3881,7 @@ export type CreateShareModelPlanMutation = { __typename: 'Mutation', shareModelP
 export type GetPossibleSolutionsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetPossibleSolutionsQuery = { __typename: 'Query', possibleOperationalSolutions: Array<{ __typename: 'PossibleOperationalSolution', id: number, key: OperationalSolutionKey, pointsOfContact: Array<{ __typename: 'PossibleOperationalSolutionContact', id: UUID, name: string, email: string, isTeam: boolean, isPrimary?: boolean | null, role?: string | null }> }> };
+export type GetPossibleSolutionsQuery = { __typename: 'Query', possibleOperationalSolutions: Array<{ __typename: 'PossibleOperationalSolution', id: number, key: OperationalSolutionKey, pointsOfContact: Array<{ __typename: 'PossibleOperationalSolutionContact', id: UUID, name: string, email: string, isTeam: boolean, isPrimary: boolean, role?: string | null }> }> };
 
 export type GetTaskListSubscriptionsQueryVariables = Exact<{
   modelPlanID: Scalars['UUID']['input'];
