@@ -10,11 +10,11 @@ import {
 import userEvent from '@testing-library/user-event';
 import {
   GetOperationalSolutionDocument,
-  GetPossibleOperationalSolutionsDocument
+  GetPossibleOperationalSolutionsDocument,
+  OpSolutionStatus
 } from 'gql/gen/graphql';
 
 import { needQuestionAndAnswerMock } from 'data/mock/solutions';
-import { OpSolutionStatus } from 'types/graphql-global-types';
 
 import AddSolution from '.';
 
