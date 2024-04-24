@@ -66,6 +66,9 @@ describe('Operational Solutions Util', () => {
         status: OpSolutionStatus.NOT_STARTED,
         createdBy: 'f4f0a51d-590d-47fb-82e4-b6e6cdcfde06',
         createdDts: '2021-08-10T14:00:00Z',
+        needID: 'b7290d2c-0eae-4df4-8657-b22b5df3159e',
+        needKey: 'RECRUIT_PARTICIPANTS',
+        needName: 'Recruit participants',
         name: 'Salesforce',
         needed: true,
         key: OperationalSolutionKey.APPS,
@@ -104,7 +107,7 @@ describe('Operational Solutions Util', () => {
     ];
 
     expect(filterPossibleNeeds(possibleNeeds)).toEqual([
-      { ...possibleNeeds, status: OperationalNeedStatus.NOT_NEEDED }
+      { ...possibleNeeds[0], status: OperationalNeedStatus.NOT_NEEDED }
     ]);
   });
 

@@ -1,4 +1,4 @@
-import { TaskListSection } from 'gql/gen/graphql';
+import { TaskListSection } from '../../src/gql/gen/graphql';
 
 describe('Web Socket Connections', () => {
   beforeEach(() => {
