@@ -14,10 +14,10 @@ import {
   Grid
 } from '@trussworks/react-uswds';
 import {
+  GetOperationalSolutionQuery,
   useDeleteDocumentSolutionLinkMutation,
   useGetOperationalSolutionQuery
 } from 'gql/gen/graphql';
-import { GetOperationalSolution_operationalSolution as GetOperationalSolutionOperationalSolutionType } from 'gql/gen/types/GetOperationalSolution';
 
 import AskAQuestion from 'components/AskAQuestion';
 import UswdsReactLink from 'components/LinkWrapper';
@@ -34,6 +34,8 @@ import NotFound from 'views/NotFound';
 
 import SolutionDetailCard from '../_components/SolutionDetailCard';
 import SubtasksTable from '../_components/SubtasksTable';
+
+type GetOperationalSolutionOperationalSolutionType = GetOperationalSolutionQuery['operationalSolution'];
 
 const SolutionDetails = () => {
   const { modelID, operationalNeedID, operationalSolutionID } = useParams<{

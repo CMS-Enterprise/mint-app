@@ -7,11 +7,13 @@ import {
   waitFor,
   waitForElementToBeRemoved
 } from '@testing-library/react';
-import { GetOperationalSolutionDocument } from 'gql/gen/graphql';
+import {
+  GetOperationalSolutionDocument,
+  OpSolutionStatus
+} from 'gql/gen/graphql';
 
 import { needQuestionAndAnswerMock } from 'data/mock/solutions';
 import { MessageProvider } from 'hooks/useMessage';
-import { OpSolutionStatus } from 'types/graphql-global-types';
 import setup from 'utils/testing/setup';
 
 import AddCustomSolution from '.';

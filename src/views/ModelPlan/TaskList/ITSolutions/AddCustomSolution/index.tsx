@@ -12,6 +12,8 @@ import {
 import { Field, Form, Formik, FormikProps } from 'formik';
 import {
   GetOperationalSolutionQuery,
+  OperationalSolutionKey,
+  OpSolutionStatus,
   useCreateOperationalSolutionMutation,
   useGetOperationalSolutionQuery,
   useUpdateOperationalSolutionMutation
@@ -27,10 +29,6 @@ import FieldGroup from 'components/shared/FieldGroup';
 import RequiredAsterisk from 'components/shared/RequiredAsterisk';
 import useMessage from 'hooks/useMessage';
 import usePlanTranslation from 'hooks/usePlanTranslation';
-import {
-  OperationalSolutionKey,
-  OpSolutionStatus
-} from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
 import { ModelInfoContext } from 'views/ModelInfoWrapper';
 import NotFound from 'views/NotFound';

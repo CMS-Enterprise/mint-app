@@ -2,11 +2,13 @@ import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render } from '@testing-library/react';
-import { GetModelPlan_modelPlan as GetModelPlanType } from 'gql/gen/types/GetModelPlan';
+import { GetModelPlanQuery } from 'gql/gen/graphql';
 
 import { MessageProvider } from 'hooks/useMessage';
 
 import TaskListSideNav from './index';
+
+type GetModelPlanType = GetModelPlanQuery['modelPlan'];
 
 const modelPlan = {
   modelName: 'Test',
