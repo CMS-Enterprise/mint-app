@@ -422,29 +422,3 @@ func sanitizeAuditBoolValue(value interface{}) interface{} {
 	return value
 
 }
-
-// checkChildConditionals will check if changes to a question make any questions non applicable
-func checkChildConditionals(old interface{}, new interface{}, children map[string][]models.TranslationField) *pq.StringArray {
-
-	if old == nil {
-		return nil
-	}
-	childArray, exists := children[fmt.Sprint(old)]
-	if !exists {
-		return nil
-	}
-
-	//Changes: (Translations) Verify that the new fields don't have an overlap, Verify if we need to look at new children vs old children or just can assume old are no longer applicable
-
-	conditionals := pq.StringArray{}
-
-	for _, child := range childArray {
-
-		//Changes: (Translations) Should we call get label here? Figure that out
-		conditionals = append(conditionals, child.Label)
-
-	}
-
-	return &conditionals
-
-}
