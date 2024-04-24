@@ -6,17 +6,17 @@ import {
   waitFor,
   waitForElementToBeRemoved
 } from '@testing-library/react';
-import { GetOperationalSolution_operationalSolution as GetOperationalSolutionType } from 'gql/gen/types/GetOperationalSolution';
+import {
+  GetOperationalSolution_operationalSolution as GetOperationalSolutionType,
+  OperationalSolutionKey,
+  OpSolutionStatus
+} from 'gql/gen/types/GetOperationalSolution';
 
 import {
   needQuestionAndAnswerMock,
   possibleSolutionsMock
 } from 'data/mock/solutions';
 import { MessageProvider } from 'hooks/useMessage';
-import {
-  OperationalSolutionKey,
-  OpSolutionStatus
-} from 'types/graphql-global-types';
 import VerboseMockedProvider from 'utils/testing/MockedProvider';
 
 import SolutionDetailCard from '.';

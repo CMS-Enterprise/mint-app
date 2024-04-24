@@ -1,12 +1,9 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';
+import { PrepareForClearanceStatus, TaskStatus } from 'gql/gen/graphql';
 
 import Alert from 'components/shared/Alert';
-import {
-  PrepareForClearanceStatus,
-  TaskStatus
-} from 'types/graphql-global-types';
 
 type TaskListButtonProps = {
   ariaLabel?: string;
