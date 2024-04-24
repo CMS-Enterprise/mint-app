@@ -225,6 +225,26 @@ func translateField(fieldName string, field models.AuditField, audit *models.Aud
 
 		}
 
+		//Changes: (Translations) refactor this
+		oldStr, oldIsString := old.(string)
+		if oldIsString {
+			oldSlice, oldIsSlice := isArray(oldStr)
+			if oldIsSlice {
+				old = oldSlice
+			} else {
+				old = oldStr
+			}
+		}
+		newStr, newIsString := new.(string)
+		if newIsString {
+			newSlice, newIsSlice := isArray(newStr)
+			if newIsSlice {
+				new = newSlice
+			} else {
+				new = newStr
+			}
+		}
+
 		options, hasOptions := translationInterface.GetOptions()
 		if hasOptions {
 			translatedOld = translateValue(old, options)
@@ -277,6 +297,50 @@ func getChangeType(old interface{}, new interface{}) models.AuditFieldChangeType
 	return models.AFCUpdated
 }
 
+// type stringOrStringArray interface {
+// 	string | []string
+// }
+
+// func translateStrValue[V stringOrStringArray](value V, options map[string]interface{}) interface{} {
+
+// 	slice, isSlice :=  value.([]string)
+
+// 	if isSlice {
+// 		transArray := pq.StringArray{}
+// 		// transArray := []interface{}{}
+// 		for _, str := range strSlice {
+// 			translated := translateValueSingle(str, options)
+// 			transArray = append(transArray, translated)
+// 		}
+// 		// Changes: (Translations) revisit this, even using generic array results in escape characters in GQL...
+// 		// genArray := pq.GenericArray{transArray}
+// 		return transArray
+// 	}
+// 	// str, isString := value.(string)
+// 	if isString {
+// 		// Changes: (Translations) Revisit this issue here, we need the value to be stringified properly. Or provide a column type that is string or string array
+
+// 		return translateValueSingle(str, options)
+// 	}
+// 	// Changes: (Translations)  Should we handle the case where we can't translate it more?
+// 	return value
+// }
+
+func translateStrSlice(strSlice []string, options map[string]interface{}) pq.StringArray {
+	// Changes: (Translations) Determine if we can serialize a generic interface? it makes a weird artifact in the GQL
+	//   "{\"Mandatory national\",\"Other\"}",
+	transArray := pq.StringArray{}
+	for _, str := range strSlice {
+		translated := translateValueSingle(str, options)
+		transArray = append(transArray, translated)
+	}
+
+	return transArray
+	// Changes: (Translations) revisit this, even using generic array results in escape characters in GQL...
+	// genArray := pq.GenericArray{transArray}
+
+}
+
 // translateValue takes a given value and maps it to a human readable value.
 // It checks in the value is an array, and if so it translates each value to a human readable form
 func translateValue(value interface{}, options map[string]interface{}) interface{} {
@@ -285,24 +349,12 @@ func translateValue(value interface{}, options map[string]interface{}) interface
 	// Changes: (Translations) work on bool representation, they should come through here as a string, but show up as t, f. We will want to set they values
 	// strSlice, isSlice := value.([]string)
 	str, isString := value.(string)
-	if !isString {
-		return value
-	}
 
-	strSlice, isSlice := isArray(str)
+	// strSlice, isSlice := isArray(str)
+	strSlice, isSlice := value.([]string)
 
 	if isSlice {
-		// transArray := []string{}
-		// Changes: (Translations) Determine if we can serialize a generic interface? it makes a weird artifact in the GQL
-		//   "{\"Mandatory national\",\"Other\"}",
-		transArray := pq.StringArray{}
-		// transArray := []interface{}{}
-		for _, str := range strSlice {
-			translated := translateValueSingle(str, options)
-			transArray = append(transArray, translated)
-		}
-		// Changes: (Translations) revisit this, even using generic array results in escape characters in GQL...
-		// genArray := pq.GenericArray{transArray}
+		transArray := translateStrSlice(strSlice, options)
 		return transArray
 	}
 	// str, isString := value.(string)
@@ -328,7 +380,7 @@ func translateValueSingle(value string, options map[string]interface{}) string {
 }
 
 // isArray checks if a String begins with { and ends with }. If so, it is an array
-func isArray(str string) ([]string, bool) {
+func isArray(str string) (pq.StringArray, bool) {
 	// Define a regular expression to match the array format
 	arrayRegex := regexp.MustCompile(`^\{.*\}$`)
 
@@ -344,7 +396,7 @@ func isArray(str string) ([]string, bool) {
 
 // extractArrayValues extracts array values from a string representation
 // Changes: (Translations)  Verify the extraction, perhaps we can combine with earlier function?
-func extractArrayValues(str string) []string {
+func extractArrayValues(str string) pq.StringArray {
 	// Define a regular expression to match the array format
 	arrayRegex := regexp.MustCompile(`\{(.+?)\}`)
 
