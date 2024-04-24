@@ -194,6 +194,7 @@ func translateField(fieldName string, field models.AuditField, audit *models.Aud
 	// Set default values in case of missing translation
 	// Changes: (Translations) We should handle a nil / empty case what should we do in that case?
 	translatedLabel := fieldName
+	var referencesLabel *string
 	old := field.Old
 	new := field.New
 	translatedOld := old
@@ -211,6 +212,7 @@ func translateField(fieldName string, field models.AuditField, audit *models.Aud
 	if translationInterface != nil {
 
 		translatedLabel = translationInterface.GetLabel()
+		referencesLabel = translationInterface.GetReferencesLabel(translationMap)
 		//Changes: (Translations) update this to handle if notes, or preferences.
 
 		tForm := translationInterface.GetFormType()
@@ -272,6 +274,7 @@ func translateField(fieldName string, field models.AuditField, audit *models.Aud
 	translatedField.ChangeType = changeType
 	translatedField.NotApplicableQuestions = conditionals
 	translatedField.QuestionType = questionType
+	translatedField.ReferenceLabel = referencesLabel
 
 	// change.MetaDataRaw = nil //Changes: (Meta) This should be specific to the type of change...
 

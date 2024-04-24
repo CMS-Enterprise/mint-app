@@ -364,7 +364,7 @@ type PlanParticipantsAndProvidersTranslation struct {
 	ParticipantRemovedFrequencyOther          models.TranslationField                       `json:"participantRemovedFrequencyOther" db:"participant_removed_frequency_other"`
 	ParticipantRemovedFrequencyNote           models.TranslationField                       `json:"participantRemovedFrequencyNote" db:"participant_removed_frequency_note"`
 	CommunicationMethod                       models.TranslationFieldWithOptions            `json:"communicationMethod" db:"communication_method"`
-	CommunicationMethodOther                  models.TranslationField                       `json:"communicationMethodOther" db:"communication_method"`
+	CommunicationMethodOther                  models.TranslationField                       `json:"communicationMethodOther" db:"communication_method_other"`
 	CommunicationNote                         models.TranslationField                       `json:"communicationNote" db:"communication_note"`
 	RiskType                                  models.TranslationFieldWithOptions            `json:"riskType" db:"risk_type"`
 	RiskOther                                 models.TranslationField                       `json:"riskOther" db:"risk_other"`
