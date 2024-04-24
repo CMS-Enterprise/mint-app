@@ -44,7 +44,7 @@ type TranslatedAuditField struct {
 	FieldNameTranslated    string                   `json:"fieldNameTranslated" db:"field_name_translated"`
 	ReferenceLabel         *string                  `json:"referenceLabel" db:"reference_label"`
 	QuestionType           *TranslationQuestionType `json:"questionType" db:"question_type"`
-	NotApplicableQuestions pq.StringArray           `json:"notApplicableQuestions" db:"not_applicable_questions"`
+	NotApplicableQuestions *pq.StringArray          `json:"notApplicableQuestions" db:"not_applicable_questions"`
 
 	DataType *TranslationDataType `json:"dataType" db:"data_type"`
 	FormType *TranslationFormType `json:"formType" db:"form_type"`

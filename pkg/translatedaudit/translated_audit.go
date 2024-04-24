@@ -201,18 +201,23 @@ func translateField(fieldName string, field models.AuditField, audit *models.Aud
 	changeType := getChangeType(old, new)
 	var formType *models.TranslationFormType
 	var dataType *models.TranslationDataType
+	var conditionals *pq.StringArray
+	var questionType *models.TranslationQuestionType
 	// Changes: (Translations) We need to distinguish if the answer is for an other / note field. The label in that case is really the parent's label or the specific text for that type.
-	// Changes: (Translations) Handle if the change made a question not necessary //Changes: (Structure) How should we structure this? Field MetaData? Or base level implementation information?
+
+	// Changes: (Translations) Handle if the change made a question not necessary // Changes: (Structure) How should we structure this? Field MetaData? Or base level implementation information?
 
 	translationInterface := translationMap[fieldName]
 	if translationInterface != nil {
 
 		translatedLabel = translationInterface.GetLabel(translationMap)
+		//Changes: (Translations) update this to handle if notes, or preferences.
 
 		tForm := translationInterface.GetFormType()
 		tData := translationInterface.GetDataType()
 		formType = &tForm
 		dataType = &tData
+		questionType = translationInterface.GetQuestionType()
 
 		if tData == models.TDTBoolean { // clean t or f to true or false
 			old = sanitizeAuditBoolValue(old)
@@ -228,6 +233,11 @@ func translateField(fieldName string, field models.AuditField, audit *models.Aud
 			translatedOld = old
 			translatedNew = new
 		}
+
+		children, hasChildren := translationInterface.GetChildren()
+		if hasChildren {
+			conditionals = checkChildConditionals(old, new, children)
+		}
 	}
 	translatedField := models.NewTranslatedAuditField(constants.GetSystemAccountUUID(),
 		fieldName,
@@ -240,6 +250,8 @@ func translateField(fieldName string, field models.AuditField, audit *models.Aud
 		formType,
 	)
 	translatedField.ChangeType = changeType
+	translatedField.NotApplicableQuestions = conditionals
+	translatedField.QuestionType = questionType
 
 	// change.MetaDataRaw = nil //Changes: (Meta) This should be specific to the type of change...
 
@@ -408,5 +420,31 @@ func sanitizeAuditBoolValue(value interface{}) interface{} {
 		return false
 	}
 	return value
+
+}
+
+// checkChildConditionals will check if changes to a question make any questions non applicable
+func checkChildConditionals(old interface{}, new interface{}, children map[string][]models.TranslationField) *pq.StringArray {
+
+	if old == nil {
+		return nil
+	}
+	childArray, exists := children[fmt.Sprint(old)]
+	if !exists {
+		return nil
+	}
+
+	//Changes: (Translations) Verify that the new fields don't have an overlap, Verify if we need to look at new children vs old children or just can assume old are no longer applicable
+
+	conditionals := pq.StringArray{}
+
+	for _, child := range childArray {
+
+		//Changes: (Translations) Should we call get label here? Figure that out
+		conditionals = append(conditionals, child.Label)
+
+	}
+
+	return &conditionals
 
 }

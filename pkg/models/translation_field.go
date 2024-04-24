@@ -125,6 +125,22 @@ func (tfb TranslationFieldBase) GetDataType() TranslationDataType {
 	return tfb.DataType
 }
 
+// GetQuestionType returns the question type of a translation
+// Currently, it will return not if a note, or other if an other (priority given to note)
+// If neither of the above, it will return nil
+func (tfb TranslationFieldBase) GetQuestionType() *TranslationQuestionType {
+	if tfb.IsNote {
+		note := TFTNote
+		return &note
+	}
+	if tfb.IsOtherType {
+		other := TFTOther
+		return &other
+	}
+	return nil
+
+}
+
 // TranslationFieldWithOptions Represents a TranslationField that has options
 type TranslationFieldWithOptions struct {
 	TranslationFieldBase
@@ -149,6 +165,8 @@ type ITranslationField interface {
 	HasChildren() bool
 	GetChildren() (map[string][]TranslationField, bool)
 	//Changes: (Translations) Note, the children could be other types (Eg with options, or with parent), but this allows us to have a typed deserialization
+
+	GetQuestionType() *TranslationQuestionType
 }
 
 //Changes: (Translations) Define the Translation Parent better
