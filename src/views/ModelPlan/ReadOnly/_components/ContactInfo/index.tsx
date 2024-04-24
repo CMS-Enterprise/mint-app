@@ -1,11 +1,15 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Icon, Link } from '@trussworks/react-uswds';
-import { useGetModelCollaboratorsQuery } from 'gql/gen/graphql';
-import { GetModelCollaborators_modelPlan_collaborators as GetCollaboratorsType } from 'gql/gen/types/GetModelCollaborators';
+import {
+  GetModelCollaboratorsQuery,
+  TeamRole,
+  useGetModelCollaboratorsQuery
+} from 'gql/gen/graphql';
 
 import UswdsReactLink from 'components/LinkWrapper';
-import { TeamRole } from 'types/graphql-global-types';
+
+type GetCollaboratorsType = GetModelCollaboratorsQuery['modelPlan']['collaborators'][0];
 
 const ContactInfo = ({
   modelID,

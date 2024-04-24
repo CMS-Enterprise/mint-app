@@ -2,12 +2,12 @@ import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { act, render, screen, waitFor } from '@testing-library/react';
-import { GetClearanceStatusesDocument } from 'gql/gen/graphql';
-
 import {
+  GetClearanceStatusesDocument,
   PrepareForClearanceStatus,
   TaskStatus
-} from 'types/graphql-global-types';
+} from 'gql/gen/graphql';
+
 import setup from 'utils/testing/setup';
 
 import PrepareForClearanceCheckList, {
