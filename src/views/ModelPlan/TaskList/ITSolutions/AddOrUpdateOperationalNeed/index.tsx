@@ -12,11 +12,11 @@ import {
 } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
 import {
+  UpdateCustomOperationalNeedMutation,
   useGetOperationalNeedQuery,
   useUpdateCustomOperationalNeedByIdMutation,
   useUpdateCustomOperationalNeedMutation
 } from 'gql/gen/graphql';
-import { UpdateCustomOperationalNeed_addOrUpdateCustomOperationalNeed as FormTypes } from 'gql/gen/types/UpdateCustomOperationalNeed';
 
 import Breadcrumbs from 'components/Breadcrumbs';
 import PageHeading from 'components/PageHeading';
@@ -30,6 +30,8 @@ import flattenErrors from 'utils/flattenErrors';
 import { ModelInfoContext } from 'views/ModelInfoWrapper';
 
 import ITSolutionsSidebar from '../_components/ITSolutionSidebar';
+
+type FormTypes = UpdateCustomOperationalNeedMutation['addOrUpdateCustomOperationalNeed'];
 
 type CustomOperationalNeedFormType = Omit<
   FormTypes,

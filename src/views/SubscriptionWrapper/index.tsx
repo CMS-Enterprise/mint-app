@@ -8,14 +8,16 @@
 import React, { createContext, useEffect, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 import {
+  ChangeType,
+  GetTaskListSubscriptionsQuery,
   TaskListSubscriptionDocument,
   TaskListSubscriptionSubscription,
   useGetTaskListSubscriptionsLazyQuery
 } from 'gql/gen/graphql';
-import { TaskListSubscription_onLockTaskListSectionContext_lockStatus as LockSectionType } from 'gql/gen/types/TaskListSubscription';
 
-import { ChangeType } from 'types/graphql-global-types';
 import { isUUID } from 'utils/modelPlan';
+
+type LockSectionType = GetTaskListSubscriptionsQuery['taskListSectionLocks'][0];
 
 type SubscriptionWrapperProps = {
   children: React.ReactNode;
