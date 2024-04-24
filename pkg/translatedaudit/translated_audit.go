@@ -316,13 +316,16 @@ func translateStrSlice(strSlice []string, options map[string]interface{}) pq.Str
 // It checks in the value is an array, and if so it translates each value to a human readable form
 func translateValue(value interface{}, options map[string]interface{}) interface{} {
 
+	if value == nil {
+		return nil
+	}
 	// Changes: (Translations) Check if value is nil, don't need to translate that.
 	// Changes: (Translations) work on bool representation, they should come through here as a string, but show up as t, f. We will want to set they values
 	// strSlice, isSlice := value.([]string)
 	str, isString := value.(string)
 
 	// strSlice, isSlice := isArray(str)
-	strSlice, isSlice := value.([]string)
+	strSlice, isSlice := value.(pq.StringArray)
 
 	if isSlice {
 		transArray := translateStrSlice(strSlice, options)
@@ -437,10 +440,10 @@ func saveTranslatedAuditAndFields(tp sqlutils.TransactionPreparer, translatedAud
 // sanitizeAuditBoolValue sanitizes raw audit data and does some preliminary translation data, ex translating a t or f character to true or false
 func sanitizeAuditBoolValue(value interface{}) interface{} {
 	if value == "t" {
-		return true
+		return "true"
 	}
 	if value == "f" {
-		return false
+		return "false"
 	}
 	return value
 
