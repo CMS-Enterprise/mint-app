@@ -9,8 +9,8 @@ import React, { useContext } from 'react';
 import { RootStateOrAny, useSelector } from 'react-redux';
 import { Redirect, useHistory } from 'react-router-dom';
 import {
+  GetTaskListSubscriptionsQuery,
   TaskListSection,
-  TaskListSectionLockStatus as LockSectionType,
   useLockTaskListSectionMutation,
   useUnlockTaskListSectionMutation
 } from 'gql/gen/graphql';
@@ -18,6 +18,8 @@ import {
 import { isUUID } from 'utils/modelPlan';
 import { RouterContext } from 'views/RouterContext';
 import { SubscriptionContext } from 'views/SubscriptionWrapper';
+
+type LockSectionType = GetTaskListSubscriptionsQuery['taskListSectionLocks'][0];
 
 type SubscriptionHandlerProps = {
   children: React.ReactNode;

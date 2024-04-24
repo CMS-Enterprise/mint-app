@@ -17,6 +17,8 @@ import {
   Icon
 } from '@trussworks/react-uswds';
 import {
+  PrepareForClearanceStatus,
+  TaskStatus,
   TaskStatusInput,
   UpdateClearanceBasicsMutationFn,
   UpdateClearanceBeneficiariesMutationFn,
@@ -39,10 +41,6 @@ import Modal from 'components/Modal';
 import PageHeading from 'components/PageHeading';
 import PageLoading from 'components/PageLoading';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
-import {
-  PrepareForClearanceStatus,
-  TaskStatus
-} from 'types/graphql-global-types';
 import ReadOnlyBeneficiaries from 'views/ModelPlan/ReadOnly/Beneficiaries';
 import ReadOnlyGeneralCharacteristics from 'views/ModelPlan/ReadOnly/GeneralCharacteristics';
 import ReadOnlyModelBasics from 'views/ModelPlan/ReadOnly/ModelBasics';
