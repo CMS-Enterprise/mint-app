@@ -1,17 +1,13 @@
 import React from 'react';
-import { GetOperationalNeedsQuery } from 'gql/gen/graphql';
-// import {
-//   // GetOperationalNeeds_modelPlan_operationalNeeds as GetOperationalNeedsOperationalNeedsType,
-//   GetOperationalNeeds_modelPlan_operationalNeeds_solutions as GetOperationalNeedsSolutionsType
-// } from 'gql/gen/types/GetOperationalNeeds';
+import {
+  GetOperationalNeedsQuery,
+  OperationalNeedKey,
+  OpSolutionStatus
+} from 'gql/gen/graphql';
 import i18next from 'i18next';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import operationalNeedMap from 'data/operationalNeedMap';
-import {
-  OperationalNeedKey,
-  OpSolutionStatus
-} from 'types/graphql-global-types';
 
 import { OperationalNeedStatus } from './_components/NeedsStatus';
 
