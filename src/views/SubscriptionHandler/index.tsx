@@ -9,12 +9,12 @@ import React, { useContext } from 'react';
 import { RootStateOrAny, useSelector } from 'react-redux';
 import { Redirect, useHistory } from 'react-router-dom';
 import {
+  TaskListSection,
+  TaskListSectionLockStatus as LockSectionType,
   useLockTaskListSectionMutation,
   useUnlockTaskListSectionMutation
 } from 'gql/gen/graphql';
-import { TaskListSubscription_onLockTaskListSectionContext_lockStatus as LockSectionType } from 'gql/gen/types/TaskListSubscription';
 
-import { TaskListSection } from 'types/graphql-global-types';
 import { isUUID } from 'utils/modelPlan';
 import { RouterContext } from 'views/RouterContext';
 import { SubscriptionContext } from 'views/SubscriptionWrapper';
