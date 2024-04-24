@@ -441,11 +441,10 @@ const OperationalNeedsTable = ({
                       paddingBottom: '.5rem',
                       position: 'relative',
                       paddingLeft: index === 0 ? '.5em' : '0px',
-                      // width: index === 5 ? '235px' : 'auto'
                       width:
                         (index === 5 && '235px') ||
                         (index === 2 && '170px') ||
-                        (index === 3 && '100px') ||
+                        (index === 3 && type !== 'possibleNeeds' && '100px') ||
                         'auto'
                     }}
                   >
