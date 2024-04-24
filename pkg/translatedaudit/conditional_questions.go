@@ -52,6 +52,9 @@ func checkChildConditionals(old interface{}, new interface{}, childrenMap map[st
 		oldMinusNew, _ = lo.Difference(oldChildren, newChildren)
 
 	}
+	if len(oldMinusNew) < 1 {
+		return nil
+	}
 
 	//Changes: (Translations) Verify that the new fields don't have an overlap, Verify if we need to look at new children vs old children or just can assume old are no longer applicable
 
