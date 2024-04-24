@@ -11287,7 +11287,8 @@ enum DiscussionUserRole {
   LEADERSHIP,
   MEDICARE_ADMINISTRATIVE_CONTRACTOR,
   MINT_TEAM,
-  MODEL_IT_LEAD,
+  IT_LEAD,
+  MODEL_LEAD,
   MODEL_TEAM,
   SHARED_SYSTEM_MAINTAINER,
   NONE_OF_THE_ABOVE,
@@ -11353,7 +11354,8 @@ enum Role {
   A MINT MAC user
   """
   MINT_MAC
-}`, BuiltIn: false},
+}
+`, BuiltIn: false},
 	{Name: "../schema/types/tag.graphql", Input: `enum TagType {
   USER_ACCOUNT
   POSSIBLE_SOLUTION
