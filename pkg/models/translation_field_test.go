@@ -76,61 +76,101 @@ func TestTranslationFieldLabel(t *testing.T) {
 
 	t.Run("label field is the fall through field", func(t *testing.T) {
 		// When there is no note or is other, and no export label, use the base label
-		label := testTranslation.GetLabel(testTranslationMap)
+		label := testTranslation.GetLabel()
 		assert.EqualValues(t, testBaseLabel, label)
 	})
-	t.Run("Other parent field is used if note or if other", func(t *testing.T) {
+	t.Run("Other parent field is used for reference label if present", func(t *testing.T) {
 		// if isNote or if isOther use the
 		testTranslation.IsNote = true
-		label := testTranslation.GetLabel(testTranslationMap)
-		assert.EqualValues(t, parentLabel, label)
+		label := testTranslation.GetLabel()
+		assert.EqualValues(t, testBaseLabel, label)
+		referencesLabel := testTranslation.GetReferencesLabel(testTranslationMap)
+		assert.EqualValues(t, &parentLabel, referencesLabel)
 		testTranslation.IsOtherType = true
 		testTranslation.IsNote = false
-		label = testTranslation.GetLabel(testTranslationMap)
-		assert.EqualValues(t, parentLabel, label)
+		label = testTranslation.GetLabel()
+		assert.EqualValues(t, testBaseLabel, label)
 	})
 
-	t.Run("Other parent field is used if note or if other. If a parent field isn't found, use the base label", func(t *testing.T) {
+	t.Run("Other parent field is used for references if present. If a parent field isn't found, nil references", func(t *testing.T) {
 		// if isNote or if isOther use the
 		testTranslation.IsNote = true
 		parentField := "false_field_name"
 		testTranslation.OtherParentField = &parentField
-		label := testTranslation.GetLabel(testTranslationMap)
+		label := testTranslation.GetLabel()
 		assert.EqualValues(t, testBaseLabel, label)
-		testTranslation.IsOtherType = true
-		testTranslation.IsNote = false
-		label = testTranslation.GetLabel(testTranslationMap)
-		assert.EqualValues(t, testBaseLabel, label)
-	})
-	t.Run("ParentReferencesLabel  is prioritized over Other Parent Field if note or if other", func(t *testing.T) {
-		testTranslation.IsNote = true
-		referenceLabel := "References Label"
-		testTranslation.ParentReferencesLabel = &referenceLabel
+		referencesLabel := testTranslation.GetReferencesLabel(testTranslationMap)
+		assert.Nil(t, referencesLabel)
 
-		label := testTranslation.GetLabel(testTranslationMap)
-		assert.EqualValues(t, referenceLabel, label)
 		testTranslation.IsOtherType = true
 		testTranslation.IsNote = false
-		label = testTranslation.GetLabel(testTranslationMap)
-		assert.EqualValues(t, referenceLabel, label)
+		label = testTranslation.GetLabel()
+		assert.EqualValues(t, testBaseLabel, label)
+		referencesLabel = testTranslation.GetReferencesLabel(testTranslationMap)
+		assert.Nil(t, referencesLabel)
 	})
-	t.Run("If parentReferencesLabel and Other Parent Field are null, use base label", func(t *testing.T) {
+	t.Run("ParentReferencesLabel  is prioritized over Other Parent Field if present", func(t *testing.T) {
+		testTranslation.IsNote = true
+		parentReferenceLabel := "References Label"
+		testTranslation.ParentReferencesLabel = &parentReferenceLabel
+
+		label := testTranslation.GetLabel()
+		assert.EqualValues(t, testBaseLabel, label)
+		referencesLabel := testTranslation.GetReferencesLabel(testTranslationMap)
+		assert.EqualValues(t, &parentReferenceLabel, referencesLabel)
+
+		testTranslation.IsOtherType = true
+		testTranslation.IsNote = false
+		label = testTranslation.GetLabel()
+		assert.EqualValues(t, testBaseLabel, label)
+		referencesLabel = testTranslation.GetReferencesLabel(testTranslationMap)
+		assert.EqualValues(t, &parentReferenceLabel, referencesLabel)
+	})
+	t.Run("If parentReferencesLabel and Other Parent Field are null, references label will be null", func(t *testing.T) {
 		testTranslation.IsNote = true
 		testTranslation.ParentReferencesLabel = nil
 		testTranslation.OtherParentField = nil
 
-		label := testTranslation.GetLabel(testTranslationMap)
+		label := testTranslation.GetLabel()
 		assert.EqualValues(t, testBaseLabel, label)
+		referencesLabel := testTranslation.GetReferencesLabel(testTranslationMap)
+		assert.Nil(t, referencesLabel)
 
 	})
 
 	t.Run("Export Label takes priority of other field", func(t *testing.T) {
 		testTranslation.IsNote = true
 		testTranslation.IsOtherType = true
+		parentReferenceLabel := "References Label"
+		testTranslation.ParentReferencesLabel = &parentReferenceLabel
 		exportLabel := "Export Label"
 		testTranslation.ExportLabel = &exportLabel
-		label := testTranslation.GetLabel(testTranslationMap)
+		label := testTranslation.GetLabel()
 		assert.EqualValues(t, exportLabel, label)
+
+		parentExportLabel := "Parent Export Label"
+		parentTranslationTest.ExportLabel = &parentExportLabel
+
+		referencesLabel := testTranslation.GetReferencesLabel(testTranslationMap)
+		assert.EqualValues(t, &parentReferenceLabel, referencesLabel)
+	})
+	t.Run("Parent other field will Favor Export Label over regular label for references label", func(t *testing.T) {
+		testTranslation.IsNote = true
+		testTranslation.IsOtherType = true
+
+		testTranslation.ParentReferencesLabel = nil
+		exportLabel := "Export Label"
+		testTranslation.ExportLabel = &exportLabel
+		label := testTranslation.GetLabel()
+		assert.EqualValues(t, exportLabel, label)
+
+		// Update the map to have the updated parent which has an export label
+		parentExportLabel := "Parent Export Label"
+		parentTranslationTest.ExportLabel = &parentExportLabel
+		testTranslationMap[otherParentField] = parentTranslationTest
+
+		referencesLabel := testTranslation.GetReferencesLabel(testTranslationMap)
+		assert.EqualValues(t, &parentExportLabel, referencesLabel)
 	})
 
 }

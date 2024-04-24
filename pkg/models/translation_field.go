@@ -63,55 +63,30 @@ type TranslationFieldBase struct {
 }
 
 // GetLabel has logic to prioritize the translated label to be returned for a specific field. It prioritizes the Export only Label, then the parent label, then label
-func (tfb TranslationFieldBase) GetLabel(translationDictionary map[string]ITranslationField) string {
-	/*
-		1. Favor Export Label --> ReadOnlyLabel --> Label
-
-		2. Any IsOther, or IsNote Translation
-			a. Prioritize ParentReferencesLabel
-				i.
-			b. Use Other ParentField to get the parent translation if needed
-
-		3. Label is the fallthrough default choice
-
-	*/
+func (tfb TranslationFieldBase) GetLabel() string {
 	//Changes: (Translations) Should GetLabel return an error ever?
 	/*1. Favor Export Label  */
 	if tfb.ExportLabel != nil {
 		return *tfb.ExportLabel
 	}
-
-	// Changes: (Translations) Update this to look and see if we should return that it is a note in this function? Or do it in the calling function?
-	// We could alternatively return multiple strings, one is the label, one is the note precursor or something?
-
-	/* 2. Any IsOther, or IsNote Translation
-	a. Prioritize ParentReferencesLabel
-		i.
-	b. Use Other ParentField to get the parent translation if needed
-	*/
-	if tfb.IsNote || tfb.IsOtherType {
-		if tfb.ParentReferencesLabel != nil {
-			return *tfb.ParentReferencesLabel
-		}
-		if tfb.OtherParentField != nil {
-			// Attempt to get the parent field, and it's label (with recursion?) If not, fall through to the other labels.
-			parent, ok := translationDictionary[*tfb.OtherParentField]
-			if ok {
-				return parent.GetLabel(translationDictionary)
-				// Changes: (Translations) verify that this is ok, we are opening ourselves up to recursion using this method call...
-			}
-		}
-
-	}
-
 	// Changes: (Translations) Verify the priority for labels? Read only sometimes has language that isn't correct for this.
 	return tfb.Label
-	// Changes: (Translations) Verify we don't want to use ReadOnly
-	// if tfb.ReadOnlyLabel != nil {
-	// 	return *tfb.ReadOnlyLabel
-	// }
 
-	// return tfb.Label
+}
+func (tfb TranslationFieldBase) GetReferencesLabel(translationDictionary map[string]ITranslationField) *string {
+	if tfb.ParentReferencesLabel != nil {
+		return tfb.ParentReferencesLabel
+	}
+	if tfb.OtherParentField != nil {
+		// Attempt to get the parent field, and it's label (with recursion?) If not, fall through to the other labels.
+		parent, ok := translationDictionary[*tfb.OtherParentField]
+		if ok {
+			parentLabel := parent.GetLabel()
+			return &parentLabel
+			// Changes: (Translations) verify that this is ok, we are opening ourselves up to recursion using this method call...
+		}
+	}
+	return nil
 
 }
 
@@ -151,7 +126,10 @@ type TranslationFieldWithOptions struct {
 
 // ITranslationField defines the signature every translation is expected to have
 type ITranslationField interface {
-	GetLabel(translationDictionary map[string]ITranslationField) string
+	// Returns the label directly for the field without reference to a parent.
+	GetLabel() string
+	GetReferencesLabel(map[string]ITranslationField) *string
+
 	HasOptions() bool
 	// Returns options if a translationField has options
 	GetOptions() (map[string]interface{}, bool)

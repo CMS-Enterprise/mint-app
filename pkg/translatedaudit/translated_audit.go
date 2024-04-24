@@ -210,7 +210,7 @@ func translateField(fieldName string, field models.AuditField, audit *models.Aud
 	translationInterface := translationMap[fieldName]
 	if translationInterface != nil {
 
-		translatedLabel = translationInterface.GetLabel(translationMap)
+		translatedLabel = translationInterface.GetLabel()
 		//Changes: (Translations) update this to handle if notes, or preferences.
 
 		tForm := translationInterface.GetFormType()
