@@ -297,35 +297,6 @@ func getChangeType(old interface{}, new interface{}) models.AuditFieldChangeType
 	return models.AFCUpdated
 }
 
-// type stringOrStringArray interface {
-// 	string | []string
-// }
-
-// func translateStrValue[V stringOrStringArray](value V, options map[string]interface{}) interface{} {
-
-// 	slice, isSlice :=  value.([]string)
-
-// 	if isSlice {
-// 		transArray := pq.StringArray{}
-// 		// transArray := []interface{}{}
-// 		for _, str := range strSlice {
-// 			translated := translateValueSingle(str, options)
-// 			transArray = append(transArray, translated)
-// 		}
-// 		// Changes: (Translations) revisit this, even using generic array results in escape characters in GQL...
-// 		// genArray := pq.GenericArray{transArray}
-// 		return transArray
-// 	}
-// 	// str, isString := value.(string)
-// 	if isString {
-// 		// Changes: (Translations) Revisit this issue here, we need the value to be stringified properly. Or provide a column type that is string or string array
-
-// 		return translateValueSingle(str, options)
-// 	}
-// 	// Changes: (Translations)  Should we handle the case where we can't translate it more?
-// 	return value
-// }
-
 func translateStrSlice(strSlice []string, options map[string]interface{}) pq.StringArray {
 	// Changes: (Translations) Determine if we can serialize a generic interface? it makes a weird artifact in the GQL
 	//   "{\"Mandatory national\",\"Other\"}",

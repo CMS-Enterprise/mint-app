@@ -9,7 +9,6 @@ import (
 
 // checkChildConditionals will check if changes to a question make any questions non applicable
 func checkChildConditionals(old interface{}, new interface{}, childrenMap map[string][]models.TranslationField) *pq.StringArray {
-	// Changes: (Translations) check if we need to deal with an array for children.. EG if it is a multiselect, we need to check each value, not just one like we are doing
 
 	if old == nil {
 		return nil
@@ -55,8 +54,6 @@ func checkChildConditionals(old interface{}, new interface{}, childrenMap map[st
 	if len(oldMinusNew) < 1 {
 		return nil
 	}
-
-	//Changes: (Translations) Verify that the new fields don't have an overlap, Verify if we need to look at new children vs old children or just can assume old are no longer applicable
 
 	conditionals := pq.StringArray{}
 
