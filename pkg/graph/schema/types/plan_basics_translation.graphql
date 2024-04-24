@@ -4,7 +4,7 @@ Represents plan basics translation data
 type PlanBasicsTranslation {
   modelCategory: TranslationFieldWithOptions! @goTag(key: "db", value: "model_category")
   additionalModelCategories: TranslationFieldWithOptions! @goTag(key: "db", value: "additional_model_categories")
-  demoCode: TranslationField! @goTag(key: "db", value: "“demo_code”")
+  demoCode: TranslationField! @goTag(key: "db", value: "demo_code")
   amsModelID: TranslationField! @goTag(key: "db", value: "ams_model_ID")
   cmsCenters: TranslationFieldWithOptions! @goTag(key: "db", value: "cms_centers")
   cmmiGroups: TranslationFieldWithOptions! @goTag(key: "db", value: "cmmi_groups")
@@ -13,7 +13,7 @@ type PlanBasicsTranslation {
   problem: TranslationField! @goTag(key: "db", value: "problem")
   goal: TranslationField! @goTag(key: "db", value: "goal")
   testInterventions: TranslationField! @goTag(key: "db", value: "test_interventions")
-  note: TranslationField! @goTag(key: "db", value: "demo_code")
+  note: TranslationField! @goTag(key: "db", value: "note")
 
   # Milestones
   completeICIP: TranslationField! @goTag(key: "db", value: "complete_icip")

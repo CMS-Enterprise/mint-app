@@ -10,6 +10,8 @@ import (
 	"github.com/cmsgov/mint-app/pkg/models"
 )
 
+//Changes (Testing) Assert that every go tag is correct? Is this possible? Example, on plan basics demo_code had extra quotes, and the notes field mapped to demo_code, so the translation was weird
+
 // assertTranslationFields will iterate through all fields in a translation and make sure that they are populated correctly and valid
 func assertTranslationFields(t *testing.T, translation Translation) {
 	// Get the type & value of the object

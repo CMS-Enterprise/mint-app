@@ -53,7 +53,7 @@ type NDAInfo struct {
 type PlanBasicsTranslation struct {
 	ModelCategory             models.TranslationFieldWithOptions `json:"modelCategory" db:"model_category"`
 	AdditionalModelCategories models.TranslationFieldWithOptions `json:"additionalModelCategories" db:"additional_model_categories"`
-	DemoCode                  models.TranslationField            `json:"demoCode" db:"“demo_code”"`
+	DemoCode                  models.TranslationField            `json:"demoCode" db:"demo_code"`
 	AmsModelID                models.TranslationField            `json:"amsModelID" db:"ams_model_ID"`
 	CmsCenters                models.TranslationFieldWithOptions `json:"cmsCenters" db:"cms_centers"`
 	CmmiGroups                models.TranslationFieldWithOptions `json:"cmmiGroups" db:"cmmi_groups"`
@@ -62,7 +62,7 @@ type PlanBasicsTranslation struct {
 	Problem                   models.TranslationField            `json:"problem" db:"problem"`
 	Goal                      models.TranslationField            `json:"goal" db:"goal"`
 	TestInterventions         models.TranslationField            `json:"testInterventions" db:"test_interventions"`
-	Note                      models.TranslationField            `json:"note" db:"demo_code"`
+	Note                      models.TranslationField            `json:"note" db:"note"`
 	CompleteIcip              models.TranslationField            `json:"completeICIP" db:"complete_icip"`
 	ClearanceStarts           models.TranslationField            `json:"clearanceStarts" db:"clearance_starts"`
 	ClearanceEnds             models.TranslationField            `json:"clearanceEnds" db:"clearance_ends"`
