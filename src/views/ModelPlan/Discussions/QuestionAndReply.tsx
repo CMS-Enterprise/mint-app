@@ -11,12 +11,9 @@ import {
 import { Field, Form, Formik, FormikProps } from 'formik';
 import {
   DiscussionUserRole,
+  GetModelPlanDiscussionsQuery,
   useGetMostRecentRoleSelectionQuery
 } from 'gql/gen/graphql';
-import {
-  GetModelPlanDiscussions_modelPlan_discussions as DiscussionType,
-  GetModelPlanDiscussions_modelPlan_discussions_replies as ReplyType
-} from 'gql/gen/types/GetModelPlanDiscussions';
 import * as Yup from 'yup';
 
 import PageHeading from 'components/PageHeading';
@@ -32,6 +29,9 @@ import flattenErrors from 'utils/flattenErrors';
 import DiscussionUserInfo from './_components/DiscussionUserInfo';
 import Replies from './Replies';
 import { DiscussionFormPropTypes } from '.';
+
+type DiscussionType = GetModelPlanDiscussionsQuery['modelPlan']['discussions'][0];
+type ReplyType = GetModelPlanDiscussionsQuery['modelPlan']['discussions'][0]['replies'][0];
 
 type QuestionAndReplyProps = {
   closeModal?: () => void;

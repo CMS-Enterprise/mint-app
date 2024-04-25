@@ -1,18 +1,18 @@
 import React from 'react';
+import {
+  GetOperationalNeedsQuery,
+  OperationalNeedKey,
+  OpSolutionStatus
+} from 'gql/gen/graphql';
 import i18next from 'i18next';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import operationalNeedMap from 'data/operationalNeedMap';
-import {
-  GetOperationalNeeds_modelPlan_operationalNeeds as GetOperationalNeedsOperationalNeedsType,
-  GetOperationalNeeds_modelPlan_operationalNeeds_solutions as GetOperationalNeedsSolutionsType
-} from 'queries/ITSolutions/types/GetOperationalNeeds';
-import {
-  OperationalNeedKey,
-  OpSolutionStatus
-} from 'types/graphql-global-types';
 
 import { OperationalNeedStatus } from './_components/NeedsStatus';
+
+type GetOperationalNeedsOperationalNeedsType = GetOperationalNeedsQuery['modelPlan']['operationalNeeds'][0];
+type GetOperationalNeedsSolutionsType = GetOperationalNeedsQuery['modelPlan']['operationalNeeds'][0]['solutions'][0];
 
 // Utility function for getting a list of operational needs that are not answered/needed
 export const filterPossibleNeeds = (
@@ -70,9 +70,9 @@ const formatSolutionsFromNeed = (
 
 // Utility to populate an empty solution from an operational need
 const emptySolution = (
-  needName: string | null,
+  needName: string | null | undefined,
   needID: string,
-  key: OperationalNeedKey | null
+  key?: OperationalNeedKey | null
 ) => {
   return {
     __typename: 'OperationalSolution',

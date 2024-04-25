@@ -319,7 +319,7 @@ exports[`Operational Solutions NeedQuestionAndAnswer > matches snapshot 1`] = `
                   data-testid="label"
                   for="solution-must-finish-RMADA"
                 >
-                  Must finish by
+                  Must be ready by
                 </label>
                 <div
                   class="usa-hint margin-top-1"

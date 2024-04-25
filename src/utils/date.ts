@@ -15,8 +15,16 @@ export const formatDateLocal = (date: string, format: DateFormat) =>
  * Typically used for dates from user input, where utc timezone needs to be set
  * explicitly in order to match timezoneless dates within a iso string correctly.
  */
-export const formatDateUtc = (date: string, format: DateFormat) =>
-  DateTime.fromISO(date, { zone: 'UTC' }).toFormat(format);
+export const formatDateUtc = (
+  date: string | null,
+  format: DateFormat
+): string => {
+  if (date) {
+    const parsedDate = DateTime.fromISO(date, { zone: 'UTC' }).toFormat(format);
+    if (parsedDate !== 'Invalid DateTime') return parsedDate;
+  }
+  return '';
+};
 
 export const getTimeElapsed = (discussionCreated: string) => {
   const now = DateTime.local();
@@ -45,6 +53,10 @@ export const getTimeElapsed = (discussionCreated: string) => {
 
   return dateString;
 };
+
+// Returns only the time from an ISO string -> 1:57 pm
+export const formatTime = (date: string) =>
+  DateTime.fromISO(date).toLocaleString(DateTime.TIME_SIMPLE);
 
 export const getDaysElapsed = (discussionCreated: string) => {
   const now = DateTime.local();

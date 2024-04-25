@@ -6,9 +6,15 @@ Displays relevant operational need question and answers
 import React, { useContext, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
-import { useMutation, useQuery } from '@apollo/client';
 import { Button, Fieldset, Grid, Icon } from '@trussworks/react-uswds';
 import { Form, Formik, FormikProps } from 'formik';
+import {
+  GetOperationalNeedQuery,
+  GetOperationalSolutionQuery,
+  OperationalNeedKey,
+  useGetOperationalNeedQuery,
+  useUpdateOperationalSolutionMutation
+} from 'gql/gen/graphql';
 
 import Breadcrumbs from 'components/Breadcrumbs';
 import PageHeading from 'components/PageHeading';
@@ -16,16 +22,6 @@ import PageLoading from 'components/PageLoading';
 import Alert from 'components/shared/Alert';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import useMessage from 'hooks/useMessage';
-import GetOperationalNeed from 'queries/ITSolutions/GetOperationalNeed';
-import {
-  GetOperationalNeed as GetOperationalNeedType,
-  GetOperationalNeed_operationalNeed as GetOperationalNeedOperationalNeedType,
-  GetOperationalNeedVariables
-} from 'queries/ITSolutions/types/GetOperationalNeed';
-import { GetOperationalSolution_operationalSolution as GetOperationalSolutionType } from 'queries/ITSolutions/types/GetOperationalSolution';
-import { UpdateOperationalSolutionVariables } from 'queries/ITSolutions/types/UpdateOperationalSolution';
-import UpdateOperationalSolution from 'queries/ITSolutions/UpdateOperationalSolution';
-import { OperationalNeedKey } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
 import { ModelInfoContext } from 'views/ModelInfoWrapper';
 import NotFound from 'views/NotFound';
@@ -35,9 +31,12 @@ import NeedQuestionAndAnswer from '../_components/NeedQuestionAndAnswer';
 
 import Solution from './_components/Solution';
 
+type OperationalNeedType = GetOperationalNeedQuery['operationalNeed'];
+type GetOperationalSolutionType = GetOperationalSolutionQuery['operationalSolution'];
+
 // Passing in operationalNeed to Formik instead of array of solutions
 // Fomik does not take an array structure
-export const initialValues: GetOperationalNeedOperationalNeedType = {
+export const initialValues: OperationalNeedType = {
   __typename: 'OperationalNeed',
   id: '',
   modelPlanID: '',
@@ -72,16 +71,11 @@ const SolutionImplementation = () => {
   // State management for mutation errors
   const [mutationError, setMutationError] = useState<boolean>(false);
 
-  const formikRef = useRef<FormikProps<GetOperationalNeedOperationalNeedType>>(
-    null
-  );
+  const formikRef = useRef<FormikProps<OperationalNeedType>>(null);
 
   const { modelName } = useContext(ModelInfoContext);
 
-  const { data, loading, error } = useQuery<
-    GetOperationalNeedType,
-    GetOperationalNeedVariables
-  >(GetOperationalNeed, {
+  const { data, loading, error } = useGetOperationalNeedQuery({
     variables: {
       id: operationalNeedID,
       includeNotNeeded: false
@@ -90,13 +84,11 @@ const SolutionImplementation = () => {
 
   const operationalNeed = data?.operationalNeed || initialValues;
 
-  const [updateSolution] = useMutation<UpdateOperationalSolutionVariables>(
-    UpdateOperationalSolution
-  );
+  const [updateSolution] = useUpdateOperationalSolutionMutation();
 
   // Cycles and updates all solutions on a need
   const handleFormSubmit = async (
-    formikValues: GetOperationalNeedOperationalNeedType,
+    formikValues: OperationalNeedType,
     redirect?: 'back' | null,
     dontAdd?: boolean // False if user selects 'Don’t add solutions and return to tracker'
   ) => {
@@ -207,7 +199,7 @@ const SolutionImplementation = () => {
     return t('dontAdd');
   };
 
-  const handleCancelClick = (values: GetOperationalNeedOperationalNeedType) => {
+  const handleCancelClick = (values: OperationalNeedType) => {
     if (!!solutionId && fromSolutionDetails) {
       return history.goBack();
     }
@@ -303,9 +295,7 @@ const SolutionImplementation = () => {
               enableReinitialize
               innerRef={formikRef}
             >
-              {(
-                formikProps: FormikProps<GetOperationalNeedOperationalNeedType>
-              ) => {
+              {(formikProps: FormikProps<OperationalNeedType>) => {
                 const { errors, setErrors, handleSubmit, values } = formikProps;
 
                 const flatErrors = flattenErrors(errors);

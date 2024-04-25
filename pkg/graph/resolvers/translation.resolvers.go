@@ -6,6 +6,7 @@ package resolvers
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/cmsgov/mint-app/pkg/graph/generated"
 	"github.com/cmsgov/mint-app/pkg/models"
@@ -43,3 +44,33 @@ func (r *Resolver) TranslationFieldWithParentAndChildren() generated.Translation
 
 type translationFieldWithOptionsAndChildrenResolver struct{ *Resolver }
 type translationFieldWithParentAndChildrenResolver struct{ *Resolver }
+
+// !!! WARNING !!!
+// The code below was going to be deleted when updating resolvers. It has been copied here so you have
+// one last chance to move it out of harms way if you want. There are two reasons this happens:
+//   - When renaming or deleting a resolver the old code will be put in here. You can safely delete
+//     it when you're done.
+//   - You have helper methods in this file. Move them out to keep these resolver files clean.
+func (r *translationFieldResolver) ExportLabel(ctx context.Context, obj *models.TranslationField) (*string, error) {
+	panic(fmt.Errorf("not implemented: ExportLabel - exportLabel"))
+}
+func (r *translationFieldWithOptionsResolver) ExportLabel(ctx context.Context, obj *models.TranslationFieldWithOptions) (*string, error) {
+	panic(fmt.Errorf("not implemented: ExportLabel - exportLabel"))
+}
+func (r *translationFieldWithOptionsAndChildrenResolver) ExportLabel(ctx context.Context, obj *models.TranslationFieldWithOptionsAndChildren) (*string, error) {
+	panic(fmt.Errorf("not implemented: ExportLabel - exportLabel"))
+}
+func (r *translationFieldWithOptionsAndParentResolver) ExportLabel(ctx context.Context, obj *models.TranslationFieldWithOptionsAndParent) (*string, error) {
+	panic(fmt.Errorf("not implemented: ExportLabel - exportLabel"))
+}
+func (r *translationFieldWithParentResolver) ExportLabel(ctx context.Context, obj *models.TranslationFieldWithParent) (*string, error) {
+	panic(fmt.Errorf("not implemented: ExportLabel - exportLabel"))
+}
+func (r *translationFieldWithParentAndChildrenResolver) ExportLabel(ctx context.Context, obj *models.TranslationFieldWithParentAndChildren) (*string, error) {
+	panic(fmt.Errorf("not implemented: ExportLabel - exportLabel"))
+}
+
+type translationFieldResolver struct{ *Resolver }
+type translationFieldWithOptionsResolver struct{ *Resolver }
+type translationFieldWithOptionsAndParentResolver struct{ *Resolver }
+type translationFieldWithParentResolver struct{ *Resolver }

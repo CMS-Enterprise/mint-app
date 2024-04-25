@@ -5,8 +5,15 @@ View for linking and unlinking existing model plan documents for operational nee
 import React, { useContext, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';
-import { useMutation, useQuery } from '@apollo/client';
 import { Button, Grid, Icon } from '@trussworks/react-uswds';
+import {
+  GetOperationalNeedQuery,
+  GetOperationalSolutionQuery,
+  OperationalNeedKey,
+  useCreateDocumentSolutionLinksMutation,
+  useDeleteDocumentSolutionLinkMutation,
+  useGetOperationalSolutionQuery
+} from 'gql/gen/graphql';
 import { isEqual } from 'lodash';
 
 import Breadcrumbs from 'components/Breadcrumbs';
@@ -16,24 +23,15 @@ import PageLoading from 'components/PageLoading';
 import Alert from 'components/shared/Alert';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import useMessage from 'hooks/useMessage';
-import CreateDocumentSolutionLinks from 'queries/ITSolutions/CreateDocumentSolutionLinks';
-import DeleteDocumentSolutionLinks from 'queries/ITSolutions/DeleteDocumentSolutionLink';
-import GetOperationalSolution from 'queries/ITSolutions/GetOperationalSolution';
-import { CreateDocumentSolutionLinksVariables } from 'queries/ITSolutions/types/CreateDocumentSolutionLinks';
-import { DeleteDocumentSolutionLinkVariables } from 'queries/ITSolutions/types/DeleteDocumentSolutionLink';
-import { GetOperationalNeed_operationalNeed as GetOperationalNeedOperationalNeedType } from 'queries/ITSolutions/types/GetOperationalNeed';
-import {
-  GetOperationalSolution as GetOperationalSolutionType,
-  GetOperationalSolution_operationalSolution as GetOperationalSolutionOperationalSolutionType,
-  GetOperationalSolutionVariables
-} from 'queries/ITSolutions/types/GetOperationalSolution';
-import { OperationalNeedKey } from 'types/graphql-global-types';
 import { ModelInfoContext } from 'views/ModelInfoWrapper';
 import PlanDocumentsTable from 'views/ModelPlan/Documents/table';
 import NotFound from 'views/NotFound';
 
 import ITSolutionsSidebar from '../_components/ITSolutionSidebar';
 import NeedQuestionAndAnswer from '../_components/NeedQuestionAndAnswer';
+
+type GetOperationalNeedOperationalNeedType = GetOperationalNeedQuery['operationalNeed'];
+type GetOperationalSolutionOperationalSolutionType = GetOperationalSolutionQuery['operationalSolution'];
 
 export const initialValues: GetOperationalNeedOperationalNeedType = {
   __typename: 'OperationalNeed',
@@ -74,10 +72,7 @@ const LinkDocuments = () => {
   // State management for mutation errors
   const [mutationError, setMutationError] = useState<boolean>(false);
 
-  const { data, loading, error } = useQuery<
-    GetOperationalSolutionType,
-    GetOperationalSolutionVariables
-  >(GetOperationalSolution, {
+  const { data, loading, error } = useGetOperationalSolutionQuery({
     variables: {
       id: operationalSolutionID
     }
@@ -99,15 +94,9 @@ const LinkDocuments = () => {
     setLinkedDocsInit(linkedDocsFiltered);
   }, [solution]);
 
-  const [
-    createSolutionLinks
-  ] = useMutation<CreateDocumentSolutionLinksVariables>(
-    CreateDocumentSolutionLinks
-  );
+  const [createSolutionLinks] = useCreateDocumentSolutionLinksMutation();
 
-  const [deleteSolutionLink] = useMutation<DeleteDocumentSolutionLinkVariables>(
-    DeleteDocumentSolutionLinks
-  );
+  const [deleteSolutionLink] = useDeleteDocumentSolutionLinkMutation();
 
   // Checks which documents need to be linked/unlinked and calls/handles mutations
   const handleDocumentLink = async () => {

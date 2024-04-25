@@ -12,10 +12,11 @@ type PossibleOperationalSolutionContact struct {
 	baseStruct
 	PossibleOperationalSolutionID int `db:"possible_operational_solution_id" json:"possibleOperationalSolutionID"`
 
-	Name   string  `db:"name" json:"name"`
-	Email  string  `db:"email" json:"email"`
-	IsTeam bool    `db:"isTeam" json:"is_team"`
-	Role   *string `db:"role" json:"role"`
+	Name      string  `db:"name" json:"name"`
+	Email     string  `db:"email" json:"email"`
+	IsTeam    bool    `db:"isTeam" json:"is_team"`
+	Role      *string `db:"role" json:"role"`
+	IsPrimary bool    `db:"is_primary" json:"isPrimary"`
 }
 
 // GetPOCEmailAddresses transforms an array of POCs to return a list of email addresses.

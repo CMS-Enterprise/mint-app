@@ -3,12 +3,15 @@ import { Provider } from 'react-redux';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, waitFor } from '@testing-library/react';
-import { GetCrtdLsDocument, GetModelPlanBaseDocument } from 'gql/gen/graphql';
+import {
+  GetCrtdLsDocument,
+  GetModelPlanBaseDocument,
+  TaskStatus
+} from 'gql/gen/graphql';
 import configureMockStore from 'redux-mock-store';
 
 import { ASSESSMENT } from 'constants/jobCodes';
 import { MessageProvider } from 'hooks/useMessage';
-import { TaskStatus } from 'types/graphql-global-types';
 
 import CRTDL from '..';
 

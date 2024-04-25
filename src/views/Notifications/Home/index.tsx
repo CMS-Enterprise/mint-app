@@ -3,10 +3,10 @@ import { useTranslation } from 'react-i18next';
 import ReactPaginate from 'react-paginate';
 import { Alert, Button, Grid, GridContainer } from '@trussworks/react-uswds';
 import {
+  Activity,
   useGetNotificationsQuery,
   useUpdateAllNotificationsAsReadMutation
 } from 'gql/gen/graphql';
-import { GetNotifications_currentUser_notifications_notifications_activity as NotificationActivityType } from 'gql/gen/types/GetNotifications';
 
 import Breadcrumbs from 'components/Breadcrumbs';
 import UswdsReactLink from 'components/LinkWrapper';
@@ -129,7 +129,7 @@ const NotificationsHome = () => {
               currentNotifications?.map((notification, index) => (
                 <IndividualNotification
                   {...notification}
-                  activity={notification.activity as NotificationActivityType}
+                  activity={notification.activity as Activity}
                   key={notification.id}
                   index={index}
                 />

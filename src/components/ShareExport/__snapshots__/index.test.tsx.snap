@@ -1577,7 +1577,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     type="button"
                   >
                     <svg
-                      class="usa-icon top-05"
+                      class="usa-icon top-05 margin-right-05"
                       focusable="false"
                       height="1em"
                       role="img"
@@ -2191,7 +2191,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     type="button"
                   >
                     <svg
-                      class="usa-icon top-05"
+                      class="usa-icon top-05 margin-right-05"
                       focusable="false"
                       height="1em"
                       role="img"
@@ -3892,7 +3892,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     type="button"
                   >
                     <svg
-                      class="usa-icon top-05"
+                      class="usa-icon top-05 margin-right-05"
                       focusable="false"
                       height="1em"
                       role="img"
@@ -5072,9 +5072,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                   </div>
                   <div
                     class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
-                  >
-                    12/12/2026
-                  </div>
+                  />
                 </div>
               </div>
             </div>
@@ -6495,7 +6493,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="usa-alert__text"
                   >
                     <span>
-                      There are 2 additional questions that are not applicable for this model based on the answers selected in the question above.
+                      There are 2 additional questions that are not applicable for this model based on the answer to "What data do you need to monitor the model?"
                     </span>
                   </p>
                 </div>
@@ -6511,7 +6509,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                   type="button"
                 >
                   <svg
-                    class="usa-icon top-05"
+                    class="usa-icon top-05 margin-right-05"
                     focusable="false"
                     height="1em"
                     role="img"
@@ -7779,7 +7777,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                   type="button"
                 >
                   <svg
-                    class="usa-icon top-05"
+                    class="usa-icon top-05 margin-right-05"
                     focusable="false"
                     height="1em"
                     role="img"
@@ -7869,7 +7867,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                   type="button"
                 >
                   <svg
-                    class="usa-icon top-05"
+                    class="usa-icon top-05 margin-right-05"
                     focusable="false"
                     height="1em"
                     role="img"
@@ -8503,7 +8501,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                   <div
                     class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
                   >
-                    2022-06-03T19:32:24.412662Z
+                    06/03/2022
                   </div>
                 </div>
               </div>
@@ -10676,7 +10674,7 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                     type="button"
                   >
                     <svg
-                      class="usa-icon top-05"
+                      class="usa-icon top-05 margin-right-05"
                       focusable="false"
                       height="1em"
                       role="img"
@@ -11290,7 +11288,7 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                     type="button"
                   >
                     <svg
-                      class="usa-icon top-05"
+                      class="usa-icon top-05 margin-right-05"
                       focusable="false"
                       height="1em"
                       role="img"
@@ -12991,7 +12989,7 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                     type="button"
                   >
                     <svg
-                      class="usa-icon top-05"
+                      class="usa-icon top-05 margin-right-05"
                       focusable="false"
                       height="1em"
                       role="img"
@@ -14171,9 +14169,7 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                   </div>
                   <div
                     class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
-                  >
-                    12/12/2026
-                  </div>
+                  />
                 </div>
               </div>
             </div>
@@ -15594,7 +15590,7 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                     class="usa-alert__text"
                   >
                     <span>
-                      There are 2 additional questions that are not applicable for this model based on the answers selected in the question above.
+                      There are 2 additional questions that are not applicable for this model based on the answer to "What data do you need to monitor the model?"
                     </span>
                   </p>
                 </div>
@@ -15610,7 +15606,7 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                   type="button"
                 >
                   <svg
-                    class="usa-icon top-05"
+                    class="usa-icon top-05 margin-right-05"
                     focusable="false"
                     height="1em"
                     role="img"
@@ -16878,7 +16874,7 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                   type="button"
                 >
                   <svg
-                    class="usa-icon top-05"
+                    class="usa-icon top-05 margin-right-05"
                     focusable="false"
                     height="1em"
                     role="img"
@@ -16968,7 +16964,7 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                   type="button"
                 >
                   <svg
-                    class="usa-icon top-05"
+                    class="usa-icon top-05 margin-right-05"
                     focusable="false"
                     height="1em"
                     role="img"
@@ -17602,7 +17598,7 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                   <div
                     class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
                   >
-                    2022-06-03T19:32:24.412662Z
+                    06/03/2022
                   </div>
                 </div>
               </div>

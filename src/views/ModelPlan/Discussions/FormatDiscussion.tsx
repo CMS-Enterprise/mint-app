@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@trussworks/react-uswds';
-import {
-  GetModelPlanDiscussions_modelPlan_discussions as DiscussionType,
-  GetModelPlanDiscussions_modelPlan_discussions_replies as ReplyType
-} from 'gql/gen/types/GetModelPlanDiscussions';
+import { GetModelPlanDiscussionsQuery } from 'gql/gen/graphql';
 
 import Divider from 'components/shared/Divider';
 import SectionWrapper from 'components/shared/SectionWrapper';
 
 import SingleDiscussion from './SingleDiscussion';
+
+type DiscussionType = GetModelPlanDiscussionsQuery['modelPlan']['discussions'][0];
+type ReplyType = GetModelPlanDiscussionsQuery['modelPlan']['discussions'][0]['replies'][0];
 
 type FormatDiscussionProps = {
   discussionsContent: DiscussionType[];

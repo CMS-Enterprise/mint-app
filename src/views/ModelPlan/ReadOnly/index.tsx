@@ -4,8 +4,13 @@ import { RootStateOrAny, useSelector } from 'react-redux';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
 import { Grid, GridContainer, Icon, SummaryBox } from '@trussworks/react-uswds';
 import classnames from 'classnames';
-import { GetCrtdLsQuery, useGetModelSummaryQuery } from 'gql/gen/graphql';
-import { GetModelSummary_modelPlan as GetModelSummaryTypes } from 'gql/gen/types/GetModelSummary';
+import {
+  GetCrtdLsQuery,
+  GetModelSummaryQuery,
+  ModelStatus,
+  TeamRole,
+  useGetModelSummaryQuery
+} from 'gql/gen/graphql';
 import { useFlags } from 'launchdarkly-react-client-sdk';
 
 import { FavoriteIcon } from 'components/FavoriteCard';
@@ -20,7 +25,6 @@ import ShareExportModal from 'components/ShareExport';
 import SAMPLE_MODEL_UUID_STRING from 'constants/sampleModelPlan';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import useFavoritePlan from 'hooks/useFavoritePlan';
-import { ModelStatus, TeamRole } from 'types/graphql-global-types';
 import { isAssessment, isMAC } from 'utils/user';
 import NotFound from 'views/NotFound';
 import PrintPDFWrapper from 'views/PrintPDFWrapper';
@@ -54,6 +58,8 @@ import ReadOnlyPayments from './Payments';
 import ReadOnlyTeamInfo from './Team';
 
 import './index.scss';
+
+type GetModelSummaryTypes = GetModelSummaryQuery['modelPlan'];
 
 type CRTDLType =
   | GetCrtdLsQuery['modelPlan']['crs'][0]
