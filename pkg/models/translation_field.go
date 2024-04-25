@@ -58,15 +58,61 @@ type TranslationFieldBase struct {
 	OtherParentField *string `json:"otherParentField"`
 	// Label for fields that reference more than one parent - Ex: Notes - 'Note for Model Basics'
 	ParentReferencesLabel *string `json:"parentReferencesLabel"`
+	// Labels specifically for export/change history.  Takes priority over all other labels
+	ExportLabel *string `json:"exportLabel"`
 }
 
-// GetLabel has logic to prioritize the translated label to be returned for a specific field. It prioritizes the Read only Label, a
+// GetLabel has logic to prioritize the translated label to be returned for a specific field. It prioritizes the Export only Label, then the parent label, then label
 func (tfb TranslationFieldBase) GetLabel() string {
-	if tfb.ReadOnlyLabel != nil {
-		return *tfb.ReadOnlyLabel
+	//Changes: (Translations) Should GetLabel return an error ever?
+	/*1. Favor Export Label  */
+	if tfb.ExportLabel != nil {
+		return *tfb.ExportLabel
 	}
-
+	// Changes: (Translations) Verify the priority for labels? Read only sometimes has language that isn't correct for this.
 	return tfb.Label
+
+}
+func (tfb TranslationFieldBase) GetReferencesLabel(translationDictionary map[string]ITranslationField) *string {
+	if tfb.ParentReferencesLabel != nil {
+		return tfb.ParentReferencesLabel
+	}
+	if tfb.OtherParentField != nil {
+		// Attempt to get the parent field, and it's label (with recursion?) If not, fall through to the other labels.
+		parent, ok := translationDictionary[*tfb.OtherParentField]
+		if ok {
+			parentLabel := parent.GetLabel()
+			return &parentLabel
+			// Changes: (Translations) verify that this is ok, we are opening ourselves up to recursion using this method call...
+		}
+	}
+	return nil
+
+}
+
+// GetFormType returns the form type of a translation
+func (tfb TranslationFieldBase) GetFormType() TranslationFormType {
+	return tfb.FormType
+}
+
+// GetDataType returns the data type of a translation
+func (tfb TranslationFieldBase) GetDataType() TranslationDataType {
+	return tfb.DataType
+}
+
+// GetQuestionType returns the question type of a translation
+// Currently, it will return not if a note, or other if an other (priority given to note)
+// If neither of the above, it will return nil
+func (tfb TranslationFieldBase) GetQuestionType() *TranslationQuestionType {
+	if tfb.IsNote {
+		note := TFTNote
+		return &note
+	}
+	if tfb.IsOtherType {
+		other := TFTOther
+		return &other
+	}
+	return nil
 
 }
 
@@ -80,7 +126,10 @@ type TranslationFieldWithOptions struct {
 
 // ITranslationField defines the signature every translation is expected to have
 type ITranslationField interface {
+	// Returns the label directly for the field without reference to a parent.
 	GetLabel() string
+	GetReferencesLabel(map[string]ITranslationField) *string
+
 	HasOptions() bool
 	// Returns options if a translationField has options
 	GetOptions() (map[string]interface{}, bool)
@@ -88,9 +137,14 @@ type ITranslationField interface {
 	HasParent() bool
 	GetParent() (ITranslationParent, bool)
 
+	GetFormType() TranslationFormType
+	GetDataType() TranslationDataType
+
 	HasChildren() bool
 	GetChildren() (map[string][]TranslationField, bool)
 	//Changes: (Translations) Note, the children could be other types (Eg with options, or with parent), but this allows us to have a typed deserialization
+
+	GetQuestionType() *TranslationQuestionType
 }
 
 //Changes: (Translations) Define the Translation Parent better

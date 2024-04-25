@@ -22,15 +22,3 @@ func PlanBasicsTranslation() (*model.PlanBasicsTranslation, error) {
 	return &translation, nil
 
 }
-
-// PlanBasicsTranslationMap Provides the translation for Plan basics
-func PlanBasicsTranslationMap() (map[string]interface{}, error) {
-	var translation map[string]interface{}
-	err := json.Unmarshal(basicsJSON, &translation)
-	if err != nil {
-		fmt.Println("Error unmarshalling JSON:", err)
-		return nil, err
-	}
-	return translation, nil
-
-}

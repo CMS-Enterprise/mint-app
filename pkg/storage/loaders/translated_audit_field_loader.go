@@ -35,6 +35,7 @@ func (loaders *DataLoaders) translatedAuditFieldCollectionGetByTranslatedAuditID
 	for _, field := range translatedFields {
 		key := fmt.Sprint(field.TranslatedAuditID)
 		slice, ok := translatedFieldsByTranslatedAuditID[key]
+		// Changes: (Serialization) Consider writing a function that will handle the escaped data in a pq string array for multi-select and checkbox.
 		if ok {
 			slice = append(slice, field)
 			translatedFieldsByTranslatedAuditID[key] = slice
