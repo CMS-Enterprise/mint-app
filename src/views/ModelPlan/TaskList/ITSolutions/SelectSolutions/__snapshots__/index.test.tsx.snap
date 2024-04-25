@@ -85,12 +85,56 @@ exports[`Operational Solutions NeedQuestionAndAnswer > matches snapshot 1`] = `
         class="tablet:grid-col-12 desktop:grid-col-8 margin-bottom-4"
         data-testid="grid"
       >
-        <span
-          aria-valuetext="Loading"
-          class="mint-spinner mint-spinner--large center"
-          data-testid="needs-spinner"
-          role="progressbar"
-        />
+        <div
+          class="grid-container padding-3 bg-base-lightest maxw-none"
+          data-testid="gridContainer"
+        >
+          <div
+            class="grid-row"
+            data-testid="grid"
+          >
+            <div
+              class="desktop:grid-col-12"
+              data-testid="grid"
+            >
+              <p
+                class="text-bold margin-y-1"
+              >
+                Operational need
+              </p>
+              <p
+                class="margin-top-0 font-body-sm"
+              >
+                Obtain an application support contractor
+              </p>
+            </div>
+            <div
+              class="desktop:grid-col-12"
+              data-testid="grid"
+            >
+              <button
+                class="usa-button usa-button--unstyled display-flex flex-align-center text-ls-1 deep-underline margin-bottom-1 margin-top-1"
+                data-testid="toggle-need-answer"
+                type="button"
+              >
+                <svg
+                  class="usa-icon margin-right-05 needs-question__rotate"
+                  focusable="false"
+                  height="1em"
+                  role="img"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="m12 8-6 6 1.41 1.41L12 10.83l4.59 4.58L18 14z"
+                  />
+                </svg>
+                Why is this a part of my operational needs?
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
